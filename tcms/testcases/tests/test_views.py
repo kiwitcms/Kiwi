@@ -333,25 +333,15 @@ class TestCloneCase(BasePlanCase):
 
         self.assertContains(response, _('At least one TestCase is required'))
 
-    def test_show_clone_page_with_from_plan(self):
+    def test_show_clone_page_with_selected_cases(self):
         response = self.client.get(self.clone_url,
-                                   {'from_plan': self.plan.pk,
-                                    'case': [self.case_1.pk, self.case_2.pk]})
+                                   {'case': [self.case_1.pk, self.case_2.pk]})
 
         self.assertContains(response, "TP-%s: %s" % (self.plan.pk, self.plan.name))
 
-        for loop_counter, case in enumerate([self.case_1, self.case_2]):
-            self.assertContains(
-                response,
-                '<label for="id_case_{0}">'
-                '<input checked="checked" id="id_case_{0}" name="case" '
-                'type="checkbox" value="{1}"> {2}</label>'.format(
-                    loop_counter, case.pk, case.summary),
-                html=True)
-
-    def test_show_clone_page_without_from_plan(self):
-        response = self.client.get(self.clone_url, {'case': self.case_1.pk})
-        self.assertRedirects(response, '/')
+        for case in [self.case_1, self.case_2]:
+            self.assertContains(response,
+                                "TC-%d: %s" % (case.pk, case.summary))
 
 
 class TestSearchCases(BasePlanCase):

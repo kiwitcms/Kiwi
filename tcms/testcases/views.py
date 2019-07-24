@@ -749,12 +749,12 @@ def edit(request, case_id):
 
 
 @permission_required('testcases.add_testcase')
-def clone(request, template_name='case/clone.html'):
+def clone(request, template_name='testcases/clone.html'):
     """Clone one case or multiple case into other plan or plans"""
 
     request_data = getattr(request, request.method)
 
-    if 'selectAll' not in request_data and 'case' not in request_data:
+    if 'case' not in request_data:
         messages.add_message(request,
                              messages.ERROR,
                              _('At least one TestCase is required'))
@@ -762,12 +762,6 @@ def clone(request, template_name='case/clone.html'):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     test_plan_src = plan_from_request_or_none(request)
-    if not test_plan_src:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('TestPlan is required'))
-        # redirect back where we came from
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     # Do the clone action
     if request.method == 'POST':
@@ -866,6 +860,6 @@ def clone(request, template_name='case/clone.html'):
 
     context = {
         'test_plan': test_plan_src,
-        'clone_form': clone_form,
+        'form': clone_form,
     }
     return render(request, template_name, context)
