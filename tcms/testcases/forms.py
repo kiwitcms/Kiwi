@@ -280,4 +280,6 @@ class CloneCaseForm(forms.Form):
     )
 
     def populate(self, case_ids):
-        self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
+        self.fields['case'].queryset = TestCase.objects.filter(pk__in=case_ids)
+        plan_ids = self.fields['case'].queryset.values_list('plan', flat=True)
+        self.fields['plan'].queryset = TestPlan.objects.filter(pk__in=plan_ids)
