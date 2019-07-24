@@ -789,9 +789,7 @@ def clone(request, template_name='case/clone.html'):
                     priority=tc_src.priority,
                     notes=tc_src.notes,
                     text=tc_src.text,
-                    author=clone_form.cleaned_data[
-                        'maintain_case_orignal_author'] and
-                    tc_src.author or request.user,
+                    author=request.user,
                     default_tester=clone_form.cleaned_data[
                         'maintain_case_orignal_default_tester'] and
                     tc_src.author or request.user,
@@ -865,7 +863,6 @@ def clone(request, template_name='case/clone.html'):
         # Initial the clone case form
         clone_form = CloneCaseForm(initial={
             'case': selected_cases,
-            'maintain_case_orignal_author': False,
             'maintain_case_orignal_default_tester': False,
         })
         clone_form.populate(case_ids=selected_cases)
