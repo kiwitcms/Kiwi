@@ -799,17 +799,7 @@ def clone(request, template_name='case/clone.html'):
                     )
 
                     for test_plan in clone_form.cleaned_data['plan']:
-                        # copy a case and keep origin case's sortkey
-                        if test_plan_src:
-                            try:
-                                tcp = TestCasePlan.objects.get(plan=test_plan_src,
-                                                               case=tc_src)
-                                sortkey = tcp.sortkey
-                            except ObjectDoesNotExist:
-                                sortkey = test_plan.get_case_sortkey()
-                        else:
-                            sortkey = test_plan.get_case_sortkey()
-
+                        sortkey = test_plan.get_case_sortkey()
                         test_plan.add_case(tc_dest, sortkey)
 
                     for tag in tc_src.tag.all():
@@ -827,17 +817,7 @@ def clone(request, template_name='case/clone.html'):
                     tc_dest.save()
 
                     for test_plan in clone_form.cleaned_data['plan']:
-                        # create case link and keep origin plan's sortkey
-                        if test_plan_src:
-                            try:
-                                tcp = TestCasePlan.objects.get(plan=test_plan_src,
-                                                               case=tc_dest)
-                                sortkey = tcp.sortkey
-                            except ObjectDoesNotExist:
-                                sortkey = test_plan.get_case_sortkey()
-                        else:
-                            sortkey = test_plan.get_case_sortkey()
-
+                        sortkey = test_plan.get_case_sortkey()
                         test_plan.add_case(tc_dest, sortkey)
 
                 # Add the cases to plan
