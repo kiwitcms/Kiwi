@@ -28,12 +28,12 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 				<label class="strong title">{% trans "Select Plan" %}</label>
 				{% if test_plan %}
 				<div>
-					<input type="radio" id="id_use_sameplan" name="selectplan" value="{{ test_plan.plan_id }}"/>
+					<input type="radio" id="id_use_sameplan" name="selectplan" value="{{ test_plan.plan_id }}" checked="checked"/>
                                         <label for="id_use_sameplan" class="strong">{% trans "Use the same Plan" %} -- {{ test_plan.plan_id }} : {{ test_plan.name }}</label>
 				</div>
 				{% endif %}
 				<div>
-					<input type="radio" id="id_use_filterplan" checked="checked"  name="selectplan"/>
+					<input type="radio" id="id_use_filterplan" name="selectplan"/>
                                         <label for="id_use_filterplan" class="strong">{% trans "Filter another plan" %}</label>
 					<div id="id_filterPlan">
 					<form id="id_form_search_plan" action="{% url "plans-all" %}" method="get">

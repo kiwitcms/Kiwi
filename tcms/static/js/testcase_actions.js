@@ -55,7 +55,6 @@ Nitrate.TestCases.Clone.on_load = function() {
     jQ('#id_copy_case').attr('checked', true);
   });
 
-  if (jQ('#id_use_sameplan').length) {
     jQ('#id_use_sameplan').bind('click', function(e) {
       jQ('#id_form_search_plan :input').attr('disabled', true);
       jQ('#id_plan_id').val(jQ('#value_plan_id').val());
@@ -63,7 +62,8 @@ Nitrate.TestCases.Clone.on_load = function() {
       jQ('#id_plan_container').html('<div class="ajax_loading"></div>').hide();
       jQ('#id_copy_case').attr('checked', false);
     });
-  }
+
+  $('#id_use_sameplan').click();
 
   jQ('.js-cancel-button').bind('click', function() {
     window.history.go('-1');
