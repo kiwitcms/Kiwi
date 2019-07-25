@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-23 21:31+0000\n"
+"POT-Creation-Date: 2019-07-25 07:44+0000\n"
 "PO-Revision-Date: 2019-07-24 06:03\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
@@ -10,7 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
+"&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
+"&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: kiwitcms\n"
 "X-Crowdin-Language: ru\n"
@@ -57,21 +59,31 @@ msgstr "ОБНОВЛЕНИЕ: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
-msgid "Updated on %(history_date)s\n"
-"Updated by %(username)s\n\n"
-"%(diff)s\n\n"
+msgid ""
+"Updated on %(history_date)s\n"
+"Updated by %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr "Обновлено %(history_date)s\n"
-"Обновлено %(username)s\n\n"
-"%(diff)s\n\n"
+msgstr ""
+"Обновлено %(history_date)s\n"
+"Обновлено %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "Дополнительная информация:\n"
 "%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Базовый URL-адрес не настроен! Смотрите <a href=\"%(doc_url)s\">документация</a> и <a href=\"%(admin_url)s\">измените это</a>"
+msgid ""
+"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
+"and <a href=\"%(admin_url)s\">change it</a>"
+msgstr ""
+"Базовый URL-адрес не настроен! Смотрите <a href=\"%(doc_url)s"
+"\">документация</a> и <a href=\"%(admin_url)s\">измените это</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -95,11 +107,15 @@ msgid "Your new %s account confirmation"
 msgstr ""
 
 #: tcms/kiwi_auth/views.py:54
-msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Ваша учетная запись была создана и ожидает подтверждение через указанный вами e-mail"
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+"Ваша учетная запись была создана и ожидает подтверждение через указанный "
+"вами e-mail"
 
 #: tcms/kiwi_auth/views.py:60
-msgid "Your account has been created, but you need an administrator to activate it"
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
 msgstr "Ваша учетная запись была создана и ожидает активации администратором"
 
 #: tcms/kiwi_auth/views.py:65
@@ -222,9 +238,9 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
-#: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
-#: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
-#: tcms/templates/run/get.html:122 tcms/templates/run/report.html:35
+#: tcms/templates/dashboard.html:49 tcms/templates/plan/get.html:62
+#: tcms/templates/plan/preview.html:15 tcms/templates/run/get.html:122
+#: tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/get.html:314
 #: tcms/testcases/templates/testcases/mutable.html:37
@@ -344,119 +360,6 @@ msgstr "Вы действительно хотите удалить это вл�
 msgid "the leading open source test case management system"
 msgstr "лидер в системах управления тест-кейсами с открытым исходным кодом"
 
-#: tcms/templates/case/clone.html:24
-msgid "Clone TestCase(s)"
-msgstr "Клонировать тест-кейс(ы)"
-
-#: tcms/templates/case/clone.html:28
-msgid "Select Plan"
-msgstr "Выберите план"
-
-#: tcms/templates/case/clone.html:32
-msgid "Use the same Plan"
-msgstr "Использовать этот план"
-
-#: tcms/templates/case/clone.html:37
-msgid "Filter another plan"
-msgstr "Фильтровать другой план"
-
-#: tcms/templates/case/clone.html:42 tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:80
-#: tcms/templates/run/assign_case.html:71
-#: tcms/testcases/templates/testcases/get.html:310
-#: tcms/testcases/templates/testcases/search.html:132
-#: tcms/testplans/templates/testplans/search.html:108
-#: tcms/testruns/templates/testruns/search.html:90
-msgid "ID"
-msgstr "ID"
-
-#: tcms/templates/case/clone.html:50 tcms/templates/run/get.html:73
-#: tcms/templates/run/report.html:27
-msgid "Product Version"
-msgstr "Версия продукта"
-
-#: tcms/templates/case/clone.html:54
-#: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:70
-#: tcms/templates/plan/preview.html:23
-msgid "Plan Type"
-msgstr "Тип плана"
-
-#: tcms/templates/case/clone.html:58
-msgid "Plan Author"
-msgstr "Автор плана"
-
-#: tcms/templates/case/clone.html:62 tcms/templates/case/get_details.html:32
-#: tcms/templates/management/get_tag.html:6
-#: tcms/templates/plan/get_cases.html:127
-#: tcms/templates/run/get_case_runs.html:113
-#: tcms/testcases/templates/testcases/search.html:111
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Tag"
-msgstr "Тег"
-
-#: tcms/templates/case/clone.html:66
-#: tcms/templates/case/clone_select_plan.html:8
-msgid "Plan Summary"
-msgstr "Итоги по плану"
-
-#: tcms/templates/case/clone.html:70
-#: tcms/testplans/templates/testplans/mutable.html:139
-#: tcms/testplans/templates/testplans/search.html:93
-msgid "Active"
-msgstr "Активно"
-
-#: tcms/templates/case/clone.html:93
-msgid "Case(s)"
-msgstr "Кейс(ы)"
-
-#: tcms/templates/case/clone.html:97
-msgid "Clone Settings"
-msgstr "Клонировать настройки"
-
-#: tcms/templates/case/clone.html:99
-msgid "Case Properties"
-msgstr "Свойства кейса"
-
-#: tcms/templates/case/clone_select_plan.html:2
-msgid "Plan"
-msgstr "План"
-
-#: tcms/templates/case/clone_select_plan.html:10
-#: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
-#: tcms/templates/plan/search_case.html:82
-#: tcms/templates/run/assign_case.html:73
-#: tcms/testcases/templates/testcases/get.html:43
-#: tcms/testcases/templates/testcases/get.html:312
-#: tcms/testcases/templates/testcases/mutable.html:147
-#: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:140
-#: tcms/testplans/templates/testplans/mutable.html:103
-#: tcms/testplans/templates/testplans/search.html:74
-#: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/mutable.html:93
-msgid "Author"
-msgstr "Автор"
-
-#: tcms/templates/case/clone_select_plan.html:11
-msgid "Is Active"
-msgstr "Активно"
-
-#: tcms/templates/case/clone_select_plan.html:19
-#: tcms/testcases/templates/testcases/search.html:94
-msgid "Yes"
-msgstr "Да"
-
-#: tcms/templates/case/clone_select_plan.html:19
-#: tcms/testcases/templates/testcases/search.html:97
-msgid "No"
-msgstr "Нет"
-
-#: tcms/templates/case/clone_select_plan.html:22
-msgid "There are no plans"
-msgstr "Нет планов"
-
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
@@ -483,6 +386,16 @@ msgstr "Компонент"
 #: tcms/templates/case/get_details_case_run.html:169
 msgid "No component found"
 msgstr "Компонент не найден"
+
+#: tcms/templates/case/get_details.html:32
+#: tcms/templates/management/get_tag.html:6
+#: tcms/templates/plan/get_cases.html:127
+#: tcms/templates/run/get_case_runs.html:113
+#: tcms/testcases/templates/testcases/search.html:111
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Tag"
+msgstr "Тег"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:180
@@ -590,12 +503,16 @@ msgstr "Дата запуска"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid "\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
+msgid ""
+"\n"
+"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
+"need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                %(total_count)s тест-прогон(s) или тест-кейс(s), назначенные вам для исполнения.\n"
+msgstr ""
+"\n"
+"                %(total_count)s тест-прогон(s) или тест-кейс(s), назначенные "
+"вам для исполнения.\n"
 "                Последние %(count)s.\n"
 "                "
 
@@ -630,12 +547,16 @@ msgstr "Запуски"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid "\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid ""
+"\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
+"are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                Вы управляете %(total_count)s тест-план(s), %(disabled_count)s отключены.\n"
+msgstr ""
+"\n"
+"                Вы управляете %(total_count)s тест-план(s), "
+"%(disabled_count)s отключены.\n"
 "                Последние %(count)s.\n"
 "                "
 
@@ -645,45 +566,59 @@ msgstr "Не существуют тест-планы принадлежащие
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr "Добро пожаловать %(user)s,\n"
-"благодарю вас за регистрацию на %(site_domain)s!\n\n"
+msgstr ""
+"Добро пожаловать %(user)s,\n"
+"благодарю вас за регистрацию на %(site_domain)s!\n"
+"\n"
 "Чтобы активировать свою учётную запись, нажмите на эту ссылку:\n"
 "%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "TestCase has been deleted by %(username)s!\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "Тест-кейс был удален %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "\n"
-"Test run %(pk)s has been created or updated for you.\n\n"
+msgid ""
+"\n"
+"Test run %(pk)s has been created or updated for you.\n"
+"\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n\n"
+"Summary: %(summary)s\n"
+"\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n\n"
+"Default tester: %(default_tester)s.\n"
+"\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Notes:\n"
 "%(notes)s\n"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid "Dear Administrator,\n"
+msgid ""
+"Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
@@ -776,7 +711,7 @@ msgstr "Следующая страница"
 msgid "Last page"
 msgstr "Последняя страница"
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:575
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
 msgid "Edit"
 msgstr "Изменить"
 
@@ -811,6 +746,26 @@ msgstr "Удалить план"
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
 msgstr "Удалить тест-план"
+
+#: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
+#: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
+#: tcms/templates/plan/search_case.html:82
+#: tcms/templates/run/assign_case.html:73
+#: tcms/testcases/templates/testcases/get.html:43
+#: tcms/testcases/templates/testcases/get.html:312
+#: tcms/testcases/templates/testcases/mutable.html:147
+#: tcms/testcases/templates/testcases/search.html:106
+#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testplans/templates/testplans/mutable.html:103
+#: tcms/testplans/templates/testplans/search.html:74
+#: tcms/testplans/templates/testplans/search.html:114
+#: tcms/testruns/templates/testruns/mutable.html:93
+msgid "Author"
+msgstr "Автор"
+
+#: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
+msgid "Plan Type"
+msgstr "Тип плана"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
@@ -904,7 +859,8 @@ msgid "print view of selected cases"
 msgstr "просмотр печати выбранных кейсов"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:579 tcms/testplans/templates/testplans/clone.html:68
+#: tcms/testcases/templates/testcases/clone.html:40 tcms/testcases/views.py:578
+#: tcms/testplans/templates/testplans/clone.html:68
 msgid "Clone"
 msgstr "Клонировать"
 
@@ -970,8 +926,12 @@ msgid "Show filter options"
 msgstr "Показать параметры фильтра"
 
 #: tcms/templates/plan/get_cases.html:71
-msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "Нажмите на меня, затем перетащите строки в необходимом порядке, и нажмите на 'Завершить сортировку', чтобы сохранить изменения"
+msgid ""
+"Click me,then Drag and drop the rows to adjust the order,and click 'Done "
+"Sorting' link to submit your changes"
+msgstr ""
+"Нажмите на меня, затем перетащите строки в необходимом порядке, и нажмите на "
+"'Завершить сортировку', чтобы сохранить изменения"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1006,6 +966,16 @@ msgstr "Элементы на странице"
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
 msgstr "Также выберите все случаи, которые пока еще не приведены ниже."
+
+#: tcms/templates/plan/get_cases.html:161
+#: tcms/templates/plan/search_case.html:80
+#: tcms/templates/run/assign_case.html:71
+#: tcms/testcases/templates/testcases/get.html:310
+#: tcms/testcases/templates/testcases/search.html:132
+#: tcms/testplans/templates/testplans/search.html:108
+#: tcms/testruns/templates/testruns/search.html:90
+msgid "ID"
+msgstr "ID"
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
@@ -1150,8 +1120,12 @@ msgid "Confirm"
 msgstr "Подтвердить"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr "Пожалуйста, введите ваш новый пароль дважды, чтобы мы могли проверить, что вы ввели его правильно"
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly"
+msgstr ""
+"Пожалуйста, введите ваш новый пароль дважды, чтобы мы могли проверить, что "
+"вы ввели его правильно"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1212,10 +1186,12 @@ msgstr "Как присоединить кейс?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr "В приведенной таблице содержится список подтвержденных тест-кейсов плана"
+msgstr ""
+"В приведенной таблице содержится список подтвержденных тест-кейсов плана"
 
 #: tcms/templates/run/assign_case.html:59
-msgid "check the checkbox to add cases into test run. Remember to update at last"
+msgid ""
+"check the checkbox to add cases into test run. Remember to update at last"
 msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
@@ -1225,6 +1201,10 @@ msgstr "Дата создания"
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
 msgstr "Выбранные"
+
+#: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
+msgid "Product Version"
+msgstr "Версия продукта"
 
 #: tcms/templates/run/get.html:115 tcms/templates/run/report.html:51
 msgid "Note"
@@ -1416,31 +1396,45 @@ msgid "No execution found"
 msgstr "Запуски не найдены"
 
 #: tcms/testcases/forms.py:21
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "Пожалуйста, введите правильный id кейса(ов), для введения нескольких используйте запятую. Например, \"111, 222\""
+msgid ""
+"Please input valid case id(s). use comma to split more than one case id. e."
+"g. \"111, 222\""
+msgstr ""
+"Пожалуйста, введите правильный id кейса(ов), для введения нескольких "
+"используйте запятую. Например, \"111, 222\""
 
 #: tcms/testcases/forms.py:90
-msgid "**Scenario**: ... what behavior will be tested ...\n"
+msgid ""
+"**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
-"  **Then** ... expected results ...\n\n"
-"*Actions*:\n\n"
-"1. item\n"
-"2. item\n"
-"3. item\n\n"
-"*Expected results*:\n\n"
+"  **Then** ... expected results ...\n"
+"\n"
+"*Actions*:\n"
+"\n"
 "1. item\n"
 "2. item\n"
 "3. item\n"
-msgstr "**Сценарий**: ... какое поведение будет протестировано ...\n"
+"\n"
+"*Expected results*:\n"
+"\n"
+"1. item\n"
+"2. item\n"
+"3. item\n"
+msgstr ""
+"**Сценарий**: ... какое поведение будет протестировано ...\n"
 "  **Дано** ... условия ...\n"
 "  **Когда** ... действия ...\n"
-"  **Тогда** ... ожидаемые результаты ...\n\n"
-"*Действия*:\n\n"
+"  **Тогда** ... ожидаемые результаты ...\n"
+"\n"
+"*Действия*:\n"
+"\n"
 "1. пункт\n"
 "2. пункт\n"
-"3. пункт\n\n"
-"*Ожидаемые результаты*:\n\n"
+"3. пункт\n"
+"\n"
+"*Ожидаемые результаты*:\n"
+"\n"
 "1. пункт\n"
 "2. пункт\n"
 "3. пункт\n"
@@ -1449,6 +1443,10 @@ msgstr "**Сценарий**: ... какое поведение будет пр�
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "УДАЛЕНО: тест-кейс #%(pk)d - %(summary)s"
+
+#: tcms/testcases/templates/testcases/clone.html:12
+msgid "Add new TC into TP"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1546,8 +1544,12 @@ msgid "CC to"
 msgstr "Копия к"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
-msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr "E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены на каждый адрес электронной почты из списка (копия)."
+msgid ""
+"Email addresses separated by comma. A notification email will be sent to "
+"each Email address within CC list."
+msgstr ""
+"E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены "
+"на каждый адрес электронной почты из списка (копия)."
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:145
@@ -1562,6 +1564,14 @@ msgstr "Поиск тест-кейсов"
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
 msgstr "Итоги по тест-кейсу"
+
+#: tcms/testcases/templates/testcases/search.html:94
+msgid "Yes"
+msgstr "Да"
+
+#: tcms/testcases/templates/testcases/search.html:97
+msgid "No"
+msgstr "Нет"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
@@ -1586,24 +1596,24 @@ msgstr "Поиск"
 msgid "Created on"
 msgstr "Создано"
 
-#: tcms/testcases/views.py:400
+#: tcms/testcases/views.py:399
 msgid "TestPlan not specified or does not exist"
 msgstr "Тест-план не указан или не существует"
 
-#: tcms/testcases/views.py:583
+#: tcms/testcases/views.py:582
 msgid "History"
 msgstr "История"
 
-#: tcms/testcases/views.py:588
+#: tcms/testcases/views.py:587
 msgid "Delete"
 msgstr "Удалить"
 
-#: tcms/testcases/views.py:761 tcms/testruns/views.py:430
+#: tcms/testcases/views.py:760 tcms/testruns/views.py:430
 #: tcms/testruns/views.py:508
 msgid "At least one TestCase is required"
 msgstr "Требуется хотя бы один тест-кейс"
 
-#: tcms/testcases/views.py:898
+#: tcms/testcases/views.py:849
 msgid "TestCase cloning was successful"
 msgstr "Клонирование тест-кейса прошло успешно"
 
@@ -1668,6 +1678,11 @@ msgstr "Тест-план обновлен"
 msgid "Test cases are updated"
 msgstr "Тест-кейсы обновлены"
 
+#: tcms/testplans/templates/testplans/mutable.html:139
+#: tcms/testplans/templates/testplans/search.html:93
+msgid "Active"
+msgstr "Активно"
+
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
 msgstr "Поиск тест-планов"
@@ -1681,15 +1696,15 @@ msgstr "Название тест-плана"
 msgid "Test plan"
 msgstr "Тест-план"
 
-#: tcms/testplans/views.py:346
+#: tcms/testplans/views.py:340
 msgid "TestPlan is required"
 msgstr "Требуется тест-план"
 
-#: tcms/testplans/views.py:523
+#: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
 msgstr "Для печати требуется хотя бы один тест-план"
 
-#: tcms/testplans/views.py:531
+#: tcms/testplans/views.py:525
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Тест-план \"%s\" не существует"
@@ -1734,12 +1749,16 @@ msgstr "Выбранные тест-кейс(ы):"
 
 #: tcms/testruns/templates/testruns/mutable.html:82
 #, python-format
-msgid "\n"
-"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
+msgid ""
+"\n"
+"                    %(count)s of the pre-selected test cases is not "
+"CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr "\n"
-"                    %(count)s из выбранных тест-кейсов не ПОДТВЕРЖДЕНО и не будет клонировано!\n"
+msgstr ""
+"\n"
+"                    %(count)s из выбранных тест-кейсов не ПОДТВЕРЖДЕНО и не "
+"будет клонировано!\n"
 "                    Подробности смотрите в тест-плане!\n"
 "                    "
 
@@ -1781,8 +1800,11 @@ msgid "%d CaseRun(s) updated:"
 msgstr "%d тест-прогоны обновлены:"
 
 #: tcms/xmlrpc/api/bug.py:85
-msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
-msgstr "Включить привязку тест-кейсов настроив параметры API для трекера задач!"
+msgid ""
+"Enable linking test cases by configuring API parameters for this Issue "
+"Tracker!"
+msgstr ""
+"Включить привязку тест-кейсов настроив параметры API для трекера задач!"
 
 #: tcms/xmlrpc/api/bug.py:138
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -1840,4 +1862,3 @@ msgstr "ОШИБКА"
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
 msgstr "ОТЛОЖЕНО"
-
