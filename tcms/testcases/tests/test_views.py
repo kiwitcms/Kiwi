@@ -179,9 +179,7 @@ class TestNewCase(BasePlanCase):
         response = self.client.post(self.new_case_url, self.data)
 
         test_case = TestCase.objects.get(summary=self.summary)
-        redirect_url = "{0}?from_plan={1}".format(
-            reverse('testcases-get', args=[test_case.pk]), self.plan.pk
-        )
+        redirect_url = reverse('testcases-get', args=[test_case.pk])
 
         self.assertRedirects(response, redirect_url)
         self.assertEqual(test_case.plan.get(), self.plan)
@@ -276,10 +274,7 @@ class TestEditCase(BasePlanCase):
 
         response = self.client.post(self.case_edit_url, edit_data)
 
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-get', args=[self.case_1.pk]),
-            self.plan.pk,
-        )
+        redirect_url = reverse('testcases-get', args=[self.case_1.pk])
         self.assertRedirects(response, redirect_url)
 
         edited_case = TestCase.objects.get(pk=self.case_1.pk)

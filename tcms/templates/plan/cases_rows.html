@@ -22,10 +22,10 @@ test_cases should be a queryset of a list of TestCases.
 		class="checkbox case_selector" {% if not selected_case_ids or test_case.pk in selected_case_ids %}checked{% endif %} />
 	</td>
 	<td>
-		<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.pk }}</a>
+		<a href="{% url "testcases-get" test_case.case_id %}">{{ test_case.pk }}</a>
 	</td>
 	<td>
-		<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.summary }}</a>
+		<a href="{% url "testcases-get" test_case.case_id %}">{{ test_case.summary }}</a>
 	</td>
 	<td class="col_author_content"><a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author }}</a></td>
 	<td class="col_author_content">
@@ -56,7 +56,7 @@ test_cases should be a queryset of a list of TestCases.
 	</td>
 	<td align="center" >
 		{% if perms.testcases.change_testcase %}
-		<a class="editlink" href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">Edit</a>
+		<a class="editlink" href="{% url "testcases-edit" test_case.case_id %}">Edit</a>
 		{% else %}
 		<span class="editlink grey">{% trans "Edit" %}</span>
 		{% endif %}

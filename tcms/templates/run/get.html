@@ -45,9 +45,7 @@ jQ(function() {
 	</div>
 	<div class="control">
 		{% if perms.testruns.change_testexecution %}
-		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'testruns-edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
-		{% else %}
-		<input id="btn_edit" type="button" value="Edit" disabled="true">
+                <a href="{% url 'testruns-edit' test_run.pk %}"><strong>EDIT</strong></a>
 		{% endif %}
 		{% if perms.testruns.add_testrun %}
 		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'testruns-clone' test_run.pk %}" />

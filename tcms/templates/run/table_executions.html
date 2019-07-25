@@ -40,7 +40,7 @@
 				<a href="#caserun_{{ test_case_run.pk }}">#{{ test_case_run.pk }}</a>
 			</td>
 			<td "{{ test_case_run.case_id }}" class="case_title expandable">
-				<a href="{% url "testcases-get" test_case_run.case_id %}?from_plan={{ test_case_run.run.plan_id }}">{{ test_case_run.case_id }}</a>
+				<a href="{% url "testcases-get" test_case_run.case_id %}">{{ test_case_run.case_id }}</a>
 			</td>
 
 			<td class="expandable">

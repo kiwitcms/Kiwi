@@ -44,13 +44,13 @@ def new(request):
     """Display the create test run page."""
 
     # If from_plan does not exist will redirect to plans for select a plan
-    if not request.POST.get('from_plan'):
+    plan_id = request.POST.get('from_plan')
+    if not plan_id:
         messages.add_message(request,
                              messages.ERROR,
                              _('Creating a TestRun requires a TestPlan, select one'))
         return HttpResponseRedirect(reverse('plans-search'))
 
-    plan_id = request.POST.get('from_plan')
     # case is required by a test run
     # NOTE: currently this is handled in JavaScript but in the TestRun creation
     # form cases can be deleted
@@ -263,7 +263,6 @@ def get(request,  # pylint: disable=missing-permission-required
 
     context_data = {
         'test_run': test_run,
-        'from_plan': request.GET.get('from_plan', False),
         'test_case_runs': walk_executions(),
         'test_case_runs_count': len(test_executions),
         'status_stats': status_stats_result,
