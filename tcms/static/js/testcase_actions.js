@@ -24,13 +24,6 @@ Nitrate.TestCases.Clone = {};
 }());
 
 
-Nitrate.TestCases.Clone.on_load = function() {
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.go('-1');
-  });
-
-};
-
 
 /*
  * Used for expanding test case in test plan page specifically
@@ -263,18 +256,4 @@ function serializeCaseForm2(form, table, serialized, exclude_cases) {
     data['case'] = serializeCaseFromInputList(table);
   }
   return data;
-}
-
-function toggleDiv(link, divId) {
-  var link = jQ(link);
-  var div = jQ('#' + divId);
-  var show = 'Show All';
-  var hide = 'Hide All';
-  div.toggle();
-  var text = link.html();
-  if (text !== show) {
-    link.html(show);
-  } else {
-    link.html(hide);
-  }
 }
