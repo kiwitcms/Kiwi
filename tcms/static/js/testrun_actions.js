@@ -4,6 +4,21 @@ Nitrate.TestRuns.Execute = {}
 Nitrate.TestRuns.AssignCase = {}
 
 
+function toggleDiv(link, divId) {
+  var link = jQ(link);
+  var div = jQ('#' + divId);
+  var show = 'Show All';
+  var hide = 'Hide All';
+  div.toggle();
+  var text = link.html();
+  if (text !== show) {
+    link.html(show);
+  } else {
+    link.html(hide);
+  }
+}
+
+
 Nitrate.TestRuns.Details.on_load = function() {
   setAddTagAutocomplete();
 
