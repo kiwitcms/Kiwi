@@ -128,11 +128,6 @@ class NewCaseView(TemplateView):
 
         if form.is_valid() and notify_form.is_valid():
             test_case = self.create_test_case(form, notify_form, test_plan)
-            if test_plan:
-                return HttpResponseRedirect(
-                    '%s?from_plan=%s' % (reverse('testcases-get', args=[test_case.pk]),
-                                         test_plan.pk))
-
             return HttpResponseRedirect(reverse('testcases-get', args=[test_case.pk]))
 
         context_data = {
@@ -560,23 +555,16 @@ def get(request, case_id):
         'test_case_runs': tcrs,
     }
 
-    url_params = "?case=%d" % test_case.pk
-    case_edit_url = reverse('testcases-edit', args=[test_case.pk])
-    test_plan = request.GET.get('from_plan', 0)
-    if test_plan:
-        url_params += "&from_plan=%s" % test_plan
-        case_edit_url += "?from_plan=%s" % test_plan
-
     with modify_settings(
             MENU_ITEMS={'append': [
                 ('...', [
                     (
                         _('Edit'),
-                        case_edit_url
+                        reverse('testcases-edit', args=[test_case.pk])
                     ),
                     (
                         _('Clone'),
-                        reverse('testcases-clone') + url_params
+                        reverse('testcases-clone') + "?case=%d" % test_case.pk
                     ),
                     (
                         _('History'),
@@ -676,9 +664,6 @@ def edit(request, case_id):
         raise Http404
 
     test_plan = plan_from_request_or_none(request)
-    from_plan = ""
-    if test_plan:
-        from_plan = "?from_plan=%d" % test_plan.pk
 
     if request.method == "POST":
         form = NewCaseForm(request.POST)
@@ -696,7 +681,7 @@ def edit(request, case_id):
             update_case_email_settings(test_case, n_form)
 
             return HttpResponseRedirect(
-                reverse('testcases-get', args=[case_id, ]) + from_plan
+                reverse('testcases-get', args=[case_id, ])
             )
 
     else:
@@ -828,10 +813,7 @@ def clone(request, template_name='testcases/clone.html'):
             plans_count = len(clone_form.cleaned_data['plan'])
 
             if cases_count == 1 and plans_count == 1:
-                return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('testcases-get', args=[tc_dest.pk, ]),
-                    test_plan.pk
-                ))
+                return HttpResponseRedirect(reverse('testcases-get', args=[tc_dest.pk, ]))
 
             if cases_count == 1:
                 return HttpResponseRedirect(
