@@ -3,11 +3,11 @@ from modernrpc.core import rpc_method
 
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 from tcms.issuetracker.types import IssueTrackerType
 from tcms.xmlrpc.decorators import permissions_required
+from tcms.core.contrib.linkreference.models import LinkReference
 
 
 __all__ = (
@@ -26,19 +26,21 @@ def filter(query):  # pylint: disable=redefined-builtin
         Get list of bugs that are associated with TestCase or
         a TestExecution.
 
-        :param query: Field lookups for :class:`tcms.testcases.models.Bug`
+        :param query: Field lookups for :class:`tcms.core.contrib.linkreference.LinkReference`
         :type query: dict
-        :return: List of serialized :class:`tcms.testcases.models.Bug` objects.
+        :return: List of serialized :class:`tcms.core.contrib.linkreference.LinkReference`
+                 objects.
 
         Get all bugs for particular TestCase::
 
-            >>> Bug.filter({'case': 123}) or Bug.filter({'case_id': 123})
+            >>> Bug.filter({'execution__case': 123})
 
         Get all bugs for a particular TestExecution::
 
-            >>> Bug.filter({'case_run': 1234}) or Bug.filter({'case_run_id': 1234})
+            >>> Bug.filter({'execution': 1234})
     """
-    return Bug.to_xmlrpc(query)
+    query['is_defect'] = True
+    return list(LinkReference.objects.filter(**query).values())
 
 
 @permissions_required('testcases.add_bug')

@@ -27,13 +27,6 @@ function addComponent(object_id, _input, to_table) {
 
 
 $(document).ready(function() {
-    var bug_systems_cache = {}
-    jsonRPC('BugSystem.filter', {}, function(data) {
-        data.forEach(function(element) {
-            bug_systems_cache[element.id] = element
-        });
-    });
-
     var case_id = $('#test_case_pk').data('pk');
     var product_id = $('#product_pk').data('pk');
     var perm_remove_tag = $('#test_case_pk').data('perm-remove-tag') === 'True';
@@ -224,15 +217,13 @@ $(document).ready(function() {
     // bugs table
     var bugs_table = $('#bugs').DataTable({
         ajax: function(data, callback, settings) {
-            dataTableJsonRPC('Bug.filter', {case: case_id}, callback);
+            dataTableJsonRPC('Bug.filter', {execution__case: case_id}, callback);
         },
         columns: [
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    var url = bug_systems_cache[data.bug_system_id].url_reg_exp.replace('%s', data.bug_id).replace('%d', data.bug_id);
-                    var name = bug_systems_cache[data.bug_system_id].name + ' #' + data.bug_id;
-                    return '<a href="' + url + '">' + name + '</a>';
+                    return '<a href="' + data.url + '">' + data.url + '</a>';
                 }
             },
         ],
