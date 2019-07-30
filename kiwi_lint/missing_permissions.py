@@ -57,6 +57,9 @@ class MissingPermissionsChecker(checkers.BaseChecker):
         self._check_for_missing_decorator(node)
 
     def _check_for_missing_decorator(self, node):
+        if not isinstance(node.parent, astroid.scoped_nodes.Module):
+            return
+
         if not node.decorators:
             self.add_message('missing-permission-required', node=node)
             return
