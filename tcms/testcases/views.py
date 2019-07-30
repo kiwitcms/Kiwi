@@ -28,6 +28,7 @@ from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, CaseNotifyForm, CloneCaseForm
 from tcms.testcases.fields import MultipleEmailField
+from tcms.core.contrib.linkreference.models import LinkReference
 
 
 TESTCASE_OPERATION_ACTIONS = (
@@ -483,6 +484,8 @@ class SimpleTestCaseView(TemplateView):  # pylint: disable=missing-permission-re
             'components': case.component.only('name'),
             'tags': case.tag.only('name'),
             'case_comments': get_comments(case),
+            'bugs': LinkReference.objects.filter(is_defect=True,
+                                                 execution__case=case)
         })
 
         return data
