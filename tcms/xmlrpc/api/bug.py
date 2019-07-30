@@ -119,15 +119,15 @@ def remove(query):
 
 
 @rpc_method(name='Bug.report')
-def report(test_case_run_id, tracker_id):
+def report(execution_id, tracker_id):
     """
-    .. function:: XML-RPC Bug.report(test_case_run_id, tracker_id)
+    .. function:: XML-RPC Bug.report(execution_id, tracker_id)
 
         Returns a URL which will open the bug tracker with predefined fields
         indicating the error was detected by the specified TestExecution.
 
-        :param test_case_run_id: PK for :class:`tcms.testruns.models.TestExecution` object
-        :type test_case_run_id: int
+        :param execution_id: PK for :class:`tcms.testruns.models.TestExecution` object
+        :type execution_id: int
         :param tracker_id: PK for :class:`tcms.testcases.models.BugSystem` object
         :type tracker_id: int
         :return: Success response with bug URL or failure message
@@ -138,11 +138,11 @@ def report(test_case_run_id, tracker_id):
         'response': _('Enable reporting to this Issue Tracker by configuring its base_url!'),
     }
 
-    test_case_run = TestExecution.objects.get(pk=test_case_run_id)
+    execution = TestExecution.objects.get(pk=execution_id)
     bug_system = BugSystem.objects.get(pk=tracker_id)
     if bug_system.base_url:
         tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-        url = tracker.report_issue_from_testcase(test_case_run)
+        url = tracker.report_issue_from_testcase(execution)
         response = {'rc': 0, 'response': url}
 
     return response
