@@ -50,7 +50,7 @@ def create_link(data):
         }
     return {'rc': 1, 'response': form.errors.as_text()}
 
-
+# fixme: wrong permission label
 @permission_required('testruns.change_testexecution')
 @require_POST
 def add(request):
@@ -77,6 +77,7 @@ def add(request):
     return http.JsonResponse(json_data, status=HTTPStatus.BAD_REQUEST)
 
 
+# fixme: wrong permission label
 @permission_required('testruns.change_testexecution')
 @require_GET
 def remove(_request, link_id):
