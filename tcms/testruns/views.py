@@ -353,6 +353,7 @@ class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-requ
 
         execution_bugs = []
         bug_system_types = {}
+        # fixme: make this loop work with LinkReference objects
         for _bug in get_run_bug_ids(run.pk):
             # format the bug URLs based on DB settings
             execution_bugs.append((

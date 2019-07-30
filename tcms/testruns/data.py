@@ -7,9 +7,9 @@ from django.db.models import F
 from django.contrib.contenttypes.models import ContentType
 from django_comments.models import Comment
 
-from tcms.testcases.models import Bug
 from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestExecutionStatus
+from tcms.core.contrib.linkreference.models import LinkReference
 
 
 def get_run_bug_ids(run_id):
@@ -19,12 +19,10 @@ def get_run_bug_ids(run_id):
     :return: list of pairs of bug ID and bug link.
     :rtype: list
     """
-    return Bug.objects.values(
-        'bug_id',
-        'bug_system',
-        'bug_system__tracker_type',
-        'bug_system__url_reg_exp'
-    ).distinct().filter(case_run__run=run_id)
+    return LinkReference.objects.filter(
+        execution__run=run_id,
+        is_defect=True,
+    ).distinct()
 
 
 class TestExecutionDataMixin:
@@ -65,14 +63,12 @@ class TestExecutionDataMixin:
         :rtype: dict
         """
 
-        bugs = Bug.objects.filter(
-            case_run__run=run_pk
-        ).values(
-            'case_run',
-            'bug_id',
-            'bug_system__url_reg_exp'
-        ).order_by('case_run')
+        bugs = LinkReference.objects.filter(
+            execution__run=run_pk,
+            is_defect=True,
+        ).order_by('execution')
 
+        # fixme: everything below needs updating to work with LR
         rows = []
         for row in bugs:
             row['bug_url'] = row['bug_system__url_reg_exp'] % row['bug_id']

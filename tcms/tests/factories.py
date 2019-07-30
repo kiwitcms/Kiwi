@@ -11,7 +11,6 @@ from factory.django import DjangoModelFactory
 
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
-from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecutionStatus
 
 
@@ -294,19 +293,15 @@ class TestExecutionFactory(DjangoModelFactory):
     build = factory.SubFactory(BuildFactory)
 
 
-class BugFactory(DjangoModelFactory):
+class LinkReferenceFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'testcases.Bug'
+        model = 'linkreference.LinkReference'
 
-    bug_id = factory.Sequence(lambda n: n)
-    summary = factory.LazyAttribute(lambda obj: 'Summary of bug %s' % obj.bug_id)
-    description = ''
-    bug_system = factory.LazyFunction(
-        lambda: BugSystem.objects.first()  # pylint: disable=unnecessary-lambda
-    )
-    case_run = factory.SubFactory(TestExecutionFactory)
-    case = factory.SubFactory(TestCaseFactory)
+    execution = factory.SubFactory(TestExecutionFactory)
+    name = factory.Sequence(lambda n: "Bug %d" % n)
+    url = factory.Sequence(lambda n: "https://example.com/link/%d/" % n)
+    is_defect = True
 
 
 class TestRunTagFactory(DjangoModelFactory):

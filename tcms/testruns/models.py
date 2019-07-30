@@ -13,7 +13,6 @@ import vinaigrette
 from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.testcases.models import Bug
 from tcms.xmlrpc.serializer import TestExecutionXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
@@ -142,9 +141,10 @@ class TestRun(TCMSActionModel):
         """
         # note fom Django docs: A count() call performs a SELECT COUNT(*)
         # behind the scenes !!!
-        return Bug.objects.filter(
-            case_run__run=self.pk
-        ).values('bug_id').distinct().count()
+        return LinkReference.objects.filter(
+            execution__run=self.pk,
+            is_defect=True,
+        ).distinct().count()
 
     def get_percentage(self, count):
         case_run_count = self.total_num_caseruns
@@ -359,8 +359,9 @@ class TestExecution(TCMSActionModel):
         self.case.remove_bug(bug_id=bug_id, run_id=run_id)
 
     def get_bugs(self):
-        return Bug.objects.filter(
-            case_run__case_run_id=self.case_run_id)
+        return LinkReference.objects.filter(
+            execution=self.pk,
+            is_defect=True)
 
     def get_bugs_count(self):
         return self.get_bugs().count()
