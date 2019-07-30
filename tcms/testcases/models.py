@@ -452,40 +452,6 @@ Leave empty to disable!
         return None
 
 
-class Bug(TCMSActionModel):
-    bug_id = models.CharField(max_length=25)
-    case_run = models.ForeignKey('testruns.TestExecution', default=None, blank=True, null=True,
-                                 related_name='case_run_bug', on_delete=models.CASCADE)
-    case = models.ForeignKey(TestCase, related_name='case_bug', on_delete=models.CASCADE)
-    bug_system = models.ForeignKey(BugSystem, default=1, on_delete=models.CASCADE)
-    summary = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        unique_together = (('bug_id', 'case_run', 'case'),
-                           ('bug_id', 'case_run'))
-
-    def unique_error_message(self, model_class, unique_check):
-        """Specific to invalid bug id"""
-        bug_id_uniques = (('bug_id', 'case_run', 'case'),
-                          ('bug_id', 'case_run'))
-        if unique_check in bug_id_uniques:
-            return 'Bug %d exists in run %d already.' % (self.bug_id, self.case_run.pk)
-        return super().unique_error_message(model_class, unique_check)
-
-    def __str__(self):
-        return self.bug_id
-
-    def get_name(self):
-        if self.summary:
-            return self.summary
-
-        return self.bug_id
-
-    def get_full_url(self):
-        return self.bug_system.url_reg_exp % self.bug_id
-
-
 class TestCaseEmailSettings(models.Model):
     case = models.OneToOneField(TestCase, related_name='email_settings', on_delete=models.CASCADE)
     notify_on_case_update = models.BooleanField(default=True)
