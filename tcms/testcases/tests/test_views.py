@@ -16,7 +16,7 @@ from tcms.management.models import Priority, Tag
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.models import TestExecutionStatus
-from tcms.tests.factories import BugFactory
+from tcms.tests.factories import LinkReferenceFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests import BasePlanCase, BaseCaseRun, remove_perm_from_user
 from tcms.tests import user_should_have_perm
@@ -66,8 +66,8 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
                 )
 
     def test_user_sees_bugs(self):
-        bug_1 = BugFactory()
-        bug_2 = BugFactory()
+        bug_1 = LinkReferenceFactory()
+        bug_2 = LinkReferenceFactory()
 
         self.execution_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
         self.execution_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)

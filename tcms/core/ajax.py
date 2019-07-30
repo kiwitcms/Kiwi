@@ -17,12 +17,13 @@ from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
 
-from tcms.testcases.models import TestCase, Bug
+from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseTag
 from tcms.testplans.models import TestPlan, TestPlanTag
 from tcms.testruns.models import TestExecution, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
+from tcms.core.contrib.linkreference.models import LinkReference
 
 
 def tags(request):
@@ -249,7 +250,9 @@ def update_bugs_to_caseruns(request):
                                 bug_system_id=bug_system_id,
                                 bz_external_track=bz_external_track)
         else:
-            bugs = Bug.objects.filter(bug_id__in=bug_ids)
+            # fixme: the filter condition here is wrong. We no longer have
+            # separate bug_ids, we have list of primary keys for LR objects
+            bugs = LinkReference.objects.filter(bug_id__in=bug_ids)
             for run in runs:
                 for bug in bugs:
                     if bug.case_run_id == run.pk:
