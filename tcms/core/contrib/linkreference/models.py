@@ -4,11 +4,12 @@ from django.db import models
 
 
 class LinkReference(models.Model):
-    test_case_run = models.ForeignKey('testruns.TestExecution', on_delete=models.CASCADE)
+    execution = models.ForeignKey('testruns.TestExecution', on_delete=models.CASCADE)
 
     name = models.CharField(max_length=64, blank=True, default='')
     url = models.URLField()
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True, db_index=True)
+    is_defect = models.BooleanField(default=False, db_index=True)
 
     def __str__(self):
         return self.name

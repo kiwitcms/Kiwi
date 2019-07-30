@@ -330,7 +330,7 @@ class TestExecution(TCMSActionModel):
         """
             Returns all links attached to this object!
         """
-        return LinkReference.objects.filter(test_case_run=self.pk)
+        return LinkReference.objects.filter(execution=self.pk)
 
     def __str__(self):
         return '%s: %s' % (self.pk, self.case_id)

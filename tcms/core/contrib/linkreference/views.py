@@ -35,7 +35,7 @@ def create_link(data):
         target_id = form.cleaned_data['target_id']
 
         link = LinkReference.objects.create(
-            test_case_run_id=target_id,
+            execution_id=target_id,
             name=name,
             url=url)
 

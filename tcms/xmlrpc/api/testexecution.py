@@ -205,7 +205,7 @@ def remove_link(case_run_id, link_id):
         :type link_id: int
         :return: None
     """
-    LinkReference.objects.filter(pk=link_id, test_case_run=case_run_id).delete()
+    LinkReference.objects.filter(pk=link_id, execution=case_run_id).delete()
 
 
 @rpc_method(name='TestExecution.get_links')
@@ -220,6 +220,6 @@ def get_links(case_run_id):
         :return: Serialized list of :class:`tcms.core.contrib.linkreference.models.LinkReference`
                  objects
     """
-    links = LinkReference.objects.filter(test_case_run=case_run_id)
+    links = LinkReference.objects.filter(execution=case_run_id)
     serialier = XMLRPCSerializer(links)
     return serialier.serialize_queryset()
