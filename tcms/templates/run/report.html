@@ -54,11 +54,11 @@
 		</div>
 		<div class="clear"></div>
 		<div class="table_noborder">
-                    {% trans "Manual Cases" %}<span class="red">{{ mode_stats.manual|percentage:test_case_runs_count }}({{ mode_stats.manual }}/{{ test_case_runs_count }})</span>
-                    {% trans "Automated Cases" %}<span class="red">{{ mode_stats.automated|percentage:test_case_runs_count }}({{ mode_stats.automated }}/{{ test_case_runs_count }})</span>
+                    {% trans "Manual Cases" %}<span class="red">{{ mode_stats.manual|percentage:executions_count }}({{ mode_stats.manual }}/{{ executions_count }})</span>
+                    {% trans "Automated Cases" %}<span class="red">{{ mode_stats.automated|percentage:executions_count }}({{ mode_stats.automated }}/{{ executions_count }})</span>
 		</div>
 
-		{% if test_case_runs %}
+		{% if executions %}
 		<table class="list border-1" cellpadding="0" cellspacing="0">
 			<tr>
                             <th class="widthID">{% trans "Case-Run ID" %}</th>
@@ -70,31 +70,31 @@
                             <th width="100">{% trans "Status" %}</th>
                             <th width="160" height="25px">{% trans "Closed at" %}</th>
 			</tr>
-			{% for test_case_run in test_case_runs %}
+			{% for execution in executions %}
 			<tr>
-				<td>{{ test_case_run.case_run_id }}</td>
-				<td>{{ test_case_run.case_id }}</td>
-				<td>{{ test_case_run.case.summary }}</td>
-				<td>{{ test_case_run.case.is_automated }}</td>
-				<td>{{ test_case_run.tested_by.username }}</td>
-				<td>{{ test_case_run.case.category.name }}</td>
-				<td><span class="highlight">{{ test_case_run.status.name|upper }}</span></td>
-				<td>{{ test_case_run.close_date }}</td>
+				<td>{{ execution.case_run_id }}</td>
+				<td>{{ execution.case_id }}</td>
+				<td>{{ execution.case.summary }}</td>
+				<td>{{ execution.case.is_automated }}</td>
+				<td>{{ execution.tested_by.username }}</td>
+				<td>{{ execution.case.category.name }}</td>
+				<td><span class="highlight">{{ execution.status.name|upper }}</span></td>
+				<td>{{ execution.close_date }}</td>
 			</tr>
 			<tr>
 				<td align="left" valign="top" colspan="8" class='hide'>
-					{% if test_case_run.bugs %}
+					{% if execution.bugs %}
                                         <span class='notes_title'>{% trans "Bugs ID" %}:</span>
-					{% for bug in test_case_run.bugs %}
+					{% for bug in execution.bugs %}
 					<a href="{{ bug.bug_url }}">{{ bug.bug_id }}</a>
 					{% endfor %}
 					{% endif %}
 
-					{% if test_case_run.user_comments %}
+					{% if execution.user_comments %}
 					<h4 style='padding:0px;margin:0px'>Comments</h4>
 					<span class="notes" >
 						<ul style="margin-left:10px;" class='comment'>
-							{% for comment in test_case_run.user_comments %}
+							{% for comment in execution.user_comments %}
 							<li><b>{{ comment.user_name }}</b><span class='grey' style='margin-left:5px'>[{{ comment.submit_date }}]</span>	<br />{{ comment.comment|urlize|linebreaksbr }}</li>
 							{% endfor %}
 						</ul>
@@ -107,11 +107,11 @@
 		</table>
 		{% endif %}
 
-		<h3>Total: {{ test_case_runs_count }}</h3>
+		<h3>Total: {{ executions_count }}</h3>
 		<h3>Pending test cases: {{ summary_stats.idle }}</h3>
-		<h3>Test run completed: {{ summary_stats.complete|percentage:test_case_runs_count }}</h3>
+		<h3>Test run completed: {{ summary_stats.complete|percentage:executions_count }}</h3>
 
-		{% if test_case_run_bugs %}
+		{% if execution_bugs %}
 		<hr style="margin:40px auto 20px;"/>
                 <h2><a name="buglist" style="cursor:default; text-decoration:none">{% trans "Bug List" %}:</a></h2>
 
@@ -120,7 +120,7 @@
                             <th width="150px">{% trans "Bug ID" %}</th>
                             <th>{% trans "Bug Url" %}</th>
 			</tr>
-			{% for bug, bug_url in test_case_run_bugs %}
+			{% for bug, bug_url in execution_bugs %}
 			<tr>
 				<td>{{ bug }}</td>
 				<td><a href="{{ bug_url }}" target="_blank">{{ bug_url }}</a></td>

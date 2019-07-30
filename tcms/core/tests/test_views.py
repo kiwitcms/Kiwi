@@ -72,11 +72,11 @@ class TestDashboard(BaseCaseRun):
         response = self.client.get(reverse('core-views-index'))
         self.assertContains(response, test_run.summary)
 
-    def test_dashboard_shows_testruns_for_test_case_run_assignee(self):
-        test_case_run = TestExecutionFactory(assignee=self.tester)
+    def test_dashboard_shows_testruns_for_execution_assignee(self):
+        execution = TestExecutionFactory(assignee=self.tester)
 
         response = self.client.get(reverse('core-views-index'))
-        self.assertContains(response, test_case_run.run.summary)
+        self.assertContains(response, execution.run.summary)
 
 
 class TestCommentCaseRuns(BaseCaseRun):

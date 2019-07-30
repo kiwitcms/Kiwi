@@ -37,10 +37,10 @@ class TestAddCase(XmlrpcAPIBaseTest):
         result = self.rpc_client.exec.TestRun.add_case(self.test_run.pk, self.test_case.pk)
         self.assertTrue(isinstance(result, dict))
 
-        test_case_run = TestExecution.objects.get(run=self.test_run.pk, case=self.test_case.pk)
-        self.assertEqual(test_case_run.pk, result['case_run_id'])
-        self.assertEqual(test_case_run.case.pk, result['case_id'])
-        self.assertEqual(test_case_run.run.pk, result['run_id'])
+        execution = TestExecution.objects.get(run=self.test_run.pk, case=self.test_case.pk)
+        self.assertEqual(execution.pk, result['case_run_id'])
+        self.assertEqual(execution.case.pk, result['case_id'])
+        self.assertEqual(execution.run.pk, result['run_id'])
 
     def test_add_case_without_permissions(self):
         unauthorized_user = UserFactory()

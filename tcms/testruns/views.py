@@ -230,7 +230,7 @@ def get(request,  # pylint: disable=missing-permission-required
 
     # Get the test execution bugs summary
     # 6. get the number of bugs of this run
-    test_case_run_bugs_count = test_run.get_bug_count()
+    execution_bugs_count = test_run.get_bug_count()
 
     # Get tag list of testcases
     # 7. get tags
@@ -247,10 +247,10 @@ def get(request,  # pylint: disable=missing-permission-required
 
         priorities = dict(Priority.objects.values_list('pk', 'value'))
         testers, assignees = open_run_get_users(test_executions)
-        test_case_run_pks = []
-        for test_case_run in test_executions:
-            test_case_run_pks.append(test_case_run.pk)
-        comments_subtotal = open_run_get_comments_subtotal(test_case_run_pks)
+        execution_pks = []
+        for execution in test_executions:
+            execution_pks.append(execution.pk)
+        comments_subtotal = open_run_get_comments_subtotal(execution_pks)
         status = TestExecutionStatus.get_names()
 
         for case_run in test_executions:
@@ -263,10 +263,10 @@ def get(request,  # pylint: disable=missing-permission-required
 
     context_data = {
         'test_run': test_run,
-        'test_case_runs': walk_executions(),
-        'test_case_runs_count': len(test_executions),
+        'executions': walk_executions(),
+        'executions_count': len(test_executions),
         'status_stats': status_stats_result,
-        'test_case_run_bugs_count': test_case_run_bugs_count,
+        'execution_bugs_count': execution_bugs_count,
         'test_status': status,
         'priorities': Priority.objects.filter(is_active=True),
         'case_own_tags': tags,
@@ -354,11 +354,11 @@ class TestRunReportView(TemplateView, TestExecutionDataMixin):
         mode_stats = self.stats_mode_executions(case_runs)
         summary_stats = self.get_summary_stats(case_runs)
 
-        test_case_run_bugs = []
+        execution_bugs = []
         bug_system_types = {}
         for _bug in get_run_bug_ids(run.pk):
             # format the bug URLs based on DB settings
-            test_case_run_bugs.append((
+            execution_bugs.append((
                 _bug['bug_id'],
                 _bug['bug_system__url_reg_exp'] % _bug['bug_id'],
             ))
@@ -394,9 +394,9 @@ class TestRunReportView(TemplateView, TestExecutionDataMixin):
         context = super().get_context_data(**kwargs)
         context.update({
             'test_run': run,
-            'test_case_runs': case_runs,
-            'test_case_runs_count': len(case_runs),
-            'test_case_run_bugs': test_case_run_bugs,
+            'executions': case_runs,
+            'executions_count': len(case_runs),
+            'execution_bugs': execution_bugs,
             'mode_stats': mode_stats,
             'summary_stats': summary_stats,
             'report_urls': report_urls,
@@ -415,9 +415,9 @@ def clone(request, run_id):
 
     if request.POST.get('case_run'):
         test_cases = []
-        for test_case_run in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
-            if test_case_run.case.case_status == confirmed_case_status:
-                test_cases.append(test_case_run.case)
+        for execution in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
+            if execution.case.case_status == confirmed_case_status:
+                test_cases.append(execution.case)
             else:
                 disabled_cases += 1
     else:
@@ -522,10 +522,10 @@ class AddCasesToRunView(View):
         except ObjectDoesNotExist:
             raise Http404
 
-        test_case_runs_ids = test_run.case_run.values_list('case', flat=True)
+        executions_ids = test_run.case_run.values_list('case', flat=True)
 
         # avoid add cases that are already in current run with pk run_id
-        test_cases_ids = set(test_cases_ids) - set(test_case_runs_ids)
+        test_cases_ids = set(test_cases_ids) - set(executions_ids)
 
         test_plan = test_run.plan
         test_cases = test_run.plan.case.filter(case_status__name='CONFIRMED').select_related(
@@ -572,14 +572,14 @@ class AddCasesToRunView(View):
         # also grab a list of all TestCase IDs which are already present in the
         # current TestRun so we can mark them as disabled and not allow them to
         # be selected
-        test_case_runs = TestExecution.objects.filter(run=run_id).values_list('case', flat=True)
+        executions = TestExecution.objects.filter(run=run_id).values_list('case', flat=True)
 
         data = {
             'test_run': test_run,
             'confirmed_cases': rows,
             'confirmed_cases_count': rows.count(),
-            'test_case_runs_count': len(test_case_runs),
-            'exist_case_run_ids': test_case_runs,
+            'executions_count': len(executions),
+            'exist_case_run_ids': executions,
         }
 
         return render(request, 'run/assign_case.html', data)
@@ -623,25 +623,25 @@ def update_case_run_text(request, run_id):
     test_run = get_object_or_404(TestRun, run_id=run_id)
 
     if request.POST.get('case_run'):
-        test_case_runs = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
+        executions = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
     else:
-        test_case_runs = test_run.case_run.all()
+        executions = test_run.case_run.all()
 
-    test_case_runs = test_case_runs.filter(status__name='IDLE')
+    executions = executions.filter(status__name='IDLE')
 
     count = 0
-    updated_test_case_runs = ''
-    for test_case_run in test_case_runs:
-        latest_version = test_case_run.case.history.latest().history_id
-        if test_case_run.case_text_version != latest_version:
+    updated_executions = ''
+    for execution in executions:
+        latest_version = execution.case.history.latest().history_id
+        if execution.case_text_version != latest_version:
             count += 1
-            updated_test_case_runs += '<li>%s: %s -> %s</li>' % (
-                test_case_run.case.summary, test_case_run.case_text_version, latest_version
+            updated_executions += '<li>%s: %s -> %s</li>' % (
+                execution.case.summary, execution.case_text_version, latest_version
             )
-            test_case_run.case_text_version = latest_version
-            test_case_run.save()
+            execution.case_text_version = latest_version
+            execution.save()
 
-    info = "<p>%s</p><ul>%s</ul>" % (_("%d CaseRun(s) updated:") % count, updated_test_case_runs)
+    info = "<p>%s</p><ul>%s</ul>" % (_("%d CaseRun(s) updated:") % count, updated_executions)
     message_level = messages.INFO
     if count:
         message_level = messages.SUCCESS
@@ -699,9 +699,9 @@ class UpdateAssigneeView(View):
         object_ids = request.POST.getlist('ids[]')
 
         for caserun_pk in object_ids:
-            test_case_run = get_object_or_404(TestExecution, pk=int(caserun_pk))
-            test_case_run.assignee = user
-            test_case_run.save()
+            execution = get_object_or_404(TestExecution, pk=int(caserun_pk))
+            execution.assignee = user
+            execution.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
@@ -717,10 +717,10 @@ class UpdateCaseRunStatusView(View):
         object_ids = request.POST.getlist('object_pk[]')
 
         for caserun_pk in object_ids:
-            test_case_run = get_object_or_404(TestExecution, pk=int(caserun_pk))
-            test_case_run.status_id = status_id
-            test_case_run.tested_by = request.user
-            test_case_run.close_date = datetime.now()
-            test_case_run.save()
+            execution = get_object_or_404(TestExecution, pk=int(caserun_pk))
+            execution.status_id = status_id
+            execution.tested_by = request.user
+            execution.close_date = datetime.now()
+            execution.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

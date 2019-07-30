@@ -98,8 +98,8 @@ class TestExecutionDataMixin:
         # in Django 1.10 we have the Cast() function for similar cases, see
         # https://docs.djangoproject.com/en/1.10/ref/models/database-functions/#cast
         object_pks = []
-        for test_case_run in TestExecution.objects.filter(run=run_pk).only('pk'):
-            object_pks.append(str(test_case_run.pk))
+        for execution in TestExecution.objects.filter(run=run_pk).only('pk'):
+            object_pks.append(str(execution.pk))
 
         comments = Comment.objects.filter(
             site=settings.SITE_ID,

@@ -26,25 +26,25 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for test_case_run, tester, assignee, priority_value, status_name, comments_count in test_case_runs %}
-		<tr class="{% cycle 'odd' 'even' %} {% ifequal test_case_run.assignee_id user.pk %} mine {% endifequal %}">
+		{% for execution, tester, assignee, priority_value, status_name, comments_count in executions %}
+		<tr class="{% cycle 'odd' 'even' %} {% ifequal execution.assignee_id user.pk %} mine {% endifequal %}">
 			<td>
-				<input type="checkbox" name="case_run" value="{{ test_case_run.pk }}" class="caserun_selector" title="Select/Unselect" />
-				<input type="hidden" name="case" value="{{ test_case_run.case.pk }}" />
-				<input type="hidden" name="case_text_version" value="{{ test_case_run.case_text_version }}" />
+				<input type="checkbox" name="case_run" value="{{ execution.pk }}" class="caserun_selector" title="Select/Unselect" />
+				<input type="hidden" name="case" value="{{ execution.case.pk }}" />
+				<input type="hidden" name="case_text_version" value="{{ execution.case_text_version }}" />
 			</td>
 			<td title="expand test case" class="expandable vmiddle case_title">
 				<img class="blind_icon expand" src="{% static 'images/t1.gif' %}" border="0" alt="" />
 			</td>
 			<td class="case_title expandable">
-				<a href="#caserun_{{ test_case_run.pk }}">#{{ test_case_run.pk }}</a>
+				<a href="#caserun_{{ execution.pk }}">#{{ execution.pk }}</a>
 			</td>
-			<td "{{ test_case_run.case_id }}" class="case_title expandable">
-				<a href="{% url "testcases-get" test_case_run.case_id %}">{{ test_case_run.case_id }}</a>
+			<td "{{ execution.case_id }}" class="case_title expandable">
+				<a href="{% url "testcases-get" execution.case_id %}">{{ execution.case_id }}</a>
 			</td>
 
 			<td class="expandable">
-				<a id="link_{{ forloop.counter }}" href="#caserun_{{ test_case_run.pk }}" title="Expand test case">{{ test_case_run.case.summary }}</a>
+				<a id="link_{{ forloop.counter }}" href="#caserun_{{ execution.pk }}" title="Expand test case">{{ execution.case.summary }}</a>
 			</td>
 			<td>
 				{% if tester %}
@@ -58,17 +58,17 @@
 				<a href="{% url "tcms-profile" assignee %}" class="link_assignee">{{ assignee }}</a>
                                 {% else %}{% trans "None" %}{% endif %}
 			</td>
-			<td class="expandable">{{ test_case_run.case.is_automated }}</td>
-			<td class="expandable">{{ test_case_run.case.category }}</td>
+			<td class="expandable">{{ execution.case.is_automated }}</td>
+			<td class="expandable">{{ execution.case.category }}</td>
 			<td class="expandable">{{ priority_value }}</td>
-			<td class="expandable"><span id="{{ test_case_run.pk }}_case_bug_count" {% if test_case_run.num_bug %}class="have_bug"{% endif %}>{{ test_case_run.num_bug }}</span></td>
+			<td class="expandable"><span id="{{ execution.pk }}_case_bug_count" {% if execution.num_bug %}class="have_bug"{% endif %}>{{ execution.num_bug }}</span></td>
 			<td class="expandable center">
 				<img border="0" alt="" class="icon_status btn_{{ status_name|lower }}" />
 			</td>
-			<td><div id="{{ test_case_run.case_id }}_case_comment_count">{% if comments_count %}<img src="{% static 'images/comment.png' %}" style="vertical-align: middle;">{%endif %} <span id="{{ test_case_run.case_id }}_comments_count">{{ comments_count }}</span></div></td>
+			<td><div id="{{ execution.case_id }}_case_comment_count">{% if comments_count %}<img src="{% static 'images/comment.png' %}" style="vertical-align: middle;">{%endif %} <span id="{{ execution.case_id }}_comments_count">{{ comments_count }}</span></div></td>
 		</tr>
 		<tr class="case_content hide js-details-caserun" style="display: none;">
-			<td id="id_loading_{{ test_case_run.case_id }}" class="left_panel" colspan="14">
+			<td id="id_loading_{{ execution.case_id }}" class="left_panel" colspan="14">
 				<div class="ajax_loading"></div>
 			</td>
 		</tr>

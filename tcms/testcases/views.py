@@ -552,7 +552,7 @@ def get(request, case_id):
     # Render the page
     context_data = {
         'test_case': test_case,
-        'test_case_runs': tcrs,
+        'executions': tcrs,
     }
 
     with modify_settings(

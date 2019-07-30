@@ -74,7 +74,7 @@ class TestCaseRemoveBug(BasePlanCase):
         self.assertTrue(bug_found,
                         'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
 
-    def test_case_run_bug_not_removed_by_missing_case_run(self):
+    def execution_bug_not_removed_by_missing_case_run(self):
         self.case.remove_bug(self.bug_id_2)
 
         bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()

@@ -38,13 +38,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 			<td></td>
 			<td></td>
                         <td class="lab"><span>{% trans "Test Cases in Run" %}</span></td>
-			<td>{{ test_case_runs_count }}</td>
+			<td>{{ executions_count }}</td>
 		</tr>
 	</table>
 	<form action="{% url "add-cases-to-run" test_run.run_id %}" method="post">
 		<div class="Detailform border-1" id="testcases_selected">
 			<div class="mixbar">
-                            <span class="tit"><b>{% trans "Cases in this Run" %}: {{ test_case_runs_count }}</b></span>
+                            <span class="tit"><b>{% trans "Cases in this Run" %}: {{ executions_count }}</b></span>
 				<input id="id_checkbox_plan_sortkey" type="checkbox" name="_use_plan_sortkey" />
                                 <label for="id_checkbox_plan_sortkey" title="Uncheck it will set the sortkey to 0">{% trans "Use the sortkey stored in plan" %}</label>
 				<input type="submit" value="Update" title="Update the cases in this run"/>

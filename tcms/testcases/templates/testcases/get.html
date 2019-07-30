@@ -133,7 +133,7 @@
 
                 <div class="card-pf-body">
                     <div class="list-group tree-list-view-pf">
-                {% for execution in test_case_runs %}
+                {% for execution in executions %}
                     {% ifchanged execution.run.plan.pk %}
                         {% if not forloop.first %}
                         </div> <!-- /plan -->
