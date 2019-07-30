@@ -254,7 +254,7 @@ class TestExecutionGetLinks(XmlrpcAPIBaseTest):
         self.assertEqual(len(logs), 0)
 
     def test_get_links(self):
-        tcr_log = LinkReference.objects.get(test_case_run=self.case_run_1.pk)
+        tcr_log = LinkReference.objects.get(execution=self.case_run_1.pk)
         logs = self.rpc_client.exec.TestExecution.get_links(self.case_run_1.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
