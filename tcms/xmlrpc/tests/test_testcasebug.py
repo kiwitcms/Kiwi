@@ -15,12 +15,12 @@ class BugFilter(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(BugFilter, self)._fixture_setup()
 
-        self.case_run = TestExecutionFactory()
+        self.execution = TestExecutionFactory()
         self.bug_system_bz = BugSystem.objects.get(name='Bugzilla')
 
         self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
-            'case_run_id': self.case_run.pk,
+            'case_run_id': self.execution.pk,
             'bug_id': '67890',
             'bug_system_id': self.bug_system_bz.pk,
             'summary': 'Testing TCMS',
@@ -28,12 +28,12 @@ class BugFilter(XmlrpcAPIBaseTest):
         })
 
     def test_get_bugs_with_non_existing_caserun(self):
-        bugs = self.rpc_client.exec.Bug.filter({'case_run': -1})
+        bugs = self.rpc_client.exec.Bug.filter({'execution': -1})
         self.assertEqual(len(bugs), 0)
         self.assertIsInstance(bugs, list)
 
     def test_get_bugs_for_caserun(self):
-        bugs = self.rpc_client.exec.Bug.filter({'case_run': self.case_run.pk})
+        bugs = self.rpc_client.exec.Bug.filter({'execution': self.execution.pk})
         self.assertIsNotNone(bugs)
         self.assertEqual(1, len(bugs))
         self.assertEqual(bugs[0]['summary'], 'Testing TCMS')

@@ -259,11 +259,6 @@ class TestCase(TCMSActionModel):
     def add_tag(self, tag):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
-    def get_bugs(self):
-        return Bug.objects.select_related(
-            'case_run', 'bug_system'
-        ).filter(case__case_id=self.case_id)
-
     def get_previous_and_next(self, pk_list):
         current_idx = pk_list.index(self.pk)
         prev = TestCase.objects.get(pk=pk_list[current_idx - 1])

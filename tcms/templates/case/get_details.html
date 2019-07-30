@@ -39,13 +39,11 @@
 				</ul>
                                 <h4><span class="title strong">{% trans "bug" %}:</span></h4>
 				<ul class="ul-no-format">
-					{% for bug in test_case.get_bugs %}
+					{% for bug in bugs %}
 					<li>
-						<a href="{{ bug.get_full_url }}">{{ bug }}</a>
-						{% if bug.case_run_id %}
+						<a href="{{ bug.url }}">{{ bug.url }}</a>
                                                 <span class="grey"> - {% trans "From Run" %}</span>
-						<a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
-						{% endif %}
+						<a href="{% url "testruns-get" bug.execution.run_id %}">{{ bug.execution.run_id }}</a>
 					</li>
 					{% empty %}
                                         <li class="grey">{% trans "No bug found" %}</li>
