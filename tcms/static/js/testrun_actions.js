@@ -101,10 +101,6 @@ Nitrate.TestRuns.Details.on_load = function() {
         var params = jQ(this).data('params');
         addCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
       });
-      c_container.find('.js-remove-caserun-bug').bind('click', function(){
-        var params = jQ(this).data('params');
-        removeCaseBug(params[1], params[2], params[3]);
-      });
       c_container.find('.js-add-testlog').bind('click', function(){
         var params = jQ(this).data('params');
         addLinkToTestExecution(this, params[0], [params[1]]);
