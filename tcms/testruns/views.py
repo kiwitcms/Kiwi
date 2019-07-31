@@ -31,6 +31,7 @@ from tcms.testruns.data import TestExecutionDataMixin
 from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
 from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
 from tcms.issuetracker.types import IssueTrackerType
+from tcms.core.contrib.linkreference.models import LinkReference
 
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -154,10 +155,6 @@ def _open_run_get_executions(request, run):  # pylint: disable=missing-permissio
            'case__category__name'
            )
 
-    # Get the bug count for each execution
-    # 5. have to show the number of bugs of each execution
-    executions = executions.annotate(num_bug=Count('case_run_bug', distinct=True))
-
     # Continue to search the executionss with conditions
     # 4. executions preparing for render executions table
     executions = executions.filter(**clean_request(request))
@@ -262,13 +259,15 @@ def _walk_executions(test_executions):
     comments_subtotal = open_run_get_comments_subtotal(execution_pks)
     status = TestExecutionStatus.get_names()
 
-    for case_run in test_executions:
-        yield (case_run,
-               testers.get(case_run.tested_by_id, None),
-               assignees.get(case_run.assignee_id, None),
-               priorities.get(case_run.case.priority_id),
-               status[case_run.status_id],
-               comments_subtotal.get(case_run.pk, 0))
+    for execution in test_executions:
+        yield (execution,
+               testers.get(execution.tested_by_id, None),
+               assignees.get(execution.assignee_id, None),
+               priorities.get(execution.case.priority_id),
+               status[execution.status_id],
+               comments_subtotal.get(execution.pk, 0),
+               LinkReference.objects.filter(is_defect=True,
+                                            execution=execution.pk).count())
 
 
 @permission_required('testruns.change_testrun')

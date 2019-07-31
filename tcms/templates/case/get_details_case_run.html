@@ -83,34 +83,6 @@
 						{% endif %} ]
 					</span>
 				</h4>
-				<ul class="ul-no-format">
-					{% for bug_id, bugs in grouped_case_bugs %}
-						<li id="bug_item">
-							<table cellpadding="3" cellspacing="0" border="0">
-								<tr>
-									<td><a href="{{ bugs.0.get_full_url }}">{{ bug_id }}</a></td>
-								<td>
-								{% for bug in bugs %}
-								    {% if bug.case_run_id %}
-                                                                    <span class="grey">{% trans "From Run" %}</span><a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
-								        {% if bug.case_run_id == execution.pk and perms.testcases.delete_bug %}
-								        <a id="bug_{{ bug_id }}_{{ bug.case_id }}_{{ bug.case_run_id }}" href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ execution.run.pk }}, "{{ bug.bug_id }}", {{ bug.case_id }}, {{ bug.case_run_id }}]'>
-                                                                            <img width="9" height="9" title="remove this bug" src="{% static 'images/remove_small.png' %}">
-                                                                        </a>
-								        {% endif %}
-								    {% else %}
-                                                                    <span class="grey">{% trans "From Case" %}</span>
-								        <a href="{% url "testcases-get" bug.case_id %}">{{ bug.case_id }}</a>
-								    {% endif %}
-								{% endfor %}
-								</td>
-								</tr>
-							</table>
-						</li>
-					{% empty %}
-                                        <li class="grey">{% trans "No bug found" %}</li>
-					{% endfor %}
-				</ul>
 			</div>
 			<div class="container" style="min-height:50px;">
 				{% if execution_logs %}
@@ -193,7 +165,7 @@
 									<ul class="ul-format">
 										{% for link in execution.links %}
 										<li>
-											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape|default:link.url }}</a>
+											<a {% if link.is_defect %}class="have_bug"{% endif %} href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape|default:link.url }}</a>
 											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
 											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
 												<img title="Remove this log" src="{% static 'images/remove_small.png' %}" />

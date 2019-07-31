@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import itertools
-
 from django.conf import settings
 from django.contrib import messages
 from django.test import modify_settings
@@ -82,16 +80,6 @@ def update_case_email_settings(test_case, n_form):
     test_case.emailing.cc_list = MultipleEmailField.delimiter.join(valid_emails)
 
     test_case.emailing.save()
-
-
-def group_case_bugs(bugs):
-    """Group bugs using bug_id."""
-    grouped_bugs = []
-
-    for _pk, _bugs in itertools.groupby(bugs, lambda b: b.bug_id):
-        grouped_bugs.append((_pk, list(_bugs)))
-
-    return grouped_bugs
 
 
 @method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
@@ -520,7 +508,6 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
         execution_comments = get_comments(execution)
 
         execution_status = TestExecutionStatus.objects.values('pk', 'name').order_by('pk')
-        bugs = group_case_bugs(execution.case.get_bugs().order_by('bug_id'))
 
         data.update({
             'test_case': case,
@@ -531,7 +518,6 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
             'execution_comments': execution_comments,
             'execution_logs': execution.history.all(),
             'execution_status': execution_status,
-            'grouped_case_bugs': bugs,
         })
 
         return data
