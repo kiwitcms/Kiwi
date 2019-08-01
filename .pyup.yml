@@ -2,15 +2,18 @@ requirements:
   - requirements/base.txt:
       update: all
       pin: True
+  - requirements/devel.txt:
+      update: all
+      pin: False
   - requirements/mariadb.txt:
       update: all
       pin: True
   - requirements/postgres.txt:
       update: all
       pin: True
-  - requirements/devel.txt:
-      update: all
-      pin: False
   - requirements/readthedocs.txt:
       update: all
       pin: False
+  - requirements/tarballs.txt:
+      update: all
+      pin: True
