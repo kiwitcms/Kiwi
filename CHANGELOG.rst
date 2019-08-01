@@ -26,7 +26,7 @@ Security
 
 - Update Django from 2.2.2 to 2.2.4, see
   `release notes <https://docs.djangoproject.com/en/2.2/releases/2.2.4/>`_
-- Update marked to version 0.6.3, see
+- Update marked to version 0.7.0, see
   `release notes <https://github.com/markedjs/marked/releases/tag/v0.7.0>`_
 
 
