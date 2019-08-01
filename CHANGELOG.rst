@@ -1,6 +1,118 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.11 (02 Aug 2019)
+----------------------------
+
+
+**IMPORTANT:** this is a security and improvement update which updates
+many internal dependencies, adds 2 new Telemetry reports, updates
+TestPlan and TestCase cloning pages and provides several other
+improvements and bug fixes. Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Update Django from 2.2.2 to 2.2.4, see
+  `release notes <https://docs.djangoproject.com/en/2.2/releases/2.2.4/>`_
+- Update marked to version 0.6.3, see
+  `release notes <https://github.com/markedjs/marked/releases/tag/v0.7.0>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update python-gitlab from 1.8.0 to 1.10.0
+- Update django-grappelli from 2.12.3 to 2.13.1
+- Update django-simple-history from 2.7.2 to 2.7.3
+- Update django-attachments to 1.4.1
+- Update PyGithub from 1.43.7 to 1.43.8
+- Update patternfly to version 3.59.3
+- Update prismjs to version 1.17.0
+- Add Testing Status Matrix telemetry
+- Add Testing Execution Trends telemetry
+- Make it possible to attach files directly inside Test Plan page
+- Make it possible to attach files directly inside Test Execution widget
+- Convert Clone TestPlan page to Patternfly, greatly simplify the UI
+  and update behavior:
+
+  - Cloned TP author will always be set to the current user
+  - Cloned TC author will always be set to the current user
+  - Always keep the original default tester for test cases when cloning
+  - Refactor to class based view
+  - Fix a problem where Version values failed form validation b/c
+    we've been trying to filter based on non-existing field
+    ``product_id`` instead of just ``product``
+   - Fixes a problem where eroneus Version value was shown in the UI
+
+- Convert Clone TestCase page to Patterngly, greatly simplify the UI
+  and update behavior. Fixes
+  `Issue #838 <https://github.com/kiwitcms/Kiwi/issues/838/>`_:
+
+  - Allow cloning into multiple test plans
+  - Remove 'Filter another plan' option. Will be replaced by
+    'Add TP to TC', see
+    `Issue #1021 <https://github.com/kiwitcms/Kiwi/issues/1021>`_
+  - Always update sortkey. Cloned TC will show at the bottom of the
+    TestPlan
+  - Cloned TC author will always be set to the current user
+  - Always keep the original default tester
+
+
+API
+~~~
+
+- First parameter of RPC method ``Bug.report()``
+  has been renamed from ``test_case_run_id`` to ``execution_id``. This may
+  break existing API scripts which try to pass this argument by name
+  instead of by position!
+
+
+Settings
+~~~~~~~~
+
+- Allow ENV variables ``KIWI_USE_TZ`` and ``KIWI_TIME_ZONE`` to control
+  settings ``USE_TZ`` and ``TIME_ZONE``. Fixes
+  `Issue #982 <https://github.com/kiwitcms/Kiwi/issues/982/>`_ (Jason Yi)
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix wrong permission label when deleting comments. Fixes
+  `Issue #1010 <https://github.com/kiwitcms/Kiwi/issues/1010/>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Disable unnecessary pylint messages for missing-permission-required
+  checker (Svetlomir Balevski)
+- Remove unnecessary ``from_plan`` URL variable making cleaner URLs
+- kiwi_lint: Don't check nested functions for permissions
+- Remove and regroup JavaScript functions
+- Instruct pyup-bot to monitor ``requirements/tarballs.txt`` for updates
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 6.10 (18 June 2019)
 -----------------------------
 
