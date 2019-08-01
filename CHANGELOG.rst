@@ -54,9 +54,9 @@ Improvements
   - Fix a problem where Version values failed form validation b/c
     we've been trying to filter based on non-existing field
     ``product_id`` instead of just ``product``
-  - Fixes a problem where eroneus Version value was shown in the UI
+  - Fixes a problem where erroneous Version value was shown in the UI
 
-- Convert Clone TestCase page to Patterngly, greatly simplify the UI
+- Convert Clone TestCase page to Patternfly, greatly simplify the UI
   and update behavior. Fixes
   `Issue #838 <https://github.com/kiwitcms/Kiwi/issues/838/>`_:
 
