@@ -35,6 +35,7 @@ jobs:
   allow_failures:
     - env: CMD=pylint
     - env: CMD=bandit_site_packages
+    - env: CMD=doc8
 
   include:
     - stage: static_analysis
@@ -111,6 +112,10 @@ jobs:
         apt:
           packages:
             - graphviz
+
+    - stage: non_functional_testing
+      env:
+        - CMD=doc8
 
     - stage: non_functional_testing
       env:
