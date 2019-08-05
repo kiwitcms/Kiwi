@@ -12,5 +12,5 @@ pydot
 # linting tools
 pylint-django
 bandit
-twine
+twine==1.13.0
 pyOpenSSL
