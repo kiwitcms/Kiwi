@@ -1,2 +1,2 @@
 -r readthedocs.txt
-tcms-api
+tcms-api==6.7
