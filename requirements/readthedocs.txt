@@ -5,7 +5,7 @@ Sphinx
 flake8
 epydoc
 coverage
-factory_boy
+factory_boy==2.12.0
 mock
 django-extensions
 pydot
