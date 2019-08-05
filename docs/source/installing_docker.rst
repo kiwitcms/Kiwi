@@ -100,6 +100,21 @@ To upgrade running Kiwi TCMS containers execute the following commands::
     back these up before upgrading!
 
 
+Allow Kiwi TCMS HTTP access
+---------------------------
+
+By default the Kiwi TCMS container enforces HTTPS connections, by redirecting HTTP (80)
+requests to the HTTPS port (443). This behavior may be deactivated via the
+``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the application via
+``docker compose`` then add::
+
+        environment:
+            KIWI_DONT_ENFORCE_HTTPS: true
+
+to ``docker-compose.yml``. If starting the container via ``docker run`` then add
+``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
+
+
 SSL configuration
 -----------------
 
@@ -116,17 +131,18 @@ found at https://wiki.centos.org/HowTos/Https.
 Reverse proxy SSL
 -----------------
 
-To run Kiwi TCMS behind a reverse proxy, you may either directly pass HTTPS requests,
-or allow Kiwi TMCS to serve via HTTP. With the later being the preferred method, when
-the reverse proxy is terminating the SSL connection.
-
-Passing HTTPS to the container
-------------------------------
-
-For all of these domains the browser will see a wildcard SSL certificate for
+Sometimes you may want to serve Kiwi TCMS behind a reverse proxy which will
+also handle SSL termination. For example we serve https://public.tenant.kiwitcms.org,
+https://tcms.kiwitcms.org and a few other instances through Nginx. For all of
+these domains the browser will see a wildcard SSL certificate for
 ``*.kiwitcms.org``, while the individual docker containers are still configured
+<<<<<<< HEAD
 with the default self-signed certificate! Here's how the configuration looks
 like::
+=======
+with the default self-signed certificate (that is the connection between
+Nginx and the docker container)! Here's how the configuration looks like::
+>>>>>>> 755f4b61... [docs] Revert and update text around HTTP access. Refs #1036
 
     http {
         # default ssl certificates for *.kiwitcms.org
@@ -182,12 +198,6 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
         # do not verify the self-signed cert
         server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
 
-Allow Kiwi TMCS HTTP access
----------------------------
-
-By default the Kiwi TCMS container enforces HTTPS connections, by redirecting HTTP
-requests to the HTTP port. This behavior may be deactivated, by starting the container
-adding ```-e KIWI_DONT_ENFORCE_HTTPS=true```.
 
 Customization
 -------------
