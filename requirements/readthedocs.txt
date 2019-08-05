@@ -10,7 +10,7 @@ mock
 django-extensions
 pydot
 # linting tools
-pylint-django
+pylint-django==2.0.11
 bandit
 twine
 pyOpenSSL
