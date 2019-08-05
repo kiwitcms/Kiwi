@@ -4,7 +4,7 @@ django-debug-toolbar
 Sphinx
 flake8
 epydoc
-coverage
+coverage==4.5.4
 factory_boy
 mock
 django-extensions
