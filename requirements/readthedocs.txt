@@ -3,7 +3,7 @@
 django-debug-toolbar
 Sphinx
 flake8
-epydoc
+epydoc==3.0.1
 coverage
 factory_boy
 mock
