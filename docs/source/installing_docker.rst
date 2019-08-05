@@ -116,10 +116,14 @@ https://wiki.centos.org/HowTos/Https.
 Reverse proxy SSL
 -----------------
 
-Sometimes you may want to serve Kiwi TCMS behind a reverse proxy which will
-also handle SSL termination. For example we serve https://demo.kiwitcms.org,
-https://tcms.kiwitcms.org and a few other instances through Nginx. For all of
-these domains the browser will see a wildcard SSL certificate for
+To run Kiwi TCMS behind a reverse proxy, you may either directly pass HTTPS requests,
+or allow Kiwi TMCS to serve via HTTP. With the later being the preferred method, when
+the reverse proxy is terminating the SSL connection.
+
+Passing HTTPS to the container
+------------------------------
+
+For all of these domains the browser will see a wildcard SSL certificate for
 ``*.kiwitcms.org``, while the individual docker containers are still configured
 with the default self-signed certificate! Here's how the configuration looks like::
 
@@ -176,6 +180,13 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
     
         # do not verify the self-signed cert
         server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
+
+Allow Kiwi TMCS HTTP access
+---------------------------
+
+By default the Kiwi TCMS container enforces HTTPS connections, by redirecting HTTP
+requests to the HTTP port. This behavior may be deactivated, by starting the container
+adding ```-e KIWI_DONT_ENFORCE_HTTPS=true```.
 
 Customization
 -------------
