@@ -6,7 +6,7 @@ flake8
 epydoc
 coverage
 factory_boy
-mock
+mock==3.0.5
 django-extensions
 pydot
 # linting tools
