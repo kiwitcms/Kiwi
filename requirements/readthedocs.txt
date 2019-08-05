@@ -1,6 +1,6 @@
 -r base.txt
 
-django-debug-toolbar
+django-debug-toolbar==2.0
 Sphinx
 flake8
 epydoc
