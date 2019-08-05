@@ -7,9 +7,9 @@ rm -rf /run/httpd/* /tmp/httpd*
 
 APACHE_PARAMETERS="-DFOREGROUND "
 
-if [ ! -z $NoEnforceHTTPS ]; then
+if [ ! -z $KIWI_DONT_ENFORCE_HTTPS ]; then
 	echo "Not enforcing HTTPS by rewriting HTTP requests"
-	APACHE_PARAMETERS+="-DNoEnforceHTTPS "
+	APACHE_PARAMETERS+="-DKIWI_DONT_ENFORCE_HTTPS "
 fi
 
 exec /usr/sbin/apachectl ${APACHE_PARAMETERS}
