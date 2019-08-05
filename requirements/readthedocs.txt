@@ -1,7 +1,7 @@
 -r base.txt
 
 django-debug-toolbar
-Sphinx
+Sphinx==2.1.2
 flake8
 epydoc
 coverage
