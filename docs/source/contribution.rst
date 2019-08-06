@@ -5,9 +5,9 @@ Contribute
 ==========
 
 Kiwi TCMS team welcomes and appreciates any kind of contribution from you in
-order to make Kiwi TCMS better and better. Anyone who is interested in Kiwi TCMS is
-able to contribute in various areas, whatever you are a good and experienced
-developer, documentation writer or even a normal user.
+order to make Kiwi TCMS better and better. Anyone who is interested in
+Kiwi TCMS is able to contribute in various areas, whatever you are a good
+and experienced developer, documentation writer or even a normal user.
 
 .. include:: set_dev_env.rst
     :start-line: 2
@@ -35,9 +35,9 @@ following syntax is supported::
 Security Issues
 ---------------
 
-If you think that an issue with Kiwi TCMS may have security implications, please
-do not publically report it in the bug tracker. Instead ping us via email to
-coordinate the fix and disclosure of the issue!
+If you think that an issue with Kiwi TCMS may have security implications,
+please do not publically report it in the bug tracker. Instead ping us via
+email to coordinate the fix and disclosure of the issue!
 
 
 Reporting General Issues

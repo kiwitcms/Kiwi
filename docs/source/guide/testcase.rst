@@ -62,17 +62,19 @@ To create a new Test Case inside a Test Plan document:
    -  Select the **Automated** status: on / off.
    -  Enter the **Requirements** (optional, legacy Testopia field).
    -  Enter **Script** (optional, legacy Testopia field).
-   -  Enter the **Default Tester** (optional). Must be a valid email address registered in Kiwi TCMS.
-      This user will be notified by email when a Test Run is created.
-   -  Select the **Priority** from dropdown menu. Priority can be used as a guide when allocating
-      resources.
+   -  Enter the **Default Tester** (optional). Must be a valid email address
+      registered in Kiwi TCMS. This user will be notified by email when a Test
+      Run is created.
+   -  Select the **Priority** from dropdown menu. Priority can be used as a
+      guide when allocating resources.
    -  Enter **Arguments** (optional). These are arguments to **Script**
       however further integration is not implemented at the moment!
-   -  Enter **Reference Link** (optional). This is a user-specified field and can
-      be a URL to git, Bugzilla or another reference.
-   -  Enter **Notes** to include additional information about the Test Case if needed.
+   -  Enter **Reference Link** (optional). This is a user-specified field and
+      can be a URL to git, Bugzilla or another reference.
+   -  Enter **Notes** to include additional information about the Test Case if
+      needed.
 
-   
+
    |The add new case screen|
 
 #. Perform one of the following:
@@ -146,9 +148,9 @@ Reviewing a Test Case
 ---------------------
 
 When a new Test Case is created inside a Test Plan its status is set to
-PROPOSED. It is not possible to add such Test Cases to a Test Run for execution.
-The review functionality allows other associates to provide feedback and
-finally modify the status of a Test Case to CONFIRMED.
+PROPOSED. It is not possible to add such Test Cases to a Test Run for
+execution. The review functionality allows other associates to provide
+feedback and finally modify the status of a Test Case to CONFIRMED.
 
 .. note::
 
@@ -168,7 +170,8 @@ To review a Test Case open the Test Plan view and:
 #. Click **Reviewing Cases** tab.
 #. Expand Test Case details.
 #. Read the description and provide comments.
-#. Once satisfied change the status to **CONFIRMED** via the **Status** drop-down.
+#. Once satisfied change the status to **CONFIRMED** via the **Status**
+   drop-down.
 
 |Test Case Review Screen|
 
@@ -216,7 +219,7 @@ a Test Plan or a Test Run. To change the order of Test Cases:
     |Test Cases Reorder|
 
 #. Drag Test Cases up or down to change their order.
-#. Click **Done Sorting** button to complete the process. 
+#. Click **Done Sorting** button to complete the process.
 
     |Test Cases Reorder Done|
 
@@ -266,7 +269,8 @@ Removing a Test Case from a Test Plan
 -------------------------------------
 
 Sometimes Test Cases need to be removed from Test Plans. For example after
-cloning another Test Plan. There are two ways to remove a Test Case from a Test Plan:
+cloning another Test Plan. There are two ways to remove a Test Case from a
+Test Plan:
 
 #. Remove Test Case via the Test Plan view.
 #. Remove Test Plan via the Test Case view.

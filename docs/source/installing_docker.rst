@@ -103,14 +103,14 @@ To upgrade running Kiwi TCMS containers execute the following commands::
 SSL configuration
 -----------------
 
-By default Kiwi TCMS is served via HTTPS. ``docker-compose.yml`` is configured with
-a default self-signed certificate stored in ``etc/kiwitcms/ssl/``. If you want to
-use different SSL certificate you need to update the ``localhost.key`` and
-``localhost.crt`` files in that directory or bind-mount your own SSL directory to
-``/Kiwi/ssl`` inside the docker container!
+By default Kiwi TCMS is served via HTTPS. ``docker-compose.yml`` is configured
+with a default self-signed certificate stored in ``etc/kiwitcms/ssl/``. If you
+want to use different SSL certificate you need to update the ``localhost.key``
+and ``localhost.crt`` files in that directory or bind-mount your own SSL
+directory to ``/Kiwi/ssl`` inside the docker container!
 
-More information about generating your own self-signed certificates can be found at
-https://wiki.centos.org/HowTos/Https.
+More information about generating your own self-signed certificates can be
+found at https://wiki.centos.org/HowTos/Https.
 
 
 Reverse proxy SSL
@@ -121,30 +121,31 @@ also handle SSL termination. For example we serve https://demo.kiwitcms.org,
 https://tcms.kiwitcms.org and a few other instances through Nginx. For all of
 these domains the browser will see a wildcard SSL certificate for
 ``*.kiwitcms.org``, while the individual docker containers are still configured
-with the default self-signed certificate! Here's how the configuration looks like::
+with the default self-signed certificate! Here's how the configuration looks
+like::
 
     http {
         # default ssl certificates for *.kiwitcms.org
         ssl_certificate     /etc/nginx/wildcard_kiwitcms_org.crt;
         ssl_certificate_key /etc/nginx/wildcard_kiwitcms_org.key;
-    
+
         # default proxy settings
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-    
+
         server {
             listen 8080;
             server_name demo.kiwitcms.org;
-    
+
             location / {
                 return 301 https://$host$request_uri;
             }
         }
-    
+
         server {
             server_name demo.kiwitcms.org;
             listen 8443 ssl;
-    
+
             location / {
                 proxy_pass https://demo_kiwitcms_org_web:8443;
             }
@@ -157,23 +158,23 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
         bind *:8080
         reqadd X-Forwarded-Proto:\ http
         redirect scheme https code 301
-    
+
     frontend front_https
         # default ssl certificates for *.kiwitcms.org
         bind *:8443 ssl crt /etc/haproxy/ssl/
         reqadd X-Forwarded-Proto:\ https
-    
+
         acl kiwitcms hdr(host) -i demo.kiwitcms.org
         use_backend back_kiwitcms if kiwitcms
-    
+
     backend back_kiwitcms
         http-request set-header X-Forwarded-Port %[dst_port]
         http-request add-header X-Forwarded-Proto https
-    
+
         # some security tweaks
         rspadd Strict-Transport-Security:\ max-age=15768000
         rspadd X-XSS-Protection:\ 1;\ mode=block
-    
+
         # do not verify the self-signed cert
         server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
 
