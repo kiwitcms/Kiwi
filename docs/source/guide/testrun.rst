@@ -4,8 +4,9 @@ Test Runs
 =========
 
 This chapter explains how to create, search, edit, execute, and generate
-reports for Test Runs in Kiwi TCMS. A Test Run in Kiwi TCMS contains the execution results
-of selected test cases against particular product builds and environment.
+reports for Test Runs in Kiwi TCMS. A Test Run in Kiwi TCMS contains the
+execution results of selected test cases against particular product builds
+and environment.
 
 To view Test Runs you have created or are assigned to you click **Main menu::DASHBOARD**
 or alternatively click **Personal menu::My Test Runs**.
@@ -57,7 +58,8 @@ assigned to any user in Kiwi TCMS. To create a Test Run:
    |The Create New Test Run screen|
 
 #. Test Cases will be shown under the above screen.
-#. Click **Remove** action on any Test Cases that are not required for this Test Run.
+#. Click **Remove** action on any Test Cases that are not required for this
+   Test Run.
 #. Click **Save** button.
 
 .. note::
@@ -83,14 +85,16 @@ To add a Test Case to an existing Test Run:
 
 .. note::
 
-    Test Cases can be added via the Test Run view as well. While the Test Run is
-    opened youmay use the **Cases** sub-menu to add/remove other Test Cases to this Test Run.
+    Test Cases can be added via the Test Run view as well. While the Test Run
+    is opened you may use the **Cases** sub-menu to add/remove other
+    Test Cases to this Test Run.
 
 
 Cloning a Test Run
 ------------------
 
-Test Runs can be cloned for easier creation of testing tasks between team members.
+Test Runs can be cloned for easier creation of testing tasks between
+team members.
 To clone a Test Run:
 
 #. Open the Test Run.
@@ -101,7 +105,8 @@ To clone a Test Run:
 
    |The Clone button 2|
 
-#. Enter the details for the cloned Test Run. Details are auto-populated from the original.
+#. Enter the details for the cloned Test Run. Details are auto-populated
+   from the original.
 #. Click **Save** button.
 
 Editing a Test Run
@@ -173,8 +178,9 @@ displayed when a report is generated for a Test Run.
 
 To execute a Test Run:
 
-#. From the Dashboard or a Test Runs list, click the Test Run to execute. The Test Run
-   summary is displayed.  You are able to change Test Case statuses from this page. 
+#. From the Dashboard or a Test Runs list, click the Test Run to execute. The
+   Test Run summary is displayed.  You are able to change Test Case statuses
+   from this page.
 
    |The Test Run summary|
 

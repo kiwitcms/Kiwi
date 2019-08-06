@@ -69,8 +69,8 @@ format but you are free to enter any kind of text. To create a Test Plan:
          **Upload**. Supported formats: html, plain text, and ODT.
 
    -  Select an **Environment Group**, this is optional
-   -  Enter a **Reference Link** to any additional information (eg. a wiki page),
-      this is optional
+   -  Enter a **Reference Link** to any additional information (eg. a wiki
+      page), this is optional
 
    |The Create New Test Plans screen|
 
@@ -252,7 +252,7 @@ otherwise you will lose your testing history. To disable a Test Plan:
 #. To enable a disabled plan, click **Edit Plan**.
 
    |The enable plan button.|
-   
+
 #. Set **Active** status button to **On**
 #. Click on **Save** button to confirm changes.
 
@@ -273,7 +273,7 @@ To print a Test Plan:
 Exporting Test Cases from a Test Plan
 -------------------------------------
 
-Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwitcms.readthedocs.io/en/latest/import-export/>`_  
+Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwitcms.readthedocs.io/en/latest/import-export/>`_
 
 
 .. |The Planning menu 1| image:: ../_static/Click_New_Plan.png

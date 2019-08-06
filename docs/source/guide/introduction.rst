@@ -48,8 +48,8 @@ A Test Execution object is the container that links together the actual
 testing scenario with its execution status, additional comments and bugs
 found during testing! A Test Execution object has a 1-to-1 relation to the
 Test Case for which it holds status. Thus a Test Execution object represents
-the actual Test Case that will be/was executed against a particular product build
-and environment combination!
+the actual Test Case that will be/was executed against a particular product
+build and environment combination!
 
 
 Explanation of additional data entities
@@ -80,41 +80,45 @@ activities within your team:
    - In case you test in multiple environments then create a Test Run for each
      environment/build combination. Annotate the Test Run with tags to be able
      to search for it later!
-   - QA engineers will execute the Test Runs and update statuses as appropriate.
+   - QA engineers will execute the Test Runs and update statuses as
+     appropriate.
 
 **Question:** How do I show all executions for a given Test Case?
 
-**Answer:** Open the Test Case view, click **Executions** card and expand the widget.
-All executions from all Test Plans are shown.
+**Answer:** Open the Test Case view, click **Executions** card and expand the
+widget. All executions from all Test Plans are shown.
 
 **Question:** When did a Test Case started to fail?
 
-**Answer:** Navigate to the page which shows all executions of that test case as
-instructed above. Find the failing result. Here you have timestamp information and
-link to the Test Run (with possible product build and environment) which recorded
-the failure.
+**Answer:** Navigate to the page which shows all executions of that test case
+as instructed above. Find the failing result. Here you have timestamp
+information and link to the Test Run (with possible product build and
+environment) which recorded the failure.
 
 **Question:** How do I show all test executions for a particular
 Product/Plan/Build/Environment ?
 
-**Answer:** Navigate to **Search::Search Test Runs** and filter Test Runs by desired properties.
-If you want to filter runs from a particular Test Plan make sure to specify the plan
-name in the **Plan** field. You can also filter Test Runs by tags if necessary.
+**Answer:** Navigate to **Search::Search Test Runs** and filter Test Runs by
+desired properties.If you want to filter runs from a particular Test Plan make
+sure to specify the plan name in the **Plan** field. You can also filter Test
+Runs by tags if necessary.
 
-**Question:** Is this the first time that Test Case is failing on envrionment X/Y/Z ?
+**Question:** Is this the first time that Test Case is failing on envrionment
+X/Y/Z ?
 
-**Answer 1:** Open **Executions** card for that particular Test Case and examine the
-results by hand.
+**Answer 1:** Open **Executions** card for that particular Test Case and
+examine the results by hand.
 
 **Answer 2:** Perform the search described above and use the product version
-and environment information to answer this question. This is the preferred way to do
-this!
+and environment information to answer this question. This is the preferred way
+to do this!
 
-**Answer 3:** Go to REPORTING -> Testing report, select product/versions and select
-the ``By Plan & Build Per Plan View option``. You can see your Test Plans with Runs
-grouped by builds and an execution status table on the right of each Test Run.
-**WARNING:** This is not recommended because the reporting views query the entire
-database and are very inefficient at the moment!
+**Answer 3:** Go to REPORTING -> Testing report, select product/versions and
+select the ``By Plan & Build Per Plan View option``. You can see your Test
+Plans with Runs grouped by builds and an execution status table on the right
+of each Test Run.
+**WARNING:** This is not recommended because the reporting views query the
+entire database and are very inefficient at the moment!
 
 
 
@@ -136,8 +140,8 @@ features accessible from the home page.
 **Navigation bar**
 
 The navigation bar consists of the Main menu, Help menu and Personal menu.
-When you click over a menu item, a sub-menu appears. To navigate to a previous screen, click on
-the breadcrumb located below the menu bar.
+When you click over a menu item, a sub-menu appears. To navigate to a previous
+screen, click on the breadcrumb located below the menu bar.
 
 |The TCMS menu bar and breadcrumbs|
 

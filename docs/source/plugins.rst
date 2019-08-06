@@ -58,32 +58,32 @@ Important variables are:
 * ``TCMS_RUN_ID`` - if defined will report results to this TestRun
 * ``TCMS_PRODUCT`` or ``TRAVIS_REPO_SLUG`` or ``JOB_NAME`` - defines the
   product under test if we have to create new objects in the database
-* ``TCMS_PRODUCT_VERSION`` or ``TRAVIS_COMMIT`` or ``TRAVIS_PULL_REQUEST_SHA`` or
-  ``GIT_COMMIT`` - defines the version under test
+* ``TCMS_PRODUCT_VERSION`` or ``TRAVIS_COMMIT`` or ``TRAVIS_PULL_REQUEST_SHA``
+  or ``GIT_COMMIT`` - defines the version under test
 * ``TCMS_BUILD`` or ``TRAVIS_BUILD_NUMBER`` or ``BUILD_NUMBER`` - defines
   the build which we are testing
 
 
 You are free to adjust these variables and how they get assigned different values
 in your CI workflow. This will change how/where results are reported.
-For example this is how the environment for 
+For example this is how the environment for
 `kiwitcms-tap-plugin
 <https://github.com/kiwitcms/tap-plugin/blob/master/tests/bin/make-tap>`_
 looks like::
 
     #!/bin/bash
-    
+
     if [ "$TRAVIS_EVENT_TYPE" == "push" ]; then
         # same as $TRAVIS_TAG when building tags
         export TCMS_PRODUCT_VERSION=$TRAVIS_BRANCH
     fi
-    
+
     if [ "$TRAVIS_EVENT_TYPE" == "pull_request" ]; then
         export TCMS_PRODUCT_VERSION="PR-$TRAVIS_PULL_REQUEST"
     fi
-    
+
     export TCMS_BUILD="$TRAVIS_BUILD_NUMBER-$(echo $TRAVIS_COMMIT | cut -c1-7)"
 
 The above configuration creates a separate TestPlan for each branch,
-a separate TestPlan for each pull request (recording possible multiple test runs)
-and separate TestPlan and TestRun for each tag on GitHub!
+a separate TestPlan for each pull request (recording possible multiple test
+runs) and separate TestPlan and TestRun for each tag on GitHub!

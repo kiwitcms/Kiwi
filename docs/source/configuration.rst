@@ -38,12 +38,12 @@ need to be configured via the following settings::
     EMAIL_HOST = 'smtp.example.com'
     EMAIL_PORT = 25
     DEFAULT_FROM_EMAIL = 'kiwi@example.com'
-    
+
     # additional Kiwi TCMS setting
     EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
-If you'd like to use an external email service, like Amazon SES you also need to
-configure the following settings::
+If you'd like to use an external email service, like Amazon SES you also need
+to configure the following settings::
 
 
     EMAIL_BACKEND = 'django_ses.SESBackend'
@@ -68,8 +68,9 @@ Public read-only access
 By default Kiwi TCMS requires all users to be logged in. This is achieved via
 ``global_login_required.GlobalLoginRequiredMiddleware``. If you wish to allow
 public read-only access to certain pages (Search, TestCase view, TestPlan view,
-etc) simply disable this middleware. Add the following to your ``local_settings.py``::
+etc) simply disable this middleware. Add the following to
+your ``local_settings.py``::
 
     from django.conf import settings
-    
+
     settings.MIDDLEWARE.remove('global_login_required.GlobalLoginRequiredMiddleware')
