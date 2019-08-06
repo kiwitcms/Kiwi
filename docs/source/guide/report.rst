@@ -66,7 +66,7 @@ Kiwi TCMS can generate testing reports based on search conditions:
    |Search details. 2|
 
 #. Click **Generate Report**. The results are displayed.
- 
+
 .. note::
 
   No additional information is required to generate the testing report but

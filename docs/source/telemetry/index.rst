@@ -12,8 +12,8 @@ etc files which are standard for Django applications.
 
 There are 2 special pieces:
 
-- a ``menu.py`` file defining the ``MENU_ITEMS`` variable. The format is the same
-  as ``tcms.settings.common.MENU_ITEMS``
+- a ``menu.py`` file defining the ``MENU_ITEMS`` variable.
+  The format is the same as ``tcms.settings.common.MENU_ITEMS``
 - inside ``setup.py`` you need to define an ``entry_point``::
 
     setup(
@@ -32,5 +32,5 @@ entry point and:
 - include their URL config in ``urlpatterns``, using the plugin name as the
   URL path for inclusion!
 
-After you have tested your plugin and packaged it as a pip package the only thing
-you have to do is install the tarball inside the Docker image!
+After you have tested your plugin and packaged it as a pip package the only
+thing you have to do is install the tarball inside the Docker image!

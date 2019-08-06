@@ -13,8 +13,8 @@ Install Python 3
 
 Kiwi TCMS is a Python 3 project! On CentOS 7 this is available via
 `SoftwareCollections.org <https://www.softwarecollections.org/en/scls/rhscl/rh-python35/>`_.
-All further instructions assume that you have Python 3 enabled. If you are using software
-collections then execute::
+All further instructions assume that you have Python 3 enabled. If you are
+using software collections then execute::
 
     scl enable rh-python36 /bin/bash
 
@@ -37,7 +37,8 @@ Create a virtual environment for Kiwi TCMS::
 Dependencies
 ------------
 
-First install RPM packages which are needed to compile some of the Python dependencies::
+First install RPM packages which are needed to compile some of the Python
+dependencies::
 
     sudo yum install gcc python-devel mariadb-devel libxml2-devel libxslt-devel graphviz
 
