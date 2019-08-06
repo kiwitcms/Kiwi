@@ -136,13 +136,8 @@ also handle SSL termination. For example we serve https://public.tenant.kiwitcms
 https://tcms.kiwitcms.org and a few other instances through Nginx. For all of
 these domains the browser will see a wildcard SSL certificate for
 ``*.kiwitcms.org``, while the individual docker containers are still configured
-<<<<<<< HEAD
-with the default self-signed certificate! Here's how the configuration looks
-like::
-=======
 with the default self-signed certificate (that is the connection between
 Nginx and the docker container)! Here's how the configuration looks like::
->>>>>>> 755f4b61... [docs] Revert and update text around HTTP access. Refs #1036
 
     http {
         # default ssl certificates for *.kiwitcms.org
