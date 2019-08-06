@@ -114,6 +114,10 @@ jobs:
 
     - stage: non_functional_testing
       env:
+        - CMD=doc8
+
+    - stage: non_functional_testing
+      env:
         - CMD=test_for_missing_migrations
         - TEST_DB=SQLite
 

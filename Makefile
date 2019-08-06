@@ -98,6 +98,10 @@ check-docs-source-in-git: docs
 	    exit 1; \
 	fi
 
+.PHONY: doc8
+doc8:
+	doc8 docs/source
+
 .PHONY: help
 help:
 	@echo 'Usage: make [command]'
