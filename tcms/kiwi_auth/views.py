@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=missing-permission-required
 
 from datetime import datetime
 
@@ -22,12 +23,12 @@ from tcms.kiwi_auth.models import UserActivationKey
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-class LoginViewWithCustomTemplate(views.LoginView):  # pylint: disable=missing-permission-required
+class LoginViewWithCustomTemplate(views.LoginView):
     def get_template_names(self):
         return ['registration/custom_login.html', 'registration/login.html']
 
 
-class PasswordResetView(views.PasswordResetView):  # pylint: disable=missing-permission-required
+class PasswordResetView(views.PasswordResetView):
     form_class = forms.PasswordResetForm
 
 
@@ -93,7 +94,7 @@ def register(request):
 
 
 @require_GET
-def confirm(request, activation_key):  # pylint: disable=missing-permission-required
+def confirm(request, activation_key):
     """Confirm the user registration"""
 
     # Get the object
@@ -126,7 +127,7 @@ def confirm(request, activation_key):  # pylint: disable=missing-permission-requ
     return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
 
-def profile(request, username):  # pylint: disable=missing-permission-required
+def profile(request, username):
     """Show user profiles"""
     user = get_object_or_404(User, username=username)
     return HttpResponseRedirect(reverse('admin:auth_user_change', args=[user.pk]))

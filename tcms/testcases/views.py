@@ -43,7 +43,7 @@ TESTCASE_OPERATION_ACTIONS = (
 # helper functions
 
 
-def plan_from_request_or_none(request):
+def plan_from_request_or_none(request):  # pylint: disable=missing-permission-required
     """Get TestPlan from REQUEST
 
     This method relies on the existence of from_plan within REQUEST.
@@ -235,7 +235,7 @@ def build_cases_search_form(request, populate=None, plan=None):
     return search_form
 
 
-def paginate_testcases(request, testcases):
+def paginate_testcases(request, testcases):  # pylint: disable=missing-permission-required
     """Paginate queried TestCases
 
     Arguments:
@@ -256,7 +256,7 @@ def paginate_testcases(request, testcases):
     return testcases[offset:offset + page_size]
 
 
-def sort_queried_testcases(request, testcases):
+def sort_queried_testcases(request, testcases):  # pylint: disable=missing-permission-required
     """Sort querid TestCases according to sort key
 
     Arguments:
@@ -281,7 +281,7 @@ def sort_queried_testcases(request, testcases):
     return tcs
 
 
-def query_testcases_from_request(request, plan=None):
+def query_testcases_from_request(request, plan=None):  # pylint: disable=missing-permission-required
     """Query TestCases according to criterias coming within REQUEST
 
     :param request: the REQUEST object.
@@ -316,7 +316,7 @@ def query_testcases_from_request(request, plan=None):
     return tcs, search_form
 
 
-def get_selected_testcases(request):
+def get_selected_testcases(request):  # pylint: disable=missing-permission-required
     """Get selected TestCases from client side
 
     TestCases are selected in two cases. One is user selects part of displayed
@@ -382,7 +382,7 @@ def get_tags_from_cases(case_ids, plan=None):
 
 
 @require_POST
-def list_all(request):
+def list_all(request):  # pylint: disable=missing-permission-required
     """
     Generate the TestCase list for the UI tabs in TestPlan page view.
     """
@@ -532,7 +532,7 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
         return data
 
 
-def get(request, case_id):
+def get(request, case_id):  # pylint: disable=missing-permission-required
     """Get the case content"""
     # Get the case
     try:
@@ -579,7 +579,8 @@ def get(request, case_id):
 
 
 @require_POST
-def printable(request, template_name='case/printable.html'):
+def printable(request,  # pylint: disable=missing-permission-required
+              template_name='case/printable.html'):
     """
         Create the printable copy for plan/case.
         Only CONFIRMED TestCases are printed when printing a TestPlan!

@@ -433,7 +433,7 @@ class LinkCasesView(View):  # pylint: disable=missing-permission-required
         return HttpResponseRedirect(reverse('test_plan_url', args=[plan_id, slugify(plan.name)]))
 
 
-class LinkCasesSearchView(View):
+class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
     """Search cases for linking to plan"""
 
     template_name = 'plan/search_case.html'
@@ -507,7 +507,7 @@ class DeleteCasesView(View):
 
 
 @require_POST
-def printable(request):
+def printable(request):  # pylint: disable=missing-permission-required
     """Create the printable copy for plan"""
     plan_pk = request.POST.get('plan', 0)
 
