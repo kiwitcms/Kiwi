@@ -405,47 +405,51 @@ class TestRunReportView(TemplateView, TestExecutionDataMixin):
         return context
 
 
-@require_POST
-def clone(request, run_id):
+@method_decorator(permission_required('testruns.add_testrun'), name='dispatch')
+class CloneTestRunView(View):
     """Clone cases from filter caserun"""
 
-    test_run = get_object_or_404(TestRun, run_id=run_id)
-    confirmed_case_status = TestCaseStatus.get_confirmed()
-    disabled_cases = 0
+    template_name = 'testruns/mutable.html'
+    http_method_names = ['post']
 
-    if request.POST.get('case_run'):
-        test_cases = []
-        for execution in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
-            if execution.case.case_status == confirmed_case_status:
-                test_cases.append(execution.case)
-            else:
-                disabled_cases += 1
-    else:
-        test_cases = None
+    def post(self, request, run_id):
+        test_run = get_object_or_404(TestRun, run_id=run_id)
+        confirmed_case_status = TestCaseStatus.get_confirmed()
+        disabled_cases = 0
 
-    if not test_cases:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('At least one TestCase is required'))
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
+        if request.POST.get('case_run'):
+            test_cases = []
+            for test_case_run in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
+                if test_case_run.case.case_status == confirmed_case_status:
+                    test_cases.append(test_case_run.case)
+                else:
+                    disabled_cases += 1
+        else:
+            test_cases = None
 
-    form = NewRunForm(initial={
-        'summary': _('Clone of ') + test_run.summary,
-        'notes': test_run.notes,
-        'manager': test_run.manager,
-        'build': test_run.build_id,
-        'default_tester': test_run.default_tester,
-    })
-    form.populate(product_id=test_run.plan.product_id)
+        if not test_cases:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('At least one TestCase is required'))
+            return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
-    context_data = {
-        'is_cloning': True,
-        'disabled_cases': disabled_cases,
-        'test_plan': test_run.plan,
-        'test_cases': test_cases,
-        'form': form,
-    }
-    return render(request, 'testruns/mutable.html', context_data)
+        form = NewRunForm(initial={
+            'summary': _('Clone of ') + test_run.summary,
+            'notes': test_run.notes,
+            'manager': test_run.manager,
+            'build': test_run.build_id,
+            'default_tester': test_run.default_tester,
+        })
+        form.populate(product_id=test_run.plan.product_id)
+
+        context_data = {
+            'is_cloning': True,
+            'disabled_cases': disabled_cases,
+            'test_plan': test_run.plan,
+            'test_cases': test_cases,
+            'form': form,
+        }
+        return render(request, self.template_name, context_data)
 
 
 @permission_required('testruns.change_testrun')

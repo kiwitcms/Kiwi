@@ -257,6 +257,39 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
         self.assert_cloned_run(cloned_run)
 
+    def test_clone_a_run_without_permissions(self):
+        remove_perm_from_user(self.tester, 'testruns.add_testrun')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+
+        new_summary = 'Clone {} - {}'.format(self.test_run.pk, self.test_run.summary)
+
+        clone_data = {
+            'summary': new_summary,
+            'from_plan': self.plan.pk,
+            'product_id': self.test_run.plan.product_id,
+            'do': 'clone_run',
+            'orig_run_id': self.test_run.pk,
+            'POSTING_TO_CREATE': 'YES',
+            'product': self.test_run.plan.product_id,
+            'product_version': self.test_run.product_version.pk,
+            'build': self.test_run.build.pk,
+            'errata_id': '',
+            'manager': self.test_run.manager.email,
+            'default_tester': self.test_run.default_tester.email,
+            'notes': '',
+            'case': [self.execution_1.case.pk, self.execution_2.case.pk],
+            'case_run_id': [self.execution_1.pk, self.execution_2.pk],
+        }
+
+        url = reverse('testruns-new')
+        response = self.client.post(url, clone_data)
+
+        self.assertRedirects(
+            response,
+            reverse('tcms-login') + '?next=' + url)
+
     def assert_cloned_run(self, cloned_run):
         # Assert clone settings result
         for origin_case_run, cloned_case_run in zip((self.execution_1, self.execution_2),
