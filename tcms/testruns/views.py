@@ -133,7 +133,7 @@ def search(request):  # pylint: disable=missing-permission-required
     return render(request, 'testruns/search.html', context_data)
 
 
-def _open_run_get_executions(request, run):
+def _open_run_get_executions(request, run):  # pylint: disable=missing-permission-required
     """Prepare for executions list in a TestRun page
 
     This is an internal method. Do not call this directly.
@@ -317,7 +317,8 @@ def edit(request, run_id):
     return render(request, 'testruns/mutable.html', context_data)
 
 
-class TestRunReportView(TemplateView, TestExecutionDataMixin):
+class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-required
+                        TestExecutionDataMixin):
     """Test Run report"""
 
     template_name = 'run/report.html'
