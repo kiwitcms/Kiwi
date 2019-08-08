@@ -258,14 +258,6 @@ To generate a report for a Test Run:
 .. |The Clone button 2| image:: ../_static/Clone_Test_Run.png
 .. |The Test Run summary| image:: ../_static/Runs_Details.png
 .. |A Test Case| image:: ../_static/Enter_Test_Results.png
-.. |image70| image:: ../_static/idle.png
-.. |image71| image:: ../_static/running.png
-.. |image72| image:: ../_static/paused.png
-.. |image73| image:: ../_static/pass.png
-.. |image74| image:: ../_static/failed.png
-.. |image75| image:: ../_static/blocked.png
-.. |image76| image:: ../_static/error.png
-.. |image77| image:: ../_static/waived.png
 .. |The Set to finished button| image:: ../_static/Set_To_Finished.png
 .. |The Set to running button| image:: ../_static/Set_To_Running.png
 .. |The Report button| image:: ../_static/Click_Report.png
