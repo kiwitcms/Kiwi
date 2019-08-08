@@ -185,26 +185,6 @@ To execute a Test Run:
    |A Test Case|
 
 
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| Icon        | Meaning                                                                                                                   |
-+=============+===========================================================================================================================+
-| |image78|   | Idle - Default value. The Test Case has not been examined.                                                                |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image79|   | Running - Test Case is in progress.                                                                                       |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image80|   | Paused - This status is used to denote a problem with the test case itself that prevents the test from being completed.   |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image81|   | Passed - Test Case met all the expected results.                                                                          |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image82|   | Failed - Test Case did not meet all the expected results, or produced an unhandled exception.                             |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image83|   | Blocked - Test Case has a dependency that has failed.                                                                     |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image84|   | Error - Test environment has problems that prevent Test Case     execution.                                               |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-| |image85|   | Waived - Test Case is not suitable for this run or blocked by other cases.                                                |
-+-------------+---------------------------------------------------------------------------------------------------------------------------+
-
 Bulk update of Test Cases
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -226,7 +206,7 @@ report provides the following information:
 
 -  **Plan details:**
 
-   -  Product 
+   -  Product
    -  Product version
    -  Plan
    -  Plan version
@@ -286,14 +266,6 @@ To generate a report for a Test Run:
 .. |image75| image:: ../_static/blocked.png
 .. |image76| image:: ../_static/error.png
 .. |image77| image:: ../_static/waived.png
-.. |image78| image:: ../_static/idle.png
-.. |image79| image:: ../_static/running.png
-.. |image80| image:: ../_static/paused.png
-.. |image81| image:: ../_static/pass.png
-.. |image82| image:: ../_static/failed.png
-.. |image83| image:: ../_static/blocked.png
-.. |image84| image:: ../_static/error.png
-.. |image85| image:: ../_static/waived.png
 .. |The Set to finished button| image:: ../_static/Set_To_Finished.png
 .. |The Set to running button| image:: ../_static/Set_To_Running.png
 .. |The Report button| image:: ../_static/Click_Report.png
