@@ -67,19 +67,10 @@ have two fields: name and permissions. By default there are two groups
 created
 
 * Administrator - has all available permissions;
-* Tester - has all available permissions from the ``django_comments``,
-  ``management``, ``testcases``, ``testruns`` and ``testplans`` applications.
+* Tester - has ``add``, ``change`` and ``delete`` permissions from the
+  ``attachments``, ``django_comments``, ``management``, ``testcases``,
+  ``testruns`` and ``testplans`` applications.
 
-
-**Default group permissions in Kiwi TCMS**
-
-+----------------+----------------+----------------+----------------+----------------+
-| Group          | Test Plan      | Test Case      | Environment    | Administration |
-+================+================+================+================+================+
-| Tester         | Read / Write   | Read / Write   | Read / Write   | -              |
-+----------------+----------------+----------------+----------------+----------------+
-| Administrator  | Read / Write   | Read / Write   | Read / Write   | Read / Write   |
-+----------------+----------------+----------------+----------------+----------------+
 
 Adding a group
 ^^^^^^^^^^^^^^
