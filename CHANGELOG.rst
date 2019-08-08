@@ -25,9 +25,9 @@ Security
 ~~~~~~~~
 
 - Update Django from 2.2.2 to 2.2.4, see
-  `release notes <https://docs.djangoproject.com/en/2.2/releases/2.2.4/>`_
+  `2.2.4 release notes <https://docs.djangoproject.com/en/2.2/releases/2.2.4/>`_
 - Update marked to version 0.7.0, see
-  `release notes <https://github.com/markedjs/marked/releases/tag/v0.7.0>`_
+  `0.7.0 release notes <https://github.com/markedjs/marked/releases/tag/v0.7.0>`_
 
 
 Improvements
@@ -337,9 +337,7 @@ API
 
 - Rename ``TestCaseRun.*`` to ``TestExecution.*``
 - Rename ``TestCaseRunStatus.*`` to ``TestExecution.*``
-- This version keeps the old names for backwards compatibility reasons but they
-  will be removed in
-  `Issue #889 <https://github.com/kiwitcms/Kiwi/issues/889>`_
+- This version keeps the old names for backwards compatibility reasons
 
 
 Bug fixes
