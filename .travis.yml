@@ -64,15 +64,15 @@ jobs:
 
     - stage: testing
       env:
-        - TEST_DB=MariaDB
         - CMD=test
+        - TEST_DB=MariaDB
       addons:
         mariadb: 10.3
 
     - stage: testing
       env:
-        - TEST_DB=Postgres
         - CMD=test
+        - TEST_DB=Postgres
       addons:
         postgresql: 10
         apt:
@@ -83,26 +83,26 @@ jobs:
     - stage: testing
       if: branch = master AND type = push
       env:
-        - TEST_DB=SQLite
         - CMD=test
+        - TEST_DB=SQLite
 
     - stage: testing
       if: branch = master AND type = push
       env:
-        - TEST_DB=MySQL
         - CMD=test
+        - TEST_DB=MySQL
 
     - stage: localization_testing
       env:
+        - CMD=l10n-test
         - LANG=fr_FR.UTF-8
         - TEST_DB=SQLite
-        - CMD=l10n-test
 
     - stage: localization_testing
       env:
+        - CMD=l10n-test
         - LANG=sl_SL.UTF-8
         - TEST_DB=SQLite
-        - CMD=l10n-test
 
     - stage: non_functional_testing
       env:
@@ -114,8 +114,8 @@ jobs:
 
     - stage: non_functional_testing
       env:
-        - TEST_DB=SQLite
         - CMD=test_for_missing_migrations
+        - TEST_DB=SQLite
 
     - stage: non_functional_testing
       env:
