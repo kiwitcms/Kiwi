@@ -170,6 +170,29 @@ class TestCreateNewRun(BasePlanCase):
             self.assertEqual(new_run.build, case_run.build)
             self.assertEqual(None, case_run.close_date)
 
+    def test_create_a_new_run_without_permissions_should_fail(self):
+        remove_perm_from_user(self.tester, 'testruns.add_testrun')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+
+        clone_data = {
+            'summary': self.plan.name,
+            'from_plan': self.plan.pk,
+            'build': self.build_fast.pk,
+            'manager': self.tester.email,
+            'default_tester': self.tester.email,
+            'notes': 'Clone new run',
+            'case': [self.case_1.pk, self.case_2.pk],
+            'POSTING_TO_CREATE': 'YES',
+        }
+
+        url = reverse('testruns-new')
+
+        self.assertRedirects(
+            self.client.post(url, clone_data),
+            reverse('tcms-login') + '?next=' + url)
+
 
 class CloneRunBaseTest(BaseCaseRun):
 
