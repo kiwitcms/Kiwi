@@ -9,20 +9,6 @@ from django_comments.models import Comment
 
 from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestExecutionStatus
-from tcms.core.contrib.linkreference.models import LinkReference
-
-
-def get_run_bug_ids(run_id):
-    """Get list of pairs of bug ID and bug link that are added to a run
-
-    :param int run_id: ID of test run.
-    :return: list of pairs of bug ID and bug link.
-    :rtype: list
-    """
-    return LinkReference.objects.filter(
-        execution__run=run_id,
-        is_defect=True,
-    ).distinct()
 
 
 class TestExecutionDataMixin:
@@ -52,33 +38,6 @@ class TestExecutionDataMixin:
             'manual': manual_count,
             'automated': automated_count,
         }
-
-    @staticmethod
-    def get_execution_bugs(run_pk):
-        """Get execution bugs for run report
-
-        :param int run_pk: run's pk whose executions' bugs will be retrieved.
-        :return: the mapping between execution id and bug information containing
-            formatted bug URL.
-        :rtype: dict
-        """
-
-        bugs = LinkReference.objects.filter(
-            execution__run=run_pk,
-            is_defect=True,
-        ).order_by('execution')
-
-        # fixme: everything below needs updating to work with LR
-        rows = []
-        for row in bugs:
-            row['bug_url'] = row['bug_system__url_reg_exp'] % row['bug_id']
-            rows.append(row)
-
-        case_run_bugs = {}
-        for case_run_id, bugs_info in groupby(rows, lambda row: row['case_run']):
-            case_run_bugs[case_run_id] = list(bugs_info)
-
-        return case_run_bugs
 
     @staticmethod
     def get_execution_comments(run_pk):
