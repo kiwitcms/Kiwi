@@ -89,8 +89,6 @@ class CreateTestRunView(View):
                     default_tester=default_tester,
                 )
 
-                assignee_tester = User.objects.filter(username=default_tester).first()
-
                 loop = 1
                 for case in form.cleaned_data['case']:
                     try:
@@ -100,7 +98,7 @@ class CreateTestRunView(View):
                         sortkey = loop * 10
 
                     test_run.add_case_run(case=case, sortkey=sortkey,
-                                          assignee=assignee_tester)
+                                          assignee=default_tester)
                     loop += 1
 
                 return HttpResponseRedirect(
