@@ -8,82 +8,12 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.history import history_email_for
-from tcms.testcases.models import BugSystem
 from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
-from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestCaseTagFactory
-from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
-
-
-class TestCaseRemoveBug(BasePlanCase):
-    """Test TestCase.remove_bug"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestCaseRemoveBug, cls).setUpTestData()
-        cls.build = BuildFactory(product=cls.product)
-        cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
-                                      manager=cls.tester, default_tester=cls.tester)
-        cls.case_run = TestExecutionFactory(assignee=cls.tester, tested_by=cls.tester,
-                                            case=cls.case, run=cls.test_run, build=cls.build)
-        cls.bug_system = BugSystem.objects.get(name='Bugzilla')
-
-    def setUp(self):
-        self.bug_id_1 = '12345678'
-        self.case.add_bug(self.bug_id_1, self.bug_system.pk,
-                          summary='error when add a bug to a case')
-        self.bug_id_2 = '10000'
-        self.case.add_bug(self.bug_id_2, self.bug_system.pk, case_run=self.case_run)
-
-    def tearDown(self):
-        self.case.case_bug.all().delete()
-
-    def test_remove_case_bug(self):
-        self.case.remove_bug(self.bug_id_1)
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
-        self.assertFalse(bug_found)
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
-        self.assertTrue(bug_found,
-                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_2))
-
-    def test_case_bug_not_removed_by_passing_case_run(self):
-        self.case.remove_bug(self.bug_id_1, run_id=self.case_run.pk)
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
-        self.assertTrue(bug_found,
-                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
-        self.assertTrue(bug_found,
-                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_2))
-
-    def test_remove_case_run_bug(self):
-        self.case.remove_bug(self.bug_id_2, run_id=self.case_run.pk)
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
-        self.assertFalse(bug_found)
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
-        self.assertTrue(bug_found,
-                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
-
-    def execution_bug_not_removed_by_missing_case_run(self):
-        self.case.remove_bug(self.bug_id_2)
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
-        self.assertTrue(bug_found,
-                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
-
-        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
-        self.assertTrue(bug_found,
-                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_2))
 
 
 class TestCaseRemoveComponent(BasePlanCase):

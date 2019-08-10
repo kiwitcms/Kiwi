@@ -12,4 +12,3 @@ Submodules
 .. toctree::
 
    tcms.core.utils.mailto
-   tcms.core.utils.validations

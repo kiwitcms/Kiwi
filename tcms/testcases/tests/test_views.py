@@ -66,11 +66,8 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
                 )
 
     def test_user_sees_bugs(self):
-        bug_1 = LinkReferenceFactory()
-        bug_2 = LinkReferenceFactory()
-
-        self.execution_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
-        self.execution_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
+        bug_1 = LinkReferenceFactory(execution=self.execution_1)
+        bug_2 = LinkReferenceFactory(execution=self.execution_1)
 
         url = reverse('execution-detail-pane', args=[self.execution_1.case.pk])
         response = self.client.get(
@@ -82,8 +79,8 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         )
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, bug_1.get_full_url())
-        self.assertContains(response, bug_2.get_full_url())
+        self.assertContains(response, bug_1.url)
+        self.assertContains(response, bug_2.url)
 
 
 class TestMultipleEmailField(unittest.TestCase):

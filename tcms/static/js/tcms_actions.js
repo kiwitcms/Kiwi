@@ -467,24 +467,3 @@ function printableCases(url, form, table) {
   params.case = selection.selectedCasesIds;
   postToURL(url, params);
 }
-
-function validateIssueID(bugRegExp, bugId) {
-  // if bugRegExp is empty string then all input is valid!
-  if (!bugRegExp) {
-    return true;
-  }
-
-  try {
-    var bug_re = new RegExp(bugRegExp);
-  // catch syntax errors in regular expressions
-  } catch(err) {
-    window.alert(err.name + ': ' + err.message);
-    return false;
-  }
-  var result = bug_re.test(bugId);
-
-  if (!result) {
-    window.alert(default_messages.alert.invalid_bug_id);
-  }
-  return result;
-}

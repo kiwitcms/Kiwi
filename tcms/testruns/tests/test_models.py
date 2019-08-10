@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import TestRunFactory
-from tcms.testcases.models import BugSystem
+from tcms.tests.factories import LinkReferenceFactory
 
 
 class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
@@ -15,21 +15,20 @@ class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
     def setUpTestData(cls):
         super().setUpTestData()
 
-        bug_tracker = BugSystem.objects.first()
         cls.empty_test_run = TestRunFactory(product_version=cls.version,
                                             plan=cls.plan,
                                             manager=cls.tester,
                                             default_tester=cls.tester)
 
-        # Add bugs to case runs
-        cls.execution_1.add_bug('12345', bug_tracker.pk)
-        cls.execution_1.add_bug('909090', bug_tracker.pk)
-        cls.execution_3.add_bug('4567890', bug_tracker.pk)
-
     def test_get_bugs_count_if_no_bugs_added(self):
         self.assertEqual(0, self.empty_test_run.get_bug_count())
 
     def test_get_bugs_count(self):
+        # Add bugs to executions, which are part of cls.test_run
+        LinkReferenceFactory(execution=self.execution_1)
+        LinkReferenceFactory(execution=self.execution_2)
+        LinkReferenceFactory(execution=self.execution_3)
+
         self.assertEqual(3, self.test_run.get_bug_count())
 
     @patch('tcms.core.utils.mailto.send_mail')
