@@ -9,7 +9,6 @@ import vinaigrette
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
-from tcms.issuetracker.types import IssueTrackerType
 from tcms.testcases.fields import MultipleEmailField
 
 
@@ -231,28 +230,6 @@ class TestCase(TCMSActionModel):
 
         return queryset.distinct()
 
-    def add_bug(self, bug_id, bug_system_id, summary=None, description=None,
-                case_run=None, bz_external_track=False):
-        bug, created = self.case_bug.get_or_create(
-            bug_id=bug_id,
-            case_run=case_run,
-            bug_system_id=bug_system_id,
-            summary=summary,
-            description=description,
-        )
-
-        if created:
-            if bz_external_track:
-                bug_system = BugSystem.objects.get(pk=bug_system_id)
-                issue_tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-                if not issue_tracker.is_adding_testcase_to_issue_disabled():
-                    issue_tracker.add_testcase_to_issue([self], bug)
-                else:
-                    raise ValueError('Enable linking test cases by configuring API parameters '
-                                     'for this Issue Tracker!')
-        else:
-            raise ValueError('Bug %s already exist.' % bug_id)
-
     def add_component(self, component):
         return TestCaseComponent.objects.get_or_create(case=self, component=component)
 
@@ -277,18 +254,6 @@ class TestCase(TCMSActionModel):
                 return self.text
 
         return self.text
-
-    def remove_bug(self, bug_id, run_id=None):
-        query = Bug.objects.filter(
-            bug_id=bug_id,
-            case=self.pk
-        )
-        if run_id:
-            query = query.filter(case_run=run_id)
-        else:
-            query = query.filter(case_run__isnull=True)
-
-        query.delete()
 
     def remove_component(self, component):
         # note: cannot use self.component.remove(component) on a ManyToManyField
