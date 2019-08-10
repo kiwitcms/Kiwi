@@ -344,20 +344,6 @@ class TestExecution(TCMSActionModel):
         serializer = TestExecutionXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
-    def add_bug(self, bug_id, bug_system_id,
-                summary=None, description=None, bz_external_track=False):
-        return self.case.add_bug(
-            bug_id=bug_id,
-            bug_system_id=bug_system_id,
-            summary=summary,
-            description=description,
-            case_run=self,
-            bz_external_track=bz_external_track
-        )
-
-    def remove_bug(self, bug_id, run_id=None):
-        self.case.remove_bug(bug_id=bug_id, run_id=run_id)
-
     def get_bugs(self):
         return LinkReference.objects.filter(
             execution=self.pk,
