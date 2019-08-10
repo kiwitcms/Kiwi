@@ -4,129 +4,24 @@
 from http import HTTPStatus
 from django.urls import reverse
 
-from tcms.testcases.models import BugSystem
-
 from tcms.tests import BaseCaseRun
+from tcms.tests.factories import LinkReferenceFactory
 
 
-class Test_TestRunReportUnconfiguredJIRA(BaseCaseRun):
-    """
-        When JIRA isn't fully configured, i.e. missing API URL
-        Username and Password/Token this leads to errors when
-        generating TR reports. See
-        https://github.com/kiwitcms/Kiwi/issues/100
-
-        The problem is the underlying JIRA client assumes default
-        values and tries to connect to the JIRA instance upon
-        object creation!
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super(Test_TestRunReportUnconfiguredJIRA, cls).setUpTestData()
-
-        # NOTE: base_url, api_url, api_username and api_password
-        # are intentionally left blank!
-        cls.it = BugSystem.objects.create(
-            name='Partially configured JIRA',
-            url_reg_exp='https://jira.example.com/browse/%s',
-            validate_reg_exp=r'^[A-Z0-9]+-\d+$',
-            tracker_type='JIRA'
-        )
-
-        cls.execution_1.add_bug('KIWI-1234', cls.it.pk)
-
-    def test_reports(self):
-        url = reverse('run-report', args=[self.execution_1.run_id])
-        response = self.client.get(url)
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, self.it.url_reg_exp % 'KIWI-1234')
-
-
-class Test_TestRunReportUnconfiguredBugzilla(BaseCaseRun):
-    """
-        Test for https://github.com/kiwitcms/Kiwi/issues/100
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super(Test_TestRunReportUnconfiguredBugzilla, cls).setUpTestData()
-
-        # NOTE: base_url, api_url, api_username and api_password
-        # are intentionally left blank!
-        cls.it = BugSystem.objects.create(
-            name='Partially configured Bugzilla',
-            url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
-            validate_reg_exp=r'^\d{1,7}$',
-            tracker_type='Bugzilla'
-        )
-
-        cls.execution_1.add_bug('5678', cls.it.pk)
-
-    def test_reports(self):
-        url = reverse('run-report', args=[self.execution_1.run_id])
-        response = self.client.get(url)
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, self.it.url_reg_exp % '5678')
-
-
-class Test_TestRunReportConfiguredBugzilla(BaseCaseRun):
-    """
-        The report should not crash when loaded b/c the internal
-        bugzilla code will not try to establish and RPC connection
-        in the constructor.
-    """
-
+class Test_TestRunReport(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.it = BugSystem.objects.create(  # nosec:B105:hardcoded_password_string
-            name='Partially configured Bugzilla',
-            url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
-            validate_reg_exp=r'^\d{1,7}$',
-            tracker_type='Bugzilla',
-            base_url='https://bugzilla.example.com',
-            api_url='https://bugzilla.example.com/xml-rpc/',
-            api_username='admin',
-            api_password='secret',
-        )
-
-        cls.execution_1.add_bug('5678', cls.it.pk)
+        cls.bug_1 = LinkReferenceFactory(execution=cls.execution_1)
+        cls.bug_2 = LinkReferenceFactory(execution=cls.execution_2)
+        cls.bug_3 = LinkReferenceFactory(execution=cls.execution_3)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.execution_1.run_id])
+        url = reverse('run-report', args=[self.test_run.pk])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, self.it.url_reg_exp % '5678')
-
-
-class Test_TestRunReportUnconfiguredGitHub(BaseCaseRun):
-    """
-        Test for https://github.com/kiwitcms/Kiwi/issues/100
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super(Test_TestRunReportUnconfiguredGitHub, cls).setUpTestData()
-
-        # NOTE: base_url, api_url, api_username and api_password
-        # are intentionally left blank!
-        cls.it = BugSystem.objects.create(
-            name='Partially configured GitHub',
-            url_reg_exp='https://github.com/kiwitcms/Kiwi/issues/%s',
-            validate_reg_exp=r'^\d+$',
-            tracker_type='GitHub'
-        )
-
-        cls.execution_1.add_bug('100', cls.it.pk)
-
-    def test_reports(self):
-        url = reverse('run-report', args=[self.execution_1.run_id])
-        response = self.client.get(url)
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, self.it.url_reg_exp % '100')
+        self.assertContains(response, self.bug_1.url)
+        self.assertContains(response, self.bug_2.url)
+        self.assertContains(response, self.bug_3.url)

@@ -83,15 +83,15 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" colspan="8" class='hide'>
-					{% if execution.bugs %}
-                                        <span class='notes_title'>{% trans "Bugs ID" %}:</span>
-					{% for bug in execution.bugs %}
-					<a href="{{ bug.bug_url }}">{{ bug.bug_id }}</a>
+					{% for bug in execution.get_bugs %}
+                                            {% if forloop.first %}
+                                                <h4>{% trans "Bugs" %}:</h4>
+                                            {% endif %}
+					<a href="{{ bug.url }}">{{ bug.url }}</a><br/>
 					{% endfor %}
-					{% endif %}
 
 					{% if execution.user_comments %}
-					<h4 style='padding:0px;margin:0px'>Comments</h4>
+					<h4>{% trans "Comments" %}:</h4>
 					<span class="notes" >
 						<ul style="margin-left:10px;" class='comment'>
 							{% for comment in execution.user_comments %}
@@ -111,40 +111,19 @@
 		<h3>Pending test cases: {{ summary_stats.idle }}</h3>
 		<h3>Test run completed: {{ summary_stats.complete|percentage:executions_count }}</h3>
 
-		{% if execution_bugs %}
-		<hr style="margin:40px auto 20px;"/>
-                <h2><a name="buglist" style="cursor:default; text-decoration:none">{% trans "Bug List" %}:</a></h2>
-
-		<table	class="list border-1" cellpadding="0" cellspacing="0">
-			<tr>
-                            <th width="150px">{% trans "Bug ID" %}</th>
-                            <th>{% trans "Bug Url" %}</th>
-			</tr>
-			{% for bug, bug_url in execution_bugs %}
-			<tr>
-				<td>{{ bug }}</td>
-				<td><a href="{{ bug_url }}" target="_blank">{{ bug_url }}</a></td>
-			</tr>
-			{% endfor %}
-		</table>
-		{% endif %}
-
-		{% if report_urls %}
-                <h2>{% trans "View all in Issue Tracker" %}</h2>
-                <em>{% trans "Only configured ITs which support multiple bugs are shown" %}</em>
-		<table class="list border-1" cellpadding="0" cellspacing="0">
-			<tr>
-                            <th width="150px">{% trans "Tracker" %}</th>
-                            <th>{% trans "URL" %}</th>
-			</tr>
-			{% for name, report_url in report_urls %}
-			<tr>
-				<td>{{ name }}</td>
-				<td><a href="{{ report_url }}" target="_blank">{{ report_url }}</a></td>
-			</tr>
-			{% endfor %}
-		</table>
-		{% endif %}
+                <hr/>
+                <table class="list border-1" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>{% trans "Bug List" %}</th>
+                    </tr>
+                    {% for execution in executions %}
+                        {% for bug in execution.get_bugs %}
+                            <tr>
+                                <td><a href="{{ bug.url }}" target="_blank">{{ bug.url }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
 	</div>
 	</div>
 </body>

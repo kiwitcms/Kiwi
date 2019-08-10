@@ -26,11 +26,9 @@ from tcms.management.models import Priority, Tag
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
-from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestExecutionDataMixin
 from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
 from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
-from tcms.issuetracker.types import IssueTrackerType
 from tcms.core.contrib.linkreference.models import LinkReference
 
 
@@ -350,42 +348,8 @@ class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-requ
         mode_stats = self.stats_mode_executions(case_runs)
         summary_stats = self.get_summary_stats(case_runs)
 
-        execution_bugs = []
-        bug_system_types = {}
-        # fixme: make this loop work with LinkReference objects
-        for _bug in get_run_bug_ids(run.pk):
-            # format the bug URLs based on DB settings
-            execution_bugs.append((
-                _bug['bug_id'],
-                _bug['bug_system__url_reg_exp'] % _bug['bug_id'],
-            ))
-            # find out all unique bug tracking systems which were used to record
-            # bugs in this particular test run. we use this data for reporting
-            if _bug['bug_system'] not in bug_system_types:
-                # store a tracker type object for producing the report URL
-                tracker_class = IssueTrackerType.from_name(_bug['bug_system__tracker_type'])
-                bug_system = BugSystem.objects.get(pk=_bug['bug_system'])
-                tracker = tracker_class(bug_system)
-                bug_system_types[_bug['bug_system']] = (tracker, [])
-
-            # store the list of bugs as well
-            bug_system_types[_bug['bug_system']][1].append(_bug['bug_id'])
-
-        # list of URLs which opens all bugs reported to every different
-        # issue tracker used in this test run
-        report_urls = []
-        for (issue_tracker, ids) in bug_system_types.values():
-            report_url = issue_tracker.all_issues_link(ids)
-            # if IT doesn't support this feature or report url is not configured
-            # the above method will return None
-            if report_url:
-                report_urls.append((issue_tracker.tracker.name, report_url))
-
-        case_run_bugs = self.get_execution_bugs(run.pk)
         comments = self.get_execution_comments(run.pk)
-
         for case_run in case_runs:
-            case_run.bugs = case_run_bugs.get(case_run.pk, ())
             case_run.user_comments = comments.get(case_run.pk, [])
 
         context = super().get_context_data(**kwargs)
@@ -393,10 +357,8 @@ class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-requ
             'test_run': run,
             'executions': case_runs,
             'executions_count': len(case_runs),
-            'execution_bugs': execution_bugs,
             'mode_stats': mode_stats,
             'summary_stats': summary_stats,
-            'report_urls': report_urls,
         })
 
         return context
