@@ -109,19 +109,6 @@ class IssueTrackerType:
                     and self.tracker.api_username
                     and self.tracker.api_password)
 
-    def all_issues_link(self, _ids):
-        """
-            Used in testruns.views.get() aka run/report.html to produce
-            a single URL which will open all reported issues into a single
-            page in the Issue tracker. For example Bugzilla supports listing
-            multiple bugs into a table. GitHub on the other hand doesn't
-            support this functionality.
-
-            :ids: - list of issues reported against test executions
-
-            :return: - None if not suported or string representing the URL
-        """
-
 
 class Bugzilla(IssueTrackerType):
     """
@@ -166,15 +153,6 @@ class Bugzilla(IssueTrackerType):
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
             bugzilla_integration.BugzillaThread(self.rpc, case, issue).start()
-
-    def all_issues_link(self, ids):
-        if not self.tracker.base_url:
-            return None
-
-        if not self.tracker.base_url.endswith('/'):
-            self.tracker.base_url += '/'
-
-        return self.tracker.base_url + 'buglist.cgi?bugidtype=include&bug_id=%s' % ','.join(ids)
 
     def report_issue_from_testcase(self, caserun):
         args = {}
@@ -245,15 +223,6 @@ class JIRA(IssueTrackerType):
         for case in testcases:
             jira_integration.JiraThread(self.rpc, case, issue).start()
 
-    def all_issues_link(self, ids):
-        if not self.tracker.base_url:
-            return None
-
-        if not self.tracker.base_url.endswith('/'):
-            self.tracker.base_url += '/'
-
-        return self.tracker.base_url + 'issues/?jql=issueKey%%20in%%20(%s)' % '%2C%20'.join(ids)
-
     def report_issue_from_testcase(self, caserun):
         """
             For the HTML API description see:
@@ -315,13 +284,6 @@ class GitHub(IssueTrackerType):
 
             You can leave the ``api_url`` and ``api_username`` fields blank because
             the integration code doesn't use them!
-
-        .. note::
-
-            GitHub does not support displaying multiple issues in a table format like
-            Bugzilla and JIRA do. This means that in Test Execution Report view you will
-            see GitHub issues listed one by one and there will not be a link to open all
-            of them inside GitHub's interface!
     """
 
     def __init__(self, tracker):
@@ -433,20 +395,6 @@ class Redmine(IssueTrackerType):
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
             redmine_integration.RedmineThread(self.rpc, case, issue).start()
-
-    def all_issues_link(self, ids):
-        if not self.tracker.base_url:
-            return None
-
-        if not self.tracker.base_url.endswith('/'):
-            self.tracker.base_url += '/'
-
-        query = 'issues?utf8=✓&set_filter=1&sort=id%3Adesc&f%5B%5D=issue_id'
-        query += '&op%5Bissue_id%5D=%3D&v%5Bissue_id%5D%5B%5D={0}'.format('%2C'.join(ids))
-        query += '&f%5B%5D=&c%5B%5D=tracker&c%5B%5D=status&c%5B%5D=priority'
-        query += '&c%5B%5D=subject&c%5B%5D=assigned_to&c%5B%5D=updated_on&group_by=&t%5B%5D='
-
-        return self.tracker.base_url + query
 
     def find_project_by_name(self, name):
         """
