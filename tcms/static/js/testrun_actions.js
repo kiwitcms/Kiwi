@@ -197,12 +197,6 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('.js-change-assignee').bind('click', function() {
     changeCaseRunAssignee();
   });
-  jQ('.js-add-bugs').bind('click', function() {
-    updateBugs('add');
-  });
-  jQ('.js-remove-bugs').bind('click', function() {
-    updateBugs('remove');
-  });
   jQ('.js-show-commentdialog').bind('click', function() {
     showCommentForm();
   });
@@ -692,94 +686,6 @@ function serialzeCaseForm(form, table, serialized) {
 function showCaseRunsWithSelectedStatus(form, status_id) {
   form.status__pk.value = status_id;
   fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
-}
-
-function updateBugsActionAdd(case_runs) {
-  var dialog = new AddIssueDialog({
-    'extraFormHiddenData': { 'case_runs': case_runs.join() },
-    'onSubmit': function(e, dialog) {
-      e.stopPropagation();
-      e.preventDefault();
-      var form_data = dialog.get_data();
-      form_data.bug_id = form_data.bug_id.trim();
-
-      if (!form_data.bug_id.length) {
-        return;
-      }
-
-      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
-        return false;
-      }
-
-      jQ.ajax({
-        url: '/caserun/update-bugs-for-many/',
-        dataType: 'json',
-        data: form_data,
-        success: function(res){
-          if (res.rc === 0) {
-            reloadWindow();
-          } else {
-            window.alert(res.response);
-            return false;
-          }
-        }
-      });
-    }
-  });
-  dialog.show();
-}
-
-function updateBugsActionRemove(case_runs) {
-  var dialog = new AddIssueDialog({
-    'action': 'Remove',
-    'show_bug_id_field': true,
-    'extraFormHiddenData': { 'case_runs': case_runs.join() },
-    'onSubmit': function(e, dialog) {
-      e.stopPropagation();
-      e.preventDefault();
-      var form_data = dialog.get_data();
-      form_data.bug_id = form_data.bug_id.trim();
-
-      if (!form_data.bug_id.length) {
-        return;
-      }
-
-      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
-        return false;
-      }
-
-      jQ.ajax({
-        url: '/caserun/update-bugs-for-many/',
-        dataType: 'json',
-        success: function(res) {
-          if (res.rc == 0) {
-            reloadWindow();
-          } else {
-            window.alert(res.response);
-            return false;
-          }
-        },
-        data: form_data,
-      });
-    }
-  });
-  dialog.show();
-}
-
-function updateBugs(action) {
-  var runs = serializeCaseRunFromInputList(jQ('#id_table_cases')[0]);
-  if (!runs.length) {
-    window.alert(default_messages.alert.no_case_selected);
-    return false;
-  }
-
-  if (action === "add") {
-    updateBugsActionAdd(runs);
-  } else if (action === "remove") {
-    updateBugsActionRemove(runs);
-  } else {
-    throw new Error("Unknown operation when update case runs' bugs. This should not happen.");
-  }
 }
 
 function showCommentForm() {
