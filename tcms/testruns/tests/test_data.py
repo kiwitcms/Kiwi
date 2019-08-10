@@ -4,9 +4,7 @@
 from datetime import datetime
 
 from tcms.core.helpers.comments import add_comment
-from tcms.testcases.models import BugSystem
 from tcms.testruns.data import TestExecutionDataMixin
-from tcms.testruns.data import get_run_bug_ids
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import TestExecutionFactory
@@ -77,102 +75,6 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
         self.assertEqual(6, data.CaseRunsTotalCount)
         self.assertEqual(expected_completed_percentage, data.CompletedPercentage)
         self.assertEqual(expected_failure_percentage, data.FailurePercentage)
-
-
-class TestGetRunBugIDs(BaseCaseRun):
-    """Test get_run_bug_ids"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestGetRunBugIDs, cls).setUpTestData()
-
-        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
-
-        cls.execution_1.add_bug('123456', bug_system_id=cls.bugzilla.pk)
-        cls.execution_1.add_bug('100000', bug_system_id=cls.bugzilla.pk)
-        cls.execution_1.add_bug('100001', bug_system_id=cls.bugzilla.pk)
-        cls.execution_2.add_bug('100001', bug_system_id=cls.bugzilla.pk)
-
-    def test_get_bug_ids_when_no_bug_is_added(self):
-        bug_ids = get_run_bug_ids(self.test_run_1.pk)
-        self.assertEqual(0, len(bug_ids))
-
-    def test_get_bug_ids(self):
-        bug_ids = get_run_bug_ids(self.test_run.pk)
-
-        self.assertEqual(3, len(bug_ids))
-
-        # Convert result to list in order to compare more easily
-        received_bugs = []
-        for bug in bug_ids:
-            received_bugs.append(bug['bug_system__url_reg_exp'] % bug['bug_id'])
-
-        self.assertIn(self.bugzilla.url_reg_exp % '123456', received_bugs)
-        self.assertIn(self.bugzilla.url_reg_exp % '100000', received_bugs)
-        self.assertIn(self.bugzilla.url_reg_exp % '100001', received_bugs)
-
-
-class TestGetExecutionBugs(BaseCaseRun):
-    """Test TestExecutionDataMixin.get_caseruns_bugs"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-
-        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
-        cls.jira = BugSystem.objects.get(name='JIRA')
-
-        cls.bz_bug_1 = '12345'
-        cls.execution_1.add_bug(cls.bz_bug_1, bug_system_id=cls.bugzilla.pk)
-        cls.bz_bug_2 = '10000'
-        cls.execution_1.add_bug(cls.bz_bug_2, bug_system_id=cls.bugzilla.pk)
-        cls.jira_nitrate_1 = 'NITRATE-1'
-        cls.execution_1.add_bug(cls.jira_nitrate_1, bug_system_id=cls.jira.pk)
-        cls.jira_nitrate_2 = 'NITRATE-2'
-        cls.execution_2.add_bug(cls.jira_nitrate_2, bug_system_id=cls.jira.pk)
-
-    def test_empty_if_no_bugs(self):
-        data = TestExecutionDataMixin()
-        result = data.get_execution_bugs(self.test_run_1.pk)
-        self.assertEqual({}, result)
-
-    def test_get_bugs(self):
-        data = TestExecutionDataMixin()
-        result = data.get_execution_bugs(self.test_run.pk)
-        expected_result = {
-            self.execution_1.pk: [
-                {
-                    'bug_id': self.bz_bug_1,
-                    'case_run': self.execution_1.pk,
-                    'bug_system__url_reg_exp': self.bugzilla.url_reg_exp,
-                    'bug_url': self.bugzilla.url_reg_exp % self.bz_bug_1,
-                },
-                {
-                    'bug_id': self.bz_bug_2,
-                    'case_run': self.execution_1.pk,
-                    'bug_system__url_reg_exp': self.bugzilla.url_reg_exp,
-                    'bug_url': self.bugzilla.url_reg_exp % self.bz_bug_2,
-                },
-                {
-                    'bug_id': self.jira_nitrate_1,
-                    'case_run': self.execution_1.pk,
-                    'bug_system__url_reg_exp': self.jira.url_reg_exp,
-                    'bug_url': self.jira.url_reg_exp % self.jira_nitrate_1,
-                }
-            ],
-            self.execution_2.pk: [
-                {
-                    'bug_id': self.jira_nitrate_2,
-                    'case_run': self.execution_2.pk,
-                    'bug_system__url_reg_exp': self.jira.url_reg_exp,
-                    'bug_url': self.jira.url_reg_exp % self.jira_nitrate_2,
-                }
-            ],
-        }
-
-        for exp_key in expected_result:
-            for exp_bug in expected_result[exp_key]:
-                self.assertIn(exp_bug, result[exp_key])
 
 
 class TestGetExecutionComments(BaseCaseRun):
