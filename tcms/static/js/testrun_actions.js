@@ -107,7 +107,7 @@ Nitrate.TestRuns.Details.on_load = function() {
       });
       c_container.find('.js-add-testlog').bind('click', function(){
         var params = jQ(this).data('params');
-        addLinkToCaseRun(this, params[0], params[1]);
+        addLinkToTestExecution(this, params[0], [params[1]]);
       });
       c_container.find('.js-remove-testlog').bind('click', function(){
         var button = this;
@@ -210,6 +210,11 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('.js-show-commentdialog').bind('click', function() {
     showCommentForm();
   });
+
+    $('.js-add-links').bind('click', function() {
+        bulkAddLinkToTestExecution();
+    });
+
   jQ('.js-add-cc').bind('click', function() {
     addRunCC(jQ(this).data('param'), jQ('.js-cc-ul')[0]);
   });
@@ -842,26 +847,34 @@ jQ(document).ready(function(){
   });
 });
 
-function get_addlink_dialog() {
-  return jQ('#addlink_dialog');
+
+function bulkAddLinkToTestExecution() {
+    var execution_ids = serializeCaseRunFromInputList(jQ('#id_table_cases')[0]);
+    if (!execution_ids.length) {
+        return window.alert(default_messages.alert.no_case_selected);
+    }
+
+    addLinkToTestExecution(null, null, execution_ids);
 }
 
 /*
- * Add link to case run
- *
  * - sender: the Add link button, which is pressed to fire this event.
- * - target_id: to which TestExecution the new link will be linked.
+ * - case_id: used for reloading TE details. In case of bulk actions this
+ *            is null/undefined and the entire page is reloaded!
+ * - execution_ids: Array of TestExecution IDs to which the new link will be added
  */
-function addLinkToCaseRun(sender, case_id, case_run_id) {
-  var dialog_p = get_addlink_dialog();
+function addLinkToTestExecution(sender, case_id, execution_ids) {
+  var dialog_p = jQ('#addlink_dialog');
 
-  dialog_p.dialog('option', 'target_id', case_run_id);
-  // These two options are used for reloading TestExecution when successfully.
-  var container = jQ(sender).parents('.case_content.hide')[0];
-  dialog_p.dialog('option', 'container', container);
-  var title_container = jQ(container).prev()[0];
-  dialog_p.dialog('option', 'title_container', title_container);
+  dialog_p.dialog('option', 'target_id', execution_ids);
   dialog_p.dialog('option', 'case_id', case_id);
+  if (case_id) {
+      // These two options are used for reloading TestExecution when successfully.
+      var container = jQ(sender).parents('.case_content.hide')[0];
+      dialog_p.dialog('option', 'container', container);
+      var title_container = jQ(container).prev()[0];
+      dialog_p.dialog('option', 'title_container', title_container);
+  }
   dialog_p.dialog('open');
 }
 
@@ -870,7 +883,7 @@ function addLinkToCaseRun(sender, case_id, case_run_id) {
  * to an arbitrary instance of TestExecution
  */
 function initialize_addlink_dialog() {
-  var dialog_p = get_addlink_dialog();
+  var dialog_p = jQ('#addlink_dialog');
 
   dialog_p.dialog({
     autoOpen: false,
@@ -889,17 +902,26 @@ function initialize_addlink_dialog() {
       "OK": function() {
         var name = jQ('#testlog_name').attr('value');
         var url = jQ('#testlog_url').attr('value');
-        var target_id = jQ(this).dialog('option', 'target_id');
+        var case_id = dialog_p.dialog('option', 'case_id');
 
-        jsonRPC('TestExecution.add_link', [target_id, name, url], function(result) {
-            dialog_p.dialog('close');
+        dialog_p.dialog('close');
 
-            // Begin to construct case run area
-            var container = dialog_p.dialog('option', 'container');
-            var title_container = dialog_p.dialog('option', 'title_container');
-            var case_id = dialog_p.dialog('option', 'case_id');
-            constructCaseRunZone(container, title_container, case_id);
+        jQ(this).dialog('option', 'target_id').forEach(function(target_id) {
+            jsonRPC('TestExecution.add_link', [target_id, name, url], function(result) {
+                // when bulk adding links case_id will be undefined/null
+                if (case_id) {
+                    // Begin to construct case run area
+                    var container = dialog_p.dialog('option', 'container');
+                    var title_container = dialog_p.dialog('option', 'title_container');
+                    constructCaseRunZone(container, title_container, case_id);
+                }
+            });
         });
+
+        // reload entire page if adding in bulk
+        if (!case_id) {
+            window.location.reload(true);
+        }
       },
       "Cancel": function() {
         jQ(this).dialog('close');
