@@ -3,6 +3,7 @@ from django.core.serializers.json import Serializer as JsonSerializer
 
 
 # todo: start removing xmlrpc.serializer classes in favor of this one
+# or Django's model_to_dict() in the case when returning a single object
 # this will likely cause breakages in our API clients (particularly UI)
 # which rely on some foreign key fields being present in the result
 class Serializer(JsonSerializer):

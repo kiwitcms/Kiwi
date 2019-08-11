@@ -159,14 +159,11 @@ class TestExecutionAddLink(XmlrpcAPIBaseTest):
         with self.assertRaisesRegex(XmlRPCFault, 'constraint fail|violates foreign key'):
             self.rpc_client.exec.TestExecution.add_link(-5, 'A test log', 'http://example.com')
 
-    def test_attach_log_with_invalid_url(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Enter a valid URL'):
-            self.rpc_client.exec.TestExecution.add_link(self.case_run.pk, "UT test logs", 'aaaaaa')
-
     def test_attach_log(self):
         url = "http://127.0.0.1/test/test-log.log"
-        log_id = self.rpc_client.exec.TestExecution.add_link(self.case_run.pk, "UT test logs", url)
-        self.assertGreater(log_id, 0)
+        result = self.rpc_client.exec.TestExecution.add_link(self.case_run.pk, "UT test logs", url)
+        self.assertGreater(result['id'], 0)
+        self.assertEqual(result['url'], url)
 
 
 class TestExecutionRemoveLink(XmlrpcAPIBaseTest):
@@ -188,19 +185,20 @@ class TestExecutionRemoveLink(XmlrpcAPIBaseTest):
         self.link = self.case_run.links()[0]
 
     def test_doesnt_raise_with_non_existing_id(self):
-        self.rpc_client.exec.TestExecution.remove_link(-9, self.link.pk)
+        self.rpc_client.exec.TestExecution.remove_link({'execution_id': -9})
         links = self.case_run.links()
         self.assertEqual(1, links.count())
         self.assertEqual(self.link.pk, links[0].pk)
 
     def test_detach_log_with_non_exist_log(self):
-        self.rpc_client.exec.TestExecution.remove_link(self.case_run.pk, 999999999)
+        self.rpc_client.exec.TestExecution.remove_link({'pk': 999999999})
         links = self.case_run.links()
         self.assertEqual(1, links.count())
         self.assertEqual(self.link.pk, links[0].pk)
 
     def test_detach_log(self):
-        self.rpc_client.exec.TestExecution.remove_link(self.case_run.pk, self.link.pk)
+        self.rpc_client.exec.TestExecution.remove_link({'execution_id': self.case_run.pk,
+                                                        'pk': self.link.pk})
         self.assertEqual([], list(self.case_run.links()))
 
 

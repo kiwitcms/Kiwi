@@ -110,7 +110,10 @@ Nitrate.TestRuns.Details.on_load = function() {
         addLinkToCaseRun(this, params[0], params[1]);
       });
       c_container.find('.js-remove-testlog').bind('click', function(){
-        removeLink(this, window.parseInt(jQ(this).data('param')));
+        var button = this;
+        jsonRPC('TestExecution.remove_link', [{pk: $(button).data('param')}], function(result) {
+            button.parentNode.remove();
+        });
       });
     };
 
@@ -844,32 +847,6 @@ function get_addlink_dialog() {
 }
 
 /*
- * Do AJAX request to backend to remove a link
- *
- * - sender:
- * - link_id: the ID of an arbitrary link.
- */
-function removeLink(sender, link_id) {
-  jQ.ajax({
-    url: '/linkref/remove/' + link_id + '/',
-    type: 'GET',
-    dataType: 'json',
-    success: function(data, textStatus, jqXHR) {
-      if (data.rc !== 0) {
-        window.alert(data.response);
-        return false;
-      }
-      var li_node = sender.parentNode;
-      li_node.parentNode.removeChild(li_node);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      var data = JSON.parse(jqXHR.responseText);
-      window.alert(data.message);
-    }
-  });
-}
-
-/*
  * Add link to case run
  *
  * - sender: the Add link button, which is pressed to fire this event.
@@ -910,21 +887,11 @@ function initialize_addlink_dialog() {
     },
     buttons: {
       "OK": function() {
-        // TODO: validate name and url
         var name = jQ('#testlog_name').attr('value');
         var url = jQ('#testlog_url').attr('value');
         var target_id = jQ(this).dialog('option', 'target_id');
 
-        jQ.ajax({
-          url: '/linkref/add/',
-          type: 'POST',
-          data: { name: name, url: url, target_id: target_id },
-          dataType: 'json',
-          success: function(data, textStatus, jqXHR) {
-            if (data.rc !== 0) {
-              window.alert(data.response);
-              return false;
-            }
+        jsonRPC('TestExecution.add_link', [target_id, name, url], function(result) {
             dialog_p.dialog('close');
 
             // Begin to construct case run area
@@ -932,11 +899,6 @@ function initialize_addlink_dialog() {
             var title_container = dialog_p.dialog('option', 'title_container');
             var case_id = dialog_p.dialog('option', 'case_id');
             constructCaseRunZone(container, title_container, case_id);
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            var data = JSON.parse(jqXHR.responseText);
-            window.alert(data.response);
-          }
         });
       },
       "Cancel": function() {

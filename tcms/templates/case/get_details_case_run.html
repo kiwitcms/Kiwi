@@ -188,12 +188,12 @@
 				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
 					<tr>
 						<td>
-                                                    <h4 class="borderB">{% trans "Test Link" %} <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>]</span></h4>
+                                                    <h4 class="borderB">{% trans "Links" %} <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>]</span></h4>
 							<div class="content">
 									<ul class="ul-format">
 										{% for link in execution.links %}
 										<li>
-											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape }}</a>
+											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape|default:link.url }}</a>
 											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
 											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
 												<img title="Remove this log" src="{% static 'images/remove_small.png' %}" />
