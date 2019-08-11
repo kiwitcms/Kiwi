@@ -17,7 +17,6 @@ from modernrpc.views import RPCEntryPoint
 from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
-from tcms.core.contrib.linkreference import views as linkreference_views
 from tcms.testplans import urls as testplans_urls
 from tcms.testcases import urls as testcases_urls
 from tcms.kiwi_auth import urls as auth_urls
@@ -63,9 +62,6 @@ urlpatterns = [
 
     url(r'^caserun/comment-many/', ajax.comment_case_runs, name='ajax-comment_case_runs'),
     url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
-
-    url(r'^linkref/add/$', linkreference_views.add, name='linkref-add'),
-    url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
 
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog

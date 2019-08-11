@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import time
 
+from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import form_errors_to_list
 from tcms.core.contrib.comments.forms import SimpleForm
 from tcms.core.contrib.comments import utils as comment_utils
-from tcms.core.contrib.linkreference.views import create_link
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testruns.models import TestExecution
@@ -164,6 +164,7 @@ def update(case_run_id, values, **kwargs):
     return tcr.serialize()
 
 
+# todo: missing permissions
 @rpc_method(name='TestExecution.add_link')
 def add_link(case_run_id, name, url):
     """
@@ -177,35 +178,34 @@ def add_link(case_run_id, name, url):
         :type name: str
         :param url: URL address
         :type url: str
-        :return: ID of created link
-        :rtype: int
+        :return: Serialized
+                 :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :raises: RuntimeError if operation not successfull
     """
-    result = create_link({
-        'name': name,
-        'url': url,
-        'target': 'TestExecution',
-        'target_id': case_run_id
-    })
-    if result['rc'] != 0:
-        raise RuntimeError(result['response'])
-    return result['data']['pk']
+    link, _ = LinkReference.objects.get_or_create(
+        execution_id=case_run_id,
+        name=name,
+        url=url,
+    )
+    response = model_to_dict(link)
+    response['rc'] = 0
+    return response
 
 
+# todo: missing permissions
 @rpc_method(name='TestExecution.remove_link')
-def remove_link(case_run_id, link_id):
+def remove_link(query):
     """
-    .. function:: XML-RPC TestExecution.remove_link(case_run_id, link_id)
+    .. function:: XML-RPC TestExecution.remove_link(query)
 
         Remove URL link from TestExecution
 
-        :param case_run_id: PK of TestExecution to modify
-        :type case_run_id: int
-        :param link_id: PK of link to remove
-        :type link_id: int
+        :param query: Field lookups for
+                      :class:`tcms.core.contrib.linkreference.models.LinkReference`
+        :type query: dict
         :return: None
     """
-    LinkReference.objects.filter(pk=link_id, execution=case_run_id).delete()
+    LinkReference.objects.filter(**query).delete()
 
 
 @rpc_method(name='TestExecution.get_links')

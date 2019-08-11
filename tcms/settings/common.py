@@ -320,7 +320,9 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
 COMMENTS_APP = 'tcms.core.contrib.comments'
 
+# in alphabetic order
 MODERNRPC_METHODS_MODULES = [
+    'tcms.telemetry.api',
     'tcms.xmlrpc.api.attachment',
     'tcms.xmlrpc.api.auth',
     'tcms.xmlrpc.api.bug',
@@ -341,7 +343,6 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.xmlrpc.api.testrun',
     'tcms.xmlrpc.api.user',
     'tcms.xmlrpc.api.version',
-    'tcms.telemetry.api'
 ]
 
 # Enable the administrator delete permission
