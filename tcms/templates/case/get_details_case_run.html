@@ -78,9 +78,6 @@
                             <h4 class="borderB">{% trans "bug" %}
 					<span>
                                             <a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ execution.run_id }}, {{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Report" %}</a>&nbsp;|&nbsp;
-						{% if perms.testcases.add_bug %}
-                                                <a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ execution.run_id }}, {{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>
-						{% endif %} ]
 					</span>
 				</h4>
 			</div>
