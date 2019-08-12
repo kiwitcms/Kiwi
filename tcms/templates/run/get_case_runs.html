@@ -49,7 +49,7 @@
 			</ul>
 		</div>
                 <div class="btnBlueCaserun">
-                    <span>{% trans "Links" %}</span>
+                    <span>{% trans "Hyperlink" %}</span>
                         <ul>
                             {% if perms.linkreference.add_linkreference %}
                             <li><a href="#" class="addBlue9 js-add-links">{% trans "Add" %}</a></li>
@@ -134,7 +134,7 @@
 
 {% include "run/table_executions.html" %}
 
-<div id="addlink_dialog" title="Add Test Link">
+<div id="addlink_dialog" title="Add hyperlink">
     <form>
         <fieldset>
             <label for="testlog_url">{% trans "URL" %} <span style="color:red">*</span></label>
