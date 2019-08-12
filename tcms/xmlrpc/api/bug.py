@@ -12,7 +12,6 @@ from tcms.core.contrib.linkreference.models import LinkReference
 
 __all__ = (
     'create',
-    'remove',
     'report',
     'filter',
 )
@@ -87,37 +86,6 @@ def create(values, auto_report=False):
             response['response'] = _('Enable linking test cases by configuring '
                                      'API parameters for this Issue Tracker!')
     return response
-
-
-@permissions_required('testcases.delete_bug')
-@rpc_method(name='Bug.remove')
-def remove(query):
-    """
-    .. function:: XML-RPC Bug.remove(query)
-
-        Remove bugs from pre-existing TestCase or TestExecution object(s).
-
-        :param query: Field lookups for :class:`tcms.testcases.models.Bug`
-        :type query: dict
-        :return: None
-        :raises: PermissionDenied if missing the *testcases.delete_bug* permission
-
-        Example - removing bug from TestCase::
-
-            >>> Bug.remove({
-                'case_id': 12345,
-                'bug_id': 67890,
-                'case_run__isnull': True
-            })
-
-        Example - removing bug from TestExecution (specify case_run_id)::
-
-            >>> Bug.remove({
-                'bug_id': 67890,
-                'case_run_id': 99999,
-            })
-    """
-    return Bug.objects.filter(**query).delete()
 
 
 @rpc_method(name='Bug.report')
