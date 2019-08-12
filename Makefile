@@ -19,7 +19,7 @@ ifeq ($(TEST_DB),MariaDB)
 	DJANGO_SETTINGS_MODULE="tcms.settings.test.mariadb"
 endif
 
-ifeq ($(TEST_DB),Postgres)
+ifeq ($(TEST_DB),Postgresql)
 	DJANGO_SETTINGS_MODULE="tcms.settings.test.postgresql"
 endif
 
@@ -27,7 +27,7 @@ endif
 .PHONY: test
 test:
 	if [ "$$TEST_DB" == "all" ]; then \
-		for DB in SQLite MySQL Postgres MariaDB; do \
+		for DB in SQLite MySQL Postgresql MariaDB; do \
 			TEST_DB=$$DB make test; \
 		done; \
 	else \

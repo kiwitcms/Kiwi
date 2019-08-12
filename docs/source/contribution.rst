@@ -21,7 +21,7 @@ following syntax is supported::
         make check (uses SQlite)
         TEST_DB=MySQL make check
         TEST_DB=MariaDB make check
-        TEST_DB=Postgres make check
+        TEST_DB=Postgresql make check
         TEST_DB=all make check (will test on all DBs)
 
 .. note::

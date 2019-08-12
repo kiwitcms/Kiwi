@@ -55,7 +55,7 @@ Then install dependencies for development::
 
 .. note::
 
-    Alternatively you can use ``requirements/postgres.txt`` for PostgreSQL!
+    Alternatively you can use ``requirements/postgresql.txt`` for PostgreSQL!
 
 The user interface needs the `PatternFly <http://www.patternfly.org/>`_ library so::
 

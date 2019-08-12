@@ -8,7 +8,7 @@ requirements:
   - requirements/mariadb.txt:
       update: all
       pin: True
-  - requirements/postgres.txt:
+  - requirements/postgresql.txt:
       update: all
       pin: True
   - requirements/readthedocs.txt:
