@@ -74,13 +74,6 @@
                                 <div><span class="detail_title"><span class="detail_title">{% trans "Run Date" %}:</span>{{ execution.close_date }}</div>
                                 <div><span class="detail_title">{% trans "Build" %}:</span>{{ execution.build }} <span class="detail_title marginLeft">{% trans "Text Version" %}:</span>{{ execution.case_text_version }}</div>
 			</div>
-			<div class="container">
-                            <h4 class="borderB">{% trans "bug" %}
-					<span>
-                                            <a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ execution.run_id }}, {{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Report" %}</a>&nbsp;|&nbsp;
-					</span>
-				</h4>
-			</div>
 			<div class="container" style="min-height:50px;">
 				{% if execution_logs %}
 				<h4 class="borderB">Change Log<span>[ <a href="javascript:void(0);" class="js-show-changelog" data-param="changeLog{{ execution.pk }}">Show All</a> ]</span></h4>
@@ -106,6 +99,33 @@
 					</td>
 				</tr>
 			</table>
+			<div class="container">
+				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
+					<tr>
+						<td>
+                                                    <h4 class="borderB">
+                                                        {% trans "Bugs and hyperlinks" %}
+                                                        <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>]</span>
+                                                        <span style="float:right">[<a href="javascript:void(0);" title="Report" class="js-file-caserun-bug" data-params='[{{ execution.run_id }}, {{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Report bug" %}</a>]</span>
+                                                    </h4>
+
+							<div class="content">
+									<ul class="ul-format">
+										{% for link in execution.links %}
+										<li>
+											<a {% if link.is_defect %}class="have_bug"{% endif %} href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape|default:link.url }}</a>
+											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
+											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
+												<img title="Remove this log" src="{% static 'images/remove_small.png' %}" />
+											</a>
+										</li>
+										{% endfor %}
+									</ul>
+							 </div>
+							</td>
+						</tr>
+					</table>
+			</div>
 			<div class="container">
 				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
 					<tr>
@@ -153,28 +173,7 @@
 					</tr>
 				</table>
 			</div>
-			<div class="container">
-				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
-					<tr>
-						<td>
-                                                    <h4 class="borderB">{% trans "Links" %} <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>]</span></h4>
-							<div class="content">
-									<ul class="ul-format">
-										{% for link in execution.links %}
-										<li>
-											<a {% if link.is_defect %}class="have_bug"{% endif %} href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape|default:link.url }}</a>
-											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
-											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
-												<img title="Remove this log" src="{% static 'images/remove_small.png' %}" />
-											</a>
-										</li>
-										{% endfor %}
-									</ul>
-							 </div>
-							</td>
-						</tr>
-					</table>
-			</div>
+
 		</div>
 		<div class="clear"></div>
 	</div>
