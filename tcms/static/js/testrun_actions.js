@@ -97,10 +97,6 @@ Nitrate.TestRuns.Details.on_load = function() {
         var params = jQ(this).data('params');
         fileCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
       });
-      c_container.find('.js-add-caserun-bug').bind('click', function(){
-        var params = jQ(this).data('params');
-        addCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
-      });
       c_container.find('.js-add-testlog').bind('click', function(){
         var params = jQ(this).data('params');
         addLinkToTestExecution(this, params[0], [params[1]]);
@@ -392,12 +388,6 @@ function AddIssueDialog(options) {
   if (this.a === undefined) {
     this.a = this.action.toLowerCase();
   }
-
-  if (options.hasOwnProperty("show_bug_id_field")) {
-    this.show_bug_id_field = options.show_bug_id_field;
-  } else {
-    this.show_bug_id_field = false;
-  }
 }
 
 
@@ -418,8 +408,6 @@ AddIssueDialog.prototype.show = function () {
   var context = {
     'hiddenFields': hiddenPart,
     'action_button_text': this.action,
-    'show_bug_id_field': this.show_bug_id_field || this.action === 'Add',
-    'show_add_to_bugzilla_checkbox': this.action === 'Add',
     'a': this.a,
   };
 
@@ -444,8 +432,6 @@ AddIssueDialog.prototype.show = function () {
 
 AddIssueDialog.prototype.get_data = function () {
   var form_data = Nitrate.Utils.formSerialize(this.form);
-  form_data.bug_validation_regexp = $('#bug_system_id option:selected').data('validation-regexp');
-  form_data.bz_external_track = $('input[name=bz_external_track]').is(':checked');
   return form_data;
 };
 
@@ -469,42 +455,6 @@ function fileCaseRunBug(run_id, title_container, container, case_id, case_run_id
                 window.alert(result.response);
             }
       });
-    }
-  });
-
-  dialog.show();
-}
-
-function addCaseRunBug(run_id, title_container, container, case_id, case_run_id) {
-  var dialog = new AddIssueDialog({
-    'onSubmit': function (e, dialog) {
-      e.stopPropagation();
-      e.preventDefault();
-
-      form_data = dialog.get_data();
-
-      form_data.bug_id = form_data.bug_id.trim();
-      if (!form_data.bug_id.length) {
-        return;
-      }
-
-        jsonRPC('Bug.create', [{
-                case_id: case_id,
-                case_run_id: case_run_id,
-                bug_id: form_data.bug_id,
-                bug_system_id: form_data.bug_system_id
-            }, form_data.bz_external_track],
-            function(result) {
-                // todo: missing error handling when bz_external_track is true
-                $('#dialog').hide();
-
-                // Update bugs count associated with just updated case run
-                var jqCaserunBugCount = $('span#' + case_run_id + '_case_bug_count');
-                jqCaserunBugCount.addClass('have_bug');
-
-                // refresh the links of bugs
-                constructCaseRunZone(container, title_container, case_id);
-        });
     }
   });
 
