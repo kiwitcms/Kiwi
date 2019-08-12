@@ -209,17 +209,18 @@ def remove_link(query):
 
 
 @rpc_method(name='TestExecution.get_links')
-def get_links(case_run_id):
+def get_links(query):
     """
-    .. function:: XML-RPC TestExecution.get_links(case_run_id)
+    .. function:: XML-RPC TestExecution.get_links(query)
 
         Get URL links for the specified TestExecution
 
-        :param case_run_id: PK of TestExecution object
-        :type case_run_id: int
+        :param query: Field lookups for
+                      :class:`tcms.core.contrib.linkreference.models.LinkReference`
+        :type query: dict
         :return: Serialized list of :class:`tcms.core.contrib.linkreference.models.LinkReference`
                  objects
     """
-    links = LinkReference.objects.filter(execution=case_run_id)
+    links = LinkReference.objects.filter(**query)
     serialier = XMLRPCSerializer(links)
     return serialier.serialize_queryset()

@@ -217,7 +217,9 @@ $(document).ready(function() {
     // bugs table
     var bugs_table = $('#bugs').DataTable({
         ajax: function(data, callback, settings) {
-            dataTableJsonRPC('Bug.filter', {execution__case: case_id}, callback);
+            dataTableJsonRPC('TestExecution.get_links',
+                             {execution__case: case_id,
+                              is_defect: true}, callback);
         },
         columns: [
             {

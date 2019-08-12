@@ -6,38 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 from tcms.issuetracker.types import IssueTrackerType
-from tcms.core.contrib.linkreference.models import LinkReference
 
 
 __all__ = (
     'report',
-    'filter',
 )
-
-
-@rpc_method(name='Bug.filter')
-def filter(query):  # pylint: disable=redefined-builtin
-    """
-    .. function:: XML-RPC Bug.filter(query)
-
-        Get list of bugs that are associated with TestCase or
-        a TestExecution.
-
-        :param query: Field lookups for :class:`tcms.core.contrib.linkreference.LinkReference`
-        :type query: dict
-        :return: List of serialized :class:`tcms.core.contrib.linkreference.LinkReference`
-                 objects.
-
-        Get all bugs for particular TestCase::
-
-            >>> Bug.filter({'execution__case': 123})
-
-        Get all bugs for a particular TestExecution::
-
-            >>> Bug.filter({'execution': 1234})
-    """
-    query['is_defect'] = True
-    return list(LinkReference.objects.filter(**query).values())
 
 
 @rpc_method(name='Bug.report')
