@@ -6,12 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 from tcms.issuetracker.types import IssueTrackerType
-from tcms.xmlrpc.decorators import permissions_required
 from tcms.core.contrib.linkreference.models import LinkReference
 
 
 __all__ = (
-    'create',
     'report',
     'filter',
 )
@@ -40,52 +38,6 @@ def filter(query):  # pylint: disable=redefined-builtin
     """
     query['is_defect'] = True
     return list(LinkReference.objects.filter(**query).values())
-
-
-@permissions_required('testcases.add_bug')
-@rpc_method(name='Bug.create')
-def create(values, auto_report=False):
-    """
-    .. function:: XML-RPC Bug.create(values, auto_report=False)
-
-        Attach a bug to pre-existing TestCase or TestExecution object.
-
-        :param values: Field values for :class:`tcms.testcases.models.Bug`
-        :type values: dict
-        :param auto_report: Automatically report to Issue Tracker
-        :type auto_report: bool, default=False
-        :return: Serialized :class:`tcms.testcases.models.Bug` object
-        :raises: PermissionDenied if missing the *testcases.add_bug* permission
-
-        .. note::
-
-            `case_run_id` can be None. In this case the bug will be attached only
-            to the TestCase with specified `case_id`.
-
-        Example (doesn't specify case_run_id)::
-
-            >>> Bug.create({
-                'case_id': 12345,
-                'bug_id': 67890,
-                'bug_system_id': 1,
-                'summary': 'Testing TCMS',
-                'description': 'Just foo and bar',
-            })
-    """
-    bug, _ = Bug.objects.get_or_create(**values)
-    response = bug.serialize()
-    response['rc'] = 0
-
-    if auto_report:
-        tracker = IssueTrackerType.from_name(bug.bug_system.tracker_type)(bug.bug_system)
-
-        if not tracker.is_adding_testcase_to_issue_disabled():
-            tracker.add_testcase_to_issue([bug.case], bug)
-        else:
-            response['rc'] = 1
-            response['response'] = _('Enable linking test cases by configuring '
-                                     'API parameters for this Issue Tracker!')
-    return response
 
 
 @rpc_method(name='Bug.report')

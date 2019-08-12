@@ -158,27 +158,11 @@
 			<div class="bug_type" id="id_bug_type">Issue Tracker</div>
 			<select name="bug_system_id" id="bug_system_id">
 			{% for btr in bug_trackers %}
-				<option value="{{ btr.pk }}" data-validation-regexp="{{ btr.validate_reg_exp }}">{{ btr.name }}</option>
+				<option value="{{ btr.pk }}">{{ btr.name }}</option>
 			{% endfor %}
 			</select>
 			</br>
 {% verbatim %}
-                    {{#if show_bug_id_field}}
-			<div id="bug-system" style="line-height:30px;">
-                                <div class="bug_id">
-{% endverbatim %}{% trans "Bug ID" %}{% verbatim %}
-                                </div>
-				<input type="text" name="bug_id">
-                            {{#if show_add_to_bugzilla_checkbox}}
-				</br>
-				<input type="checkbox" name="bz_external_track" value="bz_external_track">&nbsp;
-                                <span class="use_bz_external_track">
-{% endverbatim %}{% trans "Check to add Test Case(s) to Issue Tracker" %}{% verbatim %}
-                                </span>
-                            {{/if}}
-			</div>
-			</br></br>
-                    {{/if}}
 			<div>
 				<input type="submit" value="{{ action_button_text }}">
 {% endverbatim %}
