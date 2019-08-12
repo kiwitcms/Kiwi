@@ -30,9 +30,13 @@ $(which python) setup.py sdist >/dev/null
 $(which python) setup.py bdist_wheel >/dev/null
 set +e
 
-# check rst formatting of README before building the package
-echo "..... Check rst formatting for PyPI"
-twine check dist/* || exit 1
+# we avoid installing twine inside buildroot b/c we're building
+# for release then. However twine is available locally and inside Travis CI
+if [ -n "$(which twine)" ]; then
+    # check rst formatting of README before building the package
+    echo "..... Check rst formatting for PyPI"
+    twine check dist/* || exit 1
+fi
 
 # then run some sanity tests
 for PKG_NAME in kiwitcms; do

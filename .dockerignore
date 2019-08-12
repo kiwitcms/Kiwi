@@ -1,6 +1,4 @@
-*.in
 *.ini
 *.pyc
 docs/
 *.egg-info/
-setup.*

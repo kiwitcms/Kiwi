@@ -71,8 +71,14 @@ bandit_site_packages:
 
 .PHONY: docker-image
 docker-image:
-	find -name "*.pyc" -delete
-	./tests/check-build
+	sudo rm -rf dist/
+	docker build -t kiwitcms/buildroot -f Dockerfile.buildroot .
+	docker run --rm --security-opt label=disable \
+	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \
+	            -r /Kiwi/dist/ /host/
+	docker run --rm --security-opt label=disable \
+	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \
+	            -r /venv /host/dist/
 	docker build -t kiwitcms/kiwi:latest .
 
 .PHONY: test-docker-image
