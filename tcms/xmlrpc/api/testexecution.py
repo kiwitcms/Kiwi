@@ -166,29 +166,21 @@ def update(case_run_id, values, **kwargs):
 
 # todo: missing permissions
 @rpc_method(name='TestExecution.add_link')
-def add_link(case_run_id, name, url):
+def add_link(values):
     """
-    .. function:: XML-RPC TestExecution.add_link(case_run_id, name, url)
+    .. function:: XML-RPC TestExecution.add_link(values)
 
         Add new URL link to a TestExecution
 
-        :param case_run_id: PK of a TestExecution object
-        :type case_run_id: int
-        :param name: Name/description of the link
-        :type name: str
-        :param url: URL address
-        :type url: str
+        :param values: Field values for
+                      :class:`tcms.core.contrib.linkreference.models.LinkReference`
+        :type values: dict
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :raises: RuntimeError if operation not successfull
     """
-    link, _ = LinkReference.objects.get_or_create(
-        execution_id=case_run_id,
-        name=name,
-        url=url,
-    )
+    link, _ = LinkReference.objects.get_or_create(**values)
     response = model_to_dict(link)
-    response['rc'] = 0
     return response
 
 
