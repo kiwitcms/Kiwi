@@ -759,6 +759,7 @@ function initialize_addlink_dialog() {
       "OK": function() {
         var name = jQ('#testlog_name').attr('value');
         var url = jQ('#testlog_url').attr('value');
+        var is_defect = $('#is_defect').is(':checked');
         var case_id = dialog_p.dialog('option', 'case_id');
 
         dialog_p.dialog('close');
@@ -767,10 +768,15 @@ function initialize_addlink_dialog() {
             jsonRPC('TestExecution.add_link', [{
                         execution_id: target_id,
                         name: name,
-                        url: url
+                        url: url,
+                        is_defect: is_defect
                     }], function(result) {
                 // when bulk adding links case_id will be undefined/null
                 if (case_id) {
+                    if (is_defect) {
+                        $('span#' + target_id + '_case_bug_count').addClass('have_bug');
+                    }
+
                     // Begin to construct case run area
                     var container = dialog_p.dialog('option', 'container');
                     var title_container = dialog_p.dialog('option', 'title_container');
