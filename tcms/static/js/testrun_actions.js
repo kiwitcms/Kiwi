@@ -764,7 +764,11 @@ function initialize_addlink_dialog() {
         dialog_p.dialog('close');
 
         jQ(this).dialog('option', 'target_id').forEach(function(target_id) {
-            jsonRPC('TestExecution.add_link', [target_id, name, url], function(result) {
+            jsonRPC('TestExecution.add_link', [{
+                        execution_id: target_id,
+                        name: name,
+                        url: url
+                    }], function(result) {
                 // when bulk adding links case_id will be undefined/null
                 if (case_id) {
                     // Begin to construct case run area

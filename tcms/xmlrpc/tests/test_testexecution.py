@@ -157,11 +157,17 @@ class TestExecutionAddLink(XmlrpcAPIBaseTest):
 
     def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(XmlRPCFault, 'constraint fail|violates foreign key'):
-            self.rpc_client.exec.TestExecution.add_link(-5, 'A test log', 'http://example.com')
+            self.rpc_client.exec.TestExecution.add_link({
+                'execution_id': -5,
+                'name': 'A test log',
+                'url': 'http://example.com'})
 
     def test_attach_log(self):
         url = "http://127.0.0.1/test/test-log.log"
-        result = self.rpc_client.exec.TestExecution.add_link(self.case_run.pk, "UT test logs", url)
+        result = self.rpc_client.exec.TestExecution.add_link({
+            'execution_id': self.case_run.pk,
+            'name': 'UT test logs',
+            'url': url})
         self.assertGreater(result['id'], 0)
         self.assertEqual(result['url'], url)
 
@@ -180,8 +186,10 @@ class TestExecutionRemoveLink(XmlrpcAPIBaseTest):
     def setUp(self):
         super().setUp()
 
-        self.rpc_client.exec.TestExecution.add_link(
-            self.case_run.pk, 'Related issue', 'https://localhost/issue/1')
+        self.rpc_client.exec.TestExecution.add_link({
+            'execution_id': self.case_run.pk,
+            'name': 'Related issue',
+            'url': 'https://localhost/issue/1'})
         self.link = self.case_run.links()[0]
 
     def test_doesnt_raise_with_non_existing_id(self):
@@ -237,10 +245,10 @@ class TestExecutionGetLinks(XmlrpcAPIBaseTest):
         self.case_run_1 = TestExecutionFactory()
         self.case_run_2 = TestExecutionFactory()
 
-        self.rpc_client.exec.TestExecution.add_link(
-            self.case_run_1.pk,
-            "Test logs",
-            "http://www.google.com")
+        self.rpc_client.exec.TestExecution.add_link({
+            'execution_id': self.case_run_1.pk,
+            'name': 'Test logs',
+            'url': 'http://kiwitcms.org'})
 
     def test_get_links_with_non_exist_id(self):
         result = self.rpc_client.exec.TestExecution.get_links({'execution': -9})
@@ -258,7 +266,7 @@ class TestExecutionGetLinks(XmlrpcAPIBaseTest):
         self.assertEqual(len(logs), 1)
         self.assertEqual(logs[0]['id'], tcr_log.pk)
         self.assertEqual(logs[0]['name'], "Test logs")
-        self.assertEqual(logs[0]['url'], "http://www.google.com")
+        self.assertEqual(logs[0]['url'], 'http://kiwitcms.org')
 
 
 @override_settings(LANGUAGE_CODE='en-us')
