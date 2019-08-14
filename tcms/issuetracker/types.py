@@ -78,18 +78,18 @@ class IssueTrackerType:
         """
         raise NotImplementedError()
 
-    def add_testcase_to_issue(self, testcases, issue):
+    def add_testexecution_to_issue(self, executions, issue_url):
         """
-            When adding issues to Test Execution results there is a
-            'Check to add test cases to Issue tracker' checkbox. If
-            selected this method is called to link the bug report to the
-            test case which was used to discover the bug.
+            When linking defect URLs to Test Execution results there is a
+            'Add comment to Issue tracker' checkbox. If
+            selected this method is called. It should 'link' the existing
+            defect back to the TE/TR which reproduced it.
 
             Usually this is implemented by adding a new comment pointing
-            back to the test case via the internal RPC object.
+            back to the TR/TE via the internal RPC object.
 
-            :testcases: - list of TestCase objects
-            :issue: - Bug object
+            :executions: - iterable of TestExecution objects
+            :issue_url: - the URL of the existing defect
         """
         raise NotImplementedError()
 
@@ -145,9 +145,10 @@ class Bugzilla(IssueTrackerType):
             )
         return self._rpc
 
-    def add_testcase_to_issue(self, testcases, issue):
-        for case in testcases:
-            bugzilla_integration.BugzillaThread(self.rpc, case, issue).start()
+    def add_testexecution_to_issue(self, executions, issue_url):
+        bug_id = self.bug_id_from_url(issue_url)
+        for execution in executions:
+            bugzilla_integration.BugzillaThread(self.rpc, execution, bug_id).start()
 
     def report_issue_from_testcase(self, caserun):
         args = {}
@@ -190,7 +191,7 @@ class JIRA(IssueTrackerType):
     """
 
     def __init__(self, tracker):
-        super(JIRA, self).__init__(tracker)
+        super().__init__(tracker)
 
         if hasattr(settings, 'JIRA_OPTIONS'):
             options = settings.JIRA_OPTIONS
@@ -214,9 +215,10 @@ class JIRA(IssueTrackerType):
         """
         return url.strip().split('/')[-1]
 
-    def add_testcase_to_issue(self, testcases, issue):
-        for case in testcases:
-            jira_integration.JiraThread(self.rpc, case, issue).start()
+    def add_testexecution_to_issue(self, executions, issue_url):
+        bug_id = self.bug_id_from_url(issue_url)
+        for execution in executions:
+            jira_integration.JiraThread(self.rpc, execution, bug_id).start()
 
     def report_issue_from_testcase(self, caserun):
         """
@@ -282,14 +284,15 @@ class GitHub(IssueTrackerType):
     """
 
     def __init__(self, tracker):
-        super(GitHub, self).__init__(tracker)
+        super().__init__(tracker)
 
         # NOTE: we use an access token so only the password field is required
         self.rpc = github.Github(self.tracker.api_password)
 
-    def add_testcase_to_issue(self, testcases, issue):
-        for case in testcases:
-            github_integration.GitHubThread(self.rpc, self.tracker, case, issue).start()
+    def add_testexecution_to_issue(self, executions, issue_url):
+        bug_id = self.bug_id_from_url(issue_url)
+        for execution in executions:
+            github_integration.GitHubThread(self.rpc, self.tracker, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.tracker.base_url and self.tracker.api_password)
@@ -331,14 +334,15 @@ class Gitlab(IssueTrackerType):
     """
 
     def __init__(self, tracker):
-        super(Gitlab, self).__init__(tracker)
+        super().__init__(tracker)
 
         # we use an access token so only the password field is required
         self.rpc = gitlab.Gitlab(self.tracker.api_url, private_token=self.tracker.api_password)
 
-    def add_testcase_to_issue(self, testcases, issue):
-        for case in testcases:
-            gitlab_integration.GitlabThread(self.rpc, self.tracker, case, issue).start()
+    def add_testexecution_to_issue(self, executions, issue_url):
+        bug_id = self.bug_id_from_url(issue_url)
+        for execution in executions:
+            gitlab_integration.GitlabThread(self.rpc, self.tracker, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.tracker.base_url and self.tracker.api_password)
@@ -387,9 +391,10 @@ class Redmine(IssueTrackerType):
                 password=self.tracker.api_password
             )
 
-    def add_testcase_to_issue(self, testcases, issue):
-        for case in testcases:
-            redmine_integration.RedmineThread(self.rpc, case, issue).start()
+    def add_testexecution_to_issue(self, executions, issue_url):
+        bug_id = self.bug_id_from_url(issue_url)
+        for execution in executions:
+            redmine_integration.RedmineThread(self.rpc, execution, bug_id).start()
 
     def find_project_by_name(self, name):
         """

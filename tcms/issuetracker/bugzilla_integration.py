@@ -14,17 +14,17 @@ class BugzillaThread(threading.Thread):
         Executed from the IssueTracker interface methods.
     """
 
-    def __init__(self, rpc, testcase, bug):
+    def __init__(self, rpc, execution, bug_id):
         """
             @rpc - Bugzilla XML-RPC object
-            @testcase - TestCase object
-            @bug - Bug object
+            @execution - TestExecution object
+            @bug_id - int
         """
 
         self.rpc = rpc
-        self.testcase = testcase
-        self.bug = bug
-        super(BugzillaThread, self).__init__()
+        self.execution = execution
+        self.bug_id = bug_id
+        super().__init__()
 
     def run(self):
         """
@@ -33,12 +33,17 @@ class BugzillaThread(threading.Thread):
         """
 
         try:
-            text = """---- Bug confirmed via test case ----
-URL: %s
-Summary: %s""" % (self.testcase.get_full_url(), self.testcase.summary)
+            text = """---- Confirmed via test execution ----
+TR-%d: %s
+%s
+TE-%d: %s""" % (self.execution.run.pk,
+                self.execution.run.summary,
+                self.execution.run.get_full_url(),
+                self.execution.pk,
+                self.execution.case.summary)
 
-            self.rpc.update_bugs(self.bug.bug_id, {'comment': {'comment': text,
-                                                               'is_private': False}})
+            self.rpc.update_bugs(self.bug_id, {'comment': {'comment': text,
+                                                           'is_private': False}})
         except Exception as err:  # pylint: disable=broad-except
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)
