@@ -14,21 +14,21 @@ class GitlabThread(threading.Thread):
         Executed from the IssueTracker interface methods.
     """
 
-    def __init__(self, rpc, tracker, testcase, bug):
+    def __init__(self, rpc, tracker, execution, bug_id):
         """
             @rpc - Gitlab object
             @tracker - BugSystem object
-            @testcase - TestCase object
-            @bug - Bug object
+            @execution - TestExecution object
+            @bug_id - int
         """
 
         self.rpc = rpc
-        self.testcase = testcase
-        self.bug = bug
+        self.execution = execution
+        self.bug_id = bug_id
         repo_id = '/'.join(tracker.base_url.strip().strip('/').split('/')[-2:])
         self.repo = self.rpc.projects.get(repo_id)
 
-        super(GitlabThread, self).__init__()
+        super().__init__()
 
     def run(self):
         """
@@ -36,13 +36,16 @@ class GitlabThread(threading.Thread):
         """
 
         try:
-            text = """---- Issue confirmed via test case ----
+            text = """---- Confirmed via test execution ----
+TR-%d: %s
+%s
+TE-%d: %s""" % (self.execution.run.pk,
+                self.execution.run.summary,
+                self.execution.run.get_full_url(),
+                self.execution.pk,
+                self.execution.case.summary)
 
-URL: %s
-
-Summary: %s""" % (self.testcase.get_full_url(), self.testcase.summary)
-
-            self.repo.issues.get(self.bug.bug_id).notes.create(dict(body=text))
+            self.repo.issues.get(self.bug_id).notes.create({'body': text})
         except Exception as err:  # pylint: disable=broad-except
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)

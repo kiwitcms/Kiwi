@@ -14,17 +14,17 @@ class JiraThread(threading.Thread):
         Executed from the IssueTracker interface methods.
     """
 
-    def __init__(self, rpc, testcase, bug):
+    def __init__(self, rpc, execution, bug_id):
         """
             @rpc - JIRA Python/RPC object
-            @testcase - TestCase object
-            @bug - Bug object
+            @execution - TestExecution object
+            @bug_id - str
         """
 
         self.rpc = rpc
-        self.testcase = testcase
-        self.bug = bug
-        super(JiraThread, self).__init__()
+        self.execution = execution
+        self.bug_id = bug_id
+        super().__init__()
 
     def run(self):
         """
@@ -32,11 +32,16 @@ class JiraThread(threading.Thread):
         """
 
         try:
-            text = """---- Issue confirmed via test case ----
-URL: %s
-Summary: %s""" % (self.testcase.get_full_url(), self.testcase.summary)
+            text = """---- Confirmed via test execution ----
+TR-%d: %s
+%s
+TE-%d: %s""" % (self.execution.run.pk,
+                self.execution.run.summary,
+                self.execution.run.get_full_url(),
+                self.execution.pk,
+                self.execution.case.summary)
 
-            self.rpc.add_comment(self.bug.bug_id, text)
+            self.rpc.add_comment(self.bug_id, text)
         except Exception as err:  # pylint: disable=broad-except
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)
