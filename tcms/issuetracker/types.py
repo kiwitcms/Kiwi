@@ -35,11 +35,11 @@ class IssueTrackerType:
         supports!
     """
 
-    def __init__(self, tracker):
+    def __init__(self, bug_system):
         """
-            :tracker: - BugSystem object
+            :bug_system: - BugSystem object
         """
-        self.tracker = tracker
+        self.bug_system = bug_system
 
     @classmethod
     def from_name(cls, name):
@@ -100,9 +100,9 @@ class IssueTrackerType:
 
             :return: - boolean
         """
-        return not (self.tracker.api_url
-                    and self.tracker.api_username
-                    and self.tracker.api_password)
+        return not (self.bug_system.api_url
+                    and self.bug_system.api_username
+                    and self.bug_system.api_password)
 
 
 class Bugzilla(IssueTrackerType):
@@ -119,8 +119,8 @@ class Bugzilla(IssueTrackerType):
         into Bugzilla!
     """
 
-    def __init__(self, tracker):
-        super().__init__(tracker)
+    def __init__(self, bug_system):
+        super().__init__(bug_system)
 
         # directory for Bugzilla credentials
         self._bugzilla_cache_dir = getattr(
@@ -137,9 +137,9 @@ class Bugzilla(IssueTrackerType):
     def rpc(self):
         if self._rpc is None:
             self._rpc = bugzilla.Bugzilla(
-                self.tracker.api_url,
-                user=self.tracker.api_username,
-                password=self.tracker.api_password,
+                self.bug_system.api_url,
+                user=self.bug_system.api_username,
+                password=self.bug_system.api_password,
                 cookiefile=self._bugzilla_cache_dir + 'cookie',
                 tokenfile=self._bugzilla_cache_dir + 'token',
             )
@@ -148,7 +148,10 @@ class Bugzilla(IssueTrackerType):
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            bugzilla_integration.BugzillaThread(self.rpc, self.tracker, execution, bug_id).start()
+            bugzilla_integration.BugzillaThread(self.rpc,
+                                                self.bug_system,
+                                                execution,
+                                                bug_id).start()
 
     def report_issue_from_testcase(self, caserun):
         args = {}
@@ -170,7 +173,7 @@ class Bugzilla(IssueTrackerType):
         args['short_desc'] = 'Test case failure: %s' % caserun.case.summary
         args['version'] = caserun.run.product_version
 
-        url = self.tracker.base_url
+        url = self.bug_system.base_url
         if not url.endswith('/'):
             url += '/'
 
@@ -190,8 +193,8 @@ class JIRA(IssueTrackerType):
         the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
     """
 
-    def __init__(self, tracker):
-        super().__init__(tracker)
+    def __init__(self, bug_system):
+        super().__init__(bug_system)
 
         if hasattr(settings, 'JIRA_OPTIONS'):
             options = settings.JIRA_OPTIONS
@@ -202,8 +205,8 @@ class JIRA(IssueTrackerType):
         # see https://github.com/kiwitcms/Kiwi/issues/100
         if not self.is_adding_testcase_to_issue_disabled():
             self.rpc = jira.JIRA(
-                tracker.api_url,
-                basic_auth=(self.tracker.api_username, self.tracker.api_password),
+                bug_system.api_url,
+                basic_auth=(self.bug_system.api_username, self.bug_system.api_password),
                 options=options,
             )
 
@@ -218,7 +221,7 @@ class JIRA(IssueTrackerType):
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            jira_integration.JiraThread(self.rpc, self.tracker, execution, bug_id).start()
+            jira_integration.JiraThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def report_issue_from_testcase(self, caserun):
         """
@@ -263,7 +266,7 @@ class JIRA(IssueTrackerType):
         comment += "Actual results: \n<describe what happened>\n\n"
         args['description'] = comment
 
-        url = self.tracker.base_url
+        url = self.bug_system.base_url
         if not url.endswith('/'):
             url += '/'
 
@@ -283,19 +286,19 @@ class GitHub(IssueTrackerType):
             the integration code doesn't use them!
     """
 
-    def __init__(self, tracker):
-        super().__init__(tracker)
+    def __init__(self, bug_system):
+        super().__init__(bug_system)
 
         # NOTE: we use an access token so only the password field is required
-        self.rpc = github.Github(self.tracker.api_password)
+        self.rpc = github.Github(self.bug_system.api_password)
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            github_integration.GitHubThread(self.rpc, self.tracker, execution, bug_id).start()
+            github_integration.GitHubThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.tracker.base_url and self.tracker.api_password)
+        return not (self.bug_system.base_url and self.bug_system.api_password)
 
     def report_issue_from_testcase(self, caserun):
         """
@@ -317,7 +320,7 @@ class GitHub(IssueTrackerType):
         comment += "Actual results: \n<describe what happened>\n\n"
         args['body'] = comment
 
-        url = self.tracker.base_url
+        url = self.bug_system.base_url
         if not url.endswith('/'):
             url += '/'
 
@@ -333,19 +336,20 @@ class Gitlab(IssueTrackerType):
         :api_password: - Gitlab API token.
     """
 
-    def __init__(self, tracker):
-        super().__init__(tracker)
+    def __init__(self, bug_system):
+        super().__init__(bug_system)
 
         # we use an access token so only the password field is required
-        self.rpc = gitlab.Gitlab(self.tracker.api_url, private_token=self.tracker.api_password)
+        self.rpc = gitlab.Gitlab(self.bug_system.api_url,
+                                 private_token=self.bug_system.api_password)
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            gitlab_integration.GitlabThread(self.rpc, self.tracker, execution, bug_id).start()
+            gitlab_integration.GitlabThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.tracker.base_url and self.tracker.api_password)
+        return not (self.bug_system.base_url and self.bug_system.api_password)
 
     def report_issue_from_testcase(self, caserun):
         args = {
@@ -365,7 +369,7 @@ class Gitlab(IssueTrackerType):
         comment += "**Actual results**: \n<describe what happened>\n\n"
         args['issue[description]'] = comment
 
-        url = self.tracker.base_url
+        url = self.bug_system.base_url
         if not url.endswith('/'):
             url += '/'
 
@@ -381,20 +385,23 @@ class Redmine(IssueTrackerType):
         :api_password: - the password for this username
     """
 
-    def __init__(self, tracker):
-        super().__init__(tracker)
+    def __init__(self, bug_system):
+        super().__init__(bug_system)
 
         if not self.is_adding_testcase_to_issue_disabled():
             self.rpc = redminelib.Redmine(
-                self.tracker.api_url,
-                username=self.tracker.api_username,
-                password=self.tracker.api_password
+                self.bug_system.api_url,
+                username=self.bug_system.api_username,
+                password=self.bug_system.api_password
             )
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            redmine_integration.RedmineThread(self.rpc, self.tracker, execution, bug_id).start()
+            redmine_integration.RedmineThread(self.rpc,
+                                              self.bug_system,
+                                              execution,
+                                              bug_id).start()
 
     def find_project_by_name(self, name):
         """
@@ -446,7 +453,7 @@ class Redmine(IssueTrackerType):
 
         query += "&issue[description]={0}".format(quote(comment))
 
-        url = self.tracker.base_url
+        url = self.bug_system.base_url
         if not url.endswith('/'):
             url += '/'
 
