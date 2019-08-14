@@ -398,19 +398,6 @@ Leave empty to disable!
     def get_by_id(cls, system_id):
         return cls.objects.get(pk=system_id)
 
-    @classmethod
-    def tracker_from_url(cls, url):
-        """
-            Return the IssueTrackerType class for the system
-            where ``base_url`` is part of ``url``. Usually we pass
-            URLs to pre-existing defects to this method.
-        """
-        for bug_system in cls.objects.all():
-            if url.startswith(bug_system.base_url):
-                return IssueTrackerType.from_name(bug_system.tracker_type)
-
-        return None
-
 
 class TestCaseEmailSettings(models.Model):
     case = models.OneToOneField(TestCase, related_name='email_settings', on_delete=models.CASCADE)
