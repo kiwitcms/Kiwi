@@ -37,7 +37,7 @@ def report(execution_id, tracker_id):
     bug_system = BugSystem.objects.get(pk=tracker_id)
     if bug_system.base_url:
         tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-        url = tracker.report_issue_from_testcase(execution)
+        url = tracker.report_issue_from_testexecution(execution)
         response = {'rc': 0, 'response': url}
 
     return response
