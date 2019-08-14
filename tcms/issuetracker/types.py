@@ -63,9 +63,26 @@ class IssueTrackerType:
         """
         return int(RE_ENDS_IN_INT.search(url.strip()).group(0))
 
-    def report_issue_from_testcase(self, caserun):
+    def _report_comment(self, execution):  # pylint: disable=no-self-use
         """
-            When marking Test Case results inside a Test Run there is a
+            Returns the comment which is used in the original defect report.
+        """
+        txt = execution.case.get_text_with_version(execution.case_text_version)
+
+        comment = "Filed from execution %s\n\n" % execution.get_full_url()
+        comment += "**Product:**\n%s\n\n" % execution.run.plan.product.name
+        comment += "**Component(s):**\n%s\n\n" % \
+                   execution.case.component.values_list('name', flat=True)
+        comment += "**Version-Release number** (if applicable):\n"
+        comment += "%s\n\n" % execution.build.name
+        comment += "**Steps to reproduce**: \n%s\n\n" % txt
+        comment += "**Actual results**: \n<describe what happened>\n\n"
+
+        return comment
+
+    def report_issue_from_testexecution(self, execution):
+        """
+            When marking TestExecution results inside a Test Run there is a
             `Report` link. When the `Report` link is clicked this method is called
             to help the user report an issue in the IT.
 
@@ -73,7 +90,7 @@ class IssueTrackerType:
             bug details like steps to reproduce, product, version, etc from the
             test case. Then we open this URL into another browser window!
 
-            :caserun: - TestExecution object
+            :execution: - TestExecution object
             :return: - string - URL
         """
         raise NotImplementedError()
@@ -153,25 +170,16 @@ class Bugzilla(IssueTrackerType):
                                                 execution,
                                                 bug_id).start()
 
-    def report_issue_from_testcase(self, caserun):
+    def report_issue_from_testexecution(self, execution):
         args = {}
-        args['cf_build_id'] = caserun.run.build.name
+        args['cf_build_id'] = execution.run.build.name
 
-        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
-        comment += "Version-Release number of selected " \
-                   "component (if applicable):\n"
-        comment += '%s\n\n' % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n\n" % txt
-        comment += "Actual results: \n<describe what happened>\n\n"
-
-        args['comment'] = comment
-        args['component'] = caserun.case.component.values_list('name',
-                                                               flat=True)
-        args['product'] = caserun.run.plan.product.name
-        args['short_desc'] = 'Test case failure: %s' % caserun.case.summary
-        args['version'] = caserun.run.product_version
+        args['comment'] = self._report_comment(execution)
+        args['component'] = execution.case.component.values_list('name',
+                                                                 flat=True)
+        args['product'] = execution.run.plan.product.name
+        args['short_desc'] = 'Test case failure: %s' % execution.case.summary
+        args['version'] = execution.run.product_version
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
@@ -223,14 +231,14 @@ class JIRA(IssueTrackerType):
         for execution in executions:
             jira_integration.JiraThread(self.rpc, self.bug_system, execution, bug_id).start()
 
-    def report_issue_from_testcase(self, caserun):
+    def report_issue_from_testexecution(self, execution):
         """
             For the HTML API description see:
             https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
         """
         # note: your jira instance needs to have the same projects
         # defined otherwise this will fail!
-        project = self.rpc.project(caserun.run.plan.product.name)
+        project = self.rpc.project(execution.run.plan.product.name)
 
         try:
             issue_type = self.rpc.issue_type_by_name('Bug')
@@ -240,31 +248,21 @@ class JIRA(IssueTrackerType):
         args = {
             'pid': project.id,
             'issuetype': issue_type.id,
-            'summary': 'Failed test: %s' % caserun.case.summary,
+            'summary': 'Failed test: %s' % execution.case.summary,
         }
 
         try:
             # apparently JIRA can't search users via their e-mail so try to
             # search by username and hope that it matches
-            tested_by = caserun.tested_by
+            tested_by = execution.tested_by
             if not tested_by:
-                tested_by = caserun.assignee
+                tested_by = execution.assignee
 
             args['reporter'] = self.rpc.user(tested_by.username).key
         except jira.JIRAError:
             pass
 
-        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
-        comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
-        comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
-        comment += "Version-Release number of selected " \
-                   "component (if applicable):\n"
-        comment += "%s\n\n" % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n\n" % txt
-        comment += "Actual results: \n<describe what happened>\n\n"
-        args['description'] = comment
+        args['description'] = self._report_comment(execution)
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
@@ -300,25 +298,14 @@ class GitHub(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
 
-    def report_issue_from_testcase(self, caserun):
+    def report_issue_from_testexecution(self, execution):
         """
             GitHub only supports title and body parameters
         """
         args = {
-            'title': 'Failed test: %s' % caserun.case.summary,
+            'title': 'Failed test: %s' % execution.case.summary,
+            'body': self._report_comment(execution),
         }
-
-        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
-        comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
-        comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
-        comment += "Version-Release number of selected " \
-                   "component (if applicable):\n"
-        comment += "%s\n\n" % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n\n" % txt
-        comment += "Actual results: \n<describe what happened>\n\n"
-        args['body'] = comment
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
@@ -351,23 +338,11 @@ class Gitlab(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
 
-    def report_issue_from_testcase(self, caserun):
+    def report_issue_from_testexecution(self, execution):
         args = {
-            'issue[title]': 'Failed test: %s' % caserun.case.summary,
+            'issue[title]': 'Failed test: %s' % execution.case.summary,
+            'issue[description]': self._report_comment(execution),
         }
-
-        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
-        comment += "**Product**:\n%s\n\n" % caserun.run.plan.product.name
-        comment += "**Component(s)**:\n%s\n\n"\
-                   % caserun.case.component.values_list('name', flat=True)
-        comment += "Version-Release number of selected " \
-                   "component (if applicable):\n"
-        comment += "%s\n\n" % caserun.build.name
-        comment += "**Steps to Reproduce**: \n%s\n\n" % txt
-        comment += "**Actual results**: \n<describe what happened>\n\n"
-        args['issue[description]'] = comment
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
@@ -432,29 +407,19 @@ class Redmine(IssueTrackerType):
 
         return project.trackers[0]
 
-    def report_issue_from_testcase(self, caserun):
-        project = self.find_project_by_name(caserun.run.plan.product.name)
+    def report_issue_from_testexecution(self, execution):
+        project = self.find_project_by_name(execution.run.plan.product.name)
 
         issue_type = self.find_issue_type_by_name(project, 'Bug')
 
         query = "issue[tracker_id]=" + str(issue_type.id)
-        query += "&issue[subject]=" + quote('Failed test:{0}'.format(caserun.case.summary))
+        query += "&issue[subject]=" + quote('Failed test: %s' % execution.case.summary)
 
-        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
-        comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
-        comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
-        comment += "Version-Release number of selected " \
-                   "component (if applicable):\n"
-        comment += "%s\n\n" % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n\n" % txt
-        comment += "Actual results: \n<describe what happened>\n\n"
-
-        query += "&issue[description]={0}".format(quote(comment))
+        comment = self._report_comment(execution)
+        query += "&issue[description]=%s" % quote(comment)
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
             url += '/'
 
-        return url + '/projects/{0}/issues/new?'.format(str(project.id)) + query
+        return url + '/projects/%s/issues/new?' % project.id + query
