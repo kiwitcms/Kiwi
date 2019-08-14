@@ -148,7 +148,7 @@ class Bugzilla(IssueTrackerType):
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            bugzilla_integration.BugzillaThread(self.rpc, execution, bug_id).start()
+            bugzilla_integration.BugzillaThread(self.rpc, self.tracker, execution, bug_id).start()
 
     def report_issue_from_testcase(self, caserun):
         args = {}
@@ -218,7 +218,7 @@ class JIRA(IssueTrackerType):
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            jira_integration.JiraThread(self.rpc, execution, bug_id).start()
+            jira_integration.JiraThread(self.rpc, self.tracker, execution, bug_id).start()
 
     def report_issue_from_testcase(self, caserun):
         """
@@ -394,7 +394,7 @@ class Redmine(IssueTrackerType):
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            redmine_integration.RedmineThread(self.rpc, execution, bug_id).start()
+            redmine_integration.RedmineThread(self.rpc, self.tracker, execution, bug_id).start()
 
     def find_project_by_name(self, name):
         """
