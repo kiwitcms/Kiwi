@@ -11,6 +11,7 @@ Submodules
 
 .. toctree::
 
+   tcms.issuetracker.base_integration
    tcms.issuetracker.bugzilla_integration
    tcms.issuetracker.github_integration
    tcms.issuetracker.gitlab_integration
