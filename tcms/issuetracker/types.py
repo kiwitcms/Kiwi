@@ -6,6 +6,7 @@
 """
 
 import os
+import re
 import tempfile
 from urllib.parse import urlencode
 
@@ -20,6 +21,9 @@ from tcms.issuetracker import bugzilla_integration
 from tcms.issuetracker import jira_integration
 from tcms.issuetracker import github_integration
 from tcms.issuetracker import gitlab_integration
+
+
+RE_ENDS_IN_INT = re.compile(r'[\d]+$')
 
 
 class IssueTrackerType:
@@ -44,6 +48,18 @@ class IssueTrackerType:
         if name not in globals():
             raise NotImplementedError('IT of type %s is not supported' % name)
         return globals()[name]
+
+    @classmethod
+    def bug_id_from_url(cls, url):
+        """
+            Returns a unique identifier for reported defect. This is used by the
+            underlying integration libraries. Usually that identifier is an
+            integer number.
+
+            The default implementation is to leave the last group of numeric
+            characters at the end of a string!
+        """
+        return int(RE_ENDS_IN_INT.search(url.strip()).group(0))
 
     def report_issue_from_testcase(self, caserun):
         """
@@ -187,6 +203,14 @@ class JIRA(IssueTrackerType):
                 basic_auth=(self.tracker.api_username, self.tracker.api_password),
                 options=options,
             )
+
+    @classmethod
+    def bug_id_from_url(cls, url):
+        """
+            Jira IDs are the last group of chars at the end of the URL.
+            For example https://issues.jenkins-ci.org/browse/JENKINS-31044
+        """
+        return url.strip().split('/')[-1]
 
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
