@@ -760,6 +760,7 @@ function initialize_addlink_dialog() {
         var name = jQ('#testlog_name').attr('value');
         var url = jQ('#testlog_url').attr('value');
         var is_defect = $('#is_defect').is(':checked');
+        var update_tracker = $('#update_tracker').is(':checked');
         var case_id = dialog_p.dialog('option', 'case_id');
 
         dialog_p.dialog('close');
@@ -770,7 +771,7 @@ function initialize_addlink_dialog() {
                         name: name,
                         url: url,
                         is_defect: is_defect
-                    }], function(result) {
+                    }, update_tracker], function(result) {
                 // when bulk adding links case_id will be undefined/null
                 if (case_id) {
                     if (is_defect) {
