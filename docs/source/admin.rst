@@ -43,14 +43,11 @@ and integration type.
 .. important::
 
     Details on what each field means can be found at
-    :class:`tcms.testcases.models.TestCaseBugSystem`. Integration details for supported
+    :class:`tcms.testcases.models.BugSystem`. Integration details for supported
     bug trackers can be found at :mod:`tcms.issuetracker.types`! Please read
     these sections carefully before configuring integration with external bug tracking
     systems!
 
-Users can add or remove bugs to Test Executions if they
-have the `testcases.add_testcasebug` and/or `testcases.delete_testcasebug`
-permissions!
 
 Managing permissions
 --------------------
