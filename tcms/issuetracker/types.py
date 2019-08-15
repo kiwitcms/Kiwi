@@ -318,9 +318,14 @@ class Gitlab(IssueTrackerType):
     """
         Support for Gitlab. Requires:
 
-        :base_url: - URL to a Gitlab repository for which we're going to report issues
-        :api_url: - URL to GitLab instance. Usually gitlab.com!
+        :base_url: URL to a GitLab repository for which we're going to report issues
+        :api_url: URL to GitLab instance. Usually gitlab.com!
         :api_password: - Gitlab API token.
+
+        .. note::
+
+            You can leave ``api_username`` field blank because
+            the integration code doesn't use it!
     """
 
     def __init__(self, bug_system):
