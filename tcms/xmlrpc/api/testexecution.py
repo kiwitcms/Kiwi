@@ -181,7 +181,7 @@ def update(case_run_id, values, **kwargs):
 
 # todo: missing permissions
 @rpc_method(name='TestExecution.add_link')
-def add_link(values):
+def add_link(values, update_tracker=False):
     """
     .. function:: XML-RPC TestExecution.add_link(values)
 
@@ -190,12 +190,22 @@ def add_link(values):
         :param values: Field values for
                       :class:`tcms.core.contrib.linkreference.models.LinkReference`
         :type values: dict
+        :param update_tracker: Automatically update Issue Tracker by placing a comment
+                               linking back to the failed TestExecution.
+        :type update_tracker: bool, default=False
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :raises: RuntimeError if operation not successfull
     """
     link, _ = LinkReference.objects.get_or_create(**values)
     response = model_to_dict(link)
+
+    if link.is_defect and update_tracker:
+        tracker = tracker_from_url(link.url)
+
+        if not tracker.is_adding_testcase_to_issue_disabled():
+            tracker.add_testexecution_to_issue([link.execution], link.url)
+
     return response
 
 
