@@ -67,7 +67,11 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1">
+                <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+            </div>
+        </div>
 
         {% if test_cases %}
         {# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
