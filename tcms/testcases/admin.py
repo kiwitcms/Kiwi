@@ -88,10 +88,10 @@ class BugSystemAdminForm(forms.ModelForm):
 
 class BugSystemAdmin(admin.ModelAdmin):
     search_fields = (('name',))
-    list_display = ('id', 'name', 'url_reg_exp')
+    list_display = ('id', 'name', 'base_url')
     fieldsets = [
         ('', {
-            'fields': ('name', 'description', 'url_reg_exp', 'validate_reg_exp'),
+            'fields': ('name',),
         }),
         ('External Issue Tracker Integration', {
             'fields': ('tracker_type', 'base_url', 'api_url', 'api_username', 'api_password'),
