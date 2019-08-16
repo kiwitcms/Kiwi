@@ -21,7 +21,6 @@ Submodules
    tcms.xmlrpc.api.attachment
    tcms.xmlrpc.api.auth
    tcms.xmlrpc.api.bug
-   tcms.xmlrpc.api.bugsystem
    tcms.xmlrpc.api.build
    tcms.xmlrpc.api.category
    tcms.xmlrpc.api.classification
