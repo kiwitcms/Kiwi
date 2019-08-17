@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
+from django.views.generic.base import View
 
 from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
@@ -734,21 +735,18 @@ def edit(request, case_id):
     return render(request, 'testcases/mutable.html', context_data)
 
 
-@permission_required('testcases.add_testcase')
-def clone(request, template_name='testcases/clone.html'):
+@method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
+class CloneTestCaseView(View):
     """Clone one case or multiple case into other plan or plans"""
 
-    request_data = getattr(request, request.method)
+    template_name = 'testcases/clone.html'
+    http_method_names = ['get', 'post']
 
-    if 'case' not in request_data:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('At least one TestCase is required'))
-        # redirect back where we came from
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    def post(self, request):
+        if not self._is_request_data_valid(request):
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    # Do the clone action
-    if request.method == 'POST':
+        # Do the clone action
         clone_form = CloneCaseForm(request.POST)
         clone_form.populate(case_ids=request.POST.getlist('case'))
 
@@ -813,9 +811,6 @@ def clone(request, template_name='testcases/clone.html'):
             cases_count = len(clone_form.cleaned_data['case'])
             plans_count = len(clone_form.cleaned_data['plan'])
 
-            if cases_count == 1 and plans_count == 1:
-                return HttpResponseRedirect(reverse('testcases-get', args=[tc_dest.pk, ]))
-
             if cases_count == 1:
                 return HttpResponseRedirect(
                     reverse('testcases-get', args=[tc_dest.pk, ])
@@ -831,7 +826,11 @@ def clone(request, template_name='testcases/clone.html'):
                                  messages.SUCCESS,
                                  _('TestCase cloning was successful'))
             return HttpResponseRedirect(reverse('plans-search'))
-    else:
+
+    def get(self, request):
+        if not self._is_request_data_valid(request):
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
         selected_cases = get_selected_testcases(request)
         # Initial the clone case form
         clone_form = CloneCaseForm(initial={
@@ -839,7 +838,18 @@ def clone(request, template_name='testcases/clone.html'):
         })
         clone_form.populate(case_ids=selected_cases)
 
-    context = {
-        'form': clone_form,
-    }
-    return render(request, template_name, context)
+        context = {
+            'form': clone_form,
+        }
+        return render(request, self.template_name, context)
+
+    def _is_request_data_valid(self, request):
+        request_data = getattr(request, request.method)
+
+        if 'case' not in request_data:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('At least one TestCase is required'))
+            return False
+
+        return True

@@ -338,6 +338,17 @@ class TestCloneCase(BasePlanCase):
             self.assertContains(response,
                                 "TC-%d: %s" % (case.pk, case.summary))
 
+    def test_user_without_permission_should_not_be_able_to_clone_a_case(self):
+        remove_perm_from_user(self.tester, 'testcases.add_testcase')
+        base_url = reverse('tcms-login') + '?next='
+        expected = base_url + reverse('testcases-clone') + "?case=%d" % self.case_1.pk
+        response = self.client.get(self.clone_url, {'case': [self.case_1.pk, ]})
+
+        self.assertRedirects(
+            response,
+            expected
+        )
+
 
 class TestSearchCases(BasePlanCase):
     """Test search view method"""
