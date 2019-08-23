@@ -7,12 +7,13 @@
 
 import os
 import tempfile
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 
 import jira
 import github
 import bugzilla
 import gitlab
+import redminelib
 
 from django.conf import settings
 
@@ -20,6 +21,7 @@ from tcms.issuetracker import bugzilla_integration
 from tcms.issuetracker import jira_integration
 from tcms.issuetracker import github_integration
 from tcms.issuetracker import gitlab_integration
+from tcms.issuetracker import redmine_integration
 
 
 class IssueTrackerType:
@@ -382,6 +384,104 @@ class Gitlab(IssueTrackerType):
             url += '/'
 
         return url + '/issues/new?' + urlencode(args, True)
+
+
+class Redmine(IssueTrackerType):
+    """
+        Support for Redmine. Requires:
+
+        :api_url: - the API URL for your Redmine instance
+        :api_username: - a username registered in Redmine
+        :api_password: - the password for this username
+    """
+
+    def __init__(self, tracker):
+        super().__init__(tracker)
+
+        if not self.is_adding_testcase_to_issue_disabled():
+            self.rpc = redminelib.Redmine(
+                self.tracker.api_url,
+                username=self.tracker.api_username,
+                password=self.tracker.api_password
+            )
+
+    def add_testcase_to_issue(self, testcases, issue):
+        for case in testcases:
+            redmine_integration.RedmineThread(self.rpc, case, issue).start()
+
+    def all_issues_link(self, ids):
+        if not self.tracker.base_url:
+            return None
+
+        if not self.tracker.base_url.endswith('/'):
+            self.tracker.base_url += '/'
+
+        query = 'issues?utf8=✓&set_filter=1&sort=id%3Adesc&f%5B%5D=issue_id'
+        query += '&op%5Bissue_id%5D=%3D&v%5Bissue_id%5D%5B%5D={0}'.format('%2C'.join(ids))
+        query += '&f%5B%5D=&c%5B%5D=tracker&c%5B%5D=status&c%5B%5D=priority'
+        query += '&c%5B%5D=subject&c%5B%5D=assigned_to&c%5B%5D=updated_on&group_by=&t%5B%5D='
+
+        return self.tracker.base_url + query
+
+    def find_project_by_name(self, name):
+        projects = self.rpc.project.all()
+        for prj in projects:
+            if prj.name == name:
+                return prj
+
+        return projects[0]
+
+    @staticmethod
+    def find_issue_type_by_name(project, name):
+        for trk in project.trackers:
+            if str(trk).lower() == name.lower():
+                return trk
+
+        return project.trackers[0]
+
+    def report_issue_from_testcase(self, caserun):
+        """
+            Function to report issue from testcase to Redmine issue tracker with
+            testplan's product name and 'Bug' as the project and  tracker names
+            in Redmine, respectively.
+
+            .. note::
+
+                The first project in Redmine wil be used instead if there is no projet who's
+                name matches the product name of testplan.
+
+            .. note::
+
+                The first tracker in Redmine wil be used instead if there is no tracker who's
+                name matches the name 'Bug'.
+
+        """
+
+        project = self.find_project_by_name(caserun.run.plan.product.name)
+
+        issue_type = self.find_issue_type_by_name(project, 'Bug')
+
+        query = "issue[tracker_id]=" + str(issue_type.id)
+        query += "&issue[subject]=" + quote('Failed test:{0}'.format(caserun.case.summary))
+
+        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
+
+        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
+        comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
+        comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
+        comment += "Version-Release number of selected " \
+                   "component (if applicable):\n"
+        comment += "%s\n\n" % caserun.build.name
+        comment += "Steps to Reproduce: \n%s\n\n" % txt
+        comment += "Actual results: \n<describe what happened>\n\n"
+
+        query += "&issue[description]={0}".format(quote(comment))
+
+        url = self.tracker.base_url
+        if not url.endswith('/'):
+            url += '/'
+
+        return url + '/projects/{0}/issues/new?'.format(str(project.id)) + query
 
 
 class LinkOnly(IssueTrackerType):
