@@ -9,3 +9,4 @@ django-simple-history==2.7.3
 jira==2.0.0
 Markdown==3.1.1
 python-redmine==2.2.1
+topicaxis-opengraph==0.5
