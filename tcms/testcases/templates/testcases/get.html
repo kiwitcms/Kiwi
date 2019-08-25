@@ -217,10 +217,20 @@
                                                     <div class="list-view-pf-body">
                                                         <div class="list-view-pf-description">
                                                             <div class="list-group-item-text">
-                                                                <a href="{{ bug.url }}">{{ bug.url }}</a>
+                                                                <a href="{{ bug.url }}" class="bug-url">{{ bug.url }}</a>
                                                             </div>
                                                         </div>
+
                                                         <div class="list-view-pf-additional-info">
+                                                            <div class="list-view-pf-additional-info-item">
+                                                                <a href="#"
+                                                                    data-toggle="popover" data-html="true"
+                                                                    data-content="undefined"
+                                                                    data-trigger="focus"
+                                                                    data-placement="top">
+                                                                    <span class="fa fa-info-circle"></span>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -285,7 +295,7 @@
                     <table class="table" id="bugs">
                         <thead>
                             <tr>
-                                <th>{% trans 'Bug URL' %}</th>
+                                <th colspan="2">{% trans 'Bug URL' %}</th>
                             </tr>
                         </thead>
                     </table>
