@@ -138,6 +138,18 @@ HELP_MENU_ITEMS = [
 ]
 
 
+# Configure a caching backend. ATM only used to cache bug details b/c
+# external issue trackers may be slow. If you want to override see:
+# https://docs.djangoproject.com/en/2.2/topics/cache/
+# https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-CACHES
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'kiwitcms',
+        'TIMEOUT': 3600,
+    }
+}
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
