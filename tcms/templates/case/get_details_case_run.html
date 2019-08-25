@@ -114,10 +114,12 @@
 										{% for link in execution.links %}
 										<li>
 											<a {% if link.is_defect %}class="have_bug"{% endif %} href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape|default:link.url }}</a>
-											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
-											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
-												<img title="Remove this log" src="{% static 'images/remove_small.png' %}" />
-											</a>
+											<span class="grey" style="float: right">
+                                                                                            {{ link.created_on|date:"N d, Y" }} |
+											    <a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
+												    <img title="Remove this log" src="{% static 'images/remove_small.png' %}" />
+											    </a>
+                                                                                        </span>
 										</li>
 										{% endfor %}
 									</ul>
