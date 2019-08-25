@@ -8,11 +8,10 @@ from tcms.core.utils import form_errors_to_list
 from tcms.core.contrib.comments.forms import SimpleForm
 from tcms.core.contrib.comments import utils as comment_utils
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.issuetracker.types import IssueTrackerType
-from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.decorators import permissions_required
+from tcms.xmlrpc.api.utils import tracker_from_url
 
 __all__ = (
     'create',
@@ -25,19 +24,6 @@ __all__ = (
     'get_links',
     'remove_link',
 )
-
-
-def tracker_from_url(url):
-    """
-        Return the IssueTrackerType object for the system
-        where ``base_url`` is part of ``url``. Usually we pass
-        URLs to pre-existing defects to this method.
-    """
-    for bug_system in BugSystem.objects.all():
-        if url.startswith(bug_system.base_url):
-            return IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-
-    return None
 
 
 @rpc_method(name='TestExecution.add_comment')
