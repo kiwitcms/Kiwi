@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from modernrpc.core import rpc_method
 
+from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.testcases.models import BugSystem
@@ -29,8 +30,12 @@ def details(url):
                  issue tracker.
         :rtype: dict
     """
-    tracker = tracker_from_url(url)
-    return tracker.details(url)
+    result = cache.get(url)
+    if not result:
+        tracker = tracker_from_url(url)
+        result = tracker.details(url)
+
+    return result
 
 
 @rpc_method(name='Bug.report')
