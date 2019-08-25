@@ -17,6 +17,7 @@ import gitlab
 import redminelib
 
 from django.conf import settings
+from opengraph.opengraph import OpenGraph
 
 from tcms.issuetracker import bugzilla_integration
 from tcms.issuetracker import jira_integration
@@ -62,6 +63,21 @@ class IssueTrackerType:
             characters at the end of a string!
         """
         return int(RE_ENDS_IN_INT.search(url.strip()).group(0))
+
+    def details(self, url):
+        """
+            Returns bug details to be used later. By default this method
+            returns OpenGraph metadata (dict) which is shown in the UI as tooltips.
+            You can override this method to provide different information.
+        """
+        result = OpenGraph(url, scrape=True)
+
+        # remove data which we don't need
+        for key in ['_url', 'url', 'scrape', 'type']:
+            if key in result:
+                del result[key]
+
+        return result
 
     def _report_comment(self, execution):  # pylint: disable=no-self-use
         """
