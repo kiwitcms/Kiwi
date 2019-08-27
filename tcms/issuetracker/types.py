@@ -424,15 +424,28 @@ class Redmine(IssueTrackerType):
         return self.tracker.base_url + query
 
     def find_project_by_name(self, name):
-        projects = self.rpc.project.all()
-        for prj in projects:
-            if prj.name == name:
-                return prj
+        """
+            Return a Redmine project which matches the given product name.
 
-        return projects[0]
+            .. info::
+
+                If there is no match then return the first project in Redmine.
+        """
+        try:
+            return self.rpc.project.get(name)
+        except redminelib.exceptions.ResourceNotFoundError:
+            projects = self.rpc.project.all()
+            return projects[0]
 
     @staticmethod
     def find_issue_type_by_name(project, name):
+        """
+            Return a Redmine tracker matching name ('Bug').
+
+            .. info::
+
+                If there is no match then return the first one!
+        """
         for trk in project.trackers:
             if str(trk).lower() == name.lower():
                 return trk
@@ -440,23 +453,6 @@ class Redmine(IssueTrackerType):
         return project.trackers[0]
 
     def report_issue_from_testcase(self, caserun):
-        """
-            Function to report issue from testcase to Redmine issue tracker with
-            testplan's product name and 'Bug' as the project and  tracker names
-            in Redmine, respectively.
-
-            .. note::
-
-                The first project in Redmine wil be used instead if there is no projet who's
-                name matches the product name of testplan.
-
-            .. note::
-
-                The first tracker in Redmine wil be used instead if there is no tracker who's
-                name matches the name 'Bug'.
-
-        """
-
         project = self.find_project_by_name(caserun.run.plan.product.name)
 
         issue_type = self.find_issue_type_by_name(project, 'Bug')
