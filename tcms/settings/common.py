@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as messages
 import tcms
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ You have to override the following settings in product.py
 
@@ -418,7 +419,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-# A sample LDAP  (and workable) configuration.
+# A (workable) sample LDAP configuration.
 # See https://github.com/etianen/django-python3-ldap and
 # https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
 # for more details on how to customize your LDAP configuration.
@@ -473,8 +474,8 @@ LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = None
 # The LDAP username and password of a user for querying the LDAP database for user
 # details. If None, then the authenticated user will be used for querying, and
 # the `ldap_sync_users` command will perform an anonymous query.
-#LDAP_AUTH_CONNECTION_USERNAME = "username"
-#LDAP_AUTH_CONNECTION_PASSWORD = "password"
+# LDAP_AUTH_CONNECTION_USERNAME = "username"
+# LDAP_AUTH_CONNECTION_PASSWORD = "password"
 
 # Set connection/receive timeouts (in seconds) on the underlying `ldap3` library.
 LDAP_AUTH_CONNECT_TIMEOUT = None
@@ -503,4 +504,3 @@ AUTHENTICATION_BACKENDS = (
     'django_python3_ldap.auth.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
