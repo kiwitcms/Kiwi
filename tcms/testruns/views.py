@@ -528,7 +528,7 @@ class AddCasesToRunView(View):
 
         test_plan = test_run.plan
         test_cases = test_run.plan.case.filter(case_status__name='CONFIRMED').select_related(
-            'default_tester').only('default_tester__id').filter(
+            'default_tester').only('default_tester_id').filter(
                 case_id__in=test_cases_ids)
 
         if request.POST.get('_use_plan_sortkey'):
