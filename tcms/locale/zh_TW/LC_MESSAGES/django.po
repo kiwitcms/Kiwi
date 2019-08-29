@@ -123,7 +123,7 @@ msgstr "您的帳戶已成功啟用"
 
 #: tcms/settings/common.py:96
 msgid "DASHBOARD"
-msgstr "儀表板"
+msgstr "測試儀表板"
 
 #: tcms/settings/common.py:97
 msgid "TESTING"
@@ -1574,14 +1574,14 @@ msgstr "歷史"
 msgid "Delete"
 msgstr "刪除"
 
-#: tcms/testcases/views.py:827
-msgid "TestCase cloning was successful"
-msgstr "TestCase 複製成功"
-
 #: tcms/testcases/views.py:852 tcms/testruns/views.py:428
 #: tcms/testruns/views.py:506
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
+
+#: tcms/testcases/views.py:827
+msgid "TestCase cloning was successful"
+msgstr "TestCase 複製成功"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1777,48 +1777,48 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
-msgstr ""
+msgstr "提出"
 
 #: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
-msgstr ""
+msgstr "已驗證"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
-msgstr ""
+msgstr "禁用"
 
 #: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "需要更新"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr ""
+msgstr "閒置"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr ""
+msgstr "運行"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
-msgstr ""
+msgstr "暫停"
 
 #: vinaigrette-deleteme.py:9
 msgid "PASSED"
-msgstr ""
+msgstr "通過"
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr ""
+msgstr "失敗"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
-msgstr ""
+msgstr "封鎖"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
-msgstr ""
+msgstr "錯誤"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr ""
+msgstr "放棄"
