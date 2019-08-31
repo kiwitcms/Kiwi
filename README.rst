@@ -100,21 +100,20 @@ Installation
 See http://kiwitcms.readthedocs.io/en/latest/installing_docker.html
 
 
-Ways to help us continue improving Kiwi TCMS
----------------------------------------------
+Help us improve Kiwi TCMS
+-------------------------
 
 - Click the `Star` button at https://github.com/kiwitcms/Kiwi/stargazers
 - Follow @KiwiTCMS at https://twitter.com/KiwiTCMS
 - Subscribe to our newsletter
   `here <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 - Send us testimonials and feedback about how your team is using Kiwi TCMS
-- Donate 5$ at https://opencollective.com/kiwitcms
+- Donate 5$ or more at https://opencollective.com/kiwitcms
 - Become a `contributor <http://kiwitcms.readthedocs.org/en/latest/contribution.html>`_
 
 
 Support
 -------
 
-Commercial support for Kiwi TCMS is available from
-`Mr. Senko <http://MrSenko.com>`_. For more information, pricing and support
-levels info see http://MrSenko.com/.
+Commercial support for Kiwi TCMS is also available.
+For more information see http://kiwitcms.org
