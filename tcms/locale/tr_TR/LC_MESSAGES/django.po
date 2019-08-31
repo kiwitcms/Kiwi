@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 08:51\n"
+"PO-Revision-Date: 2019-08-31 09:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -160,7 +160,7 @@ msgstr "Test"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr "Arıza"
+msgstr "Analiz"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
@@ -217,7 +217,7 @@ msgstr "DİĞER"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Test Dökümü"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
@@ -237,7 +237,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "Product"
-msgstr ""
+msgstr "Ürün"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
@@ -245,7 +245,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:65
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Test Planı"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
@@ -253,7 +253,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "Sonra"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
@@ -261,11 +261,11 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "Önce"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
-msgstr ""
+msgstr "Toplam"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:71
 #: tcms/templates/plan/get_cases.html:107
@@ -277,25 +277,25 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Automated"
-msgstr ""
+msgstr "Otomatik"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
 msgid "Manual"
-msgstr ""
+msgstr "Manuel"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
 msgid "Priorities"
-msgstr ""
+msgstr "Öncelikler"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:86
 msgid "Categories"
-msgstr ""
+msgstr "Kategoriler"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Test Durum Matrisi"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
@@ -307,7 +307,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Version"
-msgstr ""
+msgstr "Versiyon"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
@@ -584,7 +584,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "Senaryolar"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
