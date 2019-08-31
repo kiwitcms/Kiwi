@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 08:21\n"
+"PO-Revision-Date: 2019-08-31 08:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -120,35 +120,35 @@ msgstr "Hesabınız başarıyla etkinleştirildi"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "KONTROL PANELİ"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "TEST"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Yeni Test Planı"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
-msgstr ""
+msgstr "Yeni Test Senaryosu"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "ARAMA"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Test Planları Ara"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Test Koşumları Ara"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Test Senaryoları Ara"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
