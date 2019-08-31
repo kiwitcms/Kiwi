@@ -334,6 +334,14 @@ class TestSearchRuns(BaseCaseRun):
         response = self.client.get(self.search_runs_url)
         self.assertContains(response, '<input id="id_summary" type="text"')
 
+    def test_search_page_is_shown_with_get_parameter_used(self):
+        product_id = str(self.product.id)
+        url = self.search_runs_url + '?product=' + product_id
+        response = self.client.get(url)
+        self.assertContains(response,
+                            '<option value="' + product_id + '" selected>Kiwi</option>',
+                            html=True)
+
 
 class TestAddRemoveRunCC(BaseCaseRun):
     """Test view tcms.testruns.views.cc"""

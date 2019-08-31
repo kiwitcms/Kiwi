@@ -122,15 +122,17 @@ class CreateTestRunView(View):
         return render(request, self.template_name, context_data)
 
 
-@require_GET
-def search(request):  # pylint: disable=missing-permission-required
-    form = SearchRunForm(request.GET)
-    form.populate(product_id=request.GET.get('product'))
+class SearchTestRunView(TemplateView):  # pylint: disable=missing-permission-required
 
-    context_data = {
-        'form': form,
-    }
-    return render(request, 'testruns/search.html', context_data)
+    template_name = 'testruns/search.html'
+
+    def get_context_data(self, **kwargs):
+        form = SearchRunForm(self.request.GET)
+        form.populate(product_id=self.request.GET.get('product'))
+
+        return {
+            'form': form,
+        }
 
 
 def _open_run_get_executions(request, run):  # pylint: disable=missing-permission-required
