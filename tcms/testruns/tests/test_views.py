@@ -335,11 +335,10 @@ class TestSearchRuns(BaseCaseRun):
         self.assertContains(response, '<input id="id_summary" type="text"')
 
     def test_search_page_is_shown_with_get_parameter_used(self):
-        product_id = str(self.product.id)
-        url = self.search_runs_url + '?product=' + product_id
-        response = self.client.get(url)
+        response = self.client.get(self.search_runs_url, {'product': self.product.pk})
         self.assertContains(response,
-                            '<option value="' + product_id + '" selected>Kiwi</option>',
+                            '<option value="%d" selected>%s</option>' % (self.product.pk,
+                                                                         self.product.name),
                             html=True)
 
 
