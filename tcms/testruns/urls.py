@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^case-run-update-status/$', views.UpdateCaseRunStatusView.as_view(),
         name='testruns-update_caserun_status'),
 
-    url(r'^search/$', views.search, name='testruns-search'),
+    url(r'^search/$', views.SearchTestRunView.as_view(), name='testruns-search'),
 ]
