@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 03:16\n"
+"PO-Revision-Date: 2019-08-31 08:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -75,19 +75,19 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Bu e-posta adresi şu anda kullanımdadır"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Kişisel bilgi"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "İzinler"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Bu e-posta adresiyle kayıtlı bir kullanıcı zaten var."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
