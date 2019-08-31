@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 08:41\n"
+"PO-Revision-Date: 2019-08-31 08:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -180,40 +180,40 @@ msgstr "Kullanıcılar ve gruplar"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
-msgstr ""
+msgstr "Geri kalan her şey"
 
 #: tcms/settings/common.py:132
 msgid "Report an Issue"
-msgstr ""
+msgstr "Sorun Bildir"
 
 #: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "StackOverflow'da yardım isteyin"
 
 #: tcms/settings/common.py:134
 msgid "User Guide"
-msgstr ""
+msgstr "Kullanım Kılavuzu"
 
 #: tcms/settings/common.py:135
 msgid "Administration Guide"
-msgstr ""
+msgstr "Yönetim Kılavuzu"
 
 #: tcms/settings/common.py:136
 msgid "API Help"
-msgstr ""
+msgstr "API Yardım"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Onay bekleyen yeni kullanıcı var"
 
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "YENİ: Test Koşumu #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "DİĞER"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
