@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 09:31\n"
+"PO-Revision-Date: 2019-08-31 09:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -655,51 +655,51 @@ msgstr "Önceki sayfa"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Mevcut sayfa"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Sonraki sayfa"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Son sayfa"
 
 #: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:562
 msgid "Edit"
-msgstr ""
+msgstr "Düzenle"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Bu planda hiçbir test senaryosu bulunamadı."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "Planı Düzenle"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "Test planını düzenle"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
-msgstr ""
+msgstr "Planı Kopyala"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Bu planı diğer ürüne kopyala"
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "Planı Yazdır"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "Planı Sil"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "Test planını sil"
 
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
