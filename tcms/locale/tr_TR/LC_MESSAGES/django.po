@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 08:11\n"
+"PO-Revision-Date: 2019-08-31 08:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -92,31 +92,31 @@ msgstr "Bu e-posta adresiyle kayıtlı bir kullanıcı zaten var."
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "%s yeni hesap onayınız"
 
 #: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Hesabınız oluşturuldu, onayınız için e-posta hesabınızı kontrol ediniz"
 
 #: tcms/kiwi_auth/views.py:60
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Hesabınız oluşturuldu, fakat etkileşmesi için yönetici onayı gerekiyor"
 
 #: tcms/kiwi_auth/views.py:65
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Aşağıda yönetici listesi"
 
 #: tcms/kiwi_auth/views.py:107
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Bu etkileştirme anahtarı artık veritabanında mevcut değil"
 
 #: tcms/kiwi_auth/views.py:112
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Bu etkinleştirme anahtarının süresi dolmuş"
 
 #: tcms/kiwi_auth/views.py:124
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Hesabınız başarıyla etkinleştirildi"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
