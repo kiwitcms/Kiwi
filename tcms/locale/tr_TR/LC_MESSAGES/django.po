@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 08:31\n"
+"PO-Revision-Date: 2019-08-31 08:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -152,31 +152,31 @@ msgstr "Test Senaryoları Ara"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRİ"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Test"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Arıza"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Durum Matrisi"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
-msgstr ""
+msgstr "Koşum Eğilimleri"
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
-msgstr ""
+msgstr "YÖNETİM"
 
 #: tcms/settings/common.py:124
 msgid "Users and groups"
-msgstr ""
+msgstr "Kullanıcılar ve gruplar"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
