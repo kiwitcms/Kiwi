@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-31 09:11\n"
+"PO-Revision-Date: 2019-08-31 09:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -609,49 +609,49 @@ msgstr "Etiket Ekle"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Menü aç/kapat"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Hoşgeldin Misafir"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Test Koşumlarım"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Test Planlarım"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Profilim"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Şifre değiştir"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Çıkış yap"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Giriş yap"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Kayıt ol"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "İlk sayfa"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Önceki sayfa"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
