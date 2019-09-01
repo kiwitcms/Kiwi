@@ -160,18 +160,14 @@ def _open_run_get_executions(request, run):  # pylint: disable=missing-permissio
     # 5. have to show the number of bugs of each execution
     executions = executions.annotate(num_bug=Count('case_run_bug', distinct=True))
 
-    # todo: is this last distinct necessary
-    executions = executions.distinct()
-
     # Continue to search the executionss with conditions
     # 4. executions preparing for render executions table
     executions = executions.filter(**clean_request(request))
     order_by = request.GET.get('order_by')
     if order_by:
-        executions = executions.order_by(order_by)
-    else:
-        executions = executions.order_by('sortkey', 'pk')
-    return executions
+        return executions.order_by(order_by)
+
+    return executions.order_by('sortkey', 'pk')
 
 
 def open_run_get_comments_subtotal(case_run_ids):
@@ -202,73 +198,79 @@ def open_run_get_users(case_runs):
     return (dict(testers.iterator()), dict(assignees.iterator()))
 
 
-@require_GET
-def get(request,  # pylint: disable=missing-permission-required
-        run_id, template_name='run/get.html'):
-    """Display testrun's detail"""
+class GetTestRunView(TemplateView):  # pylint: disable=missing-permission-required
+    """Display testrun's details"""
 
-    # Get the test run
-    try:
-        # 1. get test run itself
-        test_run = TestRun.objects.select_related().get(run_id=run_id)
-    except ObjectDoesNotExist:
-        raise Http404
+    template_name = 'run/get.html'
 
-    # Get the test executions that belong to the run
-    # 2. get test run's all executions
-    test_executions = _open_run_get_executions(request, test_run)
+    def get_context_data(self, **kwargs):
+        # Get the test run
+        try:
+            # 1. get test run itself
+            test_run = TestRun.objects.select_related().get(run_id=kwargs['run_id'])
+        except ObjectDoesNotExist:
+            raise Http404
 
-    status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
+        # Get the test executions that belong to the run
+        # 2. get test run's all executions
+        test_executions = _open_run_get_executions(self.request, test_run)
 
-    # Count the status
-    # 3. calculate number of executions of each status
-    status_stats_result = test_run.stats_executions_status(status)
+        status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
 
-    # Get the test execution bugs summary
-    # 6. get the number of bugs of this run
-    execution_bugs_count = test_run.get_bug_count()
+        # Count the status
+        # 3. calculate number of executions of each status
+        status_stats_result = test_run.stats_executions_status(status)
 
-    # Get tag list of testcases
-    # 7. get tags
+        # Get the test execution bugs summary
+        # 6. get the number of bugs of this run
+        execution_bugs_count = test_run.get_bug_count()
+
+        return {
+            'test_run': test_run,
+            'executions': _walk_executions(test_executions),
+            'executions_count': len(test_executions),
+            'status_stats': status_stats_result,
+            'execution_bugs_count': execution_bugs_count,
+            'test_status': status,
+            'priorities': Priority.objects.filter(is_active=True),
+            'case_own_tags': _get_tags(test_executions),
+            'bug_trackers': BugSystem.objects.all(),
+        }
+
+
+def _get_tags(test_executions):
+    """Get tag list of testcases"""
+
     # Get the list of testcases belong to the run
     test_cases = []
     for test_execution in test_executions:
         test_cases.append(test_execution.case_id)
+
     tags = Tag.objects.filter(case__in=test_cases).values_list('name', flat=True)
     tags = list(set(tags))
     tags.sort()
 
-    def walk_executions():
-        """Walking executions for helping rendering executions table"""
+    return tags
 
-        priorities = dict(Priority.objects.values_list('pk', 'value'))
-        testers, assignees = open_run_get_users(test_executions)
-        execution_pks = []
-        for execution in test_executions:
-            execution_pks.append(execution.pk)
-        comments_subtotal = open_run_get_comments_subtotal(execution_pks)
-        status = TestExecutionStatus.get_names()
 
-        for case_run in test_executions:
-            yield (case_run,
-                   testers.get(case_run.tested_by_id, None),
-                   assignees.get(case_run.assignee_id, None),
-                   priorities.get(case_run.case.priority_id),
-                   status[case_run.status_id],
-                   comments_subtotal.get(case_run.pk, 0))
+def _walk_executions(test_executions):
+    """Walking executions for helping rendering executions table"""
 
-    context_data = {
-        'test_run': test_run,
-        'executions': walk_executions(),
-        'executions_count': len(test_executions),
-        'status_stats': status_stats_result,
-        'execution_bugs_count': execution_bugs_count,
-        'test_status': status,
-        'priorities': Priority.objects.filter(is_active=True),
-        'case_own_tags': tags,
-        'bug_trackers': BugSystem.objects.all(),
-    }
-    return render(request, template_name, context_data)
+    priorities = dict(Priority.objects.values_list('pk', 'value'))
+    testers, assignees = open_run_get_users(test_executions)
+    execution_pks = []
+    for execution in test_executions:
+        execution_pks.append(execution.pk)
+    comments_subtotal = open_run_get_comments_subtotal(execution_pks)
+    status = TestExecutionStatus.get_names()
+
+    for case_run in test_executions:
+        yield (case_run,
+               testers.get(case_run.tested_by_id, None),
+               assignees.get(case_run.assignee_id, None),
+               priorities.get(case_run.case.priority_id),
+               status[case_run.status_id],
+               comments_subtotal.get(case_run.pk, 0))
 
 
 @permission_required('testruns.change_testrun')
