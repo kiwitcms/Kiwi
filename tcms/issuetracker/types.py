@@ -35,6 +35,7 @@ class IssueTrackerType:
         This is a common interface for all issue trackers that Kiwi TCMS
         supports!
     """
+    rpc_cache = {}
 
     def __init__(self, bug_system):
         """
@@ -64,7 +65,7 @@ class IssueTrackerType:
         """
         return int(RE_ENDS_IN_INT.search(url.strip()).group(0))
 
-    def details(self, url):
+    def details(self, url):  # pylint: disable=no-self-use
         """
             Returns bug details to be used later. By default this method
             returns OpenGraph metadata (dict) which is shown in the UI as tooltips.
@@ -137,6 +138,31 @@ class IssueTrackerType:
                     and self.bug_system.api_username
                     and self.bug_system.api_password)
 
+    def _rpc_connection(self):
+        """
+            Returns an object which is used to communicate to the external system.
+            This method is meant to be overriden by inherited classes.
+        """
+        raise NotImplementedError()
+
+    @property
+    def rpc(self):
+        """
+            Returns an object which is used to communicate to the external system.
+            This proerty is meant to be used by the rest of the integration code
+            and provides caching b/c connecting to a remote system may be a slow
+            operation.
+        """
+        # b/c jira.JIRA tries to connect when object is created
+        # see https://github.com/kiwitcms/Kiwi/issues/100
+        if not self.is_adding_testcase_to_issue_disabled():
+            return None
+
+        if self.bug_system.base_url not in self.rpc_cache:
+            self.rpc_cache[self.bug_system.base_url] = self._rpc_connection()
+
+        return self.rpc_cache[self.bug_system.base_url]
+
 
 class Bugzilla(IssueTrackerType):
     """
@@ -161,22 +187,18 @@ class Bugzilla(IssueTrackerType):
             "BUGZILLA_AUTH_CACHE_DIR",
             tempfile.mkdtemp(prefix='.bugzilla-')
         )
+
+    def _rpc_connection(self):
         if not os.path.exists(self._bugzilla_cache_dir):
             os.makedirs(self._bugzilla_cache_dir, 0o700)
 
-        self._rpc = None
-
-    @property
-    def rpc(self):
-        if self._rpc is None:
-            self._rpc = bugzilla.Bugzilla(
-                self.bug_system.api_url,
-                user=self.bug_system.api_username,
-                password=self.bug_system.api_password,
-                cookiefile=self._bugzilla_cache_dir + 'cookie',
-                tokenfile=self._bugzilla_cache_dir + 'token',
-            )
-        return self._rpc
+        return bugzilla.Bugzilla(
+            self.bug_system.api_url,
+            user=self.bug_system.api_username,
+            password=self.bug_system.api_password,
+            cookiefile=self._bugzilla_cache_dir + 'cookie',
+            tokenfile=self._bugzilla_cache_dir + 'token',
+        )
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
@@ -217,22 +239,17 @@ class JIRA(IssueTrackerType):
         the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
     """
 
-    def __init__(self, bug_system):
-        super().__init__(bug_system)
-
+    def _rpc_connection(self):
         if hasattr(settings, 'JIRA_OPTIONS'):
             options = settings.JIRA_OPTIONS
         else:
             options = None
 
-        # b/c jira.JIRA tries to connect when object is created
-        # see https://github.com/kiwitcms/Kiwi/issues/100
-        if not self.is_adding_testcase_to_issue_disabled():
-            self.rpc = jira.JIRA(
-                bug_system.api_url,
-                basic_auth=(self.bug_system.api_username, self.bug_system.api_password),
-                options=options,
-            )
+        return jira.JIRA(
+            self.bug_system.api_url,
+            basic_auth=(self.bug_system.api_username, self.bug_system.api_password),
+            options=options,
+        )
 
     @classmethod
     def bug_id_from_url(cls, url):
@@ -300,11 +317,9 @@ class GitHub(IssueTrackerType):
             the integration code doesn't use them!
     """
 
-    def __init__(self, bug_system):
-        super().__init__(bug_system)
-
+    def _rpc_connection(self):
         # NOTE: we use an access token so only the password field is required
-        self.rpc = github.Github(self.bug_system.api_password)
+        return github.Github(self.bug_system.api_password)
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
@@ -344,12 +359,10 @@ class Gitlab(IssueTrackerType):
             the integration code doesn't use it!
     """
 
-    def __init__(self, bug_system):
-        super().__init__(bug_system)
-
+    def _rpc_connection(self):
         # we use an access token so only the password field is required
-        self.rpc = gitlab.Gitlab(self.bug_system.api_url,
-                                 private_token=self.bug_system.api_password)
+        return gitlab.Gitlab(self.bug_system.api_url,
+                             private_token=self.bug_system.api_password)
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
@@ -357,7 +370,7 @@ class Gitlab(IssueTrackerType):
             gitlab_integration.GitlabThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.bug_system.base_url and self.bug_system.api_password)
+        return not (self.bug_system.api_url and self.bug_system.api_password)
 
     def report_issue_from_testexecution(self, execution):
         args = {
@@ -381,15 +394,12 @@ class Redmine(IssueTrackerType):
         :api_password: - the password for this username
     """
 
-    def __init__(self, bug_system):
-        super().__init__(bug_system)
-
-        if not self.is_adding_testcase_to_issue_disabled():
-            self.rpc = redminelib.Redmine(
-                self.bug_system.api_url,
-                username=self.bug_system.api_username,
-                password=self.bug_system.api_password
-            )
+    def _rpc_connection(self):
+        return redminelib.Redmine(
+            self.bug_system.api_url,
+            username=self.bug_system.api_username,
+            password=self.bug_system.api_password
+        )
 
     def add_testexecution_to_issue(self, executions, issue_url):
         bug_id = self.bug_id_from_url(issue_url)
