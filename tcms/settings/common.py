@@ -107,6 +107,7 @@ MENU_ITEMS = [
             (_('Breakdown'), reverse_lazy('testing-breakdown')),
             (_('Status matrix'), reverse_lazy('testing-status-matrix')),
             (_('Execution trends'), reverse_lazy('testing-execution-trends')),
+            (_('TestCase health'), reverse_lazy('test-case-health')),
         ]),
         ('More coming soon',
          'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
