@@ -8,4 +8,6 @@ urlpatterns = [
         name='testing-status-matrix'),
     url(r'^testing/execution-trends/$', views.TestingExecutionTrendsView.as_view(),
         name='testing-execution-trends'),
+    url(r'^testing/test-case-health/$', views.TestingTestCaseHealth.as_view(),
+        name='test-case-health'),
 ]

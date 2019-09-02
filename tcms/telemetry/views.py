@@ -16,3 +16,8 @@ class TestingStatusMatrixView(TemplateView):
 class TestingExecutionTrendsView(TemplateView):
 
     template_name = 'telemetry/testing/execution-trends.html'
+
+
+class TestingTestCaseHealth(TemplateView):
+
+    template_name = 'telemetry/testing/test-case-health.html'
