@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:15\n"
+"PO-Revision-Date: 2019-09-03 13:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -53,7 +53,7 @@ msgstr "Коментар"
 #: tcms/core/history.py:41
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "АКТУАЛИЗАЦИЯ: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
@@ -62,7 +62,11 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Актуализация на %(history_date)s\n"
+"Актуализация от %(username)s\n\n"
+"%(diff)s\n\n"
+"За повече информация: \n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
@@ -88,7 +92,7 @@ msgstr "Потребител с този e-mail вече съществува."
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Потвърждаване на профил %s"
 
 #: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -538,7 +542,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
+msgstr "%(user)s, добре дошли!\n"
+"Благодарим Ви за Вашата %(site_domain)s регистрация!\n\n"
+"За да активирате Вашия Профил, моля последвайте линка:\n"
+"%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -571,7 +578,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr ""
+msgstr "Уважаеми Админ,\n"
+"Току що бе регистриран профил с потребителско име %(username)s в Kiwi TCMS, който очаква Вашето потвърждение!\n\n"
+"Отидете до %(user_url)s, за да активирате профила!\n"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -1012,7 +1021,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Потребител"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1046,7 +1055,7 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "регистриране на профил"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
@@ -1093,7 +1102,7 @@ msgstr ""
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Регистриране на нов профил"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
@@ -1170,7 +1179,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
-msgstr ""
+msgstr "Автоматично"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
@@ -1186,7 +1195,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
-msgstr ""
+msgstr "Актуализация"
 
 #: tcms/templates/run/get_case_runs.html:30
 msgid "Assign this case(s) to other people"
@@ -1588,7 +1597,7 @@ msgstr "Тест планът е актуализиран"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Тест кейсовете са актуализирани"
 
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1627,7 +1636,7 @@ msgstr ""
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "Недопустим формат на датата. Трябва да е YYYY-MM-DD."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1653,7 +1662,7 @@ msgstr "версия"
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Потребител или e-mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:79
 msgid "Selected TestCase(s):"
@@ -1731,7 +1740,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "НЕОБХОДИМА_АКТУАЛИЗАЦИЯ"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
