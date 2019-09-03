@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-30 21:46\n"
+"PO-Revision-Date: 2019-09-03 13:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -19,11 +19,11 @@ msgstr ""
 #: tcms/core/ajax.py:158 tcms/testruns/views.py:696
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "User %s not found!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "Komente të personalizuara kryesore"
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/templates/run/get_case_runs.html:152
@@ -34,26 +34,26 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Emri"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "Adresa e postës elektronike"
 
 #: tcms/core/contrib/comments/forms.py:21
 #: tcms/templates/run/get_case_runs.html:149 tcms/templates/run/report.html:138
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/core/contrib/comments/forms.py:25
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Comment"
-msgstr ""
+msgstr "Koment"
 
 #: tcms/core/history.py:41
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "Përditeso: %(model_name)s #%(pk)d -%(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
@@ -62,12 +62,16 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Përditesuar në %(history_date)s\n"
+"Përditesuar nga %(username)s\n\n"
+"%(diff)s\n\n"
+"Për më shumë informacion:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "URL-ja bazë nuk është e konfiguruar! Shihni <a href=\"%(doc_url)s\">dokumentacionin</a> dhe <a href=\"%(admin_url)s\">ndryshoni atë</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
