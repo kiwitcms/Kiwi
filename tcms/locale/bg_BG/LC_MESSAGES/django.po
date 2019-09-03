@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:09\n"
+"PO-Revision-Date: 2019-09-03 13:15\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -334,7 +334,7 @@ msgstr ""
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "Сигурни ли сте, че искате да изтриете прикачения файл?"
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -456,7 +456,7 @@ msgstr ""
 #: tcms/templates/case/get_details_case_run.html:191
 #: tcms/templates/run/get_case_runs.html:60
 msgid "Links"
-msgstr "Връзки"
+msgstr "Линкове"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -720,7 +720,7 @@ msgstr "Тип на плана"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
-msgstr ""
+msgstr "Връзка"
 
 #: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
 #: tcms/templates/plan/preview.html:36
@@ -790,16 +790,16 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Кейс"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Създай нов кейс"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Добави кейсове от други планове"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -813,7 +813,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:40 tcms/testcases/views.py:566
 #: tcms/testplans/templates/testplans/clone.html:68
 msgid "Clone"
-msgstr ""
+msgstr "Клониране"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1372,18 +1372,18 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
 msgid "Arguments"
-msgstr ""
+msgstr "Аргументи"
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
-msgstr ""
+msgstr "Изисквания"
 
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:126
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Линк"
 
 #: tcms/testcases/templates/testcases/get.html:291
 msgid "Bug URL"
@@ -1445,7 +1445,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "Известяване при"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
@@ -1457,7 +1457,7 @@ msgstr "Тест кейсът е изтрит"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "Копие до"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
@@ -1606,7 +1606,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
-msgstr ""
+msgstr "Тест план"
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
@@ -1619,7 +1619,7 @@ msgstr ""
 #: tcms/testplans/views.py:525
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Тест план \"%s\" не съществува"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
@@ -1677,7 +1677,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "ID на плана"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
@@ -1723,7 +1723,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
-msgstr ""
+msgstr "ПОТВЪРДЕНО"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
@@ -1759,7 +1759,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
-msgstr ""
+msgstr "ГРЕШКА"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
