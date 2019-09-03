@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:43\n"
+"PO-Revision-Date: 2019-09-03 14:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -136,7 +136,7 @@ msgstr "Нов тест кейс"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "ТЪРСЕНЕ"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
@@ -636,7 +636,7 @@ msgstr ""
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Промяна на паролата"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
@@ -921,7 +921,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "Избери и всички кейсове, които не са показани долу."
 
 #: tcms/templates/plan/get_cases.html:161
 #: tcms/templates/plan/search_case.html:80
@@ -982,15 +982,15 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Потърси кейсове, които да добавиш към тест плана."
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Бързо търсене"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Стандартно търсене"
 
 #: tcms/templates/plan/search_case.html:81
 #: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:66
@@ -1007,11 +1007,11 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Създаден"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Не са открити тест кейсове."
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
@@ -1027,31 +1027,31 @@ msgstr "Потребител"
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Парола"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Забравена парола"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "парола"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Влизане"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Добре дошли в Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Моля разпишете се, за да започнете"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "или"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
@@ -1063,7 +1063,7 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Паролата е настроена. Може да продължиш и"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
@@ -1077,7 +1077,7 @@ msgstr "Потвърди"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Моля въведи 2 пъти паролата, за да потвърдим вярното й изписване"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1085,7 +1085,7 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "E-mail за промяна на паролата е изпратен"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
@@ -1094,11 +1094,11 @@ msgstr "E-mail"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Промяна на парола"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS промяна на парола"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
@@ -1279,15 +1279,15 @@ msgstr ""
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "ID на кейса"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Тествано от"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Затворено на"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
@@ -1315,7 +1315,7 @@ msgstr ""
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "ОБЩО"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
@@ -1400,11 +1400,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:303
 msgid "Test plans"
-msgstr ""
+msgstr "Тестови планове"
 
 #: tcms/testcases/templates/testcases/get.html:367
 msgid "Components"
-msgstr ""
+msgstr "Компоненти"
 
 #: tcms/testcases/templates/testcases/get.html:411
 msgid "File"
@@ -1438,7 +1438,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Известяване"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
@@ -1509,7 +1509,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:100
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
-msgstr ""
+msgstr "Търсене"
 
 #: tcms/testcases/templates/testcases/search.html:134
 #: tcms/testplans/templates/testplans/search.html:110
@@ -1581,7 +1581,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
-msgstr ""
+msgstr "Известяване:"
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
@@ -1589,7 +1589,7 @@ msgstr "Автор на тест кейса"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
-msgstr ""
+msgstr "Известяване при:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
@@ -1602,7 +1602,7 @@ msgstr "Тест кейсовете са актуализирани"
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Активен"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
