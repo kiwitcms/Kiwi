@@ -1240,7 +1240,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:204
 msgid "Cancel"
-msgstr ""
+msgstr "Отказ"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
@@ -1466,7 +1466,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:145
 #: tcms/testruns/templates/testruns/mutable.html:70
 msgid "Save"
-msgstr ""
+msgstr "Запис"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
