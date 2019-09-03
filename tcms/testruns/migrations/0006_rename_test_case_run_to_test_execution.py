@@ -24,6 +24,9 @@ class Migration(migrations.Migration):
         ('testcases', '0008_notifications_default_true'),
         ('management', '0005_order_by_name'),
         ('testruns', '0005_remove_unused_fields'),
+        # enforces migrations order b/c linkreference.0001
+        # refers to TestCaseRun which we rename here
+        ('linkreference', '0001_squashed'),
     ]
 
     operations = [
