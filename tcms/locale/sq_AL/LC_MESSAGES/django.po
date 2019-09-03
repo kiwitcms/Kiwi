@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:14\n"
+"PO-Revision-Date: 2019-09-03 14:24\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -522,7 +522,7 @@ msgstr ""
 #: tcms/templates/dashboard.html:51
 #: tcms/testcases/templates/testcases/get.html:131
 msgid "Executions"
-msgstr ""
+msgstr "Ekzekutimet"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
@@ -530,11 +530,14 @@ msgid "\n"
 "                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                Ju menaxhoni %(total_count)s TestPlan(s), %(disabled_count)s janë çaktivizuar.\n"
+"                Këtu janë %(count)s më të fundit.\n"
+"                "
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Nuk ka TestPlan(s) që ju përkasin juve"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -542,13 +545,17 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
+msgstr "Mirësevini %(user)s, \n"
+"faleminderit që regjistrohesh për një llogari %(site_domain)s!\n\n"
+"Për të aktivizuar llogarinë tuaj, klikoni në këtë lidhje:\n"
+"%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "\n"
 "TestCase has been deleted by %(username)s!\n"
-msgstr ""
+msgstr "\n"
+"TestCase është fshirë nga %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
