@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:43\n"
+"PO-Revision-Date: 2019-09-03 14:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -144,11 +144,11 @@ msgstr "Planet e Testit të Kërkimit"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Punimet e provave të kërkimit"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Rastet e provave të kërkimit"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Duke testuar"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
@@ -164,7 +164,7 @@ msgstr ""
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Matrica e statusit"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
@@ -172,35 +172,35 @@ msgstr ""
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMINISTRATOR"
 
 #: tcms/settings/common.py:124
 msgid "Users and groups"
-msgstr ""
+msgstr "Përdoruesit dhe grupet"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
-msgstr ""
+msgstr "Gjithçka tjetër"
 
 #: tcms/settings/common.py:132
 msgid "Report an Issue"
-msgstr ""
+msgstr "Raportoni një çështje"
 
 #: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Kërkoni ndihmë në StackOverflow"
 
 #: tcms/settings/common.py:134
 msgid "User Guide"
-msgstr ""
+msgstr "Udhëzues Përdorues"
 
 #: tcms/settings/common.py:135
 msgid "Administration Guide"
-msgstr ""
+msgstr "Udhëzues Administrimi"
 
 #: tcms/settings/common.py:136
 msgid "API Help"
-msgstr ""
+msgstr "Ndihmë API"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
