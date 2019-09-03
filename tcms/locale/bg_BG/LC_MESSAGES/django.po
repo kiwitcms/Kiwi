@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:32\n"
+"PO-Revision-Date: 2019-09-03 13:34\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1142,7 +1142,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "маркирай кутийките, за да добавиш тест кейс към изпълнението. Не забравяй да актуализираш на края"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1175,7 +1175,7 @@ msgstr ""
 
 #: tcms/templates/run/get.html:164
 msgid "CC"
-msgstr ""
+msgstr "Копие"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
@@ -1258,7 +1258,7 @@ msgstr ""
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Добави Копие"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
