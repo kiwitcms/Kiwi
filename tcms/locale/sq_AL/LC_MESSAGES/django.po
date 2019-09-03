@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:34\n"
+"PO-Revision-Date: 2019-09-03 13:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: tcms/core/ajax.py:158 tcms/testruns/views.py:696
 #, python-format
 msgid "User %s not found!"
-msgstr "User %s not found!"
+msgstr "Përdoruesi% s nuk u gjet!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -87,36 +87,36 @@ msgstr "Lejet"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Një përdorues me atë email tashmë ekziston."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Konfirmimi juaj i ri %s i llogarisë"
 
 #: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Llogaria juaj është krijuar, ju lutemi kontrolloni kutinë tuaj postare për konfirmim"
 
 #: tcms/kiwi_auth/views.py:60
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Llogaria juaj është krijuar, por keni nevojë për një administrator për ta aktivizuar atë"
 
 #: tcms/kiwi_auth/views.py:65
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Më poshtë është lista e administratorëve"
 
 #: tcms/kiwi_auth/views.py:107
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Ky çelës aktivizimi nuk ekziston më në bazën e të dhënave"
 
 #: tcms/kiwi_auth/views.py:112
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Ky çelës aktivizimi ka skaduar"
 
 #: tcms/kiwi_auth/views.py:124
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Llogaria juaj është aktivizuar me sukses"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
@@ -124,23 +124,23 @@ msgstr ""
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "DUKE TESTUAR"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Plani i ri i Testit"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
-msgstr ""
+msgstr "Rasti i ri i provës"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "KERKIM"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Planet e Testit të Kërkimit"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
