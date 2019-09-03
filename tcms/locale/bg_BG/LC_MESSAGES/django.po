@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:14\n"
+"PO-Revision-Date: 2019-09-03 14:24\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1640,15 +1640,15 @@ msgstr "Недопустим формат на датата. Трябва да �
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Редакция на Изпълнение"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Клониране на Изпълнение"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Ново Тест Изпълнение"
 
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
@@ -1674,7 +1674,9 @@ msgid "\n"
 "                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr ""
+msgstr "\n"
+"%(count)s избрани тестови кейсове не са ПОТВЪРДЕНИ и няма да бъдат клонирани!\n"
+"Виж Тест плана за повече информация!                    "
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
