@@ -14,6 +14,7 @@ from attachments import urls as attachments_urls
 from modernrpc.core import JSONRPC_PROTOCOL
 from modernrpc.core import XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
+from tcms.bugs import urls as bugs_urls
 from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
@@ -40,6 +41,8 @@ urlpatterns = [
     url(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
         name='ajax.update.cases-actor'),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
+
+    url(r'^bugs/', include(bugs_urls)),
 
     # comments
     url(r'^comments/post/', comments_views.post, name='comments-post'),

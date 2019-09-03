@@ -29,7 +29,7 @@
         <div class="form-group">
             <div class="col-md-1 col-lg-1">
                 <label for="id_build">{% trans "Build" %}</label>
-                <a href="{% url 'admin:management_build_add' %}?_popup=1&product={{ test_plan.product_id }}"
+                <a href="{% url 'admin:management_build_add' %}?_popup&product={{ test_plan.product_id }}"
                     id="add_id_build"
                     alt="{% trans 'add new Build' %}"
                     title="{% trans 'add new Build' %}">+</a>
