@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:34\n"
+"PO-Revision-Date: 2019-09-03 13:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -379,13 +379,13 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Таг"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:180
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "Не е открит таг"
 
 #: tcms/templates/case/get_details.html:40
 #: tcms/templates/case/get_details_case_run.html:78
@@ -451,7 +451,7 @@ msgstr "Добави"
 
 #: tcms/templates/case/get_details_case_run.html:102
 msgid "From Case"
-msgstr ""
+msgstr "От Кейс"
 
 #: tcms/templates/case/get_details_case_run.html:125
 msgid "No log recorded"
@@ -472,7 +472,7 @@ msgstr ""
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Тест Кейсове"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -590,16 +590,16 @@ msgstr "Планове"
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "Кейсове"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
-msgstr ""
+msgstr "Изпълнения"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Действие"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -611,7 +611,7 @@ msgstr "Премахни"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Добави таг"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
@@ -770,7 +770,7 @@ msgstr "Прикачени файлове"
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Tags"
-msgstr ""
+msgstr "Тагове"
 
 #: tcms/templates/plan/get.html:128
 msgid "Tree View"
@@ -826,11 +826,11 @@ msgstr "Клониране"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "Клониране на избрани кейсове към друг тест план"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "Премахване на избраните кейсове от този тест план"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -896,7 +896,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:139
 msgid "No tags in cases"
-msgstr ""
+msgstr "Няма тагове в кейсовете"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
@@ -1254,7 +1254,7 @@ msgstr "Отказ"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "премахни този таг"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
@@ -1470,7 +1470,7 @@ msgstr "Копие до"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "E-mail адреси, разделни от запетая. Уведомителен e-mail ще бъде изпратен до всички адреси, посочени в Копие."
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:145
