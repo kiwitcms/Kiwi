@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:09\n"
+"PO-Revision-Date: 2019-09-03 14:14\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -689,11 +689,11 @@ msgstr "Редакция на тест план"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
-msgstr ""
+msgstr "Клониране на плана"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Клониране на плана към друг продукт"
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
@@ -1549,11 +1549,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Клониране на ТК"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Клониране/ свързване на ТК към нов ТП"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
