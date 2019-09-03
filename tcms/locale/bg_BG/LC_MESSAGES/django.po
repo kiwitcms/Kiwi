@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:02\n"
+"PO-Revision-Date: 2019-09-03 14:09\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -180,27 +180,27 @@ msgstr "Потребители и групи"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
-msgstr ""
+msgstr "Други"
 
 #: tcms/settings/common.py:132
 msgid "Report an Issue"
-msgstr ""
+msgstr "Съобщи за проблем"
 
 #: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Потърси помощ в StackOverflow"
 
 #: tcms/settings/common.py:134
 msgid "User Guide"
-msgstr ""
+msgstr "Ръководство"
 
 #: tcms/settings/common.py:135
 msgid "Administration Guide"
-msgstr ""
+msgstr "Ръководство за Админ"
 
 #: tcms/settings/common.py:136
 msgid "API Help"
-msgstr ""
+msgstr "API Помощ"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -334,7 +334,7 @@ msgstr "Страницата не е намерена"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Вътрешна грешка на сървъра"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -351,7 +351,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Прикачен файл"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:154
@@ -413,7 +413,7 @@ msgstr "Бележки"
 #: tcms/templates/run/get_case_runs.html:200
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Коментари"
 
 #: tcms/templates/case/get_details_case_run.html:46
 #: tcms/templates/case/get_details_case_run.html:48
@@ -435,7 +435,7 @@ msgstr ""
 #: tcms/templates/case/get_details_case_run.html:80
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "Справка"
 
 #: tcms/templates/case/get_details_case_run.html:82
 #: tcms/templates/case/get_details_case_run.html:191
@@ -455,7 +455,7 @@ msgstr "От Кейс"
 
 #: tcms/templates/case/get_details_case_run.html:125
 msgid "No log recorded"
-msgstr ""
+msgstr "Няма логове"
 
 #: tcms/templates/case/get_details_case_run.html:191
 #: tcms/templates/run/get_case_runs.html:60
@@ -464,7 +464,7 @@ msgstr "Линкове"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Съдържание"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
@@ -644,7 +644,7 @@ msgstr "Изход"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
@@ -1081,7 +1081,7 @@ msgstr "Моля въведи 2 пъти паролата, за да потвъ�
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "искане за нова промяна на парола"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1376,7 +1376,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Script"
-msgstr ""
+msgstr "Скрипт"
 
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
