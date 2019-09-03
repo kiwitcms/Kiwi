@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:24\n"
+"PO-Revision-Date: 2019-09-03 14:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1150,7 +1150,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Избрани"
 
 #: tcms/templates/run/get.html:71 tcms/templates/run/report.html:27
 msgid "Product Version"
