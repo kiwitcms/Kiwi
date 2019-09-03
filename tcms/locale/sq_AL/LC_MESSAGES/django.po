@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 13:32\n"
+"PO-Revision-Date: 2019-09-03 13:34\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -75,15 +75,15 @@ msgstr "URL-ja bazë nuk është e konfiguruar! Shihni <a href=\"%(doc_url)s\">d
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Kjo adresë e-mail është tashmë në përdorim"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Informacion personal"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Lejet"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
