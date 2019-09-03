@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:02\n"
+"PO-Revision-Date: 2019-09-03 14:09\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -160,7 +160,7 @@ msgstr "Duke testuar"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Thyej"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
@@ -204,7 +204,7 @@ msgstr "Ndihmë API"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Përdorues i ri që pret miratimin"
 
 #: tcms/signals.py:153
 #, python-format
@@ -213,7 +213,7 @@ msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "TË TJERA"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
