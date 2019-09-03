@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 12:58\n"
+"PO-Revision-Date: 2019-09-03 13:09\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -422,7 +422,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
-msgstr ""
+msgstr "Дата на изпълнение"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
@@ -631,7 +631,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Изход"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
@@ -640,7 +640,7 @@ msgstr ""
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Регистрация"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -668,15 +668,15 @@ msgstr "Редакция"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "В този план не са открити тест кейсове."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "Редакция на планa"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "Редакция на тест план"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
@@ -688,15 +688,15 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "Изпринтирай плана"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "Изтрий плана"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "Изтрий тест план"
 
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
@@ -716,7 +716,7 @@ msgstr "Автор"
 
 #: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
 msgid "Plan Type"
-msgstr ""
+msgstr "Тип на плана"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
@@ -739,11 +739,11 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
-msgstr ""
+msgstr "Преглед на историята"
 
 #: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Документ"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
@@ -803,7 +803,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Принтирай"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
