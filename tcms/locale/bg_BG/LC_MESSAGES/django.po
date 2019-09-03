@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 12:43\n"
+"PO-Revision-Date: 2019-09-03 12:58\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -249,7 +249,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "Преди"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
@@ -257,7 +257,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "След"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
@@ -403,7 +403,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Бележки"
 
 #: tcms/templates/case/get_details.html:64
 #: tcms/templates/run/get_case_runs.html:200
@@ -443,7 +443,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:351
 #: tcms/testcases/templates/testcases/get.html:388
 msgid "Add"
-msgstr ""
+msgstr "Добави"
 
 #: tcms/templates/case/get_details_case_run.html:102
 msgid "From Case"
@@ -456,7 +456,7 @@ msgstr ""
 #: tcms/templates/case/get_details_case_run.html:191
 #: tcms/templates/run/get_case_runs.html:60
 msgid "Links"
-msgstr ""
+msgstr "Връзки"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -505,7 +505,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
-msgstr ""
+msgstr "Тест план"
 
 #: tcms/templates/dashboard.html:50
 #: tcms/testcases/templates/testcases/get.html:313
@@ -518,7 +518,7 @@ msgstr "Тип"
 #: tcms/templates/dashboard.html:51
 #: tcms/testcases/templates/testcases/get.html:131
 msgid "Executions"
-msgstr ""
+msgstr "Изпълнения"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
@@ -544,7 +544,8 @@ msgstr ""
 #, python-format
 msgid "\n"
 "TestCase has been deleted by %(username)s!\n"
-msgstr ""
+msgstr "\n"
+"Тест кейсът е изтрит от %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -663,7 +664,7 @@ msgstr "Последна страница"
 
 #: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:562
 msgid "Edit"
-msgstr ""
+msgstr "Редакция"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -711,7 +712,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/mutable.html:93
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 #: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
 msgid "Plan Type"
@@ -751,7 +752,7 @@ msgstr ""
 #: tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Attachments"
-msgstr ""
+msgstr "Прикачени файлове"
 
 #: tcms/templates/plan/get.html:125 tcms/templates/plan/get_cases.html:76
 #: tcms/templates/run/get.html:89 tcms/templates/run/get_case_runs.html:134
@@ -1353,7 +1354,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Клонирай тест кейс"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1398,7 +1399,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:411
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: tcms/testcases/templates/testcases/get.html:412
 msgid "Owner"
@@ -1406,7 +1407,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:413
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "No records found"
@@ -1414,7 +1415,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
-msgstr ""
+msgstr "Нов тест кейс"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
 #: tcms/testplans/templates/testplans/clone.html:21
@@ -1448,11 +1449,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Тест кейсът е актуализиран"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Тест кейсът е изтрит"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
@@ -1478,11 +1479,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Не"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
@@ -1505,32 +1506,32 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:110
 #: tcms/testruns/templates/testruns/mutable.html:94
 msgid "Created on"
-msgstr ""
+msgstr "Създаден на"
 
 #: tcms/testcases/views.py:394
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Не е избран тест план или такъв не съществува"
 
 #: tcms/testcases/views.py:570
 msgid "History"
-msgstr ""
+msgstr "История"
 
 #: tcms/testcases/views.py:575
 msgid "Delete"
-msgstr ""
+msgstr "Изтрий"
 
 #: tcms/testcases/views.py:745 tcms/testruns/views.py:429
 #: tcms/testruns/views.py:507
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Необходим е поне един тест кейс"
 
 #: tcms/testcases/views.py:831
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Клонирането на тест кейса беше успешно"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Клониране на тест кейс"
 
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
@@ -1555,11 +1556,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Редакция на тест план"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Създай нов тест план"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1583,7 +1584,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Тест планът е актуализиран"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
@@ -1609,7 +1610,7 @@ msgstr ""
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Изисква се тест план"
 
 #: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
@@ -1656,7 +1657,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:79
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Избран(и) тест кейс(ове):"
 
 #: tcms/testruns/templates/testruns/mutable.html:82
 #, python-format
@@ -1680,7 +1681,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "ID на тест план"
 
 #: tcms/testruns/views.py:54
 msgid "Creating a TestRun requires a TestPlan, select one"
@@ -1692,7 +1693,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:433
 msgid "Clone of "
-msgstr ""
+msgstr "Клонирано от "
 
 #: tcms/testruns/views.py:516
 msgid "TestCase ID is not a valid integer"
