@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-08-30 21:47\n"
+"PO-Revision-Date: 2019-09-03 12:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: tcms/core/ajax.py:158 tcms/testruns/views.py:696
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Несъществуващ потребител %s!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -34,21 +34,21 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Име"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "E-mail адрес"
 
 #: tcms/core/contrib/comments/forms.py:21
 #: tcms/templates/run/get_case_runs.html:149 tcms/templates/run/report.html:138
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/core/contrib/comments/forms.py:25
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Comment"
-msgstr ""
+msgstr "Коментар"
 
 #: tcms/core/history.py:41
 #, python-format
@@ -75,15 +75,15 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Лична информация"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Права"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Потребител с този e-mail вече съществува."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
@@ -92,11 +92,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Профилът е създаден. Проверете електронната си поща за потвърждаване"
 
 #: tcms/kiwi_auth/views.py:60
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Профилът е създаден, но е необходимо администратор да го активира"
 
 #: tcms/kiwi_auth/views.py:65
 msgid "Following is the administrator list"
@@ -112,7 +112,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:124
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Профилът е активиран успешно"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
@@ -124,11 +124,11 @@ msgstr ""
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Нов тест план"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
-msgstr ""
+msgstr "Нов тест кейс"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
@@ -168,11 +168,11 @@ msgstr ""
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
-msgstr ""
+msgstr "АДМИН"
 
 #: tcms/settings/common.py:124
 msgid "Users and groups"
-msgstr ""
+msgstr "Потребители и групи"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
@@ -233,7 +233,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "Product"
-msgstr ""
+msgstr "Продукт"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
@@ -261,7 +261,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
-msgstr ""
+msgstr "Oбщо"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:71
 #: tcms/templates/plan/get_cases.html:107
@@ -278,15 +278,15 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
 msgid "Manual"
-msgstr ""
+msgstr "Ръководство"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
 msgid "Priorities"
-msgstr ""
+msgstr "Приоритети"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:86
 msgid "Categories"
-msgstr ""
+msgstr "Категории"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
@@ -303,7 +303,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Version"
-msgstr ""
+msgstr "Версия"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
@@ -318,7 +318,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Тест кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
@@ -326,7 +326,7 @@ msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Страницата не е намерена"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
@@ -414,7 +414,7 @@ msgstr ""
 #: tcms/templates/case/get_details_case_run.html:46
 #: tcms/templates/case/get_details_case_run.html:48
 msgid "Show All"
-msgstr ""
+msgstr "Покажи всички"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
@@ -493,7 +493,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "ВИЖ ВСИЧКИ"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
@@ -513,7 +513,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:113
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: tcms/templates/dashboard.html:51
 #: tcms/testcases/templates/testcases/get.html:131
@@ -574,7 +574,7 @@ msgstr ""
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Планове"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
@@ -597,7 +597,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:48
 msgid "Remove"
-msgstr ""
+msgstr "Премахни"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
@@ -643,23 +643,23 @@ msgstr ""
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Първа страница"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Предишна страница"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Текуща страница"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Следваща страница"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Последна страница"
 
 #: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:562
 msgid "Edit"
@@ -850,7 +850,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -864,7 +864,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Priority"
-msgstr ""
+msgstr "Приоритет"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
@@ -948,7 +948,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Покажи повече"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
@@ -1057,13 +1057,13 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "сега"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:203
 msgid "Confirm"
-msgstr ""
+msgstr "Потвърди"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
@@ -1080,7 +1080,7 @@ msgstr ""
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
@@ -1148,7 +1148,7 @@ msgstr ""
 
 #: tcms/templates/run/get.html:113 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Бележка"
 
 #: tcms/templates/run/get.html:145
 msgid "Finished"
@@ -1575,7 +1575,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
-msgstr ""
+msgstr "Автор на тест кейса"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
@@ -1647,7 +1647,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "версия"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
@@ -1762,5 +1762,5 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr ""
+msgstr "ОТЛОЖЕНО"
 
