@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+{% block title %}
+    {% trans "New Bug" %}
+{% endblock %}
+
+{% block contents %}
+    <div class="container-fluid container-cards-pf">
+        <form class="form-horizontal" action="{% url 'bugs-new' %}" method="post">
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
+                <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
+                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
+                    {{ form.summary.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_product">{% trans "Product" %}</label>
+                    <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
+                    <select id="id_product" name="product" class="form-control selectpicker">
+                        {% for product in form.product.field.queryset %}
+                            <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
+                                {{ product.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.product.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_version">{% trans "Version" %}</label>
+                    <a href="{% url 'admin:management_version_add' %}?_popup&product={{ form.product.pk }}"
+                       id="add_id_version" alt="{% trans 'add new Version' %}" title="{% trans 'add new Version' %}">
+                        +
+                    </a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.version.errors %}has-error{% endif %}">
+                    <select id="id_version" name="version" class="form-control selectpicker">
+                        {% for version in form.version.field.queryset %}
+                            <option value="{{ version.pk }}" {% if version.pk|escape == form.version.value|escape %}selected{% endif %}>
+                                {{ version.value }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.version.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_build">{% trans "Build" %}</label>
+                    <a href="{% url 'admin:management_build_add' %}?_popup&product={{ form.product.pk }}"
+                        id="add_id_build"
+                        alt="{% trans 'add new Build' %}"
+                        title="{% trans 'add new Build' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <select class="form-control selectpicker" id="id_build" name="build">
+                    {% for option in form.build.field.queryset %}
+                        <option value="{{ option.pk }}" {% if option.pk|escape == form.build.value|escape %}selected{% endif %}>{{ option.name }}</option>
+                    {% endfor %}
+                    </select>
+                    {{ form.build.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-12 col-md-12">
+                    <div>{{ form.text }}</div>
+                    {{ form.text.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-lg-1">
+                    <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static "grappelli/jquery/jquery.min.js" %}"></script>
+<script src="{% static "grappelli/js/grappelli.min.js" %}"></script>
+<script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script src="{% static 'bugs/js/mutable.js' %}"></script>
+{% endblock %}

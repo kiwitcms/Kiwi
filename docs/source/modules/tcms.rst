@@ -11,6 +11,7 @@ Subpackages
 
 .. toctree::
 
+   tcms.bugs
    tcms.core
    tcms.issuetracker
    tcms.kiwi_auth

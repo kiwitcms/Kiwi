@@ -307,6 +307,9 @@ INSTALLED_APPS = [
     'simple_history',
 
     'tcms.core',
+    # if you wish to disable Kiwi TCMS bug tracker
+    # comment out the next line
+    'tcms.bugs',
     'tcms.kiwi_auth',
     'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
@@ -320,6 +323,17 @@ INSTALLED_APPS = [
 
 for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
     INSTALLED_APPS.append(plugin.module_name)
+
+if 'tcms.bugs' in INSTALLED_APPS:
+    # Testing menu
+    MENU_ITEMS[1][1].extend([
+        ('-', '-'),
+        (_('New Bug'), reverse_lazy('bugs-new')),
+    ])
+    # Search menu
+    MENU_ITEMS[2][1].extend([
+        (_('Search Bugs'), reverse_lazy('bugs-search')),
+    ])
 
 
 SERIALIZATION_MODULES = {
