@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load comments %}
+{% load extra_filters %}
+{% load attachments_tags %}
+
+{% block title %}BUG-{{ object.pk }}: {{ object.summary }}{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block head %}
+    {{ comment_form.media }}
+{% endblock %}
+
+{% block contents %}
+<div class="container-cards-pf">
+    <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
+    <h1 class="col-md-12" style="margin-top: 0">
+        <span id="object_pk"
+            data-pk="{{ object.pk }}"
+            data-perm-remove-tag="{{ perms.bugs.delete_bugtag }}"
+        >BUG-{{ object.pk }}: {{ object.summary }}</span>
+
+        {% if object.status %}
+            <span class="fa fa-envelope-open-o" title="{% trans 'Open' %}"></span>
+        {% else %}
+            <span class="fa fa-times" title="{% trans 'Closed' %}"></span>
+        {% endif %}
+    </h1>
+
+    {% get_comment_list for object as comments %}
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-9">
+            <div class="card-pf card-pf-accented">
+                <div class="card-pf-body">
+                    <div class="markdown-text">
+                        {{ comments.0.comment|markdown2html }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3">
+            <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa fa-calendar"></span>{{ object.created_at }}
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa pficon-user"></span>{% trans 'Reporter' %}:
+                    <a href="{% url "tcms-profile" object.reporter.username %}">{{ object.reporter.username }}</a>
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa pficon-user"></span>{% trans 'Assignee' %}:
+                    <a href="{% url "tcms-profile" object.assignee.username %}">{{ object.assignee.username }}</a>
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span id="product_pk"
+                        data-pk="{{ object.product.pk }}"
+                        class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
+                    {{ object.product }}
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa fa-refresh"></span>{% trans 'Version' %}:
+                    {{ object.version }}
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa fa-wrench"></span>{% trans 'Build' %}:
+                    {{ object.build }}
+                </h2>
+
+                <div class="card-pf-body"></div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3" style="float: right">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-tags"></span>
+                    {% trans 'Tags' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="tags">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Name' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {% if perms.bugs.add_bugtag %}
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input type="text" class="form-control typeahead" id="id_tags">
+                                    </div>
+                                </th>
+                                <th>
+                                    <a href="#tags" id="add-tag" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for comment in comments %}
+    {% if forloop.counter0 > 0 %}
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-9">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <a href="{% url "tcms-profile" comment.user.username %}">{{ comment.user }}</a>
+                    {% trans 'commented on' %}
+                    {{ comment.submit_date }}
+                </h2>
+                <div class="card-pf-body">
+                    <div class="markdown-text">
+                        {{ comment.comment|markdown2html }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    {% if perms.django_comments.add_comment %}
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-9">
+            <div class="card-pf">
+                <form class="form-horizontal" action="{% url 'bugs-comment' %}" method="post">
+                    <input name="bug" type="hidden" value="{{ object.pk }}">
+                    <div class="form-group">
+                        <div>
+                            <div>{{ comment_form.text }}</div>
+                            {{ comment_form.text.errors }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-paperclip"></span>
+                    {% trans 'Attachments' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="attachments">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'File' %}</th>
+                                <th>{% trans 'Owner' %}</th>
+                                <th>{% trans 'Date' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% get_attachments_for object as attachments_list %}
+                        {% for attachment in attachments_list %}
+                            <tr>
+                                <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
+                                <td><a href="{% url "tcms-profile" attachment.creator %}">{{ attachment.creator }}</a></td>
+                                <td>{{ attachment.created }}</td>
+                                <td>{% attachment_delete_link attachment %}</td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="4">{% trans 'No records found' %}</td></tr>
+                        {% endfor %}
+                        </tbody>
+                        {% if perms.attachments.add_attachment %}
+                        <tfoot>
+                            <tr>
+                                <th colspan="4">
+                                    {% attachment_form object %}
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /row -->
+</div>
+
+<script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
+
+<script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+{% endblock %}
