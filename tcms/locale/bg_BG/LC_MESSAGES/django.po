@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 07:32\n"
+"PO-Revision-Date: 2019-09-04 07:42\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -140,7 +140,7 @@ msgstr "ТЪРСЕНЕ"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Търси сред Тест планове"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
@@ -148,7 +148,7 @@ msgstr ""
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Търси сред Тест кейсове"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
@@ -347,7 +347,7 @@ msgstr ""
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
@@ -356,7 +356,7 @@ msgstr "Прикачен файл"
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:154
 msgid "No attachment found"
-msgstr ""
+msgstr "Не е открит прикачен файл"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:164
@@ -364,12 +364,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
 msgid "Component"
-msgstr ""
+msgstr "Компонент"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:169
 msgid "No component found"
-msgstr ""
+msgstr "Не е открит компонент"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -954,7 +954,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Действия"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
@@ -1335,7 +1335,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "Не е открито изпълнение"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1420,7 +1420,7 @@ msgstr "Дата"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "No records found"
-msgstr ""
+msgstr "Не са открити записи"
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
@@ -1480,7 +1480,7 @@ msgstr "Запис"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Търси тест кейс"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
@@ -1606,7 +1606,7 @@ msgstr "Активен"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Търси тест план"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
