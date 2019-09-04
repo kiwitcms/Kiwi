@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 08:21\n"
+"PO-Revision-Date: 2019-09-04 08:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -485,7 +485,7 @@ msgstr "Тест изпълнения"
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:83
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Започна в"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -1171,7 +1171,7 @@ msgstr ""
 
 #: tcms/templates/run/get.html:158 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Завърши в"
 
 #: tcms/templates/run/get.html:164
 msgid "CC"
@@ -1266,11 +1266,11 @@ msgstr ""
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Ръчни кейсове"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Автоматизирани кейсове"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
@@ -1323,15 +1323,15 @@ msgstr "Няма бъгове"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Избери всички кейсове/ Премахни избраните"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Разпъни всички кейсове"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "ID на изпълнение"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
@@ -1503,7 +1503,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Раздели със запетая (,)"
 
 #: tcms/testcases/templates/testcases/search.html:124
 #: tcms/testplans/templates/testplans/search.html:100
@@ -1610,7 +1610,7 @@ msgstr "Търси тест план"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Име на Тест плана"
 
 #: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/search.html:92
