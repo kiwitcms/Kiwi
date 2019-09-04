@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 12:04\n"
+"PO-Revision-Date: 2019-09-04 12:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1187,7 +1187,7 @@ msgstr "Автоматично"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
-msgstr ""
+msgstr "Акцент"
 
 #: tcms/templates/run/get_case_runs.html:24
 msgid "Remove selected cases form this test run"
@@ -1311,7 +1311,7 @@ msgstr "Виж всички в Тракера"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
+msgstr "Показани са системи, които са конфигурирани системи да поддържат няколко бъга"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
