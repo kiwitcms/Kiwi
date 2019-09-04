@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 07:11\n"
+"PO-Revision-Date: 2019-09-04 07:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "ТЕСТВАНЕ"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Тестване"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
@@ -217,7 +217,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Разбивка на тестове"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
@@ -245,7 +245,7 @@ msgstr "Продукт"
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:65
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Тест план"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
@@ -277,7 +277,7 @@ msgstr "Oбщо"
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Automated"
-msgstr ""
+msgstr "Автоматизирано"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
@@ -318,7 +318,7 @@ msgstr "Версия"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Build"
-msgstr ""
+msgstr "Билд"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
