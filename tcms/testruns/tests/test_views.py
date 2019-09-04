@@ -825,3 +825,43 @@ class TestExecutionComments(BaseCaseRun):
         remove_perm_from_user(self.tester, 'django_comments.add_comment')
         response = self.client.get(self.url)
         self.assertNotContains(response, self.add_comment_html, html=True)
+
+
+class TestChangeTestRunStatus(BaseCaseRun):
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('testruns-change_status', args=[cls.test_run.pk])
+
+    def test_change_status_to_finished(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
+        response = self.client.get(self.url, {'finished': 1})
+        self.assertRedirects(
+            response,
+            reverse('testruns-get', args=[self.test_run.pk]))
+
+        self.test_run.refresh_from_db()
+        self.assertIsNotNone(self.test_run.stop_date)
+
+    def test_change_status_to_running(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
+        response = self.client.get(self.url, {'finished': 0})
+
+        self.assertRedirects(
+            response,
+            reverse('testruns-get', args=[self.test_run.pk]))
+
+        self.test_run.refresh_from_db()
+        self.assertIsNone(self.test_run.stop_date)
+
+    def test_should_throw_404_on_non_existing_testrun(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
+        response = self.client.get(reverse('testruns-change_status', args=[99999]), {'finished': 0})
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
+
+    def test_should_fail_when_try_to_change_status_without_permissions(self):
+        remove_perm_from_user(self.tester, 'testruns.change_testrun')
+        self.assertRedirects(
+            self.client.get(self.url, {'finished': 1}),
+            reverse('tcms-login') + '?next=%s?finished=1' % self.url)
