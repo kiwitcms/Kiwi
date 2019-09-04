@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 11:13\n"
+"PO-Revision-Date: 2019-09-04 11:29\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -23,7 +23,7 @@ msgstr "Несъществуващ потребител %s!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "Основни персонализирани коментари"
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/templates/run/get_case_runs.html:152
@@ -71,7 +71,7 @@ msgstr "Актуализация на %(history_date)s\n"
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Не е настроен Основен URL! Виж <a href=\"%(doc_url)s\">документация</a> и <a href=\"%(admin_url)s\">го промени</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -164,11 +164,11 @@ msgstr "Разбивка"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Матрица на състоянието"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
-msgstr ""
+msgstr "Графики на изпълнения"
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
@@ -295,7 +295,7 @@ msgstr "Категории"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Матрица на състоянието на тестове"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
@@ -326,7 +326,7 @@ msgstr "Тест кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
-msgstr ""
+msgstr "Тест Изпълнение"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -342,7 +342,7 @@ msgstr "Сигурни ли сте, че искате да изтриете пр
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "водещата open source система за управление на тестове"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
@@ -422,7 +422,7 @@ msgstr "Покажи всички"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Информация от Изпълнение на тестове"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
@@ -615,7 +615,7 @@ msgstr "Добави Таг"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Превключване на навигацията"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
@@ -623,7 +623,7 @@ msgstr "Гост, добре дошъл"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Моите Тест Изпълнения"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
@@ -736,7 +736,7 @@ msgstr "Връзка"
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Празно"
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
@@ -816,7 +816,7 @@ msgstr "Принтирай"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "изглед за печат на избраните кейсове"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:40 tcms/testcases/views.py:566
@@ -838,7 +838,7 @@ msgstr "Пусни"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "Добави ново Тест Изпълнение"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
@@ -878,12 +878,12 @@ msgstr "Приоритет"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "Кликни, за да се покажат филтри"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:7
 msgid "Show filter options"
-msgstr ""
+msgstr "Покажи филтри"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -891,7 +891,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Подреди кейсовете"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:139
@@ -962,11 +962,11 @@ msgstr "Покажи повече"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "оставащи кейсове"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Всички кейсове са заредени."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -978,7 +978,7 @@ msgstr ""
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
-msgstr ""
+msgstr "Търсеният план не съществува."
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
@@ -1106,7 +1106,7 @@ msgstr "Регистриране на нов профил"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "Добави тест кейс към Тест Изпълнение"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:77
 #: tcms/templates/run/report.html:30
@@ -1228,7 +1228,7 @@ msgstr "Тестер по подразбиране"
 
 #: tcms/templates/run/get_case_runs.html:92
 msgid "Auto"
-msgstr ""
+msgstr "Автом."
 
 #: tcms/templates/run/get_case_runs.html:98
 msgid "Bug"
@@ -1262,7 +1262,7 @@ msgstr "Добави Копие"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Справка за тестовото изпълнение"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
@@ -1442,7 +1442,7 @@ msgstr "Известяване"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
-msgstr ""
+msgstr "Управление на Тест Изпълнения"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
