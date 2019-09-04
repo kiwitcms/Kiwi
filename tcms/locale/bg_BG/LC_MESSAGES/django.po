@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 11:10\n"
+"PO-Revision-Date: 2019-09-04 11:13\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1118,7 +1118,7 @@ msgstr "Управление"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Всички Потвърдени кейсове"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
@@ -1130,7 +1130,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Използвай ключа за сортиране от плана"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1138,7 +1138,7 @@ msgstr "Как да сложим Изпълнител на кейс?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "По-долу са изброени всички потвърдени кейсове на плана"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
