@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 07:42\n"
+"PO-Revision-Date: 2019-09-04 07:53\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -794,7 +794,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "Няма прикачени файлове"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
@@ -834,7 +834,7 @@ msgstr "Премахване на избраните кейсове от тоз�
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Пусни"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
@@ -913,11 +913,11 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:135
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Category"
-msgstr ""
+msgstr "Категория"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "Елементи на страница"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
@@ -1653,7 +1653,7 @@ msgstr "Ново Тест Изпълнение"
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "добави нов Билд"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
