@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 08:31\n"
+"PO-Revision-Date: 2019-09-04 08:45\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -152,7 +152,7 @@ msgstr "Търси сред Тест кейсове"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
-msgstr ""
+msgstr "ТЕЛЕМЕТРИЯ"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
@@ -505,7 +505,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "Твоите Тест планове"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
@@ -534,7 +534,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Нямаш Тест(ови) план(ове)"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -778,7 +778,7 @@ msgstr "Дървовиден изглед"
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Документът за този план не е създаден все още."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
@@ -846,7 +846,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "Смени Тестер по подразбиране"
 
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
 #: tcms/templates/plan/get_cases.html:192
@@ -946,7 +946,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:83 tcms/templates/run/get.html:132
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Тестер по подразбиране"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1154,7 +1154,7 @@ msgstr "Избрани"
 
 #: tcms/templates/run/get.html:71 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Версия на продукта"
 
 #: tcms/templates/run/get.html:113 tcms/templates/run/report.html:51
 msgid "Note"
@@ -1224,7 +1224,7 @@ msgstr "Бъгове"
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Default tester"
-msgstr ""
+msgstr "Тестер по подразбиране"
 
 #: tcms/templates/run/get_case_runs.html:92
 msgid "Auto"
@@ -1450,7 +1450,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Тестер по подразбиране на изпълненията"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
@@ -1726,11 +1726,11 @@ msgstr ""
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "Макет %s няма първичен ключ. Трябва да се попълни ръчно."
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
-msgstr ""
+msgstr "ПРЕДЛОЖЕН(И)"
 
 #: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
@@ -1738,7 +1738,7 @@ msgstr "ПОТВЪРДЕНО"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
-msgstr ""
+msgstr "ДЕАКТИВИРАН(И)"
 
 #: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
@@ -1746,27 +1746,27 @@ msgstr "НЕОБХОДИМА_АКТУАЛИЗАЦИЯ"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr ""
+msgstr "ОТЛОЖЕН(И)"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr ""
+msgstr "В ИЗПЪЛНЕНИЕ"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
-msgstr ""
+msgstr "НА ИЗЧАКВАНЕ"
 
 #: vinaigrette-deleteme.py:9
 msgid "PASSED"
-msgstr ""
+msgstr "ИЗПЪЛНЕН(И)"
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr ""
+msgstr "С ГРЕШКИ"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
-msgstr ""
+msgstr "БЛОКИРАН(И)"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
