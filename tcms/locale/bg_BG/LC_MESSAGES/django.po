@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 11:00\n"
+"PO-Revision-Date: 2019-09-04 11:10\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -204,7 +204,7 @@ msgstr "API Помощ"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Нов потребител, чака потвърждение"
 
 #: tcms/signals.py:153
 #, python-format
@@ -1134,7 +1134,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Как да сложим Изпълнител на кейс?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
@@ -1199,7 +1199,7 @@ msgstr "Актуализация"
 
 #: tcms/templates/run/get_case_runs.html:30
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Насочи кейс(ове) към друг потребител"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:84
@@ -1412,7 +1412,7 @@ msgstr "Файл"
 
 #: tcms/testcases/templates/testcases/get.html:412
 msgid "Owner"
-msgstr ""
+msgstr "Възложител"
 
 #: tcms/testcases/templates/testcases/get.html:413
 msgid "Date"
@@ -1496,7 +1496,7 @@ msgstr "Не"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Всички"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testcases/templates/testcases/search.html:120
