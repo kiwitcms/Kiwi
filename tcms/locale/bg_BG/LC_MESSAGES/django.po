@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 08:05\n"
+"PO-Revision-Date: 2019-09-04 08:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -400,7 +400,7 @@ msgstr "От Изпълнение"
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:111
 msgid "No bug found"
-msgstr ""
+msgstr "Не е открит бъг"
 
 #: tcms/templates/case/get_details.html:58
 #: tcms/testcases/templates/testcases/get.html:33
@@ -1059,7 +1059,7 @@ msgstr "регистриране на профил"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "ако нямаш!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
@@ -1236,7 +1236,7 @@ msgstr "Бъг"
 
 #: tcms/templates/run/get_case_runs.html:100
 msgid "You can type multiple bugs by comma."
-msgstr ""
+msgstr "Може да изброиш няколко бъга, разделени със запетая."
 
 #: tcms/templates/run/get_case_runs.html:178 tcms/templates/run/report.html:120
 #: tcms/testcases/templates/testcases/search.html:117
@@ -1291,15 +1291,15 @@ msgstr "Затворено на"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
-msgstr ""
+msgstr "ID на бъгове"
 
 #: tcms/templates/run/report.html:116
 msgid "Bug List"
-msgstr ""
+msgstr "Списък с бъгове"
 
 #: tcms/templates/run/report.html:121
 msgid "Bug Url"
-msgstr ""
+msgstr "URL на бъга"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
@@ -1319,7 +1319,7 @@ msgstr "ОБЩО"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Няма бъгове"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
@@ -1396,7 +1396,7 @@ msgstr "Линк"
 
 #: tcms/testcases/templates/testcases/get.html:291
 msgid "Bug URL"
-msgstr ""
+msgstr "URL на бъга"
 
 #: tcms/testcases/templates/testcases/get.html:303
 msgid "Test plans"
