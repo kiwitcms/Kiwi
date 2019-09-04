@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 07:53\n"
+"PO-Revision-Date: 2019-09-04 08:05\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Този e-mail вече се използва"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
@@ -120,7 +120,7 @@ msgstr "Профилът е активиран успешно"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "ОСНОВНО ТАБЛО"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
@@ -390,7 +390,7 @@ msgstr "Не е открит таг"
 #: tcms/templates/case/get_details.html:40
 #: tcms/templates/case/get_details_case_run.html:78
 msgid "bug"
-msgstr ""
+msgstr "бъг"
 
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:95
@@ -430,7 +430,7 @@ msgstr "Дата на изпълнение"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
-msgstr ""
+msgstr "Версия на текста"
 
 #: tcms/templates/case/get_details_case_run.html:80
 #: tcms/templates/run/status_statistics.html:24
@@ -468,7 +468,7 @@ msgstr "Съдържание"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Документ на тест плана"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
@@ -476,11 +476,11 @@ msgstr "Тест Кейсове"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Основно табло"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Тест изпълнения"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:83
 #: tcms/templates/run/report.html:44
@@ -611,7 +611,7 @@ msgstr "Премахни"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr "Добави таг"
+msgstr "Добави Таг"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
@@ -740,7 +740,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
-msgstr ""
+msgstr "Час на създаване"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
@@ -790,7 +790,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Дата на създаване"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
@@ -1146,7 +1146,7 @@ msgstr "маркирай кутийките, за да добавиш тест �
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Дата на създаване"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1212,7 +1212,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:284
 msgid "Bugs"
-msgstr ""
+msgstr "Бъгове"
 
 #: tcms/templates/run/get_case_runs.html:80
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1232,7 +1232,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:98
 msgid "Bug"
-msgstr ""
+msgstr "Бъг"
 
 #: tcms/templates/run/get_case_runs.html:100
 msgid "You can type multiple bugs by comma."
@@ -1242,7 +1242,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr ""
+msgstr "Бъг ID"
 
 #: tcms/templates/run/get_case_runs.html:185
 msgid "Check to add Test Case(s) to Issue Tracker"
@@ -1367,7 +1367,7 @@ msgstr "Клонирай тест кейс"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Добави нов ТК към ТП"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
@@ -1430,11 +1430,11 @@ msgstr "Нов тест кейс"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "добави нов Продукт"
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "добави нова Категория"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
@@ -1545,7 +1545,7 @@ msgstr "Клониране на тест кейс"
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "добави нова Версия"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
