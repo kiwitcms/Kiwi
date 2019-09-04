@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:24\n"
+"PO-Revision-Date: 2019-09-04 08:45\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -447,7 +447,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:351
 #: tcms/testcases/templates/testcases/get.html:388
 msgid "Add"
-msgstr ""
+msgstr "Shto"
 
 #: tcms/templates/case/get_details_case_run.html:102
 msgid "From Case"
@@ -645,16 +645,16 @@ msgstr ""
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Kyçuni"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Regjistrohu"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Faqja e parë"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
@@ -662,19 +662,19 @@ msgstr ""
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Faqja aktuale"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Faqja tjetër"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Faqja e fundit"
 
 #: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:562
 msgid "Edit"
-msgstr ""
+msgstr "Redakto"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
