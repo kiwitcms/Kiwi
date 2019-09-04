@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 11:39\n"
+"PO-Revision-Date: 2019-09-04 11:42\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -501,7 +501,7 @@ msgstr "ВИЖ ВСИЧКИ"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Нямаш възложени Тест изпълнение/я"
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
@@ -1713,7 +1713,7 @@ msgstr "ID на тест кейса е невалидно число"
 #: tcms/testruns/views.py:644
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "%d Тест Изпълнение/я са актуализирани:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
