@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 11:42\n"
+"PO-Revision-Date: 2019-09-04 12:04\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -144,7 +144,7 @@ msgstr "Търси сред Тест планове"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Търси Тест Изпълнение"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
@@ -493,7 +493,9 @@ msgid "\n"
 "                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"%(total_count)s Тест Изпълнение/я или тестови кейс(ове) са ти възложени за изпълнение.\n"
+"               Тук са последните %(count)s.                "
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
@@ -530,7 +532,9 @@ msgid "\n"
 "                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"Отговаряш за %(total_count)s Тест Изпълнение/я, от които %(disabled_count)s са деактивирани.\n"
+"               Тук са последните %(count)s.                "
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
@@ -756,7 +760,7 @@ msgstr "Документ"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Рецензия на кейсове"
 
 #: tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:404
@@ -842,7 +846,7 @@ msgstr "Добави ново Тест Изпълнение"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "Смени Рецензента на тест кейса"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -887,7 +891,7 @@ msgstr "Покажи филтри"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Избери, влачи и пусни редове, за да промениш подредбата им. Когато си готов, натисни \"Запази\", за да се съхранят промените"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -940,7 +944,7 @@ msgstr "Резюме на тест кейса"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "Рецензент"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:83 tcms/templates/run/get.html:132
@@ -970,11 +974,11 @@ msgstr "Всички кейсове са заредени."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Добави под-категория към плана"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Премахни под-категорията от плана"
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
@@ -1191,7 +1195,7 @@ msgstr "Премахни избраните кейсове от това Тес�
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "Актуализирай ОТЛОЖЕНИ кейсове до най-новите дефиниции"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
@@ -1339,7 +1343,7 @@ msgstr "Не е открито изпълнение"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Моля, попълни валидно/и ID на кейос(ове). Използвай запетая, за да изброиш повече от едно. Пример: \"111, 222\""
 
 #: tcms/testcases/forms.py:90
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1696,11 +1700,11 @@ msgstr "ID на тест план"
 
 #: tcms/testruns/views.py:54
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "За да се създаде Тест Изпълнение, е необходим тест план. Избери един"
 
 #: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "За да се създаде Тест Изпълнение, е необходим поне един тест кейс"
 
 #: tcms/testruns/views.py:433
 msgid "Clone of "
