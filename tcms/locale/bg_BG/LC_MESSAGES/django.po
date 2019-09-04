@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 11:29\n"
+"PO-Revision-Date: 2019-09-04 11:39\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -209,7 +209,7 @@ msgstr "Нов потребител, чака потвърждение"
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "НОВО: Тест Изпълнение #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -1122,11 +1122,11 @@ msgstr "Всички Потвърдени кейсове"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Тест кейс в Тест Изпълнение"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Кейсове в това Тест Изпълнение"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1187,7 +1187,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:24
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Премахни избраните кейсове от това Тест Изпълнение"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update the IDLE case runs to newest case text"
@@ -1274,7 +1274,7 @@ msgstr "Автоматизирани кейсове"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "ID на Тест Изпълнение"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1359,7 +1359,7 @@ msgstr ""
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "ИЗТРИТО: Тест Изпълнение #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1632,7 +1632,7 @@ msgstr "Тест план \"%s\" не съществува"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Достъпът отказан: Това Тест Изпълнение не е твое"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
@@ -1680,11 +1680,11 @@ msgstr "\n"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Търси Тест Изпълнение"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Резюме от Тест Изпълнение"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
