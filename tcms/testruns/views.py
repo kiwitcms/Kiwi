@@ -451,15 +451,19 @@ class CloneTestRunView(View):
         return render(request, self.template_name, context_data)
 
 
-@permission_required('testruns.change_testrun')
-def change_status(request, run_id):
+@method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
+class ChangeTestRunStatusView(View):
     """Change test run finished or running"""
-    test_run = get_object_or_404(TestRun, run_id=run_id)
 
-    test_run.update_completion_status(request.GET.get('finished') == '1')
-    test_run.save()
+    http_method_names = ['get']
 
-    return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
+    def get(self, request, run_id):
+        test_run = get_object_or_404(TestRun, run_id=run_id)
+
+        test_run.update_completion_status(request.GET.get('finished') == '1')
+        test_run.save()
+
+        return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
 
 
 @require_POST
