@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 08:45\n"
+"PO-Revision-Date: 2019-09-04 11:00\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -744,7 +744,7 @@ msgstr "Час на създаване"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "Главна"
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
@@ -1162,12 +1162,12 @@ msgstr "Бележка"
 
 #: tcms/templates/run/get.html:145
 msgid "Finished"
-msgstr ""
+msgstr "Завършено"
 
 #: tcms/templates/run/get.html:150
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Изпълнява се"
 
 #: tcms/templates/run/get.html:158 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1205,7 +1205,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:84
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Изпълнител"
 
 #: tcms/templates/run/get_case_runs.html:45
 #: tcms/templates/run/status_statistics.html:27
@@ -1246,7 +1246,7 @@ msgstr "Бъг ID"
 
 #: tcms/templates/run/get_case_runs.html:185
 msgid "Check to add Test Case(s) to Issue Tracker"
-msgstr ""
+msgstr "Провери и добави тест кейс(ове) към Тракера"
 
 #: tcms/templates/run/get_case_runs.html:204
 msgid "Cancel"
@@ -1303,7 +1303,7 @@ msgstr "URL на бъга"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
-msgstr ""
+msgstr "Виж всички в Тракера"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
@@ -1311,7 +1311,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
-msgstr ""
+msgstr "Тракер"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
@@ -1446,7 +1446,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "Изпълнители"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
@@ -1557,11 +1557,11 @@ msgstr "Клониране/ свързване на ТК към нов ТП"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "Главна ТП"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Настрой ТП като главен за новия ТП"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1573,11 +1573,11 @@ msgstr "Създай нов тест план"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "ID на Главна"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Документ на тест плана:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
@@ -1623,7 +1623,7 @@ msgstr "Изисква се тест план"
 
 #: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Поне един тест план трябва да е избран, за да се отпечата"
 
 #: tcms/testplans/views.py:525
 #, python-format
@@ -1708,7 +1708,7 @@ msgstr "Клонирано от "
 
 #: tcms/testruns/views.py:516
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID на тест кейса е невалидно число"
 
 #: tcms/testruns/views.py:644
 #, python-format
@@ -1717,11 +1717,11 @@ msgstr ""
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
-msgstr ""
+msgstr "Настрой параметри на API, за да е разрешено свързването на тест кейсове към този Тракер!"
 
 #: tcms/xmlrpc/api/bug.py:138
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Настрой base_url, за да е разрешено репортването към този Тракер!"
 
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
