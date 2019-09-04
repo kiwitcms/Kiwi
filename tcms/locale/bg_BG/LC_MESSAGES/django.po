@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-03 14:43\n"
+"PO-Revision-Date: 2019-09-04 07:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -160,7 +160,7 @@ msgstr ""
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Разбивка"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
@@ -395,7 +395,7 @@ msgstr ""
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:95
 msgid "From Run"
-msgstr ""
+msgstr "От Изпълнение"
 
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:111
@@ -619,7 +619,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Гост, добре дошъл"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
@@ -631,7 +631,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Моят профил"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
@@ -774,7 +774,7 @@ msgstr "Тагове"
 
 #: tcms/templates/plan/get.html:128
 msgid "Tree View"
-msgstr ""
+msgstr "Дървовиден изглед"
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
@@ -782,7 +782,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Име на файл"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
@@ -931,7 +931,7 @@ msgstr "Избери и всички кейсове, които не са пок
 #: tcms/testplans/templates/testplans/search.html:108
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
