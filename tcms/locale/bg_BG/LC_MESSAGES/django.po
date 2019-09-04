@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 08:11\n"
+"PO-Revision-Date: 2019-09-04 08:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -104,15 +104,15 @@ msgstr "Профилът е създаден, но е необходимо ад�
 
 #: tcms/kiwi_auth/views.py:65
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Списък с администратори"
 
 #: tcms/kiwi_auth/views.py:107
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Този ключ за активиране вече не съществува"
 
 #: tcms/kiwi_auth/views.py:112
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Този ключ за активиране е изтекъл"
 
 #: tcms/kiwi_auth/views.py:124
 msgid "Your account has been activated successfully"
@@ -213,7 +213,7 @@ msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "ДРУГИ"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -627,7 +627,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Моите Тест планове"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
@@ -786,7 +786,7 @@ msgstr "Име на файл"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "Въвел"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
@@ -901,7 +901,7 @@ msgstr "Няма тагове в кейсовете"
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Тестер"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -936,7 +936,7 @@ msgstr "ID"
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "Резюме на тест кейса"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
@@ -950,7 +950,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Версия на текста"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
@@ -1003,7 +1003,7 @@ msgstr "Стандартно търсене"
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:91
 msgid "Summary"
-msgstr ""
+msgstr "Резюме"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
@@ -1114,7 +1114,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Manager"
-msgstr ""
+msgstr "Управление"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
@@ -1371,7 +1371,7 @@ msgstr "Добави нов ТК към ТП"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "Избрани TK"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1484,7 +1484,7 @@ msgstr "Търси тест кейс"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Резюме на тест кейса"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
