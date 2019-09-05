@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-05 13:52\n"
+"PO-Revision-Date: 2019-09-05 14:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -584,17 +584,20 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr ""
+msgstr "I dashur administrator,\n"
+"dikush thjesht regjistroi një llogari me emrin e përdoruesit %(username)s në tuajin\n\n"
+"Kiwi shembull TCMS dhe është në pritje të miratimit tuaj!\n\n"
+"Shkoni te %(user_url)s për të aktivizuar llogarinë!\n"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Planet"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "Rastet"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
@@ -603,7 +606,7 @@ msgstr ""
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Veprim"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -611,19 +614,19 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:48
 msgid "Remove"
-msgstr ""
+msgstr "Heqja"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Shto etiketë"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Ndryshoni navigimin"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Vizitor i mirëseardhur"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
@@ -631,20 +634,20 @@ msgstr ""
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Planet e Mia të Testimit"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Profili im"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Ndrysho fjalëkalimin"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Shkyç"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
@@ -661,7 +664,7 @@ msgstr "Faqja e parë"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Faqja e mëparshme"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
@@ -681,7 +684,7 @@ msgstr "Redakto"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Asnjë rast provash nuk u gjet në këtë plan."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
