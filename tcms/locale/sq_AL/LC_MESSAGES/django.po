@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-05 12:41\n"
+"PO-Revision-Date: 2019-09-05 13:42\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -356,7 +356,7 @@ msgstr "Material i bashkëngjitur"
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:154
 msgid "No attachment found"
-msgstr ""
+msgstr "Material bashkëngjitur nuk u gjet"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:164
@@ -364,12 +364,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
 msgid "Component"
-msgstr ""
+msgstr "Komponent"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:169
 msgid "No component found"
-msgstr ""
+msgstr "Asnjë komponent nuk u gjet"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -379,50 +379,50 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Etiketo"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:180
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "Asnjë etiketë nuk u gjet"
 
 #: tcms/templates/case/get_details.html:40
 #: tcms/templates/case/get_details_case_run.html:78
 msgid "bug"
-msgstr ""
+msgstr "insekt"
 
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:95
 msgid "From Run"
-msgstr ""
+msgstr "Nga Vrapimi"
 
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:111
 msgid "No bug found"
-msgstr ""
+msgstr "Asnjë insekt nuk u gjet"
 
 #: tcms/templates/case/get_details.html:58
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Shënime"
 
 #: tcms/templates/case/get_details.html:64
 #: tcms/templates/run/get_case_runs.html:200
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Komente"
 
 #: tcms/templates/case/get_details_case_run.html:46
 #: tcms/templates/case/get_details_case_run.html:48
 msgid "Show All"
-msgstr ""
+msgstr "Tregoji të gjitha"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Informacione për ekzekutimin e provave"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
@@ -430,12 +430,12 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
-msgstr ""
+msgstr "Versioni i tekstit"
 
 #: tcms/templates/case/get_details_case_run.html:80
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "Raporto"
 
 #: tcms/templates/case/get_details_case_run.html:82
 #: tcms/templates/case/get_details_case_run.html:191
@@ -451,28 +451,28 @@ msgstr "Shto"
 
 #: tcms/templates/case/get_details_case_run.html:102
 msgid "From Case"
-msgstr ""
+msgstr "Nga Rasti"
 
 #: tcms/templates/case/get_details_case_run.html:125
 msgid "No log recorded"
-msgstr ""
+msgstr "Asnjë regjistër i regjistruar"
 
 #: tcms/templates/case/get_details_case_run.html:191
 #: tcms/templates/run/get_case_runs.html:60
 msgid "Links"
-msgstr ""
+msgstr "Lidhjet"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Përmbajtjet"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Dokumenti i Planit të Testit"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Rastet e provës"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -480,12 +480,12 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Ekzekutimet e provës"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:83
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Filluar në"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
