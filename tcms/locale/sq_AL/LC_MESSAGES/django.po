@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-05 13:42\n"
+"PO-Revision-Date: 2019-09-05 13:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -493,19 +493,22 @@ msgid "\n"
 "                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                %(total_count)s TestRun(s) or TestCase(s) caktuar për ju duhet të ekzekutohet.\n"
+"                Këtu janë të fundit %(count)s.\n"
+"                "
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "SHIKOJI TË GJITHA"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Nuk ka TestRun (a) të caktuar për ju"
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "Planet e Testit tuaj"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
@@ -517,7 +520,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:113
 msgid "Type"
-msgstr ""
+msgstr "Lloji"
 
 #: tcms/templates/dashboard.html:51
 #: tcms/testcases/templates/testcases/get.html:131
