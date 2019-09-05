@@ -489,6 +489,14 @@ class TestRemoveCaseRuns(BaseCaseRun):
                                      args=[self.test_run.pk]),
                              target_status_code=302)
 
+    def test_user_witout_permissions_should_no_be_able_to_remove_exectution(self):
+        remove_perm_from_user(self.tester, 'testruns.delete_testexecution')
+        response = self.client.post(self.remove_case_run_url,
+                                    {'case_run': [self.execution_1.pk]})
+
+        self.assertRedirects(response,
+                             reverse('tcms-login') + '?next=' + self.remove_case_run_url)
+
 
 class TestUpdateCaseRunText(BaseCaseRun):
     """Test update_case_run_text view method"""
