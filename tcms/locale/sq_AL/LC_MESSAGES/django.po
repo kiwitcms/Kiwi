@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-05 12:33\n"
+"PO-Revision-Date: 2019-09-05 12:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -282,20 +282,20 @@ msgstr "Automatizuar"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
 msgid "Manual"
-msgstr ""
+msgstr "Udhëzues"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
 msgid "Priorities"
-msgstr ""
+msgstr "Prioritet"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:86
 msgid "Categories"
-msgstr ""
+msgstr "Kategoritë"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Matrica e statusit të testimit"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
@@ -307,7 +307,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
@@ -318,27 +318,27 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Build"
-msgstr ""
+msgstr "Ndërto"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Rast testi"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
-msgstr ""
+msgstr "Drejtimi i provës"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Faqja nuk u gjet"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Gabim i brendshëm i serverit"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "Jeni të sigurt që doni te fshjini këtë material të bashkëngjitur?"
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -347,11 +347,11 @@ msgstr ""
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Material i bashkëngjitur"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:154
