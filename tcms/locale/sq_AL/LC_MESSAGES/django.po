@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-04 08:45\n"
+"PO-Revision-Date: 2019-09-05 12:33\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -120,7 +120,7 @@ msgstr "Llogaria juaj është aktivizuar me sukses"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "PANEL I ADMINISTRIMIT"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
@@ -209,7 +209,7 @@ msgstr "Përdorues i ri që pret miratimin"
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "E RE: TestRun #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -277,7 +277,7 @@ msgstr "Totali"
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Automated"
-msgstr ""
+msgstr "Automatizuar"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
