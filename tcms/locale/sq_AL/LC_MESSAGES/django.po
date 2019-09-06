@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-06 10:12\n"
+"PO-Revision-Date: 2019-09-06 10:30\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -768,7 +768,7 @@ msgstr "Rishikimi i Rasteve"
 #: tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Attachments"
-msgstr ""
+msgstr "Bashëngjitjet"
 
 #: tcms/templates/plan/get.html:125 tcms/templates/plan/get_cases.html:76
 #: tcms/templates/run/get.html:89 tcms/templates/run/get_case_runs.html:134
@@ -777,53 +777,53 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Tags"
-msgstr ""
+msgstr "Etiketat"
 
 #: tcms/templates/plan/get.html:128
 msgid "Tree View"
-msgstr ""
+msgstr "Pamja e pemëve"
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Dokumenti për këtë plan nuk është shkruar ende."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Emri i dokumentit"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "Nënshtruari"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Krijo datë"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "Asnjë bashkëngjitje"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Rast"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Shkruaj një rast"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Shto raste nga plane të tjera"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Printo"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "printo pamje nga raste të përzgjedhura"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:40 tcms/testcases/views.py:566
