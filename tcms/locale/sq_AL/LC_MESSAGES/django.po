@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-06 10:11\n"
+"PO-Revision-Date: 2019-09-06 10:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -736,34 +736,34 @@ msgstr "Tipi i planit"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
-msgstr ""
+msgstr "Lidhje Reference"
 
 #: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
 #: tcms/templates/plan/preview.html:36
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Asnjë"
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
-msgstr ""
+msgstr "Krijo kohë"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "Prindër"
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
-msgstr ""
+msgstr "Shikoni Historinë e Ndryshimit"
 
 #: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Rishikimi i Rasteve"
 
 #: tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:404
