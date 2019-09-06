@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-05 14:12\n"
+"PO-Revision-Date: 2019-09-06 10:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -688,31 +688,31 @@ msgstr "Asnjë rast provash nuk u gjet në këtë plan."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "Editoje planin"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "Editoje testin e planit"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
-msgstr ""
+msgstr "Plani i klonit"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Klonojeni këtë plan tek produkti tjetër"
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "Printoje planin"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "Fshije planin"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "Fshije testin e planit"
 
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
@@ -728,11 +728,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/mutable.html:93
 msgid "Author"
-msgstr ""
+msgstr "Autori"
 
 #: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
 msgid "Plan Type"
-msgstr ""
+msgstr "Tipi i planit"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
