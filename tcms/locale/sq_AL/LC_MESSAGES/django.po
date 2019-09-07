@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-06 11:00\n"
+"PO-Revision-Date: 2019-09-07 11:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -973,7 +973,7 @@ msgstr "rastet ikën"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Të gjitha rastet janë ngarkuar."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -993,11 +993,11 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Kërkim i shpejtë"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Kërkim normal"
 
 #: tcms/templates/plan/search_case.html:81
 #: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:66
@@ -1010,15 +1010,15 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:91
 msgid "Summary"
-msgstr ""
+msgstr "Përmbledhje"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Krijuar"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Nuk u gjet asnjë rast provash."
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
