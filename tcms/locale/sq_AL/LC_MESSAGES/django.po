@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-11 20:12+0000\n"
-"PO-Revision-Date: 2019-09-07 11:33\n"
+"PO-Revision-Date: 2019-09-07 11:48\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -985,11 +985,11 @@ msgstr ""
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
-msgstr ""
+msgstr "Plani që specifikuat nuk ekziston në bazën e të dhënave."
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Kërkoni raste për të shtuar në këtë plan provë."
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
@@ -1034,15 +1034,15 @@ msgstr "Emri i përdoruesit"
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Fjalëkalimi"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "E harruar"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "fjalëkalimi"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1050,19 +1050,19 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Mirëseerdhët në Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Ju lutemi identifikohuni për të filluar"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "ose"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "regjistroni një llogari"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
