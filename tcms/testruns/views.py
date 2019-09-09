@@ -591,6 +591,7 @@ class AddCasesToRunView(View):
         return render(request, 'run/assign_case.html', data)
 
 
+# todo: this view should be removed in favor of API
 @method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
 class ManageTestRunCC(View):
     """Add or remove cc from a test run"""
@@ -612,7 +613,7 @@ class ManageTestRunCC(View):
                 )
                 context_data['message'] = ''
             except ObjectDoesNotExist:
-                context_data['message'] = 'The user you typed does not exist in database'
+                context_data['message'] = _('The user you typed does not exist in database')
                 return render(request, self.template_name, context_data)
 
         if action == 'add':
