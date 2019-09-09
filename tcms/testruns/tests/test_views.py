@@ -362,6 +362,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
         cls.test_run.add_cc(cls.cc_user_3)
 
     def test_404_if_run_not_exist(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         cc_url = reverse('testruns-cc', args=[999999])
         response = self.client.get(cc_url)
         self.assert404(response)
@@ -377,11 +378,13 @@ class TestAddRemoveRunCC(BaseCaseRun):
                 html=True)
 
     def test_refuse_if_missing_action(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(self.cc_url,
                                    {'user': self.cc_user_1.username})
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
     def test_add_cc(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(
             self.cc_url,
             {'do': 'add', 'user': self.cc_user_1.username})
@@ -390,6 +393,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
                        [self.cc_user_2, self.cc_user_3, self.cc_user_1])
 
     def test_remove_cc(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(
             self.cc_url,
             {'do': 'remove', 'user': self.cc_user_2.username})
@@ -397,24 +401,27 @@ class TestAddRemoveRunCC(BaseCaseRun):
         self.assert_cc(response, [self.cc_user_3])
 
     def test_refuse_to_remove_if_missing_user(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(self.cc_url, {'do': 'remove'})
 
         self.assertContains(
             response,
-            'User name or email is required by this operation')
+            'The user you typed does not exist in database')
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
     def test_refuse_to_add_if_missing_user(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(self.cc_url, {'do': 'add'})
 
         self.assertContains(
             response,
-            'User name or email is required by this operation')
+            'The user you typed does not exist in database')
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
     def test_refuse_if_user_not_exist(self):
+        user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(self.cc_url,
                                    {'do': 'add', 'user': 'not exist'})
 
@@ -423,6 +430,14 @@ class TestAddRemoveRunCC(BaseCaseRun):
             'The user you typed does not exist in database')
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
+
+    def test_should_not_be_able_use_cc_when_user_has_no_pemissions(self):
+        remove_perm_from_user(self.tester, 'testruns.change_testrun')
+
+        self.assertRedirects(
+            self.client.get(self.cc_url),
+            reverse('tcms-login') + '?next=%s' % self.cc_url
+        )
 
 
 class TestRemoveCaseRuns(BaseCaseRun):

@@ -16,7 +16,6 @@ from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
@@ -592,34 +591,36 @@ class AddCasesToRunView(View):
         return render(request, 'run/assign_case.html', data)
 
 
-@require_GET
-def cc(request, run_id):  # pylint: disable=invalid-name
+@method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
+class ManageTestRunCC(View):
     """Add or remove cc from a test run"""
 
-    test_run = get_object_or_404(TestRun, run_id=run_id)
-    action = request.GET.get('do')
-    username_or_email = request.GET.get('user')
-    context_data = {'test_run': test_run, 'is_ajax': True}
+    template_name = 'run/get_cc.html'
+    http_method_names = ['get']
 
-    if action:
-        if not username_or_email:
-            context_data['message'] = 'User name or email is required by this operation'
-        else:
+    def get(self, request, run_id):
+        test_run = get_object_or_404(TestRun, run_id=run_id)
+        action = request.GET.get('do')
+        username_or_email = request.GET.get('user')
+        context_data = {'test_run': test_run, 'is_ajax': True}
+
+        if action:
             try:
                 user = User.objects.get(
                     Q(username=username_or_email) |
                     Q(email=username_or_email)
                 )
+                context_data['message'] = ''
             except ObjectDoesNotExist:
                 context_data['message'] = 'The user you typed does not exist in database'
-            else:
-                if action == 'add':
-                    test_run.add_cc(user=user)
+                return render(request, self.template_name, context_data)
 
-                if action == 'remove':
-                    test_run.remove_cc(user=user)
+        if action == 'add':
+            test_run.add_cc(user=user)
+        elif action == 'remove':
+            test_run.remove_cc(user=user)
 
-    return render(request, 'run/get_cc.html', context_data)
+        return render(request, self.template_name, context_data)
 
 
 @require_POST
