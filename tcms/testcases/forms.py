@@ -102,8 +102,7 @@ class BaseCaseForm(forms.Form):
 
 1. item
 2. item
-3. item
-"""))
+3. item"""))
 
     def populate(self, product_id=None):
         if product_id:

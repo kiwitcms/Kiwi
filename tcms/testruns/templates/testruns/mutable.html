@@ -83,10 +83,8 @@
                 <strong>{% trans "Selected TestCase(s):" %}</strong>
                 {% if disabled_cases %}
                     <span class="danger">
-                    {% blocktrans with count=disabled_cases %}
-                    {{ count }} of the pre-selected test cases is not CONFIRMED and will not be cloned!
-                    See test plan for more details!
-                    {% endblocktrans %}
+{% blocktrans with count=disabled_cases %}{{ count }} of the pre-selected test cases is not CONFIRMED and will not be cloned!
+See test plan for more details!{% endblocktrans %}
                     </span>
                 {% endif %}
             </div>

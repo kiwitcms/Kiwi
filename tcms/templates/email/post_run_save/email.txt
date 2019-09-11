@@ -1,6 +1,5 @@
 {% load i18n %}
-{% blocktrans with pk=test_run.pk run_url=test_run.get_full_url plan_url=test_run.plan.get_full_url summary=test_run.summary manager=test_run.manager default_tester=test_run.default_tester product=test_run.plan.product version=test_run.product_version build=test_run.build notes=test_run.notes %}
-Test run {{ pk }} has been created or updated for you.
+{% blocktrans with pk=test_run.pk run_url=test_run.get_full_url plan_url=test_run.plan.get_full_url summary=test_run.summary manager=test_run.manager default_tester=test_run.default_tester product=test_run.plan.product version=test_run.product_version build=test_run.build notes=test_run.notes %}Test run {{ pk }} has been created or updated for you.
 
 ### Links ###
 Test run: {{ run_url }}
@@ -17,5 +16,4 @@ Product version: {{ version }}
 Build: {{ build }}
 
 Notes:
-{{ notes }}
-{% endblocktrans %}
+{{ notes }}{% endblocktrans %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-11 12:57+0000\n"
+"POT-Creation-Date: 2019-09-11 14:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,7 +226,7 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
-#: tcms/templates/dashboard.html:49 tcms/templates/plan/get.html:62
+#: tcms/templates/dashboard.html:47 tcms/templates/plan/get.html:62
 #: tcms/templates/plan/preview.html:15 tcms/templates/run/get.html:120
 #: tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:59
@@ -494,30 +494,28 @@ msgstr ""
 #: tcms/templates/dashboard.html:26
 #, python-format
 msgid ""
-"\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
-"need to be executed.\n"
-"                Here are the latest %(count)s.\n"
-"                "
+"%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be "
+"executed.\n"
+"Here are the latest %(count)s."
 msgstr ""
 
-#: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
+#: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
 msgstr ""
 
-#: tcms/templates/dashboard.html:35
+#: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
 msgstr ""
 
-#: tcms/templates/dashboard.html:42
+#: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
 msgstr ""
 
-#: tcms/templates/dashboard.html:48
+#: tcms/templates/dashboard.html:46
 msgid "TestPlan"
 msgstr ""
 
-#: tcms/templates/dashboard.html:50
+#: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:313
 #: tcms/testplans/templates/testplans/mutable.html:65
 #: tcms/testplans/templates/testplans/search.html:62
@@ -525,22 +523,19 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: tcms/templates/dashboard.html:51
+#: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/get.html:131
 msgid "Executions"
 msgstr ""
 
-#: tcms/templates/dashboard.html:72
+#: tcms/templates/dashboard.html:70
 #, python-format
 msgid ""
-"\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
-"are disabled.\n"
-"                Here are the latest %(count)s.\n"
-"                "
+"You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+"Here are the latest %(count)s."
 msgstr ""
 
-#: tcms/templates/dashboard.html:81
+#: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
 msgstr ""
 
@@ -551,20 +546,17 @@ msgid ""
 "thank you for signing up for an %(site_domain)s account!\n"
 "\n"
 "To activate your account, click this link:\n"
-"%(confirm_url)s\n"
+"%(confirm_url)s"
 msgstr ""
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid ""
-"\n"
-"TestCase has been deleted by %(username)s!\n"
+msgid "TestCase has been deleted by %(username)s!"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
 msgid ""
-"\n"
 "Test run %(pk)s has been created or updated for you.\n"
 "\n"
 "### Links ###\n"
@@ -582,7 +574,7 @@ msgid ""
 "Build: %(build)s\n"
 "\n"
 "Notes:\n"
-"%(notes)s\n"
+"%(notes)s"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
@@ -592,7 +584,7 @@ msgid ""
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n"
 "\n"
-"Go to %(user_url)s to activate the account!\n"
+"Go to %(user_url)s to activate the account!"
 msgstr ""
 
 #: tcms/templates/management/get_tag.html:7
@@ -732,7 +724,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:103
 #: tcms/testplans/templates/testplans/search.html:74
 #: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/mutable.html:97
+#: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
 msgstr ""
 
@@ -871,7 +863,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:68
 #: tcms/testcases/templates/testcases/search.html:82
 #: tcms/testcases/templates/testcases/search.html:142
-#: tcms/testruns/templates/testruns/mutable.html:99
+#: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
 msgstr ""
 
@@ -885,7 +877,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:80
 #: tcms/testcases/templates/testcases/search.html:73
 #: tcms/testcases/templates/testcases/search.html:141
-#: tcms/testruns/templates/testruns/mutable.html:101
+#: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
 msgstr ""
 
@@ -926,7 +918,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:52
 #: tcms/testcases/templates/testcases/search.html:51
 #: tcms/testcases/templates/testcases/search.html:139
-#: tcms/testruns/templates/testruns/mutable.html:100
+#: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
 msgstr ""
 
@@ -1014,7 +1006,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testruns/templates/testruns/mutable.html:94
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
@@ -1378,7 +1370,7 @@ msgid ""
 "\n"
 "1. item\n"
 "2. item\n"
-"3. item\n"
+"3. item"
 msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
@@ -1540,7 +1532,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
-#: tcms/testruns/templates/testruns/mutable.html:98
+#: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
 msgstr ""
 
@@ -1698,11 +1690,9 @@ msgstr ""
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid ""
-"\n"
-"                    %(count)s of the pre-selected test cases is not "
-"CONFIRMED and will not be cloned!\n"
-"                    See test plan for more details!\n"
-"                    "
+"%(count)s of the pre-selected test cases is not CONFIRMED and will not be "
+"cloned!\n"
+"See test plan for more details!"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5

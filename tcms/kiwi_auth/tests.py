@@ -178,8 +178,7 @@ Go to %(user_url)s to activate the account!
 thank you for signing up for an %(site_domain)s account!
 
 To activate your account, click this link:
-%(confirm_url)s
-""") % values + "\n"
+%(confirm_url)s""") % values + "\n"
         send_mail.assert_called_once_with(expected_subject, expected_body,
                                           settings.DEFAULT_FROM_EMAIL,
                                           ['new-tester@example.com'],
