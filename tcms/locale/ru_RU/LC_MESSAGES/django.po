@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-11 20:12+0000\n"
+"POT-Creation-Date: 2019-09-11 12:57+0000\n"
 "PO-Revision-Date: 2019-07-25 11:23\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:158 tcms/testruns/views.py:696
+#: tcms/core/ajax.py:158 tcms/testruns/views.py:705
 #, python-format
 msgid "User %s not found!"
 msgstr "Пользователь %s не найден!"
@@ -106,31 +106,31 @@ msgstr "Пользователь с таким email уже существует
 msgid "Your new %s account confirmation"
 msgstr ""
 
-#: tcms/kiwi_auth/views.py:54
+#: tcms/kiwi_auth/views.py:55
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 "Ваша учетная запись была создана и ожидает подтверждение через указанный "
 "вами e-mail"
 
-#: tcms/kiwi_auth/views.py:60
+#: tcms/kiwi_auth/views.py:61
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr "Ваша учетная запись была создана и ожидает активации администратором"
 
-#: tcms/kiwi_auth/views.py:65
+#: tcms/kiwi_auth/views.py:66
 msgid "Following is the administrator list"
 msgstr "Список администраторов"
 
-#: tcms/kiwi_auth/views.py:107
+#: tcms/kiwi_auth/views.py:108
 msgid "This activation key no longer exists in the database"
 msgstr "Ключ активации больше не существует в базе данных"
 
-#: tcms/kiwi_auth/views.py:112
+#: tcms/kiwi_auth/views.py:113
 msgid "This activation key has expired"
 msgstr "Срок действия ключа активации истек"
 
-#: tcms/kiwi_auth/views.py:124
+#: tcms/kiwi_auth/views.py:125
 msgid "Your account has been activated successfully"
 msgstr "Ваша учетная запись успешно активирована"
 
@@ -248,10 +248,10 @@ msgstr ""
 #: tcms/testplans/templates/testplans/clone.html:20
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
-#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/mutable.html:44
 #: tcms/testruns/templates/testruns/search.html:24
-#: tcms/testruns/templates/testruns/search.html:93
+#: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
 msgstr "Продукт"
 
@@ -291,7 +291,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:92
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testcases/templates/testcases/search.html:143
 msgid "Automated"
 msgstr "Автоматизирован"
 
@@ -319,9 +319,9 @@ msgstr ""
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
-#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:34
-#: tcms/testruns/templates/testruns/search.html:94
+#: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
 msgstr "Версия"
 
@@ -332,7 +332,7 @@ msgstr "Версия"
 #: tcms/templates/run/report.html:38
 #: tcms/testruns/templates/testruns/mutable.html:31
 #: tcms/testruns/templates/testruns/search.html:44
-#: tcms/testruns/templates/testruns/search.html:95
+#: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
 msgstr "Сборка"
 
@@ -378,7 +378,7 @@ msgstr "Вложения не найдены"
 #: tcms/templates/case/get_details_case_run.html:164
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:140
 msgid "Component"
 msgstr "Компонент"
 
@@ -538,7 +538,7 @@ msgstr "Тест-план"
 #: tcms/testcases/templates/testcases/get.html:313
 #: tcms/testplans/templates/testplans/mutable.html:65
 #: tcms/testplans/templates/testplans/search.html:62
-#: tcms/testplans/templates/testplans/search.html:113
+#: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
 msgstr "Тип"
 
@@ -713,7 +713,7 @@ msgstr "Следующая страница"
 msgid "Last page"
 msgstr "Последняя страница"
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:562
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:563
 msgid "Edit"
 msgstr "Изменить"
 
@@ -757,11 +757,11 @@ msgstr "Удалить тест-план"
 #: tcms/testcases/templates/testcases/get.html:312
 #: tcms/testcases/templates/testcases/mutable.html:147
 #: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testcases/templates/testcases/search.html:144
 #: tcms/testplans/templates/testplans/mutable.html:103
 #: tcms/testplans/templates/testplans/search.html:74
-#: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/mutable.html:93
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Author"
 msgstr "Автор"
 
@@ -808,9 +808,9 @@ msgstr "Вложения"
 #: tcms/templates/plan/get.html:125 tcms/templates/plan/get_cases.html:76
 #: tcms/templates/run/get.html:89 tcms/templates/run/get_case_runs.html:134
 #: tcms/testcases/templates/testcases/get.html:330
-#: tcms/testcases/templates/testcases/search.html:141
-#: tcms/testplans/templates/testplans/search.html:115
-#: tcms/testruns/templates/testruns/search.html:98
+#: tcms/testcases/templates/testcases/search.html:145
+#: tcms/testplans/templates/testplans/search.html:118
+#: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
 msgstr "Теги"
 
@@ -861,8 +861,8 @@ msgid "print view of selected cases"
 msgstr "просмотр печати выбранных кейсов"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:40 tcms/testcases/views.py:566
-#: tcms/testplans/templates/testplans/clone.html:68
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:567
+#: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Клонировать"
 
@@ -899,8 +899,8 @@ msgstr "Изменить тестера по умолчанию"
 #: tcms/testcases/templates/testcases/get.html:74
 #: tcms/testcases/templates/testcases/mutable.html:68
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:138
-#: tcms/testruns/templates/testruns/mutable.html:95
+#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Status"
 msgstr "Состояние"
 
@@ -913,8 +913,8 @@ msgstr "Состояние"
 #: tcms/testcases/templates/testcases/get.html:79
 #: tcms/testcases/templates/testcases/mutable.html:80
 #: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:137
-#: tcms/testruns/templates/testruns/mutable.html:97
+#: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testruns/templates/testruns/mutable.html:101
 msgid "Priority"
 msgstr "Приоритет"
 
@@ -956,8 +956,8 @@ msgstr "Тестер"
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:52
 #: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:135
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testruns/templates/testruns/mutable.html:100
 msgid "Category"
 msgstr "Категория"
 
@@ -973,9 +973,9 @@ msgstr "Также выберите все случаи, которые пока
 #: tcms/templates/plan/search_case.html:80
 #: tcms/templates/run/assign_case.html:71
 #: tcms/testcases/templates/testcases/get.html:310
-#: tcms/testcases/templates/testcases/search.html:132
-#: tcms/testplans/templates/testplans/search.html:108
-#: tcms/testruns/templates/testruns/search.html:90
+#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
 msgstr "ID"
 
@@ -1043,11 +1043,11 @@ msgstr "Обычный поиск"
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:18
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:133
+#: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:92
+#: tcms/testruns/templates/testruns/mutable.html:96
 #: tcms/testruns/templates/testruns/search.html:11
-#: tcms/testruns/templates/testruns/search.html:91
+#: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
 msgstr "Итоги"
 
@@ -1162,7 +1162,7 @@ msgstr "Добавить тест-кейс в тестовый прогон"
 #: tcms/templates/run/report.html:30
 #: tcms/testruns/templates/testruns/mutable.html:48
 #: tcms/testruns/templates/testruns/search.html:56
-#: tcms/testruns/templates/testruns/search.html:96
+#: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "Менеджер"
 
@@ -1274,7 +1274,7 @@ msgstr "Ошибки"
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testruns/templates/testruns/mutable.html:55
 #: tcms/testruns/templates/testruns/search.html:61
-#: tcms/testruns/templates/testruns/search.html:97
+#: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
 msgstr "Тестер по умолчанию"
 
@@ -1553,9 +1553,9 @@ msgstr ""
 "E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены "
 "на каждый адрес электронной почты из списка (копия)."
 
-#: tcms/testcases/templates/testcases/mutable.html:214
-#: tcms/testplans/templates/testplans/mutable.html:145
-#: tcms/testruns/templates/testruns/mutable.html:70
+#: tcms/testcases/templates/testcases/mutable.html:216
+#: tcms/testplans/templates/testplans/mutable.html:147
+#: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1586,38 +1586,38 @@ msgstr "Оба"
 msgid "Separate multiple values with comma (,)"
 msgstr "Разделяйте значения через запятые (,)"
 
-#: tcms/testcases/templates/testcases/search.html:124
-#: tcms/testplans/templates/testplans/search.html:100
-#: tcms/testruns/templates/testruns/search.html:82
+#: tcms/testcases/templates/testcases/search.html:126
+#: tcms/testplans/templates/testplans/search.html:101
+#: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
 msgstr "Поиск"
 
-#: tcms/testcases/templates/testcases/search.html:134
-#: tcms/testplans/templates/testplans/search.html:110
-#: tcms/testruns/templates/testruns/mutable.html:94
+#: tcms/testcases/templates/testcases/search.html:138
+#: tcms/testplans/templates/testplans/search.html:113
+#: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Created on"
 msgstr "Создано"
 
-#: tcms/testcases/views.py:394
+#: tcms/testcases/views.py:395
 msgid "TestPlan not specified or does not exist"
 msgstr "Тест-план не указан или не существует"
 
-#: tcms/testcases/views.py:570
+#: tcms/testcases/views.py:571
 msgid "History"
 msgstr "История"
 
-#: tcms/testcases/views.py:575
+#: tcms/testcases/views.py:576
 msgid "Delete"
 msgstr "Удалить"
 
-#: tcms/testcases/views.py:745 tcms/testruns/views.py:429
-#: tcms/testruns/views.py:507
-msgid "At least one TestCase is required"
-msgstr "Требуется хотя бы один тест-кейс"
-
-#: tcms/testcases/views.py:831
+#: tcms/testcases/views.py:827
 msgid "TestCase cloning was successful"
 msgstr "Клонирование тест-кейса прошло успешно"
+
+#: tcms/testcases/views.py:852 tcms/testruns/views.py:431
+#: tcms/testruns/views.py:513
+msgid "At least one TestCase is required"
+msgstr "Требуется хотя бы один тест-кейс"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1693,8 +1693,8 @@ msgstr "Поиск тест-планов"
 msgid "Test plan name"
 msgstr "Название тест-плана"
 
-#: tcms/testplans/templates/testplans/search.html:109
-#: tcms/testruns/templates/testruns/search.html:92
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
 msgstr "Тест-план"
 
@@ -1745,11 +1745,11 @@ msgstr "версия"
 msgid "Username or email"
 msgstr "Имя пользователя или email"
 
-#: tcms/testruns/templates/testruns/mutable.html:79
+#: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
 msgstr "Выбранные тест-кейс(ы):"
 
-#: tcms/testruns/templates/testruns/mutable.html:82
+#: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid ""
 "\n"
@@ -1780,23 +1780,23 @@ msgstr "ID плана"
 msgid "TestPlan ID"
 msgstr "ID тест-плана"
 
-#: tcms/testruns/views.py:54
+#: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "Для создание тест-прогона требуется хотя-бы один тест-план"
 
-#: tcms/testruns/views.py:60
+#: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "Создание тест-прогона требует хотя бы одного тест-кейса"
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:435
 msgid "Clone of "
 msgstr "Клонировать "
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:522
 msgid "TestCase ID is not a valid integer"
 msgstr "ID тест-кейса не является допустимым целым числом"
 
-#: tcms/testruns/views.py:644
+#: tcms/testruns/views.py:653
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d тест-прогоны обновлены:"

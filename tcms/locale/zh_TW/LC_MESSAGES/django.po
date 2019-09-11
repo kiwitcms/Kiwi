@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-28 11:58+0000\n"
+"POT-Creation-Date: 2019-09-11 12:57+0000\n"
 "PO-Revision-Date: 2019-07-25 11:23\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Chinese Traditional\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:158 tcms/testruns/views.py:695
+#: tcms/core/ajax.py:158 tcms/testruns/views.py:705
 #, python-format
 msgid "User %s not found!"
 msgstr "找不到用戶 %s"
@@ -121,87 +121,87 @@ msgstr "此啟用金鑰已過期"
 msgid "Your account has been activated successfully"
 msgstr "您的帳戶已成功啟用"
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:94
 msgid "DASHBOARD"
 msgstr "儀表板"
 
-#: tcms/settings/common.py:97
+#: tcms/settings/common.py:95
 msgid "TESTING"
 msgstr "測試"
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:96
 msgid "New Test Plan"
 msgstr "新增 Test Plan"
 
-#: tcms/settings/common.py:100
+#: tcms/settings/common.py:98
 msgid "New Test Case"
 msgstr "新增 Test Case"
 
-#: tcms/settings/common.py:102
+#: tcms/settings/common.py:100
 msgid "SEARCH"
 msgstr "搜尋"
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:101
 msgid "Search Test Plans"
 msgstr "搜尋 Test Plans"
 
-#: tcms/settings/common.py:104
+#: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr "搜尋 Test Runs" 
+msgstr "搜尋 Test Runs"
 
-#: tcms/settings/common.py:105
+#: tcms/settings/common.py:103
 msgid "Search Test Cases"
 msgstr "搜尋 TestCases"
 
-#: tcms/settings/common.py:107
+#: tcms/settings/common.py:105
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:108
+#: tcms/settings/common.py:106
 msgid "Testing"
 msgstr ""
 
-#: tcms/settings/common.py:109
+#: tcms/settings/common.py:107
 msgid "Breakdown"
 msgstr ""
 
-#: tcms/settings/common.py:110
+#: tcms/settings/common.py:108
 msgid "Status matrix"
 msgstr ""
 
-#: tcms/settings/common.py:111
+#: tcms/settings/common.py:109
 msgid "Execution trends"
 msgstr ""
 
-#: tcms/settings/common.py:125
+#: tcms/settings/common.py:123
 msgid "ADMIN"
 msgstr "系統管理"
 
-#: tcms/settings/common.py:126
+#: tcms/settings/common.py:124
 msgid "Users and groups"
 msgstr "使用者與群組"
 
-#: tcms/settings/common.py:128
+#: tcms/settings/common.py:126
 msgid "Everything else"
 msgstr "其他管理功能"
 
-#: tcms/settings/common.py:134
+#: tcms/settings/common.py:132
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:135
+#: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:136
+#: tcms/settings/common.py:134
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:137
+#: tcms/settings/common.py:135
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:138
+#: tcms/settings/common.py:136
 msgid "API Help"
 msgstr ""
 
@@ -1578,8 +1578,8 @@ msgstr "刪除"
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
-#: tcms/testcases/views.py:852 tcms/testruns/views.py:428
-#: tcms/testruns/views.py:506
+#: tcms/testcases/views.py:852 tcms/testruns/views.py:431
+#: tcms/testruns/views.py:513
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
@@ -1739,23 +1739,23 @@ msgstr ""
 msgid "TestPlan ID"
 msgstr ""
 
-#: tcms/testruns/views.py:54
+#: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "請選擇 TestPlan 以建立 TestRun"
 
-#: tcms/testruns/views.py:60
+#: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "創建 TestRun 至少需要一個 TestCase"
 
-#: tcms/testruns/views.py:432
+#: tcms/testruns/views.py:435
 msgid "Clone of "
 msgstr "複製於"
 
-#: tcms/testruns/views.py:515
+#: tcms/testruns/views.py:522
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID 不是有效的整數"
 
-#: tcms/testruns/views.py:643
+#: tcms/testruns/views.py:653
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d CaseRun 已更新:"
