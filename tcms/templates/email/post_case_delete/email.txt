@@ -1,4 +1,2 @@
 {% load i18n %}
-{% blocktrans with username=case.history.latest.history_user.username %}
-TestCase has been deleted by {{ username }}!
-{% endblocktrans %}
+{% blocktrans with username=case.history.latest.history_user.username %}TestCase has been deleted by {{ username }}!{% endblocktrans %}

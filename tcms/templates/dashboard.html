@@ -23,10 +23,8 @@
         </table>
         <div class="panel-footer">
             {% if test_runs_count %}
-                {% blocktrans with total_count=test_runs_count count=last_15_test_runs|length %}
-                {{ total_count }} TestRun(s) or TestCase(s) assigned to you need to be executed.
-                Here are the latest {{ count }}.
-                {% endblocktrans %}
+{% blocktrans with total_count=test_runs_count count=last_15_test_runs|length %}{{ total_count }} TestRun(s) or TestCase(s) assigned to you need to be executed.
+Here are the latest {{ count }}.{% endblocktrans %}
 
                 <a href="{% url "testruns-search" %}?default_tester={{ user.username|iriencode }}">
                     {% trans "SEE ALL" %}
@@ -69,10 +67,8 @@
 
         <div class="panel-footer">
             {% if test_plans_count %}
-                {% blocktrans with total_count=test_plans_count disabled_count=test_plans_disable_count count=last_15_test_plans|length %}
-                You manage {{ total_count }} TestPlan(s), {{ disabled_count }} are disabled.
-                Here are the latest {{ count }}.
-                {% endblocktrans %}
+{% blocktrans with total_count=test_plans_count disabled_count=test_plans_disable_count count=last_15_test_plans|length %}You manage {{ total_count }} TestPlan(s), {{ disabled_count }} are disabled.
+Here are the latest {{ count }}.{% endblocktrans %}
 
                 <a href="{% url "plans-search" %}?author__username__startswith={{ user.username }}">
                     {% trans "SEE ALL" %}
