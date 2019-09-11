@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 12:57+0000\n"
-"PO-Revision-Date: 2019-09-04 12:43\n"
+"PO-Revision-Date: 2019-09-11 13:09\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -57,31 +57,21 @@ msgstr "АКТУАЛИЗАЦИЯ: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
-msgid ""
-"Updated on %(history_date)s\n"
-"Updated by %(username)s\n"
-"\n"
-"%(diff)s\n"
-"\n"
+msgid "Updated on %(history_date)s\n"
+"Updated by %(username)s\n\n"
+"%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
-"Актуализация на %(history_date)s\n"
-"Актуализация от %(username)s\n"
-"\n"
-"%(diff)s\n"
-"\n"
+msgstr "Актуализация на %(history_date)s\n"
+"Актуализация от %(username)s\n\n"
+"%(diff)s\n\n"
 "За повече информация: \n"
 "%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid ""
-"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
-"and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
-"Не е настроен Основен URL! Виж <a href=\"%(doc_url)s\">документация</a> и <a "
-"href=\"%(admin_url)s\">го промени</a>"
+msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
+msgstr "Не е настроен Основен URL! Виж <a href=\"%(doc_url)s\">документация</a> и <a href=\"%(admin_url)s\">го промени</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -105,13 +95,11 @@ msgid "Your new %s account confirmation"
 msgstr "Потвърждаване на профил %s"
 
 #: tcms/kiwi_auth/views.py:55
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
+msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Профилът е създаден. Проверете електронната си поща за потвърждаване"
 
 #: tcms/kiwi_auth/views.py:61
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
+msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Профилът е създаден, но е необходимо администратор да го активира"
 
 #: tcms/kiwi_auth/views.py:66
@@ -294,7 +282,7 @@ msgstr "Автоматизирано"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
 msgid "Manual"
-msgstr "Ръководство"
+msgstr "Ръчно"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
 msgid "Priorities"
@@ -501,16 +489,12 @@ msgstr "Започна в"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid ""
-"\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
-"need to be executed.\n"
+msgid "\n"
+"                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
-"\n"
-"%(total_count)s Тест Изпълнение/я или тестови кейс(ове) са ти възложени за "
-"изпълнение.\n"
+msgstr "\n"
+"%(total_count)s Тест Изпълнение/я или тестови кейс(ове) са ти възложени за изпълнение.\n"
 "               Тук са последните %(count)s.                "
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
@@ -544,16 +528,12 @@ msgstr "Изпълнения"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid ""
-"\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
-"are disabled.\n"
+msgid "\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
-"\n"
-"Отговаряш за %(total_count)s Тест Изпълнение/я, от които %(disabled_count)s "
-"са деактивирани.\n"
+msgstr "\n"
+"Отговаряш за %(total_count)s Тест Изпълнение/я, от които %(disabled_count)s са деактивирани.\n"
 "               Тук са последните %(count)s.                "
 
 #: tcms/templates/dashboard.html:81
@@ -562,84 +542,61 @@ msgstr "Нямаш Тест(ови) план(ове)"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
-"%(user)s, добре дошли!\n"
-"Благодарим Ви за Вашата %(site_domain)s регистрация!\n"
-"\n"
+msgstr "%(user)s, добре дошли!\n"
+"Благодарим Ви за Вашата %(site_domain)s регистрация!\n\n"
 "За да активирате Вашия Профил, моля последвайте линка:\n"
 "%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid ""
-"\n"
+msgid "\n"
 "TestCase has been deleted by %(username)s!\n"
-msgstr ""
-"\n"
+msgstr "\n"
 "Тест кейсът е изтрит от %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid ""
-"\n"
-"Test run %(pk)s has been created or updated for you.\n"
-"\n"
+msgid "\n"
+"Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n"
-"\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n"
-"\n"
+"Summary: %(summary)s\n\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n"
-"\n"
+"Default tester: %(default_tester)s.\n\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n"
-"\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr ""
-"\n"
-"Тест Изпълнение %(pk)s е създадено или актуализарно.\n"
-"\n"
+msgstr "\n"
+"Тест Изпълнение %(pk)s е създадено или актуализарно.\n\n"
 "### Връзки ###\n"
 "Тест изпълнение: %(run_url)s\n"
-"Тест план: %(plan_url)s\n"
-"\n"
+"Тест план: %(plan_url)s\n\n"
 "### Основна информация ###\n"
-"Резюме: %(summary)s\n"
-"\n"
+"Резюме: %(summary)s\n\n"
 "Ръководител: %(manager)s.\n"
-"Тестер по подразбиране: %(default_tester)s.\n"
-"\n"
+"Тестер по подразбиране: %(default_tester)s.\n\n"
 "Продукт: %(product)s\n"
 "Версия на продукта: %(version)s\n"
-"Билд: %(build)s\n"
-"\n"
+"Билд: %(build)s\n\n"
 "Бележки:\n"
 "%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid ""
-"Dear Administrator,\n"
+msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr ""
-"Уважаеми Админ,\n"
-"Току що бе регистриран профил с потребителско име %(username)s в Kiwi TCMS, "
-"който очаква Вашето потвърждение!\n"
-"\n"
+msgstr "Уважаеми Админ,\n"
+"Току що бе регистриран профил с потребителско име %(username)s в Kiwi TCMS, който очаква Вашето потвърждение!\n\n"
 "Отидете до %(user_url)s, за да активирате профила!\n"
 
 #: tcms/templates/management/get_tag.html:7
@@ -946,12 +903,8 @@ msgid "Show filter options"
 msgstr "Покажи филтри"
 
 #: tcms/templates/plan/get_cases.html:71
-msgid ""
-"Click me,then Drag and drop the rows to adjust the order,and click 'Done "
-"Sorting' link to submit your changes"
-msgstr ""
-"Избери, влачи и пусни редове, за да промениш подредбата им. Когато си готов, "
-"натисни \"Запази\", за да се съхранят промените"
+msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
+msgstr "Избери, влачи и пусни редове, за да промениш подредбата им. Когато си готов, натисни \"Запази\", за да се съхранят промените"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1140,9 +1093,7 @@ msgid "Confirm"
 msgstr "Потвърди"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly"
+msgid "Please enter your new password twice so we can verify you typed it in correctly"
 msgstr "Моля въведи 2 пъти паролата, за да потвърдим вярното й изписване"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
@@ -1207,11 +1158,8 @@ msgid "The table below list all the confirmed test cases of plan"
 msgstr "По-долу са изброени всички потвърдени кейсове на плана"
 
 #: tcms/templates/run/assign_case.html:59
-msgid ""
-"check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
-"маркирай кутийките, за да добавиш тест кейс към изпълнението. Не забравяй да "
-"актуализираш на края"
+msgid "check the checkbox to add cases into test run. Remember to update at last"
+msgstr "маркирай кутийките, за да добавиш тест кейс към изпълнението. Не забравяй да актуализираш на края"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1376,8 +1324,7 @@ msgstr "Виж всички в Тракера"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
-"Показани са системи, които са конфигурирани системи да поддържат няколко бъга"
+msgstr "Показани са системи, които са конфигурирани системи да поддържат няколко бъга"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
@@ -1408,43 +1355,30 @@ msgid "No execution found"
 msgstr "Не е открито изпълнение"
 
 #: tcms/testcases/forms.py:21
-msgid ""
-"Please input valid case id(s). use comma to split more than one case id. e."
-"g. \"111, 222\""
-msgstr ""
-"Моля, попълни валидно/и ID на кейос(ове). Използвай запетая, за да изброиш "
-"повече от едно. Пример: \"111, 222\""
+msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
+msgstr "Моля, попълни валидно/и ID на кейос(ове). Използвай запетая, за да изброиш повече от едно. Пример: \"111, 222\""
 
 #: tcms/testcases/forms.py:90
-msgid ""
-"**Scenario**: ... what behavior will be tested ...\n"
+msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
-"  **Then** ... expected results ...\n"
-"\n"
-"*Actions*:\n"
-"\n"
+"  **Then** ... expected results ...\n\n"
+"*Actions*:\n\n"
+"1. item\n"
+"2. item\n"
+"3. item\n\n"
+"*Expected results*:\n\n"
 "1. item\n"
 "2. item\n"
 "3. item\n"
-"\n"
-"*Expected results*:\n"
-"\n"
-"1. item\n"
-"2. item\n"
-"3. item\n"
-msgstr ""
-"**Описание**: ... какво ще се тества ...\n"
+msgstr "**Описание**: ... какво ще се тества ...\n"
 "**Предпоставки** ... условия ...\n"
 "**Когато** ... действия ...\n"
-"**Тогава** ... очакван резултат ...\n"
-"\n"
-"*Стъпки*:\n"
-"\n"
+"**Тогава** ... очакван резултат ...\n\n"
+"*Стъпки*:\n\n"
 "1. описание\n"
 "2. описание\n"
-"3. описание\n"
-"\n"
+"3. описание\n\n"
 "*Очакван резултат*:\n"
 "1. описание\n"
 "2. описание\n"
@@ -1563,12 +1497,8 @@ msgid "CC to"
 msgstr "Копие до"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
-msgid ""
-"Email addresses separated by comma. A notification email will be sent to "
-"each Email address within CC list."
-msgstr ""
-"E-mail адреси, разделни от запетая. Уведомителен e-mail ще бъде изпратен до "
-"всички адреси, посочени в Копие."
+msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
+msgstr "E-mail адреси, разделни от запетая. Уведомителен e-mail ще бъде изпратен до всички адреси, посочени в Копие."
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 #: tcms/testplans/templates/testplans/mutable.html:147
@@ -1768,16 +1698,12 @@ msgstr "Избран(и) тест кейс(ове):"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
-msgid ""
-"\n"
-"                    %(count)s of the pre-selected test cases is not "
-"CONFIRMED and will not be cloned!\n"
+msgid "\n"
+"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr ""
-"\n"
-"%(count)s избрани тестови кейсове не са ПОТВЪРДЕНИ и няма да бъдат "
-"клонирани!\n"
+msgstr "\n"
+"%(count)s избрани тестови кейсове не са ПОТВЪРДЕНИ и няма да бъдат клонирани!\n"
 "Виж Тест плана за повече информация!                    "
 
 #: tcms/testruns/templates/testruns/search.html:5
@@ -1812,18 +1738,18 @@ msgstr "Клонирано от "
 msgid "TestCase ID is not a valid integer"
 msgstr "ID на тест кейса е невалидно число"
 
+#: tcms/testruns/views.py:616
+msgid "The user you typed does not exist in database"
+msgstr ""
+
 #: tcms/testruns/views.py:653
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d Тест Изпълнение/я са актуализирани:"
 
 #: tcms/xmlrpc/api/bug.py:85
-msgid ""
-"Enable linking test cases by configuring API parameters for this Issue "
-"Tracker!"
-msgstr ""
-"Настрой параметри на API, за да е разрешено свързването на тест кейсове към "
-"този Тракер!"
+msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
+msgstr "Настрой параметри на API, за да е разрешено свързването на тест кейсове към този Тракер!"
 
 #: tcms/xmlrpc/api/bug.py:138
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -1832,7 +1758,7 @@ msgstr "Настрой base_url, за да е разрешено репортв�
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr "Макет %s няма първичен ключ. Трябва да се попълни ръчно."
+msgstr "Модел %s няма първичен ключ. Трябва да се попълни ръчно."
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
@@ -1881,3 +1807,4 @@ msgstr "ГРЕШКА"
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
 msgstr "ОТЛОЖЕНО"
+
