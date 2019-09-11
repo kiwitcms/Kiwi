@@ -537,7 +537,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
                                     {'case_run': [self.execution_1.pk]},
                                     follow=True)
 
-        self.assertContains(response, _('%d CaseRun(s) updated:') % 1)
+        self.assertContains(response, _('CaseRun updated:'))
 
         self.execution_1.refresh_from_db()
 

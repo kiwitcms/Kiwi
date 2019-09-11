@@ -20,7 +20,7 @@ urlpatterns = [
         name='add-cases-to-run'),
 
     url(r'^(?P<run_id>\d+)/cc/$', views.ManageTestRunCC.as_view(), name='testruns-cc'),
-    url(r'^(?P<run_id>\d+)/update/$', views.update_case_run_text,
+    url(r'^(?P<run_id>\d+)/update/$', views.UpdateCaseRunTextView.as_view(),
         name='testruns-update_case_run_text'),
     url(r'^update-assignee/$', views.UpdateAssigneeView.as_view()),
     url(r'^case-run-update-status/$', views.UpdateCaseRunStatusView.as_view(),

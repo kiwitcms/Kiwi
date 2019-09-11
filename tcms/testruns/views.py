@@ -623,39 +623,38 @@ class ManageTestRunCC(View):
         return render(request, self.template_name, context_data)
 
 
-@require_POST
-@permission_required('testruns.change_testexecution')
-def update_case_run_text(request, run_id):
+@method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
+class UpdateCaseRunTextView(View):
     """Update the IDLE cases to newest text"""
 
-    test_run = get_object_or_404(TestRun, run_id=run_id)
+    http_method_names = ['post']
 
-    if request.POST.get('case_run'):
-        executions = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
-    else:
-        executions = test_run.case_run.all()
+    def post(self, request, run_id):
+        test_run = get_object_or_404(TestRun, run_id=run_id)
 
-    executions = executions.filter(status__name='IDLE')
+        if request.POST.get('case_run'):
+            executions = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
+        else:
+            executions = test_run.case_run.all()
 
-    count = 0
-    updated_executions = ''
-    for execution in executions:
-        latest_version = execution.case.history.latest().history_id
-        if execution.case_text_version != latest_version:
-            count += 1
-            updated_executions += '<li>%s: %s -> %s</li>' % (
-                execution.case.summary, execution.case_text_version, latest_version
-            )
-            execution.case_text_version = latest_version
-            execution.save()
+        executions = executions.filter(status__name='IDLE')
 
-    info = "<p>%s</p><ul>%s</ul>" % (_("%d CaseRun(s) updated:") % count, updated_executions)
-    message_level = messages.INFO
-    if count:
         message_level = messages.SUCCESS
+        for execution in executions:
+            latest_version = execution.case.history.latest().history_id
+            if execution.case_text_version != latest_version:
+                info = "<p>%s</p><ul><li>%s: %s -> %s</li></ul>" % (
+                    _("CaseRun updated:"),
+                    execution.case.summary,
+                    execution.case_text_version,
+                    latest_version
+                )
+                messages.add_message(request, message_level, info)
 
-    messages.add_message(request, message_level, info)
-    return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
+                execution.case_text_version = latest_version
+                execution.save()
+
+        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
 
 def get_caseruns_of_runs(runs, kwargs=None):
