@@ -605,16 +605,15 @@ class ManageTestRunCC(View):
         username_or_email = request.GET.get('user')
         context_data = {'test_run': test_run, 'is_ajax': True}
 
-        if action:
-            try:
-                user = User.objects.get(
-                    Q(username=username_or_email) |
-                    Q(email=username_or_email)
-                )
-                context_data['message'] = ''
-            except ObjectDoesNotExist:
-                context_data['message'] = _('The user you typed does not exist in database')
-                return render(request, self.template_name, context_data)
+        try:
+            user = User.objects.get(
+                Q(username=username_or_email) |
+                Q(email=username_or_email)
+            )
+            context_data['message'] = ''
+        except ObjectDoesNotExist:
+            context_data['message'] = _('The user you typed does not exist in database')
+            return render(request, self.template_name, context_data)
 
         if action == 'add':
             test_run.add_cc(user=user)
