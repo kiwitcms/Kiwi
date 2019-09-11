@@ -1739,7 +1739,7 @@ msgstr "ID du scénario de test n'est plus un entier valide"
 
 #: tcms/testruns/views.py:616
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "L'utilisateur saisi n'existe pas en base"
 
 #: tcms/testruns/views.py:653
 #, python-format
