@@ -2,12 +2,23 @@
 {% load static %}
 {% load extra_filters %}
 
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html class="{% block html_class%}{% endblock %}" lang="en">
+<html class="{% block html_class%}{% endblock %}" lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type='image/x-icon'>
     <title>Kiwi TCMS - {% block title %}{% trans "the leading open source test case management system" %}{% endblock %}</title>
+
+    {% if LANGUAGE_CODE == 'eo' %}
+    <script type="text/javascript">
+        var _jipt = [];
+        _jipt.push(['project', 'kiwitcms']);
+        _jipt.push(['preload_texts', true]);
+    </script>
+    <script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
+    {% endif %}
+
     {% include 'patternfly.html' %}
     {% block head %}{% endblock %}
 </head>
