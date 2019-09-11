@@ -406,7 +406,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
 
         self.assertContains(
             response,
-            'The user you typed does not exist in database')
+            _('The user you typed does not exist in database'))
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
@@ -416,7 +416,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
 
         self.assertContains(
             response,
-            'The user you typed does not exist in database')
+            _('The user you typed does not exist in database'))
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
@@ -427,7 +427,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
 
         self.assertContains(
             response,
-            'The user you typed does not exist in database')
+            _('The user you typed does not exist in database'))
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
