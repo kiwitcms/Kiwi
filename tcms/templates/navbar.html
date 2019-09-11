@@ -76,6 +76,27 @@
                     </ul>
                 </li>
 
+
+                <li class="dropdown" style="float:right">
+                    <a class="nav-item-iconic" id="horizontalDropdownMenuLang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span title="{% trans 'Language' %}" class="fa fa-globe"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenuLang">
+                        <li><a target="_parent" href="https://crowdin.com/project/kiwitcms">{% trans "Supported languages" %}</a></li>
+                        <li><a target="_parent" href="https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin">{% trans "Request new language" %}</a></li>
+
+                        <li class="divider"></li>
+                        {% get_current_language as LANGUAGE_CODE %}
+                        <li>
+                            <a target="_parent" href="{% url 'translation-mode' %}?next={{ request.path }}{% if LANGUAGE_CODE != 'eo' %}&language=eo{% endif %}">
+                                {% trans "Translation mode" %}
+                                <span class="fa {% if LANGUAGE_CODE != 'eo' %}fa-toggle-on{% else %}fa-toggle-off{% endif %}"></span>
+                            </a>
+                        </li>
+                        <li><a target="_parent" href="https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation">{% trans "Translation guide" %}</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-primary">
