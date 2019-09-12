@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-11 20:22\n"
+"PO-Revision-Date: 2019-09-12 11:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -491,7 +491,8 @@ msgstr "Démarré le"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s scénario de test ou cas de tests qui vous sont assignés pour être exécuté.\n"
+"Voici le dernier %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -526,7 +527,8 @@ msgstr "Exécutions"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Vous gérez %(total_count)s plan(s) de test, %(disabled_count)s sont désactivés. \n"
+"Voici le dernier %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -538,12 +540,15 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Bienvenu %(user)s,\n"
+"Merci pour votre inscription sur %(site_domain)s!\n\n"
+"Pour activer votre compte cliquer sur le lien suivant:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Le scénario de test a été supprimé par %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -568,7 +573,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Cher Administrateur,\n"
+"une personne a enregistré un compte avec le nom %(username)s sur votre\n"
+"instance Kiwi TCMS et attends votre approbation!\n\n"
+"Aller à %(user_url)s pour activer ce compte!"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -1660,7 +1668,8 @@ msgstr "Sélectionner des scénarios de Tests:"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s des scénarios de test pré-sélectionnés ne sont pas CONFIRMÉ et ne seront pas dupliqués !\n"
+"Voir le plan de test pour plus de détails!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
