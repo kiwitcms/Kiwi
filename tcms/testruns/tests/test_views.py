@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, too-many-ancestors
 
+import html
 from http import HTTPStatus
 
 from django.utils import formats
 from django.urls import reverse
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.utils.translation import ugettext_lazy as _
 
@@ -404,9 +406,9 @@ class TestAddRemoveRunCC(BaseCaseRun):
         user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(self.cc_url, {'do': 'remove'})
 
-        self.assertContains(
-            response,
-            _('The user you typed does not exist in database'))
+        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertIn(str(_('The user you typed does not exist in database')),
+                      response_text)
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
@@ -414,9 +416,9 @@ class TestAddRemoveRunCC(BaseCaseRun):
         user_should_have_perm(self.tester, 'testruns.change_testrun')
         response = self.client.get(self.cc_url, {'do': 'add'})
 
-        self.assertContains(
-            response,
-            _('The user you typed does not exist in database'))
+        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertIn(str(_('The user you typed does not exist in database')),
+                      response_text)
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
@@ -425,9 +427,9 @@ class TestAddRemoveRunCC(BaseCaseRun):
         response = self.client.get(self.cc_url,
                                    {'do': 'add', 'user': 'not exist'})
 
-        self.assertContains(
-            response,
-            _('The user you typed does not exist in database'))
+        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertIn(str(_('The user you typed does not exist in database')),
+                      response_text)
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
@@ -712,8 +714,8 @@ class TestAddCasesToRun(BaseCaseRun):
                 '<td>{0}</td>'.format(case.category.name),
                 '<td>{0}</td>'.format(case.priority.value),
             ]
-            for html in html_pieces:
-                self.assertContains(response, html, html=True)
+            for piece in html_pieces:
+                self.assertContains(response, piece, html=True)
 
 
 class TestRunCasesMenu(BaseCaseRun):
