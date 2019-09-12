@@ -63,11 +63,11 @@
                 </li>
 
                 <li class="dropdown" style="float:right">
-                    <a class="nav-item-iconic" id="horizontalDropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <span title="Help" class="fa pficon-help"></span>
+                    <a class="nav-item-iconic" id="horizontalDropdownMenuHelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span title="{% trans 'Help' %}" class="fa pficon-help"></span>
                         <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenu1">
+                    <ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenuHelp">
                         {% for link in SETTINGS.HELP_MENU_ITEMS %}
                         <li><a href="{{ link.0 }}" target="_parent">{{ link.1 }}</a></li>
                         {% endfor %}
