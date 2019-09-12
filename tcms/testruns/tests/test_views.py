@@ -533,11 +533,18 @@ class TestUpdateCaseRunText(BaseCaseRun):
 
         self.assertNotEqual(self.execution_1.case.history.latest().history_id,
                             self.execution_1.case_text_version)
+
+        expected_text = "%s: %s -> %s" % (
+            self.execution_1.case.summary,
+            self.execution_1.case_text_version,
+            self.execution_1.case.history.latest().history_id
+        )
+
         response = self.client.post(self.update_url,
                                     {'case_run': [self.execution_1.pk]},
                                     follow=True)
 
-        self.assertContains(response, _('CaseRun updated:'))
+        self.assertContains(response, expected_text)
 
         self.execution_1.refresh_from_db()
 

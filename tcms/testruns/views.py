@@ -639,17 +639,15 @@ class UpdateCaseRunTextView(View):
 
         executions = executions.filter(status__name='IDLE')
 
-        message_level = messages.SUCCESS
         for execution in executions:
             latest_version = execution.case.history.latest().history_id
             if execution.case_text_version != latest_version:
-                info = "<p>%s</p><ul><li>%s: %s -> %s</li></ul>" % (
-                    _("CaseRun updated:"),
+                info = "%s: %s -> %s" % (
                     execution.case.summary,
                     execution.case_text_version,
                     latest_version
                 )
-                messages.add_message(request, message_level, info)
+                messages.add_message(request, messages.SUCCESS, info)
 
                 execution.case_text_version = latest_version
                 execution.save()
