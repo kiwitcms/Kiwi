@@ -147,8 +147,7 @@ class TestRegistration(TestCase):
 somebody just registered an account with username %(username)s at your
 Kiwi TCMS instance and is awaiting your approval!
 
-Go to %(user_url)s to activate the account!
-""") % values
+Go to %(user_url)s to activate the account!""") % values
             self.assertEqual(expected.strip(), send_mail.call_args_list[0][0][1].strip())
             self.assertIn('admin@kiwitcms.org', send_mail.call_args_list[0][0][-1])
         finally:
