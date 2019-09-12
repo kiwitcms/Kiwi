@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-11 20:23\n"
+"PO-Revision-Date: 2019-09-12 20:22\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -192,15 +192,15 @@ msgstr "Потърси помощ в StackOverflow"
 
 #: tcms/settings/common.py:134
 msgid "User Guide"
-msgstr "Ръководство"
+msgstr "Потребителско ръководство"
 
 #: tcms/settings/common.py:135
 msgid "Administration Guide"
-msgstr "Ръководство за Админ"
+msgstr "Ръководство за администрация"
 
 #: tcms/settings/common.py:136
 msgid "API Help"
-msgstr "API Помощ"
+msgstr "API документация"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -342,7 +342,7 @@ msgstr "Сигурни ли сте, че искате да изтриете пр
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr "водещата open source система за управление на тестове"
+msgstr "водещата система за управление на тестове с отворен код"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
@@ -1035,7 +1035,7 @@ msgstr "Добре дошли в Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr "Моля разпишете се, за да започнете"
+msgstr "Влезте в системата, за да започнете"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
@@ -1043,11 +1043,11 @@ msgstr "или"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr "регистриране на профил"
+msgstr "регистрирайте профил"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr "ако нямаш!"
+msgstr "ако нямате!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
