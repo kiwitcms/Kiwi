@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-11 20:22\n"
+"PO-Revision-Date: 2019-09-12 08:57\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -491,7 +491,8 @@ msgstr "Začeto ob"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s testiranj in/ali testov na katere ste dodeljeni scenarijev čaka na izvedbo. \n"
+"Prikazanih je zadnjih %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -526,7 +527,8 @@ msgstr "Izvedbe"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Imate %(total_count)s baz testnih scenarijev, %(disabled_count)s je onemogočenih. \n"
+"Tukaj so zadnji %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -538,12 +540,15 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Pozdravljen-/a %(user)s,\n"
+"uspešno je bil kreiran uporabniški račun za domeno %(site_domain)s!\n\n"
+"Za aktivacijo računa kliknite na spodnjo povezavo\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Testni scenarij je izbrisal %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -560,7 +565,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Testiranje %(pk)s je bilo ustvarjeno ali posobljeno.\n\n"
+"### Povezano ###\n"
+"Testiranje: %(run_url)s\n"
+"Baza testnih scenarijev: %(plan_url)s\n\n"
+"### Osnovne informacije o testiranju ###\n"
+"Povzetek: %(summary)s\n\n"
+"Vodja testiranja: %(manager)s.\n"
+"Zadolženi tester: %(default_tester)s.\n\n"
+"Produkt: %(product)s\n"
+"Verzija produkta: %(version)s\n"
+"Build: %(build)s\n\n"
+"Zapiski:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -568,7 +585,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Spoštovani administrator,\n"
+"uporabnik %(username)s je kreiral nov uporabniški račun v sistemu Kiwi TCMS, kateri čaka na potrditev.\n\n"
+"Aktivacija računa je mogoča na sledeči povezavi %(user_url)s!"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -1342,7 +1361,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Scenarij**: ... kaj testiramo..\n"
+"  **Pogoj** ... pogoji potrebni za izvedbo testa ...\n"
+"  **Ko** ... koraki za izvedbo testa...\n"
+"  **Potem** ... pričakovani rezultati...\n\n"
+"*Ko*:\n\n"
+"1. korak\n"
+"2. korak\n"
+"3. korak\n\n"
+"*Potem*:\n\n"
+"1. rezultat\n"
+"2. rezultat\n"
+"3. rezultat"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1660,7 +1690,8 @@ msgstr "Izbrani testni scenariji(s):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s izbranih testnih scenarijev ni v statusu POTRJEN, zato se ne bodo kopirali!\n"
+"Več podrobnosti je na voljo v bazi testnih scenarijev!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
