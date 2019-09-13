@@ -351,7 +351,7 @@ class Gitlab(IssueTrackerType):
 
         :base_url: URL to a GitLab repository for which we're going to report issues
         :api_url: URL to GitLab instance. Usually gitlab.com!
-        :api_password: - Gitlab API token.
+        :api_password: GitLab API token.
 
         .. note::
 
