@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-13 20:41\n"
+"PO-Revision-Date: 2019-09-13 20:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1293,47 +1293,47 @@ msgstr "Testato da"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Chiuso alle"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
-msgstr ""
+msgstr "ID Bug"
 
 #: tcms/templates/run/report.html:116
 msgid "Bug List"
-msgstr ""
+msgstr "Elenco Bug"
 
 #: tcms/templates/run/report.html:121
 msgid "Bug Url"
-msgstr ""
+msgstr "Url Bug"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
-msgstr ""
+msgstr "Vedi tutto nel Tracciatore Problemi"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
+msgstr "Configurato solo IT che supporta bug multipli mostrati"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
-msgstr ""
+msgstr "Tracciatore"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTALE"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Nessun Bug"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Seleziona tutti i casi/Seleziona nessun caso"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Espandi tutti i casi"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
