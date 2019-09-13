@@ -4,7 +4,7 @@ Setting up a local development environment
 Get source code
 ---------------
 
-The Kiwi TCMS source code is available at: https://github.com/kiwitcms/Kiwi::
+The Kiwi TCMS source code is available at https://github.com/kiwitcms/Kiwi::
 
     git clone https://github.com/kiwitcms/Kiwi.git
 
@@ -40,7 +40,7 @@ Dependencies
 First install RPM packages which are needed to compile some of the Python
 dependencies::
 
-    sudo yum install gcc python-devel mariadb-devel libxml2-devel libxslt-devel graphviz
+    sudo yum install gcc rh-python36-python-devel mariadb-devel libffi-devel npm graphviz
 
 .. note::
 

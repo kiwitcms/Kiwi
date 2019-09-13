@@ -7,7 +7,7 @@ Contribute
 Kiwi TCMS team welcomes and appreciates any kind of contribution from you in
 order to make Kiwi TCMS better and better. Anyone who is interested in
 Kiwi TCMS is able to contribute in various areas, whatever you are a good
-and experienced developer, documentation writer or even a normal user.
+and experienced developer, documentation writer or even a regular user.
 
 .. include:: set_dev_env.rst
     :start-line: 2
@@ -64,30 +64,47 @@ Kiwi TCMS is using Crowdin as our translation service. You can find the project
 at https://crowdin.com/project/kiwitcms. You need to register with Crowdin before
 you can work on any translations!
 
-To request a new language be added to Kiwi TCMS please
-`create an issue <https://github.com/kiwitcms/Kiwi/issues/new>`_. In the description
-let us know your Crowdin username!
+To translate the application first turn on the special *translation mode* in
+Kiwi TCMS via the language menu (top-right corner). Then use Crowdin in-context
+editor to update the strings. The actual content on the page wil be updated on
+the fly as you type! Don't forget to **Save** the newly submitted translation.
+*kiwitcms-bot* will take care to submit the new strings as GitHub pull request!
 
-Before starting to translate please read the
+|Crowdin in-context|
+
+.. versionadded:: 7.0
+
+.. warning::
+
+    If in-context editor doesn't show source string your browser may not be supported!
+    Try updating the browser or switching to a different one! In our experience
+    Firefox 60.8.0 did not work but Google Chrome 77.0.3865.75 works!
+
+.. important::
+
+    If possible start Kiwi TCMS in development mode (see above), using the latest version
+    from the *master* branch and translate from there. If you are unsure how to
+    do this then use the in-context editor at https://public.tenant.kiwitcms.org!
+
+To request a new language please
+`create an issue <https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_
+on GitHub.
+
+If you prefer translating out of context (not recommended) please read the
 `Starting Translation how-to
 <https://support.crowdin.com/joining-translation-project/#starting-translation>`_
 and the `Online Editor guide <https://support.crowdin.com/online-editor/>`_.
 
-.. note::
-
-    All translations need to be proof-read before they are approved! If you do not
-    have sufficient Crowdin permissions to do so let us know that you have some new
-    translations that you'd like to be approved.
 
 Making strings translatable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before strings can be translated they need to be marked as translatable.
-This is done with the ``gettext()`` function or its shortcut ``_()``.
+This is done with the ``ugettext_lazy()`` function or its shortcut ``_()``.
 For templates ``{% load i18n %}`` at the top of the template and then use
 the ``{% trans %}`` template tag to mark strings as translatable!
 Please read `Django's Translation documentation
-<https://docs.djangoproject.com/en/2.0/topics/i18n/translation/>`_ if
+<https://docs.djangoproject.com/en/2.2/topics/i18n/translation/>`_ if
 you are not sure what these functions are!
 
 .. warning::
@@ -95,7 +112,10 @@ you are not sure what these functions are!
     To update .po files once translatable strings have been changed or updated
     you have to execute the following command and commit the results in git::
 
-        ./manage.py makemessages
+        make messages
 
     At the moment there is no test for this because Django doesn't make it easier
     to implement a quick test based on 'git status'!
+
+
+.. |Crowdin in-context| image:: ./_static/crowdin-in-context.png
