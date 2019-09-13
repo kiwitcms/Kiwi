@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-13 18:11\n"
+"PO-Revision-Date: 2019-09-13 18:22\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -71,52 +71,52 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Αυτή η διεύθυνση ηλεκτρονικού ταχυδρομείου είναι ήδη σε χρήση"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Προσωπικές πληροφορίες"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "'Αδειες"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Ενας χρήστης με αυτή την ηλεκτρονική διεύθυνση υπάρχει ήδη."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Η επιβεβαίωση λογαριασμού σας %s"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Ο λογαριασμός σας έχει δημιουργηθεί, ελέγξτε το γραμματοκιβώτιό σας για επιβεβαίωση"
 
 #: tcms/kiwi_auth/views.py:61
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Ο λογαριασμός σας έχει δημιουργηθεί, αλλά χρειάζεστε έναν διαχειριστή για να τον ενεργοποιήσετε"
 
 #: tcms/kiwi_auth/views.py:66
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Ακολουθεί η λίστα διαχειριστών"
 
 #: tcms/kiwi_auth/views.py:108
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Αυτό το κλειδί ενεργοποίησης δεν υπάρχει πλέον στη βάση δεδομένων"
 
 #: tcms/kiwi_auth/views.py:113
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Αυτό το κλειδί ενεργοποίησης έχει λήξει"
 
 #: tcms/kiwi_auth/views.py:125
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Ο λογαριασμός σας έχει ενεργοποιηθεί με επιτυχία"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "ΤΑΜΠΛΟ"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Νέο σχέδιο δοκιμών"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
@@ -132,7 +132,7 @@ msgstr ""
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "ΨΑΞΙΜΟ"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
