@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-13 19:53\n"
+"PO-Revision-Date: 2019-09-13 20:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -75,149 +75,149 @@ msgstr "L'URL di base non è configurato! Vedi <a href=\"%(doc_url)s\">documenta
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Questo indirizzo e-mail è già in uso"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Informazioni personali"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Permessi"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Un utente con quella mail esiste già."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Conferma il tuo nuovo %s profilo"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Il tuo profilo è stato creato, per favore controlla la tua casella di posta per confermare"
 
 #: tcms/kiwi_auth/views.py:61
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Il tuo profilo è stato creato, ma hai bisogno di un amministratore per attivarlo"
 
 #: tcms/kiwi_auth/views.py:66
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Segue la lista amministratore"
 
 #: tcms/kiwi_auth/views.py:108
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Questa chiave di attivazione non esiste più nel database"
 
 #: tcms/kiwi_auth/views.py:113
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Questa chiave di attivazione è scaduta"
 
 #: tcms/kiwi_auth/views.py:125
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Il tuo profilo è stato attivato con successo"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "TEST"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Nuovo Piano Test"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
-msgstr ""
+msgstr "Nuovo Caso Test"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "CERCA"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Cerca Piani Test"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Cerca Esegui Test"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Cerca Casi Test"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRIA"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Test"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Ripartizione"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Stato matrice"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
-msgstr ""
+msgstr "Trend di esecuzione"
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
-msgstr ""
+msgstr "AMMINISTRATORE"
 
 #: tcms/settings/common.py:124
 msgid "Users and groups"
-msgstr ""
+msgstr "Utenti e gruppi"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
-msgstr ""
+msgstr "Tutto il resto"
 
 #: tcms/settings/common.py:132
 msgid "Report an Issue"
-msgstr ""
+msgstr "Segnala un Problema"
 
 #: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Chiedi aiuto su StackOverflow"
 
 #: tcms/settings/common.py:134
 msgid "User Guide"
-msgstr ""
+msgstr "Guida Utente"
 
 #: tcms/settings/common.py:135
 msgid "Administration Guide"
-msgstr ""
+msgstr "Guida amministratore"
 
 #: tcms/settings/common.py:136
 msgid "API Help"
-msgstr ""
+msgstr "Aiuto Help"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Nuovo utente in attesa di approvazione"
 
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NUOVO: TestRun #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "ALTRO"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Ripartizione Test"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
@@ -237,7 +237,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
@@ -245,7 +245,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:65
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Piano Test"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
@@ -253,7 +253,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "Dopo"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
@@ -261,11 +261,11 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "Prima"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
-msgstr ""
+msgstr "Totale"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:71
 #: tcms/templates/plan/get_cases.html:107
@@ -543,7 +543,7 @@ msgstr ""
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "TestCase è stato eliminato da %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -560,7 +560,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Esecuzione test %(pk)s creata o aggiornata per te.\n\n"
+"### Link ###\n"
+"Esecuzione Test: %(run_url)s\n"
+"Piano Test: %(plan_url)s\n\n"
+"### Informazioni Esecuzione Base ###\n"
+"Sommario: %(summary)s\n\n"
+"Gestito: %(manager)s\n"
+"Tester Predefinito: %(default_tester)s.\n\n"
+"Prodotto: %(product)s\n"
+"Versione prodotto: %(version)s\n"
+"Build: %(build)s\n\n"
+"Note:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -568,26 +580,28 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Caro Amministratore,\n"
+"qualcuno ha appena registrato un profilo con il nome utente %(username)s alla tua istanza Kiwi TCMS ed è in attesa di approvazione!\n\n"
+"Vai a %(user_url)s per attivare il profilo!"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Piani"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "Casi"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
-msgstr ""
+msgstr "Esecuzioni"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Azione"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -595,11 +609,11 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:48
 msgid "Remove"
-msgstr ""
+msgstr "Rimuovi"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Aggiungi Tag"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
