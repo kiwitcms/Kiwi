@@ -48,9 +48,10 @@ Introduction
 .. image:: https://raw.githubusercontent.com/kiwitcms/Kiwi/master/tcms/static/images/kiwi_h80.png
    :alt: "Kiwi TCMS Logo"
 
-Kiwi TCMS is a test plan, test run and test case management system, written in
-Python and Django. It features Bugzilla, GitHub, GitLab and JIRA integration, fast test plan
-and runs search, powerful access control for each plan, run and case, and XML-RPC APIs.
+Kiwi TCMS is the leading open source test case management system. It is written in
+Python and Django. It features bug tracker integration, fast test plan
+and runs search, powerful access control, test automation framework plugins and
+rich API layer.
 
 
 Brief history
@@ -88,6 +89,12 @@ Brief history
   in 'Best Tech Community' category
 
 
+Live demo
+---------
+
+https://public.tenant.kiwitcms.org
+
+
 Documentation
 -------------
 
@@ -97,16 +104,26 @@ http://kiwitcms.readthedocs.org/
 Installation
 ------------
 
-See http://kiwitcms.readthedocs.io/en/latest/installing_docker.html
+See
+`Running Kiwi TCMS as a Docker container <http://kiwitcms.readthedocs.io/en/latest/installing_docker.html>`_.
+
+
+Language support
+----------------
+
+- `Supported languages <https://crowdin.com/project/kiwitcms>`_
+- `Request new language <https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_
+- `Translation guide <https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation>`_
 
 
 Help us improve Kiwi TCMS
 -------------------------
 
 - Click the `Star` button at https://github.com/kiwitcms/Kiwi/stargazers
+- Click the star icon at https://hub.docker.com/r/kiwitcms/kiwi/
 - Follow @KiwiTCMS at https://twitter.com/KiwiTCMS
-- Subscribe to our newsletter
-  `here <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
+- Subscribe to our
+  `newsletter <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 - Send us testimonials and feedback about how your team is using Kiwi TCMS
 - Donate 5$ or more at https://opencollective.com/kiwitcms
 - Become a `contributor <http://kiwitcms.readthedocs.org/en/latest/contribution.html>`_
