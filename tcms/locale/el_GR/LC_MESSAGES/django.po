@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-11 20:23\n"
+"PO-Revision-Date: 2019-09-13 18:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -19,11 +19,11 @@ msgstr ""
 #: tcms/core/ajax.py:158 tcms/testruns/views.py:705
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Ο χρήστης %s δεν βρέθηκε!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "Βασικά προσαρμοσμένα σχόλια"
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/templates/run/get_case_runs.html:152
@@ -34,26 +34,26 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "'Ονομα"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "Διεύθυνση ηλεκτρονικού ταχυδρομείου"
 
 #: tcms/core/contrib/comments/forms.py:21
 #: tcms/templates/run/get_case_runs.html:149 tcms/templates/run/report.html:138
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/core/contrib/comments/forms.py:25
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Comment"
-msgstr ""
+msgstr "Σχόλιο"
 
 #: tcms/core/history.py:41
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "ΕΚΣΥΓΧΡΟΝΙΖΩ:%(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
