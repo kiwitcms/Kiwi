@@ -452,7 +452,7 @@ class Redmine(IssueTrackerType):
         """
             Return a Redmine project which matches the given product name.
 
-            .. info::
+            .. note::
 
                 If there is no match then return the first project in Redmine.
         """
@@ -467,7 +467,7 @@ class Redmine(IssueTrackerType):
         """
             Return a Redmine tracker matching name ('Bug').
 
-            .. info::
+            .. note::
 
                 If there is no match then return the first one!
         """
