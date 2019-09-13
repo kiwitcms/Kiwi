@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-13 20:21\n"
+"PO-Revision-Date: 2019-09-13 20:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1674,19 +1674,19 @@ msgstr "Test Case selezionato(i):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s dei casi test preselezionati non CONFERMATA e non sarà clonata! Vedi il piano test per altri dettagli!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Cerca esecuzioni test"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Sommario esecuzione test"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "ID Piano"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
