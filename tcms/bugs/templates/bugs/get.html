@@ -79,40 +79,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-3" style="float: right">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-tags"></span>
-                    {% trans 'Tags' %}
-                </h2>
-
-                <div class="card-pf-body">
-                    <table class="table" id="tags">
-                        <thead>
-                            <tr>
-                                <th>{% trans 'Name' %}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-
-                        {% if perms.bugs.add_bugtag %}
-                        <tfoot>
-                            <tr>
-                                <th>
-                                    <div class="input-group input-group-sm mb-3">
-                                        <input type="text" class="form-control typeahead" id="id_tags">
-                                    </div>
-                                </th>
-                                <th>
-                                    <a href="#tags" id="add-tag" title="{% trans 'Add' %}">
-                                        <span class="fa fa-plus"></span>
-                                    </a>
-                                </th>
-                            </tr>
-                        </tfoot>
-                        {% endif %}
-                    </table>
-                </div>
-            </div>
+            {% include 'include/tags_card.html' with add_perm=perms.bugs.add_bugtag %}
         </div>
     </div>
 
@@ -213,4 +180,7 @@
 
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/tags.js' %}"></script>
+
+<script src="{% static 'bugs/js/get.js' %}"></script>
 {% endblock %}

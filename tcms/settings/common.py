@@ -372,6 +372,9 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.xmlrpc.api.version',
 ]
 
+if 'tcms.bugs' in INSTALLED_APPS:
+    MODERNRPC_METHODS_MODULES.append('tcms.bugs.api')
+
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
