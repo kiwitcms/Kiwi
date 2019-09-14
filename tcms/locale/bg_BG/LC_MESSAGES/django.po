@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-12 20:22\n"
+"PO-Revision-Date: 2019-09-14 17:58\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1179,7 +1179,7 @@ msgstr "Премахни избраните кейсове от това Тес�
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update the IDLE case runs to newest case text"
-msgstr "Актуализирай ОТЛОЖЕНИ кейсове до най-новите дефиниции"
+msgstr "Актуализирай кейсове В ИЗЧАКВАНЕ до най-новите дефиниции"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
@@ -1734,27 +1734,27 @@ msgstr "НЕОБХОДИМА_АКТУАЛИЗАЦИЯ"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr "ОТЛОЖЕН(И)"
+msgstr "В ИЗЧАКВАНЕ"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr "В ИЗПЪЛНЕНИЕ"
+msgstr "ИЗПЪЛНЯВА СЕ"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
-msgstr "НА ИЗЧАКВАНЕ"
+msgstr "ПАУЗА"
 
 #: vinaigrette-deleteme.py:9
 msgid "PASSED"
-msgstr "ИЗПЪЛНЕН(И)"
+msgstr "УСПЕШЕН"
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr "С ГРЕШКИ"
+msgstr "НЕУСПЕШЕН"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
-msgstr "БЛОКИРАН(И)"
+msgstr "БЛОКИРАН"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
@@ -1762,5 +1762,5 @@ msgstr "ГРЕШКА"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr "ОТЛОЖЕНО"
+msgstr "ОТЛОЖЕН"
 
