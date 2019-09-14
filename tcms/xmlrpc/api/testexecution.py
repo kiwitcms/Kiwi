@@ -12,6 +12,7 @@ from tcms.testruns.models import TestExecution
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.api.utils import tracker_from_url
+from tcms.issuetracker.kiwitcms import KiwiTCMS
 
 __all__ = (
     'create',
@@ -182,15 +183,20 @@ def add_link(values, update_tracker=False):
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :raises: RuntimeError if operation not successfull
+
+        .. note::
+
+            Always 'link' with IT instance if URL is from Kiwi TCMS own bug tracker!
     """
     link, _ = LinkReference.objects.get_or_create(**values)
     response = model_to_dict(link)
+    tracker = tracker_from_url(link.url)
 
-    if link.is_defect and update_tracker:
-        tracker = tracker_from_url(link.url)
-
-        if not tracker.is_adding_testcase_to_issue_disabled():
-            tracker.add_testexecution_to_issue([link.execution], link.url)
+    if (link.is_defect and
+            update_tracker and
+            not tracker.is_adding_testcase_to_issue_disabled()) or \
+            isinstance(tracker, KiwiTCMS):
+        tracker.add_testexecution_to_issue([link.execution], link.url)
 
     return response
 

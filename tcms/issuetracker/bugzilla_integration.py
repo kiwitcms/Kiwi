@@ -2,7 +2,7 @@
 """
     Helper functions which facilitate actual communications with Bugzilla.
 """
-from tcms.issuetracker.base_integration import IntegrationThread
+from tcms.issuetracker.base import IntegrationThread
 
 
 class BugzillaThread(IntegrationThread):
