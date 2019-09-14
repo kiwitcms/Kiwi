@@ -1,0 +1,36 @@
+{% load i18n %}
+
+<div class="card-pf card-pf-accented">
+    <h2 class="card-pf-title">
+        <span class="fa fa-tags"></span>
+        {% trans 'Tags' %}
+    </h2>
+
+    <div class="card-pf-body">
+        <table class="table" id="tags">
+            <thead>
+                <tr>
+                    <th>{% trans 'Name' %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            {% if add_perm %}
+            <tfoot>
+                <tr>
+                    <th>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="text" class="form-control typeahead" id="id_tags">
+                        </div>
+                    </th>
+                    <th>
+                        <a href="#tags" id="add-tag" title="{% trans 'Add' %}">
+                            <span class="fa fa-plus"></span>
+                        </a>
+                    </th>
+                </tr>
+            </tfoot>
+            {% endif %}
+        </table>
+    </div>
+</div>
