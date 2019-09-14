@@ -11,4 +11,4 @@ class UrlMixin:  # pylint: disable=too-few-public-methods
     def get_full_url(self):
         site = Site.objects.get(pk=settings.SITE_ID)
         host_link = request_host_link(None, site.domain)
-        return '{}/{}'.format(host_link, self._get_absolute_url().strip('/'))
+        return '{}/{}/'.format(host_link, self._get_absolute_url().strip('/'))

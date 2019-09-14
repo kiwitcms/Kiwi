@@ -40,7 +40,7 @@
                         <div class="list-group-item-header">
                             <div class="list-view-pf-main-info">
                                 <div class="list-view-pf-left">
-                                    <span class="fa {% if execution_comments or bugs %}fa-angle-right{% else %}fa-exclamation{% endif %}"></span>
+                                    <span class="fa {% if execution_comments or show_bugs and bugs %}fa-angle-right{% else %}fa-exclamation{% endif %}"></span>
                                 </div>
 
                                 <div class="list-view-pf-body">
@@ -58,7 +58,7 @@
                                             <span class="{{ execution.status.icon }}"></span>
                                             <strong>{{ execution.status.name }}</strong>
                                         </div>
-                                        {% if bugs %}
+                                        {% if show_bugs and bugs %}
                                         <div class="list-view-pf-additional-info-item">
                                             <span class="fa fa-bug"></span>
                                             <strong>{{ bugs|length }}</strong>
@@ -82,6 +82,7 @@
                                 </div>
                             </div>
                         </div> <!-- / caserun header -->
+                {% if show_bugs %}
                     {% for bug in bugs %}
                         <div class="list-group-item-container container-fluid">
                             <div class="list-group-item">
@@ -114,6 +115,7 @@
                             </div>
                         </div> <!-- /bug -->
                     {% endfor %}
+                {% endif %}
 
                     {% for comment in execution_comments %}
                         <!-- comments -->
