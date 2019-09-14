@@ -2,7 +2,7 @@
 """
     Helper which facilitate actual communications with GitHub.
 """
-from tcms.issuetracker.base_integration import IntegrationThread
+from tcms.issuetracker.base import IntegrationThread
 
 
 class GitHubThread(IntegrationThread):

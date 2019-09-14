@@ -2,7 +2,7 @@
 """
     Helper which facilitates actual communications with GitLab.
 """
-from tcms.issuetracker.base_integration import IntegrationThread
+from tcms.issuetracker.base import IntegrationThread
 
 
 class GitlabThread(IntegrationThread):
