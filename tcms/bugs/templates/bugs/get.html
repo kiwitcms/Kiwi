@@ -28,20 +28,8 @@
         {% endif %}
     </h1>
 
-    {% get_comment_list for object as comments %}
-
     <div class="row row-cards-pf">
-        <div class="col-xs-12 col-sm-12 col-md-9">
-            <div class="card-pf card-pf-accented">
-                <div class="card-pf-body">
-                    <div class="markdown-text">
-                        {{ comments.0.comment|markdown2html }}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-calendar"></span>{{ object.created_at }}
@@ -54,7 +42,11 @@
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa pficon-user"></span>{% trans 'Assignee' %}:
-                    <a href="{% url "tcms-profile" object.assignee.username %}">{{ object.assignee.username }}</a>
+                    {% if object.assignee %}
+                        <a href="{% url "tcms-profile" object.assignee.username %}">{{ object.assignee.username }}</a>
+                    {% else %}
+                        -
+                    {% endif %}
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
@@ -78,58 +70,11 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-3" style="float: right">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             {% include 'include/tags_card.html' with add_perm=perms.bugs.add_bugtag %}
         </div>
-    </div>
 
-    {% for comment in comments %}
-    {% if forloop.counter0 > 0 %}
-    <div class="row row-cards-pf">
-        <div class="col-xs-12 col-sm-12 col-md-9">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <a href="{% url "tcms-profile" comment.user.username %}">{{ comment.user }}</a>
-                    {% trans 'commented on' %}
-                    {{ comment.submit_date }}
-                </h2>
-                <div class="card-pf-body">
-                    <div class="markdown-text">
-                        {{ comment.comment|markdown2html }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-    {% endfor %}
-
-    {% if perms.django_comments.add_comment %}
-    <div class="row row-cards-pf">
-        <div class="col-xs-12 col-sm-12 col-md-9">
-            <div class="card-pf">
-                <form class="form-horizontal" action="{% url 'bugs-comment' %}" method="post">
-                    <input name="bug" type="hidden" value="{{ object.pk }}">
-                    <div class="form-group">
-                        <div>
-                            <div>{{ comment_form.text }}</div>
-                            {{ comment_form.text.errors }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div>
-                            <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="row row-cards-pf">
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="col-xs-12 col-sm-12 col-md-6">
             <div class="card-pf card-pf-accented">
                 <h2 class="card-pf-title">
                     <span class="fa fa-paperclip"></span>
@@ -173,7 +118,51 @@
             </div>
         </div>
 
-    </div><!-- /row -->
+    </div>
+
+    {% get_comment_list for object as comments %}
+    {% for comment in comments %}
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <a href="{% url "tcms-profile" comment.user.username %}">{{ comment.user }}</a>
+                    {% trans 'commented on' %}
+                    {{ comment.submit_date }}
+                </h2>
+                <div class="card-pf-body">
+                    <div class="markdown-text">
+                        {{ comment.comment|markdown2html }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if perms.django_comments.add_comment %}
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card-pf">
+                <form class="form-horizontal" action="{% url 'bugs-comment' %}" method="post">
+                    <input name="bug" type="hidden" value="{{ object.pk }}">
+                    <div class="form-group">
+                        <div>
+                            <div>{{ comment_form.text }}</div>
+                            {{ comment_form.text.errors }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
