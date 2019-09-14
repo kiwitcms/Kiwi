@@ -8,14 +8,15 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
 from tcms.bugs.models import Bug
+from tcms.testruns.models import TestExecution
 from tcms.bugs.forms import NewBugForm, BugCommentForm
 from tcms.core.helpers.comments import add_comment
+from tcms.core.contrib.linkreference.models import LinkReference
 
 
 class Get(DetailView):  # pylint: disable=missing-permission-required
@@ -27,6 +28,14 @@ class Get(DetailView):  # pylint: disable=missing-permission-required
         context = super().get_context_data(**kwargs)
         context['comment_form'] = BugCommentForm()
         context['comment_form'].populate(self.object.pk)
+
+        context['executions'] = TestExecution.objects.filter(
+            pk__in=LinkReference.objects.filter(
+                is_defect=True,
+                url=self.object.get_full_url(),
+            ).values('execution')
+        )
+
         return context
 
 
