@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.db import migrations, models
+import tcms.core.models.base
 
 
 class Migration(migrations.Migration):
@@ -43,5 +44,6 @@ class Migration(migrations.Migration):
                 ('version', models.ForeignKey(on_delete=models.deletion.CASCADE,
                                               to='management.Version')),
             ],
+            bases=(models.Model, tcms.core.models.base.UrlMixin),
         ),
     ]
