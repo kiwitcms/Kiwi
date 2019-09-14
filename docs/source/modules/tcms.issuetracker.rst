@@ -11,10 +11,11 @@ Submodules
 
 .. toctree::
 
-   tcms.issuetracker.base_integration
+   tcms.issuetracker.base
    tcms.issuetracker.bugzilla_integration
    tcms.issuetracker.github_integration
    tcms.issuetracker.gitlab_integration
    tcms.issuetracker.jira_integration
+   tcms.issuetracker.kiwitcms
    tcms.issuetracker.redmine_integration
    tcms.issuetracker.types

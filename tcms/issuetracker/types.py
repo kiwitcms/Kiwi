@@ -1,12 +1,9 @@
 """
     This module implements Kiwi TCMS interface to external issue tracking systems.
-    :class:`tcms.issuetracker.types.IssueTrackerType` provides the interface
-    while the rest of the classes in this module implement it! Refer to each
-    implementor class for integration specifics!
+    Refer to each implementor class for integration specifics!
 """
 
 import os
-import re
 import tempfile
 from urllib.parse import urlencode, quote
 
@@ -17,8 +14,9 @@ import gitlab
 import redminelib
 
 from django.conf import settings
-from opengraph.opengraph import OpenGraph
 
+from tcms.issuetracker.base import IssueTrackerType
+from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa
 from tcms.issuetracker import bugzilla_integration
 from tcms.issuetracker import jira_integration
 from tcms.issuetracker import github_integration
@@ -26,142 +24,14 @@ from tcms.issuetracker import gitlab_integration
 from tcms.issuetracker import redmine_integration
 
 
-RE_ENDS_IN_INT = re.compile(r'[\d]+$')
-
-
-class IssueTrackerType:
+def from_name(name):
     """
-        Represents actions which can be performed with issue trackers.
-        This is a common interface for all issue trackers that Kiwi TCMS
-        supports!
+        Return the class which matches ``name`` if it exists inside this
+        module or raise an exception.
     """
-    rpc_cache = {}
-
-    def __init__(self, bug_system):
-        """
-            :bug_system: - BugSystem object
-        """
-        self.bug_system = bug_system
-
-    @classmethod
-    def from_name(cls, name):
-        """
-            Return the class which matches ``name`` if it exists inside this
-            module or raise an exception.
-        """
-        if name not in globals():
-            raise NotImplementedError('IT of type %s is not supported' % name)
-        return globals()[name]
-
-    @classmethod
-    def bug_id_from_url(cls, url):
-        """
-            Returns a unique identifier for reported defect. This is used by the
-            underlying integration libraries. Usually that identifier is an
-            integer number.
-
-            The default implementation is to leave the last group of numeric
-            characters at the end of a string!
-        """
-        return int(RE_ENDS_IN_INT.search(url.strip()).group(0))
-
-    def details(self, url):  # pylint: disable=no-self-use
-        """
-            Returns bug details to be used later. By default this method
-            returns OpenGraph metadata (dict) which is shown in the UI as tooltips.
-            You can override this method to provide different information.
-        """
-        result = OpenGraph(url, scrape=True)
-
-        # remove data which we don't need
-        for key in ['_url', 'url', 'scrape', 'type']:
-            if key in result:
-                del result[key]
-
-        return result
-
-    def _report_comment(self, execution):  # pylint: disable=no-self-use
-        """
-            Returns the comment which is used in the original defect report.
-        """
-        txt = execution.case.get_text_with_version(execution.case_text_version)
-
-        comment = "Filed from execution %s\n\n" % execution.get_full_url()
-        comment += "**Product:**\n%s\n\n" % execution.run.plan.product.name
-        comment += "**Component(s):**\n%s\n\n" % \
-                   execution.case.component.values_list('name', flat=True)
-        comment += "**Version-Release number** (if applicable):\n"
-        comment += "%s\n\n" % execution.build.name
-        comment += "**Steps to reproduce**: \n%s\n\n" % txt
-        comment += "**Actual results**: \n<describe what happened>\n\n"
-
-        return comment
-
-    def report_issue_from_testexecution(self, execution):
-        """
-            When marking TestExecution results inside a Test Run there is a
-            `Report` link. When the `Report` link is clicked this method is called
-            to help the user report an issue in the IT.
-
-            This is implemented by constructing an URL string which will pre-fill
-            bug details like steps to reproduce, product, version, etc from the
-            test case. Then we open this URL into another browser window!
-
-            :execution: - TestExecution object
-            :return: - string - URL
-        """
-        raise NotImplementedError()
-
-    def add_testexecution_to_issue(self, executions, issue_url):
-        """
-            When linking defect URLs to Test Execution results there is a
-            'Add comment to Issue tracker' checkbox. If
-            selected this method is called. It should 'link' the existing
-            defect back to the TE/TR which reproduced it.
-
-            Usually this is implemented by adding a new comment pointing
-            back to the TR/TE via the internal RPC object.
-
-            :executions: - iterable of TestExecution objects
-            :issue_url: - the URL of the existing defect
-        """
-        raise NotImplementedError()
-
-    def is_adding_testcase_to_issue_disabled(self):  # pylint: disable=invalid-name, no-self-use
-        """
-            When is linking a TC to a Bug report disabled?
-            Usually when all the required credentials are provided.
-
-            :return: - boolean
-        """
-        return not (self.bug_system.api_url
-                    and self.bug_system.api_username
-                    and self.bug_system.api_password)
-
-    def _rpc_connection(self):
-        """
-            Returns an object which is used to communicate to the external system.
-            This method is meant to be overriden by inherited classes.
-        """
-        raise NotImplementedError()
-
-    @property
-    def rpc(self):
-        """
-            Returns an object which is used to communicate to the external system.
-            This proerty is meant to be used by the rest of the integration code
-            and provides caching b/c connecting to a remote system may be a slow
-            operation.
-        """
-        # b/c jira.JIRA tries to connect when object is created
-        # see https://github.com/kiwitcms/Kiwi/issues/100
-        if not self.is_adding_testcase_to_issue_disabled():
-            return None
-
-        if self.bug_system.base_url not in self.rpc_cache:
-            self.rpc_cache[self.bug_system.base_url] = self._rpc_connection()
-
-        return self.rpc_cache[self.bug_system.base_url]
+    if name not in globals():
+        raise NotImplementedError('IT of type %s is not supported' % name)
+    return globals()[name]
 
 
 class Bugzilla(IssueTrackerType):
@@ -208,7 +78,7 @@ class Bugzilla(IssueTrackerType):
                                                 execution,
                                                 bug_id).start()
 
-    def report_issue_from_testexecution(self, execution):
+    def report_issue_from_testexecution(self, execution, user):
         args = {}
         args['cf_build_id'] = execution.run.build.name
 
@@ -264,7 +134,7 @@ class JIRA(IssueTrackerType):
         for execution in executions:
             jira_integration.JiraThread(self.rpc, self.bug_system, execution, bug_id).start()
 
-    def report_issue_from_testexecution(self, execution):
+    def report_issue_from_testexecution(self, execution, user):
         """
             For the HTML API description see:
             https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
@@ -329,7 +199,7 @@ class GitHub(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
 
-    def report_issue_from_testexecution(self, execution):
+    def report_issue_from_testexecution(self, execution, user):
         """
             GitHub only supports title and body parameters
         """
@@ -372,7 +242,7 @@ class Gitlab(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.api_url and self.bug_system.api_password)
 
-    def report_issue_from_testexecution(self, execution):
+    def report_issue_from_testexecution(self, execution, user):
         args = {
             'issue[title]': 'Failed test: %s' % execution.case.summary,
             'issue[description]': self._report_comment(execution),
@@ -438,7 +308,7 @@ class Redmine(IssueTrackerType):
 
         return project.trackers[0]
 
-    def report_issue_from_testexecution(self, execution):
+    def report_issue_from_testexecution(self, execution, user):
         project = self.find_project_by_name(execution.run.plan.product.name)
 
         issue_type = self.find_issue_type_by_name(project, 'Bug')

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from modernrpc.core import rpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
-from tcms.issuetracker.types import IssueTrackerType
+from tcms.issuetracker.types import from_name
 from tcms.xmlrpc.api.utils import tracker_from_url
 
 
@@ -40,7 +40,7 @@ def details(url):
 
 
 @rpc_method(name='Bug.report')
-def report(execution_id, tracker_id):
+def report(execution_id, tracker_id, **kwargs):
     """
     .. function:: XML-RPC Bug.report(execution_id, tracker_id)
 
@@ -54,6 +54,7 @@ def report(execution_id, tracker_id):
         :return: Success response with bug URL or failure message
         :rtype: dict
     """
+    request = kwargs.get(REQUEST_KEY)
     response = {
         'rc': 1,
         'response': _('Enable reporting to this Issue Tracker by configuring its base_url!'),
@@ -61,9 +62,9 @@ def report(execution_id, tracker_id):
 
     execution = TestExecution.objects.get(pk=execution_id)
     bug_system = BugSystem.objects.get(pk=tracker_id)
-    if bug_system.base_url:
-        tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-        url = tracker.report_issue_from_testexecution(execution)
+    tracker = from_name(bug_system.tracker_type)(bug_system)
+    if not tracker.is_adding_testcase_to_issue_disabled():
+        url = tracker.report_issue_from_testexecution(execution, request.user)
         response = {'rc': 0, 'response': url}
 
     return response

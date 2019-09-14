@@ -9,6 +9,9 @@
 {% block body_class %}cards-pf{% endblock %}
 
 {% block head %}
+    <meta property="og:title" content="{{ object.summary }}">
+    {% get_comment_list for object as comments %}
+    <meta property="og:description" content="{{ comments.0.comment|truncatechars:200 }}">
     {{ comment_form.media }}
 {% endblock %}
 

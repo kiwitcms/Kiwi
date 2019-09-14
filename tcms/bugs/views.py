@@ -13,10 +13,9 @@ from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
 from tcms.bugs.models import Bug
-from tcms.testruns.models import TestExecution
+from tcms.management.models import Component
 from tcms.bugs.forms import NewBugForm, BugCommentForm
 from tcms.core.helpers.comments import add_comment
-from tcms.core.contrib.linkreference.models import LinkReference
 
 
 class Get(DetailView):  # pylint: disable=missing-permission-required
@@ -28,13 +27,7 @@ class Get(DetailView):  # pylint: disable=missing-permission-required
         context = super().get_context_data(**kwargs)
         context['comment_form'] = BugCommentForm()
         context['comment_form'].populate(self.object.pk)
-
-        context['executions'] = TestExecution.objects.filter(
-            pk__in=LinkReference.objects.filter(
-                is_defect=True,
-                url=self.object.get_full_url(),
-            ).values('execution')
-        )
+        context['executions'] = self.object.executions.all()
 
         return context
 
@@ -42,6 +35,72 @@ class Get(DetailView):  # pylint: disable=missing-permission-required
 @method_decorator(permission_required('bugs.add_bug'), name='dispatch')
 class New(TemplateView):
     template_name = 'bugs/mutable.html'
+
+    @staticmethod
+    def assignee_from_components(components):
+        """
+            Return the first owner which is assigned to any of the
+            components. This is as best as we can to automatically figure
+            out who should be assigned to this bug.
+        """
+        for component in components:
+            if component.initial_owner:
+                return component.initial_owner
+
+        return None
+
+    @staticmethod
+    def find_assignee(data):
+        """
+            Try to automatically find an assignee for Bug by first scanning
+            TestCase components (if present) and then components for the
+            product.
+        """
+        assignee = None
+        if '_execution' in data:
+            assignee = New.assignee_from_components(data['_execution'].case.component.all())
+            del data['_execution']
+
+        if not assignee:
+            assignee = New.assignee_from_components(
+                Component.objects.filter(product=data['product']))
+
+        return assignee
+
+    @staticmethod
+    def create_bug(data, user):
+        """
+            Helper method used to create new bug. Also used within
+            Issue Tracker integration.
+
+            :param data: Untrusted input, usually via HTTP request
+            :type data: dict
+            :param user: An instance of User object
+            :return: (form, bug)
+            :rtype: tuple
+        """
+        bug = None
+        assignee = New.find_assignee(data)
+        form = NewBugForm(data)
+
+        if data.get('product'):
+            form.populate(data['product'])
+        else:
+            form.populate()
+
+        if form.is_valid():
+            form.cleaned_data['reporter'] = user
+
+            if not form.cleaned_data['assignee']:
+                form.cleaned_data['assignee'] = assignee
+
+            text = form.cleaned_data['text']
+            del form.cleaned_data['text']
+
+            bug = Bug.objects.create(**form.cleaned_data)
+            add_comment([bug], text, user)
+
+        return form, bug
 
     def get(self, request, *args, **kwargs):
         form = NewBugForm()
@@ -53,27 +112,9 @@ class New(TemplateView):
         return render(request, self.template_name, context_data)
 
     def post(self, request, *args, **kwargs):
-        form = NewBugForm(request.POST)
+        form, bug = self.create_bug(request.POST, request.user)
 
-        if request.POST.get('product'):
-            form.populate(product_id=request.POST['product'])
-        else:
-            form.populate()
-
-        if form.is_valid():
-            form.cleaned_data['reporter'] = request.user
-
-            # todo: this must be coming from Product/Component QA owner
-            # but user should be able to change it
-            if not form.cleaned_data['assignee']:
-                form.cleaned_data['assignee'] = request.user
-
-            text = form.cleaned_data['text']
-            del form.cleaned_data['text']
-
-            bug = Bug.objects.create(**form.cleaned_data)
-            add_comment([bug], text, request.user)
-
+        if bug:
             return HttpResponseRedirect(reverse('bugs-get', args=[bug.pk]))
 
         context_data = {
