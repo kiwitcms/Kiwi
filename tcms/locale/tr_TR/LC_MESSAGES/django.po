@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 17:02\n"
+"PO-Revision-Date: 2019-09-15 17:13\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1137,7 +1137,7 @@ msgstr "Bu Koşumdaki Senaryolar"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Planda kayıtlı sıralama anahtarını kullan"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
