@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 12:02\n"
+"PO-Revision-Date: 2019-09-15 12:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -422,7 +422,7 @@ msgstr "Tümünü göster"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr "Test Yürütme Bilgisi"
+msgstr "Test Koşum Bilgisi"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
@@ -476,22 +476,23 @@ msgstr "Test Senaryoları"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Kontrol Paneli"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Test Koşumları"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:83
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Başlangıç tarihi"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Size atanmış ve ele alınması gereken %(total_count)s adet test koşum(u/ları) veya test senaryo(su/ları) var. \n"
+"Son durum %(count)s adet."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
