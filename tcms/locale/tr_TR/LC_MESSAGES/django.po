@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 17:53\n"
+"PO-Revision-Date: 2019-09-15 18:28\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1186,11 +1186,11 @@ msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
-msgstr ""
+msgstr "Otomatik"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
-msgstr ""
+msgstr "Vurgula"
 
 #: tcms/templates/run/get_case_runs.html:24
 msgid "Remove selected cases form this test run"
