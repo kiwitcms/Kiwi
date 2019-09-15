@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 19:11\n"
+"PO-Revision-Date: 2019-09-15 20:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1239,17 +1239,17 @@ msgstr "Otomatik"
 
 #: tcms/templates/run/get_case_runs.html:98
 msgid "Bug"
-msgstr ""
+msgstr "Hata"
 
 #: tcms/templates/run/get_case_runs.html:100
 msgid "You can type multiple bugs by comma."
-msgstr ""
+msgstr "Virgülle ayrılmış birden fazla hata girebilirsiniz."
 
 #: tcms/templates/run/get_case_runs.html:178 tcms/templates/run/report.html:120
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr ""
+msgstr "Hata ID"
 
 #: tcms/templates/run/get_case_runs.html:185
 msgid "Check to add Test Case(s) to Issue Tracker"
