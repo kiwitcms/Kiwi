@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 21:03\n"
+"PO-Revision-Date: 2019-09-15 21:13\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1480,72 +1480,72 @@ msgstr "Test senaryosu güncellendi"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Test senaryosu silindi"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "CC 'le"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "E-posta adresleri virgülle ayrılır. CC listesindeki her bir e-posta adresine bir e-posta bildirimi gönderilecek."
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Test senaryoları ara"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Test senaryosu özeti"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Evet"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Hayır"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Her ikisi de"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Birden fazla değeri virgüle (,) ile ayırın"
 
 #: tcms/testcases/templates/testcases/search.html:126
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #: tcms/testcases/views.py:395
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Test planı belirtilmedi veya bulunmuyor"
 
 #: tcms/testcases/views.py:571
 msgid "History"
-msgstr ""
+msgstr "Geçmiş"
 
 #: tcms/testcases/views.py:576
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: tcms/testcases/views.py:827
 msgid "TestCase cloning was successful"
@@ -1756,41 +1756,41 @@ msgstr "ONAYLANDI"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
-msgstr ""
+msgstr "KULLANIM DIŞI"
 
 #: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "GÜNCELLENECEK"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr ""
+msgstr "BOŞTA"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr ""
+msgstr "KOŞUYOR"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
-msgstr ""
+msgstr "DURAKLATILDI"
 
 #: vinaigrette-deleteme.py:9
 msgid "PASSED"
-msgstr ""
+msgstr "GEÇTİ"
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr ""
+msgstr "BAŞARISIZ"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOKE"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
-msgstr ""
+msgstr "HATALI"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr ""
+msgstr "VAZGEÇİLDİ"
 
