@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 12:12\n"
+"PO-Revision-Date: 2019-09-15 12:22\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -491,24 +491,24 @@ msgstr "Başlangıç tarihi"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr "Size atanmış ve ele alınması gereken %(total_count)s adet test koşum(u/ları) veya test senaryo(su/ları) var. \n"
+msgstr "Size atanmış ve ele alınması gereken %(total_count)s adet test koşumu veya test senaryosu var. \n"
 "Son durum %(count)s adet."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "HEPSİNİ GÖR"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Size atanmış herhangi bir test koşumu yok"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "Test Planlarınız"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Test Planı"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:313
@@ -516,22 +516,23 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "Tür"
 
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/get.html:131
 msgid "Executions"
-msgstr ""
+msgstr "Koşumlar"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s adet test planı yönetiyorsunuz, %(disabled_count)s adeti etkin değil.\n"
+"Son durum %(count)s adet."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Size atanmış herhangi bir test planı yok"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
