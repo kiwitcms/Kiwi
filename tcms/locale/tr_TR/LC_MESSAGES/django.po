@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 14:02\n"
+"PO-Revision-Date: 2019-09-15 16:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -894,21 +894,21 @@ msgstr "Filtreleme seçeneklerini göster"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Beni tıkla, sıralamayı ayarlamak üzere satırları sürükle ve bırak, sonra yapılan değişiklikleri kaydetmek için 'Sıralama Tamamlandı' bağlantısına tıkla"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Senaryoları yeniden sırala"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:139
 msgid "No tags in cases"
-msgstr ""
+msgstr "Senaryolarda herhangi bir etiket yok"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Test Uzmanı"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -920,7 +920,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
