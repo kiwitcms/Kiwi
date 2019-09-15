@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.management.models import Component
@@ -133,7 +134,13 @@ class AddComment(View):
 
         if form.is_valid():
             bug = form.cleaned_data['bug']
-            add_comment([bug], form.cleaned_data['text'], request.user)
+            if form.cleaned_data['text']:
+                add_comment([bug], form.cleaned_data['text'], request.user)
+
+            if request.POST.get('action') == 'close':
+                bug.status = False
+                bug.save()
+                add_comment([bug], _('*bug closed*'), request.user)
 
         return HttpResponseRedirect(reverse('bugs-get', args=[bug.pk]))
 
