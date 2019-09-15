@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 18:57\n"
+"PO-Revision-Date: 2019-09-15 19:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -277,7 +277,7 @@ msgstr "Toplam"
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:143
 msgid "Automated"
-msgstr "Otomatik"
+msgstr "Otomatize"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
@@ -1235,7 +1235,7 @@ msgstr "Varsayılan Test Uzmanı"
 
 #: tcms/templates/run/get_case_runs.html:92
 msgid "Auto"
-msgstr ""
+msgstr "Otomatik"
 
 #: tcms/templates/run/get_case_runs.html:98
 msgid "Bug"
@@ -1277,7 +1277,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Otomatize Senaryolar"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
