@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 18:32\n"
+"PO-Revision-Date: 2019-09-15 18:57\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1198,28 +1198,28 @@ msgstr "Seçili senaryoları bu test koşumundan çıkar"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "BOŞTA olan senaryo koşumlarını güncel senaryo metnine güncelle"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
-msgstr ""
+msgstr "Güncelle"
 
 #: tcms/templates/run/get_case_runs.html:30
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Bu senaryoları başkalarına atayın"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:84
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Atanan"
 
 #: tcms/templates/run/get_case_runs.html:45
 #: tcms/templates/run/status_statistics.html:27
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:284
 msgid "Bugs"
-msgstr ""
+msgstr "Hatalar"
 
 #: tcms/templates/run/get_case_runs.html:80
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1231,7 +1231,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "Varsayılan Test Uzmanı"
 
 #: tcms/templates/run/get_case_runs.html:92
 msgid "Auto"
