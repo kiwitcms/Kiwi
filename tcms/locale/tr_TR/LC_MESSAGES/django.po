@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 12:22\n"
+"PO-Revision-Date: 2019-09-15 12:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -540,12 +540,15 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Hoş geldiniz %(user)s,\n"
+"Bir %(site_domain)s hesabı oluşturduğunuz için teşekkür ederiz!\n\n"
+"Hesabınızı etkinleştirmek için aşağıdaki bağlantıya tıklayınız:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Test senaryosu %(username)s tarafından silindi!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -562,7 +565,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "%(pk)s test koşumu sizin için yaratıldı veya güncellendi.\n\n"
+"### Bağlantılar ###\n"
+"Test koşumu: %(run_url)s\n"
+"Test planı: %(plan_url)s\n\n"
+"### Temel koşum bilgisi ###\n"
+"Özet: %(summary)s\n\n"
+"Test yöneticisi: %(manager)s.\n"
+"Öntanımlı test uzmanı: %(default_tester)s.\n\n"
+"Ürün: %(product)s\n"
+"Ürün versiyonu: %(version)s\n"
+"Derleme: %(build)s\n\n"
+"Notlar:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
