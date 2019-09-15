@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 17:13\n"
+"PO-Revision-Date: 2019-09-15 17:45\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1141,11 +1141,11 @@ msgstr "Planda kayıtlı sıralama anahtarını kullan"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Senaryo nasıl atanır?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "Aşağıdaki tablo planın tüm onaylı test senaryolarını listeler"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1153,36 +1153,36 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Oluşturulma Tarihi"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Seçili"
 
 #: tcms/templates/run/get.html:71 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Ürün Versiyonu"
 
 #: tcms/templates/run/get.html:113 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Not"
 
 #: tcms/templates/run/get.html:145
 msgid "Finished"
-msgstr ""
+msgstr "Tamamlandı"
 
 #: tcms/templates/run/get.html:150
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Koşuluyor"
 
 #: tcms/templates/run/get.html:158 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Tamamlandı"
 
 #: tcms/templates/run/get.html:164
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
