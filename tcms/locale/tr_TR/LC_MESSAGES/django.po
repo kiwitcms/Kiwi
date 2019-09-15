@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 20:47\n"
+"PO-Revision-Date: 2019-09-15 20:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1410,53 +1410,53 @@ msgstr "Gereksinimler"
 #: tcms/testcases/templates/testcases/mutable.html:126
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Referans bağlantısı"
 
 #: tcms/testcases/templates/testcases/get.html:291
 msgid "Bug URL"
-msgstr ""
+msgstr "Hata URL"
 
 #: tcms/testcases/templates/testcases/get.html:303
 msgid "Test plans"
-msgstr ""
+msgstr "Test planları"
 
 #: tcms/testcases/templates/testcases/get.html:367
 msgid "Components"
-msgstr ""
+msgstr "Bileşenler"
 
 #: tcms/testcases/templates/testcases/get.html:411
 msgid "File"
-msgstr ""
+msgstr "Dosya"
 
 #: tcms/testcases/templates/testcases/get.html:412
 msgid "Owner"
-msgstr ""
+msgstr "Sahibi"
 
 #: tcms/testcases/templates/testcases/get.html:413
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "No records found"
-msgstr ""
+msgstr "Hiç kayıt bulunamadı"
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
-msgstr ""
+msgstr "Yeni Test Senaryosu"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "yeni Ürün ekle"
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "yeni Kategori ekle"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Bildir"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
@@ -1464,19 +1464,19 @@ msgstr "Koşumların yöneticisi"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "Atananlar"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Koşumların varsayılan test uzmanı"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "Şu durumda bildir"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Test senaryosu güncellendi"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
@@ -1698,15 +1698,15 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Test koşum özeti"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "Plan ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "Test Planı ID"
 
 #: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires a TestPlan, select one"
