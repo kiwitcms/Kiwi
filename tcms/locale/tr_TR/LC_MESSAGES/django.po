@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 20:52\n"
+"PO-Revision-Date: 2019-09-15 21:03\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1710,49 +1710,49 @@ msgstr "Test Planı ID"
 
 #: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Test Koşumu oluşturmak için Test Planı gerekli, birini seçiniz"
 
 #: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Test Koşumu oluşturmak için en az bir Test Senaryosu gereklidir"
 
 #: tcms/testruns/views.py:435
 msgid "Clone of "
-msgstr ""
+msgstr "Kopyası "
 
 #: tcms/testruns/views.py:522
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "Test Senaryo ID geçerli sayısal değer değil"
 
 #: tcms/testruns/views.py:616
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "Girdiğiniz kullanıcı veritabanında bulunmuyor"
 
 #: tcms/testruns/views.py:653
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "%d adet senaryo koşumu güncellendi:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
-msgstr ""
+msgstr "Bu İş Takip sistemi için API parametrelerini ayarlayarak test senaryolarını ilişkilendirmeyi etkinleştirin!"
 
 #: tcms/xmlrpc/api/bug.py:138
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Ana URL'i ayarlayarak bu İş Takip sistemine raporlamayı etkinleştirin!"
 
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "Model %s birinci anahtara sahip değil. Bu alanı manuel olarak belirtmeniz gerekir."
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
-msgstr ""
+msgstr "ÖNERİLDİ"
 
 #: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
-msgstr ""
+msgstr "ONAYLANDI"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
