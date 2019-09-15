@@ -15,7 +15,10 @@ class SimpleMDE(forms.Textarea):
         rendered_string = super().render(name, value, attrs, renderer)
         rendered_string += """
 <script>
-var simplemde = new SimpleMDE({ element: document.getElementById("%s") });
+var simplemde = new SimpleMDE({
+    element: document.getElementById("%s"),
+    autoDownloadFontAwesome: false
+});
 </script>
 """ % attrs['id']
 
