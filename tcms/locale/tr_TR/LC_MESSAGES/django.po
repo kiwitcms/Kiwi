@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 20:26\n"
+"PO-Revision-Date: 2019-09-15 20:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1314,27 +1314,27 @@ msgstr "İş Takip Sisteminde Tümünü Göster"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
+msgstr "Sadece birden fazla hata desteği olan konfigüre edilmiş iş takip sistemleri gösterilir"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
-msgstr ""
+msgstr "İş Takip"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "TOPLAM"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Hata Yok"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Tüm senaryoları seç/Hiçbir senaryo seçme"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Tüm senaryoları genişlet"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
