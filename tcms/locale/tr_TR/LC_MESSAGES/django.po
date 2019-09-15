@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 21:13\n"
+"PO-Revision-Date: 2019-09-15 21:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1549,152 +1549,153 @@ msgstr "Sil"
 
 #: tcms/testcases/views.py:827
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Test senaryosu başarılı bir şekilde kopyalandı"
 
 #: tcms/testcases/views.py:852 tcms/testruns/views.py:431
 #: tcms/testruns/views.py:513
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "En az bir test senaryosu gerekli"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Test Planını Kopyala"
 
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "yeni Versiyon ekle"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Test Senaryolarını Kopyala"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Mevcut Test Senaryolarını yeni Test Planına kopyala veya bağla"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "Üst Test Planı"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Kaynak Test Planı yeni Test Planın üstü olarak ayarla"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Test Planı Düzenle"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Yeni Test Planı Oluştur"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Üst ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Test planı dokümanı:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
-msgstr ""
+msgstr "Bildir:"
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
-msgstr ""
+msgstr "Test Senaryosu Oluşturan"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
-msgstr ""
+msgstr "Şu durumda bildir:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Test planı güncellendi"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Test senaryoları güncellendi"
 
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Test planları ara"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Test plan adı"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Test planı"
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Test planı gereklidir"
 
 #: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Yazdırmak için en az bir test planı gereklidir"
 
 #: tcms/testplans/views.py:525
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Test Planı \"%s\" bulunmuyor"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "İzin verilmedi: Test Koşumu size ait değildir"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "Bitiş tarihi geçerli değildir. Geçerli biçim YYYY-AA-GG."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Test Koşumunu Düzenle"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Test Koşumunu Kopyala"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Yeni Test Koşumu"
 
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "yeni Derleme ekle"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "versiyon"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Kullanıcı adı veya e-posta"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Seçili test senaryoları:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "Önseçimli test senaryolarının %(count)s tanesi ONAYLANDI değil ve kopyalanamayacak!\n"
+"Detaylar için test planına göz atınız!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Test koşumları ara"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
