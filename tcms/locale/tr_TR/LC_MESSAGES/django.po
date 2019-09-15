@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 16:27\n"
+"PO-Revision-Date: 2019-09-15 16:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1014,11 +1014,11 @@ msgstr "Özet"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Hiçbir test senaryosu bulunamadı."
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
@@ -1028,25 +1028,25 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Kullanıcı Adı"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Şifre"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Unuttun mu"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "şifreyi"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Giriş Yap"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
