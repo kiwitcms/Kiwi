@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-15 11:32\n"
+"PO-Revision-Date: 2019-09-15 11:44\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -71,7 +71,7 @@ msgstr "%(history_date)s tarihinde güncellendi.\n"
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Ana URL ayarlanmadı! <a href=\"%(doc_url)s\">Dokümanı</a> inceleyin ve <a href=\"%(admin_url)s\">değiştirin</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -318,40 +318,40 @@ msgstr "Versiyon"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "Derleme"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Test senaryosu"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
-msgstr ""
+msgstr "Test koşumu"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Sayfa bulunamadı"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Sunucuda hata oluştu"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "Bu eki silmek istediğinize emin misiniz?"
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "önde gelen açık kaynak test süreçleri yönetim sistemi"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "Metin"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Ek"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:154
