@@ -16,7 +16,6 @@ from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
@@ -463,39 +462,6 @@ class ChangeTestRunStatusView(View):
         test_run.save()
 
         return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
-
-
-@require_POST
-@permission_required('testruns.delete_testexecution')
-def remove_execution(request, run_id):
-    """Remove specific execution from the run"""
-
-    # Ignore invalid execution ids
-    execution_ids = []
-    for item in request.POST.getlist('case_run'):
-        try:
-            execution_ids.append(int(item))
-        except (ValueError, TypeError):
-            pass
-
-    # If no execution to remove, no further operation is required, just return
-    # back to run page immediately.
-    if not execution_ids:
-        return HttpResponseRedirect(reverse('testruns-get',
-                                            args=[run_id, ]))
-
-    run = get_object_or_404(TestRun.objects.only('pk'), pk=run_id)
-
-    # Restrict to delete those executions that belongs to run
-    TestExecution.objects.filter(run_id=run.pk, pk__in=execution_ids).delete()
-
-    execution_exist = TestExecution.objects.filter(run_id=run.pk).exists()
-    if execution_exist:
-        redirect_to = 'testruns-get'
-    else:
-        redirect_to = 'add-cases-to-run'
-
-    return HttpResponseRedirect(reverse(redirect_to, args=[run_id, ]))
 
 
 @method_decorator(permission_required('testruns.add_testexecution'), name='dispatch')
