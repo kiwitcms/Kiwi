@@ -523,11 +523,16 @@ function addCaseRunBug(run_id, title_container, container, case_id, case_run_id)
 
 
 function delCaseRun(run_id) {
-  var caseruns = serializeCaseRunFromInputList('id_table_cases', 'case_run');
-  var numCaseRuns = caseruns.case_run.length;
-  if (window.confirm('You are about to delete ' + numCaseRuns + ' case run(s). Are you sure?')) {
-    postToURL('remove_execution/', caseruns);
-  }
+    if (window.confirm('Are you sure?')) {
+        const executions = $('#id_table_cases').find('input[name="case_run"]:checked');
+
+        executions.each(function() {
+            var case_id = this.getAttribute('data-case_id');
+            jsonRPC('TestRun.remove_case', [run_id, Number(case_id)], function () {
+                $(this).closest('tr').remove();
+            }.bind(this));
+        });
+    }
 }
 
 

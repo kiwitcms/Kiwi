@@ -1,7 +1,6 @@
 {% load i18n %}
 <form id="id_form_case_runs">
 <div class="mixbar">
-    <span class="tit" style='float:left'>{% trans "Cases" %}: {{ executions_count }}</span>
 	<ul class="btnBlue btnBlueFilter" id="showFilterBtn">
 		<li class="btnBlueL"></li>
                 <li class="btnBlueC"><a title="Click to show filter case-run options" id='filter_case_run'>{% trans "Show filter options" %}</a></li>
@@ -13,7 +12,7 @@
 		<input id="id_check_box_highlight" type="checkbox" />
                 <label for="id_check_box_highlight" title="Highlight my assigned runs">{% trans "Highlight" %}</label>
 	</div>
-	<div>
+	<div class="paddingLeft">
 		<div class="btnBlueCaserun">
 			<span>Cases</span>
 			<ul>

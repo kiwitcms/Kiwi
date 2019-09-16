@@ -13,8 +13,6 @@ urlpatterns = [
 
     url(r'^(?P<run_id>\d+)/changestatus/$', views.ChangeTestRunStatusView.as_view(),
         name='testruns-change_status'),
-    url(r'^(?P<run_id>\d+)/remove_execution/$', views.remove_execution,
-        name='testruns-remove_case_run'),
 
     url(r'^(?P<run_id>\d+)/assigncase/$', views.AddCasesToRunView.as_view(),
         name='add-cases-to-run'),
