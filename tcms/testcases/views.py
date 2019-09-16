@@ -12,7 +12,6 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
@@ -445,21 +444,23 @@ def list_all(request):  # pylint: disable=missing-permission-required
     return render(request, 'plan/get_cases.html', context_data)
 
 
-@require_GET
-def search(request):  # pylint: disable=missing-permission-required
+class TestCaseSearchView(TemplateView):  # pylint: disable=missing-permission-required
     """
-        Shows the search form which uses JSON RPC to fetch the resuts
+        Shows the search form which uses JSON RPC to fetch the results
     """
-    form = SearchCaseForm(request.GET)
-    if request.GET.get('product'):
-        form.populate(product_id=request.GET['product'])
-    else:
-        form.populate()
 
-    context_data = {
-        'form': form,
-    }
-    return render(request, 'testcases/search.html', context_data)
+    template_name = 'testcases/search.html'
+
+    def get_context_data(self, **kwargs):
+        form = SearchCaseForm(self.request.GET)
+        if self.request.GET.get('product'):
+            form.populate(product_id=self.request.GET['product'])
+        else:
+            form.populate()
+
+        return {
+            'form': form,
+        }
 
 
 class SimpleTestCaseView(TemplateView):  # pylint: disable=missing-permission-required

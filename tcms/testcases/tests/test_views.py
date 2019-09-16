@@ -363,6 +363,13 @@ class TestSearchCases(BasePlanCase):
         response = self.client.get(self.search_url, {})
         self.assertContains(response, '<option value="">----------</option>', html=True)
 
+    def test_get_parameter_should_be_accepted_for_a_product(self):
+        response = self.client.get(self.search_url, {'product': self.product.pk})
+        self.assertContains(response,
+                            '<option value="%d" selected>%s</option>' % (self.product.pk,
+                                                                         self.product.name),
+                            html=True)
+
 
 class TestGetCasesFromPlan(BasePlanCase):
     @classmethod
