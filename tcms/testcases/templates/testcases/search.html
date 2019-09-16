@@ -43,7 +43,7 @@
                 <select class="form-control selectpicker" id="id_product">
                     <option value="">----------</option>
                 {% for option in form.product.field.queryset %}
-                    <option value="{{ option.pk }}">{{ option.name }}</option>
+                    <option value="{{ option.pk }}" {% if form.product.value|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
                 {% endfor %}
                 </select>
             </div>
