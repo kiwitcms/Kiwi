@@ -74,15 +74,16 @@ class KiwiTCMS(IssueTrackerType):
             going through the RPC layer and return its URL
         """
         data = {
+            'reporter': user,
             'summary': 'Test case failure: %s' % execution.case.summary,
-            'product': execution.run.plan.product.pk,
-            'version': execution.run.product_version.pk,
-            'build': execution.build.pk,
+            'product': execution.run.plan.product,
+            'version': execution.run.product_version,
+            'build': execution.build,
             'text': self._report_comment(execution),
             '_execution': execution,
         }
 
-        _, bug = New.create_bug(data, user)
+        bug = New.create_bug(data)
 
         # link Bug to TE via m2m
         bug.executions.add(execution)
