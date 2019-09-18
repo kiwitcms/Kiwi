@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     url(r'^(?P<pk>\d+)/$', views.Get.as_view(), name='bugs-get'),
     url(r'^new/$', views.New.as_view(), name='bugs-new'),
+    url(r'^(?P<pk>\d+)/edit/$', views.Edit.as_view(), name='bugs-edit'),
     url(r'^search/$', views.Search.as_view(), name='bugs-search'),
     url(r'^comment/$', views.AddComment.as_view(), name='bugs-comment'),
 ]

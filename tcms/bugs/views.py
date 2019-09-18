@@ -7,9 +7,11 @@ from django.contrib.auth.decorators import permission_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.test import modify_settings
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import UpdateView
 from django.views.generic.base import View
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,12 +19,27 @@ from tcms.bugs.models import Bug
 from tcms.management.models import Component
 from tcms.bugs.forms import NewBugForm, BugCommentForm
 from tcms.core.helpers.comments import add_comment
+from tcms.core.response import ModifySettingsTemplateResponse
 
 
 class Get(DetailView):  # pylint: disable=missing-permission-required
     model = Bug
     template_name = 'bugs/get.html'
     http_method_names = ['get']
+    response_class = ModifySettingsTemplateResponse
+
+    def render_to_response(self, context, **response_kwargs):
+        self.response_class.modify_settings = modify_settings(
+            MENU_ITEMS={'append': [
+                ('...', [
+                    (
+                        _('Edit'),
+                        reverse('bugs-edit', args=[self.object.pk])
+                    ),
+                ])
+            ]}
+        )
+        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -123,6 +140,40 @@ class New(TemplateView):
         }
 
         return render(request, self.template_name, context_data)
+
+
+@method_decorator(permission_required('bugs.change_bug'), name='dispatch')
+class Edit(UpdateView):
+    model = Bug
+    fields = ['summary', 'assignee', 'reporter', 'product', 'version', 'build']
+    template_name = 'bugs/mutable.html'
+    _values_before_update = {}
+
+    def _record_changes(self, new_data):
+        result = ""
+        for field in self.fields:
+            if self._values_before_update[field] != new_data[field]:
+                result += "%s: %s -> %s\n" % (field.title(),
+                                              self._values_before_update[field],
+                                              new_data[field])
+        if result:
+            add_comment([self.object], result, self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = _('Edit bug')
+        context['form_post_url'] = reverse('bugs-edit', args=[self.object.pk, ])
+        return context
+
+    def get_object(self, queryset=None):
+        object = super().get_object(queryset)
+        for field in self.fields:
+            self._values_before_update[field] = getattr(object, field)
+        return object
+
+    def form_valid(self, form):
+        self._record_changes(form.cleaned_data)
+        return super().form_valid(form)
 
 
 @method_decorator(permission_required('django_comments.add_comment'), name='dispatch')

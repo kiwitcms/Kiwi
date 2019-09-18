@@ -37,3 +37,6 @@ class Bug(models.Model, UrlMixin):
 
     def _get_absolute_url(self):
         return reverse('bugs-get', args=[self.pk, ])
+
+    def get_absolute_url(self):
+        return self._get_absolute_url()

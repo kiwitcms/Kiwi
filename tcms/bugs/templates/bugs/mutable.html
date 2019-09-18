@@ -6,12 +6,12 @@
     {{ form.media }}
 {% endblock %}
 {% block title %}
-    {% trans "New Bug" %}
+    {{ page_title }}
 {% endblock %}
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
-        <form class="form-horizontal" action="{% url 'bugs-new' %}" method="post">
+        <form class="form-horizontal" action="{{ form_post_url }}" method="post">
 
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
@@ -26,7 +26,7 @@
                     <label for="id_product">{% trans "Product" %}</label>
                     <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
                 </div>
-                <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
+                <div class="col-md-2 col-lg-2 {% if form.product.errors %}has-error{% endif %}">
                     <select id="id_product" name="product" class="form-control selectpicker">
                         {% for product in form.product.field.queryset %}
                             <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
@@ -44,7 +44,7 @@
                         +
                     </a>
                 </div>
-                <div class="col-md-3 col-lg-3 {% if form.version.errors %}has-error{% endif %}">
+                <div class="col-md-2 col-lg-2 {% if form.version.errors %}has-error{% endif %}">
                     <select id="id_version" name="version" class="form-control selectpicker">
                         {% for version in form.version.field.queryset %}
                             <option value="{{ version.pk }}" {% if version.pk|escape == form.version.value|escape %}selected{% endif %}>
@@ -62,13 +62,26 @@
                         alt="{% trans 'add new Build' %}"
                         title="{% trans 'add new Build' %}">+</a>
                 </div>
-                <div class="col-md-3 col-lg-3">
+                <div class="col-md-2 col-lg-2">
                     <select class="form-control selectpicker" id="id_build" name="build">
                     {% for option in form.build.field.queryset %}
                         <option value="{{ option.pk }}" {% if option.pk|escape == form.build.value|escape %}selected{% endif %}>{{ option.name }}</option>
                     {% endfor %}
                     </select>
                     {{ form.build.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_assignee">{% trans "Assignee" %}</label>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <select class="form-control selectpicker" id="id_assignee" name="assignee">
+                        <option value="">----------</option>
+                    {% for option in form.assignee.field.queryset %}
+                        <option value="{{ option.pk }}" {% if option.pk|escape == form.assignee.value|escape %}selected{% endif %}>{{ option.username }}</option>
+                    {% endfor %}
+                    </select>
+                    {{ form.assignee.errors }}
                 </div>
             </div>
 
