@@ -6,11 +6,10 @@
 from django.contrib.auth.decorators import permission_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.test import modify_settings
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
-from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.base import View
 from django.utils.translation import ugettext_lazy as _
@@ -51,8 +50,39 @@ class Get(DetailView):  # pylint: disable=missing-permission-required
 
 
 @method_decorator(permission_required('bugs.add_bug'), name='dispatch')
-class New(TemplateView):
+class New(CreateView):
+    model = Bug
+    form_class = NewBugForm
     template_name = 'bugs/mutable.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = _('New bug')
+        context['form_post_url'] = reverse('bugs-new')
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial'].update({
+            'reporter': self.request.user,
+        })
+        return kwargs
+
+    def get_form(self):
+        form = super().get_form()
+        # clear fields which are set dynamically via JavaScript
+        form.populate(self.request.POST.get('product', -1))
+        return form
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        if not self.object.assignee:
+            self.object.assignee = New.find_assignee(self.request.POST)
+            self.object.save()
+        add_comment([self.object], form.cleaned_data['text'], self.request.user)
+
+        return response
 
     @staticmethod
     def assignee_from_components(components):
@@ -86,65 +116,34 @@ class New(TemplateView):
         return assignee
 
     @staticmethod
-    def create_bug(data, user):
+    def create_bug(data):
         """
-            Helper method used to create new bug. Also used within
-            Issue Tracker integration.
+            Helper method used within Issue Tracker integration.
 
             :param data: Untrusted input, usually via HTTP request
             :type data: dict
-            :param user: An instance of User object
-            :return: (form, bug)
-            :rtype: tuple
+            :return: bug
+            :rtype: Model
         """
         bug = None
-        assignee = New.find_assignee(data)
-        form = NewBugForm(data)
 
-        if data.get('product'):
-            form.populate(data['product'])
-        else:
-            form.populate()
+        if 'assignee' not in data or not data['assignee']:
+            data['assignee'] = New.find_assignee(data)
 
-        if form.is_valid():
-            form.cleaned_data['reporter'] = user
+        text = data['text']
+        del data['text']
 
-            if not form.cleaned_data['assignee']:
-                form.cleaned_data['assignee'] = assignee
+        bug = Bug.objects.create(**data)
+        add_comment([bug], text, bug.reporter)
 
-            text = form.cleaned_data['text']
-            del form.cleaned_data['text']
-
-            bug = Bug.objects.create(**form.cleaned_data)
-            add_comment([bug], text, user)
-
-        return form, bug
-
-    def get(self, request, *args, **kwargs):
-        form = NewBugForm()
-
-        context_data = {
-            'form': form,
-        }
-
-        return render(request, self.template_name, context_data)
-
-    def post(self, request, *args, **kwargs):
-        form, bug = self.create_bug(request.POST, request.user)
-
-        if bug:
-            return HttpResponseRedirect(reverse('bugs-get', args=[bug.pk]))
-
-        context_data = {
-            'form': form,
-        }
-
-        return render(request, self.template_name, context_data)
+        return bug
 
 
 @method_decorator(permission_required('bugs.change_bug'), name='dispatch')
 class Edit(UpdateView):
     model = Bug
+    # todo: try using NewBugForm instead of duplicating the field names here
+    # must figure out how to collect info about changes and hide comments
     fields = ['summary', 'assignee', 'reporter', 'product', 'version', 'build']
     template_name = 'bugs/mutable.html'
     _values_before_update = {}

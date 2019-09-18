@@ -3,32 +3,17 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django import forms
-from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.core.widgets import SimpleMDE
-from tcms.management.models import Product, Version, Build
+from tcms.management.models import Version, Build
 
 
-class NewBugForm(forms.Form):
-    summary = forms.CharField()
-    assignee = forms.ModelChoiceField(
-        required=False,
-        queryset=get_user_model().objects.all(),
-    )
-
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-    )
-
-    version = forms.ModelChoiceField(
-        queryset=Version.objects.none(),
-    )
-
-    build = forms.ModelChoiceField(
-        queryset=Build.objects.none(),
-    )
+class NewBugForm(forms.ModelForm):
+    class Meta:
+        model = Bug
+        fields = ['summary', 'assignee', 'reporter', 'product', 'version', 'build']
 
     text = forms.CharField(
         widget=SimpleMDE(),
