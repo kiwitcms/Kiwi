@@ -89,6 +89,7 @@ function renderFailedExecutionsColumn(data) {
     return `${data.count.fail} of ${data.count.all}`;
 }
 
+// TODO: this can be moved to the back-end and provide the percentage there
 function renderPercentColumn(data) {
     return Number.parseFloat(data.count.fail / data.count.all * 100).toFixed(1);
 }

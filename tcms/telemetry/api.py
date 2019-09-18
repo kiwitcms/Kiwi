@@ -215,7 +215,6 @@ def _remove_all_excellent_executions(data):
 
 
 def _count_test_executions(data, test_executions, status):
-
     for te in test_executions:
         data[te['case_id']]['count'][status] = te['count']
 
