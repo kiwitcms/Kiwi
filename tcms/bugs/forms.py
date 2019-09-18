@@ -3,32 +3,31 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django import forms
-
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.core.widgets import SimpleMDE
-from tcms.core.forms.fields import UserField
 from tcms.management.models import Product, Version, Build
 
 
 class NewBugForm(forms.Form):
     summary = forms.CharField()
-    assignee = UserField(required=False)
+    assignee = forms.ModelChoiceField(
+        required=False,
+        queryset=get_user_model().objects.all(),
+    )
 
     product = forms.ModelChoiceField(
         queryset=Product.objects.all(),
-        empty_label=None,
     )
 
     version = forms.ModelChoiceField(
         queryset=Version.objects.none(),
-        empty_label=None,
     )
 
     build = forms.ModelChoiceField(
         queryset=Build.objects.none(),
-        empty_label=None,
     )
 
     text = forms.CharField(
@@ -66,7 +65,6 @@ Additional info:
 class BugCommentForm(forms.Form):
     bug = forms.ModelChoiceField(
         queryset=Bug.objects.all(),
-        empty_label=None,
     )
 
     text = forms.CharField(
