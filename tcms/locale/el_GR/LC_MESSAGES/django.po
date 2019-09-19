@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-11 14:05+0000\n"
-"PO-Revision-Date: 2019-09-13 18:34\n"
+"PO-Revision-Date: 2019-09-19 12:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -152,11 +152,11 @@ msgstr ""
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Δοκιμές"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Κατάρρευση"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
@@ -168,19 +168,19 @@ msgstr ""
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
-msgstr ""
+msgstr "ΔΙΑΧΕΙΡΙΣΤΗΣ"
 
 #: tcms/settings/common.py:124
 msgid "Users and groups"
-msgstr ""
+msgstr "Χρήστες και ομάδες"
 
 #: tcms/settings/common.py:126
 msgid "Everything else"
-msgstr ""
+msgstr "Οτιδήποτε άλλο"
 
 #: tcms/settings/common.py:132
 msgid "Report an Issue"
-msgstr ""
+msgstr "Αναφέρετε ένα πρόβλημα"
 
 #: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
@@ -188,19 +188,19 @@ msgstr ""
 
 #: tcms/settings/common.py:134
 msgid "User Guide"
-msgstr ""
+msgstr "Οδηγός χρήσης"
 
 #: tcms/settings/common.py:135
 msgid "Administration Guide"
-msgstr ""
+msgstr "Οδηγός διαχείρισης"
 
 #: tcms/settings/common.py:136
 msgid "API Help"
-msgstr ""
+msgstr "Βοήθεια API"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Νέος χρήστης αναμένει έγκριση"
 
 #: tcms/signals.py:153
 #, python-format
@@ -209,11 +209,11 @@ msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "ΑΛΛΟ"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Δοκιμή κατάρρευσης"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
@@ -233,7 +233,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "Προϊόν"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
@@ -241,7 +241,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:65
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Σχέδιο δοκιμών"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
@@ -249,7 +249,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "Μετά"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
@@ -257,11 +257,11 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "Πριν"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:71
 #: tcms/templates/plan/get_cases.html:107
@@ -273,20 +273,20 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:143
 msgid "Automated"
-msgstr ""
+msgstr "Αυτοματοποιημένο"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:91
 msgid "Manual"
-msgstr ""
+msgstr "Εγχειρίδιο"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
 msgid "Priorities"
-msgstr ""
+msgstr "Προτεραιότητες"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:86
 msgid "Categories"
-msgstr ""
+msgstr "Κατηγορίες"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
@@ -303,7 +303,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "Εκδοχή"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
@@ -314,11 +314,11 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "Χτίζω"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Δοκιμαστική περίπτωση"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
