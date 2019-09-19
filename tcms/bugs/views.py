@@ -12,6 +12,7 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.base import View
+from django.views.generic.base import TemplateView
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.bugs.models import Bug
@@ -195,5 +196,11 @@ class AddComment(View):
         return HttpResponseRedirect(reverse('bugs-get', args=[bug.pk]))
 
 
-class Search(View):  # pylint: disable=missing-permission-required
-    pass
+class Search(TemplateView):  # pylint: disable=missing-permission-required
+    template_name = 'bugs/search.html'
+
+    def get_context_data(self, **kwargs):
+        form = NewBugForm(self.request.GET)
+        form.populate(self.request.GET.get('product', -1))
+
+        return {'form': form}

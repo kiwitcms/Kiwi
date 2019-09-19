@@ -9,6 +9,7 @@ from tcms.xmlrpc.decorators import permissions_required
 __all__ = (
     'add_tag',
     'remove_tag',
+    'filter',
 )
 
 
@@ -54,3 +55,27 @@ def remove_tag(bug_id, tag):
     Bug.objects.get(pk=bug_id).tags.remove(
         Tag.objects.get(name=tag)
     )
+
+
+@rpc_method(name='Bug.filter')
+def filter(query):  # pylint: disable=redefined-builtin
+    """
+    .. function:: XML-RPC Bug.filter(query)
+
+        Get list of bugs.
+
+        :param query: Field lookups for :class:`tcms.bugs.models.Bug`
+        :type query: dict
+        :return: List of serialized :class:`tcms.bugs.models.Bug` objects.
+    """
+    result = Bug.objects.filter(**query).values(
+        'pk',
+        'summary',
+        'created_at',
+        'product__name',
+        'version__value',
+        'build__name',
+        'reporter__username',
+        'assignee__username',
+    )
+    return list(result)
