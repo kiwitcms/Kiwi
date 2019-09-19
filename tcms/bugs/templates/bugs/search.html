@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Search bugs" %}{% endblock %}
+
+{% block contents %}
+<div class="container-fluid container-cards-pf">
+    <form class="form-horizontal" method="get">
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_summary" type="text" class="form-control">
+            </div>
+
+            <label for="id_after" class="col-md-1 col-lg-1">{% trans "After" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <input type="text" class="form-control" id="id_after">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            {% include "datetimepicker_script.html" with selector="#id_after" %}
+
+            <label for="id_before" class="col-md-1 col-lg-1">{% trans "Before" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <input type="text" class="form-control" id="id_before">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            {% include "datetimepicker_script.html" with selector="#id_before" %}
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_product">{% trans "Product" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <select class="form-control selectpicker" id="id_product">
+                    <option value="">----------</option>
+                {% for option in form.product.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.product.value|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_version">{% trans "Version" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <select class="form-control selectpicker" id="id_version">
+                    <option value="">----------</option>
+                {% for option in form.version.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_build">{% trans "Build" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <select class="form-control selectpicker" id="id_build">
+                    <option value="">----------</option>
+                {% for option in form.build.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.build.value|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_reporter">{% trans "Reporter" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_reporter" type="text" class="form-control" placeholder="{% trans 'Username' %}">
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_assignee">{% trans "Assignee" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_assignee" type="text" class="form-control" placeholder="{% trans 'Username' %}">
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_status">{% trans "Open" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="bootstrap-switch" id="id_status" type="checkbox" checked>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1">
+                <button id="btn_search" type="submit" class="btn btn-default btn-lg">{% trans "Search" %}</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="panel panel-default" style="margin-top: 2em">
+        <!-- Table HTML -->
+        <table class="table table-striped table-bordered table-hover" id="resultsTable">
+            <thead>
+                <tr>
+                    <th>{% trans "ID" %}</th>
+                    <th>{% trans "Summary" %}</th>
+                    <th>{% trans "Created at" %}</th>
+                    <th>{% trans "Product" %}</th>
+                    <th>{% trans "Version" %}</th>
+                    <th>{% trans "Build" %}</th>
+                    <th>{% trans "Reporter" %}</th>
+                    <th>{% trans "Assignee" %}</th>
+                </tr>
+            </thead>
+        </table>
+
+        {% include 'pagination.html' %}
+
+    </div>
+</div><!-- /container -->
+
+<!-- JavaScript that is used in this page -->
+<script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/pagination.js' %}"></script>
+<script src="{% static 'bugs/js/search.js' %}"></script>
+{% endblock %}
