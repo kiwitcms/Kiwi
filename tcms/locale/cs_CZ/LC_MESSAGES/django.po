@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-11 20:22\n"
+"PO-Revision-Date: 2019-09-20 06:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -17,24 +17,14 @@ msgstr ""
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
 #: tcms/bugs/forms.py:21
-msgid ""
-"Description of problem:\n"
-"\n"
-"\n"
-"How often reproducible:\n"
-"\n"
-"\n"
+msgid "Description of problem:\n\n\n"
+"How often reproducible:\n\n\n"
 "Steps to Reproduce:\n"
 "1.\n"
 "2.\n"
-"3.\n"
-"\n"
-"Actual results:\n"
-"\n"
-"\n"
-"Expected results:\n"
-"\n"
-"\n"
+"3.\n\n"
+"Actual results:\n\n\n"
+"Expected results:\n\n\n"
 "Additional info:\n"
 msgstr ""
 
@@ -318,21 +308,16 @@ msgstr ""
 
 #: tcms/core/history.py:47
 #, python-format
-msgid ""
-"Updated on %(history_date)s\n"
-"Updated by %(username)s\n"
-"\n"
-"%(diff)s\n"
-"\n"
+msgid "Updated on %(history_date)s\n"
+"Updated by %(username)s\n\n"
+"%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
 msgstr ""
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid ""
-"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
-"and <a href=\"%(admin_url)s\">change it</a>"
+msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
@@ -357,13 +342,11 @@ msgid "Your new %s account confirmation"
 msgstr ""
 
 #: tcms/kiwi_auth/views.py:55
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
+msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 
 #: tcms/kiwi_auth/views.py:61
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
+msgid "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 
 #: tcms/kiwi_auth/views.py:66
@@ -717,9 +700,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid ""
-"%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be "
-"executed.\n"
+msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
 msgstr ""
 
@@ -753,8 +734,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:70
 #, python-format
-msgid ""
-"You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
 msgstr ""
 
@@ -764,10 +744,8 @@ msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
 msgstr ""
@@ -779,34 +757,26 @@ msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid ""
-"Test run %(pk)s has been created or updated for you.\n"
-"\n"
+msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n"
-"\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n"
-"\n"
+"Summary: %(summary)s\n\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n"
-"\n"
+"Default tester: %(default_tester)s.\n\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n"
-"\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid ""
-"Dear Administrator,\n"
+msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
 msgstr ""
 
@@ -1128,9 +1098,7 @@ msgid "Show filter options"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
-msgid ""
-"Click me,then Drag and drop the rows to adjust the order,and click 'Done "
-"Sorting' link to submit your changes"
+msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
@@ -1287,9 +1255,7 @@ msgid "Confirm"
 msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly"
+msgid "Please enter your new password twice so we can verify you typed it in correctly"
 msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:46
@@ -1354,8 +1320,7 @@ msgid "The table below list all the confirmed test cases of plan"
 msgstr ""
 
 #: tcms/templates/run/assign_case.html:59
-msgid ""
-"check the checkbox to add cases into test run. Remember to update at last"
+msgid "check the checkbox to add cases into test run. Remember to update at last"
 msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
@@ -1528,26 +1493,19 @@ msgid "No execution found"
 msgstr ""
 
 #: tcms/testcases/forms.py:21
-msgid ""
-"Please input valid case id(s). use comma to split more than one case id. e."
-"g. \"111, 222\""
+msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr ""
 
 #: tcms/testcases/forms.py:90
-msgid ""
-"**Scenario**: ... what behavior will be tested ...\n"
+msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
-"  **Then** ... expected results ...\n"
-"\n"
-"*Actions*:\n"
-"\n"
+"  **Then** ... expected results ...\n\n"
+"*Actions*:\n\n"
 "1. item\n"
 "2. item\n"
-"3. item\n"
-"\n"
-"*Expected results*:\n"
-"\n"
+"3. item\n\n"
+"*Expected results*:\n\n"
 "1. item\n"
 "2. item\n"
 "3. item"
@@ -1644,9 +1602,7 @@ msgid "CC to"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:211
-msgid ""
-"Email addresses separated by comma. A notification email will be sent to "
-"each Email address within CC list."
+msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:5
@@ -1830,9 +1786,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
-msgid ""
-"%(count)s of the pre-selected test cases is not CONFIRMED and will not be "
-"cloned!\n"
+msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
 msgstr ""
 
@@ -1928,3 +1882,4 @@ msgstr ""
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
 msgstr ""
+
