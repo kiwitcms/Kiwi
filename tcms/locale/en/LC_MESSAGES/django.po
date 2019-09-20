@@ -36,7 +36,7 @@ msgid ""
 "Expected results:\n"
 "\n"
 "\n"
-"Additional info:\n"
+"Additional info:"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83

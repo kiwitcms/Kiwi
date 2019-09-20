@@ -35,8 +35,7 @@ Actual results:
 Expected results:
 
 
-Additional info:
-"""))
+Additional info:"""))
 
     def populate(self, product_id=None):
         if product_id:

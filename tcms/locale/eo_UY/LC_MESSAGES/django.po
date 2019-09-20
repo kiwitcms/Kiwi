@@ -25,7 +25,7 @@ msgid "Description of problem:\n\n\n"
 "3.\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
-"Additional info:\n"
+"Additional info:"
 msgstr "crwdns1016:0crwdne1016:0"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83

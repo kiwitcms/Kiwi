@@ -25,7 +25,7 @@ msgid "Description of problem:\n\n\n"
 "3.\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
-"Additional info:\n"
+"Additional info:"
 msgstr "Opis napake:\n\n\n"
 "Ponovljivost napake:\n\n\n"
 "Scenarij napake:\n"
@@ -34,7 +34,7 @@ msgstr "Opis napake:\n\n\n"
 "3.\n\n"
 "Trenutno delovanje:\n\n\n"
 "Pričakovano delovanje:\n\n\n"
-"Dodatne informacije:\n"
+"Dodatne informacije:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
