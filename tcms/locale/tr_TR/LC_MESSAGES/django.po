@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-15 21:32\n"
+"PO-Revision-Date: 2019-09-20 06:53\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -17,30 +17,31 @@ msgstr ""
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
 #: tcms/bugs/forms.py:21
-msgid ""
-"Description of problem:\n"
-"\n"
-"\n"
-"How often reproducible:\n"
-"\n"
-"\n"
+msgid "Description of problem:\n\n\n"
+"How often reproducible:\n\n\n"
 "Steps to Reproduce:\n"
 "1.\n"
 "2.\n"
-"3.\n"
-"\n"
-"Actual results:\n"
-"\n"
-"\n"
-"Expected results:\n"
-"\n"
-"\n"
+"3.\n\n"
+"Actual results:\n\n\n"
+"Expected results:\n\n\n"
 "Additional info:\n"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:30
+#: tcms/templates/include/bug_details.html:10
+msgid "Closed"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
+#: tcms/bugs/templates/bugs/search.html:107
+#: tcms/templates/include/bug_details.html:21
+msgid "Reporter"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:47
@@ -139,6 +140,10 @@ msgstr "Tarih"
 msgid "No records found"
 msgstr "Hiç kayıt bulunamadı"
 
+#: tcms/bugs/templates/bugs/get.html:138
+msgid "commented on"
+msgstr ""
+
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
 #: tcms/testcases/templates/testcases/mutable.html:216
@@ -146,6 +151,10 @@ msgstr "Hiç kayıt bulunamadı"
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr "Kaydet"
+
+#: tcms/bugs/templates/bugs/get.html:169
+msgid "Close"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -182,6 +191,10 @@ msgstr "yeni Versiyon ekle"
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
 msgstr "yeni Derleme ekle"
+
+#: tcms/bugs/templates/bugs/search.html:5
+msgid "Search bugs"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
@@ -233,6 +246,10 @@ msgstr "Arama"
 msgid "ID"
 msgstr "ID"
 
+#: tcms/bugs/templates/bugs/search.html:103
+msgid "Created at"
+msgstr ""
+
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:553
 msgid "Edit"
@@ -240,6 +257,10 @@ msgstr "Düzenle"
 
 #: tcms/bugs/views.py:61
 msgid "New bug"
+msgstr ""
+
+#: tcms/bugs/views.py:164
+msgid "Edit bug"
 msgstr ""
 
 #: tcms/bugs/views.py:194
@@ -287,31 +308,21 @@ msgstr "GÜNCELLEME: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
-msgid ""
-"Updated on %(history_date)s\n"
-"Updated by %(username)s\n"
-"\n"
-"%(diff)s\n"
-"\n"
+msgid "Updated on %(history_date)s\n"
+"Updated by %(username)s\n\n"
+"%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
-"%(history_date)s tarihinde güncellendi.\n"
-"%(username)s tarafından güncellendi.\n"
-"\n"
-"%(diff)s\n"
-"\n"
+msgstr "%(history_date)s tarihinde güncellendi.\n"
+"%(username)s tarafından güncellendi.\n\n"
+"%(diff)s\n\n"
 "Daha fazla bilgi için:\n"
 "%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid ""
-"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
-"and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
-"Ana URL ayarlanmadı! <a href=\"%(doc_url)s\">Dokümanı</a> inceleyin ve <a "
-"href=\"%(admin_url)s\">değiştirin</a>"
+msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
+msgstr "Ana URL ayarlanmadı! <a href=\"%(doc_url)s\">Dokümanı</a> inceleyin ve <a href=\"%(admin_url)s\">değiştirin</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -335,13 +346,11 @@ msgid "Your new %s account confirmation"
 msgstr "%s yeni hesap onayınız"
 
 #: tcms/kiwi_auth/views.py:55
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
+msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Hesabınız oluşturuldu, onayınız için e-posta hesabınızı kontrol ediniz"
 
 #: tcms/kiwi_auth/views.py:61
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
+msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Hesabınız oluşturuldu, fakat etkileşmesi için yönetici onayı gerekiyor"
 
 #: tcms/kiwi_auth/views.py:66
@@ -412,6 +421,10 @@ msgstr "Durum Matrisi"
 msgid "Execution trends"
 msgstr "Koşum Eğilimleri"
 
+#: tcms/settings/common.py:110
+msgid "TestCase health"
+msgstr ""
+
 #: tcms/settings/common.py:124
 msgid "ADMIN"
 msgstr "YÖNETİM"
@@ -443,6 +456,14 @@ msgstr "Yönetim Kılavuzu"
 #: tcms/settings/common.py:137
 msgid "API Help"
 msgstr "API Yardım"
+
+#: tcms/settings/common.py:331
+msgid "New Bug"
+msgstr ""
+
+#: tcms/settings/common.py:335
+msgid "Search Bugs"
+msgstr ""
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -512,8 +533,25 @@ msgstr "Test senaryosu"
 msgid "Test run"
 msgstr "Test koşumu"
 
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
+msgid "TestCase Health"
+msgstr ""
+
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
+msgid "Test Case"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
+msgid "Failed executions"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
+#, python-format
+msgid "%% of failed executions"
 msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
@@ -635,6 +673,10 @@ msgstr ""
 msgid "Add"
 msgstr "Ekle"
 
+#: tcms/templates/case/get_details_case_run.html:109
+msgid "Report bug"
+msgstr ""
+
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
 msgstr "İçerik"
@@ -662,13 +704,9 @@ msgstr "Başlangıç tarihi"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid ""
-"%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be "
-"executed.\n"
+msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
-"Size atanmış ve ele alınması gereken %(total_count)s adet test koşumu veya "
-"test senaryosu var. \n"
+msgstr "Size atanmış ve ele alınması gereken %(total_count)s adet test koşumu veya test senaryosu var. \n"
 "Son durum %(count)s adet."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
@@ -701,12 +739,9 @@ msgstr "Koşumlar"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
-msgid ""
-"You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
-"%(total_count)s adet test planı yönetiyorsunuz, %(disabled_count)s adeti "
-"etkin değil.\n"
+msgstr "%(total_count)s adet test planı yönetiyorsunuz, %(disabled_count)s adeti etkin değil.\n"
 "Son durum %(count)s adet."
 
 #: tcms/templates/dashboard.html:77
@@ -715,16 +750,12 @@ msgstr "Size atanmış herhangi bir test planı yok"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
-"Hoş geldiniz %(user)s,\n"
-"Bir %(site_domain)s hesabı oluşturduğunuz için teşekkür ederiz!\n"
-"\n"
+msgstr "Hoş geldiniz %(user)s,\n"
+"Bir %(site_domain)s hesabı oluşturduğunuz için teşekkür ederiz!\n\n"
 "Hesabınızı etkinleştirmek için aşağıdaki bağlantıya tıklayınız:\n"
 "%(confirm_url)s"
 
@@ -735,58 +766,41 @@ msgstr "Test senaryosu %(username)s tarafından silindi!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid ""
-"Test run %(pk)s has been created or updated for you.\n"
-"\n"
+msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n"
-"\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n"
-"\n"
+"Summary: %(summary)s\n\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n"
-"\n"
+"Default tester: %(default_tester)s.\n\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n"
-"\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
-"%(pk)s test koşumu sizin için yaratıldı veya güncellendi.\n"
-"\n"
+msgstr "%(pk)s test koşumu sizin için yaratıldı veya güncellendi.\n\n"
 "### Bağlantılar ###\n"
 "Test koşumu: %(run_url)s\n"
-"Test planı: %(plan_url)s\n"
-"\n"
+"Test planı: %(plan_url)s\n\n"
 "### Temel koşum bilgisi ###\n"
-"Özet: %(summary)s\n"
-"\n"
+"Özet: %(summary)s\n\n"
 "Test yöneticisi: %(manager)s.\n"
-"Öntanımlı test uzmanı: %(default_tester)s.\n"
-"\n"
+"Öntanımlı test uzmanı: %(default_tester)s.\n\n"
 "Ürün: %(product)s\n"
 "Ürün versiyonu: %(version)s\n"
-"Derleme: %(build)s\n"
-"\n"
+"Derleme: %(build)s\n\n"
 "Notlar:\n"
 "%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid ""
-"Dear Administrator,\n"
+msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
-"Sevgili Yönetici,\n"
-"Az önce %(username)s kullanıcı adı ile birisi, Kiwi test süreci yönetim "
-"sisteminizde hesap oluşturdu ve onayınızı bekliyor!\n"
-"\n"
+msgstr "Sevgili Yönetici,\n"
+"Az önce %(username)s kullanıcı adı ile birisi, Kiwi test süreci yönetim sisteminizde hesap oluşturdu ve onayınızı bekliyor!\n\n"
 "Hesabı etkinleştirmek üzere %(user_url)s bağlantısını ziyaret edin!"
 
 #: tcms/templates/include/bug_details.html:6
@@ -880,6 +894,10 @@ msgstr "Giriş yap"
 msgid "Register"
 msgstr "Kayıt ol"
 
+#: tcms/templates/navbar.html:67
+msgid "Help"
+msgstr ""
+
 #: tcms/templates/navbar.html:82
 msgid "Language"
 msgstr ""
@@ -894,6 +912,10 @@ msgstr ""
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
+msgstr ""
+
+#: tcms/templates/navbar.html:97
+msgid "Translation guide"
 msgstr ""
 
 #: tcms/templates/pagination.html:7
@@ -1099,13 +1121,8 @@ msgid "Show filter options"
 msgstr "Filtreleme seçeneklerini göster"
 
 #: tcms/templates/plan/get_cases.html:71
-msgid ""
-"Click me,then Drag and drop the rows to adjust the order,and click 'Done "
-"Sorting' link to submit your changes"
-msgstr ""
-"Beni tıkla, sıralamayı ayarlamak üzere satırları sürükle ve bırak, sonra "
-"yapılan değişiklikleri kaydetmek için 'Sıralama Tamamlandı' bağlantısına "
-"tıkla"
+msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
+msgstr "Beni tıkla, sıralamayı ayarlamak üzere satırları sürükle ve bırak, sonra yapılan değişiklikleri kaydetmek için 'Sıralama Tamamlandı' bağlantısına tıkla"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1261,11 +1278,8 @@ msgid "Confirm"
 msgstr "Doğrula"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly"
-msgstr ""
-"Lütfen doğru bir şekilde yazdığınızı onaylamak için şifreyi iki kez girin"
+msgid "Please enter your new password twice so we can verify you typed it in correctly"
+msgstr "Lütfen doğru bir şekilde yazdığınızı onaylamak için şifreyi iki kez girin"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1329,11 +1343,8 @@ msgid "The table below list all the confirmed test cases of plan"
 msgstr "Aşağıdaki tablo planın tüm onaylı test senaryolarını listeler"
 
 #: tcms/templates/run/assign_case.html:59
-msgid ""
-"check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
-"senaryoları test koşumuna eklemek için onay kutusunu işaretleyin. Sonunda "
-"güncellemeyi unutmayın"
+msgid "check the checkbox to add cases into test run. Remember to update at last"
+msgstr "senaryoları test koşumuna eklemek için onay kutusunu işaretleyin. Sonunda güncellemeyi unutmayın"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1420,6 +1431,10 @@ msgstr "Hata"
 msgid "URL points to a defect"
 msgstr ""
 
+#: tcms/templates/run/get_case_runs.html:147
+msgid "Auto-update Issue Tracker"
+msgstr ""
+
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
 msgstr "İptal"
@@ -1501,45 +1516,31 @@ msgid "No execution found"
 msgstr "Hiçbir koşum bulunamadı"
 
 #: tcms/testcases/forms.py:21
-msgid ""
-"Please input valid case id(s). use comma to split more than one case id. e."
-"g. \"111, 222\""
-msgstr ""
-"Lütfen geçerli senaryo ID'leri girin. Birden fazla senaryo ID'yi ayrıştırmak "
-"için virgül kullanın. Örneğin, \"111,222\""
+msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
+msgstr "Lütfen geçerli senaryo ID'leri girin. Birden fazla senaryo ID'yi ayrıştırmak için virgül kullanın. Örneğin, \"111,222\""
 
 #: tcms/testcases/forms.py:90
-msgid ""
-"**Scenario**: ... what behavior will be tested ...\n"
+msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
-"  **Then** ... expected results ...\n"
-"\n"
-"*Actions*:\n"
-"\n"
+"  **Then** ... expected results ...\n\n"
+"*Actions*:\n\n"
 "1. item\n"
 "2. item\n"
-"3. item\n"
-"\n"
-"*Expected results*:\n"
-"\n"
+"3. item\n\n"
+"*Expected results*:\n\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
-"**Senaryo**: ... test edilecek davranış nedir ...\n"
+msgstr "**Senaryo**: ... test edilecek davranış nedir ...\n"
 "  **Given** ... koşullar ...\n"
 "  **When** ... aksiyonlar ...\n"
-"  **Then** ... beklenen sonuçlar ...\n"
-"\n"
-"*Aksiyonlar*:\n"
-"\n"
+"  **Then** ... beklenen sonuçlar ...\n\n"
+"*Aksiyonlar*:\n\n"
 "1. aksiyon\n"
 "2. aksiyon\n"
-"3. aksiyon\n"
-"\n"
-"*Beklenen sonuçlar*:\n"
-"\n"
+"3. aksiyon\n\n"
+"*Beklenen sonuçlar*:\n\n"
 "1. sonuç\n"
 "2. sonuç\n"
 "3. sonuç"
@@ -1635,12 +1636,8 @@ msgid "CC to"
 msgstr "CC 'le"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
-msgid ""
-"Email addresses separated by comma. A notification email will be sent to "
-"each Email address within CC list."
-msgstr ""
-"E-posta adresleri virgülle ayrılır. CC listesindeki her bir e-posta adresine "
-"bir e-posta bildirimi gönderilecek."
+msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
+msgstr "E-posta adresleri virgülle ayrılır. CC listesindeki her bir e-posta adresine bir e-posta bildirimi gönderilecek."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1823,13 +1820,9 @@ msgstr "Seçili test senaryoları:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
-msgid ""
-"%(count)s of the pre-selected test cases is not CONFIRMED and will not be "
-"cloned!\n"
+msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
-"Önseçimli test senaryolarının %(count)s tanesi ONAYLANDI değil ve "
-"kopyalanamayacak!\n"
+msgstr "Önseçimli test senaryolarının %(count)s tanesi ONAYLANDI değil ve kopyalanamayacak!\n"
 "Detaylar için test planına göz atınız!"
 
 #: tcms/testruns/templates/testruns/search.html:5
@@ -1875,9 +1868,7 @@ msgstr "Ana URL'i ayarlayarak bu İş Takip sistemine raporlamayı etkinleştiri
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
-"Model %s birinci anahtara sahip değil. Bu alanı manuel olarak belirtmeniz "
-"gerekir."
+msgstr "Model %s birinci anahtara sahip değil. Bu alanı manuel olarak belirtmeniz gerekir."
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
@@ -1926,3 +1917,4 @@ msgstr "HATALI"
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
 msgstr "VAZGEÇİLDİ"
+
