@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:52\n"
+"PO-Revision-Date: 2019-09-20 13:44\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -26,7 +26,7 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr "crwdns1016:0crwdne1016:0"
+msgstr "crwdns1076:0crwdne1076:0"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
