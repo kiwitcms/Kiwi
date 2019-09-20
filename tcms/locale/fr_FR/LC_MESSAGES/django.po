@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 10:20\n"
+"PO-Revision-Date: 2019-09-20 10:33\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -423,7 +423,7 @@ msgstr "Tendances des exécutions"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Santé du scénario de test"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
@@ -459,11 +459,11 @@ msgstr "Aide sur l’API"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr "Nouveau Bug"
+msgstr "Nouvelle anomalie"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr "Recherche dans les bugs"
+msgstr "Recherche dans les anomalies"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -1406,7 +1406,7 @@ msgstr "Assigner ce(s) cas(s) à d'autres personnes"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Hyperlien"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1434,7 +1434,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Mise à jour automatique du suivi d'anomalie"
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
