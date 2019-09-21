@@ -135,4 +135,5 @@ build-for-pypi:
 .PHONY: messages
 messages:
 	./manage.py makemessages --no-obsolete --ignore "test*.py"
+	git checkout tcms/locale/eo_UY/
 	ls tcms/locale/*/LC_MESSAGES/*.po | xargs -n 1 -I @ msgattrib -o @ --no-fuzzy @
