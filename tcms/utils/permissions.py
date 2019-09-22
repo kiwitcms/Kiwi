@@ -16,7 +16,7 @@ def assign_default_group_permissions():
     tester = Group.objects.get(name='Tester')
     if tester.permissions.count() == 0:
         # apply all permissions for test case & product management
-        for app_name in ['django_comments', 'linkreference', 'management',
+        for app_name in ['bugs', 'django_comments', 'linkreference', 'management',
                          'testcases', 'testplans', 'testruns']:
             app_perms = Permission.objects.filter(content_type__app_label__contains=app_name)
             tester.permissions.add(*app_perms)

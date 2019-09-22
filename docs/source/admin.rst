@@ -65,8 +65,9 @@ created
 
 * Administrator - has all available permissions;
 * Tester - has ``add``, ``change`` and ``delete`` permissions from the
-  ``attachments``, ``django_comments``, ``management``, ``linkreference``,
-  ``testcases``, ``testplans`` and ``testruns`` applications.
+  ``attachments``, ``bugs``, ``django_comments``, ``management``,
+  ``linkreference``, ``testcases``, ``testplans`` and ``testruns``
+  applications.
 
 
 Adding a group

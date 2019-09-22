@@ -32,7 +32,7 @@ def forwards_add_default_perms(apps, schema_editor):
 
     tester = Group.objects.get(name='Tester')
     # apply all permissions for test case & product management
-    for app_name in ['django_comments', 'management', 'linkreference',
+    for app_name in ['bugs', 'django_comments', 'management', 'linkreference',
                      'testcases', 'testplans', 'testruns']:
         app_perms = Permission.objects.filter(content_type__app_label__contains=app_name)
         tester.permissions.add(*app_perms)
