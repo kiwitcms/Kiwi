@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-22 10:51\n"
+"PO-Revision-Date: 2019-09-22 11:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -31,7 +31,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
-msgstr ""
+msgstr "Отворен"
 
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
@@ -42,7 +42,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "Откривател"
 
 #: tcms/bugs/templates/bugs/get.html:47
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -150,11 +150,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr "Запис"
+msgstr "Записване"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "Затваряне"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -194,7 +194,7 @@ msgstr "добави нов Билд"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Търсене на дефекти"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
@@ -248,7 +248,7 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "Създаден на"
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:553
@@ -391,15 +391,15 @@ msgstr "ТЪРСЕНЕ"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr "Търси сред Тест планове"
+msgstr "Търсене на тест планове"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr "Търси Тест Изпълнение"
+msgstr "Търсене на тест изпълнения"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr "Търси сред Тест кейсове"
+msgstr "Търсене на тест кейсове"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
@@ -423,7 +423,7 @@ msgstr "Графики на изпълнения"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Флейки тестове"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
@@ -463,7 +463,7 @@ msgstr "Нов дефект"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr "Търси дефекти"
+msgstr "Търсене на дефекти"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -535,24 +535,24 @@ msgstr "Тест Изпълнение"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Флейки тестове"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Тест кейсове с най-много провалени изпълнения"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
 msgid "Test Case"
-msgstr ""
+msgstr "Тест кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
 msgid "Failed executions"
-msgstr ""
+msgstr "Провалени"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% бр"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -898,7 +898,7 @@ msgstr "Режим на превод"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
-msgstr ""
+msgstr "Ръководство за превод"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
