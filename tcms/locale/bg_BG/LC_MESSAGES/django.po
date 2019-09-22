@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:53\n"
+"PO-Revision-Date: 2019-09-22 10:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -459,11 +459,11 @@ msgstr "API документация"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr ""
+msgstr "Нов дефект"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr ""
+msgstr "Търси дефекти"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -706,7 +706,8 @@ msgstr "Започна в"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Трябва да изпълните %(total_count)s изпълнения или тест кейсове.\n"
+"Показани са последните %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -740,7 +741,7 @@ msgstr "Изпълнения"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Управлявате %(total_count)s тест плана, %(disabled_count)s е деактивиран. Показани са последните %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -877,23 +878,23 @@ msgstr "Регистрация"
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Помощ"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Език"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Поддържани езици"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
-msgstr ""
+msgstr "Заяви нов език"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr ""
+msgstr "Режим на превод"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
