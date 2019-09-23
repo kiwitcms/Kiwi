@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:53\n"
+"PO-Revision-Date: 2019-09-23 21:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -31,18 +31,18 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
-msgstr ""
+msgstr "Açık"
 
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "Kapalı"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "Raporlayan"
 
 #: tcms/bugs/templates/bugs/get.html:47
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -142,7 +142,7 @@ msgstr "Hiç kayıt bulunamadı"
 
 #: tcms/bugs/templates/bugs/get.html:138
 msgid "commented on"
-msgstr ""
+msgstr "üzerinde yorum yaptı"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -154,7 +154,7 @@ msgstr "Kaydet"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -194,7 +194,7 @@ msgstr "yeni Derleme ekle"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Hata ara"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
@@ -248,7 +248,7 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:553
@@ -257,15 +257,15 @@ msgstr "Düzenle"
 
 #: tcms/bugs/views.py:61
 msgid "New bug"
-msgstr ""
+msgstr "Yeni hata"
 
 #: tcms/bugs/views.py:164
 msgid "Edit bug"
-msgstr ""
+msgstr "Hatayı düzenle"
 
 #: tcms/bugs/views.py:194
 msgid "*bug closed*"
-msgstr ""
+msgstr "*hata kapandı*"
 
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
@@ -423,7 +423,7 @@ msgstr "Koşum Eğilimleri"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Test Senaryosu Sağlığı"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
@@ -459,11 +459,11 @@ msgstr "API Yardım"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr ""
+msgstr "Yeni hata"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr ""
+msgstr "Hata ara"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -535,24 +535,24 @@ msgstr "Test koşumu"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Test Senaryosu Sağlığı"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Sıklıkla başarısız olan test durumları"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
 msgid "Test Case"
-msgstr ""
+msgstr "Test Senaryosu"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
 msgid "Failed executions"
-msgstr ""
+msgstr "Başarısız Koşumlar"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "başarısız koşumların %%"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -661,7 +661,7 @@ msgstr "Hiçbir kayıt bulunamadı"
 
 #: tcms/templates/case/get_details_case_run.html:107
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Hatalar ve bağlantılar"
 
 #: tcms/templates/case/get_details_case_run.html:108
 #: tcms/templates/include/tags_card.html:27
@@ -675,7 +675,7 @@ msgstr "Ekle"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Hata bildir"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -896,27 +896,27 @@ msgstr "Kayıt ol"
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Yardım"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Desteklenen diller"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
-msgstr ""
+msgstr "Yeni bir dil oluştur"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr ""
+msgstr "Çeviri modu"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
-msgstr ""
+msgstr "Çeviri kılavuzu"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -1405,7 +1405,7 @@ msgstr "Bu senaryoları başkalarına atayın"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Bağlantı"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
