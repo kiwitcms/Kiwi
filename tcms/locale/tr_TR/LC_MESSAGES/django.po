@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-23 21:51\n"
+"PO-Revision-Date: 2019-09-23 22:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -26,7 +26,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Problemin açıklaması:\n\n\n"
+"Hangi sıklıkla ortaya çıkar:\n\n\n"
+"Ortaya çıkarma adımları:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Elde edilen sonuçlar:\n\n\n"
+"Beklenen sonuçlar:\n\n\n"
+"İlave bilgi:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -1429,11 +1437,11 @@ msgstr "Hata"
 
 #: tcms/templates/run/get_case_runs.html:144
 msgid "URL points to a defect"
-msgstr ""
+msgstr "Hatayı gösteren URL"
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "İş Takipçisini Otomatik Güncelle"
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
