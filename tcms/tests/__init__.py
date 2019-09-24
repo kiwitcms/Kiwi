@@ -227,3 +227,20 @@ class BaseCaseRun(BasePlanCase):
         cls.execution_4 = executions[3]
         cls.execution_5 = executions[4]
         cls.execution_6 = executions[5]
+
+
+class PermissionsTestCase(LoggedInTestCase):
+    """Base class for implementing all tests that have to do with permissions."""
+
+    def remove_all_permissions_except_tested(self, tested_permission):
+
+        self.tester.user_permissions.remove()
+
+        user_should_have_perm(self.tester, tested_permission)
+
+    def assign_all_permissions_except_tested(self, tested_permission):
+
+        for perm in Permission.objects.all():
+            user_should_have_perm(self.tester, perm)
+
+        remove_perm_from_user(self.tester, tested_permission)
