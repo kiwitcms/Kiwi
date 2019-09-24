@@ -18,7 +18,7 @@ ENV PATH /venv/bin:/opt/rh/rh-python36/root/usr/bin${PATH:+:${PATH}} \
 RUN virtualenv /venv
 
 # because we get some errors from other packages which need newer versions
-RUN pip install --upgrade pip setuptools
+RUN pip install --no-cache-dir --upgrade pip setuptools twine
 
 # replace standard mod_wsgi with one compiled for Python 3
 RUN pip install --no-cache-dir --upgrade mod_wsgi
@@ -26,13 +26,11 @@ RUN pip install --no-cache-dir --upgrade mod_wsgi
 # build and install the application
 COPY . /Kiwi/
 WORKDIR /Kiwi
-RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" manage.py && \
-    ./tests/check-build && \
-    pip install --no-cache-dir dist/kiwitcms-*.tar.gz
 
-# install DB requirements b/c the rest should already be installed
+# install app dependencies so we can build the app later
 RUN pip install --no-cache-dir -r requirements/mariadb.txt
 RUN pip install --no-cache-dir -r requirements/postgres.txt
 
-# compile gettext translations
-RUN ./manage.py compilemessages
+RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" manage.py
+RUN ./tests/check-build
+RUN pip install --no-cache-dir dist/kiwitcms-*.tar.gz
