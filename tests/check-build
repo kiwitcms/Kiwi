@@ -8,10 +8,19 @@
 # first clean up the local environment
 echo "..... Clean up first"
 find . -type f -name '*.pyc' -delete
-find . -type d -name __pycache__ -delete
+find . -type d -name __pycache__ | xargs rm -rf
 find . -type d -name '*.egg-info' | xargs rm -rf
 rm -rf build/ .cache/ dist/ .eggs/ .tox/ .venv/
 rm -rf tcms/node_modules/
+
+# ensure fresh translations are compiled in
+find tcms/locale/ -name "*.mo" -delete
+./manage.py compilemessages
+
+if [ -z $(find -type f -name "*.mo") ]; then
+    echo "ERROR: .mo files not found"
+    exit 1
+fi
 
 echo "..... Installing npm dependencies"
 pushd tcms/
