@@ -22,6 +22,7 @@ from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import UserFactory
+from tcms.tests import PermissionsTestCase
 
 
 class TestGetRun(BaseCaseRun):
@@ -821,6 +822,26 @@ class TestChangeTestRunStatus(BaseCaseRun):
 
     def test_should_fail_when_try_to_change_status_without_permissions(self):
         remove_perm_from_user(self.tester, 'testruns.change_testrun')
+        self.assertRedirects(
+            self.client.get(self.url, {'finished': 1}),
+            reverse('tcms-login') + '?next=%s?finished=1' % self.url)
+
+
+class PermissionsTestCase(PermissionsTestCase, TestChangeTestRunStatus):
+
+    def test_remove_all_but_one_permission(self):
+
+        self.remove_all_permissions_except_tested("testruns.change_testrun")
+        response = self.client.get(self.url, {'finished': 1})
+        self.assertRedirects(
+            response,
+            reverse('testruns-get', args=[self.test_run.pk]))
+
+        self.test_run.refresh_from_db()
+        self.assertIsNotNone(self.test_run.stop_date)
+
+    def test_assign_all_permissions_except_tested(self):
+        self.assign_all_permissions_except_tested('testruns.change_testrun')
         self.assertRedirects(
             self.client.get(self.url, {'finished': 1}),
             reverse('tcms-login') + '?next=%s?finished=1' % self.url)
