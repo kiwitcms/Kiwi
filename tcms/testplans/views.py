@@ -16,6 +16,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.http import require_http_methods
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
+from django.views.generic.base import TemplateView
 from uuslug import slugify
 
 from tcms.search import remove_from_request_path
@@ -151,16 +152,20 @@ def get_all(request):  # pylint: disable=missing-permission-required
     return render(request, template_name, context_data)
 
 
-@require_GET
-def search(request):  # pylint: disable=missing-permission-required
-    form = SearchPlanForm(request.GET)
-    form.populate(product_id=request.GET.get('product'))
+class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-required
 
-    context_data = {
-        'form': form,
-        'plan_types': PlanType.objects.all().only('pk', 'name').order_by('name'),
-    }
-    return render(request, 'testplans/search.html', context_data)
+    template_name = 'testplans/search.html'
+
+    def get_context_data(self, **kwargs):
+        form = SearchPlanForm(self.request.GET)
+        form.populate(product_id=self.request.GET.get('product'))
+
+        context_data = {
+            'form': form,
+            'plan_types': PlanType.objects.all().only('pk', 'name').order_by('name'),
+        }
+
+        return context_data
 
 
 def get_number_of_plans_cases(plan_ids):
