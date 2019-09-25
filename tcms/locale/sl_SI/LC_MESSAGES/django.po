@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 07:52\n"
+"PO-Revision-Date: 2019-09-25 15:13\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -26,15 +26,7 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr "Opis napake:\n\n\n"
-"Ponovljivost napake:\n\n\n"
-"Scenarij napake:\n"
-"1.\n"
-"2.\n"
-"3.\n\n"
-"Trenutno delovanje:\n\n\n"
-"Pričakovano delovanje:\n\n\n"
-"Dodatne informacije:"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -50,7 +42,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "Prijavitelj"
 
 #: tcms/bugs/templates/bugs/get.html:47
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -86,7 +78,7 @@ msgstr "Tester"
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr "Izdelek"
+msgstr "Produkt"
 
 #: tcms/bugs/templates/bugs/get.html:63
 #: tcms/bugs/templates/bugs/mutable.html:41
@@ -202,7 +194,7 @@ msgstr "dodaj nov build"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Poišči napako"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
@@ -256,7 +248,7 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:553
@@ -431,7 +423,7 @@ msgstr "Pregled zgodovine testiranj"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Zdravje testnih scenarijev"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
@@ -467,11 +459,11 @@ msgstr "Pomoč za API"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr ""
+msgstr "Vnesi napako"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr ""
+msgstr "Poišči napako"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -547,20 +539,20 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Najbolj nestabilni testni scenariji"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
 msgid "Test Case"
-msgstr ""
+msgstr "Testni scenarij"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
 msgid "Failed executions"
-msgstr ""
+msgstr "Število neuspešnih"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% neuspešnih"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -714,7 +706,7 @@ msgstr "Začeto ob"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr "%(total_count)s testiranj in/ali testov na katere ste dodeljeni scenarijev čaka na izvedbo. \n"
+msgstr "%(total_count)s testiranj in/ali testov na katere ste dodeljeni čaka na izvedbo. \n"
 "Prikazanih je zadnjih %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
@@ -739,7 +731,7 @@ msgstr "Baza testnih scenarijev"
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr "Tip"
+msgstr "Tip testiranja"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
@@ -904,27 +896,27 @@ msgstr "Registracija"
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Pomoč"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Jezik"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Podprti jeziki"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
-msgstr ""
+msgstr "Dodaj nov jezik za prevod"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr ""
+msgstr "Način za prevajalce"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
-msgstr ""
+msgstr "Navodila za prevajanje"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
