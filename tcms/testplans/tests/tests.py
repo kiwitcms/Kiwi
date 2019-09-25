@@ -72,6 +72,13 @@ class PlanTests(BasePlanTest):
         response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
+    def test_search_page_is_shown_with_get_parameter_used(self):
+        response = self.client.get(reverse('plans-search'), {'product': self.product.pk})
+        self.assertContains(response,
+                            '<option value="%d" selected>%s</option>' % (self.product.pk,
+                                                                         self.product.name),
+                            html=True)
+
     def test_plan_details(self):
         location = reverse('test_plan_url_short', args=[self.plan_id])
         response = self.client.get(location)
