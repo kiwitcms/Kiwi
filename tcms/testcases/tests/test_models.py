@@ -110,9 +110,9 @@ class TestSendMailOnCaseIsDeleted(BasePlanCase):
     @patch('tcms.core.utils.mailto.send_mail')
     def test_send_mail_to_case_author(self, send_mail):
         expected_subject = _('DELETED: TestCase #%(pk)d - %(summary)s') % {
-                'pk': self.case.pk,
-                'summary': self.case.summary
-            }
+            'pk': self.case.pk,
+            'summary': self.case.summary
+        }
         expected_body = render_to_string('email/post_case_delete/email.txt', {'case': self.case})
         recipients = get_case_notification_recipients(self.case)
 
