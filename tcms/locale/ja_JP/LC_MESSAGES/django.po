@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:53\n"
+"PO-Revision-Date: 2019-09-26 03:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -96,7 +96,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "バージョン"
 
 #: tcms/bugs/templates/bugs/get.html:68
 #: tcms/bugs/templates/bugs/mutable.html:59
@@ -726,7 +726,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "タイプ"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
