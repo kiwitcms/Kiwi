@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-22 11:01\n"
+"PO-Revision-Date: 2019-09-26 08:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -26,7 +26,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Описание на проблема:\n\n"
+"Колко често се възпроизвежда:\n\n"
+"Стъпки за възпроизвеждане:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Резултат:\n\n"
+"Очакван резултат:\n\n"
+"Допълнителна инфромация:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -36,7 +44,7 @@ msgstr "Отворен"
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "Затворен"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -142,7 +150,7 @@ msgstr "Не са открити записи"
 
 #: tcms/bugs/templates/bugs/get.html:138
 msgid "commented on"
-msgstr ""
+msgstr "коментирано на"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -257,15 +265,15 @@ msgstr "Редакция"
 
 #: tcms/bugs/views.py:61
 msgid "New bug"
-msgstr ""
+msgstr "Нов бъг"
 
 #: tcms/bugs/views.py:164
 msgid "Edit bug"
-msgstr ""
+msgstr "Редакция на бъг"
 
 #: tcms/bugs/views.py:194
 msgid "*bug closed*"
-msgstr ""
+msgstr "*затворен бъг*"
 
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
@@ -661,7 +669,7 @@ msgstr "Няма логове"
 
 #: tcms/templates/case/get_details_case_run.html:107
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Бъгове и хиперлинкове"
 
 #: tcms/templates/case/get_details_case_run.html:108
 #: tcms/templates/include/tags_card.html:27
@@ -675,7 +683,7 @@ msgstr "Добави"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Докладване на бъг"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -753,12 +761,15 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "%(user)s, добре дошли!\n"
+"Благодарим Ви за Вашата %(site_domain)s регистрация!\n\n"
+"За да активирате Вашия Профил, моля последвайте линка:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Тест кейсът е изтрит от %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -783,7 +794,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Уважаеми Администратор,\n"
+"Току що бе регистриран профил с потребителско име %(username)s в Kiwi TCMS, който очаква Вашето потвърждение!\n\n"
+"Отидете до %(user_url)s, за да активирате профила!"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -1387,7 +1400,7 @@ msgstr "Насочи кейс(ове) към друг потребител"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Хиперлинк"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1415,7 +1428,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Автоматична актуализация на Тракера"
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
@@ -1793,7 +1806,7 @@ msgstr "Избран(и) тест кейс(ове):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s от избраните тест кейосве не е/са ПОТВЪРДЕН/И и няма да бъде/ат клонирани! Виж тест плана за повече информация!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
