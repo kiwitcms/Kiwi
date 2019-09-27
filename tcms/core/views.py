@@ -7,8 +7,9 @@ from django.shortcuts import render
 from django.db.models import Count, Q
 from django.utils import translation
 from django.utils.translation import trans_real
+from django.utils.decorators import method_decorator
 from django.views.generic.base import View
-from django.views.decorators.http import require_GET
+from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 
@@ -16,38 +17,38 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
 
-@require_GET
-@login_required
-def dashboard(request):  # pylint: disable=missing-permission-required
-    """List all recent TestPlans and TestRuns"""
-    test_plans = TestPlan.objects.filter(
-        author=request.user
-    ).order_by(
-        '-plan_id'
-    ).select_related(
-        'product', 'type'
-    ).annotate(
-        num_runs=Count('run', distinct=True)
-    )
-    test_plans_disable_count = test_plans.filter(is_active=False).count()
+@method_decorator(login_required, name='dispatch')
+class DashboardView(TemplateView):  # pylint: disable=missing-permission-required
 
-    test_runs = TestRun.objects.filter(
-        Q(manager=request.user) |
-        Q(default_tester=request.user) |
-        Q(case_run__assignee=request.user),
-        stop_date__isnull=True,
-    ).order_by('-run_id').distinct()
+    template_name = 'dashboard.html'
 
-    context_data = {
-        'test_plans_count': test_plans.count(),
-        'test_plans_disable_count': test_plans_disable_count,
-        'last_15_test_plans': test_plans.filter(is_active=True)[:15],
+    def get_context_data(self, **kwargs):
+        """List all recent TestPlans and TestRuns"""
+        test_plans = TestPlan.objects.filter(
+            author=self.request.user
+        ).order_by(
+            '-plan_id'
+        ).select_related(
+            'product', 'type'
+        ).annotate(
+            num_runs=Count('run', distinct=True)
+        )
+        test_plans_disable_count = test_plans.filter(is_active=False).count()
 
-        'last_15_test_runs': test_runs[:15],
+        test_runs = TestRun.objects.filter(
+            Q(manager=self.request.user) |
+            Q(default_tester=self.request.user) |
+            Q(case_run__assignee=self.request.user),
+            stop_date__isnull=True,
+        ).order_by('-run_id').distinct()
 
-        'test_runs_count': test_runs.count(),
-    }
-    return render(request, 'dashboard.html', context_data)
+        return {
+            'test_plans_count': test_plans.count(),
+            'test_plans_disable_count': test_plans_disable_count,
+            'last_15_test_plans': test_plans.filter(is_active=True)[:15],
+            'last_15_test_runs': test_runs[:15],
+            'test_runs_count': test_runs.count(),
+        }
 
 
 def navigation(request):  # pylint: disable=missing-permission-required
