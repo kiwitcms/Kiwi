@@ -504,7 +504,7 @@ class DeleteCasesView(View):
                 'response': 'At least one case is required to delete.'
             })
 
-        cases = get_selected_testcases(request).only('pk')
+        cases = get_selected_testcases(request)
         for case in cases:
             plan.delete_case(case=case)
 
