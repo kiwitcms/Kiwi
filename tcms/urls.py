@@ -26,7 +26,7 @@ from tcms.telemetry import urls as telemetry_urls
 
 
 urlpatterns = [
-    url(r'^$', core_views.dashboard, name='core-views-index'),
+    url(r'^$', core_views.DashboardView.as_view(), name='core-views-index'),
     url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
     url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
     url(r'^navigation/', core_views.navigation, name='iframe-navigation'),
