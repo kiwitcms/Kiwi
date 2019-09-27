@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-25 15:13\n"
+"PO-Revision-Date: 2019-09-27 09:42\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -26,7 +26,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Opis napake:\n\n\n"
+"Ponovljivost napake:\n\n\n"
+"Scenarij napake:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Trenutno delovanje:\n\n\n"
+"Pričakovano delovanje:\n\n\n"
+"Dodatne informacije:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -36,7 +44,7 @@ msgstr "Odprt"
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "Zaprt"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -142,7 +150,7 @@ msgstr "Ni iskalnih zadetkov"
 
 #: tcms/bugs/templates/bugs/get.html:138
 msgid "commented on"
-msgstr ""
+msgstr "komentar na"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -154,7 +162,7 @@ msgstr "Shrani"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "Zapri"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -257,15 +265,15 @@ msgstr "Uredi"
 
 #: tcms/bugs/views.py:61
 msgid "New bug"
-msgstr ""
+msgstr "Vnesi napako"
 
 #: tcms/bugs/views.py:164
 msgid "Edit bug"
-msgstr ""
+msgstr "Uredi napako"
 
 #: tcms/bugs/views.py:194
 msgid "*bug closed*"
-msgstr ""
+msgstr "*napaka zaprta*"
 
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
@@ -535,7 +543,7 @@ msgstr "Testiranje"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Zdravje testnega scenarija"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
@@ -661,7 +669,7 @@ msgstr "Ni zabeleženih vnosov v dnevniško datoteko"
 
 #: tcms/templates/case/get_details_case_run.html:107
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Napake in povezave"
 
 #: tcms/templates/case/get_details_case_run.html:108
 #: tcms/templates/include/tags_card.html:27
@@ -675,7 +683,7 @@ msgstr "Dodaj"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Prijavi napako"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -1405,7 +1413,7 @@ msgstr "Dodeli scenarij(e) drugim testerjem"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Hiperpovezava"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1429,11 +1437,11 @@ msgstr "Napaka"
 
 #: tcms/templates/run/get_case_runs.html:144
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URL do napake"
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Samodejno posodobi povezavo"
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
