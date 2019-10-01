@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:53\n"
+"PO-Revision-Date: 2019-10-01 12:23\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -885,7 +885,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Поддерживаемые языки"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
