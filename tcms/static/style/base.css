@@ -264,6 +264,8 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{background:transparent url(../images/bug_fire.png) no-repeat; padding:0px 15px; text-decoration:none; }
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
+.case_run_add_link{padding-top: 5px; display:flex; justify-content: space-between; }
+.case_run_add_link div {display:flex; align-items:center; flex-grow:1; }
 /***********************Run End***************************/
 
 /***********************Testcase Start***************************/
