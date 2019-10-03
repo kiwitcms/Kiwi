@@ -757,11 +757,16 @@ function initialize_addlink_dialog() {
     },
     buttons: {
       "OK": function() {
-        var name = jQ('#testlog_name').attr('value');
-        var url = jQ('#testlog_url').attr('value');
-        var is_defect = $('#is_defect').is(':checked');
-        var update_tracker = $('#update_tracker').is(':checked');
-        var case_id = dialog_p.dialog('option', 'case_id');
+        var name = jQ('#testlog_name').attr('value'),
+            url = jQ('#testlog_url').attr('value'),
+            is_defect = $('#is_defect').is(':checked'),
+            update_tracker = $('#update_tracker').is(':checked'),
+            case_id = dialog_p.dialog('option', 'case_id');
+
+        //check if url is valid
+        if (url.length === 0 || url.indexOf('://') === -1) {
+            return;
+        }
 
         dialog_p.dialog('close');
 
