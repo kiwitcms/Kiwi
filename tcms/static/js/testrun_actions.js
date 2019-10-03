@@ -104,7 +104,7 @@ Nitrate.TestRuns.Details.on_load = function() {
       c_container.find('.js-remove-testlog').bind('click', function(){
         var button = this;
         jsonRPC('TestExecution.remove_link', [{pk: $(button).data('param')}], function(result) {
-            button.parentNode.remove();
+            button.parentNode.parentNode.remove();
         });
       });
     };
