@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-04 11:12\n"
+"PO-Revision-Date: 2019-10-04 11:29\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -988,7 +988,7 @@ msgstr "Κανένας"
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
-msgstr ""
+msgstr "Δημιουργία ώρας"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
@@ -996,11 +996,11 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
-msgstr ""
+msgstr "Προβολή ιστορικού επεξεργασίας"
 
 #: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Έγγραφο"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
@@ -1168,7 +1168,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Δείτε περισσότερα"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
@@ -1176,7 +1176,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Όλες οι περιπτώσεις έχουν φορτωθεί."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
