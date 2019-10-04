@@ -98,9 +98,9 @@ class TestExecutionDataMixin:
         idle_count = 0
         complete_count = 0
         for case_run in executions:
-            if case_run.status.name in TestExecutionStatus.idle_status_names:
+            if case_run.status.weight == 0:
                 idle_count += 1
-            elif case_run.status.name in TestExecutionStatus.complete_status_names:
+            else:
                 complete_count += 1
 
         return {'idle': idle_count, 'complete': complete_count}

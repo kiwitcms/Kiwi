@@ -157,8 +157,7 @@ class TestRun(TCMSActionModel):
         return percent
 
     def _get_completed_case_run_percentage(self):
-        ids = TestExecutionStatus.objects.filter(
-            name__in=TestExecutionStatus.complete_status_names).values_list('pk', flat=True)
+        ids = TestExecutionStatus.objects.exclude(weight=0).values_list('pk', flat=True)
 
         completed_caserun = self.case_run.filter(
             status__in=ids)
@@ -211,13 +210,12 @@ class TestRun(TCMSActionModel):
 
         for _status_pk, total_info in caserun_statuses_subtotal.items():
             status_caseruns_count, caserun_status = total_info
-            status_name = caserun_status.name
 
             caseruns_total_count += status_caseruns_count
 
-            if status_name in TestExecutionStatus.complete_status_names:
+            if caserun_status.weight != 0:
                 complete_count += status_caseruns_count
-            if status_name in TestExecutionStatus.failure_status_names:
+            if caserun_status.weight < 0:
                 failure_count += status_caseruns_count
 
         # Final calculation
@@ -236,45 +234,12 @@ class TestRun(TCMSActionModel):
 
 
 class TestExecutionStatus(TCMSActionModel):
-    FAILED = 'FAILED'
-    BLOCKED = 'BLOCKED'
-    PASSED = 'PASSED'
-    IDLE = 'IDLE'
-    WAIVED = 'WAIVED'
-
-    _icons = {
-        'IDLE': 'fa fa-question-circle-o',
-        'RUNNING': 'fa fa-play-circle-o',
-        'PAUSED': 'fa fa-pause-circle-o',
-        PASSED: 'fa fa-check-circle-o',
-        FAILED: 'fa fa-times-circle-o',
-        BLOCKED: 'fa fa-stop-circle-o',
-        'ERROR': 'fa fa-minus-circle',
-        WAIVED: 'fa fa-commenting-o',
-    }
-
-    _css_classes = {
-        IDLE: 'idle',
-        FAILED: 'fail',
-        PASSED: 'pass',
-        BLOCKED: 'fail',
-        'ERROR': 'fail',
-    }
-
-    _colors = {
-        IDLE: '#72767b',
-        'PASS': '#92d400',
-        'FAIL': '#cc0000'
-    }
-
-    complete_status_names = (PASSED, 'ERROR', FAILED, WAIVED)
-    failure_status_names = ('ERROR', FAILED, BLOCKED)
-    passed_status_names = (PASSED, WAIVED)
-    idle_status_names = (IDLE,)
-    chart_status_names = ('pass', 'fail', 'idle', 'other')
 
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
+    weight = models.IntegerField(default=0)
+    icon = models.CharField(max_length=64)
+    color = models.CharField(max_length=8)
 
     def __str__(self):
         return self.name
@@ -288,18 +253,6 @@ class TestExecutionStatus(TCMSActionModel):
     def get_names_ids(cls):
         """ Get all status names in reverse mapping between name and id """
         return dict((name, _id) for _id, name in cls.get_names().items())
-
-    def icon(self):
-        with override('en'):
-            return self._icons.get(self.name)
-
-    def color(self):
-        with override('en'):
-            return self._colors.get(self.color_code().upper(), '#ec7a08')
-
-    def color_code(self):
-        with override('en'):
-            return self._css_classes.get(self.name, 'other')
 
 
 # register model for DB translations

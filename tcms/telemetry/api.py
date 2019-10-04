@@ -128,27 +128,24 @@ def execution_trends(query=None):
     colors = []
     count = {}
 
-    for status in TestExecutionStatus.objects.all():
-        data_set[status.color_code()] = []
-
-        color = status.color()
-        if color not in colors:
-            colors.append(color)
+    for status in TestExecutionStatus.objects.all().distinct('name'):
+        data_set[status.name] = []
+        colors.append(status.color)
 
     run_id = 0
     for test_execution in TestExecution.objects.filter(**query).order_by('run_id'):
-        status = test_execution.status.color_code()
+        status = test_execution.status
 
         if test_execution.run_id == run_id:
-            if status in count:
-                count[status] += 1
+            if status.name in count:
+                count[status.name] += 1
             else:
-                count[status] = 1
+                count[status.name] = 1
 
         else:
             _append_status_counts_to_result(count, data_set)
 
-            count = {status: 1}
+            count = {status.name: 1}
             run_id = test_execution.run_id
             categories.append(run_id)
 
@@ -166,9 +163,9 @@ def execution_trends(query=None):
 
 
 def _append_status_counts_to_result(count, result):
-    for status in TestExecutionStatus.chart_status_names:
-        status_count = count.get(status, 0)
-        result.get(status).append(status_count)
+    for status in TestExecutionStatus.objects.all().distinct('name'):
+        status_count = count.get(status.name, 0)
+        result.get(status.name).append(status_count)
 
 
 @rpc_method(name='Testing.test_case_health')
@@ -180,8 +177,7 @@ def test_case_health(query=None):
     all_test_executions = TestExecution.objects.filter(**query)
 
     test_executions = _get_count_for(all_test_executions)
-    failed_test_executions = _get_count_for(all_test_executions.filter(
-        status__name__in=TestExecutionStatus.failure_status_names))
+    failed_test_executions = _get_count_for(all_test_executions.filter(weight__lt=0))
 
     data = {}
     for te in test_executions:
