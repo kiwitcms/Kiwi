@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:52\n"
+"PO-Revision-Date: 2019-10-04 10:49\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -26,23 +26,31 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Përshkrimi i problemit:\n\n\n"
+"Sa shpesh i riprodhueshëm:\n\n\n"
+"Hapat për të riprodhuar:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Rezultatet aktuale:\n\n\n"
+"Rezultatet e pritura:\n\n\n"
+"Informacion shtesë:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
-msgstr ""
+msgstr "Hapur"
 
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "Mbyllur"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "Raportuar"
 
 #: tcms/bugs/templates/bugs/get.html:47
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -123,26 +131,26 @@ msgstr "Bashëngjitjet"
 #: tcms/bugs/templates/bugs/get.html:91
 #: tcms/testcases/templates/testcases/get.html:231
 msgid "File"
-msgstr ""
+msgstr "Dokument"
 
 #: tcms/bugs/templates/bugs/get.html:92
 #: tcms/testcases/templates/testcases/get.html:232
 msgid "Owner"
-msgstr ""
+msgstr "Pronari"
 
 #: tcms/bugs/templates/bugs/get.html:93
 #: tcms/testcases/templates/testcases/get.html:233
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: tcms/bugs/templates/bugs/get.html:107
 #: tcms/testcases/templates/testcases/get.html:247
 msgid "No records found"
-msgstr ""
+msgstr "Nuk u gjet asnjë regjistrim"
 
 #: tcms/bugs/templates/bugs/get.html:138
 msgid "commented on"
-msgstr ""
+msgstr "komentuar në"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -150,11 +158,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Ruaj"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "Mbyllur"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -177,20 +185,20 @@ msgstr "Përmbledhje"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "shto një Produkt të ri"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "shto një Version të ri"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "shtoni Ndërtimin e ri"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -233,7 +241,7 @@ msgstr "Emri i përdoruesit"
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "Kërko"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -248,7 +256,7 @@ msgstr "Indetifikim"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "Krijuar në"
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:553
@@ -880,27 +888,27 @@ msgstr "Regjistrohu"
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Ndihmë"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Gjuhë"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Gjuhët e mbështetura"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
-msgstr ""
+msgstr "Kërkoni gjuhë të re"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr ""
+msgstr "Mënyra e përkthimit"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
-msgstr ""
+msgstr "Udhëzues për përkthim"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -1357,15 +1365,15 @@ msgstr "Duke vrapuar"
 
 #: tcms/templates/run/get.html:157 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Mbaruar në"
 
 #: tcms/templates/run/get.html:163
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "Automatkisht"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
@@ -1421,15 +1429,15 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
-msgstr ""
+msgstr "Anullo"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "hiqni këtë etiketë"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Shtoni CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
@@ -1441,7 +1449,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Rastet e automatizuara"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
@@ -1450,7 +1458,7 @@ msgstr ""
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "Rasti ID"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
@@ -1473,7 +1481,7 @@ msgstr ""
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTALI"
 
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
@@ -1497,7 +1505,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "Nuk u gjet asnjë ekzekutim"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1529,11 +1537,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Shtoni TC të ri në TP"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "TC e zgjedhur"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1543,12 +1551,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
 msgid "Arguments"
-msgstr ""
+msgstr "Argumentet"
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
-msgstr ""
+msgstr "Kërkesat"
 
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:126
@@ -1574,7 +1582,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "shto kategori të rë"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
@@ -1622,15 +1630,15 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Po"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Jo"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Të dyja"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testcases/templates/testcases/search.html:120
@@ -1648,7 +1656,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Krijuar në"
 
 #: tcms/testcases/views.py:383
 msgid "TestPlan not specified or does not exist"
@@ -1656,11 +1664,11 @@ msgstr ""
 
 #: tcms/testcases/views.py:561
 msgid "History"
-msgstr ""
+msgstr "Histori"
 
 #: tcms/testcases/views.py:566
 msgid "Delete"
-msgstr ""
+msgstr "Fshijni"
 
 #: tcms/testcases/views.py:817
 msgid "TestCase cloning was successful"
@@ -1669,7 +1677,7 @@ msgstr ""
 #: tcms/testcases/views.py:842 tcms/testruns/views.py:392
 #: tcms/testruns/views.py:441
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Kërkohet të paktën një TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1730,7 +1738,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1738,7 +1746,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Emri i planit të provës"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
@@ -1780,12 +1788,12 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "version"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Emrin e përdoruesit ose email"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
@@ -1807,7 +1815,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "Plani ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
@@ -1831,7 +1839,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:543
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "Përdoruesi që keni shtypur nuk ekziston në bazën e të dhënave"
 
 #: tcms/xmlrpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -1844,11 +1852,11 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
-msgstr ""
+msgstr "PROPOZUAR"
 
 #: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
-msgstr ""
+msgstr "KONFIRMUAR"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
@@ -1868,19 +1876,19 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
-msgstr ""
+msgstr "NDALUAR"
 
 #: vinaigrette-deleteme.py:9
 msgid "PASSED"
-msgstr ""
+msgstr "KALOI"
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr ""
+msgstr "DËSHTOI"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLLOKUAR"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
