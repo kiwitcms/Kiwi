@@ -6,8 +6,10 @@
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
-
         <form class="form-horizontal">
+            <div class="form-group">
+                <div class="fa pficon-help help-tooltip" data-toggle="tooltip" data-placement="left" title="{% trans 'Detailed information about test execution status' %}"></div>
+            </div>
             <div class="form-group">
                 <label for="id_product" class="col-md-1 col-lg-1">
                     {% trans "Product" %}
@@ -83,6 +85,7 @@
 
     </div>
 
+    <link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/telemetry.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/status-matrix.css' %}"/>
 
     <script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
