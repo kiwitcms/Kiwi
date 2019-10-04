@@ -12,6 +12,8 @@ let initial_column = {
 };
 
 $(document).ready(() => {
+    $('[data-toggle="tooltip"]').tooltip()
+
     loadInitialProduct();
     loadInitialTestPlans();
 
