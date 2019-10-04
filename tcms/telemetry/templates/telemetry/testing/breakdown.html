@@ -7,8 +7,10 @@
 {% block contents %}
 
     <div class="container-fluid container-cards-pf">
-
         <form class="form-horizontal">
+            <div class="form-group">
+                <div class="fa pficon-help help-tooltip" data-toggle="tooltip" data-placement="left" title="{% trans 'Shows how existing test cases are distributed' %}"></div>
+            </div>
             <div class="form-group">
                 <label for="id_product" class="col-md-1 col-lg-1">
                     {% trans "Product" %}:
@@ -89,6 +91,7 @@
     </div>
 
     <link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/breakdown.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/telemetry.css' %}" />
 
     <script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
     <script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
