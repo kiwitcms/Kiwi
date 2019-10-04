@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-04 10:52\n"
+"PO-Revision-Date: 2019-10-04 11:09\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -150,7 +150,7 @@ msgstr "Δεν βρέθηκαν καταγραφές"
 
 #: tcms/bugs/templates/bugs/get.html:138
 msgid "commented on"
-msgstr ""
+msgstr "σχολίασε"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -158,11 +158,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Αποθηκεύσετε"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "Κλείσε"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -178,20 +178,20 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr ""
+msgstr "Περίληψη"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:38
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "προσθέστε νέο Προϊόν"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "προσθέστε νέα Εκδοση"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
@@ -234,14 +234,14 @@ msgstr "Πριν"
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Όνομα χρήστη"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:126
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "Αναζήτηση"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -252,16 +252,16 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "Ταυτότητα"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "Δημιουργήθηκε στο"
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:553
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #: tcms/bugs/views.py:61
 msgid "New bug"
@@ -634,7 +634,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Σημειώσεις"
 
 #: tcms/templates/case/get_details.html:62
 #: tcms/templates/run/get_case_runs.html:182 tcms/templates/run/report.html:94
@@ -734,7 +734,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
@@ -801,7 +801,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:142
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:125
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:88
@@ -810,11 +810,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "Ετικέτες"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Σχέδια"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
@@ -828,14 +828,14 @@ msgstr ""
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Δράση"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr ""
+msgstr "Αφαιρώ"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
@@ -859,12 +859,12 @@ msgstr ""
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Το προφίλ μου"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Αλλαξε κωδικό"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
@@ -872,7 +872,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Σύνδεση"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
@@ -881,59 +881,59 @@ msgstr ""
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Βοήθεια"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Υποστηριζόμενες γλώσσες"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
-msgstr ""
+msgstr "Ζητήστε νέα γλώσσα"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr ""
+msgstr "Λειτουργία μετάφρασης"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
-msgstr ""
+msgstr "Οδηγός μετάφρασης"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Πρώτη σελίδα"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Προηγούμενη σελίδα"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Τρέχουσα σελίδα"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Επόμενη σελίδα"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Τελευταία σελίδα"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Σε αυτό το σχέδιο δεν βρέθηκε δοκιμαστική περίπτωση."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "Επεξεργασία σχεδίου"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "Επεξεργαστείτε το σχέδιο δοκιμών"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
@@ -945,15 +945,15 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "Σχέδιο εκτύπωσης"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "Διαγραφή σχεδίου"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "Διαγραφή προγράμματος δοκιμών"
 
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
@@ -969,7 +969,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Συγγραφέας"
 
 #: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
 msgid "Plan Type"
