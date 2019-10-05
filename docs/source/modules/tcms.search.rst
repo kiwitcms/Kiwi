@@ -2,9 +2,9 @@ tcms.search package
 ===================
 
 .. automodule:: tcms.search
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -12,3 +12,4 @@ Submodules
 .. toctree::
 
    tcms.search.order
+

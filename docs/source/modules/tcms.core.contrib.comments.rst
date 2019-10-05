@@ -2,9 +2,9 @@ tcms.core.contrib.comments package
 ==================================
 
 .. automodule:: tcms.core.contrib.comments
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -14,3 +14,4 @@ Submodules
    tcms.core.contrib.comments.forms
    tcms.core.contrib.comments.utils
    tcms.core.contrib.comments.views
+

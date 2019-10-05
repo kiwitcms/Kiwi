@@ -4,7 +4,7 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.bugs.models import Bug
 from tcms.management.models import Tag
-from tcms.xmlrpc.decorators import permissions_required
+from tcms.rpc.decorators import permissions_required
 
 __all__ = (
     'add_tag',

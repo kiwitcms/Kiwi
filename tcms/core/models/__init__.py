@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from tcms.core.models.base import UrlMixin
-from tcms.xmlrpc.serializer import XMLRPCSerializer
+from tcms.rpc.serializer import XMLRPCSerializer
 
 get_user_model()._meta.ordering = ['username']
 

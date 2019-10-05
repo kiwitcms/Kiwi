@@ -112,8 +112,8 @@ class TestCase(TCMSActionModel):
 
     @classmethod
     def to_xmlrpc(cls, query=None):
-        from tcms.xmlrpc.serializer import TestCaseXMLRPCSerializer
-        from tcms.xmlrpc.utils import distinct_filter
+        from tcms.rpc.serializer import TestCaseXMLRPCSerializer
+        from tcms.rpc.utils import distinct_filter
 
         _query = query or {}
         qs = distinct_filter(TestCase, _query).order_by('pk')

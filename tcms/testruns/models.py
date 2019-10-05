@@ -13,9 +13,9 @@ import vinaigrette
 from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.xmlrpc.serializer import TestExecutionXMLRPCSerializer
-from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
-from tcms.xmlrpc.utils import distinct_filter
+from tcms.rpc.serializer import TestExecutionXMLRPCSerializer
+from tcms.rpc.serializer import TestRunXMLRPCSerializer
+from tcms.rpc.utils import distinct_filter
 
 TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [
     'StatusSubtotal',

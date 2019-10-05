@@ -2,9 +2,9 @@ tcms.testcases.helpers package
 ==============================
 
 .. automodule:: tcms.testcases.helpers
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -12,3 +12,4 @@ Submodules
 .. toctree::
 
    tcms.testcases.helpers.email
+
