@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 09:52\n"
+"PO-Revision-Date: 2019-10-05 10:03\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -627,7 +627,7 @@ msgstr "insekt"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr "Nga Vrapimi"
+msgstr "Nga Ekzekutimi"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -770,7 +770,7 @@ msgstr "Mirësevini %(user)s,\n"
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Rasti i Testimit është %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -787,7 +787,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Testi në ekzekutim %(pk)s është krijuar për ty.\n\n"
+"### Ndërlidhje ###\n"
+"Ekzekutimi i testit: %(run_url)s\n"
+"Plani i ekzekutimit: %(plan_url)s\n\n"
+"### Informacioni bazik i ekzekutimit ###\n"
+"Përmbledhje: %(summary)s\n\n"
+"Menaxhuar: %(manager)s.\n"
+"Testuesi paracaktuar: %(default_tester)s.\n\n"
+"Produkt: %(product)s\n"
+"Versioni i produktit: %(version)s\n"
+"Ndërtimi: %(build)s\n\n"
+"Shënime:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -834,7 +846,7 @@ msgstr "Rastet"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
-msgstr ""
+msgstr "Ekzekutimet"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
@@ -862,7 +874,7 @@ msgstr "Vizitor i mirëseardhur"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Ekzekutimet e mia"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
@@ -1087,7 +1099,7 @@ msgstr "Krijoni TestRun të ri"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "Ndrysho rishikuesin per rastin e testimit"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1161,13 +1173,13 @@ msgstr "Përmbledhja e çështjes së provës"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "Rishikues"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:83 tcms/templates/run/get.html:131
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Testues i paracaktuar"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1320,11 +1332,11 @@ msgstr "Të gjitha rastet e konfirmuar"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Rastet e Testimit në Ekzekutim"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Rastet në këtë Ekzekutim"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1365,7 +1377,7 @@ msgstr "E përfunduar"
 #: tcms/templates/run/get.html:149
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr "Duke vrapuar"
+msgstr "Duke ekzekutuar"
 
 #: tcms/templates/run/get.html:157 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1381,11 +1393,11 @@ msgstr "Automatkisht"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr ""
+msgstr "Theksoje"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Fshini rastet e përzgjedhura nga ekzekutimi i këtij testi"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1417,7 +1429,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "Automatike"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
@@ -1594,7 +1606,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
-msgstr ""
+msgstr "Menaxheri i ekzekutimeve"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
@@ -1876,7 +1888,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr ""
+msgstr "DUKE EKZEKUTUAR"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
