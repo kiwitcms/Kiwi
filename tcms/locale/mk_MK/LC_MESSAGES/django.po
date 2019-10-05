@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:31\n"
+"PO-Revision-Date: 2019-10-05 10:47\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Macedonian\n"
 "Language: mk_MK\n"
@@ -330,36 +330,36 @@ msgstr "Обновено на %(history_date)s\n"
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Основниот URL  не е потврден! Види <a href=\"%(doc_url)s\">документирано</a> иhref=\"%(admin_url)s\">променилit</a<"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Оваа имајл адреса е веќе во употреба"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Лични информации"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Дозвола"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Корисник со оваа емаил адреса веќе постои"
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Вашата нова%s корисничка потврда"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Вашата корисничка сметка е креирана, ве молиме проверете ја вашата маил адреса за потврда"
 
 #: tcms/kiwi_auth/views.py:61
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Вашата корисничка сметка е создадена, но ви треба администраророт да ја активира"
 
 #: tcms/kiwi_auth/views.py:66
 msgid "Following is the administrator list"
