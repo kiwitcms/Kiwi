@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 09:32\n"
+"PO-Revision-Date: 2019-10-05 09:42\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -431,7 +431,7 @@ msgstr "Trendetet e ekzekutimit"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Shëndeti i Rastit të Testimit"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
@@ -467,11 +467,11 @@ msgstr "Ndihmë API"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr ""
+msgstr "Gabim i ri"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr ""
+msgstr "Kërko gabime"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -543,24 +543,24 @@ msgstr "Drejtimi i provës"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Shëndeti i Rastit të Testimit"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Rastet më të shpeshta të dështimit"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
 msgid "Test Case"
-msgstr ""
+msgstr "Rast Testimi"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
 msgid "Failed executions"
-msgstr ""
+msgstr "Rastet e ekzekutimit"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% ekzekutime të dështuara"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -576,7 +576,7 @@ msgstr "Jeni të sigurt që doni te fshjini këtë material të bashkëngjitur?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "sistemi kryesor i menaxhimit të çështjeve të testit me kod-burim të hapur"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
@@ -657,7 +657,7 @@ msgstr "Informacione për ekzekutimin e provave"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
-msgstr ""
+msgstr "Data ekzekutimit"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
@@ -669,7 +669,7 @@ msgstr "Asnjë regjistër i regjistruar"
 
 #: tcms/templates/case/get_details_case_run.html:107
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Gabime dhe ndërlidhje"
 
 #: tcms/templates/case/get_details_case_run.html:108
 #: tcms/templates/include/tags_card.html:27
@@ -1497,7 +1497,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Shfaq të gjitha rastet"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
