@@ -70,7 +70,8 @@ class MissingPermissionsChecker(checkers.BaseChecker):
                 if decorator.func.name == 'permission_required':
                     found_permissions_required = True
                     break
-                elif decorator.func.name == 'method_decorator' and \
+                if decorator.func.name == 'method_decorator' and \
+                        isinstance(decorator.args[0], astroid.Call) and \
                         decorator.args[0].func.name == 'permission_required':
                     found_permissions_required = True
                     break
