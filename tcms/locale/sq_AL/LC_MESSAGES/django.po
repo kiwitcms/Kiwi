@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:31\n"
+"PO-Revision-Date: 2019-10-05 10:47\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1791,15 +1791,15 @@ msgstr "Kërkohet të paktën një test plani për printim"
 #: tcms/testplans/views.py:525
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Plani testues \"%s\" nuk ekziston"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Autorizimi refuzohet: Testi i ekzekutuar nuk ju përket"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "Data e ndalimit është e pavlefshme. Formati i vlefshëm është YYYY-MM-DD."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1811,7 +1811,7 @@ msgstr "Klono Ekzekutimin e testimit"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Ekzekutim testimi i ri"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
@@ -1824,21 +1824,22 @@ msgstr "Emrin e përdoruesit ose email"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Skenar(ë) testimi të zgjedhura:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s e skenarëve të para zgjedhur të testimit nuk është i konfirmuar dhe nuk do të klonohet!\n"
+"Shiko planin e testimit për më shumë detaje!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Kërko ekzekutime testesh"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Përmbledhje skenari testimi"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
@@ -1846,7 +1847,7 @@ msgstr "Plani ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "ID e Planit të Testimit"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires a TestPlan, select one"
