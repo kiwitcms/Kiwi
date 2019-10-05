@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:21\n"
+"PO-Revision-Date: 2019-10-05 10:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1200,25 +1200,25 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Γρήγορη αναζήτηση"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Κανονική αναζήτηση"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Δημιουργήθηκε"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Δεν βρέθηκαν περιπτώσεις δοκιμών."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Κωδικός πρόσβασης"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
@@ -1226,49 +1226,49 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "κωδικός πρόσβασης"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Σύνδεση"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Καλώς ήρθατε στο Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Παρακαλω συνδεθείτε για να ξεκινήσετε"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "ή"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "καταχωρίστε έναν λογαριασμό"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "αν δεν έχετε εναν!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Ο κωδικός πρόσβασής σας έχει ρυθμιστεί. Μπορείτε να προχωρισεται και"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "τώρα"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:185
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαιώνω"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Εισαγάγετε δύο φορές τον νέο κωδικό πρόσβασης, ώστε να μπορέσουμε να επιβεβαιώσουμε ότι το πληκτρολογήσατε σωστά"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1426,15 +1426,15 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
-msgstr ""
+msgstr "Ακυρώνω"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "αφαιρέστε αυτήν την ετικέτα"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Προσθέστε CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
