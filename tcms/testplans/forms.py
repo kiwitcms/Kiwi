@@ -10,31 +10,25 @@ from .models import TestPlan, PlanType
 
 class BasePlanForm(forms.Form):
     name = forms.CharField(
-        label="Plan name",
         required=True
     )
     type = forms.ModelChoiceField(
-        label="Type",
         queryset=PlanType.objects.all(),
         empty_label=None,
     )
     text = forms.CharField(
-        label="Plan Document",
         widget=SimpleMDE(),
         required=False
     )
     product = forms.ModelChoiceField(
-        label="Product",
         queryset=Product.objects.all(),
         empty_label=None,
     )
     product_version = forms.ModelChoiceField(
-        label="Product Version",
         queryset=Version.objects.none(),
         empty_label=None,
     )
     extra_link = StripURLField(
-        label='Extra link',
         max_length=1024,
         required=False
     )
@@ -88,21 +82,18 @@ class SearchPlanForm(forms.Form):
     pk = forms.IntegerField(required=False)
     pk__in = forms.CharField(required=False)
     parent__pk = forms.IntegerField(required=False)
-    search = forms.CharField(label="Search", required=False)
-    plan_id = forms.IntegerField(label="Plan ID", required=False)
-    name__icontains = forms.CharField(label="Plan name", required=False)
+    search = forms.CharField(required=False)
+    plan_id = forms.IntegerField(required=False)
+    name__icontains = forms.CharField(required=False)
     product = forms.ModelChoiceField(
-        label="Product",
         queryset=Product.objects.all().order_by('name'),
         required=False
     )
     version = forms.ModelChoiceField(
-        label="Product Version",
         queryset=Version.objects.none(),
         required=False
     )
     type = forms.ModelChoiceField(
-        label="Type",
         queryset=PlanType.objects.all(),
         required=False,
     )
@@ -113,13 +104,13 @@ class SearchPlanForm(forms.Form):
     tag__name__in = forms.CharField(required=False)
     is_active = forms.BooleanField(required=False)
     create_date__gte = forms.DateTimeField(
-        label='Create after', required=False,
+        required=False,
         widget=forms.DateInput(attrs={
             'class': 'vDateField',
         })
     )
     create_date__lte = forms.DateTimeField(
-        label='Create before', required=False,
+        required=False,
         widget=forms.DateInput(attrs={
             'class': 'vDateField',
         })
@@ -159,12 +150,10 @@ class ClonePlanForm(forms.Form):
     )
 
     copy_testcases = forms.BooleanField(
-        label='Create a copy',
         help_text='Unchecking will create a link to selected plans',
         required=False
     )
     set_parent = forms.BooleanField(
-        label='Set source plan as parent',
         help_text='Check it to set the source plan as parent of new cloned '
                   'plan.',
         required=False
