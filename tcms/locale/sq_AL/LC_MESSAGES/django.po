@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:21\n"
+"PO-Revision-Date: 2019-10-05 10:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1687,7 +1687,7 @@ msgstr "Krijuar në"
 
 #: tcms/testcases/views.py:383
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Plani Testimit nuk specifikohet ose nuk ekziston"
 
 #: tcms/testcases/views.py:561
 msgid "History"
@@ -1699,7 +1699,7 @@ msgstr "Fshijni"
 
 #: tcms/testcases/views.py:817
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Klonimi i TestCase ishte i suksesshëm"
 
 #: tcms/testcases/views.py:842 tcms/testruns/views.py:392
 #: tcms/testruns/views.py:441
@@ -1712,19 +1712,19 @@ msgstr "Klono TestPlan-in"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Klono TC-të"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Klononi ose lidhni Rastet Testimit ekzistuese në Plane Testimi të reja"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr "TPja mëmë"
+msgstr "TPja prind"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Vendos Planin e testimit burim si prind të Planit të ri të testimit"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1736,31 +1736,31 @@ msgstr "Krijo TestPlan të ri"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "ID-ja prind"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Dokumenti i planit te testit:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
-msgstr ""
+msgstr "Njofto:"
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
-msgstr ""
+msgstr "Autori I Skenarit Testues"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
-msgstr ""
+msgstr "Njofto kur:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Plani i testimit është përditësuar"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Rastet e testimit janë përditësuar"
 
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1769,7 +1769,7 @@ msgstr "Aktiv"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Kërko plane testimi"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1782,11 +1782,11 @@ msgstr "Plani i testimit"
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Kërkohet një plan testimi"
 
 #: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Kërkohet të paktën një test plani për printim"
 
 #: tcms/testplans/views.py:525
 #, python-format
@@ -1803,11 +1803,11 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Modifiko Ekzekutimin e testit"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Klono Ekzekutimin e testimit"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
@@ -1850,11 +1850,11 @@ msgstr ""
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Të krijosh një Ekzekutim Testi kërkon një Plan Testi, zgjidh një"
 
 #: tcms/testruns/views.py:57
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Të krijosh një Ekzekutimi Testimi kërkon të pakten një Rast Testimi"
 
 #: tcms/testruns/views.py:396
 msgid "Clone of "
@@ -1870,7 +1870,7 @@ msgstr "Përdoruesi që keni shtypur nuk ekziston në bazën e të dhënave"
 
 #: tcms/xmlrpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Aktivizoni raportimin në këtë Ndjekjes i çeshtjesh duke configuruar base_url e tij!"
 
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
