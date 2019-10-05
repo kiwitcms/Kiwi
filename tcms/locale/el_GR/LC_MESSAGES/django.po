@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:31\n"
+"PO-Revision-Date: 2019-10-05 10:47\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1463,26 +1463,26 @@ msgstr ""
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Κλείσιμο στο"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:27
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:137
 msgid "Bugs"
-msgstr ""
+msgstr "Σφάλματα"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "Λίστα σφαλμάτων"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "ΣΥΝΟΛΟ"
 
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "Αναφορά"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
@@ -1548,12 +1548,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
 msgid "Arguments"
-msgstr ""
+msgstr "Επιχειρήματα"
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
-msgstr ""
+msgstr "Απαιτήσεις"
 
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:126
@@ -1567,7 +1567,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:156
 msgid "Test plans"
-msgstr ""
+msgstr "Δοκιμαστικά σχέδια"
 
 #: tcms/testcases/templates/testcases/get.html:187
 msgid "Components"
@@ -1579,7 +1579,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "προσθέστε νέα κατηγορία"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
