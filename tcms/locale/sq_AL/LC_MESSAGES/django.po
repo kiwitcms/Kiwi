@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:03\n"
+"PO-Revision-Date: 2019-10-05 10:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1130,7 +1130,7 @@ msgstr "Shfaq opsionet e filtrit"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Kliko tek unë, pastaj tërhiq dhe lësho rreshtat për të rregulluar rendin, dhe kliko lidhjen 'Kryej renditjen' për të paraqitur ndryshimet e tua"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1203,11 +1203,11 @@ msgstr "Të gjitha rastet janë ngarkuar."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Shto nyje-femije planit te tanishem"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Hiq nyjen femije nga plani i tanishem"
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
@@ -1340,11 +1340,11 @@ msgstr "Rastet në këtë Ekzekutim"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Përdor celësin e radhitjes të ruajtur në plan"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Si të caktosh një rast?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
@@ -1352,7 +1352,7 @@ msgstr "Tabela më poshtë rendit të gjitha rastet e planit të konfirmuar"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "kontrollo kutinë për të shtuar rastet në provë. Mos harroni të përditësoni në fund"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1409,7 +1409,7 @@ msgstr "Përditëso"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Cakto këtë rast(e) te persona të tjerë"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
@@ -1425,7 +1425,7 @@ msgstr "Ndërlidhje"
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "Testuesi paracaktuar"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
@@ -1433,11 +1433,11 @@ msgstr "Automatike"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "Gabim"
 
 #: tcms/templates/run/get_case_runs.html:144
 msgid "URL points to a defect"
-msgstr ""
+msgstr "Pikat e URL për një defekt"
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
@@ -1586,7 +1586,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:156
 msgid "Test plans"
-msgstr ""
+msgstr "Plane testimi"
 
 #: tcms/testcases/templates/testcases/get.html:187
 msgid "Components"
@@ -1614,23 +1614,23 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Kontrollues i paracaktuar i ekzekutimeve"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "Njofto kur"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Rasti i testimit u perditsua"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Rasti u testimit u fshi"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "Dergo ne CC tek"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
@@ -1638,7 +1638,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Kërko raste testimi"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
@@ -1666,7 +1666,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr ""
+msgstr "Identiteti i gabimit"
 
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
@@ -1697,7 +1697,7 @@ msgstr "Kërkohet të paktën një TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Klono TestPlan-in"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
@@ -1709,7 +1709,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "TPja mëmë"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
@@ -1717,7 +1717,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Ndysho TestPlan"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
