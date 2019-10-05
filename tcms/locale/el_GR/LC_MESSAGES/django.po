@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-04 11:29\n"
+"PO-Revision-Date: 2019-10-05 09:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -126,7 +126,7 @@ msgstr "Χτίζω"
 #: tcms/bugs/templates/bugs/get.html:84 tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:224
 msgid "Attachments"
-msgstr ""
+msgstr "Συνημμένα"
 
 #: tcms/bugs/templates/bugs/get.html:91
 #: tcms/testcases/templates/testcases/get.html:231
@@ -202,7 +202,7 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Αναζήτηση σφαλμάτων"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
