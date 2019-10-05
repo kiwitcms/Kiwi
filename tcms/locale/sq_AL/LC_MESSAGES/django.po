@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:12\n"
+"PO-Revision-Date: 2019-10-05 10:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1401,7 +1401,7 @@ msgstr "Fshini rastet e përzgjedhura nga ekzekutimi i këtij testi"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "Përditëso ekzekutimet e rasteve IDLE me tekstin e rastit me të ri"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1441,7 +1441,7 @@ msgstr "Pikat e URL për një defekt"
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Vetë-përditëso Monitoruesin e Çështjeve"
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
@@ -1457,11 +1457,11 @@ msgstr "Shtoni CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Raporti i Ekzekutimit të Testit"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Raste Manuale"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
@@ -1469,7 +1469,7 @@ msgstr "Rastet e automatizuara"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "ID Ekzekutimi-skenari"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1489,11 +1489,11 @@ msgstr "E mbyllur në"
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:137
 msgid "Bugs"
-msgstr ""
+msgstr "Gabime"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "Lista e Gabimeve"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
@@ -1505,7 +1505,7 @@ msgstr "Raporto"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Nuk ka gabime"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
@@ -1525,7 +1525,7 @@ msgstr "Nuk u gjet asnjë ekzekutim"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Ju lutem vendosni id-në(të) të vlefshme skenari. përdorni presje për të ndarë më shumë se një Id skenari. psh. \"111, 222\""
 
 #: tcms/testcases/forms.py:90
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1540,16 +1540,27 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Skenar**: ... çfarë sjelljeje do të testohet ...\n"
+"  **Të dhëna** ... kushtet ...\n"
+"  **Kur** ... veprimet ...\n"
+"  **Atëherë** ... Rezultatet e pritshme ...\n\n"
+"*Veprimet*:\n\n"
+"1. artikull\n"
+"2. artikull\n"
+"3. artikull\n\n"
+"*Rezultatet e pritshme*:\n\n"
+"1. artikull\n"
+"2. artikull\n"
+"3. artikull"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "E FSHIRË: Skenar Testues #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Klono Skenarin Testues"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1582,7 +1593,7 @@ msgstr "Lidhje reference"
 
 #: tcms/testcases/templates/testcases/get.html:144
 msgid "Bug URL"
-msgstr ""
+msgstr "Gabim URL"
 
 #: tcms/testcases/templates/testcases/get.html:156
 msgid "Test plans"
@@ -1590,11 +1601,11 @@ msgstr "Plane testimi"
 
 #: tcms/testcases/templates/testcases/get.html:187
 msgid "Components"
-msgstr ""
+msgstr "Komponentët"
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
-msgstr ""
+msgstr "Rasti Testimi i Ri"
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
@@ -1602,7 +1613,7 @@ msgstr "shto kategori të rë"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Njofto"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
@@ -1610,7 +1621,7 @@ msgstr "Menaxheri i ekzekutimeve"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "Të caktuarit"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
@@ -1634,7 +1645,7 @@ msgstr "Dergo ne CC tek"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Adresat e postës elektronike të ndara me presje. Një email njoftimi do t'i dërgohet secilës adresë emaili brenda listës në CC."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1642,7 +1653,7 @@ msgstr "Kërko raste testimi"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Përmbledhje skenari testimi"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
@@ -1661,12 +1672,12 @@ msgstr "Të dyja"
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Ndaj vlera të shumta me presje (,)"
 
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr "Identiteti i gabimit"
+msgstr "ID i gabimit"
 
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
@@ -1721,7 +1732,7 @@ msgstr "Ndysho TestPlan"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Krijo TestPlan të ri"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1847,11 +1858,11 @@ msgstr ""
 
 #: tcms/testruns/views.py:396
 msgid "Clone of "
-msgstr ""
+msgstr "Klonimi i "
 
 #: tcms/testruns/views.py:450
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID e rastit te testimit nuk është një numër i plotë i vlefshëm"
 
 #: tcms/testruns/views.py:543
 msgid "The user you typed does not exist in database"
@@ -1876,15 +1887,15 @@ msgstr "KONFIRMUAR"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
-msgstr ""
+msgstr "DISABLED"
 
 #: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "NEED_UPDATE"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr ""
+msgstr "IDLE"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
@@ -1912,5 +1923,5 @@ msgstr "GABIM"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr ""
+msgstr "WAIVED"
 
