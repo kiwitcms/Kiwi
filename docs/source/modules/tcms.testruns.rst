@@ -2,9 +2,9 @@ tcms.testruns package
 =====================
 
 .. automodule:: tcms.testruns
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -16,3 +16,4 @@ Submodules
    tcms.testruns.forms
    tcms.testruns.models
    tcms.testruns.views
+

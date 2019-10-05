@@ -2,9 +2,9 @@ tcms.core.utils package
 =======================
 
 .. automodule:: tcms.core.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -12,3 +12,4 @@ Submodules
 .. toctree::
 
    tcms.core.utils.mailto
+

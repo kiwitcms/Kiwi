@@ -2,27 +2,27 @@ tcms package
 ============
 
 .. automodule:: tcms
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-   tcms.bugs
-   tcms.core
-   tcms.issuetracker
-   tcms.kiwi_auth
-   tcms.management
-   tcms.search
-   tcms.telemetry
-   tcms.testcases
-   tcms.testplans
-   tcms.testruns
-   tcms.utils
-   tcms.xmlrpc
+    tcms.bugs
+    tcms.core
+    tcms.issuetracker
+    tcms.kiwi_auth
+    tcms.management
+    tcms.rpc
+    tcms.search
+    tcms.telemetry
+    tcms.testcases
+    tcms.testplans
+    tcms.testruns
+    tcms.utils
 
 Submodules
 ----------
@@ -31,3 +31,4 @@ Submodules
 
    tcms.signals
    tcms.wsgi
+

@@ -2,9 +2,9 @@ tcms.core.templatetags package
 ==============================
 
 .. automodule:: tcms.core.templatetags
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -13,3 +13,4 @@ Submodules
 
    tcms.core.templatetags.extra_filters
    tcms.core.templatetags.report_tags
+

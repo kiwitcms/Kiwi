@@ -318,7 +318,7 @@ INSTALLED_APPS = [
     'tcms.testplans.apps.AppConfig',
     'tcms.testruns.apps.AppConfig',
     'tcms.telemetry',
-    'tcms.xmlrpc',
+    'tcms.rpc',
 ]
 
 for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
@@ -351,25 +351,25 @@ COMMENTS_APP = 'tcms.core.contrib.comments'
 # in alphabetic order
 MODERNRPC_METHODS_MODULES = [
     'tcms.telemetry.api',
-    'tcms.xmlrpc.api.attachment',
-    'tcms.xmlrpc.api.auth',
-    'tcms.xmlrpc.api.bug',
-    'tcms.xmlrpc.api.build',
-    'tcms.xmlrpc.api.category',
-    'tcms.xmlrpc.api.classification',
-    'tcms.xmlrpc.api.component',
-    'tcms.xmlrpc.api.plantype',
-    'tcms.xmlrpc.api.priority',
-    'tcms.xmlrpc.api.product',
-    'tcms.xmlrpc.api.tag',
-    'tcms.xmlrpc.api.testcase',
-    'tcms.xmlrpc.api.testexecution',
-    'tcms.xmlrpc.api.testexecutionstatus',
-    'tcms.xmlrpc.api.testcasestatus',
-    'tcms.xmlrpc.api.testplan',
-    'tcms.xmlrpc.api.testrun',
-    'tcms.xmlrpc.api.user',
-    'tcms.xmlrpc.api.version',
+    'tcms.rpc.api.attachment',
+    'tcms.rpc.api.auth',
+    'tcms.rpc.api.bug',
+    'tcms.rpc.api.build',
+    'tcms.rpc.api.category',
+    'tcms.rpc.api.classification',
+    'tcms.rpc.api.component',
+    'tcms.rpc.api.plantype',
+    'tcms.rpc.api.priority',
+    'tcms.rpc.api.product',
+    'tcms.rpc.api.tag',
+    'tcms.rpc.api.testcase',
+    'tcms.rpc.api.testexecution',
+    'tcms.rpc.api.testexecutionstatus',
+    'tcms.rpc.api.testcasestatus',
+    'tcms.rpc.api.testplan',
+    'tcms.rpc.api.testrun',
+    'tcms.rpc.api.user',
+    'tcms.rpc.api.version',
 ]
 
 if 'tcms.bugs' in INSTALLED_APPS:
@@ -402,7 +402,7 @@ LOGGING = {
         'simple': {
             'format': '[%(asctime)s] %(levelname)s %(message)s'
         },
-        'xmlrpc_log': {
+        'rpc_log': {
             'format': '[%(asctime)s] %(levelname)s XMLRPC %(process)d "%(message)s"'
         },
     },
@@ -417,10 +417,10 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
-        'xmlrpc': {
+        'rpc': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'xmlrpc_log',
+            'formatter': 'rpc_log',
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -434,8 +434,8 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'kiwi.xmlrpc': {
-            'handlers': ['xmlrpc'],
+        'kiwi.rpc': {
+            'handlers': ['rpc'],
             'level': 'DEBUG',
             'propagate': True,
         },

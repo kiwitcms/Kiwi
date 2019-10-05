@@ -2,9 +2,9 @@ tcms.core.helpers package
 =========================
 
 .. automodule:: tcms.core.helpers
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 Submodules
 ----------
@@ -12,3 +12,4 @@ Submodules
 .. toctree::
 
    tcms.core.helpers.comments
+
