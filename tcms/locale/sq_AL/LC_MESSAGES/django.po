@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 09:22\n"
+"PO-Revision-Date: 2019-10-05 09:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -269,11 +269,11 @@ msgstr "Gabim i ri"
 
 #: tcms/bugs/views.py:164
 msgid "Edit bug"
-msgstr ""
+msgstr "Përpuno gabimin"
 
 #: tcms/bugs/views.py:194
 msgid "*bug closed*"
-msgstr ""
+msgstr "*gabimi u mbyll*"
 
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
@@ -411,7 +411,7 @@ msgstr "Rastet e provave të kërkimit"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRI"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
@@ -427,7 +427,7 @@ msgstr "Matrica e statusit"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
-msgstr ""
+msgstr "Trendetet e ekzekutimit"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
