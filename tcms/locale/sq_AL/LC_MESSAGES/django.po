@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-04 10:49\n"
+"PO-Revision-Date: 2019-10-05 09:22\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -61,7 +61,7 @@ msgstr "Raportuar"
 #: tcms/templates/run/get_case_runs.html:76
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Përgjegjësi"
 
 #: tcms/bugs/templates/bugs/get.html:58
 #: tcms/bugs/templates/bugs/mutable.html:26
@@ -202,7 +202,7 @@ msgstr "shtoni Ndërtimin e ri"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Kërko për gabime"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
@@ -265,7 +265,7 @@ msgstr "Redakto"
 
 #: tcms/bugs/views.py:61
 msgid "New bug"
-msgstr ""
+msgstr "Gabim i ri"
 
 #: tcms/bugs/views.py:164
 msgid "Edit bug"
