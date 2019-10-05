@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 09:42\n"
+"PO-Revision-Date: 2019-10-05 09:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -683,7 +683,7 @@ msgstr "Shto"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Raporto gabimet"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -699,7 +699,7 @@ msgstr "Rastet e provës"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Panel Administrimi"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
@@ -714,7 +714,8 @@ msgstr "Filluar në"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s Ekzekuto Testimin(s) or Testo Rastet(s) e caktuara, që duhet të testohen.\n"
+"Këtu janë më të fundit %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -730,7 +731,7 @@ msgstr "Planet e Testit tuaj"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Plan testimi"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:166
@@ -748,7 +749,8 @@ msgstr "Ekzekutimet"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Ju po menaxhoni %(total_count)s Plane Testimi, %(disabled_count)s janë të pa-sakta.\n"
+"Këto janë të fundit %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -793,7 +795,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "I dashur Administrator,\n"
+"dikush sapo u regjistrua me një llogari me emër përdoruesi %(username)s në instancën tuaj Kiwi TCMS dhe po pret aprovimin nga ju!\n\n"
+"Shko tek %(user_url)s për të aktivizuar llogarinë!"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -1063,11 +1067,11 @@ msgstr "printo pamje nga raste të përzgjedhura"
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:557
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Klono"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "Klono rastet e përzgjedhura në një plan tjetër testimi"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
@@ -1389,7 +1393,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "Përditëso"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
@@ -1397,7 +1401,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Ndërlidhje"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1493,7 +1497,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Përzgjidh të gjitha rastet/Mos përzgjidh asnjë rast"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
@@ -1501,7 +1505,7 @@ msgstr "Shfaq të gjitha rastet"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "ID e ekzekutimit"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
@@ -1546,7 +1550,7 @@ msgstr "TC e zgjedhur"
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
@@ -1562,7 +1566,7 @@ msgstr "Kërkesat"
 #: tcms/testcases/templates/testcases/mutable.html:126
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Lidhje reference"
 
 #: tcms/testcases/templates/testcases/get.html:144
 msgid "Bug URL"
@@ -1751,7 +1755,7 @@ msgstr "Emri i planit të provës"
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Plani i testimit"
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
@@ -1848,7 +1852,7 @@ msgstr ""
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "Modeli %s nuk ka çelës primar. Ju duhet të specifikoni këtë fushë manualisht."
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
@@ -1892,7 +1896,7 @@ msgstr "BLLOKUAR"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
-msgstr ""
+msgstr "GABIM"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
