@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:12\n"
+"PO-Revision-Date: 2019-10-05 10:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1068,15 +1068,15 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "Κατάργηση επιλεγμένων περιπτώσεων από αυτό το σχέδιο"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Εκτέλεση"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "Δημιουργήστε νέο TestRun"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "Αλλάξτε τον προεπιλεγμένο έλεγχο"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1098,16 +1098,16 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:141
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "Προτεραιότητα"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "Κάντε κλικ για να εμφανίσετε τις επιλογές φίλτρου"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "Εμφάνιση επιλογών φίλτρου"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -1125,7 +1125,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Δοκιμαστής"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1137,15 +1137,15 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "Κατηγορία"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "Αντικείμενα ανά σελίδα"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "Επίσης, επιλέξτε όλες τις περιπτώσεις που δεν εμφανίζονται ακόμα παρακάτω."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
@@ -1164,11 +1164,11 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Έκδοση κειμένου"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Ενέργειες"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
