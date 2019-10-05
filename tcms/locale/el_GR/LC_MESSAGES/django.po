@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:03\n"
+"PO-Revision-Date: 2019-10-05 10:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -555,12 +555,12 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
 msgid "Failed executions"
-msgstr ""
+msgstr "Αποτυχημένες εκτελέσεις"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% των αποτυχημένων εκτελέσεων"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -576,7 +576,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε 
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "το κύριο σύστημα διαχείρισης περιπτώσεων δοκιμής ανοιχτού κώδικα"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
@@ -631,7 +631,7 @@ msgstr "Από την εκτέλεση"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "Δεν βρέθηκε κανένα σφάλμα"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:33
@@ -644,16 +644,16 @@ msgstr "Σημειώσεις"
 #: tcms/templates/run/get_case_runs.html:182 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
 #: tcms/templates/case/get_details_case_run.html:46
 #: tcms/templates/case/get_details_case_run.html:48
 msgid "Show All"
-msgstr ""
+msgstr "Προβολή όλων"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Πληροφορίες εκτέλεσης δοκιμής"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
@@ -661,7 +661,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
-msgstr ""
+msgstr "Έκδοση κειμένου"
 
 #: tcms/templates/case/get_details_case_run.html:87
 msgid "No log recorded"
@@ -679,15 +679,15 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:55
 #: tcms/testcases/templates/testcases/get.html:208
 msgid "Add"
-msgstr ""
+msgstr "Προσθέτω"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Αναφορά προβλήματος"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Περιεχόμενα"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
@@ -718,7 +718,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "ΠΡΟΒΟΛΗ ΟΛΩΝ"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
@@ -726,7 +726,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "Τα σχέδια δοκιμής σας"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
@@ -1032,25 +1032,25 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "Δεν υπάρχουν συνημμένα"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Υπόθεση"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Γράψτε νέα περίπτωση"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Προσθέστε περιπτώσεις από άλλα σχέδια"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
