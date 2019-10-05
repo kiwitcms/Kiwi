@@ -33,7 +33,6 @@ class BaseRunForm(forms.Form):
 
 class NewRunForm(BaseRunForm):
     case = forms.ModelMultipleChoiceField(
-        label='Cases',
         queryset=TestCase.objects.filter(case_status__id=2).all(),
     )
 
@@ -50,29 +49,24 @@ class XMLRPCNewRunForm(BaseRunForm):
 
 class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
     plan = forms.ModelChoiceField(
-        label='Test Plan',
         queryset=TestPlan.objects.all(),
         required=False,
     )
     summary = forms.CharField(
-        label='Summary',
         required=False
     )
     manager = forms.ModelChoiceField(
-        label='Manager', queryset=User.objects.all(), required=False
+        queryset=User.objects.all(), required=False
     )
     product = forms.ModelChoiceField(
-        label='Product',
         queryset=Product.objects.all(),
         empty_label=None, required=False
     )
     product_version = forms.ModelChoiceField(
-        label='Product Version',
         queryset=Version.objects.none(),
         empty_label=None, required=False
     )
     build = forms.ModelChoiceField(
-        label='Build',
         queryset=Build.objects.all(),
         required=False
     )
@@ -105,7 +99,6 @@ class SearchRunForm(forms.Form):
         required=False
     )
     build = forms.ModelChoiceField(
-        label='Build',
         queryset=Build.objects.none(),
         required=False,
     )
