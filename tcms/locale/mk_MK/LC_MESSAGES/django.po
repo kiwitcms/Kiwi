@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:53\n"
+"PO-Revision-Date: 2019-10-05 10:03\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Macedonian\n"
 "Language: mk_MK\n"
@@ -26,23 +26,31 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Опис на проблемот:\n\n\n"
+"Колку често може да се репродуцира:\n\n\n"
+"Чекори за репродукција:\n"
+"1\n"
+"2.\n"
+"3.\n\n"
+"Фактички резултати:\n\n\n"
+"Очекувани резултати:\n\n\n"
+"Додатни информации:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
-msgstr ""
+msgstr "Отворено"
 
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "затворен"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "Pепортер"
 
 #: tcms/bugs/templates/bugs/get.html:47
 #: tcms/bugs/templates/bugs/mutable.html:75
