@@ -57,6 +57,22 @@ def remove_tag(bug_id, tag):
     )
 
 
+@permissions_required('bugs.delete_bug')
+@rpc_method(name='Bug.remove_bug')
+def remove_bug(bug_id):
+    """
+    .. function:: XML-RPC Bug.delete_bug(bug_id)
+
+        Remove Bug object(s).
+
+        :param bug_id: PK of Bug to modify
+        :return: None
+        :raises: PermissionDenied if missing *bugs.delete_bugtag* permission
+        :raises: DoesNotExist if objects specified don't exist
+    """
+    Bug.objects.get(pk=bug_id).delete()
+
+
 @rpc_method(name='Bug.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

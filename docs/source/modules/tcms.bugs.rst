@@ -11,6 +11,7 @@ Submodules
 
 .. toctree::
 
+   tcms.bugs.admin
    tcms.bugs.api
    tcms.bugs.forms
    tcms.bugs.models
