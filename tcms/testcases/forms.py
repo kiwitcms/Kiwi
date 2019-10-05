@@ -46,41 +46,35 @@ class BugField(forms.CharField):
 # =========== Forms for create/update ==============
 
 class BaseCaseForm(forms.Form):
-    summary = forms.CharField(label="Summary", )
-    default_tester = UserField(label="Default tester", required=False)
-    requirement = forms.CharField(label="Requirement", required=False)
+    summary = forms.CharField()
+    default_tester = UserField(required=False)
+    requirement = forms.CharField(required=False)
     is_automated = forms.BooleanField(initial=False, required=False)
-    script = forms.CharField(label="Script", required=False)
-    arguments = forms.CharField(label="Arguments", required=False)
+    script = forms.CharField(required=False)
+    arguments = forms.CharField(required=False)
     extra_link = StripURLField(
-        label='Extra link',
         max_length=1024,
         required=False
     )
     # sortkey = forms.IntegerField(label = 'Sortkey', required = False)
     case_status = forms.ModelChoiceField(
-        label="Case status",
         queryset=TestCaseStatus.objects.all(),
         empty_label=None,
         required=False
     )
     priority = forms.ModelChoiceField(
-        label="Priority",
         queryset=Priority.objects.filter(is_active=True),
         empty_label=None,
     )
     product = forms.ModelChoiceField(
-        label="Product",
         queryset=Product.objects.all(),
         empty_label=None,
     )
     category = forms.ModelChoiceField(
-        label="Category",
         queryset=Category.objects.none(),
         empty_label=None,
     )
     notes = forms.CharField(
-        label='Notes',
         widget=forms.Textarea,
         required=False
     )
@@ -155,11 +149,9 @@ class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
 
 class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
     summary = forms.CharField(
-        label="Summary",
         required=False,
     )
     priority = forms.ModelChoiceField(
-        label="Priority",
         queryset=Priority.objects.all(),
         empty_label=None,
         required=False,
@@ -182,30 +174,26 @@ class BaseCaseSearchForm(forms.Form):
     default_tester = forms.CharField(required=False)
     tag__name__in = forms.CharField(required=False)
     category = forms.ModelChoiceField(
-        label="Category",
         queryset=Category.objects.none(),
         required=False
     )
     priority = forms.ModelMultipleChoiceField(
-        label="Priority",
         queryset=Priority.objects.filter(is_active=True),
         widget=forms.CheckboxSelectMultiple(),
         required=False
     )
     case_status = forms.ModelMultipleChoiceField(
-        label="Case status",
         queryset=TestCaseStatus.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
         required=False
     )
     component = forms.ModelChoiceField(
-        label="Components",
         queryset=Component.objects.none(),
         required=False
     )
     bug_id = BugField(label="Bug ID", required=False)
     is_automated = forms.BooleanField(required=False)
-    items_per_page = forms.ChoiceField(label='Items per page',
+    items_per_page = forms.ChoiceField(
                                        required=False,
                                        choices=ITEMS_PER_PAGE_CHOICES)
 
@@ -239,7 +227,6 @@ class SearchCaseForm(BaseCaseSearchForm):
     # todo: is the plan field used ?
     plan = forms.CharField(required=False)
     product = forms.ModelChoiceField(
-        label="Product",
         queryset=Product.objects.all(),
         required=False
     )
