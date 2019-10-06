@@ -36,6 +36,11 @@ class Get(DetailView):  # pylint: disable=missing-permission-required
                         _('Edit'),
                         reverse('bugs-edit', args=[self.object.pk])
                     ),
+                    ('-', '-'),
+                    (
+                        _('Delete'),
+                        reverse('admin:bugs_bug_delete', args=[self.object.pk])
+                    ),
                 ])
             ]}
         )
