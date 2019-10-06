@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-06 11:41\n"
+"PO-Revision-Date: 2019-10-06 11:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1353,7 +1353,7 @@ msgstr "Σημείωση"
 
 #: tcms/templates/run/get.html:144
 msgid "Finished"
-msgstr ""
+msgstr "Τερματίστηκε"
 
 #: tcms/templates/run/get.html:149
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1366,11 +1366,11 @@ msgstr ""
 
 #: tcms/templates/run/get.html:163
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "Αυτομάτως"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
@@ -1386,7 +1386,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "Ενημέρωση"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
@@ -1414,11 +1414,11 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "Σφάλμα"
 
 #: tcms/templates/run/get_case_runs.html:144
 msgid "URL points to a defect"
-msgstr ""
+msgstr "Η διεύθυνση URL υποδεικνύει σε ένα ελάττωμα"
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
@@ -1583,7 +1583,7 @@ msgstr "προσθέστε νέα κατηγορία"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Ειδοποιώ"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
@@ -1627,7 +1627,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
