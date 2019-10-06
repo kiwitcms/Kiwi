@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-06 11:52\n"
+"PO-Revision-Date: 2019-10-06 12:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1631,11 +1631,11 @@ msgstr "Ναι"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Οχι"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Και τα δύο"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testcases/templates/testcases/search.html:120
@@ -1653,28 +1653,28 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στο"
 
 #: tcms/testcases/views.py:383
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Το TestPlan δεν έχει προσδιοριστεί ή δεν υπάρχει"
 
 #: tcms/testcases/views.py:561
 msgid "History"
-msgstr ""
+msgstr "Ιστορία"
 
 #: tcms/testcases/views.py:566
 msgid "Delete"
-msgstr ""
+msgstr "Σβήνω"
 
 #: tcms/testcases/views.py:817
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Η κλωνοποίηση του TestCase ήταν επιτυχής"
 
 #: tcms/testcases/views.py:842 tcms/testruns/views.py:392
 #: tcms/testruns/views.py:441
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Απαιτείται τουλάχιστον μία TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1726,16 +1726,16 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Το TestPlan ενημερώνεται"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Οι περιπτώσεις δοκιμών ενημερώνονται"
 
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Ενεργός"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1743,37 +1743,37 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Όνομα σχεδίου δοκιμής"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Σχέδιο δοκιμής"
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Το TestPlan απαιτείται"
 
 #: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Για την εκτύπωση απαιτείται τουλάχιστον ένα σχέδιο δοκιμής"
 
 #: tcms/testplans/views.py:525
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Δεν υπάρχει σχέδιο δοκιμής \"%s\""
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Η άδεια απορρίφθηκε: Το TestRun δεν ανήκει σε εσάς"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "Η ημερομηνία λήξης δεν είναι έγκυρη. Η έγκυρη μορφή είναι YYYY-MM-DD."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Επεξεργαστείτε το TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
@@ -1869,7 +1869,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr ""
+msgstr "ΕΝΑΡΞΗ"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
@@ -1881,7 +1881,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr ""
+msgstr "ΑΠΕΤΥΧΕ"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
@@ -1889,7 +1889,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
-msgstr ""
+msgstr "ΣΦΑΛΜΑ"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
