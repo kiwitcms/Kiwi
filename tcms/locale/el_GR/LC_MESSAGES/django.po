@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-05 10:47\n"
+"PO-Revision-Date: 2019-10-06 11:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -1020,15 +1020,15 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Ονομα αρχείου"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "Υποψήφιος"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Ημερομηνία δημιουργίας"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
@@ -1272,11 +1272,11 @@ msgstr "Εισαγάγετε δύο φορές τον νέο κωδικό πρό
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "ζητήστε μια νέα επαναφορά κωδικού πρόσβασης"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "Εστάλη μήνυμα ηλεκτρονικού ταχυδρομείου επαναφοράς κωδικού πρόσβασης"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
@@ -1285,15 +1285,15 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Επαναφορά κωδικού πρόσβασης"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Επαναφορά κωδικού πρόσβασης TCW Kiwi"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Εγγραφή νέου λογαριασμού"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
@@ -1305,11 +1305,11 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
-msgstr ""
+msgstr "Διευθυντής"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Όλες οι επιβεβαιωμένες περιπτώσεις"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
@@ -1337,19 +1337,19 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Ημερομηνία δημιουργίας"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Επιλεγμένο"
 
 #: tcms/templates/run/get.html:70 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Έκδοση προϊόντος"
 
 #: tcms/templates/run/get.html:112 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Σημείωση"
 
 #: tcms/templates/run/get.html:144
 msgid "Finished"
