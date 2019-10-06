@@ -278,7 +278,7 @@ msgstr "*затворена грешка*"
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
 msgid "User %s not found!"
-msgstr "Корисникот% не е пронајден"
+msgstr "Корисникот %s не е пронајден"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
