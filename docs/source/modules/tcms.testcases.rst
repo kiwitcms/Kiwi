@@ -2,16 +2,16 @@ tcms.testcases package
 ======================
 
 .. automodule:: tcms.testcases
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    tcms.testcases.helpers
+   tcms.testcases.helpers
 
 Submodules
 ----------
@@ -23,4 +23,3 @@ Submodules
    tcms.testcases.forms
    tcms.testcases.models
    tcms.testcases.views
-

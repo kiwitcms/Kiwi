@@ -2,9 +2,9 @@ tcms.management package
 =======================
 
 .. automodule:: tcms.management
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -14,4 +14,3 @@ Submodules
    tcms.management.admin
    tcms.management.forms
    tcms.management.models
-

@@ -2,9 +2,9 @@ tcms.testplans.helpers package
 ==============================
 
 .. automodule:: tcms.testplans.helpers
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -12,4 +12,3 @@ Submodules
 .. toctree::
 
    tcms.testplans.helpers.email
-

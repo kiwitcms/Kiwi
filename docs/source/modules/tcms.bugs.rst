@@ -2,9 +2,9 @@ tcms.bugs package
 =================
 
 .. automodule:: tcms.bugs
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -16,4 +16,3 @@ Submodules
    tcms.bugs.forms
    tcms.bugs.models
    tcms.bugs.views
-

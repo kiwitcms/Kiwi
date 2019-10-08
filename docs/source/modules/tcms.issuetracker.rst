@@ -2,9 +2,9 @@ tcms.issuetracker package
 =========================
 
 .. automodule:: tcms.issuetracker
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -19,4 +19,3 @@ Submodules
    tcms.issuetracker.kiwitcms
    tcms.issuetracker.redmine_integration
    tcms.issuetracker.types
-

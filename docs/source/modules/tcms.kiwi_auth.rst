@@ -2,9 +2,9 @@ tcms.kiwi\_auth package
 =======================
 
 .. automodule:: tcms.kiwi_auth
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -15,4 +15,3 @@ Submodules
    tcms.kiwi_auth.forms
    tcms.kiwi_auth.models
    tcms.kiwi_auth.views
-
