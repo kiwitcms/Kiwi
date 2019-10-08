@@ -135,11 +135,7 @@ class CaseNotifyForm(forms.Form):
 # =========== Forms for  XML-RPC functions ==============
 
 
-class XMLRPCBaseCaseForm(BaseCaseForm):
-    pass
-
-
-class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
+class XMLRPCNewCaseForm(BaseCaseForm):
     def clean_case_status(self):
         if not self.cleaned_data['case_status']:
             return TestCaseStatus.get_proposed()
@@ -147,7 +143,7 @@ class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
         return self.cleaned_data['case_status']
 
 
-class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
+class XMLRPCUpdateCaseForm(BaseCaseForm):
     summary = forms.CharField(
         required=False,
     )
