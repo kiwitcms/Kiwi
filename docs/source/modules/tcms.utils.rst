@@ -2,9 +2,9 @@ tcms.utils package
 ==================
 
 .. automodule:: tcms.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -13,4 +13,3 @@ Submodules
 
    tcms.utils.permissions
    tcms.utils.user
-

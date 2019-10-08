@@ -2,21 +2,21 @@ tcms.core package
 =================
 
 .. automodule:: tcms.core
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    tcms.core.contrib
-    tcms.core.forms
-    tcms.core.helpers
-    tcms.core.models
-    tcms.core.templatetags
-    tcms.core.utils
+   tcms.core.contrib
+   tcms.core.forms
+   tcms.core.helpers
+   tcms.core.models
+   tcms.core.templatetags
+   tcms.core.utils
 
 Submodules
 ----------
@@ -32,4 +32,3 @@ Submodules
    tcms.core.serializer
    tcms.core.views
    tcms.core.widgets
-

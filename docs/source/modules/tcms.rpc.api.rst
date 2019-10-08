@@ -2,16 +2,16 @@ tcms.rpc.api package
 ====================
 
 .. automodule:: tcms.rpc.api
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    tcms.rpc.api.forms
+   tcms.rpc.api.forms
 
 Submodules
 ----------
@@ -38,4 +38,3 @@ Submodules
    tcms.rpc.api.user
    tcms.rpc.api.utils
    tcms.rpc.api.version
-
