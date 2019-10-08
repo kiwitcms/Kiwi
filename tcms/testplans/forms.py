@@ -8,6 +8,8 @@ from tcms.management.models import Product, Version
 from .models import TestPlan, PlanType
 
 
+# todo: merge with NewPlanForm below b/c not used
+# anywhere else
 class BasePlanForm(forms.Form):
     name = forms.CharField(
         required=True
