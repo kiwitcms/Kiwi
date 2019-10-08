@@ -8,9 +8,10 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
+from tcms.testcases.forms import NewCaseForm
 
 from tcms.rpc import utils
-from tcms.rpc.forms import UpdateCaseForm, NewCaseForm
+from tcms.rpc.forms import UpdateCaseForm
 from tcms.rpc.decorators import permissions_required
 
 __all__ = (

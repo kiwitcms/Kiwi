@@ -2,7 +2,6 @@
 
 from django.forms.widgets import CheckboxInput
 
-from tcms.testcases.forms import XMLRPCNewCaseForm
 from tcms.testcases.forms import XMLRPCUpdateCaseForm
 from tcms.rpc.utils import parse_bool_value
 
@@ -13,10 +12,6 @@ class XMLRPCCheckboxInput(CheckboxInput):
             return False
         value = parse_bool_value(data.get(name))
         return value
-
-
-class NewCaseForm(XMLRPCNewCaseForm):
-    pass
 
 
 class UpdateCaseForm(XMLRPCUpdateCaseForm):
