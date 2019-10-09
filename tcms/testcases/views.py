@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
+from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
@@ -27,6 +28,7 @@ from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, CaseNotifyForm, CloneCaseForm
 from tcms.testcases.fields import MultipleEmailField
 from tcms.core.contrib.linkreference.models import LinkReference
+from tcms.core.response import ModifySettingsTemplateResponse
 
 
 TESTCASE_OPERATION_ACTIONS = (
@@ -523,50 +525,46 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
         return data
 
 
-def get(request, case_id):  # pylint: disable=missing-permission-required
-    """Get the case content"""
-    # Get the case
-    try:
-        test_case = TestCase.objects.select_related(
-            'author', 'default_tester',
-            'category', 'category',
-            'priority', 'case_status').get(case_id=case_id)
-    except ObjectDoesNotExist:
-        raise Http404
+class TestCaseGetView(DetailView):  # pylint: disable=missing-permission-required
 
-    # Get the test executions
-    tcrs = test_case.case_run.select_related(
-        'run', 'tested_by',
-        'assignee', 'case',
-        'case', 'status').order_by('run__plan', 'run')
+    model = TestCase
+    template_name = 'testcases/get.html'
+    http_method_names = ['get']
+    response_class = ModifySettingsTemplateResponse
 
-    # Render the page
-    context_data = {
-        'test_case': test_case,
-        'executions': tcrs,
-    }
-
-    with modify_settings(
+    def render_to_response(self, context, **response_kwargs):
+        self.response_class.modify_settings = modify_settings(
             MENU_ITEMS={'append': [
                 ('...', [
                     (
                         _('Edit'),
-                        reverse('testcases-edit', args=[test_case.pk])
+                        reverse('testcases-edit', args=[self.object.pk])
                     ),
                     (
                         _('Clone'),
-                        reverse('testcases-clone') + "?case=%d" % test_case.pk
+                        reverse('testcases-clone') + "?case=%d" % self.object.pk
                     ),
                     (
                         _('History'),
-                        "/admin/testcases/testcase/%d/history/" % test_case.pk
+                        "/admin/testcases/testcase/%d/history/" % self.object.pk
                     ),
                     ('-', '-'),
                     (
                         _('Delete'),
-                        reverse('admin:testcases_testcase_delete', args=[test_case.pk])
-                    )])]}):
-        return render(request, 'testcases/get.html', context_data)
+                        reverse('admin:testcases_testcase_delete', args=[self.object.pk])
+                    )])]}
+        )
+        return super().render_to_response(context, **response_kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        test_case_runs = self.object.case_run.select_related(
+            'run', 'tested_by',
+            'assignee', 'case',
+            'status').order_by('run__plan', 'run')
+
+        context['executions'] = test_case_runs
+        return context
 
 
 @require_POST

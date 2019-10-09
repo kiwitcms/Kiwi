@@ -5,7 +5,7 @@
 {% load extra_filters %}
 {% load attachments_tags %}
 
-{% block title %}TC-{{ test_case.pk }}: {{ test_case.summary }}{% endblock %}
+{% block title %}TC-{{ object.pk }}: {{ object.summary }}{% endblock %}
 {% block body_class %}cards-pf{% endblock %}
 
 {% block contents %}
@@ -13,12 +13,12 @@
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12" style="margin-top: 0">
         <span id="test_case_pk"
-            data-pk="{{ test_case.pk }}"
+            data-pk="{{ object.pk }}"
             data-perm-remove-tag="{{ perms.testcases.delete_testcasetag }}"
             data-perm-remove-component="{{ perms.testcases.delete_testcasecomponent }}"
             data-perm-remove-plan="{{ perms.testcases.delete_testcaseplan }}"
             data-perm-remove-bug="{{ perms.testcases.delete_bug }}"
-        >TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
+        >TC-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
 <div class="row row-cards-pf">
@@ -26,12 +26,12 @@
         <div class="card-pf card-pf-accented">
             <div class="card-pf-body">
                 <div class="markdown-text">
-                    {{ test_case.text|markdown2html }}
+                    {{ object.text|markdown2html }}
                 </div>
 
                 <p>
                     <strong>{% trans 'Notes' %}:</strong>
-                    {{ test_case.notes }}
+                    {{ object.notes }}
                 </p>
             </div>
         </div>
@@ -41,13 +41,13 @@
         <div class="card-pf card-pf-accented card-pf-aggregate-status">
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa pficon-user"></span>{% trans 'Author' %}:
-                <a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author.username }}</a>
+                <a href="{% url "tcms-profile" object.author.username %}">{{ object.author.username }}</a>
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-search"></span>{% trans 'Default tester' %}:
-                {% if test_case.default_tester  %}
-                <a href="{% url "tcms-profile" test_case.default_tester.username %}">{{ test_case.default_tester.username }}</a>
+                {% if object.default_tester  %}
+                <a href="{% url "tcms-profile" object.default_tester.username %}">{{ object.default_tester.username }}</a>
                 {% else %}
                 -
                 {% endif %}
@@ -55,64 +55,64 @@
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span id="product_pk"
-                    data-pk="{{ test_case.category.product.pk }}"
+                    data-pk="{{ object.category.product.pk }}"
                     class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
-                {{ test_case.category.product }}
+                {{ object.category.product }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-tag"></span>{% trans 'Category' %}:
-                {{ test_case.category }}
+                {{ object.category }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa
-                    {% if test_case.case_status.is_confirmed %}
+                    {% if object.case_status.is_confirmed %}
                         fa-check-square
                     {% else %}
                         fa-times
                     {% endif %}"></span>{% trans 'Status' %}:
-                {{ test_case.case_status }}
+                {{ object.case_status }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-hourglass"></span>{% trans 'Priority' %}:
-                {{ test_case.priority }}
+                {{ object.priority }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
-                <span class="fa fa-calendar"></span>{{ test_case.create_date }}
+                <span class="fa fa-calendar"></span>{{ object.create_date }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa
-                    {% if test_case.is_automated %}
+                    {% if object.is_automated %}
                         fa-cog
                     {% else %}
                         fa-thumbs-up
                     {% endif %}"></span>{% trans 'Automated' %}:
-                {{ test_case.is_automated }}
+                {{ object.is_automated }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-terminal"></span>{% trans 'Script' %}:
-                {{ test_case.script|default:'-' }}
+                {{ object.script|default:'-' }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-terminal"></span>{% trans 'Arguments' %}:
-                {{ test_case.arguments|default:'-' }}
+                {{ object.arguments|default:'-' }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-file-text"></span>{% trans 'Requirements' %}:
-                {{ test_case.requirement|default:'-' }}
+                {{ object.requirement|default:'-' }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-link"></span>{% trans 'Reference link' %}:
-                {% if test_case.extra_link %}
-                    <a href="{{ test_case.extra_link }}">{{ test_case.extra_link }}</a>
+                {% if object.extra_link %}
+                    <a href="{{ object.extra_link }}">{{ object.extra_link }}</a>
                 {% else %}
                     -
                 {% endif %}
@@ -235,7 +235,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% get_attachments_for test_case as attachments_list %}
+                        {% get_attachments_for object as attachments_list %}
                         {% for attachment in attachments_list %}
                             <tr>
                                 <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
@@ -251,7 +251,7 @@
                         <tfoot>
                             <tr>
                                 <th colspan="4">
-                                    {% attachment_form test_case %}
+                                    {% attachment_form object %}
                                 </th>
                             </tr>
                         </tfoot>
