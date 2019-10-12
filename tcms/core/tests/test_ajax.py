@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.ajax import _TagCounter, _TagObjects
 from tcms.testplans.models import TestPlanTag
@@ -71,123 +72,43 @@ class Test_TestCaseUpdates(BasePlanCase):
         self._assert_default_tester_is(self.tester)
 
     def test_update_default_tester_non_existing_user(self):
+        username = 'user which doesnt exist'
         response = self.client.post(self.url, {
             'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
             'what_to_update': 'default_tester',
-            'usernmae': 'user which doesnt exist'
+            'username': username
         })
 
-        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(result['rc'], 1)
-        self.assertEqual(result['response'], 'Default tester not found!')
+        self.assertEqual(result['response'], _('User %s not found!') % username)
 
         self._assert_default_tester_is(None)
 
 
-class Test_Tag_Test(test.TestCase):
+class Test_Tag_Render(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.url = reverse('ajax-tags')
         cls.test_tag = TagFactory()
         cls.test_plan = TestPlanFactory()
         cls.test_case = TestCaseFactory()
         cls.test_run = TestRunFactory()
 
-
-class Test_Tag_Add(Test_Tag_Test):
-
-    def test_add_tag_to_test_plan(self):
-        response = self.client.get(self.url, {
-            'tags': self.test_tag,
-            'plan': self.test_plan.plan_id,
-            'a': 'add'
-        })
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(self.test_plan.tag.count(), 1)
-        self.assertTrue(self.test_tag in self.test_plan.tag.all())
-
-    def test_add_tag_to_test_case(self):
-        response = self.client.get(self.url, {
-            'tags': self.test_tag,
-            'case': self.test_case.case_id,
-            'a': 'add'
-        })
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(self.test_case.tag.count(), 1)
-        self.assertTrue(self.test_tag in self.test_case.tag.all())
-
-    def test_add_tag_to_test_run(self):
-        response = self.client.get(self.url, {
-            'tags': self.test_tag,
-            'run': self.test_run.run_id,
-            'a': 'add'
-        })
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(self.test_run.tag.count(), 1)
-        self.assertTrue(self.test_tag in self.test_run.tag.all())
-
-
-class Test_Tag_Remove(Test_Tag_Test):
-
-    def test_remove_tag_from_test_plan(self):
-        self.test_plan.add_tag(self.test_tag)
-
-        response = self.client.get(self.url, {
-            'tags': self.test_tag,
-            'plan': self.test_plan.plan_id,
-            'a': 'remove'
-        })
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(self.test_plan.tag.count(), 0)
-
-    def test_remove_tag_from_test_case(self):
-        self.test_case.add_tag(self.test_tag)
-
-        response = self.client.get(self.url, {
-            'tags': self.test_tag,
-            'case': self.test_case.case_id,
-            'a': 'remove'
-        })
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(self.test_case.tag.count(), 0)
-
-    def test_remove_tag_from_test_run(self):
-        self.test_run.add_tag(self.test_tag)
-
-        response = self.client.get(self.url, {
-            'tags': self.test_tag,
-            'run': self.test_run.run_id,
-            'a': 'remove'
-        })
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(self.test_run.tag.count(), 0)
-
-
-class Test_Tag_Render(Test_Tag_Test):
-
-    @classmethod
-    def setUpTestData(cls):
-        super(Test_Tag_Render, cls).setUpTestData()
-
         cls.test_plan.add_tag(cls.test_tag)
         cls.test_case.add_tag(cls.test_tag)
         cls.test_run.add_tag(cls.test_tag)
 
-        for _ in range(0, 3):
+        for i in range(0, 3):
             TestPlanFactory().add_tag(cls.test_tag)
 
-        for _ in range(0, 4):
+        for i in range(0, 4):
             TestCaseFactory().add_tag(cls.test_tag)
 
-        for _ in range(0, 5):
+        for i in range(0, 5):
             TestRunFactory().add_tag(cls.test_tag)
 
     def test_render_plan(self):
