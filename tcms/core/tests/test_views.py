@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from http import HTTPStatus
-from urllib.parse import urlencode
 
 from django import test
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django_comments.models import Comment
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.testruns.models import TestExecution
 from tcms.tests import BaseCaseRun
@@ -25,17 +25,14 @@ class TestNavigation(test.TestCase):
         cls.user.set_password('testing')
         cls.user.save()
 
-    def test_urls_for_emails_with_pluses(self):
-        # test for https://github.com/Nitrate/Nitrate/issues/262
-        # when email contains + sign it needs to be properly urlencoded
-        # before passing it as query string argument to the search views
+    def test_navigation_displays_currently_logged_user(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.user.username,
             password='testing')
         response = self.client.get(reverse('iframe-navigation'))
 
-        self.assertContains(response, urlencode({'people': self.user.email}))
-        self.assertContains(response, urlencode({'author__email__startswith': self.user.email}))
+        self.assertContains(response, self.user.username)
+        self.assertContains(response, _('My profile'))
 
 
 class TestDashboard(BaseCaseRun):
@@ -57,8 +54,10 @@ class TestDashboard(BaseCaseRun):
 
     def test_when_logged_in_renders_dashboard(self):
         response = self.client.get(reverse('core-views-index'))
-        self.assertContains(response, 'Test Plans')
-        self.assertContains(response, 'Test Runs')
+
+        self.assertContains(response, _('Test executions'))
+        self.assertContains(response, _('Dashboard'))
+        self.assertContains(response, _('Your Test plans'))
 
     def test_dashboard_shows_testruns_for_manager(self):
         test_run = TestRunFactory(manager=self.tester)
