@@ -153,7 +153,7 @@ class UpdateTestCaseActorsView(View):
                 user = User.objects.get(email=username)
             except User.DoesNotExist:
                 return JsonResponse({'rc': 1,
-                                     'response': _('User %s not found!' % username)},
+                                     'response': _('User %s not found!') % username},
                                     status=HTTPStatus.NOT_FOUND)
 
         what_to_update = request.POST.get('what_to_update')

@@ -626,7 +626,7 @@ class UpdateAssigneeView(View):
                 user = User.objects.get(email=assignee)
             except User.DoesNotExist:
                 return JsonResponse({'rc': 1,
-                                     'response': _('User %s not found!' % assignee)},
+                                     'response': _('User %s not found!') % assignee},
                                     status=HTTPStatus.NOT_FOUND)
 
         object_ids = request.POST.getlist('ids[]')
