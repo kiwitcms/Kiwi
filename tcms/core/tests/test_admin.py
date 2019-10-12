@@ -5,13 +5,13 @@ from http import HTTPStatus
 
 from django.urls import reverse
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
-from tcms.tests import BasePlanCase, BaseCaseRun
+from tcms.tests import LoggedInTestCase
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import TestCaseEmailSettingsFactory
 
 
-class TestAdminView(BasePlanCase):
+class TestAdminView(LoggedInTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -36,36 +36,38 @@ class TestAdminView(BasePlanCase):
         self.assertContains(response, 'Components')
         self.assertContains(response, 'Priorities')
         self.assertContains(response, 'Products')
+        self.assertContains(response, 'Tags')
         self.assertContains(response, 'Versions')
+
+        # for tcms.bugs
+        self.assertContains(response, '<a href="/admin/bugs/" class="grp-section">%s</a>' %
+                            _('Bugs'), html=True)
+        self.assertContains(response, '<strong>Bugs</strong>', html=True)
 
         # for tcms.testcases
         self.assertContains(response, 'Bug trackers')
         self.assertContains(response, 'Test case categories')
 
         self.assertNotContains(response, 'Test case status')
-        self.assertNotContains(response, 'Test case texts')
-        self.assertNotContains(response, 'Test cases')
+        self.assertContains(response, 'Testcases')
+        self.assertContains(response, 'Test cases')
 
         # for tcms.testplans
         self.assertContains(response, 'Plan types')
-
-        self.assertNotContains(response, 'Test plans')
+        self.assertContains(response, 'Testplans')
+        self.assertContains(response, 'Test plans')
 
         # for tcms.testruns
-        self.assertNotContains(response, 'Testruns')
-        self.assertNotContains(response, 'Test case run statuss')
-        self.assertNotContains(response, 'Test case run statuses')
-        self.assertNotContains(response, 'Test runs')
-
-        # for tcms.xmlrpc
-        self.assertContains(response, 'Xml rpc logs')
+        self.assertNotContains(response, 'Test execution status')
+        self.assertContains(response, 'Testruns')
+        self.assertContains(response, 'Test runs')
 
         # for django_comments
         self.assertNotContains(response, 'Django_Comments')
         self.assertNotContains(response, 'Comments')
 
         # for django.contrib.sites
-        self.assertContains(response, 'Sites')
+        self.assertContains(response, _('Sites'))
 
     def test_sites_admin_add(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -89,41 +91,52 @@ class TestAdminView(BasePlanCase):
         self.assertContains(response, 'column-is_superuser')
 
 
-class TestUserDeletionViaAdminView(BaseCaseRun):
+class TestUserDeletionViaAdminView(LoggedInTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.case.email_setting = TestCaseEmailSettingsFactory(case=cls.case,
-                                                              notify_on_case_update=True,
-                                                              auto_to_case_author=True)
+        cls.superuser = UserFactory()
+        cls.superuser.is_staff = True
+        cls.superuser.is_superuser = True
+        cls.superuser.set_password('password')
+        cls.superuser.save()
 
-        cls.tester.is_staff = True  # can access admin
-        cls.tester.save()
+        cls.regular_user = UserFactory()
+        cls.regular_user.is_staff = True
+        cls.regular_user.set_password('password')
+        cls.regular_user.save()
 
-        cls.another_user = UserFactory()
+        cls.url = reverse('admin:auth_user_delete', args=[cls.regular_user.pk])
 
-        cls.url = reverse('admin:auth_user_delete', args=[cls.tester.pk])
-
-    def test_delete_another_user(self):
+    def test_regular_user_should_not_delete_another_user(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
+            username=self.regular_user.username,
             password='password')
-        response = self.client.get(reverse('admin:auth_user_delete', args=[self.another_user.pk]))
+        response = self.client.get(reverse('admin:auth_user_delete', args=[self.superuser.pk]))
 
         # it is not possible to delete other user accounts
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
-    def test_delete_myself(self):
+    def test_regular_user_should_be_able_to_delete_himself(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
+            username=self.regular_user.username,
+            password='password')
+        response = self.client.get(self.url)
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, _("Yes, I'm sure"))
+
+    def test_superuser_should_be_able_to_delete_any_user(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.superuser.username,
             password='password')
         response = self.client.get(self.url)
 
         # verify there's the Yes, I'm certain button
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, "Yes, I'm sure")
-
+        self.assertContains(response, _("Yes, I'm sure"))
         response = self.client.post(self.url, {'post': 'yes'}, follow=True)
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, "was deleted successfully")
+        self.assertNotContains(response, '<a href="/admin/auth/user/%d/change/">%s</a>' %
+                               (self.regular_user.pk, self.regular_user.username), html=True)
