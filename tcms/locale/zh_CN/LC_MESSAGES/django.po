@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:52\n"
+"PO-Revision-Date: 2019-10-12 09:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -371,7 +371,7 @@ msgstr "您的账户已被成功激活"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr "仪表 板"
+msgstr "仪表盘"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
