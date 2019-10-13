@@ -102,13 +102,13 @@ class Test_Tag_Render(BasePlanCase):
         cls.test_case.add_tag(cls.test_tag)
         cls.test_run.add_tag(cls.test_tag)
 
-        for i in range(0, 3):
+        for _i in range(0, 3):
             TestPlanFactory().add_tag(cls.test_tag)
 
-        for i in range(0, 4):
+        for _i in range(0, 4):
             TestCaseFactory().add_tag(cls.test_tag)
 
-        for i in range(0, 5):
+        for _i in range(0, 5):
             TestRunFactory().add_tag(cls.test_tag)
 
     def test_render_plan(self):
