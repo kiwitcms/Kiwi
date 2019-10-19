@@ -6,5 +6,5 @@ django-grappelli==2.13.1
 django-uuslug==1.1.9
 django-vinaigrette==1.2.0
 python-bugzilla==2.3.0
-PyGithub==1.43.8
+PyGithub==1.44
 python-gitlab==1.12.1
