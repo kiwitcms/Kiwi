@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 20:01\n"
+"PO-Revision-Date: 2019-10-21 20:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -807,7 +807,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Estimado Administrador,\n"
+"alguien acaba de registrar una cuenta con el nombre de usuario %(username)s en su\n"
+"instancia de Kiwi TCMS y está esperando su aprobación!\n\n"
+"¡Haz click en %(user_url)s para activar la cuenta!"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -950,11 +953,11 @@ msgstr "No se encontró ningún caso de prueba en este plan."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "Editar Plan"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "Editar plan de pruebas"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
@@ -962,19 +965,19 @@ msgstr "Clonar Plan de Pruebas"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Clonar este plan a otro producto"
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "Imprimir Plan"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "Eliminar Plan"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "Eliminar plan de pruebas"
 
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
@@ -1058,7 +1061,7 @@ msgstr "Caso"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Escribir nuevo caso de pruebas"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
@@ -1067,11 +1070,11 @@ msgstr "Añadir casos de prueba de otros planes"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "imprimir vista de casos de prueba seleccionados"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:557
@@ -1081,11 +1084,11 @@ msgstr "Clonar"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "Clonar casos de prueba seleccionados a otro plan de prueba"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "Eliminar casos de prueba seleccionados de este plan"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1326,15 +1329,15 @@ msgstr "Administrador"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Todos los Casos de Prueba Confirmados"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Casos de prueba en esta ejecución"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Casos en esta ejecución"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1342,23 +1345,23 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "¿Cómo asignar caso de prueba?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "La tabla siguiente lista todos los casos de prueba confirmados del plan"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "marca la casilla de verificación para añadir casos en la ejecución de pruebas. Recuerda actualizar al final"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Fecha de creación"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Seleccionado"
 
 #: tcms/templates/run/get.html:70 tcms/templates/run/report.html:27
 msgid "Product Version"
@@ -1366,11 +1369,11 @@ msgstr "Versión del producto"
 
 #: tcms/templates/run/get.html:112 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: tcms/templates/run/get.html:144
 msgid "Finished"
-msgstr ""
+msgstr "Terminado"
 
 #: tcms/templates/run/get.html:149
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1379,23 +1382,23 @@ msgstr "Ejecutando"
 
 #: tcms/templates/run/get.html:157 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Terminado el"
 
 #: tcms/templates/run/get.html:163
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "Automáticamente"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr ""
+msgstr "Resaltar"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Eliminar casos de prueba seleccionados de este plan"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1403,11 +1406,11 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "Actualizar"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Asignar este(os) caso(s) a otras personas"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
@@ -1467,7 +1470,7 @@ msgstr "Casos automatizados"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "ID de Ejecución"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1538,7 +1541,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Escenario**: ... qué comportamiento se probará ...\n"
+"  **Dado** ... condiciones ...\n"
+"  **Cuando** ... acciones ...\n"
+"  **Entonces** ... resultados esperados ...\n\n"
+"*Acciones*:\n\n"
+"1. ítem\n"
+"2. ítem\n"
+"3. ítem\n\n"
+"*Resultados previstos*:\n\n"
+"1. ítem\n"
+"2. ítem\n"
+"3. ítem"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
