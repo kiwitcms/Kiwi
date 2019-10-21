@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 15:12\n"
+"PO-Revision-Date: 2019-10-21 15:14\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -723,7 +723,7 @@ msgstr "Sus planes de prueba"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Plan de Pruebas"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:166
@@ -731,21 +731,22 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Ejecuciones"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Administras %(total_count)s TestPlan(s), %(disabled_count)s están desactivados.\n"
+"Aquí tienes la última %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "No hay ningún Plan(s) de prueba que le pertenezca"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -753,12 +754,15 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Bienvenido %(user)s,\n"
+"gracias por registrarse en una cuenta de %(site_domain)s!\n\n"
+"Para activar su cuenta, haga clic en este enlace:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "¡El TestCase ha sido eliminado por %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -798,7 +802,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:142
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:125
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:88
@@ -807,44 +811,44 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "Etiquetas"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Planes"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
-msgstr ""
+msgstr "Casos"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
-msgstr ""
+msgstr "Ejecuciones"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Añadir etiqueta"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Cambiar el modo de navegación"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Bienvenida invitado"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
@@ -852,11 +856,11 @@ msgstr ""
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Mis planes de prueba"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Mi perfil"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
@@ -1069,7 +1073,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "Crear nuevo TestRun"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
