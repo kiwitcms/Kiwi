@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 19:32\n"
+"PO-Revision-Date: 2019-10-21 19:42\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -475,12 +475,12 @@ msgstr "Buscar errores"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Nuevo usuario esperando aprobación"
 
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NUEVO: Ejecución de Caso de Prueba #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -564,11 +564,11 @@ msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Página no encontrada"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Error interno del servidor"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -576,7 +576,7 @@ msgstr ""
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "el principal sistema de gestión de casos de prueba de código abierto"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
@@ -886,7 +886,7 @@ msgstr ""
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Registrarse"
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
@@ -894,7 +894,7 @@ msgstr "Ayuda"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
@@ -906,7 +906,7 @@ msgstr "Solicitar nuevo idioma"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr "Modo de traducción"
+msgstr "Habilitar modo de traducción"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
@@ -914,23 +914,23 @@ msgstr "Guía de traducción"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Primera página"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Página anterior"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Página actual"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Siguiente página"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Última página"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -1065,7 +1065,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:557
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Clonar"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1662,7 +1662,7 @@ msgstr "Creado en"
 
 #: tcms/testcases/views.py:383
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Plan de pruebas no especificado o no existente"
 
 #: tcms/testcases/views.py:561
 msgid "History"
@@ -1731,11 +1731,11 @@ msgstr "Notificar cuando:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "El plan de pruebas está actualizado"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Los Casos de Prueba están actualizados"
 
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1753,24 +1753,24 @@ msgstr "Nombre del plan de prueba"
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Plan de pruebas"
 
 #: tcms/testplans/views.py:340
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Se requiere un plan de prueba"
 
 #: tcms/testplans/views.py:517
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Se requiere al menos un plan de prueba para poder imprimir"
 
 #: tcms/testplans/views.py:525
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "El plan de prueba \"%s\" no existe"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Permiso denegado: La ejecución del Caso de Prueba no te pertenece"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
@@ -1778,15 +1778,15 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Editar Ejecución de Caso de Pruebas"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Clonar Ejecución de Caso de Pruebas"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Nueva Ejecución de Caso de Pruebas"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
