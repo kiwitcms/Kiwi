@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 19:51\n"
+"PO-Revision-Date: 2019-10-21 20:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -484,11 +484,11 @@ msgstr "NUEVO: Ejecución de Caso de Prueba #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "OTRO"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Desglose de pruebas"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
@@ -501,7 +501,7 @@ msgstr "Plan de Pruebas"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:71
 #: tcms/templates/plan/get_cases.html:107
@@ -518,49 +518,49 @@ msgstr "Automatizado"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
 msgid "Priorities"
-msgstr ""
+msgstr "Prioridades"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:86
 msgid "Categories"
-msgstr ""
+msgstr "Categorías"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Matriz de estado de pruebas"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Caso de prueba"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
-msgstr ""
+msgstr "Ejecución del Caso de Pruebas"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Salud del Caso de Prueba"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Casos de prueba con fallas más frecuentes"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
 msgid "Test Case"
-msgstr ""
+msgstr "Caso de Prueba"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
 msgid "Failed executions"
-msgstr ""
+msgstr "Ejecuciones fallidas"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% de ejecuciones fallidas"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -572,7 +572,7 @@ msgstr "Error interno del servidor"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "¿Está seguro de que quiere eliminar este archivo adjunto?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -787,7 +787,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "La ejecución de prueba %(pk)s se ha creado o actualizado para ti.\n\n"
+"### Enlaces ###\n"
+"Ejecución de Caso de Prueba: %(run_url)s\n"
+"Plan de prueba: %(plan_url)s\n\n"
+"### Información básica de ejecución ###\n"
+"Resumen: %(summary)s\n\n"
+"Gestionado por: %(manager)s.\n"
+"Tester predeterminado: %(default_tester)s.\n\n"
+"Producto: %(product)s\n"
+"Versión del producto: %(version)s\n"
+"Compilación: %(build)s\n\n"
+"Notas:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
