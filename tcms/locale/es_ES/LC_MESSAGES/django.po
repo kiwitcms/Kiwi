@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 19:24\n"
+"PO-Revision-Date: 2019-10-21 19:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -26,7 +26,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Descripción del problema:\n\n\n"
+"Con qué frecuencia es reproducible:\n\n\n"
+"Pasos para reproducir:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Resultados actuales:\n\n\n"
+"Resultados previstos:\n\n\n"
+"Información adicional:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -451,19 +459,19 @@ msgstr "Guía de usuario"
 
 #: tcms/settings/common.py:136
 msgid "Administration Guide"
-msgstr ""
+msgstr "Guía de Administración"
 
 #: tcms/settings/common.py:137
 msgid "API Help"
-msgstr ""
+msgstr "Ayuda de la API"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr ""
+msgstr "Nuevo error"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr ""
+msgstr "Buscar errores"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -505,7 +513,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:143
 msgid "Automated"
-msgstr ""
+msgstr "Automatizado"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
 #: tcms/templates/run/get_case_runs.html:83
@@ -852,7 +860,7 @@ msgstr "Bienvenida invitado"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Mis ejecuciones de Casos de Prueba"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
@@ -865,11 +873,11 @@ msgstr "Mi perfil"
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Cambiar Contraseña"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Cerrar sesión"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
@@ -882,7 +890,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
@@ -890,19 +898,19 @@ msgstr ""
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
-msgstr ""
+msgstr "Idiomas soportados"
 
 #: tcms/templates/navbar.html:87
 msgid "Request new language"
-msgstr ""
+msgstr "Solicitar nuevo idioma"
 
 #: tcms/templates/navbar.html:93
 msgid "Translation mode"
-msgstr ""
+msgstr "Modo de traducción"
 
 #: tcms/templates/navbar.html:97
 msgid "Translation guide"
-msgstr ""
+msgstr "Guía de traducción"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -970,7 +978,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
 msgid "Plan Type"
@@ -1391,7 +1399,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Hipervínculo"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1403,47 +1411,47 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "Tester por defecto"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "Automático"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "Error"
 
 #: tcms/templates/run/get_case_runs.html:144
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URL apunta a un defecto"
 
 #: tcms/templates/run/get_case_runs.html:147
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Auto-actualizar el gestor de problemas"
 
 #: tcms/templates/run/get_case_runs.html:186
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "eliminar esta etiqueta"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Añadir CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Informe de ejecución de prueba"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Casos manuales"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Casos automatizados"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
@@ -1452,58 +1460,58 @@ msgstr ""
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "ID del Caso"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Probado por"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Cerrado el"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:27
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:137
 msgid "Bugs"
-msgstr ""
+msgstr "Errores"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "Lista de errores"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTAL"
 
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "Reporte"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Sin errores"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Seleccione todos los casos/Seleccione ningún caso"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Expandir todos los casos"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "ID de ejecución"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "No se encontró ejecución"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Por favor, introduzca un id(s) de caso válido. use coma para agregar más de un id de caso. ej. \"111, 222\""
 
 #: tcms/testcases/forms.py:90
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1527,7 +1535,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Clonar TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1564,7 +1572,7 @@ msgstr "URL de error"
 
 #: tcms/testcases/templates/testcases/get.html:156
 msgid "Test plans"
-msgstr ""
+msgstr "Planes de prueba"
 
 #: tcms/testcases/templates/testcases/get.html:187
 msgid "Components"
@@ -1782,22 +1790,23 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "versión"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Nombre de usuario o correo electrónico"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Prueba seleccionada(s):"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "¡%(count)s de los casos de prueba pre-seleccionados no se CONFIRMA y no se clonará! ¡\n"
+"¡Ver plan de prueba para más detalles!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
