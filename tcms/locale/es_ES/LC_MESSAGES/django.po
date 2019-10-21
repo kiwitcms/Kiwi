@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 18:02\n"
+"PO-Revision-Date: 2019-10-21 19:24\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -367,87 +367,87 @@ msgstr "Esta clave de activación ha expirado"
 
 #: tcms/kiwi_auth/views.py:125
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Su cuenta ha sido activada con éxito"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "DASHARD"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "TESTING"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Nuevo plan de prueba"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
-msgstr ""
+msgstr "Nuevo Caso de Prueba"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "BUSCAR"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Buscar planes de prueba"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Buscar ejecuciones de Casos de Prueba"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Buscar Casos de Prueba"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRÍA"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Pruebas"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Desglose"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Matriz de estado"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
-msgstr ""
+msgstr "Tendencias de ejecución"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Salud del Caso de Prueba"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMINISTRACIÓN"
 
 #: tcms/settings/common.py:125
 msgid "Users and groups"
-msgstr ""
+msgstr "Usuarios y Grupos"
 
 #: tcms/settings/common.py:127
 msgid "Everything else"
-msgstr ""
+msgstr "Todo lo demás"
 
 #: tcms/settings/common.py:133
 msgid "Report an Issue"
-msgstr ""
+msgstr "Reportar un Error"
 
 #: tcms/settings/common.py:134
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Solicitar ayuda en StackOverflow"
 
 #: tcms/settings/common.py:135
 msgid "User Guide"
-msgstr ""
+msgstr "Guía de usuario"
 
 #: tcms/settings/common.py:136
 msgid "Administration Guide"
@@ -1801,94 +1801,94 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Buscar pruebas ejecutadas"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Resumen de prueba de ejecución"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "ID del Plan"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "ID de TestPlan"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Crear un TestRun requiere un Plan de Pruebas, seleccione uno"
 
 #: tcms/testruns/views.py:57
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Crear un TestRun requiere al menos un TestCase"
 
 #: tcms/testruns/views.py:396
 msgid "Clone of "
-msgstr ""
+msgstr "Clon de "
 
 #: tcms/testruns/views.py:450
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "El ID de TestCase no es un entero válido"
 
 #: tcms/testruns/views.py:543
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "El usuario que has escrito no existe en la base de datos"
 
 #: tcms/xmlrpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "¡Habilita la notificación a este gestor de problemas configurando su base_url!"
 
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "El modelo %s no tiene clave principal. Debe especificar este campo manualmente."
 
 #: vinaigrette-deleteme.py:2
 msgid "PROPOSED"
-msgstr ""
+msgstr "PROPUESTO"
 
 #: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
-msgstr ""
+msgstr "CONFIRMADO"
 
 #: vinaigrette-deleteme.py:4
 msgid "DISABLED"
-msgstr ""
+msgstr "DESHABILITADO"
 
 #: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "NECESITA ACTUALIZACIÓN"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr ""
+msgstr "OCIOSO"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
-msgstr ""
+msgstr "EN EJECUCIÓN"
 
 #: vinaigrette-deleteme.py:8
 msgid "PAUSED"
-msgstr ""
+msgstr "EN PAUSA"
 
 #: vinaigrette-deleteme.py:9
 msgid "PASSED"
-msgstr ""
+msgstr "PASO"
 
 #: vinaigrette-deleteme.py:10
 msgid "FAILED"
-msgstr ""
+msgstr "FALLO"
 
 #: vinaigrette-deleteme.py:11
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOQUEADO"
 
 #: vinaigrette-deleteme.py:12
 msgid "ERROR"
-msgstr ""
+msgstr "ERROR"
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr ""
+msgstr "WAIVADO"
 
