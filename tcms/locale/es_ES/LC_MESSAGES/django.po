@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 20:12\n"
+"PO-Revision-Date: 2019-10-21 20:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -44,7 +44,7 @@ msgstr "Abrir"
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr "Cerrar"
+msgstr "Cerrado"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -1557,7 +1557,7 @@ msgstr "**Escenario**: ... qué comportamiento se probará ...\n"
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "BORRADO: Caso de prueba #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1634,7 +1634,7 @@ msgstr "Notificar cuando"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "El Caso de Prueba está actualizado"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
