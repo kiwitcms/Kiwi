@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 17:52\n"
+"PO-Revision-Date: 2019-10-21 18:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1193,108 +1193,108 @@ msgstr "El plan que especificó no existe en la base de datos."
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Buscar casos para añadir a este plan de pruebas."
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Búsqueda rápida"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Búsqueda normal"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Creado"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "No se encontraron casos de prueba."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Olvidado"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "contraseña"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Bienvenido a Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Por favor, inicia sesión para empezar"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "registrar una cuenta"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "si no tienes uno!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Tu contraseña ha sido establecida. Puedes seguir adelante y"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "ahora"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:185
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Por favor, introduzca su nueva contraseña dos veces para que podamos verificar que la ha escrito correctamente"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "solicitar un nuevo restablecimiento de contraseña"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "Se envió el email de restablecimiento de contraseña"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Restablecer contraseña"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Reiniciar contraseña de Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Registrar una nueva cuenta"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "Añadir TestCase a TestRun"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:76
 #: tcms/templates/run/report.html:30
@@ -1302,7 +1302,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
-msgstr ""
+msgstr "Administrador"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
@@ -1531,36 +1531,36 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Añadir nuevo TC al TP"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "TC seleccionado"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Script"
-msgstr ""
+msgstr "Script"
 
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
 msgid "Arguments"
-msgstr ""
+msgstr "Parámetros"
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
-msgstr ""
+msgstr "Requisitos"
 
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:126
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Enlace de referencia"
 
 #: tcms/testcases/templates/testcases/get.html:144
 msgid "Bug URL"
-msgstr ""
+msgstr "URL de error"
 
 #: tcms/testcases/templates/testcases/get.html:156
 msgid "Test plans"
@@ -1568,35 +1568,35 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:187
 msgid "Components"
-msgstr ""
+msgstr "Componentes"
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
-msgstr ""
+msgstr "Nuevo TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "añadir nueva categoría"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Notificar"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
-msgstr ""
+msgstr "Gestor de ejecuciones"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "Asignados"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Probador por defecto de las ejecuciones"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "Notificar cuando"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
@@ -1604,53 +1604,53 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "TestCase ha sido eliminado"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "CC a"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Direcciones de correo electrónico separadas por coma. Se enviará un correo de notificación a cada dirección de correo electrónico dentro de la lista CC."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Buscar pruebas"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Resumen de caso de prueba"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Ambos"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Separar varios valores con coma (,)"
 
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr ""
+msgstr "Id de error"
 
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #: tcms/testcases/views.py:383
 msgid "TestPlan not specified or does not exist"
@@ -1658,68 +1658,68 @@ msgstr ""
 
 #: tcms/testcases/views.py:561
 msgid "History"
-msgstr ""
+msgstr "Historial"
 
 #: tcms/testcases/views.py:566
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: tcms/testcases/views.py:817
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "La clonación de prueba fue exitosa"
 
 #: tcms/testcases/views.py:842 tcms/testruns/views.py:392
 #: tcms/testruns/views.py:441
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Se requiere al menos un TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Clonar Plan de Pruebas"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Clonar TCs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Clonar o enlazar TCs existentes en nuevo TP"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "TP padre"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Establecer el TP fuente como padre del nuevo TP"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Editar Plan de Pruebas"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Crear nuevo Plan de Pruebas"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "ID padre"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Documento de plan de prueba:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
-msgstr ""
+msgstr "Notificar:"
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
-msgstr ""
+msgstr "Autor de TestCase"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
-msgstr ""
+msgstr "Notificar cuando:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
@@ -1732,15 +1732,15 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Buscar planes de prueba"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Nombre del plan de prueba"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
