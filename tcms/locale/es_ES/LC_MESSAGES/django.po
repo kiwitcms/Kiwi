@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 19:42\n"
+"PO-Revision-Date: 2019-10-21 19:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -497,7 +497,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:64
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Plan de Pruebas"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
@@ -581,11 +581,11 @@ msgstr "el principal sistema de gestión de casos de prueba de código abierto"
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Archivo adjunto"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:145
@@ -881,7 +881,7 @@ msgstr "Cerrar sesión"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Iniciar Sesión"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
@@ -934,7 +934,7 @@ msgstr "Última página"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "No se encontró ningún caso de prueba en este plan."
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
@@ -946,7 +946,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone Plan"
-msgstr ""
+msgstr "Clonar Plan de Pruebas"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
@@ -982,67 +982,67 @@ msgstr "Autor"
 
 #: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
 msgid "Plan Type"
-msgstr ""
+msgstr "Tipo de plan"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
-msgstr ""
+msgstr "Enlace de referencia"
 
 #: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
 #: tcms/templates/plan/preview.html:36
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
-msgstr ""
+msgstr "Fecha de creación"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "Padre"
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
-msgstr ""
+msgstr "Ver historial de edición"
 
 #: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Casos en revisión"
 
 #: tcms/templates/plan/get.html:128
 msgid "Tree View"
-msgstr ""
+msgstr "Vista de árbol"
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "El documento para este plan no ha sido escrito todavía."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Nombre del archivo"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "Enviado por"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Fecha de creación"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "Sin adjuntos"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Caso"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
@@ -1051,7 +1051,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Añadir casos de prueba de otros planes"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1077,7 +1077,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Ejecutar"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
@@ -1350,7 +1350,7 @@ msgstr ""
 
 #: tcms/templates/run/get.html:70 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Versión del producto"
 
 #: tcms/templates/run/get.html:112 tcms/templates/run/report.html:51
 msgid "Note"
@@ -1363,7 +1363,7 @@ msgstr ""
 #: tcms/templates/run/get.html:149
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Ejecutando"
 
 #: tcms/templates/run/get.html:157 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1774,7 +1774,7 @@ msgstr "Permiso denegado: La ejecución del Caso de Prueba no te pertenece"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "La fecha de corte no es válida. El formato válido es YYYY-MM-DD."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
