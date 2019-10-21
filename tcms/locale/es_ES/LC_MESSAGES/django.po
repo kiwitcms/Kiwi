@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 15:03\n"
+"PO-Revision-Date: 2019-10-21 15:12\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -265,16 +265,16 @@ msgstr "Editar error"
 
 #: tcms/bugs/views.py:194
 msgid "*bug closed*"
-msgstr ""
+msgstr "* error cerrado*"
 
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Usuario no encontrado!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "Comentarios personalizados del núcleo"
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/templates/include/tags_card.html:13
@@ -285,26 +285,26 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "Dirección de correo electrónico"
 
 #: tcms/core/contrib/comments/forms.py:21
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
-msgstr ""
+msgstr "URL (dirección web)"
 
 #: tcms/core/contrib/comments/forms.py:25
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
-msgstr ""
+msgstr "Comentario"
 
 #: tcms/core/history.py:41
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "ACTUALIZAR: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
@@ -313,53 +313,57 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Actualizado en %(history_date)s\n"
+"Actualizado por %(username)s\n\n"
+"%(diff)s\n\n"
+"Para más información:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "¡La URL base no está configurada! Ver <a href=\"%(doc_url)s\">documentación</a> y <a href=\"%(admin_url)s\">cambiarla</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Esta dirección de correo electrónico ya está en uso"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Información personal"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Permisos"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Ya existe un usuario con este correo electrónico."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Confirmación de tu nueva cuenta %s"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Su cuenta ha sido creada, por favor, compruebe su buzón para confirmación"
 
 #: tcms/kiwi_auth/views.py:61
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Tu cuenta ha sido creada, pero necesitas un administrador para activarla"
 
 #: tcms/kiwi_auth/views.py:66
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Siguiente es la lista de administradores"
 
 #: tcms/kiwi_auth/views.py:108
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Esta clave de activación ya no existe en la base de datos"
 
 #: tcms/kiwi_auth/views.py:113
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Esta clave de activación ha expirado"
 
 #: tcms/kiwi_auth/views.py:125
 msgid "Your account has been activated successfully"
@@ -578,7 +582,7 @@ msgstr ""
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:145
 msgid "No attachment found"
-msgstr ""
+msgstr "No se ha encontrado ningún archivo adjunto"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:155
@@ -586,12 +590,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:140
 msgid "Component"
-msgstr ""
+msgstr "Componente"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:160
 msgid "No component found"
-msgstr ""
+msgstr "No se han encontrado Componentes"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -601,63 +605,63 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Etiqueta"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:171
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "No se encontraron etiquetas"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "error"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "Desde Run"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "No se encontró ningún error"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #: tcms/templates/case/get_details.html:62
 #: tcms/templates/run/get_case_runs.html:182 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Comentarios"
 
 #: tcms/templates/case/get_details_case_run.html:46
 #: tcms/templates/case/get_details_case_run.html:48
 msgid "Show All"
-msgstr ""
+msgstr "Mostrar todo"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Información de ejecución de prueba"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
-msgstr ""
+msgstr "Fecha de ejecución"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
-msgstr ""
+msgstr "Versión de texto"
 
 #: tcms/templates/case/get_details_case_run.html:87
 msgid "No log recorded"
-msgstr ""
+msgstr "No hay registro registrado"
 
 #: tcms/templates/case/get_details_case_run.html:107
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Bugs e hipervínculos"
 
 #: tcms/templates/case/get_details_case_run.html:108
 #: tcms/templates/include/tags_card.html:27
@@ -667,54 +671,55 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:55
 #: tcms/testcases/templates/testcases/get.html:208
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Reportar error"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Contenidos"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Documento de plan de prueba"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Casos de prueba"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Tablero de mando"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Ejecución de prueba"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:82
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Comenzó el"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s TestRun(s) o TestCase(s) asignados a usted necesita ser ejecutado.\n"
+"Aquí están los últimos %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "VER TODOS"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "No hay pruebas(s) asignadas a usted"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "Sus planes de prueba"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
