@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-10-21 20:32\n"
+"PO-Revision-Date: 2019-10-22 07:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -278,7 +278,7 @@ msgstr "* error cerrado*"
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
 msgid "User %s not found!"
-msgstr "Usuario no encontrado!"
+msgstr "Usuario %s no encontrado!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
