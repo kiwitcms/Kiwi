@@ -91,9 +91,6 @@ class TestPlan(TCMSActionModel):
 
         return query_set.filter(**new_query).order_by('pk').distinct()
 
-    def confirmed_case(self):
-        return self.case.filter(case_status__name='CONFIRMED')
-
     def add_case(self, case, sortkey=None):
 
         if sortkey is None:

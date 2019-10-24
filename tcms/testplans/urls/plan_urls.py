@@ -5,9 +5,10 @@ from django.conf.urls import url
 from tcms.testplans import views
 
 urlpatterns = [
-    url(r'^(?P<plan_id>\d+)/$', views.get, name='test_plan_url_short'),
+    url(r'^(?P<pk>\d+)/$', views.GetTestPlanRedirectView.as_view(), name='test_plan_url_short'),
     # human friendly url
-    url(r'^(?P<plan_id>\d+)/(?P<slug>[-\w\d]+)$', views.get, name='test_plan_url'),
+    url(r'^(?P<pk>\d+)/(?P<slug>[-\w\d]+)$', views.TestPlanGetView.as_view(),
+        name='test_plan_url'),
 
     url(r'^(?P<plan_id>\d+)/edit/$', views.edit, name='plan-edit'),
 
