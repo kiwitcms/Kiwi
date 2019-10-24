@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.http import require_http_methods
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView
 from django.views.generic import View
 from django.views.generic.base import TemplateView
 from uuslug import slugify
@@ -253,28 +254,32 @@ def calculate_stats_for_testplans(plans):
     return plans
 
 
-def get(request,  # pylint: disable=missing-permission-required
-        plan_id, slug=None, template_name='plan/get.html'):
-    """Display the plan details."""
+class TestPlanGetView(DetailView):  # pylint: disable=missing-permission-required
 
-    try:
-        test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
-    except ObjectDoesNotExist:
-        raise Http404
+    template_name = 'plan/get.html'
+    http_method_names = ['get']
+    model = TestPlan
 
-    if slug is None:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        confirmed_status = TestCaseStatus.get_confirmed()
+        context['review_case_count'] = self.object.case.exclude(
+            case_status=confirmed_status).count()
+        context['run_case_count'] = self.object.case.filter(
+            case_status=confirmed_status).count()
+        return context
+
+
+class GetTestPlanRedirectView(DetailView):  # pylint: disable=missing-permission-required
+
+    http_method_names = ['get']
+    model = TestPlan
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
         return HttpResponsePermanentRedirect(reverse('test_plan_url',
-                                                     args=[plan_id, slugify(test_plan.name)]))
-
-    # Initial the case counter
-    confirm_status_name = 'CONFIRMED'
-    test_plan.run_case = test_plan.case.filter(case_status__name=confirm_status_name)
-    test_plan.review_case = test_plan.case.exclude(case_status__name=confirm_status_name)
-
-    context_data = {
-        'test_plan': test_plan,
-    }
-    return render(request, template_name, context_data)
+                                                     args=[self.object.pk,
+                                                           slugify(self.object.name)]))
 
 
 @require_http_methods(['GET', 'POST'])

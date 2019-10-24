@@ -3,7 +3,7 @@
 {% load static %}
 {% load extra_filters %}
 {% load attachments_tags %}
-{% block subtitle %}{{ test_plan.name }}{% endblock %}
+{% block subtitle %}{{ object.name }}{% endblock %}
 
 {% block custom_stylesheet %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print">
@@ -17,12 +17,12 @@
 Nitrate.Utils.after_page_load(Nitrate.TestPlans.Details.on_load);
 
 Nitrate.TestPlans.Instance = {
-	pk: {{ test_plan.pk }},
+	pk: {{ object.pk }},
 	fields: {
-		name: '{{ test_plan.name }}',
-		product_id: {{ test_plan.product_id }},
-		author_id: {{ test_plan.author_id }},
-		parent: {{ test_plan.parent.pk|default:'null' }}
+		name: '{{ object.name }}',
+		product_id: {{ object.product_id }},
+		author_id: {{ object.author_id }},
+		parent: {{ object.parent.pk|default:'null' }}
 	},
 }
 </script>
@@ -34,49 +34,49 @@ Nitrate.TestPlans.Instance = {
 
 {% block content_type %}
 	<input type="hidden" name="content_type" value="testplans.testplan" />
-	<input type="hidden" name="object_pk" value="{{ test_plan.pk }}" />
-	<input type="hidden" name="name" value="{{ test_plan.name }}" />
+	<input type="hidden" name="object_pk" value="{{ object.pk }}" />
+	<input type="hidden" name="name" value="{{ object.name }}" />
 {% endblock %}
 
 {% block contents %}
 <div id="content">
-	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
+	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ object.plan_id }}">
 	<div class="control">
 		<span id="id_buttons" class="button">
-			<input id="btn_edit" type="button" value="{% trans "Edit Plan" %}" title="{% trans "Edit test plan" %}" data-param="{% url 'plan-edit' test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
-			<input id="btn_clone" type="button" value="{% trans "Clone Plan" %}" title="{% trans "Clone this plan to other product" %}" data-params='["{% url "plans-clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
-			<input id="btn_print" type="button" value="{% trans "Print Plan" %}" title="{% trans "Print Plan" %}" data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
-			<input id="btn_delete" type="button" value="{% trans "Delete Plan" %}" title="{% trans "Delete test plan" %}" data-param="{% url 'admin:testplans_testplan_delete' test_plan.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
+			<input id="btn_edit" type="button" value="{% trans "Edit Plan" %}" title="{% trans "Edit test plan" %}" data-param="{% url 'plan-edit' object.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
+			<input id="btn_clone" type="button" value="{% trans "Clone Plan" %}" title="{% trans "Clone this plan to other product" %}" data-params='["{% url "plans-clone" %}", {{ object.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
+			<input id="btn_print" type="button" value="{% trans "Print Plan" %}" title="{% trans "Print Plan" %}" data-params='["{% url "plans-printable" %}", {{ object.pk }}]'>
+			<input id="btn_delete" type="button" value="{% trans "Delete Plan" %}" title="{% trans "Delete test plan" %}" data-param="{% url 'admin:testplans_testplan_delete' object.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
 		</span>
 	</div>
-	<h2 id="display_title" class="{% ifequal test_plan.is_active 0 %}line-through{% endifequal %}">
-		{{ test_plan.name }}
+	<h2 id="display_title" class="{% ifequal object.is_active 0 %}line-through{% endifequal %}">
+		{{ object.name }}
 	</h2>
 	<div class="listinfo_content">
 		<div class="leftlistinfo">
 			<div class="listinfo">
 				<div class="title grey">{% trans "Author" %}&nbsp;:</div>
-				<div id="display_author"  class="name " > <a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a></div>
+				<div id="display_author"  class="name " > <a href="{% url "tcms-profile" object.author.username %}">{{ object.author.username }}</a></div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">{% trans "Product" %}&nbsp;:</div>
-				<div id="display_product"  class="name "><a href="{% url "plans-search" %}?product={{ test_plan.product_id }}" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
+				<div id="display_product"  class="name "><a href="{% url "plans-search" %}?product={{ object.product_id }}" title="Search plans of {{ object.product }} ">{{ object.product }}</a></div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">{% trans "Version" %}&nbsp;:</div>
-				<div id="display_product_version"  class="name ">{{ test_plan.product_version.value }}</div>
+				<div id="display_product_version"  class="name ">{{ object.product_version.value }}</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">{% trans "Plan Type" %}&nbsp;:</div>
-				<div id="display_type"  class="name ">{{ test_plan.type.name }}</div>
+				<div id="display_type"  class="name ">{{ object.type.name }}</div>
 			</div>
 		 </div>
 		<div class="rightlistinfo">
 			<div class="listinfo">
 				<div class="title grey">{% trans "Reference Link" %}&nbsp;:</div>
 				<div class="name">
-					{% if test_plan.extra_link %}
-					<a href="{{ test_plan.extra_link }}">{{ test_plan.extra_link }}</a>
+					{% if object.extra_link %}
+					<a href="{{ object.extra_link }}">{{ object.extra_link }}</a>
 					{% else %}
 					{% trans "None" %}
 					{% endif %}
@@ -84,21 +84,21 @@ Nitrate.TestPlans.Instance = {
 			</div>
 			<div class="listinfo">
 				<div class="title grey">{% trans "Create Time" %}&nbsp;:</div>
-				<div class="name ">{{test_plan.create_date}}</div>
+				<div class="name ">{{object.create_date}}</div>
 				
 			</div>
 			<div class="listinfo">
 				<div class="title grey">{% trans "Parent" %}&nbsp;:</div>
 				<div class="name ">
-				{% if test_plan.parent.pk %}
-					<a href="{% url 'test_plan_url_short' test_plan.parent.pk %}">{{ test_plan.parent.pk }}</a>
+				{% if object.parent.pk %}
+					<a href="{% url 'test_plan_url_short' object.parent.pk %}">{{ object.parent.pk }}</a>
 				{% else %}
 					{% trans "None" %}
 				{% endif %}
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title"><a href="/admin/testplans/testplan/{{ test_plan.pk }}/history/">{% trans "View Edit History" %}</a></div>
+				<div class="title"><a href="/admin/testplans/testplan/{{ object.pk }}/history/">{% trans "View Edit History" %}</a></div>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -110,19 +110,19 @@ Nitrate.TestPlans.Instance = {
 					<a href="#document" title="document">{% trans "Document" %}</a>
 				</li>
 				<li id="tab_testcases" class="tab tab_focus">
-					<a href="#testcases" title="testcases">{% trans "Cases" %} (<span id='run_case_count' class="js-testcases-count">{{ test_plan.run_case.count }}</span>/<span id='case_count'>{{ test_plan.case.count }}</span>)</a>
+					<a href="#testcases" title="testcases">{% trans "Cases" %} (<span id='run_case_count' class="js-testcases-count">{{ run_case_count }}</span>/<span id='case_count'>{{ object.case.count }}</span>)</a>
 				</li>
 				<li id="tab_reviewcases" class="tab">
-					<a href="#reviewcases" title="reviewcases">{% trans "Reviewing Cases" %} (<span id='review_case_count' class="js-reviewcases-count">{{ test_plan.review_case.count }}</span>)</a>
+					<a href="#reviewcases" title="reviewcases">{% trans "Reviewing Cases" %} (<span id='review_case_count' class="js-reviewcases-count">{{ review_case_count }}</span>)</a>
 				</li>
 				<li id="tab_testruns"  class="tab">
-					<a href="#testruns" title="testruns">{% trans "Runs" %} (<span id='run_count'>{{ test_plan.run.count }}</span>)</a>
+					<a href="#testruns" title="testruns">{% trans "Runs" %} (<span id='run_count'>{{ object.run.count }}</span>)</a>
 				</li>
 				<li id="tab_attachment" class="tab">
-					<a href="#attachment" title="attachment">{% trans "Attachments" %} (<span id='attachment_count'>{% attachments_count test_plan %}</span>)</a>
+					<a href="#attachment" title="attachment">{% trans "Attachments" %} (<span id='attachment_count'>{% attachments_count object %}</span>)</a>
 				</li>
 				<li id="tab_tag" class="tab">
-					<a href="#tag" title="tag">{% trans "Tags" %} (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
+					<a href="#tag" title="tag">{% trans "Tags" %} (<span id='tag_count'>{{ object.tag.count }}</span>)</a>
 				</li>
 				<li id="tab_treeview" class="tab">
 					<a href="#treeview" title="treeview">{% trans "Tree View" %}</a>
@@ -131,8 +131,8 @@ Nitrate.TestPlans.Instance = {
 			<div id="document" class="tab_list" style="display:none">
                             <div class="listinfo_doc_content">
                                 <div id="display_summary" class="listinfo_doc markdown-text">
-                                {% if test_plan.text %}
-                                    {{ test_plan.text|markdown2html }}
+                                {% if object.text %}
+                                    {{ object.text|markdown2html }}
                                 {% else %}
                                     <span style="color: #666">{% trans "The document for this plan hasn't been written yet." %}</span>
                                 {% endif %}
@@ -148,7 +148,7 @@ Nitrate.TestPlans.Instance = {
                                 a temporary solution until we can convert the entire page to Patternfly
                                 and figure out a way to re-use the search forms!
                              -->
-                            <iframe src="{% url 'testruns-search' %}?nonav=1&plan={{ test_plan.pk }}"
+                            <iframe src="{% url 'testruns-search' %}?nonav=1&plan={{ object.pk }}"
                                     width="100%" height="1000px" scrolling="auto" frameBorder="0">
                             </iframe>
 			</div>
