@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-19 21:03+0000\n"
-"PO-Revision-Date: 2019-09-20 06:52\n"
+"POT-Creation-Date: 2019-10-26 15:50+0000\n"
+"PO-Revision-Date: 2019-10-26 17:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -59,10 +59,10 @@ msgstr ""
 #: tcms/bugs/templates/bugs/mutable.html:26
 #: tcms/bugs/templates/bugs/search.html:41
 #: tcms/bugs/templates/bugs/search.html:104
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:13
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:16
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:16
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 #: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:37
 #: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
 #: tcms/templates/run/get.html:119 tcms/templates/run/report.html:35
@@ -84,9 +84,9 @@ msgstr ""
 #: tcms/bugs/templates/bugs/mutable.html:41
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:105
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:22
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:25
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:25
 #: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:66
 #: tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/clone.html:35
@@ -102,9 +102,9 @@ msgstr ""
 #: tcms/bugs/templates/bugs/mutable.html:59
 #: tcms/bugs/templates/bugs/search.html:61
 #: tcms/bugs/templates/bugs/search.html:106
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:31
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:34
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:33
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:34
 #: tcms/templates/case/get_details_case_run.html:75
 #: tcms/templates/include/bug_details.html:49
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:125
@@ -197,20 +197,20 @@ msgid "Search bugs"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:16
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:50
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:50
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:53
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:52
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:53
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:27
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:62
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:62
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:47
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:65
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:64
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:65
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
@@ -251,19 +251,23 @@ msgid "Created at"
 msgstr ""
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:553
+#: tcms/testcases/views.py:540
 msgid "Edit"
 msgstr ""
 
-#: tcms/bugs/views.py:61
+#: tcms/bugs/views.py:41 tcms/testcases/views.py:553
+msgid "Delete"
+msgstr ""
+
+#: tcms/bugs/views.py:66
 msgid "New bug"
 msgstr ""
 
-#: tcms/bugs/views.py:164
+#: tcms/bugs/views.py:169
 msgid "Edit bug"
 msgstr ""
 
-#: tcms/bugs/views.py:194
+#: tcms/bugs/views.py:199
 msgid "*bug closed*"
 msgstr ""
 
@@ -278,7 +282,7 @@ msgstr ""
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/templates/include/tags_card.html:13
-#: tcms/templates/run/get_case_runs.html:150
+#: tcms/templates/run/get_case_runs.html:153
 #: tcms/testcases/templates/testcases/get.html:164
 #: tcms/testcases/templates/testcases/get.html:194
 #: tcms/testplans/templates/testplans/clone.html:13
@@ -365,6 +369,15 @@ msgstr ""
 msgid "Your account has been activated successfully"
 msgstr ""
 
+#: tcms/rpc/api/bug.py:60
+msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
+msgstr ""
+
+#: tcms/rpc/serializer.py:288
+#, python-format
+msgid "Model %s has no primary key. You have to specify such field manually."
+msgstr ""
+
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
 msgstr ""
@@ -414,6 +427,7 @@ msgid "Status matrix"
 msgstr ""
 
 #: tcms/settings/common.py:109
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr ""
 
@@ -478,20 +492,24 @@ msgstr ""
 msgid "Testing Breakdown"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:42
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:42
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
+msgid "Shows how existing test cases are distributed"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:44
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:45
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:64
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:63
 msgid "Total"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:71
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:73
 #: tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
@@ -503,29 +521,36 @@ msgstr ""
 msgid "Automated"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:75
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:77
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:81
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:83
 msgid "Priorities"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:86
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:88
 msgid "Categories"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
+msgid "Information if product builds are getting better or worse"
+msgstr ""
+
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
+msgid "Detailed information about test execution status"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test case"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test run"
 msgstr ""
 
@@ -533,19 +558,23 @@ msgstr ""
 msgid "TestCase Health"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:76
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
+msgid "Discover which test cases are the most common source of problems"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:80
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:83
 msgid "Test Case"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:81
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:84
 msgid "Failed executions"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:82
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:85
 #, python-format
 msgid "%% of failed executions"
 msgstr ""
@@ -629,7 +658,7 @@ msgid "Notes"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:62
-#: tcms/templates/run/get_case_runs.html:182 tcms/templates/run/report.html:94
+#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
 msgstr ""
@@ -1045,7 +1074,7 @@ msgid "print view of selected cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:557
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:544
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr ""
@@ -1250,7 +1279,7 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
-#: tcms/templates/run/get_case_runs.html:185
+#: tcms/templates/run/get_case_runs.html:188
 msgid "Confirm"
 msgstr ""
 
@@ -1404,15 +1433,15 @@ msgstr ""
 msgid "Bug"
 msgstr ""
 
-#: tcms/templates/run/get_case_runs.html:144
+#: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
 msgstr ""
 
-#: tcms/templates/run/get_case_runs.html:147
+#: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
 msgstr ""
 
-#: tcms/templates/run/get_case_runs.html:186
+#: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
 msgstr ""
 
@@ -1496,7 +1525,7 @@ msgstr ""
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr ""
 
-#: tcms/testcases/forms.py:90
+#: tcms/testcases/forms.py:84
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1643,23 +1672,19 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
-#: tcms/testcases/views.py:383
+#: tcms/testcases/views.py:385
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:561
+#: tcms/testcases/views.py:548
 msgid "History"
 msgstr ""
 
-#: tcms/testcases/views.py:566
-msgid "Delete"
-msgstr ""
-
-#: tcms/testcases/views.py:817
+#: tcms/testcases/views.py:815
 msgid "TestCase cloning was successful"
 msgstr ""
 
-#: tcms/testcases/views.py:842 tcms/testruns/views.py:392
+#: tcms/testcases/views.py:840 tcms/testruns/views.py:392
 #: tcms/testruns/views.py:441
 msgid "At least one TestCase is required"
 msgstr ""
@@ -1738,15 +1763,15 @@ msgstr ""
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/views.py:340
+#: tcms/testplans/views.py:350
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:517
+#: tcms/testplans/views.py:527
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:525
+#: tcms/testplans/views.py:535
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
@@ -1755,7 +1780,7 @@ msgstr ""
 msgid "Permission denied: TestRun does not belong to you"
 msgstr ""
 
-#: tcms/testruns/forms.py:83
+#: tcms/testruns/forms.py:77
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
 msgstr ""
 
@@ -1826,60 +1851,51 @@ msgstr ""
 msgid "The user you typed does not exist in database"
 msgstr ""
 
-#: tcms/xmlrpc/api/bug.py:60
-msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
-
-#: tcms/xmlrpc/serializer.py:288
-#, python-format
-msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
-
-#: vinaigrette-deleteme.py:2
+#: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:3
+#: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:4
+#: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:5
+#: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
 msgstr ""
 
-#: vinaigrette-deleteme.py:6
+#: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
 msgstr ""
 
-#: vinaigrette-deleteme.py:7
+#: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
 msgstr ""
 
-#: vinaigrette-deleteme.py:8
+#: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:9
+#: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:10
+#: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:11
+#: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
 msgstr ""
 
-#: vinaigrette-deleteme.py:12
+#: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
 msgstr ""
 
-#: vinaigrette-deleteme.py:13
+#: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
 msgstr ""
 
