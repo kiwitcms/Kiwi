@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-27 18:52\n"
+"PO-Revision-Date: 2019-10-27 19:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1471,7 +1471,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Автообновление трекера задач"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1570,7 +1570,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Сценарий**: ... какое поведение будет протестировано ...\n"
+"  **Дано** ... условия ...\n"
+"  **Когда** ... действия ...\n"
+"  **Тогда** ... ожидаемые результаты ...\n\n"
+"*Действия*:\n\n"
+"1. пункт\n"
+"2. пункт\n"
+"3. пункт\n\n"
+"*Ожидаемые результаты*:\n\n"
+"1. пункт\n"
+"2. пункт\n"
+"3. пункт"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1579,15 +1590,15 @@ msgstr "УДАЛЕНО: тест-кейс #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Клонировать Тест-кейс"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Добавить новый TC в TP"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "Выбранные TC"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1640,7 +1651,7 @@ msgstr "Менеджер прогонов"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr "Назаначено"
+msgstr "Назначено"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
@@ -1727,19 +1738,19 @@ msgstr "Клонировать тест-план"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Клонировать TC"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Клонировать или связать существующие TC в новом TP"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "Родительский TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Установить исходный TP как родитель нового TP"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1780,7 +1791,7 @@ msgstr "Тест-кейсы обновлены"
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr "Активно"
+msgstr "Активный"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1881,7 +1892,7 @@ msgstr "ID тест-кейса не является допустимым цел
 
 #: tcms/testruns/views.py:543
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "Введенный вами пользователь, не существует в базе данных"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
