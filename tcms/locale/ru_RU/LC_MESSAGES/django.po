@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-27 18:31\n"
+"PO-Revision-Date: 2019-10-27 18:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -572,7 +572,7 @@ msgstr "Состояние Тест-кейсов"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Discover which test cases are the most common source of problems"
-msgstr ""
+msgstr "Узнайте, какие тесты являются наиболее распространенным источником проблем"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
@@ -584,7 +584,7 @@ msgstr "Тест-кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:84
 msgid "Failed executions"
-msgstr "Падающие прогонки"
+msgstr "Упавшие прогонки"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:85
 #, python-format
@@ -698,7 +698,7 @@ msgstr "Нет записанных логов"
 
 #: tcms/templates/case/get_details_case_run.html:107
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Ошибки и гиперссылки"
 
 #: tcms/templates/case/get_details_case_run.html:108
 #: tcms/templates/include/tags_card.html:27
@@ -712,7 +712,7 @@ msgstr "Добавить"
 
 #: tcms/templates/case/get_details_case_run.html:109
 msgid "Report bug"
-msgstr ""
+msgstr "Отчёт об ошибке"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -743,7 +743,8 @@ msgstr "Дата запуска"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s TestRun(s) или TestCase(s) назначенные вам должны быть выполнены.\n"
+"Это последние %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -777,11 +778,12 @@ msgstr "Запуски"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Вы управляете %(total_count)s TestPlan(s), %(disabled_count)s отключены.\n"
+"Это последние %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Не существуют тест-планы принадлежащие вам"
+msgstr "Нет тест-план(ов) принадлежащих вам"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -789,12 +791,15 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Добро пожаловать %(user)s,\n"
+"благодарим вас за регистрацию на %(site_domain)s!\n\n"
+"Чтобы активировать свою учетную запись, нажмите на эту ссылку:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Тест-кейс был удален %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -811,7 +816,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Тестовый запуск %(pk)s был создан или обновлен для вас.\n\n"
+"### Ссылки ###\n"
+"Испытательный запуск: %(run_url)s\n"
+"Тестовый план: %(plan_url)s\n\n"
+"### Базовая информация об исполнении ###\n"
+"Сводка: %(summary)s\n\n"
+"Управляется: %(manager)s.\n"
+"Тестер по умолчанию: %(default_tester)s.\n\n"
+"Продукт: %(product)s\n"
+"Версия продукта: %(version)s\n"
+"Сборка: %(build)s\n\n"
+"Заметки:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -819,7 +836,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Уважаемый администратор,\n"
+"кто-то зарегистрировал аккаунт с именем пользователя %(username)s в \n"
+"Kiwi TCMS и ожидает вашего подтверждения!\n\n"
+"Перейдите на %(user_url)s, чтобы активировать учетную запись!"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -868,7 +888,7 @@ msgstr "Действие"
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr "Удалить"
+msgstr "Удаление"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
