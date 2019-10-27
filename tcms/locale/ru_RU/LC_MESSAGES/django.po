@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-27 18:21\n"
+"PO-Revision-Date: 2019-10-27 18:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -445,7 +445,7 @@ msgstr "Тренды выполнения"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
-msgstr ""
+msgstr "Состояние тест-кейсов"
 
 #: tcms/settings/common.py:124
 msgid "ADMIN"
@@ -498,15 +498,15 @@ msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "ДРУГОЕ"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Этапы тестирования"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
 msgid "Shows how existing test cases are distributed"
-msgstr ""
+msgstr "Показывает распределение выполнения тест-кейсов"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
@@ -519,7 +519,7 @@ msgstr "Тест-план"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:63
 msgid "Total"
-msgstr ""
+msgstr "Итого"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:73
 #: tcms/templates/plan/get_cases.html:107
@@ -536,39 +536,39 @@ msgstr "Автоматизирован"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:77
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr "Вручную"
+msgstr "Ручной"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:83
 msgid "Priorities"
-msgstr ""
+msgstr "Приоритеты"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:88
 msgid "Categories"
-msgstr ""
+msgstr "Категории"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
 msgid "Information if product builds are getting better or worse"
-msgstr ""
+msgstr "Информация, если сборки продуктов становятся лучше или хуже"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Матрица состояния тестов"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Подробная информация о состоянии прогонки теста"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test case"
-msgstr ""
+msgstr "Тест-кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test run"
-msgstr ""
+msgstr "Прогонка теста"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Состояние Тест-кейсов"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Discover which test cases are the most common source of problems"
@@ -576,20 +576,20 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Часто падающие тест-кейсы"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:83
 msgid "Test Case"
-msgstr ""
+msgstr "Тест-кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:84
 msgid "Failed executions"
-msgstr ""
+msgstr "Падающие прогонки"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:85
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% упавших прогонок"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -652,7 +652,7 @@ msgstr "Тег не найден"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr "ошибка"
+msgstr "баг"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
