@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-27 18:11\n"
+"PO-Revision-Date: 2019-10-27 18:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -185,24 +185,24 @@ msgstr "Итоги"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr "добавить новый продукт"
+msgstr "добавить новый Продукт"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr "добавить новую версию"
+msgstr "добавить новую Версию"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr "добавить новую сборку"
+msgstr "добавить новую Сборку"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr "Поиск ошибок"
+msgstr "Поиск багов"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
@@ -269,15 +269,15 @@ msgstr "Удалить"
 
 #: tcms/bugs/views.py:66
 msgid "New bug"
-msgstr "Новый дефект"
+msgstr "Новый баг"
 
 #: tcms/bugs/views.py:169
 msgid "Edit bug"
-msgstr "Правка дефекта"
+msgstr "Правка бага"
 
 #: tcms/bugs/views.py:199
 msgid "*bug closed*"
-msgstr ""
+msgstr "*баг закрыт*"
 
 #: tcms/core/ajax.py:156 tcms/testruns/views.py:629
 #, python-format
@@ -355,7 +355,7 @@ msgstr "Пользователь с таким email уже существует
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Подтверждение вашего нового %s аккаунта"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -428,20 +428,20 @@ msgstr "ТЕЛЕМЕТРИЯ"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Тестирование"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Разбивка"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Матрица состояния"
 
 #: tcms/settings/common.py:109
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Тренды выполнения"
 
 #: tcms/settings/common.py:110
 msgid "TestCase health"
@@ -481,11 +481,11 @@ msgstr "Справка по API"
 
 #: tcms/settings/common.py:331
 msgid "New Bug"
-msgstr ""
+msgstr "Новый Баг"
 
 #: tcms/settings/common.py:335
 msgid "Search Bugs"
-msgstr ""
+msgstr "Поиск Багов"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
