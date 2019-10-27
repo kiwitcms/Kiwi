@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-27 18:43\n"
+"PO-Revision-Date: 2019-10-27 18:52\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1117,7 +1117,7 @@ msgstr "Клонировать выбранные кейсы в другой т�
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr "Удалить выбранные случаи из плана"
+msgstr "Удалить выбранные кейсы из плана"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1160,7 +1160,7 @@ msgstr "Показать параметры фильтра"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "Нажмите на меня, затем перетащите строки в необходимом порядке, и нажмите на 'Завершить сортировку', чтобы сохранить изменения"
+msgstr "Нажмите на меня, затем перетащите строки, чтобы настроить порядок, и нажмите на ссылку 'Завершить сортировку', чтобы сохранить изменения"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1257,7 +1257,7 @@ msgstr "Обычный поиск"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr "Создана"
+msgstr "Создан"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
@@ -1378,11 +1378,11 @@ msgstr "Как присоединить кейс?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr "В приведенной таблице содержится список подтвержденных тест-кейсов плана"
+msgstr "В таблице содержится весь список подтвержденных тест-кейсов плана"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "проверьте флажок, чтобы добавить кейсы в тестовый прогон. Не забудьте их обновить"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1423,11 +1423,11 @@ msgstr "Автоматически"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr "Выберите"
+msgstr "Выделить"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Удалить выбранные кейсы из тестового прогона"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1439,11 +1439,11 @@ msgstr "Обновление"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Назначить кейс(ы) другим"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Ссылка"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1463,7 +1463,7 @@ msgstr "Авто"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr "Ошибка"
+msgstr "Баг"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
