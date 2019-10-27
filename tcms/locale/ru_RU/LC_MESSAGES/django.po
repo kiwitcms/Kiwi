@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-26 17:51\n"
+"PO-Revision-Date: 2019-10-27 18:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -26,23 +26,31 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Описание проблемы:\n\n\n"
+"Как часто воспроизводится:\n\n\n"
+"Шаги для воспроизведения:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Фактические результаты:\n\n\n"
+"Ожидаемые результаты:\n\n\n"
+"Дополнительная информация:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
-msgstr ""
+msgstr "Открыть"
 
 #: tcms/bugs/templates/bugs/get.html:30
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "Закрыт"
 
 #: tcms/bugs/templates/bugs/get.html:42 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "Репортёр"
 
 #: tcms/bugs/templates/bugs/get.html:47
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -142,7 +150,7 @@ msgstr "Записи не найдены"
 
 #: tcms/bugs/templates/bugs/get.html:138
 msgid "commented on"
-msgstr ""
+msgstr "прокомментировано"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -154,7 +162,7 @@ msgstr "Сохранить"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -194,7 +202,7 @@ msgstr "добавить новую сборку"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Поиск ошибок"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
@@ -248,12 +256,12 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "Создано"
 
 #: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:540
 msgid "Edit"
-msgstr "Изменить"
+msgstr "Правка"
 
 #: tcms/bugs/views.py:41 tcms/testcases/views.py:553
 msgid "Delete"
@@ -261,11 +269,11 @@ msgstr "Удалить"
 
 #: tcms/bugs/views.py:66
 msgid "New bug"
-msgstr ""
+msgstr "Новый дефект"
 
 #: tcms/bugs/views.py:169
 msgid "Edit bug"
-msgstr ""
+msgstr "Правка дефекта"
 
 #: tcms/bugs/views.py:199
 msgid "*bug closed*"
@@ -906,11 +914,11 @@ msgstr "Регистрация"
 
 #: tcms/templates/navbar.html:67
 msgid "Help"
-msgstr ""
+msgstr "Помощь"
 
 #: tcms/templates/navbar.html:82
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: tcms/templates/navbar.html:86
 msgid "Supported languages"
