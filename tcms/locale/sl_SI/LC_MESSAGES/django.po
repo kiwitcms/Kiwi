@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-26 17:52\n"
+"PO-Revision-Date: 2019-10-28 07:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -506,7 +506,7 @@ msgstr "Razčlenitev testiranja"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
 msgid "Shows how existing test cases are distributed"
-msgstr ""
+msgstr "Prikaz razpršenosti trenutnih testnih scenarijev"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
@@ -548,7 +548,7 @@ msgstr "Kategorije"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
 msgid "Information if product builds are getting better or worse"
-msgstr ""
+msgstr "Informacije o stabilnosti verzij produkta"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -556,7 +556,7 @@ msgstr "Matrika statusov testiranja"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Podrobnosti izvajanja testiranj"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test case"
@@ -572,7 +572,7 @@ msgstr "Zdravje testnega scenarija"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Discover which test cases are the most common source of problems"
-msgstr ""
+msgstr "Izpis najbolj problematičnih testnih scenarijev"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
