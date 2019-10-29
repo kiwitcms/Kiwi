@@ -261,12 +261,13 @@ the contents of ``Dockerfile`` and then::
 Troubleshooting
 ----------------
 
-The Kiwi TCMS container will print HTTPD logs on the docker console!
+The Kiwi TCMS container will print HTTPD logs on STDOUT!
 
 .. warning::
 
     You must start the containers in the foreground with ``docker-compose up``,
-    e.g. without the ``-d`` option in order to see their logs!
+    e.g. without the ``-d`` option in order to see their logs or use
+    ``docker container logs [-f|--tail 1000] kiwi_web``!
 
 In case you see a 500 Internal Server Error page and the error log does not
 provide a traceback you should configure the ``DEBUG`` setting to ``True`` and
