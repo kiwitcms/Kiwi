@@ -252,7 +252,7 @@ class PermissionsTestCase(LoggedInTestCase):
 
     def run(self, result=None):
         if self.__class__.__name__ == "PermissionsTestCase":
-            return
+            return None
 
         return super().run()
     # end skip running
