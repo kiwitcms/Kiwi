@@ -10,6 +10,7 @@ __all__ = (
     'add_tag',
     'remove_tag',
     'filter',
+    'remove',
 )
 
 
@@ -58,19 +59,19 @@ def remove_tag(bug_id, tag):
 
 
 @permissions_required('bugs.delete_bug')
-@rpc_method(name='Bug.remove_bug')
-def remove_bug(bug_id):
+@rpc_method(name='Bug.remove')
+def remove(query):
     """
-    .. function:: XML-RPC Bug.delete_bug(bug_id)
+    .. function:: XML-RPC Bug.remove(bug_id)
 
         Remove Bug object(s).
 
-        :param bug_id: PK of Bug to modify
+        :param query: Field lookups for :class:`tcms.bugs.models.Bug`
+        :type query: dict
         :return: None
         :raises: PermissionDenied if missing *bugs.delete_bugtag* permission
-        :raises: DoesNotExist if objects specified don't exist
     """
-    Bug.objects.get(pk=bug_id).delete()
+    Bug.objects.filter(**query).delete()
 
 
 @rpc_method(name='Bug.filter')
