@@ -29,9 +29,8 @@ def user_should_have_perm(user, perm):
         else:
             if not app_label or not codename:
                 raise ValueError('Invalid app_label or codename')
-            get_permission = Permission.objects.get
             user.user_permissions.add(
-                get_permission(content_type__app_label=app_label, codename=codename))
+                Permission.objects.get(content_type__app_label=app_label, codename=codename))
     elif isinstance(perm, Permission):
         user.user_permissions.add(perm)
     else:
