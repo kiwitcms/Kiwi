@@ -1,6 +1,107 @@
 Change Log
 ==========
 
+Kiwi TCMS 7.1 (29 Oct 2019)
+---------------------------
+
+**IMPORTANT:** this is a small improvement update which includes
+database schema and API changes, several other improvements,
+internal refactoring and updated translations.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 2.2.5 to 2.2.6
+- Update python-gitlab from 1.11.0 to 1.12.1
+- Update pygithub from 1.43.8 to 1.44
+- Update psycopg2 from 2.8.3 to 2.8.4
+- Add help tooltips in all telemetry pages
+- Better styling for checkboxes in 'Add hyperlink' dialog,
+  part of TestRun page
+- Add hyperlink validation. Fixes
+  `Issue #1147 <https://github.com/kiwitcms/Kiwi/issues/1147>`_
+
+Database migrations
+~~~~~~~~~~~~~~~~~~~
+
+- Add ``bugs`` permissions to ``Tester`` group. Will make any difference
+  only if upgrading from existing installation
+
+
+API
+~~~
+
+- New method ``Bug.remove()``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Always build with the latest versions of translations
+- Add 'Delete' menu item in Bugs page. Fixes #1153
+  `Issue #1153 <https://github.com/kiwitcms/Kiwi/issues/1154>`_
+- When deleting hyperlink from TestExecution hide the actual UI
+  elements from the page
+- Fix failure to delete TCs when the number of TCs inside TP is greater
+  than 100. Fixes
+  `Issue #1149 <https://github.com/kiwitcms/Kiwi/issues/1149>`_ and
+  `Sentry KIWI-TCMS-8F <https://sentry.io/organizations/open-technologies-bulgaria-ltd/issues/1245504316/>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Rename directory ``xmlrpc`` to ``rpc`` and pylint updates. Refs
+  `Issue #682 <https://github.com/kiwitcms/Kiwi/issues/682>`_
+  (Matej Aleksandrov, Sinergise)
+- Remove labels from form fields, Refs
+  `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_ (Azmi YÜKSEL)
+- New base class for tests around permissions (Svetlomir Balevski)
+- New "blueprint" test case around permissions to make testing in this area more
+  robust
+- Refactor many views from function based to class based
+- Update stale tests in ``tcms/core/tests/`` and make sure they aren't ignored
+  by the test runner
+- Remove empty class ``XMLRPCBaseCaseForm``
+- Remove ``XMLRPCNewCaseForm``, duplicate of ``NewCaseForm``
+- Remove ``rpc.forms.UpdateCaseForm`` in favor of ``XMLRPCUpdateCaseForm``
+- Update only English sources with new strings as a temporary workaround b/c
+  Crowdin uses different formatting heuristics than gettext. This will minimize
+  the number of .po format changes
+- A few pylint fixes
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Albanian translation <https://crowdin.com/project/kiwitcms/sq#>`_ - 97%
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_ - 91%
+- Updated `Chinese Simplified <https://crowdin.com/project/kiwitcms/zh-CN#>`_ - 71%
+- Updated `Greek translation <https://crowdin.com/project/kiwitcms/el#>`_ - 44%
+- Updated `Italian translation <https://crowdin.com/project/kiwitcms/it#>`_ - 97%
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_ - 0%
+- Updated `Macedonian translation <https://crowdin.com/project/kiwitcms/mk#>`_ - 11%
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_ - 97%
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_ - 100%
+- Updated `Spanish translation <https://crowdin.com/project/kiwitcms/es-ES#>`_ - 96%
+- Updated `Turkish translation <https://crowdin.com/project/kiwitcms/tr#>`_ - 97%
+
+
+
 Kiwi TCMS 7.0 (24 Sep 2019)
 ---------------------------
 
