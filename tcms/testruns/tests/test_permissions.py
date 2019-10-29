@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, too-many-ancestors
 
-
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from tcms import tests
 from tcms.tests import PermissionsTestCase, factories
+from tcms.testruns.models import TestRun
+from tcms.testcases.models import TestCaseStatus
 
 
 class EditTestRunViewTestCase(PermissionsTestCase):
@@ -55,3 +57,74 @@ class EditTestRunViewTestCase(PermissionsTestCase):
         self.assertRedirects(
             response,
             reverse('testruns-get', args=[self.test_run.pk]))
+
+
+class CreateTestRunViewTestCase(tests.PermissionsTestCase):
+    permission_label = 'testruns.add_testrun'
+    http_method_names = ['post']
+    url = reverse('testruns-new')
+
+    @classmethod
+    def setUpTestData(cls):
+
+        cls.plan = factories.TestPlanFactory()
+
+        cls.build_fast = factories.BuildFactory(name='fast', product=cls.plan.product)
+
+        cls.post_data = {
+            'summary': cls.plan.name,
+            'from_plan': cls.plan.pk,
+            'build': cls.build_fast.pk,
+            'notes': 'Create new test run',
+            'POSTING_TO_CREATE': 'YES',
+        }
+
+        super().setUpTestData()
+
+        cls.post_data['manager'] = cls.tester.email
+        cls.post_data['default_tester'] = cls.tester.email
+
+        case_status_confirmed = TestCaseStatus.get_confirmed()
+
+        cls.case_1 = factories.TestCaseFactory(
+            author=cls.tester,
+            default_tester=None,
+            reviewer=cls.tester,
+            case_status=case_status_confirmed,
+            plan=[cls.plan])
+        cls.case_1.save()  # will generate history object
+
+        cls.case_2 = factories.TestCaseFactory(
+            author=cls.tester,
+            default_tester=None,
+            reviewer=cls.tester,
+            case_status=case_status_confirmed,
+            plan=[cls.plan])
+        cls.case_2.save()  # will generate history object
+
+        cls.post_data['case'] = [cls.case_1.pk, cls.case_2.pk]
+
+    def verify_post_with_permission(self):
+        response = self.client.post(self.url, self.post_data)
+        last_run = TestRun.objects.last()
+
+        self.assertRedirects(
+            response,
+            reverse('testruns-get', args=[last_run.pk]))
+
+        self.assertEqual(self.plan.name, last_run.summary)
+        self.assertEqual(self.plan, last_run.plan)
+        self.assertEqual(self.plan.product_version, last_run.product_version)
+        self.assertEqual(None, last_run.stop_date)
+        self.assertEqual('Create new test run', last_run.notes)
+        self.assertEqual(self.build_fast, last_run.build)
+        self.assertEqual(self.tester, last_run.manager)
+        self.assertEqual(self.tester, last_run.default_tester)
+        for case, case_run in zip((self.case_1, self.case_2),
+                                  last_run.case_run.order_by('case')):
+            self.assertEqual(case, case_run.case)
+            self.assertEqual(None, case_run.tested_by)
+            self.assertEqual(self.tester, case_run.assignee)
+            self.assertEqual(case.history.latest().history_id, case_run.case_text_version)
+            self.assertEqual(last_run.build, case_run.build)
+            self.assertEqual(None, case_run.close_date)

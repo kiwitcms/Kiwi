@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from tcms.testruns.models import TestExecutionStatus, TestRun
 from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
                         user_should_have_perm)
-from tcms.tests.factories import (BuildFactory, TagFactory, TestCaseFactory,
+from tcms.tests.factories import (TagFactory, TestCaseFactory,
                                   UserFactory)
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -82,12 +82,10 @@ class TestCreateNewRun(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestCreateNewRun, cls).setUpTestData()
+        super().setUpTestData()
 
-        cls.permission = 'testruns.add_testrun'
-        user_should_have_perm(cls.tester, cls.permission)
+        user_should_have_perm(cls.tester, 'testruns.add_testrun')
         cls.url = reverse('testruns-new')
-        cls.build_fast = BuildFactory(name='fast', product=cls.product)
 
     def test_refuse_if_missing_plan_pk(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -120,74 +118,6 @@ class TestCreateNewRun(BasePlanCase):
                 response,
                 '<a href="%s">TC-%d: %s</a>' % (case_url, case.pk, case.summary),
                 html=True)
-
-    def test_create_a_new_run(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        clone_data = {
-            'summary': self.plan.name,
-            'from_plan': self.plan.pk,
-            'build': self.build_fast.pk,
-            'manager': self.tester.email,
-            'default_tester': self.tester.email,
-            'notes': 'Clone new run',
-            'case': [self.case_1.pk, self.case_2.pk],
-            'POSTING_TO_CREATE': 'YES',
-        }
-
-        url = reverse('testruns-new')
-        response = self.client.post(url, clone_data)
-
-        new_run = TestRun.objects.last()
-
-        self.assertRedirects(
-            response,
-            reverse('testruns-get', args=[new_run.pk]))
-
-        self.assertEqual(self.plan.name, new_run.summary)
-        self.assertEqual(self.plan, new_run.plan)
-        self.assertEqual(self.version, new_run.product_version)
-        self.assertEqual(None, new_run.stop_date)
-        self.assertEqual('Clone new run', new_run.notes)
-        self.assertEqual(self.build_fast, new_run.build)
-        self.assertEqual(self.tester, new_run.manager)
-        self.assertEqual(self.tester, new_run.default_tester)
-
-        for case, case_run in zip((self.case_1, self.case_2),
-                                  new_run.case_run.order_by('case')):
-            self.assertEqual(case, case_run.case)
-            self.assertEqual(None, case_run.tested_by)
-            self.assertEqual(self.tester, case_run.assignee)
-            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
-                             case_run.status)
-            self.assertEqual(case.history.latest().history_id, case_run.case_text_version)
-            self.assertEqual(new_run.build, case_run.build)
-            self.assertEqual(None, case_run.close_date)
-
-    def test_create_a_new_run_without_permissions_should_fail(self):
-        remove_perm_from_user(self.tester, 'testruns.add_testrun')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        clone_data = {
-            'summary': self.plan.name,
-            'from_plan': self.plan.pk,
-            'build': self.build_fast.pk,
-            'manager': self.tester.email,
-            'default_tester': self.tester.email,
-            'notes': 'Clone new run',
-            'case': [self.case_1.pk, self.case_2.pk],
-            'POSTING_TO_CREATE': 'YES',
-        }
-
-        url = reverse('testruns-new')
-
-        self.assertRedirects(
-            self.client.post(url, clone_data),
-            reverse('tcms-login') + '?next=' + url)
 
 
 class CloneRunBaseTest(BaseCaseRun):
