@@ -53,7 +53,7 @@ Bug fixes
 
 - Always build with the latest versions of translations
 - Add 'Delete' menu item in Bugs page. Fixes #1153
-  `Issue #1153 <https://github.com/kiwitcms/Kiwi/issues/1154>`_
+  `Issue #1153 <https://github.com/kiwitcms/Kiwi/issues/1153>`_
 - When deleting hyperlink from TestExecution hide the actual UI
   elements from the page
 - Fix failure to delete TCs when the number of TCs inside TP is greater
