@@ -73,6 +73,9 @@ class TestRun(TCMSActionModel):
     def _get_absolute_url(self):
         return reverse('testruns-get', args=[self.pk, ])
 
+    def get_absolute_url(self):
+        return self._get_absolute_url()
+
     def get_notify_addrs(self):
         """
         Get the all related mails from the run

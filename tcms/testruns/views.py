@@ -18,11 +18,12 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
+from django.views.generic.edit import UpdateView
 
 from django_comments.models import Comment
 
 from tcms.core.utils import clean_request
-from tcms.management.models import Priority, Tag
+from tcms.management.models import Priority, Tag, Build
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
@@ -268,52 +269,30 @@ def _walk_executions(test_executions):
                                             execution=execution.pk).count())
 
 
-@permission_required('testruns.change_testrun')
-def edit(request, run_id):
-    """Edit test plan view"""
+@method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
+class EditTestRunView(UpdateView):
+    model = TestRun
+    template_name = 'testruns/mutable.html'
+    form_class = BaseRunForm
 
-    try:
-        test_run = TestRun.objects.select_related().get(run_id=run_id)
-    except ObjectDoesNotExist:
-        raise Http404
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['test_plan'] = self.object.plan
+        context['builds'] = Build.objects.filter(product=self.object.plan.product, is_active=True)
 
-    # If the form is submitted
-    if request.method == "POST":
-        form = BaseRunForm(request.POST)
-        form.populate(product_id=test_run.plan.product_id)
+        return context
 
-        # FIXME: Error handler
-        if form.is_valid():
-            test_run.summary = form.cleaned_data['summary']
-            # Permission hack
-            if test_run.manager == request.user or test_run.plan.author == request.user:
-                test_run.manager = form.cleaned_data['manager']
-            test_run.default_tester = form.cleaned_data['default_tester']
-            test_run.build = form.cleaned_data['build']
-            test_run.product_version = test_run.plan.product_version
-            test_run.notes = form.cleaned_data['notes']
-            test_run.save()
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        form.populate(self.object.plan.product_id)
 
-            return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
-    else:
-        # Generate a blank form
-        form = BaseRunForm(initial={
-            'summary': test_run.summary,
-            'manager': test_run.manager.email,
-            'default_tester': (test_run.default_tester and
-                               test_run.default_tester.email or None),
-            'version': test_run.product_version_id,
-            'build': test_run.build_id,
-            'notes': test_run.notes,
-        })
-        form.populate(test_run.plan.product_id)
+        return form
 
-    context_data = {
-        'test_run': test_run,
-        'test_plan': test_run.plan,
-        'form': form,
-    }
-    return render(request, 'testruns/mutable.html', context_data)
+    def get_initial(self):
+        return {
+            'manager': self.object.manager,
+            'default_tester': self.object.default_tester,
+        }
 
 
 class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-required
