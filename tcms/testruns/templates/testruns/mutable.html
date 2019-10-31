@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    {% if test_run %}
+    {% if object %}
         {% trans "Edit TestRun" %}
     {% elif is_cloning %}
         {% trans "Clone TestRun" %}
@@ -14,7 +14,7 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
-    <form class="form-horizontal" action="{% if test_run %}{% url 'testruns-edit' test_run.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
+    <form class="form-horizontal" action="{% if object %}{% url 'testruns-edit' object.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
         <div class="form-group">

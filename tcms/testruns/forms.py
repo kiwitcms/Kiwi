@@ -14,21 +14,16 @@ from .models import TestRun, TestExecutionStatus
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-class BaseRunForm(forms.Form):
-    summary = forms.CharField(max_length=255)
+class BaseRunForm(forms.ModelForm):
+    class Meta:
+        model = TestRun
+        fields = ['notes', 'default_tester', 'build', 'manager', 'summary']
+
     manager = UserField()
     default_tester = UserField(required=False)
-    build = forms.ModelChoiceField(
-        queryset=Build.objects.none(),
-    )
-    notes = forms.CharField(
-        widget=forms.Textarea,
-        required=False,
-    )
 
     def populate(self, product_id):
-        query = {'product_id': product_id, 'is_active': True}
-        self.fields['build'].queryset = Build.objects.filter(**query)
+        self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
 
 
 class NewRunForm(BaseRunForm):
