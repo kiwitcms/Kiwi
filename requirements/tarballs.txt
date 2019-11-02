@@ -7,4 +7,4 @@ django-uuslug==1.1.9
 django-vinaigrette==1.2.0
 python-bugzilla==2.3.0
 PyGithub==1.44
-python-gitlab==1.12.1
+python-gitlab==1.13.0
