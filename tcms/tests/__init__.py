@@ -250,11 +250,11 @@ class PermissionsTestCase(LoggedInTestCase):
             return
         super().tearDownClass()
 
-    def run(self, result=None):
+    def __call__(self, result=None):
         if self.__class__.__name__ == "PermissionsTestCase":
             return None
 
-        return super().run()
+        return super().__call__(result)
     # end skip running
 
     @classmethod
