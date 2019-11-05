@@ -17,6 +17,8 @@ Available plugins
 * Native `JUnit 5 plugin <https://github.com/kiwitcms/junit-plugin/>`_ written
   in Java
 
+.. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
+
 
 Plugins still in progress
 -------------------------
@@ -30,6 +32,8 @@ Watch their repositories or
 `subscribe to our newsletter <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 to be notified when they are officially released.
 
+.. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
+
 
 Proposed plugins
 ----------------
@@ -38,6 +42,9 @@ Proposed plugins
 * Native `Test NG plugin <https://github.com/kiwitcms/Kiwi/issues/692>`_ to be
   written in Java
 * `GitHub status plugin <https://github.com/kiwitcms/Kiwi/issues/817>`_
+* `Robot Framework plugin <https://github.com/kiwitcms/Kiwi/issues/984>`_
+
+.. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
 
 Vote with a ``:+1:`` reaction on GitHub to give them priority!
 
