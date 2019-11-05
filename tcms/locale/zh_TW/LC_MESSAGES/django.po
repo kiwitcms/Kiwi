@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-26 17:52\n"
+"PO-Revision-Date: 2019-11-05 03:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -384,7 +384,7 @@ msgstr ""
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "測試"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
