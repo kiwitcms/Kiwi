@@ -140,7 +140,7 @@ class IntegrationThread(threading.Thread):
 
     def __init__(self, rpc, bug_system, execution, bug_id):
         """
-            :param rpc: Bugzilla XML-RPC object
+            :param rpc: Bug tracker RPC object
             :param bug_system: BugSystem object
             :param execution: TestExecution object
             :param bug_id: Unique defect identifier in the system. Usually an int.
@@ -171,8 +171,8 @@ TE-%d: %s""" % (self.execution.run.pk,
 
     def run(self):
         """
-            Using Bugzilla's XML-RPC try to link the test case with
-            the bug!
+            Using RPC try to link the test case with existing bug!
+            By default will post a comment!
         """
 
         try:

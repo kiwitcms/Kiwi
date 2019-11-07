@@ -36,9 +36,9 @@ Configure external bug trackers
 One of the first steps when working with Kiwi TCMS is to configure bug
 tracking systems. This can be done via the interface located at
 ``ADMIN -> Everything else -> Test cases -> Bug trackers``.
-Each bug tracker is given a name, short description, URL format string,
-regular expression which is used to validate bug ID strings, API credentials
-and integration type.
+Each bug tracker is given a name, URL, API credentials and integration type.
+The extent of integration with 3rd party bug tracking systems is documented
+in :mod:`tcms.issuetracker`.
 
 .. important::
 
