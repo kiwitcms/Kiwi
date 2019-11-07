@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-26 17:53\n"
+"PO-Revision-Date: 2019-11-07 07:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -26,7 +26,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Descriptif du problème:\n\n\n"
+"Est t'il reproductible:\n\n\n"
+"Étape pour reproduire:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Résultats actuels:\n\n\n"
+"Résultats attendus:\n\n\n"
+"Information complémentaire:"
 
 #: tcms/bugs/templates/bugs/get.html:28 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -498,7 +506,7 @@ msgstr "Palier de test"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
 msgid "Shows how existing test cases are distributed"
-msgstr ""
+msgstr "Affiche comment les scénarios de test existants sont distribués"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
@@ -540,7 +548,7 @@ msgstr "Catégories"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
 msgid "Information if product builds are getting better or worse"
-msgstr ""
+msgstr "Informations si les constructions de produits sont de meilleure ou pire"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -548,7 +556,7 @@ msgstr "Matrice d'état des tests"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Informations détaillées sur l'état d'exécution du test"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test case"
@@ -564,7 +572,7 @@ msgstr "Suivi du scénario de test"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Discover which test cases are the most common source of problems"
-msgstr ""
+msgstr "Découvrez quels scénarios de test sont la source de problèmes la plus courante"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
