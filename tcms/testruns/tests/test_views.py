@@ -540,46 +540,6 @@ class TestUpdateCaseRunText(BaseCaseRun):
         )
 
 
-class TestEditRun(BaseCaseRun):
-    """Test edit view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestEditRun, cls).setUpTestData()
-
-        user_should_have_perm(cls.tester, 'testruns.change_testrun')
-        cls.edit_url = reverse('testruns-edit', args=[cls.test_run.pk])
-
-        cls.new_build = BuildFactory(name='FastTest',
-                                     product=cls.test_run.plan.product)
-        cls.intern = UserFactory(username='intern',
-                                 email='intern@example.com')
-
-    def test_404_if_edit_non_existing_run(self):
-        url = reverse('testruns-edit', args=[9999])
-        response = self.client.get(url)
-
-        self.assert404(response)
-
-    def test_edit_run(self):
-
-        post_data = {
-            'summary': 'New run summary',
-            'build': self.new_build.pk,
-            'manager': self.test_run.manager.email,
-            'default_tester': self.intern.email,
-            'notes': 'easytest',
-        }
-
-        response = self.client.post(self.edit_url, post_data)
-
-        run = TestRun.objects.get(pk=self.test_run.pk)
-        self.assertEqual('New run summary', run.summary)
-        self.assertEqual(self.new_build, run.build)
-
-        self.assertRedirects(response, reverse('testruns-get', args=[run.pk]))
-
-
 class TestAddCasesToRun(BaseCaseRun):
     """Test AddCasesToRunView"""
 
