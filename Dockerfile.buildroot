@@ -1,36 +1,27 @@
-FROM centos:centos7
+FROM centos:centos8
 
-RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-12.noarch.rpm && \
-    yum -y --setopt=tsflags=nodocs install centos-release-scl && \
-    yum -y --setopt=tsflags=nodocs install rh-python36 gcc mariadb-devel \
-    postgresql-devel httpd-devel gettext npm which unzip libffi-devel && \
-    yum clean all
+RUN dnf -y --setopt=tsflags=nodocs install python3-virtualenv mariadb-connector-c-devel \
+    postgresql-devel libffi-devel gcc gettext npm which && \
+    dnf clean all
 
 
-# make sure Python 3.6 is enabled by default
-ENV PATH /venv/bin:/opt/rh/rh-python36/root/usr/bin${PATH:+:${PATH}} \
-    LD_LIBRARY_PATH /opt/rh/rh-python36/root/usr/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} \
-    PKG_CONFIG_PATH /opt/rh/rh-python36/root/usr/lib64/pkgconfig${PKG_CONFIG_PATH:+:${PKG_CONFIG_PATH}} \
-    XDG_DATA_DIRS "/opt/rh/rh-python36/root/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}" \
+ENV PATH /venv/bin:${PATH} \
     VIRTUAL_ENV /venv
 
 # Create a virtualenv for the application dependencies
 RUN virtualenv /venv
 
 # because we get some errors from other packages which need newer versions
-RUN pip install --no-cache-dir --upgrade pip setuptools twine
-
-# replace standard mod_wsgi with one compiled for Python 3
-RUN pip install --no-cache-dir --upgrade mod_wsgi
+RUN pip3 install --no-cache-dir --upgrade pip setuptools twine
 
 # build and install the application
 COPY . /Kiwi/
 WORKDIR /Kiwi
 
 # install app dependencies so we can build the app later
-RUN pip install --no-cache-dir -r requirements/mariadb.txt
-RUN pip install --no-cache-dir -r requirements/postgres.txt
+RUN pip3 install --no-cache-dir -r requirements/mariadb.txt
+RUN pip3 install --no-cache-dir -r requirements/postgres.txt
 
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" manage.py
 RUN ./tests/check-build
-RUN pip install --no-cache-dir dist/kiwitcms-*.tar.gz
+RUN pip3 install --no-cache-dir dist/kiwitcms-*.tar.gz

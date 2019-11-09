@@ -17,7 +17,7 @@ rm -rf tcms/node_modules/
 find tcms/locale/ -name "*.mo" -delete
 ./manage.py compilemessages
 
-if [ -z $(find -type f -name "*.mo") ]; then
+if [ -z "$(find -type f -name "*.mo")" ]; then
     echo "ERROR: .mo files not found"
     exit 1
 fi
