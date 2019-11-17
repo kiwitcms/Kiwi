@@ -3,13 +3,9 @@
 from http import HTTPStatus
 
 from django import test
-from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
-from django_comments.models import Comment
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.testruns.models import TestExecution
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import TestPlanFactory
@@ -76,76 +72,3 @@ class TestDashboard(BaseCaseRun):
 
         response = self.client.get(reverse('core-views-index'))
         self.assertContains(response, execution.run.summary)
-
-
-class TestCommentCaseRuns(BaseCaseRun):
-    """Test case for ajax.comment_case_runs"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestCommentCaseRuns, cls).setUpTestData()
-        cls.many_comments_url = reverse('ajax-comment_case_runs')
-
-    def test_refuse_if_missing_comment(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.many_comments_url,
-                                    {'run': [self.execution_1.pk, self.execution_2.pk]})
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'Comments needed'})
-
-    def test_refuse_if_missing_no_case_run_pk(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.many_comments_url,
-                                    {'comment': 'new comment', 'run': []})
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'No runs selected.'})
-
-        response = self.client.post(self.many_comments_url,
-                                    {'comment': 'new comment'})
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'No runs selected.'})
-
-    def test_refuse_if_passed_case_run_pks_not_exist(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.many_comments_url,
-                                    {'comment': 'new comment',
-                                     'run': '99999998,1009900'})
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'No caserun found.'})
-
-    def test_add_comment_to_case_runs(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        new_comment = 'new comment'
-        response = self.client.post(
-            self.many_comments_url,
-            {'comment': new_comment,
-             'run': ','.join([str(self.execution_1.pk),
-                              str(self.execution_2.pk)])})
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok'})
-
-        # Assert comments are added
-        case_run_ct = ContentType.objects.get_for_model(TestExecution)
-
-        for case_run_pk in (self.execution_1.pk, self.execution_2.pk):
-            comments = Comment.objects.filter(object_pk=case_run_pk,
-                                              content_type=case_run_ct)
-            self.assertEqual(new_comment, comments[0].comment)
-            self.assertEqual(self.tester, comments[0].user)
