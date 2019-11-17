@@ -64,8 +64,6 @@ urlpatterns = [
 
     url(r'^telemetry/', include(telemetry_urls)),
 
-    url(r'^caserun/comment-many/', ajax.comment_case_runs, name='ajax-comment_case_runs'),
-
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),

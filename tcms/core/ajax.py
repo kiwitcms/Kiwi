@@ -11,7 +11,6 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_POST
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
@@ -19,8 +18,7 @@ from django.contrib.auth.decorators import permission_required
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseTag
 from tcms.testplans.models import TestPlan, TestPlanTag
-from tcms.testruns.models import TestExecution, TestRunTag
-from tcms.core.helpers.comments import add_comment
+from tcms.testruns.models import TestRunTag
 
 
 def tags(request):
@@ -167,25 +165,3 @@ class UpdateTestCaseActorsView(View):
             test_case.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@require_POST
-def comment_case_runs(request):
-    """
-    Add comment to one or more caseruns at a time.
-    """
-    data = request.POST.copy()
-    comment = data.get('comment', None)
-    if not comment:
-        return say_no('Comments needed')
-    run_ids = []
-    for run_id in data.get('run', '').split(','):
-        if run_id:
-            run_ids.append(run_id)
-    if not run_ids:
-        return say_no('No runs selected.')
-    runs = TestExecution.objects.filter(pk__in=run_ids).only('pk')
-    if not runs:
-        return say_no('No caserun found.')
-    add_comment(runs, comment, request.user)
-    return say_yes()
