@@ -659,20 +659,12 @@ function showCommentForm() {
       commentsErr.html(error);
       return false;
     }
-    jQ.ajax({
-      url: '/caserun/comment-many/',
-      data: {'comment': comments, 'run': runs.join()},
-      dataType: 'json',
-      type: 'post',
-      success: function(res) {
-        if (res.rc == 0) {
-          reloadWindow();
-        } else {
-          commentsErr.html(res.response);
-          return false;
-        }
-      }
+
+    runs.forEach(function(run_id) {
+      jsonRPC('TestExecution.add_comment', [run_id, comments], function(){});
     });
+
+    reloadWindow();
   });
   jQ('#btnCancelComment').live('click', function(){
     jQ(dialog).hide();
