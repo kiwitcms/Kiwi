@@ -8,7 +8,7 @@ from xmlrpc.client import Fault as XmlRPCFault
 
 from django.test import override_settings
 
-from tcms.core.contrib.comments.utils import get_comments
+from tcms.core.helpers.comments import get_comments
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testruns.models import TestExecutionStatus
 

@@ -15,7 +15,7 @@ from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
-from tcms.core.contrib.comments.utils import get_comments
+from tcms.core.helpers.comments import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases.models import TestCase, TestCaseStatus, \
