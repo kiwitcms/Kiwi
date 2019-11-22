@@ -650,18 +650,14 @@ function showCommentForm() {
   var commentText = jQ('#commentText');
   var commentsErr = jQ('#commentsErr');
   jQ('#btnComment').live('click', function() {
-    var error;
     var comments = jQ.trim(commentText.val());
     if (!comments) {
-      error = 'No comments given.';
-    }
-    if (error) {
-      commentsErr.html(error);
+      commentsErr.html('No comments given');
       return false;
     }
 
     runs.forEach(function(run_id) {
-      jsonRPC('TestExecution.add_comment', [run_id, comments], function(){});
+        jsonRPC('TestExecution.add_comment', [run_id, comments], function(result){}, true);
     });
 
     reloadWindow();
