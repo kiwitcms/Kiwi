@@ -28,23 +28,23 @@ __all__ = (
 
 
 @rpc_method(name='TestExecution.add_comment')
-def add_comment(case_run_id, comment, **kwargs):
+def add_comment(execution_id, comment, **kwargs):
     """
-    .. function:: XML-RPC TestExecution.add_comment(case_run_id, comment)
+    .. function:: XML-RPC TestExecution.add_comment(execution_id, comment)
 
         Add comment to selected test execution.
 
-        :param case_run_id: PK of a TestExecution object
-        :param case_run_id: int
+        :param execution_id: PK of a TestExecution object
+        :param execution_id: int
         :param comment: The text to add as a comment
         :param comment: str
         :return: None or JSON string in case of errors
     """
-    case_run = TestExecution.objects.get(pk=case_run_id)
+    case_run = TestExecution.objects.get(pk=execution_id)
 
     data = {
         'content_type': 'testruns.testexecution',
-        'object_pk': str(case_run_id),
+        'object_pk': str(execution_id),
         'timestamp': str(time.time()).split('.')[0],
     }
     data['security_hash'] = SimpleForm(case_run).generate_security_hash(**data)
