@@ -8,6 +8,7 @@ from xmlrpc.client import Fault as XmlRPCFault
 
 from django.test import override_settings
 
+from tcms.core.contrib.comments.utils import get_comments
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testruns.models import TestExecutionStatus
 
@@ -136,14 +137,19 @@ class TestExecutionAddComment(XmlrpcAPIBaseTest):
     """Test TestExecution.add_comment"""
 
     def _fixture_setup(self):
-        super(TestExecutionAddComment, self)._fixture_setup()
+        super()._fixture_setup()
 
-        self.case_run_1 = TestExecutionFactory()
-        self.case_run_2 = TestExecutionFactory()
+        self.execution_1 = TestExecutionFactory()
+        self.execution_2 = TestExecutionFactory()
 
-    def test_add_comment_with_int(self):
-        comment = self.rpc_client.exec.TestExecution.add_comment(self.case_run_2.pk, "Hello World!")
-        self.assertIsNone(comment)
+    def test_add_comment_with_pk_as_int(self):
+        self.rpc_client.exec.TestExecution.add_comment(self.execution_2.pk,
+                                                       "Hello World!")
+        comments = get_comments(self.execution_2)
+        self.assertEqual(1, comments.count())
+
+        first_comment = comments.first()
+        self.assertEqual("Hello World!", first_comment.comment)
 
 
 @override_settings(LANGUAGE_CODE='en-us')
