@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import time
 
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method, REQUEST_KEY
 
+from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.core.contrib.comments.forms import SimpleForm
-from tcms.core.contrib.comments import utils as comment_utils
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testruns.models import TestExecution
 from tcms.rpc.serializer import XMLRPCSerializer
@@ -40,22 +38,8 @@ def add_comment(execution_id, comment, **kwargs):
         :param comment: str
         :return: None or JSON string in case of errors
     """
-    case_run = TestExecution.objects.get(pk=execution_id)
-
-    data = {
-        'content_type': 'testruns.testexecution',
-        'object_pk': str(execution_id),
-        'timestamp': str(time.time()).split('.')[0],
-    }
-    data['security_hash'] = SimpleForm(case_run).generate_security_hash(**data)
-    data['comment'] = comment
-
-    form, _ = comment_utils.add_comment(kwargs.get(REQUEST_KEY), data)
-
-    if not form.is_valid():
-        return form.errors.as_json()
-
-    return None
+    execution = TestExecution.objects.get(pk=execution_id)
+    comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
 
 
 # todo: this is very similar, if not duplicate to TestRun.add_case IMO
