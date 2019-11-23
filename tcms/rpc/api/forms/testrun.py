@@ -1,11 +1,15 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from django.contrib.auth import get_user_model
+
 from tcms.management.models import Product, Version, Build
 from tcms.testplans.models import TestPlan
+from tcms.testruns.models import TestRun, TestExecutionStatus
+from tcms.testruns.forms import BaseCaseRunForm
+from tcms.testcases.models import TestCase
 from tcms.testruns.forms import BaseRunForm
 
-from django.contrib.auth import get_user_model
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -53,3 +57,35 @@ class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
 
     def clean_status(self):
         return self.cleaned_data.get('status')
+
+
+class XMLRPCNewExecutionForm(BaseCaseRunForm):
+    assignee = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
+    run = forms.ModelChoiceField(queryset=TestRun.objects.all())
+    case = forms.ModelChoiceField(queryset=TestCase.objects.all())
+
+    def clean_assignee(self):
+        data = self.cleaned_data.get('assignee')
+        if not data:
+            if self.cleaned_data.get('case') \
+                    and self.cleaned_data['case'].default_tester_id:
+                data = self.cleaned_data['case'].default_tester
+            elif self.cleaned_data.get('run') \
+                    and self.cleaned_data['run'].default_tester_id:
+                data = self.cleaned_data['run'].default_tester
+
+        return data
+
+    def clean_case_text_version(self):
+        data = self.cleaned_data.get('case_text_version')
+        if not data and self.cleaned_data.get('case'):
+            data = self.cleaned_data['case'].history.latest().history_id
+
+        return data
+
+    def clean_status(self):
+        data = self.cleaned_data.get('status')
+        if not data:
+            data = TestExecutionStatus.objects.get(name='IDLE')
+
+        return data
