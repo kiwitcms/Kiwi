@@ -11,4 +11,6 @@ Submodules
 
 .. toctree::
 
+   tcms.rpc.api.forms.testcase
    tcms.rpc.api.forms.testplan
+   tcms.rpc.api.forms.testrun
