@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name, protected-access
 
 import unittest
+from datetime import datetime
 
 from django import test
 from django.utils import timezone
@@ -51,7 +52,6 @@ class TestUtilityMethods(unittest.TestCase):
         value = datetime_to_str(None)
         self.assertEqual(value, None)
 
-        from datetime import datetime
         now = timezone.now()
         value = datetime_to_str(now)
         expected_value = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')

@@ -1,3 +1,5 @@
+# pylint: disable=import-outside-toplevel
+
 from django.apps import AppConfig as DjangoAppConfig
 
 
