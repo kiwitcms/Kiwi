@@ -12,6 +12,9 @@ from tcms.rpc.decorators import permissions_required
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.issuetracker.kiwitcms import KiwiTCMS
 
+from tcms.rpc.api.forms.testrun import XMLRPCNewExecutionForm
+
+
 __all__ = (
     'create',
     'update',
@@ -66,7 +69,6 @@ def create(values):
             }
             >>> TestExecution.create(values)
     """
-    from tcms.testruns.forms import XMLRPCNewExecutionForm
 
     form = XMLRPCNewExecutionForm(values)
 
