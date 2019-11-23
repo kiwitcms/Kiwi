@@ -148,7 +148,7 @@ def execution_trends(query=None):
         else:
             _append_status_counts_to_result(count, data_set)
 
-            count = {}
+            count = {status: 1}
             run_id = test_execution.run_id
             categories.append(run_id)
 
