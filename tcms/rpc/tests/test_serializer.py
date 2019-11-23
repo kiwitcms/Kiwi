@@ -8,7 +8,7 @@ from tcms.management.models import Product
 from tcms.testcases.models import TestCase
 from tcms.testplans.models import TestPlan
 from tcms.rpc.serializer import QuerySetBasedXMLRPCSerializer
-from tcms.rpc.serializer import XMLRPCSerializer
+from tcms.rpc.serializer import Serializer
 from tcms.rpc.serializer import datetime_to_str
 from tcms.rpc.serializer import do_nothing
 from tcms.rpc.serializer import to_str
@@ -30,7 +30,7 @@ class TestXMLSerializer(test.TestCase):
                                                   ComponentFactory()])
 
     def test_serializer(self):
-        serializer = XMLRPCSerializer(model=self.testcase)
+        serializer = Serializer(model=self.testcase)
 
         result = serializer.serialize_model()
 

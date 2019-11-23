@@ -5,7 +5,7 @@ from django.forms.widgets import CheckboxInput
 from tcms.rpc.utils import parse_bool_value
 
 
-class XMLRPCCheckboxInput(CheckboxInput):
+class CheckboxInput(CheckboxInput):
     def value_from_datadict(self, data, files, name):
         if name not in data:
             return False

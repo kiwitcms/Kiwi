@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.rpc.serializer import XMLRPCSerializer
+from tcms.rpc.serializer import Serializer
 from tcms.rpc.utils import parse_bool_value
 from tcms.rpc.decorators import permissions_required
 
@@ -22,7 +22,7 @@ __all__ = (
 
 
 def _get_user_dict(user):
-    user_dict = XMLRPCSerializer(model=user).serialize_model()
+    user_dict = Serializer(model=user).serialize_model()
     if 'password' in user_dict:
         del user_dict['password']
     return user_dict

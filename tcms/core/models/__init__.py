@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from tcms.core.models.base import UrlMixin
-from tcms.rpc.serializer import XMLRPCSerializer
+from tcms.rpc.serializer import Serializer
 
 get_user_model()._meta.ordering = ['username']
 
@@ -25,12 +25,12 @@ class TCMSActionModel(models.Model, UrlMixin):
         """
         if query is None:
             query = {}
-        serializer = XMLRPCSerializer(queryset=cls.objects.filter(**query))
+        serializer = Serializer(queryset=cls.objects.filter(**query))
         return serializer.serialize_queryset()
 
     def serialize(self):
         """
         Convert the model for XMLPRC
         """
-        serializer = XMLRPCSerializer(model=self)
+        serializer = Serializer(model=self)
         return serializer.serialize_model()

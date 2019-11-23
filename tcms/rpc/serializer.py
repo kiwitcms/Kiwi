@@ -47,7 +47,7 @@ def timedelta_to_str(value):
 
 
 # todo: start removing these classes in favor of tcms.core.serializer
-class XMLRPCSerializer:
+class Serializer:
     """
     Django XMLRPC Serializer
     The goal is to process the datetime and timedelta data structure
@@ -56,13 +56,13 @@ class XMLRPCSerializer:
     How to use it:
     # Model
     m = Model.objects.get(pk = 1)
-    s = XMLRPCSerializer(model = m)
+    s = Serializer(model = m)
     s.serialize()
 
     Or
     # QuerySet
     q = Model.objects.all()
-    s = XMLRPCSerializer(queryset = q)
+    s = Serializer(queryset = q)
     s.serialize()
     """
 
@@ -172,7 +172,7 @@ def _serialize_names(row, values_fields_mapping):
     return new_serialized_data
 
 
-class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
+class QuerySetBasedXMLRPCSerializer(Serializer):
     """XMLRPC serializer specific for TestPlan
 
     To configure the serialization, developer can specify following class
