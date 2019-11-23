@@ -89,3 +89,8 @@ class XMLRPCNewExecutionForm(BaseCaseRunForm):
             data = TestExecutionStatus.objects.get(name='IDLE')
 
         return data
+
+
+class XMLRPCUpdateExecutionForm(BaseCaseRunForm):
+    assignee = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
+    build = forms.ModelChoiceField(queryset=Build.objects.all(), required=False)
