@@ -14,7 +14,7 @@ from tcms.testruns.forms import BaseRunForm
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-class XMLRPCNewRunForm(BaseRunForm):
+class NewForm(BaseRunForm):
     plan = forms.ModelChoiceField(
         queryset=TestPlan.objects.none(),
     )
@@ -24,7 +24,7 @@ class XMLRPCNewRunForm(BaseRunForm):
         self.populate(self.fields['plan'].queryset.first().product_id)
 
 
-class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
+class UpdateForm(NewForm):
     plan = forms.ModelChoiceField(
         queryset=TestPlan.objects.all(),
         required=False,
@@ -59,7 +59,7 @@ class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
         return self.cleaned_data.get('status')
 
 
-class XMLRPCNewExecutionForm(BaseCaseRunForm):
+class NewExecutionForm(BaseCaseRunForm):
     assignee = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
     run = forms.ModelChoiceField(queryset=TestRun.objects.all())
     case = forms.ModelChoiceField(queryset=TestCase.objects.all())
@@ -91,6 +91,6 @@ class XMLRPCNewExecutionForm(BaseCaseRunForm):
         return data
 
 
-class XMLRPCUpdateExecutionForm(BaseCaseRunForm):
+class UpdateExecutionForm(BaseCaseRunForm):
     assignee = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
     build = forms.ModelChoiceField(queryset=Build.objects.all(), required=False)

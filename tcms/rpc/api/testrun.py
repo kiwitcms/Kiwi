@@ -7,7 +7,7 @@ from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestRun
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.api.forms.testrun import XMLRPCUpdateRunForm, XMLRPCNewRunForm
+from tcms.rpc.api.forms.testrun import UpdateForm, NewForm
 
 
 __all__ = (
@@ -161,7 +161,7 @@ def create(values):
             }
             >>> TestRun.create(values)
     """
-    form = XMLRPCNewRunForm(values)
+    form = NewForm(values)
     form.assign_plan(values.get('plan'))
 
     if form.is_valid():
@@ -218,7 +218,7 @@ def update(run_id, values):
     if values.get('product_version') and not values.get('product'):
         raise ValueError('Field "product" is required by product_version')
 
-    form = XMLRPCUpdateRunForm(values)
+    form = UpdateForm(values)
     if values.get('product_version'):
         form.populate(product_id=values['product'])
 
