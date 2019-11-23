@@ -7,7 +7,7 @@ from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestRun
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
+from tcms.rpc.api.forms.testrun import XMLRPCUpdateRunForm, XMLRPCNewRunForm
 
 
 __all__ = (
