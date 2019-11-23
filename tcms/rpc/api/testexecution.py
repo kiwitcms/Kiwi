@@ -7,7 +7,7 @@ from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testruns.models import TestExecution
-from tcms.rpc.serializer import XMLRPCSerializer
+from tcms.rpc.serializer import Serializer
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.issuetracker.kiwitcms import KiwiTCMS
@@ -217,5 +217,5 @@ def get_links(query):
                  objects
     """
     links = LinkReference.objects.filter(**query)
-    serialier = XMLRPCSerializer(links)
+    serialier = Serializer(links)
     return serialier.serialize_queryset()

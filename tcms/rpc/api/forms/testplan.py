@@ -3,13 +3,13 @@ from django.forms import BooleanField, CharField, ModelChoiceField
 from tcms.management.models import Product, Version
 from tcms.testplans import forms as testplan_forms
 from tcms.testplans.models import PlanType
-from tcms.rpc.forms import XMLRPCCheckboxInput
+from tcms.rpc.forms import CheckboxInput
 
 
 class NewPlanForm(testplan_forms.NewPlanForm):
     is_active = BooleanField(
         required=False,
-        widget=XMLRPCCheckboxInput
+        widget=CheckboxInput
     )
 
 
