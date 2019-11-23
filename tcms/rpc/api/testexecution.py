@@ -13,6 +13,7 @@ from tcms.rpc.api.utils import tracker_from_url
 from tcms.issuetracker.kiwitcms import KiwiTCMS
 
 from tcms.rpc.api.forms.testrun import XMLRPCNewExecutionForm
+from tcms.rpc.api.forms.testrun import XMLRPCUpdateExecutionForm
 
 
 __all__ = (
@@ -124,7 +125,6 @@ def update(case_run_id, values, **kwargs):
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :raises: PermissionDenied if missing *testruns.change_testexecution* permission
     """
-    from tcms.testruns.forms import XMLRPCUpdateExecutionForm
 
     tcr = TestExecution.objects.get(pk=case_run_id)
     form = XMLRPCUpdateExecutionForm(values)

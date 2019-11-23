@@ -72,8 +72,3 @@ class BaseCaseRunForm(forms.Form):
     assignee = UserField(required=False)
     case_text_version = forms.IntegerField(required=False)
     sortkey = forms.IntegerField(required=False)
-
-
-class XMLRPCUpdateExecutionForm(BaseCaseRunForm):
-    assignee = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
-    build = forms.ModelChoiceField(queryset=Build.objects.all(), required=False)
