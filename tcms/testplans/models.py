@@ -7,12 +7,16 @@ from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from uuslug import slugify
+from django.db.models import Q
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
 from tcms.management.models import Version
 from tcms.testcases.models import (Category, TestCase, TestCasePlan,
                                    TestCaseStatus)
+
+from tcms.rpc.serializer import TestPlanXMLRPCSerializer
+from tcms.rpc.utils import distinct_filter
 
 
 class PlanType(TCMSActionModel):
@@ -58,8 +62,6 @@ class TestPlan(TCMSActionModel):
 
     @classmethod
     def to_xmlrpc(cls, query=None):
-        from tcms.rpc.serializer import TestPlanXMLRPCSerializer
-        from tcms.rpc.utils import distinct_filter
 
         _query = query or {}
         qs = distinct_filter(TestPlan, _query).order_by('pk')
@@ -69,7 +71,6 @@ class TestPlan(TCMSActionModel):
     @classmethod
     def list(cls, query=None):
         """docstring for list_plans"""
-        from django.db.models import Q
 
         new_query = {}
 

@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
-import vinaigrette
 from django.conf import settings
 from django.db import models
 from django.db.models import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils.translation import override
+import vinaigrette
+from django.db.models import Q
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
 from tcms.testcases.fields import MultipleEmailField
+from tcms.rpc.serializer import TestCaseXMLRPCSerializer
+from tcms.rpc.utils import distinct_filter
 
 
 class TestCaseStatus(TCMSActionModel):
@@ -111,8 +114,6 @@ class TestCase(TCMSActionModel):
 
     @classmethod
     def to_xmlrpc(cls, query=None):
-        from tcms.rpc.serializer import TestCaseXMLRPCSerializer
-        from tcms.rpc.utils import distinct_filter
 
         _query = query or {}
         qs = distinct_filter(TestCase, _query).order_by('pk')
@@ -151,7 +152,6 @@ class TestCase(TCMSActionModel):
     @classmethod
     def list(cls, query, plan=None):
         """List the cases with request"""
-        from django.db.models import Q
 
         if not plan:
             queryset = cls.objects

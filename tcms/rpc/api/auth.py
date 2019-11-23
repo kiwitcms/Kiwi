@@ -3,6 +3,8 @@
 import django.contrib.auth
 from django.core.exceptions import PermissionDenied
 from modernrpc.core import REQUEST_KEY, rpc_method
+from django.contrib.auth.middleware import RemoteUserMiddleware
+
 
 __all__ = (
     'login',
@@ -50,7 +52,6 @@ def login_krbv(**kwargs):
         :return: Session ID
         :rtype: str
     """
-    from django.contrib.auth.middleware import RemoteUserMiddleware
 
     # Get the current request
     request = kwargs.get(REQUEST_KEY)
