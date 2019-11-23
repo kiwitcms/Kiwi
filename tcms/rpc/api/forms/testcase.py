@@ -5,7 +5,7 @@ from tcms.management.models import Priority, Product
 from tcms.testcases.models import Category
 
 
-class XMLRPCUpdateCaseForm(BaseCaseForm):
+class UpdateForm(BaseCaseForm):
     summary = forms.CharField(
         required=False,
     )

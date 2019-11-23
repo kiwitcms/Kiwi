@@ -9,7 +9,7 @@ from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
 from tcms.testcases.forms import NewCaseForm
-from tcms.rpc.api.forms.testcase import XMLRPCUpdateCaseForm
+from tcms.rpc.api.forms.testcase import UpdateForm
 
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
@@ -320,7 +320,7 @@ def update(case_id, values):
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
-    form = XMLRPCUpdateCaseForm(values)
+    form = UpdateForm(values)
 
     if values.get('category') and not values.get('product'):
         raise ValueError('Product ID is required for category')

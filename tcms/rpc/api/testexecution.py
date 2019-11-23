@@ -12,8 +12,8 @@ from tcms.rpc.decorators import permissions_required
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.issuetracker.kiwitcms import KiwiTCMS
 
-from tcms.rpc.api.forms.testrun import XMLRPCNewExecutionForm
-from tcms.rpc.api.forms.testrun import XMLRPCUpdateExecutionForm
+from tcms.rpc.api.forms.testrun import NewExecutionForm
+from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 
 
 __all__ = (
@@ -71,7 +71,7 @@ def create(values):
             >>> TestExecution.create(values)
     """
 
-    form = XMLRPCNewExecutionForm(values)
+    form = NewExecutionForm(values)
 
     if not isinstance(values, dict):
         raise TypeError('Argument values must be in dict type.')
@@ -127,7 +127,7 @@ def update(case_run_id, values, **kwargs):
     """
 
     tcr = TestExecution.objects.get(pk=case_run_id)
-    form = XMLRPCUpdateExecutionForm(values)
+    form = UpdateExecutionForm(values)
 
     if form.is_valid():
         if form.cleaned_data['build']:
