@@ -132,27 +132,6 @@ class CaseNotifyForm(forms.Form):
         widget=forms.Textarea(attrs={'rows': 1, }))
 
 
-class XMLRPCUpdateCaseForm(BaseCaseForm):
-    summary = forms.CharField(
-        required=False,
-    )
-    priority = forms.ModelChoiceField(
-        queryset=Priority.objects.all(),
-        empty_label=None,
-        required=False,
-    )
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None,
-        required=False,
-    )
-    category = forms.ModelChoiceField(
-        queryset=Category.objects.none(),
-        empty_label=None,
-        required=False,
-    )
-
-
 class BaseCaseSearchForm(forms.Form):
     summary = forms.CharField(required=False)
     author = forms.CharField(required=False)
@@ -179,8 +158,8 @@ class BaseCaseSearchForm(forms.Form):
     bug_id = BugField(label="Bug ID", required=False)
     is_automated = forms.BooleanField(required=False)
     items_per_page = forms.ChoiceField(
-                                       required=False,
-                                       choices=ITEMS_PER_PAGE_CHOICES)
+        required=False,
+        choices=ITEMS_PER_PAGE_CHOICES)
 
     def clean_bug_id(self):
         data = self.cleaned_data['bug_id']
