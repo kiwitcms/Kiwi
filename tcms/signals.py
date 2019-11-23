@@ -1,4 +1,4 @@
-# pylint: disable=unused-argument
+# pylint: disable=unused-argument, import-outside-toplevel
 """
 Defines custom signals sent throughout Kiwi TCMS. You can connect your own
 handlers if you'd like to augment some of the default behavior!
