@@ -91,7 +91,7 @@ def status_matrix(query=None):
         columns[test_execution.run.run_id] = test_execution.run.summary
         test_execution_response = {
             'pk': test_execution.pk,
-            'class': test_execution.status.color_code(),
+            'color': test_execution.status.color,
             'run_id': test_execution.run_id,
         }
 
@@ -128,7 +128,7 @@ def execution_trends(query=None):
     colors = []
     count = {}
 
-    for status in TestExecutionStatus.objects.all().distinct('name'):
+    for status in TestExecutionStatus.objects.all():
         data_set[status.name] = []
         colors.append(status.color)
 
@@ -163,7 +163,7 @@ def execution_trends(query=None):
 
 
 def _append_status_counts_to_result(count, result):
-    for status in TestExecutionStatus.objects.all().distinct('name'):
+    for status in TestExecutionStatus.objects.all():
         status_count = count.get(status.name, 0)
         result.get(status.name).append(status_count)
 
@@ -177,7 +177,7 @@ def test_case_health(query=None):
     all_test_executions = TestExecution.objects.filter(**query)
 
     test_executions = _get_count_for(all_test_executions)
-    failed_test_executions = _get_count_for(all_test_executions.filter(weight__lt=0))
+    failed_test_executions = _get_count_for(all_test_executions.filter(status__weight__lt=0))
 
     data = {}
     for te in test_executions:

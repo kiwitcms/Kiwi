@@ -108,9 +108,9 @@ function applyStyleToCell(cell) {
         const cellChildren = cellElement.children;
         if (cellChildren) {
             const el = cellChildren[0];
-            if (el && el.classList) {
-                const classListValue = el.classList.value;
-                $(cell).addClass(classListValue);
+            if (el && el.attributes['color']) {
+                color = el.attributes['color'].nodeValue
+                $(cell[1]).attr('style', `border-left: 5px solid ${color}`);
             }
         }
     }
@@ -120,9 +120,9 @@ function renderData(testRunId) {
     return (data, type, full, meta) => {
         const execution = full.executions.find(e => e.run_id === Number(testRunId));
         if (execution) {
-            return `<span class="execution-status ${execution.class}">`
-                + `<a href="/runs/${execution.run_id}/#caserun_${execution.pk}">TE-${execution.pk}</a>`
-                + `</span>`;
+            return `<span class="execution-status" color="${execution.color}">` +
+                `<a href="/runs/${execution.run_id}/#caserun_${execution.pk}">TE-${execution.pk}</a>` +
+                `</span>`;
         }
         return '';
     }
