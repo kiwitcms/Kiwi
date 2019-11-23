@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import F
 from django_comments.models import Comment
 
-from tcms.testruns.models import TestExecution, TestExecutionStatus
+from tcms.testruns.models import TestExecution
 
 
 class TestExecutionDataMixin:
