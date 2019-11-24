@@ -750,16 +750,20 @@ function bindEventsOnLoadedCases(options) {
               var params = Nitrate.Utils.formSerialize(this);
               var refresh_case = function(t) {
                 var td = jQ('<td>', {colspan: 12});
-                var id = 'id_loading_' + params['object_pk'];
+                var id = 'id_loading_' + case_id;
                 td.append(getAjaxLoading(id));
                 jQ(content).html(td);
                 fireEvent(btn, 'click');
                 fireEvent(btn, 'click');
               }
-              submitComment(comment_container_t, params, refresh_case);
+
+                const comment_text = $(this).find('textarea[name=comment]').val();
+                jsonRPC('TestCase.add_comment', [case_id, comment_text], function(data){
+                    updateCommentsCount(case_id, true);
+                    refresh_case();
+                });
             };
-            jQ(content).parent().find('.update_form').unbind('submit');
-            jQ(content).parent().find('.update_form').bind('submit', cc_callback);
+            $(content).parent().find('.update_form').unbind('submit').bind('submit', cc_callback);
 
             // Observe the delete comment form
             var rc_callback = function(e) {

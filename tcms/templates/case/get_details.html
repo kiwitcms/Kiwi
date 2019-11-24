@@ -89,14 +89,9 @@
 		<tr>
 			<td colspan="3" style='border:none;background:transparent'>
 				<form class="update_form" method="POST">
-					{% get_comment_form for test_case as comment_form %}
-					{{ comment_form.comment }}
-					{{ comment_form.content_type }}
-					{{ comment_form.object_pk }}
-					{{ comment_form.timestamp }}
-					{{ comment_form.security_hash }}
-					<br/>
-					<input type="submit" class="submit-post margin-top" value='Add Comment'>
+                                    <textarea name="comment" cols="50" rows="4"></textarea>
+				    <br/>
+				    <input type="submit" value="{% trans 'Save' %}">
 				</form>
 			</td>
 		</tr>

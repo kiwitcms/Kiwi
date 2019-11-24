@@ -39,7 +39,6 @@ html .fixed { height: 1%; }
 .border-right{border-right:1px solid #ccc;}
 .background-light-grey{background:#f5f5f5;}
 .margin-bottom{margin-bottom:10px;}
-.margin-top{ margin-top:10px;}
 .marginLeft{ margin-left:10px;}
 .paddingLeft{ padding-left:10px;}
 .nobg{border:none;background:transparent}
@@ -257,10 +256,8 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .highlight{ background: #ffffca !important;}
 .caes_run label{ margin-right:10px; width:120px;}
 .case_run .row{ float:left; clear:both; width:98%; margin-left:1%; padding-top:5px;}
-.case_run .exist_comments,.case_run .new_comment{ float:left; width:100%; margin:5px 0; }
+.case_run .exist_comments { float:left; width:100%; margin:5px 0; }
 .case_run .exist_comments li{}
-.new_comment textarea[name='comment']{ width:600px;}
-.new_comment .submit-post{ margin:5px 0; cursor:pointer}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{background:transparent url(../images/bug_fire.png) no-repeat; padding:0px 15px; text-decoration:none; }
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
