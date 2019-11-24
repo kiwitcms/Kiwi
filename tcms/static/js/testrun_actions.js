@@ -69,10 +69,6 @@ Nitrate.TestRuns.Details.on_load = function() {
       c_container.parent().find('.update_form')
         .unbind('submit').bind('submit', updateCaseRunStatus);
 
-      // Observe the delete comment form
-      var refresh_case = function(t) {
-        constructCaseRunZone(c_container[0], c[0], case_id);
-      };
 
       var rc_callback = function(e) {
         e.stopPropagation();
@@ -80,7 +76,11 @@ Nitrate.TestRuns.Details.on_load = function() {
         if (!window.confirm(default_messages.confirm.remove_comment)) {
           return false;
         }
-        removeComment(this, refresh_case);
+
+        const comment_id = $(this).find('input[name=comment_id]').val();
+        jsonRPC('TestExecution.remove_comment', [case_run_id, comment_id], function(data) {
+            constructCaseRunZone(c_container[0], c[0], case_id);
+        });
       };
       c_container.parent().find('.form_comment')
         .unbind('submit').bind('submit', rc_callback);
