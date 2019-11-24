@@ -768,22 +768,13 @@ function bindEventsOnLoadedCases(options) {
               if (!window.confirm(default_messages.confirm.remove_comment)) {
                 return false;
               }
-              var params = Nitrate.Utils.formSerialize(this);
-              var refresh_case = function(t) {
-                var returnobj = jQ.parseJSON(t.responseText);
-                if (returnobj.rc != 0) {
-                  window.alert(returnobj.response);
-                  return false;
-                }
 
-                var td = jQ('<td>', {colspan: 12});
-                var id = 'id_loading_' + params['object_pk'];
-                td.append(getAjaxLoading(id));
-                jQ(content).html(td);
-                fireEvent(btn, 'click');
-                fireEvent(btn, 'click');
-              };
-              removeComment(this, refresh_case);
+                const case_id = $(this).find('input[name=object_pk]').val();
+                const comment_id = $(this).find('input[name=comment_id]').val();
+                const comment_widget = $(this).parents().find("#comment"+comment_id);
+                jsonRPC('TestCase.remove_comment', [case_id, comment_id], function(data){
+                    $(comment_widget).hide();
+                });
             };
             jQ(content).parent().find('.form_comment').unbind('submit');
             jQ(content).parent().find('.form_comment').bind('submit', rc_callback);
