@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import get_user_model
-
-from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.management.models import Component
-from tcms.rpc.utils import pre_check_product
 from tcms.rpc.decorators import permissions_required
-
+from tcms.rpc.utils import pre_check_product
 
 User = get_user_model()  # pylint: disable=invalid-name
 

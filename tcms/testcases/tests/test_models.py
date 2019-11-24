@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, no-member
 
-from mock import patch
-
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from mock import patch
 
 from tcms.core.history import history_email_for
 from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import TestCaseComponentFactory
-from tcms.tests.factories import TestCaseTagFactory
-from tcms.tests.factories import TagFactory
+from tcms.tests.factories import (ComponentFactory, TagFactory,
+                                  TestCaseComponentFactory, TestCaseTagFactory)
 
 
 class TestCaseRemoveComponent(BasePlanCase):

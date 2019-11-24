@@ -3,14 +3,12 @@
 
 from http import HTTPStatus
 
-from django.urls import reverse
 from django.contrib.auth.models import Permission
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests import remove_perm_from_user
-from tcms.tests import BasePlanCase
+from tcms.tests import BasePlanCase, remove_perm_from_user
+from tcms.tests.factories import TagFactory, UserFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 

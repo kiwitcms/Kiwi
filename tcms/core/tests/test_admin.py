@@ -3,8 +3,8 @@
 
 from http import HTTPStatus
 
-from django.urls import reverse
 from django.conf import settings
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.tests import LoggedInTestCase

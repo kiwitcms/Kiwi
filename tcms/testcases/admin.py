@@ -2,13 +2,13 @@
 import inspect
 
 from django import forms
-from django.urls import reverse
 from django.contrib import admin
 from django.forms.widgets import Select
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-from tcms.issuetracker import types
 from tcms.core.history import ReadOnlyHistoryAdmin
+from tcms.issuetracker import types
 from tcms.testcases.models import BugSystem, Category, TestCase
 
 

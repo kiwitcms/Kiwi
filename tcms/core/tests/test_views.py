@@ -7,10 +7,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.tests import BaseCaseRun
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestExecutionFactory
+from tcms.tests.factories import (TestExecutionFactory, TestPlanFactory,
+                                  TestRunFactory, UserFactory)
 
 
 class TestNavigation(test.TestCase):

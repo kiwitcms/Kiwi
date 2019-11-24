@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.core import REQUEST_KEY, rpc_method
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.testruns.models import TestExecution
-from tcms.rpc.serializer import Serializer
-from tcms.rpc.decorators import permissions_required
-from tcms.rpc.api.utils import tracker_from_url
 from tcms.issuetracker.kiwitcms import KiwiTCMS
-
-from tcms.rpc.api.forms.testrun import NewExecutionForm
-from tcms.rpc.api.forms.testrun import UpdateExecutionForm
-
+from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
+from tcms.rpc.api.utils import tracker_from_url
+from tcms.rpc.decorators import permissions_required
+from tcms.rpc.serializer import Serializer
+from tcms.testruns.models import TestExecution
 
 __all__ = (
     'create',

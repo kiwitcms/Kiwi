@@ -2,22 +2,16 @@
 # pylint: disable=attribute-defined-outside-init
 
 from xmlrpc.client import Fault, ProtocolError
-from django.contrib.auth.models import Permission
 
+from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
-from tcms.testcases.models import TestCase
-
-from tcms.tests import remove_perm_from_user
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import CategoryFactory
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.testcases.models import TestCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests.factories import (CategoryFactory, ComponentFactory,
+                                  ProductFactory, TagFactory, TestCaseFactory,
+                                  TestPlanFactory, UserFactory, VersionFactory)
 
 
 class TestNotificationRemoveCC(XmlrpcAPIBaseTest):

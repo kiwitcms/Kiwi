@@ -1,15 +1,12 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from django.contrib.auth import get_user_model
-
-from tcms.management.models import Product, Version, Build
-from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestRun, TestExecutionStatus
-from tcms.testruns.forms import BaseCaseRunForm
+from tcms.management.models import Build, Product, Version
 from tcms.testcases.models import TestCase
-from tcms.testruns.forms import BaseRunForm
-
+from tcms.testplans.models import TestPlan
+from tcms.testruns.forms import BaseCaseRunForm, BaseRunForm
+from tcms.testruns.models import TestExecutionStatus, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 

@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-ancestors
 
+from django.utils.translation import ugettext_lazy as _
 from mock import patch
 
-from django.utils.translation import ugettext_lazy as _
-
 from tcms.tests import BaseCaseRun
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import LinkReferenceFactory
+from tcms.tests.factories import LinkReferenceFactory, TestRunFactory
 
 
 class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name

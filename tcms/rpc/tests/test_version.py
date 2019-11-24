@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, avoid-list-comprehension
 
-from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
+from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import VersionFactory
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.tests.factories import ProductFactory, VersionFactory
 
 
 class TestFilterVersions(XmlrpcAPIBaseTest):

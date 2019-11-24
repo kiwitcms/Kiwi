@@ -2,9 +2,10 @@
 # pylint: disable=attribute-defined-outside-init
 
 import os
-from django import test
 
 import tcms_api
+from django import test
+
 from tcms.tests.factories import UserFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 

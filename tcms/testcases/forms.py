@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from django import forms
-
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.core.widgets import SimpleMDE
-from tcms.core.forms.fields import UserField, StripURLField
+from tcms.core.forms.fields import StripURLField, UserField
 from tcms.core.utils import string_to_list
-from tcms.testplans.models import TestPlan
-from tcms.management.models import Priority, Product, Component
-from tcms.testcases.models import TestCase, Category, TestCaseStatus
+from tcms.core.widgets import SimpleMDE
+from tcms.management.models import Component, Priority, Product
 from tcms.testcases.fields import MultipleEmailField
-
+from tcms.testcases.models import Category, TestCase, TestCaseStatus
+from tcms.testplans.models import TestPlan
 
 ITEMS_PER_PAGE_CHOICES = (
     ('20', '20'),

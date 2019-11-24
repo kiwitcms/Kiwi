@@ -2,12 +2,12 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField
-from tcms.management.models import Product, Version, Build
+from tcms.core.utils import string_to_list
+from tcms.management.models import Build, Product, Version
 from tcms.testcases.models import TestCase
-from .models import TestRun, TestExecutionStatus
 
+from .models import TestExecutionStatus, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 

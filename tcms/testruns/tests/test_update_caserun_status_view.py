@@ -3,14 +3,12 @@
 
 from datetime import datetime
 
-from django.urls import reverse
 from django.conf import settings
+from django.urls import reverse
 from django.utils.translation import override
 
 from tcms.testruns.models import TestExecutionStatus
-
-from tcms.tests import BaseCaseRun
-from tcms.tests import user_should_have_perm
+from tcms.tests import BaseCaseRun, user_should_have_perm
 
 
 class TestUpdateCaseRunStatusView(BaseCaseRun):

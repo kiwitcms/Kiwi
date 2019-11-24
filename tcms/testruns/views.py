@@ -5,33 +5,29 @@ from http import HTTPStatus
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
-from django.db.models import Count
-from django.db.models import Q
-from django.http import HttpResponseRedirect, Http404, JsonResponse
+from django.db.models import Count, Q
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic.base import TemplateView
-from django.views.generic.base import View
+from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import UpdateView
-
 from django_comments.models import Comment
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.utils import clean_request
-from tcms.management.models import Priority, Tag, Build
-from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
+from tcms.management.models import Build, Priority, Tag
+from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import TestExecutionDataMixin
-from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
-from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
-from tcms.core.contrib.linkreference.models import LinkReference
-
+from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm
+from tcms.testruns.models import TestExecution, TestExecutionStatus, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 

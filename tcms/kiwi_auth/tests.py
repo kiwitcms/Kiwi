@@ -2,19 +2,19 @@
 # pylint: disable=invalid-name
 
 import datetime
-from mock import patch
 
-from django.urls import reverse
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from mock import patch
 
 from tcms import signals
 from tcms.tests.factories import UserFactory
-from .models import UserActivationKey
 
+from .models import UserActivationKey
 
 User = get_user_model()  # pylint: disable=invalid-name
 

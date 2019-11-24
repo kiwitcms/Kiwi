@@ -2,35 +2,30 @@
 
 import datetime
 
-from django.utils.decorators import method_decorator
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
 from django.db.models import Count
-from django.contrib import messages
-from django.http import HttpResponseRedirect
-from django.http import Http404, HttpResponsePermanentRedirect
-from django.http import JsonResponse
+from django.http import (Http404, HttpResponsePermanentRedirect,
+                         HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, render
-from django.views.decorators.http import require_GET, require_POST
-from django.views.decorators.http import require_http_methods
+from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView
-from django.views.generic import View
+from django.views.decorators.http import (require_GET, require_http_methods,
+                                          require_POST)
+from django.views.generic import DetailView, View
 from django.views.generic.base import TemplateView
 from uuslug import slugify
 
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
-from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
-from tcms.testcases.models import TestCaseStatus
-from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
+from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import printable as testcases_printable
-from tcms.testplans.forms import ClonePlanForm
-from tcms.testplans.forms import NewPlanForm
-from tcms.testplans.forms import SearchPlanForm
-from tcms.testplans.models import TestPlan, PlanType
+from tcms.testplans.forms import ClonePlanForm, NewPlanForm, SearchPlanForm
+from tcms.testplans.models import PlanType, TestPlan
 from tcms.testruns.models import TestRun
 
 

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import os.path
-import pkg_resources
 from importlib import import_module
 
+import pkg_resources
+from django.contrib.messages import constants as messages
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.messages import constants as messages
-import tcms
 
+import tcms
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ You have to override the following settings in product.py

@@ -2,13 +2,11 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.management.models import Version
-from tcms.management.forms import VersionForm
-
 from tcms.core.utils import form_errors_to_list
+from tcms.management.forms import VersionForm
+from tcms.management.models import Version
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.utils import pre_check_product
-
 
 __all__ = (
     'create',

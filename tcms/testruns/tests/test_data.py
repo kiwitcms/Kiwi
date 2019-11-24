@@ -5,11 +5,9 @@ from datetime import datetime
 
 from tcms.core.helpers.comments import add_comment
 from tcms.testruns.data import TestExecutionDataMixin
-from tcms.tests import BaseCaseRun
-from tcms.tests import BasePlanCase
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import TestExecutionStatus
-from tcms.tests.factories import TestRunFactory
+from tcms.tests import BaseCaseRun, BasePlanCase
+from tcms.tests.factories import (TestExecutionFactory, TestExecutionStatus,
+                                  TestRunFactory)
 
 
 class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):

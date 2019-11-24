@@ -1,6 +1,6 @@
-from django.urls import reverse
 from django.contrib import admin
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from tcms.bugs.models import Bug
 from tcms.core.history import ReadOnlyHistoryAdmin

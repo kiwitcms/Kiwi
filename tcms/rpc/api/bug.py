@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-from modernrpc.core import rpc_method, REQUEST_KEY
-
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
+from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.testcases.models import BugSystem
-from tcms.testruns.models import TestExecution
 from tcms.issuetracker.types import from_name
 from tcms.rpc.api.utils import tracker_from_url
-
+from tcms.testcases.models import BugSystem
+from tcms.testruns.models import TestExecution
 
 __all__ = (
     'details',

@@ -2,18 +2,16 @@
 
 import io
 import time
-from mock import MagicMock
 
-from attachments.models import Attachment
 from attachments import views as attachment_views
-
+from attachments.models import Attachment
+from django.db.models import FieldDoesNotExist
 from django.http import HttpRequest
 from django.middleware.csrf import get_token
-from django.db.models import FieldDoesNotExist
+from mock import MagicMock
 
-from tcms.management.models import Product
 from tcms.core.utils import request_host_link
-
+from tcms.management.models import Product
 
 QUERY_DISTINCT = 1
 

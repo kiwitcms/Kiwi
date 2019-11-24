@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 from xmlrpc.client import ProtocolError
-from django.contrib.auth.models import Permission
 
+from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
-from tcms.testplans.models import TestPlan
-from tcms.testcases.models import TestCasePlan
-
-from tcms.tests import remove_perm_from_user
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.testcases.models import TestCasePlan
+from tcms.testplans.models import TestPlan
+from tcms.tests import remove_perm_from_user
+from tcms.tests.factories import (PlanTypeFactory, ProductFactory, TagFactory,
+                                  TestCaseFactory, TestPlanFactory,
+                                  UserFactory, VersionFactory)
 
 
 class TestFilter(XmlrpcAPIBaseTest):

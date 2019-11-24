@@ -6,17 +6,16 @@ Most of these functions are use for Ajax.
 """
 from http import HTTPStatus
 
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import permission_required
 from django.db.models import Count
 from django.http import JsonResponse
-from django.views.generic.base import View
-from django.contrib.auth import get_user_model
-from django.utils.decorators import method_decorator
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.decorators import permission_required
+from django.views.generic.base import View
 
-from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCaseTag
+from tcms.testcases.models import TestCase, TestCaseTag
 from tcms.testplans.models import TestPlan, TestPlanTag
 from tcms.testruns.models import TestRunTag
 

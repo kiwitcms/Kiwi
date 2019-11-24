@@ -1,7 +1,7 @@
 from django import forms
 
-from tcms.testcases.forms import BaseCaseForm
 from tcms.management.models import Priority, Product
+from tcms.testcases.forms import BaseCaseForm
 from tcms.testcases.models import Category
 
 

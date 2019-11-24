@@ -2,11 +2,8 @@
 
 from django.contrib import admin
 
-from tcms.management.models import Classification
-from tcms.management.models import Component, Version
-from tcms.management.models import Priority
-from tcms.management.models import Product
-from tcms.management.models import Build, Tag
+from tcms.management.models import (Build, Classification, Component, Priority,
+                                    Product, Tag, Version)
 
 
 class ClassificationAdmin(admin.ModelAdmin):

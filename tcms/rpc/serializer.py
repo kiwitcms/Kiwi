@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from itertools import groupby
-
-from django.utils.translation import ugettext_lazy as _
 
 from django.db.models import ObjectDoesNotExist
 from django.db.models.fields.related import ForeignKey
+from django.utils.translation import ugettext_lazy as _
 
 SECONDS_PER_MIN = 60
 SECONDS_PER_HOUR = 3600

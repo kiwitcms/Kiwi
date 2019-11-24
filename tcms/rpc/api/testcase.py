@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from django.forms import EmailField, ValidationError
-
-from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
-from tcms.management.models import Tag
-from tcms.management.models import Component
-from tcms.testcases.models import TestCase
-from tcms.testcases.forms import NewCaseForm
-from tcms.rpc.api.forms.testcase import UpdateForm
-
+from tcms.management.models import Component, Tag
 from tcms.rpc import utils
+from tcms.rpc.api.forms.testcase import UpdateForm
 from tcms.rpc.decorators import permissions_required
+from tcms.testcases.forms import NewCaseForm
+from tcms.testcases.models import TestCase
 
 __all__ = (
     'create',

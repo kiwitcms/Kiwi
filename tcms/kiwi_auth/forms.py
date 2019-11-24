@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.urls import reverse
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import \
+    PasswordResetForm as DjangoPasswordResetForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
+from django.contrib.sites.models import Site
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils import request_host_link
 from tcms.core.utils.mailto import mailto
 from tcms.kiwi_auth.models import UserActivationKey
 from tcms.utils.permissions import initiate_user_with_default_setups
-
 
 User = get_user_model()  # pylint: disable=invalid-name
 

@@ -8,7 +8,6 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-
 from django_comments.models import Comment
 
 

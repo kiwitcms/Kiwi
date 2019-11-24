@@ -2,25 +2,19 @@
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
 from datetime import datetime
-
-from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
+from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
-from tcms.core.helpers.comments import get_comments
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.testruns.models import TestExecutionStatus
-
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
-from tcms.tests.factories import BuildFactory
+from tcms.core.helpers.comments import get_comments
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.testruns.models import TestExecutionStatus
+from tcms.tests.factories import (BuildFactory, ProductFactory,
+                                  TestCaseFactory, TestExecutionFactory,
+                                  TestPlanFactory, TestRunFactory, UserFactory,
+                                  VersionFactory)
 
 
 @override_settings(LANGUAGE_CODE='en-us')

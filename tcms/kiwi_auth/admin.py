@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from django.urls import reverse
 from django.contrib import admin
-from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Permission
-from django.contrib.auth.forms import UserChangeForm
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin, sensitive_post_parameters_m
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.models import Permission
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.utils.user import delete_user
 

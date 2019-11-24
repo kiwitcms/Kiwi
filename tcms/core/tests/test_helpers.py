@@ -3,9 +3,9 @@
 from django.contrib.contenttypes.models import ContentType
 from django_comments.models import Comment
 
+from tcms.core.helpers.comments import add_comment
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import UserFactory
-from tcms.core.helpers.comments import add_comment
 
 
 class TestAddComments(BasePlanCase):

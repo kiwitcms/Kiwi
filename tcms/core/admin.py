@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.urls import reverse
 from django.conf import settings
 from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.contrib.sites.models import Site
 from django.contrib.sites.admin import SiteAdmin
-
+from django.contrib.sites.models import Site
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django_comments.models import Comment
 
 

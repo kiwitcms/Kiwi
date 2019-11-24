@@ -4,24 +4,18 @@
 import html
 from http import HTTPStatus
 
-from django.utils import formats
-from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import Permission
+from django.urls import reverse
+from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.testruns.models import TestExecutionStatus
-from tcms.testruns.models import TestRun
+from tcms.testruns.models import TestExecutionStatus, TestRun
+from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
+                        user_should_have_perm)
+from tcms.tests.factories import (BuildFactory, TagFactory, TestCaseFactory,
+                                  UserFactory)
 from tcms.utils.permissions import initiate_user_with_default_setups
-
-from tcms.tests import BaseCaseRun
-from tcms.tests import BasePlanCase
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
-from tcms.tests.factories import BuildFactory
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import UserFactory
 
 
 class TestGetRun(BaseCaseRun):

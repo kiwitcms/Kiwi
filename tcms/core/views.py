@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from django import http
-from django.views import i18n
 from django.conf import settings
-from django.template import loader
-from django.shortcuts import render
-from django.db.models import Count, Q
-from django.utils import translation
-from django.utils.translation import trans_real
-from django.utils.decorators import method_decorator
-from django.views.generic.base import View
-from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count, Q
+from django.shortcuts import render
+from django.template import loader
+from django.utils import translation
+from django.utils.decorators import method_decorator
+from django.utils.translation import trans_real
+from django.views import i18n
 from django.views.decorators.csrf import requires_csrf_token
+from django.views.generic.base import TemplateView, View
 
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun

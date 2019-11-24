@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.core.widgets import SimpleMDE
-from tcms.management.models import Version, Build
+from tcms.management.models import Build, Version
 
 
 class NewBugForm(forms.ModelForm):

@@ -3,23 +3,17 @@
 from datetime import datetime
 from xmlrpc.client import ProtocolError
 
-from django.test import override_settings
 from django.contrib.auth.models import Permission
-
+from django.test import override_settings
 from tcms_api import xmlrpc
 
-from tcms.testruns.models import TestRun, TestExecution
-
-from tcms.tests import remove_perm_from_user
-from tcms.tests.factories import TestCaseFactory, BuildFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.testruns.models import TestExecution, TestRun
+from tcms.tests import remove_perm_from_user
+from tcms.tests.factories import (BuildFactory, ProductFactory, TagFactory,
+                                  TestCaseFactory, TestExecutionFactory,
+                                  TestPlanFactory, TestRunFactory, UserFactory,
+                                  VersionFactory)
 
 
 class TestAddCase(XmlrpcAPIBaseTest):

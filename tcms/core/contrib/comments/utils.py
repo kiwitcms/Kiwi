@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.apps import apps
-
 import django_comments
+from django.apps import apps
 
 
 # todo: this is duplicate with tcms.core.helpers.comments.utils

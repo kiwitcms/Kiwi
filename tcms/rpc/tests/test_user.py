@@ -6,11 +6,9 @@ from xmlrpc.client import Fault as XmlRPCFault
 from django.test import TestCase
 
 from tcms.rpc.api.user import _get_user_dict
-
-from tcms.tests.factories import GroupFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests import user_should_have_perm
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.tests import user_should_have_perm
+from tcms.tests.factories import GroupFactory, UserFactory
 
 
 class TestUserSerializer(TestCase):

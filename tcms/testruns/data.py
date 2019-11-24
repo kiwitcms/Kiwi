@@ -3,12 +3,11 @@
 from itertools import groupby
 
 from django.conf import settings
-from django.db.models import F
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import F
 from django_comments.models import Comment
 
-from tcms.testruns.models import TestExecution
-from tcms.testruns.models import TestExecutionStatus
+from tcms.testruns.models import TestExecution, TestExecutionStatus
 
 
 class TestExecutionDataMixin:

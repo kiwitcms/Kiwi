@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from tcms.core.widgets import SimpleMDE
-from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import StripURLField
+from tcms.core.utils import string_to_list
+from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Product, Version
-from .models import TestPlan, PlanType
+
+from .models import PlanType, TestPlan
 
 
 # todo: merge with NewPlanForm below b/c not used

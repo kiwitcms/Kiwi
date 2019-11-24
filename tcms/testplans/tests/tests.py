@@ -3,28 +3,21 @@
 
 import json
 from http import HTTPStatus
-from uuslug import slugify
 
 from django import test
 from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from uuslug import slugify
 
-from tcms.management.models import Product
-from tcms.management.models import Version
+from tcms.management.models import Product, Version
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
-
-from tcms.tests.factories import ClassificationFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
-from tcms.tests import BasePlanCase
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
+from tcms.tests import (BasePlanCase, remove_perm_from_user,
+                        user_should_have_perm)
+from tcms.tests.factories import (ClassificationFactory, PlanTypeFactory,
+                                  ProductFactory, TestCaseFactory,
+                                  TestPlanFactory, UserFactory, VersionFactory)
 
 
 class BasePlanTest(test.TestCase):

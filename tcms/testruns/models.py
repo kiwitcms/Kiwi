@@ -2,19 +2,18 @@
 import datetime
 from collections import namedtuple
 
+import vinaigrette
 from django.conf import settings
-from django.urls import reverse
 from django.db import models
 from django.db.models import Count
+from django.urls import reverse
 from django.utils.translation import override
 
-import vinaigrette
-
-from tcms.core.models import TCMSActionModel
-from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.rpc.serializer import TestExecutionXMLRPCSerializer
-from tcms.rpc.serializer import TestRunXMLRPCSerializer
+from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.models import TCMSActionModel
+from tcms.rpc.serializer import (TestExecutionXMLRPCSerializer,
+                                 TestRunXMLRPCSerializer)
 from tcms.rpc.utils import distinct_filter
 
 TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [

@@ -1,6 +1,6 @@
 import re
-import warnings
 import threading
+import warnings
 
 from opengraph.opengraph import OpenGraph
 
