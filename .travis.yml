@@ -24,27 +24,16 @@ addons:
       # all sources I've read point to possible issues with sqlite itself
       - sqlite3
 
-stages:
-  - static_analysis
-  - testing
-  - localization_testing
-  - non_functional_testing
-  - docker
-
 jobs:
-  allow_failures:
-    - env: CMD=pylint
-    - env: CMD=bandit_site_packages
-
   include:
-    - stage: static_analysis
-      env:
+    - env:
         - CMD=bandit
 
-    - { stage: static_analysis, env: CMD=bandit_site_packages, if: branch = master AND type = push }
+    - if: branch = master AND type = push
+      env:
+        - CMD=bandit_site_packages
 
-    - stage: static_analysis
-      if: branch = master AND type = push
+    - if: branch = master AND type = push
       env:
         - CMD=coverity
       addons:
@@ -56,21 +45,19 @@ jobs:
           build_command: "--no-command --fs-capture-search ./ --fs-capture-search $(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')"
           branch_pattern: master
 
-    - stage: static_analysis
-      env:
+    - env:
         - CMD=flake8
 
-    - { stage: static_analysis, env: CMD=pylint }
+    - env:
+        - CMD=pylint
 
-    - stage: testing
-      env:
+    - env:
         - CMD=test
         - TEST_DB=MariaDB
       addons:
         mariadb: 10.3
 
-    - stage: testing
-      env:
+    - env:
         - CMD=test
         - TEST_DB=Postgres
       addons:
@@ -80,54 +67,52 @@ jobs:
           - postgresql-10
           - postgresql-client-10
 
-    - stage: testing
-      if: branch = master AND type = push
+    - if: branch = master AND type = push
       env:
         - CMD=test
         - TEST_DB=SQLite
 
-    - stage: testing
-      if: branch = master AND type = push
+    - if: branch = master AND type = push
       env:
         - CMD=test
         - TEST_DB=MySQL
 
-    - stage: localization_testing
-      env:
+    - env:
         - CMD=l10n-test
         - LANG=fr_FR.UTF-8
         - TEST_DB=SQLite
 
-    - stage: localization_testing
-      env:
+    - env:
         - CMD=l10n-test
         - LANG=sl_SL.UTF-8
         - TEST_DB=SQLite
 
-    - stage: non_functional_testing
-      env:
+    - env:
         - CMD=check-docs-source-in-git
       addons:
         apt:
           packages:
             - graphviz
 
-    - stage: non_functional_testing
-      env:
+    - env:
         - CMD=doc8
 
-    - stage: non_functional_testing
-      env:
+    - env:
         - CMD=test_for_missing_migrations
         - TEST_DB=SQLite
 
-    - stage: non_functional_testing
-      env:
+    - env:
         - CMD=build-for-pypi
 
-    - stage: docker
-      env:
+    - env:
         - CMD=test-docker-image
+
+  allow_failures:
+    - env:
+        - CMD=pylint
+    - env:
+        - CMD=bandit_site_packages
+
 
 before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
