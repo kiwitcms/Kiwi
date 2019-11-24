@@ -773,7 +773,6 @@ function bindEventsOnLoadedCases(options) {
                 return false;
               }
 
-                const case_id = $(this).find('input[name=object_pk]').val();
                 const comment_id = $(this).find('input[name=comment_id]').val();
                 const comment_widget = $(this).parents().find("#comment"+comment_id);
                 jsonRPC('TestCase.remove_comment', [case_id, comment_id], function(data){
