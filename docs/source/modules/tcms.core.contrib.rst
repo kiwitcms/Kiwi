@@ -11,5 +11,4 @@ Subpackages
 
 .. toctree::
 
-   tcms.core.contrib.comments
    tcms.core.contrib.linkreference

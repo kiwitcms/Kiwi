@@ -283,30 +283,6 @@ function removeTag(container, params) {
 }
 
 
-function submitComment(container, parameters, callback) {
-  var complete = function(t) {
-    updateCommentsCount(parameters['case_id'], true);
-    if (callback) {
-      callback();
-    }
-  };
-
-  jQ(container).html('<div class="ajax_loading"></div>');
-
-  var url = '/comments/post/';
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-    },
-    'complete': function () {
-      complete();
-    }
-  });
-}
-
 function updateCommentsCount(caseId, increase) {
   var commentDiv = jQ("#"+caseId+"_case_comment_count");
   var countText = jQ("#"+caseId+"_comments_count");
