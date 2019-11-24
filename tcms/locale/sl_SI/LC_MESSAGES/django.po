@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-26 15:50+0000\n"
-"PO-Revision-Date: 2019-10-28 07:01\n"
+"POT-Creation-Date: 2019-11-24 20:35+0000\n"
+"PO-Revision-Date: 2019-11-24 21:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -113,7 +113,7 @@ msgstr "Verzija"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:34
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:33
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:34
-#: tcms/templates/case/get_details_case_run.html:75
+#: tcms/templates/case/get_details_case_run.html:76
 #: tcms/templates/include/bug_details.html:49
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:125
 #: tcms/templates/run/report.html:38
@@ -154,6 +154,7 @@ msgstr "komentar na"
 
 #: tcms/bugs/templates/bugs/get.html:166
 #: tcms/bugs/templates/bugs/mutable.html:97
+#: tcms/templates/case/get_details.html:93
 #: tcms/testcases/templates/testcases/mutable.html:216
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
@@ -258,67 +259,38 @@ msgstr "ID"
 msgid "Created at"
 msgstr "Ustvarjeno"
 
-#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:540
+#: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:536
 msgid "Edit"
 msgstr "Uredi"
 
-#: tcms/bugs/views.py:41 tcms/testcases/views.py:553
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:549
 msgid "Delete"
 msgstr "Izbriši"
 
-#: tcms/bugs/views.py:66
+#: tcms/bugs/views.py:64
 msgid "New bug"
 msgstr "Vnesi napako"
 
-#: tcms/bugs/views.py:169
+#: tcms/bugs/views.py:167
 msgid "Edit bug"
 msgstr "Uredi napako"
 
-#: tcms/bugs/views.py:199
+#: tcms/bugs/views.py:197
 msgid "*bug closed*"
 msgstr "*napaka zaprta*"
 
-#: tcms/core/ajax.py:156 tcms/testruns/views.py:629
+#: tcms/core/ajax.py:153 tcms/testruns/views.py:604
 #, python-format
 msgid "User %s not found!"
 msgstr "Uporabnika %s ni bilo mogoče najti!"
 
-#: tcms/core/contrib/comments/apps.py:10
-msgid "Core customized comments"
-msgstr "Jedrni komentarji - po meri"
-
-#: tcms/core/contrib/comments/forms.py:14
-#: tcms/templates/include/tags_card.html:13
-#: tcms/templates/run/get_case_runs.html:153
-#: tcms/testcases/templates/testcases/get.html:164
-#: tcms/testcases/templates/testcases/get.html:194
-#: tcms/testplans/templates/testplans/clone.html:13
-#: tcms/testplans/templates/testplans/mutable.html:23
-#: tcms/testplans/templates/testplans/search.html:11
-msgid "Name"
-msgstr "Ime"
-
-#: tcms/core/contrib/comments/forms.py:18
-msgid "Email address"
-msgstr "E-poštni naslov"
-
-#: tcms/core/contrib/comments/forms.py:21
-#: tcms/templates/run/get_case_runs.html:140
-msgid "URL"
-msgstr "URL naslov"
-
-#: tcms/core/contrib/comments/forms.py:25
-#: tcms/templates/run/get_case_runs.html:44
-msgid "Comment"
-msgstr "Komentar"
-
-#: tcms/core/history.py:41
+#: tcms/core/history.py:40
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "POSODOBITEV: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:47
+#: tcms/core/history.py:46
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -357,35 +329,35 @@ msgstr "Uporabnik s tem e-mail naslovom že obstaja."
 msgid "Your new %s account confirmation"
 msgstr "Informacije o uporabniškem računu %s ."
 
-#: tcms/kiwi_auth/views.py:55
+#: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik za potrditveno povezavo preko katere ga aktivirate"
 
-#: tcms/kiwi_auth/views.py:61
+#: tcms/kiwi_auth/views.py:57
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še administrator"
 
-#: tcms/kiwi_auth/views.py:66
+#: tcms/kiwi_auth/views.py:62
 msgid "Following is the administrator list"
 msgstr "Seznam administratorjev"
 
-#: tcms/kiwi_auth/views.py:108
+#: tcms/kiwi_auth/views.py:104
 msgid "This activation key no longer exists in the database"
 msgstr "Aktivacijska koda ne obstaja več v bazi"
 
-#: tcms/kiwi_auth/views.py:113
+#: tcms/kiwi_auth/views.py:109
 msgid "This activation key has expired"
 msgstr "Aktivacijska koda je potekla"
 
-#: tcms/kiwi_auth/views.py:125
+#: tcms/kiwi_auth/views.py:121
 msgid "Your account has been activated successfully"
 msgstr "Vaš račun je bil uspešno aktiviran"
 
-#: tcms/rpc/api/bug.py:60
+#: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Potrebno je nastaviti Url sistema za beleženje napak!"
 
-#: tcms/rpc/serializer.py:288
+#: tcms/rpc/serializer.py:286
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Model %s nima primarnega ključa. Polje bo potrebno ročno dodati."
@@ -479,19 +451,19 @@ msgstr "Priročnik za administratorje"
 msgid "API Help"
 msgstr "Pomoč za API"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:330
 msgid "New Bug"
 msgstr "Vnesi napako"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:334
 msgid "Search Bugs"
 msgstr "Poišči napako"
 
-#: tcms/signals.py:78
+#: tcms/signals.py:79
 msgid "New user awaiting approval"
 msgstr "Nov uporabnik - potrebna potrditev uporabniškega računa"
 
-#: tcms/signals.py:153
+#: tcms/signals.py:154
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
@@ -617,12 +589,12 @@ msgid "Attachment"
 msgstr "Priponka"
 
 #: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:145
+#: tcms/templates/case/get_details_case_run.html:146
 msgid "No attachment found"
 msgstr "Ni priponk"
 
 #: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:155
+#: tcms/templates/case/get_details_case_run.html:156
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:140
@@ -630,7 +602,7 @@ msgid "Component"
 msgstr "Komponenta"
 
 #: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:160
+#: tcms/templates/case/get_details_case_run.html:161
 msgid "No component found"
 msgstr "Ni komponent"
 
@@ -645,7 +617,7 @@ msgid "Tag"
 msgstr "Značka"
 
 #: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:171
+#: tcms/templates/case/get_details_case_run.html:172
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
 msgstr "Ni značk"
@@ -675,32 +647,27 @@ msgstr "Opombe"
 msgid "Comments"
 msgstr "Komentarji"
 
-#: tcms/templates/case/get_details_case_run.html:46
-#: tcms/templates/case/get_details_case_run.html:48
-msgid "Show All"
-msgstr "Prikaži vse"
-
-#: tcms/templates/case/get_details_case_run.html:73
+#: tcms/templates/case/get_details_case_run.html:74
 msgid "Test Execution Information"
 msgstr "Podatki o izvedbi testiranja"
 
-#: tcms/templates/case/get_details_case_run.html:74
+#: tcms/templates/case/get_details_case_run.html:75
 msgid "Run Date"
 msgstr "Pričetek testiranja"
 
-#: tcms/templates/case/get_details_case_run.html:75
+#: tcms/templates/case/get_details_case_run.html:76
 msgid "Text Version"
 msgstr "Verzija besedila"
 
-#: tcms/templates/case/get_details_case_run.html:87
+#: tcms/templates/case/get_details_case_run.html:88
 msgid "No log recorded"
 msgstr "Ni zabeleženih vnosov v dnevniško datoteko"
 
-#: tcms/templates/case/get_details_case_run.html:107
+#: tcms/templates/case/get_details_case_run.html:108
 msgid "Bugs and hyperlinks"
 msgstr "Napake in povezave"
 
-#: tcms/templates/case/get_details_case_run.html:108
+#: tcms/templates/case/get_details_case_run.html:109
 #: tcms/templates/include/tags_card.html:27
 #: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
@@ -710,7 +677,7 @@ msgstr "Napake in povezave"
 msgid "Add"
 msgstr "Dodaj"
 
-#: tcms/templates/case/get_details_case_run.html:109
+#: tcms/templates/case/get_details_case_run.html:110
 msgid "Report bug"
 msgstr "Prijavi napako"
 
@@ -863,6 +830,16 @@ msgstr "Status"
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
 msgstr "Značke"
+
+#: tcms/templates/include/tags_card.html:13
+#: tcms/templates/run/get_case_runs.html:153
+#: tcms/testcases/templates/testcases/get.html:164
+#: tcms/testcases/templates/testcases/get.html:194
+#: tcms/testplans/templates/testplans/clone.html:13
+#: tcms/testplans/templates/testplans/mutable.html:23
+#: tcms/testplans/templates/testplans/search.html:11
+msgid "Name"
+msgstr "Ime"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -1105,7 +1082,7 @@ msgid "print view of selected cases"
 msgstr "natisni izbrane testne scenarije"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:544
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:540
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Podvoji"
@@ -1440,6 +1417,10 @@ msgstr "Posodobi"
 msgid "Assign this case(s) to other people"
 msgstr "Dodeli scenarij(e) drugim testerjem"
 
+#: tcms/templates/run/get_case_runs.html:44
+msgid "Comment"
+msgstr "Komentar"
+
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
 msgstr "Hiperpovezava"
@@ -1463,6 +1444,10 @@ msgstr "Samodejno"
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
 msgstr "Napaka"
+
+#: tcms/templates/run/get_case_runs.html:140
+msgid "URL"
+msgstr "URL naslov"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
@@ -1552,11 +1537,11 @@ msgstr "Številka izvedbe testiranja"
 msgid "No execution found"
 msgstr "Ni najdenih izvedb testiranj"
 
-#: tcms/testcases/forms.py:21
+#: tcms/testcases/forms.py:19
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr "Prosimo vnesite veljavne Id-je testni scenarijev. Uporabite vejico za več primerov npr. \"111, 222\""
 
-#: tcms/testcases/forms.py:84
+#: tcms/testcases/forms.py:82
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1714,20 +1699,20 @@ msgstr "ID napake"
 msgid "Created on"
 msgstr "Ustvarjeno dne"
 
-#: tcms/testcases/views.py:385
+#: tcms/testcases/views.py:381
 msgid "TestPlan not specified or does not exist"
 msgstr "Baza testnih scenarijev ni izbrana ali ne obstaja"
 
-#: tcms/testcases/views.py:548
+#: tcms/testcases/views.py:544
 msgid "History"
 msgstr "Zgodovina"
 
-#: tcms/testcases/views.py:815
+#: tcms/testcases/views.py:811
 msgid "TestCase cloning was successful"
 msgstr "Kloniranje testnega scenarija je uspelo"
 
-#: tcms/testcases/views.py:840 tcms/testruns/views.py:392
-#: tcms/testruns/views.py:441
+#: tcms/testcases/views.py:836 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:416
 msgid "At least one TestCase is required"
 msgstr "Vsaj en testni scenarij je zahtevan"
 
@@ -1805,26 +1790,22 @@ msgstr "Naziv baze testni scenarijev"
 msgid "Test plan"
 msgstr "Baza testni scenarijev"
 
-#: tcms/testplans/views.py:350
+#: tcms/testplans/views.py:345
 msgid "TestPlan is required"
 msgstr "Baza testnih scenarijev je obvezna"
 
-#: tcms/testplans/views.py:527
+#: tcms/testplans/views.py:522
 msgid "At least one test plan is required for print"
 msgstr "Za tiskanje je potrebno izbrati vsaj eno bazo testnih scenarijev"
 
-#: tcms/testplans/views.py:535
+#: tcms/testplans/views.py:530
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Testiranje \"%s\" ne obstaja"
 
-#: tcms/testruns/admin.py:29
+#: tcms/testruns/admin.py:28
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Zavrnjeno: niste avtor ali zadolženi za testiranje"
-
-#: tcms/testruns/forms.py:77
-msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr "Končni datum ni veljaven. Pravilen format je LLLL-MM-DD."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1874,23 +1855,23 @@ msgstr "ID načrta"
 msgid "TestPlan ID"
 msgstr "ID baze testnih scenarijev testov"
 
-#: tcms/testruns/views.py:51
+#: tcms/testruns/views.py:48
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "V kolikor želite kreirati novo testiranje morate imeti ustvarjeno bazo testnih scenarijev"
 
-#: tcms/testruns/views.py:57
+#: tcms/testruns/views.py:54
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "V kolikor želite kreirati novo testiranje morate dodati najmanj en testni scenarij"
 
-#: tcms/testruns/views.py:396
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "Klon "
 
-#: tcms/testruns/views.py:450
+#: tcms/testruns/views.py:425
 msgid "TestCase ID is not a valid integer"
 msgstr "ID testnega scenarija ni celo število"
 
-#: tcms/testruns/views.py:543
+#: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
 msgstr "Navedeni uporabnik ne obstaja v sistemu"
 
