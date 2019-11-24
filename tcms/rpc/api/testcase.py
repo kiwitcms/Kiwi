@@ -3,6 +3,7 @@
 from django.forms import EmailField, ValidationError
 from modernrpc.core import REQUEST_KEY, rpc_method
 
+from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
@@ -16,6 +17,9 @@ __all__ = (
     'update',
     'filter',
     'remove',
+
+    'add_comment',
+    'remove_comment',
 
     'add_component',
     'get_components',
@@ -402,3 +406,49 @@ def add_attachment(case_id, filename, b64content, **kwargs):
         kwargs.get(REQUEST_KEY).user,
         filename,
         b64content)
+
+
+@permissions_required('django_comments.add_comment')
+@rpc_method(name='TestCase.add_comment')
+def add_comment(case_id, comment, **kwargs):
+    """
+    .. function:: TestCase.add_comment(case_id, comment)
+
+        Add comment to selected test case.
+
+        :param case_id: PK of a TestCase object
+        :param case_id: int
+        :param comment: The text to add as a comment
+        :param comment: str
+        :return: None or JSON string in case of errors
+        :raises: PermissionDenied if missing *django_comments.add_comment* permission
+
+        .. important::
+
+            In webUI comments are only shown **only** during test case review!
+    """
+    case = TestCase.objects.get(pk=case_id)
+    comments.add_comment([case], comment, kwargs.get(REQUEST_KEY).user)
+
+
+@permissions_required('django_comments.delete_comment')
+@rpc_method(name='TestCase.remove_comment')
+def remove_comment(case_id, comment_id=None):
+    """
+    .. function:: TestCase.remove_comment(case_id, comment_id)
+
+        Remove all or specified comment(s) from selected test case.
+
+        :param case_id: PK of a TestCase object
+        :param case_id: int
+        :param comment_id: PK of a Comment object or None
+        :param comment_id: int
+        :return: None
+        :raises: PermissionDenied if missing *django_comments.delete_comment* permission
+    """
+    case = TestCase.objects.get(pk=case_id)
+    to_be_deleted = comments.get_comments(case)
+    if comment_id:
+        to_be_deleted = to_be_deleted.filter(pk=comment_id)
+
+    to_be_deleted.delete()
