@@ -61,7 +61,7 @@
 			<td colspan="3" style="border:none; background:none">
                             <h4>{% trans "Comments" %}:</h4>
 				{% for comment in case_comments %}
-					<div>
+					<div id="comment{{ comment.pk }}">
 						<div>
 							<span class="strong">#{{ forloop.counter }}</span>
 							<span class="strong">
@@ -73,15 +73,15 @@
 						</div>
 						<div>
 							{% if review_mode and comment.user.pk == user.pk %}
-							<form action="{% url "comments-delete" %}" method="post" class="form_comment">
+							<form action="#" method="post" class="form_comment">
 								<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
 								<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
 								<input class='commentdelete sprites' value='Delete Comment' type='submit' />
 							</form>
 							{% endif %}
 						</div>
-					</div>
 					{{ comment.comment|urlize|linebreaksbr }}
+					</div>
 				{% endfor %}
 			</td>
 		</tr>
