@@ -44,7 +44,6 @@ urlpatterns = [
 
     # comments
     url(r'^comments/post/', comments_views.post, name='comments-post'),
-    url(r'^comments/delete/', comments_views.delete, name='comments-delete'),
 
     # Account information zone, such as login method
     url(r'^accounts/', include(auth_urls)),

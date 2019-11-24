@@ -282,25 +282,6 @@ function removeTag(container, params) {
     });
 }
 
-function removeComment(form, callback) {
-  var url = form.action;
-  var method = form.method;
-  var parameters = Nitrate.Utils.formSerialize(form);
-
-  jQ.ajax({
-    'url': url,
-    'type': method,
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      updateCommentsCount(parameters['object_pk'], false);
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
-
 
 function submitComment(container, parameters, callback) {
   var complete = function(t) {
