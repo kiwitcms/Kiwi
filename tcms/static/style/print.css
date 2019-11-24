@@ -198,10 +198,8 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .run_current{ background:#f3f8fc;}
 .caes_run label{ margin-right:10px; width:120px;}
 .case_run .row{ float:left; clear:both; width:98%; margin-left:1%; padding-top:5px;}
-.case_run .exist_comments ,.case_run .new_comment{ float:left; width:100%;}
+.case_run .exist_comments { float:left; width:100%;}
 .case_run .exist_comments li{}
-.new_comment textarea[name='comment']{ width:600px;}
-.new_comment .submit-post{ margin:5px 0; cursor:pointer}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{ float:right; margin-right:40px; color:#fbbf2c;}
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
