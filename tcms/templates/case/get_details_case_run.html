@@ -41,14 +41,15 @@
 					</table>
 				</form>
 				{% endif %}
+
 				<h4 class="borderB">Comments History ({{ comments_count }}):
-				{% ifequal comments_count 0 %}
-                                <span>[ <a id="showText" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
-				{% else %}
-                                <span>[ <a id="showText" class="js-show-comments" data-param="comment{{ execution.pk }}" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
-				{% endifequal %}
+				{% if comments_count > 0 %}
+                                <span>[ <a id="showText" class="js-show-comments" data-param="comment{{ execution.pk }}" href="javascript:void(0);">Hide All</a> ]</span>
+				{% endif %}
 				</h4>
-				<ul class="comment" id="comment{{ execution.pk }}" style="display:none;">
+
+                                {% if comments_count > 0 %}
+				<ul class="comment" id="comment{{ execution.pk }}">
 					{% for comment in execution_comments %}
 					<li>
 						<span>#{{ forloop.counter }}</span>
@@ -67,6 +68,7 @@
 					</li>
 					{% endfor %}
 				</ul>
+                                {% endif %}
 			</div>
 			<div style="padding: 5px 9px 15px 18px;">
 				<h4>{% trans "Test Execution Information" %}</h4>
