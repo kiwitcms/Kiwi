@@ -75,7 +75,6 @@
 							{% if review_mode and comment.user.pk == user.pk %}
 							<form action="#" method="post" class="form_comment">
 								<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
-								<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
 								<input class='commentdelete sprites' value='Delete Comment' type='submit' />
 							</form>
 							{% endif %}
