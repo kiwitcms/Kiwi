@@ -26,6 +26,7 @@ __all__ = (
 )
 
 
+@permissions_required('django_comments.add_comment')
 @rpc_method(name='TestExecution.add_comment')
 def add_comment(execution_id, comment, **kwargs):
     """
@@ -38,6 +39,7 @@ def add_comment(execution_id, comment, **kwargs):
         :param comment: The text to add as a comment
         :param comment: str
         :return: None or JSON string in case of errors
+        :raises: PermissionDenied if missing *django_comments.add_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
     comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
