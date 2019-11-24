@@ -51,8 +51,8 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
 
         self.assertContains(
             response,
-            '<textarea name="comment" cols="40" id="id_comment" maxlength="10000" '
-            'rows="10">\n</textarea>',
+            '<textarea name="comment" cols="40" id="id_comment" maxlength="3000" '
+            'required rows="10">\n</textarea>',
             html=True)
 
         with override('en'):

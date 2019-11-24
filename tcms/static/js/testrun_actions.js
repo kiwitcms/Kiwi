@@ -319,10 +319,17 @@ var updateCaseRunStatus = function(e) {
     ajax_loading.id = 'id_loading_' + parameters['case_id'];
     container.html(ajax_loading);
     var c = jQ('<div>');
+
     if (parameters['value'] != '') {
-      submitComment(c[0], parameters);
+        jsonRPC('TestExecution.add_comment', [object_pk, parameters['comment']], function(data){
+            updateCommentsCount(parameters['case_id'], true);
+        });
     } else {
-      submitComment(c[0], parameters, callback);
+        jsonRPC('TestExecution.add_comment', [object_pk, parameters['comment']], function(data){
+            updateCommentsCount(parameters['case_id'], true);
+            callback();
+        });
+
     }
   }
 
