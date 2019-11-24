@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
-from django.urls import reverse
-from django.db import models
-from django.utils.translation import override
-from django.db.models import ObjectDoesNotExist
-
 import vinaigrette
+from django.conf import settings
+from django.db import models
+from django.db.models import ObjectDoesNotExist
+from django.urls import reverse
+from django.utils.translation import override
 
-from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.models import TCMSActionModel
 from tcms.testcases.fields import MultipleEmailField
 
 

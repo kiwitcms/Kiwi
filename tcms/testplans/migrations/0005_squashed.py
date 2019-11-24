@@ -2,8 +2,8 @@
 
 from django.conf import settings
 from django.db import migrations, models
-import tcms.core.models.base
 
+import tcms.core.models.base
 
 plan_types = [
     'Unit',

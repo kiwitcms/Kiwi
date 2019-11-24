@@ -6,8 +6,8 @@ import unittest
 from django import test
 from django.db.models import ObjectDoesNotExist
 
-from tcms.tests.factories import ProductFactory
 import tcms.rpc.utils as U
+from tcms.tests.factories import ProductFactory
 
 
 class TestParseBool(unittest.TestCase):

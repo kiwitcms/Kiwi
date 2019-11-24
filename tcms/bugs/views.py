@@ -4,22 +4,20 @@
 
 
 from django.contrib.auth.decorators import permission_required
-from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.test import modify_settings
+from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import UpdateView
-from django.views.generic.base import View
-from django.views.generic.base import TemplateView
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView
+from django.views.generic.base import TemplateView, View
+from django.views.generic.edit import CreateView, UpdateView
 
+from tcms.bugs.forms import BugCommentForm, NewBugForm
 from tcms.bugs.models import Bug
-from tcms.management.models import Component
-from tcms.bugs.forms import NewBugForm, BugCommentForm
 from tcms.core.helpers.comments import add_comment
 from tcms.core.response import ModifySettingsTemplateResponse
+from tcms.management.models import Component
 
 
 class Get(DetailView):  # pylint: disable=missing-permission-required

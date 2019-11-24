@@ -1,4 +1,5 @@
-from django.core.serializers.json import Deserializer  # noqa, pylint: disable=unused-import
+# pylint: disable=unused-import
+from django.core.serializers.json import Deserializer  # noqa
 from django.core.serializers.json import Serializer as JsonSerializer
 
 

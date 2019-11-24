@@ -3,13 +3,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
+from modernrpc.core import REQUEST_KEY, rpc_method
 
-from modernrpc.core import rpc_method, REQUEST_KEY
-
+from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
 from tcms.rpc.utils import parse_bool_value
-from tcms.rpc.decorators import permissions_required
-
 
 User = get_user_model()  # pylint: disable=invalid-name
 

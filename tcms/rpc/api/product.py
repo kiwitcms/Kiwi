@@ -5,7 +5,6 @@ from modernrpc.core import rpc_method
 from tcms.management.models import Product
 from tcms.rpc.decorators import permissions_required
 
-
 __all__ = (
     'create',
     'filter',

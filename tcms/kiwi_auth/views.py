@@ -3,22 +3,18 @@
 
 from datetime import datetime
 
-from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import render
-from django.contrib.auth import views
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, views
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_GET, require_http_methods
 
-from tcms.signals import USER_REGISTERED_SIGNAL
 from tcms.kiwi_auth import forms
 from tcms.kiwi_auth.models import UserActivationKey
-
+from tcms.signals import USER_REGISTERED_SIGNAL
 
 User = get_user_model()  # pylint: disable=invalid-name
 

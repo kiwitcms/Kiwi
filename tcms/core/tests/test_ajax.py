@@ -3,23 +3,19 @@ import json
 from http import HTTPStatus
 
 from django import test
-from django.urls import reverse
 from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.ajax import _TagCounter, _TagObjects
+from tcms.testcases.models import TestCase, TestCaseTag
 from tcms.testplans.models import TestPlanTag
 from tcms.testruns.models import TestRunTag
-from tcms.testcases.models import TestCase, TestCaseTag
 from tcms.tests import BasePlanCase
-
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
-
+from tcms.tests.factories import (TagFactory, TestCaseFactory, TestPlanFactory,
+                                  TestRunFactory)
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 

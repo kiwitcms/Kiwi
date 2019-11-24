@@ -5,8 +5,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.tests import PermissionsTestCase
-from tcms.tests import factories
+from tcms.tests import PermissionsTestCase, factories
 
 
 class EditTestRunViewTestCase(PermissionsTestCase):

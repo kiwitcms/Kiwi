@@ -5,23 +5,20 @@
 
 import os
 import tempfile
-from urllib.parse import urlencode, quote
+from urllib.parse import quote, urlencode
 
-import jira
-import github
 import bugzilla
+import github
 import gitlab
+import jira
 import redminelib
-
 from django.conf import settings
 
+from tcms.issuetracker import (bugzilla_integration, github_integration,
+                               gitlab_integration, jira_integration,
+                               redmine_integration)
 from tcms.issuetracker.base import IssueTrackerType
 from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa
-from tcms.issuetracker import bugzilla_integration
-from tcms.issuetracker import jira_integration
-from tcms.issuetracker import github_integration
-from tcms.issuetracker import gitlab_integration
-from tcms.issuetracker import redmine_integration
 
 
 def from_name(name):

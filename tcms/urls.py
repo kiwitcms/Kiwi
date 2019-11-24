@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
-import pkg_resources
 from importlib import import_module
 
+import pkg_resources
+from attachments import urls as attachments_urls
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views.i18n import JavaScriptCatalog
-
 from grappelli import urls as grappelli_urls
-from attachments import urls as attachments_urls
-from modernrpc.core import JSONRPC_PROTOCOL
-from modernrpc.core import XMLRPC_PROTOCOL
+from modernrpc.core import JSONRPC_PROTOCOL, XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
+
 from tcms.bugs import urls as bugs_urls
 from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
-from tcms.testplans import urls as testplans_urls
-from tcms.testcases import urls as testcases_urls
 from tcms.kiwi_auth import urls as auth_urls
-from tcms.testruns import urls as testruns_urls
 from tcms.telemetry import urls as telemetry_urls
-
+from tcms.testcases import urls as testcases_urls
+from tcms.testplans import urls as testplans_urls
+from tcms.testruns import urls as testruns_urls
 
 urlpatterns = [
     url(r'^$', core_views.DashboardView.as_view(), name='core-views-index'),

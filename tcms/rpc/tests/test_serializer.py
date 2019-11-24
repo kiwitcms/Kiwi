@@ -2,23 +2,18 @@
 # pylint: disable=invalid-name, protected-access
 
 import unittest
+
 from django import test
 
 from tcms.management.models import Product
+from tcms.rpc.serializer import (QuerySetBasedXMLRPCSerializer, Serializer,
+                                 _get_related_object_pks, datetime_to_str,
+                                 do_nothing, to_str)
 from tcms.testcases.models import TestCase
 from tcms.testplans.models import TestPlan
-from tcms.rpc.serializer import QuerySetBasedXMLRPCSerializer
-from tcms.rpc.serializer import Serializer
-from tcms.rpc.serializer import datetime_to_str
-from tcms.rpc.serializer import do_nothing
-from tcms.rpc.serializer import to_str
-from tcms.rpc.serializer import _get_related_object_pks
-
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import UserFactory
+from tcms.tests.factories import (ComponentFactory, ProductFactory,
+                                  TestCaseFactory, TestPlanFactory,
+                                  UserFactory)
 
 
 class TestXMLSerializer(test.TestCase):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.bugs.models import Bug
 from tcms.management.models import Tag

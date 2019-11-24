@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.forms import EmailField
-from django.forms import ValidationError
+from django.forms import EmailField, ValidationError
 
 
 class MultipleEmailField(EmailField):

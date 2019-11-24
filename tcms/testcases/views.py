@@ -2,34 +2,30 @@
 
 from django.conf import settings
 from django.contrib import messages
-from django.test import modify_settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.test import modify_settings
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView
-from django.views.generic.base import TemplateView
-from django.views.generic.base import View
+from django.views.generic.base import TemplateView, View
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
+from tcms.core.response import ModifySettingsTemplateResponse
+from tcms.management.models import Priority, Tag
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
-from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan
-from tcms.management.models import Priority, Tag
-from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestExecution
-from tcms.testruns.models import TestExecutionStatus
-from tcms.testcases.forms import NewCaseForm, \
-    SearchCaseForm, CaseNotifyForm, CloneCaseForm
 from tcms.testcases.fields import MultipleEmailField
-from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.response import ModifySettingsTemplateResponse
-
+from tcms.testcases.forms import (CaseNotifyForm, CloneCaseForm, NewCaseForm,
+                                  SearchCaseForm)
+from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
+from tcms.testplans.models import TestPlan
+from tcms.testruns.models import TestExecution, TestExecutionStatus
 
 TESTCASE_OPERATION_ACTIONS = (
     'search', 'sort', 'update',

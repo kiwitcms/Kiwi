@@ -4,11 +4,10 @@
 
 import bleach
 import markdown
-from bleach_whitelist import markdown_tags, markdown_attrs, print_tags
-
+from bleach_whitelist import markdown_attrs, markdown_tags, print_tags
 from django import template
-from django.utils.safestring import mark_safe
 from django.contrib.messages import constants as messages
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 

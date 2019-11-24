@@ -4,7 +4,7 @@ from modernrpc.core import rpc_method
 
 from tcms.management.models import Build
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.utils import pre_check_product, parse_bool_value
+from tcms.rpc.utils import parse_bool_value, pre_check_product
 
 __all__ = (
     'create',

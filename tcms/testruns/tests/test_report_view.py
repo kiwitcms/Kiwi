@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name, too-many-ancestors
 
 from http import HTTPStatus
+
 from django.urls import reverse
 
 from tcms.tests import BaseCaseRun

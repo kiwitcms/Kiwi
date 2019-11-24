@@ -3,15 +3,14 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 import pkg_resources
-
 from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 from django.urls.resolvers import URLResolver
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.urls import urlpatterns
 from tcms.telemetry.tests.plugin import menu as plugin_menu
+from tcms.urls import urlpatterns
 
 
 class PluginDiscoveryTestCase(TestCase):

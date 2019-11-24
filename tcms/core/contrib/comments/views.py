@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import django_comments as comments
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-
-import django_comments as comments
 
 from .utils import add_comment
 

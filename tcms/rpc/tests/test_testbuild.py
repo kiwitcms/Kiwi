@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
-from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
+from xmlrpc.client import ProtocolError
 
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import BuildFactory
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.tests.factories import BuildFactory, ProductFactory
 
 
 class BuildCreate(XmlrpcAPIBaseTest):

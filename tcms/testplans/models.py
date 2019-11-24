@@ -4,18 +4,15 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
-from django.urls import reverse
 from django.shortcuts import get_object_or_404
-
+from django.urls import reverse
 from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
 from tcms.management.models import Version
-from tcms.testcases.models import TestCase
-from tcms.testcases.models import Category
-from tcms.testcases.models import TestCasePlan
-from tcms.testcases.models import TestCaseStatus
+from tcms.testcases.models import (Category, TestCase, TestCasePlan,
+                                   TestCaseStatus)
 
 
 class PlanType(TCMSActionModel):

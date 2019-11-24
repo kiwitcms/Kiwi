@@ -3,18 +3,16 @@
 
 from http import HTTPStatus
 
-from django.test import TestCase
 from django.conf import settings
+from django.test import TestCase
 from django.test.client import Client
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.management.models import Product, Version
 from tcms.testplans.models import TestPlan
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
+from tcms.tests.factories import (PlanTypeFactory, ProductFactory, UserFactory,
+                                  VersionFactory)
 
 
 class ProductTests(TestCase):

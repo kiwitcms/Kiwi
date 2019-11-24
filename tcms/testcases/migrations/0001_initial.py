@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 import tcms.core.models.base
 
-
 test_case_statuss = ['PROPOSED', 'CONFIRMED', 'DISABLED', 'NEED_UPDATE']
 
 

@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
-from django.contrib.staticfiles.storage import StaticFilesStorage
 from django.contrib.staticfiles.finders import get_finders
+from django.contrib.staticfiles.storage import StaticFilesStorage
 
 
 def find_files():

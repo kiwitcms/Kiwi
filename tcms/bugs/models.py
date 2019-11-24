@@ -2,8 +2,8 @@
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.urls import reverse
 
 from tcms.core.models.base import UrlMixin

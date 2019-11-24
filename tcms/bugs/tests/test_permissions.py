@@ -2,8 +2,8 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from tcms import tests
-from tcms.tests import factories
 from tcms.bugs.models import Bug
+from tcms.tests import factories
 
 
 class NewTestCase(tests.PermissionsTestCase):

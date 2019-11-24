@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from attachments.views import delete_attachment
-from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc.decorators import permissions_required
 

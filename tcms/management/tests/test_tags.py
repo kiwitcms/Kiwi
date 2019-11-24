@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from tcms.tests import LoggedInTestCase
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
-from tcms.tests.factories import TagFactory
-
 from tcms.management.models import Tag
+from tcms.tests import (LoggedInTestCase, remove_perm_from_user,
+                        user_should_have_perm)
+from tcms.tests.factories import TagFactory
 
 
 class TestTagsWithPermission(LoggedInTestCase):

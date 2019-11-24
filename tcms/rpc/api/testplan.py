@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from modernrpc.core import rpc_method, REQUEST_KEY
+from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
-from tcms.testplans.models import TestPlan
-from tcms.testcases.models import TestCase, TestCasePlan
-
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanForm
 from tcms.rpc.decorators import permissions_required
+from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testplans.models import TestPlan
 
 __all__ = (
     'create',

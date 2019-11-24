@@ -3,16 +3,14 @@
 
 from datetime import datetime
 
-from django.db.models import signals
-from django.conf import settings
-
 import factory
+from django.conf import settings
+from django.db.models import signals
 from factory.django import DjangoModelFactory
 
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testruns.models import TestExecutionStatus
-
 
 # ### Factories for app management ###
 

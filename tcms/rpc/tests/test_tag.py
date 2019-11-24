@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from tcms.tests.factories import TagFactory
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.tests.factories import TagFactory
 
 
 class Tag(XmlrpcAPIBaseTest):

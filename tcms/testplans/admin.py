@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.urls import reverse
 from django.contrib import admin
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from tcms.core.history import ReadOnlyHistoryAdmin
 from tcms.testplans.models import PlanType, TestPlan

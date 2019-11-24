@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.db import migrations, models
+
 import tcms.core.models.base
 
 

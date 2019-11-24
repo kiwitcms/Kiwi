@@ -5,21 +5,20 @@ import unittest
 from http import HTTPStatus
 from urllib.parse import urlencode
 
-from django.urls import reverse
 from django.forms import ValidationError
 from django.test import RequestFactory
+from django.urls import reverse
 from django.utils.translation import override
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.testcases.fields import MultipleEmailField
 from tcms.management.models import Priority, Tag
+from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.models import TestExecutionStatus
-from tcms.tests.factories import LinkReferenceFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests import BasePlanCase, BaseCaseRun, remove_perm_from_user
-from tcms.tests import user_should_have_perm
+from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
+                        user_should_have_perm)
+from tcms.tests.factories import LinkReferenceFactory, TestCaseFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
