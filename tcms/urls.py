@@ -16,7 +16,6 @@ from modernrpc.views import RPCEntryPoint
 from tcms.bugs import urls as bugs_urls
 from tcms.core import ajax
 from tcms.core import views as core_views
-from tcms.core.contrib.comments import views as comments_views
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.telemetry import urls as telemetry_urls
 from tcms.testcases import urls as testcases_urls
@@ -41,9 +40,6 @@ urlpatterns = [
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
 
     url(r'^bugs/', include(bugs_urls)),
-
-    # comments
-    url(r'^comments/post/', comments_views.post, name='comments-post'),
 
     # Account information zone, such as login method
     url(r'^accounts/', include(auth_urls)),

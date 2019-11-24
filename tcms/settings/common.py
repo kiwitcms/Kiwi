@@ -311,7 +311,6 @@ INSTALLED_APPS = [
     # comment out the next line
     'tcms.bugs',
     'tcms.kiwi_auth',
-    'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
     'tcms.management',
     'tcms.testcases.apps.AppConfig',
@@ -343,10 +342,6 @@ SERIALIZATION_MODULES = {
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
-
-# Define the custom comment app
-# http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
-COMMENTS_APP = 'tcms.core.contrib.comments'
 
 # in alphabetic order
 MODERNRPC_METHODS_MODULES = [
