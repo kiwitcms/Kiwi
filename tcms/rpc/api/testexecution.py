@@ -19,6 +19,7 @@ __all__ = (
     'filter',
 
     'add_comment',
+    'remove_comment',
 
     'add_link',
     'get_links',
@@ -43,6 +44,29 @@ def add_comment(execution_id, comment, **kwargs):
     """
     execution = TestExecution.objects.get(pk=execution_id)
     comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
+
+
+@permissions_required('django_comments.delete_comment')
+@rpc_method(name='TestExecution.remove_comment')
+def remove_comment(execution_id, comment_id=None):
+    """
+    .. function:: TestExecution.remove_comment(execution_id, comment_id)
+
+        Remove all or specified comment(s) from selected test execution.
+
+        :param execution_id: PK of a TestExecution object
+        :param execution_id: int
+        :param comment_id: PK of a Comment object or None
+        :param comment_id: int
+        :return: None
+        :raises: PermissionDenied if missing *django_comments.delete_comment* permission
+    """
+    execution = TestExecution.objects.get(pk=execution_id)
+    to_be_deleted = comments.get_comments(execution)
+    if comment_id:
+        to_be_deleted = to_be_deleted.filter(pk=comment_id)
+
+    to_be_deleted.delete()
 
 
 # todo: this is very similar, if not duplicate to TestRun.add_case IMO
