@@ -4,6 +4,7 @@
 import unittest
 
 from django import test
+from django.utils import timezone
 
 from tcms.management.models import Product
 from tcms.rpc.serializer import (QuerySetBasedXMLRPCSerializer, Serializer,
@@ -51,7 +52,7 @@ class TestUtilityMethods(unittest.TestCase):
         self.assertEqual(value, None)
 
         from datetime import datetime
-        now = datetime.now()
+        now = timezone.now()
         value = datetime_to_str(now)
         expected_value = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
         self.assertEqual(expected_value, value)

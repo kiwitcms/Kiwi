@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
-from datetime import datetime
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
+from django.utils import timezone
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
@@ -310,4 +310,4 @@ class TestExecutionUpdate(XmlrpcAPIBaseTest):
         self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.exec.TestExecution.update(self.case_run_1.pk,
-                                                      {"close_date": datetime.now()})
+                                                      {"close_date": timezone.now()})

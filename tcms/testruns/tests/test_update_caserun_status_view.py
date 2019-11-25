@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-ancestors
 
-from datetime import datetime
-
 from django.conf import settings
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import override
 
 from tcms.testruns.models import TestExecutionStatus
@@ -20,7 +19,7 @@ class TestUpdateCaseRunStatusView(BaseCaseRun):
         cls.url = reverse('testruns-update_caserun_status')
 
     def test_update_status_positive_scenario(self):
-        before_update = datetime.now()
+        before_update = timezone.now()
         status_passed = TestExecutionStatus.objects.get(name=TestExecutionStatus.PASSED)
         post_data = {
             'status_id': status_passed.pk,
@@ -38,7 +37,7 @@ class TestUpdateCaseRunStatusView(BaseCaseRun):
             self.assertEqual(caserun.status_id, status_passed.pk)
             self.assertEqual(caserun.tested_by, self.tester)
             self.assertGreater(caserun.close_date, before_update)
-            self.assertLess(caserun.close_date, datetime.now())
+            self.assertLess(caserun.close_date, timezone.now())
 
         # verify we didn't update the last TCR by mistake
         self.execution_3.refresh_from_db()

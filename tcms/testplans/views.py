@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,6 +8,7 @@ from django.http import (Http404, HttpResponsePermanentRedirect,
                          HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import (require_GET, require_http_methods,
@@ -69,7 +68,7 @@ class NewTestPlanView(View):
                 product_version=form.cleaned_data['product_version'],
                 type=form.cleaned_data['type'],
                 name=form.cleaned_data['name'],
-                create_date=datetime.datetime.now(),
+                create_date=timezone.now(),
                 extra_link=form.cleaned_data['extra_link'],
                 parent=form.cleaned_data['parent'],
                 text=form.cleaned_data['text'],

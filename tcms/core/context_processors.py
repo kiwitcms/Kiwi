@@ -18,4 +18,4 @@ def settings_processor(_request):
 
 
 def server_time_processor(_request):
-    return {'SERVER_TIME': timezone.now() }
+    return {'SERVER_TIME': timezone.now()}

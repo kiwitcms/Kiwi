@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.test import TestCase, override_settings
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from mock import patch
 
@@ -28,7 +29,7 @@ class TestSetRandomKey(TestCase):
 
     @patch('tcms.kiwi_auth.models.datetime')
     def test_set_random_key(self, mock_datetime):
-        now = datetime.datetime.now()
+        now = timezone.now()
         in_7_days = datetime.timedelta(7)
 
         mock_datetime.datetime.today.return_value = now
@@ -229,7 +230,7 @@ class TestConfirm(TestCase):
         with patch('tcms.kiwi_auth.models.secrets') as _secrets:
             _secrets.token_hex.return_value = fake_activation_key
             key = UserActivationKey.set_random_key_for_user(self.new_user)
-            key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
+            key.key_expires = timezone.now() - datetime.timedelta(days=10)
             key.save()
 
         confirm_url = reverse('tcms-confirm', args=[fake_activation_key])

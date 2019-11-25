@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-few-public-methods, unused-argument
 
-from datetime import datetime
-
 import factory
 from django.conf import settings
 from django.db.models import signals
+from django.utils import timezone
 from factory.django import DjangoModelFactory
 
 from tcms.management.models import Priority
@@ -122,7 +121,7 @@ class TestPlanFactory(DjangoModelFactory):
 
     name = factory.Sequence(lambda n: 'Plan name %d' % n)
     text = factory.Sequence(lambda n: 'Plan document %d' % n)
-    create_date = factory.LazyFunction(datetime.now)
+    create_date = factory.LazyFunction(timezone.now)
     product_version = factory.SubFactory(VersionFactory)
     author = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)
