@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load tz %}
 
     <!-- PatternFly Horizontal Nav -->
     <nav class="navbar navbar-default navbar-pf" role="navigation">
@@ -96,6 +97,15 @@
                         </li>
                         <li><a target="_parent" href="https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation">{% trans "Translation guide" %}</a></li>
                     </ul>
+                </li>
+
+                <li style="float:right">
+                    <a>
+                        <span class="fa fa-clock-o">
+                            {% get_current_timezone as TIME_ZONE %}
+                            {{ SERVER_TIME }} {{ TIME_ZONE }}
+                        </span>
+                    </a>
                 </li>
             </ul>
 

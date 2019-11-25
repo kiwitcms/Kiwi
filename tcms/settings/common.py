@@ -276,6 +276,7 @@ TEMPLATES = [
 
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',
+                'tcms.core.context_processors.server_time_processor',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
