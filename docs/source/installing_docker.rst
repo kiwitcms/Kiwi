@@ -211,7 +211,8 @@ This means you can edit ``docker-compose.yml`` to mount the host file
             - uploads:/Kiwi/uploads
             - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
-essentially overriding any stock settings in this way!
+essentially overriding any stock settings in this way! For more information
+see :ref:`configuration`.
 
 .. warning::
 
