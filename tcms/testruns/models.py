@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import datetime
 from collections import namedtuple
 
 import vinaigrette
@@ -7,6 +6,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Count
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import override
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -174,7 +174,7 @@ class TestRun(TCMSActionModel):
 
     def update_completion_status(self, is_finished):
         if is_finished:
-            self.stop_date = datetime.datetime.now()
+            self.stop_date = timezone.now()
         else:
             self.stop_date = None
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from http import HTTPStatus
 
 from django.conf import settings
@@ -13,6 +12,7 @@ from django.db.models import Count, Q
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView, View
@@ -628,7 +628,7 @@ class UpdateCaseRunStatusView(View):
             execution = get_object_or_404(TestExecution, pk=int(caserun_pk))
             execution.status_id = status_id
             execution.tested_by = request.user
-            execution.close_date = datetime.now()
+            execution.close_date = timezone.now()
             execution.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

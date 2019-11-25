@@ -3,11 +3,10 @@
 Functions that help access comments
 of objects.
 """
-from datetime import datetime
-
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.utils import timezone
 from django_comments.models import Comment
 
 
@@ -41,7 +40,7 @@ def add_comment(objs, comments, user, submit_date=None):
                                object_pk=obj.pk,
                                user=user,
                                comment=comments,
-                               submit_date=submit_date or datetime.now(),
+                               submit_date=submit_date or timezone.now(),
                                user_email=user.email,
                                user_name=user.username)
 

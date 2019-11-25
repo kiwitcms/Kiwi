@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=missing-permission-required
 
-from datetime import datetime
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, views
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET, require_http_methods
 
@@ -105,7 +104,7 @@ def confirm(request, activation_key):
         )
         return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
-    if _activation_key.key_expires <= datetime.now():
+    if _activation_key.key_expires <= timezone.now():
         messages.add_message(request, messages.ERROR, _('This activation key has expired'))
         return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
