@@ -224,8 +224,8 @@ LOCALE_PATHS = [
 ]
 
 # If you set this to False, Django will not use timezone-aware datetimes.
+# See https://docs.djangoproject.com/en/2.2/topics/i18n/timezones/
 USE_TZ = os.environ.get('KIWI_USE_TZ', 'False').lower() == 'true'
-
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
