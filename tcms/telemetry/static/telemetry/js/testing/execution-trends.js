@@ -25,12 +25,12 @@ function drawChart() {
 
     const productId = $('#id_product').val();
     if (productId) {
-        query['case__plan__product'] = productId;
+        query['run__plan__product'] = productId;
     }
 
     const versionId = $('#id_version').val();
     if (versionId) {
-        query['case__plan__product_version'] = versionId;
+        query['run__plan__product_version'] = versionId;
     }
 
     const buildId = $('#id_build').val();
@@ -40,7 +40,7 @@ function drawChart() {
 
     const testPlanId = $('#id_test_plan').val();
     if (testPlanId) {
-        query['case__plan__plan_id'] = testPlanId;
+        query['run__plan__plan_id'] = testPlanId;
     }
 
     const dateBefore = $('#id_before');
