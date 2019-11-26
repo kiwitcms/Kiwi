@@ -84,7 +84,7 @@
 				{% endfor %}
 			</td>
 		</tr>
-                {% if review_mode %}
+                {% if review_mode and perms.django_comments.add_comment %}
 		<tr>
 			<td colspan="3" style='border:none;background:transparent'>
 				<form class="update_form" method="POST">
