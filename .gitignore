@@ -13,6 +13,7 @@ docs/source/*.dot
 docs/guide/target
 docs/target/
 .idea/
+.vscode/
 .cache/
 tcms/node_modules/
 package-lock.json
