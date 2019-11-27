@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^$', core_views.DashboardView.as_view(), name='core-views-index'),
     url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
     url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
-    url(r'^navigation/', core_views.navigation, name='iframe-navigation'),
+    url(r'^navigation/', core_views.NavigationView.as_view(), name='iframe-navigation'),
     url(r'^translation-mode/', core_views.TranslationMode.as_view(), name='translation-mode'),
 
     url(r'^grappelli/', include(grappelli_urls)),
