@@ -491,6 +491,7 @@ class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
         return render(request, self.template_name, context=context)
 
 
+@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
 class DeleteCasesView(View):
     """Delete selected cases from plan"""
 
