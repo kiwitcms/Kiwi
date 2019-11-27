@@ -19,7 +19,7 @@ class TestNavigation(test.TestCase):
         cls.user.set_password('testing')
         cls.user.save()
 
-    def test_navigation_displays_currently_logged_user(self):
+    def test_navigation_displays_currently_for_logged_user(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.user.username,
             password='testing')
@@ -27,6 +27,19 @@ class TestNavigation(test.TestCase):
 
         self.assertContains(response, self.user.username)
         self.assertContains(response, _('My profile'))
+        self._common_navigation_assertions(response)
+
+    def test_navigation_displays_currently_for_guest_user(self):
+        response = self.client.get(reverse('iframe-navigation'))
+        self.assertContains(response, _('Welcome Guest'))
+        self._common_navigation_assertions(response)
+
+    def _common_navigation_assertions(self, response):
+        self.assertContains(response, _('DASHBOARD'))
+        self.assertContains(response, _('TESTING'))
+        self.assertContains(response, _('SEARCH'))
+        self.assertContains(response, _('TELEMETRY'))
+        self.assertContains(response, _('ADMIN'))
 
 
 class TestDashboard(BaseCaseRun):

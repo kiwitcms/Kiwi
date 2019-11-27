@@ -188,7 +188,7 @@ PUBLIC_VIEWS = [
     'tcms.kiwi_auth.views.PasswordResetView',
     'tcms.kiwi_auth.views.register',
     'tcms.kiwi_auth.views.confirm',
-    'tcms.core.views.navigation',
+    'tcms.core.views.NavigationView',
     'tcms.core.views.TranslationMode',
 ]
 

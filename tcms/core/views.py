@@ -3,7 +3,6 @@ from django import http
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
-from django.shortcuts import render
 from django.template import loader
 from django.utils import translation
 from django.utils.decorators import method_decorator
@@ -50,11 +49,8 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
         }
 
 
-def navigation(request):  # pylint: disable=missing-permission-required
-    """
-    iframe navigation workaround until we migrate everything to patternfly
-    """
-    return render(request, 'navigation.html')
+class NavigationView(TemplateView):  # pylint: disable=missing-permission-required
+    template_name = 'navigation.html'
 
 
 @requires_csrf_token
