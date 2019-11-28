@@ -626,10 +626,10 @@ class TestRunStatusMenu(BaseCaseRun):
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
         cls.status_menu_html = []
 
-        for tcrs in TestExecutionStatus.objects.all():
+        for execution_status in TestExecutionStatus.objects.all():
             cls.status_menu_html.append(
-                '<a value="{0}" href="#" class="{1}Blue9">{2}</a>'
-                .format(tcrs.pk, tcrs.name.lower(), tcrs.name)
+                '<i class="{0}" style="color: {1}"></i>{2}'
+                .format(execution_status.icon, execution_status.color, execution_status.name)
             )
 
     def test_get_status_options_with_permission(self):
