@@ -669,17 +669,8 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 
 .addBlue9{background:url("../images/operation_ico.png") no-repeat 3px 6px;}
 .removeBlue9{background:url("../images/operation_ico.png") no-repeat 3px -24px;}
-.reorderBlue9{background:url("../images/operation_ico.png") no-repeat 3px -54px;}
 .updateBlue9{background:url("../images/operation_ico.png") no-repeat 3px -144px;}
 .assigneeBlue9{background:url("../images/operation_ico.png") no-repeat 3px -114px;}
-.idleBlue9{background:url("../images/operation_ico.png") no-repeat 3px -174px;}
-.passedBlue9{background:url("../images/operation_ico.png") no-repeat 3px -264px;}
-.failedBlue9{background:url("../images/operation_ico.png") no-repeat 3px -294px;}
-.runningBlue9{background:url("../images/operation_ico.png") no-repeat 3px -204px;}
-.pausedBlue9{background:url("../images/operation_ico.png") no-repeat 3px -354px;}
-.blockedBlue9{background:url("../images/operation_ico.png") no-repeat 3px -234px;}
-.errorBlue9{background:url("../images/operation_ico.png") no-repeat 3px -324px;}
-.waivedBlue9{background:url("../images/operation_ico.png") no-repeat 3px -384px;}
 /* ico end */
 
  /********************************list: cases list /runs list ***********************/
