@@ -205,7 +205,7 @@ class GetTestRunView(TemplateView):  # pylint: disable=missing-permission-requir
         # 2. get test run's all executions
         test_executions = _open_run_get_executions(self.request, test_run)
 
-        status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
+        status = TestExecutionStatus.objects.order_by('-weight', 'name')
 
         # Count the status
         # 3. calculate number of executions of each status
@@ -252,14 +252,12 @@ def _walk_executions(test_executions):
     for execution in test_executions:
         execution_pks.append(execution.pk)
     comments_subtotal = open_run_get_comments_subtotal(execution_pks)
-    status = TestExecutionStatus.get_names()
 
     for execution in test_executions:
         yield (execution,
                testers.get(execution.tested_by_id, None),
                assignees.get(execution.assignee_id, None),
                priorities.get(execution.case.priority_id),
-               status[execution.status_id],
                comments_subtotal.get(execution.pk, 0),
                LinkReference.objects.filter(is_defect=True,
                                             execution=execution.pk).count())

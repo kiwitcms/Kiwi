@@ -34,8 +34,8 @@
                     <span>{% trans "Status" %}</span>
 			{% if perms.testruns.change_testexecution %}
 				<ul class="statusOptions">
-					{% for tcrs in test_status %}
-					<li><a value="{{ tcrs.pk }}" href="#" class="{{ tcrs|lower }}Blue9">{{ tcrs }}</a></li>
+					{% for execution_status in test_status %}
+					<li><a value="{{ execution_status.pk }}" href="#"><i class="{{execution_status.icon}}" style="color: {{execution_status.color}}"></i> {{ execution_status.name }}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}
