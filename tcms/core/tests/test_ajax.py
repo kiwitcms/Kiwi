@@ -189,7 +189,7 @@ class Test_Tag_Counter(test.TestCase):
 
         test_case_tags = TestCaseTag.objects.filter(
             tag=self.tag_one).values('tag').annotate(
-            num_cases=Count('tag')).order_by('tag')
+                num_cases=Count('tag')).order_by('tag')
 
         case_tag_counter = _TagCounter('num_cases', test_case_tags)
         count_for_tag_one = case_tag_counter.calculate_tag_count(self.tag_one)

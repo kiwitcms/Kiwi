@@ -38,7 +38,7 @@ DATABASES = {
 # handle MariaDB only options
 if DATABASES['default']['ENGINE'].find('mysql') > -1:
     DATABASES['default']['OPTIONS'].update({
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         })
 
 
