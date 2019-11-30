@@ -18,8 +18,5 @@ urlpatterns = [
         name='plan-link-cases'),
     url(r'^(?P<plan_id>\d+)/link-cases/search/$', views.LinkCasesSearchView.as_view(),
         name='plan-search-cases-for-link'),
-    url(r'^(?P<plan_id>\d+)/delete-cases/$', views.DeleteCasesView.as_view(),
-        name='plan-delete-cases'),
-
     url(r'^update-parent/$', views.UpdateParentView.as_view()),
 ]
