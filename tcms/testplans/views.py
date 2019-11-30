@@ -21,7 +21,6 @@ from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
-from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
@@ -490,26 +489,6 @@ class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
             'search_mode': search_mode
         }
         return render(request, self.template_name, context=context)
-
-
-@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
-class DeleteCasesView(View):
-    """Delete selected cases from plan"""
-
-    def post(self, request, plan_id):
-        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=int(plan_id))
-
-        if 'case' not in request.POST:
-            return JsonResponse({
-                'rc': 1,
-                'response': 'At least one case is required to delete.'
-            })
-
-        cases = get_selected_testcases(request)
-        for case in cases:
-            plan.delete_case(case=case)
-
-        return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 @require_POST

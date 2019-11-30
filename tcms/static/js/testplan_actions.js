@@ -626,51 +626,23 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
   }
 };
 
-/*
- * Unlink selected cases from current TestPlan.
- *
- * Rewrite function unlinkCasePlan to avoid conflict. Remove it when confirm it's not used any more.
- */
-function unlinkCasesFromPlan(container, form, table) {
-  var selection = serializeCaseFromInputList2(table);
+
+function unlinkCasesFromPlan(plan_id, table) {
+  const selection = serializeCaseFromInputList2(table);
+
   if (selection.empty()) {
     window.alert('At least one case is required to delete.');
     return false;
   }
 
-  var parameters = serialzeCaseForm(form, table, true);
-  if (selection.selectAll) {
-    parameters.selectAll = selection.selectAll;
-  }
-  parameters.case = selection.selectedCasesIds;
-
-  var c = confirm("Are you sure you want to delete test case(s) from this test plan?");
-  if (!c) {
+  if (! confirm("Are you sure you want to delete test case(s) from this test plan?")) {
     return false;
   }
 
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-    if (returnobj.rc == 0) {
-      parameters.a = 'initial';
-      constructPlanDetailsCasesZone(container, parameters.from_plan, parameters);
-      return true;
-    }
-    window.alert(returnobj.response);
-  };
-
-  var url = 'delete-cases/';
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
+  selection.selectedCasesIds.forEach(function(case_id) {
+    jsonRPC('TestPlan.remove_case', [plan_id, case_id], function(data){
+        $(table).find(`tr[id="${case_id}"]`).hide();
+    });
   });
 }
 
@@ -1102,7 +1074,7 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         });
       });
       jQ('#js-remove-case').bind('click', function() {
-        unlinkCasesFromPlan(container, navForm, casesTable);
+        unlinkCasesFromPlan(plan_id, casesTable);
       });
       jQ('#js-new-run').bind('click', function() {
         requestOperationUponFilteredCases({

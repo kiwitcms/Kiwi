@@ -151,31 +151,6 @@ class TestPlanModel(test.TestCase):
         self.assertEqual(15, case_plan.sortkey)
 
 
-class TestDeleteCasesFromPlan(BasePlanCase):
-    """Test case for deleting cases from a plan"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-        cls.plan_tester = UserFactory(username='tester')
-        cls.plan_tester.set_password('password')
-        cls.plan_tester.save()
-        user_should_have_perm(cls.plan_tester, 'testplans.change_testplan')
-
-        cls.cases_url = reverse('plan-delete-cases', args=[cls.plan.pk])
-
-    def test_missing_cases_ids(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        response = self.client.post(self.cases_url)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEqual(1, data['rc'])
-        self.assertEqual('At least one case is required to delete.',
-                         data['response'])
-
-
 class TestSortCases(BasePlanCase):
     """Test case for sorting cases"""
 
