@@ -6,14 +6,16 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, views
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET
+from django.views.generic.base import View
 
 from tcms.kiwi_auth import forms
 from tcms.kiwi_auth.models import UserActivationKey
 from tcms.signals import USER_REGISTERED_SIGNAL
+from tcms.kiwi_auth.forms import RegistrationForm
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -27,11 +29,14 @@ class PasswordResetView(views.PasswordResetView):
     form_class = forms.PasswordResetForm
 
 
-@require_http_methods(['GET', 'POST'])
-def register(request):
+class Register(View):
     """Register method of account"""
-    if request.method == 'POST':
-        form = forms.RegistrationForm(data=request.POST, files=request.FILES)
+    template_name = 'registration/registration_form.html'
+    form_class = RegistrationForm
+    success_url = reverse_lazy('core-views-index')
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_user = form.save()
             activation_key = form.set_activation_key()
@@ -78,14 +83,10 @@ def register(request):
                         '<a href="mailto:{}">{}</a>'.format(email, name)
                     )
 
-            return HttpResponseRedirect(reverse('core-views-index'))
-    else:
-        form = forms.RegistrationForm()
+            return HttpResponseRedirect(self.success_url)
 
-    context_data = {
-        'form': form,
-    }
-    return render(request, 'registration/registration_form.html', context_data)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'form': self.form_class()})
 
 
 @require_GET
