@@ -185,6 +185,7 @@ class TestSortCases(BasePlanCase):
         cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
+        user_should_have_perm(cls.plan_tester, 'testplans.change_testplan')
 
         cls.cases_url = reverse('plan-reorder-cases', args=[cls.plan.pk])
 
@@ -197,23 +198,6 @@ class TestSortCases(BasePlanCase):
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, data['rc'])
         self.assertEqual('At least one case is required to re-order.', data['response'])
-
-    def test_order_cases(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        post_data = {'case': [self.case_3.pk, self.case_1.pk]}
-        response = self.client.post(self.cases_url, post_data)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        self.assertEqual({'rc': 0, 'response': 'ok'}, data)
-
-        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_3)
-        self.assertEqual(10, case_plan_rel.sortkey)
-
-        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_1)
-        self.assertEqual(20, case_plan_rel.sortkey)
 
 
 class TestLinkCases(BasePlanCase):
