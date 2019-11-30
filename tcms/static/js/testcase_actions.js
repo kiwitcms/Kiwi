@@ -234,26 +234,3 @@ function serialzeCaseForm(form, table, serialized, exclude_cases) {
   }
   return data;
 }
-
-/*
- * New implementation of serialzeCaseForm to allow to choose whether the
- * TestCases' Ids are necessary to be serialized.
- *
- * Be default if no value is passed to exclude_cases, not exclude them.
- */
-function serializeCaseForm2(form, table, serialized, exclude_cases) {
-  if (typeof serialized != 'boolean') {
-    var serialized = true;
-  }
-  var data;
-  if (serialized) {
-    data = Nitrate.Utils.formSerialize(form);
-  } else {
-    data = jQ(form).serialize();
-  }
-  var _exclude = exclude_cases === undefined ? false : exclude_cases;
-  if (!_exclude) {
-    data['case'] = serializeCaseFromInputList(table);
-  }
-  return data;
-}
