@@ -6,8 +6,8 @@ from django.db import models
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from uuslug import slugify
 from django.db.models import Q
+from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel

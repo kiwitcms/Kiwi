@@ -4,8 +4,8 @@ from django.db import models
 from django.db.models import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils.translation import override
-import vinaigrette
 from django.db.models import Q
+import vinaigrette
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
