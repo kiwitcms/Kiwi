@@ -938,7 +938,7 @@ function constructPlanDetailsCasesZoneCallback(options) {
     jQ(form).bind('submit', function(e) {
       e.stopPropagation();
       e.preventDefault();
-      var params = serializeCaseForm2(form, table, true, true);
+      var params = serialzeCaseForm(form, table, true, true);
       constructPlanDetailsCasesZone(container, plan_id, params);
     });
 
@@ -1212,7 +1212,7 @@ function requestOperationUponFilteredCases(options) {
     return false;
   }
   // Exclude selected cases, that will be added from the selection.
-  var params = serializeCaseForm2(form, casesContainer, true, true);
+  var params = serialzeCaseForm(form, casesContainer, true, true);
   if (selection.selectAll) {
     params.selectAll = selection.selectAll;
   }
