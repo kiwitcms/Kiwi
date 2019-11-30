@@ -71,13 +71,11 @@ class BugSystemAdminForm(forms.ModelForm):
     # make password show asterisks
     api_password = forms.CharField(
         widget=forms.PasswordInput(render_value=True),
-        label='API password or token',
         required=False
     )
 
     # select only tracker types for which we have available integrations
     tracker_type = IssueTrackerTypeField(
-        label='Type',
         help_text='This determines how Kiwi TCMS integrates with the IT system',
     )
 
