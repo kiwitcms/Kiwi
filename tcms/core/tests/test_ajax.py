@@ -19,7 +19,7 @@ from tcms.tests.factories import (TagFactory, TestCaseFactory, TestPlanFactory,
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
-class Test_TestCaseUpdates(BasePlanCase):
+class TestTestCaseUpdates(BasePlanCase):
     """
         Tests for TC bulk update actions triggered via
         TP sub-menu.
@@ -83,7 +83,7 @@ class Test_TestCaseUpdates(BasePlanCase):
         self._assert_default_tester_is(None)
 
 
-class Test_Tag_Render(BasePlanCase):
+class TestTagRender(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -135,7 +135,7 @@ class Test_Tag_Render(BasePlanCase):
         self.assertContains(response, '>6</a>')
 
 
-class Test_Tag_Objects(test.TestCase):
+class TestTagObjects(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -159,7 +159,7 @@ class Test_Tag_Objects(test.TestCase):
         self.assertEqual(tag_objects.get()[1], self.test_case)
 
 
-class Test_Tag_Counter(test.TestCase):
+class TestTagCounter(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
