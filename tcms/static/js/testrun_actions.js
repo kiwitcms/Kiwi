@@ -625,21 +625,6 @@ function serializeCaseRunFromInputList(table, name) {
   return returnobj_list;
 }
 
-function serialzeCaseForm(form, table, serialized) {
-  if (typeof serialized !== 'boolean') {
-    var serialized = true;
-  }
-  var data;
-  if (serialized) {
-    data = Nitrate.Utils.formSerialize(form);
-  } else {
-    data = jQ(form).serialize();
-  }
-
-  data['case_run'] = serializeCaseFromInputList(table);
-  return data;
-}
-
 function showCaseRunsWithSelectedStatus(form, status_id) {
   form.status__pk.value = status_id;
   fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
