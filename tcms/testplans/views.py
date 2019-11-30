@@ -373,6 +373,7 @@ class Clone(View):
         return render(request, self.template_name, context_data)
 
 
+@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
 class ReorderCasesView(View):
     """Reorder cases"""
 
