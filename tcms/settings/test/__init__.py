@@ -1,4 +1,4 @@
-# pylint: disable=wildcard-import, unused-wildcard-import
+# pylint: disable=wildcard-import, unused-wildcard-import, invalid-name
 
 import os
 import warnings

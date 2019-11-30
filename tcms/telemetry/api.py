@@ -180,12 +180,12 @@ def test_case_health(query=None):
     failed_test_executions = _get_count_for(all_test_executions.filter(status__weight__lt=0))
 
     data = {}
-    for te in test_executions:
-        data[te['case_id']] = {
-            'case_id': te['case_id'],
-            'case_summary': te['case__summary'],
+    for value in test_executions:
+        data[value['case_id']] = {
+            'case_id': value['case_id'],
+            'case_summary': value['case__summary'],
             'count': {
-                'all': te['count'],
+                'all': value['count'],
                 'fail': 0
             }
         }
@@ -211,8 +211,8 @@ def _remove_all_excellent_executions(data):
 
 
 def _count_test_executions(data, test_executions, status):
-    for te in test_executions:
-        data[te['case_id']]['count'][status] = te['count']
+    for value in test_executions:
+        data[value['case_id']]['count'][status] = value['count']
 
 
 def _sort_by_failing_rate(element):

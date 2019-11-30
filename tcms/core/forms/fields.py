@@ -22,8 +22,7 @@ class UserField(forms.CharField):
         if value == '' or value is None:
             if self.required:
                 raise ValidationError('A user name or user ID is required.')
-            else:
-                return None
+            return None
         if isinstance(value, int):
             try:
                 return User.objects.get(pk=value)
