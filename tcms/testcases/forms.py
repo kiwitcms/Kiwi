@@ -147,7 +147,7 @@ class BaseCaseSearchForm(forms.Form):
         queryset=Component.objects.none(),
         required=False
     )
-    bug_id = BugField(label="Bug ID", required=False)
+    bug_id = BugField(required=False)
     is_automated = forms.BooleanField(required=False)
     items_per_page = forms.ChoiceField(
         required=False,
