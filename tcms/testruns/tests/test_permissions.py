@@ -128,3 +128,35 @@ class CreateTestRunViewTestCase(tests.PermissionsTestCase):
             self.assertEqual(case.history.latest().history_id, case_run.case_text_version)
             self.assertEqual(last_run.build, case_run.build)
             self.assertEqual(None, case_run.close_date)
+
+
+class MenuAddCommentItemTestCase(PermissionsTestCase):
+    permission_label = 'django_comments.add_comment'
+    http_method_names = ['get']
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_run = factories.TestRunFactory()
+
+        cls.url = reverse('testruns-get', args=[cls.test_run.pk])
+        cls.post_data = {'summary': 'mock', }
+        super().setUpTestData()
+
+        cls.add_comment_html = \
+            '<a href="#" class="addBlue9 js-show-commentdialog">{0}</a>' \
+            .format(_('Add'))
+
+    def assert_on_testrun_page(self, response):
+        self.assertContains(response, self.test_run.summary)
+        self.assertContains(response, self.test_run.plan)
+        self.assertContains(response, self.test_run.build)
+
+    def verify_get_with_permission(self):
+        response = self.client.get(self.url)
+        self.assert_on_testrun_page(response)
+        self.assertContains(response, self.add_comment_html, html=True)
+
+    def verify_get_without_permission(self):
+        response = self.client.get(self.url)
+        self.assert_on_testrun_page(response)
+        self.assertNotContains(response, self.add_comment_html, html=True)
