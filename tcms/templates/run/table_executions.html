@@ -63,7 +63,7 @@
 			<td class="expandable">{{ priority_value }}</td>
 			<td class="expandable"><span id="{{ execution.pk }}_case_bug_count" {% if bugs_count %}class="have_bug"{% endif %}>{{ bugs_count }}</span></td>
 			<td class="expandable center">
-				<img border="0" alt="" class="icon_status btn_{{ status_name|lower }}" />
+				<i class="icon_status btn_{{ status_name|lower }}" ></i>
 			</td>
 			<td><div id="{{ execution.case_id }}_case_comment_count">{% if comments_count %}<img src="{% static 'images/comment.png' %}" style="vertical-align: middle;">{%endif %} <span id="{{ execution.case_id }}_comments_count">{{ comments_count }}</span></div></td>
 		</tr>

@@ -271,23 +271,22 @@ var updateCaseRunStatus = function(e) {
   var value = parameters['value'];
 
   // Callback when
-  var callback = function(t) {
+  var callback = function (t) {
     // Update the contents
-    if (parameters['value'] != '') {
+    const value = parameters['value']
+    if (value != '') {
       // Update the case run status icon
       var crs = Nitrate.TestRuns.CaseRunStatus;
-      title.find('.icon_status').each(function(index) {
+      title.find('.icon_status').each(function (index) {
         for (i in crs) {
-          if (typeof crs[i] === 'string' && jQ(this).is('.btn_' + crs[i])) {
-            jQ(this).removeClass('btn_' + crs[i]);
-          }
+          jQ(this).removeClass('btn_' + crs[i].name.toLowerCase());
         }
-        jQ(this).addClass('btn_' + Nitrate.TestRuns.CaseRunStatus[value - 1]);
+        jQ(this).addClass('btn_' + Nitrate.TestRuns.CaseRunStatus.find(tcs => tcs.pk === value).name.toLowerCase());
       });
 
       // Update related people
       var usr = Nitrate.User;
-      title.find('.link_tested_by').each(function(i) {
+      title.find('.link_tested_by').each(function (i) {
         jQ(this).html(usr.username);
       });
     }
