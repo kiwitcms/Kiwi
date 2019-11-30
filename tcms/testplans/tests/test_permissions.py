@@ -57,23 +57,25 @@ class ReorderCasesViewTestCase(PermissionsTestCase):
         cls.plan = factories.TestPlanFactory()
         cls.case_1 = TestCaseFactory(
             plan=[cls.plan])
-        cls.case_3 = TestCaseFactory(
+        cls.case_2 = TestCaseFactory(
             plan=[cls.plan])
 
-        cls.post_data = {'case': [cls.case_3.pk, cls.case_1.pk]}
+        cls.post_data = {'case': [cls.case_2.pk, cls.case_1.pk]}
         cls.url = reverse('plan-reorder-cases', args=[cls.plan.pk])
 
         super().setUpTestData()
 
     def verify_post_with_permission(self):
+        case1 = TestCasePlan.objects.get(plan=self.plan, case=self.case_1)
+        case2 = TestCasePlan.objects.get(plan=self.plan, case=self.case_2)
+        self.assertGreater(case2.sortkey, case1.sortkey)
 
         response = self.client.post(self.url, self.post_data)
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual({'rc': 0, 'response': 'ok'}, data)
 
-        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_3)
-        self.assertEqual(10, case_plan_rel.sortkey)
-
-        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_1)
-        self.assertEqual(20, case_plan_rel.sortkey)
+        # Post changes the order of cases
+        case1.refresh_from_db()
+        case2.refresh_from_db()
+        self.assertGreater(case1.sortkey, case2.sortkey)
