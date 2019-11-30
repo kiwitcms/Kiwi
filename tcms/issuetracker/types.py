@@ -18,7 +18,7 @@ from tcms.issuetracker import (bugzilla_integration, github_integration,
                                gitlab_integration, jira_integration,
                                redmine_integration)
 from tcms.issuetracker.base import IssueTrackerType
-from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa
+from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa, pylint: disable=unused-import
 
 
 def from_name(name):
