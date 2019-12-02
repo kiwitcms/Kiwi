@@ -33,9 +33,9 @@
 		<div class="btnBlueCaserun">
                     <span>{% trans "Status" %}</span>
 			{% if perms.testruns.change_testexecution %}
-				<ul class="statusOptions">
+				<ul class="statusOptions" style="width: auto; white-space: nowrap">
 					{% for execution_status in test_status %}
-					<li><a value="{{ execution_status.pk }}" href="#"><i class="{{execution_status.icon}}" style="color: {{execution_status.color}}"></i> {{ execution_status.name }}</a></li>
+					<li><a style="padding-left: 0" value="{{ execution_status.pk }}" href="#"><i class="{{execution_status.icon}}" style="color: {{execution_status.color}}"></i> {{ execution_status.name }}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}
