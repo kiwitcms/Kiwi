@@ -8,7 +8,6 @@ from urllib.parse import urlencode
 from django.forms import ValidationError
 from django.test import RequestFactory
 from django.urls import reverse
-from django.utils.translation import override
 from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import Priority, Tag
@@ -55,14 +54,14 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             'required rows="10">\n</textarea>',
             html=True)
 
-        with override('en'):
-            for status in TestExecutionStatus.objects.all():
-                self.assertContains(
-                    response,
-                    "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "
-                    "title=\"%s\"" % (status.name.lower(), status.name),
-                    html=False
-                )
+        for status in TestExecutionStatus.objects.all():
+            self.assertContains(
+                response,
+                '<i class="submit_button %s fa-2x" style="color: %s" \
+                    statusId="%s" title="%s"></i>'
+                % (status.icon, status.color, status.pk, status.name),
+                html=True
+            )
 
     def test_user_sees_bugs(self):
         bug_1 = LinkReferenceFactory(execution=self.execution_1)

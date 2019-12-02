@@ -167,6 +167,9 @@ def update(case_run_id, values, **kwargs):
         if form.cleaned_data['sortkey'] is not None:
             tcr.sortkey = form.cleaned_data['sortkey']
 
+        if form.cleaned_data['tested_by']:
+            tcr.tested_by = form.cleaned_data['tested_by']
+
         tcr.save()
 
     else:

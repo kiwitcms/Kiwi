@@ -3,6 +3,7 @@ Nitrate.TestRuns.Details = {};
 Nitrate.TestRuns.Execute = {}
 Nitrate.TestRuns.AssignCase = {}
 
+let executionStatuses;
 
 function toggleDiv(link, divId) {
   var link = jQ(link);
@@ -60,15 +61,25 @@ Nitrate.TestRuns.Details.on_load = function() {
   var toggle_case_run = function(e) {
     var c = jQ(this).parent(); // Container
     var c_container = c.next(); // Content Containers
-    var case_id = c.find('input[name="case"]')[0].value;
-    var case_run_id = c.find('input[name="case_run"]')[0].value;
-    var case_text_version = c.find('input[name="case_text_version"]')[0].value;
-    var type = 'case_run';
+    var caseId = c.find('input[name="case"]')[0].value;
+    var executionId = c.find('input[name="case_run"]')[0].value;
+    var caseTextVersion = c.find('input[name="case_text_version"]')[0].value;
     var callback = function(t) {
       // Observe the update case run stauts/comment form
-      c_container.parent().find('.update_form')
-        .unbind('submit').bind('submit', updateCaseRunStatus);
 
+      const updateForm = c_container.find('.update_form')
+
+      updateForm.unbind('submit').bind('submit', event => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const commentTextArea = updateForm.find('textarea[name=comment]')
+        addComment(commentTextArea, executionId, caseId)
+      });
+
+      const currentStatusId = parseInt(c_container.find('input[name=status_id]').val())
+      const submitButtons = c_container.find('.submit_button')
+      bindSubmitButtons(updateForm, currentStatusId, submitButtons, executionId, caseId)
 
       var rc_callback = function(e) {
         e.stopPropagation();
@@ -78,15 +89,12 @@ Nitrate.TestRuns.Details.on_load = function() {
         }
 
         const comment_id = $(this).find('input[name=comment_id]').val();
-        jsonRPC('TestExecution.remove_comment', [case_run_id, comment_id], function(data) {
-            constructCaseRunZone(c_container[0], c[0], case_id);
+        jsonRPC('TestExecution.remove_comment', [executionId, comment_id], function(data) {
+            constructCaseRunZone(c_container[0], c[0], caseId);
         });
       };
       c_container.parent().find('.form_comment')
         .unbind('submit').bind('submit', rc_callback);
-      c_container.find('.js-status-button').bind('click', function() {
-        this.form.value.value = jQ(this).data('formvalue');
-      });
       c_container.find('.js-show-comments').bind('click', function() {
         toggleDiv(this, jQ(this).data('param'));
       });
@@ -111,9 +119,9 @@ Nitrate.TestRuns.Details.on_load = function() {
 
     toggleTestExecutionPane({
       'callback': callback,
-      'caseId': case_id,
-      'caserunId': case_run_id,
-      'caseTextVersion': case_text_version,
+      'caseId': caseId,
+      'caserunId': executionId,
+      'caseTextVersion': caseTextVersion,
       'caserunRowContainer': c,
       'expandPaneContainer': c_container
     });
@@ -244,55 +252,34 @@ Nitrate.TestRuns.AssignCase.on_load = function() {
   });
 };
 
+function updateExecutionStatus(updateForm, executionId, caseId, executionStatusPk) {
 
-function updateRunStatus(object_pk, value, callback) {
-  jQ.ajax({
-    'url': '/runs/case-run-update-status/',
-    'type': 'POST',
-    'data': {'object_pk': object_pk, 'status_id': value },
-    'success': function (data, textStatus, jqXHR) {
-      callback();
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
+  const container = updateForm.parents().eq(3)
+  const parent = container.parent()
+  const title = parent.prev()
+  const link = title.find('.expandable')[0];
 
-var updateCaseRunStatus = function(e) {
-  e.stopPropagation();
-  e.preventDefault();
-  var container = jQ(this).parents().eq(3);
-  var parent = container.parent();
-  var title = parent.prev();
-  var link = title.find('.expandable')[0];
-  var parameters = Nitrate.Utils.formSerialize(this);
-  var object_pk = parameters['object_pk'];
-  var value = parameters['value'];
+  const commentTextArea = updateForm.find('textarea[name=comment]')
+  addComment(commentTextArea, executionId, caseId)
 
-  // Callback when
-  var callback = function(t) {
-    // Update the contents
-    const value = parameters['value']
-    if (value != '') {
-      // Update the case run status icon
-      var crs = Nitrate.TestRuns.CaseRunStatus;
-      title.find('.execution_status_icon').each(function(index) {
-        for (i in crs) {
-          jQ(this).removeClass(crs[i].icon);
-        }
-        const execution = Nitrate.TestRuns.CaseRunStatus.find(tcs => tcs.pk === value);
-        jQ(this).addClass(execution.icon);
-        jQ(this).css('color', execution.color)
-      });
+  // Update the object when changing the status
+  jsonRPC('TestExecution.update', [executionId, {
+    'status': executionStatusPk,
+    'tested_by': Nitrate.User.pk
+  }], data => {
 
-      // Update related people
-      var usr = Nitrate.User;
-      title.find('.link_tested_by').each(function(i) {
-        jQ(this).html(usr.username);
-      });
-    }
+    const executionStatusIcon = $(title.find('.execution_status_icon'))
 
+    // remove all the icon classes from the icon, so that we can add the proper class few lines below
+    executionStatuses.forEach(status => executionStatusIcon.removeClass(status.icon))
+
+    // update the icon in the table row
+    const executionStatus = executionStatuses.find(status => status.id === parseInt(executionStatusPk))
+    executionStatusIcon.addClass(executionStatus.icon)
+    executionStatusIcon.css('color', executionStatus.color)
+
+    // Update related people
+    title.find('.link_tested_by').html(data.tested_by);
     // Mark the case run to mine
     if (!title.is('.mine')) {
       title.addClass('mine');
@@ -300,7 +287,7 @@ var updateCaseRunStatus = function(e) {
 
     // Blind down next case
     fireEvent(link, 'click');
-    if (jQ('#id_check_box_auto_blinddown').attr('checked') && parameters['value'] != '') {
+    if ($('#id_check_box_auto_blinddown')[0].checked && executionStatusPk) {
       var next_title = parent.next();
       if (!next_title.length) {
         return false;
@@ -311,39 +298,37 @@ var updateCaseRunStatus = function(e) {
     } else {
       fireEvent(link, 'click');
     }
-  };
 
-  // Add comment
-  if (parameters['comment'] != '') {
-    // Reset the content to loading
-    var ajax_loading = getAjaxLoading();
-    ajax_loading.id = 'id_loading_' + parameters['case_id'];
-    container.html(ajax_loading);
-    var c = jQ('<div>');
+    const submitButtons = updateForm.find('.submit_button')
 
-    if (parameters['value'] != '') {
-        jsonRPC('TestExecution.add_comment', [object_pk, parameters['comment']], function(data){
-            updateCommentsCount(parameters['case_id'], true);
-        });
-    } else {
-        jsonRPC('TestExecution.add_comment', [object_pk, parameters['comment']], function(data){
-            updateCommentsCount(parameters['case_id'], true);
-            callback();
-        });
-
-    }
-  }
-
-  // Update the object when changing the status
-  if (parameters['value'] != '') {
-    // Reset the content to loading
-    var ajax_loading = getAjaxLoading();
-    ajax_loading.id = 'id_loading_' + parameters['case_id'];
-    container.html(ajax_loading);
-    updateRunStatus([object_pk], value, callback);
-  }
+    bindSubmitButtons(updateForm, data.status_id, submitButtons, executionId, caseId)
+  });
 };
 
+function bindSubmitButtons(updateForm, currentStatusId, submitButtons, executionId, caseId) {
+  submitButtons.each((_index, b) => {
+    const submitButton = $(b)
+    const executionStatusId = parseInt(submitButton.attr('statusId'))
+
+    submitButton.unbind('click')
+
+    if (executionStatusId === currentStatusId) {
+      submitButton.css('opacity', '0.25')
+    } else {
+      submitButton.css('opacity', '1')
+      submitButton.bind('click', () => updateExecutionStatus(updateForm, executionId, caseId, executionStatusId))
+    }
+
+  })
+}
+
+function addComment(commentTextArea, executionId, caseId) {
+  const comment = commentTextArea.val()
+  if (comment) {
+    jsonRPC('TestExecution.add_comment', [executionId, comment], () => updateCommentsCount(caseId, true))
+    commentTextArea.val("")
+  }
+}
 
 function constructCaseRunZone(container, title_container, case_id) {
   var link = jQ(title_container).find('.expandable')[0];
@@ -663,6 +648,9 @@ function showCommentForm() {
 }
 
 jQ(document).ready(function(){
+
+  jsonRPC('TestExecutionStatus.filter', {}, data => executionStatuses = data)
+
   jQ('.btnBlueCaserun').mouseover(function() {
     jQ(this).find('ul').show();
   }).mouseout(function() {
@@ -681,7 +669,14 @@ jQ(document).ready(function(){
     if (!window.confirm(default_messages.confirm.change_case_status)) {
       return false;
     }
-    updateRunStatus(object_pks, option, reloadWindow);
+    object_pks.forEach(executionId => {
+      jsonRPC('TestExecution.update', [executionId, {
+        'status': option,
+        'tested_by': Nitrate.User.pk
+      }], () => { }, true)
+    })
+
+    reloadWindow();
   });
 });
 

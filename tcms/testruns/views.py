@@ -12,7 +12,6 @@ from django.db.models import Count, Q
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView, View
@@ -607,26 +606,6 @@ class UpdateAssigneeView(View):
         for caserun_pk in object_ids:
             execution = get_object_or_404(TestExecution, pk=int(caserun_pk))
             execution.assignee = user
-            execution.save()
-
-        return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
-class UpdateCaseRunStatusView(View):
-    """Updates TestExecution.status_id. Called from the front-end."""
-
-    http_method_names = ['post']
-
-    def post(self, request):
-        status_id = int(request.POST.get('status_id'))
-        object_ids = request.POST.getlist('object_pk[]')
-
-        for caserun_pk in object_ids:
-            execution = get_object_or_404(TestExecution, pk=int(caserun_pk))
-            execution.status_id = status_id
-            execution.tested_by = request.user
-            execution.close_date = timezone.now()
             execution.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

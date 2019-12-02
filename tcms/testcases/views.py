@@ -466,7 +466,7 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
         # Data of TestExecution
         execution_comments = get_comments(execution)
 
-        execution_status = TestExecutionStatus.objects.values('pk', 'name').order_by('pk')
+        execution_status = TestExecutionStatus.objects.order_by('-weight', 'name')
 
         data.update({
             'test_case': case,
