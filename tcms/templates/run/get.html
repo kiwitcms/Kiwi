@@ -14,15 +14,6 @@
 <script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
-{#　Define the status array for all of case run status　#}
-Nitrate.TestRuns.CaseRunStatus = new Array();
-{% for crs in test_status %}
-Nitrate.TestRuns.CaseRunStatus.push({
-  "pk": "{{crs.pk}}",
-  "icon": "{{crs.icon}}",
-  "color": "{{crs.color}}"
-});
-{% endfor %}
 Nitrate.Utils.after_page_load(Nitrate.TestRuns.Details.on_load);
 </script>
 <script type="text/javascript">

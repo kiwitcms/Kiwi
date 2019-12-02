@@ -90,4 +90,5 @@ class NewExecutionForm(BaseCaseRunForm):
 
 class UpdateExecutionForm(BaseCaseRunForm):
     assignee = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
+    tested_by = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
     build = forms.ModelChoiceField(queryset=Build.objects.all(), required=False)

@@ -29,11 +29,12 @@
 								<input type="hidden" name="case_id" value="{{ execution.case_id }}" />
 								<input type="hidden" name="assignee" value="{{ execution.assignee_id }}" />
 								<input type="hidden" name="tested_by" value="{{ execution.tested_by_id }}" />
+								<input type="hidden" name="status_id" value="{{ execution.status_id }}" />
 								<input type="hidden" name="value" value="" />
 								{% if perms.testruns.change_testexecution %}
-								{% for status in execution_status %}
-								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk execution.status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
-								{% endfor %}
+									{% for status in execution_status %}
+										<i class="submit_button {{ status.icon }} fa-2x" style="color: {{status.color}}" statusId="{{ status.pk }}" title="{{ status.name }}"></i>
+									{% endfor %}
 								{% endif %}
 								<input type="submit" class="submit-post" value="Submit">
 							</td>
