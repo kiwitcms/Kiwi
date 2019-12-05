@@ -37,53 +37,44 @@ class Register(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            new_user = form.save()
-            activation_key = form.set_activation_key()
-            # send a signal that new user has been registered
-            USER_REGISTERED_SIGNAL.send(sender=form.__class__,
-                                        request=request,
-                                        user=new_user)
+        if not form.is_valid():
+            return None
 
-            # Send confirmation email to new user
-            if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
-                form.send_confirm_mail(request, activation_key)
+        new_user = form.save()
+        activation_key = form.set_activation_key()
+        # send a signal that new user has been registered
+        USER_REGISTERED_SIGNAL.send(sender=form.__class__, request=request, user=new_user)
 
-                messages.add_message(
-                    request,
-                    messages.SUCCESS,
-                    _('Your account has been created, please check your mailbox for confirmation')
-                )
-            else:
-                messages.add_message(
-                    request,
-                    messages.WARNING,
-                    _('Your account has been created, but you need an administrator to activate it')
-                )
-                messages.add_message(
-                    request,
-                    messages.INFO,
-                    _('Following is the administrator list')
-                )
+        # Send confirmation email to new user
+        if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
+            form.send_confirm_mail(request, activation_key)
 
-                # super-users can approve others
-                for user in User.objects.filter(is_superuser=True):
-                    messages.add_message(
-                        request,
-                        messages.INFO,
-                        '<a href="mailto:{}">{}</a>'.format(user.email,
-                                                            user.get_full_name() or user.username)
-                    )
+            msg = _('Your account has been created, please check your mailbox for confirmation')
+            messages.add_message(request, messages.SUCCESS, msg)
+        else:
+            msg = _('Your account has been created, but you need an administrator to activate it')
+            messages.add_message(request, messages.WARNING, msg)
 
-                # site admins should be able to do so too
-                for name, email in settings.ADMINS:
-                    messages.add_message(
-                        request,
-                        messages.WARNING,
-                        '<a href="mailto:{}">{}</a>'.format(email, name)
-                    )
+            messages.add_message(request, messages.INFO, _('Following is the administrator list'))
+            self.show_messages_with_site_admins_emails_as_links(request)
+            self.show_messages_with_super_user_emails_as_links(request)
 
-            return HttpResponseRedirect(self.success_url)
+        return HttpResponseRedirect(self.success_url)
+
+    @staticmethod
+    def show_messages_with_site_admins_emails_as_links(request):
+        """ Show messages with site admins emails as links. """
+        for name, email in settings.ADMINS:
+            mailto = '<a href="mailto:{}">{}</a>'.format(email, name)
+            messages.add_message(request, messages.WARNING, mailto)
+
+    @staticmethod
+    def show_messages_with_super_user_emails_as_links(request):
+        """ Show messages with super users emails as links. """
+        for user in User.objects.filter(is_superuser=True):
+            email_display_name = user.get_full_name() or user.username
+            mailto = '<a href="mailto:{}">{}</a>'.format(user.email, email_display_name)
+            messages.add_message(request, messages.INFO, mailto)
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name, {'form': self.form_class()})
