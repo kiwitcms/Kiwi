@@ -1,6 +1,117 @@
 Change Log
 ==========
 
+Kiwi TCMS 7.2 (08 Dec 2019)
+---------------------------
+
+
+**IMPORTANT:** this is an improvement & bug fix release which includes
+new database migrations and API methods, internal refactoring and updated
+translations.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Base docker image to new CentOS 8
+- Update Django from 2.2.6 to 2.2.8
+- Update django-contrib-comments from 1.9.1 to 1.9.2
+- Update django-grappelli from 2.13.1 to 2.13.2
+- Update django-modern-rpc from 0.11.1 to 0.12.0
+- Update django-simple-history from 2.7.3 to 2.8.0
+- Update mysqlclient from 1.4.4 to 1.4.6
+- Update pygithub from 1.44 to 1.44.1
+- Update python-gitlab from 1.12.1 to 1.13.0
+- Several documentation updates
+
+
+Database migrations
+~~~~~~~~~~~~~~~~~~~
+
+- Add new database fields ``weight``, ``icon`` and ``color`` to
+  ``TestExecutionStatus`` and adjust existing code to work with them.
+  This is a necessary step before allowing customization of test execution
+  statuses, see
+  `Issue #236 <https://github.com/kiwitcms/Kiwi/issues/236>`_
+
+
+API
+~~~
+
+- RPC method ``TestExecution.add_comment()`` now requires
+  ``django_comments.add_comment`` permission
+- Add new RPC method ``TestExecution.remove_comment()``
+- Add new RPC method ``TestCase.add_comment()``
+- Add new RPC method ``TestCase.remove_comment()``
+
+
+Bug fixes
+~~~~~~~~~
+
+- ``testplans.views.DeleteCasesView`` now requires ``testplans.change_testplan``
+  permission (Svetlomir Balevski)
+- ``testplans.views.ReorderCasesView`` now requires ``testplans.change_testplan``
+  permission (Svetlomir Balevski)
+- Fix counting bug in execution trends telemetry
+- Fix several telemetry queries to still show data in the corner case
+  where test cases have been deleted from a TestPlan but test runs
+  are still available
+- Fix broken bulk menu in TestRun page when (translated) status names
+  are too long
+- Automatically expand TestExecution comment history if there are comments
+  present. Fixes
+  `Issue #349 <https://github.com/kiwitcms/Kiwi/issues/349>`_ (Matt Porter)
+- Document timezone settings and show current server time in navbar. Fixes
+  `Issue #1206 <https://github.com/kiwitcms/Kiwi/issues/1206>`_
+- Check for permissions in HTML template. Closes
+  `Issue #961 <https://github.com/kiwitcms/Kiwi/issues/961>`_
+- Document bug tracker integration support. Fixes
+  `Issue #698 <https://github.com/kiwitcms/Kiwi/issues/698>`_
+- Delete comments when TestCase and TestExecution are removed. Closes
+  `Issue #1028 <https://github.com/kiwitcms/Kiwi/issues/1028>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Pylint fixes (Mariyan Garvanski)
+- Use ``django.utils.timezone.now()`` instead of ``datetime.now()``. Closes
+  `Issue #545 <https://github.com/kiwitcms/Kiwi/issues/545>`_
+- Use JSON-RPC instead of backend views when working with comments. Resolves
+  `Issue #960 <https://github.com/kiwitcms/Kiwi/issues/960>`_
+- Remove ``tcms.core.contrib.comments`` module. Closes
+  `Issue #959 <https://github.com/kiwitcms/Kiwi/issues/959>`_
+- Remove ``label=`` attribute from form field. Fixes
+  `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_
+- Move and rename XML-RPC forms. Resolves
+  `Issue #681 <https://github.com/kiwitcms/Kiwi/issues/681>`_
+- Convert ``testplans.views.DeleteCasesView`` to JSON-RPC
+- Refactor more views from function based to class based
+- Remove duplicate JavaScript
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+
+
+
 Kiwi TCMS 7.1 (29 Oct 2019)
 ---------------------------
 
@@ -52,7 +163,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Always build with the latest versions of translations
-- Add 'Delete' menu item in Bugs page. Fixes #1153
+- Add 'Delete' menu item in Bugs page. Fixes
   `Issue #1153 <https://github.com/kiwitcms/Kiwi/issues/1153>`_
 - When deleting hyperlink from TestExecution hide the actual UI
   elements from the page
