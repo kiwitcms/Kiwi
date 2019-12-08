@@ -11,5 +11,6 @@ Submodules
 
 .. toctree::
 
+   tcms.utils.github
    tcms.utils.permissions
    tcms.utils.user
