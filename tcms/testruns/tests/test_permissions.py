@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from tcms import tests
 from tcms.tests import PermissionsTestCase, factories
-from tcms.testruns.models import TestRun
+from tcms.testruns.models import TestRun, TestExecutionStatus
 from tcms.testcases.models import TestCaseStatus
 
 
@@ -160,3 +160,80 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         response = self.client.get(self.url)
         self.assert_on_testrun_page(response)
         self.assertNotContains(response, self.add_comment_html, html=True)
+
+class CreateTestStartCloneRunFromRunPage(tests.PermissionsTestCase):
+    permission_label = 'testruns.add_testrun'
+    http_method_names = ['post']
+    url = reverse('testruns-new')
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.plan = factories.TestPlanFactory()
+        cls.test_run = factories.TestRunFactory()
+
+        cls.new_summary = 'Clone {} - {}'.format(cls.test_run.pk, cls.test_run.summary)
+
+        cls.post_data = {
+            'summary': cls.new_summary,
+            'from_plan': cls.plan.pk,
+            'product_id': cls.test_run.plan.product_id,
+            'do': 'clone_run',
+            'orig_run_id': cls.test_run.pk,
+            'POSTING_TO_CREATE': 'YES',
+            'product': cls.test_run.plan.product_id,
+            'product_version': cls.test_run.product_version.pk,
+            'build': cls.test_run.build.pk,
+            'errata_id': '',
+            'notes': '',
+        }
+        # post_data is the cloned data
+        super().setUpTestData()
+        executions = []
+        cls.case_1 = factories.TestCaseFactory()
+        cls.case_1.save()  # will generate history object
+        cls.case_2 = factories.TestCaseFactory()
+        cls.case_2.save()  # will generate history object
+
+        cls.build = factories.BuildFactory()
+        cls.status_idle = TestExecutionStatus.objects.get(name='IDLE')
+        for i, case in enumerate((cls.case_1, cls.case_2), 1):
+            executions.append(factories.TestExecutionFactory(assignee=cls.tester,
+                                                       run=cls.test_run,
+                                                       build=cls.build,
+                                                       status=cls.status_idle,
+                                                       case=case, sortkey=i * 10))
+
+        # used in other tests as well
+        cls.execution_1 = executions[0]
+        cls.execution_2 = executions[1]
+
+        cls.post_data['manager'] = cls.test_run.manager.email
+        cls.post_data['default_tester'] = cls.tester.email
+        cls.post_data['case'] = [cls.execution_1.pk, cls.execution_2.pk]
+        cls.post_data['case_run_id'] = [cls.execution_1.pk, cls.execution_2.pk]
+
+    def verify_post_without_permission(self):
+        response = self.client.post(self.url, self.post_data)
+
+        self.assertRedirects(
+            response,
+            reverse('tcms-login') + '?next=' + self.url)
+
+    def verify_post_with_permission(self):
+        response = self.client.post(self.url, self.post_data, follow=True)
+        self.assertContains(response, '<input type="text" id="id_summary" name="summary" value="Clone')
+        cloned_run = TestRun.objects.get(summary=self.new_summary)
+
+        self.assertRedirects(
+            response,
+            reverse('testruns-get', args=[cloned_run.pk]))
+
+        self.assert_cloned_run(cloned_run)
+
+    def assert_cloned_run(self, cloned_run):
+        # Assert clone settings result
+        for origin_case_run, cloned_case_run in zip((self.execution_1, self.execution_2),
+                                                    cloned_run.case_run.order_by('pk')):
+            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
+                             cloned_case_run.status)
+            self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
