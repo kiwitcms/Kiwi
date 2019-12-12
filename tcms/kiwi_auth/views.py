@@ -36,9 +36,10 @@ class Register(View):
     success_url = reverse_lazy('core-views-index')
 
     def post(self, request, *args, **kwargs):
+        """ Post request handler. """
         form = self.form_class(data=request.POST, files=request.FILES)
         if not form.is_valid():
-            return None
+            return render(request, self.template_name, {'form': form})
 
         new_user = form.save()
         activation_key = form.set_activation_key()
@@ -77,6 +78,7 @@ class Register(View):
             messages.add_message(request, messages.INFO, mailto)
 
     def get(self, request, *args, **kwargs):
+        """ Get request handler. """
         return render(request, self.template_name, {'form': self.form_class()})
 
 
