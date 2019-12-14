@@ -21,28 +21,6 @@ VALIDATION_ERROR_MESSAGE = _('Please input valid case id(s). '
                              'case id. e.g. "111, 222"')
 
 
-class BugField(forms.CharField):
-    """
-    Customizing forms CharFiled validation.
-    Bug ID seperated using a delimiter such as comma.
-    """
-
-    def validate(self, value):
-        super(BugField, self).validate(value)
-        error = 'Enter a valid Bug ID.'
-        bug_ids = string_to_list(value)
-
-        for bug_id in bug_ids:
-            try:
-                bug_id = int(bug_id)
-            except ValueError as error:
-                raise forms.ValidationError(error)
-            if abs(bug_id) > 8388607:
-                raise forms.ValidationError(error)
-
-
-# =========== Forms for create/update ==============
-
 class BaseCaseForm(forms.Form):
     summary = forms.CharField()
     default_tester = UserField(required=False)
@@ -147,22 +125,10 @@ class BaseCaseSearchForm(forms.Form):
         queryset=Component.objects.none(),
         required=False
     )
-    bug_id = BugField(required=False)
     is_automated = forms.BooleanField(required=False)
     items_per_page = forms.ChoiceField(
         required=False,
         choices=ITEMS_PER_PAGE_CHOICES)
-
-    def clean_bug_id(self):
-        data = self.cleaned_data['bug_id']
-        data = string_to_list(data)
-        for data_obj in data:
-            try:
-                int(data_obj)
-            except ValueError as error:
-                raise forms.ValidationError(error)
-
-        return data
 
     def clean_tag__name__in(self):
         return string_to_list(self.cleaned_data['tag__name__in'])

@@ -60,11 +60,6 @@ $(document).ready(function() {
 
             updateParamsToSearchTags('#id_tag', params);
 
-            var bug_list = splitByComma($('#id_bugs').val());
-            if (bug_list.length > 0) {
-                params['case_bug__bug_id__in'] = bug_list;
-            };
-
             dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data);
         },
         columns: [

@@ -221,9 +221,6 @@ class TestCase(TCMSActionModel):
         if query.get('component'):
             queryset = queryset.filter(component=query['component'])
 
-        if query.get('bug_id'):
-            queryset = queryset.filter(case_bug__bug_id__in=query['bug_id'])
-
         if query.get('is_automated'):
             queryset = queryset.filter(is_automated=query['is_automated'])
 
