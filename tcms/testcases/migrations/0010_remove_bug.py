@@ -6,6 +6,9 @@ def forward_copy_data(apps, schema_editor):
     LinkReference = apps.get_model('linkreference', 'LinkReference')
 
     for bug in Bug.objects.all():
+        if not bug.case_run_id:
+            continue
+
         LinkReference.objects.create(
             execution_id=bug.case_run_id,
             name="%s %s" % (bug.bug_system.name, bug.bug_id),
