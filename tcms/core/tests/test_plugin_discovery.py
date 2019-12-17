@@ -19,7 +19,7 @@ class PluginDiscoveryTestCase(TestCase):
             Given there are some plugins installed
             Then validate the plugin module is added to INSTALLED_APPS
         """
-        for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+        for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
             self.assertIn(plugin.module_name, settings.INSTALLED_APPS)
 
 
@@ -31,7 +31,7 @@ class UrlDiscoveryTestCase(TestCase):
 
                 - ^<plugin-name>/ includes(<plugin-module-urls>)
         """
-        for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+        for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
             for url_resolver in urlpatterns:
                 if isinstance(url_resolver, URLResolver):
                     if str(url_resolver.pattern) == '^%s/' % plugin.name and \
@@ -45,25 +45,25 @@ class MenuDiscoveryTestCase(TestCase):
     def test_menu_is_updated(self):
         """
             Given there are some plugins installed
-            Then navigation menu under TELEMETRY will be extended
+            Then navigation menu under PLUGINS will be extended
         """
         for name, target in settings.MENU_ITEMS:
-            if name == _('TELEMETRY'):
+            if name == _('PLUGINS'):
                 for menu_item in plugin_menu.MENU_ITEMS:
                     self.assertIn(menu_item, target)
 
                 return
 
-        self.fail('TELEMETRY not found in settings.MENU_ITEMS')
+        self.fail('PLUGINS not found in settings.MENU_ITEMS')
 
     def test_menu_rendering(self):
         """
             Given there are some plugins installed
-            Then navigation menu under TELEMETRY will be rendered
+            Then navigation menu under PLUGINS will be rendered
                 with several levels of sub menus.
         """
         response = self.client.get(reverse('iframe-navigation'))
-        self.assertContains(response, 'Fake Plugin under TELEMETRY')
+        self.assertContains(response, 'Fake Telemetry plugin')
         self.assertContains(
             response,
             "<a class='dropdown-toggle' href='#' data-toggle='dropdown'>Fake Plugin sub-menu</a>",

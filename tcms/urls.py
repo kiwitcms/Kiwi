@@ -63,7 +63,7 @@ urlpatterns = [
 ]
 
 
-for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
     plugin_urls = import_module('%s.urls' % plugin.module_name)
     urlpatterns.append(
         url(r'^%s/' % plugin.name, include(plugin_urls))
