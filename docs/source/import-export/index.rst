@@ -41,3 +41,7 @@ https://tcms-api.readthedocs.io/en/latest/modules/tcms_api.plugin_helpers.html.
     Please be a good open source citizen and share your import/export scripts
     with the rest of the Kiwi TCMS community. You are welcome to do so by
     opening a pull request at https://github.com/kiwitcms/api-scripts.
+
+
+Alternatively you can develop your customized import/export as a web
+application and distribute it to your users as a Kiwi TCMS plugin.

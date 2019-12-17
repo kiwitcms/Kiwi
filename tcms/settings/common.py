@@ -89,55 +89,6 @@ FILE_UPLOAD_MAX_SIZE = 5242880
 DELETE_ATTACHMENTS_FROM_DISK = True
 
 
-# this is the main navigation menu
-MENU_ITEMS = [
-    (_('DASHBOARD'), reverse_lazy('core-views-index')),
-    (_('TESTING'), [
-        (_('New Test Plan'), reverse_lazy('plans-new')),
-        ('-', '-'),
-        (_('New Test Case'), reverse_lazy('testcases-new')),
-    ]),
-    (_('SEARCH'), [
-        (_('Search Test Plans'), reverse_lazy('plans-search')),
-        (_('Search Test Runs'), reverse_lazy('testruns-search')),
-        (_('Search Test Cases'), reverse_lazy('testcases-search')),
-    ]),
-    (_('TELEMETRY'), [
-        (_('Testing'), [
-            (_('Breakdown'), reverse_lazy('testing-breakdown')),
-            (_('Status matrix'), reverse_lazy('testing-status-matrix')),
-            (_('Execution trends'), reverse_lazy('testing-execution-trends')),
-            (_('TestCase health'), reverse_lazy('test-case-health')),
-        ]),
-        ('More coming soon',
-         'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
-    ]),
-]
-
-# last element is always TELEMETRY
-for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
-    plugin_menu = import_module('%s.menu' % plugin.module_name)
-    MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)
-
-# append the ADMIN menu at the end
-MENU_ITEMS.append(
-    (_('ADMIN'), [
-        (_('Users and groups'), '/admin/auth/'),
-        ('-', '-'),
-        (_('Everything else'), '/admin/'),
-    ]),
-)
-
-# redefine the help menu in the navigation bar
-HELP_MENU_ITEMS = [
-    ('https://github.com/kiwitcms/Kiwi/issues/new', _('Report an Issue')),
-    ('https://stackoverflow.com/questions/tagged/kiwi-tcms', _('Ask for help on StackOverflow')),
-    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', _('User Guide')),
-    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', _('Administration Guide')),
-    ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', _('API Help')),
-]
-
-
 # Configure a caching backend. ATM only used to cache bug details b/c
 # external issue trackers may be slow. If you want to override see:
 # https://docs.djangoproject.com/en/2.2/topics/cache/
@@ -321,20 +272,57 @@ INSTALLED_APPS = [
     'tcms.rpc',
 ]
 
-for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
     INSTALLED_APPS.append(plugin.module_name)
 
-if 'tcms.bugs' in INSTALLED_APPS:
-    # Testing menu
-    MENU_ITEMS[1][1].extend([
+# this is the main navigation menu
+MENU_ITEMS = [
+    (_('DASHBOARD'), reverse_lazy('core-views-index')),
+    (_('TESTING'), [
+        (_('New Test Plan'), reverse_lazy('plans-new')),
         ('-', '-'),
-        (_('New Bug'), reverse_lazy('bugs-new')),
-    ])
-    # Search menu
-    MENU_ITEMS[2][1].extend([
-        (_('Search Bugs'), reverse_lazy('bugs-search')),
-    ])
+        (_('New Test Case'), reverse_lazy('testcases-new')),
+        ('-', '-') if 'tcms.bugs' in INSTALLED_APPS else (),
+        (_('New Bug'), reverse_lazy('bugs-new')) if 'tcms.bugs' in INSTALLED_APPS else (),
+    ]),
+    (_('SEARCH'), [
+        (_('Search Test Plans'), reverse_lazy('plans-search')),
+        (_('Search Test Runs'), reverse_lazy('testruns-search')),
+        (_('Search Test Cases'), reverse_lazy('testcases-search')),
+        (_('Search Bugs'), reverse_lazy('bugs-search')) if 'tcms.bugs' in INSTALLED_APPS else (),
+    ]),
+    (_('TELEMETRY'), [
+        (_('Testing'), [
+            (_('Breakdown'), reverse_lazy('testing-breakdown')),
+            (_('Status matrix'), reverse_lazy('testing-status-matrix')),
+            (_('Execution trends'), reverse_lazy('testing-execution-trends')),
+            (_('TestCase health'), reverse_lazy('test-case-health')),
+        ]),
+        ('More coming soon',
+         'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
+    ]),
+    (_('ADMIN'), [
+        (_('Users and groups'), '/admin/auth/'),
+        ('-', '-'),
+        (_('Everything else'), '/admin/'),
+    ]),
+    (_('PLUGINS'), [
+    ]),
+]
 
+# last element is always PLUGINS so we can easily extend & override it
+for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
+    plugin_menu = import_module('%s.menu' % plugin.module_name)
+    MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)
+
+# redefine the help menu in the navigation bar
+HELP_MENU_ITEMS = [
+    ('https://github.com/kiwitcms/Kiwi/issues/new', _('Report an Issue')),
+    ('https://stackoverflow.com/questions/tagged/kiwi-tcms', _('Ask for help on StackOverflow')),
+    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', _('User Guide')),
+    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', _('Administration Guide')),
+    ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', _('API Help')),
+]
 
 SERIALIZATION_MODULES = {
     'json': 'tcms.core.serializer',
