@@ -90,6 +90,34 @@ class NewCaseForm(BaseCaseForm):
         return self.cleaned_data['case_status']
 
 
+class EditCaseForm(forms.ModelForm):
+
+    class Meta:
+        model = TestCase
+        exclude = ['author', 'reviewer', 'tag', 'component', 'plan']
+
+    default_tester = UserField(required=False)
+    priority = forms.ModelChoiceField(
+        queryset=Priority.objects.filter(is_active=True),
+        empty_label=None,
+    )
+    product = forms.ModelChoiceField(
+        queryset=Product.objects.all(),
+        empty_label=None,
+    )
+    text = forms.CharField(
+        widget=SimpleMDE(),
+        required=False,
+    )
+
+    def populate(self, product_id=None):
+        if product_id:
+            self.fields['category'].queryset = Category.objects.filter(
+                product_id=product_id)
+        else:
+            self.fields['category'].queryset = Category.objects.all()
+
+
 class CaseNotifyForm(forms.Form):
     author = forms.BooleanField(required=False, initial=True)
     default_tester_of_case = forms.BooleanField(required=False, initial=True)
