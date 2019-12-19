@@ -265,6 +265,9 @@ class TestCase(TCMSActionModel):
     def _get_absolute_url(self, request=None):
         return reverse('testcases-get', args=[self.pk, ])
 
+    def get_absolute_url(self):
+        return self._get_absolute_url()
+
     def _get_email_conf(self):
         try:
             return self.email_settings

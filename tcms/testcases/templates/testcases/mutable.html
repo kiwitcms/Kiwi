@@ -12,7 +12,7 @@
 {% block contents %}
 
     <div class="container-fluid container-cards-pf">
-        <form class="form-horizontal" action="{% if test_case %}{% url 'testcases-edit' test_case.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
+        <form class="form-horizontal" action="{% if object %}{% url 'testcases-edit' object.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
 
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>

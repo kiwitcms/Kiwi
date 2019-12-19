@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
 from django.views.generic.base import TemplateView, View
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -22,7 +23,7 @@ from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.forms import (CaseNotifyForm, CloneCaseForm, NewCaseForm,
-                                  SearchCaseForm)
+                                  SearchCaseForm, EditCaseForm)
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestExecution, TestExecutionStatus
@@ -603,120 +604,30 @@ def printable(request,  # pylint: disable=missing-permission-required
     return render(request, template_name, context_data)
 
 
-def update_testcase(request, test_case, tc_form):
-    """Updating information of specific TestCase
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class EditTestCaseView(UpdateView):
 
-    This is called by views.edit internally. Don't call this directly.
+    model = TestCase
+    template_name = 'testcases/mutable.html'
+    form_class = EditCaseForm
 
-    Arguments:
-    - test_case: instance of a TestCase being updated
-    - tc_form: instance of django.forms.Form, holding validated data.
-    """
-
-    # TODO: this entire function doesn't seem very useful
-    # part if it was logging the changes but now this is
-    # done by simple_history. Should we remove it ???
-    # Modify the contents
-    fields = ['summary',
-              'case_status',
-              'category',
-              'priority',
-              'notes',
-              'text',
-              'is_automated',
-              'script',
-              'arguments',
-              'extra_link',
-              'requirement']
-
-    for field in fields:
-        if getattr(test_case, field) != tc_form.cleaned_data[field]:
-            setattr(test_case, field, tc_form.cleaned_data[field])
-    try:
-        if test_case.default_tester != tc_form.cleaned_data['default_tester']:
-            test_case.default_tester = tc_form.cleaned_data['default_tester']
-    except ObjectDoesNotExist:
-        pass
-
-    test_case.save()
-
-
-@permission_required('testcases.change_testcase')
-def edit(request, case_id):
-    """Edit case detail"""
-    try:
-        test_case = TestCase.objects.select_related().get(case_id=case_id)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    test_plan = plan_from_request_or_none(request)
-
-    if request.method == "POST":
-        form = NewCaseForm(request.POST)
-        if request.POST.get('product'):
-            form.populate(product_id=request.POST['product'])
-        elif test_plan:
-            form.populate(product_id=test_plan.product_id)
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        if self.request.POST.get('product'):
+            form.populate(product_id=self.request.POST['product'])
         else:
-            form.populate()
+            form.populate(product_id=self.object.category.product_id)
+        return form
 
-        n_form = CaseNotifyForm(request.POST)
-
-        if form.is_valid() and n_form.is_valid():
-            update_testcase(request, test_case, form)
-            update_case_email_settings(test_case, n_form)
-
-            return HttpResponseRedirect(
-                reverse('testcases-get', args=[case_id, ])
-            )
-
-    else:
-        # Notification form initial
-        n_form = CaseNotifyForm(initial={
-            'notify_on_case_update': test_case.emailing.notify_on_case_update,
-            'notify_on_case_delete': test_case.emailing.notify_on_case_delete,
-            'author': test_case.emailing.auto_to_case_author,
-            'default_tester_of_case': test_case.emailing.auto_to_case_tester,
-            'managers_of_runs': test_case.emailing.auto_to_run_manager,
-            'default_testers_of_runs': test_case.emailing.auto_to_run_tester,
-            'assignees_of_case_runs': test_case.emailing.auto_to_case_run_assignee,
-            'cc_list': MultipleEmailField.delimiter.join(
-                test_case.emailing.get_cc_list()),
-        })
-
-        components = []
-        for component in test_case.component.all():
-            components.append(component.pk)
-
+    def get_initial(self):
         default_tester = None
-        if test_case.default_tester_id:
-            default_tester = test_case.default_tester.email
+        if self.object.default_tester_id:
+            default_tester = self.object.default_tester.email
 
-        form = NewCaseForm(initial={
-            'summary': test_case.summary,
-            'default_tester': default_tester,
-            'requirement': test_case.requirement,
-            'is_automated': test_case.is_automated,
-            'script': test_case.script,
-            'arguments': test_case.arguments,
-            'extra_link': test_case.extra_link,
-            'case_status': test_case.case_status_id,
-            'priority': test_case.priority_id,
-            'product': test_case.category.product_id,
-            'category': test_case.category_id,
-            'notes': test_case.notes,
-            'text': test_case.text,
-        })
-
-        form.populate(product_id=test_case.category.product_id)
-
-    context_data = {
-        'test_case': test_case,
-        'test_plan': test_plan,
-        'form': form,
-        'notify_form': n_form,
-    }
-    return render(request, 'testcases/mutable.html', context_data)
+        return {
+            'product': self.object.category.product_id,
+            'default_tester': default_tester
+        }
 
 
 @method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
