@@ -58,7 +58,7 @@ class TestAdminView(LoggedInTestCase):
         self.assertContains(response, 'Test plans')
 
         # for tcms.testruns
-        self.assertNotContains(response, 'Test execution status')
+        self.assertContains(response, 'Test execution statuses')
         self.assertContains(response, 'Testruns')
         self.assertContains(response, 'Test runs')
 

@@ -8,6 +8,8 @@ from django.db.models import Count
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import override
+from django.utils.translation import gettext_lazy as _
+from colorfield.fields import ColorField
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
@@ -234,11 +236,16 @@ class TestRun(TCMSActionModel):
 
 
 class TestExecutionStatus(TCMSActionModel):
+
+    class Meta:
+        # used in the admin view
+        verbose_name_plural = _("Test execution statuses")
+
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
     weight = models.IntegerField(default=0)
     icon = models.CharField(max_length=64)
-    color = models.CharField(max_length=8)
+    color = ColorField()
 
     def __str__(self):
         return self.name

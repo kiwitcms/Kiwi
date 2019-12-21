@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import ReadOnlyHistoryAdmin
-from tcms.testruns.models import TestRun
+from tcms.testruns.models import TestRun, TestExecutionStatus
 
 
 class TestRunAdmin(ReadOnlyHistoryAdmin):
@@ -29,4 +29,9 @@ class TestRunAdmin(ReadOnlyHistoryAdmin):
         return HttpResponseRedirect(reverse('testruns-get', args=[object_id]))
 
 
+class TestExecutionStatusAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'color', 'weight')
+
+
 admin.site.register(TestRun, TestRunAdmin)
+admin.site.register(TestExecutionStatus, TestExecutionStatusAdmin)

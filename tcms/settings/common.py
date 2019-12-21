@@ -257,6 +257,7 @@ INSTALLED_APPS = [
     'django_comments',
     'modernrpc',
     'simple_history',
+    'colorfield',
 
     'tcms.core',
     # if you wish to disable Kiwi TCMS bug tracker
