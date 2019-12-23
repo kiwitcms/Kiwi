@@ -1,6 +1,35 @@
 Change Log
 ==========
 
+Kiwi TCMS 7.2.1 (23 Dec 2019)
+-----------------------------
+
+**IMPORTANT:** this is an internal release which will be shipped only as
+a PyPI package. It includes changes needed for testing and development
+of Kiwi TCMS add-ons and future migration to Django 3.0.
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update python-gitlab from 1.13.0 to 1.15.0
+- Bump django-uuslug from 1.1.9 to 1.2.0
+- Bump django-attachments from 1.4.1 to 1.5
+- Bump django-vinaigrette from 1.2.0 to 1.2.1
+- Update marked to version 0.8.0
+- Generalize existing ``kiwitcms.telemetry.plugins`` handling code by
+  renaming the entry point to ``kiwitcms.plugins``
+- Refactor views to class based (Svetlozar Stoyanov)
+
+Database
+~~~~~~~~
+
+- When migrating from the older ``Bug`` model to ``LinkReference`` skip
+  bugs which are attached directly to test cases instead of test executions.
+  See `StackOverflow <https://stackoverflow.com/questions/59321756/>`_
+
+
+
 Kiwi TCMS 7.2 (08 Dec 2019)
 ---------------------------
 
