@@ -26,7 +26,7 @@ Database
 
 - When migrating from the older ``Bug`` model to ``LinkReference`` skip
   bugs which are attached directly to test cases instead of test executions.
-  See `StackOverflow <https://stackoverflow.com/questions/59321756/>`_
+  See `SO #59321756 <https://stackoverflow.com/questions/59321756/>`_
 
 
 
