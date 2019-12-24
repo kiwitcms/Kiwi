@@ -124,7 +124,7 @@ class IssueTrackerType:
         """
         # b/c jira.JIRA tries to connect when object is created
         # see https://github.com/kiwitcms/Kiwi/issues/100
-        if not self.is_adding_testcase_to_issue_disabled():
+        if self.is_adding_testcase_to_issue_disabled():
             return None
 
         if self.bug_system.base_url not in self.rpc_cache:
