@@ -14,6 +14,7 @@ import jira
 import redminelib
 from django.conf import settings
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker import (bugzilla_integration, github_integration,
                                gitlab_integration, jira_integration,
                                redmine_integration)
@@ -205,11 +206,27 @@ class GitHub(IssueTrackerType):
             'body': self._report_comment(execution),
         }
 
-        url = self.bug_system.base_url
-        if not url.endswith('/'):
-            url += '/'
+        try:
+            repo_id = github_integration.GitHubThread.repo_id(self.bug_system)
+            repo = self.rpc.get_repo(repo_id)
+            issue = repo.create_issue(**args)
 
-        return url + '/issues/new?' + urlencode(args, True)
+            # add a link reference that will be shown in the UI
+            LinkReference.objects.get_or_create(
+                execution=execution,
+                url=issue.html_url,
+                is_defect=True,
+            )
+
+            return issue.html_url
+        except Exception:  # pylint: disable=broad-except
+            # something above didn't work so return a link for manually
+            # entering issue details with info pre-filled
+            url = self.bug_system.base_url
+            if not url.endswith('/'):
+                url += '/'
+
+            return url + '/issues/new?' + urlencode(args, True)
 
 
 class Gitlab(IssueTrackerType):
