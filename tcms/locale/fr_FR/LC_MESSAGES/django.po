@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-30 01:37+0000\n"
-"PO-Revision-Date: 2019-12-30 13:13\n"
+"PO-Revision-Date: 2020-01-01 15:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -440,7 +440,7 @@ msgstr "Tout le reste"
 
 #: tcms/settings/common.py:309
 msgid "PLUGINS"
-msgstr ""
+msgstr "GREFFONS"
 
 #: tcms/settings/common.py:320
 msgid "Report an Issue"
