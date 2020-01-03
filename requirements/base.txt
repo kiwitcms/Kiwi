@@ -1,7 +1,7 @@
 -r tarballs.txt
 
 bleach==3.1.0
-Django==2.2.8
+Django==3.0.2
 django-attachments==1.5
 django-contrib-comments==1.9.2
 django-modern-rpc==0.12.0
