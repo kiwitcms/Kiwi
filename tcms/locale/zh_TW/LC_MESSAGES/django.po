@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-30 01:37+0000\n"
-"PO-Revision-Date: 2020-01-03 05:21\n"
+"PO-Revision-Date: 2020-01-03 05:31\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -132,7 +132,7 @@ msgstr "擁有者"
 #: tcms/bugs/templates/bugs/get.html:93
 #: tcms/testcases/templates/testcases/get.html:233
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: tcms/bugs/templates/bugs/get.html:107
 #: tcms/testcases/templates/testcases/get.html:247
@@ -150,11 +150,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: tcms/bugs/templates/bugs/get.html:169
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -170,7 +170,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr ""
+msgstr "概要"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:38
@@ -204,7 +204,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "之後"
 
 #: tcms/bugs/templates/bugs/search.html:27
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:47
@@ -214,7 +214,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "之前"
 
 #: tcms/bugs/templates/bugs/search.html:75
 #: tcms/bugs/templates/bugs/search.html:80
@@ -226,14 +226,14 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "使用者名稱"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:126
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -244,20 +244,20 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "創建於"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:536
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:549
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -301,11 +301,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "個人信息"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "使用權限"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
@@ -395,7 +395,7 @@ msgstr ""
 
 #: tcms/settings/common.py:295
 msgid "Testing"
-msgstr ""
+msgstr "測試中"
 
 #: tcms/settings/common.py:296
 msgid "Breakdown"
@@ -792,7 +792,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:142
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "狀態"
 
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:125
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:92
@@ -801,7 +801,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "標籤"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -815,7 +815,7 @@ msgstr "姓名"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "方案"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
@@ -1017,7 +1017,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "檔案名稱"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
@@ -1025,16 +1025,16 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "創建日期"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "沒有附件。"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "案例"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
@@ -1047,7 +1047,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "列印"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
@@ -1057,7 +1057,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:540
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "克隆"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1069,7 +1069,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "運行"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
