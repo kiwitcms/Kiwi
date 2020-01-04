@@ -51,7 +51,6 @@ var default_messages = {
     'ajax_failure': 'Communication with server got some unknown errors.',
     'tree_reloaded': 'The tree has been reloaded.',
     'last_case_run': 'It is the last case run',
-    'invalid_bug_id': 'Please input a valid bug id!',
     'no_bugs_specified': 'Please specify bug ID',
   },
   'confirm': {
