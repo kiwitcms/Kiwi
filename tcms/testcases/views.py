@@ -24,6 +24,7 @@ from tcms.search.order import order_case_queryset
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.forms import (CaseNotifyForm, CloneCaseForm, NewCaseForm,
                                   SearchCaseForm, EditCaseForm)
+from tcms.testcases.forms import CaseNotifyFormSet
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestExecution, TestExecutionStatus
@@ -610,6 +611,21 @@ class EditTestCaseView(UpdateView):
     model = TestCase
     template_name = 'testcases/mutable.html'
     form_class = EditCaseForm
+
+    def form_valid(self, form):
+        notify_formset = CaseNotifyFormSet(self.request.POST, instance=self.object)
+        if notify_formset.is_valid():
+            notify_formset.save()
+            return super().form_valid(form)
+
+        # taken from FormMixin.form_invalid()
+        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['notify_formset'] = kwargs.get('notify_formset') or \
+            CaseNotifyFormSet(instance=self.object)
+        return context
 
     def get_form(self, form_class=None):
         form = super().get_form()
