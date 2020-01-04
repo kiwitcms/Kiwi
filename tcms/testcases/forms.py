@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.forms import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.forms.fields import StripURLField, UserField
@@ -7,7 +8,7 @@ from tcms.core.utils import string_to_list
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Component, Priority, Product
 from tcms.testcases.fields import MultipleEmailField
-from tcms.testcases.models import Category, TestCase, TestCaseStatus
+from tcms.testcases.models import Category, TestCase, TestCaseStatus, TestCaseEmailSettings
 from tcms.testplans.models import TestPlan
 
 ITEMS_PER_PAGE_CHOICES = (
@@ -118,16 +119,24 @@ class EditCaseForm(forms.ModelForm):
             self.fields['category'].queryset = Category.objects.all()
 
 
-class CaseNotifyForm(forms.Form):
-    author = forms.BooleanField(required=False, initial=True)
-    default_tester_of_case = forms.BooleanField(required=False, initial=True)
-    managers_of_runs = forms.BooleanField(required=False, initial=True)
-    default_testers_of_runs = forms.BooleanField(required=False, initial=True)
-    assignees_of_case_runs = forms.BooleanField(required=False, initial=True)
-    notify_on_case_update = forms.BooleanField(required=False, initial=True)
-    notify_on_case_delete = forms.BooleanField(required=False, initial=True)
+# only useful b/c we want to override the cc_list field
+class CaseNotifyForm(forms.ModelForm):
+    class Meta:
+        model = TestCaseEmailSettings
+        exclude = ()
 
     cc_list = MultipleEmailField(required=False)
+
+
+# for usage in CreateView, UpdateView
+CaseNotifyFormSet = inlineformset_factory(
+    TestCase,
+    TestCaseEmailSettings,
+    form=CaseNotifyForm,
+    fields=[f.name for f in TestCaseEmailSettings._meta.fields],
+    can_delete=False,
+    can_order=False,
+)
 
 
 class BaseCaseSearchForm(forms.Form):

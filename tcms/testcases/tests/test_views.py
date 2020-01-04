@@ -246,7 +246,21 @@ class TestEditCase(BasePlanCase):
             'priority': cls.case_1.priority.pk,
             'tag': 'RHEL',
             'text': 'Given-When-Then',
-            'cc_list': '',
+
+            'email_settings-0-auto_to_case_author': 'on',
+            'email_settings-0-auto_to_run_manager': 'on',
+            'email_settings-0-auto_to_case_run_assignee': 'on',
+            'email_settings-0-auto_to_case_tester': 'on',
+            'email_settings-0-auto_to_run_tester': 'on',
+            'email_settings-0-notify_on_case_update': 'on',
+            'email_settings-0-notify_on_case_delete': 'on',
+            'email_settings-0-cc_list': '',
+            'email_settings-0-case': cls.case_1.pk,
+            'email_settings-0-id': cls.case_1.emailing.pk,
+            'email_settings-TOTAL_FORMS': '1',
+            'email_settings-INITIAL_FORMS': '1',
+            'email_settings-MIN_NUM_FORMS': '0',
+            'email_settings-MAX_NUM_FORMS': '1',
         }
 
     def test_404_if_case_id_not_exist(self):
@@ -269,8 +283,8 @@ class TestEditCase(BasePlanCase):
         redirect_url = reverse('testcases-get', args=[self.case_1.pk])
         self.assertRedirects(response, redirect_url)
 
-        edited_case = TestCase.objects.get(pk=self.case_1.pk)
-        self.assertEqual(new_summary, edited_case.summary)
+        self.case_1.refresh_from_db()
+        self.assertEqual(new_summary, self.case_1.summary)
 
 
 class TestPrintablePage(BasePlanCase):
