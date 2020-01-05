@@ -71,11 +71,13 @@ class TestFilterCases(XmlrpcAPIBaseTest):
 class TestUpdate(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestUpdate, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.testcase = TestCaseFactory(text='')
+        self.new_author = UserFactory()
 
     def test_update_text_and_product(self):
+        author_pk = self.testcase.author.pk
         self.assertEqual('', self.testcase.text)
 
         # update the test case
@@ -86,11 +88,29 @@ class TestUpdate(XmlrpcAPIBaseTest):
                 'text': 'new TC text',
             }
         )
-        self.testcase.refresh_from_db()  # refresh before assertions
+
+        self.testcase.refresh_from_db()
 
         self.assertEqual(updated['case_id'], self.testcase.pk)
         self.assertEqual('This was updated', self.testcase.summary)
         self.assertEqual('new TC text', self.testcase.text)
+        # FK for author not passed above. Make sure it didn't change!
+        self.assertEqual(author_pk, self.testcase.author.pk)
+
+    def test_update_author_issue_630(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        # update the test case
+        updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'author': self.new_author.pk,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.author)
+        self.assertEqual(self.new_author.pk, updated['author_id'])
 
 
 class TestAddTag(XmlrpcAPIBaseTest):
