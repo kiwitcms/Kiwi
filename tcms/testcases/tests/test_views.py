@@ -254,11 +254,6 @@ class TestEditCase(BasePlanCase):
         response = self.client.get(url)
         self.assert404(response)
 
-    @unittest.skip('Temporary skip the test until from_plan is implemented')
-    def test_404_if_from_plan_not_exist(self):
-        response = self.client.get(self.case_edit_url, {'from_plan': 9999})
-        self.assert404(response)
-
     def test_show_edit_page(self):
         response = self.client.get(self.case_edit_url)
         self.assertEqual(200, response.status_code)
