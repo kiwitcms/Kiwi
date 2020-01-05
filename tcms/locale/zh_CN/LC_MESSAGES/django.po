@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-30 01:37+0000\n"
-"PO-Revision-Date: 2019-12-30 13:12\n"
+"POT-Creation-Date: 2020-01-04 20:35+0000\n"
+"PO-Revision-Date: 2020-01-05 03:53\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -176,7 +176,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:18
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:131
 #: tcms/testruns/templates/testruns/mutable.html:21
 #: tcms/testruns/templates/testruns/mutable.html:94
 #: tcms/testruns/templates/testruns/search.html:11
@@ -241,7 +241,7 @@ msgid "Username"
 msgstr "用户名"
 
 #: tcms/bugs/templates/bugs/search.html:91
-#: tcms/testcases/templates/testcases/search.html:126
+#: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
@@ -252,7 +252,7 @@ msgstr "搜索"
 #: tcms/templates/plan/search_case.html:80
 #: tcms/templates/run/assign_case.html:71
 #: tcms/testcases/templates/testcases/get.html:163
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:130
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
@@ -508,7 +508,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:92
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:143
+#: tcms/testcases/templates/testcases/search.html:137
 msgid "Automated"
 msgstr "自动化的"
 
@@ -604,7 +604,7 @@ msgstr "未找到附件"
 #: tcms/templates/case/get_details_case_run.html:156
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testcases/templates/testcases/search.html:134
 msgid "Component"
 msgstr "组件"
 
@@ -805,7 +805,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:74
 #: tcms/testcases/templates/testcases/mutable.html:68
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
 msgstr "状态"
@@ -813,7 +813,7 @@ msgstr "状态"
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:125
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:92
 #: tcms/templates/run/get_case_runs.html:125
-#: tcms/testcases/templates/testcases/search.html:145
+#: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
@@ -980,7 +980,7 @@ msgstr "删除测试计划"
 #: tcms/testcases/templates/testcases/get.html:165
 #: tcms/testcases/templates/testcases/mutable.html:147
 #: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/mutable.html:103
 #: tcms/testplans/templates/testplans/search.html:74
 #: tcms/testplans/templates/testplans/search.html:117
@@ -1108,7 +1108,7 @@ msgstr "更改默认测试者"
 #: tcms/testcases/templates/testcases/get.html:79
 #: tcms/testcases/templates/testcases/mutable.html:80
 #: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testcases/templates/testcases/search.html:135
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
 msgstr "优先级"
@@ -1147,7 +1147,7 @@ msgstr "测试者"
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:52
 #: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testcases/templates/testcases/search.html:133
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
 msgstr "类别"
@@ -1529,7 +1529,7 @@ msgstr ""
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr "请输入有效的用例ID。使用逗号分割多个用例 id。比如“111, 222”"
 
-#: tcms/testcases/forms.py:82
+#: tcms/testcases/forms.py:60
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1659,18 +1659,12 @@ msgid "Both"
 msgstr "都"
 
 #: tcms/testcases/templates/testcases/search.html:114
-#: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
 msgstr "使用逗号隔开多个值"
 
-#: tcms/testcases/templates/testcases/search.html:117
-#: tcms/testcases/templates/testcases/search.html:119
-msgid "Bug ID"
-msgstr "Bug 编号"
-
-#: tcms/testcases/templates/testcases/search.html:138
+#: tcms/testcases/templates/testcases/search.html:132
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
