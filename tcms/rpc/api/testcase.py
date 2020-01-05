@@ -321,22 +321,18 @@ def update(case_id, values):
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
-    form = UpdateForm(values)
+    test_case = TestCase.objects.get(pk=case_id)
 
-    if values.get('category') and not values.get('product'):
-        raise ValueError('Product ID is required for category')
+    # initialize mandatory values for FK fields if they are
+    # not specified by the caller
+    for fk_field in ('author', 'case_status', 'category', 'priority'):
+        if not (values.get(fk_field) or values.get(fk_field + '_id')):
+            values[fk_field] = getattr(test_case, fk_field + '_id')
 
-    if values.get('product'):
-        form.populate(product_id=values['product'])
+    form = UpdateForm(values, instance=test_case)
 
     if form.is_valid():
-        test_case = TestCase.objects.get(pk=case_id)
-        for key in values.keys():
-            # only modify attributes that were passed via parameters
-            # skip attributes which are Many-to-Many relations
-            if key not in ['component', 'tag'] and hasattr(test_case, key):
-                setattr(test_case, key, form.cleaned_data[key])
-        test_case.save()
+        test_case = form.save()
     else:
         raise ValueError(form_errors_to_list(form))
 
