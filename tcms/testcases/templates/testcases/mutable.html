@@ -13,7 +13,7 @@
 
     <div class="container-fluid container-cards-pf">
         <form class="form-horizontal" action="{% if object %}{% url 'testcases-edit' object.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
-
+            <input type="hidden" name="author" value="{{ form.author.value }}">
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
                 <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">

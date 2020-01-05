@@ -141,6 +141,7 @@ class TestNewCase(BasePlanCase):
         cls.link = 'http://somelink.net'
         cls.notes = 'notes'
         cls.data = {
+            'author': cls.tester.pk,
             'summary': cls.summary,
             'default_tester': cls.tester.pk,
             'product': cls.case.category.product.pk,
@@ -152,7 +153,22 @@ class TestNewCase(BasePlanCase):
             'arguments': cls.arguments,
             'requirement': cls.requirement,
             'extra_link': cls.link,
-            'notes': cls.notes
+            'notes': cls.notes,
+
+            'email_settings-0-auto_to_case_author': 'on',
+            'email_settings-0-auto_to_run_manager': 'on',
+            'email_settings-0-auto_to_case_run_assignee': 'on',
+            'email_settings-0-auto_to_case_tester': 'on',
+            'email_settings-0-auto_to_run_tester': 'on',
+            'email_settings-0-notify_on_case_update': 'on',
+            'email_settings-0-notify_on_case_delete': 'on',
+            'email_settings-0-cc_list': 'info@example.com',
+            'email_settings-0-case': '',
+            'email_settings-0-id': cls.case.emailing.pk,
+            'email_settings-TOTAL_FORMS': '1',
+            'email_settings-INITIAL_FORMS': '1',
+            'email_settings-MIN_NUM_FORMS': '0',
+            'email_settings-MAX_NUM_FORMS': '1',
         }
 
         user_should_have_perm(cls.tester, 'testcases.add_testcase')
@@ -192,6 +208,7 @@ class TestNewCase(BasePlanCase):
         self.assertEqual(TestCase.objects.filter(summary=self.summary).count(), 0)
 
     def _assertTestCase(self, test_case):
+        self.assertEqual(test_case.author, self.tester)
         self.assertEqual(test_case.summary, self.summary)
         self.assertEqual(test_case.category, self.case.category)
         self.assertEqual(test_case.default_tester, self.tester)
@@ -228,6 +245,7 @@ class TestEditCase(BasePlanCase):
 
         # Copy, then modify or add new data for specific tests below
         cls.edit_data = {
+            'author': cls.case_1.author.pk,
             'from_plan': cls.plan.pk,
             'summary': cls.case_1.summary,
             'product': cls.case_1.category.product.pk,

@@ -95,7 +95,7 @@ class EditCaseForm(forms.ModelForm):
 
     class Meta:
         model = TestCase
-        exclude = ['author', 'reviewer', 'tag', 'component', 'plan']
+        exclude = ['reviewer', 'tag', 'component', 'plan']
 
     default_tester = UserField(required=False)
     priority = forms.ModelChoiceField(
@@ -109,7 +109,22 @@ class EditCaseForm(forms.ModelForm):
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,
-    )
+        initial=_("""**Scenario**: ... what behavior will be tested ...
+  **Given** ... conditions ...
+  **When** ... actions ...
+  **Then** ... expected results ...
+
+*Actions*:
+
+1. item
+2. item
+3. item
+
+*Expected results*:
+
+1. item
+2. item
+3. item"""))
 
     def populate(self, product_id=None):
         if product_id:

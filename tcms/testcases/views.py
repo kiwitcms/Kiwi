@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import TemplateView, View
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -21,8 +21,7 @@ from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Priority, Tag
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
-from tcms.testcases.forms import (CaseNotifyForm, CloneCaseForm, NewCaseForm,
-                                  SearchCaseForm, EditCaseForm)
+from tcms.testcases.forms import CloneCaseForm, SearchCaseForm, EditCaseForm
 from tcms.testcases.forms import CaseNotifyFormSet
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
@@ -52,90 +51,52 @@ def plan_from_request_or_none(request):  # pylint: disable=missing-permission-re
     return get_object_or_404(TestPlan, plan_id=test_plan_id)
 
 
-def update_case_email_settings(test_case, n_form):
-    """Update testcase's email settings."""
-
-    test_case.emailing.notify_on_case_update = n_form.cleaned_data[
-        'notify_on_case_update']
-    test_case.emailing.notify_on_case_delete = n_form.cleaned_data[
-        'notify_on_case_delete']
-    test_case.emailing.auto_to_case_author = n_form.cleaned_data[
-        'author']
-    test_case.emailing.auto_to_case_tester = n_form.cleaned_data[
-        'default_tester_of_case']
-    test_case.emailing.auto_to_run_manager = n_form.cleaned_data[
-        'managers_of_runs']
-    test_case.emailing.auto_to_run_tester = n_form.cleaned_data[
-        'default_testers_of_runs']
-    test_case.emailing.auto_to_case_run_assignee = n_form.cleaned_data[
-        'assignees_of_case_runs']
-
-    default_tester = n_form.cleaned_data['default_tester_of_case']
-    if (default_tester and test_case.default_tester_id):
-        test_case.emailing.auto_to_case_tester = True
-
-    # Continue to update CC list
-    test_case.emailing.cc_list = n_form.cleaned_data['cc_list']
-
-    test_case.emailing.save()
-
-
 @method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
-class NewCaseView(TemplateView):
-
+class NewCaseView(CreateView):
+    model = TestCase
+    form_class = EditCaseForm
     template_name = 'testcases/mutable.html'
 
-    def get(self, request, *args, **kwargs):
-        test_plan = plan_from_request_or_none(request)
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        # clear fields which are set dynamically via JavaScript
+        form.populate(self.request.POST.get('product', -1))
+        return form
 
-        default_form_parameters = {}
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial'].update({
+            'author': self.request.user,
+        })
+
+        test_plan = plan_from_request_or_none(self.request)
         if test_plan:
-            default_form_parameters['product'] = test_plan.product_id
+            kwargs['initial']['product'] = test_plan.product_id
 
-        form = NewCaseForm(initial=default_form_parameters)
+        return kwargs
 
-        context_data = {
-            'test_plan': test_plan,
-            'form': form,
-            'notify_form': CaseNotifyForm(),
-        }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['test_plan'] = plan_from_request_or_none(self.request)
+        context['notify_formset'] = kwargs.get('notify_formset') or CaseNotifyFormSet()
+        return context
 
-        return render(request, self.template_name, context_data)
+    def form_valid(self, form):
+        test_plan = plan_from_request_or_none(self.request)
 
-    def post(self, request, *args, **kwargs):
-        test_plan = plan_from_request_or_none(request)
+        notify_formset = CaseNotifyFormSet(self.request.POST)
+        if notify_formset.is_valid():
+            test_case = form.save()
+            if test_plan:
+                test_plan.add_case(test_case)
 
-        form = NewCaseForm(request.POST)
-        if request.POST.get('product'):
-            form.populate(product_id=request.POST['product'])
-        else:
-            form.populate()
+            notify_formset.instance = test_case
+            notify_formset.save()
 
-        notify_form = CaseNotifyForm(request.POST)
-
-        if form.is_valid() and notify_form.is_valid():
-            test_case = self.create_test_case(form, notify_form, test_plan)
             return HttpResponseRedirect(reverse('testcases-get', args=[test_case.pk]))
 
-        context_data = {
-            'test_plan': test_plan,
-            'form': form,
-            'notify_form': notify_form
-        }
-
-        return render(request, self.template_name, context_data)
-
-    def create_test_case(self, form, notify_form, test_plan):
-        """Create new test case"""
-        test_case = TestCase.create(author=self.request.user, values=form.cleaned_data)
-
-        # Assign the case to the plan
-        if test_plan:
-            test_plan.add_case(test_case)
-
-        update_case_email_settings(test_case, notify_form)
-
-        return test_case
+        # taken from FormMixin.form_invalid()
+        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
 
 
 def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
