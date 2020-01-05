@@ -2,9 +2,8 @@
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-from django.shortcuts import render
+from django.views.generic.base import TemplateView
 
 
-def example(request):
-    """An example view of Telemetry plugin"""
-    return render(request, 'a_fake_plugin/example.html')
+class Example(TemplateView):  # pylint: disable=missing-permission-required
+    template_name = 'a_fake_plugin/example.html'

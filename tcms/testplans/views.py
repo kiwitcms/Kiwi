@@ -269,10 +269,10 @@ class GetTestPlanRedirectView(DetailView):  # pylint: disable=missing-permission
     model = TestPlan
 
     def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        test_plan = self.get_object()
         return HttpResponsePermanentRedirect(reverse('test_plan_url',
-                                                     args=[self.object.pk,
-                                                           slugify(self.object.name)]))
+                                                     args=[test_plan.pk,
+                                                           slugify(test_plan.name)]))
 
 
 @require_http_methods(['GET', 'POST'])

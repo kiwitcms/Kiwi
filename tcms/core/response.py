@@ -33,5 +33,5 @@ class ModifySettingsTemplateResponse(TemplateResponse):
     modify_settings = None
 
     def render(self):
-        with self.modify_settings:
+        with self.modify_settings:  # pylint: disable=not-context-manager
             return super().render()

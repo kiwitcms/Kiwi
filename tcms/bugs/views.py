@@ -67,12 +67,12 @@ class New(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['initial'].update({
+        kwargs['initial'].update({  # pylint: disable=objects-update-used
             'reporter': self.request.user,
         })
         return kwargs
 
-    def get_form(self):
+    def get_form(self, form_class=None):
         form = super().get_form()
         # clear fields which are set dynamically via JavaScript
         form.populate(self.request.POST.get('product', -1))
@@ -169,10 +169,10 @@ class Edit(UpdateView):
         return context
 
     def get_object(self, queryset=None):
-        object = super().get_object(queryset)
+        obj = super().get_object(queryset)
         for field in self.fields:
-            self._values_before_update[field] = getattr(object, field)
-        return object
+            self._values_before_update[field] = getattr(obj, field)
+        return obj
 
     def form_valid(self, form):
         self._record_changes(form.cleaned_data)
