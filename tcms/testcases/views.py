@@ -21,7 +21,6 @@ from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Priority, Tag
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
-from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.forms import (CaseNotifyForm, CloneCaseForm, NewCaseForm,
                                   SearchCaseForm, EditCaseForm)
 from tcms.testcases.forms import CaseNotifyFormSet
@@ -76,8 +75,7 @@ def update_case_email_settings(test_case, n_form):
         test_case.emailing.auto_to_case_tester = True
 
     # Continue to update CC list
-    valid_emails = n_form.cleaned_data['cc_list']
-    test_case.emailing.cc_list = MultipleEmailField.delimiter.join(valid_emails)
+    test_case.emailing.cc_list = n_form.cleaned_data['cc_list']
 
     test_case.emailing.save()
 

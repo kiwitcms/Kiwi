@@ -103,29 +103,26 @@ class TestMultipleEmailField(unittest.TestCase):
             self.assertEqual(pyobj, [])
 
     def test_clean(self):
-        value = u'zhangsan@localhost'
+        value = 'zhangsan@localhost'
         data = self.field.clean(value)
-        self.assertEqual(data, [value])
+        self.assertEqual(data, value)
 
-        value = u'zhangsan@localhost,lisi@example.com'
-        data = self.field.clean(value)
-        self.assertEqual(data, [u'zhangsan@localhost', u'lisi@example.com'])
+        data = self.field.clean('zhangsan@localhost,lisi@example.com')
+        self.assertEqual(data, 'zhangsan@localhost,lisi@example.com')
 
-        value = u',zhangsan@localhost, ,lisi@example.com, \n'
-        data = self.field.clean(value)
-        self.assertEqual(data, [u'zhangsan@localhost', 'lisi@example.com'])
+        data = self.field.clean(',zhangsan@localhost, ,lisi@example.com, \n')
+        self.assertEqual(data, 'zhangsan@localhost,lisi@example.com')
 
-        value = ',zhangsan,zhangsan@localhost, \n,lisi@example.com, '
-        self.assertRaises(ValidationError, self.field.clean, value)
+        with self.assertRaises(ValidationError):
+            self.field.clean(',zhangsan,zhangsan@localhost, \n,lisi@example.com, ')
 
-        value = ''
-        self.field.required = True
-        self.assertRaises(ValidationError, self.field.clean, value)
+        with self.assertRaises(ValidationError):
+            self.field.required = True
+            self.field.clean('')
 
-        value = ''
         self.field.required = False
-        data = self.field.clean(value)
-        self.assertEqual(data, [])
+        data = self.field.clean('')
+        self.assertEqual(data, '')
 
 
 class TestNewCase(BasePlanCase):
