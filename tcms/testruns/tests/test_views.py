@@ -645,7 +645,7 @@ class TestRunStatusMenu(BaseCaseRun):
         response = self.client.get(self.url)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
-        for tcrs in TestExecutionStatus.objects.all():
+        for _tcrs in TestExecutionStatus.objects.all():
             self.assertNotContains(response, self.status_menu_html, html=True)
 
 

@@ -58,9 +58,6 @@ class TestUtilityMethods(unittest.TestCase):
         self.assertEqual(expected_value, value)
 
 
-# ################### Mock serializer classes for testing ####################
-
-
 class MockTestPlanSerializer(QuerySetBasedXMLRPCSerializer):
     values_fields_mapping = {
         'create_date': ('create_date', datetime_to_str),
@@ -95,13 +92,6 @@ class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
         'case_status': ('case_status_id', do_nothing),
         'case_status__name': ('case_status', do_nothing),
     }
-
-
-class MockProductSerializer(QuerySetBasedXMLRPCSerializer):
-    """Empty definition to test some method's default behavior"""
-
-
-# ################### Mock serializer classes for testing ####################
 
 
 class TestQuerySetBasedSerializer(test.TestCase):
@@ -153,7 +143,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
             product_keys.append(product.pk)
 
         cls.products = Product.objects.filter(pk__in=product_keys)
-        cls.product_serializer = MockProductSerializer(Product, cls.products)
+        cls.product_serializer = QuerySetBasedXMLRPCSerializer(Product, cls.products)
 
     def test_get_values_fields_mapping(self):
         mapping = self.product_serializer._get_values_fields_mapping()

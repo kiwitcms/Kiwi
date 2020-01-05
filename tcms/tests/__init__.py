@@ -233,7 +233,7 @@ class PermissionsTestCase(LoggedInTestCase):
     """Base class for implementing all tests that have to do with permissions."""
 
     permission_label = None
-    http_method_names = None
+    http_method_names = []
     url = None
     post_data = {}
 
@@ -283,14 +283,14 @@ class PermissionsTestCase(LoggedInTestCase):
             Implement all validation steps for GET self.url
             when self.tester has the appropriate permission.
         """
-        raise NotImplementedError
+        self.fail('Not implemented')
 
     def verify_post_with_permission(self):
         """
             Implement all validation steps for POST self.url
             when self.tester has the appropriate permission.
         """
-        raise NotImplementedError
+        self.fail('Not implemented')
 
     def verify_get_without_permission(self):
         """

@@ -735,6 +735,7 @@ class CloneTestCaseView(View):
         clone_form.populate(case_ids=request.POST.getlist('case'))
 
         if clone_form.is_valid():
+            test_plan = None
             tcs_src = clone_form.cleaned_data['case']
             for tc_src in tcs_src:
                 tc_dest = TestCase.objects.create(
@@ -827,7 +828,8 @@ class CloneTestCaseView(View):
         }
         return render(request, self.template_name, context)
 
-    def _is_request_data_valid(self, request):
+    @staticmethod
+    def _is_request_data_valid(request):
         request_data = getattr(request, request.method)
 
         if 'case' not in request_data:
