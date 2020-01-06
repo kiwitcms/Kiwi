@@ -721,7 +721,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .queries p{clear:none; padding:0px; margin:0px;}
 
 /* caserun stutas icon */
-.icon_status {display:inline-block; padding-left:23px; height:23px; line-height:23px; background:url(../images/ico_status.png) no-repeat;}
 .btn_status {display:inline-block; width:23px; height:23px; line-height:23px; background:url(../images/ico_status.png) no-repeat; margin-right:4px; border:0px; float:left; cursor:pointer;}
 .btn_passed{background-position:0px -207px;}
 .btn_passed[disabled="True"]{background-position:0px -253px;}
