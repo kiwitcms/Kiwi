@@ -157,8 +157,8 @@ Nitrate.TestRuns.Details.on_load = function() {
     var errorCaseRunCount = window.parseInt(jQ('span#ERROR a').text()) || 0;
     var failedCaseRunCount = window.parseInt(jQ('span#FAILED a').text()) || 0;
     var waivedCaseRunCount = window.parseInt(jQ('span#WAIVED a').text()) || 0;
-    var completePercent = 100 * ((passedCaseRunCount + errorCaseRunCount + failedCaseRunCount
-      + waivedCaseRunCount) / caseRunCount).toFixed(2);
+    var completePercent = Math.round(100 * ((passedCaseRunCount + errorCaseRunCount + failedCaseRunCount
+      + waivedCaseRunCount) / caseRunCount));
     var failedPercent = 100 * ((errorCaseRunCount + failedCaseRunCount) / (passedCaseRunCount
       + errorCaseRunCount + failedCaseRunCount + waivedCaseRunCount)).toFixed(2);
 
