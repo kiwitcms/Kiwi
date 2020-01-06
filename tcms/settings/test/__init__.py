@@ -13,7 +13,7 @@ dist._ep_map = {'kiwitcms.telemetry.plugins': {'a_fake_plugin': entry_point}}
 pkg_resources.working_set.add(dist)
 
 # this needs to be here so that  discovery tests can work
-from tcms.settings.devel import *  # noqa: F401,F403 pylint: disable=import-outside-toplevel
+from tcms.settings.devel import *  # noqa: F401,F403 pylint: disable=C0413,import-outside-toplevel
 
 
 # silence resource warnings while testing, see

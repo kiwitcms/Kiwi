@@ -734,7 +734,7 @@ class CloneTestCaseView(View):
         clone_form = CloneCaseForm(request.POST)
         clone_form.populate(case_ids=request.POST.getlist('case'))
 
-        if clone_form.is_valid():
+        if clone_form.is_valid(): 
             tcs_src = clone_form.cleaned_data['case']
             for tc_src in tcs_src:
                 tc_dest = TestCase.objects.create(
@@ -756,7 +756,7 @@ class CloneTestCaseView(View):
                 # apply tags as well
                 for tag in tc_src.tag.all():
                     tc_dest.add_tag(tag=tag)
-
+                test_plan = None
                 for test_plan in clone_form.cleaned_data['plan']:
                     # add new TC to selected TP
                     sortkey = test_plan.get_case_sortkey()
@@ -827,6 +827,7 @@ class CloneTestCaseView(View):
         }
         return render(request, self.template_name, context)
 
+    @classmethod
     def _is_request_data_valid(self, request):
         request_data = getattr(request, request.method)
 
