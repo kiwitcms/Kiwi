@@ -65,7 +65,7 @@ class NewCaseView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['initial'].update({
+        kwargs['initial'].update({  # pylint: disable=objects-update-used
             'author': self.request.user,
         })
 
