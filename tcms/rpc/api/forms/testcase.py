@@ -7,7 +7,7 @@ from tcms.testcases.models import TestCase
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = TestCase
-        exclude = ('tag', 'component', 'plan')
+        exclude = ('tag', 'component', 'plan')  # pylint: disable=modelform-uses-exclude
 
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=None,
