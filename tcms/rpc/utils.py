@@ -178,7 +178,7 @@ def request_for_upload(user, filename, b64content):
     request.method = 'POST'
     request.content_type = 'multipart/form-data'
     # because attachment.views.add_attachment() calls messages.success()
-    request._messages = MagicMock()
+    request._messages = MagicMock()  # pylint: disable=protected-access
 
     data, boundary = encode_multipart(
         get_token(request),
@@ -188,13 +188,13 @@ def request_for_upload(user, filename, b64content):
 
     request.META['CONTENT_TYPE'] = 'multipart/form-data; boundary=%s' % boundary
     request.META['CONTENT_LENGTH'] = len(data)
-    request._stream = io.BytesIO(data.encode())
+    request._stream = io.BytesIO(data.encode())  # pylint: disable=protected-access
 
     # manually parse the input data and populate data attributes
-    request._read_started = False
-    request._load_post_and_files()
-    request.POST = request._post
-    request.FILES = request._files
+    request._read_started = False   # pylint: disable=protected-access
+    request._load_post_and_files()  # pylint: disable=protected-access
+    request.POST = request._post    # pylint: disable=protected-access
+    request.FILES = request._files  # pylint: disable=protected-access
 
     return request
 
