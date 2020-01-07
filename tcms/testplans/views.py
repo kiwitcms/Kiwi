@@ -336,7 +336,7 @@ class Clone(View):
     http_method_names = ['post']
     template_name = 'testplans/clone.html'
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         if 'plan' not in request.POST:
             messages.add_message(request,
                                  messages.ERROR,

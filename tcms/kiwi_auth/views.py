@@ -35,7 +35,7 @@ class Register(View):
     form_class = RegistrationForm
     success_url = reverse_lazy('core-views-index')
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         """ Post request handler. """
         form = self.form_class(data=request.POST, files=request.FILES)
         if not form.is_valid():
@@ -77,7 +77,7 @@ class Register(View):
             mailto = '<a href="mailto:{}">{}</a>'.format(user.email, email_display_name)
             messages.add_message(request, messages.INFO, mailto)
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         """ Get request handler. """
         return render(request, self.template_name, {'form': self.form_class()})
 
