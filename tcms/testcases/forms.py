@@ -144,13 +144,13 @@ class CaseNotifyForm(forms.ModelForm):
 
 
 # note: these fields can't change during runtime !
-_email_settings_fields = []
+_email_settings_fields = []  # pylint: disable=invalid-name
 for field in TestCaseEmailSettings._meta.fields:
     _email_settings_fields.append(field.name)
 
 
 # for usage in CreateView, UpdateView
-CaseNotifyFormSet = inlineformset_factory(
+CaseNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
     TestCase,
     TestCaseEmailSettings,
     form=CaseNotifyForm,
