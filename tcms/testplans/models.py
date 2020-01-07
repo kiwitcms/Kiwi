@@ -144,7 +144,7 @@ class TestPlan(TCMSActionModel):
         return 'Copy of {}'.format(self.name)
 
     def clone(self, name=None, product=None, version=None,
-              new_author=None, set_parent=False, copy_testcases=False, **kwargs):
+              new_author=None, set_parent=False, copy_testcases=False, **_kwargs):
         """Clone this plan
 
         :param str name: New name of cloned plan. If not passed, make_cloned_name is called
