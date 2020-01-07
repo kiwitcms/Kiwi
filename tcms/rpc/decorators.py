@@ -2,7 +2,7 @@ from modernrpc.auth import set_authentication_predicate
 
 
 def permissions_required(perm):
-    def check_perms(request, permissions):
+    def check_perms(request, permissions):  # pylint: disable=nested-function-found
         if isinstance(permissions, str):
             permissions = (permissions, )
 
