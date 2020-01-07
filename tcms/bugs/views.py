@@ -183,7 +183,7 @@ class Edit(UpdateView):
 class AddComment(View):
     http_methods = ['post']
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         form = BugCommentForm(request.POST)
 
         if form.is_valid():
