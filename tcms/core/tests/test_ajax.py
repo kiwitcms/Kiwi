@@ -33,6 +33,9 @@ class TestTestCaseUpdates(BasePlanCase):
         super().setUpTestData()
         initiate_user_with_default_setups(cls.tester)
         cls.url = reverse('ajax.update.cases-actor')
+        cls.case_pks = []
+        for case in TestCase.objects.filter(plan=cls.plan):
+            cls.case_pks.append(case.pk)
 
     def setUp(self):
         super().setUp()
@@ -40,7 +43,7 @@ class TestTestCaseUpdates(BasePlanCase):
 
     def test_update_default_tester_via_username(self):
         response = self.client.post(self.url, {
-            'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
+            'case[]': self.case_pks,
             'what_to_update': 'default_tester',
             'username': self.tester.username
         })
@@ -55,7 +58,7 @@ class TestTestCaseUpdates(BasePlanCase):
     def test_update_default_tester_via_email(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/85
         response = self.client.post(self.url, {
-            'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
+            'case[]': self.case_pks,
             'what_to_update': 'default_tester',
             'username': self.tester.email
         })
@@ -70,7 +73,7 @@ class TestTestCaseUpdates(BasePlanCase):
     def test_update_default_tester_non_existing_user(self):
         username = 'user which doesnt exist'
         response = self.client.post(self.url, {
-            'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
+            'case[]': self.case_pks,
             'what_to_update': 'default_tester',
             'username': username
         })

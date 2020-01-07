@@ -143,12 +143,18 @@ class CaseNotifyForm(forms.ModelForm):
     cc_list = MultipleEmailField(required=False)
 
 
+# note: these fields can't change during runtime !
+_email_settings_fields = []
+for field in TestCaseEmailSettings._meta.fields:
+    _email_settings_fields.append(field.name)
+
+
 # for usage in CreateView, UpdateView
 CaseNotifyFormSet = inlineformset_factory(
     TestCase,
     TestCaseEmailSettings,
     form=CaseNotifyForm,
-    fields=[f.name for f in TestCaseEmailSettings._meta.fields],
+    fields=_email_settings_fields,
     can_delete=False,
     can_order=False,
 )
