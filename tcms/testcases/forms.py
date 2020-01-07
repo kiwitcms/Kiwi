@@ -95,7 +95,7 @@ class EditCaseForm(forms.ModelForm):
 
     class Meta:
         model = TestCase
-        exclude = ['reviewer', 'tag', 'component', 'plan']
+        exclude = ['reviewer', 'tag', 'component', 'plan']  # pylint: disable=modelform-uses-exclude
 
     default_tester = UserField(required=False)
     priority = forms.ModelChoiceField(
@@ -138,7 +138,7 @@ class EditCaseForm(forms.ModelForm):
 class CaseNotifyForm(forms.ModelForm):
     class Meta:
         model = TestCaseEmailSettings
-        exclude = ()
+        fields = '__all__'
 
     cc_list = MultipleEmailField(required=False)
 
