@@ -21,7 +21,7 @@ from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Priority, Tag
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
-from tcms.testcases.forms import CloneCaseForm, SearchCaseForm, EditCaseForm
+from tcms.testcases.forms import CloneCaseForm, SearchCaseForm, TestCaseForm
 from tcms.testcases.forms import CaseNotifyFormSet
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
@@ -54,7 +54,7 @@ def plan_from_request_or_none(request):  # pylint: disable=missing-permission-re
 @method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
 class NewCaseView(CreateView):
     model = TestCase
-    form_class = EditCaseForm
+    form_class = TestCaseForm
     template_name = 'testcases/mutable.html'
 
     def get_form(self, form_class=None):
@@ -569,7 +569,7 @@ class EditTestCaseView(UpdateView):
 
     model = TestCase
     template_name = 'testcases/mutable.html'
-    form_class = EditCaseForm
+    form_class = TestCaseForm
 
     def form_valid(self, form):
         notify_formset = CaseNotifyFormSet(self.request.POST, instance=self.object)

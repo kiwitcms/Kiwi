@@ -22,7 +22,7 @@ VALIDATION_ERROR_MESSAGE = _('Please input valid case id(s). '
                              'case id. e.g. "111, 222"')
 
 
-class EditCaseForm(forms.ModelForm):
+class TestCaseForm(forms.ModelForm):
 
     class Meta:
         model = TestCase
