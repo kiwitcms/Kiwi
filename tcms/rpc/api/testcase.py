@@ -7,9 +7,8 @@ from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
-from tcms.rpc.api.forms.testcase import UpdateForm
+from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.forms import NewCaseForm
 from tcms.testcases.models import TestCase
 
 __all__ = (
@@ -267,22 +266,17 @@ def create(values, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
 
-    if not (values.get('category') or values.get('summary')):
-        raise ValueError()
+    if not (values.get('author') or values.get('author_id')):
+        values['author'] = request.user.pk
 
-    form = NewCaseForm(values)
-    form.populate(values.get('product'))
+    form = NewForm(values)
 
     if form.is_valid():
-        # Create the case
-        test_case = TestCase.create(author=request.user, values=form.cleaned_data)
+        test_case = form.save()
     else:
-        # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
 
-    result = test_case.serialize()
-
-    return result
+    return test_case.serialize()
 
 
 @rpc_method(name='TestCase.filter')
