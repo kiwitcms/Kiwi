@@ -7,7 +7,7 @@ from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
-from tcms.management.models import Priority, Product
+from tcms.management.models import Priority
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (CategoryFactory, ComponentFactory,
@@ -129,7 +129,6 @@ class TestCreate(XmlrpcAPIBaseTest):
                 'case_status': TestCaseStatus.objects.first().pk,
                 'priority': Priority.objects.first().pk,
                 'category': Category.objects.first().pk,
-                'product': Product.objects.first().pk,
             }
         )
 
@@ -148,7 +147,6 @@ class TestCreate(XmlrpcAPIBaseTest):
                 'case_status': TestCaseStatus.objects.last().pk,
                 'priority': Priority.objects.last().pk,
                 'category': Category.objects.last().pk,
-                'product': Product.objects.last().pk,
                 'author': new_author.pk,
             }
         )

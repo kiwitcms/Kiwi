@@ -3,7 +3,7 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.core.forms.fields import StripURLField, UserField
+from tcms.core.forms.fields import UserField
 from tcms.core.utils import string_to_list
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Component, Priority, Product
@@ -20,75 +20,6 @@ ITEMS_PER_PAGE_CHOICES = (
 VALIDATION_ERROR_MESSAGE = _('Please input valid case id(s). '
                              'use comma to split more than one '
                              'case id. e.g. "111, 222"')
-
-
-class BaseCaseForm(forms.Form):
-    summary = forms.CharField()
-    default_tester = UserField(required=False)
-    requirement = forms.CharField(required=False)
-    is_automated = forms.BooleanField(initial=False, required=False)
-    script = forms.CharField(required=False)
-    arguments = forms.CharField(required=False)
-    extra_link = StripURLField(
-        max_length=1024,
-        required=False
-    )
-    # sortkey = forms.IntegerField(label = 'Sortkey', required = False)
-    case_status = forms.ModelChoiceField(
-        queryset=TestCaseStatus.objects.all(),
-        empty_label=None,
-        required=False
-    )
-    priority = forms.ModelChoiceField(
-        queryset=Priority.objects.filter(is_active=True),
-        empty_label=None,
-    )
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None,
-    )
-    category = forms.ModelChoiceField(
-        queryset=Category.objects.none(),
-        empty_label=None,
-    )
-    notes = forms.CharField(
-        widget=forms.Textarea,
-        required=False
-    )
-    text = forms.CharField(
-        widget=SimpleMDE(),
-        required=False,
-        initial=_("""**Scenario**: ... what behavior will be tested ...
-  **Given** ... conditions ...
-  **When** ... actions ...
-  **Then** ... expected results ...
-
-*Actions*:
-
-1. item
-2. item
-3. item
-
-*Expected results*:
-
-1. item
-2. item
-3. item"""))
-
-    def populate(self, product_id=None):
-        if product_id:
-            self.fields['category'].queryset = Category.objects.filter(
-                product_id=product_id)
-        else:
-            self.fields['category'].queryset = Category.objects.all()
-
-
-class NewCaseForm(BaseCaseForm):
-    def clean_case_status(self):
-        if not self.cleaned_data['case_status']:
-            return TestCaseStatus.get_proposed()
-
-        return self.cleaned_data['case_status']
 
 
 class EditCaseForm(forms.ModelForm):

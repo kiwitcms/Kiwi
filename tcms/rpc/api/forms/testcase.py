@@ -4,6 +4,12 @@ from django.forms.utils import ErrorList
 from tcms.testcases.models import TestCase
 
 
+class NewForm(forms.ModelForm):
+    class Meta:
+        model = TestCase
+        exclude = ('reviewer', 'tag', 'component', 'plan')  # pylint: disable=modelform-uses-exclude
+
+
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = TestCase
