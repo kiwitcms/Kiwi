@@ -7,7 +7,8 @@ from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
-from tcms.testcases.models import TestCase
+from tcms.management.models import Priority, Product
+from tcms.testcases.models import Category, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (CategoryFactory, ComponentFactory,
                                   ProductFactory, TagFactory, TestCaseFactory,
@@ -111,6 +112,59 @@ class TestUpdate(XmlrpcAPIBaseTest):
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
+
+
+class TestCreate(XmlrpcAPIBaseTest):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        for _ in range(5):
+            CategoryFactory()
+
+    def test_passes_with_valid_data(self):
+        result = self.rpc_client.exec.TestCase.create(
+            {
+                'summary': 'Newly created TC via API',
+                'text': 'Given-When-Then',
+                'case_status': TestCaseStatus.objects.first().pk,
+                'priority': Priority.objects.first().pk,
+                'category': Category.objects.first().pk,
+                'product': Product.objects.first().pk,
+            }
+        )
+
+        tc_from_db = TestCase.objects.get(summary=result['summary'], text=result['text'])
+
+        self.assertEqual(result['case_id'], tc_from_db.pk)
+        # author field is auto-configured if not passed
+        self.assertEqual(result['author'], tc_from_db.author.username)
+        self.assertEqual(self.api_user, tc_from_db.author)
+
+    def test_author_can_be_specified(self):
+        new_author = UserFactory()
+        result = self.rpc_client.exec.TestCase.create(
+            {
+                'summary': 'TC via API with author',
+                'case_status': TestCaseStatus.objects.last().pk,
+                'priority': Priority.objects.last().pk,
+                'category': Category.objects.last().pk,
+                'product': Product.objects.last().pk,
+                'author': new_author.pk,
+            }
+        )
+
+        tc_from_db = TestCase.objects.get(summary=result['summary'], author=new_author)
+
+        self.assertEqual(result['case_id'], tc_from_db.pk)
+        self.assertEqual(new_author, tc_from_db.author)
+
+    def test_fails_when_mandatory_fields_not_specified(self):
+        with self.assertRaises(Fault):
+            self.rpc_client.exec.TestCase.create(
+                {
+                    'summary': 'TC via API without mandatory FK fields',
+                }
+            )
 
 
 class TestAddTag(XmlrpcAPIBaseTest):
