@@ -20,7 +20,7 @@ class Classification(TCMSActionModel):
 
 
 class Product(TCMSActionModel):
-    id = models.AutoField(max_length=5, primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=64)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
@@ -51,7 +51,7 @@ class Product(TCMSActionModel):
 
 
 class Priority(TCMSActionModel):
-    id = models.AutoField(max_length=5, primary_key=True)
+    id = models.AutoField(primary_key=True)
     value = models.CharField(unique=True, max_length=64)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
@@ -64,7 +64,7 @@ class Priority(TCMSActionModel):
 
 
 class Component(TCMSActionModel):
-    id = models.AutoField(max_length=5, primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     product = models.ForeignKey(Product, related_name='component', on_delete=models.CASCADE)
     initial_owner = models.ForeignKey(
@@ -117,7 +117,7 @@ class Version(TCMSActionModel):
 
 
 class Build(TCMSActionModel):
-    build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
+    build_id = models.AutoField(unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name='build', on_delete=models.CASCADE)
     is_active = models.BooleanField(db_column='isactive', default=True)
@@ -140,7 +140,7 @@ class Build(TCMSActionModel):
 
 
 class Tag(TCMSActionModel):
-    id = models.AutoField(db_column='tag_id', max_length=10, primary_key=True)
+    id = models.AutoField(db_column='tag_id', primary_key=True)
     name = models.CharField(db_column='tag_name', max_length=255)
 
     class Meta:

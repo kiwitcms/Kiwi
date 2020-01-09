@@ -16,7 +16,7 @@ from tcms.rpc.utils import distinct_filter
 
 class TestCaseStatus(TCMSActionModel):
     id = models.AutoField(
-        db_column='case_status_id', max_length=6, primary_key=True
+        db_column='case_status_id', primary_key=True
     )
     # FIXME: if name has unique value for each status, give unique constraint
     # to this field. Otherwise, all SQL queries filtering upon this
