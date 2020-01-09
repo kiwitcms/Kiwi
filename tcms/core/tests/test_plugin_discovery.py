@@ -7,7 +7,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 from django.urls.resolvers import URLResolver
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.telemetry.tests.plugin import menu as plugin_menu
 from tcms.urls import urlpatterns

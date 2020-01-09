@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.cache import cache
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.issuetracker.types import from_name

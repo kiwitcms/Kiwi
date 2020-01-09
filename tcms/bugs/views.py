@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView

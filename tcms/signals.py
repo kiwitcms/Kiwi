@@ -22,7 +22,7 @@ altering the following setting::
 """
 from django.db.models import ObjectDoesNotExist
 from django.dispatch import Signal
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 __all__ = [
     'USER_REGISTERED_SIGNAL',

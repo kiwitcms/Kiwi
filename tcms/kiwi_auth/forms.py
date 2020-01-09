@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.utils import request_host_link
 from tcms.core.utils.mailto import mailto

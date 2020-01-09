@@ -2,7 +2,7 @@
 from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import ReadOnlyHistoryAdmin
 from tcms.testruns.models import TestRun

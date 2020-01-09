@@ -3,7 +3,7 @@
 
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from mock import patch
 
 from tcms.core.history import history_email_for

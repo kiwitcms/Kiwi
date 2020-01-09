@@ -3,7 +3,7 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.core.widgets import SimpleMDE
