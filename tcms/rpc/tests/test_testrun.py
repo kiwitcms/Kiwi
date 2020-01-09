@@ -4,7 +4,6 @@ from datetime import datetime
 from xmlrpc.client import ProtocolError
 
 from django.contrib.auth.models import Permission
-from django.test import override_settings
 from tcms_api import xmlrpc
 
 from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
@@ -250,7 +249,6 @@ class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
         self.assertEqual(result['product_version'], self.plan.product_version.value)
 
 
-@override_settings(LANGUAGE_CODE='en-us')
 class TestUpdateTestRun(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
