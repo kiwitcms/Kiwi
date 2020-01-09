@@ -17,7 +17,7 @@ from tcms.tests.factories import (BuildFactory, ProductFactory,
                                   VersionFactory)
 
 
-@override_settings(LANGUAGE_CODE='en-us')
+@override_settings(LANGUAGE_CODE='en')
 class TestExecutionCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """Test TestExecution.create"""
 
@@ -146,7 +146,7 @@ class TestExecutionAddComment(XmlrpcAPIBaseTest):
         self.assertEqual("Hello World!", first_comment.comment)
 
 
-@override_settings(LANGUAGE_CODE='en-us')
+@override_settings(LANGUAGE_CODE='en')
 class TestExecutionAddLink(XmlrpcAPIBaseTest):
     """Test TestExecution.add_link"""
 
@@ -269,7 +269,7 @@ class TestExecutionGetLinks(XmlrpcAPIBaseTest):
         self.assertEqual(logs[0]['url'], 'http://kiwitcms.org')
 
 
-@override_settings(LANGUAGE_CODE='en-us')
+@override_settings(LANGUAGE_CODE='en')
 class TestExecutionUpdate(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):

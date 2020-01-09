@@ -79,12 +79,12 @@ jobs:
 
     - env:
         - CMD=l10n-test
-        - LANG=fr_FR.UTF-8
+        - LANG=fr
         - TEST_DB=SQLite
 
     - env:
         - CMD=l10n-test
-        - LANG=sl_SL.UTF-8
+        - LANG=sl
         - TEST_DB=SQLite
 
     - env:
