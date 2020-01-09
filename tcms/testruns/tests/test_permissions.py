@@ -2,7 +2,7 @@
 # pylint: disable=invalid-name, too-many-ancestors
 
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms import tests
 from tcms.tests import PermissionsTestCase, factories

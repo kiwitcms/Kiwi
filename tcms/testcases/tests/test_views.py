@@ -9,7 +9,7 @@ from django.forms import ValidationError
 from django.test import RequestFactory
 from django.urls import reverse
 from django.utils.translation import override
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import Priority, Tag
 from tcms.testcases.fields import MultipleEmailField

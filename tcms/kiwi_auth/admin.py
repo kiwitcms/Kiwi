@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Permission
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.utils.user import delete_user
 

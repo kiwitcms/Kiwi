@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.ajax import _TagCounter, _TagObjects
 from tcms.testcases.models import TestCase, TestCaseTag
