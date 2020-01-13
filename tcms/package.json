@@ -3,7 +3,7 @@
     "bootstrap-switch": "3.3.4",
     "marked": "0.8.0",
     "patternfly": "3.59.4",
-    "prismjs": "1.17.0",
+    "prismjs": "1.19.0",
     "simplemde": "1.11.2",
     "typeahead.js": "0.11.1"
   }
