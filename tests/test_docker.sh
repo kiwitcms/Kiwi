@@ -5,6 +5,8 @@
 assert_up_and_running() {
     sleep 10
     IP_ADDRESS=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web`
+    # HTTP redirects; HTTPS displays the login page
+    rlRun -t -c "curl       -o- http://$IP_ADDRESS:8080/  | grep 'The document has moved'"
     rlRun -t -c "curl -k -L -o- https://$IP_ADDRESS:8443/ | grep 'Welcome to Kiwi TCMS'"
 }
 
