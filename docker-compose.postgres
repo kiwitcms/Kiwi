@@ -24,7 +24,7 @@ services:
         volumes:
             - uploads:/Kiwi/uploads:Z
         environment:
-            KIWI_DB_ENGINE: django.db.backends.postgresql_psycopg2
+            KIWI_DB_ENGINE: django.db.backends.postgresql
             KIWI_DB_HOST: db
             KIWI_DB_PORT: 5432
             KIWI_DB_NAME: kiwi
