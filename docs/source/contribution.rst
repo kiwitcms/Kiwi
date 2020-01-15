@@ -100,7 +100,7 @@ Making strings translatable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before strings can be translated they need to be marked as translatable.
-This is done with the ``ugettext_lazy()`` function or its shortcut ``_()``.
+This is done with the ``gettext_lazy()`` function or its shortcut ``_()``.
 For templates ``{% load i18n %}`` at the top of the template and then use
 the ``{% trans %}`` template tag to mark strings as translatable!
 Please read `Django's Translation documentation
