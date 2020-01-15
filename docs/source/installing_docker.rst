@@ -109,7 +109,7 @@ via the ``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the
 application via ``docker compose`` then add::
 
         environment:
-            KIWI_DONT_ENFORCE_HTTPS: true
+            KIWI_DONT_ENFORCE_HTTPS: "true"
 
 to ``docker-compose.yml``. If starting the container via ``docker run`` then
 add ``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
