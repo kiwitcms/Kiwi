@@ -3,7 +3,7 @@ version: '2'
 services:
     db:
         container_name: kiwi_db
-        image: centos/postgresql-94-centos7
+        image: centos/postgresql-10-centos7
         volumes:
             - db_data:/var/lib/pgsql/data
         restart: always
