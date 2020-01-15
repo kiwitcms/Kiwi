@@ -14,6 +14,7 @@ fi
 
 # execute test scripts
 ./tests/test_docker.sh
+./tests/test_http.sh
 
 
 # look for failures
