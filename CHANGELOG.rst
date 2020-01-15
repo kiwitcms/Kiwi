@@ -1,25 +1,48 @@
 Change Log
 ==========
 
-Kiwi TCMS 7.2.1 (23 Dec 2019)
------------------------------
+Kiwi TCMS 7.3 (16 Jan 2020)
+---------------------------
 
-**IMPORTANT:** this is an internal release which will be shipped only as
-a PyPI package. It includes changes needed for testing and development
-of Kiwi TCMS add-ons and future migration to Django 3.0.
+**IMPORTANT:** this is a critical security update for
+**CVE-2019-19844: Potential account hijack via password reset form!**
+
+Also migrates to Django 3.0 and includes several other improvement
+and bug-fixes!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
 
 
 Improvements
 ~~~~~~~~~~~~
 
+- Update Django from 2.2.8 to 3.0.2
 - Update python-gitlab from 1.13.0 to 1.15.0
+- Update pygithub from 1.44.1 to 1.45
+- Update django-grappelli from 2.13.2 to 2.13.3
 - Bump django-uuslug from 1.1.9 to 1.2.0
 - Bump django-attachments from 1.4.1 to 1.5
-- Bump django-vinaigrette from 1.2.0 to 1.2.1
+- Bump django-vinaigrette from 1.2.0 to 2.0.1
 - Update marked to version 0.8.0
+- Update prismjs to version 1.19.0
 - Generalize existing ``kiwitcms.telemetry.plugins`` handling code by
   renaming the entry point to ``kiwitcms.plugins``
 - Refactor views to class based (Svetlozar Stoyanov)
+- Teach Kiwi TCMS to automatically report bugs to GitHub when the user
+  selects such action. Fall back to opening a new browser window for
+  manually entering the bug if something goes wrong
+
 
 Database
 ~~~~~~~~
@@ -27,6 +50,48 @@ Database
 - When migrating from the older ``Bug`` model to ``LinkReference`` skip
   bugs which are attached directly to test cases instead of test executions.
   See `SO #59321756 <https://stackoverflow.com/questions/59321756/>`_
+- Remove ``AutoField.max_length`` because it is ignored by Django 3
+
+
+API
+~~~
+
+- ``TestCase.update()`` method now allows to update the ``author`` field. Fixes
+  `Issue #630 <https://github.com/kiwitcms/Kiwi/issues/630>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Modify template pass ``object`` as ``test_plan``. Fixes
+  `Issue #1307 <https://github.com/kiwitcms/Kiwi/issues/1307>`_ (Ed Oswald S. Go)
+- Enable version selection in test plan search page. Fixes
+  `Issue #1276 <https://github.com/kiwitcms/Kiwi/issues/1276>`_
+- Apply percentage rounding for completed test executions. Fixes
+  `Issue #1230 <https://github.com/kiwitcms/Kiwi/issues/1230>`_
+- Fix a logical bug in conditional expression when deciding whether or not
+  reporting bugs to selected issue tracker is disabled
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Add code of conduct. Fixes #1185
+  `Issue #1185 <https://github.com/kiwitcms/Kiwi/issues/1185>`_ (Rosen Sasov)
+- Add test for ``KIWI_DONT_ENFORSE_HTTPS``. Closes
+  `Issue #1274 <https://github.com/kiwitcms/Kiwi/issues/1274>`_
+- Replace ``ugettext_lazy`` with ``gettext_lazy`` for Django 3
+- Remove ``BaseCaseSearchForm.bug_id`` field
+- Refactor testcase edit view to class-based
+- Happy New Year pylint
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Vietnamese translation <https://crowdin.com/project/kiwitcms/vi#>`_
 
 
 
