@@ -57,24 +57,18 @@ format but you are free to enter any kind of text. To create a Test Plan:
 #. In the **Create New Test Plan** screen, perform the following
    actions:
 
-   -  Enter the **Plan Name**
+   -  Enter the **Name**
    -  Select the **Product**
-   -  Select the **Product Version**
+   -  Select the **Version**
    -  Select the **Type** of Test Plan
    -  Enter the **Parent ID**, this is optional
-   -  In the **Plan Document** text box do one of the following:
-
-      -  Enter the details of the Test Plan or
-      -  Click **Browse**, select the file to upload, and then click
-         **Upload**. Supported formats: html, plain text, and ODT.
-
-   -  Select an **Environment Group**, this is optional
+   -  In the **Plan Document** text box enter the details of the Test Plan
    -  Enter a **Reference Link** to any additional information (eg. a wiki
       page), this is optional
 
    |The Create New Test Plans screen|
 
-#. Click the **Create Test Plan** button
+#. Click the **Save** button
 
 .. _cloning-testplan:
 
@@ -87,14 +81,17 @@ product or a new version of the current product. To clone a Test Plan:
 #. Open the Test Plan which will be cloned.
 #. Click the **Clone Plan** button.
 
-   |The Clone plan button|
+   |Test plan action buttons|
 
 #. In the **Clone Test Plan** screen, perform the following actions:
 
-   -  Enter the **New Plan Name**.
-   -  In **Copy to Product**, select the product.
-   -  In **Product Version**, select the version.
-   -  Tick the **Copy Settings** you want
+   -  Enter the **Name**.
+   -  In **Product**, select the product.
+   -  In **Version**, select the version.
+   -  Tick the **Clone TCs** if you want to clone test cases, otherwise
+      they will be only linked into new TP
+   -  Tick the **Parent TP** if you want create parent-child relation
+      to new TP
 
    |The Clone Test Plan screen|
 
@@ -109,7 +106,7 @@ Test Cases or Test Runs associated with the Test Plan. To edit a Test Plan:
 #. Open the Test Plan to be edited.
 #. Click the **Edit plan** button.
 
-   |The Edit plan button|
+   |Test plan action buttons|
 
 #. Edit the fields as required:
 
@@ -120,36 +117,10 @@ Test Cases or Test Runs associated with the Test Plan. To edit a Test Plan:
 Edit History
 ~~~~~~~~~~~~
 
-To view the changelog of a Test Plan document, click the **View Edit History**
-in the **Document** tab of the Test Plan.
+To view the changelog of a Test Plan document,
+click the **View Edit History**.
 
     |View Test Plan Edit History|
-
-Default Components
-~~~~~~~~~~~~~~~~~~
-
-Kiwi TCMS allows adding default components for a Test Plan. The
-default components will be added to each Test Case belonging to the
-plan. To edit default components:
-
-#. Open the Test Plan to be edited.
-#. Click **Default Components** tab
-
-   |The Default Components tab.|
-
-#. To Add a component:
-
-   -  Click **Update components**.
-   -  Select the components.
-   -  Click the **Update** button
-
-   |The update components selection screen.|
-
-#. To Remove a component:
-
-   -  Select the components to remove.
-   -  Click the **Remove** button
-
 
 Test Plan Tags
 ~~~~~~~~~~~~~~
@@ -244,15 +215,18 @@ database. It is best to disable older Test Plans instead of deleting them
 otherwise you will lose your testing history. To disable a Test Plan:
 
 #. Open the Test Plan to be disabled.
-#. Click **Disable Plan** button.
+#. Click **Edit Plan** button.
+#. Toggle **Active** status button to **Off**
+#. Click on **Save** button to confirm changes.
 
-   |The disable plan button.|
+   |Test Plan Disabled|
 
    The plan name changes to a strike through font.
+
+Re-enable a Test Plan
+~~~~~~~~~~~~~~~~~~~~~
+
 #. To enable a disabled plan, click **Edit Plan**.
-
-   |The enable plan button.|
-
 #. Set **Active** status button to **On**
 #. Click on **Save** button to confirm changes.
 
@@ -264,7 +238,7 @@ To print a Test Plan:
 #. Open the Test Plan to be printed.
 #. Click **Print Plan** button.
 
-   |The Print Plan button|
+   |Test plan action buttons|
 
 #. A printer friendly version displays.
 #. From the **File** menu in your Browser, click **Print**.
@@ -282,12 +256,8 @@ Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwit
 .. |The Search menu| image:: ../_static/Click_Search.png
 .. |The Search Plan screen| image:: ../_static/Planning_Home.png
 .. |Click column to sort by.| image:: ../_static/Sort_By_Column.png
-.. |The Clone plan button| image:: ../_static/Plan_Actions.png
 .. |The Clone Test Plan screen| image:: ../_static/Clone_Details.png
-.. |The Edit plan button| image:: ../_static/Plan_Actions.png
 .. |Edit a Test Plan| image:: ../_static/Edit_Test_Plan.png
-.. |The Default Components tab.| image:: ../_static/Plan_Default_Components.png
-.. |The update components selection screen.| image:: ../_static/Click_Components_Update.png
 .. |View Test Plan Edit History| image:: ../_static/Test_Plan_View_Edit_History.png
 .. |The Tags tab.| image:: ../_static/Test_Plan_Tags.png
 .. |The default tester screen| image:: ../_static/TP_Update_Default_Tester.png
@@ -295,6 +265,5 @@ Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwit
 .. |Change parent.| image:: ../_static/Tree_View_Change_Parent.png
 .. |Add child node.| image:: ../_static/Tree_View_Add_Child.png
 .. |Remove child node.| image:: ../_static/Tree_View_Remove_Child.png
-.. |The Print Plan button| image:: ../_static/Plan_Actions.png
-.. |The disable plan button.| image:: ../_static/Plan_Actions.png
-.. |The enable plan button.| image:: ../_static/Plan_Actions_Enable.png
+.. |Test Plan Disabled| image:: ../_static/Test_Plan_Disabled.png
+.. |Test plan action buttons| image:: ../_static/Test_Plan_Actions.png
