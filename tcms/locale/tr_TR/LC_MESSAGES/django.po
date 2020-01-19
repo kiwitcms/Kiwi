@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-04 20:35+0000\n"
-"PO-Revision-Date: 2020-01-19 16:51\n"
+"PO-Revision-Date: 2020-01-19 17:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -523,7 +523,7 @@ msgstr "Kategoriler"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
 msgid "Information if product builds are getting better or worse"
-msgstr ""
+msgstr "Ürün derlemelerinin iyiye veya kötüye gittiğine ilişkin bilgi"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -531,7 +531,7 @@ msgstr "Test Durum Matrisi"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Test koşum durumları hakkında detaylı bilgi"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
 msgid "Test case"
@@ -547,7 +547,7 @@ msgstr "Test Senaryosu Sağlığı"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Discover which test cases are the most common source of problems"
-msgstr ""
+msgstr "Hangi test senaryolarının en yaygın sorun kaynağı olduğunu keşfedin"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
