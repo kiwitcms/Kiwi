@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-04 20:35+0000\n"
-"PO-Revision-Date: 2020-01-05 03:53\n"
+"PO-Revision-Date: 2020-01-19 16:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -440,7 +440,7 @@ msgstr "Geri kalan her şey"
 
 #: tcms/settings/common.py:309
 msgid "PLUGINS"
-msgstr ""
+msgstr "EKLENTİLER"
 
 #: tcms/settings/common.py:320
 msgid "Report an Issue"
@@ -481,7 +481,7 @@ msgstr "Test Dökümü"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
 msgid "Shows how existing test cases are distributed"
-msgstr ""
+msgstr "Mevcut test senaryolarının nasıl dağıldığını gösterir"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
