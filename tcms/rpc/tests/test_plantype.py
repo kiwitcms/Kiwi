@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import PlanTypeFactory
 
 
-class PlanTypeMethods(XmlrpcAPIBaseTest):
+class PlanTypeMethods(APITestCase):
 
     def _fixture_setup(self):
         super(PlanTypeMethods, self)._fixture_setup()

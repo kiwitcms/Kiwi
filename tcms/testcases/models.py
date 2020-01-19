@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
+import vinaigrette
 from django.conf import settings
 from django.db import models
 from django.db.models import ObjectDoesNotExist
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import override
-from django.db.models import Q
-import vinaigrette
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
-from tcms.testcases.fields import MultipleEmailField
-from tcms.rpc.serializer import TestCaseXMLRPCSerializer
+from tcms.rpc.serializer import TestCaseRPCSerializer
 from tcms.rpc.utils import distinct_filter
+from tcms.testcases.fields import MultipleEmailField
 
 
 class TestCaseStatus(TCMSActionModel):
@@ -113,7 +113,7 @@ class TestCase(TCMSActionModel):
 
         _query = query or {}
         qs = distinct_filter(TestCase, _query).order_by('pk')
-        serializer = TestCaseXMLRPCSerializer(model_class=cls, queryset=qs)
+        serializer = TestCaseRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
     @classmethod

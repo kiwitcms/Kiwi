@@ -170,8 +170,8 @@ def _serialize_names(row, values_fields_mapping):
     return new_serialized_data
 
 
-class QuerySetBasedXMLRPCSerializer(Serializer):
-    """XMLRPC serializer specific for TestPlan
+class QuerySetBasedRPCSerializer(Serializer):
+    """Serializer for TestPlan
 
     To configure the serialization, developer can specify following class
     attribute, values_fields_mapping, m2m_fields, and primary_key.
@@ -386,8 +386,8 @@ class QuerySetBasedXMLRPCSerializer(Serializer):
         return serialize_result
 
 
-class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    """XMLRPC serializer specific for TestPlan"""
+class TestPlanRPCSerializer(QuerySetBasedRPCSerializer):
+    """Serializer for TestPlan"""
 
     values_fields_mapping = {
         'create_date': ('create_date', datetime_to_str),
@@ -416,8 +416,8 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     m2m_fields = ('case', 'tag')
 
 
-class TestExecutionXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    """XMLRPC serializer specific for TestExecution"""
+class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
+    """Serializer for TestExecution"""
 
     values_fields_mapping = {
         'case_run_id': ('case_run_id', do_nothing),
@@ -440,7 +440,7 @@ class TestExecutionXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     }
 
 
-class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+class TestRunRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestRun"""
 
     values_fields_mapping = {
@@ -463,7 +463,7 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     }
 
 
-class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestCase"""
 
     values_fields_mapping = {
@@ -493,7 +493,7 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     }
 
 
-class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+class ProductRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for Product"""
 
     values_fields_mapping = {
@@ -505,7 +505,7 @@ class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     }
 
 
-class BuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+class BuildRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for Build"""
 
     values_fields_mapping = {

@@ -12,8 +12,8 @@ from django.utils.translation import override
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
-from tcms.rpc.serializer import (TestExecutionXMLRPCSerializer,
-                                 TestRunXMLRPCSerializer)
+from tcms.rpc.serializer import (TestExecutionRPCSerializer,
+                                 TestRunRPCSerializer)
 from tcms.rpc.utils import distinct_filter
 
 TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [
@@ -66,7 +66,7 @@ class TestRun(TCMSActionModel):
     def to_xmlrpc(cls, query=None):
         _query = query or {}
         qs = distinct_filter(TestRun, _query).order_by('pk')
-        serializer = TestRunXMLRPCSerializer(model_class=cls, queryset=qs)
+        serializer = TestRunRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
     def _get_absolute_url(self):
@@ -234,7 +234,6 @@ class TestRun(TCMSActionModel):
 
 
 class TestExecutionStatus(TCMSActionModel):
-
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
     weight = models.IntegerField(default=0)
@@ -296,7 +295,7 @@ class TestExecution(TCMSActionModel):
         if query is None:
             query = {}
         query_set = distinct_filter(TestExecution, query).order_by('pk')
-        serializer = TestExecutionXMLRPCSerializer(model_class=cls, queryset=query_set)
+        serializer = TestExecutionRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def get_bugs(self):

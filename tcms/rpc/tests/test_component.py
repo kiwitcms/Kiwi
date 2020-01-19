@@ -4,11 +4,11 @@
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import ComponentFactory, ProductFactory
 
 
-class TestFilterComponents(XmlrpcAPIBaseTest):
+class TestFilterComponents(APITestCase):
     def _fixture_setup(self):
         super(TestFilterComponents, self)._fixture_setup()
 
@@ -31,7 +31,7 @@ class TestFilterComponents(XmlrpcAPIBaseTest):
         self.assertEqual(0, len(found))
 
 
-class TestCreateComponent(XmlrpcAPIBaseTest):
+class TestCreateComponent(APITestCase):
 
     def _fixture_setup(self):
         super(TestCreateComponent, self)._fixture_setup()
@@ -57,7 +57,7 @@ class TestCreateComponent(XmlrpcAPIBaseTest):
             self.rpc_client.exec.Component.create(self.product.pk, "MyComponent")
 
 
-class TestUpdateComponent(XmlrpcAPIBaseTest):
+class TestUpdateComponent(APITestCase):
     # pylint: disable=objects-update-used
     def _fixture_setup(self):
         super(TestUpdateComponent, self)._fixture_setup()

@@ -6,8 +6,8 @@ from xmlrpc.client import Fault, ProtocolError
 from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
 from tcms.management.models import Priority
+from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (CategoryFactory, ComponentFactory,
@@ -15,7 +15,7 @@ from tcms.tests.factories import (CategoryFactory, ComponentFactory,
                                   TestPlanFactory, UserFactory, VersionFactory)
 
 
-class TestNotificationRemoveCC(XmlrpcAPIBaseTest):
+class TestNotificationRemoveCC(APITestCase):
     """ Tests the XML-RPC testcase.notication_remove_cc method """
 
     def _fixture_setup(self):
@@ -39,7 +39,7 @@ class TestNotificationRemoveCC(XmlrpcAPIBaseTest):
         self.assertEqual([], self.testcase.emailing.get_cc_list())
 
 
-class TestFilterCases(XmlrpcAPIBaseTest):
+class TestFilterCases(APITestCase):
 
     def _fixture_setup(self):
         super(TestFilterCases, self)._fixture_setup()
@@ -69,7 +69,7 @@ class TestFilterCases(XmlrpcAPIBaseTest):
         self.assertEqual(len(cases), self.cases_count)
 
 
-class TestUpdate(XmlrpcAPIBaseTest):
+class TestUpdate(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -139,7 +139,7 @@ class TestUpdate(XmlrpcAPIBaseTest):
         self.assertEqual('Given-When-Then', self.testcase.text)
 
 
-class TestCreate(XmlrpcAPIBaseTest):
+class TestCreate(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -190,7 +190,7 @@ class TestCreate(XmlrpcAPIBaseTest):
             )
 
 
-class TestAddTag(XmlrpcAPIBaseTest):
+class TestAddTag(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -225,7 +225,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
 
-class TestRemoveTag(XmlrpcAPIBaseTest):
+class TestRemoveTag(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -264,7 +264,7 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
 
-class TestAddComponent(XmlrpcAPIBaseTest):
+class TestAddComponent(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
