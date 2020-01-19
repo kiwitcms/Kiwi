@@ -5,7 +5,7 @@ from xmlrpc.client import ProtocolError
 from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.tests import remove_perm_from_user
@@ -14,7 +14,7 @@ from tcms.tests.factories import (PlanTypeFactory, ProductFactory, TagFactory,
                                   UserFactory, VersionFactory)
 
 
-class TestFilter(XmlrpcAPIBaseTest):
+class TestFilter(APITestCase):
 
     def _fixture_setup(self):
         super(TestFilter, self)._fixture_setup()
@@ -45,7 +45,7 @@ class TestFilter(XmlrpcAPIBaseTest):
         self.assertEqual(plans_total, len(self.rpc_client.exec.TestPlan.filter({})))
 
 
-class TestAddTag(XmlrpcAPIBaseTest):
+class TestAddTag(APITestCase):
 
     def _fixture_setup(self):
         super(TestAddTag, self)._fixture_setup()
@@ -84,7 +84,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
 
-class TestRemoveTag(XmlrpcAPIBaseTest):
+class TestRemoveTag(APITestCase):
 
     def _fixture_setup(self):
         super(TestRemoveTag, self)._fixture_setup()
@@ -129,7 +129,7 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
 
-class TestUpdate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
+class TestUpdate(APITestCase):  # pylint: disable=too-many-instance-attributes
     """ Tests the XMLRPM testplan.update method """
 
     def _fixture_setup(self):
@@ -156,7 +156,7 @@ class TestUpdate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attrib
         self.assertEqual('This has been updated', self.plan_1.text)
 
 
-class TestRemoveCase(XmlrpcAPIBaseTest):
+class TestRemoveCase(APITestCase):
     """ Test the XML-RPC method TestPlan.remove_case() """
 
     def _fixture_setup(self):
@@ -182,7 +182,7 @@ class TestRemoveCase(XmlrpcAPIBaseTest):
         self.assertEqual(1, self.testcase_2.plan.count())  # pylint: disable=no-member
 
 
-class TestAddCase(XmlrpcAPIBaseTest):
+class TestAddCase(APITestCase):
     """ Test the XML-RPC method TestPlan.add_case() """
 
     def _fixture_setup(self):

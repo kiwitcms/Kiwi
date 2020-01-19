@@ -6,7 +6,7 @@ from xmlrpc.client import ProtocolError
 from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.testruns.models import TestExecution, TestRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (BuildFactory, ProductFactory, TagFactory,
@@ -15,7 +15,7 @@ from tcms.tests.factories import (BuildFactory, ProductFactory, TagFactory,
                                   VersionFactory)
 
 
-class TestAddCase(XmlrpcAPIBaseTest):
+class TestAddCase(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -55,7 +55,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         self.assertFalse(exists)
 
 
-class TestRemovesCase(XmlrpcAPIBaseTest):
+class TestRemovesCase(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -104,7 +104,7 @@ class TestRemovesCase(XmlrpcAPIBaseTest):
         self.assertFalse(TestExecution.objects.filter(pk=self.test_execution.pk).exists())
 
 
-class TestAddTag(XmlrpcAPIBaseTest):
+class TestAddTag(APITestCase):
     def _fixture_setup(self):
         super(TestAddTag, self)._fixture_setup()
 
@@ -152,7 +152,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
 
-class TestRemoveTag(XmlrpcAPIBaseTest):
+class TestRemoveTag(APITestCase):
     def _fixture_setup(self):
         super(TestRemoveTag, self)._fixture_setup()
 
@@ -210,7 +210,7 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.assertTrue(tag_exists)
 
 
-class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
+class TestProductVersionWhenCreating(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -249,7 +249,7 @@ class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
         self.assertEqual(result['product_version'], self.plan.product_version.value)
 
 
-class TestUpdateTestRun(XmlrpcAPIBaseTest):
+class TestUpdateTestRun(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 

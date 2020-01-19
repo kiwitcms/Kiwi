@@ -4,11 +4,11 @@
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import BuildFactory, ProductFactory
 
 
-class BuildCreate(XmlrpcAPIBaseTest):
+class BuildCreate(APITestCase):
 
     def _fixture_setup(self):
         super(BuildCreate, self)._fixture_setup()
@@ -80,7 +80,7 @@ class BuildCreate(XmlrpcAPIBaseTest):
         self.assertEqual(b['is_active'], False)
 
 
-class BuildUpdate(XmlrpcAPIBaseTest):
+class BuildUpdate(APITestCase):
 
     def _fixture_setup(self):
         super(BuildUpdate, self)._fixture_setup()
@@ -124,7 +124,7 @@ class BuildUpdate(XmlrpcAPIBaseTest):
         self.assertEqual(b['name'], 'Update')
 
 
-class BuildFilter(XmlrpcAPIBaseTest):
+class BuildFilter(APITestCase):
 
     def _fixture_setup(self):
         super(BuildFilter, self)._fixture_setup()

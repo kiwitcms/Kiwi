@@ -10,7 +10,7 @@ from tcms.tests.factories import UserFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
-class XmlrpcAPIBaseTest(test.LiveServerTestCase):
+class APITestCase(test.LiveServerTestCase):
     serialized_rollback = True
 
     # NOTE: we setup the required DB data and API objects here
@@ -20,7 +20,7 @@ class XmlrpcAPIBaseTest(test.LiveServerTestCase):
     def _fixture_setup(self):
         # restore the serialized data from initial migrations
         # this includes default groups and permissions
-        super(XmlrpcAPIBaseTest, self)._fixture_setup()
+        super()._fixture_setup()
         self.api_user = UserFactory()
         self.api_user.set_password('api-testing')
         initiate_user_with_default_setups(self.api_user)

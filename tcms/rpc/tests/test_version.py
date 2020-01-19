@@ -6,11 +6,11 @@ from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import ProductFactory, VersionFactory
 
 
-class TestFilterVersions(XmlrpcAPIBaseTest):
+class TestFilterVersions(APITestCase):
 
     def _fixture_setup(self):
         super(TestFilterVersions, self)._fixture_setup()
@@ -38,7 +38,7 @@ class TestFilterVersions(XmlrpcAPIBaseTest):
 
 
 @override_settings(LANGUAGE_CODE='en')
-class TestAddVersion(XmlrpcAPIBaseTest):
+class TestAddVersion(APITestCase):
 
     def _fixture_setup(self):
         super(TestAddVersion, self)._fixture_setup()

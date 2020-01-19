@@ -6,7 +6,7 @@ from xmlrpc.client import Fault as XmlRPCFault
 from django.test import TestCase
 
 from tcms.rpc.api.user import _get_user_dict
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import GroupFactory, UserFactory
 
@@ -25,7 +25,7 @@ class TestUserSerializer(TestCase):
         self.assertNotIn('password', data)
 
 
-class TestUserFilter(XmlrpcAPIBaseTest):
+class TestUserFilter(APITestCase):
     """Test User.filter"""
 
     def _fixture_setup(self):
@@ -69,7 +69,7 @@ class TestUserFilter(XmlrpcAPIBaseTest):
         self.assertEqual(data['email'], self.api_user.email)
 
 
-class TestUserJoin(XmlrpcAPIBaseTest):
+class TestUserJoin(APITestCase):
     """Test User.join_group"""
 
     def _fixture_setup(self):
@@ -97,7 +97,7 @@ class TestUserJoin(XmlrpcAPIBaseTest):
             self.rpc_client.exec.User.join_group(self.user.username, 'nonexistent group name')
 
 
-class TestUserUpdate(XmlrpcAPIBaseTest):
+class TestUserUpdate(APITestCase):
     """Test User.update"""
 
     def _fixture_setup(self):

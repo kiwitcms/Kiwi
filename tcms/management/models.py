@@ -4,8 +4,8 @@ from django.conf import settings
 from django.db import models
 
 from tcms.core.models import TCMSActionModel
-from tcms.rpc.serializer import ProductXMLRPCSerializer
-from tcms.rpc.serializer import BuildXMLRPCSerializer
+from tcms.rpc.serializer import BuildRPCSerializer
+from tcms.rpc.serializer import ProductRPCSerializer
 
 
 class Classification(TCMSActionModel):
@@ -32,7 +32,7 @@ class Product(TCMSActionModel):
     def to_xmlrpc(cls, query=None):
         _query = query or {}
         query_set = cls.objects.filter(**_query).order_by('pk')
-        serializer = ProductXMLRPCSerializer(model_class=cls, queryset=query_set)
+        serializer = ProductRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -132,7 +132,7 @@ class Build(TCMSActionModel):
     def to_xmlrpc(cls, query=None):
         query = query or {}
         query_set = cls.objects.filter(**query).order_by('pk')
-        serializer = BuildXMLRPCSerializer(model_class=cls, queryset=query_set)
+        serializer = BuildRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def __str__(self):

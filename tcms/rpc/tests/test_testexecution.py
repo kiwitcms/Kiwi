@@ -9,7 +9,7 @@ from django.utils import timezone
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import (BuildFactory, ProductFactory,
                                   TestCaseFactory, TestExecutionFactory,
@@ -18,7 +18,7 @@ from tcms.tests.factories import (BuildFactory, ProductFactory,
 
 
 @override_settings(LANGUAGE_CODE='en')
-class TestExecutionCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
+class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-attributes
     """Test TestExecution.create"""
 
     def _fixture_setup(self):
@@ -127,7 +127,7 @@ class TestExecutionCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instan
             self.rpc_client.exec.TestExecution.create(values)
 
 
-class TestExecutionAddComment(XmlrpcAPIBaseTest):
+class TestExecutionAddComment(APITestCase):
     """Test TestExecution.add_comment"""
 
     def _fixture_setup(self):
@@ -147,7 +147,7 @@ class TestExecutionAddComment(XmlrpcAPIBaseTest):
 
 
 @override_settings(LANGUAGE_CODE='en')
-class TestExecutionAddLink(XmlrpcAPIBaseTest):
+class TestExecutionAddLink(APITestCase):
     """Test TestExecution.add_link"""
 
     def _fixture_setup(self):
@@ -172,7 +172,7 @@ class TestExecutionAddLink(XmlrpcAPIBaseTest):
         self.assertEqual(result['url'], url)
 
 
-class TestExecutionRemoveLink(XmlrpcAPIBaseTest):
+class TestExecutionRemoveLink(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -210,7 +210,7 @@ class TestExecutionRemoveLink(XmlrpcAPIBaseTest):
         self.assertEqual([], list(self.case_run.links()))
 
 
-class TestExecutionFilter(XmlrpcAPIBaseTest):
+class TestExecutionFilter(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -237,7 +237,7 @@ class TestExecutionFilter(XmlrpcAPIBaseTest):
         self.assertEqual(tcr['status_id'], self.status_idle.pk)
 
 
-class TestExecutionGetLinks(XmlrpcAPIBaseTest):
+class TestExecutionGetLinks(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -270,7 +270,7 @@ class TestExecutionGetLinks(XmlrpcAPIBaseTest):
 
 
 @override_settings(LANGUAGE_CODE='en')
-class TestExecutionUpdate(XmlrpcAPIBaseTest):
+class TestExecutionUpdate(APITestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()

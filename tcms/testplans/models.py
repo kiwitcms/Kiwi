@@ -15,7 +15,7 @@ from tcms.management.models import Version
 from tcms.testcases.models import (Category, TestCase, TestCasePlan,
                                    TestCaseStatus)
 
-from tcms.rpc.serializer import TestPlanXMLRPCSerializer
+from tcms.rpc.serializer import TestPlanRPCSerializer
 from tcms.rpc.utils import distinct_filter
 
 
@@ -65,7 +65,7 @@ class TestPlan(TCMSActionModel):
 
         _query = query or {}
         qs = distinct_filter(TestPlan, _query).order_by('pk')
-        serializer = TestPlanXMLRPCSerializer(model_class=cls, queryset=qs)
+        serializer = TestPlanRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
     @classmethod

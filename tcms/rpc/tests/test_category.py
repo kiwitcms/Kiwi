@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import CategoryFactory, ProductFactory
 
 
-class TestCategory(XmlrpcAPIBaseTest):
+class TestCategory(APITestCase):
 
     def _fixture_setup(self):
         super(TestCategory, self)._fixture_setup()

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from tcms.rpc.tests.utils import XmlrpcAPIBaseTest
+from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import ProductFactory
 
 
-class TestFilter(XmlrpcAPIBaseTest):
+class TestFilter(APITestCase):
 
     def _fixture_setup(self):
         super(TestFilter, self)._fixture_setup()

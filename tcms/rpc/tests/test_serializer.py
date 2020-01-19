@@ -8,7 +8,7 @@ from django import test
 from django.utils import timezone
 
 from tcms.management.models import Product
-from tcms.rpc.serializer import (QuerySetBasedXMLRPCSerializer, Serializer,
+from tcms.rpc.serializer import (QuerySetBasedRPCSerializer, Serializer,
                                  _get_related_object_pks, datetime_to_str,
                                  do_nothing, to_str)
 from tcms.testcases.models import TestCase
@@ -58,7 +58,7 @@ class TestUtilityMethods(unittest.TestCase):
         self.assertEqual(expected_value, value)
 
 
-class MockTestPlanSerializer(QuerySetBasedXMLRPCSerializer):
+class MockTestPlanSerializer(QuerySetBasedRPCSerializer):
     values_fields_mapping = {
         'create_date': ('create_date', datetime_to_str),
         'extra_link': ('extra_link', do_nothing),
@@ -79,7 +79,7 @@ class MockTestPlanSerializer(QuerySetBasedXMLRPCSerializer):
     m2m_fields = ('case',)
 
 
-class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
+class MockTestCaseSerializer(QuerySetBasedRPCSerializer):
     primary_key = 'case_id'
 
     values_fields_mapping = {
@@ -95,7 +95,7 @@ class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class TestQuerySetBasedSerializer(test.TestCase):
-    """Test QuerySetBasedXMLRPCSerializer"""
+    """Test QuerySetBasedRPCSerializer"""
 
     @classmethod
     def setUpTestData(cls):
@@ -143,7 +143,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
             product_keys.append(product.pk)
 
         cls.products = Product.objects.filter(pk__in=product_keys)
-        cls.product_serializer = QuerySetBasedXMLRPCSerializer(Product, cls.products)
+        cls.product_serializer = QuerySetBasedRPCSerializer(Product, cls.products)
 
     def test_get_values_fields_mapping(self):
         mapping = self.product_serializer._get_values_fields_mapping()
