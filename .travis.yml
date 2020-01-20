@@ -53,13 +53,19 @@ jobs:
 
     - env:
         - CMD=test
+        - TEST_DB=SQLite
+
+    - env:
+        - CMD=test
         - TEST_DB=MariaDB
+        - LANG=sl
       addons:
         mariadb: 10.3
 
     - env:
         - CMD=test
         - TEST_DB=Postgres
+        - LANG=fr
       addons:
         postgresql: 10
         apt:
@@ -70,22 +76,7 @@ jobs:
     - if: branch = master AND type = push
       env:
         - CMD=test
-        - TEST_DB=SQLite
-
-    - if: branch = master AND type = push
-      env:
-        - CMD=test
         - TEST_DB=MySQL
-
-    - env:
-        - CMD=l10n-test
-        - LANG=fr
-        - TEST_DB=SQLite
-
-    - env:
-        - CMD=l10n-test
-        - LANG=sl
-        - TEST_DB=SQLite
 
     - env:
         - CMD=check-docs-source-in-git

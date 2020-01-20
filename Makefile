@@ -26,6 +26,7 @@ endif
 
 .PHONY: test
 test:
+	./manage.py compilemessages
 	if [ "$$TEST_DB" == "all" ]; then \
 		for DB in SQLite MySQL Postgres MariaDB; do \
 			TEST_DB=$$DB make test; \
@@ -33,12 +34,6 @@ test:
 	else \
 		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test --noinput --settings=$(DJANGO_SETTINGS_MODULE); \
 	fi
-
-
-.PHONY: l10n-test
-l10n-test:
-	./manage.py compilemessages
-	@make test
 
 
 # test for missing migrations
