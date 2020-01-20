@@ -37,8 +37,8 @@ class TestPlan(TCMSActionModel):
     plan_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, db_index=True)
     text = models.TextField(blank=True)
-    create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
-    is_active = models.BooleanField(db_column='isactive', default=True, db_index=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True, db_index=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)

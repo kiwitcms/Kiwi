@@ -67,7 +67,7 @@ class TestCase(TCMSActionModel):
     history = KiwiHistoricalRecords()
 
     case_id = models.AutoField(primary_key=True)
-    create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
+    create_date = models.DateTimeField(auto_now_add=True)
     is_automated = models.BooleanField(default=False)
     script = models.TextField(blank=True, null=True)
     arguments = models.TextField(blank=True, null=True)
