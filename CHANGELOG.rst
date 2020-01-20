@@ -76,7 +76,7 @@ Bug fixes
 Refactoring
 ~~~~~~~~~~~
 
-- Add code of conduct. Fixes #1185
+- Add code of conduct. Fixes
   `Issue #1185 <https://github.com/kiwitcms/Kiwi/issues/1185>`_ (Rosen Sasov)
 - Add test for ``KIWI_DONT_ENFORSE_HTTPS``. Closes
   `Issue #1274 <https://github.com/kiwitcms/Kiwi/issues/1274>`_
