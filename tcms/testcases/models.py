@@ -199,16 +199,6 @@ class TestCase(TCMSActionModel):
     def add_tag(self, tag):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
-    def get_previous_and_next(self, pk_list):
-        current_idx = pk_list.index(self.pk)
-        prev = TestCase.objects.get(pk=pk_list[current_idx - 1])
-        try:
-            _next = TestCase.objects.get(pk=pk_list[current_idx + 1])
-        except IndexError:
-            _next = TestCase.objects.get(pk=pk_list[0])
-
-        return (prev, _next)
-
     def get_text_with_version(self, case_text_version=None):
         if case_text_version:
             try:
