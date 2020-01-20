@@ -153,7 +153,7 @@ install:
 script: make $CMD
 after_success:
   - |
-        if [ "$TRAVIS_BUILD_STAGE_NAME" == "Testing" ] && [ "$TEST_DB" == "MariaDB" ]; then
+        if [ "$TEST_DB" == "MariaDB" ]; then
             coveralls
             codecov
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
