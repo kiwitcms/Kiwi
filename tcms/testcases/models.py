@@ -39,10 +39,6 @@ class TestCaseStatus(TCMSActionModel):
     def get_confirmed(cls):
         return cls.objects.get(name='CONFIRMED')
 
-    @classmethod
-    def string_to_instance(cls, name):
-        return cls.objects.get(name=name)
-
     def is_confirmed(self):
         with override('en'):
             return self.name == 'CONFIRMED'
