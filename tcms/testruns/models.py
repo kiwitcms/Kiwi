@@ -325,7 +325,7 @@ class TestRunTag(models.Model):
 
 class TestRunCC(models.Model):
     run = models.ForeignKey(TestRun, related_name='cc_list', on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('run', 'user')

@@ -50,7 +50,7 @@ class Product(TCMSActionModel):
 
 class Priority(TCMSActionModel):
     value = models.CharField(unique=True, max_length=64)
-    is_active = models.BooleanField(db_column='isactive', default=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['value']
@@ -65,15 +65,13 @@ class Component(TCMSActionModel):
     product = models.ForeignKey(Product, related_name='component', on_delete=models.CASCADE)
     initial_owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        db_column='initialowner',
-        related_name='initialowner',
+        related_name='initial_owner',
         null=True,
         on_delete=models.CASCADE
     )
     initial_qa_contact = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        db_column='initialqacontact',
-        related_name='initialqacontact',
+        related_name='initial_qa_contact',
         blank=True,
         null=True,
         on_delete=models.CASCADE
@@ -115,7 +113,7 @@ class Build(TCMSActionModel):
     build_id = models.AutoField(unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name='build', on_delete=models.CASCADE)
-    is_active = models.BooleanField(db_column='isactive', default=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['name']
@@ -136,7 +134,7 @@ class Build(TCMSActionModel):
 
 class Tag(TCMSActionModel):
     id = models.AutoField(db_column='tag_id', primary_key=True)
-    name = models.CharField(db_column='tag_name', max_length=255)
+    name = models.CharField(max_length=255)
 
     class Meta:
         ordering = ['name']
