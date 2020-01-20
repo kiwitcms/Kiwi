@@ -11,5 +11,4 @@ Tutorial
    guide/testplan.rst
    guide/testcase.rst
    guide/testrun.rst
-   guide/report.rst
    guide/appendix.rst
