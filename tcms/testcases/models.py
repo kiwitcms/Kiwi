@@ -120,35 +120,6 @@ class TestCase(TCMSActionModel):
         serializer = TestCaseXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
-    # todo: does this check permissions ???
-    @classmethod
-    def create(cls, author, values):
-        """
-        Create the case element based on models/forms.
-        """
-        case = cls.objects.create(
-            author=author,
-            is_automated=values['is_automated'],
-            # sortkey = values['sortkey'],
-            script=values['script'],
-            arguments=values['arguments'],
-            extra_link=values['extra_link'],
-            summary=values['summary'],
-            requirement=values['requirement'],
-            case_status=values['case_status'],
-            category=values['category'],
-            priority=values['priority'],
-            default_tester=values['default_tester'],
-            notes=values['notes'],
-            text=values['text'],
-        )
-
-        # todo: should use add_tag
-        tags = values.get('tag')
-        if tags:
-            map(case.add_tag, tags)
-        return case
-
     @classmethod
     def list(cls, query, plan=None):
         """List the cases with request"""
