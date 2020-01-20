@@ -9,7 +9,6 @@ from tcms.rpc.serializer import ProductRPCSerializer
 
 
 class Classification(TCMSActionModel):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=64)
 
     def __str__(self):
@@ -20,7 +19,6 @@ class Classification(TCMSActionModel):
 
 
 class Product(TCMSActionModel):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=64)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
@@ -51,7 +49,6 @@ class Product(TCMSActionModel):
 
 
 class Priority(TCMSActionModel):
-    id = models.AutoField(primary_key=True)
     value = models.CharField(unique=True, max_length=64)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
@@ -64,7 +61,6 @@ class Priority(TCMSActionModel):
 
 
 class Component(TCMSActionModel):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     product = models.ForeignKey(Product, related_name='component', on_delete=models.CASCADE)
     initial_owner = models.ForeignKey(
@@ -96,7 +92,6 @@ class Component(TCMSActionModel):
 
 
 class Version(TCMSActionModel):
-    id = models.AutoField(primary_key=True)
     value = models.CharField(max_length=192)
     product = models.ForeignKey(Product, related_name='version', on_delete=models.CASCADE)
 
