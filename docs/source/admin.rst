@@ -27,6 +27,7 @@ in devel mode. To update the setting go to
 Update **Domain name** to the fully qualified domain name or IP address,
 including port if necessary and click the Save button!
 
+|Base URL configuration|
 
 .. _configure-bug-trackers:
 
@@ -90,7 +91,7 @@ To add a group:
 
 #. In the add group screen, perform the following actions:
 
-   -  Enter the **Group Name**.
+   -  Enter the **Name** for the group.
    -  From **Available permissions**, select the Group's permissions.
 
 #. Click **Add**.
@@ -322,7 +323,7 @@ performed or convey additional information about the test case. Similar
 information may also be conveyed with tags, properties or in other way
 so it is up to you to decide how you want to organize your testing workflow!
 
-
+.. |Base URL configuration| image:: ./_static/Configure_base_url.png
 .. |The Administration screen| image:: ./_static/Admin_Home.png
 .. |The Auth screen| image:: ./_static/Auth_Home.png
 .. |The Admin menu 1| image:: ./_static/Click_Auth.png
