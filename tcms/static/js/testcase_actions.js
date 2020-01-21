@@ -48,43 +48,6 @@ function toggleExpandArrow(options) {
 }
 
 
-function toggleTestCaseContents(template_type, container, content_container, object_pk, case_text_version, execution_id, callback) {
-  if (typeof container === 'string') {
-    var container = jQ('#' + container)[0];
-  }
-
-  if(typeof content_container === 'string') {
-    var content_container = jQ('#' + content_container)[0];
-  }
-
-  jQ(content_container).toggle();
-
-  if (jQ('#id_loading_' + object_pk).length) {
-    var url = Nitrate.http.URLConf.reverse({ name: 'case_details', arguments: {id: object_pk} });
-    var parameters = {
-      template_type: template_type,
-      case_text_version: case_text_version,
-      execution_id: execution_id
-    };
-
-    jQ.ajax({
-      'url': url,
-      'data': parameters,
-      'success': function (data, textStatus, jqXHR) {
-        jQ(content_container).html(data);
-      },
-      'error': function (jqXHR, textStatus, errorThrown) {
-        html_failure();
-      },
-      'complete': function (jqXHR, textStatus) {
-        callback(jqXHR);
-      }
-    });
-  }
-
-  toggleExpandArrow({ caseRowContainer: jQ(container), expandPaneContainer: jQ(content_container) });
-}
-
 function changeTestCaseStatus(plan_id, case_ids, new_value, container) {
     case_ids.forEach(function(element) {
         jsonRPC('TestCase.update', [element, {case_status: new_value}], function(data) {});

@@ -250,9 +250,6 @@ Nitrate.TestRuns.AssignCase.on_load = function() {
   jQ('.js-close-how-assign').bind('click', function() {
     jQ('#help_assign').hide();
   });
-  jQ('.js-toggle-button, .js-case-summary').bind('click', function() {
-    toggleTestCaseContents(jQ(this).data('param'));
-  });
 };
 
 function updateExecutionStatus(updateForm, executionId, caseId, executionStatusPk) {
