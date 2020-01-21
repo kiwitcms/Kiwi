@@ -328,13 +328,6 @@ def update(case_id, values):
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
     test_case = TestCase.objects.get(pk=case_id)
-
-    # initialize mandatory values for FK fields if they are
-    # not specified by the caller
-    for fk_field in ('author', 'case_status', 'category', 'priority'):
-        if not (values.get(fk_field) or values.get(fk_field + '_id')):
-            values[fk_field] = getattr(test_case, fk_field + '_id')
-
     form = UpdateForm(values, instance=test_case)
 
     if form.is_valid():

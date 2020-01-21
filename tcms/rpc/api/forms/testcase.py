@@ -28,3 +28,6 @@ class UpdateForm(forms.ModelForm):
 
         for field in self.fields:
             self.fields[field].required = False
+            # will cause BaseForm._clean_fields() to reuse the value
+            # from self.initial (<-- self.instance) if not specified
+            self.fields[field].disabled = field not in data
