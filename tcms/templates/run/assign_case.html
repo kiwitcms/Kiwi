@@ -93,7 +93,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 							<a href="{% url "testcases-get" test_case.case %}">{{ test_case.case }}</a>
 						</td>
 						<td class="js-case-summary" data-param="{{ forloop.counter }}" >
-							<a id="link_{{ forloop.counter }}" class="blind_title_link" href="javascript:void(0);">
+							<a id="link_{{ forloop.counter }}" class="blind_title_link" href="{% url "testcases-get" test_case.case %}">
 								{{ test_case.case__summary }}
 							</a>
 						</td>

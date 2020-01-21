@@ -517,15 +517,17 @@ class TestAddCasesToRun(BaseCaseRun):
         # Check listed case properties
         # note: the response is ordered by 'case'
         for loop_counter, case in enumerate(confirmed_cases, 1):
+            case_url = reverse('testcases-get', args=[case.pk])
             html_pieces = [
                 '<a href="{0}">{1}</a>'.format(
-                    reverse('testcases-get', args=[case.pk]),
+                    case_url,
                     case.pk),
 
                 '<td class="js-case-summary" data-param="{0}">'
                 '<a id="link_{0}" class="blind_title_link" '
-                'href="javascript:void(0);">{1}</a></td>'.format(loop_counter,
-                                                                 case.summary),
+                'href="{2}">{1}</a></td>'.format(loop_counter,
+                                                 case.summary,
+                                                 case_url),
 
                 '<td>{0}</td>'.format(case.author.username),
                 '<td>{0}</td>'.format(
