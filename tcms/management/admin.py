@@ -39,8 +39,8 @@ class VersionAdmin(admin.ModelAdmin):
 
 
 class BuildAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'build_id')
-    list_display = ('build_id', 'name', 'product', 'is_active')
+    search_fields = ('name', 'id')
+    list_display = ('id', 'name', 'product', 'is_active')
     list_filter = ('product',)
 
 

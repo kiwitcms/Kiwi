@@ -509,7 +509,7 @@ class BuildRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for Build"""
 
     values_fields_mapping = {
-        'build_id': ('build_id', do_nothing),
+        'id': ('id', do_nothing),
         'is_active': ('is_active', do_nothing),
         'name': ('name', do_nothing),
         'product': ('product_id', do_nothing),

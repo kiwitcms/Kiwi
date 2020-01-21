@@ -46,7 +46,7 @@ function update_version_select_from_product() {
 */
 function update_build_select_from_product(keep_first) {
     var updateCallback = function(data) {
-        updateSelect(data, '#id_build', 'build_id', 'name')
+        updateSelect(data, '#id_build', 'id', 'name')
     }
 
     if (keep_first === true) {

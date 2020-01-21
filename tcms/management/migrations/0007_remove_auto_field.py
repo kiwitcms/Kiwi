@@ -6,11 +6,24 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
+    atomic = False
+
     dependencies = [
         ('management', '0006_remove_autofield_max_length'),
     ]
 
     operations = [
+        migrations.RenameField(
+            model_name='build',
+            old_name='build_id',
+            new_name='id',
+        ),
+        migrations.AlterField(
+            model_name='build',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True,
+                                   serialize=False, verbose_name='ID'),
+        ),
         migrations.AlterField(
             model_name='build',
             name='is_active',

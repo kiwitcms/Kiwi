@@ -110,7 +110,6 @@ class Version(TCMSActionModel):
 
 
 class Build(TCMSActionModel):
-    build_id = models.AutoField(unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name='build', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
