@@ -84,10 +84,6 @@ var default_messages = {
 
   http.URLConf = {
     _mapping: {
-      login: '/accounts/login/',
-      logout: '/accounts/logout/',
-
-      case_details: '/case/$id/',
       search_case: '/cases/',
     },
 
