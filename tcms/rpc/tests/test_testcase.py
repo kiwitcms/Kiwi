@@ -74,12 +74,13 @@ class TestUpdate(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory(text='')
+        self.testcase = TestCaseFactory(summary='Sanity test case', text='Given-When-Then')
         self.new_author = UserFactory()
 
     def test_update_text_and_product(self):
         author_pk = self.testcase.author.pk
-        self.assertEqual('', self.testcase.text)
+        self.assertEqual('Sanity test case', self.testcase.summary)
+        self.assertEqual('Given-When-Then', self.testcase.text)
 
         # update the test case
         updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
@@ -112,6 +113,30 @@ class TestUpdate(XmlrpcAPIBaseTest):
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
+
+    def test_update_priority_issue_1318(self):
+        expected_priority = Priority.objects.exclude(pk=self.testcase.priority.pk).first()
+
+        self.assertNotEqual(expected_priority.pk, self.testcase.priority.pk)
+        self.assertEqual('Sanity test case', self.testcase.summary)
+        self.assertEqual('Given-When-Then', self.testcase.text)
+
+        # update the test case
+        self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'priority': expected_priority.pk,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        # priority has changed
+        self.assertEqual(expected_priority.pk, self.testcase.priority.pk)
+
+        # but nothing else changed, issue #1318
+        self.assertEqual('Sanity test case', self.testcase.summary)
+        self.assertEqual('Given-When-Then', self.testcase.text)
 
 
 class TestCreate(XmlrpcAPIBaseTest):
