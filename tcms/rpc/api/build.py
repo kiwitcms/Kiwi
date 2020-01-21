@@ -73,7 +73,7 @@ def update(build_id, values):
         :raises: Build.DoesNotExist if build not found
         :raises: PermissionDenied if missing *management.change_build* permission
     """
-    selected_build = Build.objects.get(build_id=build_id)
+    selected_build = Build.objects.get(pk=build_id)
 
     def _update_value(obj, name, value):
         setattr(obj, name, value)

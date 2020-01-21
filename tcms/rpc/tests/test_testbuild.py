@@ -138,7 +138,7 @@ class BuildFilter(APITestCase):
     def test_build_filter_with_id(self):
         b = self.rpc_client.exec.Build.filter({'pk': self.build.pk})[0]
         self.assertIsNotNone(b)
-        self.assertEqual(b['build_id'], self.build.pk)
+        self.assertEqual(b['id'], self.build.pk)
         self.assertEqual(b['name'], self.build.name)
         self.assertEqual(b['product_id'], self.product.pk)
         self.assertTrue(b['is_active'])
@@ -149,7 +149,7 @@ class BuildFilter(APITestCase):
             'product': self.product.pk
         })[0]
         self.assertIsNotNone(b)
-        self.assertEqual(b['build_id'], self.build.pk)
+        self.assertEqual(b['id'], self.build.pk)
         self.assertEqual(b['name'], self.build.name)
         self.assertEqual(b['product_id'], self.product.pk)
         self.assertEqual(b['is_active'], True)
