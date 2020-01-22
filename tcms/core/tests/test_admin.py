@@ -140,3 +140,11 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertNotContains(response, '<a href="/admin/auth/user/%d/change/">%s</a>' %
                                (self.regular_user.pk, self.regular_user.username), html=True)
+
+    def test_admin_add_view(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.superuser.username,
+            password='password')
+        response = self.client.get(reverse('admin:testruns_testrun_add'))
+        self.assertRedirects(response, reverse('admin:testruns_testrun_changelist'))
+
