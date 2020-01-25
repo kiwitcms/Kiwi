@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from tcms.kiwi_auth import views
 
 urlpatterns = [
-    url(r'^(?P<username>[\w.@+-]+)/profile/$', views.profile,
+    url(r'^(?P<username>[\w.@+-]+)/profile/$', views.Profile.as_view(),
         name='tcms-profile'),
 
     url(r'^register/$', views.Register.as_view(), name='tcms-register'),
