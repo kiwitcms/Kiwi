@@ -88,7 +88,6 @@ class LoggedInTestCase(test.TestCase):
         self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
                           password='password')
 
-    # todo: create a lint plugin for that to enforce using the helper
     def assertJsonResponse(self, response, expected, status_code=200):
         self.assertEqual(status_code, response.status_code)
         self.assertJSONEqual(

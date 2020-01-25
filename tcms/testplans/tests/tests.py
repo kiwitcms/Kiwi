@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import json
 from http import HTTPStatus
 
 from django import test
-from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from uuslug import slugify
@@ -170,9 +168,9 @@ class TestSortCases(BasePlanCase):
             password='password')
 
         response = self.client.post(self.cases_url)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEqual(1, data['rc'])
-        self.assertEqual('At least one case is required to re-order.', data['response'])
+        self.assertJsonResponse(
+            response,
+            {'rc': 1, 'response': 'At least one case is required to re-order.'})
 
 
 class TestLinkCases(BasePlanCase):
