@@ -281,7 +281,7 @@ class TestEditCase(BasePlanCase):
     def test_404_if_case_id_not_exist(self):
         url = reverse('testcases-edit', args=[99999])
         response = self.client.get(url)
-        self.assert404(response)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_show_edit_page(self):
         response = self.client.get(self.case_edit_url)
