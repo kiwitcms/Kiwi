@@ -291,7 +291,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
         user_should_have_perm(self.tester, 'testruns.change_testrun')
         cc_url = reverse('testruns-cc', args=[999999])
         response = self.client.get(cc_url)
-        self.assert404(response)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def assert_cc(self, response, expected_cc):
         self.assertEqual(len(expected_cc), self.test_run.cc.count())  # pylint: disable=no-member

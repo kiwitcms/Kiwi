@@ -369,7 +369,7 @@ class TestCloneView(BasePlanCase):
             password='password')
 
         response = self.client.post(self.plan_clone_url, {'plan': 99999}, follow=True)
-        self.assert404(response)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_open_clone_page_to_clone_one_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg

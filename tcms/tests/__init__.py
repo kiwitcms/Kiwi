@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-from http import HTTPStatus
-
 from django import test
 from django.urls import reverse
 from django.conf import settings
@@ -89,10 +87,6 @@ class LoggedInTestCase(test.TestCase):
         super().setUp()
         self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
                           password='password')
-
-    # todo: create a lint plugin for that to enforce using the helper
-    def assert404(self, response):
-        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     # todo: create a lint plugin for that to enforce using the helper
     def assertJsonResponse(self, response, expected, status_code=200):
