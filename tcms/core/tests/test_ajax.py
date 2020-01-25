@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import json
 from http import HTTPStatus
 
 from django import test
-from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
 from django.urls import reverse
@@ -48,11 +46,7 @@ class TestTestCaseUpdates(BasePlanCase):
             'username': self.tester.username
         })
 
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEqual(result['rc'], 0)
-        self.assertEqual(result['response'], 'ok')
-
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
         self._assert_default_tester_is(self.tester)
 
     def test_update_default_tester_via_email(self):
@@ -63,11 +57,7 @@ class TestTestCaseUpdates(BasePlanCase):
             'username': self.tester.email
         })
 
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEqual(result['rc'], 0)
-        self.assertEqual(result['response'], 'ok')
-
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
         self._assert_default_tester_is(self.tester)
 
     def test_update_default_tester_non_existing_user(self):
@@ -78,11 +68,10 @@ class TestTestCaseUpdates(BasePlanCase):
             'username': username
         })
 
-        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
-        result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEqual(result['rc'], 1)
-        self.assertEqual(result['response'], _('User %s not found!') % username)
-
+        self.assertJsonResponse(
+            response,
+            {'rc': 1, 'response': _('User %s not found!') % username},
+            HTTPStatus.NOT_FOUND)
         self._assert_default_tester_is(None)
 
 

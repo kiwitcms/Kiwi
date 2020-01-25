@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-ancestors
 
-from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -27,9 +26,7 @@ class TestUpdateCaseRunStatusView(BaseCaseRun):
 
         response = self.client.post(self.url, post_data)
 
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok'})
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
 
         for caserun in [self.execution_1, self.execution_2]:
             caserun.refresh_from_db()

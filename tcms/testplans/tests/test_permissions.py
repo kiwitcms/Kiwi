@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import json
-
-from django.conf import settings
 from django.urls import reverse
-
 
 from tcms.tests import PermissionsTestCase, factories
 from tcms.tests.factories import TestCaseFactory
@@ -36,9 +32,7 @@ class ReorderCasesViewTestCase(PermissionsTestCase):
         self.assertGreater(case2.sortkey, case1.sortkey)
 
         response = self.client.post(self.url, self.post_data)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        self.assertEqual({'rc': 0, 'response': 'ok'}, data)
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
 
         # Post changes the order of cases
         case1.refresh_from_db()
