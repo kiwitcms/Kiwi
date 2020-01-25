@@ -116,7 +116,11 @@ def confirm(request, activation_key):
     return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
 
-def profile(request, username):
+class Profile(View):
     """Show user profiles"""
-    user = get_object_or_404(User, username=username)
-    return HttpResponseRedirect(reverse('admin:auth_user_change', args=[user.pk]))
+
+    http_method_names = ['get']
+
+    def get(self, request, username):
+        user = get_object_or_404(User, username=username)
+        return HttpResponseRedirect(reverse('admin:auth_user_change', args=[user.pk]))
