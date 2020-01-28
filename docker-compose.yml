@@ -3,9 +3,9 @@ version: '2'
 services:
     db:
         container_name: kiwi_db
-        image: centos/mariadb
+        image: centos/mariadb-103-centos7
         volumes:
-            - db_data:/var/lib/mysql
+            - db_data:/var/lib/mysql/data
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: kiwi-1s-aw3s0m3
