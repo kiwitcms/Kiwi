@@ -55,7 +55,7 @@ class CreateTestRunView(View):
 
         # Ready to write cases to test plan
         test_cases = get_selected_testcases(request)
-        test_plan = TestPlan.objects.get(plan_id=plan_id)
+        test_plan = TestPlan.objects.get(pk=plan_id)
 
         # note: ordered by case_id for test_show_create_new_run_page()
         tcs_values = test_cases.select_related('author',

@@ -48,7 +48,7 @@ def plan_from_request_or_none(request):  # pylint: disable=missing-permission-re
     test_plan_id = request.POST.get("from_plan") or request.GET.get("from_plan")
     if not test_plan_id:
         return None
-    return get_object_or_404(TestPlan, plan_id=test_plan_id)
+    return get_object_or_404(TestPlan, pk=test_plan_id)
 
 
 @method_decorator(permission_required('testcases.add_testcase'), name='dispatch')

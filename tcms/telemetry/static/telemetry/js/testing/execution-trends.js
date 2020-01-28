@@ -40,7 +40,7 @@ function drawChart() {
 
     const testPlanId = $('#id_test_plan').val();
     if (testPlanId) {
-        query['run__plan__plan_id'] = testPlanId;
+        query['run__plan__pk'] = testPlanId;
     }
 
     const dateBefore = $('#id_before');

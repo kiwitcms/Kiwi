@@ -58,7 +58,7 @@ Here are the latest {{ count }}.{% endblocktrans %}
                     </td>
                     <td>{{ test_plan.product }}</td>
                     <td>{{ test_plan.type }}</td>
-                    <td><a href="{% url 'testruns-search' %}?plan={{ test_plan.plan_id }}">{{ test_plan.num_runs }}</a></td>
+                    <td><a href="{% url 'testruns-search' %}?plan={{ test_plan.pk }}">{{ test_plan.num_runs }}</a></td>
                 </tr>
                 {% endif %}
             {% endfor %}

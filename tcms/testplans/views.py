@@ -75,7 +75,7 @@ class NewTestPlanView(View):
             update_plan_email_settings(test_plan, form)
 
             return HttpResponseRedirect(
-                reverse('test_plan_url_short', args=[test_plan.plan_id, ])
+                reverse('test_plan_url_short', args=[test_plan.pk, ])
             )
 
         context_data = {
@@ -219,7 +219,7 @@ def edit(request, plan_id):
     """Edit test plan view"""
 
     try:
-        test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
+        test_plan = TestPlan.objects.select_related().get(pk=plan_id)
     except ObjectDoesNotExist:
         raise Http404
 

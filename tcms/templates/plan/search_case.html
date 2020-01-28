@@ -23,7 +23,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 	<div class="Detailform border-1">
 		<div class="Detailform-variety_0">
                     <div class="grey tit">{% trans "Search cases to add into this test plan." %}</div>
-			<form action="{% url "plan-search-cases-for-link" test_plan.plan_id %}" method="post">
+			<form action="{% url "plan-search-cases-for-link" test_plan.pk %}" method="post">
 				<fieldset class="no-border">
 				<input type="hidden" name="a" value="link_cases" />
 				<input type="hidden" name="action" value="search" />
@@ -62,7 +62,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 			</form>
 			</fieldset>
 		</div>
-		<form id="id_form_cases" action="{% url "plan-link-cases" test_plan.plan_id %}" method="post">
+		<form id="id_form_cases" action="{% url "plan-link-cases" test_plan.pk %}" method="post">
 			{% if test_cases %}
 			<div class="middle-list" >
 				<div id="searchcase" class="mixbar">

@@ -10,14 +10,14 @@
 			<ul>
 				<li>
 					{% if perms.testcases.add_testcase %}
-					<span id="js-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'>{% trans "Case" %}</span>
+					<span id="js-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "testcases-new" %}", {{ test_plan.pk }}]'>{% trans "Case" %}</span>
 					{% else %}
 					<span class='sprites toolbar_case icon_plan'>{% trans "Case" %}</span>
 					{% endif %}
 					<ul>
 						{% if perms.testcases.add_testcase %}
-						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="{% trans "Write new case" %}" data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'/></li>
-						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="{% trans "Add cases from other plans" %}" data-param="{% url "plan-search-cases-for-link" test_plan.plan_id %}" /></li>
+						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="{% trans "Write new case" %}" data-params='["{% url "testcases-new" %}", {{ test_plan.pk }}]'/></li>
+						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="{% trans "Add cases from other plans" %}" data-param="{% url "plan-search-cases-for-link" test_plan.pk %}" /></li>
 						{% else %}
 						<li><input type="button" class="add_new icon_plan" disabled value="{% trans "Write new case" %}"/></li>
 						<li><input type="button" class="search icon_plan" disabled value="{% trans "Add cases from other plans" %}" /></li>
@@ -146,7 +146,7 @@
 	<label for="cases-select-all">{% trans "Also select all cases that are not yet shown below." %}</label>
 </div>
 <table class="list js-cases-list" cellpadding="1" cellspacing="0" border="0">
-	<thead data-param="{{ test_plan.plan_id }}">
+	<thead data-param="{{ test_plan.pk }}">
 		<tr>
 			<th class="nosort" align="left" width="18px">
 				<a id='id_blind_all_link' class="blind_all_link">
