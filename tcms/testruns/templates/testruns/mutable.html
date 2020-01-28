@@ -14,7 +14,7 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
-    <form class="form-horizontal" action="{% if object %}{% url 'testruns-edit' object.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
+    <form class="form-horizontal" action="{% if object %}{% url 'testruns-edit' object.pk %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
         <div class="form-group">

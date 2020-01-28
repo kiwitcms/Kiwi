@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('testruns', '0007_test_execution_statuses'),
+        ('testruns', '0008_test_execution_status_color_field'),
     ]
 
     operations = [
@@ -42,5 +42,33 @@ class Migration(migrations.Migration):
             name='user',
             field=models.ForeignKey(on_delete=models.deletion.CASCADE,
                                     to=settings.AUTH_USER_MODEL),
+        ),
+
+        # drop TestRun.run_id in favor of TestRun.id
+        migrations.AlterUniqueTogether(
+            name='testrun',
+            unique_together=set(),
+        ),
+        migrations.RenameField(
+            model_name='testrun',
+            old_name='run_id',
+            new_name='id',
+        ),
+        migrations.RenameField(
+            model_name='historicaltestrun',
+            old_name='run_id',
+            new_name='id',
+        ),
+        migrations.AlterField(
+            model_name='testrun',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True,
+                                   serialize=False, verbose_name='ID'),
+        ),
+        migrations.AlterField(
+            model_name='historicaltestrun',
+            name='id',
+            field=models.IntegerField(auto_created=True, blank=True,
+                                      db_index=True, verbose_name='ID'),
         ),
     ]

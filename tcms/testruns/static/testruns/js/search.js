@@ -58,11 +58,11 @@ $(document).ready(function() {
             dataTableJsonRPC('TestRun.filter', params, callback, pre_process_data);
         },
         columns: [
-            { data: "run_id" },
+            { data: "id" },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    result = '<a href="/runs/'+ data.run_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
+                    result = '<a href="/runs/'+ data.id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
                     if (data.stop_date) {
                         result += '<p class="help-block">' + data.stop_date + '</p>';
                     }

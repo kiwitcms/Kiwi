@@ -445,7 +445,7 @@ class TestRunRPCSerializer(QuerySetBasedRPCSerializer):
 
     values_fields_mapping = {
         'notes': ('notes', do_nothing),
-        'run_id': ('run_id', do_nothing),
+        'id': ('id', do_nothing),
         'start_date': ('start_date', datetime_to_str),
         'stop_date': ('stop_date', datetime_to_str),
         'summary': ('summary', do_nothing),

@@ -29,8 +29,6 @@ TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [
 class TestRun(TCMSActionModel):
     history = KiwiHistoricalRecords()
 
-    run_id = models.AutoField(primary_key=True)
-
     # todo: this field should be removed in favor of plan.product_version
     # no longer shown in edit forms
     product_version = models.ForeignKey('management.Version', related_name='version_run',
@@ -57,9 +55,6 @@ class TestRun(TCMSActionModel):
                                  related_name='run')
 
     cc = models.ManyToManyField(settings.AUTH_USER_MODEL, through='testruns.TestRunCC')
-
-    class Meta:
-        unique_together = ('run_id', 'product_version')
 
     def __str__(self):
         return self.summary
