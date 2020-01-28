@@ -1,6 +1,5 @@
 {% load i18n %}
 {% load static %}
-{% load comments %}
 {% load extra_filters %}
 {% load attachments_tags %}
 
@@ -12,16 +11,7 @@
 				{% if perms.django_comments.add_comment %}
 				<form class="update_form" method="POST">
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">
-						{% get_comment_form for execution as comment_form %}
-						<tr>
-							<td>
-								{{ comment_form.comment }}
-								{{ comment_form.content_type }}
-								{{ comment_form.object_pk }}
-								{{ comment_form.timestamp }}
-								{{ comment_form.security_hash }}
-							</td>
-						</tr>
+						<textarea name="comment" cols="40" rows="10" maxlength="3000" id="id_comment"></textarea>
 						<tr>
 							<td style="padding:5px 9px 10px 9px;">
 								<input type="hidden" name="type" value="html" />
