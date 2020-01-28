@@ -25,7 +25,7 @@ class DashboardView(TemplateView):
         test_plans = TestPlan.objects.filter(
             author=self.request.user
         ).order_by(
-            '-plan_id'
+            '-pk'
         ).select_related(
             'product', 'type'
         ).annotate(

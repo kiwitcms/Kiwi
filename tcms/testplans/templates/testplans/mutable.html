@@ -16,7 +16,7 @@
 {% block contents %}
 
     <div class="container-fluid container-cards-pf">
-        <form class="form-horizontal" action="{% if test_plan %}{% url 'plan-edit' test_plan.plan_id %}{% else %}{% url 'plans-new' %}{% endif %}" method="post">
+        <form class="form-horizontal" action="{% if test_plan %}{% url 'plan-edit' test_plan.pk %}{% else %}{% url 'plans-new' %}{% endif %}" method="post">
             {% csrf_token %}
 
             <div class="form-group">

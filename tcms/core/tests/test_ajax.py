@@ -101,14 +101,14 @@ class TestTagRender(BasePlanCase):
 
     def test_render_plan(self):
         response = self.client.get(self.url, {
-            'plan': self.test_plan.plan_id
+            'plan': self.test_plan.pk
         })
 
         self._assert_tags(response)
 
     def test_render_case(self):
         response = self.client.get(self.url, {
-            'case': self.test_case.case_id
+            'case': self.test_case.pk
         })
 
         self._assert_tags(response)

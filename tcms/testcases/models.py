@@ -176,7 +176,7 @@ class TestCase(TCMSActionModel):
             try:
                 # Is it an integer?  If so treat as a plan_id:
                 plan_id = int(plan_str)
-                queryset = queryset.filter(plan__plan_id=plan_id)
+                queryset = queryset.filter(plan__pk=plan_id)
             except ValueError:
                 # Not an integer - treat plan_str as a plan name:
                 queryset = queryset.filter(plan__name__icontains=plan_str)

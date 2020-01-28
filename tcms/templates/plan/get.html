@@ -40,11 +40,11 @@ Nitrate.TestPlans.Instance = {
 
 {% block contents %}
 <div id="content">
-	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ object.plan_id }}">
+	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ object.pk }}">
 	<div class="control">
 		<span id="id_buttons" class="button">
-			<input id="btn_edit" type="button" value="{% trans "Edit Plan" %}" title="{% trans "Edit test plan" %}" data-param="{% url 'plan-edit' object.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
-			<input id="btn_clone" type="button" value="{% trans "Clone Plan" %}" title="{% trans "Clone this plan to other product" %}" data-params='["{% url "plans-clone" %}", {{ object.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
+			<input id="btn_edit" type="button" value="{% trans "Edit Plan" %}" title="{% trans "Edit test plan" %}" data-param="{% url 'plan-edit' object.pk %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
+			<input id="btn_clone" type="button" value="{% trans "Clone Plan" %}" title="{% trans "Clone this plan to other product" %}" data-params='["{% url "plans-clone" %}", {{ object.pk }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
 			<input id="btn_print" type="button" value="{% trans "Print Plan" %}" title="{% trans "Print Plan" %}" data-params='["{% url "plans-printable" %}", {{ object.pk }}]'>
 			<input id="btn_delete" type="button" value="{% trans "Delete Plan" %}" title="{% trans "Delete test plan" %}" data-param="{% url 'admin:testplans_testplan_delete' object.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
 		</span>
