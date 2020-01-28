@@ -18,10 +18,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 
 {% block contents %}
 <div id="content">
-	<div id="tcms_values" class="hidden">
-		<input id="value_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}" />
-		<input id="value_product_id" type="hidden" mame="product_id" value="{{ test_plan.product_id }}">
-	</div>
 	<h2>{{ test_plan.name }}</h2>
 
 	<div class="Detailform border-1">

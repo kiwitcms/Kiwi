@@ -95,7 +95,7 @@ class CreateTestRunView(View):
                     loop += 1
 
                 return HttpResponseRedirect(
-                    reverse('testruns-get', args=[test_run.run_id, ])
+                    reverse('testruns-get', args=[test_run.pk, ])
                 )
 
         else:
@@ -136,8 +136,7 @@ def _open_run_get_executions(request, run):  # pylint: disable=missing-permissio
 
     executions = run.case_run.select_related(
         'run', 'case'
-    ).only('run__run_id',
-           'run__plan',
+    ).only('run_id',
            'status',
            'assignee',
            'tested_by',
@@ -196,7 +195,7 @@ class GetTestRunView(TemplateView):  # pylint: disable=missing-permission-requir
         # Get the test run
         try:
             # 1. get test run itself
-            test_run = TestRun.objects.select_related().get(run_id=kwargs['run_id'])
+            test_run = TestRun.objects.select_related().get(pk=kwargs['pk'])
         except ObjectDoesNotExist:
             raise Http404
 
@@ -304,7 +303,7 @@ class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-requ
         4. Statistics
         5. bugs
         """
-        run = TestRun.objects.select_related('manager', 'plan').get(pk=kwargs['run_id'])
+        run = TestRun.objects.select_related('manager', 'plan').get(pk=kwargs['pk'])
 
         case_runs = TestExecution.objects.filter(
             run=run
@@ -343,8 +342,8 @@ class CloneTestRunView(View):
     template_name = 'testruns/mutable.html'
     http_method_names = ['post']
 
-    def post(self, request, run_id):
-        test_run = get_object_or_404(TestRun, run_id=run_id)
+    def post(self, request, pk):
+        test_run = get_object_or_404(TestRun, pk=pk)
         confirmed_case_status = TestCaseStatus.get_confirmed()
         disabled_cases = 0
 
@@ -362,7 +361,7 @@ class CloneTestRunView(View):
             messages.add_message(request,
                                  messages.ERROR,
                                  _('At least one TestCase is required'))
-            return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
+            return HttpResponseRedirect(reverse('testruns-get', args=[pk]))
 
         form = NewRunForm(initial={
             'summary': _('Clone of ') + test_run.summary,
@@ -389,20 +388,20 @@ class ChangeTestRunStatusView(View):
 
     http_method_names = ['get']
 
-    def get(self, request, run_id):
-        test_run = get_object_or_404(TestRun, run_id=run_id)
+    def get(self, request, pk):
+        test_run = get_object_or_404(TestRun, pk=pk)
 
         test_run.update_completion_status(request.GET.get('finished') == '1')
         test_run.save()
 
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
+        return HttpResponseRedirect(reverse('testruns-get', args=[pk, ]))
 
 
 @method_decorator(permission_required('testruns.add_testexecution'), name='dispatch')
 class AddCasesToRunView(View):
     """Add cases to a TestRun"""
 
-    def post(self, request, run_id):
+    def post(self, request, pk):
         # Selected cases' ids to add to run
         test_cases_ids = request.POST.getlist('case')
         if not test_cases_ids:
@@ -411,7 +410,7 @@ class AddCasesToRunView(View):
             messages.add_message(request,
                                  messages.ERROR,
                                  _('At least one TestCase is required'))
-            return HttpResponseRedirect(reverse('add-cases-to-run', args=[run_id]))
+            return HttpResponseRedirect(reverse('add-cases-to-run', args=[pk]))
 
         try:
             test_cases_ids = list(map(int, test_cases_ids))
@@ -420,17 +419,18 @@ class AddCasesToRunView(View):
             messages.add_message(request,
                                  messages.ERROR,
                                  _('TestCase ID is not a valid integer'))
-            return HttpResponseRedirect(reverse('add-cases-to-run', args=[run_id]))
+            return HttpResponseRedirect(reverse('add-cases-to-run', args=[pk]))
 
         try:
-            test_run = TestRun.objects.select_related('plan').only('plan__plan_id').get(
-                run_id=run_id)
+            test_run = TestRun.objects.select_related(
+                'plan'
+            ).only('plan__plan_id').get(pk=pk)
         except ObjectDoesNotExist:
             raise Http404
 
         executions_ids = test_run.case_run.values_list('case', flat=True)
 
-        # avoid add cases that are already in current run with pk run_id
+        # avoid add cases that are already in current run with pk
         test_cases_ids = set(test_cases_ids) - set(executions_ids)
 
         test_plan = test_run.plan
@@ -451,16 +451,16 @@ class AddCasesToRunView(View):
                 test_run.add_case_run(case=test_case)
 
         return HttpResponseRedirect(reverse('testruns-get',
-                                            args=[test_run.run_id, ]))
+                                            args=[test_run.pk, ]))
 
-    def get(self, request, run_id):
+    def get(self, request, pk):
         # information about TestRun, used in the page header
         test_run = TestRun.objects.select_related(
             'plan', 'manager', 'build'
         ).only(
             'plan', 'plan__name',
             'manager__email', 'build__name'
-        ).get(run_id=run_id)
+        ).get(pk=pk)
 
         # select all CONFIRMED cases from the TestPlan that is a parent
         # of this particular TestRun
@@ -478,7 +478,7 @@ class AddCasesToRunView(View):
         # also grab a list of all TestCase IDs which are already present in the
         # current TestRun so we can mark them as disabled and not allow them to
         # be selected
-        executions = TestExecution.objects.filter(run=run_id).values_list('case', flat=True)
+        executions = TestExecution.objects.filter(run=pk).values_list('case', flat=True)
 
         data = {
             'test_run': test_run,
@@ -499,8 +499,8 @@ class ManageTestRunCC(View):
     template_name = 'run/get_cc.html'
     http_method_names = ['get']
 
-    def get(self, request, run_id):
-        test_run = get_object_or_404(TestRun, run_id=run_id)
+    def get(self, request, pk):
+        test_run = get_object_or_404(TestRun, pk=pk)
         action = request.GET.get('do')
         username_or_email = request.GET.get('user')
         context_data = {'test_run': test_run, 'is_ajax': True}
@@ -529,8 +529,8 @@ class UpdateCaseRunTextView(View):
 
     http_method_names = ['post']
 
-    def post(self, request, run_id):
-        test_run = get_object_or_404(TestRun, run_id=run_id)
+    def post(self, request, pk):
+        test_run = get_object_or_404(TestRun, pk=pk)
 
         if request.POST.get('case_run'):
             executions = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
@@ -552,7 +552,7 @@ class UpdateCaseRunTextView(View):
                 execution.case_text_version = latest_version
                 execution.save()
 
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
+        return HttpResponseRedirect(reverse('testruns-get', args=[pk]))
 
 
 def get_caseruns_of_runs(runs, kwargs=None):

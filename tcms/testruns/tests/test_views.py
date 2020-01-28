@@ -182,7 +182,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'from_plan': self.plan.pk,
             'product_id': self.test_run.plan.product_id,
             'do': 'clone_run',
-            'orig_run_id': self.test_run.pk,
             'POSTING_TO_CREATE': 'YES',
             'product': self.test_run.plan.product_id,
             'product_version': self.test_run.product_version.pk,
@@ -219,7 +218,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'from_plan': self.plan.pk,
             'product_id': self.test_run.plan.product_id,
             'do': 'clone_run',
-            'orig_run_id': self.test_run.pk,
             'POSTING_TO_CREATE': 'YES',
             'product': self.test_run.plan.product_id,
             'product_version': self.test_run.product_version.pk,
@@ -402,7 +400,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
         )
 
         response = self.client.post(self.update_url,
-                                    {'case_run': [self.execution_1.pk]},
+                                    {'pk': [self.execution_1.pk]},
                                     follow=True)
 
         self.assertContains(response, expected_text)
@@ -441,7 +439,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
         )
 
         response = self.client.post(self.update_url,
-                                    {'case_run': [self.execution_1.pk]},
+                                    {'pk': [self.execution_1.pk]},
                                     follow=True)
 
         self.assertRedirects(

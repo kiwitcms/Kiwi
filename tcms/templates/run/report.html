@@ -15,7 +15,7 @@
 <body>
 	<div class="report_title">
             {% trans "Test Execution Report" %}
-	<div class="report_sub_title"><a href='{% url "testruns-get" test_run.run_id %}'>[{{ test_run.run_id }}] {{ test_run.summary }}</a></div></div>
+	<div class="report_sub_title"><a href='{% url "testruns-get" test_run.pk %}'>[{{ test_run.pk }}] {{ test_run.summary }}</a></div></div>
 	<div class="report_content">
 	<div id="content">
 		<div class="listinfo_content" style="float:left; width:95%">

@@ -18,7 +18,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 
 {% block contents %}
 <div id="content">
-	<h2 id="display_title">Add TestCase(s) to <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a></h2>
+	<h2 id="display_title">Add TestCase(s) to <a href="{% url "testruns-get" test_run.pk %}">{{ test_run.summary }}</a></h2>
 	<table class="runsDetail" border="0" width="66%" cellspacing="0" cellpadding="0">
 		<tr class="cell">
                     <td class="lab">{% trans "Build" %}</td>
@@ -41,7 +41,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 			<td>{{ executions_count }}</td>
 		</tr>
 	</table>
-	<form action="{% url "add-cases-to-run" test_run.run_id %}" method="post">
+	<form action="{% url "add-cases-to-run" test_run.pk %}" method="post">
 		<div class="Detailform border-1" id="testcases_selected">
 			<div class="mixbar">
                             <span class="tit"><b>{% trans "Cases in this Run" %}: {{ executions_count }}</b></span>

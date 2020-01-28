@@ -38,7 +38,7 @@ class DashboardView(TemplateView):
             Q(default_tester=self.request.user) |
             Q(case_run__assignee=self.request.user),
             stop_date__isnull=True,
-        ).order_by('-run_id').distinct()
+        ).order_by('-pk').distinct()
 
         return {
             'test_plans_count': test_plans.count(),

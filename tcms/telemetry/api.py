@@ -88,7 +88,7 @@ def status_matrix(query=None):
             'case_id', 'run_id', 'case__summary', 'status'
     ).order_by('case_id', 'run_id'):
 
-        columns[test_execution.run.run_id] = test_execution.run.summary
+        columns[test_execution.run_id] = test_execution.run.summary
         test_execution_response = {
             'pk': test_execution.pk,
             'color': test_execution.status.color,

@@ -14,7 +14,7 @@
                         {% include "run/status_progress_patternfly.html" with stats=test_run.stats_executions_status %}
                     </td>
                     <td>
-                        <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a>
+                        <a href="{% url "testruns-get" test_run.pk %}">{{ test_run.summary }}</a>
                         <div>{% trans "Started at" %} {{ test_run.start_date }}</div>
                     </td>
                 </tr>
