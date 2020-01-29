@@ -9,8 +9,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.http import require_GET
-from django.views.generic.base import View
+from django.views.generic.base import View, RedirectView
 
 from tcms.kiwi_auth import forms
 from tcms.kiwi_auth.models import UserActivationKey
@@ -82,38 +81,40 @@ class Register(View):
         return render(request, self.template_name, {'form': self.form_class()})
 
 
-@require_GET
-def confirm(request, activation_key):
+class Confirm(RedirectView):
     """Confirm the user registration"""
 
-    # Get the object
-    try:
-        _activation_key = UserActivationKey.objects.select_related('user')
-        _activation_key = _activation_key.get(activation_key=activation_key)
-    except UserActivationKey.DoesNotExist:
+    http_method_names = ['get']
+
+    def get_redirect_url(self, *args, **kwargs):
+        self.url = self.request.GET.get('next', reverse('core-views-index'))
+        activation_key = kwargs['activation_key']
+        try:
+            _activation_key = UserActivationKey.objects.select_related('user')\
+                .get(activation_key=activation_key)
+        except UserActivationKey.DoesNotExist:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                _('This activation key no longer exists in the database')
+            )
+            return super().get_redirect_url(*args, **kwargs)
+
+        if _activation_key.key_expires <= timezone.now():
+            messages.add_message(self.request, messages.ERROR, _('This activation key has expired'))
+            return super().get_redirect_url(*args, **kwargs)
+
+        # All thing done, start to active the user and use the user login
+        _activation_key.user.is_active = True
+        _activation_key.user.save()
+        _activation_key.delete()
+
         messages.add_message(
-            request,
-            messages.ERROR,
-            _('This activation key no longer exists in the database')
+            self.request,
+            messages.SUCCESS,
+            _('Your account has been activated successfully')
         )
-        return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
-
-    if _activation_key.key_expires <= timezone.now():
-        messages.add_message(request, messages.ERROR, _('This activation key has expired'))
-        return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
-
-    # All thing done, start to active the user and use the user login
-    user = _activation_key.user
-    user.is_active = True
-    user.save(update_fields=['is_active'])
-    _activation_key.delete()
-
-    messages.add_message(
-        request,
-        messages.SUCCESS,
-        _('Your account has been activated successfully')
-    )
-    return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
+        return super().get_redirect_url(*args, **kwargs)
 
 
 class Profile(View):
