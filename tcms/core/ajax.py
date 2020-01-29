@@ -85,9 +85,6 @@ class _TagObjects:
     def plan(self):
         return 'management/get_tag.html', TestPlan.objects.get(pk=self.object_pk)
 
-    def case(self):
-        return 'management/get_tag.html', TestCase.objects.get(pk=self.object_pk)
-
 
 class _TagCounter:  # pylint: disable=too-few-public-methods
     """ Used for counting the number of times a tag is assigned to TestRun/TestCase/TestPlan """

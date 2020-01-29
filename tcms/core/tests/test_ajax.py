@@ -106,20 +106,11 @@ class TestTagRender(BasePlanCase):
 
         self._assert_tags(response)
 
-    def test_render_case(self):
-        response = self.client.get(self.url, {
-            'case': self.test_case.pk
-        })
-
-        self._assert_tags(response)
-
     def _assert_tags(self, response):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
         # asserting the number of tags for the given plan/case/run
         self.assertEqual(self.test_plan.tag.count(), 1)
-        self.assertEqual(self.test_case.tag.count(), 1)
-        self.assertEqual(self.test_run.tag.count(), 1)
 
         # asserting the number or plans/cases/runs the tag has been assigned to
         self.assertContains(response, '>4</a>')
@@ -142,13 +133,6 @@ class TestTagObjects(test.TestCase):
 
         self.assertEqual(tag_objects.get()[0], 'management/get_tag.html')
         self.assertEqual(tag_objects.get()[1], self.test_plan)
-
-    def test_get_case(self):
-        self.request.GET = {'case': self.test_case.pk}
-        tag_objects = _TagObjects(self.request)
-
-        self.assertEqual(tag_objects.get()[0], 'management/get_tag.html')
-        self.assertEqual(tag_objects.get()[1], self.test_case)
 
 
 class TestTagCounter(test.TestCase):
