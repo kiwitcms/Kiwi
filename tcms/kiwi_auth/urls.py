@@ -11,7 +11,7 @@ urlpatterns = [
         name='tcms-profile'),
 
     url(r'^register/$', views.Register.as_view(), name='tcms-register'),
-    url(r'^confirm/(?P<activation_key>[A-Za-z0-9\-]+)/$', views.confirm,
+    url(r'^confirm/(?P<activation_key>[A-Za-z0-9\-]+)/$', views.Confirm.as_view(),
         name='tcms-confirm'),
 
     url(r'^login/$', views.LoginViewWithCustomTemplate.as_view(), name='tcms-login'),
