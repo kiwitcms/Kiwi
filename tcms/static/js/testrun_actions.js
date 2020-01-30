@@ -222,7 +222,7 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('.js-caserun-total').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], '');
   });
-  jQ('.js-status-subtotal').bind('click', function() {
+  jQ('.status-link-button').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], jQ(this).data('param'));
   });
 };
@@ -302,6 +302,7 @@ function updateExecutionStatus(updateForm, executionId, caseId, executionStatusP
     const submitButtons = updateForm.find('.submit_button')
 
     bindSubmitButtons(updateForm, data.status_id, submitButtons, executionId, caseId)
+    drawPercentBar()
   });
 };
 
@@ -649,7 +650,10 @@ function showCommentForm() {
 
 jQ(document).ready(function(){
 
-  jsonRPC('TestExecutionStatus.filter', {}, data => executionStatuses = data)
+  jsonRPC('TestExecutionStatus.filter', {}, data => {
+    executionStatuses = data
+    drawPercentBar()
+  })
 
   jQ('.btnBlueCaserun').mouseover(function() {
     jQ(this).find('ul').show();
@@ -679,6 +683,66 @@ jQ(document).ready(function(){
     reloadWindow();
   });
 });
+
+function drawPercentBar() {
+
+  const testRunId = $('input[name="run_id"]').val()
+
+  jsonRPC('TestExecution.filter', {'run_id': testRunId}, testExecutions => {
+    
+    let positiveCount = 0;
+    let negativeCount = 0;
+    let allCount = testExecutions.length;
+    let statusCount = {}
+    executionStatuses.forEach(s => statusCount[s.name] = { count: 0, id: s.id })
+
+    testExecutions.forEach(testExecution => {
+      const executionStatus = executionStatuses.find(s => s.id === testExecution.status_id)
+
+      if (executionStatus.weight > 0) {
+        positiveCount++
+      } else if (executionStatus.weight < 0) {
+        negativeCount++
+      }
+
+      statusCount[executionStatus.name].count++
+    })
+  
+    renderProgressBars(positiveCount, negativeCount, allCount)
+    renderCountPerStatusList(statusCount)
+  })
+}
+
+function renderProgressBars(positiveCount, negativeCount, allCount) {
+  const completeCount = positiveCount + negativeCount;
+  const completePercent = +(completeCount / allCount * 100).toFixed(2);
+  const failurePercent = +(negativeCount / completeCount * 100).toFixed(2);
+  $(".progress-bar > .percent > .complete-percent").text(`${completePercent}%`)
+  $(".progress-bar > .progress-inner").css("width", `${completePercent}%`)
+  $(".progress-bar > .progress-inner > .progress-failed").css("width", `${failurePercent}%`)
+  $(".js-caserun-total").text(allCount)
+
+  $(".count-per-status-list").remove()
+  $(".count-per-status-container").prepend('<span class="count-per-status-list"></span>')
+}
+
+function renderCountPerStatusList(statusCount) {
+  for (var status in statusCount) {
+    let element = "0";
+    const count = statusCount[status].count
+    if (count) {
+      className = "status-link-button"
+      element = `<a href="#" class="status-link-button" data-param=${statusCount[status].id}>${count}</a>`
+    }
+
+    $(".count-per-status-list").append(`
+    <li>
+      <label>${status}</label>
+      [${element}]
+    </li>
+    `)
+  }
+}
 
 
 function bulkAddLinkToTestExecution() {

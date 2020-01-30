@@ -2,32 +2,22 @@
 {% load static %}
 
 <div class="statu" style="float:left;" >
-    {% include "run/status_progress.html" %}
-	<ul>
-		{% for status_pk, total_info in status_stats.StatusSubtotal.items %}
+	{% include "run/status_progress.html" %}
+	<ul class="count-per-status-container">
 		<li>
-			<label>{{ total_info.1.name }}</label>
-			{% ifnotequal total_info.0 0 %}
-			<span id='{{ total_info.1.name }}'>[<a href="javascript:void(0)" class="js-status-subtotal" data-param="{{ total_info.1.pk }}">{{ total_info.0 }}</a>]</span>
-			{% else %}
-			<span id='{{ total_info.1.name }}'>[<a>{{ total_info.0 }}</a>]</span>
-			{% endifnotequal %}
-		</li>
-		{% endfor %}
-		<li>
-                    <label>{% trans "TOTAL" %}</label>
-			<span id="TOTAL">[</span><a href="javascript:void(0)" class="js-caserun-total">{{ status_stats.CaseRunsTotalCount }}</a><span>]</span>
+			<label>{% trans "TOTAL" %}</label>
+			[<a href="#" class="js-caserun-total"></a>]
 		</li>
 	</ul>
 	<div class="clear"></div>
 	<ul>
-            <li style="background:url({% static 'images/btn_bg_report.png' %}) no-repeat; height:25px; line-height:25px; width:57px; padding-left:30px; margin-right:15px;"><a href="{% url "run-report" test_run.pk %}" title="report of test caserun">{% trans "Report" %}</a></li>
+		<li style="background:url({% static 'images/btn_bg_report.png' %}) no-repeat; height:25px; line-height:25px; width:57px; padding-left:30px; margin-right:15px;"><a href="{% url "run-report" test_run.pk %}" title="report of test caserun">{% trans "Report" %}</a></li>
 		<li style="background:url({% static 'images/btn_bg_showbug.png' %}) no-repeat; height:25px; line-height:25px; width:133px; padding-left:30px;">
 		{% ifnotequal execution_bugs_count 0 %}
-                <span id="total_run_bug_count"><a href="{% url "run-report" test_run.pk %}#buglist" title="Show All Bugs">{% trans "Bugs" %} [{{ execution_bugs_count }}]</a></span>
+			<span id="total_run_bug_count"><a href="{% url "run-report" test_run.pk %}#buglist" title="Show All Bugs">{% trans "Bugs" %} [{{ execution_bugs_count }}]</a></span>
 		{% else %}
-                <span id="total_run_bug_count"><a>{% trans "No Bugs" %}</a></span>
-			{% endifnotequal %}
+			<span id="total_run_bug_count"><a>{% trans "No Bugs" %}</a></span>
+		{% endifnotequal %}
 		</li>
 	</ul>
 </div>
