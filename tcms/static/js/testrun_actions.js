@@ -145,6 +145,9 @@ Nitrate.TestRuns.Details.on_load = function() {
       }
     });
   }
+
+  // todo: this broke in #1258 b/c status buttons no loger have the btn_status class
+  // it is related to #1326 b/c progress bar is updated here so it needs immediate fixing
   //bind click to status btn
   jQ('.btn_status').live('click', function() {
     var from = jQ(this).siblings('.btn_status:disabled')[0].title;
