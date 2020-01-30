@@ -720,25 +720,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .queries li label{padding:0 3px 0 0; color:#999999;}
 .queries p{clear:none; padding:0px; margin:0px;}
 
-/* caserun stutas icon */
-.btn_status {display:inline-block; width:23px; height:23px; line-height:23px; background:url(../images/ico_status.png) no-repeat; margin-right:4px; border:0px; float:left; cursor:pointer;}
-.btn_passed{background-position:0px -207px;}
-.btn_passed[disabled="True"]{background-position:0px -253px;}
-.btn_failed{background-position:0px -345px;}
-.btn_failed[disabled="True"]{background-position:0px -391px;}
-.btn_blocked{background-position:0px -483px;}
-.btn_blocked[disabled="True"]{background-position:0px -529px;}
-.btn_idle{background-position:0px -276px;}
-.btn_idle[disabled="True"]{background-position:0px -322px;}
-.btn_paused{background-position:0px -138px;}
-.btn_paused[disabled="True"]{background-position:0px -184px;}
-.btn_error{background-position:0px -414px;}
-.btn_error[disabled="True"]{background-position:0px -460px;}
-.btn_running{background-position:0px -69px;}
-.btn_running[disabled="True"]{background-position:0px -115px;}
-.btn_waived{background-position:0px 0px;}
-.btn_waived[disabled="True"]{background-position:0px -46px;}
-
 /* plan icon */
 .icon_plan{background-image:url(../images/ico_plan.png); background-repeat:no-repeat; background-color:transparent; display:block; border:0px; cursor:pointer; font-size:12px; margin-right:5px; padding-left:16px; line-height:18px; }
 

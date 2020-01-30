@@ -176,22 +176,6 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 #up:hover{background:url(../images/up_hover.png) no-repeat;}
 #down{ width:20px;  height:20px; float:left; }
 #down:hover{background:url(../images/down_hover.png) no-repeat;}
-.btn_passed{ background:url(../images/pass.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_passed_ban{ background:url(../images/pass_ban.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_failed { background:url(../images/failed.png) no-repeat; height:25px; width:25px;border:0;}
-.btn_failed_ban { border:0; background:url(../images/failed_ban.png) no-repeat; height:25px; width:25px;}
-.btn_blocked{ background:url(../images/blocked.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_blocked_ban{ background:url(../images/blocked_ban.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_idle{ background:url(../images/idle.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_idle_ban{ background:url(../images/idle_ban.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_paused{ background:url(../images/paused.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_paused_ban{ background:url(../images/paused_ban.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_error{ background:url(../images/error.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_error_ban{ background:url(../images/error_ban.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_running{ background:url(../images/running.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_running_ban{ background:url(../images/running_ban.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_waived{ background:url(../images/waived.png) no-repeat; height:25px; width:25px; border:0;}
-.btn_waived_ban{ background:url(../images/waived_ban.png) no-repeat; height:25px; width:25px; border:0;}
 .case_run{ width:100%; border-left:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc; float:left; padding:1px;}
 .run_evenRow{ background:#f1f1f1; width:100%; clear:both; padding:3px 0px; float:left;}
 .run_oddRow{ background:#fff; width:100%; padding:3px 0px; clear:both;}
