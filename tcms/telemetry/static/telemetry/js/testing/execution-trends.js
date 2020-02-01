@@ -54,6 +54,8 @@ function drawChart() {
     }
 
     jsonRPC('Testing.execution_trends', query, data => {
+        drawPassingRateSummary(data.status_count)
+
         const chartData = Object.entries(data.data_set).map(entry => [entry[0], ...entry[1]]);
         const categories = data.categories.map(testRunId => `TR-${testRunId}`);
 
@@ -92,4 +94,37 @@ function drawChart() {
         };
         c3.generate(config);
     });
+}
+
+function drawPassingRateSummary(status_count) {
+    const allCount = status_count.positive + status_count.negative + status_count.neutral
+    $('.passing-rate-summary .total').text(allCount)
+
+    const positivePercent = roundDown(status_count.positive / allCount * 100)
+    const positiveBar = $('.progress > .progress-bar-success')
+    const positiveRateText = `${positivePercent}%`
+    positiveBar.css('width', positiveRateText)
+    positiveBar.text(positiveRateText)
+    $('.passing-rate-summary .positive').text(status_count.positive)
+    
+    const neutralPercent = roundDown(status_count.neutral / allCount * 100)
+    const neutralRateText = `${neutralPercent}%`
+    const neutralBar = $('.progress > .progress-bar-remaining')
+    neutralBar.css('width', neutralRateText)
+    neutralBar.text(neutralRateText)
+    $('.passing-rate-summary .neutral').text(status_count.neutral)
+    
+    const negativePercent = roundDown(status_count.negative / allCount * 100)
+    const negativeRateText = `${negativePercent}%`
+    const negativeBar = $('.progress > .progress-bar-danger')
+    negativeBar.css('width', negativeRateText)
+    negativeBar.text(negativeRateText)
+    $('.passing-rate-summary .negative').text(status_count.negative)
+}
+
+// we need this function, because the standard library does not have
+// one that rounds the number down, which means that the sum
+// of the percents may become more than 100% and that breaksg the chart
+function roundDown(number) {
+    return Math.floor(number * 100) / 100
 }

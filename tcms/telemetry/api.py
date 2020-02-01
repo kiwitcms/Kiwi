@@ -138,8 +138,7 @@ def execution_trends(query=None):
         'neutral': 0,
     }
     run_id = 0
-    all_test_executions = TestExecution.objects.filter(**query).order_by('run_id')
-    for test_execution in all_test_executions:
+    for test_execution in TestExecution.objects.filter(**query).order_by('run_id'):
         status = test_execution.status
 
         if status.weight > 0:
@@ -168,18 +167,11 @@ def execution_trends(query=None):
     for _key, value in data_set.items():
         del value[0]
 
-    all_count = all_test_executions.count()
-    passing_rate_summary = {
-        'positive': round(status_count['positive'] / all_count * 100, 2),
-        'negative': round(status_count['negative'] / all_count * 100, 2),
-        'neutral': round(status_count['neutral'] / all_count * 100, 2),
-    }
-
     return {
         'categories': categories,
         'data_set': data_set,
         'colors': colors,
-        'passing_rate_summary': passing_rate_summary,
+        'status_count': status_count,
     }
 
 
