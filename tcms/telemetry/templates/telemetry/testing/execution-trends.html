@@ -9,6 +9,25 @@
     <div class="container-fluid container-cards-pf">
         {% include "telemetry/include/filters.html" %}
 
+        <div class="passing-rate-summary">
+            <div style="font-weight: bold; text-align: center; padding: 0.5rem">{% trans "TOTAL" %} - <span class="total"></span></div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar"></div>
+                <div class="progress-bar progress-bar-remaining" role="progressbar" style="color: black"></div>
+                <div class="progress-bar progress-bar-danger" role="progressbar"></div>
+            </div>
+            <div class="progress-description" style="display: flex; justify-content: space-between; max-width:100%">
+                <div>
+                    <span class="pficon pficon-ok"></span><span style="font-weight: bold;">{% trans "Positive" %} - <span class="positive"></span></span>
+                </div>
+                <div>
+                    <span class="pficon pficon-unknown"></span><strong>{% trans "Neutral" %} - <span class="neutral"></span></strong>
+                </div>
+                <div>
+                    <span class="pficon pficon-error-circle-o"></span><strong>{% trans "Negative" %}- <span class="negative"></span></strong>
+                </div>
+            </div>
+        </div>
         <div id="chart"></div>
     </div>
 
