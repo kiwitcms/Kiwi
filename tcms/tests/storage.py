@@ -9,6 +9,7 @@ def find_files():
     found_files = OrderedDict()
     for finder in get_finders():
         for path, storage in finder.list([]):
+            path = path.replace('\\', '/')
             if path not in found_files:
                 found_files[path] = (storage, path)
 
