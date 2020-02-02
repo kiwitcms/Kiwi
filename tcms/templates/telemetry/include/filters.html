@@ -1,0 +1,79 @@
+{% load i18n %}
+{% load static %}
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <div class="fa pficon-help help-tooltip" data-toggle="tooltip" data-placement="left"
+            title="{% trans 'Detailed information about test execution status' %}"></div>
+    </div>
+    <div class="form-group">
+        <label for="id_product" class="col-md-1 col-lg-1">
+            {% trans "Product" %}
+        </label>
+        <div class="col-md-3">
+            <select name="product" id="id_product" class="form-control selectpicker">
+                <option value="">----------</option>
+            </select>
+        </div>
+
+        <label for="id_version" class="col-md-1 col-lg-1">
+            {% trans "Version" %}
+        </label>
+        <div class="col-md-3">
+            <select name="version" id="id_version" class="form-control selectpicker">
+                <option value="">----------</option>
+            </select>
+        </div>
+
+        <label for="id_build" class="col-md-1 col-lg-1">
+            {% trans "Build" %}
+        </label>
+        <div class="col-md-3">
+            <select name="build" id="id_build" class="form-control selectpicker">
+                <option value="">----------</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="id_test_plan" class="col-md-1 col-lg-1">
+            {% trans "Test Plan" %}
+        </label>
+        <div class="col-md-3">
+            <select name="test_plan" id="id_test_plan" class="form-control selectpicker">
+                <option value="">----------</option>
+            </select>
+        </div>
+
+        <label class="col-md-1 col-lg-1" for="id_after">{% trans "After" %}</label>
+        <div class="col-md-3 col-lg-3">
+            <div class="input-group date-time-picker-pf">
+                <input type="text" class="form-control" id="id_after">
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+
+            {% include "datetimepicker_script.html" with selector="#id_after" %}
+        </div>
+
+        <label class="col-md-1 col-lg-1" for="id_before">{% trans "Before" %}</label>
+        <div class="col-md-3 col-lg-3">
+            <div class="input-group date-time-picker-pf">
+                <input type="text" class="form-control" id="id_before">
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+
+            {% include "datetimepicker_script.html" with selector="#id_before" %}
+        </div>
+    </div>
+</form>
+
+<link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/telemetry.css' %}" />
+
+<script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
