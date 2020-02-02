@@ -80,7 +80,11 @@ function drawTable() {
 
         Object.keys(data.columns).forEach(testRunId => {
             const testRunSummary = data.columns[testRunId];
-            $('.table > thead > tr').append(`<th>TR-${testRunId} ${testRunSummary}</th>`);
+            $('.table > thead > tr').append(`
+            <th class="header-test-run">
+                <a href="/runs/${testRunId}">TR-${testRunId}</a>
+                <span class="fa pficon-help" data-toggle="tooltip" data-placement="left" title="${testRunSummary}"></span>
+            </th>`);
 
             table_columns.push({
                 data: null,
@@ -99,6 +103,10 @@ function drawTable() {
 
         const cells = $('.table > tbody > tr > td:has(.execution-status)');
         Object.entries(cells).forEach(applyStyleToCell);
+
+        // initialize the tooltips by hand, because they are dinamically inserted
+        // and not handled by Bootstrap itself
+        $('span[data-toggle=tooltip]').tooltip();
     });
 }
 

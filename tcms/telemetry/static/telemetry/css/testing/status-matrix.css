@@ -1,5 +1,9 @@
 .table-with-horizontal-scroll {
     display: block;
     overflow-x: auto;
+    white-space: normal;
+}
+
+.header-test-run {
     white-space: nowrap;
 }
