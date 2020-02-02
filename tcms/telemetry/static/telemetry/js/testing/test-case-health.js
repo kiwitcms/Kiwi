@@ -70,6 +70,10 @@ function drawTable(selector, data) {
             },
             {
                 data: null,
+                render: renderVisualPercent
+            },
+            {
+                data: null,
                 render: renderFailedExecutionsColumn
             },
             {
@@ -94,4 +98,20 @@ function renderFailedExecutionsColumn(data) {
 // TODO: this can be moved to the back-end and provide the percentage there
 function renderPercentColumn(data) {
     return Number.parseFloat(data.count.fail / data.count.all * 100).toFixed(1);
+}
+
+function renderVisualPercent(data) {
+    const failPercent = data.count.fail / data.count.all * 100;
+
+    const colors = [];
+    const step = 20;
+    for (i = 0; i < 5; i++) {
+        if(failPercent > i * step) {
+            colors.push('#cc0000') // pf-red-100
+        } else {
+            colors.push('#3f9c35') // pf-green-400
+        }
+    }
+
+    return colors.reduce((prev, color) => prev += `<span class='visual-percent-box' style='background-color: ${color}'></span>\n`, '')
 }
