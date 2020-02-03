@@ -347,6 +347,7 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .case_detail .case_list{ width:50%; float:left;}
 .right_pannel{ float:right; margin-left:-265px; width:260px; padding-top:10px;}
 .case_detail .no-border td{ border:0px;}
+.case_detail ol{padding-left:1em;}
 
 /**********************************multiple select************/
 .last_login{ width:100%;}
