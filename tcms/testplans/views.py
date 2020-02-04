@@ -11,14 +11,12 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.http import (require_GET, require_http_methods,
+from django.views.decorators.http import (require_http_methods,
                                           require_POST)
 from django.views.generic import DetailView, View
 from django.views.generic.base import TemplateView
 from uuslug import slugify
 
-from tcms.search import remove_from_request_path
-from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import printable as testcases_printable
@@ -84,66 +82,6 @@ class NewTestPlanView(View):
             'form': form,
         }
         return render(request, self.template_name, context_data)
-
-
-@require_GET
-def get_all(request):  # pylint: disable=missing-permission-required
-    """Display all testplans"""
-    # TODO: this function should be deleted
-    # todo: this function can be replaced with the existing JSON-RPC search
-    # TODO: this function now only performs a forward feature, no queries
-    # need here. All of it will be removed in the future.
-    # If it's not a search the page will be blank
-    tps = TestPlan.objects.none()
-    query_result = False
-    order_by = request.GET.get('order_by', 'create_date')
-    asc = bool(request.GET.get('asc', None))
-    # if it's a search request the page will be fill
-    if request.GET:
-        search_form = SearchPlanForm(request.GET)
-        search_form.populate(product_id=request.GET.get('product'))
-
-        if search_form.is_valid():
-            query_result = True
-            # build a QuerySet:
-            tps = TestPlan.list(search_form.cleaned_data)
-            tps = tps.select_related('author', 'type', 'product')
-            tps = order_plan_queryset(tps, order_by, asc)
-    else:
-        # Set search active plans only by default
-        search_form = SearchPlanForm(initial={'is_active': True})
-
-    template_name = 'non-existing.html'
-
-    # used in tree preview only
-    # fixme: must be replaced by JSON RPC and the
-    # JavaScript dialog that displays the preview
-    # should be converted to Patternfly
-    # todo: when this is done SearchPlanForm must contain only the
-    # fields which are used in search.html
-    if request.GET.get('t') == 'html':
-        if request.GET.get('f') == 'preview':
-            template_name = 'plan/preview.html'
-
-    query_url = remove_from_request_path(request, 'order_by')
-    if asc:
-        query_url = remove_from_request_path(query_url, 'asc')
-    else:
-        query_url = '%s&asc=True' % query_url
-    page_type = request.GET.get('page_type', 'pagination')
-    query_url_page_type = remove_from_request_path(request, 'page_type')
-    if query_url_page_type:
-        query_url_page_type = remove_from_request_path(query_url_page_type, 'page')
-
-    context_data = {
-        'test_plans': tps,
-        'query_result': query_result,
-        'search_plan_form': search_form,
-        'query_url': query_url,
-        'query_url_page_type': query_url_page_type,
-        'page_type': page_type
-    }
-    return render(request, template_name, context_data)
 
 
 class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-required

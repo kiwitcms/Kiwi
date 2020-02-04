@@ -220,8 +220,6 @@ Nitrate.TestPlans.TreeView = {
       return false;
     }
 
-    var parameters = { pk__in: childPlanIds };
-
     var callback = function(e) {
       e.stopPropagation();
       e.preventDefault();
@@ -248,7 +246,7 @@ Nitrate.TestPlans.TreeView = {
       });
     };
 
-    previewPlan(parameters, '', callback);
+    previewPlan(childPlanIds, '', callback);
   },
 };
 
