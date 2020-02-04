@@ -129,17 +129,6 @@ var html_failure = function() {
   return false;
 };
 
-var json_success_refresh_page = function(t) {
-  returnobj = jQ.parseJSON(t.responseText);
-
-  if (returnobj.rc == 0) {
-    window.location.reload();
-  } else {
-    window.alert(returnobj.response);
-    return false;
-  }
-};
-
 
 function splitString(str, num) {
   cut_for_dot = num - 3;
