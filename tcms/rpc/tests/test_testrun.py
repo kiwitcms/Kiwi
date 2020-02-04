@@ -32,7 +32,7 @@ class TestAddCase(APITestCase):
         self.assertTrue(isinstance(result, dict))
 
         execution = TestExecution.objects.get(run=self.test_run.pk, case=self.test_case.pk)
-        self.assertEqual(execution.pk, result['case_run_id'])
+        self.assertEqual(execution.pk, result['id'])
         self.assertEqual(execution.case.pk, result['case_id'])
         self.assertEqual(execution.run.pk, result['run_id'])
 

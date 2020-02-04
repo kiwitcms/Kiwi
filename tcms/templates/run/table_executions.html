@@ -29,7 +29,7 @@
 		{% for execution, tester, assignee, priority_value, comments_count, bugs_count in executions %}
 		<tr class="{% cycle 'odd' 'even' %} {% ifequal execution.assignee_id user.pk %} mine {% endifequal %}">
 			<td>
-				<input type="checkbox" name="case_run" value="{{ execution.pk }}" class="caserun_selector" data-case_id="{{ execution.case.pk }}" title="Select/Unselect" />
+				<input type="checkbox" name="execution" value="{{ execution.pk }}" class="caserun_selector" data-case_id="{{ execution.case.pk }}" title="Select/Unselect" />
 				<input type="hidden" name="case" value="{{ execution.case.pk }}" />
 				<input type="hidden" name="case_text_version" value="{{ execution.case_text_version }}" />
 			</td>

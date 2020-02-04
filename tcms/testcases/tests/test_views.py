@@ -41,7 +41,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         response = self.client.get(
             url,
             {
-                'case_run_id': self.execution_1.pk,
+                'execution_id': self.execution_1.pk,
                 'case_text_version': self.execution_1.case.history.latest().history_id,
             }
         )
@@ -71,7 +71,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         response = self.client.get(
             url,
             {
-                'case_run_id': self.execution_1.pk,
+                'execution_id': self.execution_1.pk,
                 'case_text_version': self.execution_1.case.history.latest().history_id,
             }
         )

@@ -192,7 +192,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'default_tester': self.test_run.default_tester.email,
             'notes': '',
             'case': [self.execution_1.case.pk, self.execution_2.case.pk],
-            'case_run_id': [self.execution_1.pk, self.execution_2.pk],
+            'execution_id': [self.execution_1.pk, self.execution_2.pk],
         }
 
         url = reverse('testruns-new')
@@ -229,7 +229,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'default_tester': self.test_run.default_tester.email,
             'notes': '',
             'case': [self.execution_1.case.pk, self.execution_2.case.pk],
-            'case_run_id': [self.execution_1.pk, self.execution_2.pk],
+            'execution_id': [self.execution_1.pk, self.execution_2.pk],
         }
 
         url = reverse('testruns-new')

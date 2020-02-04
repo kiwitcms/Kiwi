@@ -420,7 +420,7 @@ class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestExecution"""
 
     values_fields_mapping = {
-        'case_run_id': ('case_run_id', do_nothing),
+        'id': ('id', do_nothing),
         'case_text_version': ('case_text_version', do_nothing),
         'close_date': ('close_date', datetime_to_str),
         'sortkey': ('sortkey', do_nothing),

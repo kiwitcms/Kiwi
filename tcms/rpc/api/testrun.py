@@ -72,7 +72,7 @@ def get_cases(run_id):
         :param run_id: PK of TestRun to inspect
         :type run_id: int
         :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects
-                 augmented with ``case_run_id`` and ``status`` information.
+                 augmented with ``execution_id`` and ``status`` information.
         :rtype: list(dict)
     """
     tcs_serializer = TestCase.to_xmlrpc(query={'case_run__run_id': run_id})
@@ -83,7 +83,7 @@ def get_cases(run_id):
 
     for case in tcs_serializer:
         info = extra_info[case['case_id']]
-        case['case_run_id'] = info['pk']
+        case['execution_id'] = info['pk']
         case['status'] = info['status__name']
 
     return tcs_serializer
