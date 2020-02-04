@@ -268,7 +268,6 @@ vinaigrette.register(TestExecutionStatus, ['name'])
 class TestExecution(TCMSActionModel):
     history = KiwiHistoricalRecords()
 
-    case_run_id = models.AutoField(primary_key=True)
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                                  related_name='case_run_assignee',
                                  on_delete=models.CASCADE)

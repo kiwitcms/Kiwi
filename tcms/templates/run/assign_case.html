@@ -82,7 +82,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 					<tr id="row_{{ forloop.counter }}" class="{% cycle 'odd' 'even' %} selection_row">
 						<td align="left">
 							{# Hide the check box when it is in the exist_case_runs, and remove it from form submitation #}
-							<input type="checkbox" name="case"  {% if test_case.case in exist_case_run_ids %}value="{{ test_case.case }}" disabled="true"  checked="true"{% else %}value="{{ test_case.case }}"{% endif %} />
+							<input type="checkbox" name="case"  {% if test_case.case in exist_execution_ids %}value="{{ test_case.case }}" disabled="true"  checked="true"{% else %}value="{{ test_case.case }}"{% endif %} />
 						</td>
 						<td>
 							<a id="blind_link_{{ forloop.counter }}" class="blind_link js-toggle-button" data-param="{{ forloop.counter }}" href="javascript:void(0);">

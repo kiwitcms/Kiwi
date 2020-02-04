@@ -135,21 +135,21 @@ def filter(values):  # pylint: disable=redefined-builtin
 
 @permissions_required('testruns.change_testexecution')
 @rpc_method(name='TestExecution.update')
-def update(case_run_id, values, **kwargs):
+def update(execution_id, values, **kwargs):
     """
-    .. function:: XML-RPC TestExecution.update(case_run_id, values)
+    .. function:: XML-RPC TestExecution.update(execution_id, values)
 
         Update the selected TestExecution
 
-        :param case_run_id: PK of TestExecution to modify
-        :type case_run_id: int
+        :param execution_id: PK of TestExecution to modify
+        :type execution_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :raises: PermissionDenied if missing *testruns.change_testexecution* permission
     """
 
-    tcr = TestExecution.objects.get(pk=case_run_id)
+    tcr = TestExecution.objects.get(pk=execution_id)
     form = UpdateExecutionForm(values)
 
     if form.is_valid():

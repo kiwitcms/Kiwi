@@ -35,8 +35,6 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
         self.status = TestExecutionStatus.objects.get(name='IDLE')
         self.case = TestCaseFactory(author=self.api_user, default_tester=None, plan=[self.plan])
 
-        self.execution_pks = []
-
     def test_create_with_no_required_fields(self):
         values = [
             {
@@ -67,7 +65,7 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
             "case_text_version": 15,
         })
         self.assertIsNotNone(tcr)
-        self.execution_pks.append(tcr['case_run_id'])
+        self.assertIsNotNone(tcr['id'])
         self.assertEqual(tcr['build_id'], self.build.pk)
         self.assertEqual(tcr['case_id'], self.case.pk)
         self.assertEqual(tcr['run_id'], self.test_run.pk)
@@ -83,7 +81,7 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
             "case_text_version": 3,
         })
         self.assertIsNotNone(tcr)
-        self.execution_pks.append(tcr['case_run_id'])
+        self.assertIsNotNone(tcr['id'])
         self.assertEqual(tcr['build_id'], self.build.pk)
         self.assertEqual(tcr['case_id'], self.case.pk)
         self.assertEqual(tcr['assignee_id'], self.api_user.pk)

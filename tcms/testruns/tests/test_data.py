@@ -113,13 +113,13 @@ class TestGetExecutionComments(BaseCaseRun):
         expected_comments = {
             self.execution_4.pk: [
                 {
-                    'case_run_id': str(self.execution_4.pk),
+                    'execution_id': str(self.execution_4.pk),
                     'user_name': self.tester.username,
                     'submit_date': self.submit_date,
                     'comment': 'new comment'
                 },
                 {
-                    'case_run_id': str(self.execution_4.pk),
+                    'execution_id': str(self.execution_4.pk),
                     'user_name': self.tester.username,
                     'submit_date': self.submit_date,
                     'comment': 'make better'
@@ -127,7 +127,7 @@ class TestGetExecutionComments(BaseCaseRun):
             ],
             self.execution_5.pk: [
                 {
-                    'case_run_id': str(self.execution_5.pk),
+                    'execution_id': str(self.execution_5.pk),
                     'user_name': self.tester.username,
                     'submit_date': self.submit_date,
                     'comment': 'new comment'

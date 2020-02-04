@@ -62,20 +62,20 @@ class TestExecutionDataMixin:
             is_removed=False,
             object_pk__in=object_pks
         ).annotate(
-            case_run_id=F('object_pk')
+            execution_id=F('object_pk')
         ).values(
-            'case_run_id',
+            'execution_id',
             'submit_date',
             'comment',
             'user_name'
-        ).order_by('case_run_id')
+        ).order_by('execution_id')
 
         rows = []
         for row in comments:
             rows.append(row)
 
         case_run_comments = {}
-        for key, groups in groupby(rows, lambda row: row['case_run_id']):
+        for key, groups in groupby(rows, lambda row: row['execution_id']):
             case_run_comments[int(key)] = list(groups)
 
         return case_run_comments

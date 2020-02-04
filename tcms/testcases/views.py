@@ -442,12 +442,12 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
     """Display execution detail in run page"""
 
     template_name = 'case/get_details_case_run.html'
-    caserun_id = None
+    execution_id = None
     case_text_version = None
 
     def get(self, request, *args, **kwargs):
         try:
-            self.caserun_id = int(request.GET.get('case_run_id'))
+            self.execution_id = int(request.GET.get('execution_id'))
             self.case_text_version = int(request.GET.get('case_text_version'))
         except (TypeError, ValueError):
             raise Http404
@@ -458,7 +458,7 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
         data = super().get_context_data(**kwargs)
 
         case = TestCase.objects.get(pk=kwargs['case_id'])
-        execution = TestExecution.objects.get(pk=self.caserun_id)
+        execution = TestExecution.objects.get(pk=self.execution_id)
 
         # Data of TestCase
         test_case_text = case.get_text_with_version(self.case_text_version)

@@ -48,7 +48,7 @@ function toggleExpandArrow(options) {
 }
 
 
-function toggleTestCaseContents(template_type, container, content_container, object_pk, case_text_version, case_run_id, callback) {
+function toggleTestCaseContents(template_type, container, content_container, object_pk, case_text_version, execution_id, callback) {
   if (typeof container === 'string') {
     var container = jQ('#' + container)[0];
   }
@@ -64,7 +64,7 @@ function toggleTestCaseContents(template_type, container, content_container, obj
     var parameters = {
       template_type: template_type,
       case_text_version: case_text_version,
-      case_run_id: case_run_id
+      execution_id: execution_id
     };
 
     jQ.ajax({

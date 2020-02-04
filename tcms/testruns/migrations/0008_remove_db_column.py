@@ -6,12 +6,37 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
+    atomic = False
+
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('testruns', '0007_test_execution_statuses'),
     ]
 
     operations = [
+        migrations.RenameField(
+            model_name='testexecution',
+            old_name='case_run_id',
+            new_name='id',
+        ),
+        migrations.RenameField(
+            model_name='historicaltestexecution',
+            old_name='case_run_id',
+            new_name='id',
+        ),
+        migrations.AlterField(
+            model_name='testexecution',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True,
+                                   serialize=False, verbose_name='ID'),
+        ),
+        migrations.AlterField(
+            model_name='historicaltestexecution',
+            name='id',
+            field=models.IntegerField(auto_created=True, blank=True,
+                                      db_index=True, verbose_name='ID'),
+        ),
+
         migrations.AlterField(
             model_name='testruncc',
             name='user',

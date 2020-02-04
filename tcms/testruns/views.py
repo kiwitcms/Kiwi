@@ -159,12 +159,12 @@ def _open_run_get_executions(request, run):  # pylint: disable=missing-permissio
     return executions.order_by('sortkey', 'pk')
 
 
-def open_run_get_comments_subtotal(case_run_ids):
+def open_run_get_comments_subtotal(execution_ids):
     content_type = ContentType.objects.get_for_model(TestExecution)
     query_set = Comment.objects.filter(
         content_type=content_type,
         site_id=settings.SITE_ID,
-        object_pk__in=case_run_ids,
+        object_pk__in=execution_ids,
         is_removed=False).values('object_pk').annotate(comment_count=Count('pk')).order_by(
             'object_pk')
 
@@ -485,7 +485,7 @@ class AddCasesToRunView(View):
             'confirmed_cases': rows,
             'confirmed_cases_count': rows.count(),
             'executions_count': len(executions),
-            'exist_case_run_ids': executions,
+            'exist_execution_ids': executions,
         }
 
         return render(request, 'run/assign_case.html', data)
