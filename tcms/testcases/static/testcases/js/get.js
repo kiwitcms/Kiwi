@@ -100,11 +100,11 @@ $(document).ready(function() {
             dataTableJsonRPC('TestPlan.filter', {case: case_id}, callback);
         },
         columns: [
-            { data: "plan_id" },
+            { data: "id" },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                    return '<a href="/plan/'+ data.id + '/">' + escapeHTML(data.name) + '</a>';
                 }
             },
             { data: "author" },
@@ -115,7 +115,7 @@ $(document).ready(function() {
                 sortable: false,
                 render: function (data, type, full, meta) {
                     if (perm_remove_plan) {
-                        return '<a href="#plans" class="remove-plan" data-pk="' + data.plan_id  + '"><span class="pficon-error-circle-o"></span></a>';
+                        return '<a href="#plans" class="remove-plan" data-pk="' + data.id  + '"><span class="pficon-error-circle-o"></span></a>';
                     }
                     return '';
                 }

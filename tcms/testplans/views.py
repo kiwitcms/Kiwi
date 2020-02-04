@@ -215,11 +215,11 @@ class GetTestPlanRedirectView(DetailView):  # pylint: disable=missing-permission
 
 @require_http_methods(['GET', 'POST'])
 @permission_required('testplans.change_testplan')
-def edit(request, plan_id):
+def edit(request, pk):
     """Edit test plan view"""
 
     try:
-        test_plan = TestPlan.objects.select_related().get(pk=plan_id)
+        test_plan = TestPlan.objects.select_related().get(pk=pk)
     except ObjectDoesNotExist:
         raise Http404
 
@@ -243,7 +243,7 @@ def edit(request, plan_id):
             # Update plan email settings
             update_plan_email_settings(test_plan, form)
             return HttpResponseRedirect(
-                reverse('test_plan_url', args=[plan_id, slugify(test_plan.name)]))
+                reverse('test_plan_url', args=[pk, slugify(test_plan.name)]))
     else:
         form = NewPlanForm(initial={
             'name': test_plan.name,
@@ -316,7 +316,7 @@ class ReorderCasesView(View):
 
     http_method_names = ['post']
 
-    def post(self, request, plan_id):
+    def post(self, request, pk):
         if 'case' not in request.POST:
             return JsonResponse({
                 'rc': 1,
@@ -327,7 +327,7 @@ class ReorderCasesView(View):
         for case_id in request.POST.getlist('case'):
             case_ids.append(int(case_id))
 
-        cases = TestCasePlan.objects.filter(case_id__in=case_ids, plan=plan_id).only('case_id')
+        cases = TestCasePlan.objects.filter(case_id__in=case_ids, plan=pk).only('case_id')
 
         for case in cases:
             case.sortkey = (case_ids.index(case.case_id) + 1) * 10
@@ -361,8 +361,8 @@ class LinkCasesView(View):  # pylint: disable=missing-permission-required
     """Link cases to plan"""
 
     @method_decorator(permission_required('testcases.add_testcaseplan'))
-    def post(self, request, plan_id):
-        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=int(plan_id))
+    def post(self, request, pk):
+        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=pk)
 
         case_ids = []
         for case_id in request.POST.getlist('case'):
@@ -372,7 +372,7 @@ class LinkCasesView(View):  # pylint: disable=missing-permission-required
         for case in cases:
             plan.add_case(case)
 
-        return HttpResponseRedirect(reverse('test_plan_url', args=[plan_id, slugify(plan.name)]))
+        return HttpResponseRedirect(reverse('test_plan_url', args=[pk, slugify(plan.name)]))
 
 
 class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
@@ -380,8 +380,8 @@ class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
 
     template_name = 'plan/search_case.html'
 
-    def get(self, request, plan_id):
-        plan = get_object_or_404(TestPlan, pk=int(plan_id))
+    def get(self, request, pk):
+        plan = get_object_or_404(TestPlan, pk=pk)
 
         normal_form = SearchCaseForm(initial={
             'product': plan.product_id,
@@ -395,8 +395,8 @@ class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
             'test_plan': plan,
         })
 
-    def post(self, request, plan_id):
-        plan = get_object_or_404(TestPlan, pk=int(plan_id))
+    def post(self, request, pk):
+        plan = get_object_or_404(TestPlan, pk=pk)
 
         search_mode = request.POST.get('search_mode')
         if search_mode == 'quick':

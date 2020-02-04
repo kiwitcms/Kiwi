@@ -60,12 +60,11 @@ class TestUtilityMethods(unittest.TestCase):
 
 class MockTestPlanSerializer(QuerySetBasedRPCSerializer):
     values_fields_mapping = {
+        'id': ('id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_active': ('is_active', do_nothing),
         'name': ('name', do_nothing),
-        'plan_id': ('plan_id', do_nothing),
-
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
         'product_version': ('product_version_id', do_nothing),
@@ -263,14 +262,14 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(extra_fields, {})
 
     def test_handle_extra_fields_alias(self):
-        serialize_result = {'plan_id': 1000, 'product_version': 1}
+        serialize_result = {'id': 1000, 'product_version': 1}
         test_data = serialize_result.copy()
 
         self.plan_serializer._handle_extra_fields(test_data)
         self.assertTrue('default_product_version' in test_data)
         self.assertEqual(test_data['default_product_version'],
                          serialize_result['product_version'])
-        self.assertEqual(test_data['plan_id'], serialize_result['plan_id'])
+        self.assertEqual(test_data['id'], serialize_result['id'])
         self.assertEqual(test_data['product_version'],
                          serialize_result['product_version'])
 
@@ -286,8 +285,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(len(self.plans), len(serialize_result))
 
         for plan in serialize_result:
-            plan_id = plan['plan_id']
-            expected_plan = TestPlan.objects.get(pk=plan_id)
+            expected_plan = TestPlan.objects.get(pk=plan['id'])
             self.assertEqual(expected_plan.name, plan['name'])
             self.assertEqual(expected_plan.is_active, plan['is_active'])
             self.assertEqual(expected_plan.extra_link, plan['extra_link'])

@@ -34,7 +34,6 @@ class TestPlan(TCMSActionModel):
     """A plan within the TCMS"""
     history = KiwiHistoricalRecords()
 
-    plan_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, db_index=True)
     text = models.TextField(blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -52,9 +51,6 @@ class TestPlan(TCMSActionModel):
     tag = models.ManyToManyField('management.Tag',
                                  through='testplans.TestPlanTag',
                                  related_name='plan')
-
-    class Meta:
-        index_together = [['product', 'plan_id']]
 
     def __str__(self):
         return self.name
@@ -96,7 +92,7 @@ class TestPlan(TCMSActionModel):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
 
     def _get_absolute_url(self):
-        return reverse('test_plan_url', args=[self.plan_id, slugify(self.name)])
+        return reverse('test_plan_url', args=[self.pk, slugify(self.name)])
 
     def get_case_sortkey(self):
         """

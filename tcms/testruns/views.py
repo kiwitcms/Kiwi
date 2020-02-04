@@ -424,7 +424,7 @@ class AddCasesToRunView(View):
         try:
             test_run = TestRun.objects.select_related(
                 'plan'
-            ).only('plan__plan_id').get(pk=pk)
+            ).only('plan_id').get(pk=pk)
         except ObjectDoesNotExist:
             raise Http404
 

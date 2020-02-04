@@ -390,13 +390,12 @@ class TestPlanRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestPlan"""
 
     values_fields_mapping = {
+        'id': ('id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_active': ('is_active', do_nothing),
         'name': ('name', do_nothing),
         'text': ('text', do_nothing),
-        'plan_id': ('plan_id', do_nothing),
-
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
         'parent': ('parent_id', do_nothing),

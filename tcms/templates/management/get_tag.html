@@ -17,7 +17,7 @@
 				<td><a href="{% url "plans-search" %}?tag__name__in={{ tag }}" title="{{ tag.num_plans }} plans tagged {{ tag }}">{{ tag.num_plans }}</a></td>
 				<td><a href="{% url "testcases-search" %}?tag__name__in={{ tag }}"  title="{{ tag.num_cases }} cases tagged {{ tag }}">{{ tag.num_cases }}</a></td>
 				<td><a href="{% url "testruns-search" %}?tag__name__in={{ tag }}"  title="{{ tag.num_runs }} runs tagged {{ tag }}">{{ tag.num_runs }}</a></td>
-				{% if object.plan_id and perms.testplans.delete_testplantag or object.case_id and perms.testcases.delete_testcasetag %}
+				{% if perms.testplans.delete_testplantag %}
                                 <td><a href="#tag" class="remove js-remove-tag" title="remove tag">{% trans "Remove" %}</a></td>
 				{% else %}
                                 <td><span class="disabled grey">{% trans "Remove" %}</span></td>
@@ -30,7 +30,7 @@
 			{% endfor %}
 			<tr>
 				<td colspan="5" align="center" style="padding:0">
-				{% if object.plan_id and perms.testplans.add_testplantag or object.case_id and perms.testcases.add_testcasetag %}
+				{% if perms.testplans.add_testplantag %}
 				<div class="addtag">
                                     <span class="tit">{% trans "Add Tag" %}</span>
 						<input id="id_tags" type="text" name="tags" data-params='["{{ api_module}}", {{ object.pk }}]'>

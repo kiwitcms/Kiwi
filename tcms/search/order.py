@@ -7,7 +7,7 @@ def order_plan_queryset(plans, field, asc=False):
     by calling order_by on it.
     """
     orderable_fields = (
-        'plan_id', 'name', 'author__username',
+        'id', 'name', 'author__username',
         'create_date', 'product__name', 'type'
     )
     if field in orderable_fields:
