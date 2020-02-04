@@ -23,8 +23,6 @@ Nitrate.TestPlans.TreeView = {
     jsonRPC('TestPlan.filter', parameters, callback, true);
   },
   'init': function(plan_id) {
-    this.pk = plan_id;
-
     // Current, Parent, Brothers, Children, Temporary current
     var c_plan, p_plan, b_plans, ch_plans, tc_plan;
 
@@ -60,7 +58,7 @@ Nitrate.TestPlans.TreeView = {
     }
 
     // Get the child plans
-    var p4 = { parent: c_plan.plan_id};
+    var p4 = { parent: c_plan.id};
     var c4 = function(returnobj) {
       ch_plans = returnobj;
     };
@@ -70,13 +68,13 @@ Nitrate.TestPlans.TreeView = {
     // Presume the plan have parent and brother at first
     if (p_plan && b_plans) {
       p_plan.children = b_plans;
-      tc_plan = this.traverse(p_plan.children, c_plan.plan_id);
+      tc_plan = this.traverse(p_plan.children, c_plan.id);
       tc_plan.is_current = true;
       if (ch_plans) {
         tc_plan.children = ch_plans;
       }
 
-      if (p_plan.plan_id) {
+      if (p_plan.id) {
         p_plan = Nitrate.Utils.convert('obj_to_list', p_plan);
       }
 
@@ -127,12 +125,12 @@ Nitrate.TestPlans.TreeView = {
 
     // Add the child plans to parent
     for (var i in data) {
-      if (!data[i].plan_id) {
+      if (!data[i].id) {
         continue;
       }
 
       var li = jQ('<li>');
-      var title = '[<a href="/plan/' + data[i].plan_id + '/">' + data[i].plan_id + '</a>] ';
+      var title = '[<a href="/plan/' + data[i].id + '/">' + data[i].id + '</a>] ';
 
 
       if (data[i].children) {
@@ -153,7 +151,7 @@ Nitrate.TestPlans.TreeView = {
       }
 
       // Construct the items
-      title += '<a class="plan_name" href="/plan/' + data[i].plan_id + '/">' + data[i].name + '</a>';
+      title += '<a class="plan_name" href="/plan/' + data[i].id + '/">' + data[i].name + '</a>';
       title += '</div>';
 
       li.html(title);
@@ -181,7 +179,7 @@ Nitrate.TestPlans.TreeView = {
         continue;
       }
 
-      if (typeof data[i].plan_id === 'number' && data[i].plan_id === pk) {
+      if (data[i].id === pk) {
         return data[i];
       }
 

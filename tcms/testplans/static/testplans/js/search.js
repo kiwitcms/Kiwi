@@ -51,11 +51,11 @@ $(document).ready(function() {
             dataTableJsonRPC('TestPlan.filter', params, callback, pre_process_data);
         },
         columns: [
-            { data: "plan_id" },
+            { data: "id" },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    result = '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                    result = '<a href="/plan/'+ data.id + '/">' + escapeHTML(data.name) + '</a>';
                     if (! data.is_active) {
                         result = '<strike>' + result + '</strike>';
                     }

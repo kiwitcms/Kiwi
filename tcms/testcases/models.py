@@ -171,6 +171,8 @@ class TestCase(TCMSActionModel):
             queryset = queryset.filter(case_status__in=query['case_status'])
 
         # If plan exists, remove leading and trailing whitespace from it.
+        # todo: this is the same as the if condition above !!! - this entire method
+        # should be removed in favor of API
         plan_str = query.get('plan', '').strip()
         if plan_str:
             try:

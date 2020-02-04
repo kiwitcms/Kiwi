@@ -181,6 +181,9 @@ def update(plan_id, values):
     raise ValueError(form_errors_to_list(form))
 
 
+# todo: this should be removed and the form used inside the API
+# method should inherit from ModelForm. See TestCase.update()
+# and the form which it uses !
 def _get_updated_test_plan(values, form, test_plan):
     if form.cleaned_data['name']:
         test_plan.name = form.cleaned_data['name']

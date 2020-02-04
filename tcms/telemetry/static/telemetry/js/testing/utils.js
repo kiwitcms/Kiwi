@@ -1,6 +1,6 @@
 function updateTestPlanSelectFromProduct(callback = () => {}) {
     const updateCallback = (data = []) => {
-        updateSelect(data, '#id_test_plan', 'plan_id', 'name');
+        updateSelect(data, '#id_test_plan', 'id', 'name');
         callback();
     };
 
@@ -20,7 +20,7 @@ function loadInitialProduct(callback = () => {}) {
 }
 
 function loadInitialTestPlans() {
-    jsonRPC('TestPlan.filter', {}, data => updateSelect(data, '#id_test_plan', 'plan_id', 'name'));
+    jsonRPC('TestPlan.filter', {}, data => updateSelect(data, '#id_test_plan', 'id', 'name'));
 }
 
 function showOnlyRoundNumbers(number) {
