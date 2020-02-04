@@ -289,31 +289,32 @@ function updateCommentsCount(caseId, increase) {
   }
 }
 
-function previewPlan(parameters, action, callback) {
-  var dialog = getDialog();
-
-  clearDialog();
-  jQ(dialog).show();
-
-  parameters.t = 'html';
-  parameters.f = 'preview';
-
-  var url = '/plans/';
-  var success = function(t) {
-    var form = constructForm(t.responseText, action, callback);
-    jQ(dialog).html(form);
-  };
-
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      html_failure();
+function previewPlan(planIds, action, callback) {
+  let realIds = Array();
+  planIds.split(',').forEach(function(element) {
+    element = element.trim();
+    if (element !== "") {
+        realIds.push(element);
     }
+  });
+
+  var dialog = getDialog();
+  clearDialog();
+  $(dialog).show();
+
+  jsonRPC('TestPlan.filter', {'pk__in': realIds}, function(data) {
+    let htmlText = "";
+
+    data.forEach(function(element) {
+        htmlText = htmlText +
+            "<div class='listinfo'>" +
+                "<input id='id_preview_plan_" + element.id + "' type='checkbox' name='plan_id' value='" + element.id + "' checked>"+
+                "<label>TP-" + element.id + ":</label> " + element.name +
+            "</div>"
+    });
+
+    var form = constructForm(htmlText, action, callback);
+    jQ(dialog).html(form);
   });
 }
 

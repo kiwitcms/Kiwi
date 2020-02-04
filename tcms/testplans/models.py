@@ -6,7 +6,6 @@ from django.db import models
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.db.models import Q
 from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
@@ -68,29 +67,7 @@ class TestPlan(TCMSActionModel):
         serializer = TestPlanRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
-    @classmethod
-    def list(cls, query=None):
-        """docstring for list_plans"""
-
-        new_query = {}
-
-        for key, value in query.items():
-            if value and key not in ['action', 't', 'f', 'a']:
-                if key == 'version':  # comes from case/clone.html
-                    key = 'product_version'
-                new_query[key] = value.strip() if hasattr(value, 'strip') else value
-
-        query_set = cls.objects
-
-        if new_query.get('search'):
-            query_set = query_set.filter(Q(plan_id__icontains=new_query['search']) |
-                                         Q(name__icontains=new_query['search']))
-            del new_query['search']
-
-        return query_set.filter(**new_query).order_by('pk').distinct()
-
     def add_case(self, case, sortkey=None):
-
         if sortkey is None:
             lastcase = self.testcaseplan_set.order_by('-sortkey').first()
             if lastcase and lastcase.sortkey is not None:
