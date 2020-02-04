@@ -79,15 +79,7 @@ class NewPlanForm(BasePlanForm):
     is_active = forms.BooleanField(required=False, initial=True)
 
 
-# =========== Forms for search/filter ==============
-
 class SearchPlanForm(forms.Form):
-    pk = forms.IntegerField(required=False)
-    pk__in = forms.CharField(required=False)
-    parent__pk = forms.IntegerField(required=False)
-    search = forms.CharField(required=False)
-    plan_id = forms.IntegerField(required=False)
-    name__icontains = forms.CharField(required=False)
     product = forms.ModelChoiceField(
         queryset=Product.objects.all().order_by('name'),
         required=False
@@ -96,38 +88,8 @@ class SearchPlanForm(forms.Form):
         queryset=Version.objects.none(),
         required=False
     )
-    type = forms.ModelChoiceField(
-        queryset=PlanType.objects.all(),
-        required=False,
-    )
     author__username__startswith = forms.CharField(required=False)
-    author__email__startswith = forms.CharField(required=False)
-    case__default_tester__username__startswith = forms.CharField(
-        required=False)
     tag__name__in = forms.CharField(required=False)
-    is_active = forms.BooleanField(required=False)
-    create_date__gte = forms.DateTimeField(
-        required=False,
-        widget=forms.DateInput(attrs={
-            'class': 'vDateField',
-        })
-    )
-    create_date__lte = forms.DateTimeField(
-        required=False,
-        widget=forms.DateInput(attrs={
-            'class': 'vDateField',
-        })
-    )
-
-    def clean_pk__in(self):
-        results = []
-        try:
-            for result in string_to_list(self.cleaned_data['pk__in']):
-                results.append(int(result))
-        except Exception as error:
-            raise forms.ValidationError(str(error))
-
-        return results
 
     def clean_tag__name__in(self):
         return string_to_list(self.cleaned_data['tag__name__in'])
