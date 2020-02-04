@@ -78,47 +78,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-6">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-paperclip"></span>
-                    {% trans 'Attachments' %}
-                </h2>
-
-                <div class="card-pf-body">
-                    <table class="table" id="attachments">
-                        <thead>
-                            <tr>
-                                <th>{% trans 'File' %}</th>
-                                <th>{% trans 'Owner' %}</th>
-                                <th>{% trans 'Date' %}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% get_attachments_for object as attachments_list %}
-                        {% for attachment in attachments_list %}
-                            <tr>
-                                <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
-                                <td><a href="{% url "tcms-profile" attachment.creator %}">{{ attachment.creator }}</a></td>
-                                <td>{{ attachment.created }}</td>
-                                <td>{% attachment_delete_link attachment %}</td>
-                            </tr>
-                        {% empty %}
-                            <tr><td colspan="4">{% trans 'No records found' %}</td></tr>
-                        {% endfor %}
-                        </tbody>
-                        {% if perms.attachments.add_attachment %}
-                        <tfoot>
-                            <tr>
-                                <th colspan="4">
-                                    {% attachment_form object %}
-                                </th>
-                            </tr>
-                        </tfoot>
-                        {% endif %}
-                    </table>
-                </div>
-            </div>
+            {% include 'include/attachments.html' %}
         </div>
     </div>
 
