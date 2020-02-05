@@ -46,6 +46,9 @@ jobs:
           branch_pattern: master
 
     - env:
+        - CMD=flake8
+
+    - env:
         - CMD=pylint
 
     - env:
