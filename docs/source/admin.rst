@@ -323,6 +323,66 @@ performed or convey additional information about the test case. Similar
 information may also be conveyed with tags, properties or in other way
 so it is up to you to decide how you want to organize your testing workflow!
 
+
+Test Execution statuses
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.0
+
+As shown in :ref:`data_organization_kiwitcms` TestExecution objects record
+the status for each TestCase tied to a particular TestRun.
+Kiwi TCMS installs several pre-configured statuses by default. Starting with
+v8.0 you can fully customize them!
+
+For this purpose the following fields are available:
+
+- **Name** - human readable status name
+
+  .. note::
+
+      Status names in Admin will always appear in English!
+      For statuses shipped with Kiwi TCMS by default the names may appear
+      translated into local language when displayed outside Admin pages!
+
+      Translation of non-default statuses is currently almost impossible,
+      see https://github.com/ecometrica/django-vinaigrette/issues/45.
+
+- **Color** - a color to be used for icons, charts, etc.
+
+  .. note::
+
+      For a consistent user experience we recommend using colors of the same family
+      (or even the same color) for the various weight categories - green
+      for *Positive*, black/gray for *Neutral* and red for *Negative*!
+
+- **Icon** - a CSS class to be used for visual display. The accepted
+  value is any valid class name from
+  `Font Awesome v4.7 <https://fontawesome.com/v4.7.0/icons/>`_ or
+  `Patternfly v3.0 <https://www.patternfly.org/v3/styles/icons/index.html>`_
+
+  .. note::
+
+      Icons must be specified with their full CSS class name. For example
+      ``PASSED`` is ``fa fa-check-circle-o``!
+
+- **Weight** - integer representation of this status
+
+  .. note::
+
+      Kiwi TCMS recognizes only 3 weight categories:
+
+      - *Positive* - ``PASSED`` and ``WAIVED`` - test completed and was
+        successfull or was skipped/ignored on purpose
+      - *Neutral* - ``IDLE``, ``PAUSED`` and ``RUNNING`` - test has
+        not been executed yet and the result is unknown
+      - *Negative* - ``BLOCKED``, ``ERROR`` and ``FAILED`` - test completed
+        unsuccessfully or was not able to complete due to external factors
+
+      Kiwi TCMS does not make any other distinction based on weight except
+      when sorting statuses for display (e.g. a row of buttons)! It is up to you
+      to define what each individual status means.
+
+
 .. |Base URL configuration| image:: ./_static/Configure_base_url.png
 .. |The Administration screen| image:: ./_static/Admin_Home.png
 .. |The Auth screen| image:: ./_static/Auth_Home.png
