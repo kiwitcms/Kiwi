@@ -63,11 +63,11 @@ $(document).ready(function() {
             dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data);
         },
         columns: [
-            { data: "case_id" },
+            { data: "id" },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/case/'+ data.case_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
+                    return '<a href="/case/'+ data.id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
                 }
             },
             { data: "create_date"},

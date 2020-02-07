@@ -74,7 +74,7 @@ def get_components(case_id):
         :rtype: list(dict)
         :raises: TestCase.DoesNotExist if missing test case matching PK
     """
-    test_case = TestCase.objects.get(case_id=case_id)
+    test_case = TestCase.objects.get(pk=case_id)
 
     component_ids = test_case.component.values_list('id', flat=True)
     query = {'id__in': component_ids}

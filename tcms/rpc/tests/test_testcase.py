@@ -93,7 +93,7 @@ class TestUpdate(APITestCase):
 
         self.testcase.refresh_from_db()
 
-        self.assertEqual(updated['case_id'], self.testcase.pk)
+        self.assertEqual(updated['id'], self.testcase.pk)
         self.assertEqual('This was updated', self.testcase.summary)
         self.assertEqual('new TC text', self.testcase.text)
         # FK for author not passed above. Make sure it didn't change!
@@ -159,7 +159,7 @@ class TestCreate(APITestCase):
 
         tc_from_db = TestCase.objects.get(summary=result['summary'], text=result['text'])
 
-        self.assertEqual(result['case_id'], tc_from_db.pk)
+        self.assertEqual(result['id'], tc_from_db.pk)
         # author field is auto-configured if not passed
         self.assertEqual(result['author'], tc_from_db.author.username)
         self.assertEqual(self.api_user, tc_from_db.author)
@@ -178,7 +178,7 @@ class TestCreate(APITestCase):
 
         tc_from_db = TestCase.objects.get(summary=result['summary'], author=new_author)
 
-        self.assertEqual(result['case_id'], tc_from_db.pk)
+        self.assertEqual(result['id'], tc_from_db.pk)
         self.assertEqual(new_author, tc_from_db.author)
 
     def test_fails_when_mandatory_fields_not_specified(self):

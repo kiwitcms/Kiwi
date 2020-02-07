@@ -106,7 +106,7 @@ See test plan for more details!{% endblocktrans %}
                         <td>
                             <input type="hidden" name="case" value="{{ test_case.pk }}">
                             <a href="{% url 'testcases-get' test_case.pk %}">
-                                TC-{{ test_case.case_id }}: {{ test_case.summary }}
+                                TC-{{ test_case.pk }}: {{ test_case.summary }}
                             </a>
                         </td>
                         <td>

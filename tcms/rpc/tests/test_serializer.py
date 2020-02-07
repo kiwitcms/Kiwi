@@ -79,11 +79,11 @@ class MockTestPlanSerializer(QuerySetBasedRPCSerializer):
 
 
 class MockTestCaseSerializer(QuerySetBasedRPCSerializer):
-    primary_key = 'case_id'
+    primary_key = 'id'
 
     values_fields_mapping = {
         'arguments': ('arguments', do_nothing),
-        'case_id': ('case_id', do_nothing),
+        'id': ('id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
 
         'author': ('author_id', do_nothing),

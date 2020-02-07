@@ -467,7 +467,7 @@ class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
 
     values_fields_mapping = {
         'arguments': ('arguments', do_nothing),
-        'case_id': ('case_id', do_nothing),
+        'id': ('id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_automated': ('is_automated', do_nothing),

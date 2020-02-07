@@ -24,7 +24,7 @@ def order_case_queryset(cases, field, asc=False):
     by calling order_by on it.
     """
     orderable_fields = (
-        'case_id', 'summary', 'author__username',
+        'id', 'summary', 'author__username',
         'default_tester__username', 'priority',
         'is_automated', 'category__name', 'case_status',
         'create_date'
