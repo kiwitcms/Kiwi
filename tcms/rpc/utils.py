@@ -18,6 +18,7 @@ QUERY_DISTINCT = 1
 ACCEPTABLE_BOOL_VALUES = ('0', '1', 0, 1, True, False)
 
 
+# todo: can be replaces with distutils.util.strtobool
 def parse_bool_value(value):
     if value in ACCEPTABLE_BOOL_VALUES:
         if value == '0':
