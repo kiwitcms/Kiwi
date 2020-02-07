@@ -20,6 +20,11 @@ plan_types = [
 ]
 
 
+TYPE_ID_COLUMN = 'type_id'
+if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
+    TYPE_ID_COLUMN = ''
+
+
 def forwards_add_initial_data(apps, schema_editor):
     PlanType = apps.get_model('testplans', 'PlanType')
 
@@ -89,7 +94,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PlanType',
             fields=[
-                ('id', models.AutoField(db_column='type_id', primary_key=True, serialize=False)),
+                ('id', models.AutoField(db_column=TYPE_ID_COLUMN,
+                                        primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=64, unique=True)),
                 ('description', models.TextField(blank=True, null=True)),
             ],

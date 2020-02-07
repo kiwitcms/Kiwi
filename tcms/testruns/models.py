@@ -236,7 +236,6 @@ class TestExecutionStatus(TCMSActionModel):
         # used in the admin view
         verbose_name_plural = _("Test execution statuses")
 
-    id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
     weight = models.IntegerField(default=0)
     icon = models.CharField(max_length=64)

@@ -6,6 +6,11 @@ from django.db import migrations, models
 import tcms.core.models.base
 
 
+CASE_RUN_STATUS_ID_COLUMN = 'case_run_status_id'
+if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
+    CASE_RUN_STATUS_ID_COLUMN = ''
+
+
 def forwards_add_initial_data(apps, schema_editor):
     TestCaseRunStatus = apps.get_model('testruns', 'TestCaseRunStatus')
 
@@ -62,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestCaseRunStatus',
             fields=[
-                ('id', models.AutoField(db_column='case_run_status_id', primary_key=True,
+                ('id', models.AutoField(db_column=CASE_RUN_STATUS_ID_COLUMN, primary_key=True,
                                         serialize=False)),
                 ('name', models.CharField(blank=True, max_length=60, unique=True)),
             ],
