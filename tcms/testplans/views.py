@@ -368,7 +368,7 @@ class LinkCasesView(View):  # pylint: disable=missing-permission-required
         for case_id in request.POST.getlist('case'):
             case_ids.append(int(case_id))
 
-        cases = TestCase.objects.filter(case_id__in=case_ids).only('pk')
+        cases = TestCase.objects.filter(pk__in=case_ids).only('pk')
         for case in cases:
             plan.add_case(case)
 
@@ -417,7 +417,7 @@ class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
                 'default_tester__email', 'case_status__name',
                 'priority__value'
             ).exclude(
-                case_id__in=plan.case.values_list('case_id', flat=True))
+                pk__in=plan.case.values_list('id', flat=True))
 
         context = {
             'test_plan': plan,

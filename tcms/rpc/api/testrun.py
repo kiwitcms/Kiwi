@@ -82,7 +82,7 @@ def get_cases(run_id):
     extra_info = dict(((row['case'], row) for row in qs.iterator()))
 
     for case in tcs_serializer:
-        info = extra_info[case['case_id']]
+        info = extra_info[case['id']]
         case['execution_id'] = info['pk']
         case['status'] = info['status__name']
 

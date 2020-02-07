@@ -50,7 +50,7 @@
         <div class="thick-line"></div>
 	{% for test_case in test_cases %}
         <div style="clear: left">
-		<h3>TC-{{ test_case.case_id }}: {{ test_case.summary }}</h3>
+		<h3>TC-{{ test_case.pk }}: {{ test_case.summary }}</h3>
 		<div class="thin-line"></div>
 		<div class="case-stage">
 			{{ test_case.text|markdown2html }}

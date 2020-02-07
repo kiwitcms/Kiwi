@@ -554,8 +554,8 @@ def printable(request,  # pylint: disable=missing-permission-required
             test_plan = None
 
     tcs = TestCase.objects.filter(**case_filter).values(
-        'case_id', 'summary', 'text'
-    ).order_by('case_id')
+        'pk', 'summary', 'text'
+    ).order_by('pk')
 
     context_data = {
         'test_plan': test_plan,

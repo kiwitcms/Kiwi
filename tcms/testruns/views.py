@@ -57,11 +57,11 @@ class CreateTestRunView(View):
         test_cases = get_selected_testcases(request)
         test_plan = TestPlan.objects.get(pk=plan_id)
 
-        # note: ordered by case_id for test_show_create_new_run_page()
+        # note: ordered by pk for test_show_create_new_run_page()
         tcs_values = test_cases.select_related('author',
                                                'case_status',
                                                'category',
-                                               'priority').order_by('case_id')
+                                               'priority').order_by('pk')
 
         if request.POST.get('POSTING_TO_CREATE'):
             form = NewRunForm(request.POST)
@@ -436,7 +436,7 @@ class AddCasesToRunView(View):
         test_plan = test_run.plan
         test_cases = test_run.plan.case.filter(case_status__name='CONFIRMED').select_related(
             'default_tester').only('default_tester_id').filter(
-                case_id__in=test_cases_ids)
+                pk__in=test_cases_ids)
 
         if request.POST.get('_use_plan_sortkey'):
             test_case_pks = (test_case.pk for test_case in test_cases)

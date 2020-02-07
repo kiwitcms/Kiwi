@@ -66,7 +66,6 @@ class Category(TCMSActionModel):
 class TestCase(TCMSActionModel):
     history = KiwiHistoricalRecords()
 
-    case_id = models.AutoField(primary_key=True)
     create_date = models.DateTimeField(auto_now_add=True)
     is_automated = models.BooleanField(default=False)
     script = models.TextField(blank=True, null=True)
@@ -238,16 +237,13 @@ class TestCasePlan(models.Model):
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
     sortkey = models.IntegerField(null=True, blank=True)
 
-    # TODO: create FOREIGN KEY constraint on plan_id and case_id individually
-    # in database.
-
     class Meta:
         unique_together = ('plan', 'case')
 
 
 class TestCaseComponent(models.Model):
-    case = models.ForeignKey(TestCase, on_delete=models.CASCADE)  # case_id
-    component = models.ForeignKey('management.Component', on_delete=models.CASCADE)  # component_id
+    case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
+    component = models.ForeignKey('management.Component', on_delete=models.CASCADE)
 
 
 class TestCaseTag(models.Model):
