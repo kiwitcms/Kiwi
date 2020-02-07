@@ -132,7 +132,6 @@ class Build(TCMSActionModel):
 
 
 class Tag(TCMSActionModel):
-    id = models.AutoField(db_column='tag_id', primary_key=True)
     name = models.CharField(max_length=255)
 
     class Meta:

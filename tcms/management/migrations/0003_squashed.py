@@ -6,6 +6,11 @@ from django.db import migrations, models
 import tcms.core.models.base
 
 
+TAG_ID_COLUMN = 'tag_id'
+if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
+    TAG_ID_COLUMN = ''
+
+
 def forwards_add_initial_data(apps, schema_editor):
     Priority = apps.get_model('management', 'Priority')
     Priority.objects.bulk_create([
@@ -102,7 +107,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(db_column='tag_id', max_length=10,
+                ('id', models.AutoField(db_column=TAG_ID_COLUMN, max_length=10,
                                         primary_key=True, serialize=False)),
                 ('name', models.CharField(db_column='tag_name', max_length=255)),
             ],

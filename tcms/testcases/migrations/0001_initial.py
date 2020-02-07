@@ -7,6 +7,13 @@ import tcms.core.models.base
 test_case_statuss = ['PROPOSED', 'CONFIRMED', 'DISABLED', 'NEED_UPDATE']
 
 
+CASE_STATUS_ID_COLUMN = 'case_status_id'
+CATEGORY_ID_COLUMN = 'category_id'
+if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
+    CASE_STATUS_ID_COLUMN = ''
+    CATEGORY_ID_COLUMN = ''
+
+
 def forwards_add_initial_data(apps, schema_editor):
     BugSystem = apps.get_model('testcases', 'BugSystem')
     BugSystem.objects.bulk_create([
@@ -46,7 +53,7 @@ class Migration(migrations.Migration):
             name='TestCaseStatus',
             fields=[
                 ('id', models.AutoField(max_length=6, serialize=False, primary_key=True,
-                                        db_column='case_status_id')),
+                                        db_column=CASE_STATUS_ID_COLUMN)),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(null=True, blank=True)),
             ],
@@ -60,7 +67,7 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True,
-                                        db_column='category_id')),
+                                        db_column=CATEGORY_ID_COLUMN)),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(blank=True)),
                 ('product', models.ForeignKey(related_name='category', to='management.Product',

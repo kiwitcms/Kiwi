@@ -15,9 +15,6 @@ from tcms.testcases.fields import MultipleEmailField
 
 
 class TestCaseStatus(TCMSActionModel):
-    id = models.AutoField(
-        db_column='case_status_id', primary_key=True
-    )
     # FIXME: if name has unique value for each status, give unique constraint
     # to this field. Otherwise, all SQL queries filtering upon this
     #        field will cost much time in the database side.
@@ -49,7 +46,6 @@ vinaigrette.register(TestCaseStatus, ['name'])
 
 
 class Category(TCMSActionModel):
-    id = models.AutoField(db_column='category_id', primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey('management.Product', related_name="category",
                                 on_delete=models.CASCADE)

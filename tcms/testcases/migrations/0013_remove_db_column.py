@@ -46,4 +46,17 @@ class Migration(migrations.Migration):
             field=models.IntegerField(auto_created=True, blank=True,
                                       db_index=True, verbose_name='ID'),
         ),
+
+        migrations.AlterField(
+            model_name='category',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True,
+                                   serialize=False, verbose_name='ID'),
+        ),
+        migrations.AlterField(
+            model_name='testcasestatus',
+            name='id',
+            field=models.AutoField(auto_created=True, primary_key=True,
+                                   serialize=False, verbose_name='ID'),
+        ),
     ]

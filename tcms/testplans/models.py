@@ -19,7 +19,6 @@ from tcms.rpc.utils import distinct_filter
 
 
 class PlanType(TCMSActionModel):
-    id = models.AutoField(db_column='type_id', primary_key=True)
     name = models.CharField(max_length=64, unique=True)
     description = models.TextField(blank=True, null=True)
 
