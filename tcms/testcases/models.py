@@ -14,10 +14,10 @@ from tcms.rpc.utils import distinct_filter
 from tcms.testcases.fields import MultipleEmailField
 
 
+# todo: this entire model should be removed and replaced with a boolean flag,
+# e.g. TestCase.is_confirmed where False indicates that TC is not ready for
+# execution yet - could be under peer review, could be new (unreviewed) or other
 class TestCaseStatus(TCMSActionModel):
-    # FIXME: if name has unique value for each status, give unique constraint
-    # to this field. Otherwise, all SQL queries filtering upon this
-    #        field will cost much time in the database side.
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
 

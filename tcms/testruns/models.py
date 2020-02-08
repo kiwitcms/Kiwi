@@ -91,7 +91,6 @@ class TestRun(TCMSActionModel):
                                 'email', ''))
         return list(send_to)
 
-    # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, status=1, assignee=None,
                      case_text_version=None, build=None,
                      sortkey=0):
