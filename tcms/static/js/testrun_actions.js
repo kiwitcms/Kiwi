@@ -62,7 +62,7 @@ Nitrate.TestRuns.Details.on_load = function() {
     var c = jQ(this).parent(); // Container
     var c_container = c.next(); // Content Containers
     var caseId = c.find('input[name="case"]')[0].value;
-    var executionId = c.find('input[name="case_run"]')[0].value;
+    var executionId = c.find('input[name="execution"]')[0].value;
     var caseTextVersion = c.find('input[name="case_text_version"]')[0].value;
     var callback = function(t) {
       // Observe the update case run stauts/comment form
@@ -120,7 +120,7 @@ Nitrate.TestRuns.Details.on_load = function() {
     toggleTestExecutionPane({
       'callback': callback,
       'caseId': caseId,
-      'caserunId': executionId,
+      'executionId': executionId,
       'caseTextVersion': caseTextVersion,
       'caserunRowContainer': c,
       'expandPaneContainer': c_container
