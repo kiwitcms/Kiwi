@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load attachments_tags %}
 
 <div class="card-pf card-pf-accented">
     <h2 class="card-pf-title">
@@ -21,7 +22,7 @@
             {% for attachment in attachments_list %}
             <tr>
                 <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
-                <td><a href="{% url " tcms-profile" attachment.creator %}">{{ attachment.creator }}</a></td>
+                <td><a href="{% url 'tcms-profile' attachment.creator %}">{{ attachment.creator }}</a></td>
                 <td>{{ attachment.created }}</td>
                 <td>{% attachment_delete_link attachment %}</td>
             </tr>
