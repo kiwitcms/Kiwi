@@ -23,13 +23,6 @@ jQ(function() {
 </script>
 {% endblock %}
 
-{% block content_type %}
-	<input type="hidden" name="content_type" value="testruns.testrun" />
-	<input type="hidden" name="object_pk" value="{{ test_run.pk }}" />
-	<input type="hidden" name="name" value="{{ test_run.name }}" />
-	<input type="hidden" name="description" value="{{ test_run.notes }}" />
-{% endblock %}
-
 {% block contents %}
 <div id="content">
 	<div class="control">
