@@ -25,6 +25,8 @@ jQ(function() {
 
 {% block contents %}
 <div id="content">
+        <input type="hidden" name="run_id" value="{{ test_run.pk }}" />
+
 	<div class="control">
 		{% if perms.testruns.change_testexecution %}
                 <a href="{% url 'testruns-edit' test_run.pk %}"><strong>EDIT</strong></a>
