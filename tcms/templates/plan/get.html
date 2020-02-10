@@ -32,12 +32,6 @@ Nitrate.TestPlans.Instance = {
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 {% endblock %}
 
-{% block content_type %}
-	<input type="hidden" name="content_type" value="testplans.testplan" />
-	<input type="hidden" name="object_pk" value="{{ object.pk }}" />
-	<input type="hidden" name="name" value="{{ object.name }}" />
-{% endblock %}
-
 {% block contents %}
 <div id="content">
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ object.pk }}">
