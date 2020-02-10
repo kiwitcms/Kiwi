@@ -2,7 +2,7 @@
 
 bleach-whitelist==0.0.10
 django-glrm==1.1.3
-django-grappelli==2.13.3
+django-grappelli==2.13.4
 django-uuslug==1.2.0
 django-vinaigrette==2.0.1
 django-colorfield==0.1.15
