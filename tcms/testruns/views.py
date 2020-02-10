@@ -194,7 +194,10 @@ class GetTestRunView(TemplateView):  # pylint: disable=missing-permission-requir
     def get_context_data(self, **kwargs):
         # Get the test run
         try:
-            # 1. get test run itself
+            # todo: this is redundant b/c we've got self.object pointing to the
+            # same object and we don't have to read it twice from the DB
+            # todo: self.object however isn't present b/c this is not a DetailsView
+            # and we're not calling super() anywhere
             test_run = TestRun.objects.select_related().get(pk=kwargs['pk'])
         except ObjectDoesNotExist:
             raise Http404
