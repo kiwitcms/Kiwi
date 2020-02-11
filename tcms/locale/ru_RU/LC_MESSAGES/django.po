@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-10 21:32+0000\n"
-"PO-Revision-Date: 2020-02-11 21:23\n"
+"POT-Creation-Date: 2020-02-11 21:25+0000\n"
+"PO-Revision-Date: 2020-02-11 21:34\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -65,14 +65,10 @@ msgstr "Назначено"
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
 #: tcms/bugs/templates/bugs/search.html:41
-#: tcms/bugs/templates/bugs/search.html:104
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:16
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:16
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
-#: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:37
-#: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
-#: tcms/templates/run/get.html:123 tcms/templates/run/report.html:35
+#: tcms/bugs/templates/bugs/search.html:104 tcms/templates/dashboard.html:47
+#: tcms/templates/include/bug_details.html:37 tcms/templates/plan/get.html:56
+#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
+#: tcms/templates/telemetry/include/filters.html:11
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:37
@@ -91,11 +87,8 @@ msgstr "Продукт"
 #: tcms/bugs/templates/bugs/mutable.html:41
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:105
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:25
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:25
-#: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:66
-#: tcms/templates/plan/preview.html:19
+#: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:60
+#: tcms/templates/telemetry/include/filters.html:20
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
@@ -109,13 +102,11 @@ msgstr "Версия"
 #: tcms/bugs/templates/bugs/mutable.html:59
 #: tcms/bugs/templates/bugs/search.html:61
 #: tcms/bugs/templates/bugs/search.html:106
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:34
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:33
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:34
-#: tcms/templates/case/get_details_case_run.html:76
+#: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:49
-#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:129
+#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
+#: tcms/templates/telemetry/include/filters.html:29
 #: tcms/testruns/templates/testruns/mutable.html:31
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
@@ -142,7 +133,7 @@ msgstr "Закрыть"
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
 #: tcms/bugs/templates/bugs/search.html:102
-#: tcms/templates/plan/search_case.html:81
+#: tcms/templates/plan/search_case.html:77
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:18
@@ -180,20 +171,14 @@ msgid "Search bugs"
 msgstr "Поиск багов"
 
 #: tcms/bugs/templates/bugs/search.html:16
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:53
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:52
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:53
+#: tcms/templates/telemetry/include/filters.html:48
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
 msgstr "После"
 
 #: tcms/bugs/templates/bugs/search.html:27
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:47
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:65
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:64
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:65
+#: tcms/templates/telemetry/include/filters.html:60
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
@@ -220,7 +205,7 @@ msgstr "Поиск"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:80
+#: tcms/templates/plan/search_case.html:76
 #: tcms/templates/run/assign_case.html:71
 #: tcms/testcases/templates/testcases/get.html:162
 #: tcms/testcases/templates/testcases/search.html:130
@@ -254,7 +239,7 @@ msgstr "Правка бага"
 msgid "*bug closed*"
 msgstr "*баг закрыт*"
 
-#: tcms/core/ajax.py:153 tcms/testruns/views.py:602
+#: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
 msgid "User %s not found!"
 msgstr "Пользователь %s не найден!"
@@ -303,27 +288,27 @@ msgstr "Пользователь с таким email уже существует
 msgid "Your new %s account confirmation"
 msgstr "Подтверждение вашего нового %s аккаунта"
 
-#: tcms/kiwi_auth/views.py:53
+#: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Ваша учетная запись была создана и ожидает подтверждение через указанный вами e-mail"
 
-#: tcms/kiwi_auth/views.py:56
+#: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Ваша учетная запись была создана и ожидает активации администратором"
 
-#: tcms/kiwi_auth/views.py:59
+#: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
 msgstr "Список администраторов"
 
-#: tcms/kiwi_auth/views.py:97
+#: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
 msgstr "Ключ активации больше не существует в базе данных"
 
-#: tcms/kiwi_auth/views.py:102
+#: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
 msgstr "Срок действия ключа активации истек"
 
-#: tcms/kiwi_auth/views.py:114
+#: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
 msgstr "Ваша учетная запись успешно активирована"
 
@@ -336,104 +321,104 @@ msgstr "Включить отчетность к трекеру задач, на
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Модель %s не имеет основного ключа. Его необходимо указать вручную."
 
-#: tcms/settings/common.py:280
+#: tcms/settings/common.py:282
 msgid "DASHBOARD"
 msgstr "ДАШБОРД"
 
-#: tcms/settings/common.py:281
+#: tcms/settings/common.py:283
 msgid "TESTING"
 msgstr "ТЕСТИРОВАНИЕ"
 
-#: tcms/settings/common.py:282
+#: tcms/settings/common.py:284
 msgid "New Test Plan"
 msgstr "Новый тест-план"
 
-#: tcms/settings/common.py:284
+#: tcms/settings/common.py:286
 msgid "New Test Case"
 msgstr "Новый тест-кейс"
 
-#: tcms/settings/common.py:286
+#: tcms/settings/common.py:288
 msgid "New Bug"
 msgstr "Новый Баг"
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:290
 msgid "SEARCH"
 msgstr "ПОИСК"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:291
 msgid "Search Test Plans"
 msgstr "Поиск тест-планов"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:292
 msgid "Search Test Runs"
 msgstr "Поиск тест-прогонов"
 
-#: tcms/settings/common.py:291
+#: tcms/settings/common.py:293
 msgid "Search Test Cases"
 msgstr "Поиск тест-кейсов"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:294
 msgid "Search Bugs"
 msgstr "Поиск Багов"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:296
 msgid "TELEMETRY"
 msgstr "ТЕЛЕМЕТРИЯ"
 
-#: tcms/settings/common.py:295
+#: tcms/settings/common.py:297
 msgid "Testing"
 msgstr "Тестирование"
 
-#: tcms/settings/common.py:296
+#: tcms/settings/common.py:298
 msgid "Breakdown"
 msgstr "Разбивка"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:299
 msgid "Status matrix"
 msgstr "Матрица состояния"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:300
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Тренды выполнения"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:301
 msgid "TestCase health"
 msgstr "Состояние тест-кейсов"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:306
 msgid "ADMIN"
 msgstr "АДМИН"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:307
 msgid "Users and groups"
 msgstr "Пользователи и группы"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:309
 msgid "Everything else"
 msgstr "Прочее"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:311
 msgid "PLUGINS"
 msgstr ""
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:322
 msgid "Report an Issue"
 msgstr "Сообщение о проблеме"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:323
 msgid "Ask for help on StackOverflow"
 msgstr "Запросить помощь в StackOverflow"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:324
 msgid "User Guide"
 msgstr "Руководство пользователя"
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:325
 msgid "Administration Guide"
 msgstr "Руководство администратора"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:326
 msgid "API Help"
 msgstr "Справка по API"
 
@@ -454,24 +439,11 @@ msgstr "ДРУГОЕ"
 msgid "Testing Breakdown"
 msgstr "Этапы тестирования"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
-msgid "Shows how existing test cases are distributed"
-msgstr "Показывает распределение выполнения тест-кейсов"
-
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:44
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:45
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:68
-#: tcms/templates/run/report.html:24
-msgid "Test Plan"
-msgstr "Тест-план"
-
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:63
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
 msgstr "Итого"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:73
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
@@ -483,36 +455,28 @@ msgstr "Итого"
 msgid "Automated"
 msgstr "Автоматизирован"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:77
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
 msgstr "Ручной"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:83
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
 msgstr "Приоритеты"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:88
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "Категории"
-
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
-msgid "Information if product builds are getting better or worse"
-msgstr "Информация, если сборки продуктов становятся лучше или хуже"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
 msgstr "Матрица состояния тестов"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
-msgid "Detailed information about test execution status"
-msgstr "Подробная информация о состоянии прогонки теста"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
 msgstr "Тест-кейс"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
 msgstr "Прогонка теста"
 
@@ -521,22 +485,18 @@ msgid "TestCase Health"
 msgstr "Состояние Тест-кейсов"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
-msgid "Discover which test cases are the most common source of problems"
-msgstr "Узнайте, какие тесты являются наиболее распространенным источником проблем"
-
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
 msgstr "Часто падающие тест-кейсы"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:83
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
 msgstr "Тест-кейс"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:84
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:17
 msgid "Failed executions"
 msgstr "Упавшие прогонки"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:85
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 #, python-format
 msgid "%% of failed executions"
 msgstr "%% упавших прогонок"
@@ -567,12 +527,12 @@ msgid "Attachment"
 msgstr "Вложения"
 
 #: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:146
+#: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
 msgstr "Вложения не найдены"
 
 #: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:156
+#: tcms/templates/case/get_details_case_run.html:147
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:134
@@ -580,7 +540,7 @@ msgid "Component"
 msgstr "Компонент"
 
 #: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:161
+#: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
 msgstr "Компонент не найден"
 
@@ -595,7 +555,7 @@ msgid "Tag"
 msgstr "Тег"
 
 #: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:172
+#: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
 msgstr "Тег не найден"
@@ -625,27 +585,27 @@ msgstr "Примечания"
 msgid "Comments"
 msgstr "Комментарии"
 
-#: tcms/templates/case/get_details_case_run.html:74
+#: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
 msgstr "Информация о выполнении теста"
 
-#: tcms/templates/case/get_details_case_run.html:75
+#: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
 msgstr "Дата прогона"
 
-#: tcms/templates/case/get_details_case_run.html:76
+#: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
 msgstr "Версия текста"
 
-#: tcms/templates/case/get_details_case_run.html:88
+#: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
 msgstr "Нет записанных логов"
 
-#: tcms/templates/case/get_details_case_run.html:108
+#: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
 msgstr "Ошибки и гиперссылки"
 
-#: tcms/templates/case/get_details_case_run.html:109
+#: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
 #: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
@@ -655,7 +615,7 @@ msgstr "Ошибки и гиперссылки"
 msgid "Add"
 msgstr "Добавить"
 
-#: tcms/templates/case/get_details_case_run.html:110
+#: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
 msgstr "Отчёт об ошибке"
 
@@ -679,7 +639,7 @@ msgstr "Панель мониторинга"
 msgid "Test executions"
 msgstr "Тестовые запуски"
 
-#: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:86
+#: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
 msgstr "Дата запуска"
@@ -786,7 +746,7 @@ msgstr "Уважаемый администратор,\n"
 "Kiwi TCMS и ожидает вашего подтверждения!\n\n"
 "Перейдите на %(user_url)s, чтобы активировать учетную запись!"
 
-#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:122
+#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
 msgstr "Вложения"
 
@@ -809,7 +769,7 @@ msgstr "Записи не найдены"
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
 #: tcms/templates/plan/get_cases.html:192
-#: tcms/templates/plan/search_case.html:86 tcms/templates/run/get.html:145
+#: tcms/templates/plan/search_case.html:82 tcms/templates/run/get.html:126
 #: tcms/templates/run/get_case_runs.html:34
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
@@ -821,8 +781,8 @@ msgstr "Записи не найдены"
 msgid "Status"
 msgstr "Состояние"
 
-#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:125
-#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:92
+#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
+#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/search.html:118
@@ -844,12 +804,12 @@ msgstr "Наименование"
 msgid "Plans"
 msgstr "Планы"
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
+#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
 msgstr "Кейсы"
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
+#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
 msgstr "Прогоны"
 
@@ -955,37 +915,37 @@ msgstr "Последняя страница"
 msgid "No test case was found in this plan."
 msgstr "В этом плане не найдено ни одного тест-кейса."
 
-#: tcms/templates/plan/get.html:46
+#: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
 msgstr "Изменить план"
 
-#: tcms/templates/plan/get.html:46
+#: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
 msgstr "Изменить тест-план"
 
-#: tcms/templates/plan/get.html:47
+#: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
 msgstr "Клонировать план"
 
-#: tcms/templates/plan/get.html:47
+#: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
 msgstr "Клонировать план в другой продукт"
 
-#: tcms/templates/plan/get.html:48
+#: tcms/templates/plan/get.html:42
 msgid "Print Plan"
 msgstr "Печать плана"
 
-#: tcms/templates/plan/get.html:49
+#: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
 msgstr "Удалить план"
 
-#: tcms/templates/plan/get.html:49
+#: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
 msgstr "Удалить тест-план"
 
-#: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
-#: tcms/templates/plan/search_case.html:82
+#: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
+#: tcms/templates/plan/get_cases.html:171
+#: tcms/templates/plan/search_case.html:78
 #: tcms/templates/run/assign_case.html:73
 #: tcms/testcases/templates/testcases/get.html:42
 #: tcms/testcases/templates/testcases/get.html:164
@@ -999,46 +959,45 @@ msgstr "Удалить тест-план"
 msgid "Author"
 msgstr "Автор"
 
-#: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
+#: tcms/templates/plan/get.html:64
 msgid "Plan Type"
 msgstr "Тип плана"
 
-#: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
+#: tcms/templates/plan/get.html:70
 msgid "Reference Link"
 msgstr "Ссылка"
 
-#: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
-#: tcms/templates/plan/preview.html:36
+#: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
 msgstr "Пусто"
 
-#: tcms/templates/plan/get.html:86
+#: tcms/templates/plan/get.html:80
 msgid "Create Time"
 msgstr "Время создания"
 
-#: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
+#: tcms/templates/plan/get.html:85
 msgid "Parent"
 msgstr "Родитель"
 
-#: tcms/templates/plan/get.html:101
+#: tcms/templates/plan/get.html:95
 msgid "View Edit History"
 msgstr "Просмотреть историю изменений"
 
-#: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
+#: tcms/templates/plan/get.html:104
 msgid "Document"
 msgstr "Документ"
 
-#: tcms/templates/plan/get.html:116
+#: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
 msgstr "Рецензирование кейсов"
 
-#: tcms/templates/plan/get.html:128
+#: tcms/templates/plan/get.html:122
 msgid "Tree View"
 msgstr "Дерево"
 
-#: tcms/templates/plan/get.html:137
+#: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
 msgstr "Документ для этого плана еще не был записан."
 
@@ -1112,7 +1071,7 @@ msgstr "Изменить тестера по умолчанию"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
-#: tcms/templates/plan/search_case.html:84
+#: tcms/templates/plan/search_case.html:80
 #: tcms/templates/run/assign_case.html:76
 #: tcms/templates/run/get_case_runs.html:103
 #: tcms/templates/run/table_executions.html:22
@@ -1181,7 +1140,7 @@ msgid "Reviewer"
 msgstr "Рецензент"
 
 #: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:83 tcms/templates/run/get.html:135
+#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
 msgstr "Тестер по умолчанию"
@@ -1214,27 +1173,23 @@ msgstr "Добавить дочерний узел в текущий план"
 msgid "Remove child node from current plan"
 msgstr "Удалить дочерний узел из текущего плана"
 
-#: tcms/templates/plan/preview.html:52
-msgid "The plan you specified does not exist in the database."
-msgstr "Указанный вами план не существует в базе данных."
-
-#: tcms/templates/plan/search_case.html:29
+#: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
 msgstr "Поиск заявок для добавления в тест-план."
 
-#: tcms/templates/plan/search_case.html:40
+#: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
 msgstr "Быстрый поиск"
 
-#: tcms/templates/plan/search_case.html:45
+#: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
 msgstr "Обычный поиск"
 
-#: tcms/templates/plan/search_case.html:85
+#: tcms/templates/plan/search_case.html:81
 msgid "Created"
 msgstr "Создан"
 
-#: tcms/templates/plan/search_case.html:115
+#: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
 msgstr "Тест-кейсы не найдены."
 
@@ -1323,13 +1278,19 @@ msgstr "Регистрация нового аккаунта"
 msgid "Add TestCase to TestRun"
 msgstr "Добавить тест-кейс в тестовый прогон"
 
-#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:80
+#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
 #: tcms/testruns/templates/testruns/mutable.html:48
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "Менеджер"
+
+#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/report.html:24
+#: tcms/templates/telemetry/include/filters.html:40
+msgid "Test Plan"
+msgstr "Тест-план"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
@@ -1367,28 +1328,28 @@ msgstr "Дата создания"
 msgid "Selected"
 msgstr "Выбранные"
 
-#: tcms/templates/run/get.html:74 tcms/templates/run/report.html:27
+#: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
 msgstr "Версия продукта"
 
-#: tcms/templates/run/get.html:116 tcms/templates/run/report.html:51
+#: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
 msgstr "Примечание"
 
-#: tcms/templates/run/get.html:148
+#: tcms/templates/run/get.html:129
 msgid "Finished"
 msgstr "Завершено"
 
-#: tcms/templates/run/get.html:153
+#: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
 msgstr "Запущено"
 
-#: tcms/templates/run/get.html:161 tcms/templates/run/report.html:47
+#: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
 msgstr "Завершено"
 
-#: tcms/templates/run/get.html:167
+#: tcms/templates/run/get.html:148
 msgid "CC"
 msgstr "Копия"
 
@@ -1498,7 +1459,7 @@ msgid "Closed at"
 msgstr "Закрыто"
 
 #: tcms/templates/run/report.html:88
-#: tcms/templates/run/status_statistics.html:27
+#: tcms/templates/run/status_statistics.html:17
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
@@ -1508,15 +1469,15 @@ msgstr "Ошибки"
 msgid "Bug List"
 msgstr "Список ошибок"
 
-#: tcms/templates/run/status_statistics.html:18
+#: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
 msgstr "ИТОГИ"
 
-#: tcms/templates/run/status_statistics.html:24
+#: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "Отчёт"
 
-#: tcms/templates/run/status_statistics.html:29
+#: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
 msgstr "Нет ошибок"
 
@@ -1535,6 +1496,10 @@ msgstr "ID запуска"
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
 msgstr "Запуски не найдены"
+
+#: tcms/templates/telemetry/include/filters.html:7
+msgid "Detailed information about test execution status"
+msgstr "Подробная информация о состоянии прогонки теста"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1704,8 +1669,8 @@ msgstr "История"
 msgid "TestCase cloning was successful"
 msgstr "Клонирование тест-кейса прошло успешно"
 
-#: tcms/testcases/views.py:724 tcms/testruns/views.py:365
-#: tcms/testruns/views.py:414
+#: tcms/testcases/views.py:724 tcms/testruns/views.py:366
+#: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
 msgstr "Требуется хотя бы один тест-кейс"
 
@@ -1783,15 +1748,15 @@ msgstr "Название тест-плана"
 msgid "Test plan"
 msgstr "Тест-план"
 
-#: tcms/testplans/views.py:343
+#: tcms/testplans/views.py:281
 msgid "TestPlan is required"
 msgstr "Требуется тест-план"
 
-#: tcms/testplans/views.py:502
+#: tcms/testplans/views.py:440
 msgid "At least one test plan is required for print"
 msgstr "Для печати требуется хотя бы один тест-план"
 
-#: tcms/testplans/views.py:510
+#: tcms/testplans/views.py:448
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Тест-план \"%s\" не существует"
@@ -1799,6 +1764,10 @@ msgstr "Тест-план \"%s\" не существует"
 #: tcms/testruns/admin.py:28
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Доступ запрещен: тестовый прогон не принадлежит вам"
+
+#: tcms/testruns/models.py:236
+msgid "Test execution statuses"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1847,23 +1816,23 @@ msgstr "ID плана"
 msgid "TestPlan ID"
 msgstr "ID тест-плана"
 
-#: tcms/testruns/views.py:48
+#: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "Для создание тест-прогона требуется хотя-бы один тест-план"
 
-#: tcms/testruns/views.py:54
+#: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "Создание тест-прогона требует хотя бы одного тест-кейса"
 
-#: tcms/testruns/views.py:369
+#: tcms/testruns/views.py:370
 msgid "Clone of "
 msgstr "Клонировать "
 
-#: tcms/testruns/views.py:423
+#: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
 msgstr "ID тест-кейса не является допустимым целым числом"
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
 msgstr "Введенный вами пользователь, не существует в базе данных"
 
