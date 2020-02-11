@@ -8,6 +8,7 @@ django-modern-rpc==0.12.0
 django-simple-history==2.8.0
 jira==2.0.0
 Markdown==3.2
+PyGithub==1.46
 python-gitlab==2.0.1
 python-redmine==2.2.1
 topicaxis-opengraph==0.5
