@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-10 21:32+0000\n"
-"PO-Revision-Date: 2020-02-11 21:24\n"
+"POT-Creation-Date: 2020-02-11 21:25+0000\n"
+"PO-Revision-Date: 2020-02-11 21:34\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -65,14 +65,10 @@ msgstr "Atanan"
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
 #: tcms/bugs/templates/bugs/search.html:41
-#: tcms/bugs/templates/bugs/search.html:104
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:16
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:16
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
-#: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:37
-#: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
-#: tcms/templates/run/get.html:123 tcms/templates/run/report.html:35
+#: tcms/bugs/templates/bugs/search.html:104 tcms/templates/dashboard.html:47
+#: tcms/templates/include/bug_details.html:37 tcms/templates/plan/get.html:56
+#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
+#: tcms/templates/telemetry/include/filters.html:11
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:37
@@ -91,11 +87,8 @@ msgstr "Ürün"
 #: tcms/bugs/templates/bugs/mutable.html:41
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:105
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:25
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:25
-#: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:66
-#: tcms/templates/plan/preview.html:19
+#: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:60
+#: tcms/templates/telemetry/include/filters.html:20
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
@@ -109,13 +102,11 @@ msgstr "Versiyon"
 #: tcms/bugs/templates/bugs/mutable.html:59
 #: tcms/bugs/templates/bugs/search.html:61
 #: tcms/bugs/templates/bugs/search.html:106
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:34
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:33
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:34
-#: tcms/templates/case/get_details_case_run.html:76
+#: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:49
-#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:129
+#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
+#: tcms/templates/telemetry/include/filters.html:29
 #: tcms/testruns/templates/testruns/mutable.html:31
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
@@ -142,7 +133,7 @@ msgstr "Kapat"
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
 #: tcms/bugs/templates/bugs/search.html:102
-#: tcms/templates/plan/search_case.html:81
+#: tcms/templates/plan/search_case.html:77
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:18
@@ -180,20 +171,14 @@ msgid "Search bugs"
 msgstr "Hata ara"
 
 #: tcms/bugs/templates/bugs/search.html:16
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:53
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:52
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:53
+#: tcms/templates/telemetry/include/filters.html:48
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
 msgstr "Sonra"
 
 #: tcms/bugs/templates/bugs/search.html:27
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:47
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:65
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:64
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:65
+#: tcms/templates/telemetry/include/filters.html:60
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
@@ -220,7 +205,7 @@ msgstr "Arama"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:80
+#: tcms/templates/plan/search_case.html:76
 #: tcms/templates/run/assign_case.html:71
 #: tcms/testcases/templates/testcases/get.html:162
 #: tcms/testcases/templates/testcases/search.html:130
@@ -254,7 +239,7 @@ msgstr "Hatayı düzenle"
 msgid "*bug closed*"
 msgstr "*hata kapandı*"
 
-#: tcms/core/ajax.py:153 tcms/testruns/views.py:602
+#: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
 msgid "User %s not found!"
 msgstr "%s adlı kullanıcı bulunamadı!"
@@ -303,27 +288,27 @@ msgstr "Bu e-posta adresiyle kayıtlı bir kullanıcı zaten var."
 msgid "Your new %s account confirmation"
 msgstr "%s yeni hesap onayınız"
 
-#: tcms/kiwi_auth/views.py:53
+#: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Hesabınız oluşturuldu, onayınız için e-posta hesabınızı kontrol ediniz"
 
-#: tcms/kiwi_auth/views.py:56
+#: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Hesabınız oluşturuldu, fakat etkileşmesi için yönetici onayı gerekiyor"
 
-#: tcms/kiwi_auth/views.py:59
+#: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
 msgstr "Aşağıda yönetici listesi"
 
-#: tcms/kiwi_auth/views.py:97
+#: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
 msgstr "Bu etkileştirme anahtarı artık veritabanında mevcut değil"
 
-#: tcms/kiwi_auth/views.py:102
+#: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
 msgstr "Bu etkinleştirme anahtarının süresi dolmuş"
 
-#: tcms/kiwi_auth/views.py:114
+#: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
 msgstr "Hesabınız başarıyla etkinleştirildi"
 
@@ -336,104 +321,104 @@ msgstr "Ana URL'i ayarlayarak bu İş Takip sistemine raporlamayı etkinleştiri
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Model %s birinci anahtara sahip değil. Bu alanı manuel olarak belirtmeniz gerekir."
 
-#: tcms/settings/common.py:280
+#: tcms/settings/common.py:282
 msgid "DASHBOARD"
 msgstr "KONTROL PANELİ"
 
-#: tcms/settings/common.py:281
+#: tcms/settings/common.py:283
 msgid "TESTING"
 msgstr "TEST"
 
-#: tcms/settings/common.py:282
+#: tcms/settings/common.py:284
 msgid "New Test Plan"
 msgstr "Yeni Test Planı"
 
-#: tcms/settings/common.py:284
+#: tcms/settings/common.py:286
 msgid "New Test Case"
 msgstr "Yeni Test Senaryosu"
 
-#: tcms/settings/common.py:286
+#: tcms/settings/common.py:288
 msgid "New Bug"
 msgstr "Yeni hata"
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:290
 msgid "SEARCH"
 msgstr "ARAMA"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:291
 msgid "Search Test Plans"
 msgstr "Test Planları Ara"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:292
 msgid "Search Test Runs"
 msgstr "Test Koşumları Ara"
 
-#: tcms/settings/common.py:291
+#: tcms/settings/common.py:293
 msgid "Search Test Cases"
 msgstr "Test Senaryoları Ara"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:294
 msgid "Search Bugs"
 msgstr "Hata ara"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:296
 msgid "TELEMETRY"
 msgstr "TELEMETRİ"
 
-#: tcms/settings/common.py:295
+#: tcms/settings/common.py:297
 msgid "Testing"
 msgstr "Test"
 
-#: tcms/settings/common.py:296
+#: tcms/settings/common.py:298
 msgid "Breakdown"
 msgstr "Analiz"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:299
 msgid "Status matrix"
 msgstr "Durum Matrisi"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:300
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Koşum Eğilimleri"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:301
 msgid "TestCase health"
 msgstr "Test Senaryosu Sağlığı"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:306
 msgid "ADMIN"
 msgstr "YÖNETİM"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:307
 msgid "Users and groups"
 msgstr "Kullanıcılar ve gruplar"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:309
 msgid "Everything else"
 msgstr "Geri kalan her şey"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:311
 msgid "PLUGINS"
 msgstr "EKLENTİLER"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:322
 msgid "Report an Issue"
 msgstr "Sorun Bildir"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:323
 msgid "Ask for help on StackOverflow"
 msgstr "StackOverflow'da yardım isteyin"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:324
 msgid "User Guide"
 msgstr "Kullanım Kılavuzu"
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:325
 msgid "Administration Guide"
 msgstr "Yönetim Kılavuzu"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:326
 msgid "API Help"
 msgstr "API Yardım"
 
@@ -454,24 +439,11 @@ msgstr "DİĞER"
 msgid "Testing Breakdown"
 msgstr "Test Dökümü"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:12
-msgid "Shows how existing test cases are distributed"
-msgstr "Mevcut test senaryolarının nasıl dağıldığını gösterir"
-
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:25
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:45
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:44
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:45
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:68
-#: tcms/templates/run/report.html:24
-msgid "Test Plan"
-msgstr "Test Planı"
-
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:63
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
 msgstr "Toplam"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:73
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
@@ -483,36 +455,28 @@ msgstr "Toplam"
 msgid "Automated"
 msgstr "Otomatize"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:77
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
 msgstr "Manuel"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:83
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
 msgstr "Öncelikler"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:88
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "Kategoriler"
-
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:12
-msgid "Information if product builds are getting better or worse"
-msgstr "Ürün derlemelerinin iyiye veya kötüye gittiğine ilişkin bilgi"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
 msgstr "Test Durum Matrisi"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:11
-msgid "Detailed information about test execution status"
-msgstr "Test koşum durumları hakkında detaylı bilgi"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
 msgstr "Test senaryosu"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:81
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
 msgstr "Test koşumu"
 
@@ -521,22 +485,18 @@ msgid "TestCase Health"
 msgstr "Test Senaryosu Sağlığı"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
-msgid "Discover which test cases are the most common source of problems"
-msgstr "Hangi test senaryolarının en yaygın sorun kaynağı olduğunu keşfedin"
-
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:79
 msgid "Most frequently failing test cases"
 msgstr "Sıklıkla başarısız olan test durumları"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:83
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
 msgstr "Test Senaryosu"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:84
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:17
 msgid "Failed executions"
 msgstr "Başarısız Koşumlar"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:85
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 #, python-format
 msgid "%% of failed executions"
 msgstr "başarısız koşumların %%"
@@ -567,12 +527,12 @@ msgid "Attachment"
 msgstr "Ek"
 
 #: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:146
+#: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
 msgstr "Hiçbir ek bulunamadı"
 
 #: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:156
+#: tcms/templates/case/get_details_case_run.html:147
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:134
@@ -580,7 +540,7 @@ msgid "Component"
 msgstr "Bileşen"
 
 #: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:161
+#: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
 msgstr "Hiçbir bileşen bulunamadı"
 
@@ -595,7 +555,7 @@ msgid "Tag"
 msgstr "Etiket"
 
 #: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:172
+#: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
 msgstr "Hiçbir etiket bulunamadı"
@@ -625,27 +585,27 @@ msgstr "Notlar"
 msgid "Comments"
 msgstr "Yorumlar"
 
-#: tcms/templates/case/get_details_case_run.html:74
+#: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
 msgstr "Test Koşum Bilgisi"
 
-#: tcms/templates/case/get_details_case_run.html:75
+#: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
 msgstr "Koşum Tarihi"
 
-#: tcms/templates/case/get_details_case_run.html:76
+#: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
 msgstr "Metin Versiyonu"
 
-#: tcms/templates/case/get_details_case_run.html:88
+#: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
 msgstr "Hiçbir kayıt bulunamadı"
 
-#: tcms/templates/case/get_details_case_run.html:108
+#: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
 msgstr "Hatalar ve bağlantılar"
 
-#: tcms/templates/case/get_details_case_run.html:109
+#: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
 #: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
@@ -655,7 +615,7 @@ msgstr "Hatalar ve bağlantılar"
 msgid "Add"
 msgstr "Ekle"
 
-#: tcms/templates/case/get_details_case_run.html:110
+#: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
 msgstr "Hata bildir"
 
@@ -679,7 +639,7 @@ msgstr "Kontrol Paneli"
 msgid "Test executions"
 msgstr "Test Koşumları"
 
-#: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:86
+#: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
 msgstr "Başlangıç tarihi"
@@ -785,7 +745,7 @@ msgstr "Sevgili Yönetici,\n"
 "Az önce %(username)s kullanıcı adı ile birisi, Kiwi test süreci yönetim sisteminizde hesap oluşturdu ve onayınızı bekliyor!\n\n"
 "Hesabı etkinleştirmek üzere %(user_url)s bağlantısını ziyaret edin!"
 
-#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:122
+#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
 msgstr "Eklentiler"
 
@@ -808,7 +768,7 @@ msgstr "Hiç kayıt bulunamadı"
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
 #: tcms/templates/plan/get_cases.html:192
-#: tcms/templates/plan/search_case.html:86 tcms/templates/run/get.html:145
+#: tcms/templates/plan/search_case.html:82 tcms/templates/run/get.html:126
 #: tcms/templates/run/get_case_runs.html:34
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
@@ -820,8 +780,8 @@ msgstr "Hiç kayıt bulunamadı"
 msgid "Status"
 msgstr "Durum"
 
-#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:125
-#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:92
+#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
+#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/search.html:118
@@ -843,12 +803,12 @@ msgstr "Ad"
 msgid "Plans"
 msgstr "Planlar"
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
+#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
 msgstr "Senaryolar"
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
+#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
 msgstr "Koşumlar"
 
@@ -954,37 +914,37 @@ msgstr "Son sayfa"
 msgid "No test case was found in this plan."
 msgstr "Bu planda hiçbir test senaryosu bulunamadı."
 
-#: tcms/templates/plan/get.html:46
+#: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
 msgstr "Planı Düzenle"
 
-#: tcms/templates/plan/get.html:46
+#: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
 msgstr "Test planını düzenle"
 
-#: tcms/templates/plan/get.html:47
+#: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
 msgstr "Planı Kopyala"
 
-#: tcms/templates/plan/get.html:47
+#: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
 msgstr "Bu planı diğer ürüne kopyala"
 
-#: tcms/templates/plan/get.html:48
+#: tcms/templates/plan/get.html:42
 msgid "Print Plan"
 msgstr "Planı Yazdır"
 
-#: tcms/templates/plan/get.html:49
+#: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
 msgstr "Planı Sil"
 
-#: tcms/templates/plan/get.html:49
+#: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
 msgstr "Test planını sil"
 
-#: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171 tcms/templates/plan/preview.html:11
-#: tcms/templates/plan/search_case.html:82
+#: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
+#: tcms/templates/plan/get_cases.html:171
+#: tcms/templates/plan/search_case.html:78
 #: tcms/templates/run/assign_case.html:73
 #: tcms/testcases/templates/testcases/get.html:42
 #: tcms/testcases/templates/testcases/get.html:164
@@ -998,46 +958,45 @@ msgstr "Test planını sil"
 msgid "Author"
 msgstr "Oluşturan"
 
-#: tcms/templates/plan/get.html:70 tcms/templates/plan/preview.html:23
+#: tcms/templates/plan/get.html:64
 msgid "Plan Type"
 msgstr "Plan Türü"
 
-#: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
+#: tcms/templates/plan/get.html:70
 msgid "Reference Link"
 msgstr "Referans Bağlantısı"
 
-#: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
-#: tcms/templates/plan/preview.html:36
+#: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
 msgstr "Hiçbiri"
 
-#: tcms/templates/plan/get.html:86
+#: tcms/templates/plan/get.html:80
 msgid "Create Time"
 msgstr "Oluşturma Zamanı"
 
-#: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
+#: tcms/templates/plan/get.html:85
 msgid "Parent"
 msgstr "Üst"
 
-#: tcms/templates/plan/get.html:101
+#: tcms/templates/plan/get.html:95
 msgid "View Edit History"
 msgstr "Geçmiş Değişiklikleri Göster"
 
-#: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
+#: tcms/templates/plan/get.html:104
 msgid "Document"
 msgstr "Doküman"
 
-#: tcms/templates/plan/get.html:116
+#: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
 msgstr "İncelenmekte Olan Senaryolar"
 
-#: tcms/templates/plan/get.html:128
+#: tcms/templates/plan/get.html:122
 msgid "Tree View"
 msgstr "Ağaç Görünümü"
 
-#: tcms/templates/plan/get.html:137
+#: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
 msgstr "Bu plan için henüz doküman yazılmadı."
 
@@ -1111,7 +1070,7 @@ msgstr "Varsayılan test uzmanını değiştir"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
-#: tcms/templates/plan/search_case.html:84
+#: tcms/templates/plan/search_case.html:80
 #: tcms/templates/run/assign_case.html:76
 #: tcms/templates/run/get_case_runs.html:103
 #: tcms/templates/run/table_executions.html:22
@@ -1180,7 +1139,7 @@ msgid "Reviewer"
 msgstr "İnceleyen"
 
 #: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:83 tcms/templates/run/get.html:135
+#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
 msgstr "Varsayılan Test Uzmanı"
@@ -1213,27 +1172,23 @@ msgstr "Şimdiki plana alt plan ekle"
 msgid "Remove child node from current plan"
 msgstr "Şimdiki plandan alt plan çıkar"
 
-#: tcms/templates/plan/preview.html:52
-msgid "The plan you specified does not exist in the database."
-msgstr "Belirttiğiniz plan veritabanında bulunmuyor."
-
-#: tcms/templates/plan/search_case.html:29
+#: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
 msgstr "Bu test planına eklemek üzere senaryo ara."
 
-#: tcms/templates/plan/search_case.html:40
+#: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
 msgstr "Hızlı Arama"
 
-#: tcms/templates/plan/search_case.html:45
+#: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
 msgstr "Normal Arama"
 
-#: tcms/templates/plan/search_case.html:85
+#: tcms/templates/plan/search_case.html:81
 msgid "Created"
 msgstr "Oluşturuldu"
 
-#: tcms/templates/plan/search_case.html:115
+#: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
 msgstr "Hiçbir test senaryosu bulunamadı."
 
@@ -1322,13 +1277,19 @@ msgstr "Yeni Hesap Oluştur"
 msgid "Add TestCase to TestRun"
 msgstr "Test koşumuna test senaryosu ekle"
 
-#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:80
+#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
 #: tcms/testruns/templates/testruns/mutable.html:48
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "Test Yöneticisi"
+
+#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/report.html:24
+#: tcms/templates/telemetry/include/filters.html:40
+msgid "Test Plan"
+msgstr "Test Planı"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
@@ -1366,28 +1327,28 @@ msgstr "Oluşturulma Tarihi"
 msgid "Selected"
 msgstr "Seçili"
 
-#: tcms/templates/run/get.html:74 tcms/templates/run/report.html:27
+#: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
 msgstr "Ürün Versiyonu"
 
-#: tcms/templates/run/get.html:116 tcms/templates/run/report.html:51
+#: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
 msgstr "Not"
 
-#: tcms/templates/run/get.html:148
+#: tcms/templates/run/get.html:129
 msgid "Finished"
 msgstr "Tamamlandı"
 
-#: tcms/templates/run/get.html:153
+#: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
 msgstr "Koşuluyor"
 
-#: tcms/templates/run/get.html:161 tcms/templates/run/report.html:47
+#: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
 msgstr "Tamamlandı"
 
-#: tcms/templates/run/get.html:167
+#: tcms/templates/run/get.html:148
 msgid "CC"
 msgstr "CC"
 
@@ -1497,7 +1458,7 @@ msgid "Closed at"
 msgstr "Kapandı"
 
 #: tcms/templates/run/report.html:88
-#: tcms/templates/run/status_statistics.html:27
+#: tcms/templates/run/status_statistics.html:17
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
@@ -1507,15 +1468,15 @@ msgstr "Hatalar"
 msgid "Bug List"
 msgstr "Hata Listesi"
 
-#: tcms/templates/run/status_statistics.html:18
+#: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
 msgstr "TOPLAM"
 
-#: tcms/templates/run/status_statistics.html:24
+#: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "Rapor"
 
-#: tcms/templates/run/status_statistics.html:29
+#: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
 msgstr "Hata Yok"
 
@@ -1534,6 +1495,10 @@ msgstr "Koşum ID"
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
 msgstr "Hiçbir koşum bulunamadı"
+
+#: tcms/templates/telemetry/include/filters.html:7
+msgid "Detailed information about test execution status"
+msgstr "Test koşum durumları hakkında detaylı bilgi"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1703,8 +1668,8 @@ msgstr "Geçmiş"
 msgid "TestCase cloning was successful"
 msgstr "Test senaryosu başarılı bir şekilde kopyalandı"
 
-#: tcms/testcases/views.py:724 tcms/testruns/views.py:365
-#: tcms/testruns/views.py:414
+#: tcms/testcases/views.py:724 tcms/testruns/views.py:366
+#: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
 msgstr "En az bir test senaryosu gerekli"
 
@@ -1782,15 +1747,15 @@ msgstr "Test plan adı"
 msgid "Test plan"
 msgstr "Test planı"
 
-#: tcms/testplans/views.py:343
+#: tcms/testplans/views.py:281
 msgid "TestPlan is required"
 msgstr "Test planı gereklidir"
 
-#: tcms/testplans/views.py:502
+#: tcms/testplans/views.py:440
 msgid "At least one test plan is required for print"
 msgstr "Yazdırmak için en az bir test planı gereklidir"
 
-#: tcms/testplans/views.py:510
+#: tcms/testplans/views.py:448
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Test Planı \"%s\" bulunmuyor"
@@ -1798,6 +1763,10 @@ msgstr "Test Planı \"%s\" bulunmuyor"
 #: tcms/testruns/admin.py:28
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "İzin verilmedi: Test Koşumu size ait değildir"
+
+#: tcms/testruns/models.py:236
+msgid "Test execution statuses"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1847,23 +1816,23 @@ msgstr "Plan ID"
 msgid "TestPlan ID"
 msgstr "Test Planı ID"
 
-#: tcms/testruns/views.py:48
+#: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "Test Koşumu oluşturmak için Test Planı gerekli, birini seçiniz"
 
-#: tcms/testruns/views.py:54
+#: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "Test Koşumu oluşturmak için en az bir Test Senaryosu gereklidir"
 
-#: tcms/testruns/views.py:369
+#: tcms/testruns/views.py:370
 msgid "Clone of "
 msgstr "Kopyası "
 
-#: tcms/testruns/views.py:423
+#: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
 msgstr "Test Senaryo ID geçerli sayısal değer değil"
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
 msgstr "Girdiğiniz kullanıcı veritabanında bulunmuyor"
 
