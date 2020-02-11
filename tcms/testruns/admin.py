@@ -2,6 +2,7 @@
 from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import ReadOnlyHistoryAdmin
@@ -30,7 +31,29 @@ class TestRunAdmin(ReadOnlyHistoryAdmin):
 
 
 class TestExecutionStatusAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'color', 'weight')
+    list_display = ('id', 'visual_icon', 'name', 'colored_color', 'weight')
+    ordering = ['-weight']
+
+    def colored_color(self, test_execution):
+        return format_html(
+            '''
+            <span style="background-color: {}; height: 20px; display: block; text-align: center">
+                <span style="color: black; font-weight: bold">{}</span>
+            </span>
+            ''',
+            test_execution.color, test_execution.color)
+
+    colored_color.short_description = 'color'
+
+    def visual_icon(self, test_execution):
+        return format_html(
+            '''
+            <span class="{}" style="font-size: 18px; color: {};"></span>
+            ''',
+            test_execution.icon, test_execution.color
+        )
+
+    visual_icon.short_description = 'icon'
 
 
 admin.site.register(TestRun, TestRunAdmin)
