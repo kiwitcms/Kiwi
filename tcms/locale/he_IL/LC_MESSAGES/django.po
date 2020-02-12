@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:35\n"
+"POT-Creation-Date: 2020-02-12 17:20+0000\n"
+"PO-Revision-Date: 2020-02-12 17:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -454,6 +454,23 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/templates/run/status_statistics.html:8
+msgid "TOTAL"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
+msgid "Positive"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
+msgid "Neutral"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
+msgid "Negative"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
@@ -1437,10 +1454,6 @@ msgstr ""
 msgid "Bug List"
 msgstr ""
 
-#: tcms/templates/run/status_statistics.html:8
-msgid "TOTAL"
-msgstr ""
-
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr ""
@@ -1718,7 +1731,7 @@ msgstr ""
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
 
-#: tcms/testruns/admin.py:28
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr ""
 
