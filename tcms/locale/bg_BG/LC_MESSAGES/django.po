@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-12 07:22\n"
+"POT-Creation-Date: 2020-02-12 17:20+0000\n"
+"PO-Revision-Date: 2020-02-12 17:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -467,6 +467,23 @@ msgstr "Приоритети"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "Категории"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/templates/run/status_statistics.html:8
+msgid "TOTAL"
+msgstr "ОБЩО"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
+msgid "Positive"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
+msgid "Neutral"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
+msgid "Negative"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -1467,10 +1484,6 @@ msgstr "Бъгове"
 msgid "Bug List"
 msgstr "Списък с бъгове"
 
-#: tcms/templates/run/status_statistics.html:8
-msgid "TOTAL"
-msgstr "ОБЩО"
-
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "Справка"
@@ -1759,7 +1772,7 @@ msgstr "Поне един тест план трябва да е избран, �
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Тест план \"%s\" не съществува"
 
-#: tcms/testruns/admin.py:28
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Достъпът отказан: Това Тест Изпълнение не е твое"
 
