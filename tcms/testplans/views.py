@@ -187,7 +187,7 @@ def calculate_stats_for_testplans(plans):
 
 class TestPlanGetView(DetailView):  # pylint: disable=missing-permission-required
 
-    template_name = 'plan/get.html'
+    template_name = 'testplans/get.html'
     http_method_names = ['get']
     model = TestPlan
 
