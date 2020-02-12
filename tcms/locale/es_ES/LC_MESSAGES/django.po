@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:34\n"
+"POT-Creation-Date: 2020-02-12 17:20+0000\n"
+"PO-Revision-Date: 2020-02-12 17:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -467,6 +467,23 @@ msgstr "Prioridades"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "Categorías"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/templates/run/status_statistics.html:8
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
+msgid "Positive"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
+msgid "Neutral"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
+msgid "Negative"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -1469,10 +1486,6 @@ msgstr "Errores"
 msgid "Bug List"
 msgstr "Lista de errores"
 
-#: tcms/templates/run/status_statistics.html:8
-msgid "TOTAL"
-msgstr "TOTAL"
-
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "Reporte"
@@ -1761,7 +1774,7 @@ msgstr "Se requiere al menos un plan de prueba para poder imprimir"
 msgid "Test Plan \"%s\" does not exist"
 msgstr "El plan de prueba \"%s\" no existe"
 
-#: tcms/testruns/admin.py:28
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Permiso denegado: La ejecución del Caso de Prueba no te pertenece"
 
