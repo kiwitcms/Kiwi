@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:34\n"
+"POT-Creation-Date: 2020-02-12 17:20+0000\n"
+"PO-Revision-Date: 2020-02-12 17:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -467,6 +467,23 @@ msgstr "Prioritet"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "Kategoritë"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/templates/run/status_statistics.html:8
+msgid "TOTAL"
+msgstr "TOTALI"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
+msgid "Positive"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
+msgid "Neutral"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
+msgid "Negative"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -1468,10 +1485,6 @@ msgstr "Gabime"
 msgid "Bug List"
 msgstr "Lista e Gabimeve"
 
-#: tcms/templates/run/status_statistics.html:8
-msgid "TOTAL"
-msgstr "TOTALI"
-
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "Raporto"
@@ -1760,7 +1773,7 @@ msgstr "Kërkohet të paktën një test plani për printim"
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Plani testues \"%s\" nuk ekziston"
 
-#: tcms/testruns/admin.py:28
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Autorizimi refuzohet: Testi i ekzekutuar nuk ju përket"
 
