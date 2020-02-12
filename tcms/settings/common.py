@@ -263,7 +263,7 @@ INSTALLED_APPS = [
     'tcms.core',
     # if you wish to disable Kiwi TCMS bug tracker
     # comment out the next line
-    'tcms.bugs',
+    'tcms.bugs.apps.AppConfig',
     'tcms.kiwi_auth',
     'tcms.core.contrib.linkreference',
     'tcms.management',

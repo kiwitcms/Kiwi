@@ -34,6 +34,7 @@ __all__ = [
     'handle_emails_pre_case_delete',
     'handle_emails_post_plan_save',
     'handle_emails_post_run_save',
+    'handle_emails_post_bug_save',
 ]
 
 
@@ -175,3 +176,21 @@ def handle_comments_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
 
     get_comments(instance).delete()
+
+
+def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
+    """
+        Send email updates to assignee after they've been
+        assigned a bug on bug creation.
+    """
+    if not created or instance.assignee is None:
+        return
+
+    from tcms.core.utils.mailto import mailto
+
+    mailto(
+        template_name='email/post_bug_save/email.txt',
+        recipients=[instance.assignee.email],
+        subject=_('NEW: Bug #{} - {}').format(instance.pk, instance.summary),
+        context={'bug': instance}
+    )
