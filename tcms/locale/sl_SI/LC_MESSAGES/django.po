@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:34\n"
+"PO-Revision-Date: 2020-02-12 06:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1766,7 +1766,7 @@ msgstr "Zavrnjeno: niste avtor ali zadolženi za testiranje"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Statusi izvajanja testa"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
