@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load comments %}
+{% load extra_filters %}
+{% load attachments_tags %}
+
+{% block title %}TP-{{ object.pk }}: {{ object.name }}{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block contents %}
+    <div class="container-cards-pf">
+    <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
+    <h1 class="col-md-12" style="margin-top: 0">
+        <span id="test_plan_pk"
+              data-testplan-pk="{{ object.pk }}"
+        >TP-{{ object.pk }}:</span> {{ object.name }}
+    </h1>
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-9">
+            <div class="card-pf card-pf-accented">
+                <div class="card-pf-body">
+                    <div class="markdown-text">
+                        {{ object.text|markdown2html }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-3">
+            <div class="card-pf card-pf-accented card-pf-aggregate-status" style="text-align: left">
+                <h2 class="card-pf-title">
+                    <span class="fa pficon-user"></span>{% trans 'Author' %}:
+                    <a href="{% url "tcms-profile" object.author.username %}">{{ object.author.username }}</a>
+                </h2>
+
+                <h2 class="card-pf-title">
+                    <span class="fa fa-calendar"></span>{{ object.create_date }}
+                </h2>
+
+                <h2 class="card-pf-title">
+                <span id="product_pk"
+                      class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
+                    <a href="{% url "plans-search" %}?product={{ object.product_id }}"
+                       title="Search plans of {{ object.product }} ">{{ object.product }}</a>
+                </h2>
+
+                <h2 class="card-pf-title">
+                    <span class="fa fa-random"></span>{% trans 'Version' %}:
+                    {{ object.product_version.value }}
+                </h2>
+
+                <h2 class="card-pf-title">
+                    <span class="fa fa-cube"></span>{% trans 'Plan Type' %}:
+                    {{ object.type.name  }}
+                </h2>
+
+                <h2 class="card-pf-title">
+                    <span class="fa fa-arrow-circle-o-up"></span>{% trans 'Parent' %}:
+                    {% if object.parent.pk %}
+                        <a href="{% url 'test_plan_url_short' object.parent.pk %}">TP-{{ object.parent.pk }}</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </h2>
+
+                <h2 class="card-pf-title">
+                    <span class="fa fa-link"></span>{% trans 'Reference link' %}:
+                    {% if object.extra_link %}
+                        <a href="{{ object.extra_link }}">{{ object.extra_link }}</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </h2>
+                <div class="card-pf-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
