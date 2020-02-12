@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:34\n"
+"PO-Revision-Date: 2020-02-12 07:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1765,7 +1765,7 @@ msgstr "Достъпът отказан: Това Тест Изпълнение 
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Статуси на тестови изпълнения"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
