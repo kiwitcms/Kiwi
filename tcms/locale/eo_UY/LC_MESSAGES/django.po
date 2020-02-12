@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:35\n"
+"POT-Creation-Date: 2020-02-12 17:20+0000\n"
+"PO-Revision-Date: 2020-02-12 17:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -455,6 +455,23 @@ msgstr "crwdns960:0crwdne960:0"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "crwdns962:0crwdne962:0"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/templates/run/status_statistics.html:8
+msgid "TOTAL"
+msgstr "crwdns836:0crwdne836:0"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
+msgid "Positive"
+msgstr "crwdns1089:0crwdne1089:0"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
+msgid "Neutral"
+msgstr "crwdns1091:0crwdne1091:0"
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
+msgid "Negative"
+msgstr "crwdns1093:0crwdne1093:0"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -1437,10 +1454,6 @@ msgstr "crwdns488:0crwdne488:0"
 msgid "Bug List"
 msgstr "crwdns826:0crwdne826:0"
 
-#: tcms/templates/run/status_statistics.html:8
-msgid "TOTAL"
-msgstr "crwdns836:0crwdne836:0"
-
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "crwdns622:0crwdne622:0"
@@ -1718,7 +1731,7 @@ msgstr "crwdns308:0crwdne308:0"
 msgid "Test Plan \"%s\" does not exist"
 msgstr "crwdns309:0%scrwdne309:0"
 
-#: tcms/testruns/admin.py:28
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "crwdns311:0crwdne311:0"
 
