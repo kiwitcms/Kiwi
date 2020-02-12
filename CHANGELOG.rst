@@ -54,7 +54,7 @@ by renaming multiple columns.
 
     - ``docker-compose.yml`` has been updated from MariaDB 5.5 to MariaDB 10.3.
       The 10.x MariaDB containers change their ``datadir`` configuration from
-      ``/var/lib/mysql`` to ``/var/lib/mysql/data``! We recomment first upgrading
+      ``/var/lib/mysql`` to ``/var/lib/mysql/data``! We recommend first upgrading
       your MariaDB version, using Kiwi TCMS 7.3 and afterwards upgrading to
       Kiwi TCMS 8.0:
 
