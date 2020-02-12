@@ -37,7 +37,8 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
     def colored_color(self, test_execution):
         return format_html(
             '''
-            <span style="background-color: {}; height: 20px; display: block; color: black; font-weight: bold">
+            <span style="background-color: {}; height: 20px; display: block;
+                         color: black; font-weight: bold">
                 {}
             </span>
             ''',
