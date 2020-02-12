@@ -198,7 +198,7 @@ def calculate_stats_for_testplans(plans):
 @method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
 class TestPlanGetView(DetailView):
 
-    template_name = 'plan/get.html'
+    template_name = 'testplans/get.html'
     http_method_names = ['get']
     model = TestPlan
 
