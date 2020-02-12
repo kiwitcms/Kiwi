@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
+import html
 from http import HTTPStatus
 
 from django.conf import settings
@@ -58,7 +59,10 @@ class TestAdminView(LoggedInTestCase):
         self.assertContains(response, 'Test plans')
 
         # for tcms.testruns
-        self.assertContains(response, 'Test execution statuses')
+        # b/c French translation contains characters which get HTML escaped
+        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertIn(str(_('Test execution statuses')), response_text)
+
         self.assertContains(response, 'Testruns')
         self.assertContains(response, 'Test runs')
 
