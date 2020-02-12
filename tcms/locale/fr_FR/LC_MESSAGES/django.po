@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-11 21:25+0000\n"
-"PO-Revision-Date: 2020-02-11 21:35\n"
+"PO-Revision-Date: 2020-02-12 07:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1767,7 +1767,7 @@ msgstr "Permission refusé: L'essai de test ne vous est plus assigné"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "États des tests d'exécutions"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
