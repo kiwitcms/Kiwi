@@ -141,7 +141,7 @@ Bug fixes
 - Make ``tcms.tests.storage.RaiseWhenFileNotFound``` capable of finding
   finding static files on Windows which enables development mode for folks
   not using Linux environment. See
-  `SO #55297178 <https://stackoverflow.com/questions/55297178>`_ (Mfo Eti-mfon)
+  `SO #55297178 <https://stackoverflow.com/questions/55297178>`_ (Mfon Eti-mfon)
 - Allow changing test execution status without adding comment. Fixes
   `Issue #1261 <https://github.com/kiwitcms/Kiwi/issues/1261>`_
 - Properly refresh test run progress bar when changing statuses. Fixes
