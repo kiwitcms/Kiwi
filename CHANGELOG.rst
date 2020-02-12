@@ -1,6 +1,188 @@
 Change Log
 ==========
 
+Kiwi TCMS 8.0 (12 Feb 2020)
+---------------------------
+
+**IMPORTANT:** this is a major release which includes important database and
+API changes, several improvements and bug fixes. Multiple API methods are now
+incompatible with older releases and extra caution needs to be applied when
+upgrading via ``docker-compose.yml`` because newer MariaDB versions are
+breaking direct upgrades from existing installations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 3.0.2 to 3.0.3
+- Update django-grappelli from 2.13.3 to 2.14.1
+- Update markdown from 3.1.1 to 3.2
+- Update python-gitlab from 1.15.0 to 2.0.1
+- Update pygithub from 1.45 to 1.46
+- Allow customization of test execution statuses via admin.
+  For more information see
+  https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses.
+  Fixes `Issue #236 <https://github.com/kiwitcms/Kiwi/issues/236>`_
+- Add passing rate chart to Execution trends telemetry
+- Documentation updates (@Prome88)
+
+
+Database
+~~~~~~~~
+
+This release adds several migrations which alter the underlying database schema
+by renaming multiple columns.
+
+.. warning::
+
+    - SQLite has very poor capabilities for altering schema and it will break
+      when run with existing database! If you had deployed Kiwi TCMS with
+      SQLite for production purposes you will not be able to upgrade! We recommend
+      switching to Postgres first and then upgrading!
+
+    - ``docker-compose.yml`` has been updated from MariaDB 5.5 to MariaDB 10.3.
+      The 10.x MariaDB containers change their ``datadir`` configuration from
+      ``/var/lib/mysql`` to ``/var/lib/mysql/data``! We recomment first upgrading
+      your MariaDB version, using Kiwi TCMS 7.3 and afterwards upgrading to
+      Kiwi TCMS 8.0:
+
+      1. Backup existing database with::
+
+            docker exec -it kiwi_db mysqldump -u kiwi -pYourPass kiwi > backup.sql
+
+      2. ``docker-compose down``
+      3. ``docker volume rm kiwi_db_data`` - will remove existing data volume
+         b/c of incompatibilities between different MariaDB versions
+      4. ``docker-compose up`` - will recreate data volume with missing data. e.g.
+         ``manage.py showmigrations`` will report that 0 migrations have been applied.
+      5. Restore the data from backup::
+
+           cat backup.sql | docker exec -u 0 -i kiwi_db /opt/rh/rh-mariadb103/root/usr/bin/mysql kiwi
+
+         .. note::
+
+            This connects to the database as the root user
+
+      6. Proceed to upgrade your Kiwi TCMS container !
+
+
+- Remove model fields of type ``AutoField``. They are a legacy construct
+  and shouldn't be specified in the source code! Django knows how to add them
+  dynamically. These are:
+
+  - ``Tag.id``
+  - ``TestCaseStatus.id``
+  - ``Category.id``
+  - ``PlanType.id``
+  - ``TestExecutionStatus.id``
+
+- Remove ``db_column`` attribute from model fields
+- Rename several primary key fields to ``id``:
+
+  - ``Build.build_id`` -> ``Build.id``
+  - ``TestRun.run_id`` -> ``TestRun.id``
+  - ``TestPlan.plan_id`` -> ``TestPlan.id``
+  - ``TestCase.case_id`` -> ``TestCase.id``
+  - ``TestExecution.case_run_id`` -> ``TestExecution.id``
+
+
+API
+~~~
+
+.. warning::
+
+    The database schema changes mentioned above affect multiple API methods
+    in a backwards incompatible way!
+    There is possibility that your API scripts will also be affected. You will
+    have to adjust those to use the new field names where necessary!
+
+- Methods ``Build.create()``, ``Build.filter()`` and ``Build.update()`` will
+  return ``id`` instead of ``build_id`` field
+- Method ``TestRun.get_cases()`` will return ``execution_id`` instead of
+  ``case_run_id`` field and ``id`` instead of ``case_id`` field
+- Methods ``TestRun.add_case()``, ``TestExecution.create()``,
+  ``TestExecution.filter()`` and ``TestExecution.update()`` will return
+  ``id`` instead of ``case_run_id`` field
+- Methods ``TestRun.create()``, ``TestRun.filter()``, ``TestRun.update()`` will
+  return ``id`` instead of ``run_id`` field
+- Methods ``TestPlan.create()``, ``TestPlan.filter()`` and
+  ``TestPlan.update()`` will return ``id`` instead of ``plan_id`` field
+- Methods ``TestCase.add_component()``, ``TestCase.create()``,
+  ``TestCase.filter()`` and ``TestCase.update()`` will return ``id`` instead
+  of ``case_id`` field
+
+.. note::
+
+    Kiwi TCMS automation framework plugins have been updated to work with the
+    newest API. At the time of Kiwi TCMS v8.0 release their versions are:
+
+    - kiwitcms-tap-plugin v8.0.1
+    - kiwitcms-junit.xml-plugin v8.0.1
+    - kiwitcms-junit-plugin v8.0
+
+
+Bug fixes
+~~~~~~~~~
+
+- Allow displaying lists with more then 9 items when reviewing test cases. Fixes
+  `Issue #339 <https://github.com/kiwitcms/Kiwi/issues/339>`_ (Mfon Eti-mfon)
+- Make ``tcms.tests.storage.RaiseWhenFileNotFound``` capable of finding
+  finding static files on Windows which enables development mode for folks
+  not using Linux environment. See
+  `SO #55297178 <https://stackoverflow.com/questions/55297178>`_ (Mfo Eti-mfon)
+- Allow changing test execution status without adding comment. Fixes
+  `Issue #1261 <https://github.com/kiwitcms/Kiwi/issues/1261>`_
+- Properly refresh test run progress bar when changing statuses. Fixes
+  `Issue #1326 <https://github.com/kiwitcms/Kiwi/issues/1326>`_
+- Fix a bug where updating test cases from the UI was causing text and various
+  other fields to be reset. Fixes
+  `Issue #1318 <https://github.com/kiwitcms/Kiwi/issues/1318>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Extract attachments widget to new template. Fixes
+  `Issue #1124 <https://github.com/kiwitcms/Kiwi/issues/1124>`_
+  (Rosen Sasov)
+- Rename RPC related classes. Fixes
+  `Issue #682 <https://github.com/kiwitcms/Kiwi/issues/682>`_
+  (Rosen Sasov)
+- Add new test (Mariyan Garvanski)
+- Start using GitHub actions, first for running flake8
+- Remove unused ``TestCase.get_previous_and_next()``
+- Remove unused ``TestCaseStatus.string_to_instance()``
+- Remove unused ``TestCase.create()``
+- Remove unused ``json_success_refresh_page()``
+- Remove unused fields from ``SearchPlanForm``
+- Use JSON-RPC in ``previewPlan()``
+- Remove ``toggleTestCaseContents()``, duplicate of ``toggleTestExecutionPane()``
+- Refactor a few more views to class-based
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Turkish translation <https://crowdin.com/project/kiwitcms/tr#>`_
+
+
+
 Kiwi TCMS 7.3 (16 Jan 2020)
 ---------------------------
 
