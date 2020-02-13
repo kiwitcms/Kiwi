@@ -100,21 +100,21 @@ function drawPassingRateSummary(status_count) {
     const allCount = status_count.positive + status_count.negative + status_count.neutral
     $('.passing-rate-summary .total').text(allCount)
 
-    const positivePercent = roundDown(status_count.positive / allCount * 100)
+    const positivePercent = status_count.positive ? roundDown(status_count.positive / allCount * 100) : 0
     const positiveBar = $('.progress > .progress-bar-success')
     const positiveRateText = `${positivePercent}%`
     positiveBar.css('width', positiveRateText)
     positiveBar.text(positiveRateText)
     $('.passing-rate-summary .positive').text(status_count.positive)
     
-    const neutralPercent = roundDown(status_count.neutral / allCount * 100)
+    const neutralPercent = status_count.neutral ? roundDown(status_count.neutral / allCount * 100) : 0
     const neutralRateText = `${neutralPercent}%`
     const neutralBar = $('.progress > .progress-bar-remaining')
     neutralBar.css('width', neutralRateText)
     neutralBar.text(neutralRateText)
     $('.passing-rate-summary .neutral').text(status_count.neutral)
     
-    const negativePercent = roundDown(status_count.negative / allCount * 100)
+    const negativePercent = status_count.negative ? roundDown(status_count.negative / allCount * 100) : 0
     const negativeRateText = `${negativePercent}%`
     const negativeBar = $('.progress > .progress-bar-danger')
     negativeBar.css('width', negativeRateText)
