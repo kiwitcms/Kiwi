@@ -29,5 +29,6 @@ Submodules
 
 .. toctree::
 
+   tcms.handlers
    tcms.signals
    tcms.wsgi
