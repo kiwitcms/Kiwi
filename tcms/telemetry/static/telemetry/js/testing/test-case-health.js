@@ -88,7 +88,7 @@ function drawTable(selector, data) {
 }
 
 function renderTestCaseColumn(data) {
-    return `<a href="/case/${data.id}">TC-${data.id}</a>: ${data.case_summary}`;
+    return `<a href="/case/${data.case_id}">TC-${data.case_id}</a>: ${data.case_summary}`;
 }
 
 function renderFailedExecutionsColumn(data) {
