@@ -334,6 +334,9 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
+# WARNING: do not edit. The stock JSONRPC handler does not HTML escape !!!
+MODERNRPC_HANDLERS = ['modernrpc.handlers.XMLRPCHandler', 'tcms.handlers.SafeJSONRPCHandler']
+
 # in alphabetic order
 MODERNRPC_METHODS_MODULES = [
     'tcms.telemetry.api',
