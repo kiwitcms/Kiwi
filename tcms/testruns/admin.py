@@ -33,6 +33,17 @@ class TestRunAdmin(ReadOnlyHistoryAdmin):
 class TestExecutionStatusAdmin(admin.ModelAdmin):
     list_display = ('id', 'visual_icon', 'name', 'colored_color', 'weight')
     ordering = ['-weight']
+    fieldsets = [
+        ('', {
+            'fields': ('name',),
+        }),
+        ('Test Execution Status', {
+            'fields': ('weight', 'icon', 'color'),
+            'description': """<h1>For more information about customizing TestExecutionStatus see
+        <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses">
+        the documentation</a></h1>""",
+        }),
+    ]
 
     def colored_color(self, test_execution):
         return format_html(
