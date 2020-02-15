@@ -190,9 +190,6 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('.js-caserun-total').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], '');
   });
-  jQ('.status-link-button').bind('click', function() {
-    showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], jQ(this).data('param'));
-  });
 };
 
 Nitrate.TestRuns.AssignCase.on_load = function() {
@@ -696,12 +693,8 @@ function renderProgressBars(positiveCount, negativeCount, allCount) {
 
 function renderCountPerStatusList(statusCount) {
   for (var status in statusCount) {
-    let element = "0";
     const count = statusCount[status].count
-    if (count) {
-      className = "status-link-button"
-      element = `<a href="#" class="status-link-button" data-param=${statusCount[status].id}>${count}</a>`
-    }
+    const element = count ? `<a href="?status_id=${statusCount[status].id}">${count}</a>` : '0'
 
     $(".count-per-status-list").append(`
     <li>
