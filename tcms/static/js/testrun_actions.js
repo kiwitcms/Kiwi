@@ -574,11 +574,6 @@ function serializeCaseRunFromInputList(table, name) {
   return returnobj_list;
 }
 
-function showCaseRunsWithSelectedStatus(form, status_id) {
-  form.status__pk.value = status_id;
-  fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
-}
-
 function showCommentForm() {
   var dialog = getDialog();
   var runs = serializeCaseRunFromInputList(jQ('#id_table_cases')[0]);
