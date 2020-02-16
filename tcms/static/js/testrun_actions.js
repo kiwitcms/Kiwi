@@ -187,9 +187,6 @@ Nitrate.TestRuns.Details.on_load = function() {
     var params = jQ(this).data('params');
     removeRunCC(params[0], params[1], jQ('.js-cc-ul')[0]);
   });
-  jQ('.js-caserun-total').bind('click', function() {
-    showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], '');
-  });
 };
 
 Nitrate.TestRuns.AssignCase.on_load = function() {
