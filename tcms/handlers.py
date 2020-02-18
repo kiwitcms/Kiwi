@@ -16,7 +16,7 @@ class SafeJSONRPCHandler(JSONRPCHandler):
             if isinstance(item, str):
                 result_list[index] = html.escape(item)
             elif isinstance(item, dict):
-                __class__.escape_dict(item)
+                SafeJSONRPCHandler.escape_dict(item)
 
     def execute_procedure(self, name, args=None, kwargs=None):
         """
