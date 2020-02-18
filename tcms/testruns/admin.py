@@ -35,13 +35,10 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
     ordering = ['-weight']
     fieldsets = [
         ('', {
-            'fields': ('name',),
-        }),
-        ('Test Execution Status', {
-            'fields': ('weight', 'icon', 'color'),
-            'description': """<h1>For more information about customizing TestExecutionStatus see
+            'fields': ('name', 'weight', 'icon', 'color'),
+            'description': _("""For more information about customizing test execution statuses see
         <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses">
-        the documentation</a></h1>""",
+        the documentation</a>!"""),
         }),
     ]
 
