@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 17:20+0000\n"
-"PO-Revision-Date: 2020-02-12 17:22\n"
+"POT-Creation-Date: 2020-02-18 14:18+0000\n"
+"PO-Revision-Date: 2020-02-18 14:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -497,11 +497,11 @@ msgstr ""
 msgid "Test Case"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:17
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
 msgstr ""
@@ -1733,6 +1733,12 @@ msgstr ""
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
+msgstr ""
+
+#: tcms/testruns/admin.py:39
+msgid "For more information about customizing test execution statuses see\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        the documentation</a>!"
 msgstr ""
 
 #: tcms/testruns/models.py:236
