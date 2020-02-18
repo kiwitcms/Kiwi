@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 17:20+0000\n"
-"PO-Revision-Date: 2020-02-12 17:22\n"
+"POT-Creation-Date: 2020-02-18 14:18+0000\n"
+"PO-Revision-Date: 2020-02-18 14:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -509,11 +509,11 @@ msgstr "Sıklıkla başarısız olan test durumları"
 msgid "Test Case"
 msgstr "Test Senaryosu"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:17
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
 msgstr "Başarısız Koşumlar"
 
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
 msgstr "başarısız koşumların %%"
@@ -1776,6 +1776,12 @@ msgstr "Test Planı \"%s\" bulunmuyor"
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "İzin verilmedi: Test Koşumu size ait değildir"
+
+#: tcms/testruns/admin.py:39
+msgid "For more information about customizing test execution statuses see\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        the documentation</a>!"
+msgstr ""
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
