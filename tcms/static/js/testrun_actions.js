@@ -677,7 +677,7 @@ function renderProgressBars(positiveCount, negativeCount, allCount) {
   $(".progress-bar > .percent > .complete-percent").text(`${completePercent}%`)
   $(".progress-bar > .progress-inner").css("width", `${completePercent}%`)
   $(".progress-bar > .progress-inner > .progress-failed").css("width", `${failurePercent}%`)
-  $(".js-caserun-total").text(allCount)
+  $(".total-execution-count").text(allCount)
 
   $(".count-per-status-list").remove()
   $(".count-per-status-container").prepend('<span class="count-per-status-list"></span>')
