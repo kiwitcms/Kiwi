@@ -194,7 +194,7 @@ def open_run_get_users(case_runs):
 class GetTestRunView(TemplateView):
     """Display testrun's details"""
 
-    template_name = 'run/get.html'
+    template_name = 'testruns/get.html'
 
     def get_context_data(self, **kwargs):
         # Get the test run
@@ -222,7 +222,7 @@ class GetTestRunView(TemplateView):
         execution_bugs_count = test_run.get_bug_count()
 
         return {
-            'test_run': test_run,
+            'object': test_run,
             'executions': _walk_executions(test_executions),
             'executions_count': len(test_executions),
             'status_stats': status_stats_result,
