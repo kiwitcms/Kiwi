@@ -20,6 +20,7 @@ function pre_process_data(data) {
 
 $(document).ready(function() {
     var table = $("#resultsTable").DataTable({
+        pageLength: 100,
         ajax: function(data, callback, settings) {
             var params = {};
 
