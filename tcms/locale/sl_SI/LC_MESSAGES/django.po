@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-18 14:18+0000\n"
-"PO-Revision-Date: 2020-02-18 14:23\n"
+"PO-Revision-Date: 2020-02-19 09:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -475,15 +475,15 @@ msgstr "SKUPAJ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Pozitivno"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Nevtralno"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negativno"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -1781,7 +1781,9 @@ msgstr "Zavrnjeno: niste avtor ali zadolženi za testiranje"
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Več informacij glede prilagajanja statusov izvajanja testiranj si preberite v\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        dokumentaciji</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
