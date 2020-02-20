@@ -1,16 +1,13 @@
-from django.forms import BooleanField, CharField, ModelChoiceField
+from django.forms import CharField, ModelChoiceField
 
 from tcms.management.models import Product, Version
-from tcms.rpc.forms import CheckboxInput
 from tcms.testplans import forms as testplan_forms
 from tcms.testplans.models import PlanType
 
 
+# todo: this needs to become a model form with none of the fields required
 class NewPlanForm(testplan_forms.NewPlanForm):
-    is_active = BooleanField(
-        required=False,
-        widget=CheckboxInput
-    )
+    pass
 
 
 class EditPlanForm(NewPlanForm):
