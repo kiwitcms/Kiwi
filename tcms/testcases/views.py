@@ -106,7 +106,6 @@ def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
         qs = qs.filter(plan__pk=plan.pk)
     qs = qs.values('pk', 'sortkey', 'case')
     return dict([(item['case'], {
-        'testcaseplan_pk': item['pk'],
         'sortkey': item['sortkey']
     }) for item in qs])
 
@@ -134,10 +133,8 @@ def calculate_for_testcases(plan, testcases):
             # todo: these properties appear to be redundant since the same
             # info should be available from the test_case query
             setattr(test_case, 'cal_sortkey', data['sortkey'])
-            setattr(test_case, 'cal_testcaseplan_pk', data['testcaseplan_pk'])
         else:
             setattr(test_case, 'cal_sortkey', None)
-            setattr(test_case, 'cal_testcaseplan_pk', None)
 
     return testcases
 
