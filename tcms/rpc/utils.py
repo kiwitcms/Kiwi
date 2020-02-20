@@ -15,19 +15,6 @@ from tcms.management.models import Product
 
 QUERY_DISTINCT = 1
 
-ACCEPTABLE_BOOL_VALUES = ('0', '1', 0, 1, True, False)
-
-
-# todo: can be replaces with distutils.util.strtobool
-def parse_bool_value(value):
-    if value in ACCEPTABLE_BOOL_VALUES:
-        if value == '0':
-            return False
-        if value == '1':
-            return True
-        return value
-    raise ValueError('Unacceptable bool value.')
-
 
 def pre_check_product(values):
     if isinstance(values, dict):
