@@ -266,18 +266,6 @@ def create(values, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
 
-    # b/c form was designed badly in the past clients send 'product'
-    # as one of the fields. With the new forms product isn't accepted
-    # but we add this as backward compatibility for older clients
-    # otherwise they will start failing.
-    # todo: remove after all clients have been updated
-    if values.get('product'):
-        del values['product']
-
-    # todo: this is sent by junit-plugin while Python plugins use the above
-    if values.get('product_id'):
-        del values['product_id']
-
     if not (values.get('author') or values.get('author_id')):
         values['author'] = request.user.pk
 
