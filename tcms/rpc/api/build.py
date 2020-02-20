@@ -4,7 +4,7 @@ from modernrpc.core import rpc_method
 
 from tcms.management.models import Build
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.utils import parse_bool_value, pre_check_product
+from tcms.rpc.utils import pre_check_product
 
 __all__ = (
     'create',
@@ -52,7 +52,7 @@ def create(values):
     return Build.objects.create(
         product=pre_check_product(values),
         name=values['name'],
-        is_active=parse_bool_value(values.get('is_active', True))
+        is_active=values.get('is_active', True)
     ).serialize()
 
 
@@ -79,14 +79,14 @@ def update(build_id, values):
         setattr(obj, name, value)
         update_fields.append(name)
 
+    # todo: this needs to start using model forms
     update_fields = list()
     if values.get('product'):
         _update_value(selected_build, 'product', pre_check_product(values))
     if values.get('name'):
         _update_value(selected_build, 'name', values['name'])
     if values.get('is_active') is not None:
-        _update_value(selected_build, 'is_active', parse_bool_value(values.get(
-            'is_active', True)))
+        _update_value(selected_build, 'is_active', values['is_active'])
 
     selected_build.save(update_fields=update_fields)
 
