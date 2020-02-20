@@ -62,9 +62,6 @@ class KiwiHistoricalRecords(HistoricalRecords):
         inside of the ``history_change_reason`` field. This gives us
         a crude changelog until upstream introduces their new interface.
     """
-
-    # todo: HistoricalRecords doesn't seem to have a pre_save method
-    # so not sure if this even works ATM
     def pre_save(self, instance, **kwargs):
         """
             Signal handlers don't have access to the previous version of
