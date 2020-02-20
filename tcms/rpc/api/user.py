@@ -7,7 +7,6 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
-from tcms.rpc.utils import parse_bool_value
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -46,8 +45,6 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     if not query:
         query = {'pk': kwargs.get(REQUEST_KEY).user.pk}
 
-    if 'is_active' in query:
-        query['is_active'] = parse_bool_value(query['is_active'])
     users = User.objects.filter(**query)
 
     filtered_users = []
