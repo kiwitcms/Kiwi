@@ -1,32 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import unittest
-
 from django import test
 from django.db.models import ObjectDoesNotExist
 
 import tcms.rpc.utils as U
 from tcms.tests.factories import ProductFactory
-
-
-class TestParseBool(unittest.TestCase):
-
-    def test_parse_bool_value_with_rejected_args(self):
-        rejected_args = (3, -1, "", "True", "False", "yes", "no", "33", "-11",
-                         [], (), {}, None)
-        for arg in rejected_args:
-            with self.assertRaisesRegex(ValueError, 'Unacceptable bool value.'):
-                U.parse_bool_value(arg)
-
-    def test_parse_bool_value(self):
-        self.assertFalse(U.parse_bool_value(0))
-        self.assertFalse(U.parse_bool_value('0'))
-        self.assertFalse(U.parse_bool_value(False))
-
-        self.assertTrue(U.parse_bool_value(1))
-        self.assertTrue(U.parse_bool_value('1'))
-        self.assertTrue(U.parse_bool_value(True))
 
 
 class TestPreCheckProduct(test.TestCase):
