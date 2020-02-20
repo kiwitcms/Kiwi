@@ -19,6 +19,5 @@ Submodules
 .. toctree::
 
    tcms.rpc.decorators
-   tcms.rpc.forms
    tcms.rpc.serializer
    tcms.rpc.utils
