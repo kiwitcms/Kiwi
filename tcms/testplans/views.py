@@ -211,7 +211,11 @@ class TestPlanGetView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # todo: this can be passed to the new template and consumed
+        # in the JavaScript when rendering test cases based on status
         confirmed_status = TestCaseStatus.get_confirmed()
+        # todo: these 2 context variables are used in plan/get.html
+        # which is scheduled for deprecation and need be removed
         context['review_case_count'] = self.object.case.exclude(
             case_status=confirmed_status).count()
         context['run_case_count'] = self.object.case.filter(
