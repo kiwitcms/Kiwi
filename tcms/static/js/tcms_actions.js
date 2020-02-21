@@ -207,32 +207,7 @@ function setAddTagAutocomplete() {
 
 
 function constructTagZone(container, parameters) {
-  $(container).html('<div class="ajax_loading"></div>');
-
-  var complete = function(t) {
-    setAddTagAutocomplete();
-
-    $('#id_tag_form').bind('submit', function(e){
-      e.stopPropagation();
-      e.preventDefault();
-
-      addTag(container);
-    });
-    var count = $('tbody#tag').attr('count');
-    $('#tag_count').text(count);
-  };
-
-  $.ajax({
-    'url': '/management/tags/',
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      $(container).html(data);
-    },
-    'complete': function () {
-      complete();
-    }
-  });
+  $(container).html('<div class="ajax_loading">MIGRATED TO PATTERNFLY+JSON-RPC</div>');
 }
 
 
