@@ -37,7 +37,6 @@ urlpatterns = [
     # Ajax call responder
     re_path(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
             name='ajax.update.cases-actor'),
-    re_path(r'^management/tags/$', ajax.tags, name='ajax-tags'),
 
     # Account information zone, such as login method
     re_path(r'^accounts/', include(auth_urls)),
