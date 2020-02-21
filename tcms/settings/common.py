@@ -284,14 +284,16 @@ MENU_ITEMS = [
         (_('New Test Plan'), reverse_lazy('plans-new')),
         ('-', '-'),
         (_('New Test Case'), reverse_lazy('testcases-new')),
-        ('-', '-') if 'tcms.bugs' in INSTALLED_APPS else (),
-        (_('New Bug'), reverse_lazy('bugs-new')) if 'tcms.bugs' in INSTALLED_APPS else (),
+        ('-', '-') if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS else (),
+        (_('New Bug'),
+         reverse_lazy('bugs-new')) if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS else (),
     ]),
     (_('SEARCH'), [
         (_('Search Test Plans'), reverse_lazy('plans-search')),
         (_('Search Test Runs'), reverse_lazy('testruns-search')),
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
-        (_('Search Bugs'), reverse_lazy('bugs-search')) if 'tcms.bugs' in INSTALLED_APPS else (),
+        (_('Search Bugs'),
+         reverse_lazy('bugs-search')) if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS else (),
     ]),
     (_('TELEMETRY'), [
         (_('Testing'), [
@@ -361,7 +363,7 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.rpc.api.version',
 ]
 
-if 'tcms.bugs' in INSTALLED_APPS:
+if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS:
     MODERNRPC_METHODS_MODULES.append('tcms.bugs.api')
 
 # Enable the administrator delete permission
