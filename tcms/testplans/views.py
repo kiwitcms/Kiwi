@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.http import (HttpResponsePermanentRedirect,
                          HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, render
+from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -16,6 +17,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 from uuslug import slugify
 
+from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import printable as testcases_printable
@@ -208,6 +210,33 @@ class TestPlanGetView(DetailView):
     template_name = 'testplans/get.html'
     http_method_names = ['get']
     model = TestPlan
+    response_class = ModifySettingsTemplateResponse
+
+    def render_to_response(self, context, **response_kwargs):
+        self.response_class.modify_settings = modify_settings(
+            MENU_ITEMS={'append': [
+                ('...', [
+                    (
+                        _('Edit'),
+                        reverse('plan-edit', args=[self.object.pk])
+                    ),
+                    (
+                        _('Clone'),
+                        # todo: URL accepts POST, need to refactor to use GET+POST
+                        # e.g. plans/3/clone/
+                        reverse('plans-clone')
+                    ),
+                    (
+                        _('History'),
+                        "/admin/testplans/testplan/%d/history/" % self.object.pk
+                    ),
+                    ('-', '-'),
+                    (
+                        _('Delete'),
+                        reverse('admin:testplans_testplan_delete', args=[self.object.pk])
+                    )])]}
+        )
+        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
