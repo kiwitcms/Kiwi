@@ -595,22 +595,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .datetimeshortcuts{display:block; float:left; padding:3px 0 0 0;}
 .datetimeshortcuts #calendarlink0, .datetimeshortcuts #calendarlink1, .datetimeshortcuts #calendarlink2, .datetimeshortcuts #calendarlink3, .datetimeshortcuts #calendarlink4, .datetimeshortcuts #calendarlink5, .datetimeshortcuts #calendarlink6{vertical-align:bottom;}
 
-/**********************item Search*******************/
-.itemSearch {width:98%; background:#f5f5f5; margin:8px auto; position:relative; border:1px solid #ccc;}
-.itemSearch h2{ margin:0px; padding:10px 15px;}
-.itemSearch .relativeSearchOption{ position:absolute; top:5px; right:10px;}
-.itemSearch .relativeSearchBox{width:100%;}
-.itemSearch .relativeSearchTitle{ border-top:solid 1px #ccc;border-bottom:solid 1px #ccc;  margin:20px 10px 10px; font-size:14px; font-weight:bold; height:30px; line-height:30px; position:relative;}
-.itemSearch .relativeSearchTitle span{ font-weight:normal; font-size:12px}
-.itemSearch .field{ float:left; width:50%; margin-bottom:2px;}
-.itemSearch .field .title { width :150px; margin-right:2px; margin-left:10px; float:left;}
-.itemSearch .name { float:left;}
-.itemSearch .name_short input[type="text"]{ width:106px; float:left;}
-.itemSearch .name_short select{width:144px; float:left;}
-.itemSearch .bottom{height:26px; padding:20px 0 10px 400px; line-height:26px;}
-.itemSearch .bottom .allSearch{float:left; padding:0 0 0 15px;}
-.itemSearch .bottom .allSearch span{padding:0 6px; color:#AAAAAA;}
-
 .mixbar{background:url("../images/action_bg.png") repeat-x left top #e6e6e6;width:100%;clear:both;border-bottom:1px solid #ccc; padding:4px 0 2px 0; position:relative;}
 .mixbar_left{float:left; height:22px;line-height:22px; padding-left:5px;}
 .tagname{ margin-left:10px; height:20px; line-height:20px; float:left}

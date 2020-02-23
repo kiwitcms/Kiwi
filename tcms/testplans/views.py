@@ -18,8 +18,7 @@ from guardian.decorators import permission_required as object_permission_require
 from uuslug import slugify
 
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
-from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
+from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
@@ -354,79 +353,6 @@ class UpdateParentView(View):
             test_plan.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@method_decorator(permission_required('testcases.add_testcaseplan'), name='dispatch')
-class LinkCasesView(View):
-    """Link cases to plan"""
-
-    def post(self, request, pk):
-        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=pk)
-
-        case_ids = []
-        for case_id in request.POST.getlist('case'):
-            case_ids.append(int(case_id))
-
-        cases = TestCase.objects.filter(pk__in=case_ids).only('pk')
-        for case in cases:
-            plan.add_case(case)
-
-        return HttpResponseRedirect(reverse('test_plan_url', args=[pk, slugify(plan.name)]))
-
-
-@method_decorator(permission_required('testcases.view_testcase'), name='dispatch')
-class LinkCasesSearchView(View):
-    """Search cases for linking to plan"""
-
-    template_name = 'plan/search_case.html'
-
-    def get(self, request, pk):
-        plan = get_object_or_404(TestPlan, pk=pk)
-
-        normal_form = SearchCaseForm(initial={
-            'product': plan.product_id,
-            'product_version': plan.product_version_id,
-            'case_status_id': TestCaseStatus.get_confirmed()
-        })
-        quick_form = QuickSearchCaseForm()
-        return render(self.request, self.template_name, {
-            'search_form': normal_form,
-            'quick_form': quick_form,
-            'test_plan': plan,
-        })
-
-    def post(self, request, pk):
-        plan = get_object_or_404(TestPlan, pk=pk)
-
-        search_mode = request.POST.get('search_mode')
-        if search_mode == 'quick':
-            form = quick_form = QuickSearchCaseForm(request.POST)
-            normal_form = SearchCaseForm()
-        else:
-            form = normal_form = SearchCaseForm(request.POST)
-            form.populate(product_id=request.POST.get('product'))
-            quick_form = QuickSearchCaseForm()
-
-        cases = []
-        if form.is_valid():
-            cases = TestCase.list(form.cleaned_data)
-            cases = cases.select_related(
-                'author', 'default_tester', 'case_status', 'priority'
-            ).only(
-                'pk', 'summary', 'create_date', 'author__email',
-                'default_tester__email', 'case_status__name',
-                'priority__value'
-            ).exclude(
-                pk__in=plan.case.values_list('id', flat=True))
-
-        context = {
-            'test_plan': plan,
-            'test_cases': cases,
-            'search_form': normal_form,
-            'quick_form': quick_form,
-            'search_mode': search_mode
-        }
-        return render(request, self.template_name, context=context)
 
 
 @require_POST
