@@ -1,4 +1,5 @@
 const bug_details_cache = {}
+const plan_cache = {}
 
 
 function addComponent(object_id, _input, to_table) {
@@ -14,6 +15,70 @@ function addComponent(object_id, _input, to_table) {
             }
         });
     }
+}
+
+
+function addTestPlanToTestCase(case_id, plans_table) {
+    const plan_name = $('#input-add-plan')[0].value;
+    const plan = plan_cache[plan_name];
+
+    jsonRPC('TestPlan.add_case', [plan.id, case_id], function(data) {
+        plans_table.row.add({
+            id: plan.id,
+            name: plan.name,
+            author: plan.author,
+            type: plan.type,
+            product: plan.product
+        }).draw();
+        $('#input-add-plan').val('');
+    });
+}
+
+
+function initAddPlan(case_id, plans_table) {
+    // + button
+    $('#btn-add-plan').click(function() {
+        addTestPlanToTestCase(case_id, plans_table);
+    });
+
+    // Enter key
+    $('#input-add-plan').keyup(function(event) {
+        if (event.keyCode === 13) {
+            addTestPlanToTestCase(case_id, plans_table);
+        };
+    });
+
+    // autocomplete
+    $('#input-add-plan.typeahead').typeahead({
+        minLength: 3,
+        highlight: true
+        }, {
+        name: 'plans-autocomplete',
+        source: function(query, processSync, processAsync) {
+            // accepts "TP-1234" or "tp-1234" or "1234"
+            query = query.toLowerCase().replace('tp-', '');
+            if (query === '') {
+                return;
+            }
+
+            var rpc_query = {pk: query};
+
+            // or arbitrary string
+            if (isNaN(query)) {
+                rpc_query = {name__icontains: query};
+            }
+
+            jsonRPC('TestPlan.filter', rpc_query, function(data) {
+                var processedData = [];
+                data.forEach(function(element) {
+                    const display_name = 'TP-' + element.id + ': ' + element.name
+                    processedData.push(display_name);
+                    plan_cache[display_name] = element;
+                });
+                return processAsync(processedData);
+            });
+        }
+    });
 }
 
 
@@ -140,6 +205,9 @@ $(document).ready(function() {
             });
         });
     });
+
+    // bind add TP to TC widget
+    initAddPlan(case_id, plans_table);
 
     // bugs table
     $('#bugs').DataTable({

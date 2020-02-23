@@ -159,7 +159,7 @@
                     <table class="table" id="plans">
                         <thead>
                             <tr>
-                                <th>{% trans "ID" %}</th>
+                                <th>{% trans 'ID' %}</th>
                                 <th>{% trans 'Name' %}</th>
                                 <th>{% trans 'Author' %}</th>
                                 <th>{% trans 'Type' %}</th>
@@ -167,6 +167,24 @@
                                 <th></th>
                             </tr>
                         </thead>
+
+                        {% if perms.testcases.add_testcaseplan %}
+                        <tfoot>
+                            <tr>
+                                <th colspan='5'>
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control typeahead" id="input-add-plan">
+                                    </div>
+                                </th>
+                                <th>
+                                    <a href="#plans" id="btn-add-plan" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+
                     </table>
                 </div>
             </div>
