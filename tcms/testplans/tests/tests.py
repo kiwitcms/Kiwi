@@ -6,13 +6,11 @@ from http import HTTPStatus
 from django import test
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from uuslug import slugify
 
 from tcms.management.models import Product, Version
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
-from tcms.tests import (BasePlanCase, remove_perm_from_user,
-                        user_should_have_perm)
+from tcms.tests import BasePlanCase, user_should_have_perm
 from tcms.tests.factories import (ClassificationFactory, PlanTypeFactory,
                                   ProductFactory, TestCaseFactory,
                                   TestPlanFactory, UserFactory, VersionFactory)
@@ -171,142 +169,6 @@ class TestSortCases(BasePlanCase):
         self.assertJsonResponse(
             response,
             {'rc': 1, 'response': 'At least one case is required to re-order.'})
-
-
-class TestLinkCases(BasePlanCase):
-    """Test case for linking cases from other plans"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-
-        cls.another_plan = TestPlanFactory(
-            author=cls.tester,
-            product=cls.product,
-            product_version=cls.version)
-
-        cls.another_case_1 = TestCaseFactory(
-            author=cls.tester,
-            default_tester=None,
-            reviewer=cls.tester,
-            plan=[cls.another_plan])
-
-        cls.another_case_2 = TestCaseFactory(
-            author=cls.tester,
-            default_tester=None,
-            reviewer=cls.tester,
-            plan=[cls.another_plan])
-
-        cls.plan_tester = UserFactory(username='tester')
-        cls.plan_tester.set_password('password')
-        cls.plan_tester.save()
-
-        cls.search_cases_for_link_url = reverse('plan-search-cases-for-link',
-                                                args=[cls.plan.pk])
-        cls.link_cases_url = reverse('plan-link-cases', args=[cls.plan.pk])
-
-        user_should_have_perm(cls.plan_tester, 'testcases.view_testcase')
-        user_should_have_perm(cls.plan_tester, 'testplans.view_testplan')
-
-    def tearDown(self):
-        # Ensure permission is removed whenever it was added during tests
-        remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
-
-    def assert_quick_search_is_shown(self, response):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        self.assertContains(
-            response,
-            '<li class="profile_tab_active" id="quick_tab">')
-
-    def assert_normal_search_is_shown(self, response):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        self.assertContains(
-            response,
-            '<li class="profile_tab_active" id="normal_tab">')
-
-    def test_show_quick_search_by_default(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        response = self.client.post(self.search_cases_for_link_url, {})
-        self.assert_quick_search_is_shown(response)
-
-    def assert_search_result(self, response):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        self.assertContains(
-            response,
-            '<a href="{}">{}</a>'.format(
-                reverse('testcases-get', args=[self.another_case_2.pk]),
-                self.another_case_2.pk))
-
-        # Assert: Do not list case that already belongs to the plan
-        self.assertNotContains(
-            response,
-            '<a href="{}">{}</a>'.format(
-                reverse('testcases-get', args=[self.case_2.pk]),
-                self.case_2.pk))
-
-    def test_quick_search(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        post_data = {
-            'search_mode': 'quick',
-            'case_id_set': ','.join(
-                map(str, [self.case_1.pk, self.another_case_2.pk]))
-        }
-        response = self.client.post(self.search_cases_for_link_url, post_data)
-
-        self.assert_quick_search_is_shown(response)
-        self.assert_search_result(response)
-
-    def test_normal_search(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        post_data = {
-            'search_mode': 'normal',
-            'case_id_set': ','.join(
-                map(str, [self.case_1.pk, self.another_case_2.pk]))
-        }
-        response = self.client.post(self.search_cases_for_link_url, post_data)
-
-        self.assert_normal_search_is_shown(response)
-        self.assert_search_result(response)
-
-    def test_link_cases(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-
-        post_data = {
-            'case': [self.another_case_1.pk, self.another_case_2.pk]
-        }
-        response = self.client.post(self.link_cases_url, post_data)
-        self.assertRedirects(
-            response,
-            reverse('test_plan_url', args=[self.plan.pk, slugify(self.plan.name)]))
-
-        self.assertTrue(
-            TestCasePlan.objects.filter(
-                plan=self.plan, case=self.another_case_1).exists())
-        self.assertTrue(
-            TestCasePlan.objects.filter(
-                plan=self.plan, case=self.another_case_2).exists())
 
 
 class TestCloneView(BasePlanCase):
