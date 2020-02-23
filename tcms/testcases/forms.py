@@ -17,10 +17,6 @@ ITEMS_PER_PAGE_CHOICES = (
     ('100', '100')
 )
 
-VALIDATION_ERROR_MESSAGE = _('Please input valid case id(s). '
-                             'use comma to split more than one '
-                             'case id. e.g. "111, 222"')
-
 
 class TestCaseForm(forms.ModelForm):
 
@@ -150,24 +146,6 @@ class SearchCaseForm(BaseCaseSearchForm):
 
     def clean_priority(self):
         return list(self.cleaned_data['priority'])
-
-
-class QuickSearchCaseForm(forms.Form):
-    case_id_set = forms.CharField(required=False)
-
-    def clean_case_id_set(self):
-        case_id_set = self.cleaned_data['case_id_set']
-
-        if not case_id_set:
-            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE)
-
-        try:
-            case_ids = []
-            for case_id in case_id_set.split(','):
-                case_ids.append(int(case_id))
-            return case_ids
-        except ValueError:
-            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE) from None
 
 
 class CloneCaseForm(forms.Form):
