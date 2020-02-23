@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.db.models import Count
 from django.http import (HttpResponsePermanentRedirect,
-                         HttpResponseRedirect, JsonResponse)
+                         HttpResponseRedirect)
 from django.shortcuts import get_object_or_404, render
 from django.test import modify_settings
 from django.urls import reverse
@@ -300,32 +300,6 @@ class Clone(View):
         }
 
         return render(request, self.template_name, context_data)
-
-
-@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
-class ReorderCasesView(View):
-    """Reorder cases"""
-
-    http_method_names = ['post']
-
-    def post(self, request, pk):
-        if 'case' not in request.POST:
-            return JsonResponse({
-                'rc': 1,
-                'response': 'At least one case is required to re-order.'
-            })
-
-        case_ids = []
-        for case_id in request.POST.getlist('case'):
-            case_ids.append(int(case_id))
-
-        cases = TestCasePlan.objects.filter(case_id__in=case_ids, plan=pk).only('case_id')
-
-        for case in cases:
-            case.sortkey = (case_ids.index(case.case_id) + 1) * 10
-            case.save()
-
-        return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 @require_POST

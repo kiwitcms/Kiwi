@@ -11,7 +11,4 @@ urlpatterns = [
             name='test_plan_url'),
 
     re_path(r'^(?P<pk>\d+)/edit/$', views.Edit.as_view(), name='plan-edit'),
-
-    re_path(r'^(?P<pk>\d+)/reorder-cases/$', views.ReorderCasesView.as_view(),
-            name='plan-reorder-cases'),
 ]
