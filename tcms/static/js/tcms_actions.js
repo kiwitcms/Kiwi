@@ -320,12 +320,6 @@ function clickedSelectAll(checkbox, form, name) {
   }
 }
 
-function bindSelectAllCheckbox(element, form, name) {
-  jQ(element).bind('click', function(e) {
-    clickedSelectAll(this, form, name);
-  });
-}
-
 function constructForm(content, action, form_observe, info, s, c) {
   var f = jQ('<form>', {'action': action});
   var i = jQ('<div>', {'class': 'alert'});
