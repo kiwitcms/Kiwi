@@ -24,7 +24,6 @@ Submodules
 .. toctree::
 
    tcms.core.admin
-   tcms.core.ajax
    tcms.core.context_processors
    tcms.core.history
    tcms.core.middleware
