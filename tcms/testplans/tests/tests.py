@@ -147,30 +147,6 @@ class TestPlanModel(test.TestCase):
         self.assertEqual(15, case_plan.sortkey)
 
 
-class TestSortCases(BasePlanCase):
-    """Test case for sorting cases"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestSortCases, cls).setUpTestData()
-        cls.plan_tester = UserFactory(username='tester')
-        cls.plan_tester.set_password('password')
-        cls.plan_tester.save()
-        user_should_have_perm(cls.plan_tester, 'testplans.change_testplan')
-
-        cls.cases_url = reverse('plan-reorder-cases', args=[cls.plan.pk])
-
-    def test_missing_cases_ids(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        response = self.client.post(self.cases_url)
-        self.assertJsonResponse(
-            response,
-            {'rc': 1, 'response': 'At least one case is required to re-order.'})
-
-
 class TestCloneView(BasePlanCase):
     """Test case for cloning a plan"""
 
