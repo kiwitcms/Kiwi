@@ -242,15 +242,6 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .list_filter .priority_filter ul,.list_filter td ul{ list-style-type:none; margin:0px; padding:0px;}
 .list_filter .priority_filter ul li{ float:left; padding:0px; margin:0px;}
 .list_filter td  input[ type="text" ]{ width:100%;}
-/**********************item Search*******************/
-.itemSearch { width : 100%; border-top:1px solid #ccc; float :right; background:#f5f5f5;}
-.itemSearch .field{ float:left; width:50%; margin-bottom:2px;}
-.itemSearch .field .title { width :150px; margin-right : 2px; margin-left:10px; float : left;}
-.itemSearch .name { float:left;}
-.itemSearch  .name_short input[type="text"]{ width:120px;}
-.itemSearch  .name input[type="text"]{ width:250px;}
-.itemSearch  .name select{ width:255px;}
-.itemSearch .bottom{ width:100%; margin-top:10px; text-align:center; border-bottom:1px solid #ccc; padding-bottom:5px; float:left;}
 /**********************tab******************/
 .content_tab{ border-bottom:4px solid #235d9f; float:left; width:100%; list-style-type:none; padding:0px; margin:0px}
 .content_tab li{ line-height:30px; margin:0px; padding:0px;}

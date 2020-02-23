@@ -553,75 +553,6 @@ Nitrate.TestPlans.Details = {
   }
 };
 
-Nitrate.TestPlans.SearchCase.on_load = function() {
-    $('#id_product').change(update_category_select_from_product);
-    if (!$('#id_category').val().length) {
-        update_category_select_from_product();
-    }
-
-//fixme: for some reason when we clear Product categories are cleared
-// but components are not. as if the on-change event doesn't execute!
-// if we change to another Product both components and categories are
-// updated
-    $('#id_product').change(update_component_select_from_product);
-    if (!$('#id_component').val().length) {
-        update_component_select_from_product();
-    }
-
-  // new feature for searching by case id.
-  var quick_search = jQ("#tp_quick_search_cases_form");
-  var normal_search = jQ("#tp_normal_search_case_form");
-  var quick_tab = jQ("#quick_tab");
-  var normal_tab = jQ("#normal_tab");
-  var search_mode = jQ("#search_mode");
-  var errors = jQ(".errors");
-  var triggerFormDisplay = function(options) {
-    options.show.show();
-    options.show_tab.addClass("profile_tab_active");
-    options.hide.hide();
-    options.hide_tab.removeClass("profile_tab_active");
-  };
-
-  jQ("#quick_search_cases").bind("click", function() {
-    // clear errors
-    errors.empty();
-    search_mode.val("quick");
-    triggerFormDisplay({
-      "show": quick_search,
-      "show_tab": quick_tab,
-      "hide": normal_search,
-      "hide_tab": normal_tab
-    });
-  });
-  jQ("#normal_search_cases").bind("click", function() {
-    // clear errors
-    errors.empty();
-    search_mode.val("normal");
-    triggerFormDisplay({
-      "show": normal_search,
-      "show_tab": normal_tab,
-      "hide": quick_search,
-      "hide_tab": quick_tab
-    });
-  });
-
-  if ($('#id_table_cases').length) {
-    $('#id_table_cases').DataTable({
-      "aoColumnDefs":[{ "bSortable":false, "aTargets":[ 'nosort' ] }],
-      "aaSorting": [[ 1, "desc" ]],
-      "sPaginationType": "full_numbers",
-      "bFilter": false,
-      "aLengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-      "iDisplayLength": 20,
-      "bProcessing": true
-    });
-  }
-
-  if (jQ("#id_checkbox_all_cases").length) {
-    bindSelectAllCheckbox(jQ('#id_checkbox_all_cases')[0], jQ('#id_form_cases')[0], 'case');
-  }
-};
-
 
 function unlinkCasesFromPlan(plan_id, table) {
   const selection = serializeCaseFromInputList2(table);
@@ -1054,9 +985,6 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
       jQ('#js-case-menu, #js-new-case').bind('click', function() {
         var params = jQ(this).data('params');
         window.location.href = params[0] + '?from_plan=' + params[1];
-      });
-      jQ('#js-add-case-to-plan').bind('click', function() {
-        window.location.href = jQ(this).data('param');
       });
       jQ('#js-print-case').bind('click', function() {
         printableCases(jQ(this).data('param'), navForm, casesTable);
