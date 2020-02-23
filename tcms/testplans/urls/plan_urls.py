@@ -14,5 +14,4 @@ urlpatterns = [
 
     url(r'^(?P<pk>\d+)/reorder-cases/$', views.ReorderCasesView.as_view(),
         name='plan-reorder-cases'),
-    url(r'^update-parent/$', views.UpdateParentView.as_view()),
 ]
