@@ -17,10 +17,10 @@
 					<ul>
 						{% if perms.testcases.add_testcase %}
 						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="{% trans "Write new case" %}" data-params='["{% url "testcases-new" %}", {{ test_plan.pk }}]'/></li>
-						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="{% trans "Add cases from other plans" %}" data-param="{% url "plan-search-cases-for-link" test_plan.pk %}" /></li>
+						<li>DEPRECATED IN FAVOR OF PATTERNFLY</li>
 						{% else %}
 						<li><input type="button" class="add_new icon_plan" disabled value="{% trans "Write new case" %}"/></li>
-						<li><input type="button" class="search icon_plan" disabled value="{% trans "Add cases from other plans" %}" /></li>
+						<li>DEPRECATED IN FAVOR OF PATTERNFLY</li>
 						{% endif %}
 						<li><input type="button" id="js-print-case" class="print_view icon_plan" value="{% trans "Print" %}"  title="{% trans "print view of selected cases" %}" data-param="{% url "testcases-printable" %}" /></li>
 						{% if perms.testcases.add_testcase %}
