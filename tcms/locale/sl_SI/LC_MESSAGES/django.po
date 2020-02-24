@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-02-24 11:03\n"
+"PO-Revision-Date: 2020-02-24 11:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -404,7 +404,7 @@ msgstr "VTIČNIKI"
 
 #: tcms/settings/common.py:324
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: tcms/settings/common.py:325
 msgid "Report an Issue"
@@ -437,7 +437,7 @@ msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 msgid "NEW: Bug #{} - {}"
-msgstr ""
+msgstr "Novo: Napaka #{} - {}"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -738,7 +738,15 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Dodeljena vam je bila napaka %(pk)s.\n\n"
+"Povezava: %(bug_url)s\n\n"
+"Povzetek: %(summary)s\n"
+"Ustvarjeno: %(creation_date)s\n"
+"Prijavil: %(reporter)s\n"
+"Zadolžena oseba: %(assignee)s\n"
+"Produkt: %(product)s\n"
+"Verzija: %(version)s\n"
+"Različica: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
