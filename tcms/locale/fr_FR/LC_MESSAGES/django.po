@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-18 14:18+0000\n"
-"PO-Revision-Date: 2020-02-18 16:52\n"
+"POT-Creation-Date: 2020-02-24 09:46+0000\n"
+"PO-Revision-Date: 2020-02-24 11:03\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -219,11 +219,11 @@ msgid "Created at"
 msgstr "Créé le"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:497
+#: tcms/testcases/views.py:494
 msgid "Edit"
 msgstr "Modifier"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:510
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:507
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -341,95 +341,103 @@ msgstr "Nouveau scénario de test"
 msgid "New Bug"
 msgstr "Nouvelle anomalie"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:291
 msgid "SEARCH"
 msgstr "RECHERCHER"
 
-#: tcms/settings/common.py:291
+#: tcms/settings/common.py:292
 msgid "Search Test Plans"
 msgstr "Rechercher des plans de test"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:293
 msgid "Search Test Runs"
 msgstr "Rechercher des essais réalisés"
 
-#: tcms/settings/common.py:293
+#: tcms/settings/common.py:294
 msgid "Search Test Cases"
 msgstr "Rechercher des scénarios de tests"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:295
 msgid "Search Bugs"
 msgstr "Recherche dans les anomalies"
 
-#: tcms/settings/common.py:296
+#: tcms/settings/common.py:298
 msgid "TELEMETRY"
 msgstr "TELEMETRIE"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:299
 msgid "Testing"
 msgstr "En Test"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:300
 msgid "Breakdown"
 msgstr "Panne"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:301
 msgid "Status matrix"
 msgstr "Matrice d'état"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:302
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Tendances des exécutions"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:303
 msgid "TestCase health"
 msgstr "Santé du scénario de test"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:308
 msgid "ADMIN"
 msgstr "ADMINISTRATEUR"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:309
 msgid "Users and groups"
 msgstr "Utilisateurs et groupes"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:311
 msgid "Everything else"
 msgstr "Tout le reste"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:313
 msgid "PLUGINS"
 msgstr "GREFFONS"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:324
+msgid "Forum"
+msgstr ""
+
+#: tcms/settings/common.py:325
 msgid "Report an Issue"
 msgstr "Signaler un problème"
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:326
 msgid "Ask for help on StackOverflow"
 msgstr "Demander de l’aide sur StackOverflow"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:327
 msgid "User Guide"
 msgstr "Guide de l'utilisateur"
 
-#: tcms/settings/common.py:325
+#: tcms/settings/common.py:328
 msgid "Administration Guide"
 msgstr "Guide de l'administrateur"
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:329
 msgid "API Help"
 msgstr "Aide sur l’API"
 
-#: tcms/signals.py:79
+#: tcms/signals.py:80
 msgid "New user awaiting approval"
 msgstr "Nouvel utilisateur en attente d’approbation"
 
-#: tcms/signals.py:154
+#: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NOUVEAU: Essai #%(pk)d - %(summary)s"
+
+#: tcms/signals.py:194
+msgid "NEW: Bug #{} - {}"
+msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -628,7 +636,8 @@ msgstr "Bugs et hyperliens"
 #: tcms/templates/run/get_case_runs.html:20
 #: tcms/templates/run/get_case_runs.html:47
 #: tcms/templates/run/get_case_runs.html:55
-#: tcms/testcases/templates/testcases/get.html:207
+#: tcms/testcases/templates/testcases/get.html:180
+#: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
 msgstr "Ajouter"
 
@@ -717,6 +726,19 @@ msgstr "Bienvenu %(user)s,\n"
 "Merci pour votre inscription sur %(site_domain)s!\n\n"
 "Pour activer votre compte cliquer sur le lien suivant:\n"
 "%(confirm_url)s"
+
+#: tcms/templates/email/post_bug_save/email.txt:2
+#, python-format
+msgid "Bug %(pk)s has been assigned to you.\n\n"
+"Link: %(bug_url)s\n\n"
+"Summary: %(summary)s\n"
+"Created at: %(creation_date)s\n"
+"Reporter: %(reporter)s\n"
+"Assignee: %(assignee)s\n"
+"Product: %(product)s\n"
+"Version: %(version)s\n"
+"Build: %(build)s"
+msgstr ""
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -810,7 +832,7 @@ msgstr "Étiquettes"
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
 #: tcms/testcases/templates/testcases/get.html:163
-#: tcms/testcases/templates/testcases/get.html:193
+#: tcms/testcases/templates/testcases/get.html:211
 #: tcms/testplans/templates/testplans/clone.html:13
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
@@ -1057,7 +1079,7 @@ msgid "print view of selected cases"
 msgstr "afficher la vue des scénarios sélectionnés"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:501
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:498
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Dupliquer"
@@ -1590,7 +1612,7 @@ msgstr "URL de remonter d'anomalie"
 msgid "Test plans"
 msgstr "Plans de test"
 
-#: tcms/testcases/templates/testcases/get.html:186
+#: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
 msgstr "Composants"
 
@@ -1670,19 +1692,19 @@ msgstr "Séparez les valeurs multiples avec une virgule (,)"
 msgid "Created on"
 msgstr "Créé le"
 
-#: tcms/testcases/views.py:342
+#: tcms/testcases/views.py:339
 msgid "TestPlan not specified or does not exist"
 msgstr "Plan de test non spécifié ou n'existe pas"
 
-#: tcms/testcases/views.py:505
+#: tcms/testcases/views.py:502
 msgid "History"
 msgstr "Historique"
 
-#: tcms/testcases/views.py:698
+#: tcms/testcases/views.py:695
 msgid "TestCase cloning was successful"
 msgstr "Le clonage du cas de test a été réalisé avec succès"
 
-#: tcms/testcases/views.py:724 tcms/testruns/views.py:366
+#: tcms/testcases/views.py:721 tcms/testruns/views.py:366
 #: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
 msgstr "Au moins un scénario de test est requis"
