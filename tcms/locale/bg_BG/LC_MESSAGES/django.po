@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-02-24 11:04\n"
+"PO-Revision-Date: 2020-02-24 13:36\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -404,7 +404,7 @@ msgstr ""
 
 #: tcms/settings/common.py:324
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: tcms/settings/common.py:325
 msgid "Report an Issue"
@@ -437,7 +437,7 @@ msgstr "НОВО: Тест Изпълнение #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 msgid "NEW: Bug #{} - {}"
-msgstr ""
+msgstr "Нов бъг #{} - {}"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -737,7 +737,15 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "%(pk)s бъга са ти насочени.\n\n"
+"Линк: %(bug_url)s\n\n"
+"Резюме: %(summary)s\n"
+"Създаден на: %(creation_date)s\n"
+"От: %(reporter)s\n"
+"Назначен: %(assignee)s\n"
+"Продукт: %(product)s\n"
+"Версия: %(version)s\n"
+"Билд: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1802,7 +1810,9 @@ msgstr "Достъпът отказан: Това Тест Изпълнение 
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Относно как да се настроят статуси на тест изпълненията, виж\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"       документацията</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
