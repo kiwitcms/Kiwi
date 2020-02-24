@@ -321,6 +321,7 @@ for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
 
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
+    ('https://kiwitcms.discourse.group', _('Forum')),
     ('https://github.com/kiwitcms/Kiwi/issues/new', _('Report an Issue')),
     ('https://stackoverflow.com/questions/tagged/kiwi-tcms', _('Ask for help on StackOverflow')),
     ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', _('User Guide')),
