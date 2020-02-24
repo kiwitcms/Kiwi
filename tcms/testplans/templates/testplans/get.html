@@ -9,7 +9,7 @@
 {% block body_class %}cards-pf{% endblock %}
 
 {% block contents %}
-    <div class="container-cards-pf">
+<div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12" style="margin-top: 0">
         <span id="test_plan_pk"
@@ -76,5 +76,57 @@
             </div>
         </div>
     </div>
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    {% trans 'Confirmed test cases' %}
+                </h2>
+                <div id="confirmed-testcases" class="list-group list-view-pf list-view-pf-view"></div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<template id="no_test_cases">
+    <div class="list-group-item">
+        <div class="list-group-item-header">
+            <div class="list-view-pf-main-info">{% trans 'No records found' %}</div>
+        </div>
+    </div>
+</template>
+
+<template id="test_case_row">
+    <div class="list-group-item">
+        <div class="list-group-item-header">
+            <div class="list-view-pf-expand">
+                <span class="fa fa-angle-right"></span>
+            </div>
+            <div class="list-view-pf-checkbox">
+                <input type="checkbox">
+            </div>
+            <div class="list-view-pf-actions">
+                <div class="dropdown pull-right dropdown-kebab-pf">
+                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownKebabRight9"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="fa fa-ellipsis-v"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownKebabRight9">
+                        <li><a href="#">{% trans 'Change status' %}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="list-view-pf-main-info"></div>
+        </div>
+        <div class="list-group-item-container container-fluid hidden">
+            <div class="row">
+                <div class="col-md-12">Some test case widgets</div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'testplans/js/get.js' %}"></script>
 {% endblock %}
