@@ -14,6 +14,7 @@
     <h1 class="col-md-12" style="margin-top: 0">
         <span id="test_plan_pk"
               data-testplan-pk="{{ object.pk }}"
+              data-perm-remove-tag="{{ perms.testplans.delete_testplantag }}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
     </h1>
     <div class="row row-cards-pf">
@@ -86,6 +87,12 @@
             </div>
         </div>
     </div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            {% include 'include/tags_card.html' with add_perm=perms.testcases.add_testcasetag %}
+        </div>
+    </div>
 </div>
 
 <template id="no_test_cases">
@@ -129,7 +136,10 @@
     </div>
 </template>
 
-<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
+
 <script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/tags.js' %}"></script>
 <script src="{% static 'testplans/js/get.js' %}"></script>
 {% endblock %}
