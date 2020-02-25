@@ -28,7 +28,7 @@ $(document).ready(function() {
         if (testCases.confirmed.length > 0) {
             for (var i = 0; i < testCases.confirmed.length; i++) {
                 var testCase = testCases.confirmed[i];
-                testCaseMainInfo.innerHTML = `<a href="/case/${testCase.id}">TC-${testCase.id}: ${testCase.summary}</a>`;
+                testCaseMainInfo.innerHTML = `<a href="/case/${testCase.id}/">TC-${testCase.id}: ${testCase.summary}</a>`;
                 container.append($(testCaseRow).html());
             }
         } else {
