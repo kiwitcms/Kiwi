@@ -5,6 +5,10 @@ $(document).ready(function() {
         'not_confirmed': []
     };
 
+    // bind everything in tags table
+    const perm_remove_tag = $('#test_plan_pk').data('perm-remove-tag') === 'True';
+    tagsCard('TestPlan', testPlanId, {plan: testPlanId}, perm_remove_tag);
+
     jsonRPC('TestCase.filter', [{'plan': testPlanId}], function(data) {
         for (var i = 0; i < data.length; i++) {
             var testCase = data[i];
