@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-02-24 11:03\n"
+"PO-Revision-Date: 2020-02-25 07:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -404,7 +404,7 @@ msgstr "GREFFONS"
 
 #: tcms/settings/common.py:324
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: tcms/settings/common.py:325
 msgid "Report an Issue"
@@ -437,7 +437,7 @@ msgstr "NOUVEAU: Essai #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 msgid "NEW: Bug #{} - {}"
-msgstr ""
+msgstr "NOUVEAU: Incident #{} - {}"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -738,7 +738,15 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "L'incident %(pk)s vous a été assigné.\n\n"
+"Lien: %(bug_url)s\n\n"
+"Sommaire: %(summary)s\n"
+"Créé le: %(creation_date)s\n"
+"Rapporteur: %(reporter)s\n"
+"Assigné à: %(assignee)s\n"
+"Produit: %(product)s\n"
+"Version: %(version)s\n"
+"Construction: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
