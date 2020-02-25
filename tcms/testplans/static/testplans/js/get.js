@@ -16,19 +16,19 @@ $(document).ready(function() {
             }
         }
         drawConfirmedTestCases();
-
     });
 
     function drawConfirmedTestCases() {
         var container = $('#confirmed-testcases'),
             noCasesTemplate = $('#no_test_cases'),
             testCaseRow = $('#test_case_row')[0],
-            testCaseMainInfo = $(testCaseRow.content).find('.list-view-pf-main-info')[0];
+            testCaseSummary = $(testCaseRow.content).find('.list-view-pf-main-info a.testcase')[0];
 
         if (testCases.confirmed.length > 0) {
             for (var i = 0; i < testCases.confirmed.length; i++) {
                 var testCase = testCases.confirmed[i];
-                testCaseMainInfo.innerHTML = `<a href="/case/${testCase.id}/">TC-${testCase.id}: ${testCase.summary}</a>`;
+                testCaseSummary.href = `/case/${testCase.id}/`;
+                testCaseSummary.innerHTML = `TC-${testCase.id}: ${testCase.summary}`;
                 container.append($(testCaseRow).html());
             }
         } else {
