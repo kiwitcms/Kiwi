@@ -13,4 +13,5 @@ Submodules
 
    tcms.utils.github
    tcms.utils.permissions
+   tcms.utils.settings
    tcms.utils.user
