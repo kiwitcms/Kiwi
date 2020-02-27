@@ -197,22 +197,53 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
 Customization
 -------------
 
-``tcms/settings/product.py`` contains the following lines at the end::
+You can override any default settings provided by ``tcms/settings/product.py``
+by editing ``docker-compose.yml``:
 
-    try:
-        from .local_settings import *  # noqa: F401,F403
-    except ImportError:
-        pass
-
-This means you can edit ``docker-compose.yml`` to mount the host file
-``local_settings.py`` inside the running Docker container::
+* Mount the host file ``local_settings.py`` inside the running container under
+  ``../tcms/settings/``::
 
         volumes:
             - uploads:/Kiwi/uploads
             - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
-essentially overriding any stock settings in this way! For more information
-see :ref:`configuration`.
+  If this file exists it is imported before any of the files under
+  ``local_settings_dir/``!
+
+.. versionadded:: 8.1
+
+* Mount a host directory with multiple .py files under
+  ``../tcms/settings/local_settings_dir/``::
+
+        volumes:
+            - uploads:/Kiwi/uploads
+            - ./local_settings_dir/:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings_dir/
+
+  Alternatively you can mount multiple individual host files under this
+  directory.
+
+  .. important::
+
+        Filenames under ``local_settings_dir/`` must be valid Python
+        `module names <https://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_,
+        in other words you should be able to import them!
+
+        Modules under ``local_settings_dir/`` are sorted alphabetically before being imported!
+        For a directory structure which lools like this::
+
+            local_settings_dir/
+            ├── django_social_auth.py
+            ├── email_config.py
+            ├── __init__.py
+            └── multi_tenant.py
+
+        the import order is ``django_social_auth``, ``email_config``, ``multi_tenant``!
+
+        ``__init__.py`` is skipped but it must be present to indicate Python can import
+        modules from this directory!
+
+
+For more information about what each setting means see :ref:`configuration`.
 
 .. warning::
 
