@@ -19,26 +19,38 @@ $(document).ready(function() {
                 testCases.not_confirmed.push(data[i]);
             }
         }
-        drawConfirmedTestCases();
+        drawTestCases(testCases.confirmed);
+        treeViewBind();
     });
 
-    function drawConfirmedTestCases() {
-        var container = $('#confirmed-testcases'),
-            noCasesTemplate = $('#no_test_cases'),
-            testCaseRow = $('#test_case_row')[0],
-            testCaseSummary = $(testCaseRow.content).find('.list-view-pf-main-info a.testcase')[0];
-
-        if (testCases.confirmed.length > 0) {
-            for (var i = 0; i < testCases.confirmed.length; i++) {
-                var testCase = testCases.confirmed[i];
-                testCaseSummary.href = `/case/${testCase.id}/`;
-                testCaseSummary.innerHTML = `TC-${testCase.id}: ${testCase.summary}`;
-                container.append($(testCaseRow).html());
-            }
-        } else {
-            container.append(noCasesTemplate[0].innerHTML);
-        }
-
-        treeViewBind();
-    }
 });
+
+function drawTestCases(testCases) {
+    var container = $('#confirmed-testcases'),
+        noCasesTemplate = $('#no_test_cases'),
+        testCaseRow = $('#test_case_row')[0],
+        testCaseSummary = $(testCaseRow.content).find('.list-view-pf-main-info a.testcase')[0];
+
+    if (testCases.length > 0) {
+        for (var i = 0; i < testCases.length; i++) {
+            var testCase = testCases[i];
+            testCaseSummary.innerHTML = getTestCaseRowContent(testCase);
+            container.append($(testCaseRow).html());
+        }
+    } else {
+        container.append(noCasesTemplate[0].innerHTML);
+    }
+}
+
+
+function getTestCaseRowContent(testCase) {
+    var rowDetailsTemplate = $('#test_case_row_details')[0],
+        row = $(rowDetailsTemplate.content);
+
+    row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href',`/case/${testCase.id}/`);
+    row.find('.js-test-case-priority').html(`${testCase.priority}`);
+    row.find('.js-test-case-category').html(`${testCase.category}`);
+    row.find('.js-test-case-author').html(`${testCase.author}`);
+    row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
+    return $(rowDetailsTemplate).html();
+}
