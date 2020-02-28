@@ -83,7 +83,7 @@
                 <h2 class="card-pf-title">
                     {% trans 'Confirmed test cases' %}
                 </h2>
-                <div id="confirmed-testcases" class="list-group list-view-pf list-view-pf-view"></div>
+                <div id="confirmed-testcases" class="list-group tree-list-view-pf"></div>
             </div>
         </div>
     </div>
@@ -135,6 +135,32 @@
         <div class="list-group-item-container container-fluid hidden">
             <div class="row">
                 <div class="col-md-12">Some test case widgets</div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="test_case_row_details">
+    <div class="list-view-pf-left">
+        <a class="js-test-case-link"></a>
+    </div>
+    <div class="list-view-pf-body">
+        <div class="list-view-pf-additional-info">
+            <div title="{% trans 'Priority' %}" class="list-view-pf-additional-info-item">
+                <span class="fa fa-hourglass"></span>
+                <span class="js-test-case-priority"></span>
+            </div>
+            <div title="{% trans 'Category' %}" class="list-view-pf-additional-info-item">
+                <span class="fa fa-tag"></span>
+                <span class="js-test-case-category"></span>
+            </div>
+            <div title="{% trans 'Author' %}" class="list-view-pf-additional-info-item">
+                <span class="fa pficon-user"></span>
+               <span class="js-test-case-author"></span>
+            </div>
+            <div title="{% trans 'Default Tester' %}" class="list-view-pf-additional-info-item">
+                <span class="fa fa-search"></span>
+                <span class="js-test-case-tester"></span>
             </div>
         </div>
     </div>
