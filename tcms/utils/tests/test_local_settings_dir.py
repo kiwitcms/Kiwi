@@ -17,7 +17,7 @@ class ImportLocalSettingsTestCase(TestCase):
         self.assertNotIn('test_me', settings.INSTALLED_APPS)
 
         # perform the import which will override settings
-        import_local_settings('local_settings_test')
+        import_local_settings('local_settings_test', scope=settings.__dict__)
 
         # assert settings values have changed
         self.assertEqual(settings.KIWI_VERSION, "%s-Under-Test" % __version__)
