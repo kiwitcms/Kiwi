@@ -64,8 +64,12 @@ function initAddPlan(case_id, plans_table) {
             var rpc_query = {pk: query};
 
             // or arbitrary string
-            if (isNaN(query) && (query.length >=3)) {
-                rpc_query = {name__icontains: query};
+            if (isNaN(query)) {
+                if (query.length >=3) {
+                    rpc_query = {name__icontains: query};
+                } else {
+                    return;
+                }
             }
 
             jsonRPC('TestPlan.filter', rpc_query, function(data) {
