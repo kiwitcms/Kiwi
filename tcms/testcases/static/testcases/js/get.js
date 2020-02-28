@@ -50,7 +50,7 @@ function initAddPlan(case_id, plans_table) {
 
     // autocomplete
     $('#input-add-plan.typeahead').typeahead({
-        minLength: 3,
+        minLength: 1,
         highlight: true
         }, {
         name: 'plans-autocomplete',
@@ -64,7 +64,7 @@ function initAddPlan(case_id, plans_table) {
             var rpc_query = {pk: query};
 
             // or arbitrary string
-            if (isNaN(query)) {
+            if (isNaN(query) && (query.length >=3)) {
                 rpc_query = {name__icontains: query};
             }
 
