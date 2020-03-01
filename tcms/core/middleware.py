@@ -8,6 +8,11 @@ from django.utils.deprecation import MiddlewareMixin
 from django.utils.translation import gettext_lazy as _
 
 
+class CsrfDisableMiddleware(MiddlewareMixin):
+    def process_view(self, request, _callback, _callback_args, _callback_kwargs):
+        setattr(request, '_dont_enforce_csrf_checks', True)
+
+
 class CheckSettingsMiddleware(MiddlewareMixin):
     def process_request(self, request):
         doc_url = 'https://kiwitcms.readthedocs.io/en/latest/admin.html#configure-kiwi-s-base-url'
