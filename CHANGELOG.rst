@@ -1,6 +1,113 @@
 Change Log
 ==========
 
+
+Kiwi TCMS 8.1 (04 Mar 2020)
+---------------------------
+
+**IMPORTANT:** this is a small security and improvement release which
+also includes several bug fixes, internal refactoring and updated translations.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- JSON-RPC handler will now HTML escape all strings. This prevents XSS attacks
+  via tags, components or anything else which is loaded on the web page via RPC
+  and then shown as string. Even if someone saves ``<script>alert(123);</script>``
+  in the database the returned result will be HTML escaped and will not be executed
+  as JavaScript!
+
+  .. note::
+
+        This is easy to exploit but people able to do so should have accounts in
+        your Kiwi TCMS installation and write privileges on their accounts. If they
+        do this means they can cause a lot more damage much more easily!
+- Update Django from 3.0.3 to 3.0.4 - fixes security issue CVE-2020-9402:
+  Potential SQL injection via ``tolerance`` parameter in GIS functions and aggregates
+  on Oracle which we believe does not affect Kiwi TCMS
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 3.1.0 to 3.1.1
+- Update django-colorfield from 0.1.15 to 0.2.1
+- Update markdown from 3.2 to 3.2.1
+- On bug creation send email to assignee. Fixes
+  `Issue #1154 <https://github.com/kiwitcms/Kiwi/issues/1154>`_ (Mfon Eti-mfon)
+- Make it possible to provide override settings in a directory. Kiwi TCMS will
+  respect:
+
+  - ``local_settings.py``
+  - ``local_settings_dir/*.py``
+
+  For more information see
+  https://kiwitcms.readthedocs.io/en/latest/installing_docker.html#customization
+- Allow adding TestPlan to TestCase via UI. Fixes
+  `Issue #1021 <https://github.com/kiwitcms/Kiwi/issues/1021>`_
+- Add visual representation of failures in TestCase health telemetry
+- Add helper text to TestExecutionStatus admin
+- Add link to discussion forum in Help menu
+
+
+API
+~~~
+
+- ``TestCase.create()`` method no longer accepts ``product`` or ``product_id``
+  fields which have previously been deprecated
+- API methods which receive True/False values will no longer parse yes,no,1,0 values.
+  The only accepted values are boolean constants defined in the calling programming
+  language which are then transmitted via XML-RPC or JSON-RPC and converted to
+  native boolean on the backend
+
+
+Bug fixes
+~~~~~~~~~
+
+- The number of search results shown per page can now be controlled via
+  ``DEFAULT_PAGE_SIZE`` setting, which is 100 by default. Fixes
+  `Issue #1210 <https://github.com/kiwitcms/Kiwi/issues/1210>`_ (Ivailo Karabojkov)
+- Use comma separated display of components in bug reports. Fixes
+  `Issue #1157 <https://github.com/kiwitcms/Kiwi/issues/1157>`_ (Ivailo Karabojkov)
+- Update selector for 'Select All' test executions in TestRun page. Fixes
+  `Issue #1404 <https://github.com/kiwitcms/Kiwi/issues/1404>`_
+- Fix crash when sorting test cases in TestPlan page. Fixes
+  `Sentry #KIWI-TCMS-A6 <https://sentry.io/organizations/open-technologies-bulgaria-ltd/issues/1519809326/>`_
+- Fix a ``TC-undefined`` displayed in TestCase health telemetry
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Add test for ``TestRunAdmin.change_view()`` (Mariyan Garvanski)
+- Remove unused ``showCaseRunsWithSelectedStatus``
+- Internal JavaScript updates
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 8.0 (12 Feb 2020)
 ---------------------------
 
