@@ -25,7 +25,7 @@ Nitrate.TestRuns.Details.on_load = function() {
 
   // Observe the interface buttons
   jQ('#id_check_all_button').bind('click', function(e) {
-    toggleAllCheckBoxes(this, 'id_table_cases', 'case_run');
+    toggleAllCheckBoxes(this, 'id_table_cases', 'execution');
   });
 
   if (jQ('#id_check_box_highlight').attr('checked')) {
