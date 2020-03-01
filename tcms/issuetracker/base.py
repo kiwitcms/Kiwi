@@ -57,7 +57,9 @@ class IssueTrackerType:
         comment = "Filed from execution %s\n\n" % execution.get_full_url()
         comment += "**Product:**\n%s\n\n" % execution.run.plan.product.name
         comment += "**Component(s):**\n%s\n\n" % \
-                   execution.case.component.values_list('name', flat=True)
+                   ' '.join([str(i) for i in
+                             execution.case.component.values_list('name',
+                                                                  flat=True)])
         comment += "**Version-Release number** (if applicable):\n"
         comment += "%s\n\n" % execution.build.name
         comment += "**Steps to reproduce**: \n%s\n\n" % txt

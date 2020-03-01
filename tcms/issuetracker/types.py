@@ -81,8 +81,9 @@ class Bugzilla(IssueTrackerType):
         args['cf_build_id'] = execution.run.build.name
 
         args['comment'] = self._report_comment(execution)
-        args['component'] = execution.case.component.values_list('name',
-                                                                 flat=True)
+        args['component'] = ' '.join([str(i) for i in
+                                      execution.case.component.values_list('name',
+                                                                           flat=True)])
         args['product'] = execution.run.plan.product.name
         args['short_desc'] = 'Test case failure: %s' % execution.case.summary
         args['version'] = execution.run.product_version
