@@ -33,6 +33,15 @@ class IssueTrackerType:
         """
         return int(RE_ENDS_IN_INT.search(url.strip()).group(0))
 
+    @staticmethod
+    def get_case_components(case):
+        """
+            Returns a string that contains comma separated list of components
+            bound to a given testcase
+        """
+        case_components = ', '.join(case.component.values_list('name', flat=True))
+        return case_components
+
     def details(self, url):  # pylint: disable=no-self-use
         """
             Returns bug details to be used later. By default this method
@@ -57,7 +66,7 @@ class IssueTrackerType:
         comment = "Filed from execution %s\n\n" % execution.get_full_url()
         comment += "**Product:**\n%s\n\n" % execution.run.plan.product.name
         comment += "**Component(s):**\n%s\n\n" % \
-                   execution.case.component.values_list('name', flat=True)
+                   self.get_case_components(execution.case)
         comment += "**Version-Release number** (if applicable):\n"
         comment += "%s\n\n" % execution.build.name
         comment += "**Steps to reproduce**: \n%s\n\n" % txt
