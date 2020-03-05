@@ -28,14 +28,11 @@ $(document).ready(function() {
 function drawTestCases(testCases) {
     var container = $('#confirmed-testcases'),
         noCasesTemplate = $('#no_test_cases'),
-        testCaseRow = $('#test_case_row')[0],
-        testCaseSummary = $(testCaseRow.content).find('.list-view-pf-main-info a.testcase')[0];
+        testCaseRowDocumentFragment = $('#test_case_row')[0].content;
 
     if (testCases.length > 0) {
         for (var i = 0; i < testCases.length; i++) {
-            var testCase = testCases[i];
-            testCaseSummary.innerHTML = getTestCaseRowContent(testCase);
-            container.append($(testCaseRow).html());
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[i]));
         }
     } else {
         container.append(noCasesTemplate[0].innerHTML);
@@ -43,14 +40,14 @@ function drawTestCases(testCases) {
 }
 
 
-function getTestCaseRowContent(testCase) {
-    var rowDetailsTemplate = $('#test_case_row_details')[0],
-        row = $(rowDetailsTemplate.content);
+function getTestCaseRowContent(rowContent, testCase) {
+    var row = $(rowContent);
 
     row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href',`/case/${testCase.id}/`);
     row.find('.js-test-case-priority').html(`${testCase.priority}`);
     row.find('.js-test-case-category').html(`${testCase.category}`);
     row.find('.js-test-case-author').html(`${testCase.author}`);
     row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
-    return $(rowDetailsTemplate).html();
+
+    return row;
 }
