@@ -45,26 +45,3 @@ def request_host_link(request, domain_name=None):
             protocol = 'http://'
 
     return protocol + domain_name
-
-
-# todo: remove this
-def clean_request(request, keys=None):
-    """
-    Clean the request strings
-    """
-    request_contents = request.GET.copy()
-    if not keys:
-        keys = request_contents.keys()
-    cleaned_request = {}
-    for key in keys:
-        key = str(key)
-        if request_contents.get(key):
-            if key in ('order_by', 'from_plan'):
-                continue
-
-            value = request.GET[key]
-            # Convert the value to be list if it's __in filter.
-            if key.endswith('__in') and isinstance(value, str):
-                value = string_to_list(value)
-            cleaned_request[key] = value
-    return cleaned_request
