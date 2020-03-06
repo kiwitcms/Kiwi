@@ -318,20 +318,3 @@ var reloadWindow = function(t) {
 
   window.location.reload(true);
 };
-
-function printableCases(url, form, table) {
-  var selection = serializeCaseFromInputList2(table);
-  var emptySelection = !selection.selectAll & selection.selectedCasesIds.length === 0;
-  if (emptySelection) {
-    window.alert(default_messages.alert.no_case_selected);
-    return false;
-  }
-
-  var params = serialzeCaseForm(form, table, true);
-  if (selection.selectAll) {
-    params.selectAll = selection.selectAll;
-  }
-  // replace with selected cases' IDs
-  params.case = selection.selectedCasesIds;
-  postToURL(url, params);
-}
