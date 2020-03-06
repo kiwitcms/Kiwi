@@ -309,38 +309,6 @@ class TestEditCase(BasePlanCase):
         self.assertEqual(new_summary, self.case_1.summary)
 
 
-class TestPrintablePage(BasePlanCase):
-    """Test printable page view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-        cls.printable_url = reverse('testcases-printable')
-        user_should_have_perm(cls.tester, 'testcases.view_testcase')
-
-    def test_printable_page(self):
-        # printing only 1 of the cases
-        response = self.client.post(self.printable_url,
-                                    {'case': [self.case_1.pk]})
-
-        # not printing the Test Plan header section
-        self.assertNotContains(response, 'Test Plan Document')
-
-        # response contains the first TestCase
-        self.assertContains(
-            response,
-            '<h3>TC-{0}: {1}</h3>'.format(self.case_1.pk, self.case_1.summary),
-            html=True
-        )
-
-        # but not the second TestCase b/c it was not selected
-        self.assertNotContains(
-            response,
-            '<h3>TC-{0}: {1}'.format(self.case_2.pk, self.case_2.summary),
-            html=True
-        )
-
-
 class TestCloneCase(BasePlanCase):
     """Test clone view method"""
 
