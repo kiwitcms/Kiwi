@@ -14,10 +14,9 @@ from tcms.management.models import Priority, Tag
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
-from tcms.testruns.models import TestExecutionStatus
 from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
                         user_should_have_perm)
-from tcms.tests.factories import LinkReferenceFactory, TestCaseFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
@@ -33,59 +32,6 @@ class TestGetTestCase(BaseCaseRun):
 
         # will not fail when running under different locale
         self.assertEqual(HTTPStatus.OK, response.status_code)
-
-
-class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
-    """Assert what a default user (non-admin) will see"""
-
-    def test_user_in_default_group_sees_comments(self):
-        # test for https://github.com/kiwitcms/Kiwi/issues/74
-        initiate_user_with_default_setups(self.tester)
-
-        url = reverse('execution-detail-pane', args=[self.execution_1.case_id])
-        response = self.client.get(
-            url,
-            {
-                'execution_id': self.execution_1.pk,
-                'case_text_version': self.execution_1.case.history.latest().history_id,
-            }
-        )
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-
-        self.assertContains(
-            response,
-            '<textarea name="comment" cols="40" id="id_comment" maxlength="3000" '
-            'rows="10">\n</textarea>',
-            html=True)
-
-        for status in TestExecutionStatus.objects.all():
-            self.assertContains(
-                response,
-                '<i class="submit_button %s fa-2x" style="color: %s" \
-                    statusId="%s" title="%s"></i>'
-                % (status.icon, status.color, status.pk, status.name),
-                html=True
-            )
-
-    def test_user_sees_link_references(self):
-        user_should_have_perm(self.tester, 'testruns.view_testexecution')
-
-        bug_1 = LinkReferenceFactory(execution=self.execution_1)
-        bug_2 = LinkReferenceFactory(execution=self.execution_1)
-
-        url = reverse('execution-detail-pane', args=[self.execution_1.case.pk])
-        response = self.client.get(
-            url,
-            {
-                'execution_id': self.execution_1.pk,
-                'case_text_version': self.execution_1.case.history.latest().history_id,
-            }
-        )
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, bug_1.url)
-        self.assertContains(response, bug_2.url)
 
 
 class TestMultipleEmailField(unittest.TestCase):
