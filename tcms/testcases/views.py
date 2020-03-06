@@ -322,47 +322,6 @@ class TestCaseGetView(DetailView):
         return context
 
 
-@require_POST
-@permission_required('testcases.view_testcase')
-def printable(request,
-              template_name='case/printable.html'):
-    """
-        Create the printable copy for plan/case.
-        Only CONFIRMED TestCases are printed when printing a TestPlan!
-    """
-    # fixme: remove when TestPlan and TestCase templates have been converted to Patternfly
-    # instead of generating the print values on the backend we can use CSS to do
-    # this in the browser
-    # search only by case PK. Used when printing selected cases
-    case_ids = request.POST.getlist('case')
-    case_filter = {'pk__in': case_ids}
-
-    test_plan = None
-    # plan_pk is passed from the TestPlan.printable function
-    # but it doesn't pass IDs of individual cases to be printed
-    if not case_ids:
-        plan_pk = request.POST.get('plan', 0)
-        try:
-            test_plan = TestPlan.objects.get(pk=plan_pk)
-            # search cases from a TestPlan, used when printing entire plan
-            case_filter = {
-                'pk__in': test_plan.case.all(),
-                'case_status': TestCaseStatus.objects.get(name='CONFIRMED').pk,
-            }
-        except (ValueError, TestPlan.DoesNotExist):
-            test_plan = None
-
-    tcs = TestCase.objects.filter(**case_filter).values(
-        'pk', 'summary', 'text'
-    ).order_by('pk')
-
-    context_data = {
-        'test_plan': test_plan,
-        'test_cases': tcs,
-    }
-    return render(request, template_name, context_data)
-
-
 @method_decorator(
     object_permission_required('testcases.change_testcase', (TestCase, 'pk', 'pk'),
                                accept_global_perms=True),
