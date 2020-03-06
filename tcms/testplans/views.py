@@ -17,10 +17,8 @@ from guardian.decorators import permission_required as object_permission_require
 from uuslug import slugify
 
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.testcases.models import TestCasePlan
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
-from tcms.testruns.models import TestRun
 
 
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
@@ -114,45 +112,7 @@ class SearchTestPlanView(TemplateView):
         return context_data
 
 
-def get_number_of_plans_cases(plan_ids):
-    """Get the number of cases related to each plan
-
-    :param plan_ids: a tuple or list of TestPlans' ids
-    :type plan_ids: list or tuple
-
-    :return: a dict where key is plan_id and the value is the
-        total count.
-    :rtype: dict
-    """
-    query_set = TestCasePlan.objects.filter(plan__in=plan_ids).values('plan').annotate(
-        total_count=Count('pk')).order_by('-plan')
-
-    number_of_plan_cases = {}
-    for item in query_set:
-        number_of_plan_cases[item['plan']] = item['total_count']
-
-    return number_of_plan_cases
-
-
-def get_number_of_plans_runs(plan_ids):
-    """Get the number of runs related to each plan
-
-    :param plan_ids: a tuple or list of TestPlans' ids
-    :type plan_ids: list or tuple
-
-    :return: a dict where key is plan_id and the value is the
-        total count.
-    :rtype: dict
-    """
-    query_set = TestRun.objects.filter(plan__in=plan_ids).values('plan').annotate(
-        total_count=Count('pk')).order_by('-plan')
-    number_of_plan_runs = {}
-    for item in query_set:
-        number_of_plan_runs[item['plan']] = item['total_count']
-
-    return number_of_plan_runs
-
-
+# todo: this may still be used depending on how we design TP tree view
 def get_number_of_children_plans(plan_ids):
     """Get the number of children plans related to each plan
 
@@ -170,32 +130,6 @@ def get_number_of_children_plans(plan_ids):
         number_of_children_plans[item['parent']] = item['total_count']
 
     return number_of_children_plans
-
-
-def calculate_stats_for_testplans(plans):
-    """Attach the number of cases and runs for each TestPlan
-
-    :param plans: the queryset of TestPlans
-    :type plans: dict
-    :return: A list of TestPlans, each of which is attached the statistics which is
-        with prefix cal meaning calculation result.
-    :rtype: list
-    """
-    plan_ids = []
-    for plan in plans:
-        plan_ids.append(plan.pk)
-
-    cases_counts = get_number_of_plans_cases(plan_ids)
-    runs_counts = get_number_of_plans_runs(plan_ids)
-    children_counts = get_number_of_children_plans(plan_ids)
-
-    # Attach calculated statistics to each object of TestPlan
-    for plan in plans:
-        setattr(plan, 'cal_cases_count', cases_counts.get(plan.pk, 0))
-        setattr(plan, 'cal_runs_count', runs_counts.get(plan.pk, 0))
-        setattr(plan, 'cal_children_count', children_counts.get(plan.pk, 0))
-
-    return plans
 
 
 @method_decorator(
