@@ -81,24 +81,6 @@ class PlanTests(BasePlanTest):
         response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-    def test_plan_printable_without_selected_plan(self):
-        location = reverse('plans-printable')
-        response = self.client.post(location, follow=True)
-        self.assertContains(response, _('At least one test plan is required for print'))
-
-    def test_plan_printable(self):
-        location = reverse('plans-printable')
-        response = self.client.post(location, {'plan': [self.test_plan.pk]})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
-        self.assertContains(response, self.test_plan.name)
-        self.assertContains(response, self.test_plan.text)
-
-        confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
-        for case in self.test_plan.case.filter(case_status=confirmed):
-            self.assertContains(response, case.summary)
-            self.assertContains(response, case.text)
-
     def test_plan_history(self):
         # note: the history URL is generated on the fly and not accessible via
         # name
