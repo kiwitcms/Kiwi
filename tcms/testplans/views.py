@@ -10,7 +10,6 @@ from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, View
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
@@ -19,7 +18,6 @@ from uuslug import slugify
 
 from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.testcases.models import TestCasePlan
-from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
 from tcms.testruns.models import TestRun
@@ -300,27 +298,3 @@ class Clone(View):
         }
 
         return render(request, self.template_name, context_data)
-
-
-@require_POST
-@permission_required('testplans.view_testplan')
-def printable(request):
-    """Create the printable copy for plan"""
-    plan_pk = request.POST.get('plan', 0)
-
-    if not plan_pk:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('At least one test plan is required for print'))
-        return HttpResponseRedirect(reverse('core-views-index'))
-
-    try:
-        TestPlan.objects.get(pk=plan_pk)
-    except (ValueError, TestPlan.DoesNotExist):
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Test Plan "%s" does not exist') % plan_pk)
-        return HttpResponseRedirect(reverse('core-views-index'))
-
-    # rendering is actually handled by testcases.views.printable()
-    return testcases_printable(request)
