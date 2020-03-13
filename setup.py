@@ -52,6 +52,7 @@ setup(
     packages=find_packages(exclude=['kiwi_lint*',
                                     '*.tests',
                                     'tcms.settings.test']),
+    zip_safe=False,
     include_package_data=True,
     classifiers=[
         'Intended Audience :: Developers',

@@ -211,27 +211,26 @@ by editing ``docker-compose.yml``:
   ``local_settings_dir/``!
 
 .. versionadded:: 8.1
+.. versionchanged:: 8.2
 
-* Mount a host directory with multiple .py files under
-  ``../tcms/settings/local_settings_dir/``::
+* Mount multiple override .py files under
+  ``../site-packages/tcms_settings_dir/``::
 
         volumes:
             - uploads:/Kiwi/uploads
-            - ./local_settings_dir/:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings_dir/
-
-  Alternatively you can mount multiple individual host files under this
-  directory.
+            - ./my_settings_dir/email_config.py:/venv/lib64/python3.6/site-packages/tcms_settings_dir/email_config.py
+            - ./my_settings_dir/multi_tenant.py:/venv/lib64/python3.6/site-packages/tcms_settings_dir/multi_tenant.py
 
   .. important::
 
-        Filenames under ``local_settings_dir/`` must be valid Python
+        Filenames under ``my_settings_dir/`` must be valid Python
         `module names <https://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_,
         in other words you should be able to import them!
 
-        Modules under ``local_settings_dir/`` are sorted alphabetically before being imported!
+        Modules under ``my_settings_dir/`` are sorted alphabetically before being imported!
         For a directory structure which lools like this::
 
-            local_settings_dir/
+            my_settings_dir/
             ├── django_social_auth.py
             ├── email_config.py
             ├── __init__.py
@@ -241,6 +240,18 @@ by editing ``docker-compose.yml``:
 
         ``__init__.py`` is skipped but it must be present to indicate Python can import
         modules from this directory!
+
+    .. important::
+
+        Starting from Kiwi TCMS v8.2 the ``__init__.py`` file must contain::
+
+            __path__ = __import__('pkgutil').extend_path(__path__, __name__)
+
+        and nothing else if you want to mount the entire ``my_settings_dir`` directly!
+        This is because ``tcms_settings_dir`` is now treated as a
+        `pkgutil-style namespace package <https://packaging.python.org/guides/packaging-namespace-packages/#pkgutil-style-namespace-packages>`_
+        and is provided by default when installing Kiwi TCMS! This allows plugins
+        and downstream override packages to install settings files into this directory!
 
 
 For more information about what each setting means see :ref:`configuration`.
