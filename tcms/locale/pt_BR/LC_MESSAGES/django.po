@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-03-14 15:29\n"
+"PO-Revision-Date: 2020-03-14 16:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -168,7 +168,7 @@ msgstr "adicionar nova Build"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr "Procurar bugs"
+msgstr "Pesquisar bugs"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/templates/telemetry/include/filters.html:48
@@ -201,7 +201,7 @@ msgstr "Nome de usuário"
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr "Procurar"
+msgstr "Pesquisar"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -319,15 +319,15 @@ msgstr ""
 #: tcms/rpc/serializer.py:286
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "Model %s não tem chave primária. Você precisa especificar esse campo manualmente."
 
 #: tcms/settings/common.py:282
 msgid "DASHBOARD"
-msgstr ""
+msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:283
 msgid "TESTING"
-msgstr ""
+msgstr "TESTE"
 
 #: tcms/settings/common.py:284
 msgid "New Test Plan"
@@ -343,7 +343,7 @@ msgstr ""
 
 #: tcms/settings/common.py:291
 msgid "SEARCH"
-msgstr ""
+msgstr "PESQUISA"
 
 #: tcms/settings/common.py:292
 msgid "Search Test Plans"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "Caso de teste"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
@@ -545,16 +545,16 @@ msgstr ""
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Anexo"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "Nenhum anexo encontrado"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -562,12 +562,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:134
 msgid "Component"
-msgstr ""
+msgstr "Componente"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
-msgstr ""
+msgstr "Nenhum componente encontrado"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
