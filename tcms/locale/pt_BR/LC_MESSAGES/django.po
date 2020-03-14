@@ -269,7 +269,7 @@ msgstr "A URL base não está configurada! Consulte a <a href=\"%(doc_url)s\">do
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Esse endereço de e-mail já está sendo usado"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
