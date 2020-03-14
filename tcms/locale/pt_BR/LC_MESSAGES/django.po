@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-03-14 15:22\n"
+"PO-Revision-Date: 2020-03-14 15:29\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -273,44 +273,44 @@ msgstr "Esse endereço de e-mail já está sendo usado"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Informações pessoais"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Permissões"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Já existe um usuário com esse e-mail."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Confirmação da sua nova conta em %s"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Sua conta foi criada. Por favor verifique seu e-mail para confirmação"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Sua conta foi criada, mas é necessário um administrador para ativá-la"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Segue a lista de administradores"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Essa chave de ativação não existe mais no banco de dados"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Essa chave de ativação expirou"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Sua conta foi ativada com sucesso"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
