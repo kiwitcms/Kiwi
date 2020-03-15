@@ -59,6 +59,7 @@ $(document).ready(function() {
                 params['is_automated'] = false;
             };
 
+            // todo: see BaseCaseSearchForm
             const text = $('#id_text').val();
             if (text) {
                 params['text__icontains'] = text;
