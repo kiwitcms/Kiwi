@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-03-16 19:32\n"
+"PO-Revision-Date: 2020-03-16 19:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -577,58 +577,58 @@ msgstr "Nenhum componente encontrado"
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "Nenhuma tag encontrada"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "bug"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "Da Execução"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "Nenhum bug encontrado"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #: tcms/templates/case/get_details.html:62
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Comentários"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Informações de Execução de Teste"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "Data de Execução"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
-msgstr ""
+msgstr "Versão do Texto"
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
-msgstr ""
+msgstr "Nenhum log gravado"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Bugs e hiperlinks"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -639,58 +639,59 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
-msgstr ""
+msgstr "Reportar bug"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Conteúdo"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Documento do Plano de Teste"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Casos de Teste"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Execuções de Teste"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Iniciado em"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s Execuçã(ões) de Teste Caso(s) de Teste atribuídos a você precisam ser executados.\n"
+"Aqui estão os últimos %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "VER TUDO"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Não há Execução(ões) de Teste atribuídas a você"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "Seus planos de teste"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Plano de Teste"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -698,11 +699,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Execuções"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
@@ -924,43 +925,43 @@ msgstr ""
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Próxima página"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Última página"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Nenhum caso de teste foi encontrado neste plano."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "Editar Plano"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "Editar plano de teste"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "Clonar Plano"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Clonar este plano para outro produto"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "Imprimir plano"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "Excluir Plano"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "Excluir plano de teste"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -976,29 +977,29 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "Tipo de Plano"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
-msgstr ""
+msgstr "Link de Referência"
 
 #: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "Data de Criação"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "Antecessor"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
