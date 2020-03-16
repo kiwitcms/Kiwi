@@ -49,5 +49,19 @@ function getTestCaseRowContent(rowContent, testCase) {
     row.find('.js-test-case-author').html(`${testCase.author}`);
     row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
 
+    //handle automated icon
+    var automation_indication_element = row.find('.js-test-case-automated'),
+        automated_class_to_remove = 'fa-cog';
+
+    if (testCase.is_automated) {
+        automated_class_to_remove = 'fa-thumbs-up';
+    }
+
+    automation_indication_element.parent().attr('title', automation_indication_element.data(
+        testCase.is_automated ? 'automated' : 'manual'
+        )
+    );
+    automation_indication_element.removeClass(automated_class_to_remove);
+
     return row;
 }
