@@ -1003,11 +1003,11 @@ msgstr "Antecessor"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
-msgstr ""
+msgstr "Visualizar Histórico de Edição"
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
