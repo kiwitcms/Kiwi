@@ -57,9 +57,9 @@ function getTestCaseRowContent(rowContent, testCase) {
         automated_class_to_remove = 'fa-thumbs-up';
     }
 
-    automation_indication_element.parent().attr('title', automation_indication_element.data(
-        testCase.is_automated ? 'automated' : 'manual'
-        )
+    automation_indication_element.parent().attr(
+        'title',
+        automation_indication_element.data(testCase.is_automated.toString())
     );
     automation_indication_element.removeClass(automated_class_to_remove);
 
