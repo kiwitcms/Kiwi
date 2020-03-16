@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-03-14 16:04\n"
+"PO-Revision-Date: 2020-03-16 19:30\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -111,11 +111,11 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr ""
+msgstr "comentou em"
 
 #: tcms/bugs/templates/bugs/get.html:125
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -124,11 +124,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: tcms/bugs/templates/bugs/get.html:128
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -331,15 +331,15 @@ msgstr "TESTE"
 
 #: tcms/settings/common.py:284
 msgid "New Test Plan"
-msgstr ""
+msgstr "Novo Plano de Teste"
 
 #: tcms/settings/common.py:286
 msgid "New Test Case"
-msgstr ""
+msgstr "Novo Caso de Teste"
 
 #: tcms/settings/common.py:288
 msgid "New Bug"
-msgstr ""
+msgstr "Novo Bug"
 
 #: tcms/settings/common.py:291
 msgid "SEARCH"
@@ -347,27 +347,27 @@ msgstr "PESQUISA"
 
 #: tcms/settings/common.py:292
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Pesquisar Planos de Teste"
 
 #: tcms/settings/common.py:293
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Pesquisar Execuções de Testes"
 
 #: tcms/settings/common.py:294
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Pesquisar Casos de Teste"
 
 #: tcms/settings/common.py:295
 msgid "Search Bugs"
-msgstr ""
+msgstr "Pesquisar Bugs"
 
 #: tcms/settings/common.py:298
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRIA"
 
 #: tcms/settings/common.py:299
 msgid "Testing"
-msgstr ""
+msgstr "Teste"
 
 #: tcms/settings/common.py:300
 msgid "Breakdown"
@@ -380,68 +380,68 @@ msgstr ""
 #: tcms/settings/common.py:302
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Tendências de execução"
 
 #: tcms/settings/common.py:303
 msgid "TestCase health"
-msgstr ""
+msgstr "Saúde do Caso de Teste"
 
 #: tcms/settings/common.py:308
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMIN"
 
 #: tcms/settings/common.py:309
 msgid "Users and groups"
-msgstr ""
+msgstr "Usuários e grupos"
 
 #: tcms/settings/common.py:311
 msgid "Everything else"
-msgstr ""
+msgstr "Todo o resto"
 
 #: tcms/settings/common.py:313
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGINS"
 
 #: tcms/settings/common.py:324
 msgid "Forum"
-msgstr ""
+msgstr "Fórum"
 
 #: tcms/settings/common.py:325
 msgid "Report an Issue"
-msgstr ""
+msgstr "Relatar um Problema"
 
 #: tcms/settings/common.py:326
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Pedir ajuda no StackOverflow"
 
 #: tcms/settings/common.py:327
 msgid "User Guide"
-msgstr ""
+msgstr "Manual do Usuário"
 
 #: tcms/settings/common.py:328
 msgid "Administration Guide"
-msgstr ""
+msgstr "Manual do Administrador"
 
 #: tcms/settings/common.py:329
 msgid "API Help"
-msgstr ""
+msgstr "Ajuda da API"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Novo usuário aguardando aprovação"
 
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NOVO: Execução de Teste #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 msgid "NEW: Bug #{} - {}"
-msgstr ""
+msgstr "NOVO: Bug #{} - {}"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "OUTRO(A)"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -449,7 +449,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
@@ -461,37 +461,37 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:137
 msgid "Automated"
-msgstr ""
+msgstr "Automatizado"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr ""
+msgstr "Prioridades"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "Categorias"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTAL"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Positivo"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutro"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negativo"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -499,19 +499,19 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "Caso de Teste"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "Execução de teste"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Saúde do Caso de Teste"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Casos de teste com falha mais frequentes"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
@@ -519,7 +519,7 @@ msgstr "Caso de teste"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "Execuções com falha"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
