@@ -135,7 +135,7 @@ class GetTestRunView(DetailView):  # pylint: disable=missing-permission-required
                 ('...', [
                     (
                         _('Edit'),
-                        reverse('plan-edit', args=[self.object.pk])
+                        reverse('testruns-edit', args=[self.object.pk])
                     ),
                     (
                         _('Clone'),
