@@ -142,7 +142,7 @@ class GetTestRunView(DetailView):
                 ('...', [
                     (
                         _('Edit'),
-                        reverse('plan-edit', args=[self.object.pk])
+                        reverse('testruns-edit', args=[self.object.pk])
                     ),
                     (
                         _('Clone'),
