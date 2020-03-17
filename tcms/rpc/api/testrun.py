@@ -213,45 +213,14 @@ def update(run_id, values):
         :raises: PermissionDenied if missing *testruns.change_testrun* permission
         :raises: ValueError if data validations fail
     """
-    if values.get('product_version') and not values.get('product'):
-        raise ValueError('Field "product" is required by product_version')
+    test_run = TestRun.objects.get(pk=run_id)
+    form = UpdateForm(values, instance=test_run)
 
-    form = UpdateForm(values)
-    if values.get('product_version'):
+    if values.get('product'):
         form.populate(product_id=values['product'])
 
     if not form.is_valid():
         raise ValueError(form_errors_to_list(form))
 
-    test_run = TestRun.objects.get(pk=run_id)
-    if form.cleaned_data['plan']:
-        test_run.plan = form.cleaned_data['plan']
-
-    if form.cleaned_data['build']:
-        test_run.build = form.cleaned_data['build']
-
-    if form.cleaned_data['manager']:
-        test_run.manager = form.cleaned_data['manager']
-
-    test_run.default_tester = None
-
-    if form.cleaned_data['default_tester']:
-        test_run.default_tester = form.cleaned_data['default_tester']
-
-    if form.cleaned_data['summary']:
-        test_run.summary = form.cleaned_data['summary']
-
-    if form.cleaned_data['product_version']:
-        test_run.product_version = form.cleaned_data['product_version']
-
-    if 'notes' in values:
-        if values['notes'] in (None, ''):
-            test_run.notes = values['notes']
-        if form.cleaned_data['notes']:
-            test_run.notes = form.cleaned_data['notes']
-
-    if form.cleaned_data['stop_date']:
-        test_run.stop_date = form.cleaned_data['stop_date']
-
-    test_run.save()
+    test_run = form.save()
     return test_run.serialize()

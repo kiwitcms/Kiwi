@@ -1,4 +1,13 @@
+from django import forms
 from django.forms.utils import ErrorList
+from django.utils.translation import gettext_lazy as _
+
+
+class DateTimeField(forms.DateTimeField):
+    input_formats = ['%Y-%m-%d', '%Y-%m-%d %H:%M:%S']
+    default_error_messages = {
+        'invalid': _('Invalid date format. Expected YYYY-MM-DD [HH:MM:SS].')
+    }
 
 
 class UpdateModelFormMixin:  # pylint: disable=too-few-public-methods
