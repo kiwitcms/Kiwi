@@ -14,6 +14,7 @@
     <h1 class="col-md-12" style="margin-top: 0">
         <span id="test_run_pk"
             data-pk="{{ object.pk }}"
+            data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 </div>
@@ -76,6 +77,9 @@
 
         <div class="card-pf-body"></div>
     </div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-3">
+    {% include 'include/tags_card.html' with add_perm=perms.testruns.add_testruntag %}
 </div>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
