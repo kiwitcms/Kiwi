@@ -17,12 +17,10 @@ framework.
 """
 
 import os
-import sys
 import tempfile
 
 from django.core.wsgi import get_wsgi_application
 
-import tcms
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -31,8 +29,6 @@ import tcms
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tcms.settings.product")
 os.environ['PYTHON_EGG_CACHE'] = tempfile.mkdtemp(prefix='.python-eggs-')
 
-# add tcms's core lib path
-sys.path.append(os.path.join(tcms.__path__[0], 'core', 'lib'))
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
@@ -46,7 +42,3 @@ def application(environ, start_response):
         environ['HTTPS'] = 'on'
 
     return _APPLICATION(environ, start_response)
-
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
