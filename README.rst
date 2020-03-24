@@ -13,21 +13,9 @@ Kiwi TCMS - Open Source Test Case Management System
    :target: https://crowdin.com/project/kiwitcms
    :alt: Translate
 
-.. image:: https://pyup.io/repos/github/kiwitcms/Kiwi/shield.svg
-    :target: https://pyup.io/repos/github/kiwitcms/Kiwi/
-    :alt: Python updates
-
-.. image:: https://badges.greenkeeper.io/kiwitcms/Kiwi.svg
-   :alt: Greenkeeper badge
-   :target: https://greenkeeper.io/
-
 .. image:: https://scan.coverity.com/projects/15921/badge.svg
     :target: https://scan.coverity.com/projects/kiwitcms-kiwi
     :alt: Coverity scan
-
-.. image:: https://snyk.io/test/github/kiwitcms/Kiwi/badge.svg?targetFile=tcms/package.json
-    :target: https://snyk.io/test/github/kiwitcms/Kiwi/?targetFile=tcms/package.json
-    :alt: Snyk vulnerability scan
 
 .. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
     :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
