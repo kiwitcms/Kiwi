@@ -20,7 +20,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/cc/$', views.ManageTestRunCC.as_view(), name='testruns-cc'),
     url(r'^(?P<pk>\d+)/update/$', views.UpdateCaseRunTextView.as_view(),
         name='testruns-update_case_run_text'),
-    url(r'^update-assignee/$', views.UpdateAssigneeView.as_view()),
 
     url(r'^search/$', views.SearchTestRunView.as_view(), name='testruns-search'),
 ]
