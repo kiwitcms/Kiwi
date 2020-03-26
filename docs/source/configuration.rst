@@ -30,6 +30,21 @@ ones to augment the default behavior of Kiwi TCMS. For more information
 refer to :mod:`tcms.signals`.
 
 
+Language and emojis
+-------------------
+
+By default our ``docker-compose.yml`` file is configured with MariaDB and
+uses charset ``utf8mb4`` and collation ``utf8mb4_unicode_ci``. That should
+be sufficient to support many languages plus emojis. If you are having troubles
+consult `MariaDB Character Sets and Collations <https://mariadb.com/kb/en/character-sets/>`_
+documentation.
+
+If you need to change the default settings see ``docker-compose.yml`` or
+``/etc/mysql/conf.d/mariadb.cnf`` if using a stand alone DB server! On the
+application side see ``DATABASES['default']['OPTIONS']`` in
+``tcms/settings/common.py``.
+
+
 Time zone settings
 ------------------
 

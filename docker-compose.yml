@@ -12,8 +12,8 @@ services:
             MYSQL_DATABASE: kiwi
             MYSQL_USER: kiwi
             MYSQL_PASSWORD: kiwi
-            MYSQL_CHARSET: utf8
-            MYSQL_COLLATION: utf8_unicode_ci
+            MYSQL_CHARSET: utf8mb4
+            MYSQL_COLLATION: utf8mb4_unicode_ci
 
     web:
         container_name: kiwi_web
