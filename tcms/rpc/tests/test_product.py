@@ -9,18 +9,18 @@ class TestFilter(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.product = ProductFactory(name="Nitrate")
+        self.product = ProductFactory(name="Kiwi TCMS")
         self.product_xmlrpc = ProductFactory(name="XMLRPC API")
 
     def test_filter_by_id(self):
         prod = self.rpc_client.Product.filter({"id": self.product.pk})
         self.assertIsNotNone(prod)
-        self.assertEqual(prod[0]["name"], "Nitrate")
+        self.assertEqual(prod[0]["name"], "Kiwi TCMS")
 
     def test_filter_by_name(self):
-        prod = self.rpc_client.Product.filter({"name": "Nitrate"})
+        prod = self.rpc_client.Product.filter({"name": "Kiwi TCMS"})
         self.assertIsNotNone(prod)
-        self.assertEqual(prod[0]["name"], "Nitrate")
+        self.assertEqual(prod[0]["name"], "Kiwi TCMS")
 
     def test_filter_non_existing(self):
         found = self.rpc_client.Product.filter({"name": "Non Existing"})
