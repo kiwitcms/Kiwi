@@ -39,7 +39,8 @@ DATABASES = {
 if DATABASES['default']['ENGINE'].find('mysql') > -1:
     DATABASES['default']['OPTIONS'].update({  # pylint: disable=objects-update-used
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        })
+        'charset': 'utf8mb4',
+    })
 
 
 # Administrators error report email settings
