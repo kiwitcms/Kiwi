@@ -29,6 +29,5 @@ Submodules
    tcms.core.history
    tcms.core.middleware
    tcms.core.response
-   tcms.core.serializer
    tcms.core.views
    tcms.core.widgets

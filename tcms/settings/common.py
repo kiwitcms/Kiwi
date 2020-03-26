@@ -330,10 +330,6 @@ HELP_MENU_ITEMS = [
     ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', _('API Help')),
 ]
 
-SERIALIZATION_MODULES = {
-    'json': 'tcms.core.serializer',
-}
-
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
