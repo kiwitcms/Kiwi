@@ -382,6 +382,12 @@ For this purpose the following fields are available:
       when sorting statuses for display (e.g. a row of buttons)! It is up to you
       to define what each individual status means.
 
+  .. warning::
+
+      Make sure to always have at least 1 positive, 1 negative and 1 nautral
+      status, e.g. ``PASSED``, ``IDLE``, ``FAILED``. If you delete all statuses
+      within a certain wight group Kiwi TCMS will crash!
+
 
 .. |Base URL configuration| image:: ./_static/Configure_base_url.png
 .. |The Administration screen| image:: ./_static/Admin_Home.png
