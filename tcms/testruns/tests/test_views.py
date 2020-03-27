@@ -241,7 +241,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         # Assert clone settings result
         for origin_case_run, cloned_case_run in zip((self.execution_1, self.execution_2),
                                                     cloned_run.case_run.order_by('pk')):
-            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
+            self.assertEqual(TestExecutionStatus.objects.filter(weight=0).first(),
                              cloned_case_run.status)
             self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
