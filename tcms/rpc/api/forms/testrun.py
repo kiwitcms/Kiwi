@@ -83,7 +83,7 @@ class NewExecutionForm(BaseCaseRunForm):
     def clean_status(self):
         data = self.cleaned_data.get('status')
         if not data:
-            data = TestExecutionStatus.objects.get(name='IDLE')
+            data = TestExecutionStatus.objects.filter(weight=0).first()
 
         return data
 
