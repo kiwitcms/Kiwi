@@ -63,5 +63,43 @@ function getTestCaseRowContent(rowContent, testCase) {
     );
     automation_indication_element.removeClass(automated_class_to_remove);
 
+    getTestCaseExpandArea(row, testCase);
+
     return row;
+}
+
+function getTestCaseExpandArea(row, testCase) {
+    // todo use markdown converter to show tc.text as html
+    row.find('.js-test-case-expand-text').html(testCase.text);
+    if (testCase.notes.trim().length > 0) {
+        row.find('.js-test-case-expand-notes').html(testCase.notes);
+    }
+
+    // draw the attachments
+    var uniqueDivCustomId = `js-tc-id-${testCase.id}-attachments`;
+    // set unique identifier so we know where to draw fetched data
+    row.find('.js-test-case-expand-attachments').parent()[0].id = uniqueDivCustomId;
+
+    jsonRPC('TestCase.list_attachments',[testCase.id],function(data) {
+
+        // cannot use instance of row in the callback
+        var ulElement = $(`#${uniqueDivCustomId} .js-test-case-expand-attachments`);
+
+        if (data.length === 0) {
+            ulElement.children().removeClass('hidden');
+            return;
+        }
+
+         var liElementFragment = $('#attachments-list-item')[0].content;
+
+        for (var i = 0; i < data.length; i++) {
+            //should create new element for every attachment
+            var liElement = liElementFragment.cloneNode(true),
+                attachmentLink = $(liElement).find('a')[0];
+
+            attachmentLink.href = data[i].url;
+            attachmentLink.innerText = data[i].url.split('/').slice(-1)[0];
+            ulElement.append(liElement);
+        }
+    });
 }
