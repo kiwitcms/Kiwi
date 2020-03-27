@@ -162,10 +162,26 @@
         </div>
         <div class="list-group-item-container container-fluid hidden">
             <div class="row">
-                <div class="col-md-12">Some test case widgets</div>
+                <div class="col-md-9">
+                    <div class="markdown-text js-test-case-expand-text"></div>
+                    <strong>{% trans 'Notes' %}:</strong>
+                    <p class="js-test-case-expand-notes">{% trans 'Notes' %}</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <span>{% trans 'Attachments' %}:</span>
+                    <ul class="list-group list-unstyled js-test-case-expand-attachments">
+                        <li class="list-group-item hidden">{% trans "No attachments" %}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+</template>
+
+<template id="attachments-list-item">
+    <li class="list-group-item'">
+        <a></a>
+    </li>
 </template>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
