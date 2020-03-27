@@ -41,9 +41,9 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
 
         cls.statuss = TestExecutionStatus.objects.all().order_by('pk')
 
-        cls.status_idle = TestExecutionStatus.objects.get(name='IDLE')
-        cls.status_failed = TestExecutionStatus.objects.get(name='FAILED')
-        cls.status_waived = TestExecutionStatus.objects.get(name='WAIVED')
+        cls.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
+        cls.status_failed = TestExecutionStatus.objects.filter(weight__lt=0).first()
+        cls.status_waived = TestExecutionStatus.objects.filter(weight__gt=0).first()
 
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
