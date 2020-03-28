@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 09:46+0000\n"
-"PO-Revision-Date: 2020-02-24 11:03\n"
+"POT-Creation-Date: 2020-03-28 18:29+0000\n"
+"PO-Revision-Date: 2020-03-28 18:34\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -57,10 +57,11 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
 #: tcms/bugs/templates/bugs/search.html:41
-#: tcms/bugs/templates/bugs/search.html:104 tcms/templates/dashboard.html:47
-#: tcms/templates/include/bug_details.html:37 tcms/templates/plan/get.html:56
-#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
-#: tcms/templates/telemetry/include/filters.html:11
+#: tcms/bugs/templates/bugs/search.html:104
+#: tcms/telemetry/templates/telemetry/include/filters.html:11
+#: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:37
+#: tcms/templates/plan/get.html:56 tcms/templates/run/get.html:104
+#: tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:37
@@ -79,8 +80,8 @@ msgstr ""
 #: tcms/bugs/templates/bugs/mutable.html:41
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:105
+#: tcms/telemetry/templates/telemetry/include/filters.html:20
 #: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:60
-#: tcms/templates/telemetry/include/filters.html:20
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
@@ -94,11 +95,11 @@ msgstr ""
 #: tcms/bugs/templates/bugs/mutable.html:59
 #: tcms/bugs/templates/bugs/search.html:61
 #: tcms/bugs/templates/bugs/search.html:106
+#: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:49
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
-#: tcms/templates/telemetry/include/filters.html:29
 #: tcms/testruns/templates/testruns/mutable.html:31
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
@@ -130,7 +131,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:18
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:131
+#: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testruns/templates/testruns/mutable.html:21
 #: tcms/testruns/templates/testruns/mutable.html:94
 #: tcms/testruns/templates/testruns/search.html:11
@@ -163,14 +164,14 @@ msgid "Search bugs"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:16
-#: tcms/templates/telemetry/include/filters.html:48
+#: tcms/telemetry/templates/telemetry/include/filters.html:48
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:27
-#: tcms/templates/telemetry/include/filters.html:60
+#: tcms/telemetry/templates/telemetry/include/filters.html:60
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
@@ -189,7 +190,7 @@ msgid "Username"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:91
-#: tcms/testcases/templates/testcases/search.html:120
+#: tcms/testcases/templates/testcases/search.html:125
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
@@ -200,7 +201,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:76
 #: tcms/templates/run/assign_case.html:71
 #: tcms/testcases/templates/testcases/get.html:162
-#: tcms/testcases/templates/testcases/search.html:130
+#: tcms/testcases/templates/testcases/search.html:135
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
@@ -304,113 +305,113 @@ msgstr ""
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr ""
 
-#: tcms/rpc/serializer.py:286
+#: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""
 
-#: tcms/settings/common.py:282
+#: tcms/settings/common.py:283
 msgid "DASHBOARD"
 msgstr ""
 
-#: tcms/settings/common.py:283
+#: tcms/settings/common.py:284
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:284
+#: tcms/settings/common.py:285
 msgid "New Test Plan"
 msgstr ""
 
-#: tcms/settings/common.py:286
+#: tcms/settings/common.py:287
 msgid "New Test Case"
 msgstr ""
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:289
 msgid "New Bug"
 msgstr ""
 
-#: tcms/settings/common.py:291
+#: tcms/settings/common.py:292
 msgid "SEARCH"
 msgstr ""
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:293
 msgid "Search Test Plans"
 msgstr ""
 
-#: tcms/settings/common.py:293
+#: tcms/settings/common.py:294
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:295
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:295
+#: tcms/settings/common.py:296
 msgid "Search Bugs"
 msgstr ""
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:299
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:300
 msgid "Testing"
 msgstr ""
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "Breakdown"
 msgstr ""
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "Status matrix"
 msgstr ""
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:303
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr ""
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:304
 msgid "TestCase health"
 msgstr ""
 
-#: tcms/settings/common.py:308
+#: tcms/settings/common.py:309
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:312
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:314
 msgid "PLUGINS"
 msgstr ""
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:325
 msgid "Forum"
 msgstr ""
 
-#: tcms/settings/common.py:325
+#: tcms/settings/common.py:326
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:327
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:328
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:329
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:330
 msgid "API Help"
 msgstr ""
 
@@ -431,6 +432,16 @@ msgstr ""
 msgid "OTHER"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:7
+msgid "Detailed information about test execution status"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:40
+#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/report.html:24
+msgid "Test Plan"
+msgstr ""
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr ""
@@ -447,7 +458,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:92
 #: tcms/testcases/templates/testcases/mutable.html:92
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:142
 msgid "Automated"
 msgstr ""
 
@@ -532,6 +543,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
+#: tcms/testcases/templates/testcases/search.html:117
 msgid "Text"
 msgstr ""
 
@@ -548,7 +560,7 @@ msgstr ""
 #: tcms/templates/case/get_details_case_run.html:147
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:134
+#: tcms/testcases/templates/testcases/search.html:139
 msgid "Component"
 msgstr ""
 
@@ -783,7 +795,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:68
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:141
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
 msgstr ""
@@ -791,7 +803,7 @@ msgstr ""
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
-#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testcases/templates/testcases/search.html:144
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
@@ -958,7 +970,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:164
 #: tcms/testcases/templates/testcases/mutable.html:148
 #: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:138
+#: tcms/testcases/templates/testcases/search.html:143
 #: tcms/testplans/templates/testplans/mutable.html:103
 #: tcms/testplans/templates/testplans/search.html:74
 #: tcms/testplans/templates/testplans/search.html:117
@@ -1085,7 +1097,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:78
 #: tcms/testcases/templates/testcases/mutable.html:80
 #: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:135
+#: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
 msgstr ""
@@ -1124,7 +1136,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:63
 #: tcms/testcases/templates/testcases/mutable.html:52
 #: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:133
+#: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
 msgstr ""
@@ -1291,12 +1303,6 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
-msgstr ""
-
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
-#: tcms/templates/run/report.html:24
-#: tcms/templates/telemetry/include/filters.html:40
-msgid "Test Plan"
 msgstr ""
 
 #: tcms/templates/run/assign_case.html:34
@@ -1500,10 +1506,6 @@ msgstr ""
 msgid "No execution found"
 msgstr ""
 
-#: tcms/templates/telemetry/include/filters.html:7
-msgid "Detailed information about test execution status"
-msgstr ""
-
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr ""
@@ -1643,7 +1645,7 @@ msgstr ""
 msgid "Separate multiple values with comma (,)"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:132
+#: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
