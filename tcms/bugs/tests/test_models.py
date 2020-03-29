@@ -20,7 +20,7 @@ class TestSendMailOnAssigneeChange(TestCase):
         assignee = UserFactory()
         bug = BugFactory(assignee=assignee)
 
-        expected_subject = _('NEW: Bug #{} - {}').format(bug.pk, bug.summary)
+        expected_subject = _('NEW: Bug #%d - %s') % (bug.pk, bug.summary)
         expected_body = render_to_string('email/post_bug_save/email.txt', {'bug': bug})
         expected_recipients = [assignee.email]
 
@@ -31,6 +31,7 @@ class TestSendMailOnAssigneeChange(TestCase):
             expected_recipients,
             fail_silently=False
         )
+        self.assertTrue(send_mail.called)
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_no_notification_if_assignee_not_set(self, send_mail):

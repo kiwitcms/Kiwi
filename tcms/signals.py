@@ -191,6 +191,6 @@ def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
     mailto(
         template_name='email/post_bug_save/email.txt',
         recipients=[instance.assignee.email],
-        subject=_('NEW: Bug #{} - {}').format(instance.pk, instance.summary),
+        subject=_('NEW: Bug #%d - %s') % (instance.pk, instance.summary),
         context={'bug': instance}
     )
