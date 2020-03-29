@@ -170,18 +170,17 @@
                 <div class="col-md-3 text-center">
                     <span>{% trans 'Attachments' %}:</span>
                     <ul class="list-group list-unstyled js-test-case-expand-attachments">
+                        <template id="attachments-list-item">
+                        <li class="list-group-item'">
+                            <a></a>
+                        </li>
+                        </template>
                         <li class="list-group-item hidden">{% trans "No attachments" %}</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-</template>
-
-<template id="attachments-list-item">
-    <li class="list-group-item'">
-        <a></a>
-    </li>
 </template>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
