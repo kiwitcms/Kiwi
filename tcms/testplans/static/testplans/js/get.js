@@ -90,7 +90,7 @@ function getTestCaseExpandArea(row, testCase) {
             return;
         }
 
-         var liElementFragment = $('#attachments-list-item')[0].content;
+        var liElementFragment = $('#attachments-list-item')[0].content;
 
         for (var i = 0; i < data.length; i++) {
             //should create new element for every attachment
