@@ -81,8 +81,10 @@ Brief history
 * Dec 2018 - GitLab integration support - first big code contribution by
   non-team member; more than 5 different external contributors in 2018 alone
 * Feb 2019 - Celebrating 10th anniversary with Kiwi TCMS info booth at FOSDEM Brussels
+* May 2019 - become the first open source TCMS system on `GitHub Marketplace <https://github.com/marketplace/kiwi-tcms/>`_
 * Jun 2019 - `OpenAwards winner <http://kiwitcms.org/blog/atodorov/2019/06/24/kiwi-tcms-is-openawards-2019-best-tech-community-winner/>`_
   in 'Best Tech Community' category
+* Mar 2020 - `Mozilla Open Source Award winner <https://kiwitcms.org/blog/kiwi-tcms-team/2020/03/27/kiwi-tcms-is-open-source-seed-award-winner/>`_
 
 
 Live demo
