@@ -107,7 +107,7 @@
     </div>
     {% endfor %}
 
-    {% if perms.django_comments.add_comment and object.status %}
+    {% if perms.django_comments.add_comment %}
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="card-pf">
@@ -122,11 +122,14 @@
 
                     <div class="form-group">
                         <div>
+                            {% if not object.status %}
+                            <button type="submit" name="action" value="reopen" class="btn btn-warning btn-lg" style="float:right">{% trans "Reopen" %}</button>
+                            {% else %}
                             <button type="submit" name="action" value="comment" class="btn btn-default btn-lg">{% trans "Save" %}</button>
-
                             <button type="submit" name="action" value="close" class="btn btn-danger btn-lg" style="float:right">
                                 {% trans "Close" %}
                             </button>
+                            {% endif %}
                         </div>
                     </div>
                 </form>
