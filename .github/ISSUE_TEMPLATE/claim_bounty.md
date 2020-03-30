@@ -1,5 +1,5 @@
 ---
-name: Claim a completed bounty
+name: :euro: Claim a completed bounty
 about: validate your identity before collecting bounty for complated tasks
 title: ''
 labels: ''
