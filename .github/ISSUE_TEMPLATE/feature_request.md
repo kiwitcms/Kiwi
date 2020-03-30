@@ -1,8 +1,8 @@
 ---
-name: :seedling: Feature request
+name: Feature request
 about: Suggest an idea for Kiwi TCMS
 title: ''
-labels: 'feature request'
+labels: ''
 assignees: ''
 
 ---
