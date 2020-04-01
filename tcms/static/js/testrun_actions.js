@@ -755,9 +755,16 @@ function initialize_addlink_dialog() {
             is_defect = $('#is_defect').is(':checked'),
             update_tracker = $('#update_tracker').is(':checked'),
             case_id = dialog_p.dialog('option', 'case_id');
+        var error = jQ('#testlog_dialog_error')[0];
+
+        if (name.length > 64) {
+            error.innerHTML = "Name length should not exceed 64 characters.";
+            return;
+        }
 
         //check if url is valid
         if (url.length === 0 || url.indexOf('://') === -1) {
+            error.innerHTML = "Not a valid URL."
             return;
         }
 
@@ -797,6 +804,8 @@ function initialize_addlink_dialog() {
       // clean name and url for next input
       jQ('#testlog_name').val('');
       jQ('#testlog_url').val('');
+      // clean error message
+      jQ('#testlog_dialog_error')[0].innerHTML = '';
 
       return true;
     },
