@@ -62,6 +62,7 @@ The second is controlled via environment variables and behavior is described
 <http://kiwitcms.org/blog/atodorov/2018/11/05/test-runner-plugin-specification/>`_.
 Important variables are:
 
+* ``TCMS_PLAN_ID`` - if defined will create test runs under this TestPlan
 * ``TCMS_RUN_ID`` - if defined will report results to this TestRun
 * ``TCMS_PRODUCT`` or ``TRAVIS_REPO_SLUG`` or ``JOB_NAME`` - defines the
   product under test if we have to create new objects in the database
