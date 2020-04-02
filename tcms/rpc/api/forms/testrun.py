@@ -46,9 +46,9 @@ class UpdateForm(NewForm):
     )
     stop_date = forms.DateTimeField(
         required=False,
-        input_formats=['%Y-%m-%d'],
+        input_formats=['%Y-%m-%d', '%Y-%m-%d %H:%M:%S'],
         error_messages={
-            'invalid': _('The stop date is invalid. The valid format is YYYY-MM-DD.')
+            'invalid': _('The stop date is invalid. The valid format is YYYY-MM-DD [HH:MM:SS].')
         }
     )
 
