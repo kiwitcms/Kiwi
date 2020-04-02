@@ -299,7 +299,7 @@ class TestUpdateTestRun(APITestCase):
         }
 
         with self.assertRaisesMessage(Exception,
-                                      'The stop date is invalid. The valid format is YYYY-MM-DD.'):
+                                      'The stop date is invalid. The valid format is'):
             self.rpc_client.exec.TestRun.update(test_run.pk, update_fields)
 
         # assert test run fields have not been updated
