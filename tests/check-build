@@ -82,7 +82,7 @@ echo "..... Trying to install the new tarballs inside a virtualenv"
 virtualenv -q -p $(which python) .venv/test-tarball
 source .venv/test-tarball/bin/activate
 pip install --upgrade setuptools pip
-pip install --no-binary :all: -f dist/ kiwitcms
+pip install --no-binary :all: dist/kiwitcms*.tar.gz
 pip freeze | grep kiwitcms
 deactivate
 rm -rf .venv/
@@ -93,7 +93,7 @@ source .venv/test-wheel/bin/activate
 pip install --upgrade setuptools pip
 pip install -r requirements/tarballs.txt
 pip install pycparser
-pip install --only-binary :all: -f dist/ kiwitcms
+pip install --only-binary :all: dist/kiwitcms*.whl
 pip freeze | grep kiwitcms
 deactivate
 rm -rf .venv/
