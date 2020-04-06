@@ -10,6 +10,7 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.core.contrib
    tcms.core.forms
@@ -22,6 +23,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.core.admin
    tcms.core.ajax
