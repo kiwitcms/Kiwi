@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-28 18:29+0000\n"
-"PO-Revision-Date: 2020-04-06 04:11\n"
+"PO-Revision-Date: 2020-04-06 04:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1648,27 +1648,27 @@ msgstr "Testador padrão de execuções"
 
 #: tcms/testcases/templates/testcases/mutable.html:187
 msgid "Notify when"
-msgstr ""
+msgstr "Notificar quando"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Caso de Teste foi atualizado"
 
 #: tcms/testcases/templates/testcases/mutable.html:198
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Caso de Teste foi excluído"
 
 #: tcms/testcases/templates/testcases/mutable.html:207
 msgid "CC to"
-msgstr ""
+msgstr "CC para"
 
 #: tcms/testcases/templates/testcases/mutable.html:212
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Endereços de e-mail separados por vírgula. Um e-mail de notificação será enviado para cada endereço de e-mail dentro da lista CC."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Pesquisar casos de teste"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
@@ -1676,141 +1676,143 @@ msgstr "Resumo do caso de teste"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Ambos"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Separar múltiplos valores com vírgula (,)"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #: tcms/testcases/views.py:339
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Plano de Teste não especificado ou não existe"
 
 #: tcms/testcases/views.py:502
 msgid "History"
-msgstr ""
+msgstr "Histórico"
 
 #: tcms/testcases/views.py:695
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "A clonagem de Caso de Teste foi bem sucedida"
 
 #: tcms/testcases/views.py:721 tcms/testruns/views.py:366
 #: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Pelo menos um Caso de Teste é necessário"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Clonar Plano de Teste"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Clonar CTs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Clonar ou vincular CTs existentes num novo PT"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "PT pai"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Definir o PT de origem como pai do novo PT"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Editar Plano de Teste"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Criar novo Plano de Teste"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "ID Pai"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Documento do plano de teste:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
-msgstr ""
+msgstr "Notificar:"
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
-msgstr ""
+msgstr "Autor do Caso de Teste"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
-msgstr ""
+msgstr "Notificar quando:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Plano de Teste atualizado"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Casos de testes atualizados"
 
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Ativo(s)"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Pesquisar planos de testes"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Nome do plano de teste"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Plano de teste"
 
 #: tcms/testplans/views.py:281
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Plano de Teste é obrigatório"
 
 #: tcms/testplans/views.py:440
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Pelo menos um plano de teste é necessário para impressão"
 
 #: tcms/testplans/views.py:448
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Plano de Teste \"%s\" não existe"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Permissão negada: Execução do Teste não pertence a você"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Para obter mais informações sobre como personalizar o status de execução do teste, consulte\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        a documentação</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
