@@ -10,5 +10,6 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.core.contrib.linkreference

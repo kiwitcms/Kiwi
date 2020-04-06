@@ -10,5 +10,6 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.core.utils.mailto
