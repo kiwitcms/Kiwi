@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-28 18:29+0000\n"
-"PO-Revision-Date: 2020-03-28 18:34\n"
+"PO-Revision-Date: 2020-04-06 04:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -82,7 +82,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:41
@@ -97,7 +97,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "Versão"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:59
@@ -145,7 +145,7 @@ msgstr "Fechar"
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr "Sumário"
+msgstr "Resumo"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:38
@@ -452,7 +452,7 @@ msgstr "Informações detalhadas sobre o estado de execução de teste"
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Plano de Teste"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -725,7 +725,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Não existem planos de teste que pertençam a você"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -733,7 +733,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Bem-vindo %(user)s,\n"
+"obrigado por se cadastrar em uma conta %(site_domain)s!\n\n"
+"Para ativar sua conta, clique neste link:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -746,12 +749,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "O bug %(pk)s foi atribuído a você.\n\n"
+"Link: %(bug_url)s\n\n"
+"Resumo: %(summary)s\n"
+"Criado em: %(creation_date)s\n"
+"Relator: %(reporter)s\n"
+"Atribuído: %(assignee)s\n"
+"Produto: %(product)s\n"
+"Versão: %(version)s\n"
+"Build: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "TestCase foi excluído por %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -768,7 +779,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "A execução de teste %(pk)s foi criada ou atualizada para você.\n\n"
+"### Links ###\n"
+"Execução do teste: %(run_url)s\n"
+"Plano de teste: %(plan_url)s\n\n"
+"### Informações básicas de execução ###\n"
+"Resumo: %(summary)s\n\n"
+"Gerenciado por: %(manager)s.\n"
+"Testador padrão: %(default_tester)s.\n\n"
+"Produto: %(product)s\n"
+"Versão do Produto: %(version)s\n"
+"Build: %(build)s\n\n"
+"Notas:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -1165,7 +1188,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr "Sumário do Caso de Teste"
+msgstr "Resumo do Caso de Teste"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
@@ -1649,7 +1672,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Resumo do caso de teste"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
@@ -1831,7 +1854,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Resumo da execução do teste"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
