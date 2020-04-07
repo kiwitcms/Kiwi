@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-28 18:29+0000\n"
-"PO-Revision-Date: 2020-03-28 18:42\n"
+"POT-Creation-Date: 2020-04-07 19:03+0000\n"
+"PO-Revision-Date: 2020-04-07 19:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -72,7 +72,7 @@ msgstr "Изпълнител"
 #: tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
-#: tcms/testcases/templates/testcases/mutable.html:37
+#: tcms/testcases/templates/testcases/mutable.html:41
 #: tcms/testcases/templates/testcases/search.html:41
 #: tcms/testplans/templates/testplans/clone.html:20
 #: tcms/testplans/templates/testplans/mutable.html:32
@@ -89,7 +89,8 @@ msgstr "Продукт"
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:105
 #: tcms/telemetry/templates/telemetry/include/filters.html:20
-#: tcms/templates/include/bug_details.html:43 tcms/templates/plan/get.html:60
+#: tcms/templates/include/bug_details.html:43 tcms/templates/navbar.html:76
+#: tcms/templates/plan/get.html:60
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
@@ -118,16 +119,20 @@ msgstr "Билд"
 msgid "commented on"
 msgstr "коментирано на"
 
-#: tcms/bugs/templates/bugs/get.html:125
+#: tcms/bugs/templates/bugs/get.html:126
+msgid "Reopen"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
 #: tcms/templates/case/get_details.html:93
-#: tcms/testcases/templates/testcases/mutable.html:225
+#: tcms/testcases/templates/testcases/mutable.html:229
 #: tcms/testplans/templates/testplans/mutable.html:147
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr "Записване"
 
-#: tcms/bugs/templates/bugs/get.html:128
+#: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
 msgstr "Затваряне"
 
@@ -137,7 +142,7 @@ msgstr "Затваряне"
 #: tcms/templates/plan/search_case.html:77
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
-#: tcms/testcases/templates/testcases/mutable.html:18
+#: tcms/testcases/templates/testcases/mutable.html:22
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testruns/templates/testruns/mutable.html:21
@@ -148,7 +153,7 @@ msgid "Summary"
 msgstr "Резюме"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
-#: tcms/testcases/templates/testcases/mutable.html:38
+#: tcms/testcases/templates/testcases/mutable.html:42
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
@@ -239,6 +244,10 @@ msgstr "Редакция на бъг"
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
 msgstr "*затворен бъг*"
+
+#: tcms/bugs/views.py:201
+msgid "*bug reopened*"
+msgstr ""
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -437,8 +446,9 @@ msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "НОВО: Тест Изпълнение #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
-msgid "NEW: Bug #{} - {}"
-msgstr "Нов бъг #{} - {}"
+#, python-format
+msgid "NEW: Bug #%(pk)d - %(summary)s"
+msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -468,7 +478,7 @@ msgstr "Oбщо"
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
 #: tcms/templates/run/table_executions.html:20
 #: tcms/testcases/templates/testcases/get.html:92
-#: tcms/testcases/templates/testcases/mutable.html:92
+#: tcms/testcases/templates/testcases/mutable.html:96
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:142
 msgid "Automated"
@@ -554,7 +564,7 @@ msgid "the leading open source test case management system"
 msgstr "водещата система за управление на тестове с отворен код"
 
 #: tcms/templates/case/get_details.html:8
-#: tcms/testcases/templates/testcases/mutable.html:100
+#: tcms/testcases/templates/testcases/mutable.html:104
 #: tcms/testcases/templates/testcases/search.html:117
 msgid "Text"
 msgstr "Текст"
@@ -611,7 +621,7 @@ msgstr "Не е открит бъг"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
-#: tcms/testcases/templates/testcases/mutable.html:134
+#: tcms/testcases/templates/testcases/mutable.html:138
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
 msgstr "Бележки"
@@ -831,7 +841,7 @@ msgstr "Не са открити записи"
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
 #: tcms/testcases/templates/testcases/get.html:73
-#: tcms/testcases/templates/testcases/mutable.html:68
+#: tcms/testcases/templates/testcases/mutable.html:72
 #: tcms/testcases/templates/testcases/search.html:82
 #: tcms/testcases/templates/testcases/search.html:141
 #: tcms/testruns/templates/testruns/mutable.html:97
@@ -1006,7 +1016,7 @@ msgstr "Изтрий тест план"
 #: tcms/templates/run/assign_case.html:73
 #: tcms/testcases/templates/testcases/get.html:42
 #: tcms/testcases/templates/testcases/get.html:164
-#: tcms/testcases/templates/testcases/mutable.html:148
+#: tcms/testcases/templates/testcases/mutable.html:152
 #: tcms/testcases/templates/testcases/search.html:106
 #: tcms/testcases/templates/testcases/search.html:143
 #: tcms/testplans/templates/testplans/mutable.html:103
@@ -1133,7 +1143,7 @@ msgstr "Смени Тестер по подразбиране"
 #: tcms/templates/run/get_case_runs.html:103
 #: tcms/templates/run/table_executions.html:22
 #: tcms/testcases/templates/testcases/get.html:78
-#: tcms/testcases/templates/testcases/mutable.html:80
+#: tcms/testcases/templates/testcases/mutable.html:84
 #: tcms/testcases/templates/testcases/search.html:73
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:99
@@ -1172,7 +1182,7 @@ msgstr "Тестер"
 #: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
 #: tcms/templates/run/table_executions.html:21
 #: tcms/testcases/templates/testcases/get.html:63
-#: tcms/testcases/templates/testcases/mutable.html:52
+#: tcms/testcases/templates/testcases/mutable.html:56
 #: tcms/testcases/templates/testcases/search.html:51
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
@@ -1438,8 +1448,8 @@ msgstr "Хиперлинк"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
-#: tcms/testcases/templates/testcases/mutable.html:30
-#: tcms/testcases/templates/testcases/mutable.html:171
+#: tcms/testcases/templates/testcases/mutable.html:34
+#: tcms/testcases/templates/testcases/mutable.html:175
 #: tcms/testplans/templates/testplans/mutable.html:115
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testruns/templates/testruns/mutable.html:55
@@ -1520,6 +1530,11 @@ msgstr "Бъгове"
 msgid "Bug List"
 msgstr "Списък с бъгове"
 
+#: tcms/templates/run/status_progress_patternfly.html:3
+#, python-format
+msgid "%(amount)s%% complete"
+msgstr ""
+
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
 msgstr "Справка"
@@ -1592,22 +1607,22 @@ msgid "Selected TC"
 msgstr "Избрани TK"
 
 #: tcms/testcases/templates/testcases/get.html:97
-#: tcms/testcases/templates/testcases/mutable.html:107
+#: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
 msgstr "Скрипт"
 
 #: tcms/testcases/templates/testcases/get.html:102
-#: tcms/testcases/templates/testcases/mutable.html:113
+#: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
 msgstr "Аргументи"
 
 #: tcms/testcases/templates/testcases/get.html:107
-#: tcms/testcases/templates/testcases/mutable.html:121
+#: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
 msgstr "Изисквания"
 
 #: tcms/testcases/templates/testcases/get.html:112
-#: tcms/testcases/templates/testcases/mutable.html:126
+#: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
 msgstr "Линк"
@@ -1624,47 +1639,51 @@ msgstr "Тестови планове"
 msgid "Components"
 msgstr "Компоненти"
 
-#: tcms/testcases/templates/testcases/mutable.html:9
+#: tcms/testcases/templates/testcases/mutable.html:10
+msgid "Edit TestCase"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
 msgstr "Нов тест кейс"
 
-#: tcms/testcases/templates/testcases/mutable.html:53
+#: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
 msgstr "добави нова Категория"
 
-#: tcms/testcases/templates/testcases/mutable.html:144
+#: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
 msgstr "Известяване"
 
-#: tcms/testcases/templates/testcases/mutable.html:155
+#: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
 msgstr "Управление на Тест Изпълнения"
 
-#: tcms/testcases/templates/testcases/mutable.html:162
+#: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
 msgstr "Изпълнители"
 
-#: tcms/testcases/templates/testcases/mutable.html:178
+#: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
 msgstr "Тестер по подразбиране на изпълненията"
 
-#: tcms/testcases/templates/testcases/mutable.html:187
+#: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
 msgstr "Известяване при"
 
-#: tcms/testcases/templates/testcases/mutable.html:191
+#: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
 msgstr "Тест кейсът е актуализиран"
 
-#: tcms/testcases/templates/testcases/mutable.html:198
+#: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
 msgstr "Тест кейсът е изтрит"
 
-#: tcms/testcases/templates/testcases/mutable.html:207
+#: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
 msgstr "Копие до"
 
-#: tcms/testcases/templates/testcases/mutable.html:212
+#: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "E-mail адреси, разделни от запетая. Уведомителен e-mail ще бъде изпратен до всички адреси, посочени в Копие."
 
