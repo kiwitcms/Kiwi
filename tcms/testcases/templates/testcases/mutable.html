@@ -6,7 +6,11 @@
     {{ form.media }}
 {% endblock %}
 {% block title %}
-    {% trans "New TestCase" %}
+    {% if object %}
+        {% trans "Edit TestCase" %}
+    {% else %}
+        {% trans "New TestCase" %}
+    {% endif %}
 {% endblock %}
 
 {% block contents %}
