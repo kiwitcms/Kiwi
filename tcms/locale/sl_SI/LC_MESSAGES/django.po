@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-07 19:11\n"
+"PO-Revision-Date: 2020-04-08 06:29\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -121,7 +121,7 @@ msgstr "komentar na"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Znova odpri"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -247,7 +247,7 @@ msgstr "*napaka zaprta*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*napaka je ponovno odprta*"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -448,7 +448,7 @@ msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NOVO: Napaka #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -1534,7 +1534,7 @@ msgstr "Seznam napak"
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% zaključenih"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1642,7 +1642,7 @@ msgstr "Komponente"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Uredi testni scenarij"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
