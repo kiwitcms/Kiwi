@@ -20,7 +20,8 @@ class TestSendMailOnAssigneeChange(TestCase):
         assignee = UserFactory()
         bug = BugFactory(assignee=assignee)
 
-        expected_subject = _('NEW: Bug #%d - %s') % (bug.pk, bug.summary)
+        expected_subject = _('NEW: Bug #%(pk)d - %(summary)s') % {'pk': bug.pk,
+                                                                  'summary': bug.summary}
         expected_body = render_to_string('email/post_bug_save/email.txt', {'bug': bug})
         expected_recipients = [assignee.email]
 
