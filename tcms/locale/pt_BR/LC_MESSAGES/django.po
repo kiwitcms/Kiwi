@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 15:45\n"
+"PO-Revision-Date: 2020-04-10 16:07\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -337,7 +337,7 @@ msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:284
 msgid "TESTING"
-msgstr "TESTE"
+msgstr "CRIAR TESTE"
 
 #: tcms/settings/common.py:285
 msgid "New Test Plan"
@@ -377,7 +377,7 @@ msgstr "TELEMETRIA"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
-msgstr "Teste"
+msgstr "Testando"
 
 #: tcms/settings/common.py:301
 msgid "Breakdown"
@@ -448,7 +448,7 @@ msgstr "NOVO: Execução de Teste #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NOVO: Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -1534,7 +1534,7 @@ msgstr "Lista de Bugs"
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% completo"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
