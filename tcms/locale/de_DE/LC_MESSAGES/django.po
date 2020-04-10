@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 21:34\n"
+"PO-Revision-Date: 2020-04-10 21:39\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -266,12 +266,16 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Aktualisiert am %(history_date)s\n"
+"Aktualisiert von %(username)s\n\n"
+"%(diff)s\n\n"
+"Für weitere Informationen:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Die Basis-URL ist nicht konfiguriert! Siehe <a href=\"%(doc_url)s\">Dokumentation</a> und <a href=\"%(admin_url)s\">ändern Sie es</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -292,7 +296,7 @@ msgstr "Ein Benutzer mit dieser E-Mail-Adresse ist bereits vorhanden."
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Ihre %s Kontobestätigung"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -304,7 +308,7 @@ msgstr "Ihr Konto wurde erstellt, wenden Sie sich an einen Administrator um es z
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Die Liste der Administratoren"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
