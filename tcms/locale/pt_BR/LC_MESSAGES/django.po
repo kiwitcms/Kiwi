@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 16:07\n"
+"PO-Revision-Date: 2020-04-10 20:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -337,7 +337,7 @@ msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:284
 msgid "TESTING"
-msgstr "CRIAR TESTE"
+msgstr "TESTANDO"
 
 #: tcms/settings/common.py:285
 msgid "New Test Plan"
