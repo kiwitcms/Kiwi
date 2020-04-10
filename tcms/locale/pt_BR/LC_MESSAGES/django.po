@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-07 19:10\n"
+"PO-Revision-Date: 2020-04-10 14:36\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1911,11 +1911,11 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr ""
+msgstr "CONFIRMADO"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "DESATIVADO"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
