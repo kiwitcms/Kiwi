@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 21:43\n"
+"PO-Revision-Date: 2020-04-10 22:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -324,12 +324,12 @@ msgstr "Dein Konto wurde erfolgreich aktiviert"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Ermöglichen Sie das Melden von Fehlern, indem Sie die Basis-URL konfigurieren!"
 
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "Modell %s hat keinen Primärschlüssel. Sie müssen dieses Feld manuell ausfüllen."
 
 #: tcms/settings/common.py:283
 msgid "DASHBOARD"
@@ -349,7 +349,7 @@ msgstr "Neuer Testfall"
 
 #: tcms/settings/common.py:289
 msgid "New Bug"
-msgstr ""
+msgstr "Neuer Fehler"
 
 #: tcms/settings/common.py:292
 msgid "SEARCH"
@@ -369,28 +369,28 @@ msgstr "Suche Testfall"
 
 #: tcms/settings/common.py:296
 msgid "Search Bugs"
-msgstr ""
+msgstr "Fehler durchsuchen"
 
 #: tcms/settings/common.py:299
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRIE"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
-msgstr ""
+msgstr "Überprüfung läuft"
 
 #: tcms/settings/common.py:301
 msgid "Breakdown"
-msgstr ""
+msgstr "Aufschlüsselung"
 
 #: tcms/settings/common.py:302
 msgid "Status matrix"
-msgstr ""
+msgstr "Statusmatrix"
 
 #: tcms/settings/common.py:303
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Ausführungstrends"
 
 #: tcms/settings/common.py:304
 msgid "TestCase health"
@@ -410,11 +410,11 @@ msgstr "Alles andere"
 
 #: tcms/settings/common.py:314
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGINS"
 
 #: tcms/settings/common.py:325
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: tcms/settings/common.py:326
 msgid "Report an Issue"
@@ -438,7 +438,7 @@ msgstr "API-Hilfe"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Neuer Benutzer wartet auf Genehmigung"
 
 #: tcms/signals.py:155
 #, python-format
@@ -448,29 +448,29 @@ msgstr "Neu: Testlauf #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NEU: Fehler #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "ANDERE"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Ausführliche Informationen zum Ausführungsstatus des Tests"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Testplan"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Aufschlüsselung des Tests"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "Gesamt"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
@@ -487,15 +487,15 @@ msgstr "Automatisiert"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr ""
+msgstr "Manuell"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr ""
+msgstr "Prioritäten"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "Kategorien"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -843,52 +843,52 @@ msgstr "Name"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Pläne"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
-msgstr ""
+msgstr "Aufträge"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
-msgstr ""
+msgstr "Durchläufe"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Aktion"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Tag hinzufügen"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Navigation an-/ausschalten"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Willkommen Gast"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "Meine Testläufe"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "Meine Testpläne"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "Mein Profil"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
@@ -897,11 +897,11 @@ msgstr "Passwort ändern"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "Ausloggen"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr ""
+msgstr "Einloggen"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
@@ -910,27 +910,27 @@ msgstr "Registrieren"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "Unterstützte Sprachen"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "Neue Sprache anfordern"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "Übersetzungsmodus"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "Übersetzungsanleitung"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -954,35 +954,35 @@ msgstr "Letzte Seite"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "In diesem Plan wurde kein Testfall gefunden."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "Plan bearbeiten"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "Testplan bearbeiten"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "Plan klonen"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Diesen Plan zu einem anderen Produkt kopieren"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "Plan drucken"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "Plan löschen"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "Testplan löschen"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1002,45 +1002,45 @@ msgstr "Ersteller"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "Plantyp"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
-msgstr ""
+msgstr "Verweis"
 
 #: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Kein"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "erstellt"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "Überordner"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
-msgstr ""
+msgstr "Änderungsverlauf anzeigen"
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Fälle überprüfen"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "Baumansicht"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Das Dokument für diesen Plan wurde noch nicht erstellt."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
