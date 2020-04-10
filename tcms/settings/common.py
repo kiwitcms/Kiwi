@@ -244,33 +244,40 @@ ROOT_URLCONF = 'tcms.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
-INSTALLED_APPS = [
-    'vinaigrette',
+# DANGER: DO NOT EDIT, see git log !!!
+# this is consumed by kiwitcms-tenants/django-tenants
+TENANT_APPS = [
+    'django.contrib.sites',
+
+    'attachments',
+    'django_comments',
+    'modernrpc',
+    'simple_history',
+
+    # if you wish to disable Kiwi TCMS bug tracker
+    # comment out the next line
+    'tcms.bugs.apps.AppConfig',
+    'tcms.core.contrib.linkreference',
+    'tcms.management',
+    'tcms.testcases.apps.AppConfig',
+    'tcms.testplans.apps.AppConfig',
+    'tcms.testruns.apps.AppConfig',
+]
+
+INSTALLED_APPS = TENANT_APPS + [
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'attachments',
-    'django_comments',
-    'modernrpc',
-    'simple_history',
     'colorfield',
+    'vinaigrette',
 
     'tcms.core',
-    # if you wish to disable Kiwi TCMS bug tracker
-    # comment out the next line
-    'tcms.bugs.apps.AppConfig',
     'tcms.kiwi_auth',
-    'tcms.core.contrib.linkreference',
-    'tcms.management',
-    'tcms.testcases.apps.AppConfig',
-    'tcms.testplans.apps.AppConfig',
-    'tcms.testruns.apps.AppConfig',
     'tcms.telemetry',
     'tcms.rpc',
 ]
