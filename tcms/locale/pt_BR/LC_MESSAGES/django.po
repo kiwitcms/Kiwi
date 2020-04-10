@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 14:36\n"
+"PO-Revision-Date: 2020-04-10 15:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1329,15 +1329,15 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Redefinição de Senha"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Redefinir senha do Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Cadastrar Nova Conta"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
@@ -1839,7 +1839,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Editar Plano de Teste"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
@@ -1891,7 +1891,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Criar um Plano de Teste requer pelo menos um Caso de Teste"
 
 #: tcms/testruns/views.py:370
 msgid "Clone of "
@@ -1899,7 +1899,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID Caso de Teste não é um inteiro válido"
 
 #: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
@@ -1907,7 +1907,7 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "PROPOSTA"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -1919,37 +1919,37 @@ msgstr "DESATIVADO"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "PRECISA ATUALIZAR"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "OSCIOSO"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "EXECUTANDO"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "PAUSAR"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "PASSOU"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "FALHOU"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOQUEADO"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "ERRO"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "ABANDONAR"
 
