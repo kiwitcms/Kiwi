@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 22:01\n"
+"PO-Revision-Date: 2020-04-10 22:06\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1044,7 +1044,7 @@ msgstr "Das Dokument für diesen Plan wurde noch nicht erstellt."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Dateiname"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
