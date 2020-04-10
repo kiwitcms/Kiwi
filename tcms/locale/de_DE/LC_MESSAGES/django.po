@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 21:39\n"
+"PO-Revision-Date: 2020-04-10 21:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -312,7 +312,7 @@ msgstr "Die Liste der Administratoren"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Dieser Aktivierungsschlüssel existiert nicht mehr in der Datenbank"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
