@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-10 15:40\n"
+"PO-Revision-Date: 2020-04-10 15:45\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -121,7 +121,7 @@ msgstr "comentou em"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Reabrir"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -247,7 +247,7 @@ msgstr "*bug fechado*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*bug reaberto*"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -385,7 +385,7 @@ msgstr "Detalhamento"
 
 #: tcms/settings/common.py:302
 msgid "Status matrix"
-msgstr ""
+msgstr "Matriz de estado"
 
 #: tcms/settings/common.py:303
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
@@ -466,7 +466,7 @@ msgstr "Plano de Teste"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Detalhamento do teste"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
@@ -516,7 +516,7 @@ msgstr "Negativo"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Matriz de Status do Teste"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
@@ -731,7 +731,8 @@ msgstr "Execuções"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Você gerencia %(total_count)s Plano de Testes, %(disabled_count)s estão desabilitados.\n"
+"Aqui estão os %(count)s mais recentes."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -809,7 +810,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Prezado administrador,\n"
+"alguém acabou de registrar uma conta com o nome de usuário  %(username)s na sua instância do Kiwi TCMS e aguarda sua aprovação!\n\n"
+"Vá para %(user_url)s para ativar a conta!"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
@@ -1639,7 +1642,7 @@ msgstr "Componentes"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Editar Caso de Teste"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
@@ -1835,7 +1838,7 @@ msgstr "Para obter mais informações sobre como personalizar o status de execu�
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Testar status de execução"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1903,7 +1906,7 @@ msgstr "ID Caso de Teste não é um inteiro válido"
 
 #: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "O usuário digitado não existe no banco de dados"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
