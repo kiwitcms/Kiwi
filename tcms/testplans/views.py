@@ -18,7 +18,7 @@ from guardian.decorators import permission_required as object_permission_require
 from uuslug import slugify
 
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.testcases.models import TestCasePlan, TestCaseStatus
+from tcms.testcases.models import TestCasePlan
 from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
@@ -241,13 +241,7 @@ class TestPlanGetView(DetailView):
         context = super().get_context_data(**kwargs)
         # todo: this can be passed to the new template and consumed
         # in the JavaScript when rendering test cases based on status
-        confirmed_status = TestCaseStatus.get_confirmed()
-        # todo: these 2 context variables are used in plan/get.html
-        # which is scheduled for deprecation and need be removed
-        context['review_case_count'] = self.object.case.exclude(
-            case_status=confirmed_status).count()
-        context['run_case_count'] = self.object.case.filter(
-            case_status=confirmed_status).count()
+        # confirmed_status = TestCaseStatus.get_confirmed()
         return context
 
 
@@ -330,27 +324,6 @@ class ReorderCasesView(View):
         for case in cases:
             case.sortkey = (case_ids.index(case.case_id) + 1) * 10
             case.save()
-
-        return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
-class UpdateParentView(View):
-    """Updates TestPlan.parent. Called from the front-end."""
-
-    http_method_names = ['post']
-
-    def post(self, request):
-        parent_id = int(request.POST.get('parent_id'))
-        if parent_id == 0:
-            parent_id = None
-
-        child_ids = request.POST.getlist('child_ids[]')
-
-        for child_pk in child_ids:
-            test_plan = get_object_or_404(TestPlan, pk=int(child_pk))
-            test_plan.parent_id = parent_id
-            test_plan.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
