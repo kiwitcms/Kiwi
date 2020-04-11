@@ -8,19 +8,19 @@ from django.http import (Http404, HttpResponsePermanentRedirect,
                          HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import (require_http_methods,
                                           require_POST)
 from django.views.generic import DetailView, View
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 from uuslug import slugify
 
 from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import printable as testcases_printable
-from tcms.testplans.forms import ClonePlanForm, NewPlanForm, SearchPlanForm
+from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
 from tcms.testruns.models import TestRun
 
@@ -38,50 +38,39 @@ def update_plan_email_settings(test_plan, form):
     test_plan.emailing.save()
 
 
-# _____________________________________________________________________________
-# view functons
-
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
-class NewTestPlanView(View):
+class NewTestPlanView(CreateView):
+    model = TestPlan
+    form_class = NewPlanForm
     template_name = 'testplans/mutable.html'
 
-    def get(self, request):
-        form = NewPlanForm()
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        # clear fields which are set dynamically via JavaScript
+        form.populate(self.request.POST.get('product', -1))
+        return form
 
-        context_data = {
-            'form': form
-        }
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['author'] = self.request.user
+        return kwargs
 
-        return render(request, self.template_name, context_data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['notify_formset'] = kwargs.get('notify_formset') or PlanNotifyFormSet()
+        return context
 
-    def post(self, request):
-        form = NewPlanForm(request.POST)
-        form.populate(product_id=request.POST.get('product'))
+    def form_valid(self, form):
+        notify_formset = PlanNotifyFormSet(self.request.POST)
+        if notify_formset.is_valid():
+            test_plan = form.save()
+            notify_formset.instance = test_plan
+            notify_formset.save()
 
-        if form.is_valid():
-            test_plan = TestPlan.objects.create(
-                product=form.cleaned_data['product'],
-                author=request.user,
-                product_version=form.cleaned_data['product_version'],
-                type=form.cleaned_data['type'],
-                name=form.cleaned_data['name'],
-                create_date=timezone.now(),
-                extra_link=form.cleaned_data['extra_link'],
-                parent=form.cleaned_data['parent'],
-                text=form.cleaned_data['text'],
-                is_active=form.cleaned_data['is_active'],
-            )
+            return HttpResponseRedirect(test_plan.get_absolute_url())
 
-            update_plan_email_settings(test_plan, form)
-
-            return HttpResponseRedirect(
-                reverse('test_plan_url_short', args=[test_plan.pk, ])
-            )
-
-        context_data = {
-            'form': form,
-        }
-        return render(request, self.template_name, context_data)
+        # taken from FormMixin.form_invalid()
+        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
 
 
 class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-required
