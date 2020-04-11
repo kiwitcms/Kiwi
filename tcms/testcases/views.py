@@ -15,15 +15,11 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import TemplateView, View
 
-from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.management.models import Priority, Tag
-from tcms.search import remove_from_request_path
-from tcms.search.order import order_case_queryset
 from tcms.testcases.forms import CloneCaseForm, SearchCaseForm, TestCaseForm
 from tcms.testcases.forms import CaseNotifyFormSet
-from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
+from tcms.testcases.models import TestCase, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestExecution, TestExecutionStatus
 
@@ -99,46 +95,6 @@ class NewCaseView(CreateView):
         return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
 
 
-def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
-    """Get each TestCase' sortkey and related TestCasePlan's pk"""
-    qs = TestCasePlan.objects.filter(case__in=tc_ids)
-    if plan is not None:
-        qs = qs.filter(plan__pk=plan.pk)
-    qs = qs.values('pk', 'sortkey', 'case')
-    return dict([(item['case'], {
-        'sortkey': item['sortkey']
-    }) for item in qs])
-
-
-def calculate_for_testcases(plan, testcases):
-    """Calculate extra data for TestCases
-
-    Attach TestCasePlan.sortkey, TestCasePlan.pk, and the number of bugs of
-    each TestCase.
-
-    :param plan: the TestPlan containing searched TestCases. None means testcases
-                 are not limited to a specific TestPlan.
-    :param testcases: a queryset of TestCases.
-    """
-    tc_ids = []
-    for test_case in testcases:
-        tc_ids.append(test_case.pk)
-
-    sortkey_tcpkan_pks = get_testcaseplan_sortkey_pk_for_testcases(
-        plan, tc_ids)
-
-    for test_case in testcases:
-        data = sortkey_tcpkan_pks.get(test_case.pk, None)
-        if data:
-            # todo: these properties appear to be redundant since the same
-            # info should be available from the test_case query
-            setattr(test_case, 'cal_sortkey', data['sortkey'])
-        else:
-            setattr(test_case, 'cal_sortkey', None)
-
-    return testcases
-
-
 def get_case_status(template_type):
     """Get part or all TestCaseStatus according to template type"""
     confirmed_status_name = 'CONFIRMED'
@@ -178,52 +134,6 @@ def build_cases_search_form(request, populate=None, plan=None):
             search_form.populate()
 
     return search_form
-
-
-def paginate_testcases(request, testcases):  # pylint: disable=missing-permission-required
-    """Paginate queried TestCases
-
-    Arguments:
-    - request: django's HttpRequest from which to get pagination data
-    - testcases: an object queryset representing already queried TestCases
-
-    Return value: return the queryset for chain call
-    """
-
-    page_index = int(request.POST.get('page_index', 1))
-    page_size = int(request.POST.get(
-        'items_per_page',
-        request.session.get(
-            'items_per_page', settings.DEFAULT_PAGE_SIZE
-        )
-    ))
-    offset = (page_index - 1) * page_size
-    return testcases[offset:offset + page_size]
-
-
-def sort_queried_testcases(request, testcases):  # pylint: disable=missing-permission-required
-    """Sort querid TestCases according to sort key
-
-    Arguments:
-    - request: REQUEST object
-    - testcases: object of QuerySet containing queried TestCases
-    """
-    order_by = request.POST.get('order_by', 'create_date')
-    asc = bool(request.POST.get('asc', None))
-    tcs = order_case_queryset(testcases, order_by, asc)
-    # default sorted by sortkey
-    tcs = tcs.order_by('testcaseplan__sortkey')
-    # Resort the order
-    # if sorted by 'sortkey'(foreign key field)
-    case_sort_by = request.POST.get('case_sort_by')
-    if case_sort_by:
-        if case_sort_by not in ['sortkey', '-sortkey']:
-            tcs = tcs.order_by(case_sort_by)
-        elif case_sort_by == 'sortkey':
-            tcs = tcs.order_by('testcaseplan__sortkey')
-        else:
-            tcs = tcs.order_by('-testcaseplan__sortkey')
-    return tcs
 
 
 def query_testcases_from_request(request, plan=None):  # pylint: disable=missing-permission-required
@@ -285,110 +195,6 @@ def get_selected_testcases(request):  # pylint: disable=missing-permission-requi
     return TestCase.objects.filter(pk__in=method.getlist('case'))
 
 
-def load_more_cases(request,  # pylint: disable=missing-permission-required
-                    template_name='plan/cases_rows.html'):
-    """Loading more TestCases"""
-    plan = plan_from_request_or_none(request)
-    cases = []
-    selected_case_ids = []
-    if plan is not None:
-        cases, _search_form = query_testcases_from_request(request, plan)
-        cases = sort_queried_testcases(request, cases)
-        cases = paginate_testcases(request, cases)
-        cases = calculate_for_testcases(plan, cases)
-        selected_case_ids = []
-        for test_case in cases:
-            selected_case_ids.append(test_case.pk)
-    context_data = {
-        'test_plan': plan,
-        'test_cases': cases,
-        'selected_case_ids': selected_case_ids,
-        'case_status': TestCaseStatus.objects.all(),
-    }
-    return render(request, template_name, context_data)
-
-
-def get_tags_from_cases(case_ids, plan=None):
-    """Get all tags from test cases
-
-    @param cases: an iterable object containing test cases' ids
-    @type cases: list, tuple
-
-    @param plan: TestPlan object
-
-    @return: a list containing all found tags with id and name
-    @rtype: list
-    """
-    query = Tag.objects.filter(case__in=case_ids).distinct().order_by('name')
-    if plan:
-        query = query.filter(case__plan=plan)
-
-    return query
-
-
-@require_POST
-def list_all(request):  # pylint: disable=missing-permission-required
-    """
-    Generate the TestCase list for the UI tabs in TestPlan page view.
-    """
-    # Intial the plan in plan details page
-    test_plan = plan_from_request_or_none(request)
-    if not test_plan:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('TestPlan not specified or does not exist'))
-        return HttpResponseRedirect(reverse('core-views-index'))
-
-    tcs, search_form = query_testcases_from_request(request, test_plan)
-    tcs = sort_queried_testcases(request, tcs)
-    total_cases_count = tcs.count()
-
-    # Get the tags own by the cases
-    ttags = get_tags_from_cases((case.pk for case in tcs), test_plan)
-
-    tcs = paginate_testcases(request, tcs)
-
-    # There are several extra information related to each TestCase to be shown
-    # also. This step must be the very final one, because the calculation of
-    # related data requires related TestCases' IDs, that is the queryset of
-    # TestCases should be evaluated in advance.
-    tcs = calculate_for_testcases(test_plan, tcs)
-
-    # generating a query_url with order options
-    #
-    # FIXME: query_url is always equivlant to None&asc=True whatever what
-    # criterias specified in filter form, or just with default filter
-    # conditions during loading TestPlan page.
-    query_url = remove_from_request_path(request, 'order_by')
-    asc = bool(request.POST.get('asc', None))
-    if asc:
-        query_url = remove_from_request_path(query_url, 'asc')
-    else:
-        query_url = '%s&asc=True' % query_url
-
-    selected_case_ids = []
-    for test_case in get_selected_testcases(request):
-        selected_case_ids.append(test_case.pk)
-
-    context_data = {
-        'test_cases': tcs,
-        'test_plan': test_plan,
-        'search_form': search_form,
-        # selected_case_ids is used in template to decide whether or not this TestCase is selected
-        'selected_case_ids': selected_case_ids,
-        'case_status': TestCaseStatus.objects.all(),
-        'priorities': Priority.objects.filter(is_active=True),
-        'case_own_tags': ttags,
-        'query_url': query_url,
-
-        # Load more is a POST request, so POST parameters are required only.
-        # Remember this for loading more cases with the same as criterias.
-        'search_criterias': request.body.decode(),
-        'total_cases_count': total_cases_count,
-    }
-    return render(request, 'plan/get_cases.html', context_data)
-
-
 class TestCaseSearchView(TemplateView):  # pylint: disable=missing-permission-required
     """
         Shows the search form which uses JSON RPC to fetch the results
@@ -406,33 +212,6 @@ class TestCaseSearchView(TemplateView):  # pylint: disable=missing-permission-re
         return {
             'form': form,
         }
-
-
-class SimpleTestCaseView(TemplateView):  # pylint: disable=missing-permission-required
-    """Simple read-only TestCase View used in TestPlan page"""
-
-    template_name = 'case/get_details.html'
-    review_mode = None
-
-    def get(self, request, *args, **kwargs):
-        self.review_mode = request.GET.get('review_mode')
-        return super().get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-
-        case = TestCase.objects.get(pk=kwargs['case_id'])
-        data.update({
-            'test_case': case,
-            'review_mode': self.review_mode,
-            'components': case.component.only('name'),
-            'tags': case.tag.only('name'),
-            'case_comments': get_comments(case),
-            'bugs': LinkReference.objects.filter(is_defect=True,
-                                                 execution__case=case)
-        })
-
-        return data
 
 
 class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing-permission-required
