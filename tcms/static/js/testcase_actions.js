@@ -48,30 +48,6 @@ function toggleExpandArrow(options) {
 }
 
 
-function changeTestCaseStatus(plan_id, case_ids, new_value, container) {
-    case_ids.forEach(function(element) {
-        jsonRPC('TestCase.update', [element, {case_status: new_value}], function(data) {});
-    });
-
-
-    var template_type = 'case';
-    if (container.attr('id') === 'reviewcases') {
-        template_type = 'review_case';
-    }
-
-    var parameters = {
-        'a': 'initial',
-        'from_plan': plan_id,
-        'template_type': template_type,
-    };
-
-    // todo: #run_case_count, #case_count, #review_case_count
-    // are no longer updated
-    constructPlanDetailsCasesZone(container, plan_id, parameters);
-
-    Nitrate.TestPlans.Details.reopenTabHelper(jQ(container));
-}
-
 function toggleAllCheckBoxes(element, container, name) {
   if (element.checked) {
     jQ('#' + container).parent().find('input[name="' + name + '"]').not(':disabled').attr('checked', true);
