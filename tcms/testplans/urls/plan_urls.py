@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/(?P<slug>[-\w\d]+)$', views.TestPlanGetView.as_view(),
         name='test_plan_url'),
 
-    url(r'^(?P<pk>\d+)/edit/$', views.edit, name='plan-edit'),
+    url(r'^(?P<pk>\d+)/edit/$', views.Edit.as_view(), name='plan-edit'),
 
     url(r'^(?P<pk>\d+)/reorder-cases/$', views.ReorderCasesView.as_view(),
         name='plan-reorder-cases'),
