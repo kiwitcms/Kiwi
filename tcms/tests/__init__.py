@@ -177,9 +177,7 @@ class BaseCaseRun(BasePlanCase):
     def setUpTestData(cls):
         super(BaseCaseRun, cls).setUpTestData()
 
-        # todo: we need a linter to find all places where we get statuses
-        # by hard-coded names instead of class based attribute constants!
-        cls.status_idle = TestExecutionStatus.objects.get(name='IDLE')
+        cls.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
 
         cls.build = BuildFactory(product=cls.product)
 
