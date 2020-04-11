@@ -3,14 +3,13 @@
 
 import unittest
 from http import HTTPStatus
-from urllib.parse import urlencode
 
 from django.forms import ValidationError
 from django.test import RequestFactory
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from tcms.management.models import Priority, Tag
+from tcms.management.models import Priority
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
@@ -400,48 +399,6 @@ class TestSearchCases(BasePlanCase):
                             '<option value="%d" selected>%s</option>' % (self.product.pk,
                                                                          self.product.name),
                             html=True)
-
-
-class TestGetCasesFromPlan(BasePlanCase):
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-        initiate_user_with_default_setups(cls.tester)
-
-    def test_casetags_are_shown_in_template(self):
-        tag, _created = Tag.get_or_create(self.tester, 'Linux')
-        self.case.add_tag(tag)
-
-        url = reverse('testcases-all')
-        response_data = urlencode({
-            'from_plan': self.plan.pk,
-            'template_type': 'case',
-            'a': 'initial'})
-        # note: this is how the UI sends the request
-        response = self.client.post(url, data=response_data,
-                                    content_type='application/x-www-form-urlencoded; charset=UTF-8',
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, _('Tags'))
-        self.assertContains(response, '<a href="#testcases">Linux</a>')
-
-    def test_disabled_priority_now_shown(self):
-        # test data for https://github.com/kiwitcms/Kiwi/issues/334
-        # pylint: disable=objects-update-used
-        Priority.objects.filter(value='P4').update(is_active=False)
-
-        url = reverse('testcases-all')
-        response_data = urlencode({
-            'from_plan': self.plan.pk,
-            'template_type': 'case',
-            'a': 'initial'})
-        # note: this is how the UI sends the request
-        response = self.client.post(url, data=response_data,
-                                    content_type='application/x-www-form-urlencoded; charset=UTF-8',
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, 'Set P3')
-        self.assertNotContains(response, 'Set P4')
 
 
 class TestGetSelectedTestcases(BasePlanCase):
