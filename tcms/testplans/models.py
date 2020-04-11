@@ -93,6 +93,9 @@ class TestPlan(TCMSActionModel):
     def _get_absolute_url(self):
         return reverse('test_plan_url', args=[self.pk, slugify(self.name)])
 
+    def get_absolute_url(self):
+        return self._get_absolute_url()
+
     def get_case_sortkey(self):
         """
         Get case sortkey.
