@@ -18,7 +18,6 @@ Subpackages
    tcms.kiwi_auth
    tcms.management
    tcms.rpc
-   tcms.search
    tcms.telemetry
    tcms.testcases
    tcms.testplans

@@ -14,7 +14,6 @@ from grappelli import urls as grappelli_urls
 from modernrpc.core import JSONRPC_PROTOCOL, XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
 
-from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.telemetry import urls as telemetry_urls
@@ -31,12 +30,7 @@ urlpatterns = [
 
     re_path(r'^grappelli/', include(grappelli_urls)),
     re_path(r'^admin/', admin.site.urls),
-
     re_path(r'^attachments/', include(attachments_urls, namespace='attachments')),
-
-    # Ajax call responder
-    re_path(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
-            name='ajax.update.cases-actor'),
 
     # Account information zone, such as login method
     re_path(r'^accounts/', include(auth_urls)),
