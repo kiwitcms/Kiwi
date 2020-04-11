@@ -18,16 +18,6 @@ Nitrate.Utils.after_page_load = function(callback) {
   jQ(window).bind('load', callback);
 };
 
-Nitrate.Utils.convert = function(argument, data) {
-  switch(argument) {
-    case 'obj_to_list':
-      if (data.length != 0 && !data.length) {
-        var data = jQ.extend({}, {0: data, length: 1});
-      }
-      return data;
-      break;
-  };
-};
 
 Nitrate.Utils.formSerialize = function(f) {
   var params = {};
@@ -74,39 +64,6 @@ var default_messages = {
     'show_filter': 'Show Case Information Option',
   }
 };
-
-
-/*
- * http namespace and modules
- */
-(function() {
-  var http = Nitrate.http || {};
-
-  http.URLConf = {
-    _mapping: {
-      search_case: '/cases/',
-    },
-
-    reverse: function(options) {
-      var name = options.name;
-      if (name === undefined) {
-        return undefined;
-      }
-      var arguments = options.arguments || {};
-      var urlpattern = this._mapping[name];
-      if (urlpattern === undefined) {
-          return undefined;
-      }
-      var url = urlpattern;
-      for (var key in arguments) {
-          url = url.replace('$' + key, arguments[key].toString());
-      }
-      return url;
-    }
-  };
-
-  Nitrate.http = http;
-}());
 
 
 // Exceptions for Ajax
