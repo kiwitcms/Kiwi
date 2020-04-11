@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-import os
-
 import tcms_api
 from django import test
 
@@ -25,21 +23,9 @@ class APITestCase(test.LiveServerTestCase):
         self.api_user.set_password('api-testing')
         initiate_user_with_default_setups(self.api_user)
 
-        # reset connection to server b/c the address changes for
-        # every test and the client caches this as a class attribute
-        tcms_api.TCMS._connection = None  # pylint: disable=protected-access
-
-        # WARNING: for now we override the config file
-        # until we can pass the testing configuration
-        # TODO: change config values instead of overwriting files on disk
-        conf_path = os.path.expanduser('~/.tcms.conf')
-        conf_fh = open(conf_path, 'w')
-        conf_fh.write("""[tcms]
-url = %s/xml-rpc/
-username = %s
-password = %s
-""" % (self.live_server_url, self.api_user.username, 'api-testing'))
-        conf_fh.close()
-
         # this is the XML-RPC ServerProxy with cookies support
-        self.rpc_client = tcms_api.TCMS()
+        self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
+            self.api_user.username,
+            'api-testing',
+            '%s/xml-rpc/' % self.live_server_url,
+        ).server

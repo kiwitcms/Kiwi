@@ -19,14 +19,14 @@ class TestCategory(APITestCase):
         ]
 
     def test_filter_by_name_and_product_id(self):
-        cat = self.rpc_client.exec.Category.filter({
+        cat = self.rpc_client.Category.filter({
             'name': 'manual',
             'product': self.product_nitrate.pk
         })[0]
         self.assertEqual(cat['name'], 'manual')
 
     def test_filter_by_product_id(self):
-        categories = self.rpc_client.exec.Category.filter({'product': self.product_nitrate.pk})
+        categories = self.rpc_client.Category.filter({'product': self.product_nitrate.pk})
         self.assertIsNotNone(categories)
 
         category_names = []
@@ -39,5 +39,5 @@ class TestCategory(APITestCase):
         self.assertIn('manual', category_names)
 
     def test_filter_non_existing_doesnt_raise(self):
-        found = self.rpc_client.exec.Category.filter({'pk': -9})
+        found = self.rpc_client.Category.filter({'pk': -9})
         self.assertEqual(0, len(found))
