@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, too-many-ancestors
 
-import html
 import unittest
 from http import HTTPStatus
 
-from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.urls import reverse
-from django.utils import formats
 from django.utils.translation import gettext_lazy as _
 
 from tcms.testruns.models import TestExecutionStatus, TestRun
 from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
                         user_should_have_perm)
-from tcms.tests.factories import (TagFactory, TestCaseFactory,
-                                  UserFactory)
+from tcms.tests.factories import TagFactory, UserFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
@@ -274,179 +270,6 @@ class TestSearchRuns(BaseCaseRun):
                             html=True)
 
 
-class TestAddRemoveRunCC(BaseCaseRun):
-    """Test view tcms.testruns.views.cc"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAddRemoveRunCC, cls).setUpTestData()
-
-        cls.cc_url = reverse('testruns-cc', args=[cls.test_run.pk])
-
-        cls.cc_user_1 = UserFactory(username='cc-user-1',
-                                    email='cc-user-1@example.com')
-        cls.cc_user_2 = UserFactory(username='cc-user-2',
-                                    email='cc-user-2@example.com')
-        cls.cc_user_3 = UserFactory(username='cc-user-3',
-                                    email='cc-user-3@example.com')
-
-        cls.test_run.add_cc(cls.cc_user_2)
-        cls.test_run.add_cc(cls.cc_user_3)
-
-    def test_404_if_run_not_exist(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        cc_url = reverse('testruns-cc', args=[999999])
-        response = self.client.get(cc_url)
-        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
-
-    def assert_cc(self, response, expected_cc):
-        self.assertEqual(len(expected_cc), self.test_run.cc.count())  # pylint: disable=no-member
-
-        for cc in expected_cc:
-            href = reverse('tcms-profile', args=[cc.username])
-            self.assertContains(
-                response,
-                '<a href="%s">%s</a>' % (href, cc.username),
-                html=True)
-
-    def test_refuse_if_missing_action(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(self.cc_url,
-                                   {'user': self.cc_user_1.username})
-        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
-
-    def test_add_cc(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(
-            self.cc_url,
-            {'do': 'add', 'user': self.cc_user_1.username})
-
-        self.assert_cc(response,
-                       [self.cc_user_2, self.cc_user_3, self.cc_user_1])
-
-    def test_remove_cc(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(
-            self.cc_url,
-            {'do': 'remove', 'user': self.cc_user_2.username})
-
-        self.assert_cc(response, [self.cc_user_3])
-
-    def test_refuse_to_remove_if_missing_user(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(self.cc_url, {'do': 'remove'})
-
-        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertIn(str(_('The user you typed does not exist in database')),
-                      response_text)
-
-        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
-
-    def test_refuse_to_add_if_missing_user(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(self.cc_url, {'do': 'add'})
-
-        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertIn(str(_('The user you typed does not exist in database')),
-                      response_text)
-
-        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
-
-    def test_refuse_if_user_not_exist(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(self.cc_url,
-                                   {'do': 'add', 'user': 'not exist'})
-
-        response_text = html.unescape(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertIn(str(_('The user you typed does not exist in database')),
-                      response_text)
-
-        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
-
-    def test_should_not_be_able_use_cc_when_user_has_no_pemissions(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testrun')
-
-        self.assertRedirects(
-            self.client.get(self.cc_url),
-            reverse('tcms-login') + '?next=%s' % self.cc_url
-        )
-
-
-class TestAddCasesToRun(BaseCaseRun):
-    """Test AddCasesToRunView"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAddCasesToRun, cls).setUpTestData()
-
-        cls.proposed_case = TestCaseFactory(
-            author=cls.tester,
-            default_tester=None,
-            reviewer=cls.tester,
-            case_status=cls.case_status_proposed,
-            plan=[cls.plan])
-
-        user_should_have_perm(cls.tester, 'testruns.add_testexecution')
-
-    def test_show_add_cases_to_run(self):
-        url = reverse('add-cases-to-run', args=[self.test_run.pk])
-        response = self.client.get(url)
-
-        self.assertNotContains(
-            response,
-            '<a href="{0}">{1}</a>'.format(
-                reverse('testcases-get',
-                        args=[self.proposed_case.pk]),
-                self.proposed_case.pk),
-            html=True
-        )
-
-        confirmed_cases = [self.case, self.case_1, self.case_2, self.case_3]
-
-        # Check selected and unselected case id checkboxes
-        # cls.case is not added to cls.test_run, so it should not be checked.
-        self.assertContains(
-            response,
-            '<td align="left">'
-            '<input type="checkbox" name="case" value="{0}">'
-            '</td>'.format(self.case.pk),
-            html=True)
-
-        # other cases are added to cls.test_run, so must be checked.
-        for case in confirmed_cases[1:]:
-            self.assertContains(
-                response,
-                '<td align="left">'
-                '<input type="checkbox" name="case" value="{0}" '
-                'disabled="true" checked="true">'
-                '</td>'.format(case.pk),
-                html=True)
-
-        # Check listed case properties
-        # note: the response is ordered by 'case'
-        for loop_counter, case in enumerate(confirmed_cases, 1):
-            case_url = reverse('testcases-get', args=[case.pk])
-            html_pieces = [
-                '<a href="{0}">{1}</a>'.format(
-                    case_url,
-                    case.pk),
-
-                '<td class="js-case-summary" data-param="{0}">'
-                '<a id="link_{0}" class="blind_title_link" '
-                'href="{2}">{1}</a></td>'.format(loop_counter,
-                                                 case.summary,
-                                                 case_url),
-
-                '<td>{0}</td>'.format(case.author.username),
-                '<td>{0}</td>'.format(
-                    formats.date_format(case.create_date, 'DATETIME_FORMAT')),
-                '<td>{0}</td>'.format(case.category.name),
-                '<td>{0}</td>'.format(case.priority.value),
-            ]
-            for piece in html_pieces:
-                self.assertContains(response, piece, html=True)
-
-
 class TestRunCasesMenu(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
@@ -455,12 +278,7 @@ class TestRunCasesMenu(BaseCaseRun):
 
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
 
-        cls.add_cases_html = \
-            '<a href="{0}" class="addBlue9">{1}</a>' \
-            .format(
-                reverse('add-cases-to-run', args=[cls.test_run.pk]),
-                _('Add')
-            )
+        cls.add_cases_html = '<a href="{0}" class="addBlue9">{1}</a>'
 
         cls.remove_cases_html = \
             '<a href="#" title="{0}" data-param="{1}" \
