@@ -13,7 +13,6 @@ Submodules
    :maxdepth: 4
 
    tcms.testruns.admin
-   tcms.testruns.data
    tcms.testruns.forms
    tcms.testruns.models
    tcms.testruns.views
