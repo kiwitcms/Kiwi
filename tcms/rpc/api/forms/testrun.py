@@ -23,16 +23,14 @@ class NewForm(BaseRunForm):
 
 
 class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
-
-    manager = UserField()
-    default_tester = UserField()
-
-    start_date = DateTimeField()
-    stop_date = DateTimeField()
-
     class Meta:
         model = TestRun
         exclude = ('tag', 'cc')  # pylint: disable=modelform-uses-exclude
+
+    manager = UserField()
+    default_tester = UserField()
+    start_date = DateTimeField()
+    stop_date = DateTimeField()
 
     def populate(self, product_id):
         self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
