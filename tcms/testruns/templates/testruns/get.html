@@ -82,6 +82,10 @@
     {% include 'include/tags_card.html' with add_perm=perms.testruns.add_testruntag %}
 </div>
 
+<div class="col-xs-12 col-sm-6 col-md-6">
+    {% include 'include/attachments.html' %}
+</div>
+
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
 
