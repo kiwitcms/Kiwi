@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Count, Q
+from django.db.models import Count
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -24,7 +24,6 @@ from tcms.management.models import Build, Priority, Tag
 from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
-from tcms.testruns.data import TestExecutionDataMixin
 from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm
 from tcms.testruns.models import TestExecution, TestExecutionStatus, TestRun
 
@@ -298,55 +297,6 @@ class EditTestRunView(UpdateView):
         }
 
 
-@method_decorator(permission_required('testruns.view_testrun'), name='dispatch')
-class TestRunReportView(TemplateView,
-                        TestExecutionDataMixin):
-    """Test Run report"""
-
-    template_name = 'run/report.html'
-
-    def get_context_data(self, **kwargs):
-        """Generate report for specific TestRun
-
-        There are four data source to generate this report.
-        1. TestRun
-        2. Test executions included in the TestRun
-        3. Comments associated with each test execution
-        4. Statistics
-        5. bugs
-        """
-        run = TestRun.objects.select_related('manager', 'plan').get(pk=kwargs['pk'])
-
-        case_runs = TestExecution.objects.filter(
-            run=run
-        ).select_related(
-            'status', 'case', 'tested_by'
-        ).only(
-            'close_date',
-            'status__name',
-            'case__category__name',
-            'case__summary', 'case__is_automated',
-            'tested_by__username'
-        )
-        mode_stats = self.stats_mode_executions(case_runs)
-        summary_stats = self.get_summary_stats(case_runs)
-
-        comments = self.get_execution_comments(run.pk)
-        for case_run in case_runs:
-            case_run.user_comments = comments.get(case_run.pk, [])
-
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'test_run': run,
-            'executions': case_runs,
-            'executions_count': len(case_runs),
-            'mode_stats': mode_stats,
-            'summary_stats': summary_stats,
-        })
-
-        return context
-
-
 @method_decorator(permission_required('testruns.add_testrun'), name='dispatch')
 class CloneTestRunView(View):
     """Clone cases from filter caserun"""
@@ -407,132 +357,6 @@ class ChangeTestRunStatusView(View):
         test_run.save()
 
         return HttpResponseRedirect(reverse('testruns-get', args=[pk, ]))
-
-
-@method_decorator(permission_required('testruns.add_testexecution'), name='dispatch')
-class AddCasesToRunView(View):
-    """Add cases to a TestRun"""
-
-    def post(self, request, pk):
-        # Selected cases' ids to add to run
-        test_cases_ids = request.POST.getlist('case')
-        if not test_cases_ids:
-            # user clicked Update button without selecting new Test Cases
-            # to be dded to TestRun
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 _('At least one TestCase is required'))
-            return HttpResponseRedirect(reverse('add-cases-to-run', args=[pk]))
-
-        try:
-            test_cases_ids = list(map(int, test_cases_ids))
-        except (ValueError, TypeError):
-            # this will happen only on malicious requests
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 _('TestCase ID is not a valid integer'))
-            return HttpResponseRedirect(reverse('add-cases-to-run', args=[pk]))
-
-        try:
-            test_run = TestRun.objects.select_related(
-                'plan'
-            ).only('plan_id').get(pk=pk)
-        except ObjectDoesNotExist:
-            raise Http404 from None
-
-        executions_ids = test_run.case_run.values_list('case', flat=True)
-
-        # avoid add cases that are already in current run with pk
-        test_cases_ids = set(test_cases_ids) - set(executions_ids)
-
-        test_plan = test_run.plan
-        test_cases = test_run.plan.case.filter(case_status__name='CONFIRMED').select_related(
-            'default_tester').only('default_tester_id').filter(
-                pk__in=test_cases_ids)
-
-        if request.POST.get('_use_plan_sortkey'):
-            test_case_pks = (test_case.pk for test_case in test_cases)
-            query_set = TestCasePlan.objects.filter(
-                plan=test_plan, case__in=test_case_pks).values('case', 'sortkey')
-            sort_keys_in_plan = dict((row['case'], row['sortkey']) for row in query_set.iterator())
-            for test_case in test_cases:
-                sort_key = sort_keys_in_plan.get(test_case.pk, 0)
-                test_run.add_case_run(case=test_case, sortkey=sort_key)
-        else:
-            for test_case in test_cases:
-                test_run.add_case_run(case=test_case)
-
-        return HttpResponseRedirect(reverse('testruns-get',
-                                            args=[test_run.pk, ]))
-
-    def get(self, request, pk):
-        # information about TestRun, used in the page header
-        test_run = TestRun.objects.select_related(
-            'plan', 'manager', 'build'
-        ).only(
-            'plan', 'plan__name',
-            'manager__email', 'build__name'
-        ).get(pk=pk)
-
-        # select all CONFIRMED cases from the TestPlan that is a parent
-        # of this particular TestRun
-        rows = TestCasePlan.objects.values(
-            'case',
-            'case__create_date', 'case__summary',
-            'case__category__name',
-            'case__priority__value',
-            'case__author__username'
-        ).filter(
-            plan_id=test_run.plan,
-            case__case_status=TestCaseStatus.objects.filter(name='CONFIRMED').first().pk
-        ).order_by('case')  # order b/c of PostgreSQL
-
-        # also grab a list of all TestCase IDs which are already present in the
-        # current TestRun so we can mark them as disabled and not allow them to
-        # be selected
-        executions = TestExecution.objects.filter(run=pk).values_list('case', flat=True)
-
-        data = {
-            'test_run': test_run,
-            'confirmed_cases': rows,
-            'confirmed_cases_count': rows.count(),
-            'executions_count': len(executions),
-            'exist_execution_ids': executions,
-        }
-
-        return render(request, 'run/assign_case.html', data)
-
-
-# todo: this view should be removed in favor of API
-@method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
-class ManageTestRunCC(View):
-    """Add or remove cc from a test run"""
-
-    template_name = 'run/get_cc.html'
-    http_method_names = ['get']
-
-    def get(self, request, pk):
-        test_run = get_object_or_404(TestRun, pk=pk)
-        action = request.GET.get('do')
-        username_or_email = request.GET.get('user')
-        context_data = {'test_run': test_run, 'is_ajax': True}
-
-        try:
-            user = User.objects.get(
-                Q(username=username_or_email) |
-                Q(email=username_or_email)
-            )
-            context_data['message'] = ''
-        except ObjectDoesNotExist:
-            context_data['message'] = _('The user you typed does not exist in database')
-            return render(request, self.template_name, context_data)
-
-        if action == 'add':
-            test_run.add_cc(user=user)
-        elif action == 'remove':
-            test_run.remove_cc(user=user)
-
-        return render(request, self.template_name, context_data)
 
 
 def get_caseruns_of_runs(runs, kwargs=None):
