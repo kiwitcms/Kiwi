@@ -15,7 +15,7 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf && \
     sed -i 's!ErrorLog logs/ssl_error_log!ErrorLog "/dev/stderr"!' /etc/httpd/conf.d/ssl.conf && \
     sed -i 's!TransferLog logs/ssl_access_log!TransferLog "/dev/stdout"!' /etc/httpd/conf.d/ssl.conf && \
     sed -i 's!CustomLog logs/ssl_request_log!CustomLog "/dev/stdout"!' /etc/httpd/conf.d/ssl.conf && \
-    rm -rf /run/httpd && mkdir /run/httpd && chmod -R a+rwx /run/httpd
+    chmod -R a+rwx /run/httpd
 COPY ./etc/kiwi-httpd.conf /etc/httpd/conf.d/
 
 ENV PATH /venv/bin:${PATH} \
