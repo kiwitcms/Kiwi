@@ -53,6 +53,8 @@ function drawChart() {
         query['close_date__gte'] = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
     }
 
+    const totalKey = $('.main').data('total-key')
+
     jsonRPC('Testing.execution_trends', query, data => {
         drawPassingRateSummary(data.status_count)
 
@@ -97,7 +99,13 @@ function drawChart() {
                 value: (value, _ratio, _id, _index) => value ? value : undefined
             }
         }
+        config.legend = {
+            hide: [totalKey],
+        }
         c3.generate(config);
+
+        // hide the total data point
+        $(`.c3-target-${totalKey}`).addClass('hidden')
     });
 }
 
