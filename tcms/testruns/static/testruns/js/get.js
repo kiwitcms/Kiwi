@@ -10,8 +10,9 @@ $(document).ready(() => {
         if (state) {
             jsonRPC('TestRun.update', [testRunId, { 'stop_date': null }], () => { })
         } else {
-            let now = new Date().toISOString().replace("T", " ")
-            now = now.slice(0, now.length-5)
+            const timeZone = $('#clock').data('time-zone')
+            const now = currentTimeWithTimezone(timeZone)
+
             jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], () => { })
         }
     });
