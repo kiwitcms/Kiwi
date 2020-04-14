@@ -1,5 +1,3 @@
-let executionStatuses;
-
 $(document).ready(() => {
 
     $('.bootstrap-switch').bootstrapSwitch();
@@ -27,38 +25,36 @@ $(document).ready(() => {
     // bind everything in tags table
     tagsCard('TestRun', testRunId, { run: testRunId }, permRemoveTag);
 
-    jsonRPC('TestExecutionStatus.filter', {}, data => {
-        executionStatuses = data
-        drawPercentBar(testRunId)
+    jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
+        jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
+            drawPercentBar(testExecutions, executionStatuses)
+            renderTestExecutions(testExecutions, executionStatuses)
+        })
     })
 })
 
 
-function drawPercentBar(testRunId) {
+function drawPercentBar(testExecutions, executionStatuses) {
+    let positiveCount = 0;
+    let negativeCount = 0;
+    let allCount = testExecutions.length;
+    let statusCount = {}
+    executionStatuses.forEach(s => statusCount[s.name] = { count: 0, id: s.id })
 
-    jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
+    testExecutions.forEach(testExecution => {
+        const executionStatus = executionStatuses.find(s => s.id === testExecution.status_id)
 
-        let positiveCount = 0;
-        let negativeCount = 0;
-        let allCount = testExecutions.length;
-        let statusCount = {}
-        executionStatuses.forEach(s => statusCount[s.name] = { count: 0, id: s.id })
+        if (executionStatus.weight > 0) {
+            positiveCount++
+        } else if (executionStatus.weight < 0) {
+            negativeCount++
+        }
 
-        testExecutions.forEach(testExecution => {
-            const executionStatus = executionStatuses.find(s => s.id === testExecution.status_id)
-
-            if (executionStatus.weight > 0) {
-                positiveCount++
-            } else if (executionStatus.weight < 0) {
-                negativeCount++
-            }
-
-            statusCount[executionStatus.name].count++
-        })
-
-        renderProgressBars(positiveCount, negativeCount, allCount)
-        renderCountPerStatusList(statusCount)
+        statusCount[executionStatus.name].count++
     })
+
+    renderProgressBars(positiveCount, negativeCount, allCount)
+    renderCountPerStatusList(statusCount)
 }
 
 function renderProgressBars(positiveCount, negativeCount, allCount) {
@@ -92,12 +88,67 @@ function renderProgressBars(positiveCount, negativeCount, allCount) {
 
 function renderCountPerStatusList(statusCount) {
     for (var status in statusCount) {
-        const status_id = statusCount[status].id;
+        const statusId = statusCount[status].id;
 
-        $(`#count-for-status-${status_id}`).attr('href', `?status_id=${status_id}`);
-        $(`#count-for-status-${status_id}`).text(statusCount[status].count);
+        $(`#count-for-status-${statusId}`).attr('href', `?status_id=${statusId}`).text(statusCount[status].count);
     }
 }
+
+function renderTestExecutions(testExecutions, executionStatuses) {
+    const container = $('#test-executions-container')
+    const testExecutionRowTemplate = $('#test-execution-row')[0].content
+
+    const testCaseIds = []
+    testExecutions.forEach(testExecution => {
+        testCaseIds.push(testExecution.case_id)
+
+        const executionStatus = executionStatuses.find(status => status.id === testExecution.status_id)
+        const template = $(testExecutionRowTemplate.cloneNode(true))
+
+        container.append(renderTestExecutionRow(template, testExecution, executionStatus))
+    })
+
+    treeViewBind();
+    renderAdditionalInformation(testExecutions, testCaseIds)
+}
+
+function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
+    jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
+        testExecutions.forEach(testExecution => {
+            const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
+
+            const listGroupItem = $(`.test-execution-${testExecution.id}`)
+            listGroupItem.find('.test-execution-priority').html(testCase.priority)
+            listGroupItem.find('.test-execution-category').html(testCase.category)
+
+            const isAutomatedElement = listGroupItem.find('.test-execution-automated')
+            const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
+            const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
+            isAutomatedElement.addClass(isAutomatedIcon)
+            isAutomatedElement.attr('title', isAutomatedAttr)
+
+            jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id, 'is_defect': true }, bugs => {
+                listGroupItem.find('.test-execution-bugs-count').html(bugs.length)
+            })
+        })
+    })
+
+}
+
+function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
+    template.find('.list-group-item').addClass(`test-execution-${testExecution.id}`)
+    template.find('.test-execution-info').html(`TE-${testExecution.id}`)
+    template.find('.test-execution-info-link').html(testExecution.case)
+    template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case_id}/`)
+    template.find('.test-execution-tester').html(testExecution.tested_by || '-')
+    template.find('.test-execution-asignee').html(testExecution.assignee || '-')
+
+    template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
+    template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
+
+    return template
+}
+
 
 /////// the functions below were used in bulk-menu actions
 /////// and need updates before they can be used again
