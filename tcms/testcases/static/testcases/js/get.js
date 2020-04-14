@@ -1,4 +1,3 @@
-const bug_details_cache = {}
 const plan_cache = {}
 
 
@@ -218,55 +217,10 @@ $(document).ready(function() {
     initAddPlan(case_id, plans_table);
 
     // bugs table
-    $('#bugs').DataTable({
-        ajax: function(data, callback, settings) {
-            dataTableJsonRPC('TestExecution.get_links',
-                             {execution__case: case_id,
-                              is_defect: true}, callback);
-        },
-        columns: [
-            {
-                data: null,
-                render: function (data, type, full, meta) {
-                    return '<a href="' + data.url + '" class="bug-url">' + data.url + '</a>';
-                }
-            },
-            {
-                data: null,
-                render: function (data, type, full, meta) {
-                    return '<a href="#bugs" data-toggle="popover" data-html="true" ' +
-                                'data-content="undefined" data-trigger="focus" data-placement="top">' +
-                                '<span class="fa fa-info-circle"></span>' +
-                           '</a>';
-                }
-            },
-        ],
-        dom: "t",
-        language: {
-            loadingRecords: '<div class="spinner spinner-lg"></div>',
-            processing: '<div class="spinner spinner-lg"></div>',
-            zeroRecords: "No records found"
-        },
-        order: [[ 0, 'asc' ]],
-    });
-
-    $('#bugs').on('draw.dt', function () {
-        $('#bugs').find('[data-toggle=popover]')
-        .popovers()
-        .on('show.bs.popover', function(element) {
-            fetchBugDetails($(element.target).parents('tr').find('.bug-url')[0],
-                            element.target,
-                            bug_details_cache);
-        });
-    });
-
-    $('[data-toggle=popover]')
-        .popovers()
-        .on('show.bs.popover', function(element) {
-            fetchBugDetails($(element.target).parents('.list-view-pf-body').find('.bug-url')[0],
-                            element.target,
-                            bug_details_cache);
-    });
+    loadBugs('.bugs', {
+        execution__case: case_id,
+        is_defect: true
+    })
 
     // executions treeview
     treeViewBind();
