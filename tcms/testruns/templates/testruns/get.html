@@ -112,12 +112,81 @@
     </div> <!-- /row -->
 
     <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    {% trans 'Test executions' %}
+                </h2>
+                <div class="card-pf-body">
+                    <div id="test-executions-container" class="list-group tree-list-view-pf">
+                        <template id="test-execution-row">
+                            <div class="list-group-item">
+                                <div class="list-group-item-header">
+                                    <div class="list-view-pf-main-info">
+                                        <div class="list-view-pf-left">
+                                            <span class="fa fa-angle-right"></span>
+                                        </div>
+                                        <div class="list-view-pf-body">
+                                            <div class="list-view-pf-description" style="flex: 1 0 30%;">
+                                                <div class="list-group-item-text">
+                                                    <span class="test-execution-info"></span>
+                                                    <a class="test-execution-info-link"></a>
+                                                 </div>
+                                            </div>
+                                            <div class="list-view-pf-additional-info">
+                                                <div class="list-view-pf-additional-info">
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa test-execution-automated" data-automated="{% trans 'Automated' %}" data-manual="{% trans 'Manual' %}"></span>
+                                                    </div>
+                                                    <div title="{% trans 'Priority' %}" class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-hourglass"></span>
+                                                        <span class="test-execution-priority"></span>
+                                                    </div>
+                                                    <div title="{% trans 'Category' %}" class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-tag"></span>
+                                                        <span class="test-execution-category"></span>
+                                                    </div>
+                                                    <div title="{% trans 'Author' %}" class="list-view-pf-additional-info-item">
+                                                        <span class="fa pficon-user"></span>
+                                                        <span class="test-execution-asignee"></span>
+                                                    </div>
+                                                    <div title="{% trans 'Default tester' %}" class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-search"></span>
+                                                        <span class="test-execution-tester"></span>
+                                                    </div>
+                                                    <div title="{% trans 'Bugs' %}" class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-bug"></span>
+                                                        {% comment %} TODO fetch bugs {% endcomment %}
+                                                        <span class="test-execution-bugs-count"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="list-view-pf-additional-info" style="width: 30%;">
+                                                    <div title="{% trans 'Status' %}" class="list-view-pf-additional-info-item">
+                                                        <i class="fa test-execution-status-icon"></i>
+                                                        <strong class="test-execution-status-name"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item-container container-fluid hidden">
+                                    {% comment %} TODO: exandable content goes here {% endcomment %}
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /row -->
+
+    <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-6 col-md-6">
             {% include 'include/attachments.html' %}
         </div>
     </div> <!-- /row -->
 </div>
-
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
