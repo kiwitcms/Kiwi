@@ -163,3 +163,5 @@ function treeViewBind() {
       }
     });
 }
+
+const currentTimeWithTimezone = timeZone => moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
