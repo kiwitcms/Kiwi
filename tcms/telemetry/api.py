@@ -131,6 +131,8 @@ def execution_trends(query=None):
     for status in TestExecutionStatus.objects.all():
         data_set[status.name] = []
         colors.append(status.color)
+    data_set[str(_('TOTAL'))] = []
+    colors.append('black')
 
     status_count = {
         'positive': 0,
@@ -176,9 +178,14 @@ def execution_trends(query=None):
 
 
 def _append_status_counts_to_result(count, result):
+    total = 0
     for status in TestExecutionStatus.objects.all():
         status_count = count.get(status.name, 0)
         result.get(status.name).append(status_count)
+
+        total += status_count
+
+    result.get(str(_('TOTAL'))).append(total)
 
 
 @rpc_method(name='Testing.test_case_health')
