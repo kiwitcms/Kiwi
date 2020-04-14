@@ -101,8 +101,8 @@
 
                 <li style="float:right">
                     <a>
-                        <span class="fa fa-clock-o">
-                            {% get_current_timezone as TIME_ZONE %}
+                        {% get_current_timezone as TIME_ZONE %}
+                        <span id="clock" class="fa fa-clock-o" data-time-zone="{{ TIME_ZONE }}">
                             {{ SERVER_TIME }} {{ TIME_ZONE }}
                         </span>
                     </a>
