@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load static %}
+
+<div class="col-xs-12 col-sm-6 col-md-4 bugs-table" data-no-records-found-text="{% trans 'No records found' %}">
+    <div class="card-pf card-pf-accented">
+        <h2 class="card-pf-title">
+            <span class="fa fa-bug"></span>
+            {{ heading }}
+        </h2>
+
+        <div class="card-pf-body">
+            <table class="table {{ class }}">
+                <thead>
+                    <tr>
+                        <th colspan="2">{% trans 'URL' %}</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

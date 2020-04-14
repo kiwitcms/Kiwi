@@ -129,24 +129,8 @@
     </div>
 
     <div class="row row-cards-pf">
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-bug"></span>
-                    {% trans 'Bugs' %}
-                </h2>
-
-                <div class="card-pf-body">
-                    <table class="table" id="bugs">
-                        <thead>
-                            <tr>
-                                <th colspan="2">{% trans 'Bug URL' %}</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
+        {% trans "Bugs" as bugs_heading %}
+        {% include "include/bugs_table.html" with heading=bugs_heading class="bugs" %}
 
         <div class="col-xs-12 col-sm-6 col-md-8">
             <div class="card-pf card-pf-accented">
@@ -245,5 +229,6 @@
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/tags.js' %}"></script>
+<script src="{% static 'js/bugs.js' %}"></script>
 <script src="{% static 'testcases/js/get.js' %}"></script>
 {% endblock %}
