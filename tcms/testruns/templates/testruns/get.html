@@ -17,74 +17,75 @@
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
-</div>
 
-<div class="col-xs-12 col-sm-12 col-md-3">
-    <div class="card-pf card-pf-accented card-pf-aggregate-status">
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
 
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa pficon-topology"></span>{% trans 'Test plan' %}:
-            <a href="{% url 'test_plan_url_short' object.plan.pk %}">TP-{{ object.plan.pk }}: {{ object.plan.name }}</a>
-        </h2>
-
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
-            <a href="{% url 'testruns-search' %}?product={{ object.product_version.product_id }}" title="Search test runs of {{ object.product_version.product }}">{{ object.product_version.product }}</a>
-        </h2>
-
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa-random"></span>{% trans 'Version' %}:
-            <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&product_version={{ object.plan.product_version_id }}" title="Search test runs of {{ object.plan.product_version.value }}">{{ object.plan.product_version.value }}</a>
-        </h2>
-
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa-wrench"></span>{% trans 'Build' %}:
-            <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&product_version={{ object.plan.product_version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build_id }}">{{ object.build }}</a>
-        </h2>
-
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa pficon-user"></span>{% trans 'Manager' %}:
-            <a href="{% url 'tcms-profile' object.manager.username %}">{{ object.manager.username }}</a>
-        </h2>
-
-        {% if object.default_tester %}
             <h2 class="card-pf-title" style="text-align: left">
-                <span class="fa fa-search"></span>{% trans 'Default tester' %}:
-                <a href="{% url 'tcms-profile' object.default_tester.username %}">{{ object.default_tester.username }}</a>
+                <span class="fa fa pficon-topology"></span>{% trans 'Test plan' %}:
+                <a href="{% url 'test_plan_url_short' object.plan.pk %}">TP-{{ object.plan.pk }}: {{ object.plan.name }}</a>
             </h2>
-        {% endif %}
 
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa-spinner"></span>{% trans 'Status' %}:
-            <input class="bootstrap-switch" id="status_button" type="checkbox"
-                {% if not object.stop_date %}checked{% endif %} 
-                {% if not perms.testruns.change_testrun %}disabled{% endif %}>
-        </h2>
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
+                <a href="{% url 'testruns-search' %}?product={{ object.product_version.product_id }}" title="Search test runs of {{ object.product_version.product }}">{{ object.product_version.product }}</a>
+            </h2>
 
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa-calendar"></span>{% trans 'Started at' %}:
-            {{ object.start_date }}
-        </h2>
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-random"></span>{% trans 'Version' %}:
+                <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&product_version={{ object.plan.product_version_id }}" title="Search test runs of {{ object.plan.product_version.value }}">{{ object.plan.product_version.value }}</a>
+            </h2>
 
-        <h2 class="card-pf-title" style="text-align: left">
-            <span class="fa fa-calendar-check-o"></span>{% trans 'Finished at' %}:
-            {% if object.stop_date %}
-                {{ object.stop_date }}
-            {% else %}
-                -
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-wrench"></span>{% trans 'Build' %}:
+                <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&product_version={{ object.plan.product_version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build_id }}">{{ object.build }}</a>
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa pficon-user"></span>{% trans 'Manager' %}:
+                <a href="{% url 'tcms-profile' object.manager.username %}">{{ object.manager.username }}</a>
+            </h2>
+
+            {% if object.default_tester %}
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa fa-search"></span>{% trans 'Default tester' %}:
+                    <a href="{% url 'tcms-profile' object.default_tester.username %}">{{ object.default_tester.username }}</a>
+                </h2>
             {% endif %}
-        </h2>
 
-        <div class="card-pf-body"></div>
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-spinner"></span>{% trans 'Status' %}:
+                <input class="bootstrap-switch" id="status_button" type="checkbox"
+                    {% if not object.stop_date %}checked{% endif %} 
+                    {% if not perms.testruns.change_testrun %}disabled{% endif %}>
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-calendar"></span>{% trans 'Started at' %}:
+                {{ object.start_date }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-calendar-check-o"></span>{% trans 'Finished at' %}:
+                {% if object.stop_date %}
+                    {{ object.stop_date }}
+                {% else %}
+                    -
+                {% endif %}
+            </h2>
+
+            <div class="card-pf-body"></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+        {% include 'include/tags_card.html' with add_perm=perms.testruns.add_testruntag %}
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6">
+        {% include 'include/attachments.html' %}
     </div>
 </div>
-<div class="col-xs-12 col-sm-6 col-md-3">
-    {% include 'include/tags_card.html' with add_perm=perms.testruns.add_testruntag %}
-</div>
 
-<div class="col-xs-12 col-sm-6 col-md-6">
-    {% include 'include/attachments.html' %}
-</div>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
