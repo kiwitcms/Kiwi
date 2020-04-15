@@ -22,7 +22,7 @@ from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm
-from tcms.testruns.models import TestExecution, TestRun
+from tcms.testruns.models import TestExecution, TestExecutionStatus, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -130,6 +130,11 @@ class GetTestRunView(DetailView):  # pylint: disable=missing-permission-required
     http_method_names = ['get']
     model = TestRun
     response_class = ModifySettingsTemplateResponse
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['execution_statuses'] = TestExecutionStatus.objects.order_by('-weight', 'name')
+        return context
 
     def render_to_response(self, context, **response_kwargs):
         self.response_class.modify_settings = modify_settings(
