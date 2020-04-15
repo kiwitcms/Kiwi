@@ -166,8 +166,8 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('.js-del-case').bind('click', function() {
     delCaseRun(jQ(this).data('param'));
   });
-  jQ('.js-update-case').bind('click', function() {
-    postToURL(jQ(this).data('param'), serializeCaseRunFromInputList('id_table_cases', 'case_run'));
+  jQ('#update_case_run_text').bind('click', function() {
+    updateExecutionText();
   });
   jQ('.js-change-assignee').bind('click', function() {
     changeCaseRunAssignee();
@@ -539,6 +539,18 @@ function changeCaseRunAssignee() {
   }
   executions.forEach(execution_id => jsonRPC('TestExecution.update', [execution_id, {'assignee': assignee}], () => { }, sync=true));
   window.location.reload();
+}
+
+function updateExecutionText() {
+  const executions = serializeCaseRunFromInputList(jQ('#id_table_cases')[0]);
+  if (!executions.length) {
+    window.alert(default_messages.alert.no_case_selected);
+    return false;
+  }
+  executions.forEach(executionId =>
+    jsonRPC('TestExecution.update', [executionId, {'case_text_version': 'latest'}], () => { }, sync=true)
+  );
+  window.location.reload(true);
 }
 
 function serializeCaseRunFromInputList(table, name) {
