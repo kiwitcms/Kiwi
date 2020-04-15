@@ -85,18 +85,11 @@ function renderProgressBars(positiveCount, negativeCount, allCount) {
 }
 
 function renderCountPerStatusList(statusCount) {
-    $(".count-per-status-list").remove()
-    $(".count-per-status-container").prepend('<span class="count-per-status-list"></span>')
-
     for (var status in statusCount) {
-        const count = statusCount[status].count
-        const element = count ? `<a href="?status_id=${statusCount[status].id}">${count}</a>` : '0'
+        const status_id = statusCount[status].id;
 
-        $(".count-per-status-list").append(`
-      <li class="list-group-item" style="padding: 0;">
-        <label>${status}</label> - ${element}
-      </li>
-      `)
+        $(`#count-for-status-${status_id}`).attr('href', `?status_id=${status_id}`);
+        $(`#count-for-status-${status_id}`).text(statusCount[status].count);
     }
 }
 

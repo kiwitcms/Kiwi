@@ -89,7 +89,13 @@
                     </div>
                     <div>
                         <ul class="count-per-status-container list-group" style="columns: 2; margin: 0;">
+                            {% for status in execution_statuses%}
+                            <li class="list-group-item" style="padding:0; text-align:left">
+                                <label>{{ status.name }}</label> - <a id="count-for-status-{{ status.pk }}" href="#"></a>
+                            </li>
+                            {% endfor %}
                         </ul>
+
                         <li class="list-group-item" style="text-align: center; padding: 0;">
                             <label>{% trans "TOTAL" %}</label>-<a href="#" class="total-execution-count"></a>
                         </li>
