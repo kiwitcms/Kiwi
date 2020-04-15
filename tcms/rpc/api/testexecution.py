@@ -158,33 +158,44 @@ def update(execution_id, values, **kwargs):
         :raises: PermissionDenied if missing *testruns.change_testexecution* permission
     """
 
-    tcr = TestExecution.objects.get(pk=execution_id)
+    execution = TestExecution.objects.get(pk=execution_id)
     form = UpdateExecutionForm(values)
 
     if form.is_valid():
         if form.cleaned_data['build']:
-            tcr.build = form.cleaned_data['build']
+            execution.build = form.cleaned_data['build']
 
         if form.cleaned_data['assignee']:
-            tcr.assignee = form.cleaned_data['assignee']
+            execution.assignee = form.cleaned_data['assignee']
 
         if form.cleaned_data['status']:
-            tcr.status = form.cleaned_data['status']
+            execution.status = form.cleaned_data['status']
             request = kwargs.get(REQUEST_KEY)
-            tcr.tested_by = request.user
+            execution.tested_by = request.user
 
         if form.cleaned_data['sortkey'] is not None:
-            tcr.sortkey = form.cleaned_data['sortkey']
+            execution.sortkey = form.cleaned_data['sortkey']
 
         if form.cleaned_data['tested_by']:
-            tcr.tested_by = form.cleaned_data['tested_by']
+            execution.tested_by = form.cleaned_data['tested_by']
 
-        tcr.save()
+        case_text_version = form.cleaned_data['case_text_version']
+        if case_text_version:
+            _update_case_text_version(execution, case_text_version)
+
+        execution.save()
 
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return tcr.serialize()
+    return execution.serialize()
+
+
+def _update_case_text_version(execution, case_text_version):
+    if case_text_version == 'latest':
+        execution.case_text_version = execution.case.history.latest().history_id
+    else:
+        execution.case_text_version = int(case_text_version)
 
 
 # todo: missing permissions

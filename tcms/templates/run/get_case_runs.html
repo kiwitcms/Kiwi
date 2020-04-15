@@ -23,7 +23,7 @@
                                 <li><a href="#" title="{% trans 'Remove selected cases form this test run' %}" data-param="{{ test_run.pk }}" class="removeBlue9 js-del-case">{% trans "Remove" %}</a></li>
 				{% endif %}
 				{% if perms.testruns.change_testexecution %}
-                                <li><a href="#" title="{% trans 'Update the IDLE case runs to newest case text' %}" href="javascript:void(0)" data-param="{% url 'testruns-update_case_run_text' test_run.pk %}" class="updateBlue9 js-update-case" id="update_case_run_text">{% trans "Update" %}</a></li>
+                                <li><a href="#" title="{% trans 'Update the IDLE case runs to newest case text' %}" class="updateBlue9" id="update_case_run_text">{% trans "Update" %}</a></li>
 				{% endif %}
 				{% if perms.testruns.change_testexecution %}
                                 <li><a href="#" title="{% trans 'Assign this case(s) to other people' %}" class="assigneeBlue9 js-change-assignee">{% trans "Assignee" %}</a></li>

@@ -524,38 +524,6 @@ class ManageTestRunCC(View):
         return render(request, self.template_name, context_data)
 
 
-@method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
-class UpdateCaseRunTextView(View):
-    """Update TC.text for executions which are not completed, aka status__weight=0"""
-
-    http_method_names = ['post']
-
-    def post(self, request, pk):
-        test_run = get_object_or_404(TestRun, pk=pk)
-
-        if request.POST.get('case_run'):
-            executions = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
-        else:
-            executions = test_run.case_run.all()
-
-        executions = executions.filter(status__weight=0)
-
-        for execution in executions:
-            latest_version = execution.case.history.latest().history_id
-            if execution.case_text_version != latest_version:
-                info = "%s: %s -> %s" % (
-                    execution.case.summary,
-                    execution.case_text_version,
-                    latest_version
-                )
-                messages.add_message(request, messages.SUCCESS, info)
-
-                execution.case_text_version = latest_version
-                execution.save()
-
-        return HttpResponseRedirect(reverse('testruns-get', args=[pk]))
-
-
 def get_caseruns_of_runs(runs, kwargs=None):
     """
     Filtering argument -

@@ -364,104 +364,6 @@ class TestAddRemoveRunCC(BaseCaseRun):
         )
 
 
-class TestUpdateCaseRunText(BaseCaseRun):
-    """Test update_case_run_text view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-
-        cls.testruns_url = reverse('testruns-get', args=[cls.test_run.pk])
-        cls.update_url = reverse('testruns-update_case_run_text',
-                                 args=[cls.test_run.pk])
-
-        # To increase case text version
-        cls.execution_1.case.text = "Scenario Version 1"
-        cls.execution_1.case.save()
-
-        cls.execution_1.case.text = "Scenario Version 2"
-        cls.execution_1.case.save()
-
-    def test_get_update_caserun_text_with_permissions(self):
-        user_should_have_perm(self.tester, 'testruns.change_testexecution')
-        response = self.client.get(self.testruns_url)
-        self.assertContains(response, 'id="update_case_run_text"')
-
-    def test_update_selected_case_runs_with_permissions(self):
-        user_should_have_perm(self.tester, 'testruns.change_testexecution')
-
-        self.assertNotEqual(self.execution_1.case.history.latest().history_id,
-                            self.execution_1.case_text_version)
-
-        expected_text = "%s: %s -> %s" % (
-            self.execution_1.case.summary,
-            self.execution_1.case_text_version,
-            self.execution_1.case.history.latest().history_id
-        )
-
-        response = self.client.post(self.update_url,
-                                    {'pk': [self.execution_1.pk]},
-                                    follow=True)
-
-        self.assertContains(response, expected_text)
-
-        self.execution_1.refresh_from_db()
-
-        self.assertEqual(
-            self.execution_1.case.get_text_with_version(
-                self.execution_1.case_text_version
-            ),
-            "Scenario Version 2"
-        )
-        self.assertEqual(
-            self.execution_1.case.history.latest().history_id,
-            self.execution_1.case_text_version
-        )
-
-    def test_get_update_caserun_text_without_permissions(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
-        response = self.client.get(self.testruns_url)
-        self.assertNotContains(response, 'id="update_case_run_text"')
-
-    def test_update_selected_case_runs_without_permissions(self):
-        self.execution_1.case.text = "Scenario Version 3"
-        self.execution_1.case.save()
-
-        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
-
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        self.assertNotEqual(
-            self.execution_1.case.history.latest().history_id,
-            self.execution_1.case_text_version
-        )
-
-        response = self.client.post(self.update_url,
-                                    {'pk': [self.execution_1.pk]},
-                                    follow=True)
-
-        self.assertRedirects(
-            response,
-            reverse('tcms-login') + '?next=' + self.update_url
-        )
-
-        self.execution_1.refresh_from_db()
-
-        self.assertNotEqual(
-            self.execution_1.case.get_text_with_version(
-                self.execution_1.case_text_version
-            ),
-            "Scenario Version 3"
-        )
-
-        self.assertNotEqual(
-            self.execution_1.case.history.latest().history_id,
-            self.execution_1.case_text_version
-        )
-
-
 class TestAddCasesToRun(BaseCaseRun):
     """Test AddCasesToRunView"""
 
@@ -562,11 +464,9 @@ class TestRunCasesMenu(BaseCaseRun):
 
         cls.update_case_run_text_html = \
             '<a href="#" title="{0}" \
-            href="javascript:void(0)" data-param="{1}" \
-            class="updateBlue9 js-update-case" id="update_case_run_text">{2}</a>' \
+            class="updateBlue9" id="update_case_run_text">{1}</a>' \
             .format(
                 _('Update the IDLE case runs to newest case text'),
-                reverse('testruns-update_case_run_text', args=[cls.test_run.pk]),
                 _('Update')
             )
 

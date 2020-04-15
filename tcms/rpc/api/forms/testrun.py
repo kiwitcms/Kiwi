@@ -71,3 +71,4 @@ class NewExecutionForm(BaseCaseRunForm):
 class UpdateExecutionForm(BaseCaseRunForm):
     tested_by = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
     build = forms.ModelChoiceField(queryset=Build.objects.all(), required=False)
+    case_text_version = forms.CharField(required=False)
