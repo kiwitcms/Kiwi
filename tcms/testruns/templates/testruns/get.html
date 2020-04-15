@@ -96,9 +96,9 @@
                             {% endfor %}
                         </ul>
 
-                        <li class="list-group-item" style="text-align: center; padding: 0;">
-                            <label>{% trans "TOTAL" %}</label>-<a href="#" class="total-execution-count"></a>
-                        </li>
+                        <div style="text-align: center">
+                            <label>{% trans "TOTAL" %}</label> - <a href="{% url 'testruns-get' object.pk %}" class="total-execution-count"></a>
+                        </div>
                     </div>
                 </div>
             </div>
