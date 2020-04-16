@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-11 11:38\n"
+"PO-Revision-Date: 2020-04-16 13:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -157,7 +157,7 @@ msgstr "Resumo"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr "adicionar novo Produto"
+msgstr "EC"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
