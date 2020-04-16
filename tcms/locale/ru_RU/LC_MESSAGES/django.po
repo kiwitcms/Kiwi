@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-15 13:05\n"
+"PO-Revision-Date: 2020-04-16 14:08\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -121,7 +121,7 @@ msgstr "прокомментировано"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Переоткрыть"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -247,7 +247,7 @@ msgstr "*баг закрыт*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*ошибка переоткрыта*"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -414,7 +414,7 @@ msgstr "Подключаемые модули"
 
 #: tcms/settings/common.py:325
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: tcms/settings/common.py:326
 msgid "Report an Issue"
@@ -448,7 +448,7 @@ msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "НОВОЕ: Ошибка #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
