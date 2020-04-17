@@ -70,11 +70,16 @@ class TestFilterCases(APITestCase):
 
 
 class TestUpdate(APITestCase):
+    fake_username = 'FakeUsername'
+    fake_user_id = 999
+    fake_email = 'fake@email.com'
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory(summary='Sanity test case', text='Given-When-Then', default_tester=None)
+        self.testcase = TestCaseFactory(summary='Sanity test case',
+                                        text='Given-When-Then',
+                                        default_tester=None)
         self.new_author = UserFactory()
 
     def test_update_text_and_product(self):
@@ -113,6 +118,72 @@ class TestUpdate(APITestCase):
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
+
+    def test_update_auth_should_fail_for_fake_user_id(self):
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'author': self.fake_user_id,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertNotEqual(self.fake_user_id, self.testcase.author)
+
+    def test_update_author_accepts_username(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        # update the test case
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'author': self.new_author.username,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.author)
+        self.assertEqual(self.new_author.pk, updated['author_id'])
+
+    def test_update_auth_should_fail_for_fake_username(self):
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'author': self.fake_username,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertNotEqual(self.fake_username, self.testcase.author.username)
+
+    def test_update_author_accepts_email(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        # update the test case
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'author': self.new_author.email,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.author)
+        self.assertEqual(self.new_author.pk, updated['author_id'])
+
+    def test_update_auth_should_fail_for_fake_email(self):
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'author': self.fake_email,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertNotEqual(self.fake_email, self.testcase.author.email)
 
     def test_update_priority_issue_1318(self):
         expected_priority = Priority.objects.exclude(pk=self.testcase.priority.pk).first()
@@ -159,7 +230,7 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': 9999,
+                    'default_tester': self.fake_user_id,
                 }
             )
 
@@ -188,7 +259,7 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': 'FakeUsername',
+                    'default_tester': self.fake_username,
                 }
             )
 
@@ -216,7 +287,7 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': 'some_fake@email.com',
+                    'default_tester': self.fake_email,
                 }
             )
 

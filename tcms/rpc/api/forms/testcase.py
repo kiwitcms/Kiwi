@@ -17,3 +17,4 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
         exclude = ('tag', 'component', 'plan')  # pylint: disable=modelform-uses-exclude
 
     default_tester = UserField()
+    author = UserField()
