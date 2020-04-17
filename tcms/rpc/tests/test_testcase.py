@@ -74,7 +74,7 @@ class TestUpdate(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory(summary='Sanity test case', text='Given-When-Then')
+        self.testcase = TestCaseFactory(summary='Sanity test case', text='Given-When-Then', default_tester=None)
         self.new_author = UserFactory()
 
     def test_update_text_and_product(self):
@@ -137,6 +137,92 @@ class TestUpdate(APITestCase):
         # but nothing else changed, issue #1318
         self.assertEqual('Sanity test case', self.testcase.summary)
         self.assertEqual('Given-When-Then', self.testcase.text)
+
+    def test_update_default_tester_accepts_user_id(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'default_tester': self.new_author.pk,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
+
+    def test_update_default_tester_should_fail_with_fake_user_id(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'default_tester': 9999,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+
+        self.assertIsNone(self.testcase.default_tester)
+
+    def test_update_default_tester_accepts_username(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'default_tester': self.new_author.username,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
+
+    def test_update_default_tester_should_fail_with_fake_username(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'default_tester': 'FakeUsername',
+                }
+            )
+
+        self.testcase.refresh_from_db()
+
+        self.assertIsNone(self.testcase.default_tester)
+
+    def test_update_default_tester_accepts_email(self):
+        self.assertIsNone(self.testcase.default_tester)
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'default_tester': self.new_author.email,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
+
+    def test_update_default_tester_should_fail_with_fake_email(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'default_tester': 'some_fake@email.com',
+                }
+            )
+
+        self.testcase.refresh_from_db()
+
+        self.assertIsNone(self.testcase.default_tester)
 
 
 class TestCreate(APITestCase):
