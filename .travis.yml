@@ -83,9 +83,6 @@ jobs:
             - graphviz
 
     - env:
-        - CMD=doc8
-
-    - env:
         - CMD=test_for_missing_migrations
         - TEST_DB=SQLite
 
