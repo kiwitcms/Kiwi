@@ -18,3 +18,4 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
 
     default_tester = UserField()
     author = UserField()
+    reviewer = UserField()

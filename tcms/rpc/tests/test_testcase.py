@@ -70,9 +70,9 @@ class TestFilterCases(APITestCase):
 
 
 class TestUpdate(APITestCase):
-    fake_username = 'FakeUsername'
-    fake_user_id = 999
-    fake_email = 'fake@email.com'
+    non_existing_username = 'FakeUsername'
+    non_existing_user_id = 999
+    non_existing_email = 'fake@email.com'
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -119,17 +119,18 @@ class TestUpdate(APITestCase):
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
 
-    def test_update_auth_should_fail_for_fake_user_id(self):
+    def test_update_author_should_fail_for_non_existing_user_id(self):
+        initial_author_id = self.testcase.author.pk
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'author': self.fake_user_id,
+                    'author': self.non_existing_user_id,
                 }
             )
 
         self.testcase.refresh_from_db()
-        self.assertNotEqual(self.fake_user_id, self.testcase.author)
+        self.assertEqual(initial_author_id, self.testcase.author.pk)
 
     def test_update_author_accepts_username(self):
         self.assertNotEqual(self.new_author, self.testcase.author)
@@ -146,17 +147,18 @@ class TestUpdate(APITestCase):
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
 
-    def test_update_auth_should_fail_for_fake_username(self):
+    def test_update_author_should_fail_for_non_existing_username(self):
+        initial_author_username = self.testcase.author.username
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'author': self.fake_username,
+                    'author': self.non_existing_username,
                 }
             )
 
         self.testcase.refresh_from_db()
-        self.assertNotEqual(self.fake_username, self.testcase.author.username)
+        self.assertEqual(initial_author_username, self.testcase.author.username)
 
     def test_update_author_accepts_email(self):
         self.assertNotEqual(self.new_author, self.testcase.author)
@@ -173,17 +175,18 @@ class TestUpdate(APITestCase):
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
 
-    def test_update_auth_should_fail_for_fake_email(self):
+    def test_update_author_should_fail_for_non_existing_email(self):
+        initial_author_email = self.testcase.author.email
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'author': self.fake_email,
+                    'author': self.non_existing_email,
                 }
             )
 
         self.testcase.refresh_from_db()
-        self.assertNotEqual(self.fake_email, self.testcase.author.email)
+        self.assertEqual(initial_author_email, self.testcase.author.email)
 
     def test_update_priority_issue_1318(self):
         expected_priority = Priority.objects.exclude(pk=self.testcase.priority.pk).first()
@@ -223,14 +226,14 @@ class TestUpdate(APITestCase):
 
         self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
 
-    def test_update_default_tester_should_fail_with_fake_user_id(self):
+    def test_update_default_tester_should_fail_with_non_existing_user_id(self):
         self.assertIsNone(self.testcase.default_tester)
 
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': self.fake_user_id,
+                    'default_tester': self.non_existing_user_id,
                 }
             )
 
@@ -252,14 +255,14 @@ class TestUpdate(APITestCase):
 
         self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
 
-    def test_update_default_tester_should_fail_with_fake_username(self):
+    def test_update_default_tester_should_fail_with_non_existing_username(self):
         self.assertIsNone(self.testcase.default_tester)
 
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': self.fake_username,
+                    'default_tester': self.non_existing_username,
                 }
             )
 
@@ -280,20 +283,99 @@ class TestUpdate(APITestCase):
 
         self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
 
-    def test_update_default_tester_should_fail_with_fake_email(self):
+    def test_update_default_tester_should_fail_with_non_existing_email(self):
         self.assertIsNone(self.testcase.default_tester)
 
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': self.fake_email,
+                    'default_tester': self.non_existing_email,
                 }
             )
 
         self.testcase.refresh_from_db()
 
         self.assertIsNone(self.testcase.default_tester)
+
+    def test_update_reviewer_accepts_user_id(self):
+        self.assertNotEqual(self.new_author, self.testcase.reviewer)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'reviewer': self.new_author.pk,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.reviewer.pk)
+
+    def test_update_reviewer_should_fail_with_non_existing_user_id(self):
+        initial_reviewer_id = self.testcase.reviewer.pk
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'reviewer': self.non_existing_user_id,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_reviewer_id, self.testcase.reviewer.pk)
+
+    def test_update_reviewer_accepts_username(self):
+        self.assertNotEqual(self.new_author, self.testcase.reviewer)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'reviewer': self.new_author.username,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.reviewer)
+
+    def test_update_reviewer_should_fail_for_non_existing_username(self):
+        initial_reviewer_username = self.testcase.reviewer.username
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'reviewer': self.non_existing_username,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_reviewer_username, self.testcase.reviewer.username)
+
+    def test_update_reviewer_accepts_email(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'reviewer': self.new_author.email,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.reviewer)
+
+    def test_update_reviewer_should_fail_for_non_existing_email(self):
+        initial_reviewer_email = self.testcase.reviewer.email
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'reviewer': self.non_existing_email,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_reviewer_email, self.testcase.reviewer.email)
 
 
 class TestCreate(APITestCase):
