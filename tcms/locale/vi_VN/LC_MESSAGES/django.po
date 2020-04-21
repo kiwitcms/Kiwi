@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 13:02\n"
+"PO-Revision-Date: 2020-04-21 13:27\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -90,7 +90,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "Phiên bản"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:59
@@ -402,27 +402,27 @@ msgstr "PLUGIN"
 
 #: tcms/settings/common.py:325
 msgid "Forum"
-msgstr ""
+msgstr "Diễn đàn"
 
 #: tcms/settings/common.py:326
 msgid "Report an Issue"
-msgstr ""
+msgstr "Báo cáo vấn đề"
 
 #: tcms/settings/common.py:327
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Yêu cầu trợ giúp trên StackOverflow"
 
 #: tcms/settings/common.py:328
 msgid "User Guide"
-msgstr ""
+msgstr "Hướng dẫn người dùng"
 
 #: tcms/settings/common.py:329
 msgid "Administration Guide"
-msgstr ""
+msgstr "Hướng dẫn quản trị"
 
 #: tcms/settings/common.py:330
 msgid "API Help"
-msgstr ""
+msgstr "Trợ giúp API"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
@@ -906,19 +906,19 @@ msgstr ""
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "Ngôn ngữ được hỗ trợ"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "Yêu cầu ngôn ngữ mới"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "Chế độ dịch"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "Hướng dẫn dịch"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
