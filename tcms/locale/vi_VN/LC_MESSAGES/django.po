@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 16:44\n"
+"PO-Revision-Date: 2020-04-21 16:59\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -398,7 +398,7 @@ msgstr "Khác"
 
 #: tcms/settings/common.py:314
 msgid "PLUGINS"
-msgstr "PLUGIN"
+msgstr "PHẦN MỞ RỘNG"
 
 #: tcms/settings/common.py:325
 msgid "Forum"
@@ -1284,7 +1284,7 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "Email khôi phục mật khẩu đã được gửi"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
@@ -1293,11 +1293,11 @@ msgstr "E-mail"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr "Reset mật khẩu"
+msgstr "Khôi phục mật khẩu"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Khôi phục mật khẩu Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
