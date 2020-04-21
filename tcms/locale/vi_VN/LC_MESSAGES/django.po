@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 16:59\n"
+"PO-Revision-Date: 2020-04-21 17:09\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -345,23 +345,23 @@ msgstr "TÌM KIẾM"
 
 #: tcms/settings/common.py:293
 msgid "Search Test Plans"
-msgstr "Tìm kiếm Test Plan"
+msgstr "Tìm theo Test Plan"
 
 #: tcms/settings/common.py:294
 msgid "Search Test Runs"
-msgstr "Tìm kiếm Test Run"
+msgstr "Tìm theo Test Run"
 
 #: tcms/settings/common.py:295
 msgid "Search Test Cases"
-msgstr "Tìm kiếm Test Case"
+msgstr "Tìm theo Test Case"
 
 #: tcms/settings/common.py:296
 msgid "Search Bugs"
-msgstr "Tìm kiếm lỗi"
+msgstr "Tìm theo lỗi"
 
 #: tcms/settings/common.py:299
 msgid "TELEMETRY"
-msgstr "TELEMETRY"
+msgstr "QUẢN LÝ TEST CASE"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
