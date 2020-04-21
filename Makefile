@@ -128,6 +128,8 @@ build-for-pypi:
 
 .PHONY: messages
 messages:
-	./manage.py makemessages --locale en --no-obsolete --ignore "test*.py"
+	./manage.py makemessages --locale en --no-obsolete \
+	    --ignore "test*.py" --ignore "docs/*" --ignore "kiwi_lint/*" \
+	    --ignore "*.egg-info/*" --ignore "*/node_modules/*"
 	git checkout tcms/locale/eo_UY/
 	ls tcms/locale/en/LC_MESSAGES/*.po | xargs -n 1 -I @ msgattrib -o @ --no-fuzzy @
