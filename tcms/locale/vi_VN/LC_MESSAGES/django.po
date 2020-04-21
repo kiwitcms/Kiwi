@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 12:56\n"
+"PO-Revision-Date: 2020-04-21 13:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -398,7 +398,7 @@ msgstr "Khác"
 
 #: tcms/settings/common.py:314
 msgid "PLUGINS"
-msgstr "MỞ RỘNG"
+msgstr "PLUGIN"
 
 #: tcms/settings/common.py:325
 msgid "Forum"
