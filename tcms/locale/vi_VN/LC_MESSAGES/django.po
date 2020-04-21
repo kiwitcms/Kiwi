@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 17:09\n"
+"PO-Revision-Date: 2020-04-21 17:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -365,11 +365,11 @@ msgstr "QUẢN LÝ TEST CASE"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
-msgstr "Kiểm thử"
+msgstr "Test Case"
 
 #: tcms/settings/common.py:301
 msgid "Breakdown"
-msgstr "Breakdown"
+msgstr "Thống kê"
 
 #: tcms/settings/common.py:302
 msgid "Status matrix"
