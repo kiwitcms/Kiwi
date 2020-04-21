@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 11:57\n"
+"PO-Revision-Date: 2020-04-21 12:17\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -321,7 +321,7 @@ msgstr ""
 
 #: tcms/settings/common.py:283
 msgid "DASHBOARD"
-msgstr ""
+msgstr "BẢNG TỔNG HỢP"
 
 #: tcms/settings/common.py:284
 msgid "TESTING"
@@ -329,15 +329,15 @@ msgstr "KIỂM THỬ"
 
 #: tcms/settings/common.py:285
 msgid "New Test Plan"
-msgstr ""
+msgstr "Kế hoạch kiểm thử mới"
 
 #: tcms/settings/common.py:287
 msgid "New Test Case"
-msgstr ""
+msgstr "Trường hợp kiểm thử mới"
 
 #: tcms/settings/common.py:289
 msgid "New Bug"
-msgstr ""
+msgstr "Lỗi (bug) mới"
 
 #: tcms/settings/common.py:292
 msgid "SEARCH"
@@ -345,7 +345,7 @@ msgstr "TÌM KIẾM"
 
 #: tcms/settings/common.py:293
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Tìm kế hoạch kiểm thử"
 
 #: tcms/settings/common.py:294
 msgid "Search Test Runs"
@@ -353,11 +353,11 @@ msgstr ""
 
 #: tcms/settings/common.py:295
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Tìm trường hợp kiểm thử"
 
 #: tcms/settings/common.py:296
 msgid "Search Bugs"
-msgstr ""
+msgstr "Tìm lỗi (bug)"
 
 #: tcms/settings/common.py:299
 msgid "TELEMETRY"
@@ -365,7 +365,7 @@ msgstr "CHẨN ĐOÁN"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
-msgstr ""
+msgstr "Kiểm thử"
 
 #: tcms/settings/common.py:301
 msgid "Breakdown"
@@ -398,7 +398,7 @@ msgstr ""
 
 #: tcms/settings/common.py:314
 msgid "PLUGINS"
-msgstr ""
+msgstr "MỞ RỘNG"
 
 #: tcms/settings/common.py:325
 msgid "Forum"
