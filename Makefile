@@ -125,6 +125,7 @@ coverity:
 build-for-pypi:
 	./tests/check-build
 
+LOCAL_DJANGO_PO=tcms/locale/en/LC_MESSAGES/django.po
 
 .PHONY: messages
 messages:
@@ -132,4 +133,13 @@ messages:
 	    --ignore "test*.py" --ignore "docs/*" --ignore "kiwi_lint/*" \
 	    --ignore "*.egg-info/*" --ignore "*/node_modules/*"
 	git checkout tcms/locale/eo_UY/
+
+	for APP_NAME in "github-app" "github-marketplace" "kiwitcms-enterprise" "tenants"; do \
+	    echo "---- Trying to merge translations from ../$$APP_NAME"; \
+	    if [ -d "../$$APP_NAME" ]; then \
+	        REMOTE_DJANGO_PO=`find ../$$APP_NAME -type f -wholename "*/locale/en/LC_MESSAGES/django.po"`; \
+	        msgcat --use-first -o $(LOCAL_DJANGO_PO) $(LOCAL_DJANGO_PO) $$REMOTE_DJANGO_PO; \
+	    fi; \
+	done
+
 	ls tcms/locale/en/LC_MESSAGES/*.po | xargs -n 1 -I @ msgattrib -o @ --no-fuzzy @
