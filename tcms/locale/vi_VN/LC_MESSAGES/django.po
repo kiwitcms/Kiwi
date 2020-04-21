@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 18:18\n"
+"PO-Revision-Date: 2020-04-21 18:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -1857,7 +1857,7 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "ĐÃ ĐỀ NGHỊ"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -1865,19 +1865,19 @@ msgstr "ĐÃ XÁC NHẬN"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "ĐÃ ẨN"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "CẦN CẬP NHẬT"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "IDLE"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "ĐANG CHẠY"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
@@ -1893,11 +1893,11 @@ msgstr "THẤT BẠI"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr "BỊ CHẶN"
+msgstr "ĐÃ CHẶN"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "LỖI"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
