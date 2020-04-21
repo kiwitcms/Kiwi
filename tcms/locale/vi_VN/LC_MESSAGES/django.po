@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 13:01\n"
+"PO-Revision-Date: 2020-04-21 13:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -864,7 +864,7 @@ msgstr "Điều hướng"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Chào mừng bạn"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -889,12 +889,12 @@ msgstr ""
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr ""
+msgstr "Đăng nhập"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Đăng ký"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
