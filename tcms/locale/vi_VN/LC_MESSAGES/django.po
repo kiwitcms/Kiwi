@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 12:17\n"
+"PO-Revision-Date: 2020-04-21 12:56\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -321,7 +321,7 @@ msgstr ""
 
 #: tcms/settings/common.py:283
 msgid "DASHBOARD"
-msgstr "BẢNG TỔNG HỢP"
+msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:284
 msgid "TESTING"
@@ -329,15 +329,15 @@ msgstr "KIỂM THỬ"
 
 #: tcms/settings/common.py:285
 msgid "New Test Plan"
-msgstr "Kế hoạch kiểm thử mới"
+msgstr "Test Plan mới"
 
 #: tcms/settings/common.py:287
 msgid "New Test Case"
-msgstr "Trường hợp kiểm thử mới"
+msgstr "Test Case mới"
 
 #: tcms/settings/common.py:289
 msgid "New Bug"
-msgstr "Lỗi (bug) mới"
+msgstr "Lỗi mới"
 
 #: tcms/settings/common.py:292
 msgid "SEARCH"
@@ -345,23 +345,23 @@ msgstr "TÌM KIẾM"
 
 #: tcms/settings/common.py:293
 msgid "Search Test Plans"
-msgstr "Tìm kế hoạch kiểm thử"
+msgstr "Tìm kiếm Test Plan"
 
 #: tcms/settings/common.py:294
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Tìm kiếm Test Run"
 
 #: tcms/settings/common.py:295
 msgid "Search Test Cases"
-msgstr "Tìm trường hợp kiểm thử"
+msgstr "Tìm kiếm Test Case"
 
 #: tcms/settings/common.py:296
 msgid "Search Bugs"
-msgstr "Tìm lỗi (bug)"
+msgstr "Tìm kiếm lỗi"
 
 #: tcms/settings/common.py:299
 msgid "TELEMETRY"
-msgstr "CHẨN ĐOÁN"
+msgstr "TELEMETRY"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
@@ -369,20 +369,20 @@ msgstr "Kiểm thử"
 
 #: tcms/settings/common.py:301
 msgid "Breakdown"
-msgstr ""
+msgstr "Breakdown"
 
 #: tcms/settings/common.py:302
 msgid "Status matrix"
-msgstr ""
+msgstr "Trạng thái matrix"
 
 #: tcms/settings/common.py:303
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Xu hướng thực hiện"
 
 #: tcms/settings/common.py:304
 msgid "TestCase health"
-msgstr ""
+msgstr "Sức khỏe TestCase"
 
 #: tcms/settings/common.py:309
 msgid "ADMIN"
@@ -390,11 +390,11 @@ msgstr "QUẢN TRỊ"
 
 #: tcms/settings/common.py:310
 msgid "Users and groups"
-msgstr ""
+msgstr "Người dùng và nhóm"
 
 #: tcms/settings/common.py:312
 msgid "Everything else"
-msgstr ""
+msgstr "Khác"
 
 #: tcms/settings/common.py:314
 msgid "PLUGINS"
