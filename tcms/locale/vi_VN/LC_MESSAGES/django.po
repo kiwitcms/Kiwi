@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 11:34\n"
+"PO-Revision-Date: 2020-04-21 11:57\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -192,7 +192,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Tên đăng nhập"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
@@ -325,7 +325,7 @@ msgstr ""
 
 #: tcms/settings/common.py:284
 msgid "TESTING"
-msgstr ""
+msgstr "KIỂM THỬ"
 
 #: tcms/settings/common.py:285
 msgid "New Test Plan"
@@ -341,7 +341,7 @@ msgstr ""
 
 #: tcms/settings/common.py:292
 msgid "SEARCH"
-msgstr ""
+msgstr "TÌM KIẾM"
 
 #: tcms/settings/common.py:293
 msgid "Search Test Plans"
@@ -361,7 +361,7 @@ msgstr ""
 
 #: tcms/settings/common.py:299
 msgid "TELEMETRY"
-msgstr ""
+msgstr "CHẨN ĐOÁN"
 
 #: tcms/settings/common.py:300
 msgid "Testing"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: tcms/settings/common.py:309
 msgid "ADMIN"
-msgstr ""
+msgstr "QUẢN TRỊ"
 
 #: tcms/settings/common.py:310
 msgid "Users and groups"
@@ -549,7 +549,7 @@ msgstr ""
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "hệ thống open source quản lý trường hợp kiểm thử hàng đầu"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
@@ -860,7 +860,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Điều hướng"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
@@ -1226,19 +1226,19 @@ msgstr ""
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Mật khẩu"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Quên"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "mật khẩu"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Đăng nhập"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
@@ -1246,19 +1246,19 @@ msgstr "Chào mừng bạn đến với Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Vui lòng đăng nhập để bắt đầu"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "hoặc"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "đăng ký tài khoản mới"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "nếu bạn chưa có tài khoản!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
