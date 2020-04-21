@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-21 18:02\n"
+"PO-Revision-Date: 2020-04-21 18:18\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -479,40 +479,40 @@ msgstr "Thủ công"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr "Ưu tiên"
+msgstr "Theo độ ưu tiên"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr "Phân loại"
+msgstr "Theo phân loại"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
-msgstr ""
+msgstr "TỔNG CỘNG"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Positive"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negative"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Biểu đồ kiểm thử"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "Test case"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "Test run"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
@@ -1881,19 +1881,19 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "TẠM DỪNG"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "THÀNH CÔNG"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "THẤT BẠI"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "BỊ CHẶN"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
