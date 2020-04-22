@@ -100,21 +100,6 @@ To upgrade running Kiwi TCMS containers execute the following commands::
     back these up before upgrading!
 
 
-Allow Kiwi TCMS HTTP access
----------------------------
-
-By default the Kiwi TCMS container enforces HTTPS connections, by redirecting
-HTTP (80) requests to the HTTPS port (443). This behavior may be deactivated
-via the ``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the
-application via ``docker compose`` then add::
-
-        environment:
-            KIWI_DONT_ENFORCE_HTTPS: "true"
-
-to ``docker-compose.yml``. If starting the container via ``docker run`` then
-add ``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
-
-
 SSL configuration
 -----------------
 
@@ -192,6 +177,29 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
 
         # do not verify the self-signed cert
         server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
+
+
+Enable plain text HTTP access
+-----------------------------
+
+By default the Kiwi TCMS container enforces HTTPS connections, by redirecting
+HTTP (80) requests to the HTTPS port (443). This behavior may be deactivated
+via the ``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the
+application via ``docker compose`` then add::
+
+        environment:
+            KIWI_DONT_ENFORCE_HTTPS: "true"
+
+to ``docker-compose.yml``. If starting the container via ``docker run`` then
+add ``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
+
+.. warning::
+
+    Disabling SSL means all data transmissions, including passwords will be
+    easily accessible to 3rd parties who have access to the same network.
+
+    Running plain text HTTP over the public Internet is a serious security
+    flaw! You should purchase an SSL certificate instead!
 
 
 Customization
