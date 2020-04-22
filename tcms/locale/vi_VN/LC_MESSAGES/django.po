@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-22 07:19\n"
+"PO-Revision-Date: 2020-04-22 07:53\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -25,7 +25,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Mô tả vấn đề:\n\n"
+"Tần suất lặp lại:\n\n"
+"Các bước để lặp lại:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Các kết quả hiện tại:\n\n"
+"Các kết quả mong muốn:\n\n"
+"Thông tin thêm:"
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
@@ -162,7 +170,7 @@ msgstr "thêm Phiên bản mới"
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "thêm mới Build"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -227,7 +235,7 @@ msgstr ""
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
-msgstr ""
+msgstr "Lỗi mới"
 
 #: tcms/bugs/views.py:167
 msgid "Edit bug"
@@ -1538,7 +1546,7 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr "**Kịch bản**. ...hành       vi nào sẽ được kiểm thử ...\n"
+msgstr "**Kịch bản**. ...hành vi nào sẽ được kiểm thử ...\n"
 "**Được cho** ...các điều kiện ...\n"
 "**Khi nào** ... các hành động ...\n"
 "**Sau đó** ... các kết quả mong muốn ...\n\n"
@@ -1576,7 +1584,7 @@ msgstr "Script"
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
-msgstr ""
+msgstr "Các đối số"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
@@ -1607,11 +1615,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "TestCase mới"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr ""
+msgstr "thêm Phân loại mới"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1627,27 +1635,27 @@ msgstr "Người được giao"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Người kiểm thử việc chạy mặc định"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr ""
+msgstr "Thông báo khi"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "TestCase được cập nhật"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "TestCase bị xóa"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "CC cho"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Các địa chỉ email được tách ra bởi dấu phẩy. Một email thông báo sẽ được gửi đến mỗi địa chỉ trong danh sách CC."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
