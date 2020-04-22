@@ -8,12 +8,17 @@ $(document).ready(() => {
 
     $('#status_button').on('switchChange.bootstrapSwitch', (_event, state) => {
         if (state) {
-            jsonRPC('TestRun.update', [testRunId, { 'stop_date': null }], () => { })
+            jsonRPC('TestRun.update', [testRunId, { 'stop_date': null }], () => {
+                $('.stop-date').html('-')
+            })
         } else {
             const timeZone = $('#clock').data('time-zone')
             const now = currentTimeWithTimezone(timeZone)
 
-            jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], () => { })
+            jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], testRun => {
+                const stopDate = moment(testRun.stop_date).format("DD MMM YYYY, HH:mm a")
+                $('.stop-date').html(stopDate)
+            })
         }
     });
 
