@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-07 19:03+0000\n"
-"PO-Revision-Date: 2020-04-22 09:16\n"
+"POT-Creation-Date: 2020-04-21 19:20+0000\n"
+"PO-Revision-Date: 2020-04-22 09:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -127,7 +127,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/mutable.html:97
 #: tcms/templates/case/get_details.html:93
 #: tcms/testcases/templates/testcases/mutable.html:229
-#: tcms/testplans/templates/testplans/mutable.html:147
+#: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr "Lưu"
@@ -322,113 +322,117 @@ msgstr ""
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr ""
 
+#: tcms/rpc/api/forms/__init__.py:9
+msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
+msgstr ""
+
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""
 
-#: tcms/settings/common.py:283
+#: tcms/settings/common.py:297
 msgid "DASHBOARD"
 msgstr "DASHBOARD"
 
-#: tcms/settings/common.py:284
+#: tcms/settings/common.py:298
 msgid "TESTING"
 msgstr "KIỂM THỬ"
 
-#: tcms/settings/common.py:285
+#: tcms/settings/common.py:299
 msgid "New Test Plan"
 msgstr "Test Plan mới"
 
-#: tcms/settings/common.py:287
+#: tcms/settings/common.py:301
 msgid "New Test Case"
 msgstr "Test Case mới"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:303
 msgid "New Bug"
 msgstr "Lỗi mới"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:306
 msgid "SEARCH"
 msgstr "TÌM KIẾM"
 
-#: tcms/settings/common.py:293
+#: tcms/settings/common.py:307
 msgid "Search Test Plans"
 msgstr "Tìm theo Test Plan"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:308
 msgid "Search Test Runs"
 msgstr "Tìm theo Test Run"
 
-#: tcms/settings/common.py:295
+#: tcms/settings/common.py:309
 msgid "Search Test Cases"
 msgstr "Tìm theo Test Case"
 
-#: tcms/settings/common.py:296
+#: tcms/settings/common.py:310
 msgid "Search Bugs"
 msgstr "Tìm theo lỗi"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:313
 msgid "TELEMETRY"
 msgstr "QUẢN LÝ TEST CASE"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:314
 msgid "Testing"
 msgstr "Test Case"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:315
 msgid "Breakdown"
 msgstr "Thống kê"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:316
 msgid "Status matrix"
 msgstr "Biểu đồ"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:317
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Tình trạng thực thi"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:318
 msgid "TestCase health"
 msgstr "Sức khỏe TestCase"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:323
 msgid "ADMIN"
 msgstr "QUẢN TRỊ"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:324
 msgid "Users and groups"
 msgstr "Người dùng và nhóm"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:326
 msgid "Everything else"
 msgstr "Khác"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:328
 msgid "PLUGINS"
 msgstr "PHẦN MỞ RỘNG"
 
-#: tcms/settings/common.py:325
+#: tcms/settings/common.py:339
 msgid "Forum"
 msgstr "Diễn đàn"
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:340
 msgid "Report an Issue"
 msgstr "Báo cáo vấn đề"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:341
 msgid "Ask for help on StackOverflow"
 msgstr "Yêu cầu trợ giúp trên StackOverflow"
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:342
 msgid "User Guide"
 msgstr "Hướng dẫn người dùng"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:343
 msgid "Administration Guide"
 msgstr "Hướng dẫn quản trị"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:344
 msgid "API Help"
 msgstr "Trợ giúp API"
 
@@ -449,6 +453,13 @@ msgstr ""
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
 msgstr "KHÁC"
+
+#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/templates/run/status_statistics.html:8
+msgid "TOTAL"
+msgstr "TỔNG CỘNG"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
@@ -492,11 +503,6 @@ msgstr "Theo độ ưu tiên"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
 msgstr "Theo phân loại"
-
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
-#: tcms/templates/run/status_statistics.html:8
-msgid "TOTAL"
-msgstr "TỔNG CỘNG"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -989,7 +995,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:152
 #: tcms/testcases/templates/testcases/search.html:106
 #: tcms/testcases/templates/testcases/search.html:143
-#: tcms/testplans/templates/testplans/mutable.html:103
+#: tcms/testplans/templates/testplans/mutable.html:104
 #: tcms/testplans/templates/testplans/search.html:74
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
@@ -1420,7 +1426,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:47
 #: tcms/testcases/templates/testcases/mutable.html:34
 #: tcms/testcases/templates/testcases/mutable.html:175
-#: tcms/testplans/templates/testplans/mutable.html:115
+#: tcms/testplans/templates/testplans/mutable.html:116
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testruns/templates/testruns/mutable.html:55
 #: tcms/testruns/templates/testruns/search.html:61
@@ -1742,27 +1748,27 @@ msgstr "ID cha"
 msgid "Test plan document:"
 msgstr "Tài liệu Test plan:"
 
-#: tcms/testplans/templates/testplans/mutable.html:101
+#: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
 msgstr "Thông báo:"
 
-#: tcms/testplans/templates/testplans/mutable.html:109
+#: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
 msgstr "Tác giả TestCase"
 
-#: tcms/testplans/templates/testplans/mutable.html:123
+#: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
 msgstr "Thông báo khi:"
 
-#: tcms/testplans/templates/testplans/mutable.html:125
+#: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
 msgstr "TestPlan được cập nhật"
 
-#: tcms/testplans/templates/testplans/mutable.html:131
+#: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
 msgstr "Các Test case được cập nhật"
 
-#: tcms/testplans/templates/testplans/mutable.html:139
+#: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
 msgstr "Đang hoạt động"
@@ -1780,15 +1786,15 @@ msgstr "Tên Test plan"
 msgid "Test plan"
 msgstr "Test plan"
 
-#: tcms/testplans/views.py:281
+#: tcms/testplans/views.py:229
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:440
+#: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:448
+#: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
@@ -1921,4 +1927,193 @@ msgstr "LỖI"
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
 msgstr "ĐÃ BỎ"
+
+#: tcms_github_app/admin.py:120
+#, python-format
+msgid "For additional configuration see\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
+msgstr ""
+
+#: tcms_github_app/menu.py:11
+msgid "GitHub integration"
+msgstr ""
+
+#: tcms_github_app/menu.py:12
+msgid "Settings"
+msgstr ""
+
+#: tcms_github_app/middleware.py:41
+#, python-format
+msgid "Unconfigured GitHub App %d"
+msgstr ""
+
+#: tcms_github_app/views.py:45
+#, python-format
+msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
+msgstr ""
+
+#: tcms_github_app/views.py:59
+#, python-format
+msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
+msgstr ""
+
+#: tcms_github_app/views.py:73
+msgid "Multiple GitHub App installations detected! See below:"
+msgstr ""
+
+#: tcms_github_app/views.py:82
+#, python-format
+msgid "Edit GitHub App <a href=\"%s\">%s</a>"
+msgstr ""
+
+#: tcms_github_marketplace/menu.py:11
+msgid "Subscriptions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
+msgid "Tenant subscriptions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
+msgid "You can access the following tenants"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
+msgid "Tenant"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+msgid "Organization"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
+msgid "You own the following tenants"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
+msgid "Price"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
+msgid "Subscription type"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
+msgid "Paid until"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
+msgid "Cancel subscription"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+msgid "You don't own any tenants"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+msgid "Subscribe via FastSpring"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+msgid "Transaction history"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+msgid "Sender"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+msgid "Vendor"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+msgid "Received on"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+msgid "Private Tenant Warning"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+msgid "\n"
+"You are about to create a Private Tenant for Kiwi TCMS.\n"
+"It will take a few minutes until your DB schema is ready!\n"
+"After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
+"You will be redirected to your new tenant when the creation process is complete!\n"
+"If you see a 500 Internal Server Error page please contact\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!\n"
+"                    "
+msgstr ""
+
+#: tcms_github_marketplace/views.py:325
+msgid "mo"
+msgstr ""
+
+#: tcms_github_marketplace/views.py:328
+msgid "yr"
+msgstr ""
+
+#: tcms_enterprise/pipeline.py:17
+msgid "Email address is required"
+msgstr ""
+
+#: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
+msgid "Unauthorized"
+msgstr ""
+
+#: tcms_tenants/admin.py:108
+msgid "Full name"
+msgstr ""
+
+#: tcms_tenants/menu.py:12
+msgid "Create"
+msgstr ""
+
+#: tcms_tenants/menu.py:14
+msgid "Authorized users"
+msgstr ""
+
+#: tcms_tenants/middleware.py:54
+msgid "Unpaid"
+msgstr ""
+
+#: tcms_tenants/middleware.py:64
+msgid "Tenant expires in less than 7 days"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/email/new.txt:1
+#, python-format
+msgid "Your Kiwi TCMS tenant was created at:\n"
+"%(tenant_url)s\n\n"
+"If you have troubles please contact support!\n"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:9
+msgid "New tenant"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:22
+msgid "Company, team or project name"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:29
+msgid "Schema"
+msgstr ""
+
+#: tcms_tenants/utils.py:40
+msgid "Schema name already in use"
+msgstr ""
+
+#: tcms_tenants/utils.py:100
+msgid "New Kiwi TCMS tenant created"
+msgstr ""
 
