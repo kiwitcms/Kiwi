@@ -147,7 +147,7 @@ Nginx and the docker container)! Here's how the configuration looks like::
 
         server {
             listen 8080;
-            server_name demo.kiwitcms.org;
+            server_name public.tenant.kiwitcms.org;
 
             location / {
                 return 301 https://$host$request_uri;
@@ -155,11 +155,11 @@ Nginx and the docker container)! Here's how the configuration looks like::
         }
 
         server {
-            server_name demo.kiwitcms.org;
+            server_name public.tenant.kiwitcms.org;
             listen 8443 ssl;
 
             location / {
-                proxy_pass https://demo_kiwitcms_org_web:8443;
+                proxy_pass https://tenant_kiwitcms_org_web:8443;
             }
         }
     }
@@ -176,7 +176,7 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
         bind *:8443 ssl crt /etc/haproxy/ssl/
         reqadd X-Forwarded-Proto:\ https
 
-        acl kiwitcms hdr(host) -i demo.kiwitcms.org
+        acl kiwitcms hdr(host) -i public.tenant.kiwitcms.org
         use_backend back_kiwitcms if kiwitcms
 
     backend back_kiwitcms
@@ -188,7 +188,7 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
         rspadd X-XSS-Protection:\ 1;\ mode=block
 
         # do not verify the self-signed cert
-        server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
+        server kiwi_web tenant_kiwitcms_org_web:8443 ssl verify none
 
 
 Enable plain text HTTP access
