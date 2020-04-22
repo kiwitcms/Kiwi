@@ -4,6 +4,8 @@ from datetime import datetime
 from xmlrpc.client import ProtocolError
 
 from django.contrib.auth.models import Permission
+from django.utils.translation import gettext_lazy as _
+
 from tcms_api import xmlrpc
 
 from tcms.rpc.tests.utils import APITestCase
@@ -298,8 +300,9 @@ class TestUpdateTestRun(APITestCase):
             'stop_date': '10-10-2010'
         }
 
-        with self.assertRaisesMessage(Exception,
-                                      'Invalid date format. Expected'):
+        with self.assertRaisesMessage(
+                Exception,
+                str(_('Invalid date format. Expected YYYY-MM-DD [HH:MM:SS].'))):
             self.rpc_client.TestRun.update(test_run.pk, update_fields)
 
         # assert test run fields have not been updated
