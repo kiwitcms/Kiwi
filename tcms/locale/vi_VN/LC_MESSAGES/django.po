@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-21 19:20+0000\n"
-"PO-Revision-Date: 2020-04-22 09:51\n"
+"PO-Revision-Date: 2020-04-22 19:31\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -117,11 +117,11 @@ msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr ""
+msgstr "đã bình luận lúc"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Mở lại"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -134,7 +134,7 @@ msgstr "Lưu"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr ""
+msgstr "Đóng lại"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -227,11 +227,11 @@ msgstr "Thời gian được tạo"
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:494
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:507
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -243,11 +243,11 @@ msgstr ""
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr ""
+msgstr "*lỗi đã được đóng lại*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*lỗi đã được mở lại*"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -663,7 +663,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "Thêm"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
@@ -714,7 +714,7 @@ msgstr "Test plan của bạn"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "TestPlan"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -791,23 +791,23 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
-msgstr ""
+msgstr "Đính kèm"
 
 #: tcms/templates/include/attachments.html:14
 msgid "File"
-msgstr ""
+msgstr "Tệp"
 
 #: tcms/templates/include/attachments.html:15
 msgid "Owner"
-msgstr ""
+msgstr "Chủ sở hữu"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "Ngày"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "Không có bản ghi nào được tìm thấy"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -831,7 +831,7 @@ msgstr "Trạng thái"
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr "Các tag"
+msgstr "Các Tag"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -1086,7 +1086,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:498
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Clone"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1500,7 +1500,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "Các lỗi"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
@@ -1572,15 +1572,15 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Clone TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Thêm TC mới vào TP"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "TC được chọn"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1605,15 +1605,15 @@ msgstr "Đường dẫn tham khảo"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "URL của lỗi"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Các Test plan"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "Thành phần"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1701,7 +1701,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:502
 msgid "History"
-msgstr ""
+msgstr "Lịch sử"
 
 #: tcms/testcases/views.py:695
 msgid "TestCase cloning was successful"
@@ -1710,7 +1710,7 @@ msgstr ""
 #: tcms/testcases/views.py:721 tcms/testruns/views.py:366
 #: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Yêu cầu phải có ít nhất một TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1823,20 +1823,20 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "TestRun mới"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "phiên bản"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Tên đăng nhập hoặc e-mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Các TestCase được chọn:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
