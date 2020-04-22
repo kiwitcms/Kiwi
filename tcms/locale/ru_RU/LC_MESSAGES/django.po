@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-21 19:20+0000\n"
-"PO-Revision-Date: 2020-04-22 09:51\n"
+"PO-Revision-Date: 2020-04-22 13:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -328,7 +328,7 @@ msgstr "Включить отчетность к трекеру задач, на
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Неверный формат даты. Используйте YYYY-MM-DD [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -766,7 +766,15 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Баг %(pk)s был назначен вам.\n\n"
+"Ссылка: %(bug_url)s\n\n"
+"Итоги: %(summary)s\n"
+"Создано: %(creation_date)s\n"
+"Репортер: %(reporter)s\n"
+"Назначен: %(assignee)s\n"
+"Продукт: %(product)s\n"
+"Версия: %(version)s\n"
+"Сборка: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1533,7 +1541,7 @@ msgstr "Список ошибок"
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% выполнено"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1831,11 +1839,13 @@ msgstr "Доступ запрещен: тестовый прогон не при
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Для получения дополнительной информации о настройках статусов выполнения тестов смотрите\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        документацию</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Статусы выполнения тестов"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1866,7 +1876,8 @@ msgstr "Выбранные тест-кейс(ы):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s из ранее выбранных тестов не ПОДТВЕРЖДЕНЫ и не будут скопированы!\n"
+"Смотрите план тестирования для получения более подробной информации!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
@@ -1956,43 +1967,44 @@ msgstr "ОТЛОЖЕНО"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "Дополнительную информацию смотрите на\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "Интеграция GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "Не настроенное приложение GitHub %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Вы не вошли через GitHub аккаунт! <a href=\"%s\">Нажмите здесь</a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Вы не установили Kiwi TCMS в ваш GitHub аккаунт! <a href=\"%s\">Нажмите здесь</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "Обнаружено несколько установок приложения GitHub! Смотрите ниже:"
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "Редактировать приложение GitHub <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Подписки"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -2010,7 +2022,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "Организация"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -2019,22 +2031,22 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "Цена"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "Тип подписки"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "Оплачено до"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "Отменить подписку"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -2042,16 +2054,16 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Подписаться через FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
-msgstr ""
+msgstr "История транзакций"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "Отправитель"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
@@ -2061,7 +2073,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "Получено"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -2080,35 +2092,35 @@ msgstr ""
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
-msgstr ""
+msgstr "мес"
 
 #: tcms_github_marketplace/views.py:328
 msgid "yr"
-msgstr ""
+msgstr "г"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "Требуется адрес электронной почты"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "Неавторизовано"
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "Полное имя"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Создать"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "Авторизованные пользователи"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Не оплачено"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
@@ -2127,15 +2139,15 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "Название компании, команды или проекта"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "Схема"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Такое название схемы уже используется"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
