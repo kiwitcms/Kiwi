@@ -68,11 +68,13 @@
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-calendar-check-o"></span>{% trans 'Finished at' %}:
-                    {% if object.stop_date %}
-                        {{ object.stop_date }}
-                    {% else %}
-                        -
-                    {% endif %}
+                    <span class="stop-date">
+                        {% if object.stop_date %}
+                            {{ object.stop_date }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </span>
                 </h2>
 
                 <div class="card-pf-body"></div>
