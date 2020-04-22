@@ -103,14 +103,26 @@ To upgrade running Kiwi TCMS containers execute the following commands::
 SSL configuration
 -----------------
 
-By default Kiwi TCMS is served via HTTPS. ``docker-compose.yml`` is configured
-witha default self-signed certificate stored in ``etc/kiwitcms/ssl/``. If you
-want to use different SSL certificate you need to update the ``localhost.key``
-and ``localhost.crt`` files in that directory or bind-mount your own SSL
-directory to ``/Kiwi/ssl`` inside the docker container!
+By default Kiwi TCMS is served via HTTPS. The connection is secured by a
+self-signed certificate which if valid for 10 years and contains the
+following properties::
+
+    CN = container-layer-hash-id
+    OU = Quality Engineering
+    O = Kiwi TCMS
+    L = Sofia
+    C = BG
+
+The certificate authority file is available at https://localhost/static/ca.crt!
+You may distribute this file to all browsers who are going to access the
+running Kiwi TCMS instance.
+
+If you want to use different SSL certificate you need to update the
+``localhost.key`` and ``localhost.crt`` files located under ``/Kiwi/ssl/`` or
+bind-mount your own SSL directory to ``/Kiwi/ssl`` inside the docker container!
 
 More information about generating your own self-signed certificates can be
-found at https://wiki.centos.org/HowTos/Https.
+found at https://github.com/sgallagher/sscg#full-usage.
 
 
 Reverse proxy SSL
