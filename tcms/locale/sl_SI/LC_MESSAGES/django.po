@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-21 19:20+0000\n"
-"PO-Revision-Date: 2020-04-22 13:04\n"
+"POT-Creation-Date: 2020-04-22 21:51+0000\n"
+"PO-Revision-Date: 2020-04-22 22:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -2079,14 +2079,12 @@ msgid "Private Tenant Warning"
 msgstr "Opozorilo zasebnega najemnika"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
-msgid "\n"
-"You are about to create a Private Tenant for Kiwi TCMS.\n"
+msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
-"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!\n"
-"                    "
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
 msgstr ""
 
 #: tcms_github_marketplace/views.py:325
@@ -2129,7 +2127,7 @@ msgstr "Instanca se izteče v manj kot 7-ih dneh"
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
-"If you have troubles please contact support!\n"
+"If you have troubles please contact support!"
 msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
