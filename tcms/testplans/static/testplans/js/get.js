@@ -19,13 +19,13 @@ $(document).ready(function() {
                 testCases.not_confirmed.push(data[i]);
             }
         }
-        drawTestCases(testCases.confirmed);
+        drawTestCases(testCases.confirmed, testPlanId);
         treeViewBind();
     });
 
 });
 
-function drawTestCases(testCases) {
+function drawTestCases(testCases, testPlanId) {
     var container = $('#confirmed-testcases'),
         noCasesTemplate = $('#no_test_cases'),
         testCaseRowDocumentFragment = $('#test_case_row')[0].content;
@@ -34,6 +34,8 @@ function drawTestCases(testCases) {
         for (var i = 0; i < testCases.length; i++) {
             container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[i]));
         }
+        attachEvents(testPlanId);
+        drawStatusAndPriority();
     } else {
         container.append(noCasesTemplate[0].innerHTML);
     }
@@ -43,11 +45,15 @@ function drawTestCases(testCases) {
 function getTestCaseRowContent(rowContent, testCase) {
     var row = $(rowContent);
 
-    row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href',`/case/${testCase.id}/`);
+    row[0].firstElementChild.dataset.testcasePk = testCase.id;
+    row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/`);
     row.find('.js-test-case-priority').html(`${testCase.priority}`);
     row.find('.js-test-case-category').html(`${testCase.category}`);
     row.find('.js-test-case-author').html(`${testCase.author}`);
     row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
+
+    // set the link in the kebab menu
+    row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit`;
 
     //handle automated icon
     var automation_indication_element = row.find('.js-test-case-automated'),
@@ -80,7 +86,7 @@ function getTestCaseExpandArea(row, testCase) {
     // set unique identifier so we know where to draw fetched data
     row.find('.js-test-case-expand-attachments').parent()[0].id = uniqueDivCustomId;
 
-    jsonRPC('TestCase.list_attachments',[testCase.id],function(data) {
+    jsonRPC('TestCase.list_attachments', [testCase.id], function(data) {
 
         // cannot use instance of row in the callback
         var ulElement = $(`#${uniqueDivCustomId} .js-test-case-expand-attachments`);
@@ -101,5 +107,98 @@ function getTestCaseExpandArea(row, testCase) {
             attachmentLink.innerText = data[i].url.split('/').slice(-1)[0];
             ulElement.append(liElement);
         }
+    });
+}
+
+function attachEvents(testPlanId) {
+    // update default tester
+    $('.js-test-case-menu-tester').click(function(ev) {
+        // todo this prompt need to be translated
+        var email_or_username = window.prompt('Please type new email or username');
+        if (!email_or_username) {
+            return;
+        }
+        const testCaseId = getCaseIdFromEvent(ev);
+
+        // default_tester can be update only if we pass an user id
+        jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(res) {
+
+        });
+    });
+
+    // delete testcase from the plan
+    $('.js-test-case-menu-delete').click(function(ev) {
+        const testCaseId = getCaseIdFromEvent(ev);
+        jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function(res) {
+            $("div").find(`[data-testcase-pk=${testCaseId}]`).remove();
+        });
+    });
+
+    $('.js-test-case-menu-priority').click(function(ev) {
+        const testCaseId = getCaseIdFromEvent(ev);
+
+        jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(result) {
+
+        });
+    });
+
+    $('.js-test-case-menu-status').click(function(ev) {
+        const testCaseId = getCaseIdFromEvent(ev);
+
+        jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(result) {
+
+        });
+    });
+
+    function getCaseIdFromEvent(ev) {
+        return $(ev.target).closest('.list-group-item').data('testcase-pk');
+    }
+}
+
+
+function drawStatusAndPriority() {
+
+    jsonRPC('TestCaseStatus.filter', {}, function(statuses) {
+        const listItemTemplateFragment = $('#menu-status-item')[0].content;
+
+        var listItemsNodes = [];
+
+        for (var i = 0; i < statuses.length; i++) {
+            var liElement = $(listItemTemplateFragment.cloneNode(true)),
+                testCaseStatus = statuses[i];
+
+            liElement.find('a').text(testCaseStatus.name);
+            liElement.find('a')[0].dataset.id = testCaseStatus.id;
+            listItemsNodes.push(liElement);
+        }
+
+        $('.js-test-case-menu-status').each(function() {
+             for (var i = 0; i < listItemsNodes.length; i++) {
+                // clone must be used, because items will be added only to the first TC
+                $(this).append(listItemsNodes[i].clone());
+            }
+        });
+    });
+
+    jsonRPC('Priority.filter', {}, function(priorities) {
+        const listItemTemplateFragment = $('#menu-priority-item')[0].content;
+
+        var listItemsNodes = [];
+
+        for (var i = 0; i < priorities.length; i++) {
+            var liElement = $(listItemTemplateFragment.cloneNode(true)),
+                priority = priorities[i];
+
+            liElement.find('a').text(priority.value);
+            liElement.find('a')[0].dataset.id = priority.id;
+            listItemsNodes.push(liElement);
+        }
+
+        $('.js-test-case-menu-priority').each(function() {
+            for (var i = 0; i < listItemsNodes.length; i++) {
+                // clone must be used, because items will be added only to the first TC
+                $(this).append(listItemsNodes[i].clone());
+            }
+        });
     });
 }
