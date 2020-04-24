@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-22 21:51+0000\n"
-"PO-Revision-Date: 2020-04-22 22:52\n"
+"POT-Creation-Date: 2020-04-24 13:57+0000\n"
+"PO-Revision-Date: 2020-04-24 14:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2087,6 +2087,10 @@ msgstr "crwdns1188:0crwdne1188:0"
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
 msgstr "crwdns1190:0crwdne1190:0"
+
+#: tcms_tenants/templates/tcms_tenants/new.html:40
+msgid "Valid schema_name pattern"
+msgstr "crwdns1200:0crwdne1200:0"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
