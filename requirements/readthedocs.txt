@@ -11,6 +11,5 @@ django-extensions
 pydot
 # linting tools
 pylint-django
-bandit
 twine
 pyOpenSSL

@@ -26,9 +26,6 @@ addons:
 
 jobs:
   include:
-    - env:
-        - CMD=bandit
-
     - if: branch = master AND type = push
       env:
         - CMD=bandit_site_packages
