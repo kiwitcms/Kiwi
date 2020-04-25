@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 13:57+0000\n"
-"PO-Revision-Date: 2020-04-24 14:02\n"
+"POT-Creation-Date: 2020-04-25 20:44+0000\n"
+"PO-Revision-Date: 2020-04-25 20:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -2074,6 +2074,10 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
+#: tcms_tenants/forms.py:25
+msgid "Invalid string"
+msgstr ""
+
 #: tcms_tenants/menu.py:12
 msgid "Create"
 msgstr ""
@@ -2109,8 +2113,8 @@ msgstr ""
 msgid "Schema"
 msgstr ""
 
-#: tcms_tenants/templates/tcms_tenants/new.html:40
-msgid "Valid schema_name pattern"
+#: tcms_tenants/templates/tcms_tenants/new.html:41
+msgid "Validation pattern"
 msgstr ""
 
 #: tcms_tenants/utils.py:40
