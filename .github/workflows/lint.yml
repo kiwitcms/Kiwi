@@ -41,3 +41,21 @@ jobs:
       run: |
         pip install doc8
         make doc8  
+
+  bandit:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Lint with bandit
+        run: |
+          pip install bandit
+          make bandit
