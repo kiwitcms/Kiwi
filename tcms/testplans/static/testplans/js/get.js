@@ -5,6 +5,11 @@ $(document).ready(function() {
         'not_confirmed': []
     };
 
+    const permissions = {
+        'perm-change-testcase': $('#test_plan_pk').data('perm-change-testcase') === 'True',
+        'perm-remove-testcase': $('#test_plan_pk').data('perm-remove-testcase') === 'True'
+    };
+
     // bind everything in tags table
     const perm_remove_tag = $('#test_plan_pk').data('perm-remove-tag') === 'True';
     tagsCard('TestPlan', testPlanId, {plan: testPlanId}, perm_remove_tag);
@@ -19,30 +24,32 @@ $(document).ready(function() {
                 testCases.not_confirmed.push(data[i]);
             }
         }
-        drawTestCases(testCases.confirmed, testPlanId);
+        drawTestCases(testCases.confirmed, testPlanId, permissions);
         treeViewBind();
     });
 
 });
 
-function drawTestCases(testCases, testPlanId) {
+function drawTestCases(testCases, testPlanId, permissions) {
     var container = $('#confirmed-testcases'),
         noCasesTemplate = $('#no_test_cases'),
         testCaseRowDocumentFragment = $('#test_case_row')[0].content;
 
     if (testCases.length > 0) {
         for (var i = 0; i < testCases.length; i++) {
-            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[i]));
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[i], permissions));
         }
-        attachEvents(testPlanId);
-        drawStatusAndPriority();
+        attachEvents(testPlanId, permissions);
+        if (permissions['perm-change-testcase']) {
+            drawStatusAndPriority();
+        }
     } else {
         container.append(noCasesTemplate[0].innerHTML);
     }
 }
 
 
-function getTestCaseRowContent(rowContent, testCase) {
+function getTestCaseRowContent(rowContent, testCase, permissions) {
     var row = $(rowContent);
 
     row[0].firstElementChild.dataset.testcasePk = testCase.id;
@@ -53,8 +60,9 @@ function getTestCaseRowContent(rowContent, testCase) {
     row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
 
     // set the link in the kebab menu
-    row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit`;
-
+    if (permissions['perm-change-testcase']) {
+        row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit/`;
+    }
     //handle automated icon
     var automation_indication_element = row.find('.js-test-case-automated'),
         automated_class_to_remove = 'fa-cog';
@@ -110,51 +118,54 @@ function getTestCaseExpandArea(row, testCase) {
     });
 }
 
-function attachEvents(testPlanId) {
-    // update default tester
-    $('.js-test-case-menu-tester').click(function(ev) {
-        // todo this prompt need to be translated
-        var email_or_username = window.prompt('Please type new email or username');
-        if (!email_or_username) {
-            return;
-        }
-        const testCaseId = getCaseIdFromEvent(ev);
+function attachEvents(testPlanId, permissions) {
+    if (permissions['perm-change-testcase']) {
+        // update default tester
+        $('.js-test-case-menu-tester').click(function(ev) {
+            var email_or_username = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
+            if (!email_or_username) {
+                return;
+            }
+            const testCaseId = getCaseIdFromEvent(ev);
 
-        // default_tester can be update only if we pass an user id
-        jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(res) {
-
+            // default_tester can be update only if we pass an user id
+            jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(res) {
+                // todo update tc row data
+            });
         });
-    });
 
-    // delete testcase from the plan
-    $('.js-test-case-menu-delete').click(function(ev) {
-        const testCaseId = getCaseIdFromEvent(ev);
-        jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function(res) {
-            $("div").find(`[data-testcase-pk=${testCaseId}]`).remove();
+
+        $('.js-test-case-menu-priority').click(function(ev) {
+            const testCaseId = getCaseIdFromEvent(ev);
+
+            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(result) {
+                // todo update tc row data
+            });
         });
-    });
 
-    $('.js-test-case-menu-priority').click(function(ev) {
-        const testCaseId = getCaseIdFromEvent(ev);
+        $('.js-test-case-menu-status').click(function(ev) {
+            const testCaseId = getCaseIdFromEvent(ev);
 
-        jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(result) {
-
+            jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(result) {
+                // todo update tc row data
+            });
         });
-    });
+    }
 
-    $('.js-test-case-menu-status').click(function(ev) {
-        const testCaseId = getCaseIdFromEvent(ev);
-
-        jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(result) {
-
+    if (permissions['perm-remove-testcase']) {
+        // delete testcase from the plan
+        $('.js-test-case-menu-delete').click(function(ev) {
+            const testCaseId = getCaseIdFromEvent(ev);
+            jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function(res) {
+                $("div").find(`[data-testcase-pk=${testCaseId}]`).remove();
+            });
         });
-    });
+    }
 
     function getCaseIdFromEvent(ev) {
         return $(ev.target).closest('.list-group-item').data('testcase-pk');
     }
 }
-
 
 function drawStatusAndPriority() {
 
@@ -173,7 +184,7 @@ function drawStatusAndPriority() {
         }
 
         $('.js-test-case-menu-status').each(function() {
-             for (var i = 0; i < listItemsNodes.length; i++) {
+            for (var i = 0; i < listItemsNodes.length; i++) {
                 // clone must be used, because items will be added only to the first TC
                 $(this).append(listItemsNodes[i].clone());
             }
