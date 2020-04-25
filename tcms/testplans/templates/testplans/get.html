@@ -15,6 +15,9 @@
         <span id="test_plan_pk"
               data-testplan-pk="{{ object.pk }}"
               data-perm-remove-tag="{{ perms.testplans.delete_testplantag }}"
+              data-perm-change-testcase="{{ perms.testcases.change_testcase }}"
+              data-perm-remove-testcase="{{ perms.testcases.delete_testcaseplan }}"
+              data-trans-default-tester-prompt-message="{% trans 'Please type new email or username' %}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
     </h1>
     <div class="row row-cards-pf">
@@ -126,6 +129,7 @@
                             <span class="fa fa-ellipsis-v"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownKebabRight9">
+                        {% if perms.testcases.change_testcase %}
                             <li class="dropdown-submenu dropdown-menu-left">
                                 <a tabindex="-1" href="#">{% trans 'Priority' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-priority">
@@ -143,8 +147,11 @@
                                 </ul>
                             </li>
                             <li><a class="js-test-case-menu-edit">{% trans 'Edit' %}</a></li>
-                            <li><a class="js-test-case-menu-delete">{% trans 'Delete' %}</a></li>
                             <li><a class="js-test-case-menu-tester">{% trans 'Default tester' %}</a></li>
+                        {% endif %}
+                        {% if perms.testcases.delete_testcaseplan %}
+                            <li><a class="js-test-case-menu-delete">{% trans 'Delete' %}</a></li>
+                        {% endif %}
                         </ul>
                     </div>
                 </div>
