@@ -27,12 +27,12 @@ class TestNotificationRemoveCC(APITestCase):
 
     def tearDown(self):
         super(TestNotificationRemoveCC, self).tearDown()
-        self.rpc_client.exec.Auth.logout()
+        self.rpc_client.Auth.logout()
 
     def test_remove_existing_cc(self):
         # initially testcase has the default CC listed
         # and we issue XMLRPC request to remove the cc
-        self.rpc_client.exec.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
+        self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
 
         # now verify that the CC email has been removed
         self.testcase.emailing.refresh_from_db()
@@ -64,17 +64,22 @@ class TestFilterCases(APITestCase):
             self.cases.append(test_case)
 
     def test_filter_by_product_id(self):
-        cases = self.rpc_client.exec.TestCase.filter({'category__product': self.product.pk})
+        cases = self.rpc_client.TestCase.filter({'category__product': self.product.pk})
         self.assertIsNotNone(cases)
         self.assertEqual(len(cases), self.cases_count)
 
 
 class TestUpdate(APITestCase):
+    non_existing_username = 'FakeUsername'
+    non_existing_user_id = 999
+    non_existing_email = 'fake@email.com'
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory(summary='Sanity test case', text='Given-When-Then')
+        self.testcase = TestCaseFactory(summary='Sanity test case',
+                                        text='Given-When-Then',
+                                        default_tester=None)
         self.new_author = UserFactory()
 
     def test_update_text_and_product(self):
@@ -83,7 +88,7 @@ class TestUpdate(APITestCase):
         self.assertEqual('Given-When-Then', self.testcase.text)
 
         # update the test case
-        updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'summary': 'This was updated',
@@ -103,7 +108,7 @@ class TestUpdate(APITestCase):
         self.assertNotEqual(self.new_author, self.testcase.author)
 
         # update the test case
-        updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'author': self.new_author.pk,
@@ -114,6 +119,75 @@ class TestUpdate(APITestCase):
         self.assertEqual(self.new_author, self.testcase.author)
         self.assertEqual(self.new_author.pk, updated['author_id'])
 
+    def test_update_author_should_fail_for_non_existing_user_id(self):
+        initial_author_id = self.testcase.author.pk
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'author': self.non_existing_user_id,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_author_id, self.testcase.author.pk)
+
+    def test_update_author_accepts_username(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        # update the test case
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'author': self.new_author.username,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.author)
+        self.assertEqual(self.new_author.pk, updated['author_id'])
+
+    def test_update_author_should_fail_for_non_existing_username(self):
+        initial_author_username = self.testcase.author.username
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'author': self.non_existing_username,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_author_username, self.testcase.author.username)
+
+    def test_update_author_accepts_email(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        # update the test case
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'author': self.new_author.email,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.author)
+        self.assertEqual(self.new_author.pk, updated['author_id'])
+
+    def test_update_author_should_fail_for_non_existing_email(self):
+        initial_author_email = self.testcase.author.email
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'author': self.non_existing_email,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_author_email, self.testcase.author.email)
+
     def test_update_priority_issue_1318(self):
         expected_priority = Priority.objects.exclude(pk=self.testcase.priority.pk).first()
 
@@ -122,7 +196,7 @@ class TestUpdate(APITestCase):
         self.assertEqual('Given-When-Then', self.testcase.text)
 
         # update the test case
-        self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'priority': expected_priority.pk,
@@ -138,6 +212,171 @@ class TestUpdate(APITestCase):
         self.assertEqual('Sanity test case', self.testcase.summary)
         self.assertEqual('Given-When-Then', self.testcase.text)
 
+    def test_update_default_tester_accepts_user_id(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'default_tester': self.new_author.pk,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
+
+    def test_update_default_tester_should_fail_with_non_existing_user_id(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'default_tester': self.non_existing_user_id,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+
+        self.assertIsNone(self.testcase.default_tester)
+
+    def test_update_default_tester_accepts_username(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'default_tester': self.new_author.username,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
+
+    def test_update_default_tester_should_fail_with_non_existing_username(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'default_tester': self.non_existing_username,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+
+        self.assertIsNone(self.testcase.default_tester)
+
+    def test_update_default_tester_accepts_email(self):
+        self.assertIsNone(self.testcase.default_tester)
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'default_tester': self.new_author.email,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.default_tester.pk)
+
+    def test_update_default_tester_should_fail_with_non_existing_email(self):
+        self.assertIsNone(self.testcase.default_tester)
+
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'default_tester': self.non_existing_email,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+
+        self.assertIsNone(self.testcase.default_tester)
+
+    def test_update_reviewer_accepts_user_id(self):
+        self.assertNotEqual(self.new_author, self.testcase.reviewer)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'reviewer': self.new_author.pk,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+
+        self.assertEqual(self.new_author.pk, self.testcase.reviewer.pk)
+
+    def test_update_reviewer_should_fail_with_non_existing_user_id(self):
+        initial_reviewer_id = self.testcase.reviewer.pk
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'reviewer': self.non_existing_user_id,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_reviewer_id, self.testcase.reviewer.pk)
+
+    def test_update_reviewer_accepts_username(self):
+        self.assertNotEqual(self.new_author, self.testcase.reviewer)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'reviewer': self.new_author.username,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.reviewer)
+
+    def test_update_reviewer_should_fail_for_non_existing_username(self):
+        initial_reviewer_username = self.testcase.reviewer.username
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'reviewer': self.non_existing_username,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_reviewer_username, self.testcase.reviewer.username)
+
+    def test_update_reviewer_accepts_email(self):
+        self.assertNotEqual(self.new_author, self.testcase.author)
+
+        self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                'reviewer': self.new_author.email,
+            }
+        )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(self.new_author, self.testcase.reviewer)
+
+    def test_update_reviewer_should_fail_for_non_existing_email(self):
+        initial_reviewer_email = self.testcase.reviewer.email
+        with self.assertRaises(Fault):
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    'reviewer': self.non_existing_email,
+                }
+            )
+
+        self.testcase.refresh_from_db()
+        self.assertEqual(initial_reviewer_email, self.testcase.reviewer.email)
+
 
 class TestCreate(APITestCase):
     def _fixture_setup(self):
@@ -147,7 +386,7 @@ class TestCreate(APITestCase):
             CategoryFactory()
 
     def test_passes_with_valid_data(self):
-        result = self.rpc_client.exec.TestCase.create(
+        result = self.rpc_client.TestCase.create(
             {
                 'summary': 'Newly created TC via API',
                 'text': 'Given-When-Then',
@@ -166,7 +405,7 @@ class TestCreate(APITestCase):
 
     def test_author_can_be_specified(self):
         new_author = UserFactory()
-        result = self.rpc_client.exec.TestCase.create(
+        result = self.rpc_client.TestCase.create(
             {
                 'summary': 'TC via API with author',
                 'case_status': TestCaseStatus.objects.last().pk,
@@ -183,7 +422,7 @@ class TestCreate(APITestCase):
 
     def test_fails_when_mandatory_fields_not_specified(self):
         with self.assertRaises(Fault):
-            self.rpc_client.exec.TestCase.create(
+            self.rpc_client.TestCase.create(
                 {
                     'summary': 'TC via API without mandatory FK fields',
                 }
@@ -201,7 +440,7 @@ class TestAddTag(APITestCase):
         self.tag2 = TagFactory()
 
     def test_add_tag(self):
-        self.rpc_client.exec.TestCase.add_tag(self.testcase.pk, self.tag1.name)
+        self.rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
         tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag1.pk).exists()
         self.assertTrue(tag_exists)
 
@@ -237,7 +476,7 @@ class TestRemoveTag(APITestCase):
         self.testcase.add_tag(self.tag0)
 
     def test_remove_tag(self):
-        self.rpc_client.exec.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
+        self.rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
         tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag0.pk).exists()
         self.assertFalse(tag_exists)
 
@@ -273,10 +512,10 @@ class TestAddComponent(APITestCase):
         self.bad_component = ComponentFactory()
 
     def test_add_component_from_same_product_is_allowed(self):
-        result = self.rpc_client.exec.TestCase.add_component(self.test_case.pk,
-                                                             self.good_component.name)
+        result = self.rpc_client.TestCase.add_component(self.test_case.pk,
+                                                        self.good_component.name)
         self.assertEqual(result['component'][0], self.good_component.pk)
 
     def test_add_component_from_another_product_is_not_allowed(self):
         with self.assertRaisesRegex(Fault, 'Component matching query does not exist'):
-            self.rpc_client.exec.TestCase.add_component(self.test_case.pk, self.bad_component.name)
+            self.rpc_client.TestCase.add_component(self.test_case.pk, self.bad_component.name)

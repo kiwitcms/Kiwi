@@ -45,38 +45,28 @@ def create(values, **kwargs):
 
             >>> values = {
                 'product': 61,
+                'product_version': 93,
                 'name': 'Testplan foobar',
                 'type': 1,
-                'parent_id': 150,
-                'default_product_version': 93,
+                'parent': 150,
                 'text':'Testing TCMS',
             }
             >>> TestPlan.create(values)
     """
-    if values.get('default_product_version'):
-        values['product_version'] = values.pop('default_product_version')
+    request = kwargs.get(REQUEST_KEY)
 
-    if not values.get('product'):
-        raise ValueError('Value of product is required')
+    if not (values.get('author') or values.get('author_id')):
+        values['author'] = request.user.pk
 
     form = NewPlanForm(values)
     form.populate(product_id=values['product'])
 
     if form.is_valid():
-        request = kwargs.get(REQUEST_KEY)
-        test_plan = TestPlan.objects.create(
-            product=form.cleaned_data['product'],
-            name=form.cleaned_data['name'],
-            type=form.cleaned_data['type'],
-            author=request.user,
-            product_version=form.cleaned_data['product_version'],
-            parent=form.cleaned_data['parent'],
-            is_active=form.cleaned_data['is_active'],
-            text=form.cleaned_data['text'],
-        )
+        test_plan = form.save()
+    else:
+        raise ValueError(form_errors_to_list(form))
 
-        return test_plan.serialize()
-    raise ValueError(form_errors_to_list(form))
+    return test_plan.serialize()
 
 
 @rpc_method(name='TestPlan.filter')
@@ -159,56 +149,14 @@ def update(plan_id, values):
         :raises: PermissionDenied if missing *testplans.change_testplan* permission
         :raises: ValueError if validations fail
     """
-
-    if values.get('default_product_version'):
-        values['product_version'] = values.pop('default_product_version')
-
-    if values.get('product_version') and not values.get('product'):
-        raise ValueError('Field "product" is required by product_version')
-
-    if values.get('product') and not values.get('product_version'):
-        raise ValueError('Field "product_version" is required by product')
-
-    form = EditPlanForm(values)
-    if values.get('product_version') and values.get('product'):
-        form.populate(product_id=values['product'])
-
     test_plan = TestPlan.objects.get(pk=plan_id)
-
+    form = EditPlanForm(values, instance=test_plan)
     if form.is_valid():
-        return _get_updated_test_plan(values, form, test_plan).serialize()
+        test_plan = form.save()
+    else:
+        raise ValueError(form_errors_to_list(form))
 
-    raise ValueError(form_errors_to_list(form))
-
-
-# todo: this should be removed and the form used inside the API
-# method should inherit from ModelForm. See TestCase.update()
-# and the form which it uses !
-def _get_updated_test_plan(values, form, test_plan):
-    if form.cleaned_data['name']:
-        test_plan.name = form.cleaned_data['name']
-
-    if form.cleaned_data['type']:
-        test_plan.type = form.cleaned_data['type']
-
-    if form.cleaned_data['product']:
-        test_plan.product = form.cleaned_data['product']
-
-    if form.cleaned_data['product_version']:
-        test_plan.product_version = form.cleaned_data['product_version']
-
-    if form.cleaned_data['parent']:
-        test_plan.parent = form.cleaned_data['parent']
-
-    if values.get('is_active') is not None:
-        test_plan.is_active = form.cleaned_data['is_active']
-
-    if form.cleaned_data['text']:
-        test_plan.text = form.cleaned_data['text']
-
-    test_plan.save()
-
-    return test_plan
+    return test_plan.serialize()
 
 
 @permissions_required('testcases.add_testcaseplan')

@@ -13,21 +13,9 @@ Kiwi TCMS - Open Source Test Case Management System
    :target: https://crowdin.com/project/kiwitcms
    :alt: Translate
 
-.. image:: https://pyup.io/repos/github/kiwitcms/Kiwi/shield.svg
-    :target: https://pyup.io/repos/github/kiwitcms/Kiwi/
-    :alt: Python updates
-
-.. image:: https://badges.greenkeeper.io/kiwitcms/Kiwi.svg
-   :alt: Greenkeeper badge
-   :target: https://greenkeeper.io/
-
 .. image:: https://scan.coverity.com/projects/15921/badge.svg
     :target: https://scan.coverity.com/projects/kiwitcms-kiwi
     :alt: Coverity scan
-
-.. image:: https://snyk.io/test/github/kiwitcms/Kiwi/badge.svg?targetFile=tcms/package.json
-    :target: https://snyk.io/test/github/kiwitcms/Kiwi/?targetFile=tcms/package.json
-    :alt: Snyk vulnerability scan
 
 .. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
     :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
@@ -93,8 +81,10 @@ Brief history
 * Dec 2018 - GitLab integration support - first big code contribution by
   non-team member; more than 5 different external contributors in 2018 alone
 * Feb 2019 - Celebrating 10th anniversary with Kiwi TCMS info booth at FOSDEM Brussels
+* May 2019 - become the first open source TCMS system on `GitHub Marketplace <https://github.com/marketplace/kiwi-tcms/>`_
 * Jun 2019 - `OpenAwards winner <http://kiwitcms.org/blog/atodorov/2019/06/24/kiwi-tcms-is-openawards-2019-best-tech-community-winner/>`_
   in 'Best Tech Community' category
+* Mar 2020 - `Mozilla Open Source Award winner <https://kiwitcms.org/blog/kiwi-tcms-team/2020/03/27/kiwi-tcms-is-open-source-seed-award-winner/>`_
 
 
 Live demo

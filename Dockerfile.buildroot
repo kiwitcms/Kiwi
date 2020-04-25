@@ -1,7 +1,7 @@
 FROM centos:centos8
 
 RUN dnf -y --setopt=tsflags=nodocs install python3-virtualenv mariadb-connector-c-devel \
-    postgresql-devel libffi-devel gcc gettext npm which && \
+    postgresql-devel libffi-devel gcc gettext npm unzip which && \
     dnf clean all
 
 

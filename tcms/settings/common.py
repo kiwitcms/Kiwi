@@ -39,7 +39,8 @@ DATABASES = {
 if DATABASES['default']['ENGINE'].find('mysql') > -1:
     DATABASES['default']['OPTIONS'].update({  # pylint: disable=objects-update-used
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        })
+        'charset': 'utf8mb4',
+    })
 
 
 # Administrators error report email settings
@@ -51,9 +52,16 @@ ADMINS = [
 # Email settings
 # DEFAULT_FROM_EMAIL must be defined if you want Kiwi TCMS to send emails.
 # You also need to configure the email backend. For more information see:
-# https://docs.djangoproject.com/en/2.0/topics/email/#quick-example
+# https://docs.djangoproject.com/en/3.0/topics/email/
 DEFAULT_FROM_EMAIL = 'kiwi@example.com'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
+
+#  SMTP specific settings
+#  EMAIL_HOST = 'smtp.example.com'
+#  EMAIL_PORT = 25
+#  EMAIL_HOST_USER = 'smtp_username'
+#  EMAIL_HOST_PASSWORD = 'smtp_password'
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -243,33 +251,40 @@ ROOT_URLCONF = 'tcms.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
-INSTALLED_APPS = [
-    'vinaigrette',
+# DANGER: DO NOT EDIT, see git log !!!
+# this is consumed by kiwitcms-tenants/django-tenants
+TENANT_APPS = [
+    'django.contrib.sites',
+
+    'attachments',
+    'django_comments',
+    'modernrpc',
+    'simple_history',
+
+    # if you wish to disable Kiwi TCMS bug tracker
+    # comment out the next line
+    'tcms.bugs.apps.AppConfig',
+    'tcms.core.contrib.linkreference',
+    'tcms.management',
+    'tcms.testcases.apps.AppConfig',
+    'tcms.testplans.apps.AppConfig',
+    'tcms.testruns.apps.AppConfig',
+]
+
+INSTALLED_APPS = TENANT_APPS + [
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'attachments',
-    'django_comments',
-    'modernrpc',
-    'simple_history',
     'colorfield',
+    'vinaigrette',
 
     'tcms.core',
-    # if you wish to disable Kiwi TCMS bug tracker
-    # comment out the next line
-    'tcms.bugs.apps.AppConfig',
     'tcms.kiwi_auth',
-    'tcms.core.contrib.linkreference',
-    'tcms.management',
-    'tcms.testcases.apps.AppConfig',
-    'tcms.testplans.apps.AppConfig',
-    'tcms.testruns.apps.AppConfig',
     'tcms.telemetry',
     'tcms.rpc',
 ]
@@ -328,10 +343,6 @@ HELP_MENU_ITEMS = [
     ('http://kiwitcms.readthedocs.io/en/latest/admin.html', _('Administration Guide')),
     ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', _('API Help')),
 ]
-
-SERIALIZATION_MODULES = {
-    'json': 'tcms.core.serializer',
-}
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 

@@ -53,6 +53,8 @@ function drawChart() {
         query['close_date__gte'] = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
     }
 
+    const totalKey = $('.main').data('total-key')
+
     jsonRPC('Testing.execution_trends', query, data => {
         drawPassingRateSummary(data.status_count)
 
@@ -92,7 +94,18 @@ function drawChart() {
                 ratio: 1
             }
         };
+        config.tooltip = {
+            format: {
+                value: (value, _ratio, _id, _index) => value ? value : undefined
+            }
+        }
+        config.legend = {
+            hide: [totalKey],
+        }
         c3.generate(config);
+
+        // hide the total data point
+        $(`.c3-target-${totalKey}`).addClass('hidden')
     });
 }
 
@@ -106,14 +119,14 @@ function drawPassingRateSummary(status_count) {
     positiveBar.css('width', positiveRateText)
     positiveBar.text(positiveRateText)
     $('.passing-rate-summary .positive').text(status_count.positive)
-    
+
     const neutralPercent = status_count.neutral ? roundDown(status_count.neutral / allCount * 100) : 0
     const neutralRateText = `${neutralPercent}%`
     const neutralBar = $('.progress > .progress-bar-remaining')
     neutralBar.css('width', neutralRateText)
     neutralBar.text(neutralRateText)
     $('.passing-rate-summary .neutral').text(status_count.neutral)
-    
+
     const negativePercent = status_count.negative ? roundDown(status_count.negative / allCount * 100) : 0
     const negativeRateText = `${negativePercent}%`
     const negativeBar = $('.progress > .progress-bar-danger')

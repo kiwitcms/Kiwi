@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.core.templatetags.extra_filters
    tcms.core.templatetags.report_tags

@@ -30,6 +30,21 @@ ones to augment the default behavior of Kiwi TCMS. For more information
 refer to :mod:`tcms.signals`.
 
 
+Language and emojis
+-------------------
+
+By default our ``docker-compose.yml`` file is configured with MariaDB and
+uses charset ``utf8mb4`` and collation ``utf8mb4_unicode_ci``. That should
+be sufficient to support many languages plus emojis. If you are having troubles
+consult `MariaDB Character Sets and Collations <https://mariadb.com/kb/en/character-sets/>`_
+documentation.
+
+If you need to change the default settings see ``docker-compose.yml`` or
+``/etc/mysql/conf.d/mariadb.cnf`` if using a stand alone DB server! On the
+application side see ``DATABASES['default']['OPTIONS']`` in
+``tcms/settings/common.py``.
+
+
 Time zone settings
 ------------------
 
@@ -57,23 +72,46 @@ Your server/docker container clock should also match the accurate time of day!
     navigation bar! All other timestamps are in the same time zone!
 
 
-Using Amazon SES instead of SMTP email
---------------------------------------
-
+E-mail settings
+---------------
 Kiwi TCMS supports email notifications which by default are sent over SMTP and
-need to be configured via the following settings::
+need to be configured via the following settings:
 
-    # standard Django settings
-    EMAIL_HOST = 'smtp.example.com'
-    EMAIL_PORT = 25
+- Common settings::
+
     DEFAULT_FROM_EMAIL = 'kiwi@example.com'
-
     # additional Kiwi TCMS setting
     EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
-If you'd like to use an external email service, like Amazon SES you also need
-to configure the following settings::
+- SMTP specific settings::
 
+    EMAIL_HOST = 'smtp.example.com'
+    EMAIL_PORT = 25
+    EMAIL_HOST_USER = 'smtp_username'
+    EMAIL_HOST_PASSWORD = 'smtp_password'
+
+To enable SSL or TLS support include one of the following::
+
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSL = True
+
+For more details refer to Django documentation at https://docs.djangoproject.com/en/3.0/topics/email/
+
+
+Testing and debugging e-mail configuration
+------------------------------------------
+Sending test e-mail to one or more addresses::
+
+    docker exec -it kiwi_web /Kiwi/manage.py sendtestemail user1@example1.tld user2@example2.tld ...
+
+More details at: https://docs.djangoproject.com/en/3.0/ref/django-admin/#sendtestemail
+
+
+Using Amazon SES instead of SMTP email
+--------------------------------------
+
+If you'd like to use an external email service, like Amazon SES you need
+to configure the following settings instead::
 
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'

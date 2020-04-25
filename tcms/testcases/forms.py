@@ -91,6 +91,9 @@ CaseNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
 )
 
 
+# TODO: search page can search via text field which is not defined here
+# this will become important once we switch to ModelForm and make
+# the search page remember it's URL params to it can be bookmarked
 class BaseCaseSearchForm(forms.Form):
     summary = forms.CharField(required=False)
     author = forms.CharField(required=False)

@@ -86,9 +86,8 @@ class TestExecutionDataMixin:
 
         Statistics targets:
 
-        - the number of pending test executionss, whose status is IDLE
-        - the number of completed test executionss, whose status are PASSED,
-          ERROR, FAILED, WAIVED
+        - the number of pending test executions
+        - the number of completed test executions
 
         :param executions: iterable object containing executionss
         :type executions: iterable

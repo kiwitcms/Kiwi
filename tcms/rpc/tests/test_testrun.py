@@ -4,6 +4,8 @@ from datetime import datetime
 from xmlrpc.client import ProtocolError
 
 from django.contrib.auth.models import Permission
+from django.utils.translation import gettext_lazy as _
+
 from tcms_api import xmlrpc
 
 from tcms.rpc.tests.utils import APITestCase
@@ -28,7 +30,7 @@ class TestAddCase(APITestCase):
         self.test_run = TestRunFactory(plan=self.plan)
 
     def test_add_case(self):
-        result = self.rpc_client.exec.TestRun.add_case(self.test_run.pk, self.test_case.pk)
+        result = self.rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
         self.assertTrue(isinstance(result, dict))
 
         execution = TestExecution.objects.get(run=self.test_run.pk, case=self.test_case.pk)
@@ -70,13 +72,13 @@ class TestRemovesCase(APITestCase):
         self.test_execution.save()
 
     def test_nothing_change_if_invalid_case_passed(self):
-        self.rpc_client.exec.TestRun.remove_case(self.test_run.pk, 999999)
+        self.rpc_client.TestRun.remove_case(self.test_run.pk, 999999)
         self.test_execution.refresh_from_db()
         self.assertTrue(TestExecution.objects.filter(pk=self.test_execution.pk).exists())
         self.assertEqual(1, TestExecution.objects.count())
 
     def test_nothing_change_if_invalid_run_passed(self):
-        self.rpc_client.exec.TestRun.remove_case(99999, self.test_case.pk)
+        self.rpc_client.TestRun.remove_case(99999, self.test_case.pk)
         self.test_execution.refresh_from_db()
         self.assertTrue(TestExecution.objects.filter(pk=self.test_execution.pk).exists())
         self.assertEqual(1, TestExecution.objects.count())
@@ -100,7 +102,7 @@ class TestRemovesCase(APITestCase):
         self.assertTrue(exists)
 
     def test_should_remove_a_case_run(self):
-        self.rpc_client.exec.TestRun.remove_case(self.test_run.pk, self.test_case.pk)
+        self.rpc_client.TestRun.remove_case(self.test_run.pk, self.test_case.pk)
         self.assertFalse(TestExecution.objects.filter(pk=self.test_execution.pk).exists())
 
 
@@ -124,7 +126,7 @@ class TestAddTag(APITestCase):
         self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
 
     def test_add_tag(self):
-        result = self.rpc_client.exec.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
+        result = self.rpc_client.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['id'], self.tag0.pk)
         self.assertEqual(result[0]['name'], self.tag0.name)
@@ -176,7 +178,7 @@ class TestRemoveTag(APITestCase):
             self.test_runs[1].add_tag(tag)
 
     def test_remove_tag(self):
-        result = self.rpc_client.exec.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
+        result = self.rpc_client.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['id'], self.tag1.pk)
         self.assertEqual(result[0]['name'], self.tag1.name)
@@ -229,7 +231,7 @@ class TestProductVersionWhenCreating(APITestCase):
             'manager': self.api_user.username,
         }
 
-        result = self.rpc_client.exec.TestRun.create(test_run_fields)
+        result = self.rpc_client.TestRun.create(test_run_fields)
         self.assertEqual(result['product_version'], self.plan.product_version.value)
 
     def test_create_with_product_version(self):
@@ -243,7 +245,7 @@ class TestProductVersionWhenCreating(APITestCase):
             'product_version': version2.pk,
         }
 
-        result = self.rpc_client.exec.TestRun.create(test_run_fields)
+        result = self.rpc_client.TestRun.create(test_run_fields)
         # the result is still using product_version from TR.plan.product_version
         # not the one we specified above
         self.assertEqual(result['product_version'], self.plan.product_version.value)
@@ -274,7 +276,7 @@ class TestUpdateTestRun(APITestCase):
         self.assertNotEqual(self.updated_summary, self.test_run.summary)
         self.assertNotEqual(self.updated_stop_date, self.test_run.stop_date)
 
-        updated_test_run = self.rpc_client.exec.TestRun.update(self.test_run.pk, update_fields)
+        updated_test_run = self.rpc_client.TestRun.update(self.test_run.pk, update_fields)
         self.test_run.refresh_from_db()
 
         # compare result, returned from API call with test run from DB
@@ -298,9 +300,10 @@ class TestUpdateTestRun(APITestCase):
             'stop_date': '10-10-2010'
         }
 
-        with self.assertRaisesMessage(Exception,
-                                      'The stop date is invalid. The valid format is YYYY-MM-DD.'):
-            self.rpc_client.exec.TestRun.update(test_run.pk, update_fields)
+        with self.assertRaisesMessage(
+                Exception,
+                str(_('Invalid date format. Expected YYYY-MM-DD [HH:MM:SS].'))):
+            self.rpc_client.TestRun.update(test_run.pk, update_fields)
 
         # assert test run fields have not been updated
         test_run.refresh_from_db()

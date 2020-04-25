@@ -4,8 +4,6 @@ import os
 import glob
 import inspect
 
-import tcms.settings
-
 
 def import_local_settings(scan_dir, **kwargs):
     """
@@ -14,13 +12,12 @@ def import_local_settings(scan_dir, **kwargs):
 
         Files are executed in alphabetic order!
 
-        @scan_dir is a directory(parent module) under tcms/settings/!
+        @scan_dir is an absolute directory path!
     """
     # we are getting globals() from previous frame globals - it is caller's globals()
     scope = kwargs.pop('scope', inspect.stack()[1][0].f_globals)
 
-    scan_dir = os.path.join(os.path.dirname(tcms.settings.__file__), scan_dir, '*.py')
-    override_files = glob.glob(scan_dir)
+    override_files = glob.glob(os.path.join(scan_dir, '*.py'))
     override_files.sort()
     for fname in override_files:
         if fname.endswith('__init__.py'):
@@ -28,7 +25,7 @@ def import_local_settings(scan_dir, **kwargs):
         # Similar to what Transifex does
         # https://code.djangoproject.com/wiki/SplitSettings#Usingexectoincorporatelocalsettings
         # https://code.djangoproject.com/wiki/SplitSettings#UsingalistofconffilesTransifex
-        exec(  # nosec:B102:exec_used
+        exec(  # nosec:B102:exec_used pylint: disable=exec-used
             open(fname, "rb").read(),
             scope
         )

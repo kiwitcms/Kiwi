@@ -185,16 +185,21 @@ class AddComment(View):
 
     def post(self, request):
         form = BugCommentForm(request.POST)
+        request_action = request.POST.get('action')
 
         if form.is_valid():
             bug = form.cleaned_data['bug']
             if form.cleaned_data['text']:
                 add_comment([bug], form.cleaned_data['text'], request.user)
 
-            if request.POST.get('action') == 'close':
+            if request_action == 'close':
                 bug.status = False
-                bug.save()
                 add_comment([bug], _('*bug closed*'), request.user)
+
+            if request_action == 'reopen':
+                bug.status = True
+                add_comment([bug], _('*bug reopened*'), request.user)
+            bug.save()
 
         return HttpResponseRedirect(reverse('bugs-get', args=[bug.pk]))
 

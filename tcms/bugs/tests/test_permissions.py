@@ -6,7 +6,7 @@ from tcms.bugs.models import Bug
 from tcms.tests import factories
 
 
-class NewTestCase(tests.PermissionsTestCase):
+class TestNew(tests.PermissionsTestCase):
     permission_label = 'bugs.add_bug'
     url = reverse('bugs-new')
     http_method_names = ['get', 'post']

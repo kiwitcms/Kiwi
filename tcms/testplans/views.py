@@ -2,86 +2,90 @@
 
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
-from django.http import (Http404, HttpResponsePermanentRedirect,
+from django.http import (HttpResponsePermanentRedirect,
                          HttpResponseRedirect, JsonResponse)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.http import (require_http_methods,
-                                          require_POST)
+from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, View
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 from uuslug import slugify
 
 from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import printable as testcases_printable
-from tcms.testplans.forms import ClonePlanForm, NewPlanForm, SearchPlanForm
+from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
 from tcms.testruns.models import TestRun
 
 
-def update_plan_email_settings(test_plan, form):
-    """Update test plan's email settings"""
-    test_plan.emailing.notify_on_plan_update = form.cleaned_data[
-        'notify_on_plan_update']
-    test_plan.emailing.notify_on_case_update = form.cleaned_data[
-        'notify_on_case_update']
-    test_plan.emailing.auto_to_plan_author = form.cleaned_data['auto_to_plan_author']
-    test_plan.emailing.auto_to_case_owner = form.cleaned_data['auto_to_case_owner']
-    test_plan.emailing.auto_to_case_default_tester = form.cleaned_data[
-        'auto_to_case_default_tester']
-    test_plan.emailing.save()
-
-
-# _____________________________________________________________________________
-# view functons
-
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
-class NewTestPlanView(View):
+class NewTestPlanView(CreateView):
+    model = TestPlan
+    form_class = NewPlanForm
     template_name = 'testplans/mutable.html'
 
-    def get(self, request):
-        form = NewPlanForm()
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        # clear fields which are set dynamically via JavaScript
+        form.populate(self.request.POST.get('product', -1))
+        return form
 
-        context_data = {
-            'form': form
-        }
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['author'] = self.request.user
+        return kwargs
 
-        return render(request, self.template_name, context_data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['notify_formset'] = kwargs.get('notify_formset') or PlanNotifyFormSet()
+        return context
 
-    def post(self, request):
-        form = NewPlanForm(request.POST)
-        form.populate(product_id=request.POST.get('product'))
+    def form_valid(self, form):
+        notify_formset = PlanNotifyFormSet(self.request.POST)
+        if notify_formset.is_valid():
+            test_plan = form.save()
+            notify_formset.instance = test_plan
+            notify_formset.save()
 
-        if form.is_valid():
-            test_plan = TestPlan.objects.create(
-                product=form.cleaned_data['product'],
-                author=request.user,
-                product_version=form.cleaned_data['product_version'],
-                type=form.cleaned_data['type'],
-                name=form.cleaned_data['name'],
-                create_date=timezone.now(),
-                extra_link=form.cleaned_data['extra_link'],
-                parent=form.cleaned_data['parent'],
-                text=form.cleaned_data['text'],
-                is_active=form.cleaned_data['is_active'],
-            )
+            return HttpResponseRedirect(test_plan.get_absolute_url())
 
-            update_plan_email_settings(test_plan, form)
+        # taken from FormMixin.form_invalid()
+        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
 
-            return HttpResponseRedirect(
-                reverse('test_plan_url_short', args=[test_plan.pk, ])
-            )
 
-        context_data = {
-            'form': form,
-        }
-        return render(request, self.template_name, context_data)
+@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
+class Edit(UpdateView):
+    model = TestPlan
+    form_class = NewPlanForm
+    template_name = 'testplans/mutable.html'
+
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        if self.request.POST.get('product'):
+            form.populate(product_id=self.request.POST['product'])
+        else:
+            form.populate(product_id=self.object.product_id)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['notify_formset'] = kwargs.get('notify_formset') or \
+            PlanNotifyFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        notify_formset = PlanNotifyFormSet(self.request.POST, instance=self.object)
+        if notify_formset.is_valid():
+            notify_formset.save()
+            return super().form_valid(form)
+
+        # taken from FormMixin.form_invalid()
+        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
 
 
 class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-required
@@ -211,62 +215,6 @@ class GetTestPlanRedirectView(DetailView):  # pylint: disable=missing-permission
         return HttpResponsePermanentRedirect(reverse('test_plan_url',
                                                      args=[test_plan.pk,
                                                            slugify(test_plan.name)]))
-
-
-@require_http_methods(['GET', 'POST'])
-@permission_required('testplans.change_testplan')
-def edit(request, pk):
-    """Edit test plan view"""
-
-    try:
-        test_plan = TestPlan.objects.select_related().get(pk=pk)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    # If the form is submitted
-    if request.method == "POST":
-        form = NewPlanForm(request.POST)
-        form.populate(product_id=request.POST.get('product'))
-
-        # FIXME: Error handle
-        if form.is_valid():
-            test_plan.name = form.cleaned_data['name']
-            test_plan.parent = form.cleaned_data['parent']
-            test_plan.product = form.cleaned_data['product']
-            test_plan.product_version = form.cleaned_data['product_version']
-            test_plan.type = form.cleaned_data['type']
-            test_plan.is_active = form.cleaned_data['is_active']
-            test_plan.extra_link = form.cleaned_data['extra_link']
-            test_plan.text = form.cleaned_data['text']
-            test_plan.save()
-
-            # Update plan email settings
-            update_plan_email_settings(test_plan, form)
-            return HttpResponseRedirect(
-                reverse('test_plan_url', args=[pk, slugify(test_plan.name)]))
-    else:
-        form = NewPlanForm(initial={
-            'name': test_plan.name,
-            'product': test_plan.product_id,
-            'product_version': test_plan.product_version_id,
-            'type': test_plan.type_id,
-            'text': test_plan.text,
-            'parent': test_plan.parent_id,
-            'is_active': test_plan.is_active,
-            'extra_link': test_plan.extra_link,
-            'auto_to_plan_author': test_plan.emailing.auto_to_plan_author,
-            'auto_to_case_owner': test_plan.emailing.auto_to_case_owner,
-            'auto_to_case_default_tester': test_plan.emailing.auto_to_case_default_tester,
-            'notify_on_plan_update': test_plan.emailing.notify_on_plan_update,
-            'notify_on_case_update': test_plan.emailing.notify_on_case_update,
-        })
-        form.populate(product_id=test_plan.product_id)
-
-    context_data = {
-        'test_plan': test_plan,
-        'form': form,
-    }
-    return render(request, 'testplans/mutable.html', context_data)
 
 
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')

@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.bugs.admin
    tcms.bugs.api

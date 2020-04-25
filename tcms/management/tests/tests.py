@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-from http import HTTPStatus
-
-from django.conf import settings
 from django.test import TestCase
 from django.test.client import Client
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import Product, Version
-from tcms.testplans.models import TestPlan
+from tcms.testplans.models import TestPlan, TestPlanEmailSettings
 from tcms.tests.factories import (PlanTypeFactory, ProductFactory, UserFactory,
                                   VersionFactory)
 
@@ -48,20 +45,19 @@ class ProductTests(TestCase):
         product_version = VersionFactory(value='0.1', product=product)
         plan_type = PlanTypeFactory()
 
-        # create Test Plan via the UI by sending a POST request to the view
         previous_plans_count = TestPlan.objects.count()
-        test_plan_name = 'Test plan for the new product'
-        response = self.c.post(reverse('plans-new'), {
-            'name': test_plan_name,
-            'product': product.pk,
-            'product_version': product_version.pk,
-            'type': plan_type.pk,
-        }, follow=True)
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        # verify test plan was created
-        self.assertTrue(test_plan_name in str(response.content,
-                                              encoding=settings.DEFAULT_CHARSET))
+        TestPlan.objects.create(
+            name='Test plan for the new product',
+            author=self.user,
+            product=product,
+            product_version=product_version,
+            type=plan_type,
+        )
+        # verify TP was created
         self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
+
+        # make sure there are no email settings
+        TestPlanEmailSettings.objects.all().delete()
 
         # now delete the product
         admin_delete_url = "admin:%s_%s_delete" % (

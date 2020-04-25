@@ -4,8 +4,9 @@
     Django settings for product env.
 """
 
-from .common import *  # noqa: F401,F403
+import os
 
+from tcms.settings.common import *  # noqa: F401,F403
 from tcms.utils.settings import import_local_settings
 
 
@@ -18,5 +19,8 @@ try:
 except ImportError:
     pass
 
-
-import_local_settings('local_settings_dir')
+try:
+    import tcms_settings_dir
+    import_local_settings(os.path.dirname(tcms_settings_dir.__file__))
+except ImportError:
+    pass

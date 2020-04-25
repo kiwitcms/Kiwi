@@ -17,17 +17,17 @@ class TestFilterComponents(APITestCase):
                                           initial_owner=None, initial_qa_contact=None)
 
     def test_filter_by_product_id(self):
-        com = self.rpc_client.exec.Component.filter({'product': self.product.pk})
+        com = self.rpc_client.Component.filter({'product': self.product.pk})
         self.assertIsNotNone(com)
         self.assertEqual(com[0]['name'], 'application')
 
     def test_filter_by_name(self):
-        com = self.rpc_client.exec.Component.filter({'name': 'application'})
+        com = self.rpc_client.Component.filter({'name': 'application'})
         self.assertIsNotNone(com)
         self.assertEqual(com[0]['name'], 'application')
 
     def test_filter_non_existing(self):
-        found = self.rpc_client.exec.Component.filter({'name': 'documentation'})
+        found = self.rpc_client.Component.filter({'name': 'documentation'})
         self.assertEqual(0, len(found))
 
 
@@ -42,7 +42,7 @@ class TestCreateComponent(APITestCase):
         self.components_to_delete = []
 
     def test_add_component(self):
-        com = self.rpc_client.exec.Component.create({
+        com = self.rpc_client.Component.create({
             'name': 'application',
             'product': self.product.pk,
         })
@@ -52,9 +52,9 @@ class TestCreateComponent(APITestCase):
         self.assertEqual(com['initial_owner'], self.api_user.username)
 
     def test_add_component_with_no_perms(self):
-        self.rpc_client.exec.Auth.logout()
+        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.exec.Component.create(self.product.pk, "MyComponent")
+            self.rpc_client.Component.create(self.product.pk, "MyComponent")
 
 
 class TestUpdateComponent(APITestCase):
@@ -68,14 +68,14 @@ class TestUpdateComponent(APITestCase):
 
     def test_update_component(self):
         values = {'name': 'Updated'}
-        com = self.rpc_client.exec.Component.update(self.component.pk, values)
+        com = self.rpc_client.Component.update(self.component.pk, values)
         self.assertEqual(com['name'], 'Updated')
 
     def test_update_component_with_non_exist(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Component matching query does not exist'):
-            self.rpc_client.exec.Component.update(-99, {'name': 'new name'})
+            self.rpc_client.Component.update(-99, {'name': 'new name'})
 
     def test_update_component_with_no_perms(self):
-        self.rpc_client.exec.Auth.logout()
+        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.exec.Component.update(self.component.pk, {})
+            self.rpc_client.Component.update(self.component.pk, {})

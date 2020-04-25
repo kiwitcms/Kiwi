@@ -10,6 +10,7 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.rpc.api
 
@@ -17,6 +18,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.rpc.decorators
    tcms.rpc.serializer

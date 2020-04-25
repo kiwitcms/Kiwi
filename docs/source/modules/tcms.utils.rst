@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.utils.github
    tcms.utils.permissions

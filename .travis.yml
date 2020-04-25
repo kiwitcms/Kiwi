@@ -83,9 +83,6 @@ jobs:
             - graphviz
 
     - env:
-        - CMD=doc8
-
-    - env:
         - CMD=test_for_missing_migrations
         - TEST_DB=SQLite
 
@@ -118,9 +115,9 @@ before_install:
 
             mysql -e 'SELECT VERSION();'
             mysql -e 'CREATE USER "kiwi" IDENTIFIED BY "";'
-            mysql -e 'CREATE DATABASE kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+            mysql -e 'CREATE DATABASE kiwi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
             mysql -e 'GRANT ALL PRIVILEGES ON kiwi.* TO kiwi;'
-            mysql -e 'CREATE DATABASE test_kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+            mysql -e 'CREATE DATABASE test_kiwi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
             mysql -e 'GRANT ALL PRIVILEGES ON test_kiwi.* TO kiwi;'
         fi
 

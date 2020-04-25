@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.issuetracker.base
    tcms.issuetracker.bugzilla_integration

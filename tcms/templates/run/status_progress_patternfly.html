@@ -1,4 +1,6 @@
-<span>{{ stats.CompletedPercentage|floatformat:0 }}% complete</span>
+{% load i18n %}
+
+<span>{% blocktrans with amount=stats.CompletedPercentage|floatformat:0 %}{{ amount }}% complete{% endblocktrans %}</span>
 <div class="progress">
   <div class="progress-bar progress-bar-striped progress-bar-success" style="width: {{ stats.SuccessPercentage|floatformat:0}}%;"></div>
   <div class="progress-bar progress-bar-striped progress-bar-danger" style="width: {{ stats.FailurePercentage|floatformat:0 }}%"></div>

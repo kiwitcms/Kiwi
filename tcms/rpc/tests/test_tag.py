@@ -17,9 +17,9 @@ class Tag(APITestCase):
         self.tags = [self.tag_db, self.tag_fedora, self.tag_python, self.tag_tests, self.tag_xmlrpc]
 
     def test_get_tags_with_ids(self):
-        test_tag = self.rpc_client.exec.Tag.filter({'id__in': [self.tag_python.pk,
-                                                               self.tag_db.pk,
-                                                               self.tag_fedora.pk]})
+        test_tag = self.rpc_client.Tag.filter({'id__in': [self.tag_python.pk,
+                                                          self.tag_db.pk,
+                                                          self.tag_fedora.pk]})
         self.assertIsNotNone(test_tag)
         self.assertEqual(3, len(test_tag))
 
@@ -32,7 +32,7 @@ class Tag(APITestCase):
         self.assertEqual(test_tag[2]['name'], 'python')
 
     def test_get_tags_with_names(self):
-        test_tag = self.rpc_client.exec.Tag.filter({'name__in': ['python', 'fedora', 'db']})
+        test_tag = self.rpc_client.Tag.filter({'name__in': ['python', 'fedora', 'db']})
         self.assertIsNotNone(test_tag)
         self.assertEqual(3, len(test_tag))
 

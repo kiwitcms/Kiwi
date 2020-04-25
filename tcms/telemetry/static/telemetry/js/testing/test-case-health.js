@@ -92,7 +92,7 @@ function renderTestCaseColumn(data) {
 }
 
 function renderFailedExecutionsColumn(data) {
-    return `${data.count.fail} of ${data.count.all}`;
+    return `${data.count.fail} / ${data.count.all}`;
 }
 
 // TODO: this can be moved to the back-end and provide the percentage there

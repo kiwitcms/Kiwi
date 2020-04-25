@@ -10,6 +10,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.kiwi_auth.admin
    tcms.kiwi_auth.forms

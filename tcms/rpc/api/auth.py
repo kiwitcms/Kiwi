@@ -2,12 +2,10 @@
 
 import django.contrib.auth
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.middleware import RemoteUserMiddleware
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 __all__ = (
     'login',
-    'login_krbv',
     'logout',
 )
 
@@ -39,26 +37,6 @@ def login(username, password, **kwargs):
         return request.session.session_key
 
     raise PermissionDenied('Wrong username or password')
-
-
-@rpc_method(name='Auth.login_krbv')
-def login_krbv(**kwargs):
-    """
-    .. function:: XML-RPC Auth.login_krbv()
-
-        Login into Kiwi TCMS deployed with Kerberos.
-
-        :return: Session ID
-        :rtype: str
-    """
-
-    # Get the current request
-    request = kwargs.get(REQUEST_KEY)
-
-    middleware = RemoteUserMiddleware()
-    middleware.process_request(request)
-
-    return request.session.session_key
 
 
 @rpc_method(name='Auth.logout')

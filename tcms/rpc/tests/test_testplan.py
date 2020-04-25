@@ -33,7 +33,7 @@ class TestFilter(APITestCase):
                                       type=self.plan_type)
 
     def test_filter_plans(self):
-        plans = self.rpc_client.exec.TestPlan.filter({'pk__in': [self.plan_1.pk, self.plan_2.pk]})
+        plans = self.rpc_client.TestPlan.filter({'pk__in': [self.plan_1.pk, self.plan_2.pk]})
         plan = plans[0]
         self.assertEqual(self.plan_1.name, plan['name'])
         self.assertEqual(self.plan_1.product_version.pk, plan['product_version_id'])
@@ -41,8 +41,8 @@ class TestFilter(APITestCase):
 
     def test_filter_out_all_plans(self):
         plans_total = TestPlan.objects.all().count()
-        self.assertEqual(plans_total, len(self.rpc_client.exec.TestPlan.filter()))
-        self.assertEqual(plans_total, len(self.rpc_client.exec.TestPlan.filter({})))
+        self.assertEqual(plans_total, len(self.rpc_client.TestPlan.filter()))
+        self.assertEqual(plans_total, len(self.rpc_client.TestPlan.filter({})))
 
 
 class TestAddTag(APITestCase):
@@ -60,7 +60,7 @@ class TestAddTag(APITestCase):
         self.tag2 = TagFactory(name='xmlrpc_test_tag_2')
 
     def test_add_tag(self):
-        self.rpc_client.exec.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
+        self.rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
         self.assertTrue(tag_exists)
 
@@ -102,7 +102,7 @@ class TestRemoveTag(APITestCase):
         self.plans[1].add_tag(self.tag1)
 
     def test_remove_tag(self):
-        self.rpc_client.exec.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
+        self.rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertFalse(tag_exists)
 
@@ -149,7 +149,7 @@ class TestUpdate(APITestCase):  # pylint: disable=too-many-instance-attributes
                                       type=self.plan_type)
 
     def test_update_text(self):
-        self.rpc_client.exec.TestPlan.update(self.plan_1.pk, {'text': 'This has been updated'})
+        self.rpc_client.TestPlan.update(self.plan_1.pk, {'text': 'This has been updated'})
         # reload from db
         self.plan_1.refresh_from_db()
         # assert
@@ -172,13 +172,13 @@ class TestRemoveCase(APITestCase):
         self.plan_2.add_case(self.testcase_2)
 
     def test_remove_case_with_single_plan(self):
-        self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
+        self.rpc_client.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
         self.assertEqual(0, self.testcase_1.plan.count())  # pylint: disable=no-member
 
     def test_remove_case_with_two_plans(self):
         self.assertEqual(2, self.testcase_2.plan.count())  # pylint: disable=no-member
 
-        self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_2.pk)
+        self.rpc_client.TestPlan.remove_case(self.plan_1.pk, self.testcase_2.pk)
         self.assertEqual(1, self.testcase_2.plan.count())  # pylint: disable=no-member
 
 
@@ -205,7 +205,7 @@ class TestAddCase(APITestCase):
 
         for plan_id in plans:
             for case_id in cases:
-                self.rpc_client.exec.TestPlan.add_case(plan_id, case_id)
+                self.rpc_client.TestPlan.add_case(plan_id, case_id)
 
         # no duplicates for plan1/case1 were created
         self.assertEqual(

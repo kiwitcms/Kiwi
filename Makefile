@@ -6,7 +6,7 @@ FLAKE8_EXCLUDE=.git
 
 .PHONY: flake8
 flake8:
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py kiwi_lint
+	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py kiwi_lint tcms_settings_dir
 
 
 DJANGO_SETTINGS_MODULE="tcms.settings.test"
@@ -49,11 +49,11 @@ check: flake8 test
 .PHONY: pylint
 pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
-	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring -d duplicate-code tcms/
+	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring -d duplicate-code tcms/ tcms_settings_dir/
 
 .PHONY: bandit
 bandit:
-	bandit -r *.py tcms/ kiwi_lint/
+	bandit -r *.py tcms/ kiwi_lint/ tcms_settings_dir/
 
 
 .PHONY: bandit_site_packages
@@ -125,9 +125,21 @@ coverity:
 build-for-pypi:
 	./tests/check-build
 
+LOCAL_DJANGO_PO=tcms/locale/en/LC_MESSAGES/django.po
 
 .PHONY: messages
 messages:
-	./manage.py makemessages --locale en --no-obsolete --ignore "test*.py"
+	./manage.py makemessages --locale en --no-obsolete \
+	    --ignore "test*.py" --ignore "docs/*" --ignore "kiwi_lint/*" \
+	    --ignore "*.egg-info/*" --ignore "*/node_modules/*"
 	git checkout tcms/locale/eo_UY/
+
+	for APP_NAME in "github-app" "github-marketplace" "kiwitcms-enterprise" "tenants"; do \
+	    echo "---- Trying to merge translations from ../$$APP_NAME"; \
+	    if [ -d "../$$APP_NAME" ]; then \
+	        REMOTE_DJANGO_PO=`find ../$$APP_NAME -type f -wholename "*/locale/en/LC_MESSAGES/django.po"`; \
+	        msgcat --use-first -o $(LOCAL_DJANGO_PO) $(LOCAL_DJANGO_PO) $$REMOTE_DJANGO_PO; \
+	    fi; \
+	done
+
 	ls tcms/locale/en/LC_MESSAGES/*.po | xargs -n 1 -I @ msgattrib -o @ --no-fuzzy @

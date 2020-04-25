@@ -2,6 +2,77 @@ Change Log
 ==========
 
 
+Kiwi TCMS 8.2 (03 Apr 2020)
+---------------------------
+
+**IMPORTANT:** this is a small release which updates 3rd party libraries,
+provides minor improvements, minor API changes and some new translations.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 3.1.1 to 3.1.4
+- Update django from 3.0.4 to 3.0.5
+- Update django-colorfield from 0.2.1 to 0.2.2
+- Update pygithub from 1.46 to 1.47
+- Update python-gitlab from 2.0.1 to 2.1.2
+- Update marked(js) to version 0.8.2
+- Change default MariaDB charset and collation to utf8mb4. Will only affect
+  new installations. Closes
+  `Issue #327 <https://github.com/kiwitcms/Kiwi/issues/327>`_
+- Document ``TCMS_PLAN_ID`` ENV variable supported by automation framework
+  plugins
+- Test case Search page now allows searching for records containing the
+  specified text. Closes #1209 @Schwarzkrieger
+- Provide ``../site-packages/tcms_settings_dir/`` when installing Kiwi TCMS
+  which is an empty pkgutil-style namespace where other packages can drop
+  their configuration
+- Hide empty values in Execution trends chart tooltips
+
+
+API
+~~~
+
+- Remove ``Auth.login_krbv()`` method
+- Method ``TestRun.update()`` will now accept ``%Y-%m-%d %H:%M:%S``
+  timestamp format. The previous format ``%Y-%m-%d`` is also supported
+- Method ``TestExecution.create()`` now defaults to first neutral status
+  instead of searching for the hard-coded ``IDLE``. That means newly created
+  test executions which do not specify status will be created with the first
+  neutral status found in the database
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Fix pylint errors. Closes
+  `Issue #1510 <https://github.com/kiwitcms/Kiwi/issues/1510>`_ (@cmbahadir)
+- Add tests for ``TestRunAdmin.delete_view()`` (Mariyan Garvanski)
+- Revert "[l10n] Add Serializer class which returns untranslated models"
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+
+
+
 Kiwi TCMS 8.1 (04 Mar 2020)
 ---------------------------
 

@@ -59,6 +59,12 @@ $(document).ready(function() {
                 params['is_automated'] = false;
             };
 
+            // todo: see BaseCaseSearchForm
+            const text = $('#id_text').val();
+            if (text) {
+                params['text__icontains'] = text;
+            };
+
             updateParamsToSearchTags('#id_tag', params);
 
             dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data);

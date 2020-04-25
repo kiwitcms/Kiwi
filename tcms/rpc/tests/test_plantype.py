@@ -13,7 +13,7 @@ class PlanTypeMethods(APITestCase):
         self.plan_type = PlanTypeFactory(name='xmlrpc plan type', description='')
 
     def test_filter(self):
-        result = self.rpc_client.exec.PlanType.filter({'name': self.plan_type.name})[0]
+        result = self.rpc_client.PlanType.filter({'name': self.plan_type.name})[0]
         self.assertEqual(self.plan_type.name, result['name'])
         self.assertEqual(self.plan_type.description, result['description'])
         self.assertEqual(self.plan_type.pk, result['id'])

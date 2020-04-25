@@ -528,7 +528,7 @@ class ManageTestRunCC(View):
 
 @method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
 class UpdateCaseRunTextView(View):
-    """Update the IDLE cases to newest text"""
+    """Update TC.text for executions which are not completed, aka status__weight=0"""
 
     http_method_names = ['post']
 
@@ -540,7 +540,7 @@ class UpdateCaseRunTextView(View):
         else:
             executions = test_run.case_run.all()
 
-        executions = executions.filter(status__name='IDLE')
+        executions = executions.filter(status__weight=0)
 
         for execution in executions:
             latest_version = execution.case.history.latest().history_id

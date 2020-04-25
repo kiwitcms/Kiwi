@@ -1,12 +1,13 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.utils.translation import gettext_lazy as _
 
-from tcms.management.models import Build, Product, Version
+from tcms.management.models import Build
 from tcms.testcases.models import TestCase
 from tcms.testplans.models import TestPlan
+from tcms.core.forms.fields import UserField
 from tcms.testruns.forms import BaseCaseRunForm, BaseRunForm
 from tcms.testruns.models import TestExecutionStatus, TestRun
+from tcms.rpc.api.forms import UpdateModelFormMixin, DateTimeField
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -21,39 +22,18 @@ class NewForm(BaseRunForm):
         self.populate(self.fields['plan'].queryset.first().product_id)
 
 
-class UpdateForm(NewForm):
-    plan = forms.ModelChoiceField(
-        queryset=TestPlan.objects.all(),
-        required=False,
-    )
-    summary = forms.CharField(
-        required=False
-    )
-    manager = forms.ModelChoiceField(
-        queryset=User.objects.all(), required=False
-    )
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None, required=False
-    )
-    product_version = forms.ModelChoiceField(
-        queryset=Version.objects.none(),
-        empty_label=None, required=False
-    )
-    build = forms.ModelChoiceField(
-        queryset=Build.objects.all(),
-        required=False
-    )
-    stop_date = forms.DateTimeField(
-        required=False,
-        input_formats=['%Y-%m-%d'],
-        error_messages={
-            'invalid': _('The stop date is invalid. The valid format is YYYY-MM-DD.')
-        }
-    )
+class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
+    class Meta:
+        model = TestRun
+        exclude = ('tag', 'cc')  # pylint: disable=modelform-uses-exclude
 
-    def clean_status(self):
-        return self.cleaned_data.get('status')
+    manager = UserField()
+    default_tester = UserField()
+    start_date = DateTimeField()
+    stop_date = DateTimeField()
+
+    def populate(self, product_id):
+        self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
 
 
 class NewExecutionForm(BaseCaseRunForm):
@@ -83,7 +63,7 @@ class NewExecutionForm(BaseCaseRunForm):
     def clean_status(self):
         data = self.cleaned_data.get('status')
         if not data:
-            data = TestExecutionStatus.objects.get(name='IDLE')
+            data = TestExecutionStatus.objects.filter(weight=0).first()
 
         return data
 

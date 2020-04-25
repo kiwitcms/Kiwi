@@ -100,32 +100,29 @@ To upgrade running Kiwi TCMS containers execute the following commands::
     back these up before upgrading!
 
 
-Allow Kiwi TCMS HTTP access
----------------------------
-
-By default the Kiwi TCMS container enforces HTTPS connections, by redirecting
-HTTP (80) requests to the HTTPS port (443). This behavior may be deactivated
-via the ``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the
-application via ``docker compose`` then add::
-
-        environment:
-            KIWI_DONT_ENFORCE_HTTPS: "true"
-
-to ``docker-compose.yml``. If starting the container via ``docker run`` then
-add ``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
-
-
 SSL configuration
 -----------------
 
-By default Kiwi TCMS is served via HTTPS. ``docker-compose.yml`` is configured
-witha default self-signed certificate stored in ``etc/kiwitcms/ssl/``. If you
-want to use different SSL certificate you need to update the ``localhost.key``
-and ``localhost.crt`` files in that directory or bind-mount your own SSL
-directory to ``/Kiwi/ssl`` inside the docker container!
+By default Kiwi TCMS is served via HTTPS. The connection is secured by a
+self-signed certificate which if valid for 10 years and contains the
+following properties::
+
+    CN = container-layer-hash-id
+    OU = Quality Engineering
+    O = Kiwi TCMS
+    L = Sofia
+    C = BG
+
+The certificate authority file is available at https://localhost/static/ca.crt!
+You may distribute this file to all browsers who are going to access the
+running Kiwi TCMS instance.
+
+If you want to use different SSL certificate you need to update the
+``localhost.key`` and ``localhost.crt`` files located under ``/Kiwi/ssl/`` or
+bind-mount your own SSL directory to ``/Kiwi/ssl`` inside the docker container!
 
 More information about generating your own self-signed certificates can be
-found at https://wiki.centos.org/HowTos/Https.
+found at https://github.com/sgallagher/sscg#full-usage.
 
 
 Reverse proxy SSL
@@ -150,7 +147,7 @@ Nginx and the docker container)! Here's how the configuration looks like::
 
         server {
             listen 8080;
-            server_name demo.kiwitcms.org;
+            server_name public.tenant.kiwitcms.org;
 
             location / {
                 return 301 https://$host$request_uri;
@@ -158,11 +155,11 @@ Nginx and the docker container)! Here's how the configuration looks like::
         }
 
         server {
-            server_name demo.kiwitcms.org;
+            server_name public.tenant.kiwitcms.org;
             listen 8443 ssl;
 
             location / {
-                proxy_pass https://demo_kiwitcms_org_web:8443;
+                proxy_pass https://tenant_kiwitcms_org_web:8443;
             }
         }
     }
@@ -179,7 +176,7 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
         bind *:8443 ssl crt /etc/haproxy/ssl/
         reqadd X-Forwarded-Proto:\ https
 
-        acl kiwitcms hdr(host) -i demo.kiwitcms.org
+        acl kiwitcms hdr(host) -i public.tenant.kiwitcms.org
         use_backend back_kiwitcms if kiwitcms
 
     backend back_kiwitcms
@@ -191,7 +188,30 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
         rspadd X-XSS-Protection:\ 1;\ mode=block
 
         # do not verify the self-signed cert
-        server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
+        server kiwi_web tenant_kiwitcms_org_web:8443 ssl verify none
+
+
+Enable plain text HTTP access
+-----------------------------
+
+By default the Kiwi TCMS container enforces HTTPS connections, by redirecting
+HTTP (80) requests to the HTTPS port (443). This behavior may be deactivated
+via the ``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the
+application via ``docker compose`` then add::
+
+        environment:
+            KIWI_DONT_ENFORCE_HTTPS: "true"
+
+to ``docker-compose.yml``. If starting the container via ``docker run`` then
+add ``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
+
+.. warning::
+
+    Disabling SSL means all data transmissions, including passwords will be
+    easily accessible to 3rd parties who have access to the same network.
+
+    Running plain text HTTP over the public Internet is a serious security
+    flaw! You should purchase an SSL certificate instead!
 
 
 Customization
@@ -211,27 +231,26 @@ by editing ``docker-compose.yml``:
   ``local_settings_dir/``!
 
 .. versionadded:: 8.1
+.. versionchanged:: 8.2
 
-* Mount a host directory with multiple .py files under
-  ``../tcms/settings/local_settings_dir/``::
+* Mount multiple override .py files under
+  ``../site-packages/tcms_settings_dir/``::
 
         volumes:
             - uploads:/Kiwi/uploads
-            - ./local_settings_dir/:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings_dir/
-
-  Alternatively you can mount multiple individual host files under this
-  directory.
+            - ./my_settings_dir/email_config.py:/venv/lib64/python3.6/site-packages/tcms_settings_dir/email_config.py
+            - ./my_settings_dir/multi_tenant.py:/venv/lib64/python3.6/site-packages/tcms_settings_dir/multi_tenant.py
 
   .. important::
 
-        Filenames under ``local_settings_dir/`` must be valid Python
+        Filenames under ``my_settings_dir/`` must be valid Python
         `module names <https://www.python.org/dev/peps/pep-0008/#package-and-module-names>`_,
         in other words you should be able to import them!
 
-        Modules under ``local_settings_dir/`` are sorted alphabetically before being imported!
+        Modules under ``my_settings_dir/`` are sorted alphabetically before being imported!
         For a directory structure which lools like this::
 
-            local_settings_dir/
+            my_settings_dir/
             ├── django_social_auth.py
             ├── email_config.py
             ├── __init__.py
@@ -241,6 +260,18 @@ by editing ``docker-compose.yml``:
 
         ``__init__.py`` is skipped but it must be present to indicate Python can import
         modules from this directory!
+
+    .. important::
+
+        Starting from Kiwi TCMS v8.2 the ``__init__.py`` file must contain::
+
+            __path__ = __import__('pkgutil').extend_path(__path__, __name__)
+
+        and nothing else if you want to mount the entire ``my_settings_dir`` directly!
+        This is because ``tcms_settings_dir`` is now treated as a
+        `pkgutil-style namespace package <https://packaging.python.org/guides/packaging-namespace-packages/#pkgutil-style-namespace-packages>`_
+        and is provided by default when installing Kiwi TCMS! This allows plugins
+        and downstream override packages to install settings files into this directory!
 
 
 For more information about what each setting means see :ref:`configuration`.

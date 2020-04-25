@@ -10,6 +10,7 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.testcases.helpers
 
@@ -17,6 +18,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    tcms.testcases.admin
    tcms.testcases.fields
