@@ -1,52 +1,17 @@
 {% load i18n %}
 
-<div>
-    <div>
-        <span class="fa {% if object.status %}fa-envelope-open-o{% else %}fa-times{% endif %}"></span>
-        {% trans 'Status' %}:
-        {% if object.status %}
-            {% trans 'Open' %}
-        {% else %}
-            {% trans 'Closed' %}
-        {% endif %}
-    </div>
+{% trans 'Status' %}: {% if object.status %}{% trans 'Open' %}{% else %}{% trans 'Closed' %}{% endif %}
 
-    <div>
-        <span class="fa fa-calendar"></span>
-        {{ object.created_at }}
-    </div>
+{% trans 'Created at' %}: {{ object.created_at }}
 
-    <div>
-        <span class="fa pficon-user"></span>
-        {% trans 'Reporter' %}:
-        <a href="{% url "tcms-profile" object.reporter.username %}">{{ object.reporter.username }}</a>
-    </div>
+{% trans 'Reporter' %}: {{ object.reporter.username }}
 
-    <div>
-        <span class="fa pficon-user"></span>
-        {% trans 'Assignee' %}:
-        {% if object.assignee %}
-            <a href="{% url "tcms-profile" object.assignee.username %}">{{ object.assignee.username }}</a>
-        {% else %}
-            -
-        {% endif %}
-    </div>
+{% if object.assignee %}
+    {% trans 'Assignee' %}: {{ object.assignee.username }}
+{% endif %}
 
-    <div>
-        <span id="product_pk" class="fa fa-shopping-cart"></span>
-        {% trans 'Product' %}:
-        {{ object.product }}
-    </div>
+{% trans 'Product' %}: {{ object.product }}
 
-    <div>
-        <span class="fa fa-refresh"></span>
-        {% trans 'Version' %}:
-        {{ object.version }}
-    </div>
+{% trans 'Version' %}: {{ object.version }}
 
-    <div>
-        <span class="fa fa-wrench"></span>
-        {% trans 'Build' %}:
-        {{ object.build }}
-    </div>
-</div>
+{% trans 'Build' %}: {{ object.build }}
