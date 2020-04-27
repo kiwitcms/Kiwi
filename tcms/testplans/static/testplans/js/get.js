@@ -1,8 +1,8 @@
 $(document).ready(function() {
     const testPlanId = $('#test_plan_pk').data('testplanPk');
     const testCases = {
-        'confirmed': [],
-        'not_confirmed': []
+        'confirmed': {},
+        'not_confirmed': {}
     };
 
     const permissions = {
@@ -19,9 +19,9 @@ $(document).ready(function() {
             var testCase = data[i];
             //todo: refactor when testcase_status is replaced with boolean flag
             if (testCase.case_status_id === 2) {
-                testCases.confirmed.push(data[i]);
+                testCases.confirmed[testCase.id] = testCase;
             } else {
-                testCases.not_confirmed.push(data[i]);
+                testCases.not_confirmed[testCase.id] = testCase;
             }
         }
         drawTestCases(testCases.confirmed, testPlanId, permissions);
@@ -35,9 +35,9 @@ function drawTestCases(testCases, testPlanId, permissions) {
         noCasesTemplate = $('#no_test_cases'),
         testCaseRowDocumentFragment = $('#test_case_row')[0].content;
 
-    if (testCases.length > 0) {
-        for (var i = 0; i < testCases.length; i++) {
-            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[i], permissions));
+    if (Object.keys(testCases).length > 0) {
+       for (const testCaseId in testCases) {
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[testCaseId], permissions));
         }
         attachEvents(testPlanId, permissions);
         if (permissions['perm-change-testcase']) {
