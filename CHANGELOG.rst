@@ -2,6 +2,86 @@ Change Log
 ==========
 
 
+Kiwi TCMS 8.3 (27 Apr 2020)
+---------------------------
+
+**IMPORTANT:** this is a small release which updates 3rd party libraries,
+provides several improvements, includes minor API changes and new translations.
+It is the first release to include contributions via our
+`open source bounty program <https://kiwitcms.org/blog/kiwi-tcms-team/2020/04/17/kiwi-tcms-open-source-bounty-program-round-01/>`_.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-colorfield from 0.2.2 to 0.3.0
+- Update django-simple-history from 2.8.0 to 2.9.0
+- Update prismjs from 1.19.0 to 1.20.0
+- Update psycopg2 from 2.8.4 to 2.8.5
+- Update pygithub from 1.47 to 1.50
+- Update python-gitlab from 2.1.2 to 2.2.0
+- It is now possible to reopen closed bugs - Fixes
+  `Issue #1152 <https://github.com/kiwitcms/Kiwi/issues/1152>`_ (@cmbahadir)
+- Visual improvements for Status matrix telemetry:
+
+  - columns now link to test runs
+  - tooltips show test run summary
+
+- Show TOTAL in tooltip for Execution trends telemetry
+- Self-signed SSL certificate is now built more frequently and is valid
+  for 10 years
+- Improved documentation around self-signed certificates
+- Improved documentation around e-mail backend configuraiton. Closes
+  `Issue #1070 <https://github.com/kiwitcms/Kiwi/issues/1070>`_
+  (@Schwarzkrieger)
+
+
+API
+~~~
+
+- Methods ``TestPlan.create``, ``TestPlan.update`` and ``TestRun.update``
+  now use Django's ModelForm to properly validate input data against the model
+- Method ``TestCase.update`` now also accepts username and email values for
+  fields ``author``, ``default_tester`` and ``reviewer``
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Migrate bandit test job to GitHub workflows, Closes
+  `Issue #1550 <https://github.com/kiwitcms/Kiwi/issues/1550>`_ (@lcmtwn)
+- Migrate doc8 test job to GitHub workflows. Closes
+  `Issue #1551 <https://github.com/kiwitcms/Kiwi/issues/1551>`_ (@Prome88)
+- Add 2 more tests (Mariyan Garvanski)
+- Convert TP edit page to class based view
+- Convert forms to ModelForm
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Vietnamese translation <https://crowdin.com/project/kiwitcms/vi#>`_
+
+
+
 Kiwi TCMS 8.2 (03 Apr 2020)
 ---------------------------
 
