@@ -123,7 +123,7 @@ Help us improve Kiwi TCMS
 - Subscribe to our
   `newsletter <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 - Send us testimonials and feedback about how your team is using Kiwi TCMS
-- Donate 5$ or more at https://opencollective.com/kiwitcms
+- Donate €5 or more via https://opencollective.com/kiwitcms#section-contribute
 - Become a `contributor <http://kiwitcms.readthedocs.org/en/latest/contribution.html>`_
 
 
