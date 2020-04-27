@@ -43,7 +43,7 @@ Improvements
 - Self-signed SSL certificate is now built more frequently and is valid
   for 10 years
 - Improved documentation around self-signed certificates
-- Improved documentation around e-mail backend configuraiton. Closes
+- Improved documentation around e-mail backend configuration. Closes
   `Issue #1070 <https://github.com/kiwitcms/Kiwi/issues/1070>`_
   (@Schwarzkrieger)
 
