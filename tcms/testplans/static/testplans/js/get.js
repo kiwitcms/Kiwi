@@ -1,3 +1,5 @@
+var expandedTestCaseIds = [];
+
 $(document).ready(function() {
     const testPlanId = $('#test_plan_pk').data('testplanPk');
     const testCases = {
@@ -36,10 +38,10 @@ function drawTestCases(testCases, testPlanId, permissions) {
         testCaseRowDocumentFragment = $('#test_case_row')[0].content;
 
     if (Object.keys(testCases).length > 0) {
-       for (const testCaseId in testCases) {
+        for (const testCaseId in testCases) {
             container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[testCaseId], permissions));
         }
-        attachEvents(testPlanId, permissions);
+        attachEvents(testCases, testPlanId, permissions);
         if (permissions['perm-change-testcase']) {
             drawStatusAndPriority();
         }
@@ -47,7 +49,6 @@ function drawTestCases(testCases, testPlanId, permissions) {
         container.append(noCasesTemplate[0].innerHTML);
     }
 }
-
 
 function getTestCaseRowContent(rowContent, testCase, permissions) {
     var row = $(rowContent);
@@ -76,8 +77,6 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
         automation_indication_element.data(testCase.is_automated.toString())
     );
     automation_indication_element.removeClass(automated_class_to_remove);
-
-    getTestCaseExpandArea(row, testCase);
 
     return row;
 }
@@ -118,7 +117,7 @@ function getTestCaseExpandArea(row, testCase) {
     });
 }
 
-function attachEvents(testPlanId, permissions) {
+function attachEvents(testCases, testPlanId, permissions) {
     if (permissions['perm-change-testcase']) {
         // update default tester
         $('.js-test-case-menu-tester').click(function(ev) {
@@ -162,8 +161,22 @@ function attachEvents(testPlanId, permissions) {
         });
     }
 
+    // get details and draw expand area only on expand
+    $('.js-testcase-row').click(function(ev) {
+        const testCaseId = getCaseIdFromEvent(ev);
+
+        // tc was expanded once, dom is ready
+        if (expandedTestCaseIds.indexOf(testCaseId) > -1) {
+            return;
+        }
+
+        const tcRow = $(ev.target).closest('.js-testcase-row');
+        expandedTestCaseIds.push(testCaseId);
+        getTestCaseExpandArea(tcRow, testCases[testCaseId]);
+    });
+
     function getCaseIdFromEvent(ev) {
-        return $(ev.target).closest('.list-group-item').data('testcase-pk');
+        return $(ev.target).closest('.js-testcase-row').data('testcase-pk');
     }
 }
 
