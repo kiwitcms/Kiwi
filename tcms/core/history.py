@@ -2,8 +2,10 @@
 import difflib
 
 from django.db.models import signals
+from django.http import HttpResponseRedirect
 from django.template.defaultfilters import safe
 from django.utils.translation import gettext_lazy as _
+
 from simple_history.admin import SimpleHistoryAdmin
 from simple_history.models import HistoricalRecords
 
@@ -115,3 +117,7 @@ class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
             [field.name for field in self.opts.local_many_to_many]
         ))
         return readonly_fields
+
+    def response_change(self, request, obj):
+        super().response_change(request, obj)
+        return HttpResponseRedirect(obj.get_absolute_url())
