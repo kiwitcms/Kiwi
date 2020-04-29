@@ -159,28 +159,10 @@
                             </form>
                             <div class="row toolbar-pf-results">
                                 <div class="col-sm-12">
-                                    <h5>40 Results</h5>
+                                    <h5><span class="test-executions-count"></span> Results</h5>
                                     <p>Active filters:</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <span class="label label-info">
-                                            Name: nameofthething
-                                            <a href="#"><span class="fa fa-times"></span></a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="label label-info">
-                                            Name: nameofthething
-                                            <a href="#"><span class="fa fa-times"></span></a>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="label label-info">
-                                            Name: nameofthething
-                                            <a href="#"><span class="fa fa-times"></span></a>
-                                            </span>
-                                        </li>
-                                    </ul>
+                                    <ul class="list-inline" class="active-filters"></ul>
+                                    {% comment %} TODO: maybe don't show this button until at least one filter is added {% endcomment %}
                                     <p><a href="#">Clear All Filters</a></p>
                                 </div><!-- /col -->
                             </div><!-- /row -->
