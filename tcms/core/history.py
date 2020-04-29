@@ -82,9 +82,12 @@ class KiwiHistoricalRecords(HistoricalRecords):
             return
 
         if hasattr(instance, 'previous'):
-            instance.changeReason = diff_objects(instance.previous,
-                                                 instance,
-                                                 self.fields_included(instance))
+            # note: simple_history.utils.update_change_reason() performs an extra
+            # DB query so it is better to use the private field instead!
+            # In older simple_history version this field wasn't private but was renamed
+            # in 2.10.0 hence the pylint disable!
+            instance._change_reason = diff_objects(  # pylint: disable=protected-access
+                instance.previous, instance, self.fields_included(instance))
         super().post_save(instance, created, using, **kwargs)
 
     def finalize(self, sender, **kwargs):
