@@ -113,6 +113,8 @@ function renderTestExecutions(testExecutions, executionStatuses) {
 }
 
 function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
+    $('.test-executions-count').html(testExecutions.length);
+
     jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
         testExecutions.forEach(testExecution => {
             const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
