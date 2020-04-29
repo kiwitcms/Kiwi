@@ -129,7 +129,7 @@ function attachEvents(testCases, testPlanId, permissions) {
 
             // default_tester can be update only if we pass an user id
             jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(res) {
-                // todo update tc row data
+               $(ev.target).closest('.js-testcase-row').find('.js-test-case-tester').html(res.default_tester);
             });
         });
 
@@ -138,7 +138,7 @@ function attachEvents(testCases, testPlanId, permissions) {
             const testCaseId = getCaseIdFromEvent(ev);
 
             jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(result) {
-                // todo update tc row data
+               $(ev.target).closest('.js-testcase-row').find('.js-test-case-priority').html(ev.target.innerText);
             });
         });
 
@@ -146,7 +146,10 @@ function attachEvents(testCases, testPlanId, permissions) {
             const testCaseId = getCaseIdFromEvent(ev);
 
             jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(result) {
-                // todo update tc row data
+                //todo: refactor when testcase_status is replaced with boolean flag
+                if (result.case_status_id !== 2) {
+                    deleteClosestTestCaseRow(ev.target);
+                }
             });
         });
     }
@@ -156,7 +159,7 @@ function attachEvents(testCases, testPlanId, permissions) {
         $('.js-test-case-menu-delete').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
             jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function(res) {
-                $("div").find(`[data-testcase-pk=${testCaseId}]`).remove();
+                deleteClosestTestCaseRow(ev.target);
             });
         });
     }
@@ -177,6 +180,10 @@ function attachEvents(testCases, testPlanId, permissions) {
 
     function getCaseIdFromEvent(ev) {
         return $(ev.target).closest('.js-testcase-row').data('testcase-pk');
+    }
+
+    function deleteClosestTestCaseRow(el) {
+        $(el).closest('.js-testcase-row').remove();
     }
 }
 
