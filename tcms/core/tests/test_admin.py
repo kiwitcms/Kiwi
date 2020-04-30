@@ -40,10 +40,10 @@ class TestAdminView(LoggedInTestCase):
         self.assertContains(response, 'Tags')
         self.assertContains(response, 'Versions')
 
-        # for tcms.bugs
-        self.assertContains(response, '<a href="/admin/bugs/" class="grp-section">%s</a>' %
-                            _('Bugs'), html=True)
-        self.assertContains(response, '<strong>Bugs</strong>', html=True)
+        if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+            self.assertContains(response, '<a href="/admin/bugs/" class="grp-section">%s</a>' %
+                                _('Bugs'), html=True)
+            self.assertContains(response, '<strong>Bugs</strong>', html=True)
 
         # for tcms.testcases
         self.assertContains(response, 'Bug trackers')

@@ -1,9 +1,17 @@
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+# pylint: disable=wrong-import-position
+import unittest
 
-from tcms import tests
-from tcms.bugs.models import Bug
-from tcms.tests import factories
+from django.conf import settings
+
+if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
+    raise unittest.SkipTest('tcms.bugs is disabled')
+
+from django.urls import reverse                         # noqa: E402
+from django.utils.translation import gettext_lazy as _  # noqa: E402
+
+from tcms import tests            # noqa: E402
+from tcms.bugs.models import Bug  # noqa: E402
+from tcms.tests import factories  # noqa: E402
 
 
 class TestNew(tests.PermissionsTestCase):

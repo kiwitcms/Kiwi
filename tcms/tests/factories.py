@@ -317,16 +317,3 @@ class TestRunCCFactory(DjangoModelFactory):
 
     run = factory.SubFactory(TestRunFactory)
     user = factory.SubFactory(UserFactory)
-
-
-class BugFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'bugs.Bug'
-
-    summary = factory.Sequence(lambda n: 'Bug %d' % n)
-    reporter = factory.SubFactory(UserFactory)
-    assignee = factory.SubFactory(UserFactory)
-    product = factory.SubFactory(ProductFactory)
-    version = factory.SubFactory(VersionFactory)
-    build = factory.SubFactory(BuildFactory)
