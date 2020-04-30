@@ -73,13 +73,6 @@ jobs:
         - TEST_DB=MySQL
 
     - env:
-        - CMD=check-docs-source-in-git
-      addons:
-        apt:
-          packages:
-            - graphviz
-
-    - env:
         - CMD=test_for_missing_migrations
         - TEST_DB=SQLite
 
