@@ -100,14 +100,6 @@ class Version(TCMSActionModel):
     def __str__(self):
         return self.value
 
-    @classmethod
-    def string_to_id(cls, product_id, value):
-        try:
-            return cls.objects.get(product_id=product_id,
-                                   value=value).pk
-        except cls.DoesNotExist:
-            return None
-
 
 class Build(TCMSActionModel):
     name = models.CharField(max_length=255)

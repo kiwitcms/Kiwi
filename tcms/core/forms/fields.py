@@ -41,10 +41,3 @@ class UserField(forms.CharField):
                         (Q(email=value) | Q(username=value)))
                 except User.DoesNotExist:
                     raise ValidationError('Unknown user: "%s"' % value)
-
-
-class StripURLField(forms.URLField):
-    def to_python(self, value):
-        if isinstance(value, str):
-            value = value.strip()
-        return super(StripURLField, self).to_python(value)
