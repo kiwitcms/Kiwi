@@ -19,7 +19,11 @@ from tcms.issuetracker import (bugzilla_integration, github_integration,
                                gitlab_integration, jira_integration,
                                redmine_integration)
 from tcms.issuetracker.base import IssueTrackerType
-from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa, pylint: disable=unused-import
+
+
+# conditional import b/c this App can be disabled
+if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+    from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa, pylint: disable=unused-import
 
 
 def from_name(name):
