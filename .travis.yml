@@ -51,6 +51,11 @@ jobs:
 
     - env:
         - CMD=test
+        - TEST_DB=SQLite
+        - KIWI_DISABLE_BUGTRACKER=yes
+
+    - env:
+        - CMD=test
         - TEST_DB=MariaDB
         - LANG=sl
       addons:

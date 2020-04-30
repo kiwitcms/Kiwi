@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os.path
+import os
 from importlib import import_module
 
 import pkg_resources
@@ -261,15 +261,18 @@ TENANT_APPS = [
     'modernrpc',
     'simple_history',
 
-    # if you wish to disable Kiwi TCMS bug tracker
-    # comment out the next line
-    'tcms.bugs.apps.AppConfig',
     'tcms.core.contrib.linkreference',
     'tcms.management',
     'tcms.testcases.apps.AppConfig',
     'tcms.testplans.apps.AppConfig',
     'tcms.testruns.apps.AppConfig',
 ]
+
+# if you wish to disable Kiwi TCMS bug tracker
+# define the KIWI_DISABLE_BUGTRACKER ENV variable
+if os.environ.get('KIWI_DISABLE_BUGTRACKER') is None:
+    TENANT_APPS.append('tcms.bugs.apps.AppConfig')
+
 
 INSTALLED_APPS = TENANT_APPS + [
     'grappelli',
