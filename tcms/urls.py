@@ -13,7 +13,6 @@ from grappelli import urls as grappelli_urls
 from modernrpc.core import JSONRPC_PROTOCOL, XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
 
-from tcms.bugs import urls as bugs_urls
 from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.kiwi_auth import urls as auth_urls
@@ -39,8 +38,6 @@ urlpatterns = [
         name='ajax.update.cases-actor'),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
 
-    url(r'^bugs/', include(bugs_urls)),
-
     # Account information zone, such as login method
     url(r'^accounts/', include(auth_urls)),
 
@@ -61,6 +58,12 @@ urlpatterns = [
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
+
+
+# conditional import b/c this App can be disabled
+if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+    from tcms.bugs import urls as bugs_urls
+    urlpatterns.append(url(r'^bugs/', include(bugs_urls)))
 
 
 for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
