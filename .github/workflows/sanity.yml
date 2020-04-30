@@ -1,0 +1,26 @@
+name: sanity
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  check-docs-source-in-git:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: check-docs-source-in-git
+      run: |
+        sudo apt install python-pydot python-pydot-ng graphviz
+        pip install -r requirements/readthedocs.txt
+        make check-docs-source-in-git
