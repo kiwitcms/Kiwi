@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-04-25 20:51\n"
+"PO-Revision-Date: 2020-05-01 21:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2115,7 +2115,7 @@ msgstr "Nom complet"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "Chaîne non valide"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -2156,7 +2156,7 @@ msgstr "Schéma"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "Modèle de validation"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
