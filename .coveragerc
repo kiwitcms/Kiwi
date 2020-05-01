@@ -8,6 +8,7 @@ omit =
     manage.py
     kiwi_lint/*.py
     tcms/settings/test/*
+    tcms/utils/tests/*
     */tests/__init__.py
     */tests.py
     */tests/test_*.py
