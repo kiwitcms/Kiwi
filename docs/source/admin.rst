@@ -57,6 +57,7 @@ in :mod:`tcms.issuetracker`.
     one by defining ``KIWI_DISABLE_BUGTRACKER=yes`` in your environment
     variables!
 
+    .. versionadded:: 8.4
 
 Managing permissions
 --------------------
