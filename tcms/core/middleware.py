@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 
@@ -22,9 +23,12 @@ class CheckSettingsMiddleware(MiddlewareMixin):
             messages.add_message(
                 request,
                 messages.ERROR,
-                _('Base URL is not configured! '
-                  'See <a href="%(doc_url)s">documentation</a> and '
-                  '<a href="%(admin_url)s">change it</a>') % {
-                      'doc_url': doc_url,
-                      'admin_url': reverse('admin:sites_site_change', args=[site.pk])}
+                mark_safe(   # nosec:B308:B703
+                    _('Base URL is not configured! '
+                      'See <a href="%(doc_url)s">documentation</a> and '
+                      '<a href="%(admin_url)s">change it</a>') % {
+                          'doc_url': doc_url,
+                          'admin_url': reverse('admin:sites_site_change', args=[site.pk])
+                      }
+                )
             )
