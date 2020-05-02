@@ -1,11 +1,19 @@
-# pylint: disable=too-many-ancestors
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+# pylint: disable=too-many-ancestors,wrong-import-position
 
-from tcms.tests import BaseCaseRun, user_should_have_perm
-from tcms.tests.factories import BugFactory
-from tcms.utils.permissions import initiate_user_with_default_setups
-from tcms.core.templatetags.extra_filters import markdown2html
+import unittest
+
+from django.conf import settings
+
+if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
+    raise unittest.SkipTest('tcms.bugs is disabled')
+
+from django.urls import reverse                         # noqa: E402
+from django.utils.translation import gettext_lazy as _  # noqa: E402
+
+from tcms.core.templatetags.extra_filters import markdown2html        # noqa: E402
+from tcms.bugs.tests.factory import BugFactory                        # noqa: E402
+from tcms.tests import BaseCaseRun, user_should_have_perm             # noqa: E402
+from tcms.utils.permissions import initiate_user_with_default_setups  # noqa: E402
 
 
 class TestBugStatusChange(BaseCaseRun):

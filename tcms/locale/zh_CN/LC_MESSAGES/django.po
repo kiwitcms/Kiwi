@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-22 21:51+0000\n"
-"PO-Revision-Date: 2020-04-22 22:51\n"
+"POT-Creation-Date: 2020-04-25 20:44+0000\n"
+"PO-Revision-Date: 2020-04-26 09:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -345,15 +345,15 @@ msgstr "测试"
 
 #: tcms/settings/common.py:299
 msgid "New Test Plan"
-msgstr "新的测试计划"
+msgstr "新建测试计划"
 
 #: tcms/settings/common.py:301
 msgid "New Test Case"
-msgstr "新的测试用例"
+msgstr "新建测试用例"
 
 #: tcms/settings/common.py:303
 msgid "New Bug"
-msgstr ""
+msgstr "新建缺陷"
 
 #: tcms/settings/common.py:306
 msgid "SEARCH"
@@ -373,7 +373,7 @@ msgstr "搜索测试用例"
 
 #: tcms/settings/common.py:310
 msgid "Search Bugs"
-msgstr ""
+msgstr "搜索缺陷"
 
 #: tcms/settings/common.py:313
 msgid "TELEMETRY"
@@ -414,11 +414,11 @@ msgstr "管理其他事项"
 
 #: tcms/settings/common.py:328
 msgid "PLUGINS"
-msgstr ""
+msgstr "插件"
 
 #: tcms/settings/common.py:339
 msgid "Forum"
-msgstr ""
+msgstr "论坛"
 
 #: tcms/settings/common.py:340
 msgid "Report an Issue"
@@ -916,15 +916,15 @@ msgstr "注册"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "帮助"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "语言"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "支持的语言"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
@@ -1929,11 +1929,11 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "GitHub集成"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -1961,7 +1961,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "订阅"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -1973,7 +1973,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "租户"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
@@ -2065,13 +2065,17 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
+#: tcms_tenants/forms.py:25
+msgid "Invalid string"
+msgstr ""
+
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "新建"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "被授权用户"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
@@ -2098,6 +2102,10 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:41
+msgid "Validation pattern"
 msgstr ""
 
 #: tcms_tenants/utils.py:40

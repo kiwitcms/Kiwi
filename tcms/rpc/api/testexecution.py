@@ -1,17 +1,26 @@
 # -*- coding: utf-8 -*-
 
+from django.conf import settings
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.issuetracker.kiwitcms import KiwiTCMS
 from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
 from tcms.testruns.models import TestExecution
+
+
+# conditional import b/c this App can be disabled
+if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+    from tcms.issuetracker.kiwitcms import KiwiTCMS
+else:
+    class KiwiTCMS:  # pylint: disable=remove-empty-class,nested-class-found,too-few-public-methods
+        pass
+
 
 __all__ = (
     'create',

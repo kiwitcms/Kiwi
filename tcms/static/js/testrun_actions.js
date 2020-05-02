@@ -527,28 +527,18 @@ function removeRunCC(run_id, user, container) {
 }
 
 function changeCaseRunAssignee() {
-  var runs = serializeCaseRunFromInputList(jQ('#id_table_cases')[0]);
-  if (!runs.length) {
+  var executions = serializeCaseRunFromInputList(jQ('#id_table_cases')[0]);
+  if (!executions.length) {
     window.alert(default_messages.alert.no_case_selected);
     return false;
   }
 
-  var p = window.prompt('Please type new email or username for assignee');
-  if (!p) {
+  var assignee = window.prompt('Please type new email or username for assignee');
+  if (!assignee) {
     return false;
   }
-
-  jQ.ajax({
-    'url': '/runs/update-assignee/',
-    'type': 'POST',
-    'data': { ids: runs, assignee: p },
-    'success': function (data, textStatus, jqXHR) {
-      window.location.reload();
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
+  executions.forEach(execution_id => jsonRPC('TestExecution.update', [execution_id, {'assignee': assignee}], () => { }, sync=true));
+  window.location.reload();
 }
 
 function serializeCaseRunFromInputList(table, name) {

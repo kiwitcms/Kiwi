@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-22 21:51+0000\n"
-"PO-Revision-Date: 2020-04-23 11:41\n"
+"POT-Creation-Date: 2020-04-25 20:44+0000\n"
+"PO-Revision-Date: 2020-04-25 20:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2113,6 +2113,10 @@ msgstr "Non autorisé"
 msgid "Full name"
 msgstr "Nom complet"
 
+#: tcms_tenants/forms.py:25
+msgid "Invalid string"
+msgstr ""
+
 #: tcms_tenants/menu.py:12
 msgid "Create"
 msgstr "Créer"
@@ -2134,7 +2138,9 @@ msgstr "Le locataire expire dans moins de 7 jours"
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Votre locataire Kiwi TCMS a été créé sur:\n"
+"%(tenant_url)s\n\n"
+"Si vous avez des problèmes, veuillez contacter le support!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2147,6 +2153,10 @@ msgstr "Nom de l'entreprise, de l'équipe ou du projet"
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
 msgstr "Schéma"
+
+#: tcms_tenants/templates/tcms_tenants/new.html:41
+msgid "Validation pattern"
+msgstr ""
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"

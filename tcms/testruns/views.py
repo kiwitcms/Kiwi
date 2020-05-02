@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from http import HTTPStatus
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -9,7 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Q
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -584,31 +582,3 @@ def get_caseruns_of_runs(runs, kwargs=None):
     if status:
         caseruns = caseruns.filter(status__name__iexact=status)
     return caseruns
-
-
-@method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
-class UpdateAssigneeView(View):
-    """Updates TestExecution.assignee. Called from the front-end."""
-
-    http_method_names = ['post']
-
-    def post(self, request):
-        assignee = request.POST.get('assignee')
-        try:
-            user = User.objects.get(username=assignee)
-        except User.DoesNotExist:
-            try:
-                user = User.objects.get(email=assignee)
-            except User.DoesNotExist:
-                return JsonResponse({'rc': 1,
-                                     'response': _('User %s not found!') % assignee},
-                                    status=HTTPStatus.NOT_FOUND)
-
-        object_ids = request.POST.getlist('ids[]')
-
-        for caserun_pk in object_ids:
-            execution = get_object_or_404(TestExecution, pk=int(caserun_pk))
-            execution.assignee = user
-            execution.save()
-
-        return JsonResponse({'rc': 0, 'response': 'ok'})

@@ -26,9 +26,6 @@ addons:
 
 jobs:
   include:
-    - env:
-        - CMD=bandit
-
     - if: branch = master AND type = push
       env:
         - CMD=bandit_site_packages
@@ -54,6 +51,11 @@ jobs:
 
     - env:
         - CMD=test
+        - TEST_DB=SQLite
+        - KIWI_DISABLE_BUGTRACKER=yes
+
+    - env:
+        - CMD=test
         - TEST_DB=MariaDB
         - LANG=sl
       addons:
@@ -74,13 +76,6 @@ jobs:
       env:
         - CMD=test
         - TEST_DB=MySQL
-
-    - env:
-        - CMD=check-docs-source-in-git
-      addons:
-        apt:
-          packages:
-            - graphviz
 
     - env:
         - CMD=test_for_missing_migrations

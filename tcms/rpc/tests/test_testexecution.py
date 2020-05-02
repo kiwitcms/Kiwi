@@ -58,20 +58,20 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
                 self.rpc_client.TestExecution.create(value)
 
     def test_create_with_required_fields(self):
-        tcr = self.rpc_client.TestExecution.create({
+        execution = self.rpc_client.TestExecution.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
             "case_text_version": 15,
         })
-        self.assertIsNotNone(tcr)
-        self.assertIsNotNone(tcr['id'])
-        self.assertEqual(tcr['build_id'], self.build.pk)
-        self.assertEqual(tcr['case_id'], self.case.pk)
-        self.assertEqual(tcr['run_id'], self.test_run.pk)
+        self.assertIsNotNone(execution)
+        self.assertIsNotNone(execution['id'])
+        self.assertEqual(execution['build_id'], self.build.pk)
+        self.assertEqual(execution['case_id'], self.case.pk)
+        self.assertEqual(execution['run_id'], self.test_run.pk)
 
     def test_create_with_all_fields(self):
-        tcr = self.rpc_client.TestExecution.create({
+        execution = self.rpc_client.TestExecution.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -80,14 +80,14 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
             "status": self.status.pk,
             "case_text_version": 3,
         })
-        self.assertIsNotNone(tcr)
-        self.assertIsNotNone(tcr['id'])
-        self.assertEqual(tcr['build_id'], self.build.pk)
-        self.assertEqual(tcr['case_id'], self.case.pk)
-        self.assertEqual(tcr['assignee_id'], self.api_user.pk)
-        self.assertEqual(tcr['sortkey'], 90)
-        self.assertEqual(tcr['status'], self.status.name)
-        self.assertEqual(tcr['case_text_version'], 3)
+        self.assertIsNotNone(execution)
+        self.assertIsNotNone(execution['id'])
+        self.assertEqual(execution['build_id'], self.build.pk)
+        self.assertEqual(execution['case_id'], self.case.pk)
+        self.assertEqual(execution['assignee_id'], self.api_user.pk)
+        self.assertEqual(execution['sortkey'], 90)
+        self.assertEqual(execution['status'], self.status.name)
+        self.assertEqual(execution['case_text_version'], 3)
 
     def test_create_with_non_exist_fields(self):
         values = [
@@ -224,15 +224,15 @@ class TestExecutionFilter(APITestCase):
         self.assertEqual(0, len(found))
 
     def test_filter_by_id(self):
-        tcr = self.rpc_client.TestExecution.filter({'pk': self.case_run.pk})[0]
-        self.assertIsNotNone(tcr)
-        self.assertEqual(tcr['build_id'], self.case_run.build.pk)
-        self.assertEqual(tcr['case_id'], self.case_run.case.pk)
-        self.assertEqual(tcr['assignee_id'], self.tester.pk)
-        self.assertEqual(tcr['tested_by_id'], None)
-        self.assertEqual(tcr['sortkey'], 10)
-        self.assertEqual(tcr['status'], self.status_idle.name)
-        self.assertEqual(tcr['status_id'], self.status_idle.pk)
+        execution = self.rpc_client.TestExecution.filter({'pk': self.case_run.pk})[0]
+        self.assertIsNotNone(execution)
+        self.assertEqual(execution['build_id'], self.case_run.build.pk)
+        self.assertEqual(execution['case_id'], self.case_run.case.pk)
+        self.assertEqual(execution['assignee_id'], self.tester.pk)
+        self.assertEqual(execution['tested_by_id'], None)
+        self.assertEqual(execution['sortkey'], 10)
+        self.assertEqual(execution['status'], self.status_idle.name)
+        self.assertEqual(execution['status_id'], self.status_idle.pk)
 
 
 class TestExecutionGetLinks(APITestCase):
@@ -258,11 +258,11 @@ class TestExecutionGetLinks(APITestCase):
         self.assertEqual(len(logs), 0)
 
     def test_get_links(self):
-        tcr_log = LinkReference.objects.get(execution=self.case_run_1.pk)
+        execution_log = LinkReference.objects.get(execution=self.case_run_1.pk)
         logs = self.rpc_client.TestExecution.get_links({'execution': self.case_run_1.pk})
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
-        self.assertEqual(logs[0]['id'], tcr_log.pk)
+        self.assertEqual(logs[0]['id'], execution_log.pk)
         self.assertEqual(logs[0]['name'], "Test logs")
         self.assertEqual(logs[0]['url'], 'http://kiwitcms.org')
 
@@ -280,24 +280,59 @@ class TestExecutionUpdate(APITestCase):
         self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
 
     def test_update_with_single_caserun(self):
-        tcr = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+        execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
             "build": self.build.pk,
             "assignee": self.user.pk,
             "status": self.status_positive.pk,
             "sortkey": 90
         })
-        self.assertEqual(tcr['build'], self.build.name)
-        self.assertEqual(tcr['assignee'], self.user.username)
-        self.assertEqual(tcr['status'], self.status_positive.name)
-        self.assertEqual(tcr['sortkey'], 90)
+        self.assertEqual(execution['build'], self.build.name)
+        self.assertEqual(execution['assignee'], self.user.username)
+        self.assertEqual(execution['status'], self.status_positive.name)
+        self.assertEqual(execution['sortkey'], 90)
+
+    def test_update_with_assignee_id(self):
+        self.assertNotEqual(self.case_run_1.assignee, self.user.pk)
+        execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+            "assignee": self.user.pk
+        })
+        self.assertEqual(execution['assignee'], self.user.username)
+
+    def test_update_with_assignee_email(self):
+        self.assertNotEqual(self.case_run_1.assignee, self.user.email)
+        execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+            "assignee": self.user.email
+        })
+        self.assertEqual(execution['assignee'], self.user.username)
+
+    def test_update_with_assignee_username(self):
+        self.assertNotEqual(self.case_run_1.assignee, self.user.username)
+        execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+            "assignee": self.user.username
+        })
+        self.assertEqual(execution['assignee'], self.user.username)
 
     def test_update_with_non_existing_build(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
             self.rpc_client.TestExecution.update(self.case_run_1.pk, {"build": 1111111})
 
-    def test_update_with_non_existing_assignee(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
-            self.rpc_client.TestExecution.update(self.case_run_1.pk, {"assignee": 1111111})
+    def test_update_with_non_existing_assignee_id(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user_id'):
+            self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+                "assignee": 1111111
+            })
+
+    def test_update_with_non_existing_assignee_email(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user'):
+            self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+                "assignee": 'nonExistentEmail@gmail.com'
+            })
+
+    def test_update_with_non_existing_assignee_username(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user:'):
+            self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+                "assignee": 'nonExistentUsername'
+            })
 
     def test_update_with_non_existing_status(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):

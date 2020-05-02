@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Support - ask with "kiwi-tcms" tag on Stack Overflow
+  - name: Support and general questions - ask with "kiwi-tcms" tag on Stack Overflow
     url: https://stackoverflow.com/questions/tagged/kiwi-tcms
-    about: Community support
+    about: Ask our community for help
+  - name: Donate €5 or more via Open Collective
+    url: https://opencollective.com/kiwitcms#section-contribute
+    about: Support our open source bounty program

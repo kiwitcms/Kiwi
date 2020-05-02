@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-22 21:51+0000\n"
-"PO-Revision-Date: 2020-04-23 11:41\n"
+"POT-Creation-Date: 2020-04-25 20:44+0000\n"
+"PO-Revision-Date: 2020-04-28 19:31\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -2112,6 +2112,10 @@ msgstr "Nimate pooblastil"
 msgid "Full name"
 msgstr "Polno ime"
 
+#: tcms_tenants/forms.py:25
+msgid "Invalid string"
+msgstr "Neveljaven niz"
+
 #: tcms_tenants/menu.py:12
 msgid "Create"
 msgstr "Ustvari"
@@ -2148,6 +2152,10 @@ msgstr "Naziv projekta, podjetja ali ekipe"
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
 msgstr "Shema"
+
+#: tcms_tenants/templates/tcms_tenants/new.html:41
+msgid "Validation pattern"
+msgstr "Vzorec za preverjanje"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"

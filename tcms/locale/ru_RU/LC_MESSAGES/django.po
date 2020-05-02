@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-22 21:51+0000\n"
-"PO-Revision-Date: 2020-04-22 22:51\n"
+"POT-Creation-Date: 2020-04-25 20:44+0000\n"
+"PO-Revision-Date: 2020-04-25 20:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2108,6 +2108,10 @@ msgstr "Неавторизовано"
 msgid "Full name"
 msgstr "Полное имя"
 
+#: tcms_tenants/forms.py:25
+msgid "Invalid string"
+msgstr ""
+
 #: tcms_tenants/menu.py:12
 msgid "Create"
 msgstr "Создать"
@@ -2142,6 +2146,10 @@ msgstr "Название компании, команды или проекта"
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
 msgstr "Схема"
+
+#: tcms_tenants/templates/tcms_tenants/new.html:41
+msgid "Validation pattern"
+msgstr ""
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
