@@ -1,7 +1,8 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2020 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+from django.conf import settings
 from django.template.response import TemplateResponse
 
 
@@ -33,5 +34,22 @@ class ModifySettingsTemplateResponse(TemplateResponse):
     modify_settings = None
 
     def render(self):
-        with self.modify_settings:  # pylint: disable=not-context-manager
-            return super().render()
+        try:
+            with self.modify_settings:  # pylint: disable=not-context-manager
+                return super().render()
+        finally:
+            # if this attribute is still set that means disabling settings override
+            # failed which leads to navbar showing bogus menu items, see
+            # https://github.com/kiwitcms/Kiwi/issues/991
+            # => try to restore the original unmodified settings, see
+            # django.test.utils.override_settings().disable()
+            #
+            # NOTE: the only way to reproduce this reliably ATM is by raising exception
+            # in .disable() before restoring the original settings although I can see
+            # the problem on tcms.kiwitcms.org after the last restart 1 week ago!
+            # Maybe the switch to CBV and this response class made #991 harder to
+            # reproduce. It was easier to reproduce in the past by triggering some kind
+            # of exception in the FBV which used modify_settings() !!!
+            if hasattr(self.modify_settings, 'wrapped'):
+                settings._wrapped = self.modify_settings.wrapped  # pylint: disable=protected-access
+                del self.modify_settings.wrapped
