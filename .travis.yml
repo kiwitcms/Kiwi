@@ -82,9 +82,6 @@ jobs:
         - TEST_DB=SQLite
 
     - env:
-        - CMD=build-for-pypi
-
-    - env:
         - CMD=test-docker-image
 
   allow_failures:

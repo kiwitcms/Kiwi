@@ -24,3 +24,23 @@ jobs:
         sudo apt install python-pydot python-pydot-ng graphviz
         pip install -r requirements/readthedocs.txt
         make check-docs-source-in-git
+
+  build-for-pypi:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: build-for-pypi
+        run: |
+          sudo apt install gettext
+          pip install wheel virtualenv
+          pip install -r requirements/readthedocs.txt
+          make build-for-pypi
