@@ -76,11 +76,7 @@ jobs:
       env:
         - CMD=test
         - TEST_DB=MySQL
-
-    - env:
-        - CMD=test_for_missing_migrations
-        - TEST_DB=SQLite
-
+        
     - env:
         - CMD=build-for-pypi
 
