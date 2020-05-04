@@ -16,6 +16,7 @@ Available plugins
   for reading junit.xml formatted files. Written in Python
 * Native `JUnit 5 plugin <https://github.com/kiwitcms/junit-plugin/>`_ written
   in Java
+* `Robot Framework plugin <https://github.com/kiwitcms/robotframework-plugin>`_
 
 .. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
 
@@ -42,7 +43,6 @@ Proposed plugins
 * Native `Test NG plugin <https://github.com/kiwitcms/Kiwi/issues/692>`_ to be
   written in Java
 * `GitHub status plugin <https://github.com/kiwitcms/Kiwi/issues/817>`_
-* `Robot Framework plugin <https://github.com/kiwitcms/Kiwi/issues/984>`_
 
 .. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
 
