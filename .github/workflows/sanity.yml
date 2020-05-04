@@ -24,3 +24,23 @@ jobs:
         sudo apt install python-pydot python-pydot-ng graphviz
         pip install -r requirements/readthedocs.txt
         make check-docs-source-in-git
+        
+  test-for-missing-migrations:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: test-for-missing-migrations
+        run: |
+          sudo apt install sqlite3 libsqlite3-dev
+          pip install virtualenv
+          pip install -r requirements/readthedocs.txt
+          make test_for_missing_migrations
