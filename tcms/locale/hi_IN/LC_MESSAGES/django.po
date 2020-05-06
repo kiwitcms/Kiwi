@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-04 09:51\n"
+"PO-Revision-Date: 2020-05-06 14:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -43,7 +43,7 @@ msgstr "खुला"
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "सामाप्ति"
 
 #: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -117,11 +117,11 @@ msgstr "निर्माण"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr ""
+msgstr "टिप्पणी की है"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "फिर से खोलें"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -134,7 +134,7 @@ msgstr "सेव करें"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr ""
+msgstr "बंद करें"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -227,11 +227,11 @@ msgstr "बनाने की तिथि"
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:494
 msgid "Edit"
-msgstr ""
+msgstr "संपादित करें"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:507
 msgid "Delete"
-msgstr ""
+msgstr "मिटाए"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -239,25 +239,25 @@ msgstr "नई बग"
 
 #: tcms/bugs/views.py:167
 msgid "Edit bug"
-msgstr ""
+msgstr "बग संपादित करें"
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr ""
+msgstr "* बग बंद *"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "* बग फिर से खोला *"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "उपयोगकर्ता %s नहीं मिला"
 
 #: tcms/core/history.py:40
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "अपडेट: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:46
 #, python-format
@@ -266,70 +266,74 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "संशोधित किया गया %(history_date)s\n"
+"अपडेट द्वारा  %(username)s\n\n"
+"%(diff)s\n\n"
+"अधिक जानकारी के लिए:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "आधार URL कॉन्फ़िगर नहीं है! <a href=\"%(doc_url)s\"> दस्तावेज़ीकरण </a> देखें और <a href=\"%(admin_url)s\"> इसे बदलें </a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "यह ईमेल पता पहले से प्रयोग में है"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "व्यक्तिगत जानकारी"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "अनुमतियाँ"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "इस ईमेल के साथ उपयोगकर्ता पहले से मौजूद है"
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "आपका नया %s खाता पुष्टिकरण"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "आपका खाता बन चुका है, कृपया पुष्टि के लिए अपना मेलबॉक्स देखें"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "आपका खाता बनाया जा चुका है, लेकिन इसे सक्रिय करने के लिए आपको एक व्यवस्थापक की आवश्यकता है"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "निम्नलिखित प्रशासक सूची है"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "यह सक्रियण कुंजी अब डेटाबेस में मौजूद नहीं है"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
-msgstr ""
+msgstr "यह सक्रियण कुंजी समाप्त हो गई है"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "आपका खाता सक्रिय हो गया है"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "इसके base_url को कॉन्फ़िगर करके इस समस्या ट्रैकर को रिपोर्टिंग सक्षम करें!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "अमान्य तिथि प्रारूप। अपेक्षित YYYY-MM-DD [HH: MM: SS]।"
 
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "मॉडल %s में कोई प्राथमिक कुंजी नहीं है। आपको ऐसे फ़ील्ड को मैन्युअल रूप से निर्दिष्ट करना होगा।"
 
 #: tcms/settings/common.py:297
 msgid "DASHBOARD"
@@ -438,21 +442,21 @@ msgstr "API सहायता"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "नए उपयोगकर्ता की मंजूरी का इंतजार"
 
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "नया: TestRun #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "नया: बग #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "अन्य"
 
 #: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
@@ -473,7 +477,7 @@ msgstr "टेस्ट प्लान"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "परीक्षण ब्रेकडाउन"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
@@ -551,15 +555,15 @@ msgstr "असफल क्रियान्वयन के प्रतिश
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "पृष्ठ नहीं मिला"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "आंतरिक सर्वर त्रुटि"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "क्या आप वाकई इस अटैचमेंट को हटाना चाहते हैं?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -573,12 +577,12 @@ msgstr "विषय वस्तु"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "अटैचमेंट"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "कोई अटैचमेंट नहीं मिला"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -591,7 +595,7 @@ msgstr "अवयव"
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
-msgstr ""
+msgstr "कोई घटक नहीं मिला"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -607,19 +611,19 @@ msgstr "टैग"
 #: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "कोई टैग नहीं मिला"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "बग"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "रन से"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "कोई बग नहीं मिला"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -632,27 +636,27 @@ msgstr "टिप्पणियाँ"
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "टिप्पणियाँ"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr ""
+msgstr "परीक्षा निष्पादन सूचना"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "रन तारीख"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
-msgstr ""
+msgstr "पाठ संस्करण"
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
-msgstr ""
+msgstr "कोई लॉग दर्ज नहीं"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "बग और हाइपरलिंक"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -663,23 +667,23 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "जोड़ें"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
-msgstr ""
+msgstr "बग रिपोर्ट करें"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "अन्तर्वस्तु"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "टेस्ट प्लान दस्तावेज़"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "परीक्षण के मामले"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -692,17 +696,18 @@ msgstr "परीक्षण निष्पादित"
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "इस समय शुरू किया गया"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s का TestRun(s) या TestCase(s) आपको निष्पादित करने की आवश्यकता है।\n"
+"यहाँ नवीनतम %(count)s हैं।"
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "सभी देखें"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
@@ -732,7 +737,8 @@ msgstr "अमल"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "आप %(total_count)s के TestPlan(s) प्रबंधित करते हैं, %(disabled_count)s अक्षम हैं।\n"
+"यहाँ नवीनतम %(count)s हैं।"
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -744,7 +750,9 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "आपका स्वागत है %(user)s,\n"
+"एक %(site_domain)s खाते के लिए साइन अप करने के लिए धन्यवाद!\n\n"
+"अपना खाता सक्रिय करने के लिए, इस लिंक पर क्लिक करें: %(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -757,12 +765,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "बग %(pk)s आपको सौंपा गया है।\n\n"
+"लिंक: %(bug_url)s\n\n"
+"सारांश: %(summary)s\n"
+"बनाया गया: %(creation_date)s\n"
+"रिपोर्टर: %(reporter)s\n"
+"असाइन करें: %(assignee)s\n"
+"उत्पाद: %(product)s\n"
+"संस्करण: %(version)s\n"
+"बिल्ड: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "TestCase को %(username)s द्वारा हटा दिया गया है!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -779,7 +795,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "टेस्ट रन %(pk)s आपके लिए बनाया या अपडेट किया गया है।\n\n"
+"### लिंक ###\n"
+"टेस्ट रन: %(run_url)s\n"
+"परीक्षण योजना: %(plan_url)s\n\n"
+"### मूल रन जानकारी ###\n"
+"सारांश: %(summary)s\n\n"
+"प्रबंधित: %(manager)s\n"
+"डिफ़ॉल्ट परीक्षक: %(default_tester)s\n\n"
+"उत्पाद: %(product)s\n"
+"उत्पाद संस्करण: %(version)s\n"
+"बिल्ड: %(build)s\n\n"
+"टिप्पणियाँ:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -787,27 +815,30 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "प्रिय प्रशासक,\n"
+"किसी ने अभी उपयोगकर्ता नाम से एक खाता पंजीकृत किया है %(username)s आपके\n"
+"Kiwi TCMS उदाहरण में और आपकी स्वीकृति की प्रतीक्षा कर रहा है!\n\n"
+"खाते को सक्रिय करने के लिए %(user_url)s पर जाएं!"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
-msgstr ""
+msgstr "अटैचमेंट"
 
 #: tcms/templates/include/attachments.html:14
 msgid "File"
-msgstr ""
+msgstr "फ़ाइल"
 
 #: tcms/templates/include/attachments.html:15
 msgid "Owner"
-msgstr ""
+msgstr "मालिक"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "तिथि"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "कोई रिकॉर्ड नहीं मिला"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -845,32 +876,32 @@ msgstr "नाम"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "योजनाये"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
-msgstr ""
+msgstr "केस"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
-msgstr ""
+msgstr "रन"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "कार्रवाई"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr ""
+msgstr "निकालें"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "टैग जोड़ें"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -956,35 +987,35 @@ msgstr "आखरी पृष्ठ"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "इस योजना में कोई परीक्षण मामला नहीं मिला।"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "योजना संपादित करें"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "TestPlan संपादित करें"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "प्लान को क्लोन करें"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "इस योजना को अन्य उत्पाद पर क्लोन करें"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "योजना प्रिंट करें"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "योजना को हटा दे"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "परीक्षण योजना हटाएं"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1004,113 +1035,113 @@ msgstr "लेखक"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "योजना टाइप"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
-msgstr ""
+msgstr "संदर्भ लिंक"
 
 #: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "कुछ नहीं"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "बनाने का समय"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "जनक"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
-msgstr ""
+msgstr "संपादित इतिहास देखें"
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "दस्तावेज़"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "मामलों की समीक्षा करना"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "ट्री व्यू"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "इस योजना के लिए दस्तावेज़ अभी तक नहीं लिखा गया है।"
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "फ़ाइल का नाम"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "सबमिटर"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "बनाने की तिथि"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "कोई अनुलग्नक नहीं"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "केस "
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "नया केस लिखिए"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "अन्य योजनाओं से मामले जोड़ें"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "प्रिंट करें"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "चयनित मामलों का प्रिंट दृश्य"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:498
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "क्लोन"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "एक अन्य परीक्षण योजना के लिए चयनित मामलों को क्लोन करे"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "इस योजना से चयनित मामलों को हटा दें"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "चलाएं"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "नया TestRun बनाएँ"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "TestCase समीक्षक बदलें"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "डिफ़ॉल्ट परीक्षक बदलें"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1128,30 +1159,30 @@ msgstr "प्राथमिकता"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "फ़िल्टर विकल्प दिखाने के लिए क्लिक करें"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "फ़िल्टर विकल्प दिखाएं"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "मुझे क्लिक करें, फिर ऑर्डर समायोजित करने के लिए पंक्तियों को खींचें और छोड़ें, और अपने परिवर्तनों को सबमिट करने के लिए 'क्रमबद्ध करें' लिंक पर क्लिक करें"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "केस को दोबारा आर्डर करें"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "मामलों में कोई टैग नहीं"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "परीक्षक"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1167,74 +1198,74 @@ msgstr "श्रेणी"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "आइटम प्रति पृष्ठ:"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "उन सभी मामलों का भी चयन करें जो अभी तक नीचे नहीं दिखाए गए हैं।"
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "टेस्ट मामलों का सारांश"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "समीक्षक"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "डिफ़ॉल्ट परीक्षक"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "पाठ संस्करण"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "कार्रवाई"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "अधिक दिखाएँ"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "छूटे मामले"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "सभी मामले लोड किए गए हैं।"
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "वर्तमान योजना में child node जोड़ें"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "वर्तमान योजना से child node निकालें"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "इस परीक्षण योजना में जोड़ने के लिए खोजें मामले।"
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "शीघ्र खोज"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr ""
+msgstr "सामान्य खोज"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "बनाया गया"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "कोई परीक्षण के मामले नहीं मिले।"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1276,50 +1307,50 @@ msgstr "अगर आपके पास एक नहीं है!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "आपका पासवर्ड निर्धारित हो गया है। आप आगे बढ़ सकते हैं और"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "अभी"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:188
 msgid "Confirm"
-msgstr ""
+msgstr "पुष्टि करें"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "कृपया अपना नया पासवर्ड दोबारा दर्ज करें जिससे हम वह सही ढंग से लिखा गया है इसकी पुष्टि करेंगे।"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "एक नया पासवर्ड रीसेट का अनुरोध।"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "पासवर्ड रीसेट ईमेल भेजा"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "ई-मेल"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "पासवर्ड रीसेट करें"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS पासवर्ड रीसेट"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "खाता पंजीकृत करें"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "TestRun को TestCase में जोड़ें"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1331,51 +1362,51 @@ msgstr "प्रबंधक"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "सभी पुष्टि किए गए मामले"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "रन में टेस्ट केस"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "इस रन में मामले"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "योजना में संग्रहीत सॉर्टकी का उपयोग करें"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "मामला कैसे सौंपा जाए?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "नीचे दी गई तालिका योजना के सभी पुष्टि किए गए परीक्षण मामलों को सूचीबद्ध करती है"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "परीक्षण रन में मामलों को जोड़ने के लिए चेकबॉक्स का चयन करें। याद रखें कि अंत में अपडेट करें"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "निर्माण तारीक"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "चयनित"
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "प्रॉडक्ट संस्करण"
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "टिप्पणियाँ"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "समाप्त"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1384,43 +1415,43 @@ msgstr "चल रहा है"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "पर समाप्त हुआ"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "स्वचालित रूप से!"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr ""
+msgstr "प्रकाशित करें"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "इस परीक्षण रन से चयनित मामलों को निकालें"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "नवीनतम केस टेक्स्ट पर निष्क्रिय केस रन अपडेट करें"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "अपडेट करें"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "इस मामले को अन्य लोगों को सौंपें"
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
-msgstr ""
+msgstr "टिप्पणियाँ"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "हाइपरलिंक"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1436,108 +1467,108 @@ msgstr "डिफ़ॉल्ट परीक्षक"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "स्वतः"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "बग"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
-msgstr ""
+msgstr "वेबसाइट एड्रेस"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URL एक दोष की ओर इशारा करता है"
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "ऑटो-अपडेट इश्यू ट्रैकर"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द करें"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "इस टैग को हटा दें"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "CC जोड़ें"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "परीक्षण निष्पादन रिपोर्ट"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "मैनुअल मामले"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "स्वचालित मामले"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "Case-Run आईडी"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "घटना क्रमांक"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "के द्वारा परखा गया"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "पर बंद हुआ"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:17
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "बग"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "बग सूची"
 
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% पूर्ण"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
-msgstr ""
+msgstr "रिपोर्ट"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
-msgstr ""
+msgstr "कोई बग नहीं"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "सभी मामलों का चयन करें / कोई भी मामला न चुनें"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "सभी मामलों का विस्तार करें"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "निष्पादन आईडी"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "कोई अमल नहीं मिला"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "कृपया मान्य वैल्यू आईडी (एस) इनपुट करें। एक से अधिक केस आईडी को विभाजित करने के लिए अल्पविराम का उपयोग करें। जैसे \"111, 222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1568,19 +1599,19 @@ msgstr "**परिदृश्य **: ... क्या व्यवहार �
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "हटाए गए: TestCase #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "क्लोन टेस्ट केस"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "TP में नई TC जोड़ें"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "चयनित TC"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1605,19 +1636,19 @@ msgstr "संदर्भ लिंक"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "बग URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "टेस्ट प्लान"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "अवयव"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "TestCase संपादित करें"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
@@ -1697,44 +1728,44 @@ msgstr "बनाने की तिथि"
 
 #: tcms/testcases/views.py:339
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "TestPlan निर्दिष्ट या मौजूद नहीं है"
 
 #: tcms/testcases/views.py:502
 msgid "History"
-msgstr ""
+msgstr "इतिहास"
 
 #: tcms/testcases/views.py:695
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "TestCase क्लोनिंग सफल"
 
 #: tcms/testcases/views.py:721 tcms/testruns/views.py:366
 #: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "कम से कम एक TestCase आवश्यक है"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "क्लोन टेस्टप्लान"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "क्लोन TCs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "क्लोन या मौजूदा TC को नए TP में लिंक करें"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "पैरेंट TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "स्रोत TP को नए TP के जनक के रूप में सेट करें"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "TestPlan संपादित करें"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
@@ -1779,7 +1810,7 @@ msgstr "खोज परीक्षण योजनाएँ"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "परीक्षण योजना का नाम"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
@@ -1788,61 +1819,62 @@ msgstr "टेस्ट प्लान"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr ""
+msgstr "टेस्टप्लान की आवश्यकता है"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "प्रिंट के लिए कम से कम एक परीक्षण योजना आवश्यक है"
 
 #: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "टेस्ट प्लान \"%s\" मौजूद नहीं है"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "अनुमति से इनकार: TestRun आप से संबंधित नहीं है"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "परीक्षण निष्पादन स्थिति को अनुकूलित करने के बारे में अधिक जानकारी के लिए देखें<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">दस्तावेज़ीकरण</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "परीक्षण निष्पादन की स्थिति"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "TestRun संपादित करें"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "TestRun क्लोन करें"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "नया TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "संस्करण"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "उपयोगकर्ता नाम या ईमेल"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "चुने हुए TestCase(s):"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s पूर्व-चयनित परीक्षण मामलों की पुष्टि नहीं की गई है और क्लोन नहीं किया जाएगा!\n"
+"अधिक विवरण के लिए परीक्षण योजना देखें!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
@@ -1862,23 +1894,23 @@ msgstr "टेस्टप्लान आईडी"
 
 #: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "TestRun बनाने के लिए TestPlan की आवश्यकता होती है, एक का चयन करें"
 
 #: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "TestRun बनाने के लिए कम से कम एक TestCase की आवश्यकता होती है"
 
 #: tcms/testruns/views.py:370
 msgid "Clone of "
-msgstr ""
+msgstr "का क्लोन "
 
 #: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "TestCase ID एक मान्य पूर्णांक नहीं है"
 
 #: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "आपके द्वारा टाइप किया गया उपयोगकर्ता डेटाबेस में मौजूद नहीं है"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1898,41 +1930,42 @@ msgstr "अपडेट की आवश्यकता"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "निष्क्रिय"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "चल रहा है"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "रोके गए"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "उत्तीर्ण हुआ"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "असफल हुआ"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "अवरोधित"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "त्रुटि"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "छूट"
 
 #: tcms_github_app/admin.py:120
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "अतिरिक्त कॉन्फ़िगरेशन के लिए देखें\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1945,26 +1978,26 @@ msgstr "सेटिंग्स"
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "अपुष्ट GitHub ऐप %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "आपने GitHub खाते से लॉग-इन नहीं किया है! <a href=\"%s\"> यहां क्लिक करें </a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "आपने Kiwi TCMS को अपने GitHub खाते में स्थापित नहीं किया है!<a href=\"%s\">यहां क्लिक करें</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "एकाधिक GitHub ऐप इंस्टॉलेशन का पता चला! नीचे देखो:"
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "GitHub ऐप संपादित करें<a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1972,7 +2005,7 @@ msgstr "सदस्यता"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "किरायेदार सदस्यता"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
@@ -1986,7 +2019,7 @@ msgstr "ठेकेदार"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "संगठन"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -1995,22 +2028,22 @@ msgstr "आप निम्नलिखित किरायेदारों 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "मूल्य"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "सब्स्क्रिप्शन का प्रकार"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "तक चुका दिया"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "सदस्यता रद्द करें"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -2027,21 +2060,21 @@ msgstr "लेनदेन का इतिहास"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "भेजनेवाला"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "वेंडर"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "प्राप्त हुआ"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "निजी किरायेदार चेतावनी"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2050,31 +2083,36 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "आप Kiwi TCMS के लिए एक निजी किरायेदार बनाने वाले हैं।\n"
+"आपके DB स्कीमा तैयार होने तक कुछ मिनट लगेंगे!\n"
+"'सहेजें' बटन क्लिक करने के बाद <strong> न करें </strong> इस पृष्ठ को बंद करें या ताज़ा करें! <br>\n"
+"निर्माण प्रक्रिया पूरी होने पर आपको अपने नए किरायेदार के पास भेज दिया जाएगा!\n"
+"यदि आप 500 आंतरिक सर्वर त्रुटि पेज देखते हैं तो कृपया संपर्क करें\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a> तुरंत!"
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
-msgstr ""
+msgstr "माह"
 
 #: tcms_github_marketplace/views.py:328
 msgid "yr"
-msgstr ""
+msgstr "साल"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "ई-मेल पते की आवश्यकता है।"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "अनधिकृत"
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "पूरा नाम"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "अमान्य स्ट्रिंग"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -2086,40 +2124,42 @@ msgstr "अधिकृत उपयोगकर्ता"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "भुगतान नहीं किया"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "किरायेदार 7 दिनों से कम समय में समाप्त हो रहा है"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "आपका Kiwi TCMS किरायेदार यहां बनाया गया था:\n"
+"%(tenant_url)s\n\n"
+"यदि आपको परेशानी है, तो कृपया समर्थन से संपर्क करें!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "नया किरायेदार"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "कंपनी, टीम या परियोजना का नाम"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "स्कीम"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "मान्यता पैटर्न"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "योजना नाम पहले से ही उपयोग में है"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "नई Kiwi TCMS किरायेदार बनाई गई"
 
