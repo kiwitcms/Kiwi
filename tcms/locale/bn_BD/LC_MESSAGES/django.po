@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 05:11\n"
+"PO-Revision-Date: 2020-05-08 05:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -1613,15 +1613,15 @@ msgstr "উপকরণ"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "টেস্টকেস সম্পাদনা করুন"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "নতুন পরীক্ষার কেস"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr ""
+msgstr "নতুন রুট বিভাগ যোগ করুন"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1629,7 +1629,7 @@ msgstr "বিজ্ঞপ্তি"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "রান এর ব্যবস্থাপক"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
@@ -1641,7 +1641,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr ""
+msgstr "যখন অবহিত"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
@@ -1661,7 +1661,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "অনুসন্ধান পরীক্ষার কেস"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
@@ -1866,7 +1866,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:370
 msgid "Clone of "
-msgstr ""
+msgstr "এর ক্লোন "
 
 #: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
@@ -1874,7 +1874,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "আপনার টাইপ করা ব্যবহারকারীর ডাটাবেজে উপস্থিত নেই"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1886,11 +1886,11 @@ msgstr "নিশ্চিত"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "নিষ্ক্রিত"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "আধুনিকীকরণ প্রয়োজন"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
@@ -1986,7 +1986,7 @@ msgstr "সংগঠন"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "আপনি নিম্নলিখিত ভাড়াটেদের মালিক"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
@@ -2037,7 +2037,7 @@ msgstr "গ্রহণ করা হয়েছে"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "বেসরকারি ভাড়াটের সতর্কবার্তা"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2046,7 +2046,11 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "আপনি Kiwi TCMS এর জন্য একটি ব্যক্তিগত ভাড়াটে তৈরি করতে চলেছেন.\n"
+"আপনার DB স্কিমার প্রস্তুত না হওয়া পর্যন্ত কয়েক মিনিট সময় লাগবে!\n"
+"' সেভ ' বাটনে ক্লিক করার পর <strong> কোরো না </strong> এই পৃষ্ঠাটি বন্ধ বা রিফ্রেশ করুন!<br>\n"
+"তৈরির প্রক্রিয়াটি শেষ হয়ে গেলে আপনার নতুন ভাড়াটে আপনাকে পুনঃনির্দেশিত করা হবে!\n"
+"যদি আপনি একটি 500 অভ্যন্তরীণ সার্ভারের ত্রুটির পৃষ্ঠা দেখতে পান তাহলে যোগাযোগ করুন<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> অবিলম্বে!"
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
@@ -2093,7 +2097,8 @@ msgstr "ভাড়াটে 7 দিনেরও কম সময়ে শে
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "আপনার Kiwi TCMS ভাড়াটে তৈরি করা হয়েছিল:%(tenant_url)s\\\n\n"
+"যদি আপনার ঝামেলা থাকে দয়া করে যোগাযোগ করুন!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
