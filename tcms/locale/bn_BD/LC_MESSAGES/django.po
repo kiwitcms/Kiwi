@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 11:42\n"
+"PO-Revision-Date: 2020-05-08 11:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -702,7 +702,8 @@ msgstr "শুরু হয়েছিল"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s TestRun(s) or TestCase(s) আপনাকে নির্ধারিত করা কার্যকর করা দরকার.\n"
+"এখানে সর্বশেষ %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -764,12 +765,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "বাগ %(pk)s আপনাকে বরাদ্দ করা হয়েছে.\n\n"
+"লিংক: %(bug_url)s\n\n"
+"সারসংক্ষেপ: %(summary)s\n"
+"এ নির্মিত: %(creation_date)s\n"
+"প্রতিবেদক: %(reporter)s\n"
+"উকিল: %(assignee)s\n"
+"প্রোডাক্ট: %(product)s\n"
+"সংস্করণ: %(version)s\n"
+"নির্মাণ: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "টেস্টক্যাস দ্বারা মুছে ফেলা হয়েছে %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -786,7 +795,18 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "পরীক্ষার রান %(pk)s আপনার জন্য তৈরি বা আপডেট করা হয়েছে।\n\n"
+"### লিংক ###\n"
+"টেস্ট রান: %(run_url)s\n"
+"পরীক্ষণ পরিকল্পনা: %(plan_url)s\n\n"
+"### বেসিক রান তথ্য ###\n"
+"সারসংক্ষেপ: %(summary)s\n\n"
+"পরিচালিত: %(manager)s.\n"
+"ডিফল্ট পরীক্ষক: %(default_tester)s.\n\n"
+"প্রোডাক্ট: %(product)s\n"
+"প্রোডাক্ট সংস্করণ: %(version)s\n"
+"নির্মাণ: %(build)s\n\n"
+"মন্তব্য: %(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -1116,7 +1136,7 @@ msgstr "TestRun নতুন তৈরি করুন"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "TestCase পর্যালোচক পরিবর্তন করুন"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1353,7 +1373,7 @@ msgstr "এই দৌড়ে থাকা মামলাগুলো"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "পরিকল্পনায় সঞ্চিত সার্টকি ব্যবহার করুন"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1361,7 +1381,7 @@ msgstr "কিভাবে কেস বরাদ্দ করবেন?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "নীচের সারণীতে পরিকল্পনার সমস্ত নিশ্চিত পরীক্ষার কেসগুলির তালিকা রয়েছে"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1410,7 +1430,7 @@ msgstr "গুরুত্বপূর্ণ"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "এই পরীক্ষণ চালনা থেকে নির্বাচিত মামলাগুলো অপসারণ করুন"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
