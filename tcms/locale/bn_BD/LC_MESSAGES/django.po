@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 11:33\n"
+"PO-Revision-Date: 2020-05-08 11:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -275,7 +275,7 @@ msgstr "আপডেট হয়েছে %(history_date)s\n"
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Base URL কনফিগার করা হয়নি! দেখা <a href=\"%(doc_url)s\">দলিল</a> এবং <a href=\"%(admin_url)s\"> ইহা পরিবর্তন করুন</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -324,7 +324,7 @@ msgstr "আপনার অ্যাকাউন্ট সক্রিয় ক
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "এর base_url কনফিগার করে এই ইস্যু ট্র্যাকারের প্রতিবেদন সক্ষম করুন!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -736,11 +736,12 @@ msgstr "এক্সিকিউশন"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "আপনি %(total_count)s এর TestPlan(s) পরিচালনা, %(disabled_count)s গুলি অক্ষম.\n"
+"এখানে সর্বশেষ %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "আপনার সাথে সম্পর্কিত কোনও TestPlan(s) নেই"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -1413,7 +1414,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "IDLE কেসটি আপডেট করুন নতুন কেস পাঠ্যে চলে"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1461,7 +1462,7 @@ msgstr "URL একটি ত্রুটির জন্য পয়েন্�
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "অটো-আপডেট ইস্যু ট্র্যাকার"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
