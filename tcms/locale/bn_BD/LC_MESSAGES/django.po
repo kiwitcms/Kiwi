@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-07 17:46\n"
+"PO-Revision-Date: 2020-05-08 04:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -341,11 +341,11 @@ msgstr "পরীক্ষামূলক"
 
 #: tcms/settings/common.py:299
 msgid "New Test Plan"
-msgstr ""
+msgstr "নতুন পরীক্ষা পরিকল্পনা"
 
 #: tcms/settings/common.py:301
 msgid "New Test Case"
-msgstr ""
+msgstr "নতুন পরীক্ষার কেস"
 
 #: tcms/settings/common.py:303
 msgid "New Bug"
@@ -357,19 +357,19 @@ msgstr "অনুসন্ধান"
 
 #: tcms/settings/common.py:307
 msgid "Search Test Plans"
-msgstr ""
+msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
 #: tcms/settings/common.py:308
 msgid "Search Test Runs"
-msgstr ""
+msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
 #: tcms/settings/common.py:309
 msgid "Search Test Cases"
-msgstr ""
+msgstr "অনুসন্ধান পরীক্ষার কেস"
 
 #: tcms/settings/common.py:310
 msgid "Search Bugs"
-msgstr ""
+msgstr "বাগ অনুসন্ধান করুন"
 
 #: tcms/settings/common.py:313
 msgid "TELEMETRY"
@@ -385,7 +385,7 @@ msgstr ""
 
 #: tcms/settings/common.py:316
 msgid "Status matrix"
-msgstr ""
+msgstr "স্থিতি ম্যাট্রিক্স"
 
 #: tcms/settings/common.py:317
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
@@ -402,15 +402,15 @@ msgstr "অ্যাডমিন"
 
 #: tcms/settings/common.py:324
 msgid "Users and groups"
-msgstr ""
+msgstr "ব্যবহারকারী এবং গোষ্ঠী"
 
 #: tcms/settings/common.py:326
 msgid "Everything else"
-msgstr ""
+msgstr "অন্য সব কিছুর"
 
 #: tcms/settings/common.py:328
 msgid "PLUGINS"
-msgstr ""
+msgstr "প্লাগিন"
 
 #: tcms/settings/common.py:339
 msgid "Forum"
@@ -422,7 +422,7 @@ msgstr "সমস্যার প্রতিবেদন করুন"
 
 #: tcms/settings/common.py:341
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "সাহায্য চাইতে StackOverflow"
 
 #: tcms/settings/common.py:342
 msgid "User Guide"
@@ -502,7 +502,7 @@ msgstr "অগ্রাধিকার"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "প্রকার"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -518,15 +518,15 @@ msgstr "নেগেটিভ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "পরীক্ষার স্থিতি ম্যাট্রিক্স"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "পরীক্ষা ক্ষেত্রে"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "পরীক্ষা রান"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
@@ -538,7 +538,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "পরীক্ষা ক্ষেত্রে"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
@@ -555,15 +555,15 @@ msgstr "পৃষ্ঠা খুঁজে পাওয়া যায়নি
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "অভ্যন্তরীণ সার্ভার ত্রুটি"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "আপনি কি এই সংযুক্তিটি মোছার বিষয়ে নিশ্চিত?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "শীর্ষস্থানীয় open source test case management system"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
@@ -607,7 +607,7 @@ msgstr "ট্যাগ"
 #: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "কোনও ট্যাগ পাওয়া যায় নি"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
@@ -615,7 +615,7 @@ msgstr "বাগ"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "রান থেকে"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
