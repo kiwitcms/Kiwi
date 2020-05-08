@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 08:32\n"
+"PO-Revision-Date: 2020-05-08 08:45\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -1489,7 +1489,7 @@ msgstr "স্বয়ংক্রিয় ক্ষেত্রে"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "কেস-রান আইডি"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1546,7 +1546,7 @@ msgstr "কোন এক্সিকিউশন পাওয়া যায়
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "দয়া করে বৈধ কেস আইডি (গুলি) ইনপুট করুন। একাধিক কেস আইডি বিভক্ত করতে কমা ব্যবহার করুন. উদাহরণস্বরূপ \"111, 222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1561,7 +1561,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "* * দৃশ্যকল্প * *:... কি আচরণ পরীক্ষা করা হবে...\n"
+"  * * প্রদত্ত * *... শর্ত...\n"
+"  * * যখন * *... ক্রিয়া...\n"
+"  * * তারপর * *... প্রত্যাশিত ফলাফল...\n\n"
+"* ক্রিয়া *:\n\n"
+"1. আইটেম\n"
+"2. বিষয়োপকরণ\n"
+"3. বিষয়োপকরণ\n\n"
+"* প্রত্যাশিত ফলাফল *:\n\n"
+"1. আইটেম\n"
+"2. বিষয়োপকরণ\n"
+"3. বিষয়োপকরণ"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1574,7 +1585,7 @@ msgstr "ক্লোন TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "TP নতুন TC যুক্ত করুন"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
@@ -1647,11 +1658,11 @@ msgstr "যখন অবহিত"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "TestCase আপডেট করা হয়"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "TestCase মুছে ফেলা হয়"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
@@ -1659,7 +1670,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "ইমেল ঠিকানা কমা দ্বারা পৃথক. প্রতিটি ইমেল ঠিকানায় একটি নোটিফিকেশন ইমেল পাঠানো হবে CC তালিকার মধ্যে."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1667,7 +1678,7 @@ msgstr "অনুসন্ধান পরীক্ষার কেস"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "পরীক্ষার কেস সারসংক্ষেপ"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
@@ -1685,7 +1696,7 @@ msgstr "দুটোই"
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "কমা সঙ্গে পৃথক একাধিক মান (,)"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
@@ -1724,19 +1735,19 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "অভিভাবক TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "উত্স TP নতুন TP পিতামাতা হিসাবে সেট করুন"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "TestPlan সম্পাদনা"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "TestPlan নতুন তৈরি করুন"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1760,11 +1771,11 @@ msgstr "যখন অবহিত:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "TestPlan আপডেট করা হয়"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "পরীক্ষার ক্ষেত্রে হালনাগাদ করা হয়"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1773,11 +1784,11 @@ msgstr "সক্রিয়"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "টেস্ট প্ল্যানের নাম"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
@@ -1786,11 +1797,11 @@ msgstr "পরীক্ষণ পরিকল্পনা"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr ""
+msgstr "TestPlan প্রয়োজন হয়"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "মুদ্রণের জন্য কমপক্ষে একটি পরীক্ষা পরিকল্পনা প্রয়োজন"
 
 #: tcms/testplans/views.py:396
 #, python-format
@@ -1805,7 +1816,7 @@ msgstr "অনুমতি অস্বীকার করা হয়েছে
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "পরীক্ষা এক্সিকিউশন স্টেটাস কাস্টমাইজ সম্পর্কে আরও তথ্যের জন্য দেখুন<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">ডকুমেন্টেশন</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1817,7 +1828,7 @@ msgstr "TestRun সম্পাদনা"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "ক্লোন TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
@@ -1849,7 +1860,7 @@ msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "পরীক্ষা রান সারসংক্ষেপ"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
