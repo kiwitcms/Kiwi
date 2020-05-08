@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 05:45\n"
+"PO-Revision-Date: 2020-05-08 08:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -1494,7 +1494,7 @@ msgstr ""
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "কেস আইডি"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
@@ -1502,7 +1502,7 @@ msgstr "দ্বারা পরীক্ষিত"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "বন্ধ হয়ে"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:17
@@ -1530,19 +1530,19 @@ msgstr "কোন বাগ নেই"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "সকল মামলা নির্বাচন করুন/একটিও মামলা নির্বাচন করুন"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "সকল মামলা প্রসারিত করুন"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "এক্সিকিউশন আইডি"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "কোন এক্সিকিউশন পাওয়া যায়নি"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1570,7 +1570,7 @@ msgstr "বিলুপ্ত: TestCase #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "ক্লোন TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1578,7 +1578,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "নির্বাচিত TC"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1588,22 +1588,22 @@ msgstr "স্ক্রিপ্টসমূহ"
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
-msgstr ""
+msgstr "প্যারামিটার"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr ""
+msgstr "প্রয়োজনীয়তা"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "রেফারেন্স লিংক"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "বাগ URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
@@ -1639,7 +1639,7 @@ msgstr "অধিকারপ্রাপ্ত প্রতিনিধি"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "রান এর ডিফল্ট পরীক্ষক"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1795,7 +1795,7 @@ msgstr ""
 #: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "টেস্ট প্ল্যান \"%s\" থাকে না"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
@@ -1813,7 +1813,7 @@ msgstr "পরীক্ষা কার্যকর করার স্ট্য
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "TestRun সম্পাদনা"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
@@ -1821,7 +1821,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "নতুন TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
@@ -1840,7 +1840,8 @@ msgstr "নির্বাচিত টেস্টকেস:"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s প্রাক-নির্বাচিত পরীক্ষাটির ক্ষেত্রে নিশ্চিত নয় এবং ক্লোন করা হবে না!\n"
+"আরো বিস্তারিত জানার জন্য পরীক্ষা পরিকল্পনা দেখুন!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
