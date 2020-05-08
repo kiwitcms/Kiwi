@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 05:31\n"
+"PO-Revision-Date: 2020-05-08 05:45\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -394,7 +394,7 @@ msgstr "স্থিতি ম্যাট্রিক্স"
 #: tcms/settings/common.py:317
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "এক্সিকিউশন ট্রেন্ড"
 
 #: tcms/settings/common.py:318
 msgid "TestCase health"
@@ -534,7 +534,7 @@ msgstr "পরীক্ষা রান"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "TestCase স্বাস্থ্য"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -691,7 +691,7 @@ msgstr "ড্যাশবোর্ড"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "পরীক্ষা এক্সিকিউশনের"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
@@ -730,7 +730,7 @@ msgstr "ধরন"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "এক্সিকিউশন"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
@@ -748,7 +748,9 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "স্বাগতম %(user)s,\n"
+"%(site_domain)s অ্যাকাউন্টের জন্য সাইন আপ করার জন্য আপনাকে ধন্যবাদ!\n\n"
+"আপনার একাউন্ট সক্রিয় করতে, এই লিঙ্কে ক্লিক করুন:%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -881,7 +883,7 @@ msgstr "ট্যাগ জুড়ুন"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "টগল ন্যাভিগেশন"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
@@ -991,7 +993,7 @@ msgstr "পরিকল্পনা মুছুন"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "পরীক্ষা পরিকল্পনা বিলোপ করুন"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1041,7 +1043,7 @@ msgstr "নথিগুলি"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "মামলা পর্যালোচনা"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
@@ -1049,7 +1051,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "এই পরিকল্পনার দলিল এখনো লেখা হয়নি."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
@@ -1079,7 +1081,7 @@ msgstr "নতুন কেস লিখুন"
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "অন্যান্য পরিকল্পনা থেকে মামলাসমূহ জুড়ুন"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1153,7 +1155,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "ক্ষেত্রে কোন ট্যাগ নেই"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
@@ -1483,7 +1485,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "স্বয়ংক্রিয় ক্ষেত্রে"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
@@ -1511,12 +1513,12 @@ msgstr "বাগ"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "বাগ তালিকা"
 
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s %% সম্পূর্ণ"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1605,7 +1607,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "পরীক্ষণ পরিকল্পনা"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1780,7 +1782,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "পরীক্ষণ পরিকল্পনা"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
