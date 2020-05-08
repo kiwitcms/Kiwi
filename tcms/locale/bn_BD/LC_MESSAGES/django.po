@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 11:22\n"
+"PO-Revision-Date: 2020-05-08 11:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -1146,7 +1146,7 @@ msgstr "পরিশ্রুতক পছন্দ দেখাবে"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "আমাকে টিপুন, তারপর ক্রম সামঞ্জস্য করার জন্য সারিগুলি টানুন এবং ছাড়ুন, এবং আপনার পরিবর্তনগুলি জমা দিতে ' সম্পন্ন বাছাই ' লিঙ্কে ক্লিক করুন"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1180,12 +1180,12 @@ msgstr "প্রতি পাতায় আইটেম"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "এছাড়াও সব কেস নির্বাচন করুন যা এখনও নীচে দেখানো হয়নি."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "পরীক্ষার কেস সারসংক্ষেপ"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
@@ -1219,15 +1219,15 @@ msgstr "সব মামলাই লোড করা হয়েছে."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "বর্তমান পরিকল্পনায় চাইল্ড নোড যুক্ত করুন"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "বর্তমান পরিকল্পনা থেকে চাইল্ড নোড অপসারণ করুন"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "এই পরীক্ষা পরিকল্পনায় যুক্ত করতে অনুসন্ধান মামলা."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1328,7 +1328,7 @@ msgstr "একাউন্ট রেজিস্টার করুন"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "TestRun-এ TestCase যোগ করুন"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1340,11 +1340,11 @@ msgstr "পরিচালনা"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "সব নিশ্চিত মামলা"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "চালানোর ক্ষেত্রে পরীক্ষা মামলা"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
@@ -1421,7 +1421,7 @@ msgstr "হালনাগাদ"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "এই ক্ষেত্রে অন্য ব্যক্তিদের জন্য বরাদ্দ করুন"
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
@@ -1429,7 +1429,7 @@ msgstr "কমেন্ট"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "হাইপারলিন"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1457,7 +1457,7 @@ msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URL একটি ত্রুটির জন্য পয়েন্ট"
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
@@ -1473,15 +1473,15 @@ msgstr "এই ট্যাগ অপসারণ করুন"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "CC জুড়ুন"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "পরীক্ষা এক্সিকিউশন রিপোর্ট"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "ম্যানুয়াল কেস"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
@@ -1666,7 +1666,7 @@ msgstr "TestCase মুছে ফেলা হয়"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "CC থেকে"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
