@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 05:21\n"
+"PO-Revision-Date: 2020-05-08 05:31\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -1011,7 +1011,7 @@ msgstr "লেখক"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "পরিকল্পনার ধরন"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
@@ -1061,7 +1061,7 @@ msgstr "জমাকারী"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "তারিখ তৈরি করুন"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
@@ -1074,7 +1074,7 @@ msgstr "কেসেস"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "নতুন কেস লিখুন"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
@@ -1083,7 +1083,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "প্রিন্ট"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
@@ -1093,7 +1093,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:498
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "ক্লোন"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1105,7 +1105,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "রান"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
@@ -1131,7 +1131,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "অগ্রাধিকার"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
@@ -1158,7 +1158,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "পরীক্ষক"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1170,7 +1170,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "বিভাগ"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
@@ -1187,13 +1187,13 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "সমালোচক"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "ডিফল্ট পরীক্ষক"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1213,7 +1213,7 @@ msgstr "মামলা বাকি"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "সব মামলাই লোড করা হয়েছে."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -1354,7 +1354,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "কিভাবে কেস বরাদ্দ করবেন?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
@@ -1374,7 +1374,7 @@ msgstr ""
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "প্রোডাক্ট সংস্করণ"
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
@@ -1395,7 +1395,7 @@ msgstr "শেষ হয়েছে"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
@@ -1467,7 +1467,7 @@ msgstr "বাতিল"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "এই ট্যাগ অপসারণ করুন"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
@@ -1520,11 +1520,11 @@ msgstr ""
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
-msgstr ""
+msgstr "প্রতিবেদন করুন"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
-msgstr ""
+msgstr "কোন বাগ নেই"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
@@ -1564,7 +1564,7 @@ msgstr ""
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "বিলুপ্ত: TestCase #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1738,7 +1738,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "অভিভাবক ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
@@ -1750,11 +1750,11 @@ msgstr "বিজ্ঞপ্তি:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "টেস্টকেস লেখক"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "যখন অবহিত:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
@@ -1832,7 +1832,7 @@ msgstr "ব্যবহারকারীর নাম অথবা ইমেই
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "নির্বাচিত টেস্টকেস:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
@@ -1850,11 +1850,11 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "প্ল্যান আইডি"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "TestPlan আইডি"
 
 #: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
@@ -1870,7 +1870,7 @@ msgstr "এর ক্লোন "
 
 #: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "TestCase ID একটি বৈধ পূর্ণসংখ্যা নয়"
 
 #: tcms/testruns/views.py:518
 msgid "The user you typed does not exist in database"
