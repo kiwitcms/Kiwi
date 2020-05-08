@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 09:03\n"
+"PO-Revision-Date: 2020-05-08 11:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -891,11 +891,11 @@ msgstr "স্বাগতম অতিথি"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "আমার টেস্ট"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "আমার টেস্ট পরিকল্পনা"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -965,7 +965,7 @@ msgstr "শেষ পৃষ্ঠা"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "এই পরিকল্পনায় কোনো পরীক্ষার মামলা পাওয়া যায়নি."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
@@ -981,7 +981,7 @@ msgstr "ক্লোন পরিকল্পনা"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "এই পরিকল্পনাকে অন্য পণ্যের সাথে ক্লোন করো"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
@@ -1047,7 +1047,7 @@ msgstr "মামলা পর্যালোচনা"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "গাছের দর্শন"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
@@ -1089,7 +1089,7 @@ msgstr "প্রিন্ট"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "নির্বাচিত কেসের দৃশ্য মুদ্রণ করুন"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:498
@@ -1099,11 +1099,11 @@ msgstr "ক্লোন"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "নির্বাচিত মামলাগুলো অন্য একটি পরীক্ষা পরিকল্পনায় ক্লোন করা"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "এই পরিকল্পনা থেকে নির্বাচিত মামলাগুলো অপসারণ করুন"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1142,7 +1142,7 @@ msgstr "ফিল্টার অপশন দেখাতে ক্লিক �
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "পরিশ্রুতক পছন্দ দেখাবে"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -1150,7 +1150,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "রিঅর্ডার কেস"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
