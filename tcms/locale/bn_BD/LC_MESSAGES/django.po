@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 05:03\n"
+"PO-Revision-Date: 2020-05-08 05:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -398,7 +398,7 @@ msgstr ""
 
 #: tcms/settings/common.py:318
 msgid "TestCase health"
-msgstr ""
+msgstr "TestCase স্বাস্থ্য"
 
 #: tcms/settings/common.py:323
 msgid "ADMIN"
@@ -546,12 +546,12 @@ msgstr "পরীক্ষা ক্ষেত্রে"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "বিফল এক্সিকিউশনের"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% এক্সিকিউশনের ব্যর্থ হওয়ার"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -1209,7 +1209,7 @@ msgstr "আরও দেখান"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "মামলা বাকি"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
@@ -1609,7 +1609,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "উপকরণ"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1898,15 +1898,15 @@ msgstr "অলস"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "চলছে"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "থামে"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "পাশ"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -1951,11 +1951,11 @@ msgstr "আপনি GitHub অ্যাকাউন্টের মাধ্য
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "আপনি Kiwi TCMS আপনার GitHub অ্যাকাউন্টে ইনস্টল করেননি!<a href=\"%s\">এখানে ক্লিক করুন</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "একাধিক GitHub অ্যাপ্লিকেশন ইনস্টলেশন সনাক্ত! নিচে দেখুন:"
 
 #: tcms_github_app/views.py:82
 #, python-format
@@ -1968,7 +1968,7 @@ msgstr "গ্রাহকত্ব"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "ভাড়াটে সদস্যতা"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
@@ -2014,7 +2014,7 @@ msgstr "আপনার কোনও ভাড়াটে নেই"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "FastSpring এর মাধ্যমে সাবস্ক্রাইব করুন"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
