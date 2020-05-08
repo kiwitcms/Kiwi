@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 04:52\n"
+"PO-Revision-Date: 2020-05-08 05:03\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -113,7 +113,7 @@ msgstr "সংস্করণ"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "নির্মাণ"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
@@ -266,7 +266,11 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "আপডেট হয়েছে %(history_date)s\n"
+"আপডেট করেছেন %(username)s\n\n"
+"%(diff)s\n\n"
+"আরও তথ্যের জন্য:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
@@ -292,7 +296,7 @@ msgstr "এই ইমেল সহ একজন ব্যবহারকার�
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "আপনার %s অ্যাকাউন্টের নিশ্চয়তা"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -308,7 +312,7 @@ msgstr "প্রশাসকের তালিকা নীচে"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "এই অ্যাক্টিভেশন কীটি আর ডেটাবেজে উপস্থিত নেই"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
@@ -329,7 +333,7 @@ msgstr "অবৈধ তারিখ বিন্যাস. প্রত্য�
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "মডেল %s এর কোন প্রাথমিক চাবি নেই. ম্যানুয়ালি এ ধরনের ক্ষেত্র উল্লেখ করতে হবে."
 
 #: tcms/settings/common.py:297
 msgid "DASHBOARD"
@@ -381,7 +385,7 @@ msgstr "পরীক্ষা করা হচ্ছে"
 
 #: tcms/settings/common.py:315
 msgid "Breakdown"
-msgstr ""
+msgstr "ভাঙনের"
 
 #: tcms/settings/common.py:316
 msgid "Status matrix"
@@ -534,7 +538,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "সবচেয়ে বেশিবার ব্যর্থ টেস্ট মামলা"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
@@ -578,7 +582,7 @@ msgstr "সংযুক্তির"
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "কোন অ্যাটাচমেন্ট পাওয়া যায়নি"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -591,7 +595,7 @@ msgstr "উপকরণ"
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
-msgstr ""
+msgstr "কোন উপাদান পাওয়া যায় নি"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -619,7 +623,7 @@ msgstr "রান থেকে"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "কোনও বাগ পাওয়া যায় নি"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -636,23 +640,23 @@ msgstr "কমেন্ট"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr ""
+msgstr "পরীক্ষা এক্সিকিউশনের তথ্য"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "চলার তারিখ"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
-msgstr ""
+msgstr "পাঠ্য সংস্করণ"
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
-msgstr ""
+msgstr "কোনও লগ রেকর্ড করা হয়নি"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "বাগ এবং হাইপারলিঙ্কস"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -663,27 +667,27 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "যোগ"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
-msgstr ""
+msgstr "বাগ প্রতিবেদন"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "বিষয়বস্তু"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "পরীক্ষার পরিকল্পনা নথি"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "পরীক্ষা ক্ষেত্রে"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "ড্যাশবোর্ড"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
