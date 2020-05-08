@@ -40,14 +40,14 @@ __all__ = (
 @rpc_method(name='TestCase.add_component')
 def add_component(case_id, component):
     """
-    .. function:: XML-RPC TestCase.add_component(case_id, component_id)
+    .. function:: XML-RPC TestCase.add_component(case_id, component)
 
         Add component to the selected test case.
 
         :param case_id: PK of TestCase to modify
         :type case_id: int
         :param component: Name of Component to add
-        :type component_id: str
+        :type component: str
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :raises: PermissionDenied if missing the *testcases.add_testcasecomponent*
                  permission
