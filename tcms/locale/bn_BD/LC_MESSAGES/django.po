@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-08 08:45\n"
+"PO-Revision-Date: 2020-05-08 08:54\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -973,7 +973,7 @@ msgstr "পরিকল্পনা সম্পাদনা করুন"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "পরীক্ষা পরিকল্পনা সম্পাদন করুন"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
@@ -1067,7 +1067,7 @@ msgstr "তারিখ তৈরি করুন"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "কোনো অ্যাটাচমেন্ট নেই"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
@@ -1111,7 +1111,7 @@ msgstr "রান"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "TestRun নতুন তৈরি করুন"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
@@ -1119,7 +1119,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "ডিফল্ট পরীক্ষক পরিবর্তন করুন"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1137,7 +1137,7 @@ msgstr "অগ্রাধিকার"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "ফিল্টার অপশন দেখাতে ক্লিক করুন"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
@@ -1348,7 +1348,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "এই দৌড়ে থাকা মামলাগুলো"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1364,7 +1364,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "পরীক্ষা চালানোর ক্ষেত্রে কেস জুড়তে চেকবক্সটি পরীক্ষা করুন. সর্বশেষ হালনাগাদ করতে মনে রাখবেন"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1372,7 +1372,7 @@ msgstr "তৈরীর তারিখ"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "নির্বাচিত"
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
@@ -1441,11 +1441,11 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "ডিফল্ট পরীক্ষক"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "স্বতস্ফূর্তভাবে"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
@@ -1706,7 +1706,7 @@ msgstr "তৈরির তারিখ"
 
 #: tcms/testcases/views.py:339
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "টেস্টপ্ল্যান নির্দিষ্ট করা নেই বা থাকে না"
 
 #: tcms/testcases/views.py:502
 msgid "History"
@@ -1714,24 +1714,24 @@ msgstr "ইতিহাস"
 
 #: tcms/testcases/views.py:695
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "টেস্টকেস ক্লোনিং সফল হয়েছে"
 
 #: tcms/testcases/views.py:721 tcms/testruns/views.py:366
 #: tcms/testruns/views.py:415
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "কমপক্ষে একটি TestCase প্রয়োজন"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "ক্লোন TestPlan"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "ক্লোন TCs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "নতুন TP-তে বিদ্যমান TC ক্লোন বা লিংক"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
@@ -1872,11 +1872,11 @@ msgstr "TestPlan আইডি"
 
 #: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "একটি TestRun তৈরি করা একটি TestPlan প্রয়োজন হয়, একটি নির্বাচন করুন"
 
 #: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "একটি TestRun তৈরি করে কমপক্ষে একটি TestCase প্রয়োজন"
 
 #: tcms/testruns/views.py:370
 msgid "Clone of "
