@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-04-25 20:52\n"
+"PO-Revision-Date: 2020-05-09 20:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1602,7 +1602,7 @@ msgstr "ИЗТРИТО: Тест Изпълнение #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "Клонирай тест кейс"
+msgstr "Клониране на тест кейс"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1744,7 +1744,7 @@ msgstr "Необходим е поне един тест кейс"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "Клониране на тест кейс"
+msgstr "Клониране на тест план"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
