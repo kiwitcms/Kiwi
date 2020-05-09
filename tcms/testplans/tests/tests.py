@@ -174,31 +174,13 @@ class TestCloneView(BasePlanCase):
         cls.plan_tester.save()
         user_should_have_perm(cls.plan_tester, 'testplans.add_testplan')
         user_should_have_perm(cls.plan_tester, 'testplans.view_testplan')
-        cls.plan_clone_url = reverse('plans-clone')
-
-    def test_refuse_if_missing_a_plan(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        data_missing_plan = {}  # No plan is passed
-        response = self.client.post(self.plan_clone_url, data_missing_plan, follow=True)
-        self.assertContains(response, _('TestPlan is required'))
-
-    def test_refuse_if_given_nonexisting_plan(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        response = self.client.post(self.plan_clone_url, {'plan': 99999}, follow=True)
-        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_open_clone_page_to_clone_one_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
             password='password')
 
-        response = self.client.post(self.plan_clone_url, {'plan': self.plan.pk})
+        response = self.client.get(reverse('plans-clone', args=[self.plan.pk]))
 
         self.assertContains(
             response,
@@ -251,7 +233,6 @@ class TestCloneView(BasePlanCase):
     def test_clone_a_plan_with_default_options(self):
         post_data = {
             'name': self.third_plan.make_cloned_name(),
-            'plan': self.third_plan.pk,
             'product': self.product.pk,
             'version': self.version.pk,
             'set_parent': 'on',
@@ -260,7 +241,8 @@ class TestCloneView(BasePlanCase):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
             password='password')
-        response = self.client.post(self.plan_clone_url, post_data)
+        response = self.client.post(reverse('plans-clone', args=[self.third_plan.pk]),
+                                    post_data)
 
         cloned_plan = TestPlan.objects.get(name=self.third_plan.make_cloned_name())
 
@@ -274,35 +256,33 @@ class TestCloneView(BasePlanCase):
     def test_clone_a_plan_by_copying_cases(self):
         post_data = {
             'name': self.totally_new_plan.make_cloned_name(),
-            'plan': self.totally_new_plan.pk,
             'product': self.product.pk,
             'version': self.version.pk,
             'set_parent': 'on',
             'submit': 'Clone',
-
             'copy_testcases': 'on',
         }
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
             password='password')
-        self.client.post(self.plan_clone_url, post_data)
+        self.client.post(reverse('plans-clone', args=[self.totally_new_plan.pk]),
+                         post_data)
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
 
     def test_clone_a_plan_by_setting_me_to_copied_cases_author_default_tester(self):
         post_data = {
             'name': self.totally_new_plan.make_cloned_name(),
-            'plan': self.totally_new_plan.pk,
             'product': self.product.pk,
             'version': self.version.pk,
             'set_parent': 'on',
             'submit': 'Clone',
-
             'copy_testcases': 'on',
         }
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
             password='password')
-        self.client.post(self.plan_clone_url, post_data)
+        self.client.post(reverse('plans-clone', args=[self.totally_new_plan.pk]),
+                         post_data)
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
