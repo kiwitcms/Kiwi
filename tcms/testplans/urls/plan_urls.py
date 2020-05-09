@@ -11,4 +11,5 @@ urlpatterns = [
             name='test_plan_url'),
 
     re_path(r'^(?P<pk>\d+)/edit/$', views.Edit.as_view(), name='plan-edit'),
+    re_path(r'^(?P<pk>\d+)/clone/$', views.Clone.as_view(), name='plans-clone'),
 ]
