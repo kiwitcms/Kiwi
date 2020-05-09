@@ -9,18 +9,19 @@ their documentation about download and installation options.
 Pull or Build Docker image
 --------------------------
 
-You can download the official Kiwi TCMS Docker image by running::
+We recommend downloading the official Kiwi TCMS Docker image by running::
 
     docker pull kiwitcms/kiwi
 
-Alternatively you can build an image yourself by running::
+Alternatively you can build an image from source by executing::
 
     make docker-image
 
-this will create a Docker image with the latest Kiwi TCMS version.
-By default the image tag will be ``kiwitcms/kiwi:latest``.
+within a git checkout directory. This will create a Docker image with the
+latest Kiwi TCMS version. By default the image tag will be
+``kiwitcms/kiwi:latest``.
 
-.. note::
+.. important::
 
     While Kiwi TCMS uses git tags when releasing new versions we do not
     provide versioned docker images via Docker Hub!
@@ -29,14 +30,13 @@ By default the image tag will be ``kiwitcms/kiwi:latest``.
 Start Docker compose
 --------------------
 
-Before starting Kiwi TCMS you need to clone the git repo::
-
-    git clone https://github.com/kiwitcms/Kiwi.git
-
+Copy our
+`docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
+and place it in a new directory!
 
 Then you can start Kiwi TCMS by executing::
 
-    cd Kiwi/
+    cd your-directory/
     docker-compose up -d
 
 
@@ -45,7 +45,9 @@ Your Kiwi TCMS instance will be accessible at https://localhost.
 The above command will create two containers:
 
 1) A web container based on the latest Kiwi TCMS image
-2) A DB container based on the official centos/mariadb image
+2) A DB container based on the
+   `centos/mariadb-103-centos7 <https://hub.docker.com/r/centos/mariadb-103-centos7>`_
+   image
 
 
 ``docker-compose`` will also create two volumes for persistent data storage:
@@ -57,6 +59,12 @@ The above command will create two containers:
     To use it across the organization simply distribute the FQDN of the system
     running the Docker container to all associates.
 
+.. important::
+
+    We recommend using our ``docker-compose.yml`` file only as an example to
+    create your own. This is what controls your Kiwi TCMS installation. It is
+    best to keep your own copy under version control too!
+
 
 Initial configuration of running container
 ------------------------------------------
@@ -65,16 +73,20 @@ You need to create the database schema by executing::
 
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
+Then you need to create the first user account either via the web interface
+or via the command line!
+
 .. note::
 
     By default the first registered account will become superuser!
 
 .. warning::
 
-    This requires working email because the account must be activated via
-    confirmation link sent to the email address defined during registration.
+    Account registration via web requires working :ref:`email-settings`
+    because the account must be activated via confirmation link sent to the
+    email address defined during registration.
 
-    If email is not configured or you prefer the command line use::
+    It is usually easier to create the first account via the command line::
 
         docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
@@ -84,12 +96,11 @@ Upgrading
 
 To upgrade running Kiwi TCMS containers execute the following commands::
 
-    cd Kiwi/
-    git pull # to refresh docker-compose.yml
+    cd your-directory/
     docker-compose down
     # make docker-image if you build from source or
     docker pull kiwitcms/kiwi  # to fetch latest version from Docker Hub
-    docker pull centos/mariadb # to fetch the latest version for MariaDB
+    docker pull centos/mariadb-103-centos7 # to fetch the latest MariaDB
     docker-compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
