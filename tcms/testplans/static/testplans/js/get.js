@@ -1,11 +1,13 @@
-var expandedTestCaseIds = [];
+var expandedTestCaseIds = [],
+    fadeAnimationTime = 500;
+
+const allTestCases = {
+    'confirmed': {},
+    'not_confirmed': {}
+};
 
 $(document).ready(function() {
     const testPlanId = $('#test_plan_pk').data('testplanPk');
-    const testCases = {
-        'confirmed': {},
-        'not_confirmed': {}
-    };
 
     const permissions = {
         'perm-change-testcase': $('#test_plan_pk').data('perm-change-testcase') === 'True',
@@ -21,12 +23,12 @@ $(document).ready(function() {
             var testCase = data[i];
             //todo: refactor when testcase_status is replaced with boolean flag
             if (testCase.case_status_id === 2) {
-                testCases.confirmed[testCase.id] = testCase;
+                allTestCases.confirmed[testCase.id] = testCase;
             } else {
-                testCases.not_confirmed[testCase.id] = testCase;
+                allTestCases.not_confirmed[testCase.id] = testCase;
             }
         }
-        drawTestCases(testCases.confirmed, testPlanId, permissions);
+        drawTestCases(allTestCases.confirmed, testPlanId, permissions);
         treeViewBind();
     });
 
@@ -127,9 +129,11 @@ function attachEvents(testCases, testPlanId, permissions) {
             }
             const testCaseId = getCaseIdFromEvent(ev);
 
-            // default_tester can be update only if we pass an user id
-            jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(res) {
-                // todo update tc row data
+            jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(tc) {
+                const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
+                testCaseRow.fadeOut(fadeAnimationTime, function() {
+                    testCaseRow.find('.js-test-case-tester').html(tc.default_tester);
+                }).fadeIn(fadeAnimationTime);
             });
         });
 
@@ -137,16 +141,26 @@ function attachEvents(testCases, testPlanId, permissions) {
         $('.js-test-case-menu-priority').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(result) {
-                // todo update tc row data
+            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
+                const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
+                testCaseRow.fadeOut(fadeAnimationTime, function(e) {
+                    testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
+                }).fadeIn(fadeAnimationTime);
             });
         });
 
         $('.js-test-case-menu-status').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(result) {
-                // todo update tc row data
+            jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(tc) {
+                //todo: refactor when testcase_status is replaced with boolean flag
+                if (tc.case_status_id !== 2) {
+                    delete allTestCases.confirmed[testCaseId];
+                    allTestCases.not_confirmed[testCaseId] = tc;
+                    $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
+                        $(this).remove();
+                    });
+                }
             });
         });
     }
@@ -155,8 +169,10 @@ function attachEvents(testCases, testPlanId, permissions) {
         // delete testcase from the plan
         $('.js-test-case-menu-delete').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
-            jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function(res) {
-                $("div").find(`[data-testcase-pk=${testCaseId}]`).remove();
+            jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
+                 $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
+                     $(this).remove();
+                 });
             });
         });
     }
@@ -170,7 +186,7 @@ function attachEvents(testCases, testPlanId, permissions) {
             return;
         }
 
-        const tcRow = $(ev.target).closest('.js-testcase-row');
+        const tcRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
         expandedTestCaseIds.push(testCaseId);
         getTestCaseExpandArea(tcRow, testCases[testCaseId]);
     });

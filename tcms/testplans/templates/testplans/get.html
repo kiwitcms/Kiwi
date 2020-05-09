@@ -83,11 +83,13 @@
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    {% trans 'Confirmed test cases' %}
-                </h2>
+                <div class="card-pf-heading">
+                    <h2 class="card-pf-title">
+                        {% trans 'Confirmed test cases' %}
+                    </h2>
+                </div>
                 <div class="card-pf-body">
-                    <div id="confirmed-testcases" class="list-group tree-list-view-pf"></div>
+                    <div id="confirmed-testcases" class="list-group list-view-pf list-view-pf-view"></div>
                 </div>
             </div>
         </div>
@@ -134,7 +136,7 @@
                                 <a tabindex="-1" href="#">{% trans 'Priority' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-priority">
                                     <template id="menu-priority-item">
-                                        <li><a href="#" data-id=""></a></li>
+                                        <li><a data-id=""></a></li>
                                     </template>
                                 </ul>
                             </li>
@@ -142,7 +144,7 @@
                                 <a tabindex="-1" href="#">{% trans 'Status' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-status">
                                     <template id="menu-status-item">
-                                        <li><a href="#" data-id=""></a></li>
+                                        <li><a data-id=""></a></li>
                                     </template>
                                 </ul>
                             </li>
