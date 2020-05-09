@@ -36,7 +36,7 @@ and place it in a new directory!
 
 Then you can start Kiwi TCMS by executing::
 
-    cd your-directory/
+    cd path/containing/docker-compose/
     docker-compose up -d
 
 
@@ -96,19 +96,42 @@ Upgrading
 
 To upgrade running Kiwi TCMS containers execute the following commands::
 
-    cd your-directory/
+    cd path/containing/docker-compose/
     docker-compose down
-    # make docker-image if you build from source or
+    # !!! docker tag to keep older image version on the machine
     docker pull kiwitcms/kiwi  # to fetch latest version from Docker Hub
     docker pull centos/mariadb-103-centos7 # to fetch the latest MariaDB
     docker-compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
+.. warning::
+
+    Always make sure that you execute ``migrate`` and that it doesn't report
+    any errors. Migrations ensure that your database schema has been altered
+    to match the structure which is expected by the latest version of Kiwi TCMS!
+    After an upgrade+migrate is performed
+    ``docker exec -it kiwi_web /Kiwi/manage.py showmigrations`` should always
+    report that all migrations have been applied!
+
+.. important::
+
+    Kiwi TCMS does not provide versioned docker images via Docker Hub! When you
+    execute ``docker pull`` above you will lose the older image version which
+    could make it impossible to revert back in case the upgrade fails. Use
+    ``docker tag`` before ``docker pull`` in order to keep a reference to the
+    older Kiwi TCMS image!
+
 .. note::
 
     Uploads and database data should stay intact because they are split into
-    separate volumes which makes upgrading very easy. However you may want to
-    back these up before upgrading!
+    separate volumes which makes upgrading very easy. Always
+    `backup <https://kiwitcms.org/blog/atodorov/2018/07/30/how-to-backup-docker-volumes-for-kiwi-tcms/>`_
+    before upgrading!
+
+
+Kiwi TCMS recommends that you test the upgrade on a staging server first
+in order to minimize the risk of migration failures! You should pay special
+attention to the DB section changelog entries for every release!
 
 
 SSL configuration
