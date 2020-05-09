@@ -36,8 +36,7 @@ urlpatterns = [
     re_path(r'^accounts/', include(auth_urls)),
 
     # Testplans zone
-    re_path(r'^plan/', include(testplans_urls.plan_urls)),
-    re_path(r'^plans/', include(testplans_urls.plans_urls)),
+    re_path(r'^plan/', include(testplans_urls)),
 
     # Testcases zone
     re_path(r'^case/', include(testcases_urls.case_urls)),
