@@ -55,7 +55,7 @@ class NewCaseView(CreateView):
     template_name = 'testcases/mutable.html'
 
     def get_form(self, form_class=None):
-        form = super().get_form()
+        form = super().get_form(form_class)
         # clear fields which are set dynamically via JavaScript
         form.populate(self.request.POST.get('product', -1))
         return form
@@ -348,7 +348,7 @@ class EditTestCaseView(UpdateView):
         return context
 
     def get_form(self, form_class=None):
-        form = super().get_form()
+        form = super().get_form(form_class)
         if self.request.POST.get('product'):
             form.populate(product_id=self.request.POST['product'])
         else:
