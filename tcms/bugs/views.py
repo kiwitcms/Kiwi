@@ -85,7 +85,7 @@ class New(CreateView):
         return kwargs
 
     def get_form(self, form_class=None):
-        form = super().get_form()
+        form = super().get_form(form_class)
         # clear fields which are set dynamically via JavaScript
         form.populate(self.request.POST.get('product', -1))
         return form
