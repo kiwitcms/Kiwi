@@ -37,8 +37,7 @@ urlpatterns = [
     url(r'^accounts/', include(auth_urls)),
 
     # Testplans zone
-    url(r'^plan/', include(testplans_urls.plan_urls)),
-    url(r'^plans/', include(testplans_urls.plans_urls)),
+    url(r'^plan/', include(testplans_urls)),
 
     # Testcases zone
     url(r'^case/', include(testcases_urls.case_urls)),
