@@ -286,7 +286,7 @@ class EditTestRunView(UpdateView):
         return context
 
     def get_form(self, form_class=None):
-        form = super().get_form()
+        form = super().get_form(form_class)
         form.populate(self.object.plan.product_id)
 
         return form
