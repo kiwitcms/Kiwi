@@ -44,10 +44,14 @@ Introduction
 .. image:: https://raw.githubusercontent.com/kiwitcms/Kiwi/master/tcms/static/images/kiwi_h80.png
    :alt: "Kiwi TCMS Logo"
 
-Kiwi TCMS is the leading open source test case management system. It is written in
-Python and Django. It features bug tracker integration, fast test plan
-and runs search, powerful access control, test automation framework plugins and
+Kiwi TCMS is the leading open source test management system for both manual and
+automated testing. It features bug tracker integration, search pages,
+powerful access control, test automation framework plugins, visual reports and
 rich API layer.
+
+Our mission is to transform the testing process by making it more organized,
+transparent & accountable for everyone on your team; to improve engineering
+productivity and participation in testing.
 
 
 Brief history
@@ -87,8 +91,8 @@ Brief history
 * Mar 2020 - `Mozilla Open Source Award winner <https://kiwitcms.org/blog/kiwi-tcms-team/2020/03/27/kiwi-tcms-is-open-source-seed-award-winner/>`_
 
 
-Live demo
----------
+Check it out
+------------
 
 https://public.tenant.kiwitcms.org
 
