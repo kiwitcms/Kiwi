@@ -72,8 +72,11 @@ Your server/docker container clock should also match the accurate time of day!
     navigation bar! All other timestamps are in the same time zone!
 
 
+.. _email-settings:
+
 E-mail settings
 ---------------
+
 Kiwi TCMS supports email notifications which by default are sent over SMTP and
 need to be configured via the following settings:
 
