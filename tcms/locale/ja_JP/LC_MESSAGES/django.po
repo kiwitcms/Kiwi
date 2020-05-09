@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-04-25 20:52\n"
+"PO-Revision-Date: 2020-05-09 06:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -30,12 +30,12 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:8
 msgid "Open"
-msgstr ""
+msgstr "公開"
 
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:10
 msgid "Closed"
-msgstr ""
+msgstr "招待のみ"
 
 #: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -52,7 +52,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:76
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "担当者"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
@@ -74,7 +74,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "プロダクト"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:41
@@ -105,7 +105,7 @@ msgstr "バージョン"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "重ねる"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "再開"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -122,11 +122,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -142,14 +142,14 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr ""
+msgstr "概要"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:42
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "新しい製品を追加"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
@@ -166,21 +166,21 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "バグを検索"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/include/filters.html:48
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "後に"
 
 #: tcms/bugs/templates/bugs/search.html:27
 #: tcms/telemetry/templates/telemetry/include/filters.html:60
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "ビフォー"
 
 #: tcms/bugs/templates/bugs/search.html:75
 #: tcms/bugs/templates/bugs/search.html:80
@@ -192,14 +192,14 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "ユーザー名"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -210,20 +210,20 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "IDは"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "登録日時"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:494
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:507
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -244,7 +244,7 @@ msgstr ""
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "ユーザー %s が見つかりません"
 
 #: tcms/core/history.py:40
 #, python-format
@@ -271,15 +271,15 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "個人情報"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "権限"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "このメールのユーザーはすでに存在しています"
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
@@ -304,7 +304,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
-msgstr ""
+msgstr "アクティベーションキーの有効期限が切れました。"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
@@ -316,7 +316,7 @@ msgstr ""
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS]。"
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -451,7 +451,7 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
-msgstr ""
+msgstr "合計"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
@@ -469,7 +469,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
@@ -490,11 +490,11 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr ""
+msgstr "優先順位"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "カテゴリ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -502,7 +502,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "暗夜"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
