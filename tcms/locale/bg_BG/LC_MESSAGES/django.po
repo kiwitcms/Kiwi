@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-09 20:11\n"
+"PO-Revision-Date: 2020-05-09 20:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1752,7 +1752,7 @@ msgstr "Клониране на ТК"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr "Клониране/ свързване на ТК към нов ТП"
+msgstr "Клониране или добавяне на ТК към новия ТП"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
@@ -1760,7 +1760,7 @@ msgstr "Родител"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr "Настрой ТП като родител на новия ТП"
+msgstr "Настройване като родител на новия ТП"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
