@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-09 20:32\n"
+"PO-Revision-Date: 2020-05-09 20:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1052,7 +1052,7 @@ msgstr "Час на създаване"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr "Главна"
+msgstr "Родител"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
