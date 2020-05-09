@@ -143,7 +143,7 @@ function attachEvents(testCases, testPlanId, permissions) {
 
             jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
                 const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
-                testCaseRow.fadeOut(fadeAnimationTime, function(e) {
+                testCaseRow.fadeOut(fadeAnimationTime, function() {
                     testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
                 }).fadeIn(fadeAnimationTime);
             });
