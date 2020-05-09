@@ -12,4 +12,7 @@ urlpatterns = [
 
     url(r'^(?P<pk>\d+)/edit/$', views.Edit.as_view(), name='plan-edit'),
     url(r'^(?P<pk>\d+)/clone/$', views.Clone.as_view(), name='plans-clone'),
+
+    url(r'^search/$', views.SearchTestPlanView.as_view(), name='plans-search'),
+    url(r'^new/$', views.NewTestPlanView.as_view(), name='plans-new'),
 ]
