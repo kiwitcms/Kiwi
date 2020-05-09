@@ -6,8 +6,8 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
-    <form class="form-horizontal" method="post" action="{% url "plans-clone" %}">
-        <input type="hidden" name="plan" value="{{ test_plan.pk }}">
+    <form class="form-horizontal" method="post" action="{% url "plans-clone" object.pk %}">
+        {% csrf_token %}
 
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
@@ -53,14 +53,16 @@
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_copy_testcases">{% trans "Clone TCs" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_copy_testcases" name="copy_testcases" type="checkbox">
+                <input class="bootstrap-switch" id="id_copy_testcases" name="copy_testcases"
+                       type="checkbox" {% if form.copy_testcases.value %}checked{% endif %}>
                 <p class="help-block">{% trans "Clone or link existing TCs into new TP" %}</p>
             </div>
 
 
             <label class="col-md-1 col-lg-1" for="id_set_parent">{% trans "Parent TP" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_set_parent" name="set_parent" type="checkbox">
+                <input class="bootstrap-switch" id="id_set_parent" name="set_parent"
+                       type="checkbox"  {% if form.set_parent.value %}checked{% endif %}>
                 <p class="help-block">{% trans "Set the source TP as parent of new TP" %}</p>
             </div>
         </div>

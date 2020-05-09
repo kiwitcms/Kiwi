@@ -77,15 +77,8 @@ class ClonePlanForm(forms.Form):
         empty_label=None,
     )
 
-    copy_testcases = forms.BooleanField(
-        help_text='Unchecking will create a link to selected plans',
-        required=False
-    )
-    set_parent = forms.BooleanField(
-        help_text='Check it to set the source plan as parent of new cloned '
-                  'plan.',
-        required=False
-    )
+    copy_testcases = forms.BooleanField(required=False)
+    set_parent = forms.BooleanField(required=False)
 
     def populate(self, product_pk):
         if product_pk:
