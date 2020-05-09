@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.db.models import Count
 from django.http import (HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
-from django.shortcuts import get_object_or_404, render
 from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, FormView, UpdateView
+
 from guardian.decorators import permission_required as object_permission_required
+
 from uuslug import slugify
 
 from tcms.core.response import ModifySettingsTemplateResponse
@@ -28,7 +28,7 @@ class NewTestPlanView(CreateView):
     template_name = 'testplans/mutable.html'
 
     def get_form(self, form_class=None):
-        form = super().get_form()
+        form = super().get_form(form_class)
         # clear fields which are set dynamically via JavaScript
         form.populate(self.request.POST.get('product', -1))
         return form
@@ -66,7 +66,7 @@ class Edit(UpdateView):
     template_name = 'testplans/mutable.html'
 
     def get_form(self, form_class=None):
-        form = super().get_form()
+        form = super().get_form(form_class)
         if self.request.POST.get('product'):
             form.populate(product_id=self.request.POST['product'])
         else:
@@ -153,9 +153,7 @@ class TestPlanGetView(DetailView):
                     ),
                     (
                         _('Clone'),
-                        # todo: URL accepts POST, need to refactor to use GET+POST
-                        # e.g. plans/3/clone/
-                        reverse('plans-clone')
+                        reverse('plans-clone', args=[self.object.pk])
                     ),
                     (
                         _('History'),
@@ -194,41 +192,39 @@ class GetTestPlanRedirectView(DetailView):
 
 
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
-class Clone(View):
-    http_method_names = ['post']
+class Clone(FormView):
     template_name = 'testplans/clone.html'
+    form_class = ClonePlanForm
+    object = None
 
-    def post(self, request):
-        if 'plan' not in request.POST:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 _('TestPlan is required'))
-            # redirect back where we came from
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    def get(self, request, *args, **kwargs):
+        self.object = TestPlan.objects.get(pk=kwargs['pk'])
+        return super().get(request, *args, **kwargs)
 
-        plan_id = request.POST.get('plan', 0)
-        test_plan = get_object_or_404(TestPlan, pk=int(plan_id))
+    def post(self, request, *args, **kwargs):
+        self.object = TestPlan.objects.get(pk=kwargs['pk'])
+        return super().post(request, *args, **kwargs)
 
-        post_data = request.POST.copy()
-        if not request.POST.get('name'):
-            post_data['name'] = test_plan.make_cloned_name()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object'] = self.object
+        return context
 
-        form = ClonePlanForm(post_data)
-        form.populate(product_pk=request.POST.get('product'))
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.populate(self.object.product_id)
+        return form
 
-        # if required values are missing we are still going to show
-        # the form below, otherwise clone & redirect
-        if form.is_valid():
-            form.cleaned_data['new_author'] = request.user
-            cloned_plan = test_plan.clone(**form.cleaned_data)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['initial']['name'] = self.object.make_cloned_name()
+        kwargs['initial']['product'] = self.object.product
+        kwargs['initial']['version'] = self.object.product_version
+        return kwargs
 
-            return HttpResponseRedirect(
-                reverse('test_plan_url_short', args=[cloned_plan.pk]))
+    def form_valid(self, form):
+        form.cleaned_data['new_author'] = self.request.user
+        cloned_plan = self.object.clone(**form.cleaned_data)
 
-        # form wasn't valid
-        context_data = {
-            'test_plan': test_plan,
-            'form': form,
-        }
-
-        return render(request, self.template_name, context_data)
+        return HttpResponseRedirect(
+            reverse('test_plan_url_short', args=[cloned_plan.pk]))
