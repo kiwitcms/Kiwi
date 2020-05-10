@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-10 07:41\n"
+"PO-Revision-Date: 2020-05-10 09:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1481,7 +1481,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "によってテストされた"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
@@ -1642,7 +1642,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "カンマで区切られたメールアドレス。 通知メールは、CCリスト内の各メールアドレスに送信されます。"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1650,7 +1650,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "テストケースの概要"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
@@ -1760,12 +1760,12 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "テスト計画名"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "テストプラン"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
@@ -1788,23 +1788,25 @@ msgstr ""
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "テスト実行ステータスのカスタマイズの詳細については、\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        ドキュメント</a> を参照してください。"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "実行状態のテスト"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "テスト実行を編集"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "クローンテストラン"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "新しいテストラン"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
@@ -1813,7 +1815,7 @@ msgstr "バージョン"
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "ユーザー名またはメール"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
@@ -1827,11 +1829,11 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "テスト実行を検索"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "テスト実行の概要"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
@@ -1863,11 +1865,11 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "プロポーズ済み"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr ""
+msgstr "確認済み"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
@@ -1875,7 +1877,7 @@ msgstr "無効"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "更新が必要"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
@@ -1883,7 +1885,7 @@ msgstr "そこで待て"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "ランニング"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
@@ -1891,7 +1893,7 @@ msgstr "一時停止"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "貼り付け"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -1907,17 +1909,18 @@ msgstr "エラー"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "待機中"
 
 #: tcms_github_app/admin.py:120
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "追加設定については\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a> を参照してください。"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "GitHub連携"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
