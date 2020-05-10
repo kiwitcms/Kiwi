@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-10 06:31\n"
+"PO-Revision-Date: 2020-05-10 07:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -109,7 +109,7 @@ msgstr "重ねる"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr ""
+msgstr "コメントされた"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
@@ -288,7 +288,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "あなたのアカウントが作成されました。確認用のリンクについては、メールをチェックします。"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
@@ -369,11 +369,11 @@ msgstr ""
 
 #: tcms/settings/common.py:314
 msgid "Testing"
-msgstr ""
+msgstr "テスト中"
 
 #: tcms/settings/common.py:315
 msgid "Breakdown"
-msgstr ""
+msgstr "分解する"
 
 #: tcms/settings/common.py:316
 msgid "Status matrix"
@@ -394,11 +394,11 @@ msgstr ""
 
 #: tcms/settings/common.py:324
 msgid "Users and groups"
-msgstr ""
+msgstr "ユーザとグループ"
 
 #: tcms/settings/common.py:326
 msgid "Everything else"
-msgstr ""
+msgstr "他のすべて"
 
 #: tcms/settings/common.py:328
 msgid "PLUGINS"
@@ -406,11 +406,11 @@ msgstr ""
 
 #: tcms/settings/common.py:339
 msgid "Forum"
-msgstr ""
+msgstr "フォーラム"
 
 #: tcms/settings/common.py:340
 msgid "Report an Issue"
-msgstr ""
+msgstr "問題を報告する"
 
 #: tcms/settings/common.py:341
 msgid "Ask for help on StackOverflow"
@@ -418,7 +418,7 @@ msgstr ""
 
 #: tcms/settings/common.py:342
 msgid "User Guide"
-msgstr ""
+msgstr "初心者ガイド"
 
 #: tcms/settings/common.py:343
 msgid "Administration Guide"
@@ -426,7 +426,7 @@ msgstr ""
 
 #: tcms/settings/common.py:344
 msgid "API Help"
-msgstr ""
+msgstr "API ヘルプ"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
