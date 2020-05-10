@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-09 08:01\n"
+"PO-Revision-Date: 2020-05-10 06:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -41,7 +41,7 @@ msgstr "招待のみ"
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "報告者"
 
 #: tcms/bugs/templates/bugs/get.html:46
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -1752,7 +1752,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "アクティブ"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1808,7 +1808,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "バージョン"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
@@ -1835,7 +1835,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "計画ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
@@ -1851,7 +1851,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:370
 msgid "Clone of "
-msgstr ""
+msgstr "クローン - "
 
 #: tcms/testruns/views.py:424
 msgid "TestCase ID is not a valid integer"
@@ -1871,7 +1871,7 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "無効"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
@@ -1879,7 +1879,7 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "そこで待て"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
@@ -1887,7 +1887,7 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "一時停止"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
@@ -1899,11 +1899,11 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "ブロックしています"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "エラー"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
@@ -1961,13 +1961,13 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "テナント"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "組織"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -1976,12 +1976,12 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "価格"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "購読の種類"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
@@ -1991,7 +1991,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "定期購入を解約"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -2003,22 +2003,22 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
-msgstr ""
+msgstr "トランザクション履歴"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "送信元"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "外注先"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "受信"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -2043,31 +2043,31 @@ msgstr ""
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "メールアドレスは必須項目です"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "未認証"
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "姓名"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "無効な文字列"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "作成する"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "承認されたユーザー"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "未払い"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
@@ -2090,7 +2090,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "スキーマ"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
