@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-10 07:31\n"
+"PO-Revision-Date: 2020-05-10 07:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -239,7 +239,7 @@ msgstr "*バグが閉じられました*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*バグが再開されました*"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -267,7 +267,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "このメール アドレスは既に使用されています。"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
@@ -284,7 +284,7 @@ msgstr "このメールのユーザーはすでに存在しています"
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "新しい %s アカウントの確認"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -325,11 +325,11 @@ msgstr ""
 
 #: tcms/settings/common.py:297
 msgid "DASHBOARD"
-msgstr ""
+msgstr "ダッシュボード"
 
 #: tcms/settings/common.py:298
 msgid "TESTING"
-msgstr ""
+msgstr "テスト中"
 
 #: tcms/settings/common.py:299
 msgid "New Test Plan"
@@ -345,7 +345,7 @@ msgstr ""
 
 #: tcms/settings/common.py:306
 msgid "SEARCH"
-msgstr ""
+msgstr "検索"
 
 #: tcms/settings/common.py:307
 msgid "Search Test Plans"
@@ -365,7 +365,7 @@ msgstr ""
 
 #: tcms/settings/common.py:313
 msgid "TELEMETRY"
-msgstr ""
+msgstr "テレメトリー"
 
 #: tcms/settings/common.py:314
 msgid "Testing"
@@ -390,7 +390,7 @@ msgstr ""
 
 #: tcms/settings/common.py:323
 msgid "ADMIN"
-msgstr ""
+msgstr "管理者"
 
 #: tcms/settings/common.py:324
 msgid "Users and groups"
@@ -402,7 +402,7 @@ msgstr "他のすべて"
 
 #: tcms/settings/common.py:328
 msgid "PLUGINS"
-msgstr ""
+msgstr "プラグイン"
 
 #: tcms/settings/common.py:339
 msgid "Forum"
@@ -461,7 +461,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "テストプラン"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -481,12 +481,12 @@ msgstr "合計"
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:142
 msgid "Automated"
-msgstr ""
+msgstr "自動接続"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr ""
+msgstr "手動"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
@@ -498,7 +498,7 @@ msgstr "カテゴリ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "積極的"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
@@ -551,7 +551,7 @@ msgstr "内部サーバーエラー"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "この添付ファイルを削除してよろしいですか？"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -570,7 +570,7 @@ msgstr "添付ファイル"
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "添付ファイルが見つかりません"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -583,7 +583,7 @@ msgstr "サービス"
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
-msgstr ""
+msgstr "コンポーネントが見つかりません"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -611,7 +611,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "バグは見つかりませんでした"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -783,23 +783,23 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
-msgstr ""
+msgstr "添付ファイル"
 
 #: tcms/templates/include/attachments.html:14
 msgid "File"
-msgstr ""
+msgstr "ファイル"
 
 #: tcms/templates/include/attachments.html:15
 msgid "Owner"
-msgstr ""
+msgstr "所有者"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "レコードはありません。"
 
 #: tcms/templates/include/bug_details.html:6
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -814,7 +814,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:141
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "状態"
 
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
@@ -823,7 +823,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "タグ"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -833,16 +833,16 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "名"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "計画"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
-msgstr ""
+msgstr "ケース"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
@@ -851,18 +851,18 @@ msgstr ""
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "アクション"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr ""
+msgstr "削除"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "タグの追加"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -887,40 +887,40 @@ msgstr ""
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "パスワードの変更"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "ログアウト"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr ""
+msgstr "でログイン"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "登録"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "サポートされる言語"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "新しい言語をリクエスト"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "翻訳モード"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
@@ -928,23 +928,23 @@ msgstr ""
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "最初のページ"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "前のページ"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "現在のページ"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "次ページ"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "最終ページ"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -968,7 +968,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "印刷プラン"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
@@ -992,29 +992,29 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "作家"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "プランの種類"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
-msgstr ""
+msgstr "参照"
 
 #: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "時間を作成する"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "親"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
@@ -1022,7 +1022,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "ドキュメント"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
@@ -1214,15 +1214,15 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "クイック検索"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr ""
+msgstr "通常検索"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "作成"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
@@ -1232,35 +1232,35 @@ msgstr ""
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "忘れました"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "パスワード"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "ログイン"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Kiwi TCMSへようこそ"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "開始するにはログインしてください"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "または"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "アカウントを登録"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
@@ -1268,17 +1268,17 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "あなたのパスワードが設定されています。先に進んで今すぐログイン"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "今"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:188
 msgid "Confirm"
-msgstr ""
+msgstr "確定する"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
@@ -1286,24 +1286,24 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "パスワードリセットのリクエスト"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "パスワードリセットのメールを送信しました。"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "Ｅメール"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "パスワード再設定"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS パスワードのリセット"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
@@ -1351,7 +1351,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "作成日"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1380,7 +1380,7 @@ msgstr "完了"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
@@ -1428,11 +1428,11 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "訪問認可"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "バグ"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1452,7 +1452,7 @@ msgstr "キャンセル"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "このタグを削除"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
