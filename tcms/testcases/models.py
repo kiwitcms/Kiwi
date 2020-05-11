@@ -227,6 +227,59 @@ class TestCase(TCMSActionModel):
 
     emailing = property(_get_email_conf)
 
+    def clone(self, new_author, test_plans):
+        new_tc = self.__class__.objects.create(
+            is_automated=self.is_automated,
+            script=self.script,
+            arguments=self.arguments,
+            extra_link=self.extra_link,
+            summary=self.summary,
+            requirement=self.requirement,
+            case_status=TestCaseStatus.get_proposed(),
+            category=self.category,
+            priority=self.priority,
+            notes=self.notes,
+            text=self.text,
+            author=new_author,
+            default_tester=self.default_tester,
+        )
+
+        # apply tags as well
+        for tag in self.tag.all():
+            new_tc.add_tag(tag)
+
+        for plan in test_plans:
+            plan.add_case(new_tc)
+
+            # clone TC category b/c we may be cloning a 'linked'
+            # TC which has a different Product that doesn't have the
+            # same categories yet
+            try:
+                tc_category = plan.product.category.get(name=self.category.name)
+            except ObjectDoesNotExist:
+                tc_category = plan.product.category.create(
+                    name=self.category.name,
+                    description=self.category.description,
+                )
+            new_tc.category = tc_category
+            new_tc.save()
+
+            # clone TC components b/c we may be cloning a 'linked'
+            # TC which has a different Product that doesn't have the
+            # same components yet
+            for component in self.component.all():
+                try:
+                    new_component = plan.product.component.get(name=component.name)
+                except ObjectDoesNotExist:
+                    new_component = plan.product.component.create(
+                        name=component.name,
+                        initial_owner=new_author,
+                        description=component.description,
+                    )
+                new_tc.add_component(new_component)
+
+        return new_tc
+
 
 class TestCasePlan(models.Model):
     plan = models.ForeignKey('testplans.TestPlan', on_delete=models.CASCADE)
