@@ -3,7 +3,6 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.test import modify_settings
@@ -618,78 +617,22 @@ class CloneTestCaseView(View):
         clone_form.populate(case_ids=request.POST.getlist('case'))
 
         if clone_form.is_valid():
-            test_plan = None
-            tcs_src = clone_form.cleaned_data['case']
-            for tc_src in tcs_src:
-                tc_dest = TestCase.objects.create(
-                    is_automated=tc_src.is_automated,
-                    script=tc_src.script,
-                    arguments=tc_src.arguments,
-                    extra_link=tc_src.extra_link,
-                    summary=tc_src.summary,
-                    requirement=tc_src.requirement,
-                    case_status=TestCaseStatus.get_proposed(),
-                    category=tc_src.category,
-                    priority=tc_src.priority,
-                    notes=tc_src.notes,
-                    text=tc_src.text,
-                    author=request.user,
-                    default_tester=tc_src.default_tester,
-                )
-
-                # apply tags as well
-                for tag in tc_src.tag.all():
-                    tc_dest.add_tag(tag=tag)
-
-                for test_plan in clone_form.cleaned_data['plan']:
-                    # add new TC to selected TP
-                    sortkey = test_plan.get_case_sortkey()
-                    test_plan.add_case(tc_dest, sortkey)
-
-                    # clone TC category b/c we may be cloning a 'linked'
-                    # TC which has a different Product that doesn't have the
-                    # same categories yet
-                    try:
-                        tc_category = test_plan.product.category.get(
-                            name=tc_src.category.name
-                        )
-                    except ObjectDoesNotExist:
-                        tc_category = test_plan.product.category.create(
-                            name=tc_src.category.name,
-                            description=tc_src.category.description,
-                        )
-                    tc_dest.category = tc_category
-                    tc_dest.save()
-
-                    # clone TC components b/c we may be cloning a 'linked'
-                    # TC which has a different Product that doesn't have the
-                    # same components yet
-                    for component in tc_src.component.all():
-                        try:
-                            new_c = test_plan.product.component.get(name=component.name)
-                        except ObjectDoesNotExist:
-                            new_c = test_plan.product.component.create(
-                                name=component.name,
-                                initial_owner=request.user,
-                                description=component.description,
-                            )
-                        tc_dest.add_component(new_c)
+            for tc_src in clone_form.cleaned_data['case']:
+                tc_dest = tc_src.clone(request.user, clone_form.cleaned_data['plan'])
 
             # Detect the number of items and redirect to correct one
-            cases_count = len(clone_form.cleaned_data['case'])
-            plans_count = len(clone_form.cleaned_data['plan'])
-
-            if cases_count == 1:
+            if len(clone_form.cleaned_data['case']) == 1:
                 return HttpResponseRedirect(
                     reverse('testcases-get', args=[tc_dest.pk, ])
                 )
 
-            if plans_count == 1:
+            if len(clone_form.cleaned_data['plan']) == 1:
+                test_plan = clone_form.cleaned_data['plan'][0]
                 return HttpResponseRedirect(
-                    reverse('test_plan_url_short', args=[test_plan.pk, ])
+                    reverse('test_plan_url_short', args=[test_plan.pk])
                 )
 
-            # Otherwise it will prompt to user the clone action is successful.
+            # Otherwise tell the user the clone action is successful
             messages.add_message(request,
                                  messages.SUCCESS,
                                  _('TestCase cloning was successful'))
