@@ -3,7 +3,6 @@
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from uuslug import slugify
@@ -95,16 +94,6 @@ class TestPlan(TCMSActionModel):
 
     def get_absolute_url(self):
         return self._get_absolute_url()
-
-    def get_case_sortkey(self):
-        """
-        Get case sortkey.
-        """
-        result = TestCasePlan.objects.filter(plan=self).aggregate(Max('sortkey'))
-        sortkey = result['sortkey__max']
-        if sortkey is None:
-            return None
-        return sortkey + 10
 
     def _get_email_conf(self):
         try:
