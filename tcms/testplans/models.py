@@ -3,18 +3,15 @@
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
 from tcms.management.models import Version
-from tcms.testcases.models import (Category, TestCase, TestCasePlan,
-                                   TestCaseStatus)
-
 from tcms.rpc.serializer import TestPlanRPCSerializer
 from tcms.rpc.utils import distinct_filter
+from tcms.testcases.models import TestCasePlan
 
 
 class PlanType(TCMSActionModel):
@@ -140,47 +137,14 @@ class TestPlan(TCMSActionModel):
             tp_dest.add_tag(tag=tp_tag_src)
 
         # include TCs inside cloned TP
-        for tpcase_src in self.case.all():
-            tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
-
+        for tc_src in self.case.all():
+            # this parameter should really be named clone_testcases b/c if set
+            # it clones the source TC and then adds it to the new TP
             if copy_testcases:
-                # todo: create a function/method which clones the test cases instead of
-                # duplicating the clone operation here and inside testcases.views.clone
-                tc_category, _ = Category.objects.get_or_create(
-                    name=tpcase_src.category.name, product=product)
-
-                tpcase_dest = TestCase.objects.create(
-                    create_date=tpcase_src.create_date,
-                    is_automated=tpcase_src.is_automated,
-                    script=tpcase_src.script,
-                    arguments=tpcase_src.arguments,
-                    summary=tpcase_src.summary,
-                    requirement=tpcase_src.requirement,
-                    case_status=TestCaseStatus.get_proposed(),
-                    category=tc_category,
-                    priority=tpcase_src.priority,
-                    author=new_author,
-                    default_tester=tpcase_src.default_tester,
-                    text=tpcase_src.text)
-
-                # Add case to plan.
-                tp_dest.add_case(tpcase_dest, tcp.sortkey)
-
-                for tc_tag_src in tpcase_src.tag.all():
-                    tpcase_dest.add_tag(tag=tc_tag_src)
-
-                for component in tpcase_src.component.filter(product_id=self.product_id):
-                    try:
-                        new_c = tp_dest.product.component.get(name=component.name)
-                    except ObjectDoesNotExist:
-                        new_c = tp_dest.product.component.create(
-                            name=component.name,
-                            initial_owner=new_author,
-                            description=component.description)
-
-                    tpcase_dest.add_component(new_c)
+                tc_src.clone(new_author, [tp_dest])
             else:
-                tp_dest.add_case(tpcase_src, tcp.sortkey)
+                # otherwise just link the existing TC to the new TP
+                tp_dest.add_case(tc_src)
 
         return tp_dest
 
