@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-12 08:49\n"
+"PO-Revision-Date: 2020-05-12 08:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -702,7 +702,8 @@ msgstr "开始于"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "分配给您的 %(total_count)s 测试运行(s) 或 TestCase(s) 需要执行。\n"
+"这里是最新的 %(count)s。"
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -748,7 +749,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "欢迎你， %(user)s，\n"
+"感谢你注册为 %(site_domain)s 账户！\n\n"
+"点击这个链接激活你的账户：\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -761,12 +765,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Bug %(pk)s 已分配给您。\n\n"
+"链接: %(bug_url)s\n\n"
+"摘要: %(summary)s\n"
+"创建于: %(creation_date)s\n"
+"报告员: %(reporter)s\n"
+"指定: %(assignee)s\n"
+"产品: %(product)s\n"
+"版本: %(version)s\n"
+"编译: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "测试用例已被 %(username)s 更新！"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -783,7 +795,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "已为您新建或更新测试运行 %(pk)s 。\n\n"
+"### 链接 ###\n"
+"测试运行: %(run_url)s\n"
+"测试计划: %(plan_url)s\n\n"
+"### 基本运行信息 ###\n"
+"摘要: %(summary)s\n\n"
+"管理: %(manager)s.\n"
+"默认测试者: %(default_tester)s.\n\n"
+"产品: %(product)s\n"
+"产品版本: %(version)s\n"
+"构建版本: %(build)s\n\n"
+"备注:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -791,7 +815,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "尊敬的管理员，\n"
+"有人刚刚在您的\n"
+"Kiwi TCMS实例注册了一个用户名为 %(username)s 的帐户，正在等待您的批准！\n\n"
+"访问 %(user_url)s 激活帐户！"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
@@ -1925,7 +1952,8 @@ msgstr "已放弃"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "更多配置见\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
