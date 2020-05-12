@@ -13,7 +13,7 @@ dist._ep_map = {'kiwitcms.plugins': {'a_fake_plugin': entry_point}}
 pkg_resources.working_set.add(dist)
 
 # this needs to be here so that  discovery tests can work
-from tcms.settings.devel import *  # noqa: F401,F403
+from tcms.settings.devel import *  # noqa: F401,E402,F403
 
 
 # silence resource warnings while testing, see
