@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:04\n"
+"PO-Revision-Date: 2020-05-12 14:46\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -431,7 +431,7 @@ msgstr "Demander de l’aide sur StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Faire un don de 5 € via Open Collective"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -2112,11 +2112,11 @@ msgstr "L'adresse mail est requise"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "ou continuer avec"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Informations légales"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
