@@ -19,6 +19,25 @@
     </h1>
 
     <div class="row row-cards-pf">
+        <div class="col-xs-6 col-sm-4 col-md-4">
+            <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                <div class="card-pf-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-completed progress-bar-success progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="font-weight: bold;" data-toggle="tooltip"></div>
+                        <div class="progress-bar progress-bar-remaining" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="font-weight: bold; color: black;" data-toggle="tooltip"></div>
+                        <div class="progress-bar progress-failed progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="font-weight: bold;" data-toggle="tooltip"></div>
+                    </div>
+                    <div>
+                        <ul class="count-per-status-container list-group" style="columns: 2; margin: 0;">
+                        </ul>
+                        <li class="list-group-item" style="text-align: center; padding: 0;">
+                            <label>{% trans "TOTAL" %}</label>-<a href="#" class="total-execution-count"></a>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xs-12 col-sm-12 col-md-3">
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
 
