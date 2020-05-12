@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 20:44+0000\n"
-"PO-Revision-Date: 2020-05-12 08:43\n"
+"PO-Revision-Date: 2020-05-12 08:49\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -49,7 +49,7 @@ msgstr "已关闭"
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:21
 msgid "Reporter"
-msgstr ""
+msgstr "报告人"
 
 #: tcms/bugs/templates/bugs/get.html:46
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -117,11 +117,11 @@ msgstr "构建"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr ""
+msgstr "评论于"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "重新打开"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -134,7 +134,7 @@ msgstr "保存"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -174,7 +174,7 @@ msgstr "添加新的构建"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "搜索缺陷"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/include/filters.html:48
@@ -222,7 +222,7 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 msgid "Created at"
-msgstr ""
+msgstr "创建于"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:494
@@ -235,19 +235,19 @@ msgstr "删除"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
-msgstr ""
+msgstr "新建缺陷"
 
 #: tcms/bugs/views.py:167
 msgid "Edit bug"
-msgstr ""
+msgstr "编辑缺陷"
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr ""
+msgstr "*缺陷已关闭*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*缺陷重新打开*"
 
 #: tcms/core/ajax.py:150 tcms/testruns/views.py:604
 #, python-format
@@ -328,7 +328,7 @@ msgstr "通过配置 base_url 来使能 [ 报告给这个问题追踪器 ]"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "日期格式无效。预期为 YYYY-MM-DD [HH:MM:SS]。"
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -377,11 +377,11 @@ msgstr "搜索缺陷"
 
 #: tcms/settings/common.py:313
 msgid "TELEMETRY"
-msgstr ""
+msgstr "音效"
 
 #: tcms/settings/common.py:314
 msgid "Testing"
-msgstr ""
+msgstr "测试中"
 
 #: tcms/settings/common.py:315
 msgid "Breakdown"
@@ -452,11 +452,11 @@ msgstr "NEW: 测试执行 #%(pk)d - - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NEW: Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "其他"
 
 #: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
@@ -481,7 +481,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "总计"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
