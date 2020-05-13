@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 12:13\n"
+"PO-Revision-Date: 2020-05-13 12:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -684,7 +684,7 @@ msgstr "Konten"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr "Dokumen Test Plan"
+msgstr "Dokumen Uji Rencana"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
@@ -1108,7 +1108,7 @@ msgstr "Buat kasus baru"
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr "Tambah cases dari plans lain"
+msgstr "Tambah kasus dari plans lain"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1126,11 +1126,11 @@ msgstr "Salin"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr "Salin cases yang terpilih ke test plan lainnya"
+msgstr "Salin kasus yang terpilih ke test plan lainnya"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr "Hapus cases yang terpilih dari plan ini"
+msgstr "Hapus kasus yang terpilih dari plan ini"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1142,11 +1142,11 @@ msgstr "Buat TestRun baru"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr "Ubah pengulas TestCase"
+msgstr "Ubah peninjau TestCase"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr "Ubah penguji bawaan"
+msgstr "Ubah penguji semula"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1212,7 +1212,7 @@ msgstr "Pilih juga semua case yang belum ditunjukkan di bawah ini."
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr "Ringkasan Test Case"
+msgstr "Ringkasan Uji Kasus"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
@@ -1222,7 +1222,7 @@ msgstr "Peninjau"
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr "Penguji bawaan"
+msgstr "Penguji semula"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1242,7 +1242,7 @@ msgstr "kasus tersisa"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr "Semua cases telah dimuat."
+msgstr "Semua kasus telah dimuat."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -1254,7 +1254,7 @@ msgstr "Hapus child node dari plan saat ini"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr "Cari cases untuk ditambahkan ke test plan ini."
+msgstr "Cari kasus untuk ditambahkan ke test plan ini."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1262,7 +1262,7 @@ msgstr "Pencarian Cepat"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr "Cari Biasa"
+msgstr "Pencarian Biasa"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
@@ -1371,7 +1371,7 @@ msgstr "Semua kasus yang terkonfirmasi"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr "Test Cases dalam Operasi"
+msgstr "Uji kasus dalam Operasi"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
@@ -1391,7 +1391,7 @@ msgstr "Tabel ini berisi semua uji kasus dari rencana yang terkonfirmasi"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr "centang kotak centang untuk menambahkan cases ke dalam test run. Ingatlah untuk memperbaruinya diakhir"
+msgstr "centang kotak centang untuk menambahkan kasus ke dalam uji operasi. Ingatlah untuk memperbaruinya diakhir"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
