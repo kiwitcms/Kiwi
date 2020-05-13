@@ -14,20 +14,6 @@ user to add, edit and delete records in the database.
 
 |The Administration screen|
 
-.. _configure-kiwi-base-url:
-
-Configure Kiwi's base URL
--------------------------
-
-The first step you need to do is configure the base URL of your Kiwi TCMS
-installation. This is used to construct links to test plans, test cases, etc.
-The default value is ``127.0.0.1:8000`` which is suitable if you are running
-in devel mode. To update the setting go to
-``https://<your_domain_or_ip>/admin/sites/site/1/``!
-Update **Domain name** to the fully qualified domain name or IP address,
-including port if necessary and click the Save button!
-
-|Base URL configuration|
 
 .. _configure-bug-trackers:
 
@@ -398,7 +384,6 @@ For this purpose the following fields are available:
       within a certain wight group Kiwi TCMS will crash!
 
 
-.. |Base URL configuration| image:: ./_static/Configure_base_url.png
 .. |The Administration screen| image:: ./_static/Admin_Home.png
 .. |The Auth screen| image:: ./_static/Auth_Home.png
 .. |The Admin menu 1| image:: ./_static/Click_Auth.png

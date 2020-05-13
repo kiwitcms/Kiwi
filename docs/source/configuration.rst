@@ -10,7 +10,7 @@ to update some of them for your particular production environment.
 
     After adjusting settings for your environment you have to configure
     Kiwi TCMS via its web interface! As a minimum you have to
-    :ref:`configure-kiwi-base-url` and :ref:`configure-bug-trackers`!
+    :ref:`configure-kiwi-domain` and :ref:`configure-bug-trackers`!
 
 .. note::
 
