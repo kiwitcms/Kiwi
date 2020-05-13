@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 06:11\n"
+"PO-Revision-Date: 2020-05-13 06:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -276,7 +276,7 @@ msgstr "Data pribadi"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Perizinan"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
@@ -289,15 +289,15 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Akun anda telah dibuat, silakan cek surel anda untuk konfirmasi"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Akun anda telah dibuat, silakan hubungi administrator untuk mengaktifkannya"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Berikut adalah daftar administrator"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
@@ -326,11 +326,11 @@ msgstr ""
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
-msgstr ""
+msgstr "DASBOR"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr "Ujicoba"
+msgstr "PENGUJIAN"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
@@ -342,7 +342,7 @@ msgstr "Buat Test Case"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr ""
+msgstr "Bug baru"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
@@ -366,11 +366,11 @@ msgstr "Cari Bugs"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr "Telemetri"
+msgstr "TELEMETRI"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
-msgstr ""
+msgstr "Pengujian"
 
 #: tcms/settings/common.py:318
 msgid "Breakdown"
@@ -378,16 +378,16 @@ msgstr "Perincian"
 
 #: tcms/settings/common.py:319
 msgid "Status matrix"
-msgstr ""
+msgstr "Status matrix"
 
 #: tcms/settings/common.py:320
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Tren eksekusi"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "Kesehatan TestCase"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -403,7 +403,7 @@ msgstr "Lainnya"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGIN"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
@@ -435,7 +435,7 @@ msgstr "Bantuan API"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Pengguna baru menunggu persetujuan"
 
 #: tcms/signals.py:155
 #, python-format
@@ -560,7 +560,7 @@ msgstr ""
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "sistem manajemen uji kasus open source terkemuka"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
@@ -871,7 +871,7 @@ msgstr "Tambah label"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Alihkan navigasi"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
@@ -1696,7 +1696,7 @@ msgstr ""
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Setidaknya satu TestCase dibutuhkan"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1868,27 +1868,27 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "DIUSULKAN"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr ""
+msgstr "DIKONFIRMASI"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "NONAKTIFKAN"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "BUTUH_DIPERBAHARUI"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "DIAM"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "SEDANG BERJALAN"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
@@ -1904,15 +1904,15 @@ msgstr "GAGAL"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "DIBLOKIR"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "EROR"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "DICABUT"
 
 #: tcms_github_app/admin.py:120
 #, python-format
@@ -1922,7 +1922,7 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "Intergrasi Github"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
@@ -2076,7 +2076,7 @@ msgstr "Buat baru"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "Pengguna yang berwenang"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
