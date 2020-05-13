@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 06:44\n"
+"PO-Revision-Date: 2020-05-13 06:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -788,7 +788,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Yang terhormat Administator,\n"
+"Seseorang telah mendaftar sebuah akun dengan nama pengguna%(username)s pada KIWI TCMS anda dan menunggu persetujuan anda!\n\n"
+"Pergi ke %(user_url)s untuk mengaktifasi akun tersebut!"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
@@ -1639,11 +1641,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "TestCase ini diperbaharui"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "TestCase ini dihapus"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
@@ -1797,7 +1799,7 @@ msgstr "Izin ditolak: TestRun ini bukan milik anda"
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Untuk informasi lebih lanjut mengenai kostumisasi status eksekusi tes kunjungi <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">Dokumentasi</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1990,13 +1992,13 @@ msgstr "Harga"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "Jenis langganan"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "Dibayar sampai"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
@@ -2111,11 +2113,11 @@ msgstr "Skema"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "Validasi pola"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Nama skema sudah digunakan"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
