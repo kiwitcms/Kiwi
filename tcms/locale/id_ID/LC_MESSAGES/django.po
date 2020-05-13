@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 10:33\n"
+"PO-Revision-Date: 2020-05-13 10:45\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1134,7 +1134,7 @@ msgstr "Hapus cases yang terpilih dari plan ini"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr "Jalankan"
+msgstr "Operasikan"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
