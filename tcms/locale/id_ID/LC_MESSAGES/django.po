@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 09:33\n"
+"PO-Revision-Date: 2020-05-13 09:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -624,7 +624,7 @@ msgstr "bug"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "Dari Uji coba"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -661,7 +661,7 @@ msgstr "Tidak ada log terekam"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Bugs dan tautan"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -688,7 +688,7 @@ msgstr "Dokumen Test Plan"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Test Cases"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -801,7 +801,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Test run %(pk)s telah dibuat atau diperbaharui untuk Anda.\n\n"
+"### Tautan ###\n"
+"Test run: %(run_url)s\n"
+"Test plan: %(plan_url)s\n\n"
+"### Informasi dasar pengoperasian ###\n"
+"Ringkasan: %(summary)s\n\n"
+"Dikelola: %(manager)s.\n"
+"Penguji bawaan: %(default_tester)s.\n\n"
+"Produk: %(product)s\n"
+"Versi produk: %(version)s\n"
+"Build: %(build)s\n\n"
+"Catatan\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -1062,11 +1074,11 @@ msgstr "Mengulas kasus"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "Lihat Turunan"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Dokumen untuk plan ini belum dibuat."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
@@ -1096,7 +1108,7 @@ msgstr "Buat kasus baru"
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Tambah cases dari plans lain"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1114,11 +1126,11 @@ msgstr "Salin"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "Salin cases yang terpilih ke test plan lainnya"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "Hapus cases yang terpilih dari plan ini"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1130,7 +1142,7 @@ msgstr "Buat TestRun baru"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "Ubah pengulas TestCase"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1161,7 +1173,7 @@ msgstr "Tampilkan menu penyaringan"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Klik saya, lalu Seret dan lepas baris untuk menyesuaikan susunan, dan klik tautan 'Selesai Menyortir' untuk mengirim perubahan Anda"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1230,19 +1242,19 @@ msgstr "kasus tersisa"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Semua cases telah dimuat."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Tambah child node ke plan saat ini"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Hapus child node dari plan saat ini"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Cari cases untuk ditambahkan ke test plan ini."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1359,15 +1371,15 @@ msgstr "Semua kasus yang terkonfirmasi"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Test Cases dalam Operasi"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Cases dalam Uji coba ini"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Gunakan tombol sortir yang disimpan dalam plan"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1375,11 +1387,11 @@ msgstr "Bagaimana cara memberikan kasus?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "Tabel ini berisi semua test cases dari plan yang terkonfirmasi"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "centang kotak centang untuk menambahkan cases ke dalam test run. Ingatlah untuk memperbaruinya diakhir"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
