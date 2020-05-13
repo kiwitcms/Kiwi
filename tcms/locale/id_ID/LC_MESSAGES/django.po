@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 12:33\n"
+"PO-Revision-Date: 2020-05-13 12:44\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -890,7 +890,7 @@ msgstr "Kasus"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
-msgstr "Jalankan"
+msgstr "Operasi"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
@@ -922,7 +922,7 @@ msgstr "Test Runs saya"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr "Test Plans saya"
+msgstr "Rencana Uji saya"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -996,31 +996,31 @@ msgstr "Tidak ditemukan test case pada plan ini."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr "Sunting Plan"
+msgstr "Sunting Rencana"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr "Sunting test plan"
+msgstr "Sunting Rencana uji"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr "Salin Plan"
+msgstr "Salin Rencana"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr "Salin plan ini ke produk lainnya"
+msgstr "Salin rencana ini ke produk lainnya"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr "Cetak Plan"
+msgstr "Cetak Rencana"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr "Hapus Plan"
+msgstr "Hapus Rencana"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr "Hapus test plan"
+msgstr "Hapus Rencana Uji"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1040,7 +1040,7 @@ msgstr "Pemilik"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr "Jenis Plan"
+msgstr "Tipe Rencana"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
@@ -1070,7 +1070,7 @@ msgstr "Dokumen"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr "Mengulas kasus"
+msgstr "Meninjau kasus"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
@@ -1078,7 +1078,7 @@ msgstr "Lihat Turunan"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr "Dokumen untuk plan ini belum dibuat."
+msgstr "Dokumen untuk rencana ini belum dibuat."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
@@ -1108,7 +1108,7 @@ msgstr "Buat kasus baru"
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr "Tambah kasus dari plans lain"
+msgstr "Tambah kasus dari rencana lain"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1126,11 +1126,11 @@ msgstr "Salin"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr "Salin kasus yang terpilih ke test plan lainnya"
+msgstr "Salin kasus yang terpilih ke rencana uji lainnya"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr "Hapus kasus yang terpilih dari plan ini"
+msgstr "Hapus kasus yang terpilih dari rencana ini"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1207,7 +1207,7 @@ msgstr "Item per halaman"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr "Pilih juga semua case yang belum ditunjukkan di bawah ini."
+msgstr "Pilih juga semua kasus yang belum ditunjukkan di bawah ini."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
@@ -1436,11 +1436,11 @@ msgstr "Sorotan"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr "Hapus kasus yang terpilih dari test run ini"
+msgstr "Hapus kasus yang terpilih dari uji operasi ini"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr "Memperbarui IDLE case run ke teks kasus terbaru"
+msgstr "Memperbarui IDLE kasus operasi ke teks kasus terbaru"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1468,7 +1468,7 @@ msgstr "Tautan"
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr "Tester semula"
+msgstr "Penguji semula"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
@@ -1504,7 +1504,7 @@ msgstr "Tambahkan CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr "Laporan eksekusi tes"
+msgstr "Laporan Uji Eksekusi"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
@@ -1516,7 +1516,7 @@ msgstr "Kasus otomatis"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr "ID Case-Run"
+msgstr "ID Kasus-Operasi"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1573,7 +1573,7 @@ msgstr "Tidak ada eksekusi ditemukan"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "Silakan masukkan id case yang valid. gunakan koma untuk membagi lebih dari satu id case. misalnya \"111, 222\""
+msgstr "Silakan masukkan id kasus yang valid. gunakan koma untuk membagi lebih dari satu id kasus. misalnya. \"111, 222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1701,11 +1701,11 @@ msgstr "Alamat surel dipisahkan oleh koma. Surel pemberitahuan akan dikirim ke s
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr "Cari test cases"
+msgstr "Cari uji kasus"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr "Ringkasan test cases"
+msgstr "Ringkasan uji kasus"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
@@ -1782,7 +1782,7 @@ msgstr "ID induk"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "Dokumen Test plan:"
+msgstr "Dokumen Rencana uji:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
@@ -1815,51 +1815,51 @@ msgstr "Cari test plans"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr "Nama test plan"
+msgstr "Nama rencana uji"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr "Test plan"
+msgstr "Rencana uji"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr "TestPlan diperlukan"
+msgstr "RencanaUji diperlukan"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr "Setidaknya satu test plan diperlukan untuk dicetak"
+msgstr "Setidaknya satu rencana uji diperlukan untuk dicetak"
 
 #: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr "Test Plan \"%s\" tidak ditemukan"
+msgstr "Rencana Uji \"%s\" tidak ditemukan"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr "Izin ditolak: TestRun ini bukan milik anda"
+msgstr "Izin ditolak: UjiOperasi ini bukan milik anda"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr "Untuk informasi lebih lanjut mengenai kostumisasi status eksekusi tes kunjungi <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">Dokumentasi</a>!"
+msgstr "Untuk informasi lebih lanjut mengenai kostumisasi status uji eksekusi kunjungi <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">Dokumentasi</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr "Status eksekusi tes"
+msgstr "Status uji eksekusi"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr "Sunting TestRun"
+msgstr "Sunting UjiOperasi"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "Salin TestRun"
+msgstr "Salin UjiOperasi"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr "TestRun Baru"
+msgstr "UjiOperasi Baru"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
@@ -1872,34 +1872,34 @@ msgstr "Nama pengguna atau surel"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr "TestCase(s) Terpilih:"
+msgstr "Uji Kasus Terpilih:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr "%(count)s dari test cases yang dipilih sebelumnya tidak DIKONFIRMASI dan tidak akan disalin!\n"
-"Lihat test plan untuk lebih detilnya!"
+msgstr "%(count)s dari uji kasus yang dipilih sebelumnya tidak DIKONFIRMASI dan tidak akan disalin!\n"
+"Lihat rencana uji untuk lebih detilnya!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr "Cari tes yang berjalan"
+msgstr "Cari uji operasi"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr "Ringkasan tes berjalan"
+msgstr "Ringkasan uji operasi"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr "ID Plan"
+msgstr "ID Rencana"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr "ID TestPlan"
+msgstr "ID RencanaUji"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "Untuk membuat sebuah TestRun diperlukan satu TestPlan, pilih satu"
+msgstr "Untuk membuat sebuah UjiOperasi diperlukan satu RencanaUji, pilih satu"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
