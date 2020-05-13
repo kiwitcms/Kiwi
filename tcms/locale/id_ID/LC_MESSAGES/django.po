@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 06:52\n"
+"PO-Revision-Date: 2020-05-13 07:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1964,11 +1964,11 @@ msgstr "Langganan"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "Langganan penyewa"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "Anda bisa mengakses penyewa berikut"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
@@ -1982,7 +1982,7 @@ msgstr "Organisasi"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "Anda memiliki penyewa berikut"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
@@ -2006,7 +2006,7 @@ msgstr "Batalkan langganan"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "Anda tidak memiliki satupun penyewa"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
@@ -2024,7 +2024,7 @@ msgstr "Pengirim"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "Vendor"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
@@ -2033,7 +2033,7 @@ msgstr "Diterima pada"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Peringatan Penyewa Privat"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2042,7 +2042,11 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Anda akan membuat Penyewa Privat untuk Kiwi TCMS.\n"
+"Ini akan memakan waktu beberapa menit hingga skema DB anda siap!\n"
+"Setelah mengklik tombol \"Simpan\"<strong>Jangan</strong>menutup atau memuat kembali halaman ini!<br>\n"
+"Anda akan diarahkan ke penyewa baru ketika proses pembuatan selesai!\n"
+"Jika anda melihat 500 Internal Server Error silakan hubungi <a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>segera!"
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
@@ -2074,7 +2078,7 @@ msgstr "Nama lengkap"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "String tidak valid"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -2086,22 +2090,23 @@ msgstr "Pengguna yang berwenang"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Belum dibayar"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "Penyewa berakhir dalam waktu kurang dari 7 hari"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Penyewa Kiwi TCMS anda telah dibuat di:%(tenant_url)s\n\n"
+"Jika anda memiliki kendala silakan hubungi bantuan!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "Penyewa baru"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
@@ -2121,5 +2126,5 @@ msgstr "Nama skema sudah digunakan"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Penyewa Kiwi TCMS baru dibuat"
 
