@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 09:18\n"
+"PO-Revision-Date: 2020-05-13 09:25\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -723,7 +723,7 @@ msgstr "Test plans Anda"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "TestPlan"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -856,7 +856,7 @@ msgstr "Nama"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Plans"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
@@ -1045,7 +1045,7 @@ msgstr "Dokumen"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Mengulas kasus"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
@@ -1197,7 +1197,7 @@ msgstr "Peninjau"
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Penguji semula"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1237,7 +1237,7 @@ msgstr "Pencarian Cepat"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr ""
+msgstr "Cari Biasa"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
@@ -1245,7 +1245,7 @@ msgstr "Dibuat"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "Tidak ada uji kasus ditemukan."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1305,7 +1305,7 @@ msgstr "Silakan masukan ulang kata sandi baru anda agar kami dapat memverifikasi
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "minta atur ulang kata sandi baru"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1330,7 +1330,7 @@ msgstr "Daftar akun baru"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "Tambah TestCase ke TestRun"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1342,7 +1342,7 @@ msgstr "Pengelola"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Semua kasus yang terkonfirmasi"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
@@ -1423,7 +1423,7 @@ msgstr "Pembaruan"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Berikan kasus ini kepada orang lain"
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
@@ -1431,7 +1431,7 @@ msgstr "Komentar"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Tautan"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1447,11 +1447,11 @@ msgstr "Tester semula"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "Otomatis"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "Bug"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1459,11 +1459,11 @@ msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URL mengarah ke kesalahan"
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Perbarui Pelacak Isu secara otomatis"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1471,7 +1471,7 @@ msgstr "Batal"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "hapus label ini"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
@@ -1483,7 +1483,7 @@ msgstr "Laporan eksekusi tes"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Kasus manual"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
@@ -1563,7 +1563,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Skenario**: ... perilaku apa yang akan diujicoba ...\n"
+"  **Diberikan** ... kondisi ...\n"
+"  **Kapan** ... tindakan ...\n"
+"  **Kemudian** ... Hasil yang diharapkan ...\n\n"
+"*Tindakan*:\n\n"
+"1. item\n"
+"2. item\n"
+"3. item\n\n"
+"*Hasil yang diharapkan*:\n\n"
+"1. item\n"
+"2. item\n"
+"3. item"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
