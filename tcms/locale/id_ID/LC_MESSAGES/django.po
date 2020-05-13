@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 06:01\n"
+"PO-Revision-Date: 2020-05-13 06:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -334,11 +334,11 @@ msgstr "Ujicoba"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr ""
+msgstr "Test Plan Baru"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr ""
+msgstr "Buat Test Case"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
@@ -350,23 +350,23 @@ msgstr "CARI"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Cari Test Plans"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Cari Test Runs"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Cari Test Cases"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr "Cari Kesalahan"
+msgstr "Cari Bugs"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr ""
+msgstr "Telemetri"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
@@ -415,7 +415,7 @@ msgstr "Laporkan masalah"
 
 #: tcms/settings/common.py:344
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Cari bantuan di StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
@@ -875,7 +875,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Selamat datang Tamu"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -1679,7 +1679,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Dibuat pada"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
@@ -1744,7 +1744,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "Beritahu saya ketika:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
@@ -1757,7 +1757,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1954,7 +1954,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Langganan"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -1966,7 +1966,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "Penyewa"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
@@ -2072,7 +2072,7 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Buat baru"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
