@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 07:52\n"
+"PO-Revision-Date: 2020-05-13 08:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -612,7 +612,7 @@ msgstr "Label tidak ditemukan"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "bug"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
@@ -810,7 +810,7 @@ msgstr "Tanggal"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "Tidak ada rekaman ditemukan"
 
 #: tcms/templates/include/bug_details.html:3
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -959,23 +959,23 @@ msgstr "Laman Terakhir"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Tidak ditemukan test case pada plan ini."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "Sunting Plan"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "Sunting test plan"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "Duplikasi Plan"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Duplikasi plan ini ke produk lainnya"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
@@ -987,7 +987,7 @@ msgstr "Hapus Plan"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "Hapus test plan"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1007,7 +1007,7 @@ msgstr "Pemilik"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "Jenis Plan"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
@@ -1025,7 +1025,7 @@ msgstr "Tanggal dibuat"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "Induk"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
