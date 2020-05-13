@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+    # build ourselves b/c bugzilla/docker-bugzilla-dev
+    # is too old and doesn't work
+    bugtracker_kiwitcms_org:
+        container_name: bugtracker_kiwitcms_org
+        build:
+          context: .
+          dockerfile: Dockerfile
+        image: kiwitcms/bugzilla
+        restart: always
