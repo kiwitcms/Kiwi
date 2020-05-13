@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 09:02\n"
+"PO-Revision-Date: 2020-05-13 09:18\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1487,7 +1487,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Kasus otomatis"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
@@ -1548,7 +1548,7 @@ msgstr "Tidak ada eksekusi ditemukan"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Silakan masukkan id case yang valid. gunakan koma untuk membagi lebih dari satu id case. misalnya \"111, 222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1633,19 +1633,19 @@ msgstr "Beritahu"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "Pengelola yang menjalankan"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr ""
+msgstr "Penerima tugas"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Penguji yang menjalankan"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr ""
+msgstr "Beritahu saya ketika"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
@@ -1661,7 +1661,7 @@ msgstr "CC kepada"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Alamat surel dipisahkan oleh koma. Surel pemberitahuan akan dikirim ke setiap alamat Surel dalam daftar CC."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1722,23 +1722,23 @@ msgstr "Salin TCs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Salin atau tautkan TC yang tersedia ke dalam TP baru"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "Induk TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Atur sumber TP sebagai induk TP yang baru"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Sunting TestPlan"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Buat TestPlan baru"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1811,7 +1811,7 @@ msgstr "Untuk informasi lebih lanjut mengenai kostumisasi status eksekusi tes ku
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Status eksekusi tes"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1842,15 +1842,16 @@ msgstr "TestCase(s) Terpilih:"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s dari test cases yang dipilih sebelumnya tidak DIKONFIRMASI dan tidak akan disalin!\n"
+"Lihat test plan untuk lebih detilnya!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Cari tes yang berjalan"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Ringkasan tes berjalan"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
@@ -1862,7 +1863,7 @@ msgstr "ID TestPlan"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Untuk membuat sebuah TestRun diperlukan satu TestPlan, pilih satu"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
@@ -1874,7 +1875,7 @@ msgstr "Salinan dari "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID TestCase bukan bilangan bulat yang valid"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
@@ -1932,7 +1933,8 @@ msgstr "DICABUT"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "Untuk tambahan konfigurasi kunjungi\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1945,26 +1947,26 @@ msgstr "Pengaturan"
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "GitHub App Tidak Diterkonfigurasi %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Anda tidak masuk melalui akun Github <a href=\"%s\">Klik di sini</a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Anda belum memasang Kiwi TCMS ke dalam akun Github <a href=\"%s\">Klik di sini</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "Beberapa instalasi GitHub App terdeteksi! Lihat di bawah ini:"
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "Sunting Github App <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
