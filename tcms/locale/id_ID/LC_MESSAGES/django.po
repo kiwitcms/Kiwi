@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 08:22\n"
+"PO-Revision-Date: 2020-05-13 08:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -25,7 +25,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Deskripsi masalah:\n\n\n"
+"Seberapa sering direproduksi:\n\n\n"
+"Langkah-langkah untuk Mereproduksi:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Hasil aktual:\n\n\n"
+"Perkiraan hasil:\n\n\n"
+"Info tambahan:"
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
@@ -236,16 +244,16 @@ msgstr "Sunting kesalahan"
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr ""
+msgstr "*bug ditutup*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*bug dibuka kembali*"
 
 #: tcms/core/ajax.py:150
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Pengguna %s tidak ditemukan!"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -268,7 +276,7 @@ msgstr "Diperbaharui pada %(history_date)s\n"
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Basis URL belum dikonfigurasi! Lihat <a href=\"%(doc_url)s\">dokumentasi</a>dan<a href=\"%(admin_url)s\">ubah</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -317,11 +325,11 @@ msgstr "Akun anda telah berhasil diaktifkan"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Aktifkan pelaporan ke Pelacak Isu ini dengan mengkonfigurasi base_url-nya!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Format tanggal tidak valid. Silakan ikuti seperti berikut YYYY-MM-DD [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -449,7 +457,7 @@ msgstr "BARU: TestRun #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Baru: Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -464,13 +472,13 @@ msgstr "TOTAL"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Informasi detil mengenai status eksekusi tes"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Test Plan"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -519,36 +527,36 @@ msgstr "Negatif"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Status Pengujian Matriks"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "Kasus tes"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "Tes berjalan"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Kesehatan TestCase"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Kasus tes yang paling sering gagal"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "Test Case"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "Eksekusi gagal"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% gagal dieksekusi"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -620,7 +628,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "Tidak ada bug yang ditemukan"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -668,7 +676,7 @@ msgstr "Tambah"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
-msgstr ""
+msgstr "Laporkan bug"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -676,7 +684,7 @@ msgstr "Konten"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Dokumen Test Plan"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
