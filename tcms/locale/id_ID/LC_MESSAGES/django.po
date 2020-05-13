@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 12:44\n"
+"PO-Revision-Date: 2020-05-13 12:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -645,7 +645,7 @@ msgstr "Komentar"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr "Informasi eksekusi tes"
+msgstr "Informasi Uji Eksekusi"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
@@ -696,7 +696,7 @@ msgstr "Dasbor"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr "Eksekusi tes"
+msgstr "Uji eksekusi"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
@@ -992,7 +992,7 @@ msgstr "Laman Terakhir"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr "Tidak ditemukan test case pada plan ini."
+msgstr "Tidak ditemukan uji kasus pada rencana ini."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
@@ -1134,15 +1134,15 @@ msgstr "Hapus kasus yang terpilih dari rencana ini"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr "Operasikan"
+msgstr "Operasi"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr "Buat TestRun baru"
+msgstr "Buat UjiOperasi baru"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr "Ubah peninjau TestCase"
+msgstr "Ubah peninjau UjiKasus"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1246,15 +1246,15 @@ msgstr "Semua kasus telah dimuat."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr "Tambah child node ke plan saat ini"
+msgstr "Tambah child node ke rencana saat ini"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr "Hapus child node dari plan saat ini"
+msgstr "Hapus child node dari rencana saat ini"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr "Cari kasus untuk ditambahkan ke test plan ini."
+msgstr "Cari kasus untuk ditambahkan ke rencana uji ini."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1355,7 +1355,7 @@ msgstr "Daftar akun baru"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr "Tambah TestCase ke TestRun"
+msgstr "Tambah UjiKasus ke UjiOperasi"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1379,7 +1379,7 @@ msgstr "Kasus dalam Operasi ini"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr "Gunakan tombol sortir yang disimpan dalam plan"
+msgstr "Gunakan tombol sortir yang disimpan dalam rencana"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1416,7 +1416,7 @@ msgstr "Selesai"
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr "Sedang berjalan"
+msgstr "Sedang beroperasi"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1525,7 +1525,7 @@ msgstr "ID Kasus"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr "Dites oleh"
+msgstr "Diuji oleh"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
@@ -1604,11 +1604,11 @@ msgstr "**Skenario**: ... perilaku apa yang akan diujicoba ...\n"
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr "DIHAPUS: TestCase #%(pk)d -%(summary)s"
+msgstr "DIHAPUS: UjiKasus #%(pk)d -%(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "Salin TestCase"
+msgstr "Salin UjiKasus"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1645,7 +1645,7 @@ msgstr "Bug URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr "Test plans"
+msgstr "Rencana uji"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1653,11 +1653,11 @@ msgstr "Komponen"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr "Sunting TestCase"
+msgstr "Sunting UjiKasus"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr "TestCase Baru"
+msgstr "UjiKasus Baru"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
@@ -1685,11 +1685,11 @@ msgstr "Beritahu saya ketika"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr "TestCase diperbaharui"
+msgstr "UjiKasus diperbaharui"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr "TestCase dihapus"
+msgstr "UjiKasus dihapus"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
@@ -1733,7 +1733,7 @@ msgstr "Dibuat pada"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
-msgstr "TestPlan tidak spesifik atau tidak ditemukan"
+msgstr "RencanaUji tidak spesifik atau tidak ditemukan"
 
 #: tcms/testcases/views.py:501
 msgid "History"
@@ -1741,16 +1741,16 @@ msgstr "Riwayat"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
-msgstr "TestCase berhasil disalin"
+msgstr "UjiKasus berhasil disalin"
 
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
-msgstr "Setidaknya satu TestCase dibutuhkan"
+msgstr "Setidaknya satu UjiKasus diperlukan"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "Salin TestPlan"
+msgstr "Salin RencanaUji"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
@@ -1770,11 +1770,11 @@ msgstr "Atur sumber TP sebagai induk TP yang baru"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr "Sunting TestPlan"
+msgstr "Sunting RencanaUji"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr "Buat TestPlan baru"
+msgstr "Buat RencanaUji baru"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1790,7 +1790,7 @@ msgstr "Beritahu:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr "Pemilik TestCase"
+msgstr "Pemilik UjiKasus"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
@@ -1798,11 +1798,11 @@ msgstr "Beritahu saya ketika:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr "TestPlan ini diperbaharui"
+msgstr "RencanaUji diperbaharui"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr "Test cases diperbaharui"
+msgstr "Uji kasus diperbaharui"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1811,7 +1811,7 @@ msgstr "Aktif"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr "Cari test plans"
+msgstr "Cari rencana uji"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1903,7 +1903,7 @@ msgstr "Untuk membuat sebuah UjiOperasi diperlukan satu RencanaUji, pilih satu"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr "Untuk membuat sebuah TestRun diperlukan satu TestCase"
+msgstr "Untuk membuat sebuah UjiOperasi diperlukan satu UjiKasus"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
@@ -1911,7 +1911,7 @@ msgstr "Salinan dari "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
-msgstr "ID TestCase bukan bilangan bulat yang valid"
+msgstr "ID UjiKasus bukan bilangan bulat yang valid"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
