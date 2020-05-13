@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 10:45\n"
+"PO-Revision-Date: 2020-05-13 12:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1669,7 +1669,7 @@ msgstr "Beritahu"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr "Pengelola yang menjalankan"
+msgstr "Pengelola runs"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
@@ -1824,7 +1824,7 @@ msgstr "Test plan"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr "TestPlan dibutuhkan"
+msgstr "TestPlan diperlukan"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
