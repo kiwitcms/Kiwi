@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
+"PO-Revision-Date: 2020-05-13 07:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -431,7 +431,7 @@ msgstr "Postavite vprašanje glede uporabe Kiwi TCMS na StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Prispevajte 5€ preko Open Collective"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -2111,11 +2111,11 @@ msgstr "Email naslov je obvezen"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "ali nadaljujte z"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Pravne informacije"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
