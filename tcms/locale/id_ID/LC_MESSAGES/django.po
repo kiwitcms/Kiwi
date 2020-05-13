@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 12:04\n"
+"PO-Revision-Date: 2020-05-13 12:13\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1375,7 +1375,7 @@ msgstr "Test Cases dalam Operasi"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr "Cases dalam Uji coba ini"
+msgstr "Kasus dalam Operasi ini"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1387,7 +1387,7 @@ msgstr "Bagaimana cara memberikan kasus?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr "Tabel ini berisi semua test cases dari plan yang terkonfirmasi"
+msgstr "Tabel ini berisi semua uji kasus dari rencana yang terkonfirmasi"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1436,7 +1436,7 @@ msgstr "Sorotan"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr "Hapus cases yang terpilih dari test run ini"
+msgstr "Hapus kasus yang terpilih dari test run ini"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1521,7 +1521,7 @@ msgstr "ID Case-Run"
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr "ID Case"
+msgstr "ID Kasus"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
@@ -1669,7 +1669,7 @@ msgstr "Beritahu"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr "Pengelola runs"
+msgstr "Pengelola operasi"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
@@ -1677,7 +1677,7 @@ msgstr "Penerima tugas"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr "Penguji yang menjalankan"
+msgstr "Penguji semula dari operasi"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
