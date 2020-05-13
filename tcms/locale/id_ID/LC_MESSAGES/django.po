@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 07:02\n"
+"PO-Revision-Date: 2020-05-13 07:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -245,7 +245,7 @@ msgstr ""
 #: tcms/core/ajax.py:150
 #, python-format
 msgid "User %s not found!"
-msgstr "Pengguna tidak ditemukan!"
+msgstr ""
 
 #: tcms/core/history.py:42
 #, python-format
