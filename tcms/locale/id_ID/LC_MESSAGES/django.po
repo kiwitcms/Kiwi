@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 08:52\n"
+"PO-Revision-Date: 2020-05-13 09:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1491,16 +1491,16 @@ msgstr ""
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "ID Case-Run"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "ID Case"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Dites oleh"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
@@ -1511,16 +1511,16 @@ msgstr "Ditutup pada"
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "Bugs"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "Daftar bug"
 
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% selesai"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1528,19 +1528,19 @@ msgstr "Laporkan"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
-msgstr ""
+msgstr "Tidak ada bugs"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Pilih semua kasus/Pilih tidak ada kasus"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Tampilkan semua kasus"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "ID Eksekusi"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
@@ -1609,7 +1609,7 @@ msgstr "Bug URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Test plans"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1649,11 +1649,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr "TestCase ini diperbaharui"
+msgstr "TestCase diperbaharui"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr "TestCase ini dihapus"
+msgstr "TestCase dihapus"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
@@ -1705,7 +1705,7 @@ msgstr "Riwayat"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
-msgstr "Kloning TestCase berhasil"
+msgstr "TestCase berhasil disalin"
 
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
@@ -1819,7 +1819,7 @@ msgstr "Sunting TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "Klon TestRun"
+msgstr "Salin TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
@@ -1870,7 +1870,7 @@ msgstr "Untuk membuat sebuah TestRun diperlukan satu TestCase"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
-msgstr "Klon dari "
+msgstr "Salinan dari "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
@@ -1890,15 +1890,15 @@ msgstr "DIKONFIRMASI"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr "NONAKTIFKAN"
+msgstr "DINONAKTIFKAN"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr "BUTUH_DIPERBAHARUI"
+msgstr "BUTUH_PEMBARUAN"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr "DIAM"
+msgstr "IDLE"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
@@ -1910,7 +1910,7 @@ msgstr "DITUNDA"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr "DITERIMA"
+msgstr "LOLOS"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -1922,7 +1922,7 @@ msgstr "DIBLOKIR"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr "EROR"
+msgstr "GALAT"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
@@ -1968,11 +1968,11 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr "Langganan"
+msgstr "Berlangganan"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr "Langganan penyewa"
+msgstr "Berlangganan penyewa"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
