@@ -15,6 +15,7 @@ Subpackages
    tcms.core.contrib
    tcms.core.forms
    tcms.core.helpers
+   tcms.core.management
    tcms.core.models
    tcms.core.templatetags
    tcms.core.utils
