@@ -1,0 +1,55 @@
+name: 'integration / bugtracker'
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  integration_test:
+    name: ${{ matrix.tracker }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+        tracker: [bugzilla]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Dockerize
+      run: |
+        docker-compose -f tests/${{ matrix.tracker}}/docker-compose.yml build
+        docker-compose -f tests/${{ matrix.tracker}}/docker-compose.yml up -d
+        sleep 10
+
+        IP_ADDR=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' bugtracker_kiwitcms_org`
+        sudo sh -c "echo '$IP_ADDR    bugtracker.kiwitcms.org' >> /etc/hosts"
+
+    # install all dev dependencies here b/c these steps are now part of a
+    # job matrix which unconditionally initializes the bugtracker DB and
+    # runs the tests. Some trackers may end up with empty initialization!
+    - name: Install Python dependencies
+      run: |
+        sudo apt-get install libkrb5-dev
+        pip install -r requirements/devel.txt
+
+    - name: Initialize bugs DB
+      run: |
+        ./tests/${{ matrix.tracker }}/initialize-data
+
+    - name: Execute tests
+      run: |
+        export LANG="en_US.UTF-8"
+        export TEST_BUGTRACKER_INTEGRATION=1
+        coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.issuetracker.tests.test_${{ matrix.tracker }}
+
+    - name: Send coverage to codecov.io
+      run: |
+        coverage report -m
+        bash <(curl -s https://codecov.io/bash)

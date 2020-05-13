@@ -1,0 +1,12 @@
+--- /usr/share/bugzilla/Bugzilla/Util.pm.orig	2020-05-13 15:25:00.031963484 +0300
++++ /usr/share/bugzilla/Bugzilla/Util.pm	2020-05-13 15:31:54.668329481 +0300
+@@ -106,7 +106,8 @@
+     # |U+200e|Left-To-Right Mark        |0xe2 0x80 0x8e      |
+     # |U+200f|Right-To-Left Mark        |0xe2 0x80 0x8f      |
+     # --------------------------------------------------------
+-    $var =~ tr/\x{202a}-\x{202e}//d;
++    # workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1588175
++    # $var =~ tr/\x{202a}-\x{202e}//d;
+   }
+   return $var;
+ }
