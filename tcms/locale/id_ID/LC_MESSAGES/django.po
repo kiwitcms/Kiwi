@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 12:52\n"
+"PO-Revision-Date: 2020-05-13 13:03\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -399,7 +399,7 @@ msgstr "Tren eksekusi"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr "Kesehatan TestCase"
+msgstr "Kesehatan UjiKasus"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -452,7 +452,7 @@ msgstr "Pengguna baru menunggu persetujuan"
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "BARU: TestRun #%(pk)d - %(summary)s"
+msgstr "BARU: UjiOperasi #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 #, python-format
@@ -472,7 +472,7 @@ msgstr "TOTAL"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
-msgstr "Informasi detil mengenai status eksekusi tes"
+msgstr "Informasi detil mengenai status uji eksekusi"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
@@ -539,7 +539,7 @@ msgstr "Uji operasi"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr "Kesehatan TestCase"
+msgstr "Kesehatan UjiKasus"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -564,7 +564,7 @@ msgstr "Halaman tidak ditemukan"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr "Kesalahan server dari dalam"
+msgstr "Internal Server Error"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -707,7 +707,7 @@ msgstr "Dimulai pada"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr "%(total_count)s TestRun(s) atau TestCase(s) diberikan kepada anda untuk dieksekusi.\n"
+msgstr "%(total_count)s UjiOperasi atau UjiKasus diberikan kepada anda untuk dieksekusi.\n"
 "Inilah yang terbaru %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
@@ -716,7 +716,7 @@ msgstr "LIHAT SEMUA"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr "Tidak ada TestRun yang ditugaskan kepada Anda"
+msgstr "Tidak ada UjiOperasi yang ditugaskan kepada Anda"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
@@ -724,7 +724,7 @@ msgstr "Rencana Uji Anda"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr "TestPlan"
+msgstr "RencanaUji"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -742,12 +742,12 @@ msgstr "Eksekusi"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr "Anda mengelola %(total_count)s TestPlan(s), %(disabled_count)s dinonaktifkan\n"
+msgstr "Anda mengelola %(total_count)s RencanaUji, %(disabled_count)s dinonaktifkan\n"
 "Inilah yang terbaru %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Tidak ada TestPlan(s) milik anda"
+msgstr "Tidak ada RencanaUji milik anda"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -784,7 +784,7 @@ msgstr "Bug %(pk)s telah diberikan kepada Anda\n\n"
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr "TestCase telah dihapus oleh %(username)s!"
+msgstr "UjiKasus telah dihapus oleh %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -801,14 +801,14 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr "Test run %(pk)s telah dibuat atau diperbaharui untuk Anda.\n\n"
+msgstr "Uji operasi %(pk)s telah dibuat atau diperbaharui untuk Anda.\n\n"
 "### Tautan ###\n"
-"Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Uji operasi: %(run_url)s\n"
+"Rencana uji: %(plan_url)s\n\n"
 "### Informasi dasar pengoperasian ###\n"
 "Ringkasan: %(summary)s\n\n"
 "Dikelola: %(manager)s.\n"
-"Penguji bawaan: %(default_tester)s.\n\n"
+"Penguji semula: %(default_tester)s.\n\n"
 "Produk: %(product)s\n"
 "Versi produk: %(version)s\n"
 "Build: %(build)s\n\n"
