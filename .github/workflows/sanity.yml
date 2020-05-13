@@ -9,7 +9,6 @@ jobs:
   check-docs-source-in-git:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix:
         python-version: [3.7]
 
@@ -28,7 +27,6 @@ jobs:
   build-for-pypi:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix:
         python-version: [3.7]
 
