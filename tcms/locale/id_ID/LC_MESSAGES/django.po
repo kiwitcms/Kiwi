@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 12:27\n"
+"PO-Revision-Date: 2020-05-13 12:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -346,11 +346,11 @@ msgstr "PENGUJIAN"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr "Test Plan Baru"
+msgstr "Rencana Uji Baru"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr "Test Case Baru"
+msgstr "Uji Kasus Baru"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
@@ -362,15 +362,15 @@ msgstr "CARI"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr "Cari Test Plans"
+msgstr "Cari Rencana Uji"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr "Cari Test Runs"
+msgstr "Cari Uji Operasi"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr "Cari Test Cases"
+msgstr "Cari Uji Kasus"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
@@ -624,7 +624,7 @@ msgstr "bug"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr "Dari Uji coba"
+msgstr "Dari Operasi"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -661,7 +661,7 @@ msgstr "Tidak ada log terekam"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr "Bugs dan tautan"
+msgstr "Bugs dan hyperlinks"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -684,11 +684,11 @@ msgstr "Konten"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr "Dokumen Uji Rencana"
+msgstr "Dokumen Rencana Uji"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr "Test Cases"
+msgstr "Uji Kasus"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -720,7 +720,7 @@ msgstr "Tidak ada TestRun yang ditugaskan kepada Anda"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr "Test plans Anda"
+msgstr "Rencana Uji Anda"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
@@ -732,7 +732,7 @@ msgstr "TestPlan"
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr "Jenis"
+msgstr "Tipe"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
@@ -881,7 +881,7 @@ msgstr "Nama"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr "Plans"
+msgstr "Rencana"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
