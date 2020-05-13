@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:04\n"
+"PO-Revision-Date: 2020-05-13 05:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -30,7 +30,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr ""
+msgstr "Buka"
 
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:3
