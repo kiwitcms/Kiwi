@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 08:56\n"
+"PO-Revision-Date: 2020-05-14 09:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -276,7 +276,7 @@ msgstr "更新日: %(history_date)s\n"
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">ドキュメント</a> を参照し、 <a href=\"%(admin_url)s\">変更してください</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -1108,7 +1108,7 @@ msgstr "選択した案件を別のテスト計画に複製"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "選択した案件をこの計画から削除"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1604,7 +1604,7 @@ msgstr "条件"
 #: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "参照"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
@@ -1612,7 +1612,7 @@ msgstr "バグURL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "テストプラン"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1640,11 +1640,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr ""
+msgstr "担当者。"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "ランのデフォルトテスターです"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1652,11 +1652,11 @@ msgstr "通知のタイミング"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "テストケースが更新されました"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "テストケースが削除されました"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
@@ -1668,7 +1668,7 @@ msgstr "カンマで区切られたメールアドレス。 通知メールは�
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "テストケースを検索"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
@@ -1690,7 +1690,7 @@ msgstr "両方"
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "複数の値をカンマで区切ってください (,)"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
@@ -1700,7 +1700,7 @@ msgstr "に作成"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "テストプランが指定されていないか、存在しません"
 
 #: tcms/testcases/views.py:501
 msgid "History"
@@ -1708,7 +1708,7 @@ msgstr "最近探した本"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "テストケースの複製に成功しました"
 
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
