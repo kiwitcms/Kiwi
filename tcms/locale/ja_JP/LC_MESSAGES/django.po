@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 07:25\n"
+"PO-Revision-Date: 2020-05-14 07:55\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -742,7 +742,8 @@ msgstr "実行"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s TestPlan(s), %(disabled_count)s が無効になっています。\n"
+"こちらが最新の %(count)s です。"
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -895,7 +896,7 @@ msgstr "ようこそゲスト"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "テスト実行"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
@@ -977,15 +978,15 @@ msgstr "（通読）計画を編集"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "テストプランを編集"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "計画を複製"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "このプランを他の製品にクローンする"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
@@ -1039,7 +1040,7 @@ msgstr "親"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
-msgstr ""
+msgstr "編集履歴を表示"
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
@@ -1076,7 +1077,7 @@ msgstr "添付ファイルなし"
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "事案"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
@@ -1085,7 +1086,7 @@ msgstr "新しい案件を書く"
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "他のプランから案件を追加"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1103,7 +1104,7 @@ msgstr "クローン"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "選択した案件を別のテスト計画に複製"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
