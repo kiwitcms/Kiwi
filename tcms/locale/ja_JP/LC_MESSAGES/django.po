@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 07:55\n"
+"PO-Revision-Date: 2020-05-14 08:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1160,7 +1160,7 @@ msgstr "案件を再注文する"
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "ケースにタグがありません"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
@@ -1185,7 +1185,7 @@ msgstr "ページあたりの表示件数"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "以下に表示されていないすべてのケースも選択してください。"
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
@@ -1365,11 +1365,11 @@ msgstr "ケースを割り当てる方法?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "プランの確認済みのテストケース一覧の下の表です"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "テスト実行に案件を追加するチェックボックスをチェックします。最後に更新することを忘れないでください"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1414,7 +1414,7 @@ msgstr "ハイライト"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "このテスト実行の選択した案件を削除します"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1462,7 +1462,7 @@ msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URLが欠陥を示しています"
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
@@ -1478,7 +1478,7 @@ msgstr "このタグを削除"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "CC を追加"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
@@ -1535,7 +1535,7 @@ msgstr "バグなし"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "すべての案件を選択/未解決案件を選択"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
