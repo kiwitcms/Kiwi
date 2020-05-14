@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 05:41\n"
+"PO-Revision-Date: 2020-05-14 06:58\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -25,7 +25,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "問題の説明：\n\n\n"
+"どのくらいの頻度で再現可能：\n\n\n"
+"再現する手順：\n"
+"1。\n"
+"2。\n"
+"3。\n\n"
+"実績：\n\n\n"
+"予期された結果：\n\n\n"
+"追加情報："
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
@@ -250,7 +258,7 @@ msgstr "ユーザー %s が見つかりません"
 #: tcms/core/history.py:42
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "更新: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:48
 #, python-format
@@ -297,7 +305,7 @@ msgstr "あなたのアカウントが作成されました。確認用のリン
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "アカウントが作成されましたが、有効化するには管理者が必要です"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
@@ -391,7 +399,7 @@ msgstr "実行のトレンド"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "テストケースの健康"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -738,7 +746,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "あなたに属するテストプランはありません"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -859,7 +867,7 @@ msgstr "ケース"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
-msgstr ""
+msgstr "実行"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
@@ -879,11 +887,11 @@ msgstr "タグの追加"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "ナビゲーションの切り替え"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "ようこそゲスト"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -895,7 +903,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "自分のプロフィール"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
@@ -937,7 +945,7 @@ msgstr "翻訳モード"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "翻訳者ガイド"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -961,11 +969,11 @@ msgstr "最終ページ"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "この計画ではテストケースは見つかりませんでした。"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "（通読）計画を編集"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
@@ -985,11 +993,11 @@ msgstr "印刷プラン"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "プランを削除"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "テストプランを削除"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1039,31 +1047,31 @@ msgstr "ドキュメント"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "レビューケース"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "ツリービュー"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "この計画の文書はまだ書かれていません。"
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "ファイル名"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "投稿者"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "作成日"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "添付ファイルなし"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
@@ -1072,7 +1080,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "新しい案件を書く"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
@@ -1081,11 +1089,11 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "印刷"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "選択した案件の印刷ビュー"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
@@ -1103,7 +1111,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "実行する"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
