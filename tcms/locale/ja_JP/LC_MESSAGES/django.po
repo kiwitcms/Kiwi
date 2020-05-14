@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 05:33\n"
+"PO-Revision-Date: 2020-05-14 05:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1952,11 +1952,11 @@ msgstr "GitHubアカウントでログインしていません！ <a href=\"%s\"
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "GitHubアカウントにKiwi TCMSがインストールされていません！ <a href=\"%s\">ここをクリック</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "複数の GitHub アプリのインストールが検出されました！以下を参照してください:"
 
 #: tcms_github_app/views.py:82
 #, python-format
@@ -1973,7 +1973,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "以下のテナントにアクセスできます"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
@@ -2003,7 +2003,7 @@ msgstr "購読の種類"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "支払完了まで"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
@@ -2011,7 +2011,7 @@ msgstr "定期購入を解約"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "テナントを所有していません"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
@@ -2063,11 +2063,11 @@ msgstr "メールアドレスは必須項目です"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "または続行"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "法的情報"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
@@ -2095,14 +2095,16 @@ msgstr "未払い"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "テナントの有効期限は7日未満です"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Kiwi TCMS テナントが作成されました:\n"
+"%(tenant_url)s\n\n"
+"問題が発生した場合は、サポートにお問い合わせください!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2110,7 +2112,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "会社、チーム、またはプロジェクト名"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
