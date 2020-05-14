@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 07:18\n"
+"PO-Revision-Date: 2020-05-14 07:25\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1803,7 +1803,7 @@ msgstr ""
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "アクセスが拒否されました: TestRunはあなたに属していません"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1862,7 +1862,7 @@ msgstr "計画ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "テストプランID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
@@ -1977,7 +1977,7 @@ msgstr "サブスクリプション"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "テナントサブスクリプション"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
@@ -1995,7 +1995,7 @@ msgstr "組織"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "以下のテナントを所有しています"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
@@ -2023,7 +2023,7 @@ msgstr "テナントを所有していません"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "FastSpring で購読する"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
@@ -2046,7 +2046,7 @@ msgstr "受信"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "プライベートテナント警告"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2116,7 +2116,7 @@ msgstr "Kiwi TCMS テナントが作成されました:\n"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "新規テナント名"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
@@ -2128,7 +2128,7 @@ msgstr "スキーマ"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "検証パターン"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
