@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
+"PO-Revision-Date: 2020-05-14 05:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -431,7 +431,7 @@ msgstr "StackOverflow पर मदद के लिए पूछें"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "ओपन कलेक्टिव के माध्यम से € 5 दान करें"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -2109,11 +2109,11 @@ msgstr "ई-मेल पते की आवश्यकता है।"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "या जारी रखें"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "कानूनी जानकारी"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
