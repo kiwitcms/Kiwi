@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 07:22\n"
+"PO-Revision-Date: 2020-05-15 07:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -199,7 +199,7 @@ msgstr "사용자이름"
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "검색"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -210,12 +210,12 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "아이디"
 
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
-msgstr ""
+msgstr "생성 위치"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
@@ -272,7 +272,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "개인 정보"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
@@ -699,7 +699,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "모두 보기"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
@@ -723,7 +723,7 @@ msgstr "유형"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "실행"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
@@ -925,7 +925,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "번역 모드"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
@@ -1019,7 +1019,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "상위"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
@@ -1043,24 +1043,24 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "파일 이름"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "제출자"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "생성된 날짜"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "첨부 파일이 없습니다"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "사례"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
@@ -1073,7 +1073,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "인쇄하기"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
@@ -1095,7 +1095,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "실행"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
@@ -1121,7 +1121,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "우선순위"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
@@ -1130,7 +1130,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "필터 옵션 보기"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -1295,7 +1295,7 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "암호 초기화 이메일 전송됨"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
@@ -1356,7 +1356,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "생성된 날짜"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1368,16 +1368,16 @@ msgstr "제품 버전"
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "알림"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "완료"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "실행 중"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1413,11 +1413,11 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
-msgstr ""
+msgstr "코멘트"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "하이퍼링크"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1433,15 +1433,15 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "방문 허용"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "버그"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
@@ -1453,11 +1453,11 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "태그 삭제"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
@@ -1510,7 +1510,7 @@ msgstr ""
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
-msgstr ""
+msgstr "보고하기"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
