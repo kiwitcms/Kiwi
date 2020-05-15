@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 09:12\n"
+"PO-Revision-Date: 2020-05-15 05:01\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -556,7 +556,7 @@ msgstr "执行失败的次数"
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% 执行失败"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -1545,7 +1545,7 @@ msgstr "Bug 列表"
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% 完毕"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1653,7 +1653,7 @@ msgstr "组件"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "编辑 TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
