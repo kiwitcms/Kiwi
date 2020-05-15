@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 05:41\n"
+"PO-Revision-Date: 2020-05-15 05:55\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -220,11 +220,11 @@ msgstr ""
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
 msgid "Edit"
-msgstr ""
+msgstr "편집"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:506
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -309,7 +309,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "계정이 활성화 되었습니다."
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
