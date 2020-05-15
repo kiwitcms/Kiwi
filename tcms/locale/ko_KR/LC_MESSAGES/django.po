@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 06:41\n"
+"PO-Revision-Date: 2020-05-15 06:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1571,23 +1571,23 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
-msgstr ""
+msgstr "스크립트"
 
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
-msgstr ""
+msgstr "매개 변수"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr ""
+msgstr "요구 사항"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "참조 링크"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
@@ -1599,7 +1599,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "구성 요소"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1615,7 +1615,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
-msgstr ""
+msgstr "알림"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
