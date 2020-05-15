@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 06:51\n"
+"PO-Revision-Date: 2020-05-15 07:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -427,7 +427,7 @@ msgstr ""
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
-msgstr ""
+msgstr "사용자 설명서"
 
 #: tcms/settings/common.py:348
 msgid "API Help"
@@ -570,7 +570,7 @@ msgstr "텍스트"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "첨부파일"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
@@ -608,7 +608,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "버그"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
@@ -680,7 +680,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "대시 보드"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
@@ -719,7 +719,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "유형"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
