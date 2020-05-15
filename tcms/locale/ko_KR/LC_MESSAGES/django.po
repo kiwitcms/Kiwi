@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 07:42\n"
+"PO-Revision-Date: 2020-05-15 07:56\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -535,11 +535,11 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "테스트 사례"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "실패한 실행"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
@@ -575,7 +575,7 @@ msgstr "첨부파일"
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "첨부 파일이 없습니다."
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -641,7 +641,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
-msgstr ""
+msgstr "텍스트 버전"
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
@@ -660,15 +660,15 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "추가"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
-msgstr ""
+msgstr "버그 신고"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "콘텐츠"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
@@ -676,7 +676,7 @@ msgstr ""
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "테스트 사례"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -684,12 +684,12 @@ msgstr "대시 보드"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "테스트 실행"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "에 시작"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -851,7 +851,7 @@ msgstr "케이스"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
-msgstr ""
+msgstr "뛰다"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
@@ -875,7 +875,7 @@ msgstr "전환 탐색"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "손님 환영합니다"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -921,7 +921,7 @@ msgstr "지원되는 언어"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "새로운 언어 요청"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
@@ -929,7 +929,7 @@ msgstr "번역 모드"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "번역 가이드"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -957,27 +957,27 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "계획 수정"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "테스트 계획 편집"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "복제 계획"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "이 계획을 다른 제품으로 복제"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "인쇄 계획"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "계획 삭제"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
@@ -1143,7 +1143,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "경우에 태그가 없습니다"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
@@ -1168,12 +1168,12 @@ msgstr "한 페이지당 상품 수"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "아래에 아직 표시되지 않은 모든 사례를 선택하십시오."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "테스트 사례 요약"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
@@ -1183,7 +1183,7 @@ msgstr "비평가"
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "기본 테스터"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
