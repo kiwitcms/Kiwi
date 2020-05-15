@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-14 09:12\n"
+"PO-Revision-Date: 2020-05-15 05:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -716,7 +716,7 @@ msgstr "すべて見る"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "あなたに割り当てられたテストランはありません"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
@@ -900,7 +900,7 @@ msgstr "テスト実行"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "テストプラン"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -1116,15 +1116,15 @@ msgstr "実行する"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "新しいテストランを作成"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "テストケースのレビューアを変更"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "デフォルトテスターの変更"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1333,7 +1333,7 @@ msgstr "新しい支出先"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "TestRunにテストケースを追加"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1418,7 +1418,7 @@ msgstr "このテスト実行の選択した案件を削除します"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "IDLE ケース・ランを最新のケース・テキストに更新"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1426,7 +1426,7 @@ msgstr "更新"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "このケースを他の人に割り当てる"
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
@@ -1566,12 +1566,23 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**シナリオ**：...テストされる動作...\n"
+"   **指定** ...条件...\n"
+"   **いつ** ...アクション...\n"
+"   **次に** ...期待される結果...\n\n"
+"*行動*：\n\n"
+"1.アイテム\n"
+"2.アイテム\n"
+"3.アイテム\n\n"
+"*予期された結果*：\n\n"
+"1.アイテム\n"
+"2.アイテム\n"
+"3.アイテム"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "削除: テストケース #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1579,11 +1590,11 @@ msgstr "クローンテストケース"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "TPに新しいTCを追加"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "選択されたTC"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1620,11 +1631,11 @@ msgstr "コンポーネント"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "テストケースの編集"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "新しいテストケース"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
@@ -1636,7 +1647,7 @@ msgstr "通知する"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "実行マネージャー"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
@@ -1660,7 +1671,7 @@ msgstr "テストケースが削除されました"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "CC to"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
@@ -1713,35 +1724,35 @@ msgstr "テストケースの複製に成功しました"
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "少なくとも 1 つのテストケースが必要です"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "クローンテストプラン"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "TCをクローンする"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "既存のTCを新しいTPにクローンまたはリンク"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "親TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "ソースのTPを新しいTPの親として設定します"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "テストプランを編集"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "新しいテストプランを作成"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1769,7 +1780,7 @@ msgstr "テストプランが更新されました"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "テスト案件が更新されました"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1778,7 +1789,7 @@ msgstr "アクティブ"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "テスト計画の検索"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1791,7 +1802,7 @@ msgstr "テストプラン"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr ""
+msgstr "テストプランが必要です"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
@@ -1841,13 +1852,14 @@ msgstr "ユーザー名またはメール"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "選択したテストケース:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "事前に選択されたテストケースの %(count)s は確認されておらず、クローンされません！\n"
+"詳細については、テストプランを参照してください！"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
@@ -1867,11 +1879,11 @@ msgstr "テストプランID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "TestRunを作成するにはテストプランが必要です。一つ選択してください"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "TestRunを作成するには少なくとも1つのテストケースが必要です"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
@@ -1883,7 +1895,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "入力したユーザーはデータベースに存在しません"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -2060,11 +2072,11 @@ msgstr ""
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
-msgstr ""
+msgstr "月"
 
 #: tcms_github_marketplace/views.py:328
 msgid "yr"
-msgstr ""
+msgstr "年"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
