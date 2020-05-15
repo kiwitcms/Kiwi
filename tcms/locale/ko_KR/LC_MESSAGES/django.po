@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 07:32\n"
+"PO-Revision-Date: 2020-05-15 07:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -276,11 +276,11 @@ msgstr "개인 정보"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "권한"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "해당 이메일을 가진 사용자가 이미 존재합니다."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
@@ -289,7 +289,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "계정이 생성되었습니다. 확인 링크를 메일로 가서 확인하세요"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
@@ -370,11 +370,11 @@ msgstr ""
 
 #: tcms/settings/common.py:317
 msgid "Testing"
-msgstr ""
+msgstr "테스트"
 
 #: tcms/settings/common.py:318
 msgid "Breakdown"
-msgstr ""
+msgstr "중단"
 
 #: tcms/settings/common.py:319
 msgid "Status matrix"
@@ -407,11 +407,11 @@ msgstr ""
 
 #: tcms/settings/common.py:342
 msgid "Forum"
-msgstr ""
+msgstr "포럼"
 
 #: tcms/settings/common.py:343
 msgid "Report an Issue"
-msgstr ""
+msgstr "문제를 보고"
 
 #: tcms/settings/common.py:344
 msgid "Ask for help on StackOverflow"
