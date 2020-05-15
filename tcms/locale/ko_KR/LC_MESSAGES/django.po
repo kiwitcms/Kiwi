@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 08:02\n"
+"PO-Revision-Date: 2020-05-15 08:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1486,27 +1486,27 @@ msgstr ""
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "에 의해 테스트"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "휴무"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:17
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "버그"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "버그리스트"
 
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% 완전한"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1663,11 +1663,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "아니오"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "모두"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testplans/templates/testplans/search.html:90
@@ -1679,7 +1679,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "작성일"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
@@ -1687,7 +1687,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr ""
+msgstr "지난 기록"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1736,7 +1736,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr ""
+msgstr "알림:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
@@ -1757,7 +1757,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "활성"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1813,12 +1813,12 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "버전"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "사용자 이름 또는 전자 메일"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
