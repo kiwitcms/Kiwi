@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 08:12\n"
+"PO-Revision-Date: 2020-05-15 08:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1868,11 +1868,11 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "제안"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr ""
+msgstr "확인"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
