@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 07:56\n"
+"PO-Revision-Date: 2020-05-15 08:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1187,7 +1187,7 @@ msgstr "기본 테스터"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "텍스트 버전"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
@@ -1199,11 +1199,11 @@ msgstr "더 보기"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "남은 사례"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "모든 케이스가로드되었습니다."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -1219,7 +1219,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "빠른 검색"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
@@ -1231,7 +1231,7 @@ msgstr "작성일"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "테스트 사례가 없습니다."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1253,11 +1253,11 @@ msgstr "로그인"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Kiwi TCMS에 오신 것을 환영합니다"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "시작하려면 로그인하십시오"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
@@ -1269,15 +1269,15 @@ msgstr "계정 등록"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "당신이 없다면!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "비밀번호가 설정되었습니다. 계속해서"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "지금"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
@@ -1287,11 +1287,11 @@ msgstr "확인"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "새 비밀번호를 두 번 입력하여 올바르게 입력했는지 확인하십시오"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "새 비밀번호 재설정 요청"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1328,7 +1328,7 @@ msgstr "상사"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "모든 확인 된 사례"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
@@ -1381,7 +1381,7 @@ msgstr "실행 중"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Finished At"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
@@ -1389,11 +1389,11 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "자동"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr ""
+msgstr "하이라이트"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
@@ -1405,7 +1405,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "업데이트"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
@@ -1429,7 +1429,7 @@ msgstr "하이퍼링크"
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "기본 테스터"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
