@@ -7,12 +7,62 @@ from opengraph.opengraph import OpenGraph
 RE_ENDS_IN_INT = re.compile(r'[\d]+$')
 
 
+class IntegrationThread(threading.Thread):
+    """
+        Used as a base class for everything else.
+    """
+
+    def __init__(self, rpc, bug_system, execution, bug_id):
+        """
+            :param rpc: Bug tracker RPC object
+            :param bug_system: BugSystem object
+            :param execution: TestExecution object
+            :param bug_id: Unique defect identifier in the system. Usually an int.
+        """
+        self.rpc = rpc
+        self.bug_system = bug_system
+        self.execution = execution
+        self.bug_id = bug_id
+
+        super().__init__()
+
+    def text(self):
+        """
+            Returns the text that will be posted as a comment to
+            the reported bug!
+        """
+        return """---- Confirmed via test execution ----
+TR-%d: %s
+%s
+TE-%d: %s""" % (self.execution.run.pk,
+                self.execution.run.summary,
+                self.execution.run.get_full_url(),
+                self.execution.pk,
+                self.execution.case.summary)
+
+    def post_comment(self):
+        raise NotImplementedError()
+
+    def run(self):
+        """
+            Using RPC try to link the test case with existing bug!
+            By default will post a comment!
+        """
+
+        try:
+            self.post_comment()
+        except Exception as err:  # pylint: disable=broad-except
+            message = '%s: %s' % (err.__class__.__name__, err)
+            warnings.warn(message)
+
+
 class IssueTrackerType:
     """
         Represents actions which can be performed with issue trackers.
         This is a common interface for all issue trackers that Kiwi TCMS
         supports!
     """
+    it_class = IntegrationThread
     rpc_cache = {}
 
     def __init__(self, bug_system):
@@ -103,7 +153,9 @@ class IssueTrackerType:
             :executions: - iterable of TestExecution objects
             :issue_url: - the URL of the existing defect
         """
-        raise NotImplementedError()
+        bug_id = self.bug_id_from_url(issue_url)
+        for execution in executions:
+            self.it_class(self.rpc, self.bug_system, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):  # pylint: disable=invalid-name, no-self-use
         """
@@ -140,52 +192,3 @@ class IssueTrackerType:
             self.rpc_cache[self.bug_system.base_url] = self._rpc_connection()
 
         return self.rpc_cache[self.bug_system.base_url]
-
-
-class IntegrationThread(threading.Thread):
-    """
-        Used as a base class for everything else.
-    """
-
-    def __init__(self, rpc, bug_system, execution, bug_id):
-        """
-            :param rpc: Bug tracker RPC object
-            :param bug_system: BugSystem object
-            :param execution: TestExecution object
-            :param bug_id: Unique defect identifier in the system. Usually an int.
-        """
-        self.rpc = rpc
-        self.bug_system = bug_system
-        self.execution = execution
-        self.bug_id = bug_id
-
-        super().__init__()
-
-    def text(self):
-        """
-            Returns the text that will be posted as a comment to
-            the reported bug!
-        """
-        return """---- Confirmed via test execution ----
-TR-%d: %s
-%s
-TE-%d: %s""" % (self.execution.run.pk,
-                self.execution.run.summary,
-                self.execution.run.get_full_url(),
-                self.execution.pk,
-                self.execution.case.summary)
-
-    def post_comment(self):
-        raise NotImplementedError()
-
-    def run(self):
-        """
-            Using RPC try to link the test case with existing bug!
-            By default will post a comment!
-        """
-
-        try:
-            self.post_comment()
-        except Exception as err:  # pylint: disable=broad-except
-            message = '%s: %s' % (err.__class__.__name__, err)
-            warnings.warn(message)

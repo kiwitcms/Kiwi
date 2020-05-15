@@ -49,6 +49,7 @@ class Bugzilla(IssueTrackerType):
         is not provided a temporary directory will be used each time we try to login
         into Bugzilla!
     """
+    it_class = bugzilla_integration.BugzillaThread
 
     def __init__(self, bug_system):
         super().__init__(bug_system)
@@ -71,14 +72,6 @@ class Bugzilla(IssueTrackerType):
             cookiefile=self._bugzilla_cache_dir + 'cookie',
             tokenfile=self._bugzilla_cache_dir + 'token',
         )
-
-    def add_testexecution_to_issue(self, executions, issue_url):
-        bug_id = self.bug_id_from_url(issue_url)
-        for execution in executions:
-            bugzilla_integration.BugzillaThread(self.rpc,
-                                                self.bug_system,
-                                                execution,
-                                                bug_id).start()
 
     def report_issue_from_testexecution(self, execution, user):
         args = {}
@@ -109,6 +102,7 @@ class JIRA(IssueTrackerType):
         setting (in ``product.py``). By default this setting is not provided and
         the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
     """
+    it_class = jira_integration.JiraThread
 
     def _rpc_connection(self):
         if hasattr(settings, 'JIRA_OPTIONS'):
@@ -129,11 +123,6 @@ class JIRA(IssueTrackerType):
             For example https://issues.jenkins-ci.org/browse/JENKINS-31044
         """
         return url.strip().split('/')[-1]
-
-    def add_testexecution_to_issue(self, executions, issue_url):
-        bug_id = self.bug_id_from_url(issue_url)
-        for execution in executions:
-            jira_integration.JiraThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def report_issue_from_testexecution(self, execution, user):
         """
@@ -187,15 +176,11 @@ class GitHub(IssueTrackerType):
             You can leave the ``api_url`` and ``api_username`` fields blank because
             the integration code doesn't use them!
     """
+    it_class = github_integration.GitHubThread
 
     def _rpc_connection(self):
         # NOTE: we use an access token so only the password field is required
         return github.Github(self.bug_system.api_password)
-
-    def add_testexecution_to_issue(self, executions, issue_url):
-        bug_id = self.bug_id_from_url(issue_url)
-        for execution in executions:
-            github_integration.GitHubThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
@@ -245,16 +230,12 @@ class Gitlab(IssueTrackerType):
             You can leave ``api_username`` field blank because
             the integration code doesn't use it!
     """
+    it_class = gitlab_integration.GitlabThread
 
     def _rpc_connection(self):
         # we use an access token so only the password field is required
         return gitlab.Gitlab(self.bug_system.api_url,
                              private_token=self.bug_system.api_password)
-
-    def add_testexecution_to_issue(self, executions, issue_url):
-        bug_id = self.bug_id_from_url(issue_url)
-        for execution in executions:
-            gitlab_integration.GitlabThread(self.rpc, self.bug_system, execution, bug_id).start()
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.api_url and self.bug_system.api_password)
@@ -280,6 +261,7 @@ class Redmine(IssueTrackerType):
         :api_username: - a username registered in Redmine
         :api_password: - the password for this username
     """
+    it_class = redmine_integration.RedmineThread
 
     def _rpc_connection(self):
         return redminelib.Redmine(
@@ -287,14 +269,6 @@ class Redmine(IssueTrackerType):
             username=self.bug_system.api_username,
             password=self.bug_system.api_password
         )
-
-    def add_testexecution_to_issue(self, executions, issue_url):
-        bug_id = self.bug_id_from_url(issue_url)
-        for execution in executions:
-            redmine_integration.RedmineThread(self.rpc,
-                                              self.bug_system,
-                                              execution,
-                                              bug_id).start()
 
     def find_project_by_name(self, name):
         """
