@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 08:41\n"
+"PO-Revision-Date: 2020-05-16 08:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "이미 등록 되었거나 사용중인 이메일 주소입니다"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
@@ -325,7 +325,7 @@ msgstr ""
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "날짜 형식이 잘못되었습니다. YYYY-MM-DD가 예상됩니다 [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -1984,7 +1984,7 @@ msgstr "단체"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "다음 세입자를 소유하고 있습니다"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
@@ -2008,11 +2008,11 @@ msgstr "구독 취소"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "임차인이 없습니다"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "FastSpring을 통해 구독"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
@@ -2031,11 +2031,11 @@ msgstr "공급업체"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "수신"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "개인 임차인 경고"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2076,7 +2076,7 @@ msgstr "성명"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "유효하지 않은 문자열"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -2099,15 +2099,16 @@ msgstr ""
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Kiwi TCMS 테넌트는:%(tenant_url)s\n\n"
+"문제가 있으면 지원 부서에 문의하십시오!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "새로운 세입자"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "회사, 팀 또는 프로젝트 이름"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
@@ -2115,13 +2116,13 @@ msgstr "스키마"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "검증 패턴"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "이미 사용중인 스키마 이름"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "새로운 Kiwi TCMS 테넌트 생성"
 
