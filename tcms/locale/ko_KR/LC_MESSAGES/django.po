@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 08:11\n"
+"PO-Revision-Date: 2020-05-16 08:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1920,7 +1920,7 @@ msgstr "오류"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "포기"
 
 #: tcms_github_app/admin.py:120
 #, python-format
@@ -1934,7 +1934,7 @@ msgstr ""
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "설정"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -1962,7 +1962,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "정액제 계약"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -1980,7 +1980,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "단체"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -1989,22 +1989,22 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "가격"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "가입 유형"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "까지 지불"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "구독 취소"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -2016,17 +2016,17 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
-msgstr ""
+msgstr "거래 내역"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "보낸사람"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "공급업체"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
@@ -2048,31 +2048,31 @@ msgstr ""
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
-msgstr ""
+msgstr "개월"
 
 #: tcms_github_marketplace/views.py:328
 msgid "yr"
-msgstr ""
+msgstr "년"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "이메일은 반드시 입력해야 합니다."
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "또는 계속하기"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "법적 정보"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "엑세스 권한이 없음"
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "성명"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
@@ -2080,15 +2080,15 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "만들기"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "권한이 있는 사용자"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "미지급"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
@@ -2111,7 +2111,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "스키마"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
