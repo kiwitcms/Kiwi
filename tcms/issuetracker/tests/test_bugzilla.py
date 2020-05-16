@@ -2,11 +2,19 @@
 
 import os
 import unittest
+from urllib.parse import urlencode
 
 from tcms.issuetracker.types import Bugzilla
+from tcms.management.models import Version
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import BugSystem
+
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestExecutionFactory
+from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestRunFactory
 
 
 @unittest.skipUnless(os.getenv('TEST_BUGTRACKER_INTEGRATION'),
@@ -53,14 +61,18 @@ class TestBugzillaIntegration(APITestCase):
 
         # simulate user adding a new bug URL to a TE and clicking
         # 'Automatically update bug tracker'
-        self.rpc_client.TestExecution.add_link({
+        result = self.rpc_client.TestExecution.add_link({
             'execution_id': self.execution_1.pk,
             'is_defect': True,
             'url': self.existing_bug_url,
         }, True)
 
+        # making sure RPC above returned the same URL
+        self.assertEqual(self.existing_bug_url, result['url'])
+
         # assert that a comment has been added as the last one
         # and also verify its text
+        bug.refresh()
         last_comment = bug.getcomments()[-1]
         for expected_string in [
                 'Confirmed via test execution',
@@ -68,3 +80,31 @@ class TestBugzillaIntegration(APITestCase):
                 self.execution_1.run.get_absolute_url(),
                 "TE-%d: %s" % (self.execution_1.pk, self.execution_1.case.summary)]:
             self.assertIn(expected_string, last_comment['text'])
+
+    def test_report_issue_from_test_execution(self):
+        # note: automatically creates a version called 'unspecified'
+        product = ProductFactory(name='TestProduct')
+        version, _ = Version.objects.get_or_create(product=product, value='unspecified')
+        component = ComponentFactory(name='TestComponent', product=product)
+
+        test_plan = TestPlanFactory(product=product, product_version=version)
+        test_case = TestCaseFactory(component=[component], plan=[test_plan])
+        test_case.save()  # will generate history object
+
+        test_run = TestRunFactory(plan=test_plan, product_version=version)
+        execution2 = TestExecutionFactory(run=test_run, case=test_case, build=test_run.build)
+
+        # simulate user clicking the 'Report bug' button in TE widget, TR page
+        result = self.rpc_client.Bug.report(execution2.pk, self.integration.bug_system.pk)
+        self.assertEqual(result['rc'], 0)
+        self.assertIn('http://bugtracker.kiwitcms.org/bugzilla/enter_bug.cgi', result['response'])
+
+        # ATM Bugzilla integration doesn't offer 1-click bug reporting so just
+        # assert that the result looks like valid URL parameters
+        self.assertIn('product=TestProduct', result['response'])
+        self.assertIn('component=TestComponent', result['response'])
+        self.assertIn('version=unspecified', result['response'])
+        expected_description = urlencode({
+            'short_desc': "Test case failure: %s" % execution2.case.summary,
+        })
+        self.assertIn(expected_description, result['response'])
