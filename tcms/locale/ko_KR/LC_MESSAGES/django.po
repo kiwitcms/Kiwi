@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 08:51\n"
+"PO-Revision-Date: 2020-05-16 09:31\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -386,16 +386,16 @@ msgstr "중단"
 
 #: tcms/settings/common.py:319
 msgid "Status matrix"
-msgstr ""
+msgstr "상태 매트릭스"
 
 #: tcms/settings/common.py:320
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "실행 동향"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "TestCase 건강"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -511,7 +511,7 @@ msgstr "카테고리"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "양"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
@@ -523,11 +523,11 @@ msgstr "음수"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "테스트 상태 매트릭스"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "테스트 사례"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
@@ -535,7 +535,7 @@ msgstr "테스트 실행 중"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "TestCase 건강"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -612,7 +612,7 @@ msgstr "태그"
 #: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "태그를 찾을 수 없습니다"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
@@ -641,11 +641,11 @@ msgstr "코멘트"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr ""
+msgstr "테스트 실행 정보"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "처리날짜"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
@@ -653,11 +653,11 @@ msgstr "텍스트 버전"
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
-msgstr ""
+msgstr "기록 된 로그가 없습니다"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "버그와 하이퍼 링크"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -680,7 +680,7 @@ msgstr "콘텐츠"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "시험 계획서"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
@@ -715,7 +715,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "테스트 계획"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
