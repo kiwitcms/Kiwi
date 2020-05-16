@@ -1,6 +1,9 @@
-codecov:
-  require_ci_to_pass: no
 coverage:
   status:
     patch: no
+    project:
+      default:
+        threshold: 5%
+codecov:
+  require_ci_to_pass: no
 comment: no
