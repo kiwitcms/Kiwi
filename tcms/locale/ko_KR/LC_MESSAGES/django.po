@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 07:41\n"
+"PO-Revision-Date: 2020-05-16 08:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1864,15 +1864,15 @@ msgstr ""
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
-msgstr ""
+msgstr "의 복제 "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "TestCase ID가 유효한 정수가 아닙니다"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "입력 한 사용자가 데이터베이스에 없습니다"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1900,23 +1900,23 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "일시정지"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "통과"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "실패한"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "막힌"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "오류"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
