@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 07:25\n"
+"PO-Revision-Date: 2020-05-16 07:34\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -293,7 +293,7 @@ msgstr "해당 이메일을 가진 사용자가 이미 존재합니다."
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "새 %s 계정 확인"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -301,19 +301,19 @@ msgstr "계정이 생성되었습니다. 확인 링크를 메일로 가서 확�
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "계정이 생성되었지만 활성화하려면 관리자가 필요합니다"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "다음은 관리자 목록입니다"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "이 활성화 키는 더 이상 데이터베이스에 없습니다"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
-msgstr ""
+msgstr "이 활성화 키가 만료되었습니다"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
@@ -334,47 +334,47 @@ msgstr ""
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
-msgstr ""
+msgstr "계기반"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr ""
+msgstr "테스트"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr ""
+msgstr "새로운 테스트 계획"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr ""
+msgstr "새로운 테스트 케이스"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr ""
+msgstr "새로운 버그"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
-msgstr ""
+msgstr "검색"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr ""
+msgstr "검색 테스트 계획"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr ""
+msgstr "검색 테스트 실행"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr ""
+msgstr "검색 테스트 사례"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr ""
+msgstr "검색 버그"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr ""
+msgstr "텔레 메 트리"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
@@ -399,7 +399,7 @@ msgstr ""
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
-msgstr ""
+msgstr "관리자"
 
 #: tcms/settings/common.py:327
 msgid "Users and groups"
@@ -407,11 +407,11 @@ msgstr ""
 
 #: tcms/settings/common.py:329
 msgid "Everything else"
-msgstr ""
+msgstr "다른 모든 것들"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "플러그"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
