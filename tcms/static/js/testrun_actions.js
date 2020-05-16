@@ -406,7 +406,7 @@ function fileCaseRunBug(run_id, title_container, container, case_id, execution_i
             $('#dialog').hide();
 
             if (result.rc === 0) {
-                const target_url = result.response.replace('&amp;', '&')
+                const target_url = result.response.replace(/&amp;/g, '&')
                 window.open(target_url, '_blank');
             } else {
                 window.alert(result.response);
