@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 09:31\n"
+"PO-Revision-Date: 2020-05-16 14:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -887,11 +887,11 @@ msgstr "손님 환영합니다"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "내 테스트 실행"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "내 테스트 계획"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -989,7 +989,7 @@ msgstr "계획 삭제"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "테스트 계획 삭제"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1019,11 +1019,11 @@ msgstr "참조 링크"
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "시간을 창조하십시요"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
