@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 07:34\n"
+"PO-Revision-Date: 2020-05-16 07:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -403,7 +403,7 @@ msgstr "관리자"
 
 #: tcms/settings/common.py:327
 msgid "Users and groups"
-msgstr ""
+msgstr "사용자 및 그룹"
 
 #: tcms/settings/common.py:329
 msgid "Everything else"
@@ -423,15 +423,15 @@ msgstr "문제를 보고"
 
 #: tcms/settings/common.py:344
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "StackOverflow에 대한 도움말은 k로"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Open Collective를 통해 € 5 기부"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
-msgstr ""
+msgstr "관리 안내서"
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
@@ -439,11 +439,11 @@ msgstr "사용자 설명서"
 
 #: tcms/settings/common.py:348
 msgid "API Help"
-msgstr ""
+msgstr "API 도움말"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "승인을 기다리는 새로운 사용자"
 
 #: tcms/signals.py:155
 #, python-format
@@ -457,24 +457,24 @@ msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "다른"
 
 #: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
-msgstr ""
+msgstr "합계"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "테스트 실행 상태에 대한 자세한 정보"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "테스트 계획"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -1619,7 +1619,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr ""
+msgstr "새 분류 추가"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1667,7 +1667,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "네"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
