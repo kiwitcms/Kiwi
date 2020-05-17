@@ -124,15 +124,15 @@ install:
         echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
         pip install -r $REQUIREMENTS_TXT
         pip install -r requirements/devel.txt
-        pip install coveralls codecov
+        pip install coveralls
         pushd tcms/ && npm install && popd
 
 script: make $CMD
 after_success:
   - |
+        bash <(curl -s https://codecov.io/bash)
         if [ "$TEST_DB" == "MariaDB" ]; then
             coveralls
-            codecov
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
