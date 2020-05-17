@@ -40,6 +40,7 @@ class Bugzilla(IssueTrackerType):
     """
         Support for Bugzilla. Requires:
 
+        :base_url: - e.g. http://example.com/bugzilla
         :api_url: - the XML-RPC URL for your Bugzilla instance
         :api_username: - a username registered in Bugzilla
         :api_password: - the password for this username
@@ -94,6 +95,7 @@ class JIRA(IssueTrackerType):
     """
         Support for JIRA. Requires:
 
+        :base_url: - the URL of this JIRA instance
         :api_url: - the API URL for your JIRA instance
         :api_username: - a username registered in JIRA
         :api_password: - the password for this username
@@ -257,6 +259,7 @@ class Redmine(IssueTrackerType):
     """
         Support for Redmine. Requires:
 
+        :base_url: - the URL for this Redmine instance
         :api_url: - the API URL for your Redmine instance
         :api_username: - a username registered in Redmine
         :api_password: - the password for this username
