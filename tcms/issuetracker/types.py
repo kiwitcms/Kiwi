@@ -6,6 +6,7 @@
 import os
 import tempfile
 from urllib.parse import quote, urlencode
+from xmlrpc.client import Fault
 
 import bugzilla
 import github
@@ -74,15 +75,45 @@ class Bugzilla(IssueTrackerType):
             tokenfile=self._bugzilla_cache_dir + 'token',
         )
 
-    def report_issue_from_testexecution(self, execution, user):
-        args = {}
-        args['cf_build_id'] = execution.run.build.name
+    def one_click_report(self, execution, user, args):
+        """
+            Attempt 1-click bug report! Unmodified Bugzilla requires
+            *Product*, *Component*, *Version* and *Summary*!
+            *OS* and *Hardware* fields are set to *All*!
 
-        args['comment'] = self._report_comment(execution)
-        args['component'] = self.get_case_components(execution.case)
+            .. warning::
+
+                This can fail due to Bugzilla requiring more fields,
+                because the API user doesn't have permissions to report in
+                the chosen Product, becase TC info is incomplete or because
+                any of the specified fields doesn't exist!
+
+                It is up to the Bugzilla/TCMS admin to make sure these are
+                in sync! Alternatively inherit this class and override this
+                method!
+        """
+        buginfo = args.copy()
+        buginfo['op_sys'] = 'All'
+        buginfo['rep_platform'] = 'All'
+        return self.rpc.createbug(**buginfo).weburl
+
+    def report_issue_from_testexecution(self, execution, user):
+        """
+            First attempt *1-click bug report* and if that fails fall back
+            to a URL with some of the values pre-defined as query parameters!
+        """
+        args = {}
         args['product'] = execution.run.plan.product.name
+        args['component'] = self.get_case_components(execution.case)
+        args['version'] = execution.run.product_version.value
+
         args['short_desc'] = 'Test case failure: %s' % execution.case.summary
-        args['version'] = execution.run.product_version
+        args['comment'] = self._report_comment(execution)
+
+        try:
+            return self.one_click_report(execution, user, args)
+        except Fault:
+            pass
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
