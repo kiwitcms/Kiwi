@@ -17,8 +17,8 @@ Kiwi TCMS - Open Source Test Case Management System
     :target: https://scan.coverity.com/projects/kiwitcms-kiwi
     :alt: Coverity scan
 
-.. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
-    :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
+.. image:: https://codecov.io/gh/kiwitcms/Kiwi/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/kiwitcms/Kiwi
     :alt: Code coverage
 
 .. image:: https://api.codeclimate.com/v1/badges/3f4e108ea369f625f112/maintainability
