@@ -4,6 +4,7 @@ import os
 import unittest
 from urllib.parse import urlencode
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker.types import Bugzilla
 from tcms.management.models import Version
 from tcms.rpc.tests.utils import APITestCase
@@ -152,3 +153,10 @@ class TestBugzillaIntegration(APITestCase):
                 component.name,
                 test_case.text]:
             self.assertIn(expected_string, last_comment['text'])
+
+        # verify that LR has been added to TE
+        self.assertTrue(LinkReference.objects.filter(
+            execution=execution2,
+            url=result['response'],
+            is_defect=True,
+        ).exists())

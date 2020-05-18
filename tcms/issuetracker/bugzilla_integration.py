@@ -8,6 +8,7 @@ import bugzilla
 
 from django.conf import settings
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker import base
 
 
@@ -96,7 +97,14 @@ class Bugzilla(base.IssueTrackerType):
         args['comment'] = self._report_comment(execution)
 
         try:
-            return self.one_click_report(execution, user, args)
+            new_bug_url = self.one_click_report(execution, user, args)
+            # and also add a link reference that will be shown in the UI
+            LinkReference.objects.get_or_create(
+                execution=execution,
+                url=new_bug_url,
+                is_defect=True,
+            )
+            return new_bug_url
         except Fault:
             pass
 
