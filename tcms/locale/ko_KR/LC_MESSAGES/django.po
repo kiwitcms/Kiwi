@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 07:01\n"
+"PO-Revision-Date: 2020-05-19 07:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1789,16 +1789,16 @@ msgstr "테스트 계획"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr ""
+msgstr "테스트 플랜이 필요합니다."
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "인쇄를 위해 하나 이상의 테스트 계획이 필요합니다."
 
 #: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "테스트 계획 \"%s\" 존재 하지 않습니다."
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
@@ -1816,11 +1816,11 @@ msgstr "실행 상태 테스트"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "테스트 실행 편집"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "복제 테스트 실행"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
