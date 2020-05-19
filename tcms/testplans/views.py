@@ -85,7 +85,13 @@ class Edit(UpdateView):
             return super().form_valid(form)
 
         # taken from FormMixin.form_invalid()
-        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
+        context_data = self.get_context_data(form=form, notify_formset=notify_formset)
+        return self.render_to_response(context_data)
+
+    def form_invalid(self, form):
+        notify_formset = PlanNotifyFormSet(self.request.POST, instance=self.object)
+        context_data = self.get_context_data(form=form, notify_formset=notify_formset)
+        return self.render_to_response(context_data)
 
 
 class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-required
