@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-16 14:52\n"
+"PO-Revision-Date: 2020-05-19 06:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -267,12 +267,16 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "에 업데이트 %(history_date)s\n"
+"에 의해 업데이트 %(username)s\n\n"
+"%(diff)s\n\n"
+"자세한 내용은 다음을 참조하십시오:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "기본 URL이 구성되지 않았습니다! 참조<a href=\"%(doc_url)s\">설명서</a> 및 <a href=\"%(admin_url)s\">변경</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -321,7 +325,7 @@ msgstr "계정이 활성화 되었습니다."
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "base_url 구성하여 이 문제 추적기에 보고할 수 있습니다!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -330,7 +334,7 @@ msgstr "날짜 형식이 잘못되었습니다. YYYY-MM-DD가 예상됩니다 [H
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "모델 %s 에는 기본 키가 없습니다. 이러한 필드를 수동으로 지정해야 합니다."
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
@@ -448,12 +452,12 @@ msgstr "승인을 기다리는 새로운 사용자"
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "새로운: TestRun #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "새로운: Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -478,7 +482,7 @@ msgstr "테스트 계획"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "테스트 분석"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
@@ -539,7 +543,7 @@ msgstr "TestCase 건강"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "가장 자주 실패하는 테스트 사례"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
@@ -552,7 +556,7 @@ msgstr "실패한 실행"
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% 실패한 실행의"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -568,7 +572,7 @@ msgstr "정말 이 첨부 파일을 삭제 하시겠습니까?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "선도적인 오픈 소스 테스트 사례 관리 시스템"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
@@ -624,7 +628,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "버그가 없습니다."
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -961,7 +965,7 @@ msgstr "마지막 페이지"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "이 계획에서는 테스트 사례를 찾을 수 없습니다."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
