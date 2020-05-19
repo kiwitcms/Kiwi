@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 07:51\n"
+"PO-Revision-Date: 2020-05-19 08:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1802,13 +1802,13 @@ msgstr "테스트 계획 \"%s\" 존재 하지 않습니다."
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "권한 거부: TestRun이 회원님의 소유가 아닙니다."
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "테스트 실행 상태 사용자 지정에 대한 자세한 내용은<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">설명서</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
