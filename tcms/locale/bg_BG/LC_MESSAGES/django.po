@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
+"PO-Revision-Date: 2020-05-19 12:35\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -121,7 +121,7 @@ msgstr "коментирано на"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Пре-отваряне"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -248,7 +248,7 @@ msgstr "*затворен бъг*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "преотворен бъг"
 
 #: tcms/core/ajax.py:150
 #, python-format
@@ -329,7 +329,7 @@ msgstr "Настрой base_url, за да е разрешено репортв�
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Невалиден формат на дата. Очаква се: YYYY-MM-DD [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -431,7 +431,7 @@ msgstr "Потърси помощ в StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Дари €5 чрез Open Collective"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -457,7 +457,7 @@ msgstr "НОВО: Тест Изпълнение #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Нов: Бъг #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -1544,7 +1544,7 @@ msgstr "Списък с бъгове"
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% изпълнено"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1652,7 +1652,7 @@ msgstr "Компоненти"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Редакция на Тест Кейс"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
@@ -1969,15 +1969,15 @@ msgstr "ОТЛОЖЕН"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "За допълнителни настройки виж: <a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "Интеграция с GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -2023,7 +2023,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "Организация"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
