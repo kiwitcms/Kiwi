@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 06:33\n"
+"PO-Revision-Date: 2020-05-19 06:41\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1759,7 +1759,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "언제 통지:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
@@ -1776,7 +1776,7 @@ msgstr "활성"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "검색 테스트 계획"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1785,7 +1785,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "테스트 계획"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
@@ -1851,7 +1851,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "테스트 실행 요약"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
@@ -1973,7 +1973,7 @@ msgstr "정액제 계약"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "테넌트 구독"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
@@ -2051,7 +2051,12 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Kiwi TCMS에 대한 개인 테넌트를 만들려고 합니다.\n"
+"DB 스키마가 준비될 때까지 몇 분 정도 걸릴 것입니다!\n"
+"'저장' 버튼을 클릭한 후 <strong> 안 함 </strong> 닫거나이 페이지를 새로 고침!<br>\n"
+"생성 프로세스가 완료되면 새 테넌트로 리디렉션됩니다!\n"
+"500 내부 서버 오류 페이지가 표시되면\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>즉시!"
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
@@ -2099,7 +2104,7 @@ msgstr "미지급"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "테넌트가 7일 이내에 만료됩니다."
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
