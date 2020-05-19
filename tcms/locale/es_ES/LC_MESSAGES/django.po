@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
+"PO-Revision-Date: 2020-05-19 12:35\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -121,7 +121,7 @@ msgstr "comentado en"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Reabrir"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -248,7 +248,7 @@ msgstr "* error cerrado*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*error reabierto*"
 
 #: tcms/core/ajax.py:150
 #, python-format
@@ -329,7 +329,7 @@ msgstr "¡Habilita la notificación a este gestor de problemas configurando su b
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Formato de fecha inválido. Esperado AAAA-MM-DD [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -415,11 +415,11 @@ msgstr "Todo lo demás"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGINS"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
-msgstr ""
+msgstr "Foro"
 
 #: tcms/settings/common.py:343
 msgid "Report an Issue"
@@ -431,7 +431,7 @@ msgstr "Solicitar ayuda en StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Donar €5 a través de Open Collective"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -457,7 +457,7 @@ msgstr "NUEVO: Ejecución de Caso de Prueba #%(pk)d - %(summary)s"
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NUEVO: Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -472,7 +472,7 @@ msgstr "TOTAL"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Información detallada sobre el estado de ejecución de la prueba"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
