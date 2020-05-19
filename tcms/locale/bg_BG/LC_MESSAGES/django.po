@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 12:35\n"
+"PO-Revision-Date: 2020-05-19 12:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -2005,7 +2005,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Абонамент"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -2032,22 +2032,22 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "Цена"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "Тип абонамент"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "Платено до"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "Отмени абонамента"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -2055,26 +2055,26 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Абонирай се чрез FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
-msgstr ""
+msgstr "История на транзакциите"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "Подател"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "Доставчик"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "Получено на"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -2091,15 +2091,15 @@ msgstr ""
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
-msgstr ""
+msgstr "м"
 
 #: tcms_github_marketplace/views.py:328
 msgid "yr"
-msgstr ""
+msgstr "г."
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "E-mail е задължителен"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
@@ -2107,7 +2107,7 @@ msgstr ""
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Правна информация"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
@@ -2115,15 +2115,15 @@ msgstr ""
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "Пълно име"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "Невалиден стринг"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Създай"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
@@ -2131,7 +2131,7 @@ msgstr ""
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Неплатенo"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
@@ -2154,7 +2154,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "Схема"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
@@ -2162,7 +2162,7 @@ msgstr ""
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Това име вече се използва"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
