@@ -42,3 +42,34 @@ jobs:
           pip install wheel virtualenv
           pip install -r requirements/readthedocs.txt
           make build-for-pypi
+
+  test-for-missing-migrations:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: test-for-missing-migrations
+        run: sudo apt install sqlite3
+      - name: a
+        run: |
+          export REQUIREMENTS_TXT="requirements/$(echo SQLite | tr '[:upper:]' '[:lower:]' | sed 's/mysql/mariadb/' | sed 's/sqlite/base/').txt"
+          echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
+          pip install -r $REQUIREMENTS_TXT
+      - name: b
+        run: sudo apt-get install libkrb5-dev
+      - name: c
+        run: pip install gssapi
+      - name: d
+        run: pip install -r requirements/devel.txt
+      - name: e
+        run: pushd tcms/ && npm install && popd
+      - name: f
+        run: make test_for_missing_migrations
+
