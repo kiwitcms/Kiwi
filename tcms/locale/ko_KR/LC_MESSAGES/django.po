@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 06:29\n"
+"PO-Revision-Date: 2020-05-19 06:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1323,7 +1323,7 @@ msgstr "비밀번호 초기화"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS 암호 재설정"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
@@ -1359,15 +1359,15 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "대/소문자를 할당하는 방법?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "아래 표는 계획의 확인된 모든 테스트 사례를 나열합니다."
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "검사란을 선택하여 테스트 실행에 사례를 추가합니다. 마침내 업데이트해야 합니다."
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1400,7 +1400,7 @@ msgstr "Finished At"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
@@ -1424,7 +1424,7 @@ msgstr "업데이트"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "이 사례 다른 사람에게 할당합니다."
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
@@ -1937,7 +1937,7 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "GitHub 통합"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
@@ -1951,7 +1951,7 @@ msgstr ""
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "GitHub 계정을 통해 로그인하지 않았습니다! <a href=\"%s\"> 여기를 클릭하세요 </a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
@@ -1965,7 +1965,7 @@ msgstr ""
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "GitHub 앱 편집 <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1977,11 +1977,11 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "다음 테넌에 액세스할 수 있습니다."
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "테 넌 트"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
