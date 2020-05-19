@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7]
-        tracker: [bugzilla]
+        tracker: [bugzilla, gitlab_ee]
 
     steps:
     - uses: actions/checkout@v2

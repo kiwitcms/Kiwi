@@ -183,6 +183,13 @@ class Gitlab(IssueTrackerType):
         return gitlab.Gitlab(self.bug_system.api_url,
                              private_token=self.bug_system.api_password)
 
+    def repo_slug(self):
+        """
+            Return the repository slug stripped out of ``base_url``!
+            This is needed for further integration tasks and tests!
+        """
+        return '/'.join(self.bug_system.base_url.strip().strip('/').split('/')[-2:])
+
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.api_url and self.bug_system.api_password)
 
