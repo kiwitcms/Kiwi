@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 08:02\n"
+"PO-Revision-Date: 2020-05-19 08:11\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1755,7 +1755,7 @@ msgstr "알림:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "테스트 케이스 작성자"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
@@ -1763,11 +1763,11 @@ msgstr "언제 통지:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "테스트 플랜이 업데이트되었습니다."
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "테스트 사례가 업데이트됩니다."
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1780,7 +1780,7 @@ msgstr "검색 테스트 계획"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "테스트 계획 이름"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
@@ -1837,17 +1837,18 @@ msgstr "사용자 이름 또는 전자 메일"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "선택한 테스트 케이스:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "미리 선택된 테스트 사례의 %(count)s 확인되지 않으며 복제되지 않습니다!\n"
+"자세한 내용은 테스트 계획을 참조하십시오!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "검색 테스트 실행"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
@@ -1855,19 +1856,19 @@ msgstr "테스트 실행 요약"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "플랜 ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "테스트 플랜 ID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "테스트 실행을 만들려면 테스트 계획이 필요하고 하나를 선택합니다."
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "테스트 실행을 만들려면 테스트 계획이 필요하고 하나를 선택합니다."
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
@@ -1946,7 +1947,7 @@ msgstr "설정"
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "구성되지 않은 GitHub 앱 %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
@@ -1956,11 +1957,11 @@ msgstr "GitHub 계정을 통해 로그인하지 않았습니다! <a href=\"%s\">
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "당신은 당신의 GitHub 계정에 Kiwi TCMS를 설치하지 않았습니다!<a href=\"%s\"> 여기를 클릭하세요 </a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "여러 GitHub 앱 설치가 감지되었습니다! 아래를 참조하십시오."
 
 #: tcms_github_app/views.py:82
 #, python-format
