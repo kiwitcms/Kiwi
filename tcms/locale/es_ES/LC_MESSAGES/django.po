@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 12:35\n"
+"PO-Revision-Date: 2020-05-19 12:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -515,15 +515,15 @@ msgstr "Categorías"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Positivo"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negativo"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -771,7 +771,15 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Se le ha asignado el bug %(pk)s.\n\n"
+"Enlace: %(bug_url)s\n\n"
+"Resumen: %(summary)s\n"
+"Creado en: %(creation_date)s\n"
+"Reportero: %(reporter)s\n"
+"Asignado: %(assignee)s\n"
+"Producto: %(product)s\n"
+"Versión: %(version)s\n"
+"Build: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1372,7 +1380,7 @@ msgstr "Casos en esta ejecución"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Usar el sortkey almacenado en el plan"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1433,7 +1441,7 @@ msgstr "Eliminar casos de prueba seleccionados de este plan"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "Actualizar las ejecuciones de casos IDLE al texto de caso más reciente"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1538,7 +1546,7 @@ msgstr "Lista de errores"
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% completo"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
@@ -1646,7 +1654,7 @@ msgstr "Componentes"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Editar TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
@@ -1836,11 +1844,13 @@ msgstr "Permiso denegado: La ejecución del Caso de Prueba no te pertenece"
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "¡Para más información sobre la personalización de los estados de ejecución de las pruebas, vea\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        la documentación</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Probar estados de ejecución"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1962,43 +1972,44 @@ msgstr "WAIVADO"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "Para obtener una configuración adicional, consulte\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "Integración de GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "Configuración"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "App de GitHub no configurada %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "¡No ha iniciado sesión a través de la cuenta de GitHub! <a href=\"%s\">¡Haga clic aquí</a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "¡No ha instalado Kiwi TCMS en su cuenta de GitHub! <a href=\"%s\">¡Haga clic aquí</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "¡Múltiples instalaciones de GitHub detectadas! Mira a continuación:"
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "Editar App de GitHub <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Suscripciones"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
