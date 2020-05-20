@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 13:25\n"
+"PO-Revision-Date: 2020-05-20 13:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -74,7 +74,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "Termék"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:41
@@ -684,7 +684,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Teszt végrehajtás"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
@@ -703,15 +703,15 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Nincsenek hozzád rendelt feladat(ok)"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "Teszt terveid"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Teszt terv"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -719,11 +719,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Végrehajtások száma"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
