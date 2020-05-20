@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 13:43\n"
+"PO-Revision-Date: 2020-05-20 14:34\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -90,7 +90,7 @@ msgstr "Termék"
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "Verzió"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:59
@@ -149,13 +149,13 @@ msgstr ""
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "Új termék hozzáadása"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "Új verzió hozzáadása"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
@@ -326,7 +326,7 @@ msgstr ""
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
-msgstr "Irányítópult"
+msgstr "Vezérlőpult"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
@@ -338,7 +338,7 @@ msgstr "Új teszt terv"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr "Új teszt készlet"
+msgstr "Új tesztkészlet"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
@@ -680,7 +680,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Vezérlőpult"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
@@ -699,7 +699,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "Összes"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
@@ -838,7 +838,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Név"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -997,7 +997,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Szerző"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
@@ -1429,7 +1429,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "Alapértelmezett tesztelő"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
@@ -1587,7 +1587,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Referencia link"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
@@ -1728,19 +1728,19 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Szülő ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Teszt terv dokumentum:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr ""
+msgstr "Értesítés:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "Tesztkészlet szerző"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
