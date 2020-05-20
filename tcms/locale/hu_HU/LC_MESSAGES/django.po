@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 12:43\n"
+"PO-Revision-Date: 2020-05-20 12:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -330,80 +330,80 @@ msgstr ""
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr ""
+msgstr "Tesztelés"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr ""
+msgstr "Új Teszt Terv"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr ""
+msgstr "Új Teszt Készlet"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr ""
+msgstr "Új Hibajegy"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
-msgstr ""
+msgstr "Keresés"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Teszt Terv Keresése"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Futtatott Teszt Keresése"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Teszt Készlet Keresése"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr ""
+msgstr "Hibajegyek Keresése"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr ""
+msgstr "Telemetria"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
-msgstr ""
+msgstr "Tesztelés"
 
 #: tcms/settings/common.py:318
 msgid "Breakdown"
-msgstr ""
+msgstr "Üzemzavar"
 
 #: tcms/settings/common.py:319
 msgid "Status matrix"
-msgstr ""
+msgstr "Állapot mátrix"
 
 #: tcms/settings/common.py:320
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Végrehajtási trendek"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "Teszteset egészsége"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMIN"
 
 #: tcms/settings/common.py:327
 msgid "Users and groups"
-msgstr ""
+msgstr "Felhasználók és csoportok"
 
 #: tcms/settings/common.py:329
 msgid "Everything else"
-msgstr ""
+msgstr "Minden más"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGINOK"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
