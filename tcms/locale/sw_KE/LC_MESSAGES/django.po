@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 15:23\n"
+"PO-Revision-Date: 2020-05-20 15:25\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -142,20 +142,20 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr ""
+msgstr "Muhtasari"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:42
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "ongeza bidhaa mpya"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "ongeza Toleo jipya"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
