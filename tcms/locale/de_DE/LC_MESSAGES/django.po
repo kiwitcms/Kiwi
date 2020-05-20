@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
+"PO-Revision-Date: 2020-05-20 08:13\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -329,7 +329,7 @@ msgstr "Ermöglichen Sie das Melden von Fehlern, indem Sie die Basis-URL konfigu
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Ungültiges Datumsformat. Erwartete JJJJ-MM-TT [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -399,7 +399,7 @@ msgstr "Ausführungstrends"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "TestCase Gesundheit"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -431,7 +431,7 @@ msgstr "Bitten Sie um Hilfe auf StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Spende €5 über Open Collective"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -468,7 +468,7 @@ msgstr "ANDERE"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
-msgstr ""
+msgstr "GESAMT"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
@@ -515,43 +515,43 @@ msgstr "Kategorien"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Positiv"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negativ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Statusmatrix testen"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "Testfall"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "Testlauf"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "Testfall Gesundheit"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Am häufigsten fehlgeschlagene Testfälle"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "Testfall"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "Fehlgeschlagene Ausführung"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
@@ -568,7 +568,7 @@ msgstr "Interner Serverfehler"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "Möchtest du diesen Anhang wirklich löschen?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -578,11 +578,11 @@ msgstr "das führende Open-Source Testfall-Management-System"
 #: tcms/testcases/templates/testcases/mutable.html:104
 #: tcms/testcases/templates/testcases/search.html:117
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Anhang"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
