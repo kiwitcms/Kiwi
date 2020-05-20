@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 07:43\n"
+"PO-Revision-Date: 2020-05-20 07:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1982,26 +1982,26 @@ msgstr "Настройки"
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "Не настроен GitHub App %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Не сте се логнали с GitHub потребител! <a href=\"%s\">Click here</a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Не сте инсталирали Kiwi TCMS във Вашия GitHub! <a href=\"%s\">Click here</a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "Няколко GitHub инсталации са открити! Виж:"
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "Редакция на GitHub App <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -2111,7 +2111,7 @@ msgstr "Правна информация"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "Неоторизиран"
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
@@ -2127,7 +2127,7 @@ msgstr "Създай"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "Оторизирани потребители"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
@@ -2150,7 +2150,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "Компания, екип или име на проект"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
