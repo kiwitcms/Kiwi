@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 12:52\n"
+"PO-Revision-Date: 2020-05-20 13:02\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1922,11 +1922,11 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "GitHub integráció"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -1954,7 +1954,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Feliratkozások"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -1966,7 +1966,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "Tenant - Bérlő"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
@@ -2072,11 +2072,11 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Létrehozás"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "Engedélyezett felhasználók"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
