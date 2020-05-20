@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 09:12\n"
+"PO-Revision-Date: 2020-05-20 09:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1328,7 +1328,7 @@ msgstr "Neues Benutzerkonto anlegen"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "TestCase zu TestRun hinzufügen"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1360,11 +1360,11 @@ msgstr "Wie kann ich den Fall zuweisen?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "Die folgende Tabelle listet alle bestätigten Testfälle des Plans auf"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "aktivieren Sie das Kontrollkästchen, um Fälle zum Testlauf hinzuzufügen. Denken Sie daran, endlich zu aktualisieren"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1494,55 +1494,55 @@ msgstr "Case-Run ID"
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "Fall-ID"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Getestet von"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Geschlossen am"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:17
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "Fehler"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "Fehlerliste"
 
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% complete"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
-msgstr ""
+msgstr "Bericht"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
-msgstr ""
+msgstr "Keine Bugs"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Wählen Sie alle Fälle/Keinen Fall auswählen"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Alle Fälle erweitern"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "Ausführungs-ID"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "Keine Ausführung gefunden"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1561,105 +1561,116 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Szenario**: ... welches Verhalten wird getestet ...\n"
+"  **Gib ** ... Bedingungen . .\n"
+"  **Wennen** ... Aktionen ...\n"
+"  **Then** ... erwartete Ergebnisse . .\n\n"
+"*Aktionen*:\n\n"
+"1. Element\n"
+"2. Element\n"
+"3. Element\n\n"
+"*Erwartete Ergebnisse*:\n\n"
+"1. Element\n"
+"2. Element\n"
+"3. Element"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "LÖSCHEN: Testfall #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Testfall klonen"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Neue TC zu TP hinzufügen"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "Ausgewählte TC"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
-msgstr ""
+msgstr "Argumente"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr ""
+msgstr "Anforderungen"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Referenzlink"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "Bug URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Testpläne"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "Komponenten"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Testfall bearbeiten"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "Neuer Testfall"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr ""
+msgstr "neue Kategorie hinzufügen"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
-msgstr ""
+msgstr "Benachrichtige"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "Run-Manager"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr ""
+msgstr "Asignees"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Standard Tester von Run"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr ""
+msgstr "Benachrichtigen wenn"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Testfall wurde aktualisiert"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Testfall wurde gelöscht"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "CC bis"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Durch Komma getrennte E-Mail-Adressen. Eine Benachrichtigungs-E-Mail wird an jede E-Mail-Adresse in der CC-Liste gesendet."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1667,39 +1678,39 @@ msgstr "Suche Testfall"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Testfall-Zusammenfassung"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Beide"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Trenne mehrere Werte mit Komma (,)"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "TestPlan nicht angegeben oder existiert nicht"
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr ""
+msgstr "Verlauf"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1712,15 +1723,15 @@ msgstr "Mindestens ein Testfall ist erforderlich"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Testplan klonen"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "TCs klonen"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Bestehende TCs in neue TP klonen oder verknüpfen"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
@@ -2122,21 +2133,21 @@ msgstr "Neuer Mandant"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "Firma, Team oder Projektname"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "Schema"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "Validierungsmuster"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Schema-Name wird bereits verwendet"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Neuer Kiwi TCMS Tenant erstellt"
 
