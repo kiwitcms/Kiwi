@@ -334,6 +334,39 @@ class TestExecutionUpdate(APITestCase):
                 "assignee": 'nonExistentUsername'
             })
 
+    def test_update_when_case_text_version_is_integer(self):
+        initial_case_text_version = self.case_run_1.case_text_version
+        self.update_test_case_text()
+
+        execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+            "case_text_version": str(self.case_run_1.case.history.latest().history_id)
+        })
+        self.case_run_1.refresh_from_db()
+
+        latest_case_text_version = self.case_run_1.case_text_version
+        self.assertNotEqual(initial_case_text_version, latest_case_text_version)
+        self.assertEqual(execution["case_text_version"], latest_case_text_version)
+        self.assertEqual(self.case_run_1.case.history.latest().history_id, latest_case_text_version)
+
+    def test_update_when_case_text_version_is_string_latest(self):
+        initial_case_text_version = self.case_run_1.case_text_version
+        self.update_test_case_text()
+
+        execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
+            "case_text_version": 'latest'
+        })
+        self.case_run_1.refresh_from_db()
+
+        latest_case_text_version = self.case_run_1.case_text_version
+        self.assertNotEqual(initial_case_text_version, latest_case_text_version)
+        self.assertEqual(execution["case_text_version"], latest_case_text_version)
+        self.assertEqual(self.case_run_1.case.history.latest().history_id, latest_case_text_version)
+
+    def update_test_case_text(self):
+        self.case_run_1.case.summary = "Summary Updated"
+        self.case_run_1.case.text = "Text Updated"
+        self.case_run_1.case.save()
+
     def test_update_with_non_existing_status(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
             self.rpc_client.TestExecution.update(self.case_run_1.pk,
