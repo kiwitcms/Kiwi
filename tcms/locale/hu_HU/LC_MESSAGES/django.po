@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 14:34\n"
+"PO-Revision-Date: 2020-05-20 14:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -122,7 +122,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Mentés"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
@@ -407,15 +407,15 @@ msgstr "PLUGINOK"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
-msgstr ""
+msgstr "Fórum"
 
 #: tcms/settings/common.py:343
 msgid "Report an Issue"
-msgstr ""
+msgstr "Hibabejelentés"
 
 #: tcms/settings/common.py:344
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Segítségkérés StackOverflow-on keresztül"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
@@ -423,15 +423,15 @@ msgstr ""
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
-msgstr ""
+msgstr "Adminisztrációs útmutató"
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
-msgstr ""
+msgstr "Felhasználói útmutató"
 
 #: tcms/settings/common.py:348
 msgid "API Help"
-msgstr ""
+msgstr "API súgó"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
@@ -871,7 +871,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Navigációs mód átkapcsolása"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
@@ -879,24 +879,24 @@ msgstr ""
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "Általam futtatott tesztek"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "Általam létrehozott teszt tervek"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "Profil"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Jelszó megváltoztatása"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "Kijelentkezés"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
@@ -909,27 +909,27 @@ msgstr ""
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "Súgó"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "Nyelv"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "Támogatott nyelvek"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "Új nyelv kérése"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "Fordítási mód"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "Fordítási útmutató"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -1724,7 +1724,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Új teszt terv készítése"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1744,20 +1744,20 @@ msgstr "Tesztkészlet szerző"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "Értesítsen, ha:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Teszt Terv frissítésre került"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Tesztkészletek frissítésre kerültek"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Aktív"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
