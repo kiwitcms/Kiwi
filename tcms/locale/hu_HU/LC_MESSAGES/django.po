@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 13:13\n"
+"PO-Revision-Date: 2020-05-20 13:25\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -334,15 +334,15 @@ msgstr "Tesztelés"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr "Új Teszt Terv"
+msgstr "Új teszt terv"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr "Új Teszt Készlet"
+msgstr "Új teszt készlet"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr "Új Hibajegy"
+msgstr "Új hibajegy"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
@@ -350,19 +350,19 @@ msgstr "Keresés"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr "Teszt Terv Keresése"
+msgstr "Teszt tervek keresése"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr "Futtatott Tesztek Keresése"
+msgstr "Futtatott tesztek keresése"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr "Teszt Készlet Keresése"
+msgstr "Teszt készletek keresése"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr "Hibajegyek Keresése"
+msgstr "Hibajegyek keresése"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
