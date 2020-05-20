@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 07:43\n"
+"PO-Revision-Date: 2020-05-20 07:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1541,7 +1541,7 @@ msgstr "모든 서비스 케이스 확장"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "실행 ID"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
@@ -1564,7 +1564,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "** 시나리오 ** : ... 어떤 행동을 테스트 할 것인가 ...\n"
+"   ** 주어진 ** ... 조건 ...\n"
+"   ** 언제 ** ... 작업 ...\n"
+"   ** 그럼 ** ... 예상 결과 ...\n\n"
+"*행위*:\n\n"
+"1. 품목\n"
+"2. 품목\n"
+"3. 품목\n\n"
+"* 예상 결과 * :\n\n"
+"1. 품목\n"
+"2. 품목\n"
+"3. 품목"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1573,7 +1584,7 @@ msgstr "삭제: TestCase #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "클론 테스트 케이스"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1581,7 +1592,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "선택된 TC"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1606,11 +1617,11 @@ msgstr "참조 링크"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "버그 URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "테스트 계획"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1618,11 +1629,11 @@ msgstr "구성 요소"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "테스트 케이스 편집"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "새로운 테스트 케이스"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
@@ -1634,7 +1645,7 @@ msgstr "알림"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "달리기 관리자"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
@@ -1650,19 +1661,19 @@ msgstr "언제 통지"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "TestCase가 업데이트되었습니다"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "TestCase가 삭제되었습니다"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "에 CC"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "이메일 주소는 쉼표로 구분됩니다. CC 목록 내의 각 이메일 주소로 알림 이메일이 발송됩니다."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1698,7 +1709,7 @@ msgstr "작성일"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "TestPlan이 지정되지 않았거나 존재하지 않습니다"
 
 #: tcms/testcases/views.py:501
 msgid "History"
@@ -1706,48 +1717,48 @@ msgstr "지난 기록"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "TestCase 복제 성공"
 
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "적어도 하나의 TestCase가 필요합니다"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "클론 테스트 계획"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "클론 테스트 사례"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "기존 TC를 복제하거나 새 TP에 연결"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "부모 TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "소스 TP를 새 TP의 상위로 설정"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "테스트 계획 편집"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "새로운 TestPlan 만들기"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "부모 ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "테스트 계획 문서:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
@@ -1934,7 +1945,7 @@ msgstr "포기"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "추가 구성에 대해서는<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
