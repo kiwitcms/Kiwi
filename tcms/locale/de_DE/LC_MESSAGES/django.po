@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 09:32\n"
+"PO-Revision-Date: 2020-05-20 09:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -556,7 +556,7 @@ msgstr "Fehlgeschlagene Ausführung"
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% der fehlgeschlagenen Ausführung"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -624,11 +624,11 @@ msgstr "fehler"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "Von Run"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "Kein Fehler gefunden"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -645,11 +645,11 @@ msgstr "Kommentare"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Testausführungsinformationen"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "Ausführungsdatum"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
@@ -707,7 +707,8 @@ msgstr "Gestartet am"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s Testrun(s) oder Testfall(e) die Ihnen zugewiesen sind, müssen ausgeführt werden.\n"
+"Hier sind die neuesten %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -715,7 +716,7 @@ msgstr "ALLE ANZEIGEN"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Ihnen wurde kein TestRun(e) zugewiesen"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
@@ -741,11 +742,12 @@ msgstr "Ausführungen"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Sie verwalten %(total_count)s Testplan(e), %(disabled_count)s sind deaktiviert.\n"
+"Hier sind die neuesten %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Es gibt keine Testpläne(n) die zu dir gehören"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -753,7 +755,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Willkommen %(user)s,\n"
+"vielen Dank für die Registrierung für ein %(site_domain)s Konto!\n\n"
+"Um Ihr Konto zu aktivieren, klicken Sie bitte auf diesen Link:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -766,12 +771,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Fehler %(pk)s wurde Ihnen zugewiesen.\n\n"
+"Link: %(bug_url)s\n\n"
+"Zusammenfassung: %(summary)s\n"
+"Erstellt am: %(creation_date)s\n"
+"Reporter: %(reporter)s\n"
+"Assignee: %(assignee)s\n"
+"Produkt: %(product)s\n"
+"Version: %(version)s\n"
+"Build: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Testfall wurde von %(username)s gelöscht!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -788,7 +801,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Testlauf %(pk)s wurde für Sie erstellt oder aktualisiert.\n\n"
+"### Links ###\n"
+"Test run: %(run_url)s\n"
+"Test plan: %(plan_url)s\n\n"
+"### Basic run information ###\n"
+"Zusammenfassung: %(summary)s\n\n"
+"Verwaltet: %(manager)s.\n"
+"Standard Tester: %(default_tester)s.\n\n"
+"Produkt: %(product)s\n"
+"Produktversion: %(version)s\n"
+"Build: %(build)s\n\n"
+"Notizen:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -796,7 +821,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Lieber Administrator,\n"
+"jemand hat gerade ein Konto mit dem Benutzernamen %(username)s in Ihrer\n"
+"Kiwi TCMS Instanz registriert und wartet auf Ihre Genehmigung!\n\n"
+"Gehe zu %(user_url)s, um das Konto zu aktivieren!"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
@@ -816,7 +844,7 @@ msgstr "Datum"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "Keine Belege gefunden"
 
 #: tcms/templates/include/bug_details.html:3
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -840,7 +868,7 @@ msgstr "Status"
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -1059,67 +1087,67 @@ msgstr "Dateiname"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "Absender"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Erstellungsdatum"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "Keine Anhänge"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Fall"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Neuen Fall schreiben"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Fälle von anderen Plänen hinzufügen"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Drucken"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "druckt die Ansicht der ausgewählten Fälle"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Duplizieren"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "Ausgewählte Fälle zu einem anderen Testplan klonen"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "Ausgewählte Fälle aus diesem Paket entfernen"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Ausführen"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "Neuen TestRun erstellen"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "Testfallprüfer ändern"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "Standard Tester ändern"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1137,30 +1165,30 @@ msgstr "Priorität"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "Klicken, um Filteroptionen anzuzeigen"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "Filteroptionen anzeigen"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Klicken Sie auf mich, dann ziehen Sie die Zeilen um die Reihenfolge anzupassen, und klicken Sie auf \"Sortieren\" um Ihre Änderungen einzureichen"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Fälle neu sortieren"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "Keine Tags in Fällen"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Tester"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1172,58 +1200,58 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "Artikel pro Seite"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "Wählen Sie auch alle Fälle, die noch nicht unten angezeigt werden."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "Testfall Zusammenfassung"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "Prüfer"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Standardtester"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Text version"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Mehr anzeigen"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "verbleibende Fälle"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Alle Fälle wurden geladen."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Unterknoten zum aktuellen Plan hinzufügen"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Unterknoten aus dem aktuellen Paket entfernen"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
