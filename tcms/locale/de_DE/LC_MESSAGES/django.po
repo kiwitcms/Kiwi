@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 08:44\n"
+"PO-Revision-Date: 2020-05-20 08:55\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1736,53 +1736,53 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Neuen Testplan erstellen"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Parent ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Testplandokument:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr ""
+msgstr "Benachrichtigung:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "Testfall-Autor"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "Benachrichtigen wenn:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Testplan wurde aktualisiert"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Testfälle werden aktualisiert"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Testpläne suchen"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Name des Testplans"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Testplan"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
@@ -1790,16 +1790,16 @@ msgstr "Testplan ist erforderlich"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Für den Druck ist mindestens ein Testplan erforderlich"
 
 #: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Testplan \"%s\" existiert nicht"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Zugriff verweigert: TestRun gehört Ihnen nicht"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1809,15 +1809,15 @@ msgstr ""
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Test-Ausführungsstatus"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "TestRun bearbeiten"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "TestRun klonen"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
@@ -1825,12 +1825,12 @@ msgstr "Neuer Testlauf"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "version"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Benutzername oder E-Mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
@@ -1844,7 +1844,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Testläufe durchsuchen"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
@@ -1852,7 +1852,7 @@ msgstr "Zusammenfassung Testlauf"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "Plan ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
@@ -1876,7 +1876,7 @@ msgstr "Testfall-ID ist keine gültige Ganzzahl"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "Der von Ihnen eingegebene Benutzer existiert nicht in der Datenbank"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1934,11 +1934,11 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "GitHub integration"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
