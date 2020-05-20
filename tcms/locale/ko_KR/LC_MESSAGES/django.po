@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-19 08:11\n"
+"PO-Revision-Date: 2020-05-20 07:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -624,7 +624,7 @@ msgstr "버그"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "달리다"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -723,7 +723,7 @@ msgstr "테스트 계획"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "테스트 플랜"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -1114,11 +1114,11 @@ msgstr "실행"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "새로운 TestRun 생성"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "TestCase 검토 자 변경"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1222,15 +1222,15 @@ msgstr "모든 케이스가로드되었습니다."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "현재 계획에 자식 노드 추가"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "현재 계획에서 하위 노드 제거"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "이 테스트 계획에 추가 할 검색 사례."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1331,7 +1331,7 @@ msgstr "신규 계정 등록"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "TestRun에 TestCase 추가"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1347,15 +1347,15 @@ msgstr "모든 확인 된 사례"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "실행중인 테스트 사례"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "이번 실행 사례"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "계획에 저장된 정렬 키 사용"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1476,7 +1476,7 @@ msgstr "태그 삭제"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "CC 추가"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
@@ -1492,12 +1492,12 @@ msgstr "자동화된 서비스 케이스"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "사례 실행 ID"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "사례 ID"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
@@ -1529,7 +1529,7 @@ msgstr "보고하기"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
-msgstr ""
+msgstr "버그 없음"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
