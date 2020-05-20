@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 08:22\n"
+"PO-Revision-Date: 2020-05-20 08:44\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1243,7 +1243,7 @@ msgstr "Erstellt"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "Keine Testfälle gefunden."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1303,7 +1303,7 @@ msgstr "Bitte geben Sie Ihr neues Kennwort erneut ein, damit wir überprüfen k�
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "fordern Sie ein neues Zurücksetzen des Passworts an"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1320,7 +1320,7 @@ msgstr "Passwort zurücksetzen"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS Passwort zurücksetzen"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
@@ -1336,27 +1336,27 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
-msgstr ""
+msgstr "Manager"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Alle bestätigten Fälle"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Testfälle im Lauf"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Fälle in diesem Lauf"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Den im Paket gespeicherten Sortkey verwenden"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Wie kann ich den Fall zuweisen?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
@@ -1368,23 +1368,23 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Erstellungsdatum"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Ausgewählt"
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Produktversion"
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Notiz"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "Beendet"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1393,35 +1393,35 @@ msgstr "Wird durchgeführt"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Beendet am"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "Automatisch"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr ""
+msgstr "Markieren"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Ausgewählte Fälle aus diesem Testlauf entfernen"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "Aktualisiere den IDLE-Fall auf den neuesten Text der Großschreibung"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Diesen Fall(e) anderen Personen zuweisen"
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
@@ -1429,7 +1429,7 @@ msgstr "Bemerkung"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Hyperlink"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1441,15 +1441,15 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "Standardtester"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "Auto"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "Fehler"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1457,39 +1457,39 @@ msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
-msgstr ""
+msgstr "URL weist auf einen Fehler hin"
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Fehlerverfolgung automatisch aktualisieren"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "dieses Tag entfernen"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "CC hinzufügen"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Test-Ausführungsbericht"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Manuelle Fälle"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Automatisierte Fälle"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "Case-Run ID"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1724,11 +1724,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "Übergeordnete TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Setze den Quelltext TP als Elternteil des neuen TP"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
