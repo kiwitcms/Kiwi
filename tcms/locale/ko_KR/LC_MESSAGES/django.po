@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 07:52\n"
+"PO-Revision-Date: 2020-05-20 08:04\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -707,7 +707,8 @@ msgstr "에 시작"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s 지정된 테스트 실행 (테스트 케이스에 대해)을 실행해야합니다.\n"
+"여기 최신입니다 %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -715,7 +716,7 @@ msgstr "모두 보기"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "귀하에게 할당 된 TestRun이 없습니다"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
@@ -741,11 +742,12 @@ msgstr "실행"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s TestPlan을 관리하고 %(disabled_count)s 가 비활성화되었습니다.\n"
+"최신 %(count)s 다음과 같습니다."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "귀하에게 속한 TestPlan이 없습니다"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -753,7 +755,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "어서 오십시오 %(user)s,\n"
+"%(site_domain)s 계정에 가입 해 주셔서 감사합니다!\n\n"
+"계정을 활성화하려면이 링크를 클릭하십시오:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -766,12 +771,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "버그 %(pk)s 할당되었습니다.\n\n"
+"링크: %(bug_url)s\n\n"
+"요약: %(summary)s\n"
+"만든 날짜: %(creation_date)s\n"
+"기자: %(reporter)s\n"
+"양수인: %(assignee)s\n"
+"제품: %(product)s\n"
+"버전: %(version)s\n"
+"빌드: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "%(username)s에 의해 TestCase가 삭제되었습니다"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -788,7 +801,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "테스트 실행 %(pk)s 생성되었거나 업데이트되었습니다.\n\n"
+"### 연결 ###\n"
+"테스트 실행: %(run_url)s\n"
+"테스트 계획: %(plan_url)s\n\n"
+"### 기본 주행 정보 ###\n"
+"요약: %(summary)s\n\n"
+" 관리: %(manager)s\n"
+"기본 테스터: %(default_tester)s\n\n"
+"제품: %(product)s\n"
+"제품 버전: %(version)s\n"
+"빌드: %(build)s\n\n"
+"노트:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -1416,7 +1441,7 @@ msgstr "선택한 서비스 케이스 제거가 테스트 실행을 형성합니
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "IDLE 사례 실행을 최신 사례 텍스트로 업데이트"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1588,7 +1613,7 @@ msgstr "클론 테스트 케이스"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "TP에 새로운 TC 추가"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
