@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:04\n"
+"PO-Revision-Date: 2020-05-20 15:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -30,7 +30,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr ""
+msgstr "Fungua"
 
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:3
@@ -74,7 +74,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "Bidhaa"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:41
@@ -122,7 +122,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Hifadhi"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
