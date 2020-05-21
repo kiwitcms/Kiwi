@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-21 10:53\n"
+"PO-Revision-Date: 2020-05-21 11:03\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -105,7 +105,7 @@ msgstr "Verzió"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
@@ -162,7 +162,7 @@ msgstr "Új verzió hozzáadása"
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "Új build hozzáadása"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -173,14 +173,14 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "Utána"
 
 #: tcms/bugs/templates/bugs/search.html:27
 #: tcms/telemetry/templates/telemetry/include/filters.html:60
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "Előtte"
 
 #: tcms/bugs/templates/bugs/search.html:75
 #: tcms/bugs/templates/bugs/search.html:80
@@ -210,7 +210,7 @@ msgstr "Keresés"
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
@@ -220,11 +220,11 @@ msgstr ""
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
 msgid "Edit"
-msgstr ""
+msgstr "Szerkesztés"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:506
 msgid "Delete"
-msgstr ""
+msgstr "Törlés"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -660,7 +660,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "Hozzáad"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
@@ -788,23 +788,23 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
-msgstr ""
+msgstr "Mellékletek"
 
 #: tcms/templates/include/attachments.html:14
 msgid "File"
-msgstr ""
+msgstr "Fájl"
 
 #: tcms/templates/include/attachments.html:15
 msgid "Owner"
-msgstr ""
+msgstr "Tulajdonos"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "Dátum"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "Nincs találat"
 
 #: tcms/templates/include/bug_details.html:3
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -828,7 +828,7 @@ msgstr "Állapot"
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "Cimkék"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -933,23 +933,23 @@ msgstr "Fordítási útmutató"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Első oldal"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Előző oldal"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Aktuális oldal"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Következő oldal"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Utolsó oldal"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -1043,15 +1043,15 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Fájlnév"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "Beküldő"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Létrehozás dátuma"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
@@ -1083,7 +1083,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Klónozás"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1497,7 +1497,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "Hibák"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
@@ -1591,11 +1591,11 @@ msgstr "Referencia link"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "Hiba URL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Teszttervek"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1607,7 +1607,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "Új tesztkészlet"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
@@ -1659,15 +1659,15 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Mindkettő"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testplans/templates/testplans/search.html:90
@@ -1679,7 +1679,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Létrehozva"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
@@ -1687,7 +1687,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr ""
+msgstr "Előzmények"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1720,11 +1720,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Tesztterv szerkesztése"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr "Új teszt terv készítése"
+msgstr "Új tesztterv készítése"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1748,7 +1748,7 @@ msgstr "Értesítsen, ha:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr "Teszt Terv frissítésre került"
+msgstr "Tesztterv frissítésre került"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
@@ -1770,7 +1770,7 @@ msgstr "Tesztterv neve"
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Tesztterv"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
@@ -1813,16 +1813,16 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "verzió"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Felhasználónév vagy e-mail cím"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Kiválasztott tesztkészlet(ek):"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
