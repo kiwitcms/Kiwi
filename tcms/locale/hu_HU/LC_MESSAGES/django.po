@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-21 10:43\n"
+"PO-Revision-Date: 2020-05-21 10:53\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -334,7 +334,7 @@ msgstr "Tesztelés"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr "Új teszt terv"
+msgstr "Új tesztterv"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
@@ -350,7 +350,7 @@ msgstr "Keresés"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr "Teszt tervek keresése"
+msgstr "Teszttervek keresése"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
@@ -598,7 +598,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Címke"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:163
@@ -689,7 +689,7 @@ msgstr "Teszt végrehajtás"
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Kezdés időpontja"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -733,7 +733,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Nem tartozik tesztterv hozzád"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -1761,11 +1761,11 @@ msgstr "Aktív"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Teszttervek keresése"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Tesztterv neve"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
@@ -1774,7 +1774,7 @@ msgstr ""
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr "Teszt terv szükséges"
+msgstr "Tesztterv szükséges"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
