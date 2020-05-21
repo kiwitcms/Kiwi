@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-20 14:42\n"
+"PO-Revision-Date: 2020-05-21 09:54\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -142,7 +142,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr ""
+msgstr "Összefoglaló"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:42
@@ -1160,7 +1160,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "Kategória"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
@@ -1732,7 +1732,7 @@ msgstr "Szülő ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "Teszt terv dokumentum:"
+msgstr "Teszt terv leírás:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
