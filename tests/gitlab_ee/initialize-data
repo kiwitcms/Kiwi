@@ -40,4 +40,4 @@ gitlab project create --name katinar --visibility private
 
 # http://bugtracker.kiwitcms.org/root/katinar/-/issues/1
 # http://bugtracker.kiwitcms.org/root/katinar/issues/1
-gitlab project-issue create --project-id 2 --title "Hello Private Issue" --description "Created via CLI"
+gitlab project-issue create --project-id 2 --title "Hello Private Issue" --description "Created in secret via CLI"
