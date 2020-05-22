@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-22 11:31\n"
+"PO-Revision-Date: 2020-05-22 12:12\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -272,11 +272,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
-msgstr ""
+msgstr "Személyes adatok"
 
 #: tcms/kiwi_auth/admin.py:87
 msgid "Permissions"
-msgstr ""
+msgstr "Jogosultságok"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
@@ -1413,7 +1413,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
-msgstr ""
+msgstr "Hozzászólás"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
@@ -1441,7 +1441,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
@@ -1691,12 +1691,12 @@ msgstr "Előzmények"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "A teszteset klónozása sikeres volt"
 
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Legalább egy teszteset szükséges"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1778,7 +1778,7 @@ msgstr "Tesztterv szükséges"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "A nyomtatáshoz legalább egy tesztterv szükséges"
 
 #: tcms/testplans/views.py:396
 #, python-format
