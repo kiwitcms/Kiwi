@@ -208,6 +208,18 @@ class Gitlab(IssueTrackerType):
         )
         return new_issue.attributes['web_url']
 
+    def details(self, url):
+        """
+            Use Gitlab API instead of OpenGraph to return bug
+            details b/c it will work for both public and private URLs.
+        """
+        project = self.rpc.projects.get(self.repo_slug())
+        issue = project.issues.get(self.bug_id_from_url(url))
+        return {
+            'title': issue.title,
+            'description': issue.description,
+        }
+
 
 class Redmine(IssueTrackerType):
     """

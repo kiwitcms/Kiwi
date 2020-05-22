@@ -48,13 +48,26 @@ class TestGitlabIntegration(APITestCase):
             'http://bugtracker.kiwitcms.org/root/kiwitcms/-/issues/1')
         self.assertEqual(self.existing_bug_id, result)
 
-    def test_details(self):
+    def test_details_for_public_url(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual('Hello GitLab (#1) · Issues · Administrator / kiwitcms',
-                         result['title'])
+        self.assertEqual('Hello GitLab', result['title'])
         self.assertEqual('Created via CLI', result['description'])
-        self.assertIn('/assets/gitlab_logo', result['image'])
+
+    def test_details_for_private_url(self):
+        bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            name='Private GitLab for root/katinar',
+            tracker_type='Gitlab',
+            base_url='http://bugtracker.kiwitcms.org/root/katinar/',
+            api_url='http://bugtracker.kiwitcms.org',
+            api_password='ypCa3Dzb23o5nvsixwPA',
+        )
+        integration = Gitlab(bug_system)
+
+        result = integration.details('http://bugtracker.kiwitcms.org/root/katinar/-/issues/1')
+
+        self.assertEqual('Hello Private Issue', result['title'])
+        self.assertEqual('Created in secret via CLI', result['description'])
 
     def test_auto_update_bugtracker(self):
         repo_slug = self.integration.repo_slug()
