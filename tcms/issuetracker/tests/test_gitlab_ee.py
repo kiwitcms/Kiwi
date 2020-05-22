@@ -4,10 +4,12 @@ import os
 import time
 import unittest
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker.types import Gitlab
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import BugSystem
 
+from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestExecutionFactory
 
 
@@ -21,6 +23,12 @@ class TestGitlabIntegration(APITestCase):
         super()._fixture_setup()
 
         self.execution_1 = TestExecutionFactory()
+        self.execution_1.case.text = "Given-When-Then"
+        self.execution_1.case.save()  # will generate history object
+
+        self.component = ComponentFactory(name='Gitlab integration',
+                                          product=self.execution_1.run.plan.product)
+        self.execution_1.case.add_component(self.component)
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='GitLab-EE for root/kiwitcms',
@@ -90,13 +98,30 @@ class TestGitlabIntegration(APITestCase):
                 "TE-%d: %s" % (self.execution_1.pk, self.execution_1.case.summary)]:
             self.assertIn(expected_string, last_comment.body)
 
-    def test_report_issue_from_test_execution_falls_back_to_query_params(self):
+    def test_report_issue_from_test_execution_1click_works(self):
         # simulate user clicking the 'Report bug' button in TE widget, TR page
         result = self.rpc_client.Bug.report(self.execution_1.pk, self.integration.bug_system.pk)
         self.assertEqual(result['rc'], 0)
         self.assertIn(self.integration.bug_system.base_url, result['response'])
-        self.assertIn('issues/new', result['response'])
+        self.assertIn('/-/issues/', result['response'])
 
         # assert that the result looks like valid URL parameters
-        self.assertIn('?issue%5Btitle%5D=Failed+test', result['response'])
-        self.assertIn('&issue%5Bdescription%5D=Filed+from+execution', result['response'])
+        new_issue_id = self.integration.bug_id_from_url(result['response'])
+        gl_project = self.integration.rpc.projects.get(self.integration.repo_slug())
+        issue = gl_project.issues.get(new_issue_id)
+
+        self.assertEqual("Failed test: %s" % self.execution_1.case.summary, issue.title)
+        for expected_string in [
+                "Filed from execution %s" % self.execution_1.get_full_url(),
+                self.execution_1.run.plan.product.name,
+                self.component.name,
+                "Steps to reproduce",
+                self.execution_1.case.text]:
+            self.assertIn(expected_string, issue.description)
+
+        # verify that LR has been added to TE
+        self.assertTrue(LinkReference.objects.filter(
+            execution=self.execution_1,
+            url=result['response'],
+            is_defect=True,
+        ).exists())
