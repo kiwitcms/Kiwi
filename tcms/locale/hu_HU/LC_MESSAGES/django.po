@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-22 11:21\n"
+"PO-Revision-Date: 2020-05-22 11:31\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -900,7 +900,7 @@ msgstr "Kijelentkezés"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr ""
+msgstr "Bejelentkezés"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
@@ -965,7 +965,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "Terv klónozása"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
@@ -1015,19 +1015,19 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "Létrehozás ideje"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "Szülő"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
-msgstr ""
+msgstr "Szerkesztési előzmények"
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "Dokumentum"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
@@ -1055,12 +1055,12 @@ msgstr "Létrehozás dátuma"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
-msgstr ""
+msgstr "Nincsenek mellékletek"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Eset"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
@@ -1095,7 +1095,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Futtatás"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
@@ -1148,7 +1148,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Tesztelő"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1356,7 +1356,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Létrehozás dátuma"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1700,7 +1700,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Tesztterv klónozása"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
