@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-22 10:59\n"
+"PO-Revision-Date: 2020-05-22 11:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1607,7 +1607,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr "Új tesztkészlet"
+msgstr "Új teszteset"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
@@ -1732,7 +1732,7 @@ msgstr "Szülő ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "Teszt terv leírás:"
+msgstr "Tesztterv leírás:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
@@ -1752,7 +1752,7 @@ msgstr "Tesztterv frissítésre került"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr "Tesztkészletek frissítésre kerültek"
+msgstr "Tesztesetek frissítésre kerültek"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
