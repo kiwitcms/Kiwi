@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-22 12:12\n"
+"PO-Revision-Date: 2020-05-22 12:21\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -466,7 +466,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Tesztterv"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -570,12 +570,12 @@ msgstr "Szöveg"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Melléklet"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "Nem található melléklet"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -588,7 +588,7 @@ msgstr ""
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
-msgstr ""
+msgstr "Nem található komponens"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -608,7 +608,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "hiba"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
@@ -629,7 +629,7 @@ msgstr "Megjegyzések"
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Hozzászólások"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
@@ -676,7 +676,7 @@ msgstr ""
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Tesztesetek"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -842,12 +842,12 @@ msgstr "Név"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Tervek"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
 #: tcms/templates/plan/get_cases.html:139
 msgid "Cases"
-msgstr ""
+msgstr "Esetek"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
@@ -863,11 +863,11 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove"
-msgstr ""
+msgstr "Eltávolítás"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Címke hozzáadása"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -953,7 +953,7 @@ msgstr "Utolsó oldal"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Nem található teszteset ebben a tervben."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
@@ -1001,7 +1001,7 @@ msgstr "Szerző"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "Terv típusa"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
@@ -1035,11 +1035,11 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "Fa nézet"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Ehhez a tervhez még nem készült leírás."
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
@@ -1130,7 +1130,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "Szűrő beállítás"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -1183,7 +1183,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Alapértelmezett tesztelő"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1227,7 +1227,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "Létrehozva"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
@@ -1245,7 +1245,7 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "jelszó"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1265,7 +1265,7 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "fiók regisztrálása"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
@@ -1277,7 +1277,7 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "most"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
@@ -1324,7 +1324,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
-msgstr ""
+msgstr "Menedzser"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
@@ -1372,7 +1372,7 @@ msgstr ""
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "Befejezett"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1381,15 +1381,15 @@ msgstr ""
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Befejezve"
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "Automatikusan"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
@@ -1599,7 +1599,7 @@ msgstr "Teszttervek"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "Komponensek"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1651,7 +1651,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Tesztesetek keresése"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
@@ -1840,11 +1840,11 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "Terv ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "Tesztterv ID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
