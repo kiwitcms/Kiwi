@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-21 11:03\n"
+"PO-Revision-Date: 2020-05-22 10:59\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -338,7 +338,7 @@ msgstr "Új tesztterv"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr "Új tesztkészlet"
+msgstr "Új teszteset"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
@@ -358,7 +358,7 @@ msgstr "Futtatott tesztek keresése"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr "Teszt készletek keresése"
+msgstr "Tesztesetek keresése"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
@@ -1822,7 +1822,7 @@ msgstr "Felhasználónév vagy e-mail cím"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr "Kiválasztott tesztkészlet(ek):"
+msgstr "Kiválasztott teszteset(ek):"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
