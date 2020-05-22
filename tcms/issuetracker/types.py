@@ -194,16 +194,19 @@ class Gitlab(IssueTrackerType):
         return not (self.bug_system.api_url and self.bug_system.api_password)
 
     def report_issue_from_testexecution(self, execution, user):
-        args = {
-            'issue[title]': 'Failed test: %s' % execution.case.summary,
-            'issue[description]': self._report_comment(execution),
-        }
+        project = self.rpc.projects.get(self.repo_slug())
+        new_issue = project.issues.create({
+            'title': 'Failed test: %s' % execution.case.summary,
+            'description': self._report_comment(execution),
+        })
 
-        url = self.bug_system.base_url
-        if not url.endswith('/'):
-            url += '/'
-
-        return url + '/issues/new?' + urlencode(args, True)
+        # and also add a link reference that will be shown in the UI
+        LinkReference.objects.get_or_create(
+            execution=execution,
+            url=new_issue.attributes['web_url'],
+            is_defect=True,
+        )
+        return new_issue.attributes['web_url']
 
 
 class Redmine(IssueTrackerType):
