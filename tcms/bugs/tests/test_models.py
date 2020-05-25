@@ -6,6 +6,7 @@ from django.conf import settings
 if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
     raise unittest.SkipTest('tcms.bugs is disabled')
 
+from django.contrib.auth.models import Permission       # noqa: E402
 from django.template.loader import render_to_string     # noqa: E402
 from django.test import TestCase                        # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
@@ -47,3 +48,11 @@ class TestSendMailOnAssigneeChange(TestCase):
         BugFactory(assignee=None)
 
         self.assertFalse(send_mail.called)
+
+
+class TestBugTagPermissions(TestCase):
+    def test_add_bugtag(self):
+        self.assertTrue(Permission.objects.filter(codename='add_bugtag'))
+
+    def test_delete_bugtag(self):
+        self.assertTrue(Permission.objects.filter(codename='delete_bugtag'))

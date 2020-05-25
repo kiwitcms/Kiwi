@@ -5,6 +5,7 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.models.base import UrlMixin
 
@@ -31,6 +32,12 @@ class Bug(models.Model, UrlMixin):
 
     executions = models.ManyToManyField('testruns.TestExecution', related_name='bugs')
     tags = models.ManyToManyField('management.Tag', related_name='bugs')
+
+    class Meta:
+        permissions = (
+            ('add_bugtag', _('can add bug tag')),
+            ('delete_bugtag', _('can delete bug tag')),
+        )
 
     def __str__(self):
         return "BUG-%d: %s " % (self.pk, self.summary)
