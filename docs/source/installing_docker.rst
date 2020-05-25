@@ -77,6 +77,13 @@ Then you need to create the first user account::
 
     docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
+.. warning::
+
+    In the command ``docker exec`` the option ``-i`` keeps STDIN open
+    even if not attached while ``-t`` allocates a pseudo-TTY. They are suitable
+    when executed on a terminal by a person. When used in automated scripts
+    ``-t`` often needs to be removed! For more information about ``docker exec``
+    see https://docs.docker.com/engine/reference/commandline/exec/#options
 
 .. _configure-kiwi-domain:
 
