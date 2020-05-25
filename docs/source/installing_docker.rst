@@ -73,22 +73,9 @@ You need to create the database schema by executing::
 
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
-Then you need to create the first user account either via the web interface
-or via the command line!
+Then you need to create the first user account::
 
-.. note::
-
-    By default the first registered account will become superuser!
-
-.. warning::
-
-    Account registration via web requires working :ref:`email-settings`
-    because the account must be activated via confirmation link sent to the
-    email address defined during registration.
-
-    It is usually easier to create the first account via the command line::
-
-        docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
+    docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
 
 .. _configure-kiwi-domain:
