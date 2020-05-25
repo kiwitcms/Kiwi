@@ -99,18 +99,20 @@ Configuration of Kiwi TCMS domain
 The first step you need to do is to configure the domain of your Kiwi TCMS
 installation. This is used to construct links to test plans, test cases, etc.
 The default value is ``127.0.0.1:8000`` which is suitable if you are running
-in devel mode. The easiest and automation-friendly way to set the domain is
-to use the command line tool::
+in devel mode.
 
-    docker exec -it kiwi_web /Kiwi/manage.py set_domain public.tenant.kiwitcms.org
-
-
-To update the setting using web interface go to
+To update this setting using the web interface go to
 ``https://<your_domain_or_ip>/admin/sites/site/1/``!
 Update **Domain name** to the fully qualified domain name or IP address,
 including port if necessary and click the Save button!
 
 |Domain configuration|
+
+You may also use the command line::
+
+    docker exec -it kiwi_web /Kiwi/manage.py set_domain public.tenant.kiwitcms.org
+
+.. versionadded:: 8.4
 
 
 Upgrading
