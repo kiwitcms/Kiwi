@@ -64,3 +64,40 @@ jobs:
         run: |
           coverage report -m
           bash <(curl -s https://codecov.io/bash)
+
+  postgres:
+    name: postgres / french
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Create database
+        run: |
+          docker-compose -f docker-compose.postgres pull db
+          docker-compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
+
+      - name: Execute tests
+        run: |
+          sudo apt-get install libkrb5-dev gettext
+
+          pip install -r requirements/devel.txt
+          pip install -r requirements/postgres.txt
+          pushd tcms/ && npm install && popd
+
+          docker exec -i kiwi_db psql -c "ALTER USER kiwi CREATEDB;"
+
+          export LANG=fr-fr
+          TEST_DB=Postgres make test
+
+      - name: Send coverage to codecov.io
+        run: |
+          coverage report -m
+          bash <(curl -s https://codecov.io/bash)

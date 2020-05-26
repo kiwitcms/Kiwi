@@ -45,17 +45,6 @@ jobs:
       addons:
         mariadb: 10.3
 
-    - env:
-        - CMD=test
-        - TEST_DB=Postgres
-        - LANG=fr
-      addons:
-        postgresql: 10
-        apt:
-          packages:
-          - postgresql-10
-          - postgresql-client-10
-
     - if: branch = master AND type = push
       env:
         - CMD=test
@@ -89,10 +78,6 @@ before_install:
             mysql -e 'GRANT ALL PRIVILEGES ON kiwi.* TO kiwi;'
             mysql -e 'CREATE DATABASE test_kiwi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
             mysql -e 'GRANT ALL PRIVILEGES ON test_kiwi.* TO kiwi;'
-        fi
-
-        if [ "$TEST_DB" == "Postgres" ]; then
-            psql -c  "CREATE DATABASE kiwi ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" -U postgres
         fi
 
 install:
