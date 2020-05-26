@@ -1,0 +1,47 @@
+name: security
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check with bandit
+        run: |
+          pip install bandit
+          make bandit
+
+  # this is expected to fail b/c bandit detects lots of issues
+  # from 3rd party libraries!
+  bandit_site_packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check with bandit
+        run: |
+          pip install bandit
+
+          pip install -r requirements/mariadb.txt
+          pip install -r requirements/postgres.txt
+
+          make bandit_site_packages
