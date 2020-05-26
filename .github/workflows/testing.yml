@@ -65,6 +65,41 @@ jobs:
           coverage report -m
           bash <(curl -s https://codecov.io/bash)
 
+  mariadb:
+    name: mariadb / slovenian
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Create database
+        run: |
+          docker-compose pull db
+          docker-compose run -d -p 3306:3306 --name kiwi_db db
+
+      - name: Execute tests
+        run: |
+          sudo apt-get install libkrb5-dev gettext
+
+          pip install -r requirements/devel.txt
+          pip install -r requirements/mariadb.txt
+          pushd tcms/ && npm install && popd
+
+          export LANG=sl-si
+          TEST_DB=MariaDB make test
+
+      - name: Send coverage to codecov.io
+        run: |
+          coverage report -m
+          bash <(curl -s https://codecov.io/bash)
+
   postgres:
     name: postgres / french
     runs-on: ubuntu-latest
