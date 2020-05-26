@@ -45,7 +45,7 @@ jobs:
 
     - name: Execute tests
       run: |
-        export LANG="en_US.UTF-8"
+        export LANG=en-us
         export TEST_BUGTRACKER_INTEGRATION=1
         coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.issuetracker.tests.test_${{ matrix.tracker }}
 

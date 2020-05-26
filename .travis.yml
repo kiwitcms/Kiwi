@@ -28,10 +28,6 @@ jobs:
   include:
     - if: branch = master AND type = push
       env:
-        - CMD=bandit_site_packages
-
-    - if: branch = master AND type = push
-      env:
         - CMD=coverity
       addons:
         coverity_scan:
@@ -41,18 +37,6 @@ jobs:
           notification_email: info@kiwitcms.org
           build_command: "--no-command --fs-capture-search ./ --fs-capture-search $(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')"
           branch_pattern: master
-
-    - env:
-        - CMD=pylint
-
-    - env:
-        - CMD=test
-        - TEST_DB=SQLite
-
-    - env:
-        - CMD=test
-        - TEST_DB=SQLite
-        - KIWI_DISABLE_BUGTRACKER=yes
 
     - env:
         - CMD=test
@@ -83,12 +67,6 @@ jobs:
 
     - env:
         - CMD=test-docker-image
-
-  allow_failures:
-    - env:
-        - CMD=pylint
-    - env:
-        - CMD=bandit_site_packages
 
 
 before_install:
