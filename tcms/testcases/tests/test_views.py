@@ -398,8 +398,7 @@ class TestGetCasesFromPlan(BasePlanCase):
         initiate_user_with_default_setups(cls.tester)
 
     def test_casetags_are_shown_in_template(self):
-        # pylint: disable=tag-objects-get_or_create
-        tag, _created = Tag.objects.get_or_create(name='Linux')
+        tag, _created = Tag.get_or_create(self.tester, 'Linux')
         self.case.add_tag(tag)
 
         url = reverse('testcases-all')
