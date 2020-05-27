@@ -14,7 +14,7 @@ rlJournalStart
     rlPhaseStartTest "[PostgreSQL] Container up"
         rlRun -t -c "docker-compose -f docker-compose.postgres up -d"
         sleep 10
-        rlRun -t -c "docker exec -it kiwi_web /Kiwi/manage.py migrate"
+        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         assert_up_and_running
     rlPhaseEnd
 
@@ -39,7 +39,7 @@ rlJournalStart
     rlPhaseStartTest "Container up"
         rlRun -t -c "docker-compose up -d"
         sleep 10
-        rlRun -t -c "docker exec -it kiwi_web /Kiwi/manage.py migrate"
+        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         assert_up_and_running
     rlPhaseEnd
 

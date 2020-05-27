@@ -20,7 +20,7 @@ rlJournalStart
     rlPhaseStartTest "Plain HTTP works"
         rlRun -t -c "docker-compose run -d -e KIWI_DONT_ENFORCE_HTTPS=true --name kiwi_web web /httpd-foreground"
         sleep 10
-        rlRun -t -c "docker exec -it kiwi_web /Kiwi/manage.py migrate"
+        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         assert_up_and_running
     rlPhaseEnd
 
