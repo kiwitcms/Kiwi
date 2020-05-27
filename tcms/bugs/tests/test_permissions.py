@@ -6,6 +6,10 @@ from django.conf import settings
 if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
     raise unittest.SkipTest('tcms.bugs is disabled')
 
+
+from django.contrib.auth.models import Permission           # noqa: E402
+from django.contrib.contenttypes.models import ContentType  # noqa: E402
+from django.test import TestCase                        # noqa: E402
 from django.urls import reverse                         # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
 
@@ -52,3 +56,12 @@ class TestNew(tests.PermissionsTestCase):
         self.assertEqual(self.tester, last_bug.reporter)
         self.assertContains(response, 'Bug created by test suite')
         self.assertContains(response, 'BUG-%d' % last_bug.pk)
+
+
+class TestM2MPermissionsExist(TestCase):
+    def test_permissions_exist(self):
+        ctype = ContentType.objects.get_for_model(Bug.tags.through)
+        self.assertEqual(4, Permission.objects.filter(content_type=ctype).count())
+
+        ctype = ContentType.objects.get_for_model(Bug.executions.through)
+        self.assertEqual(4, Permission.objects.filter(content_type=ctype).count())
