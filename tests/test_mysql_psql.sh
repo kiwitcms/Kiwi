@@ -16,16 +16,16 @@ rlJournalStart
         sleep 5
         rlRun -t -c "docker-compose up -d"
         sleep 10
-        rlRun -t -c "docker exec -it kiwi_web /Kiwi/manage.py migrate"
+        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         assert_up_and_running
     rlPhaseEnd
 
     rlPhaseStartTest "mysql binary is present"
-        rlRun -t -c "docker exec -u 0 -it kiwi_web mysql --help"
+        rlRun -t -c "docker exec -u 0 -i kiwi_web mysql --help"
     rlPhaseEnd
 
     rlPhaseStartTest "psql binary is present"
-        rlRun -t -c "docker exec -u 0 -it kiwi_web psql --help"
+        rlRun -t -c "docker exec -u 0 -i kiwi_web psql --help"
     rlPhaseEnd
 
     rlPhaseStartCleanup

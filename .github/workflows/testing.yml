@@ -136,3 +136,20 @@ jobs:
         run: |
           coverage report -m
           bash <(curl -s https://codecov.io/bash)
+
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Execute tests
+        run: |
+          make test-docker-image

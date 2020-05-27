@@ -47,9 +47,6 @@ jobs:
         - CMD=test_for_missing_migrations
         - TEST_DB=SQLite
 
-    - env:
-        - CMD=test-docker-image
-
 
 before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
