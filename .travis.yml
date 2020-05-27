@@ -55,7 +55,7 @@ before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
   - |
         if [ "$TEST_DB" == "MySQL" ]; then
-            cat "$TRAVIS_BUILD_DIR/.travis/my.cnf" | sudo tee -a /etc/mysql/conf.d/mariadb.cnf
+            cat "$TRAVIS_BUILD_DIR/99-charset.cnf" | sudo tee -a /etc/mysql/conf.d/mariadb.cnf
             sudo cat /etc/mysql/conf.d/mariadb.cnf
             sudo service mysql restart
 
