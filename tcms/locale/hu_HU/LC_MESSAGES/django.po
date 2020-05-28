@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 14:00\n"
+"PO-Revision-Date: 2020-05-28 14:39\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1219,11 +1219,11 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "Gyors keresés"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr ""
+msgstr "Normál keresés"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
@@ -1241,7 +1241,7 @@ msgstr "Jelszó"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Elfelejtett"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
@@ -1328,7 +1328,7 @@ msgstr "Menedzser"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Minden megerősített eset"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
@@ -1469,11 +1469,11 @@ msgstr ""
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Kézi esetek"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Automatizált esetek"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
@@ -1486,7 +1486,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Tesztelte"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
