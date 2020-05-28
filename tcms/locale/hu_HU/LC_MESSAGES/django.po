@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 13:42\n"
+"PO-Revision-Date: 2020-05-28 14:00\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -456,7 +456,7 @@ msgstr "EGYÉB"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
 msgid "TOTAL"
-msgstr ""
+msgstr "ÖSSZESEN"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
@@ -474,7 +474,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "Összesen"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
@@ -491,27 +491,27 @@ msgstr "Automatizált"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr ""
+msgstr "Kézi"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr ""
+msgstr "Prioritások"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "Kategóriák"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Pozitív"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Semleges"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negatív"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -519,7 +519,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "Teszteset"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
@@ -531,7 +531,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Leggyakoribb sikertelen tesztek"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
@@ -973,15 +973,15 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "Terv nyomtatása"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "Terv törlése"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "Tesztterv törlése"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1005,7 +1005,7 @@ msgstr "Terv típusa"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
-msgstr ""
+msgstr "Referencia hivatkozás"
 
 #: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
@@ -1031,7 +1031,7 @@ msgstr "Dokumentum"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Esetek felülvizsgálata"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
@@ -1064,16 +1064,16 @@ msgstr "Eset"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Új eset írása"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Esetek hozzáadása másik tervből"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Nyomtatás"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
@@ -1091,7 +1091,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "A kiválasztott esetek eltávolítása ebből a tervből"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1107,7 +1107,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "Alapértelmezett tesztelő megváltoztatása"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1138,7 +1138,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Esetek újrarendezése"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
@@ -1164,7 +1164,7 @@ msgstr "Kategória"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "Elemek száma oldalanként"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
@@ -1173,7 +1173,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "Teszteset összefoglaló"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
@@ -1191,7 +1191,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Műveletek"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
