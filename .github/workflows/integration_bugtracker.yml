@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7]
-        tracker: [bugzilla, gitlab_ce, gitlab_ee]
+        tracker: [bugzilla, github, gitlab_ce, gitlab_ee]
 
     steps:
     - uses: actions/checkout@v2
@@ -45,6 +45,7 @@ jobs:
 
     - name: Execute tests
       run: |
+        export GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN="${{ secrets.GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN }}"
         export LANG=en-us
         export TEST_BUGTRACKER_INTEGRATION=1
         coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.issuetracker.tests.test_${{ matrix.tracker }}

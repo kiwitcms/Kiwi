@@ -141,7 +141,7 @@ class GitHub(IssueTrackerType):
         }
 
         try:
-            repo_id = github_integration.GitHubThread.repo_id(self.bug_system)
+            repo_id = self.it_class.repo_id(self.bug_system)
             repo = self.rpc.get_repo(repo_id)
             issue = repo.create_issue(**args)
 
