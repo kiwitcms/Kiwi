@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 15:15\n"
+"PO-Revision-Date: 2020-05-28 15:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1578,7 +1578,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "Kiválasztott teszteset"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1615,7 +1615,7 @@ msgstr "Komponensek"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Teszteset szerkesztése"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
@@ -1651,15 +1651,15 @@ msgstr "Tesztkészletek frissítésre kerültek"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Teszteset törölve"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "CC:"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Email címek vesszővel elválasztva. Egy értesítő levél lesz elküldve a CC listában található összes email címre."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1695,7 +1695,7 @@ msgstr "Létrehozva"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Tesztterv nincs megadva vagy nem létezik"
 
 #: tcms/testcases/views.py:501
 msgid "History"
@@ -1716,7 +1716,7 @@ msgstr "Tesztterv klónozása"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Tesztesetek klónozása"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
@@ -1724,11 +1724,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "Szülő tesztterv"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Forrás tesztterv beállítása mint az új tesztterv szülője"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1912,15 +1912,15 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "SIKERTELEN"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "ZÁROLT"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "HIBA"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
@@ -1998,7 +1998,7 @@ msgstr "Ár"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "Előfizetés típusa"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
@@ -2016,7 +2016,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Előfizetés FastSpringen keresztül"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
@@ -2080,7 +2080,7 @@ msgstr "Teljes név"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "Érvénytelen karaktersorozat"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
