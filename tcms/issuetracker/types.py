@@ -183,18 +183,12 @@ class Gitlab(IssueTrackerType):
         return gitlab.Gitlab(self.bug_system.api_url,
                              private_token=self.bug_system.api_password)
 
-    def repo_slug(self):
-        """
-            Return the repository slug stripped out of ``base_url``!
-            This is needed for further integration tasks and tests!
-        """
-        return '/'.join(self.bug_system.base_url.strip().strip('/').split('/')[-2:])
-
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.api_url and self.bug_system.api_password)
 
     def report_issue_from_testexecution(self, execution, user):
-        project = self.rpc.projects.get(self.repo_slug())
+        repo_id = self.it_class.repo_id(self.bug_system)
+        project = self.rpc.projects.get(repo_id)
         new_issue = project.issues.create({
             'title': 'Failed test: %s' % execution.case.summary,
             'description': self._report_comment(execution),
@@ -213,7 +207,8 @@ class Gitlab(IssueTrackerType):
             Use Gitlab API instead of OpenGraph to return bug
             details b/c it will work for both public and private URLs.
         """
-        project = self.rpc.projects.get(self.repo_slug())
+        repo_id = self.it_class.repo_id(self.bug_system)
+        project = self.rpc.projects.get(repo_id)
         issue = project.issues.get(self.bug_id_from_url(url))
         return {
             'title': issue.title,
