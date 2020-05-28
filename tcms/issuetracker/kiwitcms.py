@@ -75,7 +75,7 @@ class KiwiTCMS(IssueTrackerType):
         """
         data = {
             'reporter': user,
-            'summary': 'Test case failure: %s' % execution.case.summary,
+            'summary': 'Failed test: %s' % execution.case.summary,
             'product': execution.run.plan.product,
             'version': execution.run.product_version,
             'build': execution.build,
