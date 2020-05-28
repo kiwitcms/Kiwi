@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 15:23\n"
+"PO-Revision-Date: 2020-05-28 15:43\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -297,15 +297,15 @@ msgstr "Már létezik felhasználó ezzel az email címmel."
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Az új %s fiókod megerősítése"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "A fiókod létrehozva, a megerősítésért ellenőrizd a levelesládádat"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "A fiókod létrehozva, de egy adminisztrátornak aktiválnia kell"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
@@ -338,7 +338,7 @@ msgstr ""
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
-msgstr "Vezérlőpult"
+msgstr "VEZÉRLŐPULT"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
@@ -711,7 +711,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr "Összes"
+msgstr "ÖSSZES"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
@@ -741,7 +741,7 @@ msgstr "Végrehajtások száma"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s saját kezelésű tesztterv, %(disabled_count)s letiltva. Itt van a legújabb %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
@@ -753,7 +753,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Kedves %(user)s,\n"
+"köszönjük, hogy regisztráltál egy %(site_domain)s fiókot!\n\n"
+"A fiók aktiválásához, az alábbi hivatkozásra kell kattintani:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -766,12 +769,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "%(pk)s hibajegy hozzád rendelve.\n\n"
+"Hivatkozás: %(bug_url)s\n\n"
+"Összefoglaló: %(summary)s\n"
+"Létrehozva: %(creation_date)s\n"
+"Bejelentő: %(reporter)s\n"
+"Felelős: %(assignee)s\n"
+"Termék: %(product)s\n"
+"Verzió: %(version)s\n"
+"Build: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Tesztesetet törölte %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -1473,7 +1484,7 @@ msgstr ""
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "CC hozzáadása"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
@@ -1546,7 +1557,7 @@ msgstr ""
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Érvényes esetazonosítókat kell megadni. Több esetazonosítót vesszővel kell elválasztani, pl.: \"111, 222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
