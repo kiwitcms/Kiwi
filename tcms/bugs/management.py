@@ -1,3 +1,4 @@
+# pylint: disable=too-many-locals, invalid-name, avoid-list-comprehension, bulk-create-used
 # Copyright (c) 2020 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
