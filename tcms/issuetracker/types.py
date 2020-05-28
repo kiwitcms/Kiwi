@@ -115,7 +115,8 @@ class GitHub(IssueTrackerType):
         Support for GitHub. Requires:
 
         :base_url: - URL to a GitHub repository for which we're going to report issues
-        :api_password: - GitHub API token.
+        :api_password: - GitHub API token - needs ``repo`` or ``public_repo``
+                         permissions.
 
         .. note::
 
@@ -161,6 +162,19 @@ class GitHub(IssueTrackerType):
                 url += '/'
 
             return url + '/issues/new?' + urlencode(args, True)
+
+    def details(self, url):
+        """
+            Use GitHub's API instead of OpenGraph to return bug
+            details b/c it will work for both public and private URLs.
+        """
+        repo_id = self.it_class.repo_id(self.bug_system)
+        repo = self.rpc.get_repo(repo_id)
+        issue = repo.get_issue(self.bug_id_from_url(url))
+        return {
+            'title': issue.title,
+            'description': issue.body,
+        }
 
 
 class Gitlab(IssueTrackerType):

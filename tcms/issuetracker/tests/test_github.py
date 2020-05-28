@@ -51,17 +51,29 @@ class TestGitHubIntegration(APITestCase):
     def test_details_for_public_url(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual(
-            'Hello GitHub \xb7 Issue #1 \xb7 kiwitcms/test-github-integration',
-            result['title'])
+        self.assertEqual('Hello GitHub', result['title'])
         self.assertEqual(
             "This issue is used in automated tests that verify Kiwi TCMS - GitHub "
             "bug tracking integration!",
             result['description'])
 
-    # todo: implament this
     def test_details_for_private_url(self):
-        pass
+        bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            name='Private GitHub for kiwitcms/private-test-github-integration',
+            tracker_type='GitHub',
+            base_url='https://github.com/kiwitcms/private-test-github-integration',
+            api_password=os.getenv('GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN'),
+        )
+        integration = GitHub(bug_system)
+
+        result = integration.details(
+            'https://github.com/kiwitcms/private-test-github-integration/issues/1')
+
+        self.assertEqual('Hello Private GitHub', result['title'])
+        self.assertEqual(
+            "This issue is used in automated tests that verify "
+            "Kiwi TCMS - GitHub bug tracking integration!",
+            result['description'])
 
     def test_auto_update_bugtracker(self):
         repo_id = self.integration.it_class.repo_id(self.integration.bug_system)
