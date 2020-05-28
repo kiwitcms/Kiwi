@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-22 12:21\n"
+"PO-Revision-Date: 2020-05-28 13:36\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -30,18 +30,18 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr ""
+msgstr "Nyitott"
 
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr ""
+msgstr "Lezárt"
 
 #: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
-msgstr ""
+msgstr "Bejelentő"
 
 #: tcms/bugs/templates/bugs/get.html:46
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -52,7 +52,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:76
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Felelős"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
@@ -109,11 +109,11 @@ msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr ""
+msgstr "hozzászólt: "
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Újranyit"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -126,7 +126,7 @@ msgstr "Mentés"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr ""
+msgstr "Lezárás"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -166,7 +166,7 @@ msgstr "Új build hozzáadása"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Hibajegyek keresése"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/include/filters.html:48
@@ -215,7 +215,7 @@ msgstr "ID"
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
-msgstr ""
+msgstr "Létrehozva: "
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
@@ -228,11 +228,11 @@ msgstr "Törlés"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
-msgstr ""
+msgstr "Új hibajegy"
 
 #: tcms/bugs/views.py:167
 msgid "Edit bug"
-msgstr ""
+msgstr "Hibajegy szerkesztése"
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
