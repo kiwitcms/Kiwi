@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 13:36\n"
+"PO-Revision-Date: 2020-05-28 13:42\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -236,21 +236,21 @@ msgstr "Hibajegy szerkesztése"
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr ""
+msgstr "*hibajegy lezárva*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*hibajegy újranyitva*"
 
 #: tcms/core/ajax.py:150
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "%s felhasználó nem található!"
 
 #: tcms/core/history.py:42
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "FRISSÍTÉS: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:48
 #, python-format
@@ -268,7 +268,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Ez az email cím már használatban van"
 
 #: tcms/kiwi_auth/admin.py:86
 msgid "Personal info"
@@ -280,7 +280,7 @@ msgstr "Jogosultságok"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Már létezik felhasználó ezzel az email címmel."
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
@@ -305,7 +305,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Ez az aktivációs kulcs elévült"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
@@ -317,7 +317,7 @@ msgstr ""
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Érvénytelen dátumformátum. Az elvárt formátum: YYYY-MM-DD [HH:MM:SS]."
 
 #: tcms/rpc/serializer.py:285
 #, python-format
@@ -449,7 +449,7 @@ msgstr ""
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "EGYÉB"
 
 #: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
