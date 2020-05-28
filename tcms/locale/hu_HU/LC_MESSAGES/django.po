@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 14:39\n"
+"PO-Revision-Date: 2020-05-28 14:54\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -25,7 +25,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "A probléma leírása:\n\n\n"
+"Milyen gyakorisággal reprodukálható:\n\n\n"
+"A reprodukálás lépései:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Jelenlegi eredmények:\n\n\n"
+"Elvárt eredmények:\n\n\n"
+"További információ:"
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
@@ -259,7 +267,11 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Frissítve: %(history_date)s\n"
+"Frissítette: %(username)s\n\n"
+"%(diff)s\n\n"
+"További információ:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:27
 #, python-format
@@ -445,7 +457,7 @@ msgstr ""
 #: tcms/signals.py:194
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "ÚJ: Hibajegy #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -548,7 +560,7 @@ msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Az oldal nem található"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
@@ -556,11 +568,11 @@ msgstr "Belső szerverhiba"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "Biztosan törölhető ez a melléklet?"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "a vezető nyílt forráskódú teszteset kezelő rendszer"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
@@ -583,7 +595,7 @@ msgstr "Nem található melléklet"
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Component"
-msgstr ""
+msgstr "Komponens"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
@@ -604,7 +616,7 @@ msgstr "Címke"
 #: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "Nincsenek címkék"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
@@ -616,7 +628,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "Nincsenek hibajegyek"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -649,7 +661,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
-msgstr ""
+msgstr "Hibajegyek és hiperhivatkozások"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
@@ -668,7 +680,7 @@ msgstr ""
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Tartalmak"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
@@ -856,7 +868,7 @@ msgstr ""
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
-msgstr ""
+msgstr "Művelet"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -957,11 +969,11 @@ msgstr "Nem található teszteset ebben a tervben."
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "Terv szerkesztése"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "Tesztterv szerkesztése"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
@@ -1231,7 +1243,7 @@ msgstr "Létrehozva"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "Nincsenek tesztesetek."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1364,11 +1376,11 @@ msgstr ""
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Termékverzió"
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Megjegyzés"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
@@ -1405,7 +1417,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
-msgstr ""
+msgstr "Frissítés"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
@@ -1417,7 +1429,7 @@ msgstr "Hozzászólás"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
-msgstr ""
+msgstr "Hiperhivatkozás"
 
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1433,11 +1445,11 @@ msgstr "Alapértelmezett tesztelő"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr ""
+msgstr "Automatikus"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
-msgstr ""
+msgstr "Hibajegy"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1453,7 +1465,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
@@ -1482,7 +1494,7 @@ msgstr ""
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "Eset ID"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
@@ -1490,7 +1502,7 @@ msgstr "Tesztelte"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Lezárva"
 
 #: tcms/templates/run/report.html:88
 #: tcms/templates/run/status_statistics.html:17
@@ -1501,20 +1513,20 @@ msgstr "Hibák"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
-msgstr ""
+msgstr "Hibajegy lista"
 
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% kész"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
-msgstr ""
+msgstr "Jelentés"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
-msgstr ""
+msgstr "Nincsenek hibajegyek"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
@@ -1522,7 +1534,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Összes eset kibontása"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
@@ -1623,7 +1635,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr ""
+msgstr "Felelősök"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
@@ -1655,7 +1667,7 @@ msgstr "Tesztesetek keresése"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Teszteset összefoglaló"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
@@ -1783,7 +1795,7 @@ msgstr "A nyomtatáshoz legalább egy tesztterv szükséges"
 #: tcms/testplans/views.py:396
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "\"%s\" tesztterv nem létezik"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
@@ -1972,7 +1984,7 @@ msgstr "Tenant - Bérlő"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "Szervezet"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -1981,7 +1993,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "Ár"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
@@ -2013,12 +2025,12 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "Feladó"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "Beszállító"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
@@ -2040,15 +2052,15 @@ msgstr ""
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
-msgstr ""
+msgstr "hó"
 
 #: tcms_github_marketplace/views.py:328
 msgid "yr"
-msgstr ""
+msgstr "év"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "Email cím megadása kötelező"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
@@ -2056,15 +2068,15 @@ msgstr ""
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Jogi információ"
 
 #: tcms_tenants/admin.py:39 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "Jogosulatlan"
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "Teljes név"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
@@ -2080,7 +2092,7 @@ msgstr "Engedélyezett felhasználók"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Nem fizetett"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
@@ -2099,19 +2111,19 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "Vállalat, csapat vagy projekt neve"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "Séma"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "Érvényesítési minta"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "A sémanév már használatban van"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
