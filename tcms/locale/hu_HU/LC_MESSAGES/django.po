@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-28 15:03\n"
+"PO-Revision-Date: 2020-05-28 15:15\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -313,7 +313,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Az aktiválási kulcs már nem létezik az adatbázisban"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
@@ -321,7 +321,7 @@ msgstr "Ez az aktivációs kulcs elévült"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "A fiók sikeresen aktiválva"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -547,7 +547,7 @@ msgstr "Leggyakoribb sikertelen tesztek"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "Teszteset"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
@@ -1089,7 +1089,7 @@ msgstr "Nyomtatás"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "kiválasztott esetek nyomtatási nézete"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
@@ -1137,7 +1137,7 @@ msgstr "Prioritás"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "Kattintás a szűrési lehetőségek megjelenítéséhez"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
@@ -1207,7 +1207,7 @@ msgstr "Műveletek"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Több mutatása"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Minden eset betöltve."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -1566,11 +1566,11 @@ msgstr ""
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "TÖRÖLT: Teszteset #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Teszteset klónozása"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
