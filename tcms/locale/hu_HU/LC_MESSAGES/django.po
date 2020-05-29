@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-29 08:53\n"
+"PO-Revision-Date: 2020-05-29 09:05\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1292,11 +1292,11 @@ msgstr "fiók regisztrálása"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "ha még nincs!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Jelszó beállítva. Tovább lehet lépni és"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
@@ -1310,11 +1310,11 @@ msgstr "Megerősítés"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "A jelszót kétszer kell megadni, így ellenőrizhetjük, hogy helyesen lett-e begépelve"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "új jelszó visszaállítás kérése"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1371,7 +1371,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "A lenti tábla kilistázza a terv összes megerősített tesztesetét"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1383,7 +1383,7 @@ msgstr "Létrehozás dátuma"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Kiválasztott"
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
@@ -1432,7 +1432,7 @@ msgstr "Frissítés"
 
 #: tcms/templates/run/get_case_runs.html:29
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Tesztesetek hozzárendelése más személyekhez"
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
@@ -1472,7 +1472,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
-msgstr ""
+msgstr "Hibakövető automatikus frissítése"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1480,7 +1480,7 @@ msgstr "Mégse"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "címke eltávolítása"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
@@ -1696,7 +1696,7 @@ msgstr "Mindkettő"
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Több érték elválasztása vesszővel (,)"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
@@ -1883,11 +1883,11 @@ msgstr ""
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "A teszteset ID nem érvényes egész szám"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "A megadott felhasználó nem létezik az adatbázisban"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
