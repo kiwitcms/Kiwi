@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
+"PO-Revision-Date: 2020-05-29 15:26\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -431,7 +431,7 @@ msgstr "Запросить помощь в StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Пожертвовать €5 через Open Collective"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -747,7 +747,7 @@ msgstr "Вы управляете %(total_count)s TestPlan(s), %(disabled_count)
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Нет тест-план(ов) принадлежащих вам"
+msgstr "Нет тест-планов, принадлежащих вам"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -1178,7 +1178,7 @@ msgstr "Нажмите на меня, затем перетащите строк
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Переупорядочить кейсы"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
@@ -2013,15 +2013,15 @@ msgstr "Подписки"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "Подписки владельца"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "Вы можете получить доступ к следующим владельцам"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "Владелец"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
