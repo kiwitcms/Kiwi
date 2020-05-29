@@ -220,29 +220,26 @@ class BaseCaseRun(BasePlanCase):
         cls.execution_6 = executions[5]
 
 
-class PermissionsTestCase(LoggedInTestCase):
-    """Base class for implementing all tests that have to do with permissions."""
-
+class PermissionsTestMixin:
+    base_classes = ['PermissionsTestCase', 'APIPermissionsTestCase']
+    http_method_names = []  # api, get or post
     permission_label = None
-    http_method_names = []
-    url = None
-    post_data = {}
 
     # skip running if class called directly by test runner
     @classmethod
     def setUpClass(cls):
-        if cls.__name__ == "PermissionsTestCase":
+        if cls.__name__ in cls.base_classes:
             return
         super().setUpClass()
 
     @classmethod
     def tearDownClass(cls):
-        if cls.__name__ == "PermissionsTestCase":
+        if cls.__name__ in cls.base_classes:
             return
         super().tearDownClass()
 
     def __call__(self, result=None):
-        if self.__class__.__name__ == "PermissionsTestCase":
+        if self.__class__.__name__ in self.base_classes:
             return None
 
         return super().__call__(result)
@@ -250,38 +247,105 @@ class PermissionsTestCase(LoggedInTestCase):
 
     @classmethod
     def setUpTestData(cls):
-        """
-            Makes sure important class attributes are defined.
-
-            Always call at the end of inherited method!
-        """
         super().setUpTestData()
+        cls.check_mandatory_attributes()
 
+    @classmethod
+    def check_mandatory_attributes(cls):
+        """
+            Make sure important class attributes are defined.
+        """
         if not cls.permission_label:
             raise RuntimeError("Configure `permission_label` attribute for this test class")
-
-        if not cls.url:
-            raise RuntimeError("Configure `url` attribute for this test class")
 
         if not cls.http_method_names:
             raise RuntimeError("Configure `http_method_names` attribute for this test class")
 
-        if not cls.post_data:
-            raise RuntimeError("Configure `post_data` attribute for this test class")
+    def verify_api_with_permission(self):
+        self.fail('Not implemented')
 
     def verify_get_with_permission(self):
-        """
-            Implement all validation steps for GET self.url
-            when self.tester has the appropriate permission.
-        """
         self.fail('Not implemented')
 
     def verify_post_with_permission(self):
-        """
-            Implement all validation steps for POST self.url
-            when self.tester has the appropriate permission.
-        """
         self.fail('Not implemented')
+
+    def verify_api_without_permission(self):
+        self.fail('Not implemented')
+
+    def verify_get_without_permission(self):
+        self.fail('Not implemented')
+
+    def verify_post_without_permission(self):
+        self.fail('Not implemented')
+
+    def test_with_permission(self):
+        """
+            Actual test method for positive scenario. Will validate
+            all of the accepted methods by calling the
+            verify_X_with_permission() method(s).
+        """
+        self.no_permissions_but(self.permission_label)
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+
+        for method in self.http_method_names:
+            function = getattr(self, 'verify_%s_with_permission' % method)
+            function()
+
+    def no_permissions_but(self, tested_permission):
+        """
+            Make sure self.tester has no other permissions but
+            the one required!
+        """
+        self.tester.user_permissions.remove()
+        user_should_have_perm(self.tester, tested_permission)
+
+    def test_without_permission(self):
+        """
+            Actual test method for negative scenario. Will validate
+            all of the accepted methods by calling the
+            verify_X_without_permission() method(s).
+        """
+        self.all_permissions_except(self.permission_label)
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+
+        for method in self.http_method_names:
+            function = getattr(self, 'verify_%s_without_permission' % method)
+            function()
+
+    def all_permissions_except(self, tested_permission):
+        """
+            Make sure self.tester has all other permissions except
+            the one required!
+        """
+        for perm in Permission.objects.all():
+            user_should_have_perm(self.tester, perm)
+
+        remove_perm_from_user(self.tester, tested_permission)
+
+
+class PermissionsTestCase(PermissionsTestMixin, LoggedInTestCase):
+    """Base class for all tests around view permissions"""
+
+    url = None
+    post_data = {}
+
+    @classmethod
+    def check_mandatory_attributes(cls):
+        """
+            Make sure important class attributes are defined.
+        """
+        super().check_mandatory_attributes()
+
+        if not cls.url:
+            raise RuntimeError("Configure `url` attribute for this test class")
+
+        if not cls.post_data:
+            raise RuntimeError("Configure `post_data` attribute for this test class")
 
     def verify_get_without_permission(self):
         """
@@ -304,42 +368,6 @@ class PermissionsTestCase(LoggedInTestCase):
         """
         response = self.client.post(self.url, self.post_data)
         self.assertRedirects(response, reverse('tcms-login') + '?next=' + self.url)
-
-    def test_with_permission(self):
-        """
-            Actual test method for positive scenario. Will validate
-            all of the accepted HTTP methods.
-        """
-        self.no_permissions_but(self.permission_label)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        for method in self.http_method_names:
-            function = getattr(self, 'verify_%s_with_permission' % method)
-            function()
-
-    def no_permissions_but(self, tested_permission):
-        """
-            Make sure self.tester has no other permissions but
-            the one required!
-        """
-        self.tester.user_permissions.remove()
-        user_should_have_perm(self.tester, tested_permission)
-
-    def test_without_permission(self):
-        """
-            Actual test method for negative scenario. Will validate
-            all of the accepted HTTP methods.
-        """
-        self.all_permissions_except(self.permission_label)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        for method in self.http_method_names:
-            function = getattr(self, 'verify_%s_without_permission' % method)
-            function()
 
     def all_permissions_except(self, tested_permission):
         """
