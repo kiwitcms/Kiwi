@@ -1,4 +1,4 @@
-# pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position, too-many-ancestors
 import unittest
 
 from django.conf import settings
