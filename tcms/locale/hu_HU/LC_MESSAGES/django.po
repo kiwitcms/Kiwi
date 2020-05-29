@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-29 08:46\n"
+"PO-Revision-Date: 2020-05-29 08:53\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -334,7 +334,7 @@ msgstr "Érvénytelen dátumformátum. Az elvárt formátum: YYYY-MM-DD [HH:MM:S
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "nincs elsődleges kulcs ehhez a modelhez: %s. Ezt a mezőt kézzel kell megadni."
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
@@ -431,7 +431,7 @@ msgstr "Segítségkérés StackOverflow-on keresztül"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "€5 támogatás az Open Collective-en keresztül"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
@@ -447,7 +447,7 @@ msgstr "API súgó"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Új felhasználó jóváhagyásra vár"
 
 #: tcms/signals.py:155
 #, python-format
@@ -657,7 +657,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
-msgstr ""
+msgstr "Nincs napló rögzítve"
 
 #: tcms/templates/case/get_details_case_run.html:99
 msgid "Bugs and hyperlinks"
@@ -992,7 +992,7 @@ msgstr "Terv klónozása"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Terv klónozása egy másik termékbe"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
@@ -1110,7 +1110,7 @@ msgstr "Klónozás"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "Kiválasztott esetek klónozása egy másik teszttervbe"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
@@ -1280,11 +1280,11 @@ msgstr "Üdvözöljük a Kiwi TCMS-ben"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "A kezdéshez be kell jelentkezni"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "vagy"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
