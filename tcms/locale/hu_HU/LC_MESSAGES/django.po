@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-29 08:34\n"
+"PO-Revision-Date: 2020-05-29 08:46\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -452,7 +452,7 @@ msgstr ""
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "ÚJ: Teszt futtatás #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 #, python-format
@@ -472,7 +472,7 @@ msgstr "ÖSSZESEN"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:7
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Részletes információ teszt végrehajtásának állapotáról"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
@@ -535,7 +535,7 @@ msgstr "Teszteset"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "Teszt futtatás"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
@@ -551,7 +551,7 @@ msgstr "Teszteset"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "Sikertelen végrehajtások"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
@@ -624,7 +624,7 @@ msgstr "hiba"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "Fióuttatásból"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -645,11 +645,11 @@ msgstr "Hozzászólások"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Teszt végrehajtás információ"
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "Futtatás dátuma"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
@@ -676,7 +676,7 @@ msgstr "Hozzáad"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
-msgstr ""
+msgstr "Hibajelentés"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
@@ -874,7 +874,7 @@ msgstr "Esetek"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
 msgid "Runs"
-msgstr ""
+msgstr "Futtatások"
 
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/get_attachments.html:10
@@ -1122,7 +1122,7 @@ msgstr "Futtatás"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "Új teszt futtatás létrehozása"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
@@ -1339,7 +1339,7 @@ msgstr "Fiók regisztrálása"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "Teszteset hozzáadása teszt futtatáshoz"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1355,11 +1355,11 @@ msgstr "Minden megerősített eset"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Tesztesetek a futtatásban"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Esetek a futtatásban"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1400,7 +1400,7 @@ msgstr "Befejezett"
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Futó"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1420,7 +1420,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "A kiválasztott esetek eltávolítása ebből a teszt futtatásból"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1488,7 +1488,7 @@ msgstr "CC hozzáadása"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Teszt végrehajtás jelentés"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
@@ -1500,7 +1500,7 @@ msgstr "Automatizált esetek"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "Eset-Futtatás ID"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1642,7 +1642,7 @@ msgstr "Értesítés"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "Futtatások kezelője"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
@@ -1650,7 +1650,7 @@ msgstr "Felelősök"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Futtatások alapértelmezett tesztelője"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1810,7 +1810,7 @@ msgstr "\"%s\" tesztterv nem létezik"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Hozzáférés megtagadva: A teszt futtatás nem hozzád tartozik"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1820,19 +1820,19 @@ msgstr ""
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Teszt végrehajtás állapotok"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Teszt futtatás szerkesztése"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Teszt futtatás klónozása"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Új teszt futtatás"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
@@ -1855,11 +1855,11 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Teszt futtatások keresése"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Teszt futtatás összefoglaló"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
@@ -1871,11 +1871,11 @@ msgstr "Tesztterv ID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Teszt futtatáshoz szükséges egy tesztterv, ki kell választani egyet"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
@@ -1907,15 +1907,15 @@ msgstr "Frissíteni szükséges"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "TÉTLEN"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "FUTÓ"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "MEGÁLLÍTOTT"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
