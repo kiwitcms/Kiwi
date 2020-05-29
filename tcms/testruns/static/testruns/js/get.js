@@ -120,6 +120,8 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
             const listGroupItem = $(`.test-execution-${testExecution.id}`)
             listGroupItem.find('.test-execution-priority').html(testCase.priority)
             listGroupItem.find('.test-execution-category').html(testCase.category)
+            listGroupItem.find('.test-execution-text').html(testCase.text)
+            listGroupItem.find('.test-execution-notes').append(testCase.notes)
 
             const isAutomatedElement = listGroupItem.find('.test-execution-automated')
             const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
