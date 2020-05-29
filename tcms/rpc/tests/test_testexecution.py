@@ -11,7 +11,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testruns.models import TestExecutionStatus
-from tcms.tests.factories import (BuildFactory, ProductFactory,
+from tcms.tests.factories import (BuildFactory,
                                   TestCaseFactory, TestExecutionFactory,
                                   TestPlanFactory, TestRunFactory, UserFactory,
                                   VersionFactory)
@@ -24,12 +24,11 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.staff = UserFactory(username='staff', email='staff@example.com')
+        self.staff = UserFactory()
 
-        self.product = ProductFactory(name='Nitrate')
-        self.version = VersionFactory(value='0.1', product=self.product)
-        self.build = self.product.build.first()
-        self.plan = TestPlanFactory(author=self.api_user, product=self.product)
+        self.version = VersionFactory()
+        self.build = self.version.product.build.first()
+        self.plan = TestPlanFactory(author=self.api_user, product=self.version.product)
         self.test_run = TestRunFactory(product_version=self.version, build=self.build,
                                        default_tester=None, plan=self.plan)
         self.status = TestExecutionStatus.objects.filter(weight=0).first()
