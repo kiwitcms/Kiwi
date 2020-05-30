@@ -70,7 +70,6 @@ class JIRA(IssueTrackerType):
         """
         return url.strip().split('/')[-1]
 
-
     def details(self, url):
         try:
             issue = self.rpc.issue(self.bug_id_from_url(url))
@@ -78,42 +77,56 @@ class JIRA(IssueTrackerType):
                 'title': issue.fields.summary,
                 'description': issue.fields.description,
             }
-        except:
+        except jira.exceptions.JIRAError:
             return super().details(url)
-
 
     def report_issue_from_testexecution(self, execution, user):
         """
+            JIRA Project == Kiwi TCMS Product, otherwise defaults to the first found
+            Issue Type == Bug or the first one found
+
+            If 1-click bug report doesn't work then fall back to manual
+            reporting!
+
             For the HTML API description see:
             https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
         """
-        # note: your jira instance needs to have the same projects
-        # defined otherwise this will fail!
-        project = self.rpc.project(execution.run.plan.product.name)
+        try:
+            project = self.rpc.project(execution.run.plan.product.name)
+        except jira.exceptions.JIRAError:
+            project = self.rpc.projects()[0]
 
         try:
             issue_type = self.rpc.issue_type_by_name('Bug')
         except KeyError:
             issue_type = self.rpc.issue_types()[0]
 
+        try:
+            new_issue = self.rpc.create_issue(
+                project=project.id,
+                issuetype={'name': issue_type.name},
+                summary='Failed test: %s' % execution.case.summary,
+                description=self._report_comment(execution),
+            )
+            new_url = self.bug_system.base_url + "/browse/" + new_issue.key
+
+            # add a link reference that will be shown in the UI
+            LinkReference.objects.get_or_create(
+                execution=execution,
+                url=new_url,
+                is_defect=True,
+            )
+
+            return new_url
+        except jira.exceptions.JIRAError:
+            pass
+
         args = {
             'pid': project.id,
             'issuetype': issue_type.id,
             'summary': 'Failed test: %s' % execution.case.summary,
+            'description': self._report_comment(execution),
         }
-
-        try:
-            # apparently JIRA can't search users via their e-mail so try to
-            # search by username and hope that it matches
-            tested_by = execution.tested_by
-            if not tested_by:
-                tested_by = execution.assignee
-
-            args['reporter'] = self.rpc.user(tested_by.username).key
-        except jira.JIRAError:
-            pass
-
-        args['description'] = self._report_comment(execution)
 
         url = self.bug_system.base_url
         if not url.endswith('/'):
