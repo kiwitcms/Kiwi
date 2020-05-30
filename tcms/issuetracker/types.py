@@ -70,6 +70,18 @@ class JIRA(IssueTrackerType):
         """
         return url.strip().split('/')[-1]
 
+
+    def details(self, url):
+        try:
+            issue = self.rpc.issue(self.bug_id_from_url(url))
+            return {
+                'title': issue.fields.summary,
+                'description': issue.fields.description,
+            }
+        except:
+            return super().details(url)
+
+
     def report_issue_from_testexecution(self, execution, user):
         """
             For the HTML API description see:
