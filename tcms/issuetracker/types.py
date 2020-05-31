@@ -281,6 +281,16 @@ class Redmine(IssueTrackerType):
             password=self.bug_system.api_password
         )
 
+    def details(self, url):
+        try:
+            issue = self.rpc.issue.get(self.bug_id_from_url(url))
+            return {
+                'title': issue.subject,
+                'description': issue.description,
+            }
+        except redminelib.exceptions.ResourceNotFoundError:
+            return super().details(url)
+
     def find_project_by_name(self, name):
         """
             Return a Redmine project which matches the given product name.
