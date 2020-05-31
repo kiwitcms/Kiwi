@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+    # build our own modified image to make it easier for testing
+    bugtracker_kiwitcms_org:
+        container_name: bugtracker_kiwitcms_org
+        build:
+          context: .
+          dockerfile: Dockerfile
+        image: kiwitcms/redmine
+        restart: always
+        ports:
+            - 3000:3000
+        volumes:
+          - ./seeds.rb:/usr/src/redmine/db/seeds.rb
+
