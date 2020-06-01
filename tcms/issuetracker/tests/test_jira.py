@@ -44,7 +44,6 @@ class TestJIRAIntegration(APITestCase):
             name='JIRA at kiwitcms.atlassian.net',
             tracker_type='JIRA',
             base_url='https://kiwitcms.atlassian.net',
-            api_url='https://kiwitcms.atlassian.net',
             api_username=os.getenv('JIRA_BUGTRACKER_INTEGRATION_API_USERNAME'),
             api_password=os.getenv('JIRA_BUGTRACKER_INTEGRATION_API_TOKEN'),
         )

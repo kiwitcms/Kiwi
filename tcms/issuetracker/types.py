@@ -40,7 +40,6 @@ class JIRA(IssueTrackerType):
         Support for JIRA. Requires:
 
         :base_url: - the URL of this JIRA instance
-        :api_url: - the API URL for your JIRA instance
         :api_username: - a username registered in JIRA
         :api_password: - the password for this username
 
@@ -57,10 +56,15 @@ class JIRA(IssueTrackerType):
             options = None
 
         return jira.JIRA(
-            self.bug_system.api_url,
+            self.bug_system.base_url,
             basic_auth=(self.bug_system.api_username, self.bug_system.api_password),
             options=options,
         )
+
+    def is_adding_testcase_to_issue_disabled(self):
+        return not (self.bug_system.base_url
+                    and self.bug_system.api_username
+                    and self.bug_system.api_password)
 
     @classmethod
     def bug_id_from_url(cls, url):
