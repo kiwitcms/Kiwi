@@ -3,7 +3,7 @@
     Refer to each implementor class for integration specifics!
 """
 
-from urllib.parse import quote, urlencode
+from urllib.parse import urlencode
 
 import github
 import gitlab
@@ -291,48 +291,66 @@ class Redmine(IssueTrackerType):
         except redminelib.exceptions.ResourceNotFoundError:
             return super().details(url)
 
-    def find_project_by_name(self, name):
+    def redmine_project_by_name(self, name):
         """
             Return a Redmine project which matches the given product name.
-
-            .. note::
-
-                If there is no match then return the first project in Redmine.
+            If there is no match then return the first project in Redmine!
         """
-        try:
-            return self.rpc.project.get(name)
-        except redminelib.exceptions.ResourceNotFoundError:
-            projects = self.rpc.project.all()
-            return projects[0]
+        all_projects = self.rpc.project.all()
+        for project in all_projects:
+            if project.name == name:
+                return project
+
+        return all_projects[0]
 
     @staticmethod
-    def find_issue_type_by_name(project, name):
+    def redmine_tracker_by_name(project, name):
         """
-            Return a Redmine tracker matching name ('Bug').
-
-            .. note::
-
-                If there is no match then return the first one!
+            Return a Redmine tracker matching name ('Bugs').
+            If there is no match then return the first one!
         """
-        for trk in project.trackers:
-            if str(trk).lower() == name.lower():
-                return trk
+        all_trackers = project.trackers
 
-        return project.trackers[0]
+        for tracker in all_trackers:
+            if tracker.name.lower() == name.lower():
+                return tracker
+
+        return all_trackers[0]
+
+    def redmine_priority_by_name(self, name):
+        all_priorities = self.rpc.enumeration.filter(resource='issue_priorities')
+
+        for priority in all_priorities:
+            if priority.name.lower() == name.lower():
+                return priority
+
+        return all_priorities[0]
 
     def report_issue_from_testexecution(self, execution, user):
-        project = self.find_project_by_name(execution.run.plan.product.name)
+        project = self.redmine_project_by_name(execution.run.plan.product.name)
+        tracker = self.redmine_tracker_by_name(project, 'Bugs')
 
-        issue_type = self.find_issue_type_by_name(project, 'Bug')
+        # the first Issue Status in Redmine
+        status = self.rpc.issue_status.all()[0]
 
-        query = "issue[tracker_id]=" + str(issue_type.id)
-        query += "&issue[subject]=" + quote('Failed test: %s' % execution.case.summary)
+        # try matching TC.priority with IssuePriority in Redmine
+        priority = self.redmine_priority_by_name(execution.case.priority.value)
 
-        comment = self._report_comment(execution)
-        query += "&issue[description]=%s" % quote(comment)
+        new_issue = self.rpc.issue.create(
+            subject='Failed test: %s' % execution.case.summary,
+            description=self._report_comment(execution),
+            project_id=project.id,
+            tracker_id=tracker.id,
+            status_id=status.id,
+            priority_id=priority.id,
+        )
+        new_url = self.bug_system.base_url + "/issues/%d" % new_issue.id
 
-        url = self.bug_system.base_url
-        if not url.endswith('/'):
-            url += '/'
+        # and also add a link reference that will be shown in the UI
+        LinkReference.objects.get_or_create(
+            execution=execution,
+            url=new_url,
+            is_defect=True,
+        )
 
-        return url + '/projects/%s/issues/new?' % project.id + query
+        return new_url
