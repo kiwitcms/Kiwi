@@ -17,7 +17,7 @@ from tcms.tests.factories import TestExecutionFactory
 
 @unittest.skipUnless(os.getenv('TEST_BUGTRACKER_INTEGRATION'),
                      'Bug tracker integration testing not enabled')
-class TestGitHubIntegration(APITestCase):
+class TestJIRAIntegration(APITestCase):
     existing_bug_id = 'JIRA-1'
     existing_bug_url = 'https://kiwitcms.atlassian.net/browse/JIRA-1'
 
