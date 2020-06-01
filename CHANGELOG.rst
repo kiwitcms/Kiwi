@@ -2,6 +2,190 @@ Change Log
 ==========
 
 
+Kiwi TCMS 8.4 (03 June 2020)
+----------------------------
+
+**IMPORTANT:** this is a medium sized release which includes
+minor security fixes, many improvements & bug-fixes and translations
+in several new languages. It is the second release to include
+contributions via our
+`open source bounty program <https://kiwitcms.org/blog/kiwi-tcms-team/2020/04/17/kiwi-tcms-open-source-bounty-program-round-01/>`_.
+
+.. important::
+
+    Last month we've also reached an important milestone - 100K+ pulls on Docker Hub !!!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 3.0.5 to 3.0.7 -
+  `security update <https://docs.djangoproject.com/en/3.0/releases/3.0.7/>`_
+  for functionality not used by Kiwi TCMS
+- Update bleach from 3.1.4 to 3.1.5
+- Update django-grappelli from 2.14.1 to 2.14.2
+- Update django-simple-history from 2.9.0 to 2.10.0
+- Update markdown from 3.2.1 to 3.2.2
+- Update pygithub from 1.50 to 1.51
+- Update python-redmine from 2.2.1 to 2.3.0
+- Update patternfly from 3.59.4 to 3.59.5
+- Add ``manage.py set_domain`` command to change Kiwi TCMS domain. Fixes
+  `Issue #971 <https://github.com/kiwitcms/Kiwi/issues/971>`_ (Ivajlo Karabojkov)
+- GitHub bug details now works for private issues
+- Gitlab bug details now works for private issues
+- JIRA bug details now works for private issues
+- Redmine bug details now works for private issues
+- New feature: 1-click bug report for Bugzilla
+- New feature: 1-click bug report for Gitlab
+- New feature: 1-click bug report for JIRA
+- New feature: 1-click bug report for Redmine
+- Reverting to older historical version via Admin panel now redirects
+  to object which was reverted. Fixes
+  `Issue #1074 <https://github.com/kiwitcms/Kiwi/issues/1074>`_
+- Documentation updates
+
+.. important::
+
+    Starting from v8.4 all supported bug trackers now feature
+    1-click bug report integration!
+
+.. note::
+
+    Some external bug trackers like Bugzilla & JIRA provide more
+    flexibility over which fields are required for a new bug report.
+    The current functionality should work for vanilla installations and would
+    fall back to manual bug reporting if it can't create a new bug
+    automatically!
+
+
+Database
+~~~~~~~~
+
+- Force creation of missing permissions for m2m fields from the `tcms.bugs` app:
+
+  - ``bugs.add_bug_tags``
+  - ``bugs.change_bug_tags``
+  - ``bugs.delete_bug_tags``
+  - ``bugs.view_bug_tags``
+  - ``bugs.add_bug_executions``
+  - ``bugs.change_bug_execution``
+  - ``bugs.delete_bug_execution``
+  - ``bugs.view_bug_executions``
+
+.. warning::
+
+    TCMS admins of existing installations will have to assign these by hand
+    to users/groups who will be allowed to change tags on bugs!
+
+
+Settings
+~~~~~~~~
+
+- Define the ``KIWI_DISABLE_BUGTRACKER=yes`` environment variable if you wish
+  to disable the internal bug tracker. Closes
+  `Issue #1370 <https://github.com/kiwitcms/Kiwi/issues/1370>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Workaround missing MariaDB CHARSET/COLLATION support, see our
+  ``docker-compose.yml``. Fixes
+  `Issue #1700 <https://github.com/kiwitcms/Kiwi/issues/1700>`_
+- Install missing ``/usr/bin/mysql`` in container
+- Warning message for unconfigured Kiwi TCMS domain does not show HTML tags in
+  Admin anymore. Fixes
+  `Issue #964 <https://github.com/kiwitcms/Kiwi/issues/964>`_
+- Unescape the ``&amp;`` string when trying to open new windows after
+  clicking the 'Report bug' button in TestExecution. Fixes
+  `Issue #1533 <https://github.com/kiwitcms/Kiwi/issues/1533>`_
+- Try harder to restore the original navigation menu instead of
+  leaving bogus menu items. Fixes
+  `Issue #991 <https://github.com/kiwitcms/Kiwi/issues/991>`_
+- Robot Framework plugin is now GA. Close
+  `Issue #984 <https://github.com/kiwitcms/Kiwi/issues/984>`_
+- Add LinkReference to TestExecution after creating bug via 1-click.
+  The UI still needs to be refreshed which will be implemented together
+  with the redesign of the TestRun page
+- Update documented signature for API method ``TestCase.add_component`` to
+  match current behavior, see https://stackoverflow.com/questions/61648405/
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Migrate ``check-docs-source-in-git`` to GitHub workflows. Fixes
+  `Issue #1552 <https://github.com/kiwitcms/Kiwi/issues/1552>`_ (@Prome88)
+- Migrate ``build-for-pypi`` to GitHub workflows. Fixes
+  `Issue #1554 <https://github.com/kiwitcms/Kiwi/issues/1554>`_ (@lcmtwn)
+- Add tests for ``TestCaseAdmin`` (Mariyan Garvanski)
+- Add tests for ``BugAdmin``. Fixes
+  `Issue #1596 <https://github.com/kiwitcms/Kiwi/issues/1596>`_ (Mariyan Garvanski)
+- Omit ``utils/test`` from coverage reports. Fixes
+  `Issue #1631 <https://github.com/kiwitcms/Kiwi/issues/1631>`_ (@cmbahadir)
+- Omit ``tcms/tests`` from coverage reports. Fixes
+  `Issue #1630 <https://github.com/kiwitcms/Kiwi/issues/1630>`_ (@cmbahadir)
+- Add tests for ``tcms.core.forms.fields`` - Fixes
+  `Issue #1629 <https://github.com/kiwitcms/Kiwi/issues/1629>`_ (@cmbahadir)
+- Add tests for ``TestExecution.update()`` for ``case_text_version`` field
+  (Rosen Sasov)
+- Refactor bulk-update methods in TestRun page to use JSON-RPC. Fixes
+  `Issue #1063 <https://github.com/kiwitcms/Kiwi/issues/1063>`_ (Rosen Sasov)
+- Start using ``_change_reason`` instead of ``changeReason`` field in
+  django-simple-history
+- Remove unused ``StripURLField`` & ``Version.string_to_id()``
+- Refactoring around TestCase and TestPlan cloning methods
+- Start testing with the internal bug tracker disabled
+- Start testing with all supported external bug trackers. Fixes
+  `Issue #1079 <https://github.com/kiwitcms/Kiwi/issues/1079>`_
+- Start Codecov for coverage reports
+- Add tests for presense of mysql/psql binaries in container
+- Add ``APIPermissionsTestCase`` with example in ``TestVersionCreatePermissions``
+- Move most test jobs away from Travis CI to GitHub workflows
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bengali translation <https://crowdin.com/project/kiwitcms/bn#>`_
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Hindi translation <https://crowdin.com/project/kiwitcms/hi#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Indonesian translation <https://crowdin.com/project/kiwitcms/id#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Spanish translation <https://crowdin.com/project/kiwitcms/es-ES#>`_
+- Updated `Swahili translation <https://crowdin.com/project/kiwitcms/sw#>`_
+
+.. note::
+
+    Some of the translations in Chinese and German and all of the strings in
+    Japanese and Korean have been contributed by a non-native speaker and are
+    sub-optimal, see
+    `OpenCollective #18663 <https://opencollective.com/kiwitcms/expenses/18663>`_.
+    If you are a native in these languages and spot strings which don't
+    sit well with you we kindly ask you to
+    `contribute a better translation <https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation>`_
+    via the built-in translation editor!
+
+
 Kiwi TCMS 8.3 (27 Apr 2020)
 ---------------------------
 
