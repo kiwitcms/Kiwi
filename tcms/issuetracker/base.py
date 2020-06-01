@@ -157,7 +157,7 @@ class IssueTrackerType:
         for execution in executions:
             self.it_class(self.rpc, self.bug_system, execution, bug_id).start()
 
-    def is_adding_testcase_to_issue_disabled(self):  # pylint: disable=invalid-name, no-self-use
+    def is_adding_testcase_to_issue_disabled(self):  # pylint: disable=invalid-name
         """
             When is linking a TC to a Bug report disabled?
             Usually when not all of the required credentials are provided.

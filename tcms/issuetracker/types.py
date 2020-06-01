@@ -264,15 +264,19 @@ class Redmine(IssueTrackerType):
         Support for Redmine. Requires:
 
         :base_url: - the URL for this Redmine instance
-        :api_url: - the API URL for your Redmine instance
         :api_username: - a username registered in Redmine
         :api_password: - the password for this username
     """
     it_class = redmine_integration.RedmineThread
 
+    def is_adding_testcase_to_issue_disabled(self):
+        return not (self.bug_system.base_url
+                    and self.bug_system.api_username
+                    and self.bug_system.api_password)
+
     def _rpc_connection(self):
         return redminelib.Redmine(
-            self.bug_system.api_url,
+            self.bug_system.base_url,
             username=self.bug_system.api_username,
             password=self.bug_system.api_password
         )
