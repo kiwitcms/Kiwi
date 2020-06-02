@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 18:22\n"
+"PO-Revision-Date: 2020-06-02 18:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -560,7 +560,7 @@ msgstr ""
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "mfumo aina la open source inayoongoza kwa usimamuzi ya upimaji ya kesi"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
@@ -1241,15 +1241,15 @@ msgstr "Neno la siri"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Umesahau"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "neno la siri"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Ingia"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
@@ -1922,11 +1922,11 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "Uunganisha GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "Mipangilio"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -1954,7 +1954,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Usajili"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -1966,7 +1966,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "Pangaji"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
@@ -2072,11 +2072,11 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Unda"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
-msgstr ""
+msgstr "Watumiaji walioidhinishwa"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
