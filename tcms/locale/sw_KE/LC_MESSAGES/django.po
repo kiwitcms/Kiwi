@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 18:43\n"
+"PO-Revision-Date: 2020-06-02 18:53\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -90,7 +90,7 @@ msgstr "Bidhaa"
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "Toleo"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:59
@@ -407,15 +407,15 @@ msgstr "MAJALIZI"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
-msgstr ""
+msgstr "Mkutano"
 
 #: tcms/settings/common.py:343
 msgid "Report an Issue"
-msgstr ""
+msgstr "Ripoti Suala"
 
 #: tcms/settings/common.py:344
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Omba msaada kutoka StackOverflow"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
@@ -423,15 +423,15 @@ msgstr ""
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
-msgstr ""
+msgstr "Mwongozo wa utawala"
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
-msgstr ""
+msgstr "Mwongozo wa watumiaji"
 
 #: tcms/settings/common.py:348
 msgid "API Help"
-msgstr ""
+msgstr "Msaada wa API"
 
 #: tcms/signals.py:80
 msgid "New user awaiting approval"
@@ -879,24 +879,24 @@ msgstr ""
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "Majaribio Yangu Ya Upimaji"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "Mipango Yangu Ya Upimaji"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "Maelezo Yangu"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Badilisha neno la siri"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "Ondoka"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
@@ -905,31 +905,31 @@ msgstr ""
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Jisajili"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "Msaada"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "Lugha"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "Lugha yanayo msaada"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "Omba lugha mpya"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "Namna ya utasfiri"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "Mwongozo wa Tafsiri"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -1283,7 +1283,7 @@ msgstr ""
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:188
 msgid "Confirm"
-msgstr ""
+msgstr "Thibitisha"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
@@ -1300,7 +1300,7 @@ msgstr ""
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "Barua pepe"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
