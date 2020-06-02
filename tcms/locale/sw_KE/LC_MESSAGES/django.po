@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 19:05\n"
+"PO-Revision-Date: 2020-06-02 19:13\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -689,7 +689,7 @@ msgstr ""
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Ilianza"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -1506,7 +1506,7 @@ msgstr ""
 #: tcms/templates/run/status_progress_patternfly.html:3
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% imekamilika"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
