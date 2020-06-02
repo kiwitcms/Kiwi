@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 18:53\n"
+"PO-Revision-Date: 2020-06-02 19:05\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -875,7 +875,7 @@ msgstr "Geuza urambazaji"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Karibu Mgeni"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -900,7 +900,7 @@ msgstr "Ondoka"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr ""
+msgstr "Ingia"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
@@ -1304,15 +1304,15 @@ msgstr "Barua pepe"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Chagua neno la siri mpya"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS chagua neno la siri mpya"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Jiandikishe akounti mpya"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
