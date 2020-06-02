@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 18:13\n"
+"PO-Revision-Date: 2020-06-02 18:22\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -374,36 +374,36 @@ msgstr "Upimaji"
 
 #: tcms/settings/common.py:318
 msgid "Breakdown"
-msgstr ""
+msgstr "Vunja chini"
 
 #: tcms/settings/common.py:319
 msgid "Status matrix"
-msgstr ""
+msgstr "Hali ya matrix"
 
 #: tcms/settings/common.py:320
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Mwenendo wa utelekezaji"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "Afya ya upimaji ya kesi"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
-msgstr ""
+msgstr "UTAWALA"
 
 #: tcms/settings/common.py:327
 msgid "Users and groups"
-msgstr ""
+msgstr "Watumiaji na vikundi"
 
 #: tcms/settings/common.py:329
 msgid "Everything else"
-msgstr ""
+msgstr "Kila kitu kingine"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "MAJALIZI"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
