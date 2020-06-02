@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 19:23\n"
+"PO-Revision-Date: 2020-06-02 19:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -729,7 +729,7 @@ msgstr "Utekelezaji"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Wewe husimamia mpango wa upimaji %(total_count)s, %(disabled_count)s yamezimwa. Haya ni %(count)s mpya."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
