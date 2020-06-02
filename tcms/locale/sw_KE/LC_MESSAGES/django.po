@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-02 18:03\n"
+"PO-Revision-Date: 2020-06-02 18:13\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -326,51 +326,51 @@ msgstr ""
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
-msgstr ""
+msgstr "DASHIBODI"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr ""
+msgstr "UPIMAJI"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr ""
+msgstr "Mpango Mpya Wa Upimaji"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr ""
+msgstr "Kesi Mpya Ya Upimaji"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr ""
+msgstr "Shida Mpya"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
-msgstr ""
+msgstr "TAFUTA"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Tafuta Mpango Wa Upimaji"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Tafuta Jaribio La Upimaji"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Tafuta Kesi Ya Upimaji"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr ""
+msgstr "Tafuta Mtokeo Wa Mashida"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRY"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
-msgstr ""
+msgstr "Upimaji"
 
 #: tcms/settings/common.py:318
 msgid "Breakdown"
