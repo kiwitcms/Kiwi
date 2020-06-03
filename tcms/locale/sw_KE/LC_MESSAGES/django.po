@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 06:11\n"
+"PO-Revision-Date: 2020-06-03 06:33\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -1868,7 +1868,7 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "IMPENDEKEZWA"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -1876,7 +1876,7 @@ msgstr "SAHIHISHWA"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "IMEZIMWA"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
