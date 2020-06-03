@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 10:23\n"
+"PO-Revision-Date: 2020-06-03 10:32\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -244,11 +244,11 @@ msgstr ""
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr ""
+msgstr "*shida imefungwa*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr ""
+msgstr "*shida imefunguliwa tena*"
 
 #: tcms/core/ajax.py:150
 #, python-format
