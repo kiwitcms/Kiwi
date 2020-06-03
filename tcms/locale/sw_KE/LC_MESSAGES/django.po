@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 06:33\n"
+"PO-Revision-Date: 2020-06-03 06:44\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -1880,31 +1880,31 @@ msgstr "IMEZIMWA"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "SASISHA_INAHITAJIKA"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "HAIKO KAZI"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "INAENDELEA"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "IMESITISHWA"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "IMEPITA"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "IMESHINDWA"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "IMEZUILIWA"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
