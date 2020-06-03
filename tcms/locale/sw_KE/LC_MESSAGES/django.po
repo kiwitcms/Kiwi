@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 07:23\n"
+"PO-Revision-Date: 2020-06-03 07:35\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -623,7 +623,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:138
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Vidokezo"
 
 #: tcms/templates/case/get_details.html:62
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
@@ -1549,7 +1549,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Mfano**: ... Tabia gani itapimwa ...\n"
+" **Ikitokea kwamba** ... masharti haya\n"
+" **Lini** ... vitendo ...\n"
+"**Alafu** ... matokeo yanayotarajiwa ...\n\n"
+"*Vitendo*:\n\n"
+"1. Jambo\n"
+"2. Jambo\n"
+"3. Jambo\n\n"
+"*Matokeo yanayotarajiwa*:\n\n"
+"1. Jambo\n"
+"2. Jambo\n"
+"3. Jambo"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1571,17 +1582,17 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
-msgstr ""
+msgstr "Hati"
 
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
-msgstr ""
+msgstr "Hoja"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr ""
+msgstr "Mahitaji"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
@@ -1611,19 +1622,19 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr ""
+msgstr "ongeza Aina mpya"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
-msgstr ""
+msgstr "Arifu"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
-msgstr ""
+msgstr "Meneja wa majaribio"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr ""
+msgstr "Waliyoteuiwa"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
@@ -1724,7 +1735,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Unda mpango wa upimaji mpya"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1752,7 +1763,7 @@ msgstr "Mpango wa upimaji ikisasishwa"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Kesi za upimaji zikisasishwa"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
