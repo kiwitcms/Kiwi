@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 08:13\n"
+"PO-Revision-Date: 2020-06-03 08:27\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -1577,15 +1577,15 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Tangeneza kesi iliyosawa na kesi iliyochaguliwa"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Ongeza Kesi ya Upimaji mpya kwa Mpango wa Upimaji"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
-msgstr ""
+msgstr "Kesi ya upimaji Iliyochaguliwa"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1715,7 +1715,7 @@ msgstr ""
 #: tcms/testcases/views.py:664 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Kesi moja inahitajika"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
