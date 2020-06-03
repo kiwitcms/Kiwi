@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 06:56\n"
+"PO-Revision-Date: 2020-06-03 07:05\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -933,23 +933,23 @@ msgstr "Mwongozo wa Tafsiri"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Ukurasa wa kwanza"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Ukurasa iliyotangulia"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Ukurasa hii"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Ukurasa ujao"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Ukurasa wa mwisho"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -1324,7 +1324,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
-msgstr ""
+msgstr "Meneja"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
@@ -1377,7 +1377,7 @@ msgstr ""
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Inaendelea"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
@@ -1761,7 +1761,7 @@ msgstr "Inayotumika"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Tafuta Mpango Wa Upimaji"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1832,19 +1832,19 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Tafuta jaribio la upimaji"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Ufupisho wa jaribio la upimaji"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "Kitambulisho cha upimaji"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "Kitambulisho Cha Mpango Wa Upimaji"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
