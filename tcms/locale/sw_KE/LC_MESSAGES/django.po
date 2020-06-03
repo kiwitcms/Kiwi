@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 07:43\n"
+"PO-Revision-Date: 2020-06-03 08:05\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -25,7 +25,15 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ""
+msgstr "Maelezo ya shida:\n\n"
+"Inatokeanga mara ngapi:\n\n"
+"Hatua za kuitokelezea:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Matokeo halisi:\n\n\n"
+"Matokeo yalitotarajiwa:\n\n\n"
+"Taarifa za ziada:"
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
@@ -162,7 +170,7 @@ msgstr "ongeza Toleo jipya"
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "ongeza Mjengo mpya"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -228,7 +236,7 @@ msgstr ""
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
-msgstr ""
+msgstr "Shida Mpya"
 
 #: tcms/bugs/views.py:167
 msgid "Edit bug"
@@ -1829,7 +1837,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Jina la mtumiaji au barua pepe"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
