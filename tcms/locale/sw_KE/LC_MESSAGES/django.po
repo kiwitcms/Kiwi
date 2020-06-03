@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 06:44\n"
+"PO-Revision-Date: 2020-06-03 06:56\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -199,7 +199,7 @@ msgstr "Jina la utumiaji"
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
-msgstr ""
+msgstr "Tafuta"
 
 #: tcms/bugs/templates/bugs/search.html:101
 #: tcms/templates/plan/get_cases.html:161
@@ -210,7 +210,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "KITAMBULISHO"
 
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
@@ -598,7 +598,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:163
@@ -828,7 +828,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -838,7 +838,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Jina"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -997,7 +997,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Mwandishi"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
@@ -1429,7 +1429,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Default tester"
-msgstr ""
+msgstr "Mchaguo msingi wa upimaji"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
@@ -1673,13 +1673,13 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Tumia comma (,) kutenganisha jina la 'tag'"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Ilitengenezwa kwa siku na saa ya"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
@@ -1757,7 +1757,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Inayotumika"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1765,12 +1765,12 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Jina la mpango wa upimaji"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "Mpango wa upimaji"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
@@ -1908,11 +1908,11 @@ msgstr "IMEZUILIWA"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "KOSA"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "IMEONDOLEWA"
 
 #: tcms_github_app/admin.py:120
 #, python-format
