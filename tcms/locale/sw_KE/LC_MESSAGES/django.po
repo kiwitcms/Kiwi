@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 07:13\n"
+"PO-Revision-Date: 2020-06-03 07:23\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -41,7 +41,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
-msgstr ""
+msgstr "Mfanya ripoti"
 
 #: tcms/bugs/templates/bugs/get.html:46
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -52,7 +52,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:76
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Aliyeagizwa"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
@@ -166,7 +166,7 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Tafuta Mtokeo Wa Mashida"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/include/filters.html:48
@@ -215,7 +215,7 @@ msgstr "KITAMBULISHO"
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
-msgstr ""
+msgstr "Ilitengenezwa kwa siku na saa ya"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
@@ -362,7 +362,7 @@ msgstr "Tafuta Kesi Ya Upimaji"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr "Tafuta Mtokeo Wa Mashida"
+msgstr "Tafuta Matokeo Wa Mashida"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
@@ -1587,7 +1587,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Fungo ya rejeo"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
@@ -1728,27 +1728,27 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Kitambulisho cha mzazi"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Hati ya mpango wa upimaji:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr ""
+msgstr "Arifu:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "Mwandishi wa kesi ya upimaji"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "Julisha:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Mpango wa upimaji ikisasishwa"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
