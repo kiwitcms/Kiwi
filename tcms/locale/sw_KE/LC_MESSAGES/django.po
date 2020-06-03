@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 08:45\n"
+"PO-Revision-Date: 2020-06-03 10:16\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -711,7 +711,7 @@ msgstr "Ona yote"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Hakuno majaribio ya upimaji yaliyoteua kwako"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
