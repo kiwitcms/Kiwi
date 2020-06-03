@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 08:05\n"
+"PO-Revision-Date: 2020-06-03 08:13\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -228,11 +228,11 @@ msgstr "Ilitengenezwa kwa siku na saa ya"
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
 msgid "Edit"
-msgstr ""
+msgstr "Hariri"
 
 #: tcms/bugs/views.py:39 tcms/testcases/views.py:506
 msgid "Delete"
-msgstr ""
+msgstr "Futa"
 
 #: tcms/bugs/views.py:64
 msgid "New bug"
@@ -668,7 +668,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "Ongeza"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
@@ -796,23 +796,23 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
-msgstr ""
+msgstr "Yaliyoambatishwa"
 
 #: tcms/templates/include/attachments.html:14
 msgid "File"
-msgstr ""
+msgstr "Faili"
 
 #: tcms/templates/include/attachments.html:15
 msgid "Owner"
-msgstr ""
+msgstr "Mwenyewe"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "Siku"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "Rekodi hayakupatikana"
 
 #: tcms/templates/include/bug_details.html:3
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -1091,7 +1091,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Kloni"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1505,7 +1505,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "Mashida"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
@@ -1610,15 +1610,15 @@ msgstr "Fungo ya rejeo"
 
 #: tcms/testcases/templates/testcases/get.html:143
 msgid "Bug URL"
-msgstr ""
+msgstr "URL ya shida"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Mipango wa upimaji"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "Masehemu"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1706,7 +1706,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr ""
+msgstr "Historia"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1828,11 +1828,11 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Jaribio Mpya Ya Upimaji"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "toleo"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
@@ -1841,7 +1841,7 @@ msgstr "Jina la mtumiaji au barua pepe"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Kesi ya upimaji iliyochaguliwa:"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
