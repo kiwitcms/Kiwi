@@ -2,19 +2,20 @@ from pylint import interfaces, checkers
 from pylint.checkers import utils
 
 
-class AutoFieldChecker(checkers.BaseChecker):
+class DbColumnChecker(checkers.BaseChecker):
     __implements__ = (interfaces.IAstroidChecker, )
 
-    name = 'db-columns-checker'
+    name = 'db-column-checker'
 
     msgs = {
-        'E4480': (
-            'Avoid using db_columns in Model fields',
-            'avoid-db-columns'
+        'E4481': (
+            'Avoid using db_column in Model fields',
+            'avoid-db-column'
         )
     }
 
     @utils.check_messages('avoid-db-column')
     def visit_attribute(self, node):
-        if node.attrname == 'db_column':
-            self.add_message('avoid-db-columns', node=node)
+        if (node.attrname == 'CharField'
+                and isinstance(node.expr, astroid.Attribute) and node.expr.attrname == 'models'):
+            self.add_message('avoid-db-column', node=node)
