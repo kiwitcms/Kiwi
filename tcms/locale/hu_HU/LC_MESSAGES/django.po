@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-29 09:14\n"
+"PO-Revision-Date: 2020-06-08 07:13\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1919,7 +1919,7 @@ msgstr "MEGÁLLÍTOTT"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "ÁTMENT"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -1935,7 +1935,7 @@ msgstr "HIBA"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "LEMONDOTT"
 
 #: tcms_github_app/admin.py:120
 #, python-format
