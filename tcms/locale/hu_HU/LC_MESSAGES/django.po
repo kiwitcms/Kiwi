@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-08 10:42\n"
+"PO-Revision-Date: 2020-06-08 10:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1959,26 +1959,26 @@ msgstr "Beállítások"
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "Nem konfigurált GitHub App %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "Még nem jelentkezett be a GitHub fiókkal! <a href=\"%s\"> Kattintson ide </a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "A Kiwi TCMS-t még nem telepítette a GitHub-fiókjába! <a href=\"%s\"> Kattintson ide </a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "Több GitHub App telepítés észlelve! Lásd alább:"
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "A GitHub App szerkesztése <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1986,11 +1986,11 @@ msgstr "Feliratkozások"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "Bérlő előfizetések"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "A következő bérlőket érheti el"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
