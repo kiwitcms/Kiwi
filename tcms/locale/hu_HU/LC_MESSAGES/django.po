@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-08 07:35\n"
+"PO-Revision-Date: 2020-06-08 07:51\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1166,7 +1166,7 @@ msgstr "Esetek újrarendezése"
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "Nincsenek címkék az esetekben"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
@@ -1191,7 +1191,7 @@ msgstr "Elemek száma oldalanként"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "Válassza ki az összes olyan esetet is, amely még nem látható alább."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
@@ -1200,7 +1200,7 @@ msgstr "Teszteset összefoglaló"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "Áttekintő"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
@@ -1210,7 +1210,7 @@ msgstr "Alapértelmezett tesztelő"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Szöveges verzió"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
@@ -1222,7 +1222,7 @@ msgstr "Több mutatása"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "eset(ek) maradt"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
@@ -1238,7 +1238,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Esetek keresése, amelyeket felvehet a teszttervbe."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1367,7 +1367,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Hogyan lehet kiosztani az esetet?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
