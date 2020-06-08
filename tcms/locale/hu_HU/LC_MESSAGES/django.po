@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-08 07:13\n"
+"PO-Revision-Date: 2020-06-08 07:35\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -309,7 +309,7 @@ msgstr "A fiókod létrehozva, de egy adminisztrátornak aktiválnia kell"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "A következő a rendszergazda lista"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
@@ -653,7 +653,7 @@ msgstr "Futtatás dátuma"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
-msgstr ""
+msgstr "Szöveges verzió"
 
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "No log recorded"
@@ -684,7 +684,7 @@ msgstr "Tartalmak"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Tesztterv leírás"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
@@ -898,7 +898,7 @@ msgstr "Navigációs mód átkapcsolása"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Vendég Üdvözlöm"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -1034,7 +1034,7 @@ msgstr "Referencia hivatkozás"
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
@@ -1879,7 +1879,7 @@ msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
-msgstr ""
+msgstr "Klónozva a"
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
