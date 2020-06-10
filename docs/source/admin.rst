@@ -335,11 +335,11 @@ For this purpose the following fields are available:
 
   .. note::
 
-      Status names in Admin will always appear in English!
-      For statuses shipped with Kiwi TCMS by default the names may appear
-      translated into local language when displayed outside Admin pages!
+      For statuses shipped with Kiwi TCMS the names may appear translated
+      into local language! If you change these default names they will
+      appear untranslated!
 
-      Translation of non-default statuses is currently almost impossible,
+      Translation of non-default names is currently not straight forward,
       see https://github.com/ecometrica/django-vinaigrette/issues/45.
 
 - **Color** - a color to be used for icons, charts, etc.
