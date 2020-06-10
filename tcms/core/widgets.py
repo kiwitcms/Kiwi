@@ -17,7 +17,10 @@ class SimpleMDE(forms.Textarea):
 <script>
 var simplemde = new SimpleMDE({
     element: document.getElementById("%s"),
-    autoDownloadFontAwesome: false
+    autoDownloadFontAwesome: false,
+    toolbar: ["bold", "italic", "heading", "|", "quote",
+     "unordered-list", "ordered-list", "|", "link", "image",
+     "table", "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
 });
 </script>
 """ % attrs['id']
