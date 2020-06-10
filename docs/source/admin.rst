@@ -381,7 +381,7 @@ For this purpose the following fields are available:
 
       Make sure to always have at least 1 positive, 1 negative and 1 nautral
       status, e.g. ``PASSED``, ``IDLE``, ``FAILED``. If you delete all statuses
-      within a certain wight group Kiwi TCMS will crash!
+      within a certain weight group Kiwi TCMS will crash!
 
 
 .. |The Administration screen| image:: ./_static/Admin_Home.png
