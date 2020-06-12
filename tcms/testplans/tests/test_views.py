@@ -110,15 +110,18 @@ class EditPlanViewTest(LoggedInTestCase):
         self.test_plan_1.refresh_from_db()
         self.assertEqual(new_text, self.test_plan_1.text)
 
-    # Issue: When there is an invalid value on notify_formset,
-    # returned response is always the default (ON).
     def test_with_invalid_notify_form_value(self):
+        # Note: Boolean fields are always valid - either False or True
+        # https://github.com/kiwitcms/Kiwi/pull/1677#discussion_r438776178
+        # That's why the only way to make the notify formset invalid is to
+        # reference a non-existing email_settings ID !!!
         edit_data = self.testplan_edit_data.copy()
         edit_data['email_settings-0-id'] = -1
         del edit_data['email_settings-0-auto_to_plan_author']
 
         response = self.client.post(self.testplan_edit_url, data=edit_data, follow=True)
 
+        self.assertContains(response, _('Edit TestPlan'))
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
@@ -131,6 +134,7 @@ class EditPlanViewTest(LoggedInTestCase):
 
         response = self.client.post(self.testplan_edit_url, data=edit_data, follow=True)
 
+        self.assertContains(response, _('Edit TestPlan'))
         self.assertContains(
             response,
             _('Select a valid choice. That choice is not one of the available choices.'))
@@ -146,6 +150,7 @@ class EditPlanViewTest(LoggedInTestCase):
 
         response = self.client.post(self.testplan_edit_url, data=edit_data, follow=True)
 
+        self.assertContains(response, _('Edit TestPlan'))
         self.assertContains(
             response,
             _('Select a valid choice. That choice is not one of the available choices.'))
@@ -156,6 +161,8 @@ class EditPlanViewTest(LoggedInTestCase):
 
     def test_with_invalid_version_shows_error(self):
         edit_data = self.testplan_edit_data.copy()
+        # Note: version not assigned to the current Product, that's why
+        # it is invalid !
         version = VersionFactory()
         edit_data['product_version'] = version.pk
 
