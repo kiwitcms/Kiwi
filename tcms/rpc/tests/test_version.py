@@ -6,6 +6,7 @@ from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
+from tcms.management.models import Version
 from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.tests.factories import ProductFactory, VersionFactory
 
@@ -100,8 +101,15 @@ class TestVersionCreatePermissions(APIPermissionsTestCase):
             "product": self.product.pk,
             "value": "Version with Permissions"
         })
+
+        # verify the serialized result
         self.assertEqual(result['value'], "Version with Permissions")
         self.assertEqual(result['product_id'], self.product.pk)
+
+        # verify the object from the DB
+        version = Version.objects.get(pk=result['id'])
+        self.assertEqual(version.value, "Version with Permissions")
+        self.assertEqual(version.product_id, self.product.pk)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
