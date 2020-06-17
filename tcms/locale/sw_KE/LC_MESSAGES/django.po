@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-17 08:22\n"
+"PO-Revision-Date: 2020-06-17 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -1229,7 +1229,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "Tafuta Haraka"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
@@ -1237,7 +1237,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "Siku iliyotengenezwa"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
@@ -1283,11 +1283,11 @@ msgstr "kama hauna moja!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Neno lako la siri limeanzishwa. Unaweza kuendelea na"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "sasa"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
@@ -1378,11 +1378,11 @@ msgstr ""
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Vidokezo"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "Imemaliza"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1463,7 +1463,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "Ghairi"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
@@ -2073,7 +2073,7 @@ msgstr ""
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "ama endelea na"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
@@ -2085,7 +2085,7 @@ msgstr ""
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "Majina kamili"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
