@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-03 10:32\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-06-17 08:22\n"
+"Last-Translator: \n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: sw\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -556,7 +558,7 @@ msgstr "%% ya jaribio zilizoshindwa"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Ukurasa huu haupatikani"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
@@ -1081,7 +1083,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Chapisha"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
@@ -1203,7 +1205,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Onyesha zaidi"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
@@ -1364,7 +1366,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Siku ya kutengenezwa"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1518,7 +1520,7 @@ msgstr "%(amount)s%% imekamilika"
 
 #: tcms/templates/run/status_statistics.html:14
 msgid "Report"
-msgstr ""
+msgstr "Ripoti"
 
 #: tcms/templates/run/status_statistics.html:19
 msgid "No Bugs"
