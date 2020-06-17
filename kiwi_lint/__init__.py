@@ -20,7 +20,7 @@ from .auto_field import AutoFieldChecker
 from .one_to_one_field import OneToOneFieldChecker
 from .views import ClassBasedViewChecker
 from .datetime import DatetimeChecker
-from .forms import FormFieldChecker
+from .forms import FormFieldChecker, ModelFormChecker
 
 
 def register(linter):
@@ -42,3 +42,4 @@ def register(linter):
     linter.register_checker(ClassBasedViewChecker(linter))
     linter.register_checker(DatetimeChecker(linter))
     linter.register_checker(FormFieldChecker(linter))
+    linter.register_checker(ModelFormChecker(linter))

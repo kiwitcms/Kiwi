@@ -1,5 +1,6 @@
 from pylint import checkers
 from pylint import interfaces
+from pylint_django.utils import node_is_subclass
 
 
 class FormFieldChecker(checkers.BaseChecker):
@@ -27,3 +28,24 @@ class FormFieldChecker(checkers.BaseChecker):
                     self.add_message('form-field-label-used', node=node)
                 if keyword.arg == 'help_text':
                     self.add_message('form-field-help-text-used', node=node)
+
+
+class ModelFormChecker(checkers.BaseChecker):
+    """
+    Check to ensure that all forms inherit from ModelForm.
+    """
+    __implements__ = (interfaces.IAstroidChecker,)
+
+    name = 'model-form-checker'
+
+    msgs = {'R4831': ('All forms must inherit from ModelForm',
+                      'must-inherit-from-model-form',
+                      'All forms must inherit from ModelForm'
+                      'See: https://github.com/kiwitcms/Kiwi/issues/1384')}
+
+    def visit_classdef(self, node):
+        if node_is_subclass(node, 'django.forms.forms.BaseForm',
+                            '.BaseForm') and not node_is_subclass(node,
+                                                                  'django.forms.models.ModelForm',
+                                                                  '.ModelForm'):
+            self.add_message('must-inherit-from-model-form', node=node)
