@@ -233,7 +233,7 @@ def add_link(values, update_tracker=False):
     return response
 
 
-# todo: missing permissions
+@permissions_required('linkreference.delete_linkreference')
 @rpc_method(name='TestExecution.remove_link')
 def remove_link(query):
     """

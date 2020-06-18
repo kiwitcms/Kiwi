@@ -14,7 +14,7 @@ from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import (BuildFactory,
                                   TestCaseFactory, TestExecutionFactory,
                                   TestPlanFactory, TestRunFactory, UserFactory,
-                                  VersionFactory)
+                                  VersionFactory, LinkReferenceFactory)
 
 
 @override_settings(LANGUAGE_CODE='en')
@@ -177,24 +177,30 @@ class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.case_run = TestExecutionFactory()
+        self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
+        links = self.execution.links()
+        self.assertFalse(links.exists())
+
         url = 'http://example.com'
-        self.rpc_client.TestExecution.add_link({
-            'execution_id':  self.case_run.pk,
+        result = self.rpc_client.TestExecution.add_link({
+            'execution_id': self.execution.pk,
             'url': url})
-        links = self.case_run.links()
+
+        links = self.execution.links()
+        self.assertEqual(self.execution.pk, result['execution'])
+        self.assertEqual(url, result['url'])
         self.assertEqual(1, links.count())
-        self.assertEqual(url, links[0].url)
+        self.assertEqual(url, links.first().url)
 
     def verify_api_without_permission(self):
         url = 'http://127.0.0.1/test/test-log.log'
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.TestExecution.add_link({
-                'execution_id': self.case_run.pk,
+                'execution_id': self.execution.pk,
                 'name': 'UT test logs',
-                'url':  url})
+                'url': url})
 
 
 class TestExecutionRemoveLink(APITestCase):
@@ -233,6 +239,36 @@ class TestExecutionRemoveLink(APITestCase):
         self.rpc_client.TestExecution.remove_link({'execution_id': self.case_run.pk,
                                                    'pk': self.link.pk})
         self.assertEqual([], list(self.case_run.links()))
+
+
+class TestExecutionRemoveLinkPermissions(APIPermissionsTestCase):
+    """Test permissions of TestExecution.remove_link"""
+
+    permission_label = 'linkreference.delete_linkreference'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.execution = TestExecutionFactory()
+        self.link = LinkReferenceFactory(execution=self.execution)
+        self.another_link = LinkReferenceFactory(execution=self.execution)
+
+    def verify_api_with_permission(self):
+        links = self.execution.links()
+        self.assertEqual(2, links.count())
+        self.assertIn(self.link, links)
+        self.assertIn(self.another_link, links)
+
+        self.rpc_client.TestExecution.remove_link({'pk': self.link.pk})
+
+        links = self.execution.links()
+        self.assertEqual(1, links.count())
+        self.assertIn(self.another_link, links)
+        self.assertNotIn(self.link, links)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestExecution.remove_link({'pk': self.another_link.pk})
 
 
 class TestExecutionFilter(APITestCase):
