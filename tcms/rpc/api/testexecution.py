@@ -198,7 +198,7 @@ def _update_case_text_version(execution, case_text_version):
         execution.case_text_version = int(case_text_version)
 
 
-# todo: missing permissions
+@permissions_required('linkreference.add_linkreference')
 @rpc_method(name='TestExecution.add_link')
 def add_link(values, update_tracker=False):
     """

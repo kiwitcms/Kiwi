@@ -9,7 +9,7 @@ from django.utils import timezone
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
-from tcms.rpc.tests.utils import APITestCase
+from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import (BuildFactory,
                                   TestCaseFactory, TestExecutionFactory,
@@ -167,6 +167,34 @@ class TestExecutionAddLink(APITestCase):
             'url': url})
         self.assertGreater(result['id'], 0)
         self.assertEqual(result['url'], url)
+
+
+class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
+    """Test permissions of TestExecution.add_link"""
+
+    permission_label = 'linkreference.add_linkreference'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case_run = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        url = 'http://example.com'
+        self.rpc_client.TestExecution.add_link({
+            'execution_id':  self.case_run.pk,
+            'url': url})
+        links = self.case_run.links()
+        self.assertEqual(1, links.count())
+        self.assertEqual(url, links[0].url)
+
+    def verify_api_without_permission(self):
+        url = 'http://127.0.0.1/test/test-log.log'
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestExecution.add_link({
+                'execution_id': self.case_run.pk,
+                'name': 'UT test logs',
+                'url':  url})
 
 
 class TestExecutionRemoveLink(APITestCase):
