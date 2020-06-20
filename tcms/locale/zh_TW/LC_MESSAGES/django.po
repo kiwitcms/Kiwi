@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 09:32\n"
+"PO-Revision-Date: 2020-06-20 09:41\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1176,7 +1176,7 @@ msgstr "顯示篩選選項"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "點擊拖曳在放開一行來調整順序，最後點擊“完成排序”連結來上傳您的修改"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1909,7 +1909,7 @@ msgstr "創建 TestRun 至少需要一個 TestCase"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
-msgstr ""
+msgstr "複製於 "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
@@ -1917,7 +1917,7 @@ msgstr "TestCase ID 不是有效的整數"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
-msgstr ""
+msgstr "你指定的計畫不存在資料庫中"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1971,70 +1971,71 @@ msgstr "放棄"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
-msgstr ""
+msgstr "更多設置請參考\n"
+"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "GitHub 整合"
 
 #: tcms_github_app/menu.py:12
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr ""
+msgstr "未設置 GitHub 應用 %d"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "你尚未通過 GitHub 帳號登入！ <a href=\"%s\">點擊此處</a>！"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr ""
+msgstr "你還沒有在 GitHub 帳號中安裝 Kiwi TCMS ！ <a href=\"%s\">點擊此處</a>！"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr ""
+msgstr "檢查到多個GitHub 應用程式安裝！請參考下列："
 
 #: tcms_github_app/views.py:82
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr ""
+msgstr "Edit GitHub App <a href=\"%s\">%s</a>"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "訂閱"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "租用戶訂閱"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "你可以訪問以下租用戶"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "租用戶"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "組織"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "你擁有下列租用戶"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "價格"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
