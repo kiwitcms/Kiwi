@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 10:11\n"
+"PO-Revision-Date: 2020-06-20 10:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1688,51 +1688,51 @@ msgstr "以下情況通知我"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "測試案例已更新"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "測試案例已刪除"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "副本給"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "用逗號分隔的電子郵件地址，通知電子郵件將在 CC 列表中發送給每個電子郵件位址。"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "搜尋測試案例"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "測試案例總結"
 
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "都"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "用逗號分隔變數"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "建立於"
 
 #: tcms/testcases/views.py:338
 msgid "TestPlan not specified or does not exist"
@@ -1740,7 +1740,7 @@ msgstr "TestPlan 未指定或不存在"
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr ""
+msgstr "歷史紀錄"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1753,81 +1753,81 @@ msgstr "至少需要一個 TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "複製測試計畫"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "複製 TCs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "複製或者將現有 TCs 連結到新的 TP"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "上層 TP"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "將原 TP 設置為新 TP 的根目錄"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "編輯測試計畫"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "建立新的測試計畫"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "父層ID:"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "測試計畫文件:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr ""
+msgstr "通知:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "測試案例作者"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "以下情況通知我:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "測試計畫已更新"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "測試案例已更新"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "啟動"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "搜尋測試計畫"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "測試計畫名稱"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr ""
+msgstr "測試計畫"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr ""
+msgstr "測試計畫是必須的"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
@@ -1846,42 +1846,45 @@ msgstr "許可權被拒絕: 此TestRun 不屬於您"
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "要了解更多關於自定義測試執行狀態的資訊，請參考\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        文檔</a>！"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr ""
+msgstr "測試執行狀態"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "編輯測試執行"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "複製測試執行"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "新增測試執行"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "版本"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "帳號或 Email"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "已選擇測試案例"
 
 #: tcms/testruns/templates/testruns/mutable.html:86
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "預先選定測試案例中的%(count)s 不是 CONFIRMED，將不會被複製！\n"
+"查看測試計畫以了解更多詳情！"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
