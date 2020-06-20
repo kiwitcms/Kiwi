@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-06-20 07:31\n"
+"Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -149,20 +151,20 @@ msgstr "概要"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "加入新產品"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "建立新版本"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "建立新建置"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
