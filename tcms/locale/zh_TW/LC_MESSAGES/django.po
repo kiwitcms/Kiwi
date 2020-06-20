@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 08:12\n"
+"PO-Revision-Date: 2020-06-20 08:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -513,83 +513,83 @@ msgstr "優先程度"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "分類"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "正向"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "中性"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "負數"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "測試狀態矩陣表"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
-msgstr ""
+msgstr "測試案例"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test run"
-msgstr ""
+msgstr "測試運行"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr ""
+msgstr "測試案例健康度"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "最常失敗的測試案例"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "測試案例"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "執行失敗的次數"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% 執行失敗"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "找不到頁面"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "內部伺服器錯誤"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "確定要刪除此附件嗎？"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "先進的開源測試管理系統"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:104
 #: tcms/testcases/templates/testcases/search.html:117
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "附件"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "找不到附件"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -597,12 +597,12 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Component"
-msgstr ""
+msgstr "元件/組件"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
 msgid "No component found"
-msgstr ""
+msgstr "沒有找到 元件"
 
 #: tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -612,32 +612,32 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "標籤"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:163
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "沒有找到任何標籤"
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "BUG"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr ""
+msgstr "來自執行"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr ""
+msgstr "未發現Bug"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
 #: tcms/testcases/templates/testcases/mutable.html:138
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "備註"
 
 #: tcms/templates/case/get_details.html:62
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
