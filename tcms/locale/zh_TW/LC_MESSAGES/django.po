@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 08:52\n"
+"PO-Revision-Date: 2020-06-20 09:02\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -803,7 +803,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "已為你新建或更新測試執行 %(pk)s 。\n\n"
+"### 連結 ###\n"
+"測試運行: %(run_url)s\n"
+"測試計畫: %(plan_url)s\n\n"
+"### 基本運行資訊 ###\n"
+"摘要: %(summary)s\n\n"
+"管理: %(manager)s.\n"
+"預設測試者: %(default_tester)s.\n\n"
+"產品: %(product)s\n"
+"產品版本: %(version)s\n"
+"建置版本: %(build)s\n\n"
+"備註:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -811,7 +823,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "給管理者，\n"
+"有人剛剛在此\n"
+"Kiwi TCMS註冊了一個 %(username)s 的使用者，正等待你的許可！\n\n"
+"點擊 %(user_url)s 啟用帳號！"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
@@ -831,7 +846,7 @@ msgstr "日期"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "沒有紀錄"
 
 #: tcms/templates/include/bug_details.html:3
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -894,23 +909,23 @@ msgstr "移除"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "新增標籤"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "切換導覽"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "歡迎訪客"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "我的測試執行"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "我的測試計畫"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -956,59 +971,59 @@ msgstr "進入翻譯模式"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "進入翻譯模式"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "第一頁"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "上一頁"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "目前頁面"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "下一頁"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "最後一頁"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "在這個計畫中沒有發現測試案例"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr ""
+msgstr "編輯計畫"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr ""
+msgstr "編輯測試計畫"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
-msgstr ""
+msgstr "複製計劃"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "複製此計畫到其他產品"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr ""
+msgstr "列印計畫"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr ""
+msgstr "刪除計畫"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr ""
+msgstr "刪除測試計畫"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
