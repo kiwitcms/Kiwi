@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 08:47\n"
+"PO-Revision-Date: 2020-06-20 08:52\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -749,7 +749,7 @@ msgstr "你管理 %(total_count)s 測試計畫， %(disabled_count)s 已禁用�
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "沒有屬於你的測試計畫"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -757,7 +757,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "歡迎， %(user)s，\n"
+"感謝你註冊為 %(site_domain)s 帳號！\n\n"
+"點擊此連結啟用你的帳號：\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -770,12 +773,20 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Bug %(pk)s 已指派給你。\n\n"
+"連結: %(bug_url)s\n\n"
+"摘要: %(summary)s\n"
+"建立於: %(creation_date)s\n"
+"報告者: %(reporter)s\n"
+"指派: %(assignee)s\n"
+"產品: %(product)s\n"
+"版本: %(version)s\n"
+"編譯: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "測試案例已被 %(username)s 刪除！"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
