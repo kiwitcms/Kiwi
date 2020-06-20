@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 09:41\n"
+"PO-Revision-Date: 2020-06-20 09:51\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1180,17 +1180,17 @@ msgstr "點擊拖曳在放開一行來調整順序，最後點擊“完成排序
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "重新排序案例"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
 msgid "No tags in cases"
-msgstr ""
+msgstr "測試案例中沒有標籤"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "測試人員"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1202,155 +1202,155 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "類別"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "每頁顯示的項目："
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "此外，請選擇下面尚未顯示的所有案例"
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "測試案例總結"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "審查員"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "預設測試人員"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "文檔版本"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "動作"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "顯示更多"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "剩下的案例"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "已載入所有案例"
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "在目前的計畫加入子節點"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "從目前計畫刪除子節點"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "搜尋案例加入到此測試計畫"
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "快速搜尋"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr ""
+msgstr "一般搜尋"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "建立於"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "沒有發現測試案例"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "密碼"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "忘記"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "密碼"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "登入"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "歡迎來到 Kiwi 測試案例管理系統"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "請先登入"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "註冊帳號"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "如果你沒有的話"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "您的密碼已被設置。您現在可以登入"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "現在"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:188
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "請輸入您的新密碼兩次，讓我們能夠驗證是否正確"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "請求密碼重置"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "已傳送密碼重設電子郵件。"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "電子郵件"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "密碼重設"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Kiwi TCMS 密碼重設"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
