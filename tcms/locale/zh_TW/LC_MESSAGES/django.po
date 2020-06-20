@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 07:41\n"
+"PO-Revision-Date: 2020-06-20 07:51\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -323,16 +323,16 @@ msgstr "透過設置base_url 來啟用對此問題追蹤器的回報"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "無效的日期格式。預設為 YYYY-MM-DD [HH:MM:SS]。"
 
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "%s 沒有主鍵。你必須手動指定此欄位。"
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
-msgstr ""
+msgstr "儀表板"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
@@ -340,39 +340,39 @@ msgstr "測試"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr ""
+msgstr "新增測試計畫"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr ""
+msgstr "新增測試案例"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr ""
+msgstr "新增Bug"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
-msgstr ""
+msgstr "搜尋"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
-msgstr ""
+msgstr "搜尋測試計畫"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr ""
+msgstr "搜尋測試執行"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
-msgstr ""
+msgstr "搜尋測試案例"
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr ""
+msgstr "搜尋bug"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr ""
+msgstr "遙測"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
