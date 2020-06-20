@@ -5,7 +5,7 @@ Django==3.0.7
 django-attachments==1.5
 django-contrib-comments==1.9.2
 django-modern-rpc==0.12.1
-django-simple-history==2.10.0
+django-simple-history==2.11.0
 jira==2.0.0
 Markdown==3.2.2
 python-gitlab==2.3.1
