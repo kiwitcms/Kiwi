@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 07:51\n"
+"PO-Revision-Date: 2020-06-20 08:01\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -380,56 +380,56 @@ msgstr "測試中"
 
 #: tcms/settings/common.py:318
 msgid "Breakdown"
-msgstr ""
+msgstr "分解"
 
 #: tcms/settings/common.py:319
 msgid "Status matrix"
-msgstr ""
+msgstr "狀態表"
 
 #: tcms/settings/common.py:320
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "執行趨勢"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr ""
+msgstr "測試案例健康度"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
-msgstr ""
+msgstr "管理者"
 
 #: tcms/settings/common.py:327
 msgid "Users and groups"
-msgstr ""
+msgstr "使用者及群組"
 
 #: tcms/settings/common.py:329
 msgid "Everything else"
-msgstr ""
+msgstr "管理其他事項"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "外掛"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
-msgstr ""
+msgstr "討論區"
 
 #: tcms/settings/common.py:343
 msgid "Report an Issue"
-msgstr ""
+msgstr "回報問題"
 
 #: tcms/settings/common.py:344
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "在StackOflow上求援"
 
 #: tcms/settings/common.py:345
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "透過開放群體捐贈5歐元"
 
 #: tcms/settings/common.py:346
 msgid "Administration Guide"
-msgstr ""
+msgstr "管理者指南"
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
