@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 09:02\n"
+"PO-Revision-Date: 2020-06-20 09:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1039,49 +1039,49 @@ msgstr "刪除測試計畫"
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr ""
+msgstr "計畫類型"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
-msgstr ""
+msgstr "參考連結"
 
 #: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "建立時間"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
-msgstr ""
+msgstr "上層"
 
 #: tcms/templates/plan/get.html:95
 msgid "View Edit History"
-msgstr ""
+msgstr "查看編輯歷史紀錄"
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "文件"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "審查案例"
 
 #: tcms/templates/plan/get.html:122
 msgid "Tree View"
-msgstr ""
+msgstr "樹狀圖"
 
 #: tcms/templates/plan/get.html:131
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "此計畫的文件尚未撰寫"
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
@@ -1089,7 +1089,7 @@ msgstr "檔案名稱"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
-msgstr ""
+msgstr "提交者"
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
@@ -1106,12 +1106,12 @@ msgstr "案例"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "撰寫新案例"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "從其他計畫加入案例"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1119,7 +1119,7 @@ msgstr "列印"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "選定案例的列印畫面"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
@@ -1129,11 +1129,11 @@ msgstr "克隆"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "複製指定的案例到其他測試計畫"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "從計畫中刪除指定的案例"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1141,15 +1141,15 @@ msgstr "運行"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "建立新的測試執行"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "更改測試案例審查者"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "改變預設測試者"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1163,16 +1163,16 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "優先級"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "點擊並顯示篩選選項"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "顯示篩選選項"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -1398,48 +1398,48 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "建立日期"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "已選擇："
 
 #: tcms/templates/run/get.html:55 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "產品版本"
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "備註"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "已完成"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "運行中"
 
 #: tcms/templates/run/get.html:142 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "完成於："
 
 #: tcms/templates/run/get.html:148
 msgid "CC"
-msgstr ""
+msgstr "副本"
 
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
-msgstr ""
+msgstr "自動"
 
 #: tcms/templates/run/get_case_runs.html:13
 msgid "Highlight"
-msgstr ""
+msgstr "強調"
 
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "刪除選中的測試運行案例"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
