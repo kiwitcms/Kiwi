@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django.db import DEFAULT_DB_ALIAS, connections
+from django.db.migrations.executor import MigrationExecutor
 
 
 class CsrfDisableMiddleware(MiddlewareMixin):
@@ -30,5 +32,25 @@ class CheckSettingsMiddleware(MiddlewareMixin):
                           'doc_url': doc_url,
                           'admin_url': reverse('admin:sites_site_change', args=[site.pk])
                       }
+                )
+            )
+
+
+class CheckUnappliedMigrationsMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        doc_url = """https://kiwitcms.readthedocs.io/en/latest/\
+installing_docker.html#initial-configuration-of-running-container"""
+        executor = MigrationExecutor(connections[DEFAULT_DB_ALIAS])
+        plan = executor.migration_plan(executor.loader.graph.leaf_nodes())
+        if plan:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                mark_safe(
+                    _('You have %(unapplied_migration_count)s unapplied migration(s). '
+                      'See <a href="%(doc_url)s">documentation</a>') % {
+                          "unapplied_migration_count": len(plan),
+                          "doc_url": doc_url,
+                          }
                 )
             )
