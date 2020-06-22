@@ -130,6 +130,7 @@ MIDDLEWARE = [
     'global_login_required.GlobalLoginRequiredMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
     'tcms.core.middleware.CheckSettingsMiddleware',
+    'tcms.core.middleware.CheckUnappliedMigrationsMiddleware',
 ]
 
 
