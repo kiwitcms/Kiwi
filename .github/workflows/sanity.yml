@@ -42,3 +42,24 @@ jobs:
           pip install wheel virtualenv
           pip install -r requirements/readthedocs.txt
           make build-for-pypi
+    
+  test-for-missing-migrations:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: test-for-missing-migrations
+      run: |
+        sudo apt-get install libkrb5-dev
+        export LANG=en-us
+        pip install -r requirements/devel.txt
+        pushd tcms/ && npm install && popd
+        
+        make test_for_missing_migrations
