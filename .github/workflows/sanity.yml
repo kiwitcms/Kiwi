@@ -42,7 +42,7 @@ jobs:
           pip install wheel virtualenv
           pip install -r requirements/readthedocs.txt
           make build-for-pypi
-    
+
   test-for-missing-migrations:
     runs-on: ubuntu-latest
     strategy:
@@ -58,8 +58,8 @@ jobs:
     - name: test-for-missing-migrations
       run: |
         sudo apt-get install libkrb5-dev
-        export LANG=en-us
         pip install -r requirements/devel.txt
         pushd tcms/ && npm install && popd
-        
+
+        export LANG=en-us
         make test_for_missing_migrations
