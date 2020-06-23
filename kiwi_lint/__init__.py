@@ -20,6 +20,7 @@ from .auto_field import AutoFieldChecker
 from .one_to_one_field import OneToOneFieldChecker
 from .views import ClassBasedViewChecker
 from .datetime import DatetimeChecker
+from .db_columns import DbColumnChecker
 
 
 def register(linter):
@@ -40,3 +41,5 @@ def register(linter):
     linter.register_checker(OneToOneFieldChecker(linter))
     linter.register_checker(ClassBasedViewChecker(linter))
     linter.register_checker(DatetimeChecker(linter))
+    linter.register_checker(DbColumnChecker(linter))
+    
