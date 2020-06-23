@@ -31,8 +31,21 @@ $(document).ready(() => {
     $('#id_before').on('dp.change', drawTable);
 
     drawTable();
+
+    $('#table').on('draw.dt', function(){
+        setMaxHeight($(this));
+    })
 });
 
+$(window).on('resize', function(){
+    setMaxHeight($('#table'));
+});
+
+
+function setMaxHeight(t) {
+    const maxH = 0.99 * (window.innerHeight - t.position().top)
+    t.css('max-height', maxH);
+}
 
 function drawTable() {
     if (table) {
