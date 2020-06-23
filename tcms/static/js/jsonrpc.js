@@ -19,7 +19,11 @@ function jsonRPC(rpc_method, rpc_params, callback, is_sync) {
       dataType:"json",
       contentType: "application/json",
       success: function (result) {
-            callback(result.result);
+            if (result.error) {
+                alert(result.error.message);
+            } else {
+                callback(result.result);
+            }
       },
       error: function (err,status,thrown) {
              console.log("*** jsonRPC ERROR: " + err + " STATUS: " + status + " " + thrown );
