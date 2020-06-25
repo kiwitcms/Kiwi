@@ -34,6 +34,8 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 
         :param query: Field lookups for :class:`django.contrib.auth.models.User`
         :type query: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`django.contrib.auth.models.User` object without
                  the password field!
         :rtype: dict
@@ -66,8 +68,11 @@ def update(user_id, values, **kwargs):
         :type user_id: int
         :param values: Field values for :class:`django.contrib.auth.models.User`
         :type values: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`django.contrib.auth.models.User` object
-        :raises: PermissionDenied if missing the *auth.change_user* permission
+        :rtype: dict
+        :raises PermissionDenied: if missing the *auth.change_user* permission
                  when updating another user or when passwords don't match.
 
         .. note::
@@ -129,8 +134,7 @@ def join_group(username, groupname):
         :type username: str
         :param groupname: Name of group to join, must exist!
         :type groupname: str
-        :return: None
-        :raises: PermissionDenied if missing *auth.change_user* permission
+        :raises PermissionDenied: if missing *auth.change_user* permission
     """
     user = User.objects.get(username=username)
     group = Group.objects.get(name=groupname)

@@ -108,17 +108,26 @@ class TestPlan(TCMSActionModel):
               new_author=None, set_parent=False, copy_testcases=False, **_kwargs):
         """Clone this plan
 
-        :param str name: New name of cloned plan. If not passed, make_cloned_name is called
+        :param name: New name of cloned plan. If not passed, make_cloned_name is called
             to generate a default one.
+        :type name: str
         :param product: Product of cloned plan. If not passed, original plan's product is used.
+        :type product: :class:`tcms.management.models.Product`
         :param version: Product version of cloned plan. If not passed use from source plan.
+        :type version: :class:`tcms.management.models.Version`
         :param new_author: New author of cloned plan. If not passed, original plan's
             author is used.
-        :param bool set_parent: Whether to set original plan as parent of cloned plan.
+        :type new_author: settings.AUTH_USER_MODEL
+        :param set_parent: Whether to set original plan as parent of cloned plan.
             Default is False.
-        :param bool copy_testcases: Whether to copy cases to cloned plan instead of just
+        :type set_parent: bool
+        :param copy_testcases: Whether to copy cases to cloned plan instead of just
             linking them. Default is False.
-        :rtype: cloned plan
+        :type copy_testcases: bool
+        :param _kwargs: Unused catch-all variable container for any extra input
+            which may be present
+        :return: cloned plan
+        :rtype: :class:`tcms.testplans.models.TestPlan`
         """
         tp_dest = TestPlan.objects.create(
             name=name or self.make_cloned_name(),

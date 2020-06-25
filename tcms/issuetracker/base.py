@@ -15,9 +15,13 @@ class IntegrationThread(threading.Thread):
     def __init__(self, rpc, bug_system, execution, bug_id):
         """
             :param rpc: Bug tracker RPC object
+            :type rpc: object
             :param bug_system: BugSystem object
+            :type bug_system: :class:`tcms.testcases.models.BugSystem`
             :param execution: TestExecution object
+            :type execution: :class:`tcms.testruns.models.TestExecution`
             :param bug_id: Unique defect identifier in the system. Usually an int.
+            :type bug_id: int or str
         """
         self.rpc = rpc
         self.bug_system = bug_system
@@ -162,7 +166,8 @@ class IssueTrackerType:
             When is linking a TC to a Bug report disabled?
             Usually when not all of the required credentials are provided.
 
-            :return: bool
+            :return: True if bug system api url, username and password are provided
+            :rtype: bool
         """
         return not (self.bug_system.api_url
                     and self.bug_system.api_username

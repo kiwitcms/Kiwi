@@ -43,7 +43,7 @@ def create(values):
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Build` object
         :rtype: dict
-        :raises: ValueError if product or name not specified
+        :raises ValueError: if product or name not specified
         :raises: PermissionDenied if missing *management.add_build* permission
     """
     if not values.get('product') or not values.get('name'):

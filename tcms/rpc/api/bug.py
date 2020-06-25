@@ -49,6 +49,8 @@ def report(execution_id, tracker_id, **kwargs):
         :type execution_id: int
         :param tracker_id: PK for :class:`tcms.testcases.models.BugSystem` object
         :type tracker_id: int
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Success response with bug URL or failure message
         :rtype: dict
     """
