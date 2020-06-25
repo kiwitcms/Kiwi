@@ -139,10 +139,12 @@ def _get_related_object_pks(m2m_fields_query, model_pk, field_name):
     Any object pk with value 0 or None values will be excluded in the final
     list.
 
-    :param dict m2m_field_query: the result returned from _query_m2m_fields
+    :param m2m_fields_query: the result returned from _query_m2m_fields
+    :type m2m_fields_query: dict
     :param model_pk: whose object's related object pks will be retrieved
     :type model_pk: int or long
-    :param str field_name: field name of the related object
+    :param field_name: field name of the related object
+    :type field_name: str
     :return: list of related objects' pks
     :rtype: list
     """

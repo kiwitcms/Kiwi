@@ -35,8 +35,9 @@ def add_case(run_id, case_id):
         :param case_id: PK of TestCase to be added
         :type case_id: int
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
-        :raises: DoesNotExist if objects specified by the PKs don't exist
-        :raises: PermissionDenied if missing *testruns.add_testexecution* permission
+        :rtype: dict
+        :raises DoesNotExist: if objects specified by the PKs don't exist
+        :raises PermissionDenied: if missing *testruns.add_testexecution* permission
     """
     execution = TestRun.objects.get(pk=run_id).add_case_run(
         case=TestCase.objects.get(pk=case_id)
@@ -56,8 +57,7 @@ def remove_case(run_id, case_id):
         :type run_id: int
         :param case_id: PK of TestCase to be removed
         :type case_id: int
-        :return: None
-        :raises: PermissionDenied if missing *testruns.delete_testexecution* permission
+        :raises PermissionDenied: if missing *testruns.delete_testexecution* permission
     """
     TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
@@ -101,7 +101,10 @@ def add_tag(run_id, tag_name, **kwargs):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
+        :rtype: dict
         :raises: PermissionDenied if missing *testruns.add_testruntag* permission
         :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
         :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag_name*
@@ -127,6 +130,7 @@ def remove_tag(run_id, tag_name):
         :param tag_name: Tag name to add
         :type tag_name: str
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
+        :rtype: dict
         :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
@@ -147,8 +151,9 @@ def create(values):
         :param values: Field values for :class:`tcms.testruns.models.TestRun`
         :type values: dict
         :return: Serialized :class:`tcms.testruns.models.TestRun` object
-        :raises: PermissionDenied if missing *testruns.add_testrun* permission
-        :raises: ValueError if data validations fail
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.add_testrun* permission
+        :raises ValueError: if data validations fail
 
         Example::
 
@@ -210,8 +215,9 @@ def update(run_id, values):
         :param values: Field values for :class:`tcms.testruns.models.TestRun`
         :type values: dict
         :return: Serialized :class:`tcms.testruns.models.TestRun` object
-        :raises: PermissionDenied if missing *testruns.change_testrun* permission
-        :raises: ValueError if data validations fail
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.change_testrun* permission
+        :raises ValueError: if data validations fail
     """
     test_run = TestRun.objects.get(pk=run_id)
     form = UpdateForm(values, instance=test_run)

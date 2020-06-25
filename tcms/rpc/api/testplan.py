@@ -36,10 +36,12 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testplans.models.TestPlan`
         :type values: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testplans.models.TestPlan` object
         :rtype: dict
-        :raises: PermissionDenied if missing *testplans.add_testplan* permission
-        :raises: ValueError if data validation fails
+        :raises PermissionDenied: if missing *testplans.add_testplan* permission
+        :raises ValueError: if data validation fails
 
         Minimal parameters::
 
@@ -100,10 +102,11 @@ def add_tag(plan_id, tag_name, **kwargs):
         :type plan_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :return: None
-        :raises: PermissionDenied if missing *testplans.add_testplantag* permission
-        :raises: TestPlan.DoesNotExist if object specified by PK doesn't exist
-        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag_name*
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
+        :raises PermissionDenied: if missing *testplans.add_testplantag* permission
+        :raises TestPlan.DoesNotExist: if object specified by PK doesn't exist
+        :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag_name*
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
@@ -123,9 +126,8 @@ def remove_tag(plan_id, tag_name):
         :type plan_id: int
         :param tag_name: Tag name to remove
         :type tag_name: str
-        :return: None
-        :raises: PermissionDenied if missing *testplans.delete_testplantag* permission
-        :raises: DoesNotExist if objects specified don't exist
+        :raises PermissionDenied: if missing *testplans.delete_testplantag* permission
+        :raises DoesNotExist: if objects specified don't exist
     """
     tag = Tag.objects.get(name=tag_name)
     TestPlan.objects.get(pk=plan_id).remove_tag(tag)
@@ -145,9 +147,9 @@ def update(plan_id, values):
         :type values: dict
         :return: Serialized :class:`tcms.testplans.models.TestPlan` object
         :rtype: dict
-        :raises: TestPlan.DoesNotExist if object specified by PK doesn't exist
-        :raises: PermissionDenied if missing *testplans.change_testplan* permission
-        :raises: ValueError if validations fail
+        :raises TestPlan.DoesNotExist: if object specified by PK doesn't exist
+        :raises PermissionDenied: if missing *testplans.change_testplan* permission
+        :raises ValueError: if validations fail
     """
     test_plan = TestPlan.objects.get(pk=plan_id)
     form = EditPlanForm(values, instance=test_plan)
@@ -171,10 +173,9 @@ def add_case(plan_id, case_id):
         :type plan_id: int
         :param case_id: PK of TestCase to be added to plan
         :type case_id: int
-        :return: None
-        :raises: TestPlan.DoesNotExit or TestCase.DoesNotExist if objects specified
+        :raises TestPlan.DoesNotExit or TestCase.DoesNotExist: if objects specified
                  by PKs are missing
-        :raises: PermissionDenied if missing *testcases.add_testcaseplan* permission
+        :raises PermissionDenied: if missing *testcases.add_testcaseplan* permission
     """
     plan = TestPlan.objects.get(pk=plan_id)
     case = TestCase.objects.get(pk=case_id)
@@ -193,8 +194,7 @@ def remove_case(plan_id, case_id):
         :type plan_id: int
         :param case_id: PK of TestCase to be removed from plan
         :type case_id: int
-        :return: None
-        :raises: PermissionDenied if missing *testcases.delete_testcaseplan* permission
+        :raises PermissionDenied: if missing *testcases.delete_testcaseplan* permission
     """
     TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
 
@@ -209,9 +209,11 @@ def list_attachments(plan_id, **kwargs):
 
         :param plan_id: PK of TestPlan to inspect
         :type plan_id: int
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: A list containing information and download URLs for attachements
         :rtype: list
-        :raises: TestPlan.DoesNotExit if object specified by PK is missing
+        :raises TestPlan.DoesNotExit: if object specified by PK is missing
     """
     plan = TestPlan.objects.get(pk=plan_id)
     request = kwargs.get(REQUEST_KEY)
@@ -232,7 +234,8 @@ def add_attachment(plan_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :return: None
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
     """
     utils.add_attachment(
         plan_id,

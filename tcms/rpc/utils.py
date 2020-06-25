@@ -95,8 +95,11 @@ def distinct_m2m_rows(cls, values, op_type):
     @type cls: subclass of django.db.models.Model
     @param values: fields in where condition.
     @type values: dict
+    @param op_type:
+    @type op_type: int
     @return: QuerySet
-    @rtype: django.db.models.query.QuerySet
+    @rtype: :class:`django.db.models.query.QuerySet`
+    @raises TypeError:
     """
     flag = False
     for field in values.keys():

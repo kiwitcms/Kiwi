@@ -42,6 +42,8 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.management.models.Component`
         :type values: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
         :raises: PermissionDenied if missing *management.add_component* permission
@@ -89,8 +91,8 @@ def update(component_id, values):
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
-        :raises: ValueError if ``name`` is missing or empty string
-        :raises: PermissionDenied if missing *management.change_component* permission
+        :raises ValueError: if ``name`` is missing or empty string
+        :raises PermissionDenied: if missing *management.change_component* permission
     """
     if not isinstance(values, dict) or 'name' not in values:
         raise ValueError('Component name is not in values {0}.'.format(values))

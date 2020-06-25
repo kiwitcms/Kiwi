@@ -21,6 +21,8 @@ def login(username, password, **kwargs):
         :type username: str
         :param password: The password
         :type password: str
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Session ID
         :rtype: str
         :raises PermissionDenied: if username or password doesn't match or missing
@@ -45,8 +47,6 @@ def logout(**kwargs):
     .. function:: XML-RPC Auth.logout()
 
         Delete session information
-
-        :return: None
     """
     # Get the current request
     request = kwargs.get(REQUEST_KEY)

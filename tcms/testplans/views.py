@@ -113,12 +113,12 @@ class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-re
 def get_number_of_plans_cases(plan_ids):
     """Get the number of cases related to each plan
 
-    Arguments:
-    - plan_ids: a tuple or list of TestPlans' id
+    :param plan_ids: a tuple or list of TestPlans' ids
+    :type plan_ids: list or tuple
 
-    Return value:
-    Return value is an dict object, where key is plan_id and the value is the
-    total count.
+    :return: a dict where key is plan_id and the value is the
+        total count.
+    :rtype: dict
     """
     query_set = TestCasePlan.objects.filter(plan__in=plan_ids).values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
@@ -133,12 +133,12 @@ def get_number_of_plans_cases(plan_ids):
 def get_number_of_plans_runs(plan_ids):
     """Get the number of runs related to each plan
 
-    Arguments:
-    - plan_ids: a tuple or list of TestPlans' id
+    :param plan_ids: a tuple or list of TestPlans' ids
+    :type plan_ids: list or tuple
 
-    Return value:
-    Return value is an dict object, where key is plan_id and the value is the
-    total count.
+    :return: a dict where key is plan_id and the value is the
+        total count.
+    :rtype: dict
     """
     query_set = TestRun.objects.filter(plan__in=plan_ids).values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
@@ -152,12 +152,12 @@ def get_number_of_plans_runs(plan_ids):
 def get_number_of_children_plans(plan_ids):
     """Get the number of children plans related to each plan
 
-    Arguments:
-    - plan_ids: a tuple or list of TestPlans' id
+    :param plan_ids: a tuple or list of TestPlans' ids
+    :type plan_ids: list or tuple
 
-    Return value:
-    Return value is an dict object, where key is plan_id and the value is the
-    total count.
+    :return: a dict where key is plan_id and the value is the
+        total count.
+    :rtype: dict
     """
     query_set = TestPlan.objects.filter(parent__in=plan_ids).values('parent').annotate(
         total_count=Count('parent')).order_by('-parent')
@@ -171,12 +171,11 @@ def get_number_of_children_plans(plan_ids):
 def calculate_stats_for_testplans(plans):
     """Attach the number of cases and runs for each TestPlan
 
-    Arguments:
-    - plans: the queryset of TestPlans
-
-    Return value:
-    A list of TestPlans, each of which is attached the statistics which is
-    with prefix cal meaning calculation result.
+    :param plans: the queryset of TestPlans
+    :type plans: dict
+    :return: A list of TestPlans, each of which is attached the statistics which is
+        with prefix cal meaning calculation result.
+    :rtype: list
     """
     plan_ids = []
     for plan in plans:

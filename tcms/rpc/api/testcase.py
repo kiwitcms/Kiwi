@@ -49,9 +49,10 @@ def add_component(case_id, component):
         :param component: Name of Component to add
         :type component: str
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
-        :raises: PermissionDenied if missing the *testcases.add_testcasecomponent*
+        :rtype: dict
+        :raises PermissionDenied: if missing the *testcases.add_testcasecomponent*
                  permission
-        :raises: DoesNotExist if missing test case or component that match the
+        :raises DoesNotExist: if missing test case or component that match the
                  specified PKs
     """
     case = TestCase.objects.get(pk=case_id)
@@ -93,10 +94,9 @@ def remove_component(case_id, component_id):
         :type case_id: int
         :param component_id: PK of Component to remove
         :type component_id: int
-        :return: None
-        :raises: PermissionDenied if missing the *testcases.delete_testcasecomponent*
+        :raises PermissionDenied: if missing the *testcases.delete_testcasecomponent*
                  permission
-        :raises: DoesNotExist if missing test case or component that match the
+        :raises DoesNotExist: if missing test case or component that match the
                  specified PKs
     """
     TestCase.objects.get(pk=case_id).remove_component(
@@ -111,8 +111,7 @@ def _validate_cc_list(cc_list):
 
         :param cc_list: List of email addresses
         :type cc_list: list
-        :return: None
-        :raises: TypeError or ValidationError if addresses are not valid.
+        :raises TypeError or ValidationError: if addresses are not valid.
     """
 
     if not isinstance(cc_list, list):
@@ -142,13 +141,12 @@ def add_notification_cc(case_id, cc_list):
         Add email addresses to the notification list of specified TestCase
 
         :param case_id: PK of TestCase to be modified
-        :param case_id: int
+        :type case_id: int
         :param cc_list: List of email addresses
         :type cc_list: list(str)
-        :return: None
-        :raises: TypeError or ValidationError if email validation fails
-        :raises: PermissionDenied if missing *testcases.change_testcase* permission
-        :raises: TestCase.DoesNotExist if object with case_id doesn't exist
+        :raises TypeError or ValidationError: if email validation fails
+        :raises PermissionDenied: if missing *testcases.change_testcase* permission
+        :raises TestCase.DoesNotExist: if object with case_id doesn't exist
     """
 
     _validate_cc_list(cc_list)
@@ -169,10 +167,9 @@ def remove_notification_cc(case_id, cc_list):
         :type case_id: int
         :param cc_list: List of email addresses
         :type cc_list: list(str)
-        :return: None
-        :raises: TypeError or ValidationError if email validation fails
-        :raises: PermissionDenied if missing *testcases.change_testcase* permission
-        :raises: TestCase.DoesNotExist if object with case_id doesn't exist
+        :raises TypeError or ValidationError: if email validation fails
+        :raises PermissionDenied: if missing *testcases.change_testcase* permission
+        :raises TestCase.DoesNotExist: if object with case_id doesn't exist
     """
 
     _validate_cc_list(cc_list)
@@ -208,10 +205,11 @@ def add_tag(case_id, tag, **kwargs):
         :type case_id: int
         :param tag: Tag name to add
         :type tag: str
-        :return: None
-        :raises: PermissionDenied if missing *testcases.add_testcasetag* permission
-        :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
-        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag*
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
+        :raises PermissionDenied: if missing *testcases.add_testcasetag* permission
+        :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
+        :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag*
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
@@ -231,9 +229,8 @@ def remove_tag(case_id, tag):
         :type case_id: int
         :param tag: Tag name to remove
         :type tag: str
-        :return: None
-        :raises: PermissionDenied if missing *testcases.delete_testcasetag* permission
-        :raises: DoesNotExist if objects specified don't exist
+        :raises PermissionDenied: if missing *testcases.delete_testcasetag* permission
+        :raises DoesNotExist: if objects specified don't exist
     """
     TestCase.objects.get(pk=case_id).remove_tag(
         Tag.objects.get(name=tag)
@@ -250,9 +247,12 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testcases.models.TestCase`
         :type values: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
-        :raises: PermissionDenied if missing *testcases.add_testcase* permission
+        :raises ValueError: if form is not valid
+        :raises PermissionDenied: if missing *testcases.add_testcase* permission
 
         Minimal test case parameters::
 
@@ -312,8 +312,9 @@ def update(case_id, values):
         :type values: dict
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
-        :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
-        :raises: PermissionDenied if missing *testcases.change_testcase* permission
+        :raises ValueError: if form is not valid
+        :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
+        :raises PermissionDenied: if missing *testcases.change_testcase* permission
     """
     test_case = TestCase.objects.get(pk=case_id)
     form = UpdateForm(values, instance=test_case)
@@ -336,8 +337,10 @@ def remove(query):
 
         :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
         :type query: dict
-        :return: None
         :raises: PermissionDenied if missing the *testcases.delete_testcase* permission
+        :return: The number of objects deleted and a dictionary with the
+                 number of deletions per object type.
+        :rtype: int, dict
 
         Example - removing bug from TestCase::
 
@@ -358,6 +361,8 @@ def list_attachments(case_id, **kwargs):
 
         :param case_id: PK of TestCase to inspect
         :type case_id: int
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: A list containing information and download URLs for attachements
         :rtype: list
         :raises: TestCase.DoesNotExit if object specified by PK is missing
@@ -381,7 +386,8 @@ def add_attachment(case_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :return: None
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
     """
     utils.add_attachment(
         case_id,
@@ -400,11 +406,12 @@ def add_comment(case_id, comment, **kwargs):
         Add comment to selected test case.
 
         :param case_id: PK of a TestCase object
-        :param case_id: int
+        :type case_id: int
         :param comment: The text to add as a comment
-        :param comment: str
-        :return: None or JSON string in case of errors
-        :raises: PermissionDenied if missing *django_comments.add_comment* permission
+        :type comment: str
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
+        :raises PermissionDenied: if missing *django_comments.add_comment* permission
 
         .. important::
 
@@ -423,11 +430,10 @@ def remove_comment(case_id, comment_id=None):
         Remove all or specified comment(s) from selected test case.
 
         :param case_id: PK of a TestCase object
-        :param case_id: int
+        :type case_id: int
         :param comment_id: PK of a Comment object or None
-        :param comment_id: int
-        :return: None
-        :raises: PermissionDenied if missing *django_comments.delete_comment* permission
+        :type comment_id: int
+        :raises PermissionDenied: if missing *django_comments.delete_comment* permission
     """
     case = TestCase.objects.get(pk=case_id)
     to_be_deleted = comments.get_comments(case)

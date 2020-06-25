@@ -117,7 +117,11 @@ def calculate_for_testcases(plan, testcases):
 
     :param plan: the TestPlan containing searched TestCases. None means testcases
                  are not limited to a specific TestPlan.
+    :type plan: :class:`tcms.testplans.models.TestPlan`
     :param testcases: a queryset of TestCases.
+    :type testcases: :class:`django.db.models.query.QuerySet`
+    :return: testcases
+    :rtype: :class:`django.db.models.query.QuerySet`
     """
     tc_ids = []
     for test_case in testcases:
@@ -182,11 +186,14 @@ def build_cases_search_form(request, populate=None, plan=None):
 def paginate_testcases(request, testcases):  # pylint: disable=missing-permission-required
     """Paginate queried TestCases
 
-    Arguments:
-    - request: django's HttpRequest from which to get pagination data
-    - testcases: an object queryset representing already queried TestCases
+    :param request: django's HttpRequest from which to get pagination data
+    :type request: :class:`django.http.HttpRequest`
 
-    Return value: return the queryset for chain call
+    :param testcases: an object queryset representing already queried TestCases
+    :type testcases: :class:`django.db.models.query.QuerySet`
+
+    :return: the queryset for chain call
+    :rtype: :class:`django.db.models.query.QuerySet`
     """
 
     page_index = int(request.POST.get('page_index', 1))
@@ -203,9 +210,14 @@ def paginate_testcases(request, testcases):  # pylint: disable=missing-permissio
 def sort_queried_testcases(request, testcases):  # pylint: disable=missing-permission-required
     """Sort querid TestCases according to sort key
 
-    Arguments:
-    - request: REQUEST object
-    - testcases: object of QuerySet containing queried TestCases
+    :param request: django's HttpRequest
+    :type request: :class:`django.http.HttpRequest`
+
+    :param testcases: an object queryset representing already queried TestCases
+    :type testcases: :class:`django.db.models.query.QuerySet`
+
+    :return: Queryset with testcases
+    :rtype: :class:`django.db.models.query.QuerySet`
     """
     order_by = request.POST.get('order_by', 'create_date')
     asc = bool(request.POST.get('asc', None))
@@ -229,8 +241,14 @@ def query_testcases_from_request(request, plan=None):  # pylint: disable=missing
     """Query TestCases according to criterias coming within REQUEST
 
     :param request: the REQUEST object.
+    :type request: :class:`django.http.HttpRequest`
+
     :param plan: instance of TestPlan to restrict only those TestCases belongs to
                  the TestPlan. Can be None. As you know, query from all TestCases.
+    :type plan: :class:`tcms.testplans.models.TestPlan`
+
+    :return: Queryset with testcases and search form
+    :rtype: :class:`django.db.models.query.QuerySet`, dict
     """
     search_form = build_cases_search_form(request, True, plan)
 
@@ -272,8 +290,11 @@ def get_selected_testcases(request):  # pylint: disable=missing-permission-requi
 
     If neither variables mentioned exists, empty query result is returned.
 
-    Arguments:
-    - request: REQUEST object.
+    :param request: django's HttpRequest
+    :type request: :class:`django.http.HttpRequest`
+
+    :return: Queryset with testcases
+    :rtype: :class:`django.db.models.query.QuerySet`
     """
     method = request.POST or request.GET
     if method.get('selectAll', None):
@@ -310,10 +331,11 @@ def load_more_cases(request,  # pylint: disable=missing-permission-required
 def get_tags_from_cases(case_ids, plan=None):
     """Get all tags from test cases
 
-    @param cases: an iterable object containing test cases' ids
-    @type cases: list, tuple
+    @param case_ids: an iterable object containing test cases' ids
+    @type case_ids: list, tuple
 
     @param plan: TestPlan object
+    @type plan: :class:`tcms.testplans.models.TestPlan`
 
     @return: a list containing all found tags with id and name
     @rtype: list

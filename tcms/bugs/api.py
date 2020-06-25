@@ -26,10 +26,11 @@ def add_tag(bug_id, tag, **kwargs):
         :type bug_id: int
         :param tag: Tag name to add
         :type tag: str
-        :return: None
-        :raises: PermissionDenied if missing *bugs.add_bugtag* permission
-        :raises: Bug.DoesNotExist if object specified by PK doesn't exist
-        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag*
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
+        :raises PermissionDenied: if missing *bugs.add_bugtag* permission
+        :raises Bug.DoesNotExist: if object specified by PK doesn't exist
+        :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag*
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
@@ -49,9 +50,8 @@ def remove_tag(bug_id, tag):
         :type bug_id: int
         :param tag: Tag name to remove
         :type tag: str
-        :return: None
-        :raises: PermissionDenied if missing *bugs.delete_bugtag* permission
-        :raises: DoesNotExist if objects specified don't exist
+        :raises PermissionDenied: if missing *bugs.delete_bugtag* permission
+        :raises DoesNotExist: if objects specified don't exist
     """
     Bug.objects.get(pk=bug_id).tags.remove(
         Tag.objects.get(name=tag)
@@ -68,8 +68,7 @@ def remove(query):
 
         :param query: Field lookups for :class:`tcms.bugs.models.Bug`
         :type query: dict
-        :return: None
-        :raises: PermissionDenied if missing *bugs.delete_bugtag* permission
+        :raises PermissionDenied: if missing *bugs.delete_bugtag* permission
     """
     Bug.objects.filter(**query).delete()
 
@@ -84,6 +83,7 @@ def filter(query):  # pylint: disable=redefined-builtin
         :param query: Field lookups for :class:`tcms.bugs.models.Bug`
         :type query: dict
         :return: List of serialized :class:`tcms.bugs.models.Bug` objects.
+        :rtype: list
     """
     result = Bug.objects.filter(**query).values(
         'pk',

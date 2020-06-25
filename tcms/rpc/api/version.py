@@ -38,11 +38,11 @@ def create(values):
         Add new version.
 
         :param values: Field values for :class:`tcms.management.models.Version`
-        :type query: dict
+        :type values: dict
         :return: Serialized :class:`tcms.management.models.Version` object
         :rtype: dict
-        :raises: ValueError if input data validation fails
-        :raises: PermissionDenied if missing *management.add_version* permission
+        :raises ValueError: if input data validation fails
+        :raises PermissionDenied: if missing *management.add_version* permission
 
     Example::
 

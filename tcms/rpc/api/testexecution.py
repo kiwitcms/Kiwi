@@ -45,11 +45,12 @@ def add_comment(execution_id, comment, **kwargs):
         Add comment to selected test execution.
 
         :param execution_id: PK of a TestExecution object
-        :param execution_id: int
+        :type execution_id: int
         :param comment: The text to add as a comment
-        :param comment: str
-        :return: None or JSON string in case of errors
-        :raises: PermissionDenied if missing *django_comments.add_comment* permission
+        :type comment: str
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
+        :raises PermissionDenied: if missing *django_comments.add_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
     comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
@@ -64,11 +65,10 @@ def remove_comment(execution_id, comment_id=None):
         Remove all or specified comment(s) from selected test execution.
 
         :param execution_id: PK of a TestExecution object
-        :param execution_id: int
+        :type execution_id: int
         :param comment_id: PK of a Comment object or None
-        :param comment_id: int
-        :return: None
-        :raises: PermissionDenied if missing *django_comments.delete_comment* permission
+        :type comment_id: int
+        :raises PermissionDenied: if missing *django_comments.delete_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
     to_be_deleted = comments.get_comments(execution)
@@ -91,7 +91,11 @@ def create(values):
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
-        :raises: PermissionDenied if missing *testruns.add_testexecution* permission
+        :rtype: dict
+        :raises TypeError: if argument values is not in dict type
+        :raises ValueError: if argument values is empty
+        :raises ValueError: if data validations fail
+        :raises PermissionDenied: if missing *testruns.add_testexecution* permission
 
         Minimal parameters::
 
@@ -154,8 +158,12 @@ def update(execution_id, values, **kwargs):
         :type execution_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
-        :raises: PermissionDenied if missing *testruns.change_testexecution* permission
+        :rtype: dict
+        :raises ValueError: if data validations fail
+        :raises PermissionDenied: if missing *testruns.change_testexecution* permission
     """
 
     execution = TestExecution.objects.get(pk=execution_id)
@@ -214,7 +222,8 @@ def add_link(values, update_tracker=False):
         :type update_tracker: bool, default=False
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
-        :raises: RuntimeError if operation not successfull
+        :rtype: dict
+        :raises RuntimeError: if operation not successfull
 
         .. note::
 
@@ -244,7 +253,6 @@ def remove_link(query):
         :param query: Field lookups for
                       :class:`tcms.core.contrib.linkreference.models.LinkReference`
         :type query: dict
-        :return: None
     """
     LinkReference.objects.filter(**query).delete()
 
@@ -261,6 +269,7 @@ def get_links(query):
         :type query: dict
         :return: Serialized list of :class:`tcms.core.contrib.linkreference.models.LinkReference`
                  objects
+        :rtype: dict
     """
     links = LinkReference.objects.filter(**query)
     serialier = Serializer(links)
