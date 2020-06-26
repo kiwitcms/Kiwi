@@ -17,6 +17,7 @@ Available plugins
 * Native `JUnit 5 plugin <https://github.com/kiwitcms/junit-plugin/>`_ written
   in Java
 * `Robot Framework plugin <https://github.com/kiwitcms/robotframework-plugin>`_
+* `Django test runner plugin <https://github.com/kiwitcms/django-plugin>`_
 
 .. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
 
@@ -39,7 +40,6 @@ to be notified when they are officially released.
 Proposed plugins
 ----------------
 
-* `Django test runner plugin <https://github.com/kiwitcms/Kiwi/issues/693>`_
 * Native `Test NG plugin <https://github.com/kiwitcms/Kiwi/issues/692>`_ to be
   written in Java
 * `GitHub status plugin <https://github.com/kiwitcms/Kiwi/issues/817>`_
