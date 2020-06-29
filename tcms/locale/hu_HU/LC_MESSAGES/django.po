@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 08:12\n"
+"PO-Revision-Date: 2020-06-29 08:36\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -278,7 +278,7 @@ msgstr "Frissítve: %(history_date)s\n"
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Az alap URL nincs beállítva! A beállításhoz lásd a<a href=\"%(doc_url)s\">dokumentációt</a> és <a href=\"%(admin_url)s\">változtasd meg</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -336,7 +336,7 @@ msgstr "Érvénytelen dátumformátum. Az elvárt formátum: YYYY-MM-DD [HH:MM:S
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr "nincs elsődleges kulcs ehhez a modelhez: %s. Ezt a mezőt kézzel kell megadni."
+msgstr "Nincs elsődleges kulcs ehhez a modellhez: %s. Ezt a mezőt kézzel kell megadni."
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
