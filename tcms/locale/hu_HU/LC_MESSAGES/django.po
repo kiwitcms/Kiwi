@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 11:22\n"
+"PO-Revision-Date: 2020-06-29 11:32\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -327,7 +327,7 @@ msgstr "A fiók sikeresen aktiválva"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Engedélyezze a jelentést ehhez a problémakövetőhöz a base_url konfigurálásával!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -1130,7 +1130,7 @@ msgstr "Új teszt futtatás létrehozása"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "Teszteset felülvizsgáló megváltoztatása"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1161,7 +1161,7 @@ msgstr "Szűrő beállítás"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Kattintson ide, majd húzza és ejtse a sorokat a sorrend beállításához, majd kattintson a 'Rendezés kész' linkre a módosítások beküldéséhez"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
