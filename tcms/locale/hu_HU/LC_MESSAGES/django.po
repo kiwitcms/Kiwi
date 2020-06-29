@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 07:31\n"
+"PO-Revision-Date: 2020-06-29 07:41\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1897,19 +1897,19 @@ msgstr "A megadott felhasználó nem létezik az adatbázisban"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "JAVASOLT"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr "Megerősített"
+msgstr "MEGERŐSÍTETT"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr "Tiltott"
+msgstr "TILTOTT"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr "Frissíteni szükséges"
+msgstr "FRISSÍTENI SZÜKSÉGES"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
