@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 11:32\n"
+"PO-Revision-Date: 2020-06-29 11:44\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -380,7 +380,7 @@ msgstr "Hibajegyek keresése"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr "Telemetria"
+msgstr "TELEMETRIA"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
@@ -484,7 +484,7 @@ msgstr "Tesztterv"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Tesztelési üzemzavar"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
@@ -1234,11 +1234,11 @@ msgstr "Minden eset betöltve."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Adjon hozzá gyermek csomópontot az aktuális tervhez"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Gyermek csomópont eltávolítása az aktuális tervből"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
@@ -1658,7 +1658,7 @@ msgstr "Futtatások alapértelmezett tesztelője"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr "Értesítsen, ha"
+msgstr "Értesítsen, amikor"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
