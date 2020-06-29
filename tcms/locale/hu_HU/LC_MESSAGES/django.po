@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 12:22\n"
+"PO-Revision-Date: 2020-06-29 12:31\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2091,7 +2091,9 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Arra készülsz, hogy magánbérlőt hozol létre a Kiwi TCMS számára. Az adatbázis séma létrehozásához néhány percre van szükség! Miután a 'Mentés' gombra kattintottál <strong>ne</strong> frissítsd vagy zárd be ezt az oldalt!<br>\n"
+"Amikor a létrehozási folyamat befejeződött az új bérlőre leszel átirányítva.\n"
+"Amennyiben 500-as belső szerver hibát kapsz, kérlek vedd fel azonnal a kapcsolatot <a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>!"
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
@@ -2150,7 +2152,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "Új bérlő"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
@@ -2170,5 +2172,5 @@ msgstr "A sémanév már használatban van"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Új Kiwi TCMS bérlő létrehozva"
 
