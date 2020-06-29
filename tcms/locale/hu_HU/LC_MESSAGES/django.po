@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 08:03\n"
+"PO-Revision-Date: 2020-06-29 08:12\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1322,12 +1322,12 @@ msgstr "új jelszó visszaállítás kérése"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr "Jelszó visszaállításához szükséges e-mail elküldve"
+msgstr "Jelszó visszaállításához szükséges email elküldve"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "Email"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
@@ -1339,7 +1339,7 @@ msgstr "Kiwi TCMS jelszó visszaállítása"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr "Fiók regisztrálása"
+msgstr "Új fiók regisztrálása"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
@@ -1885,7 +1885,7 @@ msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
-msgstr "Klónozva a"
+msgstr "Klónozva a "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
