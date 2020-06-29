@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 09:55\n"
+"PO-Revision-Date: 2020-06-29 10:01\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -626,7 +626,7 @@ msgstr "hiba"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr "Fióuttatásból"
+msgstr "Futtatásból"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -855,7 +855,7 @@ msgstr "Állapot"
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr "Cimkék"
+msgstr "Címkék"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -898,7 +898,7 @@ msgstr "Címke hozzáadása"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr "Navigációs mód átkapcsolása"
+msgstr "Navigációs mód"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
@@ -1638,7 +1638,7 @@ msgstr "Új teszteset"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr "Új kategória hozzáadása"
+msgstr "új kategória hozzáadása"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1771,7 +1771,7 @@ msgstr "Tesztkészlet szerző"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr "Értesítsen, ha:"
+msgstr "Értesítés, amikor:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
