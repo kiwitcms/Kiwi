@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 12:05\n"
+"PO-Revision-Date: 2020-06-29 12:22\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -401,7 +401,7 @@ msgstr "Végrehajtási trendek"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr "Teszteset egészsége"
+msgstr "Teszteset állapota"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -417,7 +417,7 @@ msgstr "Minden más"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr "PLUGINOK"
+msgstr "BŐVÍTMÉNYEK"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
@@ -1589,7 +1589,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Forgatókönyv**: ... milyen viselkedés lesz tesztelve ...\n"
+"  **Adott** ... körülmények ...\n"
+"  **Amikor** ... lépések...\n"
+"  **Azután** ... elvárt eredmények ...\n\n"
+"*Lépések*:\n\n"
+"1. tétel\n"
+"2. tétel\n"
+"3. tétel\n\n"
+"*Elvárt eredmények*:\n\n"
+"1. tétel\n"
+"2. tétel\n"
+"3. tétel"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1870,7 +1881,8 @@ msgstr "Kiválasztott teszteset(ek):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s az előre kiválasztott tesztesetek közül nincs MEGERŐSÍTVE és nem lesz klónozva!\n"
+"További részletekért lásd a teszttervet!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
@@ -1979,12 +1991,12 @@ msgstr "Nem konfigurált GitHub App %d"
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "Még nem jelentkezett be a GitHub fiókkal! <a href=\"%s\"> Kattintson ide </a>!"
+msgstr "Még nem jelentkeztél be GitHub fiókkal! <a href=\"%s\"> Kattints ide </a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "A Kiwi TCMS-t még nem telepítette a GitHub-fiókjába! <a href=\"%s\"> Kattintson ide </a>!"
+msgstr "A Kiwi TCMS még nincs telepítve a GitHub-fiókba! <a href=\"%s\"> Kattints ide </a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
@@ -2009,7 +2021,7 @@ msgstr "A következő bérlőket érheti el"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr "Tenant - Bérlő"
+msgstr "Bérlő"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
@@ -2019,7 +2031,7 @@ msgstr "Szervezet"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "A következő bérlőkkel rendelkezel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
@@ -2035,7 +2047,7 @@ msgstr "Előfizetés típusa"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "Eddig fizetve"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
@@ -2043,7 +2055,7 @@ msgstr "Előfizetés megszüntetése"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "Nem rendelkezel bérlőkkel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
@@ -2066,11 +2078,11 @@ msgstr "Beszállító"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "Ekkor érkezett"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Magánbérlő figyelmeztetés"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2127,7 +2139,7 @@ msgstr "Nem fizetett"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "A bérlés kevesebb mint 7 nap múlva jár le"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
