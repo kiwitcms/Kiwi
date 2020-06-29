@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 11:44\n"
+"PO-Revision-Date: 2020-06-29 11:54\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -529,7 +529,7 @@ msgstr "Negatív"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Tesztelési státusz mátrix"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
@@ -1428,7 +1428,7 @@ msgstr "A kiválasztott esetek eltávolítása ebből a teszt futtatásból"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "A tétlen eset futtatások frissítése az újabb eset leírással"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1589,7 +1589,7 @@ msgstr "Teszteset klónozása"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Új teszteset hozzáadása a teszttervhez"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
@@ -1735,7 +1735,7 @@ msgstr "Tesztesetek klónozása"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "A meglévő tesztesetek összekapcsolása vagy klónozása új teszttervbe"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
