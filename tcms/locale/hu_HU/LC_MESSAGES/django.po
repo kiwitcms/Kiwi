@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 10:11\n"
+"PO-Revision-Date: 2020-06-29 11:12\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1379,7 +1379,7 @@ msgstr "A lenti tábla kilistázza a terv összes megerősített tesztesetét"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "ahhoz hogy esetet adjon a teszt futtatásához, jelölje be a jelölőnégyzetet. Ne felejtse el a végén frissíteni"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
