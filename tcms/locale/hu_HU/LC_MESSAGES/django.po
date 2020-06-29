@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 07:41\n"
+"PO-Revision-Date: 2020-06-29 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -344,7 +344,7 @@ msgstr "VEZÉRLŐPULT"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr "Tesztelés"
+msgstr "TESZTELÉS"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
@@ -360,7 +360,7 @@ msgstr "Új hibajegy"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
-msgstr "Keresés"
+msgstr "KERESÉS"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
