@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-08 10:52\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-06-29 12:33\n"
+"Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: hu\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -157,13 +159,13 @@ msgstr "Összefoglaló"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr "Új termék hozzáadása"
+msgstr "új termék hozzáadása"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr "Új verzió hozzáadása"
+msgstr "új verzió hozzáadása"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
@@ -276,7 +278,7 @@ msgstr "Frissítve: %(history_date)s\n"
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Az alap URL nincs beállítva! A beállításhoz lásd a<a href=\"%(doc_url)s\">dokumentációt</a> és <a href=\"%(admin_url)s\">változtasd meg</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -325,7 +327,7 @@ msgstr "A fiók sikeresen aktiválva"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Engedélyezze a jelentést ehhez a problémakövetőhöz a base_url konfigurálásával!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -334,7 +336,7 @@ msgstr "Érvénytelen dátumformátum. Az elvárt formátum: YYYY-MM-DD [HH:MM:S
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr "nincs elsődleges kulcs ehhez a modelhez: %s. Ezt a mezőt kézzel kell megadni."
+msgstr "Nincs elsődleges kulcs ehhez a modellhez: %s. Ezt a mezőt kézzel kell megadni."
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
@@ -342,7 +344,7 @@ msgstr "VEZÉRLŐPULT"
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr "Tesztelés"
+msgstr "TESZTELÉS"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
@@ -358,7 +360,7 @@ msgstr "Új hibajegy"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
-msgstr "Keresés"
+msgstr "KERESÉS"
 
 #: tcms/settings/common.py:310
 msgid "Search Test Plans"
@@ -366,7 +368,7 @@ msgstr "Teszttervek keresése"
 
 #: tcms/settings/common.py:311
 msgid "Search Test Runs"
-msgstr "Futtatott tesztek keresése"
+msgstr "Teszt futtatások keresése"
 
 #: tcms/settings/common.py:312
 msgid "Search Test Cases"
@@ -378,7 +380,7 @@ msgstr "Hibajegyek keresése"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
-msgstr "Telemetria"
+msgstr "TELEMETRIA"
 
 #: tcms/settings/common.py:317
 msgid "Testing"
@@ -399,7 +401,7 @@ msgstr "Végrehajtási trendek"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr "Teszteset egészsége"
+msgstr "Teszteset állapota"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -415,7 +417,7 @@ msgstr "Minden más"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr "PLUGINOK"
+msgstr "BŐVÍTMÉNYEK"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
@@ -482,7 +484,7 @@ msgstr "Tesztterv"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Tesztelési üzemzavar"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
@@ -527,7 +529,7 @@ msgstr "Negatív"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Tesztelési státusz mátrix"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Test case"
@@ -624,7 +626,7 @@ msgstr "hiba"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
-msgstr "Fióuttatásból"
+msgstr "Futtatásból"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
@@ -707,7 +709,8 @@ msgstr "Kezdés időpontja"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s teszt futtatás(ok) vagy teszteset(ek) van hozzád rendelve végrehajtásra.\n"
+"Itt van a legújabb %(count)s."
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
@@ -715,7 +718,7 @@ msgstr "ÖSSZES"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
-msgstr "Nincsenek hozzád rendelt feladat(ok)"
+msgstr "Nincsenek hozzád rendelt teszt futtatás(ok)"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
@@ -799,7 +802,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Teszt futtatás %(pk)s létrehozva vagy frissítve lett.\n\n"
+"### Linkek ###\n"
+"Teszt futtatás: %(run_url)s\n"
+"Tesztterv: %(plan_url)s\n\n"
+"### Alapvető futtatási információk ###\n"
+"Összefoglalás: %(summary)s\n\n"
+"Kezelő: %(manager)s.\n"
+"Alapértelmezett tesztelő: %(default_tester)s.\n\n"
+"Termék: %(product)s\n"
+"Termék verzió: %(version)s\n"
+"Build: %(build)s\n\n"
+"Megjegyzések:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -853,7 +868,7 @@ msgstr "Állapot"
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
-msgstr "Cimkék"
+msgstr "Címkék"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/templates/run/get_case_runs.html:153
@@ -896,11 +911,11 @@ msgstr "Címke hozzáadása"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr "Navigációs mód átkapcsolása"
+msgstr "Navigációs mód"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr "Vendég Üdvözlöm"
+msgstr "Vendégként üdvözlöm"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -908,7 +923,7 @@ msgstr "Általam futtatott tesztek"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr "Általam létrehozott teszt tervek"
+msgstr "Általam létrehozott teszttervek"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -1128,7 +1143,7 @@ msgstr "Új teszt futtatás létrehozása"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "Teszteset felülvizsgáló megváltoztatása"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1159,7 +1174,7 @@ msgstr "Szűrő beállítás"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Kattintson ide, majd húzza és ejtse a sorokat a sorrend beállításához, majd kattintson a 'Rendezés kész' linkre a módosítások beküldéséhez"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1232,15 +1247,15 @@ msgstr "Minden eset betöltve."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Adjon hozzá gyermek csomópontot az aktuális tervhez"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Gyermek csomópont eltávolítása az aktuális tervből"
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr "Esetek keresése, amelyeket felvehet a teszttervbe."
+msgstr "Esetek keresése, amelyek felvehetők a teszttervbe."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1320,12 +1335,12 @@ msgstr "új jelszó visszaállítás kérése"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr "Jelszó visszaállításához szükséges e-mail elküldve"
+msgstr "Jelszó visszaállításához szükséges email elküldve"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "Email"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
@@ -1337,7 +1352,7 @@ msgstr "Kiwi TCMS jelszó visszaállítása"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr "Fiók regisztrálása"
+msgstr "Új fiók regisztrálása"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
@@ -1365,7 +1380,7 @@ msgstr "Esetek a futtatásban"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "A tervben tárolt sortkey használata"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1377,7 +1392,7 @@ msgstr "A lenti tábla kilistázza a terv összes megerősített tesztesetét"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "ahhoz hogy esetet adjon a teszt futtatásához, jelölje be a jelölőnégyzetet. Ne felejtse el a végén frissíteni"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1426,7 +1441,7 @@ msgstr "A kiválasztott esetek eltávolítása ebből a teszt futtatásból"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "A tétlen eset futtatások frissítése az újabb eset leírással"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update"
@@ -1543,7 +1558,7 @@ msgstr "Nincsenek hibajegyek"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Összes eset kiválasztása/Eset kiválasztása nélkül"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
@@ -1574,7 +1589,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Forgatókönyv**: ... milyen viselkedés lesz tesztelve ...\n"
+"  **Adott** ... körülmények ...\n"
+"  **Amikor** ... lépések...\n"
+"  **Azután** ... elvárt eredmények ...\n\n"
+"*Lépések*:\n\n"
+"1. tétel\n"
+"2. tétel\n"
+"3. tétel\n\n"
+"*Elvárt eredmények*:\n\n"
+"1. tétel\n"
+"2. tétel\n"
+"3. tétel"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1587,7 +1613,7 @@ msgstr "Teszteset klónozása"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Új teszteset hozzáadása a teszttervhez"
 
 #: tcms/testcases/templates/testcases/clone.html:27
 msgid "Selected TC"
@@ -1636,7 +1662,7 @@ msgstr "Új teszteset"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr "Új kategória hozzáadása"
+msgstr "új kategória hozzáadása"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1656,7 +1682,7 @@ msgstr "Futtatások alapértelmezett tesztelője"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr "Értesítsen, ha"
+msgstr "Értesítsen, amikor"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
@@ -1733,7 +1759,7 @@ msgstr "Tesztesetek klónozása"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "A meglévő tesztesetek összekapcsolása vagy klónozása új teszttervbe"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
@@ -1769,7 +1795,7 @@ msgstr "Tesztkészlet szerző"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr "Értesítsen, ha:"
+msgstr "Értesítés, amikor:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
@@ -1855,7 +1881,8 @@ msgstr "Kiválasztott teszteset(ek):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s az előre kiválasztott tesztesetek közül nincs MEGERŐSÍTVE és nem lesz klónozva!\n"
+"További részletekért lásd a teszttervet!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
@@ -1883,7 +1910,7 @@ msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
-msgstr "Klónozva a"
+msgstr "Klónozva a "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
@@ -1895,19 +1922,19 @@ msgstr "A megadott felhasználó nem létezik az adatbázisban"
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr "Javasolt"
+msgstr "JAVASOLT"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr "Megerősített"
+msgstr "MEGERŐSÍTETT"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr "Tiltott"
+msgstr "TILTOTT"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr "Frissíteni szükséges"
+msgstr "FRISSÍTENI SZÜKSÉGES"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
@@ -1964,12 +1991,12 @@ msgstr "Nem konfigurált GitHub App %d"
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "Még nem jelentkezett be a GitHub fiókkal! <a href=\"%s\"> Kattintson ide </a>!"
+msgstr "Még nem jelentkeztél be GitHub fiókkal! <a href=\"%s\"> Kattints ide </a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "A Kiwi TCMS-t még nem telepítette a GitHub-fiókjába! <a href=\"%s\"> Kattintson ide </a>!"
+msgstr "A Kiwi TCMS még nincs telepítve a GitHub-fiókba! <a href=\"%s\"> Kattints ide </a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
@@ -1994,7 +2021,7 @@ msgstr "A következő bérlőket érheti el"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr "Tenant - Bérlő"
+msgstr "Bérlő"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
@@ -2004,7 +2031,7 @@ msgstr "Szervezet"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
-msgstr ""
+msgstr "A következő bérlőkkel rendelkezel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
@@ -2020,7 +2047,7 @@ msgstr "Előfizetés típusa"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "Eddig fizetve"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
@@ -2028,7 +2055,7 @@ msgstr "Előfizetés megszüntetése"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "Nem rendelkezel bérlőkkel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
@@ -2051,11 +2078,11 @@ msgstr "Beszállító"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "Ekkor érkezett"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Magánbérlő figyelmeztetés"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2064,7 +2091,9 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Arra készülsz, hogy magánbérlőt hozol létre a Kiwi TCMS számára. Az adatbázis séma létrehozásához néhány percre van szükség! Miután a 'Mentés' gombra kattintottál <strong>ne</strong> frissítsd vagy zárd be ezt az oldalt!<br>\n"
+"Amikor a létrehozási folyamat befejeződött az új bérlőre leszel átirányítva.\n"
+"Amennyiben 500-as belső szerver hibát kapsz, kérlek vedd fel azonnal a kapcsolatot <a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>!"
 
 #: tcms_github_marketplace/views.py:325
 msgid "mo"
@@ -2080,7 +2109,7 @@ msgstr "Email cím megadása kötelező"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "vagy folytatás ezzel"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
@@ -2112,18 +2141,20 @@ msgstr "Nem fizetett"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "A bérlés kevesebb mint 7 nap múlva jár le"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "A Kiwi TCMS bérlő létrehozásra került:\n"
+"%(tenant_url)s\n\n"
+"Probléma esetén vedd fel a kapcsolatot a támogatókkal!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "Új bérlő"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
@@ -2143,5 +2174,5 @@ msgstr "A sémanév már használatban van"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Új Kiwi TCMS bérlő létrehozva"
 
