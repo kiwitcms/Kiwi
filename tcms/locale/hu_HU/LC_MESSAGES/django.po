@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 10:01\n"
+"PO-Revision-Date: 2020-06-29 10:11\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -902,7 +902,7 @@ msgstr "Navigációs mód"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr "Vendég Üdvözlöm"
+msgstr "Vendégként üdvözlöm"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -910,7 +910,7 @@ msgstr "Általam futtatott tesztek"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr "Általam létrehozott teszt tervek"
+msgstr "Általam létrehozott teszttervek"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -1242,7 +1242,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:25
 msgid "Search cases to add into this test plan."
-msgstr "Esetek keresése, amelyeket felvehet a teszttervbe."
+msgstr "Esetek keresése, amelyek felvehetők a teszttervbe."
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
@@ -1367,7 +1367,7 @@ msgstr "Esetek a futtatásban"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "A tervben tárolt sortkey használata"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
