@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 11:12\n"
+"PO-Revision-Date: 2020-06-29 11:22\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1545,7 +1545,7 @@ msgstr "Nincsenek hibajegyek"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Összes eset kiválasztása/Eset kiválasztása nélkül"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
