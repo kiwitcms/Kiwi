@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 12:31\n"
+"PO-Revision-Date: 2020-06-29 12:33\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2109,7 +2109,7 @@ msgstr "Email cím megadása kötelező"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "vagy folytatás ezzel"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
@@ -2148,7 +2148,9 @@ msgstr "A bérlés kevesebb mint 7 nap múlva jár le"
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "A Kiwi TCMS bérlő létrehozásra került:\n"
+"%(tenant_url)s\n\n"
+"Probléma esetén vedd fel a kapcsolatot a támogatókkal!"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
