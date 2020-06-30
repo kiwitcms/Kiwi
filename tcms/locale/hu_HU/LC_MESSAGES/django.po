@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-29 12:33\n"
+"PO-Revision-Date: 2020-06-30 06:54\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -172,7 +172,7 @@ msgstr "új verzió hozzáadása"
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr "Új build hozzáadása"
+msgstr "új build hozzáadása"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -311,7 +311,7 @@ msgstr "A fiókod létrehozva, de egy adminisztrátornak aktiválnia kell"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
-msgstr "A következő a rendszergazda lista"
+msgstr "Rendszergazda lista"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
@@ -1293,7 +1293,7 @@ msgstr "Bejelentkezés"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr "Üdvözöljük a Kiwi TCMS-ben"
+msgstr "Üdvözlünk a Kiwi TCMS-ben"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
@@ -1871,7 +1871,7 @@ msgstr "verzió"
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr "Felhasználónév vagy e-mail cím"
+msgstr "Felhasználónév vagy email cím"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
