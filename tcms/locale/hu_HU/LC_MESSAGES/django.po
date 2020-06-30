@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-30 07:24\n"
+"PO-Revision-Date: 2020-06-30 07:32\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1844,9 +1844,9 @@ msgstr "Hozzáférés megtagadva: A teszt futtatás nem hozzád tartozik"
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr "További információk a tesztfuttatás státuszainak testreszabásáról\n"
+msgstr "További információk a tesztfuttatás státuszainak testreszabásáról lásd\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
-"        the documentation</a>!"
+"        dokumentációt</a>!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1991,12 +1991,12 @@ msgstr "Nem konfigurált GitHub App %d"
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "Még nem jelentkeztél be GitHub fiókkal! <a href=\"%s\"> Kattints ide </a>!"
+msgstr "Még nem jelentkeztél be GitHub fiókkal! <a href=\"%s\">Kattints ide </a>!"
 
 #: tcms_github_app/views.py:59
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "A Kiwi TCMS még nincs telepítve a GitHub-fiókba! <a href=\"%s\"> Kattints ide </a>!"
+msgstr "A Kiwi TCMS még nincs telepítve a GitHub-fiókba! <a href=\"%s\">Kattints ide </a>!"
 
 #: tcms_github_app/views.py:73
 msgid "Multiple GitHub App installations detected! See below:"
@@ -2141,7 +2141,7 @@ msgstr "Nem fizetett"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr "A bérlés kevesebb mint 7 nap múlva jár le"
+msgstr "A bérlés 7 napon belül jár le"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
