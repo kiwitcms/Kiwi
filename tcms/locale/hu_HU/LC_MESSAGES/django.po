@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-01 17:31\n"
+"PO-Revision-Date: 2020-07-02 14:22\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -278,7 +278,7 @@ msgstr "Frissítve: %(history_date)s\n"
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Az alap URL nincs beállítva! A beállításhoz lásd a<a href=\"%(doc_url)s\">dokumentációt</a> és <a href=\"%(admin_url)s\">változtasd meg</a>"
+msgstr "Az alap URL nincs beállítva! A beállításhoz lásd a <a href=\"%(doc_url)s\">dokumentációt</a> és <a href=\"%(admin_url)s\">változtasd meg</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
