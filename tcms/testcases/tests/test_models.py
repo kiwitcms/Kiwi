@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name, no-member
 
 from django.conf import settings
+from django.test import TestCase
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 from mock import patch
@@ -11,6 +12,17 @@ from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import (ComponentFactory, TagFactory,
                                   TestCaseComponentFactory, TestCaseTagFactory)
+from tcms.tests.factories import TestCaseFactory
+
+
+class SupportsCyrillic(TestCase):
+    def test_create_testcase_with_cyrillic_works_issue_1770(self):
+        # https://github.com/kiwitcms/Kiwi/issues/1770
+        case = TestCaseFactory(summary="Това е тест на кирилица")
+        case.save()
+
+        case.refresh_from_db()
+        self.assertTrue(case.summary.endswith("кирилица"))
 
 
 class TestCaseRemoveComponent(BasePlanCase):

@@ -56,6 +56,7 @@ class BuildCreate(APITestCase):
             self.rpc_client.Build.create(values)
 
     def test_build_create_with_chinese(self):
+        # also see https://github.com/kiwitcms/Kiwi/issues/1770
         values = {
             "product": self.product.pk,
             "name": "开源中国",
