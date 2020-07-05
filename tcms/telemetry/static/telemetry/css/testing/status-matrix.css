@@ -4,6 +4,12 @@
     white-space: normal;
 }
 
+thead {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+}
+
 .header-test-run {
     white-space: nowrap;
 }
