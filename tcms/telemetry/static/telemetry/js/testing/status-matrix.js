@@ -104,7 +104,7 @@ function drawTable() {
             $('.table > thead > tr').append(`
             <th class="header-test-run">
                 <a href="/runs/${testRunId}/">TR-${testRunId}</a>
-                <span class="fa pficon-help" data-toggle="tooltip" data-placement="left" title="${testRunSummary}"></span>
+                <span class="fa pficon-help" data-toggle="tooltip" data-placement="bottom" title="${testRunSummary}"></span>
             </th>`);
 
             table_columns.push({
