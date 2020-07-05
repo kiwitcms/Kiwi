@@ -6,7 +6,7 @@ let initial_column = {
         const caseId = data.tc_id;
 
         return `<span style="padding: 5px;">` +
-            `<a href="/case/${caseId}">TC-${caseId}: ${data.tc_summary}</a>` +
+            `<a href="/case/${caseId}/">TC-${caseId}: ${data.tc_summary}</a>` +
             `</span>`;
     }
 };
@@ -103,7 +103,7 @@ function drawTable() {
             const testRunSummary = data.columns[testRunId];
             $('.table > thead > tr').append(`
             <th class="header-test-run">
-                <a href="/runs/${testRunId}">TR-${testRunId}</a>
+                <a href="/runs/${testRunId}/">TR-${testRunId}</a>
                 <span class="fa pficon-help" data-toggle="tooltip" data-placement="left" title="${testRunSummary}"></span>
             </th>`);
 
