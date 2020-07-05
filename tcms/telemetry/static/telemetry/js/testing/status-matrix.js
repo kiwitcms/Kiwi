@@ -26,6 +26,7 @@ $(document).ready(() => {
     document.getElementById('id_version').onchange = drawTable;
     document.getElementById('id_build').onchange = drawTable;
     document.getElementById('id_test_plan').onchange = drawTable;
+    document.getElementById('id_order').onchange = drawTable;
 
     $('#id_after').on('dp.change', drawTable);
     $('#id_before').on('dp.change', drawTable);
@@ -35,6 +36,8 @@ $(document).ready(() => {
     $('#table').on('draw.dt', function(){
         setMaxHeight($(this));
     })
+
+    $('.bootstrap-switch').bootstrapSwitch();
 });
 
 $(window).on('resize', function(){
@@ -88,10 +91,15 @@ function drawTable() {
     }
 
     jsonRPC('Testing.status_matrix', query, data => {
-
         const table_columns = [initial_column];
+        const testRunIds = Object.keys(data.columns);
 
-        Object.keys(data.columns).forEach(testRunId => {
+        // reverse the TR-xy order to show newest ones first
+        if (! $('#id_order').is(':checked')) {
+            testRunIds.reverse();
+        }
+
+        testRunIds.forEach(testRunId => {
             const testRunSummary = data.columns[testRunId];
             $('.table > thead > tr').append(`
             <th class="header-test-run">
