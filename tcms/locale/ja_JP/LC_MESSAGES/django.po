@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-06 23:41\n"
+"PO-Revision-Date: 2020-07-06 23:51\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -401,7 +401,7 @@ msgstr "実行のトレンド"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr "テストケースの健康"
+msgstr "テストケースの状況"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -441,7 +441,7 @@ msgstr "管理ガイド"
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
-msgstr "初心者ガイド"
+msgstr "ユーザーガイド"
 
 #: tcms/settings/common.py:348
 msgid "API Help"
@@ -454,7 +454,7 @@ msgstr "承認待ちの新規ユーザー"
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "新着: 試運転 #%(pk)d - %(summary)s"
+msgstr "新着: テストラン #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 #, python-format
@@ -480,7 +480,7 @@ msgstr "テスト実行状況に関する詳細情報"
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -500,7 +500,7 @@ msgstr "合計"
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:142
 msgid "Automated"
-msgstr "自動接続"
+msgstr "自動化"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
@@ -1515,7 +1515,7 @@ msgstr "手動ケース"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr "自動ケース"
+msgstr "自動化テストケース"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
