@@ -93,6 +93,7 @@ def status_matrix(query=None):
             'pk': test_execution.pk,
             'color': test_execution.status.color,
             'run_id': test_execution.run_id,
+            'plan_id': test_execution.run.plan_id,
         }
 
         if test_execution.case_id == row['tc_id']:
