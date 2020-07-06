@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 05:55\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-07-06 23:11\n"
+"Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -1281,7 +1283,7 @@ msgstr "パスワード"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr "忘れました"
+msgstr "お忘れですか?"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
@@ -1297,7 +1299,7 @@ msgstr "Kiwi TCMSへようこそ"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr "開始するにはログインしてください"
+msgstr "開始するにはログインしてください。"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
@@ -1305,11 +1307,11 @@ msgstr "または"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr "アカウントを登録"
+msgstr "アカウントを登録してください。"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr "お前が持ってないなら"
+msgstr "（アカウントを持っていない場合）"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
