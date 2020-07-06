@@ -27,6 +27,7 @@ $(document).ready(() => {
     document.getElementById('id_build').onchange = drawTable;
     document.getElementById('id_test_plan').onchange = drawTable;
     document.getElementById('id_order').onchange = drawTable;
+    document.getElementById('id_include_child_tps').onchange = drawTable;
 
     $('#id_after').on('dp.change', drawTable);
     $('#id_before').on('dp.change', drawTable);
@@ -75,9 +76,21 @@ function drawTable() {
         query['build_id'] = buildId;
     }
 
-    const testPlanId = $('#id_test_plan').val();
+    var testPlanId = $('#id_test_plan').val();
+    const includeChildTPs = $('#id_include_child_tps').is(':checked')
     if (testPlanId) {
+        testPlanId = parseInt(testPlanId)
         query['run__plan__pk__in'] = [testPlanId];
+
+        // note: executed synchronously to avoid race condition between
+        // collecting the list of child TPs and drawing the table below
+        if (includeChildTPs) {
+            jsonRPC('TestPlan.filter', {'parent': testPlanId}, function(result) {
+                result.forEach(function(element) {
+                    query['run__plan__pk__in'].push(element.id);
+                });
+            }, true);
+        }
     }
 
     const dateBefore = $('#id_before');
@@ -110,7 +123,7 @@ function drawTable() {
             table_columns.push({
                 data: null,
                 sortable: false,
-                render: renderData(testRunId)
+                render: renderData(testRunId, testPlanId, includeChildTPs)
             });
         });
 
@@ -140,16 +153,26 @@ function applyStyleToCell(cell) {
             if (el && el.attributes['color']) {
                 color = el.attributes['color'].nodeValue
                 $(cell[1]).attr('style', `border-left: 5px solid ${color}`);
+                if (el.attributes['from-parent'].nodeValue === "true") {
+                    $(cell[1]).addClass('danger');
+                }
             }
         }
     }
 }
 
-function renderData(testRunId) {
+function renderData(testRunId, testPlanId, includeChildTPs) {
     return (data, type, full, meta) => {
         const execution = full.executions.find(e => e.run_id === Number(testRunId));
         if (execution) {
-            return `<span class="execution-status" color="${execution.color}">` +
+            const fromParentTP = includeChildTPs && (execution.plan_id === testPlanId);
+            var iconClass = '';
+
+            if (fromParentTP) {
+                iconClass = "fa fa-arrow-circle-o-up";
+            }
+
+            return `<span class="execution-status ${iconClass}" color="${execution.color}" from-parent="${fromParentTP}">` +
                 `<a href="/runs/${execution.run_id}/#caserun_${execution.pk}">TE-${execution.pk}</a>` +
                 `</span>`;
         }
