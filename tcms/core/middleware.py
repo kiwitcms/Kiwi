@@ -46,7 +46,7 @@ class CheckUnappliedMigrationsMiddleware(MiddlewareMixin):
             messages.add_message(
                 request,
                 messages.ERROR,
-                mark_safe(
+                mark_safe(  # nosec:B308:B703
                     _('You have %(unapplied_migration_count)s unapplied migration(s). '
                       'See <a href="%(doc_url)s">documentation</a>') % {
                           "unapplied_migration_count": len(plan),
