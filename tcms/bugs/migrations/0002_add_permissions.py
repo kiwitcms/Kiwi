@@ -15,6 +15,14 @@ def forwards_add_perms(apps, schema_editor):
     tester.permissions.add(*app_perms)
 
 
+def backwards(apps, schema_editor):
+    Group = apps.get_model('auth', 'Group')
+    Permission = apps.get_model('auth', 'Permission')
+    tester = Group.objects.get(name='Tester')
+    app_perms = Permission.objects.filter(content_type__app_label__contains='bugs')
+    tester.permissions.remove(*app_perms)
+
+
 class Migration(migrations.Migration):
     dependencies = [
         ('bugs', '0001_initial'),
@@ -22,5 +30,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(forwards_add_perms),
+        migrations.RunPython(forwards_add_perms, backwards),
     ]
