@@ -77,7 +77,7 @@ function drawTable() {
 
     const testPlanId = $('#id_test_plan').val();
     if (testPlanId) {
-        query['run__plan__pk'] = testPlanId;
+        query['run__plan__pk__in'] = [testPlanId];
     }
 
     const dateBefore = $('#id_before');
