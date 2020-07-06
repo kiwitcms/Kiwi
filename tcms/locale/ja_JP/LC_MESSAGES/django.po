@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-06 23:11\n"
+"PO-Revision-Date: 2020-07-06 23:21\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -348,7 +348,7 @@ msgstr "テスト中"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr "新しいテストプラン"
+msgstr "新しいテスト計画"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
@@ -880,7 +880,7 @@ msgstr "タグ"
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr "名"
+msgstr "名称"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -1039,7 +1039,7 @@ msgstr "テストプランを削除"
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr "作家"
+msgstr "作成者"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
@@ -1785,11 +1785,11 @@ msgstr "親ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "テスト計画文書:"
+msgstr "テスト計画"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr "通知する:"
+msgstr "通知:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
@@ -1801,11 +1801,11 @@ msgstr "通知のタイミング:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr "テストプランが更新されました"
+msgstr "テスト計画が更新された時"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr "テスト案件が更新されました"
+msgstr "テストケースが更新された時"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
