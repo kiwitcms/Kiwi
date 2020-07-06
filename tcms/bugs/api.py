@@ -14,7 +14,7 @@ __all__ = (
 )
 
 
-@permissions_required('bugs.add_bugtag')
+@permissions_required('bugs.add_bug_tags')
 @rpc_method(name='Bug.add_tag')
 def add_tag(bug_id, tag, **kwargs):
     """
@@ -28,7 +28,7 @@ def add_tag(bug_id, tag, **kwargs):
         :type tag: str
         :param kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
-        :raises PermissionDenied: if missing *bugs.add_bugtag* permission
+        :raises PermissionDenied: if missing *bugs.add_bug_tags* permission
         :raises Bug.DoesNotExist: if object specified by PK doesn't exist
         :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag*
                  doesn't exist in the database!
