@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-06 23:21\n"
+"PO-Revision-Date: 2020-07-06 23:31\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -28,24 +28,24 @@ msgid "Description of problem:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
 msgstr "問題の説明：\n\n\n"
-"どのくらいの頻度で再現可能：\n\n\n"
+"どのくらいの頻度で再現可能か：\n\n\n"
 "再現する手順：\n"
-"1。\n"
-"2。\n"
-"3。\n\n"
-"実績：\n\n\n"
-"予期された結果：\n\n\n"
+"1. \n"
+"2. \n"
+"3. \n\n"
+"実際の結果：\n\n\n"
+"期待する結果：\n\n\n"
 "追加情報："
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr "公開"
+msgstr "オープン"
 
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr "招待のみ"
+msgstr "クローズ"
 
 #: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -115,15 +115,15 @@ msgstr "バージョン"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr "重ねる"
+msgstr "ビルド"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr "コメントされた"
+msgstr "コメント"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr "再開"
+msgstr "再オープン"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -136,7 +136,7 @@ msgstr "保存"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr "閉じる"
+msgstr "クローズ"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -159,7 +159,7 @@ msgstr "概要"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr "新しい製品を追加"
+msgstr "新しいプロダクトを追加"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
