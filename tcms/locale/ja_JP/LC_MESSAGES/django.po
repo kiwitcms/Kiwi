@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-15 05:55\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-07-07 00:32\n"
+"Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -26,24 +28,24 @@ msgid "Description of problem:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
 msgstr "問題の説明：\n\n\n"
-"どのくらいの頻度で再現可能：\n\n\n"
+"どのくらいの頻度で再現可能か：\n\n\n"
 "再現する手順：\n"
-"1。\n"
-"2。\n"
-"3。\n\n"
-"実績：\n\n\n"
-"予期された結果：\n\n\n"
+"1. \n"
+"2. \n"
+"3. \n\n"
+"実際の結果：\n\n\n"
+"期待する結果：\n\n\n"
 "追加情報："
 
 #: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:83
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr "公開"
+msgstr "オープン"
 
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr "招待のみ"
+msgstr "クローズ"
 
 #: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -113,15 +115,15 @@ msgstr "バージョン"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr "重ねる"
+msgstr "ビルド"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr "コメントされた"
+msgstr "コメント"
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr "再開"
+msgstr "再オープン"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -134,7 +136,7 @@ msgstr "保存"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr "閉じる"
+msgstr "クローズ"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -157,7 +159,7 @@ msgstr "概要"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr "新しい製品を追加"
+msgstr "新しいプロダクトを追加"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
@@ -188,7 +190,7 @@ msgstr "後に"
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr "ビフォー"
+msgstr "前に"
 
 #: tcms/bugs/templates/bugs/search.html:75
 #: tcms/bugs/templates/bugs/search.html:80
@@ -218,12 +220,12 @@ msgstr "検索"
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr "IDは"
+msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
-msgstr "登録日時"
+msgstr "作成日時"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:493
@@ -244,16 +246,16 @@ msgstr "バグを編集"
 
 #: tcms/bugs/views.py:197
 msgid "*bug closed*"
-msgstr "*バグが閉じられました*"
+msgstr "*バグはクローズされました。*"
 
 #: tcms/bugs/views.py:201
 msgid "*bug reopened*"
-msgstr "*バグが再開されました*"
+msgstr "*バグが再オープンされました。*"
 
 #: tcms/core/ajax.py:150
 #, python-format
 msgid "User %s not found!"
-msgstr "ユーザー %s が見つかりません"
+msgstr "ユーザー %s が見つかりません!"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -268,7 +270,7 @@ msgid "Updated on %(history_date)s\n"
 "For more information:\n"
 "%(instance_url)s"
 msgstr "更新日: %(history_date)s\n"
-"更新日: %(username)s\n\n"
+"更新者: %(username)s\n\n"
 "%(diff)s\n\n"
 "詳細情報:\n"
 "%(instance_url)s"
@@ -276,7 +278,7 @@ msgstr "更新日: %(history_date)s\n"
 #: tcms/core/middleware.py:27
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">ドキュメント</a> を参照し、 <a href=\"%(admin_url)s\">変更してください</a>"
+msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">ドキュメント</a> を参照し、 <a href=\"%(admin_url)s\">変更してください。</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -292,7 +294,7 @@ msgstr "権限"
 
 #: tcms/kiwi_auth/forms.py:35
 msgid "A user with that email already exists."
-msgstr "このメールのユーザーはすでに存在しています"
+msgstr "このメールのユーザーはすでに存在しています。"
 
 #: tcms/kiwi_auth/forms.py:63
 #, python-format
@@ -301,11 +303,11 @@ msgstr "新しい %s アカウントの確認"
 
 #: tcms/kiwi_auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "あなたのアカウントが作成されました。確認用のリンクについては、メールをチェックします。"
+msgstr "あなたのアカウントが作成されました。確認用のリンクについては、メールをチェックしてください。"
 
 #: tcms/kiwi_auth/views.py:55
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr "アカウントが作成されましたが、有効化するには管理者が必要です"
+msgstr "アカウントが作成されましたが、有効化するには管理者の確認が必要です。"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
@@ -313,7 +315,7 @@ msgstr "管理者リストは次のとおりです。"
 
 #: tcms/kiwi_auth/views.py:99
 msgid "This activation key no longer exists in the database"
-msgstr "このアクティベーションキーはデータベースに存在しません"
+msgstr "このアクティベーションキーはデータベースに存在しません。"
 
 #: tcms/kiwi_auth/views.py:104
 msgid "This activation key has expired"
@@ -321,7 +323,7 @@ msgstr "アクティベーションキーの有効期限が切れました。"
 
 #: tcms/kiwi_auth/views.py:115
 msgid "Your account has been activated successfully"
-msgstr "アカウントがアクティブ化されました"
+msgstr "アカウントがアクティブになりました。"
 
 #: tcms/rpc/api/bug.py:58
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -334,7 +336,7 @@ msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS
 #: tcms/rpc/serializer.py:285
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr "モデル %s には主キーがありません。このようなフィールドを手動で指定する必要があります。"
+msgstr "モデル %s には主キーがありません。フィールドを手動で指定する必要があります。"
 
 #: tcms/settings/common.py:300
 msgid "DASHBOARD"
@@ -346,7 +348,7 @@ msgstr "テスト中"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr "新しいテストプラン"
+msgstr "新しいテスト計画"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
@@ -399,7 +401,7 @@ msgstr "実行のトレンド"
 
 #: tcms/settings/common.py:321
 msgid "TestCase health"
-msgstr "テストケースの健康"
+msgstr "テストケースの状況"
 
 #: tcms/settings/common.py:326
 msgid "ADMIN"
@@ -439,7 +441,7 @@ msgstr "管理ガイド"
 
 #: tcms/settings/common.py:347
 msgid "User Guide"
-msgstr "初心者ガイド"
+msgstr "ユーザーガイド"
 
 #: tcms/settings/common.py:348
 msgid "API Help"
@@ -452,7 +454,7 @@ msgstr "承認待ちの新規ユーザー"
 #: tcms/signals.py:155
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "新着: 試運転 #%(pk)d - %(summary)s"
+msgstr "新着: テストラン #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:194
 #, python-format
@@ -478,7 +480,7 @@ msgstr "テスト実行状況に関する詳細情報"
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -498,7 +500,7 @@ msgstr "合計"
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:142
 msgid "Automated"
-msgstr "自動接続"
+msgstr "自動化"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
@@ -515,15 +517,15 @@ msgstr "カテゴリ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr "積極的"
+msgstr "ポジティブ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr "暗夜"
+msgstr "ニュートラル"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr "否定"
+msgstr "ネガティブ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -539,7 +541,7 @@ msgstr "テストの実行"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr "テストケースの健康"
+msgstr "テストケースの状況"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -560,7 +562,7 @@ msgstr "%% 失敗した実行"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr "ページが見つかりませんでした"
+msgstr "ページが見つかりませんでした。"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
@@ -595,7 +597,7 @@ msgstr "添付ファイルが見つかりません"
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Component"
-msgstr "サービス"
+msgstr "コンポーネント"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
@@ -628,7 +630,7 @@ msgstr "実行から"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr "バグは見つかりませんでした"
+msgstr "バグが見つかりません"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
@@ -720,11 +722,11 @@ msgstr "あなたに割り当てられたテストランはありません"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -747,7 +749,7 @@ msgstr "%(total_count)s TestPlan(s), %(disabled_count)s が無効になってい
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "あなたに属するテストプランはありません"
+msgstr "あなたに属するテスト計画はありません"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -822,8 +824,8 @@ msgid "Dear Administrator,\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
 msgstr "管理者各位,\n"
-"誰かがあなたのアカウントにユーザー名 %(username)s でアカウントを登録しました\n"
-"Kiwi TCMSインスタンスであり、あなたの承認を待っています！\n\n"
+"ユーザー名 %(username)s でアカウントを登録されました。\n"
+"あなたのKiwi TCMSインスタンスであり、あなたの承認を待っています！\n\n"
 "%(user_url)s にアクセスして、アカウントをアクティブ化してください！"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
@@ -878,7 +880,7 @@ msgstr "タグ"
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr "名"
+msgstr "名称"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -915,7 +917,7 @@ msgstr "ナビゲーションの切り替え"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr "ようこそゲスト"
+msgstr "ようこそ ゲストさん"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -923,7 +925,7 @@ msgstr "テスト実行"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -940,7 +942,7 @@ msgstr "ログアウト"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr "でログイン"
+msgstr "ログイン"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
@@ -985,11 +987,11 @@ msgstr "現在のページ"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr "次ページ"
+msgstr "次のページ"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr "最終ページ"
+msgstr "最後のページ"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -997,11 +999,11 @@ msgstr "この計画ではテストケースは見つかりませんでした。
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr "（通読）計画を編集"
+msgstr "計画を編集"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr "テストプランを編集"
+msgstr "テスト計画を編集"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
@@ -1009,19 +1011,19 @@ msgstr "計画を複製"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr "このプランを他の製品にクローンする"
+msgstr "このプランを他の製品に複製"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr "印刷プラン"
+msgstr "計画を印刷"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr "プランを削除"
+msgstr "計画を削除"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr "テストプランを削除"
+msgstr "テスト計画を削除"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1037,11 +1039,11 @@ msgstr "テストプランを削除"
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr "作家"
+msgstr "作成者"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr "プランの種類"
+msgstr "計画の種類"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
@@ -1055,7 +1057,7 @@ msgstr "なし"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr "時間を作成する"
+msgstr "作成時間"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
@@ -1100,16 +1102,16 @@ msgstr "添付ファイルなし"
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr "事案"
+msgstr "ケース"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr "新しい案件を書く"
+msgstr "新しいケースを書く"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr "他のプランから案件を追加"
+msgstr "他の計画からケースを追加"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1117,7 +1119,7 @@ msgstr "印刷"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr "選択した案件の印刷ビュー"
+msgstr "選択したケースの印刷ビュー"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
@@ -1127,11 +1129,11 @@ msgstr "クローン"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr "選択した案件を別のテスト計画に複製"
+msgstr "選択したケースを別のテスト計画に複製"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr "選択した案件をこの計画から削除"
+msgstr "選択したケースをこの計画から削除"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1174,11 +1176,11 @@ msgstr "フィルター オプションを表示"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "私をクリックし、次に行をドラッグ&ドロップして順序を調整し、「完了」リンクをクリックして変更を送信します"
+msgstr "ここをクリックして、次に行をドラッグ&ドロップして順序を調整し、「完了」リンクをクリックして変更を決定します。"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr "案件を再注文する"
+msgstr "ケースを再利用する"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
@@ -1217,7 +1219,7 @@ msgstr "テストケースの概要"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr "レビュア"
+msgstr "レビューア"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
@@ -1239,7 +1241,7 @@ msgstr "すべて表示"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr "案件が残っています"
+msgstr "ケースが残っています"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
@@ -1271,7 +1273,7 @@ msgstr "作成"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr "テストケースが見つかりませんでした．"
+msgstr "テストケースが見つかりませんでした。"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1281,7 +1283,7 @@ msgstr "パスワード"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr "忘れました"
+msgstr "お忘れですか?"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
@@ -1297,7 +1299,7 @@ msgstr "Kiwi TCMSへようこそ"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr "開始するにはログインしてください"
+msgstr "開始するにはログインしてください。"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
@@ -1305,11 +1307,11 @@ msgstr "または"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr "アカウントを登録"
+msgstr "アカウントを登録してください。"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr "お前が持ってないなら"
+msgstr "（アカウントを持っていない場合）"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
@@ -1327,7 +1329,7 @@ msgstr "確定する"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr "新しいパスワードを2回入力してください。正しく入力されたことを確認できます。"
+msgstr "確認のために、新しいパスワードを2回入力してください。"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1352,11 +1354,11 @@ msgstr "Kiwi TCMS パスワードのリセット"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr "新しい支出先"
+msgstr "新しいアカウントの登録"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr "TestRunにテストケースを追加"
+msgstr "テストランにテストケースを追加"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1380,7 +1382,7 @@ msgstr "この実行中の案件"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr "プランに保存されているソートキーを使用する"
+msgstr "計画に保存されているソートキーを使用する"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1388,7 +1390,7 @@ msgstr "ケースを割り当てる方法?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr "プランの確認済みのテストケース一覧の下の表です"
+msgstr "計画の確認済みのテストケース一覧の下の表です"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1473,7 +1475,7 @@ msgstr "デフォルトのテスター"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr "訪問認可"
+msgstr "自動"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
@@ -1513,11 +1515,11 @@ msgstr "手動ケース"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr "自動ケース"
+msgstr "自動化テストケース"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr "案件実行ID"
+msgstr "ケース実行ID"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1558,11 +1560,11 @@ msgstr "バグなし"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr "すべての案件を選択/未解決案件を選択"
+msgstr "すべてのケースを選択/未解決案件を選択"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr "すべての案件を展開"
+msgstr "すべてのケースを展開"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
@@ -1574,7 +1576,7 @@ msgstr "実行が見つかりませんでした"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "有効な案件IDを入力してください。カンマで複数の案件IDを分割してください。例：\"111、222\""
+msgstr "有効なケースIDを入力してください。カンマで複数のケースIDを分割してください。例：\"111、222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1609,7 +1611,7 @@ msgstr "削除: テストケース #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "クローンテストケース"
+msgstr "テストケースを複製"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1632,7 +1634,7 @@ msgstr "アーギュメント"
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr "条件"
+msgstr "要件"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
@@ -1646,7 +1648,7 @@ msgstr "バグURL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1674,11 +1676,11 @@ msgstr "実行マネージャー"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr "担当者。"
+msgstr "担当者"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr "ランのデフォルトテスターです"
+msgstr "テストランのデフォルトテスターです"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1738,7 +1740,7 @@ msgstr "テストプランが指定されていないか、存在しません"
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr "最近探した本"
+msgstr "履歴"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1751,7 +1753,7 @@ msgstr "少なくとも 1 つのテストケースが必要です"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "クローンテストプラン"
+msgstr "クローンテスト計画"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
@@ -1771,7 +1773,7 @@ msgstr "ソースのTPを新しいTPの親として設定します"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr "テストプランを編集"
+msgstr "テスト計画を編集"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
@@ -1783,11 +1785,11 @@ msgstr "親ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "テスト計画文書:"
+msgstr "テスト計画"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr "通知する:"
+msgstr "通知:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
@@ -1799,11 +1801,11 @@ msgstr "通知のタイミング:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr "テストプランが更新されました"
+msgstr "テスト計画が更新された時"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr "テスト案件が更新されました"
+msgstr "テストケースが更新された時"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:93
@@ -1821,15 +1823,15 @@ msgstr "テスト計画名"
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr "テストプランが必要です"
+msgstr "テスト計画が必要です"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr "印刷には少なくとも1つのテストプランが必要です"
+msgstr "印刷には少なくとも1つのテスト計画が必要です"
 
 #: tcms/testplans/views.py:396
 #, python-format
@@ -1838,7 +1840,7 @@ msgstr "テスト計画 \"%s\" は存在しません"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr "アクセスが拒否されました: TestRunはあなたに属していません"
+msgstr "アクセスが拒否されました: テストランはあなたに属していません"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1850,7 +1852,7 @@ msgstr "テスト実行ステータスのカスタマイズの詳細について
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr "実行状態のテスト"
+msgstr "テスト実行の状態"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1858,7 +1860,7 @@ msgstr "テスト実行を編集"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "クローンテストラン"
+msgstr "テストランを複製"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
@@ -1898,15 +1900,15 @@ msgstr "計画ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr "テストプランID"
+msgstr "テスト計画ID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "TestRunを作成するにはテストプランが必要です。一つ選択してください"
+msgstr "テストランを作成するにはテストプランが必要です。一つ選択してください"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr "TestRunを作成するには少なくとも1つのテストケースが必要です"
+msgstr "テストランを作成するには少なくとも1つのテストケースが必要です"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
@@ -1914,7 +1916,7 @@ msgstr "クローン - "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
-msgstr "TestCase IDは有効な整数ではありません"
+msgstr "テストケースIDは有効な整数ではありません"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
@@ -1950,7 +1952,7 @@ msgstr "一時停止"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr "貼り付け"
+msgstr "成功"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -1958,7 +1960,7 @@ msgstr "失敗"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr "ブロックしています"
+msgstr "ブロック"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
@@ -1966,7 +1968,7 @@ msgstr "エラー"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr "待機中"
+msgstr "却下"
 
 #: tcms_github_app/admin.py:120
 #, python-format
@@ -2073,7 +2075,7 @@ msgstr "送信元"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr "外注先"
+msgstr "ベンダー"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
