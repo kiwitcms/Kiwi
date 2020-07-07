@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-07 00:01\n"
+"PO-Revision-Date: 2020-07-07 00:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -722,11 +722,11 @@ msgstr "あなたに割り当てられたテストランはありません"
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -749,7 +749,7 @@ msgstr "%(total_count)s TestPlan(s), %(disabled_count)s が無効になってい
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "あなたに属するテストプランはありません"
+msgstr "あなたに属するテスト計画はありません"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -824,8 +824,8 @@ msgid "Dear Administrator,\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
 msgstr "管理者各位,\n"
-"誰かがあなたのアカウントにユーザー名 %(username)s でアカウントを登録しました\n"
-"Kiwi TCMSインスタンスであり、あなたの承認を待っています！\n\n"
+"ユーザー名 %(username)s でアカウントを登録されました。\n"
+"あなたのKiwi TCMSインスタンスであり、あなたの承認を待っています！\n\n"
 "%(user_url)s にアクセスして、アカウントをアクティブ化してください！"
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
@@ -917,7 +917,7 @@ msgstr "ナビゲーションの切り替え"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr "ようこそゲスト"
+msgstr "ようこそ ゲストさん"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -925,7 +925,7 @@ msgstr "テスト実行"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -942,7 +942,7 @@ msgstr "ログアウト"
 
 #: tcms/templates/navbar.html:54
 msgid "Login"
-msgstr "でログイン"
+msgstr "ログイン"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:47
@@ -987,11 +987,11 @@ msgstr "現在のページ"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr "次ページ"
+msgstr "次のページ"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr "最終ページ"
+msgstr "最後のページ"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -999,11 +999,11 @@ msgstr "この計画ではテストケースは見つかりませんでした。
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit Plan"
-msgstr "（通読）計画を編集"
+msgstr "計画を編集"
 
 #: tcms/templates/plan/get.html:40
 msgid "Edit test plan"
-msgstr "テストプランを編集"
+msgstr "テスト計画を編集"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone Plan"
@@ -1011,19 +1011,19 @@ msgstr "計画を複製"
 
 #: tcms/templates/plan/get.html:41
 msgid "Clone this plan to other product"
-msgstr "このプランを他の製品にクローンする"
+msgstr "このプランを他の製品に複製"
 
 #: tcms/templates/plan/get.html:42
 msgid "Print Plan"
-msgstr "印刷プラン"
+msgstr "計画を印刷"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete Plan"
-msgstr "プランを削除"
+msgstr "計画を削除"
 
 #: tcms/templates/plan/get.html:43
 msgid "Delete test plan"
-msgstr "テストプランを削除"
+msgstr "テスト計画を削除"
 
 #: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
 #: tcms/templates/plan/get_cases.html:171
@@ -1043,7 +1043,7 @@ msgstr "作成者"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
-msgstr "プランの種類"
+msgstr "計画の種類"
 
 #: tcms/templates/plan/get.html:70
 msgid "Reference Link"
@@ -1057,7 +1057,7 @@ msgstr "なし"
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr "時間を作成する"
+msgstr "作成時間"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
@@ -1102,16 +1102,16 @@ msgstr "添付ファイルなし"
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr "事案"
+msgstr "ケース"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr "新しい案件を書く"
+msgstr "新しいケースを書く"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr "他のプランから案件を追加"
+msgstr "他の計画からケースを追加"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
@@ -1119,7 +1119,7 @@ msgstr "印刷"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr "選択した案件の印刷ビュー"
+msgstr "選択したケースの印刷ビュー"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
@@ -1129,11 +1129,11 @@ msgstr "クローン"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr "選択した案件を別のテスト計画に複製"
+msgstr "選択したケースを別のテスト計画に複製"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr "選択した案件をこの計画から削除"
+msgstr "選択したケースをこの計画から削除"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
@@ -1176,11 +1176,11 @@ msgstr "フィルター オプションを表示"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "私をクリックし、次に行をドラッグ&ドロップして順序を調整し、「完了」リンクをクリックして変更を送信します"
+msgstr "ここをクリックして、次に行をドラッグ&ドロップして順序を調整し、「完了」リンクをクリックして変更を決定します。"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr "案件を再注文する"
+msgstr "ケースを再利用する"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:130
