@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-07 00:12\n"
+"PO-Revision-Date: 2020-07-07 00:22\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1219,7 +1219,7 @@ msgstr "テストケースの概要"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr "レビュア"
+msgstr "レビューア"
 
 #: tcms/templates/plan/get_cases.html:181
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
@@ -1241,7 +1241,7 @@ msgstr "すべて表示"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr "案件が残っています"
+msgstr "ケースが残っています"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
@@ -1273,7 +1273,7 @@ msgstr "作成"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr "テストケースが見つかりませんでした．"
+msgstr "テストケースが見つかりませんでした。"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1329,7 +1329,7 @@ msgstr "確定する"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr "新しいパスワードを2回入力してください。正しく入力されたことを確認できます。"
+msgstr "確認のために、新しいパスワードを2回入力してください。"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1354,11 +1354,11 @@ msgstr "Kiwi TCMS パスワードのリセット"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr "新しい支出先"
+msgstr "新しいアカウントの登録"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr "TestRunにテストケースを追加"
+msgstr "テストランにテストケースを追加"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
@@ -1382,7 +1382,7 @@ msgstr "この実行中の案件"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr "プランに保存されているソートキーを使用する"
+msgstr "計画に保存されているソートキーを使用する"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1390,7 +1390,7 @@ msgstr "ケースを割り当てる方法?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr "プランの確認済みのテストケース一覧の下の表です"
+msgstr "計画の確認済みのテストケース一覧の下の表です"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1475,7 +1475,7 @@ msgstr "デフォルトのテスター"
 
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
-msgstr "訪問認可"
+msgstr "自動"
 
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
@@ -1519,7 +1519,7 @@ msgstr "自動化テストケース"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr "案件実行ID"
+msgstr "ケース実行ID"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
@@ -1560,11 +1560,11 @@ msgstr "バグなし"
 
 #: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
-msgstr "すべての案件を選択/未解決案件を選択"
+msgstr "すべてのケースを選択/未解決案件を選択"
 
 #: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
-msgstr "すべての案件を展開"
+msgstr "すべてのケースを展開"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
@@ -1576,7 +1576,7 @@ msgstr "実行が見つかりませんでした"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "有効な案件IDを入力してください。カンマで複数の案件IDを分割してください。例：\"111、222\""
+msgstr "有効なケースIDを入力してください。カンマで複数のケースIDを分割してください。例：\"111、222\""
 
 #: tcms/testcases/forms.py:43
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1611,7 +1611,7 @@ msgstr "削除: テストケース #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "クローンテストケース"
+msgstr "テストケースを複製"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1634,7 +1634,7 @@ msgstr "アーギュメント"
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr "条件"
+msgstr "要件"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
@@ -1648,7 +1648,7 @@ msgstr "バグURL"
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1676,11 +1676,11 @@ msgstr "実行マネージャー"
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr "担当者。"
+msgstr "担当者"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr "ランのデフォルトテスターです"
+msgstr "テストランのデフォルトテスターです"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1740,7 +1740,7 @@ msgstr "テストプランが指定されていないか、存在しません"
 
 #: tcms/testcases/views.py:501
 msgid "History"
-msgstr "最近探した本"
+msgstr "履歴"
 
 #: tcms/testcases/views.py:638
 msgid "TestCase cloning was successful"
@@ -1753,7 +1753,7 @@ msgstr "少なくとも 1 つのテストケースが必要です"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "クローンテストプラン"
+msgstr "クローンテスト計画"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
@@ -1773,7 +1773,7 @@ msgstr "ソースのTPを新しいTPの親として設定します"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr "テストプランを編集"
+msgstr "テスト計画を編集"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
@@ -1823,15 +1823,15 @@ msgstr "テスト計画名"
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Test plan"
-msgstr "テストプラン"
+msgstr "テスト計画"
 
 #: tcms/testplans/views.py:229
 msgid "TestPlan is required"
-msgstr "テストプランが必要です"
+msgstr "テスト計画が必要です"
 
 #: tcms/testplans/views.py:388
 msgid "At least one test plan is required for print"
-msgstr "印刷には少なくとも1つのテストプランが必要です"
+msgstr "印刷には少なくとも1つのテスト計画が必要です"
 
 #: tcms/testplans/views.py:396
 #, python-format
@@ -1840,7 +1840,7 @@ msgstr "テスト計画 \"%s\" は存在しません"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr "アクセスが拒否されました: TestRunはあなたに属していません"
+msgstr "アクセスが拒否されました: テストランはあなたに属していません"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1852,7 +1852,7 @@ msgstr "テスト実行ステータスのカスタマイズの詳細について
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
-msgstr "実行状態のテスト"
+msgstr "テスト実行の状態"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
