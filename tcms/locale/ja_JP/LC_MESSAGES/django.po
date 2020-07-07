@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-06 23:51\n"
+"PO-Revision-Date: 2020-07-07 00:01\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -517,15 +517,15 @@ msgstr "カテゴリ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr "積極的"
+msgstr "ポジティブ"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr "暗夜"
+msgstr "ニュートラル"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr "否定"
+msgstr "ネガティブ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -541,7 +541,7 @@ msgstr "テストの実行"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
-msgstr "テストケースの健康"
+msgstr "テストケースの状況"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -562,7 +562,7 @@ msgstr "%% 失敗した実行"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr "ページが見つかりませんでした"
+msgstr "ページが見つかりませんでした。"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
@@ -597,7 +597,7 @@ msgstr "添付ファイルが見つかりません"
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:139
 msgid "Component"
-msgstr "サービス"
+msgstr "コンポーネント"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:152
@@ -630,7 +630,7 @@ msgstr "実行から"
 
 #: tcms/templates/case/get_details.html:49
 msgid "No bug found"
-msgstr "バグは見つかりませんでした"
+msgstr "バグが見つかりません"
 
 #: tcms/templates/case/get_details.html:56
 #: tcms/testcases/templates/testcases/get.html:32
