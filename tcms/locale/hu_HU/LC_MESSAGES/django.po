@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-02 18:30\n"
+"PO-Revision-Date: 2020-07-07 13:52\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -698,7 +698,7 @@ msgstr "Vezérlőpult"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr "Teszt végrehajtás"
+msgstr "Teszt végrehajtása"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:44
