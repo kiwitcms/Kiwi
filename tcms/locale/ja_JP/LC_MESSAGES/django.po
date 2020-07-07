@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-07 00:22\n"
+"PO-Revision-Date: 2020-07-07 00:32\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1860,7 +1860,7 @@ msgstr "テスト実行を編集"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "クローンテストラン"
+msgstr "テストランを複製"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
@@ -1900,15 +1900,15 @@ msgstr "計画ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr "テストプランID"
+msgstr "テスト計画ID"
 
 #: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "TestRunを作成するにはテストプランが必要です。一つ選択してください"
+msgstr "テストランを作成するにはテストプランが必要です。一つ選択してください"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr "TestRunを作成するには少なくとも1つのテストケースが必要です"
+msgstr "テストランを作成するには少なくとも1つのテストケースが必要です"
 
 #: tcms/testruns/views.py:368
 msgid "Clone of "
@@ -1916,7 +1916,7 @@ msgstr "クローン - "
 
 #: tcms/testruns/views.py:422
 msgid "TestCase ID is not a valid integer"
-msgstr "TestCase IDは有効な整数ではありません"
+msgstr "テストケースIDは有効な整数ではありません"
 
 #: tcms/testruns/views.py:516
 msgid "The user you typed does not exist in database"
@@ -1952,7 +1952,7 @@ msgstr "一時停止"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr "貼り付け"
+msgstr "成功"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -1960,7 +1960,7 @@ msgstr "失敗"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr "ブロックしています"
+msgstr "ブロック"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
@@ -1968,7 +1968,7 @@ msgstr "エラー"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr "待機中"
+msgstr "却下"
 
 #: tcms_github_app/admin.py:120
 #, python-format
@@ -2075,7 +2075,7 @@ msgstr "送信元"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr "外注先"
+msgstr "ベンダー"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
