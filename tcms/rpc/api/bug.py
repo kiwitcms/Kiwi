@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.core.cache import cache
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.issuetracker.types import from_name
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
@@ -62,7 +62,7 @@ def report(execution_id, tracker_id, **kwargs):
 
     execution = TestExecution.objects.get(pk=execution_id)
     bug_system = BugSystem.objects.get(pk=tracker_id)
-    tracker = from_name(bug_system.tracker_type)(bug_system)
+    tracker = import_string(bug_system.tracker_type)(bug_system)
     if not tracker.is_adding_testcase_to_issue_disabled():
         url = tracker.report_issue_from_testexecution(execution, request.user)
         response = {'rc': 0, 'response': url}

@@ -382,6 +382,20 @@ MODERNRPC_METHODS_MODULES = [
 if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS:
     MODERNRPC_METHODS_MODULES.append('tcms.bugs.api')
 
+# This is a list of dotted class names providing integration with
+# external bug trackers. Plugins and downstream installation can augment
+# this list with their own integration classes!
+# https://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers
+EXTERNAL_BUG_TRACKERS = [
+    'tcms.issuetracker.types.Bugzilla',
+    'tcms.issuetracker.types.JIRA',
+    'tcms.issuetracker.types.GitHub',
+    'tcms.issuetracker.types.Gitlab',
+    'tcms.issuetracker.types.Redmine',
+]
+if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS:
+    EXTERNAL_BUG_TRACKERS.append('tcms.issuetracker.types.KiwiTCMS')
+
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False

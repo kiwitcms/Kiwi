@@ -1,8 +1,9 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2020 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-from tcms.issuetracker.types import from_name
+from django.utils.module_loading import import_string
+
 from tcms.testcases.models import BugSystem
 
 
@@ -14,6 +15,6 @@ def tracker_from_url(url):
     """
     for bug_system in BugSystem.objects.all():
         if bug_system.base_url and url.startswith(bug_system.base_url):
-            return from_name(bug_system.tracker_type)(bug_system)
+            return import_string(bug_system.tracker_type)(bug_system)
 
     return None

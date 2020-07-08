@@ -1,14 +1,13 @@
 # pylint: disable=no-self-use
-import inspect
 
 from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.forms.widgets import Select
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from tcms.core.history import ReadOnlyHistoryAdmin
-from tcms.issuetracker import types
 from tcms.testcases.models import BugSystem, Category, TestCase
 
 
@@ -50,13 +49,9 @@ class IssueTrackerTypeSelectWidget(Select):
 
     @staticmethod
     def _types_as_choices():
-        trackers = []
-        for module_object in types.__dict__.values():
-            if inspect.isclass(module_object) and \
-               issubclass(module_object, types.IssueTrackerType) and \
-               module_object != types.IssueTrackerType:  # noqa: E721
-                trackers.append(module_object.__name__)
-        return (('', ''), ) + tuple(zip(trackers, trackers))
+        return (('', ''), ) + tuple(
+            zip(settings.EXTERNAL_BUG_TRACKERS,
+                settings.EXTERNAL_BUG_TRACKERS))
 
 
 class IssueTrackerTypeField(forms.ChoiceField):

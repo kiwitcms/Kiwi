@@ -31,7 +31,7 @@ class TestBugzillaIntegration(APITestCase):
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='Dockerized Bugzilla',
-            tracker_type='Bugzilla',
+            tracker_type='tcms.issuetracker.types.Bugzilla',
             base_url='http://bugtracker.kiwitcms.org/bugzilla/',
             api_url='http://bugtracker.kiwitcms.org/bugzilla/xmlrpc.cgi',
             api_username='admin@bugzilla.bugs',

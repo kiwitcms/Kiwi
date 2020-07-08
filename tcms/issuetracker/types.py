@@ -25,16 +25,6 @@ if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
     from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa, pylint: disable=unused-import
 
 
-def from_name(name):
-    """
-        Return the class which matches ``name`` if it exists inside this
-        module or raise an exception.
-    """
-    if name not in globals():
-        raise NotImplementedError('IT of type %s is not supported' % name)
-    return globals()[name]
-
-
 class JIRA(IssueTrackerType):
     """
         Support for JIRA. Requires:
