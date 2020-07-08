@@ -29,6 +29,15 @@ in :mod:`tcms.issuetracker`.
 
 .. important::
 
+    External bug tracker integration classes are defined as a dotted path list
+    in the ``EXTERNAL_BUG_TRACKERS`` setting, see :ref:`configuration`.
+    Plugins and Kiwi TCMS admins may override this setting to provide more
+    control and customized integration.
+
+    .. versionadded:: 8.5
+
+.. important::
+
     Details on what each field means can be found at
     :class:`tcms.testcases.models.BugSystem`. Integration details for supported
     bug trackers can be found at :mod:`tcms.issuetracker.types`! Please read

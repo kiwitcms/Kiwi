@@ -42,7 +42,7 @@ class TestJIRAIntegration(APITestCase):
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='JIRA at kiwitcms.atlassian.net',
-            tracker_type='JIRA',
+            tracker_type='tcms.issuetracker.types.JIRA',
             base_url='https://kiwitcms.atlassian.net',
             api_username=os.getenv('JIRA_BUGTRACKER_INTEGRATION_API_USERNAME'),
             api_password=os.getenv('JIRA_BUGTRACKER_INTEGRATION_API_TOKEN'),

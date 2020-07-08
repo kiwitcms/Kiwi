@@ -38,7 +38,7 @@ class TestGitHubIntegration(APITestCase):
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='GitHub for kiwitcms/test-github-integration',
-            tracker_type='GitHub',
+            tracker_type='tcms.issuetracker.types.GitHub',
             base_url='https://github.com/kiwitcms/test-github-integration',
             api_password=os.getenv('GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN'),
         )

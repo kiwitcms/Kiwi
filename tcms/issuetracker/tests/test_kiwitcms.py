@@ -41,7 +41,7 @@ class TestKiwiTCMSIntegration(APITestCase):
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='KiwiTCMS internal bug tracker',
-            tracker_type='KiwiTCMS',
+            tracker_type='tcms.issuetracker.types.KiwiTCMS',
             base_url="https://%s" % Site.objects.get(id=settings.SITE_ID).domain,
             # note: ^^^ this is https just because .get_full_url() default to that !
         )

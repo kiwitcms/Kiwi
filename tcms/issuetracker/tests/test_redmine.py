@@ -35,7 +35,7 @@ class TestRedmineIntegration(APITestCase):
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='Redmine at kiwitcms.atlassian.net',
-            tracker_type='Redmine',
+            tracker_type='tcms.issuetracker.types.Redmine',
             base_url='http://bugtracker.kiwitcms.org:3000',
             api_username='admin',
             api_password='admin',

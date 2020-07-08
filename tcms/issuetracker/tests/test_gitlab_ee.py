@@ -32,7 +32,7 @@ class TestGitlabIntegration(APITestCase):
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='GitLab-EE for root/kiwitcms',
-            tracker_type='Gitlab',
+            tracker_type='tcms.issuetracker.types.Gitlab',
             base_url='http://bugtracker.kiwitcms.org/root/kiwitcms/',
             api_url='http://bugtracker.kiwitcms.org',
             api_password='ypCa3Dzb23o5nvsixwPA',
@@ -57,7 +57,7 @@ class TestGitlabIntegration(APITestCase):
     def test_details_for_private_url(self):
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='Private GitLab for root/katinar',
-            tracker_type='Gitlab',
+            tracker_type='tcms.issuetracker.types.Gitlab',
             base_url='http://bugtracker.kiwitcms.org/root/katinar/',
             api_url='http://bugtracker.kiwitcms.org',
             api_password='ypCa3Dzb23o5nvsixwPA',
