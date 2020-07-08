@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-import tcms_api
 from django import test
+
+import tcms_api
 
 from tcms.tests import PermissionsTestMixin
 from tcms.tests.factories import UserFactory
