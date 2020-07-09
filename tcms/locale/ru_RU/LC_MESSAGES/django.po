@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-29 15:26\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-07-09 13:22+0000\n"
+"PO-Revision-Date: 2020-07-09 13:34\n"
+"Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -226,11 +228,11 @@ msgid "Created at"
 msgstr "Создано"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:493
+#: tcms/testcases/views.py:515
 msgid "Edit"
 msgstr "Правка"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:506
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
 msgid "Delete"
 msgstr "Удалить"
 
@@ -273,10 +275,15 @@ msgstr "Обновлено %(history_date)s\n"
 "Дополнительная информация:\n"
 "%(instance_url)s"
 
-#: tcms/core/middleware.py:27
+#: tcms/core/middleware.py:29
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "Базовый URL-адрес не настроен! Смотрите <a href=\"%(doc_url)s\">документация</a> и <a href=\"%(admin_url)s\">измените это</a>"
+
+#: tcms/core/middleware.py:50
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -323,7 +330,7 @@ msgstr "Срок действия ключа активации истек"
 msgid "Your account has been activated successfully"
 msgstr "Ваша учетная запись успешно активирована"
 
-#: tcms/rpc/api/bug.py:58
+#: tcms/rpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Включить отчетность к трекеру задач, настроив его base_url!"
 
@@ -331,7 +338,7 @@ msgstr "Включить отчетность к трекеру задач, на
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "Неверный формат даты. Используйте YYYY-MM-DD [HH:MM:SS]."
 
-#: tcms/rpc/serializer.py:285
+#: tcms/rpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Модель %s не имеет основного ключа. Его необходимо указать вручную."
@@ -463,7 +470,7 @@ msgstr "НОВОЕ: Баг #%(pk)d - %(summary)s"
 msgid "OTHER"
 msgstr "ДРУГОЕ"
 
-#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
+#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -529,11 +536,37 @@ msgstr "Отрицательный"
 msgid "Testing Status Matrix"
 msgstr "Матрица состояния тестов"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
+msgid "Include child TPs"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:94
+msgid "Yes"
+msgstr "Да"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:97
+msgid "No"
+msgstr "Нет"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
+msgid "Order"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Ascending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Descending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
 msgstr "Тест-кейс"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test run"
 msgstr "Прогонка теста"
 
@@ -938,7 +971,7 @@ msgstr "Изменить пароль"
 msgid "Logout"
 msgstr "Выйти"
 
-#: tcms/templates/navbar.html:54
+#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "Вход"
 
@@ -1120,7 +1153,7 @@ msgid "print view of selected cases"
 msgstr "просмотр печати выбранных кейсов"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Клонировать"
@@ -1708,14 +1741,6 @@ msgstr "Поиск тест-кейсов"
 msgid "Test case summary"
 msgstr "Итоги по тест-кейсу"
 
-#: tcms/testcases/templates/testcases/search.html:94
-msgid "Yes"
-msgstr "Да"
-
-#: tcms/testcases/templates/testcases/search.html:97
-msgid "No"
-msgstr "Нет"
-
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
 msgstr "Оба"
@@ -1732,19 +1757,19 @@ msgstr "Разделяйте значения через запятые (,)"
 msgid "Created on"
 msgstr "Создано"
 
-#: tcms/testcases/views.py:338
+#: tcms/testcases/views.py:360
 msgid "TestPlan not specified or does not exist"
 msgstr "Тест-план не указан или не существует"
 
-#: tcms/testcases/views.py:501
+#: tcms/testcases/views.py:523
 msgid "History"
 msgstr "История"
 
-#: tcms/testcases/views.py:638
+#: tcms/testcases/views.py:660
 msgid "TestCase cloning was successful"
 msgstr "Клонирование тест-кейса прошло успешно"
 
-#: tcms/testcases/views.py:664 tcms/testruns/views.py:364
+#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
 msgstr "Требуется хотя бы один тест-кейс"
@@ -1823,15 +1848,15 @@ msgstr "Название тест-плана"
 msgid "Test plan"
 msgstr "Тест-план"
 
-#: tcms/testplans/views.py:229
+#: tcms/testplans/views.py:234
 msgid "TestPlan is required"
 msgstr "Требуется тест-план"
 
-#: tcms/testplans/views.py:388
+#: tcms/testplans/views.py:393
 msgid "At least one test plan is required for print"
 msgstr "Для печати требуется хотя бы один тест-план"
 
-#: tcms/testplans/views.py:396
+#: tcms/testplans/views.py:401
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Тест-план \"%s\" не существует"
