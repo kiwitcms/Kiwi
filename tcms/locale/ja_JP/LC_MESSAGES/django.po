@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-07-07 00:32\n"
+"POT-Creation-Date: 2020-07-09 13:22+0000\n"
+"PO-Revision-Date: 2020-07-09 13:34\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -228,11 +228,11 @@ msgid "Created at"
 msgstr "作成日時"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:493
+#: tcms/testcases/views.py:515
 msgid "Edit"
 msgstr "編集"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:506
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
 msgid "Delete"
 msgstr "削除"
 
@@ -275,10 +275,15 @@ msgstr "更新日: %(history_date)s\n"
 "詳細情報:\n"
 "%(instance_url)s"
 
-#: tcms/core/middleware.py:27
+#: tcms/core/middleware.py:29
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">ドキュメント</a> を参照し、 <a href=\"%(admin_url)s\">変更してください。</a>"
+
+#: tcms/core/middleware.py:50
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -325,7 +330,7 @@ msgstr "アクティベーションキーの有効期限が切れました。"
 msgid "Your account has been activated successfully"
 msgstr "アカウントがアクティブになりました。"
 
-#: tcms/rpc/api/bug.py:58
+#: tcms/rpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "base_urlを設定することで、この課題トラッカーへの報告を有効にします！"
 
@@ -333,7 +338,7 @@ msgstr "base_urlを設定することで、この課題トラッカーへの報�
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS]。"
 
-#: tcms/rpc/serializer.py:285
+#: tcms/rpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "モデル %s には主キーがありません。フィールドを手動で指定する必要があります。"
@@ -465,7 +470,7 @@ msgstr "新着: バグ #%(pk)d - %(summary)s"
 msgid "OTHER"
 msgstr "他の"
 
-#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
+#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -531,11 +536,37 @@ msgstr "ネガティブ"
 msgid "Testing Status Matrix"
 msgstr "状態マトリクスのテスト"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
+msgid "Include child TPs"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:94
+msgid "Yes"
+msgstr "はい"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:97
+msgid "No"
+msgstr "いいえ"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
+msgid "Order"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Ascending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Descending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
 msgstr "テストケース"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test run"
 msgstr "テストの実行"
 
@@ -940,7 +971,7 @@ msgstr "パスワードの変更"
 msgid "Logout"
 msgstr "ログアウト"
 
-#: tcms/templates/navbar.html:54
+#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "ログイン"
 
@@ -1122,7 +1153,7 @@ msgid "print view of selected cases"
 msgstr "選択したケースの印刷ビュー"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "クローン"
@@ -1710,14 +1741,6 @@ msgstr "テストケースを検索"
 msgid "Test case summary"
 msgstr "テストケースの概要"
 
-#: tcms/testcases/templates/testcases/search.html:94
-msgid "Yes"
-msgstr "はい"
-
-#: tcms/testcases/templates/testcases/search.html:97
-msgid "No"
-msgstr "いいえ"
-
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
 msgstr "両方"
@@ -1734,19 +1757,19 @@ msgstr "複数の値をカンマで区切ってください (,)"
 msgid "Created on"
 msgstr "に作成"
 
-#: tcms/testcases/views.py:338
+#: tcms/testcases/views.py:360
 msgid "TestPlan not specified or does not exist"
 msgstr "テストプランが指定されていないか、存在しません"
 
-#: tcms/testcases/views.py:501
+#: tcms/testcases/views.py:523
 msgid "History"
 msgstr "履歴"
 
-#: tcms/testcases/views.py:638
+#: tcms/testcases/views.py:660
 msgid "TestCase cloning was successful"
 msgstr "テストケースの複製に成功しました"
 
-#: tcms/testcases/views.py:664 tcms/testruns/views.py:364
+#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
 msgstr "少なくとも 1 つのテストケースが必要です"
@@ -1825,15 +1848,15 @@ msgstr "テスト計画名"
 msgid "Test plan"
 msgstr "テスト計画"
 
-#: tcms/testplans/views.py:229
+#: tcms/testplans/views.py:234
 msgid "TestPlan is required"
 msgstr "テスト計画が必要です"
 
-#: tcms/testplans/views.py:388
+#: tcms/testplans/views.py:393
 msgid "At least one test plan is required for print"
 msgstr "印刷には少なくとも1つのテスト計画が必要です"
 
-#: tcms/testplans/views.py:396
+#: tcms/testplans/views.py:401
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "テスト計画 \"%s\" は存在しません"
