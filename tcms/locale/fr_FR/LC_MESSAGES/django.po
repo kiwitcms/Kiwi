@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-09 15:13\n"
+"PO-Revision-Date: 2020-07-09 15:24\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -538,7 +538,7 @@ msgstr "Matrice d'état des tests"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "Inclure les TPs enfants"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
