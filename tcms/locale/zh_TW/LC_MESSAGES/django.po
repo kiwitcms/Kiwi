@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-06-20 10:22\n"
+"POT-Creation-Date: 2020-07-09 13:22+0000\n"
+"PO-Revision-Date: 2020-07-09 13:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -228,11 +228,11 @@ msgid "Created at"
 msgstr "創建於"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:493
+#: tcms/testcases/views.py:515
 msgid "Edit"
 msgstr "編輯"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:506
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
 msgid "Delete"
 msgstr "刪除"
 
@@ -275,10 +275,15 @@ msgstr "更新於 %(history_date)s\n"
 "取得更多訊息:\n"
 "%(instance_url)s _ 321"
 
-#: tcms/core/middleware.py:27
+#: tcms/core/middleware.py:29
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "基本URL未設置！參考 <a href=\"%(doc_url)s\">documentation</a>  和  <a href=\"%(admin_url)s\">change it</a>"
+
+#: tcms/core/middleware.py:50
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -325,7 +330,7 @@ msgstr "此啟用金鑰已過期"
 msgid "Your account has been activated successfully"
 msgstr "您的帳戶已成功啟用"
 
-#: tcms/rpc/api/bug.py:58
+#: tcms/rpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "透過設置base_url 來啟用對此問題追蹤器的回報"
 
@@ -333,7 +338,7 @@ msgstr "透過設置base_url 來啟用對此問題追蹤器的回報"
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "無效的日期格式。預設為 YYYY-MM-DD [HH:MM:SS]。"
 
-#: tcms/rpc/serializer.py:285
+#: tcms/rpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "%s 沒有主鍵。你必須手動指定此欄位。"
@@ -465,7 +470,7 @@ msgstr "NEW: Bug #%(pk)d - %(summary)s"
 msgid "OTHER"
 msgstr "其他"
 
-#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
+#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -531,11 +536,37 @@ msgstr "負數"
 msgid "Testing Status Matrix"
 msgstr "測試狀態矩陣表"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
+msgid "Include child TPs"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:94
+msgid "Yes"
+msgstr "是"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:97
+msgid "No"
+msgstr "否"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
+msgid "Order"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Ascending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Descending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
 msgstr "測試案例"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test run"
 msgstr "測試運行"
 
@@ -940,7 +971,7 @@ msgstr "變更密碼"
 msgid "Logout"
 msgstr "登出"
 
-#: tcms/templates/navbar.html:54
+#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "登入"
 
@@ -1122,7 +1153,7 @@ msgid "print view of selected cases"
 msgstr "選定案例的列印畫面"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "克隆"
@@ -1710,14 +1741,6 @@ msgstr "搜尋測試案例"
 msgid "Test case summary"
 msgstr "測試案例總結"
 
-#: tcms/testcases/templates/testcases/search.html:94
-msgid "Yes"
-msgstr "是"
-
-#: tcms/testcases/templates/testcases/search.html:97
-msgid "No"
-msgstr "否"
-
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
 msgstr "都"
@@ -1734,19 +1757,19 @@ msgstr "用逗號分隔變數"
 msgid "Created on"
 msgstr "建立於"
 
-#: tcms/testcases/views.py:338
+#: tcms/testcases/views.py:360
 msgid "TestPlan not specified or does not exist"
 msgstr "TestPlan 未指定或不存在"
 
-#: tcms/testcases/views.py:501
+#: tcms/testcases/views.py:523
 msgid "History"
 msgstr "歷史紀錄"
 
-#: tcms/testcases/views.py:638
+#: tcms/testcases/views.py:660
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
-#: tcms/testcases/views.py:664 tcms/testruns/views.py:364
+#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
@@ -1825,15 +1848,15 @@ msgstr "測試計畫名稱"
 msgid "Test plan"
 msgstr "測試計畫"
 
-#: tcms/testplans/views.py:229
+#: tcms/testplans/views.py:234
 msgid "TestPlan is required"
 msgstr "測試計畫是必須的"
 
-#: tcms/testplans/views.py:388
+#: tcms/testplans/views.py:393
 msgid "At least one test plan is required for print"
 msgstr "列印時至少需要一個Test Plan"
 
-#: tcms/testplans/views.py:396
+#: tcms/testplans/views.py:401
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "TestPlan \"%s\" 不存在"
