@@ -47,7 +47,7 @@ class TestJIRAIntegration(APITestCase):
             api_username=os.getenv('JIRA_BUGTRACKER_INTEGRATION_API_USERNAME'),
             api_password=os.getenv('JIRA_BUGTRACKER_INTEGRATION_API_TOKEN'),
         )
-        self.integration = JIRA(bug_system)
+        self.integration = JIRA(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)

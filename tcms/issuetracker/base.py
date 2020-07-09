@@ -69,11 +69,13 @@ class IssueTrackerType:
     it_class = IntegrationThread
     rpc_cache = {}
 
-    def __init__(self, bug_system):
+    def __init__(self, bug_system, request):
         """
             :bug_system: - BugSystem object
+            :request: - an HTTP request object
         """
         self.bug_system = bug_system
+        self.request = request
 
     @classmethod
     def bug_id_from_url(cls, url):

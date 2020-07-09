@@ -40,7 +40,7 @@ class TestRedmineIntegration(APITestCase):
             api_username='admin',
             api_password='admin',
         )
-        self.integration = Redmine(bug_system)
+        self.integration = Redmine(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)

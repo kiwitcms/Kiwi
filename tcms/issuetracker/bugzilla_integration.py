@@ -39,8 +39,8 @@ class Bugzilla(base.IssueTrackerType):
     """
     it_class = BugzillaThread
 
-    def __init__(self, bug_system):
-        super().__init__(bug_system)
+    def __init__(self, bug_system, request):
+        super().__init__(bug_system, request)
 
         # directory for Bugzilla credentials
         self._bugzilla_cache_dir = getattr(

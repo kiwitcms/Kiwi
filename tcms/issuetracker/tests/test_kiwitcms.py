@@ -45,7 +45,7 @@ class TestKiwiTCMSIntegration(APITestCase):
             base_url="https://%s" % Site.objects.get(id=settings.SITE_ID).domain,
             # note: ^^^ this is https just because .get_full_url() default to that !
         )
-        self.integration = KiwiTCMS(bug_system)
+        self.integration = KiwiTCMS(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug.get_full_url())

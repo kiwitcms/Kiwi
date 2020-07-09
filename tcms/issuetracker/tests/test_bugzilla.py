@@ -37,7 +37,7 @@ class TestBugzillaIntegration(APITestCase):
             api_username='admin@bugzilla.bugs',
             api_password='password',
         )
-        self.integration = Bugzilla(bug_system)
+        self.integration = Bugzilla(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)

@@ -7,7 +7,7 @@ from django.utils.module_loading import import_string
 from tcms.testcases.models import BugSystem
 
 
-def tracker_from_url(url):
+def tracker_from_url(url, request):
     """
         Return the IssueTrackerType object for the system
         where ``base_url`` is part of ``url``. Usually we pass
@@ -15,6 +15,6 @@ def tracker_from_url(url):
     """
     for bug_system in BugSystem.objects.all():
         if bug_system.base_url and url.startswith(bug_system.base_url):
-            return import_string(bug_system.tracker_type)(bug_system)
+            return import_string(bug_system.tracker_type)(bug_system, request)
 
     return None

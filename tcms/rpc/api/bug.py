@@ -15,7 +15,7 @@ __all__ = (
 
 
 @rpc_method(name='Bug.details')
-def details(url):
+def details(url, **kwargs):
     """
     .. function:: XML-RPC Bug.details(url)
 
@@ -24,13 +24,16 @@ def details(url):
 
         :param url: URL address
         :type url: str
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Detailed information about this URL. Depends on the underlying
                  issue tracker.
         :rtype: dict
     """
     result = cache.get(url)
     if not result:
-        tracker = tracker_from_url(url)
+        request = kwargs.get(REQUEST_KEY)
+        tracker = tracker_from_url(url, request)
         result = tracker.details(url)
         cache.set(url, result)
 
@@ -62,7 +65,7 @@ def report(execution_id, tracker_id, **kwargs):
 
     execution = TestExecution.objects.get(pk=execution_id)
     bug_system = BugSystem.objects.get(pk=tracker_id)
-    tracker = import_string(bug_system.tracker_type)(bug_system)
+    tracker = import_string(bug_system.tracker_type)(bug_system, request)
     if not tracker.is_adding_testcase_to_issue_disabled():
         url = tracker.report_issue_from_testexecution(execution, request.user)
         response = {'rc': 0, 'response': url}
