@@ -42,7 +42,7 @@ class TestGitHubIntegration(APITestCase):
             base_url='https://github.com/kiwitcms/test-github-integration',
             api_password=os.getenv('GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN'),
         )
-        self.integration = GitHub(bug_system)
+        self.integration = GitHub(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)
@@ -64,7 +64,7 @@ class TestGitHubIntegration(APITestCase):
             base_url='https://github.com/kiwitcms/private-test-github-integration',
             api_password=os.getenv('GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN'),
         )
-        integration = GitHub(bug_system)
+        integration = GitHub(bug_system, None)
 
         result = integration.details(
             'https://github.com/kiwitcms/private-test-github-integration/issues/1')

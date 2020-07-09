@@ -37,7 +37,7 @@ class TestGitlabIntegration(APITestCase):
             api_url='http://bugtracker.kiwitcms.org',
             api_password='ypCa3Dzb23o5nvsixwPA',
         )
-        self.integration = Gitlab(bug_system)
+        self.integration = Gitlab(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)
@@ -62,7 +62,7 @@ class TestGitlabIntegration(APITestCase):
             api_url='http://bugtracker.kiwitcms.org',
             api_password='ypCa3Dzb23o5nvsixwPA',
         )
-        integration = Gitlab(bug_system)
+        integration = Gitlab(bug_system, None)
 
         result = integration.details('http://bugtracker.kiwitcms.org/root/katinar/-/issues/1')
 

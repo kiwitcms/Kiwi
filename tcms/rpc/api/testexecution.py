@@ -208,7 +208,7 @@ def _update_case_text_version(execution, case_text_version):
 
 @permissions_required('linkreference.add_linkreference')
 @rpc_method(name='TestExecution.add_link')
-def add_link(values, update_tracker=False):
+def add_link(values, update_tracker=False, **kwargs):
     """
     .. function:: XML-RPC TestExecution.add_link(values)
 
@@ -220,6 +220,8 @@ def add_link(values, update_tracker=False):
         :param update_tracker: Automatically update Issue Tracker by placing a comment
                                linking back to the failed TestExecution.
         :type update_tracker: bool, default=False
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :rtype: dict
@@ -231,7 +233,8 @@ def add_link(values, update_tracker=False):
     """
     link, _ = LinkReference.objects.get_or_create(**values)
     response = model_to_dict(link)
-    tracker = tracker_from_url(link.url)
+    request = kwargs.get(REQUEST_KEY)
+    tracker = tracker_from_url(link.url, request)
 
     if (link.is_defect and
             update_tracker and
