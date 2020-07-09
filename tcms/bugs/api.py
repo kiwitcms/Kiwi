@@ -38,7 +38,7 @@ def add_tag(bug_id, tag, **kwargs):
     Bug.objects.get(pk=bug_id).tags.add(tag)
 
 
-@permissions_required('bugs.delete_bugtag')
+@permissions_required('bugs.delete_bug_tags')
 @rpc_method(name='Bug.remove_tag')
 def remove_tag(bug_id, tag):
     """
@@ -50,7 +50,7 @@ def remove_tag(bug_id, tag):
         :type bug_id: int
         :param tag: Tag name to remove
         :type tag: str
-        :raises PermissionDenied: if missing *bugs.delete_bugtag* permission
+        :raises PermissionDenied: if missing *bugs.delete_bug_tags* permission
         :raises DoesNotExist: if objects specified don't exist
     """
     Bug.objects.get(pk=bug_id).tags.remove(
