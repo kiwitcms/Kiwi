@@ -1,6 +1,112 @@
 Change Log
 ==========
 
+Kiwi TCMS 8.5 (10 Jul 2020)
+---------------------------
+
+**IMPORTANT:** this is a medium sized release which includes many improvements,
+database migrations, translation updates and new tests.
+It is the third release to include contributions via our
+`open source bounty program`_.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 3.0.7 to 3.0.8
+- Update django-colorfield from 0.3.0 to 0.3.2
+- Update django-modern-rpc from 0.12.0 to 0.12.1
+- Update django-simple-history from 2.10.0 to 2.11.0
+- Update mysqlclient from 1.4.6 to 2.0.1
+- Update python-gitlab from 2.2.0 to 2.4.0
+- Update python-bugzilla from 2.3.0 to 2.5.0
+- Add middleware to warn for unapplied migrations. Fixes
+  `Issue #1696 <https://github.com/kiwitcms/Kiwi/issues/1696>`_ (Bryan Mutai)
+- Add "insert table" button to SimpleMDE toolbar. References
+  `Issue #1531 <https://github.com/kiwitcms/Kiwi/issues/1531>`_ (Bryan Mutai)
+- Implement
+  `kiwitcms-django-plugin <https://kiwitcms.org/blog/kiwi-tcms-team/2020/06/30/django-plugin-for-kiwi-tcms/>`_.
+  Resolves `Issue #693 <https://github.com/kiwitcms/Kiwi/issues/693>`_ (Bryan Mutai)
+- Add missing permission check for ``TestExecution.add_link()`` API method (Rosen Sasov)
+- Add missing permission check for ``TestExecution.remove_link()`` API method (Rosen Sasov)
+- Admin interface will now appear translated
+- Propagate server side API errors to the browser. Closes
+  `Issue #625 <https://github.com/kiwitcms/Kiwi/issues/625>`_,
+  `Issue #1333 <https://github.com/kiwitcms/Kiwi/issues/1333>`_
+- Improvements for Status Matrix telemetry page:
+
+  - Make the horizontal scroll bar at the bottom always visible
+  - Make the header row always visible
+  - Add button to show columns in reverse. Fixes
+    `Issue #1682 <https://github.com/kiwitcms/Kiwi/issues/1682>`_
+  - Make it possible to display TestExecutions from child TestPlans. Fixes
+    `Issue #1683 <https://github.com/kiwitcms/Kiwi/issues/1683>`_
+
+
+Database
+~~~~~~~~
+
+- Update existing Bug tracker records to match the changes introduced with
+  the new ``EXTERNAL_BUG_TRACKERS`` setting
+
+
+Settings
+~~~~~~~~
+
+- Add ``EXTERNAL_BUG_TRACKERS`` setting which is a list of dotted class paths
+  representing external bug tracker integrations. Plugins and Kiwi TCMS admins
+  can now more easily include customized integrations
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add new linter to check for label arguments in form field classes. Fixes
+  `Issue #738 <https://github.com/kiwitcms/Kiwi/issues/738>`_ (Bryan Mutai)
+- Add new linter to check if all forms inherit from ``ModelForm``. Fixes
+  `Issue #1384 <https://github.com/kiwitcms/Kiwi/issues/1384>`_ (Bryan Mutai)
+- Enable pylint plugin ``pylint.extensions.docparams`` and resolve errors. Fixes
+  `Issue #1192 <https://github.com/kiwitcms/Kiwi/issues/1192>`_ (Bryan Mutai)
+- Migrate 'test-for-missing-migrations' from Travis CI to GitHub workflow. Fixes
+  `Issue #1553 <https://github.com/kiwitcms/Kiwi/issues/1553>`_ (Bryan Mutai)
+- Add tests for ``tcms.bugs.api.add_tag()``. References
+  `Issue #1597 <https://github.com/kiwitcms/Kiwi/issues/1597>`_ (Mfon Eti-mfon)
+- Add tests for ``tcms.bugs.api.remove_tag()``. References
+  `Issue #1597 <https://github.com/kiwitcms/Kiwi/issues/1597>`_ (Mfon Eti-mfon)
+- Add test for ``tcms.testplans.views.Edit``. References
+  `Issue #1617 <https://github.com/kiwitcms/Kiwi/issues/1617>`_ (@cmbahadir)
+- Add tests for ``markdown2html()``. Fixes
+  `Issue #1659 <https://github.com/kiwitcms/Kiwi/issues/1659>`_ (Mariyan Garvanski)
+- Add test for Cyrillic support with MariaDB. References
+  `Issue #1770 <https://github.com/kiwitcms/Kiwi/issues/1770>`_
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Indonesian translation <https://crowdin.com/project/kiwitcms/id#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Swahili translation <https://crowdin.com/project/kiwitcms/sw#>`_
+
+
 
 Kiwi TCMS 8.4 (03 June 2020)
 ----------------------------
@@ -8,8 +114,7 @@ Kiwi TCMS 8.4 (03 June 2020)
 **IMPORTANT:** this is a medium sized release which includes
 minor security fixes, many improvements & bug-fixes and translations
 in several new languages. It is the second release to include
-contributions via our
-`open source bounty program <https://kiwitcms.org/blog/kiwi-tcms-team/2020/04/17/kiwi-tcms-open-source-bounty-program-round-01/>`_.
+contributions via our `open source bounty program`_.
 
 .. important::
 
@@ -192,7 +297,7 @@ Kiwi TCMS 8.3 (27 Apr 2020)
 **IMPORTANT:** this is a small release which updates 3rd party libraries,
 provides several improvements, includes minor API changes and new translations.
 It is the first release to include contributions via our
-`open source bounty program <https://kiwitcms.org/blog/kiwi-tcms-team/2020/04/17/kiwi-tcms-open-source-bounty-program-round-01/>`_.
+`open source bounty program`_.
 
 Supported upgrade paths::
 
@@ -4942,3 +5047,6 @@ v0.13-2.svn1309 (Feb 18 2009)
 v0.13-1.svn1294 (Feb 12 2009)
 -----------------------------
 - initial packaging
+
+
+.. _open source bounty program: https://kiwitcms.org/blog/tags/bounty-program/
