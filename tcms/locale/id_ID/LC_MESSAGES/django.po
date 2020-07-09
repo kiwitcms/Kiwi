@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-09 13:34\n"
+"PO-Revision-Date: 2020-07-09 13:54\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -283,7 +283,7 @@ msgstr "Basis URL belum dikonfigurasi! Lihat <a href=\"%(doc_url)s\">dokumentasi
 #: tcms/core/middleware.py:50
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "Anda memiliki%(unapplied_migration_count)s migrasi yang belum diterapkan. Lihat<a href=\"%(doc_url)s\">Dokumentasi</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -538,7 +538,7 @@ msgstr "Status Pengujian Matriks"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "Sertakan child TPs"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
@@ -552,15 +552,15 @@ msgstr "Tidak"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "Urutan"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "Naik"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "Turun"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
