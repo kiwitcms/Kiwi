@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-12 13:05\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-07-09 13:22+0000\n"
+"PO-Revision-Date: 2020-07-09 13:34\n"
+"Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: tr\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -226,11 +228,11 @@ msgid "Created at"
 msgstr "Oluşturuldu"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:493
+#: tcms/testcases/views.py:515
 msgid "Edit"
 msgstr "Düzenle"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:506
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
 msgid "Delete"
 msgstr "Sil"
 
@@ -273,10 +275,15 @@ msgstr "%(history_date)s tarihinde güncellendi.\n"
 "Daha fazla bilgi için:\n"
 "%(instance_url)s"
 
-#: tcms/core/middleware.py:27
+#: tcms/core/middleware.py:29
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "Ana URL ayarlanmadı! <a href=\"%(doc_url)s\">Dokümanı</a> inceleyin ve <a href=\"%(admin_url)s\">değiştirin</a>"
+
+#: tcms/core/middleware.py:50
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -323,7 +330,7 @@ msgstr "Bu etkinleştirme anahtarının süresi dolmuş"
 msgid "Your account has been activated successfully"
 msgstr "Hesabınız başarıyla etkinleştirildi"
 
-#: tcms/rpc/api/bug.py:58
+#: tcms/rpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Ana URL'i ayarlayarak bu İş Takip sistemine raporlamayı etkinleştirin!"
 
@@ -331,7 +338,7 @@ msgstr "Ana URL'i ayarlayarak bu İş Takip sistemine raporlamayı etkinleştiri
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr ""
 
-#: tcms/rpc/serializer.py:285
+#: tcms/rpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Model %s birinci anahtara sahip değil. Bu alanı manuel olarak belirtmeniz gerekir."
@@ -463,7 +470,7 @@ msgstr ""
 msgid "OTHER"
 msgstr "DİĞER"
 
-#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
+#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -529,11 +536,37 @@ msgstr ""
 msgid "Testing Status Matrix"
 msgstr "Test Durum Matrisi"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
+msgid "Include child TPs"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:94
+msgid "Yes"
+msgstr "Evet"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:97
+msgid "No"
+msgstr "Hayır"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
+msgid "Order"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Ascending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Descending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
 msgstr "Test senaryosu"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test run"
 msgstr "Test koşumu"
 
@@ -929,7 +962,7 @@ msgstr "Şifre değiştir"
 msgid "Logout"
 msgstr "Çıkış yap"
 
-#: tcms/templates/navbar.html:54
+#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "Giriş yap"
 
@@ -1111,7 +1144,7 @@ msgid "print view of selected cases"
 msgstr "seçili senaryoların yazdırma görünümü"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Kopyala"
@@ -1699,14 +1732,6 @@ msgstr "Test senaryoları ara"
 msgid "Test case summary"
 msgstr "Test senaryosu özeti"
 
-#: tcms/testcases/templates/testcases/search.html:94
-msgid "Yes"
-msgstr "Evet"
-
-#: tcms/testcases/templates/testcases/search.html:97
-msgid "No"
-msgstr "Hayır"
-
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
 msgstr "Her ikisi de"
@@ -1723,19 +1748,19 @@ msgstr "Birden fazla değeri virgüle (,) ile ayırın"
 msgid "Created on"
 msgstr "Oluşturuldu"
 
-#: tcms/testcases/views.py:338
+#: tcms/testcases/views.py:360
 msgid "TestPlan not specified or does not exist"
 msgstr "Test planı belirtilmedi veya bulunmuyor"
 
-#: tcms/testcases/views.py:501
+#: tcms/testcases/views.py:523
 msgid "History"
 msgstr "Geçmiş"
 
-#: tcms/testcases/views.py:638
+#: tcms/testcases/views.py:660
 msgid "TestCase cloning was successful"
 msgstr "Test senaryosu başarılı bir şekilde kopyalandı"
 
-#: tcms/testcases/views.py:664 tcms/testruns/views.py:364
+#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
 msgstr "En az bir test senaryosu gerekli"
@@ -1814,15 +1839,15 @@ msgstr "Test plan adı"
 msgid "Test plan"
 msgstr "Test planı"
 
-#: tcms/testplans/views.py:229
+#: tcms/testplans/views.py:234
 msgid "TestPlan is required"
 msgstr "Test planı gereklidir"
 
-#: tcms/testplans/views.py:388
+#: tcms/testplans/views.py:393
 msgid "At least one test plan is required for print"
 msgstr "Yazdırmak için en az bir test planı gereklidir"
 
-#: tcms/testplans/views.py:396
+#: tcms/testplans/views.py:401
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Test Planı \"%s\" bulunmuyor"
