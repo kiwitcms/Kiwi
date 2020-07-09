@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 12:56+0000\n"
-"PO-Revision-Date: 2020-05-13 13:03\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-07-09 13:22+0000\n"
+"PO-Revision-Date: 2020-07-09 13:34\n"
+"Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
 "X-Crowdin-Language: id\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
 
 #: tcms/bugs/forms.py:21
 msgid "Description of problem:\n\n\n"
@@ -226,11 +228,11 @@ msgid "Created at"
 msgstr "Dibuat pada"
 
 #: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:493
+#: tcms/testcases/views.py:515
 msgid "Edit"
 msgstr "Sunting"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:506
+#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
 msgid "Delete"
 msgstr "Hapus"
 
@@ -273,10 +275,15 @@ msgstr "Diperbaharui pada %(history_date)s\n"
 "Info lebih lanjut:\n"
 "%(instance_url)s"
 
-#: tcms/core/middleware.py:27
+#: tcms/core/middleware.py:29
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "Basis URL belum dikonfigurasi! Lihat <a href=\"%(doc_url)s\">dokumentasi</a>dan<a href=\"%(admin_url)s\">ubah</a>"
+
+#: tcms/core/middleware.py:50
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -323,7 +330,7 @@ msgstr "Kunci aktifasi telah kedaluwarsa"
 msgid "Your account has been activated successfully"
 msgstr "Akun anda telah berhasil diaktifkan"
 
-#: tcms/rpc/api/bug.py:58
+#: tcms/rpc/api/bug.py:60
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Aktifkan pelaporan ke Pelacak Isu ini dengan mengkonfigurasi base_url-nya!"
 
@@ -331,7 +338,7 @@ msgstr "Aktifkan pelaporan ke Pelacak Isu ini dengan mengkonfigurasi base_url-ny
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "Format tanggal tidak valid. Silakan ikuti seperti berikut YYYY-MM-DD [HH:MM:SS]."
 
-#: tcms/rpc/serializer.py:285
+#: tcms/rpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Model %s tidak memiliki kunci utama. Anda harus menentukan bidang tersebut secara manual."
@@ -463,7 +470,7 @@ msgstr "Baru: Bug #%(pk)d - %(summary)s"
 msgid "OTHER"
 msgstr "LAINNYA"
 
-#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:188
+#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -529,11 +536,37 @@ msgstr "Negatif"
 msgid "Testing Status Matrix"
 msgstr "Status Pengujian Matriks"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
+msgid "Include child TPs"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:94
+msgid "Yes"
+msgstr "Ya"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
+#: tcms/testcases/templates/testcases/search.html:97
+msgid "No"
+msgstr "Tidak"
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
+msgid "Order"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Ascending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
+msgid "Descending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
 msgstr "Uji kasus"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test run"
 msgstr "Uji operasi"
 
@@ -937,7 +970,7 @@ msgstr "Ubah kata sandi"
 msgid "Logout"
 msgstr "Keluar"
 
-#: tcms/templates/navbar.html:54
+#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "Masuk"
 
@@ -1119,7 +1152,7 @@ msgid "print view of selected cases"
 msgstr "tampilan cetak dari kasus terpilih"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:497
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Salin"
@@ -1707,14 +1740,6 @@ msgstr "Cari uji kasus"
 msgid "Test case summary"
 msgstr "Ringkasan uji kasus"
 
-#: tcms/testcases/templates/testcases/search.html:94
-msgid "Yes"
-msgstr "Ya"
-
-#: tcms/testcases/templates/testcases/search.html:97
-msgid "No"
-msgstr "Tidak"
-
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
 msgstr "Keduanya"
@@ -1731,19 +1756,19 @@ msgstr "Pisahkan beberapa label dengan koma (,)"
 msgid "Created on"
 msgstr "Dibuat pada"
 
-#: tcms/testcases/views.py:338
+#: tcms/testcases/views.py:360
 msgid "TestPlan not specified or does not exist"
 msgstr "RencanaUji tidak spesifik atau tidak ditemukan"
 
-#: tcms/testcases/views.py:501
+#: tcms/testcases/views.py:523
 msgid "History"
 msgstr "Riwayat"
 
-#: tcms/testcases/views.py:638
+#: tcms/testcases/views.py:660
 msgid "TestCase cloning was successful"
 msgstr "UjiKasus berhasil disalin"
 
-#: tcms/testcases/views.py:664 tcms/testruns/views.py:364
+#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
 #: tcms/testruns/views.py:413
 msgid "At least one TestCase is required"
 msgstr "Setidaknya satu UjiKasus diperlukan"
@@ -1822,15 +1847,15 @@ msgstr "Nama rencana uji"
 msgid "Test plan"
 msgstr "Rencana uji"
 
-#: tcms/testplans/views.py:229
+#: tcms/testplans/views.py:234
 msgid "TestPlan is required"
 msgstr "RencanaUji diperlukan"
 
-#: tcms/testplans/views.py:388
+#: tcms/testplans/views.py:393
 msgid "At least one test plan is required for print"
 msgstr "Setidaknya satu rencana uji diperlukan untuk dicetak"
 
-#: tcms/testplans/views.py:396
+#: tcms/testplans/views.py:401
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Rencana Uji \"%s\" tidak ditemukan"
