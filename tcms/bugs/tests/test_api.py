@@ -46,3 +46,24 @@ class TestAddTag(APITestCase):
     def test_add_tag_to_non_existent_bug(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Bug matching query does not exist'):
             self.rpc_client.Bug.add_tag(-9, self.tag.name)
+
+
+class TestRemoveTagPermissions(APIPermissionsTestCase):
+    """Test Bug.remove_tag"""
+
+    permission_label = "bugs.delete_bug_tags"
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.bug = BugFactory()
+        self.tag = TagFactory()
+        self.bug.tags.add(self.tag)
+
+    def verify_api_with_permission(self):
+        self.rpc_client.Bug.remove_tag(self.bug.pk, self.tag.name)
+        self.assertNotIn(self.tag, self.bug.tags.all())
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.Bug.remove_tag(self.bug.pk, self.tag.name)
