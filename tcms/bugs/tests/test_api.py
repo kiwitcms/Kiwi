@@ -9,6 +9,7 @@ from django.conf import settings
 if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")
 
+from tcms.bugs.models import Bug                                        # noqa: E402
 from tcms.bugs.tests.factory import BugFactory                          # noqa: E402
 from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase    # noqa: E402
 from tcms.tests.factories import TagFactory                             # noqa: E402
@@ -67,3 +68,28 @@ class TestRemoveTagPermissions(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.Bug.remove_tag(self.bug.pk, self.tag.name)
+
+
+class TestRemovePermissions(APIPermissionsTestCase):
+    """Test permissions of Bug.remove"""
+
+    permission_label = "bugs.delete_bug"
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.bug = BugFactory()
+        self.another_bug = BugFactory()
+        self.yet_another_bug = BugFactory()
+
+    def verify_api_with_permission(self):
+        self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
+
+        bugs = Bug.objects.all()
+        self.assertNotIn(self.bug, bugs)
+        self.assertNotIn(self.another_bug, bugs)
+        self.assertIn(self.yet_another_bug, bugs)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
