@@ -152,7 +152,12 @@
                                     <button type="button" class="btn btn-default">{% trans "Remove case" %}</button>
                                     <button type="button" class="btn btn-default">{% trans "Update case text" %}</button>
                                     <button type="button" class="btn btn-default">{% trans "Change assignee" %}</button>
-                                    <button type="button" class="btn btn-default">{% trans "Change status" %}</button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" id="filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Change status" %} <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                {% comment %} TODO: populate with the statuses from the back-end {% endcomment %}
+                                            </ul>
+                                    </div>
                                     <button type="button" class="btn btn-default">{% trans "Add comment" %}</button>
                                     <button type="button" class="btn btn-default">{% trans "Add hyperlink" %}</button>
                                 </div>
