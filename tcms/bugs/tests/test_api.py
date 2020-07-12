@@ -93,3 +93,31 @@ class TestRemovePermissions(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
+
+
+class TestFilter(APITestCase):
+    """Test Bug.filter"""
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.bug = BugFactory(status=False)
+        self.another_bug = BugFactory(status=True)
+        self.yet_another_bug = BugFactory(status=True)
+
+    def test_filter(self):
+        result = self.rpc_client.Bug.filter({"status": True})
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 2)
+
+        pks = []
+        for item in result:
+            pks.append(item["pk"])
+
+        self.assertNotIn(self.bug.pk, pks)
+        self.assertIn(self.another_bug.pk, pks)
+        self.assertIn(self.yet_another_bug.pk, pks)
+
+    def test_filter_non_existing(self):
+        result = self.rpc_client.Bug.filter({"pk": -99})
+        self.assertEqual(len(result), 0)
