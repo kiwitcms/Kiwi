@@ -154,9 +154,11 @@
                                     <button type="button" class="btn btn-default">{% trans "Change assignee" %}</button>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" id="filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Change status" %} <span class="caret"></span></button>
-                                            <ul class="dropdown-menu">
-                                                {% comment %} TODO: populate with the statuses from the back-end {% endcomment %}
-                                            </ul>
+                                        <ul class="dropdown-menu">
+                                            {% for status in execution_statuses %}
+                                                <li><a href="#">{{ status.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                     <button type="button" class="btn btn-default">{% trans "Add comment" %}</button>
                                     <button type="button" class="btn btn-default">{% trans "Add hyperlink" %}</button>
