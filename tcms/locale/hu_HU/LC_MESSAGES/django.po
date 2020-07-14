@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-14 10:14\n"
+"PO-Revision-Date: 2020-07-14 10:22\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -552,15 +552,15 @@ msgstr "Nem"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "Rendelés"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "Növekvő"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "Csökkenő"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
