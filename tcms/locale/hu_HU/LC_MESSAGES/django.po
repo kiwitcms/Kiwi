@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-09 13:33\n"
+"PO-Revision-Date: 2020-07-14 10:14\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -283,7 +283,7 @@ msgstr "Az alap URL nincs beállítva! Lásd a <a href=\"%(doc_url)s\">dokument�
 #: tcms/core/middleware.py:50
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "%(unapplied_migration_count)s nem alkalmazott migrációd van. Lásd a<a href=\"%(doc_url)s\">dokumentációt</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -538,7 +538,7 @@ msgstr "Tesztelési státusz mátrix"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "Tartalmazza a gyermek tesztterveket"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
