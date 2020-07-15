@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-09 13:34\n"
+"PO-Revision-Date: 2020-07-15 09:03\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -552,15 +552,15 @@ msgstr "Nein"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "Reihenfolge"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "Aufsteigend"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "Absteigend"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
