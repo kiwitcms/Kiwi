@@ -53,8 +53,8 @@ ADMINS = [
 # DEFAULT_FROM_EMAIL must be defined if you want Kiwi TCMS to send emails.
 # You also need to configure the email backend. For more information see:
 # https://docs.djangoproject.com/en/3.0/topics/email/
-DEFAULT_FROM_EMAIL = 'kiwi@example.com'
-SERVER_EMAIL = DEFAULT_FROM_EMAIL
+# SERVER_EMAIL is used by the logging backend to send exceptions to ADMINS
+SERVER_EMAIL = DEFAULT_FROM_EMAIL = 'kiwi@example.com'
 EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
 #  SMTP specific settings
