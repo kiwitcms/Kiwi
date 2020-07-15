@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-15 09:03\n"
+"PO-Revision-Date: 2020-07-15 09:13\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -283,7 +283,7 @@ msgstr "Die Basis-URL ist nicht konfiguriert! Siehe <a href=\"%(doc_url)s\">Doku
 #: tcms/core/middleware.py:50
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "Sie haben %(unapplied_migration_count)s nicht angewandte Migration(en). Siehe <a href=\"%(doc_url)s\">Dokumentation</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -538,7 +538,7 @@ msgstr "Statusmatrix testen"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "Untergeordnete TPs einbeziehen"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
@@ -1623,9 +1623,9 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "2. item\n"
 "3. item"
 msgstr "**Szenario**: ... welches Verhalten wird getestet ...\n"
-"  **Gib ** ... Bedingungen . .\n"
-"  **Wennen** ... Aktionen ...\n"
-"  **Then** ... erwartete Ergebnisse . .\n\n"
+"  **Gegeben ** ... Bedingungen . .\n"
+"  **Wenn** ... Aktionen ...\n"
+"  **Dann** ... erwartete Ergebnisse . .\n\n"
 "*Aktionen*:\n\n"
 "1. Element\n"
 "2. Element\n"
