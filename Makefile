@@ -49,6 +49,7 @@ check: flake8 test
 .PHONY: pylint
 pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
+	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django.checkers.migrations -d missing-docstring -d duplicate-code  tcms/*/migrations/*
 	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django --load-plugins=kiwi_lint --load-plugins=pylint.extensions.docparams -d missing-docstring -d duplicate-code tcms/ tcms_settings_dir/
 
 .PHONY: bandit
