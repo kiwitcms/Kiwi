@@ -7,7 +7,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
+from tcms.rpc.api.forms.testrun import NewTestExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
@@ -106,29 +106,14 @@ def create(values):
             }
             >>> TestExecution.create(values)
     """
-
-    form = NewExecutionForm(values)
-
-    if not isinstance(values, dict):
-        raise TypeError('Argument values must be in dict type.')
-    if not values:
-        raise ValueError('Argument values is empty.')
+    form = NewTestExecutionForm(values)
 
     if form.is_valid():
-        run = form.cleaned_data['run']
-
-        testcase_run = run.add_case_run(
-            case=form.cleaned_data['case'],
-            build=form.cleaned_data['build'],
-            assignee=form.cleaned_data['assignee'],
-            status=form.cleaned_data['status'],
-            case_text_version=form.cleaned_data['case_text_version'],
-            sortkey=form.cleaned_data['sortkey']
-        )
+        test_execution = form.save()
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return testcase_run.serialize()
+    return test_execution.serialize()
 
 
 @rpc_method(name='TestExecution.filter')

@@ -25,6 +25,7 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
         super()._fixture_setup()
 
         self.staff = UserFactory()
+        self.user = UserFactory()
 
         self.version = VersionFactory()
         self.build = self.version.product.build.first()
@@ -61,6 +62,7 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
+            "status": self.status.pk,
             "case_text_version": 15,
         })
         self.assertIsNotNone(execution)
@@ -68,6 +70,65 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
         self.assertEqual(execution['build_id'], self.build.pk)
         self.assertEqual(execution['case_id'], self.case.pk)
         self.assertEqual(execution['run_id'], self.test_run.pk)
+        self.assertEqual(execution['status_id'], self.status.pk)
+        self.assertEqual(execution['case_text_version'], 15)
+
+    def test_create_with_user_id(self):
+        execution = self.rpc_client.TestExecution.create({
+            "run": self.test_run.pk,
+            "build": self.build.pk,
+            "case": self.case.pk,
+            "assignee": self.api_user.pk,
+            "tested_by": self.user.pk,
+            "status": self.status.pk,
+            "case_text_version": 7,
+        })
+        self.assertIsNotNone(execution)
+        self.assertIsNotNone(execution['id'])
+        self.assertEqual(execution['build_id'], self.build.pk)
+        self.assertEqual(execution['case_id'], self.case.pk)
+        self.assertEqual(execution['assignee_id'], self.api_user.pk)
+        self.assertEqual(execution['tested_by_id'], self.user.pk)
+        self.assertEqual(execution['status'], self.status.name)
+        self.assertEqual(execution['case_text_version'], 7)
+
+    def test_create_with_user_username(self):
+        execution = self.rpc_client.TestExecution.create({
+            "run": self.test_run.pk,
+            "build": self.build.pk,
+            "case": self.case.pk,
+            "assignee": self.staff.username,
+            "tested_by": self.user.username,
+            "status": self.status.pk,
+            "case_text_version": 13,
+        })
+        self.assertIsNotNone(execution)
+        self.assertIsNotNone(execution['id'])
+        self.assertEqual(execution['build_id'], self.build.pk)
+        self.assertEqual(execution['case_id'], self.case.pk)
+        self.assertEqual(execution['assignee_id'], self.staff.pk)
+        self.assertEqual(execution['tested_by_id'], self.user.pk)
+        self.assertEqual(execution['status'], self.status.name)
+        self.assertEqual(execution['case_text_version'], 13)
+
+    def test_create_with_user_email(self):
+        execution = self.rpc_client.TestExecution.create({
+            "run": self.test_run.pk,
+            "build": self.build.pk,
+            "case": self.case.pk,
+            "assignee": self.api_user.email,
+            "tested_by": self.staff.email,
+            "status": self.status.pk,
+            "case_text_version": 27,
+        })
+        self.assertIsNotNone(execution)
+        self.assertIsNotNone(execution['id'])
+        self.assertEqual(execution['build_id'], self.build.pk)
+        self.assertEqual(execution['case_id'], self.case.pk)
+        self.assertEqual(execution['assignee_id'], self.api_user.pk)
+        self.assertEqual(execution['tested_by_id'], self.staff.pk)
+        self.assertEqual(execution['status'], self.status.name)
+        self.assertEqual(execution['case_text_version'], 27)
 
     def test_create_with_all_fields(self):
         execution = self.rpc_client.TestExecution.create({
@@ -108,6 +169,81 @@ class TestExecutionCreate(APITestCase):  # pylint: disable=too-many-instance-att
         ]
         for value in values:
             with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
+                self.rpc_client.TestExecution.create(value)
+
+    def test_update_with_non_existing_user_id_fields(self):
+        values = [
+            {
+                "run": self.test_run.pk,
+                "build": self.build.pk,
+                "case": self.case.pk,
+                "assignee": 111111,
+                "sortkey": 90,
+                "status": self.status.pk,
+                "case_text_version": 3,
+            },
+            {
+                "run": self.test_run.pk,
+                "build": self.build.pk,
+                "case": self.case.pk,
+                "tested_by": 111111,
+                "sortkey": 90,
+                "status": self.status.pk,
+                "case_text_version": 3,
+            },
+        ]
+        for value in values:
+            with self.assertRaisesRegex(XmlRPCFault, 'Unknown user_id'):
+                self.rpc_client.TestExecution.create(value)
+
+    def test_update_with_non_existing_user_username_fields(self):
+        values = [
+            {
+                "run": self.test_run.pk,
+                "build": self.build.pk,
+                "case": self.case.pk,
+                "assignee": "assignee_username",
+                "sortkey": 90,
+                "status": self.status.pk,
+                "case_text_version": 3,
+            },
+            {
+                "run": self.test_run.pk,
+                "build": self.build.pk,
+                "case": self.case.pk,
+                "tested_by": "tested_by_username",
+                "sortkey": 90,
+                "status": self.status.pk,
+                "case_text_version": 3,
+            },
+        ]
+        for value in values:
+            with self.assertRaisesRegex(XmlRPCFault, 'Unknown user'):
+                self.rpc_client.TestExecution.create(value)
+
+    def test_update_with_non_existing_user_email_fields(self):
+        values = [
+            {
+                "run": self.test_run.pk,
+                "build": self.build.pk,
+                "case": self.case.pk,
+                "assignee": "unknown_assignee@gmail.com",
+                "sortkey": 90,
+                "status": self.status.pk,
+                "case_text_version": 3,
+            },
+            {
+                "run": self.test_run.pk,
+                "build": self.build.pk,
+                "case": self.case.pk,
+                "tested_by": "unknown_tested_by@gmail.com",
+                "sortkey": 90,
+                "status": self.status.pk,
+                "case_text_version": 3,
+            },
+        ]
+        for value in values:
+            with self.assertRaisesRegex(XmlRPCFault, 'Unknown user'):
                 self.rpc_client.TestExecution.create(value)
 
     def test_create_with_no_perm(self):
@@ -392,7 +528,7 @@ class TestExecutionUpdate(APITestCase):
             })
 
     def test_update_with_non_existing_assignee_username(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user:'):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user'):
             self.rpc_client.TestExecution.update(self.case_run_1.pk, {
                 "assignee": 'nonExistentUsername'
             })
