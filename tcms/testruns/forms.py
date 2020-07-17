@@ -66,7 +66,7 @@ class SearchRunForm(forms.Form):
             )
 
 
-class BaseCaseRunForm(forms.Form):
+class BaseTestExecutionForm(forms.Form):
     build = forms.ModelChoiceField(queryset=Build.objects.all())
     status = forms.ModelChoiceField(queryset=TestExecutionStatus.objects.all(), required=False)
     assignee = UserField(required=False)
