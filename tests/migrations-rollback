@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+echo "... BEGIN"
+
+echo "..... Get the order in which migrations will be applied"
+MIGRATIONS_ORDER=`mktemp /tmp/migrations.order.XXXXXX`
+./manage.py migrations_order > $MIGRATIONS_ORDER
+cat $MIGRATIONS_ORDER
+
+echo "..... Apply all migrations"
+./manage.py migrate
+
+
+echo "..... Rollback migrations one by one"
+for LINE in `tac $MIGRATIONS_ORDER`; do
+    APP=`echo $LINE | cut -f1 -d.`
+    MIGRATION=`echo $LINE | cut -f2 -d.`
+
+    echo ">>>> Begin rolling back to $LINE"
+    ./manage.py sqlmigrate --backwards $APP $MIGRATION
+    ./manage.py migrate $APP $MIGRATION
+    echo ">>>> Done rolling back to $LINE"
+done
+
+echo "..... Apply all migrations again"
+./manage.py migrate
+
+echo "... END"
