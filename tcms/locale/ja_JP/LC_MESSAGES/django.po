@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-09 13:34\n"
+"PO-Revision-Date: 2020-07-20 00:41\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -283,7 +283,7 @@ msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">�
 #: tcms/core/middleware.py:50
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "%(unapplied_migration_count)s 件の未適用の移行があります。 <a href=\"%(doc_url)s\">ドキュメント</a> を参照してください。"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -538,7 +538,7 @@ msgstr "状態マトリクスのテスト"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "子のテスト計画を含む"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
@@ -552,15 +552,15 @@ msgstr "いいえ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "順序"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "昇順"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "降順"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
