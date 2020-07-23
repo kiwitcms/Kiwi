@@ -491,25 +491,64 @@ class TestExecutionUpdate(APITestCase):
         self.assertEqual(execution['sortkey'], 90)
 
     def test_update_with_assignee_id(self):
-        self.assertNotEqual(self.case_run_1.assignee, self.user.pk)
+        self.assertNotEqual(self.case_run_1.assignee, self.user)
         execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
             "assignee": self.user.pk
         })
+        self.case_run_1.refresh_from_db()
+
         self.assertEqual(execution['assignee'], self.user.username)
+        self.assertEqual(self.case_run_1.assignee, self.user)
 
     def test_update_with_assignee_email(self):
-        self.assertNotEqual(self.case_run_1.assignee, self.user.email)
+        self.assertNotEqual(self.case_run_1.assignee, self.user)
         execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
             "assignee": self.user.email
         })
+        self.case_run_1.refresh_from_db()
+
         self.assertEqual(execution['assignee'], self.user.username)
+        self.assertEqual(self.case_run_1.assignee, self.user)
 
     def test_update_with_assignee_username(self):
-        self.assertNotEqual(self.case_run_1.assignee, self.user.username)
+        self.assertNotEqual(self.case_run_1.assignee, self.user)
         execution = self.rpc_client.TestExecution.update(self.case_run_1.pk, {
             "assignee": self.user.username
         })
+        self.case_run_1.refresh_from_db()
+
         self.assertEqual(execution['assignee'], self.user.username)
+        self.assertEqual(self.case_run_1.assignee, self.user)
+
+    def test_update_with_tested_by_id(self):
+        self.assertNotEqual(self.case_run_2.tested_by, self.user)
+        execution = self.rpc_client.TestExecution.update(self.case_run_2.pk, {
+            "tested_by": self.user.pk
+        })
+        self.case_run_2.refresh_from_db()
+
+        self.assertEqual(execution['tested_by'], self.user.username)
+        self.assertEqual(self.case_run_2.tested_by, self.user)
+
+    def test_update_with_tested_by_email(self):
+        self.assertNotEqual(self.case_run_2.tested_by, self.user)
+        execution = self.rpc_client.TestExecution.update(self.case_run_2.pk, {
+            "tested_by": self.user.email
+        })
+        self.case_run_2.refresh_from_db()
+
+        self.assertEqual(execution['tested_by'], self.user.username)
+        self.assertEqual(self.case_run_2.tested_by, self.user)
+
+    def test_update_with_tested_by_username(self):
+        self.assertNotEqual(self.case_run_2.tested_by, self.user)
+        execution = self.rpc_client.TestExecution.update(self.case_run_2.pk, {
+            "tested_by": self.user.username
+        })
+        self.case_run_2.refresh_from_db()
+
+        self.assertEqual(execution['tested_by'], self.user.username)
+        self.assertEqual(self.case_run_2.tested_by, self.user)
 
     def test_update_with_non_existing_build(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
@@ -531,6 +570,24 @@ class TestExecutionUpdate(APITestCase):
         with self.assertRaisesRegex(XmlRPCFault, 'Unknown user'):
             self.rpc_client.TestExecution.update(self.case_run_1.pk, {
                 "assignee": 'nonExistentUsername'
+            })
+
+    def test_update_with_non_existing_tested_by_id(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user_id'):
+            self.rpc_client.TestExecution.update(self.case_run_2.pk, {
+                "tested_by": 1111111
+            })
+
+    def test_update_with_non_existing_tested_by_email(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user'):
+            self.rpc_client.TestExecution.update(self.case_run_2.pk, {
+                "tested_by": 'nonExistentEmail@gmail.com'
+            })
+
+    def test_update_with_non_existing_tested_by_username(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user:'):
+            self.rpc_client.TestExecution.update(self.case_run_2.pk, {
+                "tested_by": 'nonExistentUsername'
             })
 
     def test_update_when_case_text_version_is_integer(self):

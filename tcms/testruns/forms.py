@@ -6,8 +6,7 @@ from tcms.core.forms.fields import UserField
 from tcms.core.utils import string_to_list
 from tcms.management.models import Build, Product, Version
 from tcms.testcases.models import TestCase
-
-from .models import TestExecutionStatus, TestRun
+from .models import TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -64,11 +63,3 @@ class SearchRunForm(forms.Form):
             self.fields['build'].queryset = Build.objects.filter(
                 product__pk=product_id
             )
-
-
-class BaseTestExecutionForm(forms.Form):
-    build = forms.ModelChoiceField(queryset=Build.objects.all())
-    status = forms.ModelChoiceField(queryset=TestExecutionStatus.objects.all(), required=False)
-    assignee = UserField(required=False)
-    case_text_version = forms.IntegerField(required=False)
-    sortkey = forms.IntegerField(required=False)

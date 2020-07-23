@@ -5,9 +5,8 @@ from tcms.core.forms.fields import UserField
 from tcms.management.models import Build
 from tcms.rpc.api.forms import UpdateModelFormMixin, DateTimeField
 from tcms.testplans.models import TestPlan
-from tcms.testruns.forms import BaseTestExecutionForm, BaseRunForm
-from tcms.testruns.models import TestExecution
-from tcms.testruns.models import TestExecutionStatus, TestRun
+from tcms.testruns.forms import BaseRunForm
+from tcms.testruns.models import TestExecutionStatus, TestRun, TestExecution
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -59,7 +58,10 @@ class NewTestExecutionForm(forms.ModelForm):
         return data
 
 
-class UpdateExecutionForm(BaseTestExecutionForm):
-    tested_by = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
-    build = forms.ModelChoiceField(queryset=Build.objects.all(), required=False)
-    case_text_version = forms.CharField(required=False)
+class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
+    class Meta:
+        model = TestExecution
+        fields = '__all__'
+
+    assignee = UserField()
+    tested_by = UserField()
