@@ -13,7 +13,6 @@ from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
 from tcms.testruns.models import TestExecution
 
-
 # conditional import b/c this App can be disabled
 if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
     from tcms.issuetracker.kiwitcms import KiwiTCMS
@@ -150,45 +149,19 @@ def update(execution_id, values, **kwargs):
         :raises ValueError: if data validations fail
         :raises PermissionDenied: if missing *testruns.change_testexecution* permission
     """
+    test_execution = TestExecution.objects.get(pk=execution_id)
 
-    execution = TestExecution.objects.get(pk=execution_id)
-    form = UpdateExecutionForm(values)
+    if values.get('case_text_version') == 'latest':
+        values['case_text_version'] = test_execution.case.history.latest().history_id
+
+    form = UpdateExecutionForm(values, instance=test_execution)
 
     if form.is_valid():
-        if form.cleaned_data['build']:
-            execution.build = form.cleaned_data['build']
-
-        if form.cleaned_data['assignee']:
-            execution.assignee = form.cleaned_data['assignee']
-
-        if form.cleaned_data['status']:
-            execution.status = form.cleaned_data['status']
-            request = kwargs.get(REQUEST_KEY)
-            execution.tested_by = request.user
-
-        if form.cleaned_data['sortkey'] is not None:
-            execution.sortkey = form.cleaned_data['sortkey']
-
-        if form.cleaned_data['tested_by']:
-            execution.tested_by = form.cleaned_data['tested_by']
-
-        case_text_version = form.cleaned_data['case_text_version']
-        if case_text_version:
-            _update_case_text_version(execution, case_text_version)
-
-        execution.save()
-
+        test_execution = form.save()
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return execution.serialize()
-
-
-def _update_case_text_version(execution, case_text_version):
-    if case_text_version == 'latest':
-        execution.case_text_version = execution.case.history.latest().history_id
-    else:
-        execution.case_text_version = int(case_text_version)
+    return test_execution.serialize()
 
 
 @permissions_required('linkreference.add_linkreference')
