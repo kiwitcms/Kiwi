@@ -1,6 +1,15 @@
 /* override some default Patternfly styles */
 nav.navbar-default { border-top-color: #3C8D2C; }
 
+.login-pf, .login-pf body {
+    background-attachment: fixed;
+    background-image: url("../images/header-pattern.png");
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
 /* continue with styles for Kiwi TCMS */
 
 /* todo: used in form error messages, can be improved */
