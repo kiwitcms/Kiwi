@@ -207,13 +207,13 @@ Test Case status can also be updated via the Test Plan view:
    |Status changes confirmation.|
 
 
-Changing the order of Test Cases in a Test Plan or Test Run
+Changing the order of Test Cases in a Test Plan
 -----------------------------------------------------------
 
 Kiwi TCMS allows the user to change the order of Test Cases within
-a Test Plan or a Test Run. To change the order of Test Cases:
+a Test Plan. To change the order of Test Cases:
 
-#. Open the Test Plan or Test Run.
+#. Open the Test Plan.
 #. From the right side of the UI, click **Re-order cases**.
 
     |Test Cases Reorder|
