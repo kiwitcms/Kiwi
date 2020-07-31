@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-31 11:13\n"
+"PO-Revision-Date: 2020-07-31 11:44\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2201,19 +2201,19 @@ msgstr "Új Kiwi TCMS bérlő létrehozva"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Újraszinkronizálás"
 
 #: tcms_github_app/utils.py:273
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s lett importálva a GitHub-ról"
 
 #: tcms_github_app/utils.py:277
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s már létezik"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Több GitHub App telepítés észlelve!"
 
