@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-09 13:34\n"
+"PO-Revision-Date: 2020-07-31 11:12\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -2183,5 +2183,23 @@ msgstr ""
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
+msgstr ""
+
+#: tcms_github_app/menu.py:12
+msgid "Resync"
+msgstr ""
+
+#: tcms_github_app/utils.py:273
+#, python-format
+msgid "%s was imported from GitHub"
+msgstr ""
+
+#: tcms_github_app/utils.py:277
+#, python-format
+msgid "%s already exists"
+msgstr ""
+
+#: tcms_github_app/views.py:111
+msgid "Multiple GitHub App installations detected!"
 msgstr ""
 
