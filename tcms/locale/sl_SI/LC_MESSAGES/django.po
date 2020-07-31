@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-31 11:12\n"
+"PO-Revision-Date: 2020-07-31 11:44\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -2205,19 +2205,19 @@ msgstr "Nova instanca Kiwi TCMS je bila ustvarjena"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Ponovna sinhronizacija"
 
 #: tcms_github_app/utils.py:273
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s je bil uvožen z GitHub-a"
 
 #: tcms_github_app/utils.py:277
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s že obstaja"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Zaznanih je več namestitev GitHub aplikacije!"
 
