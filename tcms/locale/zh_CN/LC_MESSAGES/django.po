@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-31 11:12\n"
+"PO-Revision-Date: 2020-07-31 12:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -283,7 +283,7 @@ msgstr "基本URL未配置！参见 <a href=\"%(doc_url)s\">documentation</a>  �
 #: tcms/core/middleware.py:50
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "您有 %(unapplied_migration_count)s 个未应用的迁移(s)。请参阅 <a href=\"%(doc_url)s\">文档</a>"
 
 #: tcms/kiwi_auth/admin.py:29
 msgid "This email address is already in use"
@@ -538,7 +538,7 @@ msgstr "测试状态矩阵表"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "包括子TP"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
@@ -552,15 +552,15 @@ msgstr "不"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "顺序"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "升序排列"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "降序排序"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
@@ -2206,19 +2206,19 @@ msgstr "新的 Kiwi TCMS 租户已创建"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "重新同步"
 
 #: tcms_github_app/utils.py:273
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s 已从 GitHub 导入"
 
 #: tcms_github_app/utils.py:277
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s 已存在"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "检测到多个GitHub 应用已安装！"
 
