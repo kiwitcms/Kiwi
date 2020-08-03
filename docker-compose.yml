@@ -6,10 +6,6 @@ services:
         image: centos/mariadb-103-centos7
         volumes:
             - db_data:/var/lib/mysql/data
-            # workaround for missing charset & collation support
-            # https://github.com/sclorg/mariadb-container/pull/125
-            - ./99-charset.sh:/usr/share/container-scripts/mysql/init/99-charset.sh:Z
-            - ./99-charset.cnf:/usr/share/container-scripts/mysql/cnf/99-charset.cnf:Z
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: kiwi-1s-aw3s0m3
