@@ -14,9 +14,9 @@ def convert_test_case_text(test_case_text):
 **Breakdown:**
 %s
 """ % (test_case_text.setup,
-        test_case_text.action,
-        test_case_text.effect,
-        test_case_text.breakdown)
+       test_case_text.action,
+       test_case_text.effect,
+       test_case_text.breakdown)
 
 
 def forward_copy_data(apps, schema_editor):
@@ -31,8 +31,8 @@ def forward_copy_data(apps, schema_editor):
             test_case.save()
             # b/c the above will not generate history
             history = historical_test_case_model.objects.filter(
-                        case_id=test_case.pk
-                      ).order_by('-history_id').first()
+                case_id=test_case.pk
+                ).order_by('-history_id').first()
             history.case_text = test_case.case_text
             history.save()
 

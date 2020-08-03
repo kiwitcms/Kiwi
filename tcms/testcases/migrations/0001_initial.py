@@ -18,13 +18,13 @@ def forwards_add_initial_data(apps, schema_editor):
     bug_system_model = apps.get_model('testcases', 'BugSystem')
     bug_system_model.objects.bulk_create([
         bug_system_model(name='Bugzilla',
-                  description='1-7 digit, e.g. 1001234',
-                  url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
-                  validate_reg_exp=r'^\d{1,7}$'),
+                         description='1-7 digit, e.g. 1001234',
+                         url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
+                         validate_reg_exp=r'^\d{1,7}$'),
         bug_system_model(name='JIRA',
-                  description='e.g. KIWI-222',
-                  url_reg_exp='https://jira.example.com/browse/%s',
-                  validate_reg_exp=r'^[A-Z0-9]+-\d+$'),
+                         description='e.g. KIWI-222',
+                         url_reg_exp='https://jira.example.com/browse/%s',
+                         validate_reg_exp=r'^[A-Z0-9]+-\d+$'),
     ])
 
     test_case_status_model = apps.get_model('testcases', 'TestCaseStatus')
@@ -209,7 +209,7 @@ class Migration(migrations.Migration):
                 ('history_change_reason', models.TextField(null=True)),
                 ('history_date', models.DateTimeField()),
                 ('history_type', models.CharField(choices=[
-                 ('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
+                    ('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
                 ('author', models.ForeignKey(blank=True, db_constraint=False, null=True,
                                              on_delete=models.deletion.DO_NOTHING,
                                              related_name='+',
@@ -281,9 +281,9 @@ class Migration(migrations.Migration):
                                                             'integrates with the IT system',
                                                   verbose_name='Type')),
                 ('base_url', models.CharField(
-                        max_length=1024, null=True, blank=True,
-                        verbose_name='Base URL',
-                        help_text="""Base URL, for example <strong>https://bugzilla.example.com</strong>!
+                    max_length=1024, null=True, blank=True,
+                    verbose_name='Base URL',
+                    help_text="""Base URL, for example <strong>https://bugzilla.example.com</strong>!
 Leave empty to disable!
 """)),
             ],

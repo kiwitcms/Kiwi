@@ -7,8 +7,7 @@ def forward_copy_data(apps, schema_editor):
 
     for test_case in test_case_model.objects.all():
         history = historical_test_case_model.objects.filter(
-                    case_id=test_case.pk
-                  ).order_by('-history_id').first()
+            case_id=test_case.pk).order_by('-history_id').first()
 
         # In 0006_merge_text_field_into_testcase_model we may have
         # failed to save the text into the history record leaving

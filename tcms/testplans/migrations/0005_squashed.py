@@ -168,7 +168,7 @@ class Migration(migrations.Migration):
                 ('history_change_reason', models.TextField(null=True)),
                 ('history_date', models.DateTimeField()),
                 ('history_type', models.CharField(choices=[
-                 ('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
+                    ('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
                 ('author', models.ForeignKey(blank=True, db_constraint=False, null=True,
                                              on_delete=models.deletion.DO_NOTHING,
                                              related_name='+', to=settings.AUTH_USER_MODEL)),
