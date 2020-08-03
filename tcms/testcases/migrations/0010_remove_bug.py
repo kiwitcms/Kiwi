@@ -2,14 +2,14 @@ from django.db import migrations
 
 
 def forward_copy_data(apps, schema_editor):
-    Bug = apps.get_model('testcases', 'Bug')
-    LinkReference = apps.get_model('linkreference', 'LinkReference')
+    bug_model = apps.get_model('testcases', 'Bug')
+    link_reference_model = apps.get_model('linkreference', 'LinkReference')
 
-    for bug in Bug.objects.all():
+    for bug in bug_model.objects.all():
         if not bug.case_run_id:
             continue
 
-        LinkReference.objects.create(
+        link_reference_model.objects.create(
             execution_id=bug.case_run_id,
             name="%s %s" % (bug.bug_system.name, bug.bug_id),
             url=bug.bug_system.url_reg_exp % bug.bug_id,

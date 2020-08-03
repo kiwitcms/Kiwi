@@ -2,18 +2,18 @@ from django.db import migrations
 
 
 def forwards(apps, schema_editor):
-    BugSystem = apps.get_model('testcases', 'BugSystem')
+    bug_system_model = apps.get_model('testcases', 'BugSystem')
 
-    for record in BugSystem.objects.all():
+    for record in bug_system_model.objects.all():
         if record.tracker_type:
             record.tracker_type = "tcms.issuetracker.types.%s" % record.tracker_type
             record.save()
 
 
 def backwards(apps, schema_editor):
-    BugSystem = apps.get_model('testcases', 'BugSystem')
+    bug_system_model = apps.get_model('testcases', 'BugSystem')
 
-    for record in BugSystem.objects.all():
+    for record in bug_system_model.objects.all():
         if record.tracker_type.startswith('tcms.issuetracker.types.'):
             record.tracker_type = record.tracker_type.replace('tcms.issuetracker.types.', '')
             record.save()
