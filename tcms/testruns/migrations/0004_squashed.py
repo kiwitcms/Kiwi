@@ -12,24 +12,24 @@ if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
 
 
 def forwards_add_initial_data(apps, schema_editor):
-    TestCaseRunStatus = apps.get_model('testruns', 'TestCaseRunStatus')
+    test_case_run_status_model = apps.get_model('testruns', 'TestCaseRunStatus')
 
-    TestCaseRunStatus.objects.bulk_create([
-        TestCaseRunStatus(name='IDLE'),
-        TestCaseRunStatus(name='RUNNING'),
-        TestCaseRunStatus(name='PAUSED'),
-        TestCaseRunStatus(name='PASSED'),
-        TestCaseRunStatus(name='FAILED'),
-        TestCaseRunStatus(name='BLOCKED'),
-        TestCaseRunStatus(name='ERROR'),
-        TestCaseRunStatus(name='WAIVED'),
+    test_case_run_status_model.objects.bulk_create([
+        test_case_run_status_model(name='IDLE'),
+        test_case_run_status_model(name='RUNNING'),
+        test_case_run_status_model(name='PAUSED'),
+        test_case_run_status_model(name='PASSED'),
+        test_case_run_status_model(name='FAILED'),
+        test_case_run_status_model(name='BLOCKED'),
+        test_case_run_status_model(name='ERROR'),
+        test_case_run_status_model(name='WAIVED'),
     ])
 
 
 def reverse_add_initial_data(apps, schema_editor):
-    TestCaseRunStatus = apps.get_model('testruns', 'TestCaseRunStatus')
+    test_case_run_status_model = apps.get_model('testruns', 'TestCaseRunStatus')
     status_names = ['IDLE', 'RUNNING', 'PAUSED', 'PASSED', 'FAILED', 'BLOCKED', 'ERROR', 'WAIVED']
-    TestCaseRunStatus.objects.filter(name__in=status_names).delete()
+    test_case_run_status_model.objects.filter(name__in=status_names).delete()
 
 
 class Migration(migrations.Migration):

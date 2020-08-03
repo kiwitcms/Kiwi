@@ -15,29 +15,29 @@ if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
 
 
 def forwards_add_initial_data(apps, schema_editor):
-    BugSystem = apps.get_model('testcases', 'BugSystem')
-    BugSystem.objects.bulk_create([
-        BugSystem(name='Bugzilla',
+    bug_system_model = apps.get_model('testcases', 'BugSystem')
+    bug_system_model.objects.bulk_create([
+        bug_system_model(name='Bugzilla',
                   description='1-7 digit, e.g. 1001234',
                   url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
                   validate_reg_exp=r'^\d{1,7}$'),
-        BugSystem(name='JIRA',
+        bug_system_model(name='JIRA',
                   description='e.g. KIWI-222',
                   url_reg_exp='https://jira.example.com/browse/%s',
                   validate_reg_exp=r'^[A-Z0-9]+-\d+$'),
     ])
 
-    TestCaseStatus = apps.get_model('testcases', 'TestCaseStatus')
-    TestCaseStatus.objects.bulk_create(
-        [TestCaseStatus(name=name, description='') for name in test_case_statuss])
+    test_case_status_model = apps.get_model('testcases', 'TestCaseStatus')
+    test_case_status_model.objects.bulk_create(
+        [test_case_status_model(name=name, description='') for name in test_case_statuss])
 
 
 def reverse_add_initial_data(apps, schema_editor):
-    BugSystem = apps.get_model('testcases', 'BugSystem')
-    BugSystem.objects.filter(name__in=['Bugzilla', 'JIRA']).delete()
+    bug_system_model = apps.get_model('testcases', 'BugSystem')
+    bug_system_model.objects.filter(name__in=['Bugzilla', 'JIRA']).delete()
 
-    TestCaseStatus = apps.get_model('testcases', 'TestCaseStatus')
-    TestCaseStatus.objects.filter(name__in=test_case_statuss).delete()
+    test_case_status_model = apps.get_model('testcases', 'TestCaseStatus')
+    test_case_status_model.objects.filter(name__in=test_case_statuss).delete()
 
 
 class Migration(migrations.Migration):

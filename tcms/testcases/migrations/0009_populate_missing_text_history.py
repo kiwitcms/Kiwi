@@ -2,11 +2,11 @@ from django.db import migrations
 
 
 def forward_copy_data(apps, schema_editor):
-    TestCase = apps.get_model('testcases', 'TestCase')
-    HistoricalTestCase = apps.get_model('testcases', 'HistoricalTestCase')
+    test_case_model = apps.get_model('testcases', 'TestCase')
+    historical_test_case_model = apps.get_model('testcases', 'HistoricalTestCase')
 
-    for test_case in TestCase.objects.all():
-        history = HistoricalTestCase.objects.filter(
+    for test_case in test_case_model.objects.all():
+        history = historical_test_case_model.objects.filter(
                     case_id=test_case.pk
                   ).order_by('-history_id').first()
 

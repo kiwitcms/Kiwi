@@ -4,51 +4,51 @@ from django.db import migrations, models
 
 
 def insert_default_values(apps, schema_editor):
-    TestExecutionStatus = apps.get_model('testruns', 'TestExecutionStatus')
+    test_execution_status_model = apps.get_model('testruns', 'TestExecutionStatus')
 
-    failed = TestExecutionStatus.objects.get(name='FAILED')
+    failed = test_execution_status_model.objects.get(name='FAILED')
     failed.weight = -30
     failed.color = '#cc0000'
     failed.icon = 'fa fa-times-circle-o'
     failed.save()
 
-    error = TestExecutionStatus.objects.get(name='ERROR')
+    error = test_execution_status_model.objects.get(name='ERROR')
     error.weight = -20
     error.color = '#cc0000'
     error.icon = 'fa fa-minus-circle'
     error.save()
 
-    blocked = TestExecutionStatus.objects.get(name='BLOCKED')
+    blocked = test_execution_status_model.objects.get(name='BLOCKED')
     blocked.weight = -10
     blocked.color = '#cc0000'
     blocked.icon = 'fa fa-stop-circle-o'
     blocked.save()
 
-    idle = TestExecutionStatus.objects.get(name='IDLE')
+    idle = test_execution_status_model.objects.get(name='IDLE')
     idle.weight = 0
     idle.color = '#72767b'
     idle.icon = 'fa fa-question-circle-o'
     idle.save()
 
-    paused = TestExecutionStatus.objects.get(name='PAUSED')
+    paused = test_execution_status_model.objects.get(name='PAUSED')
     paused.weight = 0
     paused.color = '#72767b'
     paused.icon = 'fa fa-pause-circle-o'
     paused.save()
 
-    running = TestExecutionStatus.objects.get(name='RUNNING')
+    running = test_execution_status_model.objects.get(name='RUNNING')
     running.weight = 0
     running.color = '#72767b'
     running.icon = 'fa fa-play-circle-o'
     running.save()
 
-    waived = TestExecutionStatus.objects.get(name='WAIVED')
+    waived = test_execution_status_model.objects.get(name='WAIVED')
     waived.weight = 10
     waived.color = '#92d400'
     waived.icon = 'fa fa-commenting-o'
     waived.save()
 
-    passed = TestExecutionStatus.objects.get(name='PASSED')
+    passed = test_execution_status_model.objects.get(name='PASSED')
     passed.weight = 20
     passed.color = '#92d400'
     passed.icon = 'fa fa-check-circle-o'

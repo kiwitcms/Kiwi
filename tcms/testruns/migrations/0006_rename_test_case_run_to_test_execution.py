@@ -5,9 +5,9 @@ from django.db import migrations
 
 
 def rename_permissions(apps, schema_editor):
-    Permission = apps.get_model('auth', 'Permission')
+    permission_model = apps.get_model('auth', 'Permission')
 
-    for permission in Permission.objects.filter(codename__contains='testcaserun'):
+    for permission in permission_model.objects.filter(codename__contains='testcaserun'):
         new_name = permission.name.replace('test case run', 'test execution')
         new_codename = permission.codename.replace('testcaserun', 'testexecution')
 
