@@ -1,6 +1,6 @@
 # these do not provide wheel packages
 
-bleach-whitelist==0.0.10
+bleach-whitelist==0.0.11
 django-glrm==1.1.3
 django-grappelli==2.14.2
 django-uuslug==1.2.0
