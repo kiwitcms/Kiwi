@@ -283,7 +283,8 @@ class Migration(migrations.Migration):
                 ('base_url', models.CharField(
                     max_length=1024, null=True, blank=True,
                     verbose_name='Base URL',
-                    help_text="""Base URL, for example <strong>https://bugzilla.example.com</strong>!
+                    help_text="""Base URL, for example\
+ <strong>https://bugzilla.example.com</strong>!
 Leave empty to disable!
 """)),
             ],
