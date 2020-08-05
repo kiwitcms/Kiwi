@@ -1943,7 +1943,7 @@ msgstr "crwdns282:0crwdne282:0"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr "crwdns1114:0%dcrwdne1114:0"
+msgstr "crwdns1230:0%scrwdne1230:0"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
