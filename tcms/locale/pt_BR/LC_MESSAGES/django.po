@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-31 11:13\n"
+"PO-Revision-Date: 2020-08-05 12:54\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1996,8 +1996,7 @@ msgstr "ABANDONAR"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr "Para uma configuração adicional, veja\n"
-"<a href=\"%s\">GitHub</a>"
+msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
