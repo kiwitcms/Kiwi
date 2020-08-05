@@ -1996,9 +1996,9 @@ msgstr "放棄"
 #: tcms_github_app/admin.py:120
 #, python-format
 msgid "For additional configuration see\n"
-"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
+"<a href=\"%s\">GitHub</a>"
 msgstr "更多設置請參考\n"
-"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
+"<a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"

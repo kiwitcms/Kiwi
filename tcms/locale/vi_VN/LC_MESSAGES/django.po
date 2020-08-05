@@ -1963,7 +1963,7 @@ msgstr "ĐÃ BỎ"
 #: tcms_github_app/admin.py:120
 #, python-format
 msgid "For additional configuration see\n"
-"<a href=\"https://github.com/settings/installations/%d\">GitHub</a>"
+"<a href=\"%s\">GitHub</a>"
 msgstr ""
 
 #: tcms_github_app/menu.py:11
