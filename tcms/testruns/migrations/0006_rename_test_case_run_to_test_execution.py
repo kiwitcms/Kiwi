@@ -16,6 +16,18 @@ def rename_permissions(apps, schema_editor):
         permission.save()
 
 
+def backward_rename_permissions(apps, schema_editor):
+    permission_model = apps.get_model('auth', 'Permission')
+
+    for permission in permission_model.objects.filter(codename__contains='testexecution'):
+        old_name = permission.name.replace('test execution', 'test case run')
+        old_codename = permission.codename.replace('testexecution', 'testcaserun')
+
+        permission.codename = old_codename
+        permission.name = old_name
+        permission.save()
+
+
 class Migration(migrations.Migration):
     atomic = False
 
@@ -49,5 +61,5 @@ class Migration(migrations.Migration):
                 'verbose_name': 'historical test execution'
             },
         ),
-        migrations.RunPython(rename_permissions),
+        migrations.RunPython(rename_permissions, backward_rename_permissions),
     ]

@@ -55,6 +55,10 @@ def insert_default_values(apps, schema_editor):
     passed.save()
 
 
+def backward_empty_callable(apps, schema_editor):
+    pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -79,5 +83,5 @@ class Migration(migrations.Migration):
             name='weight',
             field=models.IntegerField(default=0),
         ),
-        migrations.RunPython(insert_default_values)
+        migrations.RunPython(insert_default_values, backward_empty_callable)
     ]
