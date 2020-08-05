@@ -16,6 +16,19 @@ def forward_migrate_data(apps, schema_editor):
         tc_history.save()
 
 
+def backward_restore_data(apps, schema_editor):
+    test_case_model = apps.get_model('testcases', 'TestCase')
+    historical_test_case_model = apps.get_model('testcases', 'HistoricalTestCase')
+
+    for test_case in test_case_model.objects.all():
+        test_case.is_automated = int(test_case.is_automated)
+        test_case.save()
+
+    for tc_history in historical_test_case_model.objects.all():
+        tc_history.is_automated = int(tc_history.is_automated)
+        tc_history.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -34,7 +47,7 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=False),
         ),
 
-        migrations.RunPython(forward_migrate_data),
+        migrations.RunPython(forward_migrate_data, backward_restore_data),
 
         migrations.RemoveField(
             model_name='historicaltestcase',

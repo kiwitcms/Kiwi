@@ -37,6 +37,10 @@ def forward_copy_data(apps, schema_editor):
             history.save()
 
 
+def backward_empty_callable(apps, schema_editor):
+    pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -58,7 +62,7 @@ class Migration(migrations.Migration):
         ),
 
         # copy the data from the related model
-        migrations.RunPython(forward_copy_data),
+        migrations.RunPython(forward_copy_data, backward_empty_callable),
 
         # remove the related model
         migrations.RemoveField(
