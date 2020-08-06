@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-08-05 22:12\n"
+"POT-Creation-Date: 2020-08-06 20:03+0000\n"
+"PO-Revision-Date: 2020-08-06 20:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -330,7 +330,7 @@ msgstr "アクティベーションキーの有効期限が切れました。"
 msgid "Your account has been activated successfully"
 msgstr "アカウントがアクティブになりました。"
 
-#: tcms/rpc/api/bug.py:60
+#: tcms/rpc/api/bug.py:63
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "base_urlを設定することで、この課題トラッカーへの報告を有効にします！"
 
@@ -1993,7 +1993,7 @@ msgstr "エラー"
 msgid "WAIVED"
 msgstr "却下"
 
-#: tcms_github_app/admin.py:120
+#: tcms_github_app/admin.py:122
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
@@ -2005,20 +2005,34 @@ msgid "GitHub integration"
 msgstr "GitHub連携"
 
 #: tcms_github_app/menu.py:12
+msgid "Resync"
+msgstr "再同期"
+
+#: tcms_github_app/menu.py:13
 msgid "Settings"
 msgstr "設定"
 
-#: tcms_github_app/middleware.py:41
+#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "設定されていないGitHubアプリ %d"
+
+#: tcms_github_app/utils.py:274
+#, python-format
+msgid "%s was imported from GitHub"
+msgstr "%s は GitHub からインポートされました"
+
+#: tcms_github_app/utils.py:278
+#, python-format
+msgid "%s already exists"
+msgstr "%s は既に存在します"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "GitHubアカウントでログインしていません！ <a href=\"%s\">ここをクリックしてください</a>!"
 
-#: tcms_github_app/views.py:59
+#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "GitHubアカウントにKiwi TCMSがインストールされていません！ <a href=\"%s\">ここをクリック</a>!"
@@ -2031,6 +2045,10 @@ msgstr "複数の GitHub アプリのインストールが検出されました�
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "GitHubアプリを編集 <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:111
+msgid "Multiple GitHub App installations detected!"
+msgstr "複数の GitHub アプリのインストールが検出されました！"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -2082,26 +2100,34 @@ msgstr "定期購入を解約"
 msgid "You don't own any tenants"
 msgstr "テナントを所有していません"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
-msgid "Subscribe via FastSpring"
-msgstr "FastSpring で購読する"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+msgid "Subscribe"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
+msgid "directly with Kiwi TCMS"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
+msgid "via GitHub Marketplace"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
 msgstr "トランザクション履歴"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:154
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 msgid "Sender"
 msgstr "送信元"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:159
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:160
 msgid "Vendor"
 msgstr "ベンダー"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:165
 msgid "Received on"
 msgstr "受信"
 
@@ -2203,22 +2229,4 @@ msgstr "スキーマ名はすでに使用されています"
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
 msgstr "新しい Kiwi TCMS テナントが作成されました"
-
-#: tcms_github_app/menu.py:12
-msgid "Resync"
-msgstr "再同期"
-
-#: tcms_github_app/utils.py:273
-#, python-format
-msgid "%s was imported from GitHub"
-msgstr "%s は GitHub からインポートされました"
-
-#: tcms_github_app/utils.py:277
-#, python-format
-msgid "%s already exists"
-msgstr "%s は既に存在します"
-
-#: tcms_github_app/views.py:111
-msgid "Multiple GitHub App installations detected!"
-msgstr "複数の GitHub アプリのインストールが検出されました！"
 
