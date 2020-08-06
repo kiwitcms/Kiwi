@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-08-06 10:33\n"
+"PO-Revision-Date: 2020-08-06 10:51\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -194,7 +194,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Uživatelské jméno"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
@@ -337,19 +337,19 @@ msgstr ""
 
 #: tcms/settings/common.py:301
 msgid "TESTING"
-msgstr ""
+msgstr "TESTOVÁNÍ"
 
 #: tcms/settings/common.py:302
 msgid "New Test Plan"
-msgstr ""
+msgstr "Nový Test Plan"
 
 #: tcms/settings/common.py:304
 msgid "New Test Case"
-msgstr ""
+msgstr "Nový Test Case"
 
 #: tcms/settings/common.py:306
 msgid "New Bug"
-msgstr ""
+msgstr "Nový bug"
 
 #: tcms/settings/common.py:309
 msgid "SEARCH"
@@ -369,7 +369,7 @@ msgstr ""
 
 #: tcms/settings/common.py:313
 msgid "Search Bugs"
-msgstr ""
+msgstr "Hledat chyby"
 
 #: tcms/settings/common.py:316
 msgid "TELEMETRY"
@@ -402,15 +402,15 @@ msgstr ""
 
 #: tcms/settings/common.py:327
 msgid "Users and groups"
-msgstr ""
+msgstr "Uživatelé a skupiny"
 
 #: tcms/settings/common.py:329
 msgid "Everything else"
-msgstr ""
+msgstr "Všechno ostatní"
 
 #: tcms/settings/common.py:331
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGINY"
 
 #: tcms/settings/common.py:342
 msgid "Forum"
@@ -1270,15 +1270,15 @@ msgstr ""
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Heslo"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Zapomenuté"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "heslo"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1286,7 +1286,7 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Vítejte v Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
