@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-31 11:12\n"
+"POT-Creation-Date: 2020-08-06 20:03+0000\n"
+"PO-Revision-Date: 2020-08-06 20:12\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -330,7 +330,7 @@ msgstr "Kunci aktifasi telah kedaluwarsa"
 msgid "Your account has been activated successfully"
 msgstr "Akun anda telah berhasil diaktifkan"
 
-#: tcms/rpc/api/bug.py:60
+#: tcms/rpc/api/bug.py:63
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Aktifkan pelaporan ke Pelacak Isu ini dengan mengkonfigurasi base_url-nya!"
 
@@ -1990,32 +1990,45 @@ msgstr "GALAT"
 msgid "WAIVED"
 msgstr "DICABUT"
 
-#: tcms_github_app/admin.py:120
+#: tcms_github_app/admin.py:122
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr "Untuk tambahan konfigurasi kunjungi\n"
-"<a href=\"%s\">GitHub</a>"
+msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
 msgstr "Intergrasi Github"
 
 #: tcms_github_app/menu.py:12
+msgid "Resync"
+msgstr ""
+
+#: tcms_github_app/menu.py:13
 msgid "Settings"
 msgstr "Pengaturan"
 
-#: tcms_github_app/middleware.py:41
+#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "GitHub App Tidak Diterkonfigurasi %d"
+
+#: tcms_github_app/utils.py:274
+#, python-format
+msgid "%s was imported from GitHub"
+msgstr ""
+
+#: tcms_github_app/utils.py:278
+#, python-format
+msgid "%s already exists"
+msgstr ""
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "Anda tidak masuk melalui akun Github <a href=\"%s\">Klik di sini</a>!"
 
-#: tcms_github_app/views.py:59
+#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "Anda belum memasang Kiwi TCMS ke dalam akun Github <a href=\"%s\">Klik di sini</a>!"
@@ -2028,6 +2041,10 @@ msgstr "Beberapa instalasi GitHub App terdeteksi! Lihat di bawah ini:"
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "Sunting Github App <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:111
+msgid "Multiple GitHub App installations detected!"
+msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -2079,26 +2096,34 @@ msgstr "Batalkan langganan"
 msgid "You don't own any tenants"
 msgstr "Anda tidak memiliki satupun Tenant"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
-msgid "Subscribe via FastSpring"
-msgstr "Langganan via FastSpring"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+msgid "Subscribe"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
+msgid "directly with Kiwi TCMS"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
+msgid "via GitHub Marketplace"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
 msgstr "Riwayat transaksi"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:154
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 msgid "Sender"
 msgstr "Pengirim"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:159
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:160
 msgid "Vendor"
 msgstr "Vendor"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:165
 msgid "Received on"
 msgstr "Diterima pada"
 
@@ -2198,22 +2223,4 @@ msgstr "Nama skema sudah digunakan"
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
 msgstr "Tenant Kiwi TCMS baru dibuat"
-
-#: tcms_github_app/menu.py:12
-msgid "Resync"
-msgstr ""
-
-#: tcms_github_app/utils.py:273
-#, python-format
-msgid "%s was imported from GitHub"
-msgstr ""
-
-#: tcms_github_app/utils.py:277
-#, python-format
-msgid "%s already exists"
-msgstr ""
-
-#: tcms_github_app/views.py:111
-msgid "Multiple GitHub App installations detected!"
-msgstr ""
 
