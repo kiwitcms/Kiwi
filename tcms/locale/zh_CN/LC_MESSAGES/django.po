@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-09 13:22+0000\n"
-"PO-Revision-Date: 2020-07-31 12:35\n"
+"POT-Creation-Date: 2020-08-06 20:03+0000\n"
+"PO-Revision-Date: 2020-08-06 20:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -330,7 +330,7 @@ msgstr "此激活密钥已过期"
 msgid "Your account has been activated successfully"
 msgstr "您的账户已被成功激活"
 
-#: tcms/rpc/api/bug.py:60
+#: tcms/rpc/api/bug.py:63
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "通过配置 base_url 来使能 [ 报告给这个问题追踪器 ]"
 
@@ -1993,32 +1993,45 @@ msgstr "错误"
 msgid "WAIVED"
 msgstr "已放弃"
 
-#: tcms_github_app/admin.py:120
+#: tcms_github_app/admin.py:122
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr "更多配置见\n"
-"<a href=\"%s\">GitHub</a>"
+msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
 msgstr "GitHub集成"
 
 #: tcms_github_app/menu.py:12
+msgid "Resync"
+msgstr "重新同步"
+
+#: tcms_github_app/menu.py:13
 msgid "Settings"
 msgstr "设置"
 
-#: tcms_github_app/middleware.py:41
+#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "未配置 GitHub 应用程序 %d"
+
+#: tcms_github_app/utils.py:274
+#, python-format
+msgid "%s was imported from GitHub"
+msgstr "%s 已从 GitHub 导入"
+
+#: tcms_github_app/utils.py:278
+#, python-format
+msgid "%s already exists"
+msgstr "%s 已存在"
 
 #: tcms_github_app/views.py:45
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "您尚未通过 GitHub 帐户登录！ <a href=\"%s\">点击这里</a>！"
 
-#: tcms_github_app/views.py:59
+#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "您还没有在 GitHub 账户中安装 Kiwi TCMS ！ <a href=\"%s\">点击这里</a>！"
@@ -2031,6 +2044,10 @@ msgstr "检测到多个GitHub 应用程序安装！请参阅下面："
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "Edit GitHub App <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:111
+msgid "Multiple GitHub App installations detected!"
+msgstr "检测到多个GitHub 应用已安装！"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -2082,26 +2099,34 @@ msgstr "停止订购"
 msgid "You don't own any tenants"
 msgstr "您不拥有任何租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
-msgid "Subscribe via FastSpring"
-msgstr "通过 FastSpring 订阅"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+msgid "Subscribe"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
+msgid "directly with Kiwi TCMS"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
+msgid "via GitHub Marketplace"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
 msgstr "交易记录"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:154
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 msgid "Sender"
 msgstr "发送者"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:159
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:160
 msgid "Vendor"
 msgstr "供应商"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:165
 msgid "Received on"
 msgstr "收到的时间"
 
@@ -2203,22 +2228,4 @@ msgstr "方案名称已被使用"
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
 msgstr "新的 Kiwi TCMS 租户已创建"
-
-#: tcms_github_app/menu.py:12
-msgid "Resync"
-msgstr "重新同步"
-
-#: tcms_github_app/utils.py:273
-#, python-format
-msgid "%s was imported from GitHub"
-msgstr "%s 已从 GitHub 导入"
-
-#: tcms_github_app/utils.py:277
-#, python-format
-msgid "%s already exists"
-msgstr "%s 已存在"
-
-#: tcms_github_app/views.py:111
-msgid "Multiple GitHub App installations detected!"
-msgstr "检测到多个GitHub 应用已安装！"
 
