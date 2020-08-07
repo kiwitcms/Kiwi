@@ -4,7 +4,8 @@ from importlib import import_module
 import pkg_resources
 from attachments import urls as attachments_urls
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import re_path
+from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
@@ -22,69 +23,69 @@ from tcms.testplans import urls as testplans_urls
 from tcms.testruns import urls as testruns_urls
 
 urlpatterns = [
-    url(r'^$', core_views.DashboardView.as_view(), name='core-views-index'),
-    url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
-    url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
-    url(r'^navigation/', core_views.NavigationView.as_view(), name='iframe-navigation'),
-    url(r'^translation-mode/', core_views.TranslationMode.as_view(), name='translation-mode'),
+    re_path(r'^$', core_views.DashboardView.as_view(), name='core-views-index'),
+    re_path(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
+    re_path(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
+    re_path(r'^navigation/', core_views.NavigationView.as_view(), name='iframe-navigation'),
+    re_path(r'^translation-mode/', core_views.TranslationMode.as_view(), name='translation-mode'),
 
-    url(r'^grappelli/', include(grappelli_urls)),
-    url(r'^admin/', admin.site.urls),
+    re_path(r'^grappelli/', include(grappelli_urls)),
+    re_path(r'^admin/', admin.site.urls),
 
-    url(r'^attachments/', include(attachments_urls, namespace='attachments')),
+    re_path(r'^attachments/', include(attachments_urls, namespace='attachments')),
 
     # Ajax call responder
-    url(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
-        name='ajax.update.cases-actor'),
-    url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
+    re_path(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
+            name='ajax.update.cases-actor'),
+    re_path(r'^management/tags/$', ajax.tags, name='ajax-tags'),
 
     # Account information zone, such as login method
-    url(r'^accounts/', include(auth_urls)),
+    re_path(r'^accounts/', include(auth_urls)),
 
     # Testplans zone
-    url(r'^plan/', include(testplans_urls.plan_urls)),
-    url(r'^plans/', include(testplans_urls.plans_urls)),
+    re_path(r'^plan/', include(testplans_urls.plan_urls)),
+    re_path(r'^plans/', include(testplans_urls.plans_urls)),
 
     # Testcases zone
-    url(r'^case/', include(testcases_urls.case_urls)),
-    url(r'^cases/', include(testcases_urls.cases_urls)),
+    re_path(r'^case/', include(testcases_urls.case_urls)),
+    re_path(r'^cases/', include(testcases_urls.cases_urls)),
 
     # Testruns zone
-    url(r'^runs/', include(testruns_urls)),
+    re_path(r'^runs/', include(testruns_urls)),
 
-    url(r'^telemetry/', include(telemetry_urls)),
+    re_path(r'^telemetry/', include(telemetry_urls)),
 
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    re_path(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
 
 # conditional import b/c this App can be disabled
 if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
     from tcms.bugs import urls as bugs_urls
-    urlpatterns.append(url(r'^bugs/', include(bugs_urls)))
+    urlpatterns.append(re_path(r'^bugs/', include(bugs_urls)))
 
 
 for plugin in pkg_resources.iter_entry_points('kiwitcms.plugins'):
     plugin_urls = import_module('%s.urls' % plugin.module_name)
     urlpatterns.append(
-        url(r'^%s/' % plugin.name, include(plugin_urls))
+        re_path(r'^%s/' % plugin.name, include(plugin_urls))
     )
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns.extend([
-        url(r'^500/$', TemplateView.as_view(template_name="500.html")),
-        url(r'^404/$', TemplateView.as_view(template_name="404.html")),
+        re_path(r'^500/$', TemplateView.as_view(template_name="500.html")),
+        re_path(r'^404/$', TemplateView.as_view(template_name="404.html")),
     ])
 
     try:
         import debug_toolbar
 
         urlpatterns += [
-            url(r'^__debug__/', include(debug_toolbar.urls)),
+            re_path(r'^__debug__/', include(debug_toolbar.urls)),
         ]
     # in case we're trying to debug in production
     # and debug_toolbar is not installed
