@@ -40,7 +40,7 @@ __all__ = [
 
 #: Sent when a new user is registered into Kiwi TCMS. This signal receives two
 #: keyword parameters: ``request`` and ``user`` respectively!
-USER_REGISTERED_SIGNAL = Signal(providing_args=['user'])
+USER_REGISTERED_SIGNAL = Signal()
 
 
 def notify_admins(sender, **kwargs):
