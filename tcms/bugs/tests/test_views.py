@@ -10,6 +10,7 @@ if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
 from django.urls import reverse                         # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
 
+from tcms.core.helpers.comments import get_comments                   # noqa: E402
 from tcms.core.templatetags.extra_filters import markdown2html        # noqa: E402
 from tcms.bugs.models import Bug                                      # noqa: E402
 from tcms.bugs.tests.factory import BugFactory                        # noqa: E402
@@ -140,3 +141,71 @@ class TestNewBug(LoggedInTestCase):
         bug_created = Bug.objects.last()
         self.assertEqual(bug_created.summary, self.summary)
         self.assertEqual(bug_created.assignee, comp.initial_owner)
+
+
+class TestEditBug(LoggedInTestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        user_should_have_perm(cls.tester, 'bugs.change_bug')
+        user_should_have_perm(cls.tester, 'bugs.view_bug')
+
+    def setUp(self):
+        super().setUp()
+        self.bug = BugFactory()
+        self.created_at = self.bug.created_at
+        self.url = reverse('bugs-edit', args=(self.bug.pk,))
+
+    def test_edit_bug(self):
+        summary_edit = 'An edited summary'
+        version_edit = VersionFactory()
+        build_edit = BuildFactory()
+
+        edit_data = {
+            'summary': summary_edit,
+            'version': version_edit.pk,
+            'build': build_edit.pk,
+            'reporter': self.bug.reporter.pk,
+            'assignee': self.bug.assignee.pk,
+            'product': self.bug.product.pk
+        }
+
+        response = self.client.post(self.url, edit_data, follow=True)
+
+        self.assertRedirects(
+            response,
+            reverse('bugs-get', args=(self.bug.pk,)),
+            status_code=302,
+            target_status_code=200
+        )
+
+        self.bug.refresh_from_db()
+        self.assertEqual(self.bug.summary, summary_edit)
+        self.assertEqual(self.bug.version, version_edit)
+        self.assertEqual(self.bug.build, build_edit)
+        self.assertEqual(self.bug.created_at, self.created_at)
+
+    def test_record_changes(self):
+        old_summary = self.bug.summary
+        new_summary = 'An edited summary'
+        old_comment_count = get_comments(self.bug).count()
+
+        edit_data = {
+            'summary': new_summary,
+            'version': self.bug.version.pk,
+            'build': self.bug.build.pk,
+            'reporter': self.bug.reporter.pk,
+            'assignee': self.bug.assignee.pk,
+            'product': self.bug.product.pk
+        }
+
+        self.client.post(self.url, edit_data, follow=True)
+        self.bug.refresh_from_db()
+        comments = get_comments(self.bug)
+
+        self.assertEqual(comments.count(), old_comment_count + 1)
+        self.assertEqual(
+            comments.last().comment,
+            "Summary: %s -> %s\n" % (old_summary, new_summary)
+        )
