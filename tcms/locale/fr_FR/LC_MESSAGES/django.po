@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-06 20:03+0000\n"
-"PO-Revision-Date: 2020-08-06 20:13\n"
+"PO-Revision-Date: 2020-08-07 05:32\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2102,15 +2102,15 @@ msgstr "Vous ne possédez aucun locataire"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Subscribe"
-msgstr ""
+msgstr "S'abonner"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
-msgstr ""
+msgstr "directement avec Kiwi TCMS"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
 msgid "via GitHub Marketplace"
-msgstr ""
+msgstr "via GitHub Marketplace"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
