@@ -5,6 +5,7 @@ from django import test
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import Permission
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.models import TestCaseStatus
@@ -93,6 +94,31 @@ class LoggedInTestCase(test.TestCase):
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
             expected)
+
+    def attach_file_to(self, app_model_name, obj, file_obj=None):
+        """
+            Makes an attachment to use for testing.
+        """
+        app_name, model_name = app_model_name.split('.')
+
+        add_url = reverse(
+            "attachments:add",
+            kwargs={
+                "app_label": app_name,
+                "model_name": model_name,
+                "pk": obj.pk,
+            },
+        )
+
+        if not file_obj:
+            file_obj = SimpleUploadedFile(
+                "a-test-filename.txt",
+                b"Hello Test World",
+                content_type="text/plain",
+            )
+        return self.client.post(
+            add_url, {"attachment_file": file_obj}, follow=True
+        )
 
 
 class BasePlanCase(LoggedInTestCase):

@@ -29,6 +29,7 @@ __all__ = [
 
     'notify_admins',
     'pre_save_clean',
+    'handle_attachments_pre_delete',
     'handle_comments_pre_delete',
     'handle_emails_post_case_save',
     'handle_emails_pre_case_delete',
@@ -160,6 +161,22 @@ def handle_emails_post_run_save(sender, *_args, **kwargs):
         subject, context = history_email_for(instance, instance.summary)
 
     mailto(template_name, subject, instance.get_notify_addrs(), context)
+
+
+def handle_attachments_pre_delete(sender, **kwargs):
+    """
+        Delete files attached to object which is about to be
+        deleted b/c django-attachments' object_id is not a FK relationship
+        and we can't rely on cascading delete!
+    """
+    from attachments.models import Attachment
+
+    if kwargs.get('raw', False):
+        return
+
+    instance = kwargs['instance']
+
+    Attachment.objects.attachments_for_object(instance).delete()
 
 
 def handle_comments_pre_delete(sender, **kwargs):
