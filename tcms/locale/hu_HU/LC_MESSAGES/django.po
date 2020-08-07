@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-06 20:03+0000\n"
-"PO-Revision-Date: 2020-08-06 20:13\n"
+"PO-Revision-Date: 2020-08-07 07:32\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2100,15 +2100,15 @@ msgstr "Nem rendelkezel bérlőkkel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Subscribe"
-msgstr ""
+msgstr "Feliratkozás"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
-msgstr ""
+msgstr "közvetlenül a Kiwi TCMS-el"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
 msgid "via GitHub Marketplace"
-msgstr ""
+msgstr "a GitHub Marketplace-en keresztül"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
