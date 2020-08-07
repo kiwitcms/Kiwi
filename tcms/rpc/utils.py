@@ -5,7 +5,7 @@ import time
 
 from attachments import views as attachment_views
 from attachments.models import Attachment
-from django.db.models import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist
 from django.http import HttpRequest
 from django.middleware.csrf import get_token
 from mock import MagicMock
