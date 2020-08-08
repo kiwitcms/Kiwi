@@ -73,7 +73,7 @@ class KiwiHistoricalRecords(HistoricalRecords):
             return
 
         if instance.pk and hasattr(instance, 'history'):
-            instance.previous = instance.__class__.objects.get(pk=instance.pk)
+            instance.previous = instance.__class__.objects.filter(pk=instance.pk).first()
 
     def post_save(self, instance, created, using=None, **kwargs):
         """
@@ -83,7 +83,7 @@ class KiwiHistoricalRecords(HistoricalRecords):
         if kwargs.get('raw', False):
             return
 
-        if hasattr(instance, 'previous'):
+        if hasattr(instance, 'previous') and instance.previous:
             # note: simple_history.utils.update_change_reason() performs an extra
             # DB query so it is better to use the private field instead!
             # In older simple_history version this field wasn't private but was renamed
