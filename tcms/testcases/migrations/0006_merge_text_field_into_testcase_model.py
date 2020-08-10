@@ -1,3 +1,6 @@
+import glob
+import json
+
 from django.db import migrations, models
 
 
@@ -27,6 +30,11 @@ def forward_copy_data(apps, schema_editor):
     for test_case in test_case_model.objects.all():
         latest_text = test_case_text_model.objects.filter(case=test_case.pk).order_by('-pk').first()
         if latest_text:
+            # save TestCaseText objects in case we want to revert this migration
+            file_name = '/tmp/kiwitcms-tescases-migrations-0006-TestCaseText-%d' % latest_text.pk
+            with open(file_name, 'w') as outfile:
+                json.dump(latest_text.serialize(), outfile)
+
             test_case.case_text = convert_test_case_text(latest_text)
             test_case.save()
             # b/c the above will not generate history
@@ -37,8 +45,14 @@ def forward_copy_data(apps, schema_editor):
             history.save()
 
 
-def backward_empty_callable(apps, schema_editor):
-    pass
+def backward_restore_data(apps, schema_editor):
+    test_case_text_model = apps.get_model('testcases', 'TestCaseText')
+
+    for file_name in glob.glob('/tmp/kiwitcms-tescases-migrations-0006-TestCaseText-*'):
+        with open(file_name, 'r') as infile:
+            data = json.loads(infile)
+            test_case_text = test_case_text_model(**data)
+            test_case_text.save()
 
 
 class Migration(migrations.Migration):
@@ -62,7 +76,7 @@ class Migration(migrations.Migration):
         ),
 
         # copy the data from the related model
-        migrations.RunPython(forward_copy_data, backward_empty_callable),
+        migrations.RunPython(forward_copy_data, backward_restore_data),
 
         # remove the related model
         migrations.RemoveField(
