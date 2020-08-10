@@ -19,7 +19,7 @@ class Classification(TCMSActionModel):
 
 
 class Product(TCMSActionModel):
-    name = models.CharField(unique=True, max_length=64)
+    name = models.CharField(unique=True, max_length=255)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
 
