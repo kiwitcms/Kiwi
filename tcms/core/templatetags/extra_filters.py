@@ -3,8 +3,10 @@
 """
 
 import bleach
+from bleach_allowlist import markdown_attrs, print_attrs
+from bleach_allowlist import markdown_tags, print_tags
 import markdown
-from bleach_allowlist import markdown_attrs, markdown_tags, print_tags
+
 from django import template
 from django.contrib.messages import constants as messages
 from django.utils.safestring import mark_safe
@@ -27,13 +29,15 @@ def markdown2html(md_str):
 
     rendered_md = markdown.markdown(md_str,
                                     extensions=[
+                                        'markdown.extensions.codehilite',
                                         'markdown.extensions.fenced_code',
                                         'markdown.extensions.nl2br',
                                         'markdown.extensions.tables',
                                     ])
+
     html = bleach.clean(rendered_md,
                         markdown_tags + print_tags,
-                        markdown_attrs)
+                        {**markdown_attrs, **print_attrs})
     return mark_safe(html)  # nosec:B308:blacklist
 
 
