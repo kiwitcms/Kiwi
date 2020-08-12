@@ -44,6 +44,15 @@ Line 2</p>""")
 "lastName": "Smith",
 "age": 25}</code> </p>""")
 
+    def test_markdown2html_with_codehilite(self):
+        self.assertEqual(markdown2html("""```python
+def hello():
+    pass
+```"""), """<div class="codehilite"><pre><span></span>\
+<code><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div>""")
+
     def test_markdown2html_does_bleach_unsafe_code(self):
         self.assertEqual(markdown2html("### hello <script>alert('gotcha');</script>"),
                          "<h3>hello &lt;script&gt;alert('gotcha');&lt;/script&gt;</h3>")
