@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Next (unreleased)
+-----------------
+
+Bug fixes
+~~~~~~~~~
+
+- Incorrect code formatting for <pre> HTML tags. Closes
+  `Issue #1300 <https://github.com/kiwitcms/Kiwi/issues/1300>`_
+
+
 Kiwi TCMS 8.5 (10 Jul 2020)
 ---------------------------
 
