@@ -18,6 +18,9 @@ class SimpleMDE(forms.Textarea):
 var simplemde = new SimpleMDE({
     element: document.getElementById("%s"),
     autoDownloadFontAwesome: false,
+    renderingConfig: {
+        codeSyntaxHighlighting: true,
+    },
     toolbar: ["bold", "italic", "heading", "|", "quote",
      "unordered-list", "ordered-list", "|", "link", "image",
      "table", "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
@@ -29,8 +32,11 @@ var simplemde = new SimpleMDE({
 
     class Media:
         css = {
-            'all': ['simplemde/dist/simplemde.min.css']
+            'all': ['simplemde/dist/simplemde.min.css',
+                    'prismjs/themes/prism.css']
         }
         js = ['simplemde/dist/simplemde.min.js',
               'marked/marked.min.js',
+              'prismjs/prism.js',
+              'prismjs/plugins/autoloader/prism-autoloader.min.js',
               'js/simplemde_security_override.js']
