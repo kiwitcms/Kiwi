@@ -48,8 +48,7 @@ def backward_restore_data(apps, schema_editor):
 new-LinkReference-IDs'  # nosec:B108:hardcoded_tmp_directory
     with open(link_reference_ids_file_name, 'r') as link_reference_ids_file:
         link_reference_ids = json.load(link_reference_ids_file)
-        link_reference_model.objects.filter(
-            pk__in=link_reference_ids.delete())
+        link_reference_model.objects.filter(pk__in=link_reference_ids).delete()
 
 
 class Migration(migrations.Migration):
