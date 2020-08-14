@@ -132,7 +132,7 @@ def filter(values):  # pylint: disable=redefined-builtin
 
 @permissions_required('testruns.change_testexecution')
 @rpc_method(name='TestExecution.update')
-def update(execution_id, values, **kwargs):
+def update(execution_id, values):
     """
     .. function:: XML-RPC TestExecution.update(execution_id, values)
 
@@ -142,8 +142,6 @@ def update(execution_id, values, **kwargs):
         :type execution_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
-        :param kwargs: Dict providing access to the current request, protocol
-                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :rtype: dict
         :raises ValueError: if data validations fail
