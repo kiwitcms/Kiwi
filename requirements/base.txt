@@ -1,7 +1,7 @@
 -r tarballs.txt
 
 bleach==3.1.5
-bleach-allowlist==1.0.2
+bleach-allowlist==1.0.3
 Django==3.0.9
 django-attachments==1.5
 django-contrib-comments==1.9.2
