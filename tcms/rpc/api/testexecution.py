@@ -7,7 +7,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.rpc.api.forms.testrun import NewTestExecutionForm, UpdateExecutionForm
+from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
@@ -22,7 +22,6 @@ else:
 
 
 __all__ = (
-    'create',
     'update',
     'filter',
 
@@ -75,44 +74,6 @@ def remove_comment(execution_id, comment_id=None):
         to_be_deleted = to_be_deleted.filter(pk=comment_id)
 
     to_be_deleted.delete()
-
-
-# todo: this is very similar, if not duplicate to TestRun.add_case IMO
-# should we schedule it for removal ?!?
-@permissions_required('testruns.add_testexecution')
-@rpc_method(name='TestExecution.create')
-def create(values):
-    """
-    .. function:: XML-RPC TestExecution.create(values)
-
-        Create new TestExecution object and store it in the database.
-
-        :param values: Field values for :class:`tcms.testruns.models.TestExecution`
-        :type values: dict
-        :return: Serialized :class:`tcms.testruns.models.TestExecution` object
-        :rtype: dict
-        :raises TypeError: if argument values is not in dict type
-        :raises ValueError: if argument values is empty
-        :raises ValueError: if data validations fail
-        :raises PermissionDenied: if missing *testruns.add_testexecution* permission
-
-        Minimal parameters::
-
-            >>> values = {
-                'run': 1990,
-                'case': 12345,
-                'build': 123,
-            }
-            >>> TestExecution.create(values)
-    """
-    form = NewTestExecutionForm(values)
-
-    if form.is_valid():
-        test_execution = form.save()
-    else:
-        raise ValueError(form_errors_to_list(form))
-
-    return test_execution.serialize()
 
 
 @rpc_method(name='TestExecution.filter')
