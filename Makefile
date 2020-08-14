@@ -75,6 +75,8 @@ docker-image:
 	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \
 	            -r /venv /host/dist/
 	docker build -t kiwitcms/kiwi:latest .
+	docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/kiwi:latest
+
 
 .PHONY: test-docker-image
 test-docker-image: docker-image
