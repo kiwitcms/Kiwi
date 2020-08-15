@@ -227,7 +227,7 @@ function addLinkToExecution(testExecution) {
         const url = $('.add-hyperlink-form #id_url').val()
         const name = $('.add-hyperlink-form #id_name').val()
         const isDefect = $('.add-hyperlink-form #defectCheckbox').is(':checked')
-        const updateTracker = $('.add-hyperlink-form #autoUpdateCheckbox').is(':checked')
+        const updateTracker = true
 
         jsonRPC('TestExecution.add_link', [{
             execution_id: testExecution.id,
@@ -256,6 +256,13 @@ function addLinkToExecution(testExecution) {
 }
 
 function renderLink(link) {
-    const icon = link.is_defect ? `<span class="fa fa-bug"></span>` : ''
-    return `<li>${icon} <a href="${link.url}">${link.name || link.url}</a></li>`
+    const linkEntryTemplate = $('#link-entry')[0].content
+    const template = $(linkEntryTemplate.cloneNode(true))
+    if (link.is_defect) {
+        template.find('.link-icon').addClass('fa fa-bug')
+    }
+
+    template.find('.link-url').html(link.name || link.url)
+
+    return template
 }
