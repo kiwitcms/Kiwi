@@ -44,9 +44,6 @@ function drawTestCases(testCases, testPlanId, permissions) {
             container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[testCaseId], permissions));
         }
         attachEvents(testCases, testPlanId, permissions);
-        if (permissions['perm-change-testcase']) {
-            drawStatusAndPriority();
-        }
     } else {
         container.append(noCasesTemplate[0].innerHTML);
     }
@@ -194,51 +191,4 @@ function attachEvents(testCases, testPlanId, permissions) {
     function getCaseIdFromEvent(ev) {
         return $(ev.target).closest('.js-testcase-row').data('testcase-pk');
     }
-}
-
-function drawStatusAndPriority() {
-
-    jsonRPC('TestCaseStatus.filter', {}, function(statuses) {
-        const listItemTemplateFragment = $('#menu-status-item')[0].content;
-
-        var listItemsNodes = [];
-
-        for (var i = 0; i < statuses.length; i++) {
-            var liElement = $(listItemTemplateFragment.cloneNode(true)),
-                testCaseStatus = statuses[i];
-
-            liElement.find('a').text(testCaseStatus.name);
-            liElement.find('a')[0].dataset.id = testCaseStatus.id;
-            listItemsNodes.push(liElement);
-        }
-
-        $('.js-test-case-menu-status').each(function() {
-            for (var i = 0; i < listItemsNodes.length; i++) {
-                // clone must be used, because items will be added only to the first TC
-                $(this).append(listItemsNodes[i].clone());
-            }
-        });
-    });
-
-    jsonRPC('Priority.filter', {}, function(priorities) {
-        const listItemTemplateFragment = $('#menu-priority-item')[0].content;
-
-        var listItemsNodes = [];
-
-        for (var i = 0; i < priorities.length; i++) {
-            var liElement = $(listItemTemplateFragment.cloneNode(true)),
-                priority = priorities[i];
-
-            liElement.find('a').text(priority.value);
-            liElement.find('a')[0].dataset.id = priority.id;
-            listItemsNodes.push(liElement);
-        }
-
-        $('.js-test-case-menu-priority').each(function() {
-            for (var i = 0; i < listItemsNodes.length; i++) {
-                // clone must be used, because items will be added only to the first TC
-                $(this).append(listItemsNodes[i].clone());
-            }
-        });
-    });
 }
