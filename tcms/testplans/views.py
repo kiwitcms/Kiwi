@@ -16,6 +16,8 @@ from uuslug import slugify
 from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
+from tcms.testcases.models import TestCaseStatus
+from tcms.management.models import Priority
 
 
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
@@ -152,6 +154,8 @@ class TestPlanGetView(DetailView):  # pylint: disable=missing-permission-require
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['statues'] = TestCaseStatus.objects.all()
+        context['priorities'] = Priority.objects.filter(is_active=True)
         # todo: this can be passed to the new template and consumed
         # in the JavaScript when rendering test cases based on status
         # confirmed_status = TestCaseStatus.get_confirmed()
