@@ -11,22 +11,32 @@ function do_highlight(code, lang) {
 };
 
 
+function parse_and_load_language(textarea) {
+    $(textarea).val().split("\n").forEach(function (line){
+        if (line.indexOf("```") === 0) {
+            lang = line.trim().split("```")[1];
+
+            if (lang) {
+                window.Prism.plugins.autoloader.loadLanguages([lang]);
+            }
+        }
+    });
+}
+
 $(document).ready(function() {
     // marked.options.highlight is a synchronous operation *BUT*
-    // autoloader.loadLanguages is async and we don't have much control over
-    // any of them. So parse all textarea's on the page and try to figure out
-    // what possible languages are there and load their grammars in advance!
+    // autoloader.loadLanguages is async and we don't have much control over them
     if (window.Prism && window.Prism.plugins && window.Prism.plugins.autoloader) {
+        // parse all textarea's on the page and try to figure out
+        // what possible languages are there and load their grammars in advance!
         $.find('textarea').forEach(function (textarea) {
-            textarea.innerHTML.split("\n").forEach(function (line){
-                if (line.indexOf("```") === 0) {
-                    lang = line.trim().split("```")[1];
+            parse_and_load_language(textarea);
+        });
 
-                    if (lang) {
-                        window.Prism.plugins.autoloader.loadLanguages([lang]);
-                    }
-                }
-            });
+        // keep parsing & trying to load languages as the user types b/c
+        // they may be entering new text from scratch
+        $('textarea').keyup(function(event) {
+            parse_and_load_language($(this));
         });
     }
 });
@@ -52,7 +62,7 @@ SimpleMDE.prototype.markdown = function(text) {
 
 
     if(this.options && this.options.renderingConfig && this.options.renderingConfig.codeSyntaxHighlighting === true && window.Prism) {
-        markedOptions.highlight = do_hilight;
+        markedOptions.highlight = do_highlight;
     }
 
     marked.setOptions(markedOptions);
