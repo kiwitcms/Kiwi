@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from attachments.models import Attachment
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from modernrpc.core import REQUEST_KEY, rpc_method
 
+from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.serializer import Serializer
 
@@ -15,6 +18,7 @@ __all__ = (
     'update',
     'filter',
     'join_group',
+    'add_attachment',
 )
 
 
@@ -139,3 +143,43 @@ def join_group(username, groupname):
     user = User.objects.get(username=username)
     group = Group.objects.get(name=groupname)
     user.groups.add(group)
+
+
+@permissions_required('attachments.add_attachment')
+@rpc_method(name='User.add_attachment')
+def add_attachment(filename, b64content, **kwargs):
+    """
+    .. function:: XML-RPC User.add_attachment(filename, b64content)
+
+        Attach a file under the currently logged-in user!
+
+        This method is meant to be used by SimpleMDE combined with post_save
+        processing for various models like TestPlan and TestCase. While files
+        uploaded by this method will be attached and available (if you know their URL),
+        there is no UI to see all of the files uploaded by a certain user or
+        manage them!
+
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
+        :return: Information about the attachment
+        :rtype: dict
+    """
+    user = kwargs.get(REQUEST_KEY).user
+    utils.add_attachment(
+        user.pk,
+        settings.AUTH_USER_MODEL,
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content)
+
+    # take the last attachment for this user and return information about it
+    attachment = Attachment.objects.attachments_for_object(
+        user).order_by('created').last()
+    return {
+        'url': attachment.attachment_file.url,
+        'filename': attachment.filename,
+    }
