@@ -170,13 +170,17 @@ def handle_attachments_pre_delete(sender, **kwargs):
         and we can't rely on cascading delete!
     """
     from attachments.models import Attachment
+    from attachments.views import remove_file_from_disk
 
     if kwargs.get('raw', False):
         return
 
     instance = kwargs['instance']
 
-    Attachment.objects.attachments_for_object(instance).delete()
+    attached_files = Attachment.objects.attachments_for_object(instance)
+    for attachment in attached_files:
+        remove_file_from_disk(attachment.attachment_file)
+    attached_files.delete()
 
 
 def handle_comments_pre_delete(sender, **kwargs):
