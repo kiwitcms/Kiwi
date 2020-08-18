@@ -45,11 +45,17 @@ $(document).ready(function() {
               reader = new FileReader();
 
         reader.onload = function (e){
-            const b64content = e.target.result.split('base64,')[1];
+            const data_uri = e.target.result,
+                  mime_type = data_uri.split(':')[1],
+                  b64content = data_uri.split('base64,')[1];
             jsonRPC('User.add_attachment', [attachment.name, b64content], function (data){
                 const cm = simplemde.codemirror,
-                      text = `![${data.filename}](${data.url})\n`,
                       endPoint = cm.getCursor("end");
+                var text = `[${data.filename}](${data.url})\n`;
+
+                if (mime_type.startsWith('image') === true) {
+                    text = '!' + text;
+                }
 
                 cm.replaceSelection(text);
                 endPoint.ch += text.length;
