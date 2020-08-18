@@ -35,7 +35,14 @@ var simplemde = new SimpleMDE({
             className: "fa fa-picture-o",
             title: "Insert Image",
         },
-        // todo: need a non-image attachment button
+        {
+            name: "file",
+            action: function handler(editor){
+                $('#simplemde-file-upload').click();
+            },
+            className: "fa fa-paperclip",
+            title: "Attach File",
+        },
         "table", "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
 });
 </script>
