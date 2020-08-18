@@ -39,6 +39,26 @@ $(document).ready(function() {
             parse_and_load_language($(this));
         });
     }
+
+    $('#simplemde-file-upload').change(function (){
+        const attachment = this.files[0];
+              reader = new FileReader();
+
+        reader.onload = function (e){
+            const b64content = e.target.result.split('base64,')[1];
+            jsonRPC('User.add_attachment', [attachment.name, b64content], function (data){
+                const cm = simplemde.codemirror,
+                      text = `![${data.filename}](${data.url})\n`,
+                      endPoint = cm.getCursor("end");
+
+                cm.replaceSelection(text);
+                endPoint.ch += text.length;
+                cm.setSelection(endPoint, endPoint);
+                cm.focus();
+            });
+        };
+        reader.readAsDataURL(attachment);
+    });
 });
 
 

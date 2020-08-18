@@ -14,6 +14,7 @@ class SimpleMDE(forms.Textarea):
     def render(self, name, value, attrs=None, renderer=None):
         rendered_string = super().render(name, value, attrs, renderer)
         rendered_string += """
+<input id="simplemde-file-upload" type="file" style="display: none">
 <script>
 var simplemde = new SimpleMDE({
     element: document.getElementById("%s"),
@@ -21,9 +22,21 @@ var simplemde = new SimpleMDE({
     renderingConfig: {
         codeSyntaxHighlighting: true,
     },
-    toolbar: ["bold", "italic", "heading", "|", "quote",
-     "unordered-list", "ordered-list", "|", "link", "image",
-     "table", "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
+    toolbar: [
+        "bold", "italic", "heading", "|", "quote",
+        "unordered-list", "ordered-list", "|", "link",
+        {
+            // todo: standard shortcut is (Ctrl-Alt-I) but I can't find a way
+            // to assign shortcuts to customized buttons
+            name: "image",
+            action: function handler(editor){
+                $('#simplemde-file-upload').click();
+            },
+            className: "fa fa-picture-o",
+            title: "Insert Image",
+        },
+        // todo: need a non-image attachment button
+        "table", "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
 });
 </script>
 """ % attrs['id']
