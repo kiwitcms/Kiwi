@@ -23,8 +23,9 @@ var simplemde = new SimpleMDE({
         codeSyntaxHighlighting: true,
     },
     toolbar: [
-        "bold", "italic", "heading", "|", "quote",
-        "unordered-list", "ordered-list", "|", "link",
+        "heading", "bold", "italic", "strikethrough", "|",
+        "ordered-list", "unordered-list", "table", "horizontal-rule", "code", "quote", "|",
+        "link",
         {
             // todo: standard shortcut is (Ctrl-Alt-I) but I can't find a way
             // to assign shortcuts to customized buttons
@@ -43,7 +44,7 @@ var simplemde = new SimpleMDE({
             className: "fa fa-paperclip",
             title: "Attach File",
         },
-        "table", "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
+        "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
 });
 </script>
 """ % attrs['id']
