@@ -27,5 +27,5 @@ class Migration(migrations.Migration):
 
     operations = [
         # copy the data from the related model
-        migrations.RunPython(forward_copy_data),
+        migrations.RunPython(forward_copy_data, migrations.RunPython.noop)
     ]

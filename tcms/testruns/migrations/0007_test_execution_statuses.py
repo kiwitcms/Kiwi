@@ -79,5 +79,5 @@ class Migration(migrations.Migration):
             name='weight',
             field=models.IntegerField(default=0),
         ),
-        migrations.RunPython(insert_default_values)
+        migrations.RunPython(insert_default_values, migrations.RunPython.noop)
     ]
