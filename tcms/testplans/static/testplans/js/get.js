@@ -32,6 +32,7 @@ $(document).ready(function() {
         treeViewBind();
     });
 
+    toolbarEvents();
 });
 
 function drawTestCases(testCases, testPlanId, permissions) {
@@ -188,7 +189,33 @@ function attachEvents(testCases, testPlanId, permissions) {
         getTestCaseExpandArea(tcRow, testCases[testCaseId]);
     });
 
+
+    let inputs = $('.js-testcase-row').find('input');
+    inputs.click(function(ev) {
+        const checkbox = $('.js-checkbox-toolbar')[0];
+
+        inputs.each(function(index, tc) {
+            checkbox.checked = tc.checked;
+
+            if (!checkbox.checked) {
+                return false;
+            }
+        });
+    });
+
     function getCaseIdFromEvent(ev) {
         return $(ev.target).closest('.js-testcase-row').data('testcase-pk');
     }
+}
+
+function toolbarEvents() {
+
+    $('.js-checkbox-toolbar').click(function(ev){
+        const isChecked = ev.target.checked;
+        const testCaseRows = $('.js-testcase-row').find('input');
+
+        testCaseRows.each(function(index, tc) {
+            tc.checked = isChecked;
+        });
+    });
 }
