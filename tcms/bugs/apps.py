@@ -13,6 +13,7 @@ class AppConfig(DjangoAppConfig):
         from tcms import signals
 
         post_save.connect(signals.handle_emails_post_bug_save, sender=Bug)
+        post_save.connect(signals.handle_attachments_post_save, sender=Bug)
         post_migrate.connect(
             create_permissions,
             dispatch_uid="tcms.bugs.management.create_permissions"

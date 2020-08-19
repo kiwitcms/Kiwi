@@ -30,6 +30,7 @@ __all__ = [
     'notify_admins',
     'pre_save_clean',
     'handle_attachments_pre_delete',
+    'handle_attachments_post_save',
     'handle_comments_pre_delete',
     'handle_emails_post_case_save',
     'handle_emails_pre_case_delete',
@@ -216,3 +217,47 @@ def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
                                                        'summary': instance.summary},
         context={'bug': instance}
     )
+
+
+# todo: remove then https://github.com/bartTC/django-attachments/pull/75
+# is merged & available in a released version
+def _move_attachment_to(attachment, new_object):
+    from django.contrib.contenttypes.models import ContentType
+
+    attachment.object_id = new_object.pk
+    attachment.content_type = ContentType.objects.get_for_model(new_object)
+    attachment.save()
+
+
+def _introspect_request():
+    """
+        Introspect the current thread b/c signals are executed synchronously
+        after .save() and find out the `request` variable.
+    """
+    import inspect
+
+    for frame_record in inspect.stack():
+        if frame_record[3] == 'get_response':
+            return frame_record[0].f_locals['request']
+
+    return None
+
+
+def handle_attachments_post_save(sender, instance, created=False, **kwargs):
+    """
+        SimpleMDE image/file buttons will upload attachments under the currently
+        logged-in user. This signal handler will re-attach these files under the
+        document which is being saved!
+    """
+    from attachments.models import Attachment
+
+    if kwargs.get('raw', False):
+        return
+
+    request = _introspect_request()
+    if not request:
+        return
+
+    for attachment in Attachment.objects.attachments_for_object(request.user):
+        # attachment.attach_to(instance)
+        _move_attachment_to(attachment, instance)

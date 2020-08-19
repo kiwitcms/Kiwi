@@ -1,9 +1,10 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2020 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 
 from django.contrib.auth.decorators import permission_required
+from django.db.models.signals import post_save
 from django.http import HttpResponseRedirect
 from django.test import modify_settings
 from django.urls import reverse
@@ -191,6 +192,7 @@ class AddComment(View):
             bug = form.cleaned_data['bug']
             if form.cleaned_data['text']:
                 add_comment([bug], form.cleaned_data['text'], request.user)
+                post_save.send(instance=bug, sender=bug.__class__)
 
             if request_action == 'close':
                 bug.status = False
