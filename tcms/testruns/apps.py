@@ -11,8 +11,10 @@ class AppConfig(DjangoAppConfig):
         from tcms import signals
 
         post_save.connect(signals.handle_emails_post_run_save, sender=TestRun)
+        post_save.connect(signals.handle_attachments_post_save, sender=TestRun)
         pre_save.connect(signals.pre_save_clean, sender=TestRun)
         pre_delete.connect(signals.handle_attachments_pre_delete, TestRun)
 
+        post_save.connect(signals.handle_attachments_post_save, sender=TestExecution)
         pre_delete.connect(signals.handle_attachments_pre_delete, TestExecution)
         pre_delete.connect(signals.handle_comments_pre_delete, TestExecution)
