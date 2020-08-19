@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
+from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
+from attachments.models import Attachment
 from django.contrib.auth.models import Permission
+from django.test import override_settings
 from tcms_api import xmlrpc
 
-from tcms.rpc.tests.utils import APITestCase
+from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.tests import remove_perm_from_user
@@ -22,7 +25,7 @@ class TestFilter(APITestCase):
         self.product = ProductFactory()
         self.version = VersionFactory(product=self.product)
         self.tester = UserFactory()
-        self.plan_type = PlanTypeFactory(name='manual smoking')
+        self.plan_type = PlanTypeFactory()
         self.plan_1 = TestPlanFactory(product_version=self.version,
                                       product=self.product,
                                       author=self.tester,
@@ -129,31 +132,42 @@ class TestRemoveTag(APITestCase):
         self.assertFalse(tag_exists)
 
 
-class TestUpdate(APITestCase):  # pylint: disable=too-many-instance-attributes
-    """ Tests the XMLRPM testplan.update method """
+@override_settings(LANGUAGE_CODE='en')
+class TestUpdate(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+    def test_not_exist_test_plan_id(self):
+        err_msg = 'Internal error: TestPlan matching query does not exist.'
+        with self.assertRaisesRegex(XmlRPCFault, err_msg):
+            self.rpc_client.TestPlan.update(-1, {'text': 'This has been updated'})
+
+    def test_invalid_field_value(self):
+        err_msg = 'Select a valid choice. That choice is not one of the available choices.'
+        with self.assertRaisesRegex(XmlRPCFault, err_msg):
+            self.rpc_client.TestPlan.update(self.plan.pk, {'type': -1})
+
+
+class TestUpdatePermission(APIPermissionsTestCase):
+    permission_label = 'testplans.change_testplan'
 
     def _fixture_setup(self):
-        super(TestUpdate, self)._fixture_setup()
+        super()._fixture_setup()
 
-        self.product = ProductFactory()
-        self.version = VersionFactory(product=self.product)
-        self.tester = UserFactory()
-        self.plan_type = PlanTypeFactory(name='manual smoking')
-        self.plan_1 = TestPlanFactory(product_version=self.version,
-                                      product=self.product,
-                                      author=self.tester,
-                                      type=self.plan_type)
-        self.plan_2 = TestPlanFactory(product_version=self.version,
-                                      product=self.product,
-                                      author=self.tester,
-                                      type=self.plan_type)
+        self.plan = TestPlanFactory()
 
-    def test_update_text(self):
-        self.rpc_client.TestPlan.update(self.plan_1.pk, {'text': 'This has been updated'})
+    def verify_api_with_permission(self):
+        self.rpc_client.TestPlan.update(self.plan.pk, {'text': 'This has been updated'})
         # reload from db
-        self.plan_1.refresh_from_db()
+        self.plan.refresh_from_db()
         # assert
-        self.assertEqual('This has been updated', self.plan_1.text)
+        self.assertEqual('This has been updated', self.plan.text)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestPlan.update(self.plan.pk, {'text': 'This has been updated'})
 
 
 class TestRemoveCase(APITestCase):
@@ -226,3 +240,141 @@ class TestAddCase(APITestCase):
                         case=case_id
                     ).count()
                 )
+
+
+@override_settings(LANGUAGE_CODE='en')
+class TestCreate(APITestCase):
+    def test_create_plan_with_empty_required_field(self):
+        product = ProductFactory()
+        version = VersionFactory(product=product)
+        plan_type = PlanTypeFactory()
+        with self.assertRaisesRegex(XmlRPCFault, 'This field is required.'):
+            self.rpc_client.TestPlan.create({
+                'product': product.pk,
+                'product_version': version.pk,
+                'name': '',
+                'type': plan_type.pk,
+                'text': 'Testing TCMS',
+                'parent': None,
+            })
+
+    def test_create_plan_with_different_user(self):
+        product = ProductFactory()
+        version = VersionFactory(product=product)
+        plan_type = PlanTypeFactory()
+        user = UserFactory()
+
+        params = {
+            'product': product.pk,
+            'product_version': version.pk,
+            'name': 'test plan',
+            'type': plan_type.pk,
+            'text': 'Testing TCMS',
+            'parent': None,
+            'author': user.pk
+        }
+        result = self.rpc_client.TestPlan.create(params)
+        self.assertEqual(params['product'], result['product_id'])
+        self.assertEqual(params['product_version'], result['product_version_id'])
+        self.assertEqual(params['name'], result['name'])
+        self.assertEqual(params['type'], result['type_id'])
+        self.assertEqual(params['text'], result['text'])
+        self.assertEqual(params['parent'], result['parent'])
+        self.assertEqual(user.username, result['author'])
+        self.assertEqual(user.pk, result['author_id'])
+
+
+class TestCreatePermission(APIPermissionsTestCase):
+    permission_label = 'testplans.add_testplan'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.product = ProductFactory()
+        self.version = VersionFactory(product=self.product)
+        self.plan_type = PlanTypeFactory()
+        self.params = {
+            'product': self.product.pk,
+            'product_version': self.version.pk,
+            'name': 'Testplan foobar',
+            'type': self.plan_type.pk,
+            'text': 'Testing TCMS',
+            'parent': None,
+        }
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestPlan.create(self.params)
+        self.assertEqual(self.params['product'], result['product_id'])
+        self.assertEqual(self.params['product_version'], result['product_version_id'])
+        self.assertEqual(self.params['name'], result['name'])
+        self.assertEqual(self.params['type'], result['type_id'])
+        self.assertEqual(self.params['text'], result['text'])
+        self.assertEqual(self.params['parent'], result['parent'])
+        self.assertEqual(self.tester.username, result['author'])
+
+        # verify object from DB
+        testplan = TestPlan.objects.get(name=self.params['name'])
+        self.assertEqual(testplan.serialize(), result)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestPlan.create(self.params)
+
+
+@override_settings(LANGUAGE_CODE='en')
+class TestListAttachments(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+    def test_list_attachments(self):
+        file_name = 'attachment.txt'
+        self.rpc_client.TestPlan.add_attachment(self.plan.pk, file_name, 'a2l3aXRjbXM=')
+        attachments = self.rpc_client.TestPlan.list_attachments(self.plan.pk)
+        self.assertEqual(1, len(attachments))
+
+    def test_list_attachments_with_wrong_plan_id(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'TestPlan matching query does not exist'):
+            self.rpc_client.TestPlan.list_attachments(-1)
+
+
+class TestListAttachmentsPermissions(APIPermissionsTestCase):
+    permission_label = 'attachments.view_attachment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+    def verify_api_with_permission(self):
+        attachments = self.rpc_client.TestPlan.list_attachments(self.plan.pk)
+        self.assertEqual(0, len(attachments))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestPlan.list_attachments(self.plan.pk)
+
+
+class TestAddAttachmentPermissions(APIPermissionsTestCase):
+    permission_label = 'attachments.add_attachment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+    def verify_api_with_permission(self):
+        file_name = 'attachment.txt'
+        self.rpc_client.TestPlan.add_attachment(self.plan.pk, file_name, 'a2l3aXRjbXM=')
+        attachments = Attachment.objects.attachments_for_object(self.plan)
+        self.assertEqual(1, len(attachments))
+
+        attachment = attachments[0]
+        file_url = attachment.attachment_file.url
+        self.assertTrue(file_url.startswith('/uploads/attachments/testplans_testplan/'))
+        self.assertTrue(file_url.endswith(file_name))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestPlan.add_attachment(self.plan.pk, 'attachment.txt', 'a2l3aXRjbXM=')
