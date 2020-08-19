@@ -13,6 +13,7 @@ class AppConfig(DjangoAppConfig):
 
         pre_save.connect(signals.pre_save_clean, TestCase)
         post_save.connect(signals.handle_emails_post_case_save, TestCase)
+        post_save.connect(signals.handle_attachments_post_save, sender=TestCase)
         pre_delete.connect(signals.handle_emails_pre_case_delete, TestCase)
-        pre_delete.connect(signals.handle_attachments_pre_delete, TestCase)
+        pre_delete.connect(signals.handle_attachments_pre_delete, sender=TestCase)
         pre_delete.connect(signals.handle_comments_pre_delete, TestCase)
