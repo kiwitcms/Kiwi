@@ -29,7 +29,8 @@ class TestUserFilter(APITestCase):
     """Test User.filter"""
 
     def _fixture_setup(self):
-        super(TestUserFilter, self)._fixture_setup()
+        super()._fixture_setup()
+        user_should_have_perm(self.api_user, 'auth.view_user')
 
         self.group_tester = GroupFactory()
         self.group_reviewer = GroupFactory()
