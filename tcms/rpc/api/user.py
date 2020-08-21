@@ -29,6 +29,7 @@ def _get_user_dict(user):
     return user_dict
 
 
+@permissions_required('auth.view_user')
 @rpc_method(name='User.filter')
 def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     """
@@ -61,7 +62,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 
 
 @rpc_method(name='User.update')
-def update(user_id, values, **kwargs):
+def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: XML-RPC User.update(user_id, values)
 

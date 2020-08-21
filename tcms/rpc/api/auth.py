@@ -11,7 +11,7 @@ __all__ = (
 
 
 @rpc_method(name='Auth.login')
-def login(username, password, **kwargs):
+def login(username, password, **kwargs):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: XML-RPC Auth.login(username, password)
 
@@ -42,7 +42,7 @@ def login(username, password, **kwargs):
 
 
 @rpc_method(name='Auth.logout')
-def logout(**kwargs):
+def logout(**kwargs):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: XML-RPC Auth.logout()
 

@@ -5,8 +5,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.testruns.models import TestExecutionStatus
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('testruns.view_testexecutionstatus')
 @rpc_method(name='TestExecutionStatus.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

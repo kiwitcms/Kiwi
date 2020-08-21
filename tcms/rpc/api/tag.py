@@ -3,8 +3,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.management.models import Tag
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('management.view_tag')
 @rpc_method(name='Tag.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

@@ -62,6 +62,7 @@ def remove_case(run_id, case_id):
     TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
 
+@permissions_required('testruns.view_testrun')
 @rpc_method(name='TestRun.get_cases')
 def get_cases(run_id):
     """
@@ -183,6 +184,7 @@ def create(values):
     return test_run.serialize()
 
 
+@permissions_required('testruns.view_testrun')
 @rpc_method(name='TestRun.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """

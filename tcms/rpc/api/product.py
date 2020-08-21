@@ -28,6 +28,7 @@ def create(values):
     return Product.objects.create(**values).serialize()
 
 
+@permissions_required('management.view_product')
 @rpc_method(name='Product.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

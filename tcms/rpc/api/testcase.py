@@ -62,6 +62,7 @@ def add_component(case_id, component):
     return case.serialize()
 
 
+@permissions_required('testcases.view_testcase')
 @rpc_method(name='TestCase.get_components')
 def get_components(case_id):
     """
@@ -177,6 +178,7 @@ def remove_notification_cc(case_id, cc_list):
     TestCase.objects.get(pk=case_id).emailing.remove_cc(cc_list)
 
 
+@permissions_required('testcases.view_testcase')
 @rpc_method(name='TestCase.get_notification_cc')
 def get_notification_cc(case_id):
     """
@@ -279,6 +281,7 @@ def create(values, **kwargs):
     return test_case.serialize()
 
 
+@permissions_required('testcases.view_testcase')
 @rpc_method(name='TestCase.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """

@@ -17,6 +17,7 @@ __all__ = (
 )
 
 
+@permissions_required('management.view_component')
 @rpc_method(name='Component.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

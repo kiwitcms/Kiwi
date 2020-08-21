@@ -3,8 +3,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.testplans.models import PlanType
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('testplans.view_plantype')
 @rpc_method(name='PlanType.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

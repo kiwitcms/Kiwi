@@ -5,8 +5,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.management.models import Classification
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('management.view_classification')
 @rpc_method(name='Classification.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

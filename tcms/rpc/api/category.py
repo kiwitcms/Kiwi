@@ -3,8 +3,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.testcases.models import Category
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('testcases.view_category')
 @rpc_method(name='Category.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

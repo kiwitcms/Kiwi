@@ -76,6 +76,7 @@ def remove_comment(execution_id, comment_id=None):
     to_be_deleted.delete()
 
 
+@permissions_required('testruns.view_testexecution')
 @rpc_method(name='TestExecution.filter')
 def filter(values):  # pylint: disable=redefined-builtin
     """
@@ -177,6 +178,7 @@ def remove_link(query):
     LinkReference.objects.filter(**query).delete()
 
 
+@permissions_required('linkreference.view_linkreference')
 @rpc_method(name='TestExecution.get_links')
 def get_links(query):
     """

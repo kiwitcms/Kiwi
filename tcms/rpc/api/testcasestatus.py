@@ -3,8 +3,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.testcases.models import TestCaseStatus
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('testcases.view_testcasestatus')
 @rpc_method(name='TestCaseStatus.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
