@@ -1,11 +1,13 @@
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
+from modernrpc.auth.basic import http_basic_auth_login_required
 from modernrpc.core import rpc_method
 
 from tcms.testcases.models import TestCase, TestCaseStatus
 from tcms.testruns.models import TestExecution, TestExecutionStatus
 
 
+@http_basic_auth_login_required
 @rpc_method(name='Testing.breakdown')
 def breakdown(query=None):
     """
@@ -65,6 +67,7 @@ def _map_query_set(query_set, field):
     return {entry[field]: entry['count'] for entry in query_set}
 
 
+@http_basic_auth_login_required
 @rpc_method(name='Testing.status_matrix')
 def status_matrix(query=None):
     """
@@ -118,6 +121,7 @@ def status_matrix(query=None):
     }
 
 
+@http_basic_auth_login_required
 @rpc_method(name='Testing.execution_trends')
 def execution_trends(query=None):
 
@@ -189,6 +193,7 @@ def _append_status_counts_to_result(count, result):
     result.get(str(_('TOTAL'))).append(total)
 
 
+@http_basic_auth_login_required
 @rpc_method(name='Testing.test_case_health')
 def test_case_health(query=None):
 

@@ -14,6 +14,7 @@ __all__ = (
 )
 
 
+@permissions_required('management.view_version')
 @rpc_method(name='Version.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

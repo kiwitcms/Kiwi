@@ -2,9 +2,11 @@
 from django.core.cache import cache
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
+from modernrpc.auth.basic import http_basic_auth_login_required
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc.api.utils import tracker_from_url
+from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 
@@ -14,6 +16,7 @@ __all__ = (
 )
 
 
+@http_basic_auth_login_required
 @rpc_method(name='Bug.details')
 def details(url, **kwargs):
     """
@@ -40,6 +43,8 @@ def details(url, **kwargs):
     return result
 
 
+@permissions_required(('testruns.view_testexecution',
+                       'linkreference.add_linkreference'))
 @rpc_method(name='Bug.report')
 def report(execution_id, tracker_id, **kwargs):
     """

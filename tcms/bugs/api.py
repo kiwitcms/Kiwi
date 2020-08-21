@@ -73,6 +73,7 @@ def remove(query):
     Bug.objects.filter(**query).delete()
 
 
+@permissions_required('bugs.view_bug')
 @rpc_method(name='Bug.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

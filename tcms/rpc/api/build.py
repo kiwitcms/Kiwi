@@ -13,6 +13,7 @@ __all__ = (
 )
 
 
+@permissions_required('management.view_build')
 @rpc_method(name='Build.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """

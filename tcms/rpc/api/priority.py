@@ -3,8 +3,10 @@
 from modernrpc.core import rpc_method
 
 from tcms.management.models import Priority
+from tcms.rpc.decorators import permissions_required
 
 
+@permissions_required('management.view_priority')
 @rpc_method(name='Priority.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """

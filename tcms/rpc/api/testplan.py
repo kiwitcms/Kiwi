@@ -71,6 +71,7 @@ def create(values, **kwargs):
     return test_plan.serialize()
 
 
+@permissions_required('testplans.view_testplan')
 @rpc_method(name='TestPlan.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
