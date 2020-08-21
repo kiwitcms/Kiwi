@@ -302,7 +302,9 @@
           </div>
           <div class="form-group">
             <label class="col-md-3 col-lg-3 col-sm-3 control-label" for="defectCheckbox">{% trans "Is a defect" %}</label>
-            <input class="col-md-9 col-lg-9 col-sm-9 bootstrap-switch" type="checkbox" id="defectCheckbox" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}"/>
+            <div class="col-md-3 col-lg-3">
+                <input class="bootstrap-switch" type="checkbox" id="defectCheckbox" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}"/>
+            </div>
           </div>
         </div>
         <div class="modal-footer">

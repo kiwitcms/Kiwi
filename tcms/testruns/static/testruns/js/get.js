@@ -135,7 +135,7 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
                 const bugCount = links.filter(link => link.is_defect).length;
                 listGroupItem.find('.test-execution-bugs-count').html(bugCount)
 
-                listGroupItem.find('.add-link-button').on('click', () => addLinkToExecution(testExecution))
+                listGroupItem.find('.add-link-button').click(() => addLinkToExecution(testExecution))
 
                 const ul = listGroupItem.find('.test-execution-hyperlinks')
                 links.forEach(link => ul.append(renderLink(link)))
