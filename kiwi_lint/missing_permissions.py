@@ -78,3 +78,48 @@ class MissingPermissionsChecker(checkers.BaseChecker):
 
         if not found_permissions_required:
             self.add_message('missing-permission-required', node=node)
+
+
+class MissingAPIPermissionsChecker(checkers.BaseChecker):
+    """
+        Will inspect API functions for the presence of permissions decorator!
+    """
+    __implements__ = (interfaces.IAstroidChecker,)
+
+    name = 'mising-api-permissions-checker'
+
+    msgs = {'R4512': ("API function is missing @permissions_required decorator!",
+                      'missing-api-permissions-required',
+                      "All API functions must require permissions!")}
+
+    def visit_functiondef(self, node):
+        # API functions always have @rpc_method decorator
+        if not node.decorators:
+            return
+
+        is_api_function = False
+        for decorator in node.decorators.nodes:
+            if isinstance(decorator, astroid.Call) and \
+                    isinstance(decorator.func, astroid.Name) and \
+                    decorator.func.name == 'rpc_method':
+                is_api_function = True
+                break
+
+        if not is_api_function:
+            return
+
+        found_permissions_required = False
+        for decorator in node.decorators.nodes:
+            if isinstance(decorator, astroid.Call) and \
+                    isinstance(decorator.func, astroid.Name) and \
+                    decorator.func.name == 'permissions_required':
+                found_permissions_required = True
+                break
+
+            if isinstance(decorator, astroid.Name) and \
+                    decorator.name == 'http_basic_auth_login_required':
+                found_permissions_required = True
+                break
+
+        if not found_permissions_required:
+            self.add_message('missing-api-permissions-required', node=node)
