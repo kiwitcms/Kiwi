@@ -155,7 +155,8 @@ def get_case_status(template_type):
 
 
 @require_POST
-def build_cases_search_form(request, populate=None, plan=None):
+def build_cases_search_form(request,  # pylint: disable=missing-permission-required
+                            populate=None, plan=None):
     """Build search form preparing for quering TestCases"""
     # Initial the form and template
     action = request.POST.get('a')
@@ -305,7 +306,8 @@ def get_selected_testcases(request):  # pylint: disable=missing-permission-requi
     return TestCase.objects.filter(pk__in=method.getlist('case'))
 
 
-def load_more_cases(request,  # pylint: disable=missing-permission-required
+@permission_required('testcases.view_testcase')
+def load_more_cases(request,
                     template_name='plan/cases_rows.html'):
     """Loading more TestCases"""
     plan = plan_from_request_or_none(request)
@@ -348,7 +350,8 @@ def get_tags_from_cases(case_ids, plan=None):
 
 
 @require_POST
-def list_all(request):  # pylint: disable=missing-permission-required
+@permission_required('testcases.view_testcase')
+def list_all(request):
     """
     Generate the TestCase list for the UI tabs in TestPlan page view.
     """
@@ -410,7 +413,8 @@ def list_all(request):  # pylint: disable=missing-permission-required
     return render(request, 'plan/get_cases.html', context_data)
 
 
-class TestCaseSearchView(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testcases.view_testcase'), name='dispatch')
+class TestCaseSearchView(TemplateView):
     """
         Shows the search form which uses JSON RPC to fetch the results
     """
@@ -429,7 +433,8 @@ class TestCaseSearchView(TemplateView):  # pylint: disable=missing-permission-re
         }
 
 
-class SimpleTestCaseView(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testcases.view_testcase'), name='dispatch')
+class SimpleTestCaseView(TemplateView):
     """Simple read-only TestCase View used in TestPlan page"""
 
     template_name = 'case/get_details.html'
@@ -456,7 +461,8 @@ class SimpleTestCaseView(TemplateView):  # pylint: disable=missing-permission-re
         return data
 
 
-class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testruns.view_testexecution'), name='dispatch')
+class TestCaseExecutionDetailPanelView(TemplateView):
     """Display execution detail in run page"""
 
     template_name = 'case/get_details_case_run.html'
@@ -500,7 +506,8 @@ class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing
         return data
 
 
-class TestCaseGetView(DetailView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testcases.view_testcase'), name='dispatch')
+class TestCaseGetView(DetailView):
 
     model = TestCase
     template_name = 'testcases/get.html'
@@ -543,7 +550,8 @@ class TestCaseGetView(DetailView):  # pylint: disable=missing-permission-require
 
 
 @require_POST
-def printable(request,  # pylint: disable=missing-permission-required
+@permission_required('testcases.view_testcase')
+def printable(request,
               template_name='case/printable.html'):
     """
         Create the printable copy for plan/case.

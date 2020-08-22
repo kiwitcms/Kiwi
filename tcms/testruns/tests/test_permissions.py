@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms import tests
+from tcms.tests import user_should_have_perm
 from tcms.tests import PermissionsTestCase, factories
 from tcms.testruns.models import TestRun
 from tcms.testcases.models import TestCaseStatus
@@ -48,6 +49,8 @@ class EditTestRunViewTestCase(PermissionsTestCase):
         self.assertContains(response, 'testruns/js/mutable.js')
 
     def verify_post_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.view_testrun')
+
         response = self.client.post(self.url, self.post_data)
         self.test_run.refresh_from_db()
 
@@ -105,6 +108,8 @@ class CreateTestRunViewTestCase(tests.PermissionsTestCase):
         cls.post_data['case'] = [cls.case_1.pk, cls.case_2.pk]
 
     def verify_post_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.view_testrun')
+
         response = self.client.post(self.url, self.post_data)
         last_run = TestRun.objects.last()
 
@@ -145,6 +150,8 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         cls.add_comment_html = \
             '<a href="#" class="addBlue9 js-show-commentdialog">{0}</a>' \
             .format(_('Add'))
+
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
     def assert_on_testrun_page(self, response):
         self.assertContains(response, self.test_run.summary)

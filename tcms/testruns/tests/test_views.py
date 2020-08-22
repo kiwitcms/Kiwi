@@ -85,9 +85,12 @@ class TestCreateNewRun(BasePlanCase):
         super().setUpTestData()
 
         user_should_have_perm(cls.tester, 'testruns.add_testrun')
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
         cls.url = reverse('testruns-new')
 
     def test_refuse_if_missing_plan_pk(self):
+        user_should_have_perm(self.tester, 'testplans.view_testplan')
+
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
@@ -149,6 +152,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
         cls.permission = 'testruns.add_testrun'
         user_should_have_perm(cls.tester, cls.permission)
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
     def test_refuse_without_selecting_case_runs(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -253,6 +257,7 @@ class TestSearchRuns(BaseCaseRun):
         super(TestSearchRuns, cls).setUpTestData()
 
         cls.search_runs_url = reverse('testruns-search')
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
     def test_search_page_is_shown(self):
         response = self.client.get(self.search_runs_url)
@@ -443,6 +448,7 @@ class TestRunCasesMenu(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
 
@@ -524,6 +530,7 @@ class TestRunStatusMenu(BaseCaseRun):
     def setUpTestData(cls):
         super().setUpTestData()
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
         cls.status_menu_html = []
 
         for execution_status in TestExecutionStatus.objects.all():
@@ -555,6 +562,7 @@ class TestChangeTestRunStatus(BaseCaseRun):
     def setUpTestData(cls):
         super().setUpTestData()
         cls.url = reverse('testruns-change_status', args=[cls.test_run.pk])
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
     def test_change_status_to_finished(self):
         user_should_have_perm(self.tester, 'testruns.change_testrun')

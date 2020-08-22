@@ -94,7 +94,8 @@ class Edit(UpdateView):
         return self.render_to_response(context_data)
 
 
-class SearchTestPlanView(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
+class SearchTestPlanView(TemplateView):
 
     template_name = 'testplans/search.html'
 
@@ -194,7 +195,8 @@ def calculate_stats_for_testplans(plans):
     return plans
 
 
-class TestPlanGetView(DetailView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
+class TestPlanGetView(DetailView):
 
     template_name = 'plan/get.html'
     http_method_names = ['get']
@@ -210,7 +212,8 @@ class TestPlanGetView(DetailView):  # pylint: disable=missing-permission-require
         return context
 
 
-class GetTestPlanRedirectView(DetailView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
+class GetTestPlanRedirectView(DetailView):
 
     http_method_names = ['get']
     model = TestPlan
@@ -310,10 +313,10 @@ class UpdateParentView(View):
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-class LinkCasesView(View):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testcases.add_testcaseplan'), name='dispatch')
+class LinkCasesView(View):
     """Link cases to plan"""
 
-    @method_decorator(permission_required('testcases.add_testcaseplan'))
     def post(self, request, pk):
         plan = get_object_or_404(TestPlan.objects.only('pk'), pk=pk)
 
@@ -328,7 +331,8 @@ class LinkCasesView(View):  # pylint: disable=missing-permission-required
         return HttpResponseRedirect(reverse('test_plan_url', args=[pk, slugify(plan.name)]))
 
 
-class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testcases.view_testcase'), name='dispatch')
+class LinkCasesSearchView(View):
     """Search cases for linking to plan"""
 
     template_name = 'plan/search_case.html'
@@ -383,7 +387,8 @@ class LinkCasesSearchView(View):  # pylint: disable=missing-permission-required
 
 
 @require_POST
-def printable(request):  # pylint: disable=missing-permission-required
+@permission_required('testplans.view_testplan')
+def printable(request):
     """Create the printable copy for plan"""
     plan_pk = request.POST.get('plan', 0)
 

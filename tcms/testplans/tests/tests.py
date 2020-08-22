@@ -178,7 +178,7 @@ class TestLinkCases(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestLinkCases, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.another_plan = TestPlanFactory(
             author=cls.tester,
@@ -204,6 +204,9 @@ class TestLinkCases(BasePlanCase):
         cls.search_cases_for_link_url = reverse('plan-search-cases-for-link',
                                                 args=[cls.plan.pk])
         cls.link_cases_url = reverse('plan-link-cases', args=[cls.plan.pk])
+
+        user_should_have_perm(cls.plan_tester, 'testcases.view_testcase')
+        user_should_have_perm(cls.plan_tester, 'testplans.view_testplan')
 
     def tearDown(self):
         # Ensure permission is removed whenever it was added during tests
@@ -311,7 +314,7 @@ class TestCloneView(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestCloneView, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.another_plan = TestPlanFactory(
             name='Another plan for test',
@@ -350,6 +353,7 @@ class TestCloneView(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
         user_should_have_perm(cls.plan_tester, 'testplans.add_testplan')
+        user_should_have_perm(cls.plan_tester, 'testplans.view_testplan')
         cls.plan_clone_url = reverse('plans-clone')
 
     def test_refuse_if_missing_a_plan(self):

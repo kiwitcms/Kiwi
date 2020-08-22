@@ -21,7 +21,8 @@ from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Component
 
 
-class Get(DetailView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('bugs.view_bug'), name='dispatch')
+class Get(DetailView):
     model = Bug
     template_name = 'bugs/get.html'
     http_method_names = ['get']
@@ -206,7 +207,8 @@ class AddComment(View):
         return HttpResponseRedirect(reverse('bugs-get', args=[bug.pk]))
 
 
-class Search(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('bugs.view_bug'), name='dispatch')
+class Search(TemplateView):
     template_name = 'bugs/search.html'
 
     def get_context_data(self, **kwargs):

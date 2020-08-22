@@ -36,6 +36,7 @@ class TestNew(tests.PermissionsTestCase):
         }
 
         super().setUpTestData()
+        tests.user_should_have_perm(cls.tester, 'bugs.view_bug')
 
         # cls.tester is created after calling super() above
         cls.post_data['reporter'] = cls.tester.pk
