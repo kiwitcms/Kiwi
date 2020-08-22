@@ -1,14 +1,173 @@
 Change Log
 ==========
 
-Next (unreleased)
------------------
+Kiwi TCMS 8.6 (23 Aug 2020)
+---------------------------
+
+**IMPORTANT:** this is a high severity security update which includes
+improvements, database migrations, API changes, translation updates and
+new tests. It is the fourth release to include contributions via our
+`open source bounty program`_.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- A high severity vulnerability which allows unprivileged data access
+  via JSON-RPC endpoints has been fixed:
+
+  - Affects all previous versions of Kiwi TCMS
+  - Instances on public networks, such as Amazon EC2, are at higher risk
+  - Instances on private networks are still vulnerable to anyone who can
+    access the same network
+  - This vulnerability has been disclosed by Michael Longmire (ShastaQA)
+    and Stone Pack (ShastaQA)
+
+- Update marked from 0.8.2 to 1.1.1 for a medium severity vulnerability, see
+  `SNYK-JS-MARKED-584281 <https://snyk.io/vuln/SNYK-JS-MARKED-584281>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 3.0.8 to 3.0.9
+- Update django-attachments from 1.5 to 1.6
+- Update prismjs from 1.20.0 to 1.21.0
+- Update pygithub from 1.51 to 1.53
+- Replace deprecated bleach-whitelist with bleach-allowlist
+- Make django-extensions a production dependency because it provides
+  many useful manage.py commands
+- Enable syntax highlight for code blocks
+- Remove file attachments when related objects are deleted
+- Add image and file upload buttons to text editor. Fixes
+  `Issue #977 <https://github.com/kiwitcms/Kiwi/issues/977>`_
+- Require ``auth.view_user`` permission when trying to view user profiles.
+  Fixes `Issue #1685 <https://github.com/kiwitcms/Kiwi/issues/1685>`_
+- Multiple pages now explicitly require view permissions before displaying read-only
+  information. This gives administrators a finer grained control:
+
+  - ``/bugs/<id>/``    -> ``bugs.view_bug``
+  - ``/bugs/search/``  -> ``bugs.view_bug``
+  - ``/cases/search/`` -> ``testcases.view_testcase``
+  - ``/case/<id>/``    -> ``testcases.view_testcase``
+  - ``/plans/search/`` -> ``testplans.view_testplan``
+  - ``/plan/<id>/*``   -> ``testplans.view_testplan``
+  - ``/runs/search/``  -> ``testruns.view_testrun``
+  - ``/runs/<id>/``    -> ``testruns.view_testrun``
+
+  Previously these pages only required the user to be logged in
+
+
+.. warning::
+
+    The ``auth.view_user`` permission is not granted by default because the
+    profile page contains personal information like names and email address, see
+    :ref:`managing-permissions`.
+
+
+Database
+~~~~~~~~
+
+- Migrations which manipulate data (contain ``RunPython``) can now be
+  rollbacked. See ``./manage.py migrate --plan`` for the order in which
+  migrations are applied (Bryan Mutai)
+- Increase ``Product.name`` size from 64 to 255 characters
+
+
+API
+~~~
+
+- Remove method ``TestExecution.create()`` in favor of ``TestRun.add_case()``
+- Add method ``User.add_attachment()``
+- Multiple API methods now explicitly require view permissions before returning
+  read-only information. This is in-sync with the per-page changes listed above:
+
+  - ``Bug.filter()``                   -> ``bugs.view_bug``
+  - ``Bug.report()``                   -> ``testruns.view_testexecution``
+  - ``Build.filter()``                 -> ``management.view_build``
+  - ``Category.filter()``              -> ``testcases.view_category``
+  - ``Classification.filter()``        -> ``management.view_classification``
+  - ``Component.filter()``             -> ``management.view_component``
+  - ``PlanType.filter()``              -> ``testplans.view_plantype``
+  - ``Priority.filter()``              -> ``management.view_priority``
+  - ``Product.filter()``               -> ``management.view_product``
+  - ``Tag.filter()``                   -> ``management.view_tag``
+  - ``TestCase.get_components()``      -> ``testcases.view_testcase``
+  - ``TestCase.get_notification_cc()`` -> ``testcases.view_testcase``
+  - ``TestCase.filter()``              -> ``testcases.view_testcase``
+  - ``TestCaseStatus.filter()``        -> ``testcases.view_testcasestatus``
+  - ``TestExecution.filter()``         -> ``testruns.view_testexecution``
+  - ``TestExecution.get_links()``      -> ``linkreference.view_linkreference``
+  - ``TestExecutionStatus.filter()``   -> ``testruns.view_testexecutionstatus``
+  - ``TestPlan.filter()``              -> ``testplans.view_testplan``
+  - ``TestRun.get_cases()``            -> ``testruns.view_testrun``
+  - ``TestRun.filter()``               -> ``testruns.view_testrun``
+  - ``User.filter()``                  -> ``auth.view_user``
+  - ``Version.filter()``               -> ``management.view_version``
+
 
 Bug fixes
 ~~~~~~~~~
 
-- Incorrect code formatting for <pre> HTML tags. Closes
+- Update documentation to reflect that test cases cannot be rearranged from
+  within a TestRun but only from a TestPlan. Fixes
+  `Issue #1805 <https://github.com/kiwitcms/Kiwi/issues/1805>`_ (@Prome88)
+- Incorrect code formatting for HTML <pre> tags. Closes
   `Issue #1300 <https://github.com/kiwitcms/Kiwi/issues/1300>`_
+- Fix a bug with the history handler when importing objects with ID field set.
+  Resolves a crash when trying to restore backup data
+- Delete comments when Bug is removed
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add linter to warn about missing backwards migrations callable in ``RunPython``
+  and fix all pylint offenses. Fixes
+  `Issue #1774 <https://github.com/kiwitcms/Kiwi/issues/1774>`_ (Bryan Mutai)
+- Teach linter to check API for ``@permissions_required``. Fixes
+  `Issue #1089 <https://github.com/kiwitcms/Kiwi/issues/1089>`_
+- Refactor ``NewExecutionForm`` to use ModelForm (Rosen Sasov)
+- Refactor ``UpdateExecutionForm`` to use ModelForm (Rosen Sasov)
+- Add tests for ``tcms.bugs.api``. Closes
+  `Issue #1597 <https://github.com/kiwitcms/Kiwi/issues/1597>`_ (Mfon Eti-mfon)
+- Add tests for ``tcms.bugs.views.New``. Closes
+  `Issue #1598 <https://github.com/kiwitcms/Kiwi/issues/1598>`_ (Mfon Eti-mfon)
+- Add tests for ``tcms.rpc.api.testplan``. Closes
+  `Issue #1627 <https://github.com/kiwitcms/Kiwi/issues/1627>`_ (@lcmtwn)
+- Add tests for ``percentage()`` function References
+  `Issue #1602 <https://github.com/kiwitcms/Kiwi/issues/1602>`_ (Mariyan Garvanski)
+- Add the ``migrations_order`` command to help test rollbacks
+- Adjust code for deprecation warnings from Django 3.1
+- Use Python 3 style ``super()`` without arguments
+- Update login page to match our new website design
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Czech translation <https://crowdin.com/project/kiwitcms/cs#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
 
 
 Kiwi TCMS 8.5 (10 Jul 2020)

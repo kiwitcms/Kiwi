@@ -54,6 +54,9 @@ in :mod:`tcms.issuetracker`.
 
     .. versionadded:: 8.4
 
+
+.. _managing-permissions:
+
 Managing permissions
 --------------------
 
