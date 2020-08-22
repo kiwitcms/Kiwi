@@ -22,6 +22,11 @@ from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestGetTestCase(BaseCaseRun):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        user_should_have_perm(cls.tester, 'testcases.view_testcase')
+
     def test_test_case_is_shown(self):
         url = reverse('testcases-get', args=[self.case_1.pk])
         response = self.client.get(url)
@@ -63,7 +68,9 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
                 html=True
             )
 
-    def test_user_sees_bugs(self):
+    def test_user_sees_link_references(self):
+        user_should_have_perm(self.tester, 'testruns.view_testexecution')
+
         bug_1 = LinkReferenceFactory(execution=self.execution_1)
         bug_2 = LinkReferenceFactory(execution=self.execution_1)
 
@@ -171,6 +178,7 @@ class TestNewCase(BasePlanCase):
         }
 
         user_should_have_perm(cls.tester, 'testcases.add_testcase')
+        user_should_have_perm(cls.tester, 'testcases.view_testcase')
 
     def test_create_test_case_successfully(self):
         response = self.client.post(self.new_case_url, self.data)
@@ -226,7 +234,7 @@ class TestEditCase(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestEditCase, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.proposed_case = TestCaseFactory(
             author=cls.tester,
@@ -240,6 +248,7 @@ class TestEditCase(BasePlanCase):
         Priority.objects.filter(value='P4').update(is_active=False)
 
         user_should_have_perm(cls.tester, 'testcases.change_testcase')
+        user_should_have_perm(cls.tester, 'testcases.view_testcase')
         cls.case_edit_url = reverse('testcases-edit', args=[cls.case_1.pk])
 
         # Copy, then modify or add new data for specific tests below
@@ -308,6 +317,7 @@ class TestPrintablePage(BasePlanCase):
     def setUpTestData(cls):
         super().setUpTestData()
         cls.printable_url = reverse('testcases-printable')
+        user_should_have_perm(cls.tester, 'testcases.view_testcase')
 
     def test_printable_page(self):
         # printing only 1 of the cases
@@ -378,6 +388,7 @@ class TestSearchCases(BasePlanCase):
         super().setUpTestData()
 
         cls.search_url = reverse('testcases-search')
+        user_should_have_perm(cls.tester, 'testcases.view_testcase')
 
     def test_page_renders(self):
         response = self.client.get(self.search_url, {})

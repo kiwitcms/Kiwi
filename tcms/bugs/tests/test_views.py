@@ -88,6 +88,7 @@ class TestNewBug(LoggedInTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
         user_should_have_perm(cls.tester, 'bugs.add_bug')
+        user_should_have_perm(cls.tester, 'bugs.view_bug')
 
         cls.url = reverse('bugs-new')
 

@@ -6,6 +6,7 @@ from http import HTTPStatus
 from django.urls import reverse
 
 from tcms.tests import BaseCaseRun
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import LinkReferenceFactory
 
 
@@ -13,6 +14,7 @@ class Test_TestRunReport(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
+        user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
         cls.bug_1 = LinkReferenceFactory(execution=cls.execution_1)
         cls.bug_2 = LinkReferenceFactory(execution=cls.execution_2)

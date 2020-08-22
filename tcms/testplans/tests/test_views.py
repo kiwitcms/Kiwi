@@ -63,6 +63,7 @@ class EditPlanViewTest(LoggedInTestCase):
         super().setUpTestData()
 
         user_should_have_perm(cls.tester, perm='testplans.change_testplan')
+        user_should_have_perm(cls.tester, perm='testplans.view_testplan')
         cls.product = ProductFactory()
         cls.product_version = VersionFactory(product=cls.product)
         cls.test_plan_type = PlanTypeFactory()

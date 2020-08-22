@@ -113,7 +113,8 @@ class CreateTestRunView(View):
         return render(request, self.template_name, context_data)
 
 
-class SearchTestRunView(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testruns.view_testrun'), name='dispatch')
+class SearchTestRunView(TemplateView):
 
     template_name = 'testruns/search.html'
 
@@ -184,7 +185,8 @@ def open_run_get_users(case_runs):
     return (dict(testers.iterator()), dict(assignees.iterator()))
 
 
-class GetTestRunView(TemplateView):  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testruns.view_testrun'), name='dispatch')
+class GetTestRunView(TemplateView):
     """Display testrun's details"""
 
     template_name = 'run/get.html'
@@ -288,7 +290,8 @@ class EditTestRunView(UpdateView):
         }
 
 
-class TestRunReportView(TemplateView,  # pylint: disable=missing-permission-required
+@method_decorator(permission_required('testruns.view_testrun'), name='dispatch')
+class TestRunReportView(TemplateView,
                         TestExecutionDataMixin):
     """Test Run report"""
 

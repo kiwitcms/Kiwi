@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=missing-permission-required
 
 from django.conf import settings
 from django.contrib import messages
@@ -19,16 +18,16 @@ from tcms.kiwi_auth.forms import RegistrationForm
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-class LoginViewWithCustomTemplate(views.LoginView):
+class LoginViewWithCustomTemplate(views.LoginView):  # pylint: disable=missing-permission-required
     def get_template_names(self):
         return ['registration/custom_login.html', 'registration/login.html']
 
 
-class PasswordResetView(views.PasswordResetView):
+class PasswordResetView(views.PasswordResetView):  # pylint: disable=missing-permission-required
     form_class = forms.PasswordResetForm
 
 
-class Register(View):
+class Register(View):  # pylint: disable=missing-permission-required
     """Register method of account"""
     template_name = 'registration/registration_form.html'
     form_class = RegistrationForm
@@ -81,7 +80,7 @@ class Register(View):
         return render(request, self.template_name, {'form': self.form_class()})
 
 
-class Confirm(RedirectView):
+class Confirm(RedirectView):  # pylint: disable=missing-permission-required
     """Confirm the user registration"""
 
     http_method_names = ['get']
