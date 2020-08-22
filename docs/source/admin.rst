@@ -68,6 +68,19 @@ permissions.
     individual users too! It is recommended to use groups for permissions
     management.
 
+.. warning::
+
+    Kiwi TCMS requires the ``auth.view_user`` permission in order to display
+    read-only information on user profile pages! This permission is
+    not granted by default because the profile page contains personal
+    information like names and email address.
+
+    Administrators can grant this
+    on individual or group level if access to such information is considered
+    acceptable.
+
+    .. versionadded:: 8.6
+
 Groups
 ~~~~~~
 
