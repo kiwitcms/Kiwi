@@ -8,7 +8,7 @@ from tcms.tests.factories import ProductFactory
 class TestFilter(APITestCase):
 
     def _fixture_setup(self):
-        super(TestFilter, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory(name='Nitrate')
         self.product_xmlrpc = ProductFactory(name='XMLRPC API')

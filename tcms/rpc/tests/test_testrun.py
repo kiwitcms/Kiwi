@@ -108,7 +108,7 @@ class TestRemovesCase(APITestCase):
 
 class TestAddTag(APITestCase):
     def _fixture_setup(self):
-        super(TestAddTag, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.version = VersionFactory()
@@ -156,7 +156,7 @@ class TestAddTag(APITestCase):
 
 class TestRemoveTag(APITestCase):
     def _fixture_setup(self):
-        super(TestRemoveTag, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.version = VersionFactory()

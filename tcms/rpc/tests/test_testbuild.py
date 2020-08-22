@@ -11,7 +11,7 @@ from tcms.tests.factories import BuildFactory, ProductFactory
 class BuildCreate(APITestCase):
 
     def _fixture_setup(self):
-        super(BuildCreate, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
 
@@ -84,7 +84,7 @@ class BuildCreate(APITestCase):
 class BuildUpdate(APITestCase):
 
     def _fixture_setup(self):
-        super(BuildUpdate, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.another_product = ProductFactory()
@@ -128,7 +128,7 @@ class BuildUpdate(APITestCase):
 class BuildFilter(APITestCase):
 
     def _fixture_setup(self):
-        super(BuildFilter, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.build = BuildFactory(product=self.product)

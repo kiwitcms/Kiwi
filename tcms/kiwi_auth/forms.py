@@ -35,7 +35,7 @@ class RegistrationForm(UserCreationForm):
             _("A user with that email already exists."))
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
+        user = super().save(commit=False)
         user.email = self.cleaned_data['email']
         user.is_active = False
         user.set_password(self.cleaned_data["password1"])

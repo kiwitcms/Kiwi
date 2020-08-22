@@ -19,14 +19,14 @@ class TestNotificationRemoveCC(APITestCase):
     """ Tests the XML-RPC testcase.notication_remove_cc method """
 
     def _fixture_setup(self):
-        super(TestNotificationRemoveCC, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.default_cc = 'example@MrSenko.com'
         self.testcase = TestCaseFactory()
         self.testcase.emailing.add_cc(self.default_cc)
 
     def tearDown(self):
-        super(TestNotificationRemoveCC, self).tearDown()
+        super().tearDown()
         self.rpc_client.Auth.logout()
 
     def test_remove_existing_cc(self):
@@ -42,7 +42,7 @@ class TestNotificationRemoveCC(APITestCase):
 class TestFilterCases(APITestCase):
 
     def _fixture_setup(self):
-        super(TestFilterCases, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.tester = UserFactory(username='great tester')
         self.product = ProductFactory(name='StarCraft')

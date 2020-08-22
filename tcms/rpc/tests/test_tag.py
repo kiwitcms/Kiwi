@@ -7,7 +7,7 @@ from tcms.tests.factories import TagFactory
 
 class Tag(APITestCase):
     def _fixture_setup(self):
-        super(Tag, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.tag_db = TagFactory(name='db')
         self.tag_fedora = TagFactory(name='fedora')

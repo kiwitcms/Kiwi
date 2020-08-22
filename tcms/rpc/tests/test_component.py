@@ -10,7 +10,7 @@ from tcms.tests.factories import ComponentFactory, ProductFactory
 
 class TestFilterComponents(APITestCase):
     def _fixture_setup(self):
-        super(TestFilterComponents, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory(name='StarCraft')
         self.component = ComponentFactory(name='application', product=self.product,
@@ -34,7 +34,7 @@ class TestFilterComponents(APITestCase):
 class TestCreateComponent(APITestCase):
 
     def _fixture_setup(self):
-        super(TestCreateComponent, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
 
@@ -60,7 +60,7 @@ class TestCreateComponent(APITestCase):
 class TestUpdateComponent(APITestCase):
     # pylint: disable=objects-update-used
     def _fixture_setup(self):
-        super(TestUpdateComponent, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory(name='StarCraft')
         self.component = ComponentFactory(name="application", product=self.product,
