@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin, sensitive_post_parameters_m
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Permission
+from django.http import HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -47,8 +48,17 @@ class KiwiUserAdmin(UserAdmin):
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser or obj is not None
 
+    def has_view_permission(self, request, obj=None):
+        if _modifying_myself(request, getattr(obj, 'pk', 0)):
+            return True
+
+        return super().has_view_permission(request, obj)
+
     # pylint: disable=too-many-arguments
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        if not self.has_view_permission(request, obj):
+            return HttpResponseForbidden()
+
         if obj and not (_modifying_myself(request, obj.pk) or request.user.is_superuser):
             context.update({
                 'show_save': False,

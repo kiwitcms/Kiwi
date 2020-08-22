@@ -3,9 +3,11 @@ from http import HTTPStatus
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.http import HttpResponseForbidden
 from django.utils.translation import gettext_lazy as _
 
 from tcms.tests import LoggedInTestCase
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
 
 
@@ -25,7 +27,13 @@ class TestUserAdmin(LoggedInTestCase):
         response = self.client.get('/admin/auth/user/')
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
-    def test_non_admin_can_view_single_profile_as_readonly(self):
+    def test_non_admin_cant_view_single_profile_without_permission(self):
+        response = self.client.get('/admin/auth/user/%d/change/' % self.admin.pk)
+        self.assertIsInstance(response, HttpResponseForbidden)
+
+    def test_non_admin_can_view_single_profile_as_readonly_if_permission(self):
+        user_should_have_perm(self.tester, 'auth.view_user')
+
         response = self.client.get('/admin/auth/user/%d/change/' % self.admin.pk)
         response_str = str(response.content, encoding=settings.DEFAULT_CHARSET)
 

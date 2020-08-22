@@ -117,7 +117,7 @@ class Confirm(RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
 
-class Profile(View):
+class Profile(View):  # pylint: disable=missing-permission-required
     """Show user profiles"""
 
     http_method_names = ['get']
