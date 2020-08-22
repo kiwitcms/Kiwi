@@ -57,9 +57,16 @@ in :mod:`tcms.issuetracker`.
 Managing permissions
 --------------------
 
-The Auth administration section covers Groups and Users.
+The Authentication and authorization section covers Groups, Users and
+permissions.
 
 |The Auth screen|
+
+.. important::
+
+    Permissions are usually assigned on groups but they can be granted on
+    individual users too! It is recommended to use groups for permissions
+    management.
 
 Groups
 ~~~~~~
@@ -69,21 +76,22 @@ have two fields: name and permissions. By default there are two groups
 created
 
 * Administrator - has all available permissions;
-* Tester - has ``add``, ``change`` and ``delete`` permissions from the
-  ``attachments``, ``bugs``, ``django_comments``, ``management``,
-  ``linkreference``, ``testcases``, ``testplans`` and ``testruns``
-  applications.
+* Tester - has ``add``, ``change``, ``delete`` and ``view`` permissions from
+  the ``attachments``, ``bugs``, ``django_comments``, ``linkreference``,
+  ``management``, ``testcases``, ``testplans`` and ``testruns`` applications.
+  These are the permissions required for normal usage of Kiwi TCMS!
+
+.. important::
+
+    *Tester* is the default group to which new user accounts are assigned!
+    This can be controlled with the ``DEFAULT_GROUPS``,
+    see :ref:`configuration`.
 
 
 Adding a group
 ^^^^^^^^^^^^^^
 
-A group requires a name and a set of permissions.
-
-Procedure: Adding a group
-'''''''''''''''''''''''''
-
-To add a group:
+A group requires a name and a set of permissions. To add a group:
 
 #. From the **ADMIN** menu, click **Users and groups**.
 
@@ -109,10 +117,6 @@ Editing a group
 ^^^^^^^^^^^^^^^
 
 The group name can be changed. Permissions can be added or removed.
-
-Procedure: Editing a group
-''''''''''''''''''''''''''
-
 To edit a group:
 
 #. From the **ADMIN** menu, click **Users and groups**.
@@ -125,15 +129,15 @@ To edit a group:
 Users
 ~~~~~
 
-Assigning administrator rights
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Staff status
+^^^^^^^^^^^^
 
-A user with administrator rights can access the **ADMIN** menu.
+A user with *Staff status* can access the Admin panel. This is required
+for normal Kiwi TCMS usage because many records can only be manipulated via
+admin pages! Upon account creation the *is_staff* flag is automatically
+granted and the user is assigned to ``DEFAULT_GROUPS``.
 
-Procedure: Assigning administrator rights
-'''''''''''''''''''''''''''''''''''''''''
-
-To assign administrator rights:
+To assign *Staff status*:
 
 #. From the **ADMIN** menu, click **Users and groups**.
 #. Click **Users**.
@@ -149,42 +153,8 @@ To assign administrator rights:
 
   If the user requires full permissions, select **Superuser status**.
 
-Assigning permissions
-^^^^^^^^^^^^^^^^^^^^^
-
-User permissions can be granted or revoked for individual components of
-Kiwi TCMS. All permissions are prefixed with the ``add_``, ``change_`` and
-``delete_`` prefixes signifying the operation which is controlled by this
-permission. Then the codename contains the name of the model for which this
-permission applies. For example, the ability to add attachments to a Test Case
-is controlled via the ``add_testcaseattachment`` permission.
-
-Procedure: Assigning permissions
-''''''''''''''''''''''''''''''''
-
-To assign permissions:
-
-#. From the **ADMIN** menu, click **Users and groups**.
-#. Click **Users**.
-#. In the **Search Bar**, enter the username, and then click **Search**.
-#. Click the **Username**.
-#. In the **User permission** screen:
-
-   -  To add permissions, select the permissions to be granted, and then
-      click **Add**.
-   -  To remove permissions, select the permissions to be revoked, and
-      then click **Remove**.
-
-#. Click **Save**.
-
 Adding a user to a group
 ^^^^^^^^^^^^^^^^^^^^^^^^
-
-Group permissions in Kiwi TCMS work the same as they do in Linux. The
-system checks a user's personal permissions, then group permissions.
-
-Procedure: Adding a user to a group
-'''''''''''''''''''''''''''''''''''
 
 To add a user to a group:
 
@@ -194,6 +164,7 @@ To add a user to a group:
 #. Click the **Username**.
 #. From **Groups** select the user to add.
 #. Click **Save**.
+
 
 Updating personal information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
