@@ -284,6 +284,7 @@ INSTALLED_APPS = TENANT_APPS + [
     'django.contrib.staticfiles',
 
     'colorfield',
+    'django_extensions',
     'vinaigrette',
 
     'tcms.core',
