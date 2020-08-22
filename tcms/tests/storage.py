@@ -28,4 +28,4 @@ class RaiseWhenFileNotFound(StaticFilesStorage):
         if (name not in self._files_found) and (name not in self._white_list):
             raise Exception('Static file "%s" does not exist and will cause 404 errors!' % name)
 
-        return super(RaiseWhenFileNotFound, self).url(name)
+        return super().url(name)

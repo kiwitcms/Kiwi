@@ -29,7 +29,7 @@ class MultipleEmailField(EmailField):
 
     def clean(self, value):
         email_addrs = self.to_python(value)
-        super_instance = super(MultipleEmailField, self)
+        super_instance = super()
 
         valid_email_addrs = []
         invalid_email_addrs = []

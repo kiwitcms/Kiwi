@@ -14,7 +14,7 @@ from tcms.tests.factories import ProductFactory, VersionFactory
 class TestFilterVersions(APITestCase):
 
     def _fixture_setup(self):
-        super(TestFilterVersions, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory(name='StarCraft')
         self.version = VersionFactory(value='0.7', product=self.product)

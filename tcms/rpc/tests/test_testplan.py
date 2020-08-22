@@ -20,7 +20,7 @@ from tcms.tests.factories import (PlanTypeFactory, ProductFactory, TagFactory,
 class TestFilter(APITestCase):
 
     def _fixture_setup(self):
-        super(TestFilter, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.version = VersionFactory(product=self.product)
@@ -51,7 +51,7 @@ class TestFilter(APITestCase):
 class TestAddTag(APITestCase):
 
     def _fixture_setup(self):
-        super(TestAddTag, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.plans = [
@@ -90,7 +90,7 @@ class TestAddTag(APITestCase):
 class TestRemoveTag(APITestCase):
 
     def _fixture_setup(self):
-        super(TestRemoveTag, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.product = ProductFactory()
         self.plans = [
@@ -174,7 +174,7 @@ class TestRemoveCase(APITestCase):
     """ Test the XML-RPC method TestPlan.remove_case() """
 
     def _fixture_setup(self):
-        super(TestRemoveCase, self)._fixture_setup()
+        super()._fixture_setup()
         self.testcase_1 = TestCaseFactory()
         self.testcase_2 = TestCaseFactory()
         self.plan_1 = TestPlanFactory()

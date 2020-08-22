@@ -8,7 +8,7 @@ from tcms.tests.factories import PlanTypeFactory
 class PlanTypeMethods(APITestCase):
 
     def _fixture_setup(self):
-        super(PlanTypeMethods, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.plan_type = PlanTypeFactory(name='xmlrpc plan type', description='')
 

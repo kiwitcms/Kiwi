@@ -74,7 +74,7 @@ class TestUserJoin(APITestCase):
     """Test User.join_group"""
 
     def _fixture_setup(self):
-        super(TestUserJoin, self)._fixture_setup()
+        super()._fixture_setup()
         # needs auth.change_user
         self.api_user.is_superuser = True
         self.api_user.save()
@@ -102,7 +102,7 @@ class TestUserUpdate(APITestCase):
     """Test User.update"""
 
     def _fixture_setup(self):
-        super(TestUserUpdate, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.another_user = UserFactory()
         self.another_user.set_password('another-password')
@@ -115,12 +115,12 @@ class TestUserUpdate(APITestCase):
         }
 
     def setUp(self):
-        super(TestUserUpdate, self).setUp()
+        super().setUp()
         # clear permissions b/c we set them inside individual tests
         self.api_user.user_permissions.all().delete()
 
     def tearDown(self):
-        super(TestUserUpdate, self).tearDown()
+        super().tearDown()
         self.api_user.set_password('api-testing')
         self.api_user.save()
 
