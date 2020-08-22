@@ -5,6 +5,7 @@ bleach-allowlist==1.0.3
 Django==3.0.9
 django-attachments==1.6
 django-contrib-comments==1.9.2
+django-extensions==3.0.5
 django-modern-rpc==0.12.1
 django-simple-history==2.11.0
 jira==2.0.0
