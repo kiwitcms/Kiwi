@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
     $('.bootstrap-switch').bootstrapSwitch();
+    $('.selectpicker').selectpicker();
 
     const testRunId = $('#test_run_pk').data('pk')
 
@@ -135,7 +136,8 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
                 const bugCount = links.filter(link => link.is_defect).length;
                 listGroupItem.find('.test-execution-bugs-count').html(bugCount)
 
-                listGroupItem.find('.add-link-button').click(event => addLinkToExecution(event, testExecution))
+                listGroupItem.find('.add-link-button').click(() => addLinkToExecution(testExecution))
+                listGroupItem.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
 
                 const ul = listGroupItem.find('.test-execution-hyperlinks')
                 links.forEach(link => ul.append(renderLink(link)))
@@ -211,30 +213,28 @@ function updateExecutionText() {
     window.location.reload(true);
 }
 
-function fileBugFromExecution(run_id, title_container, container, case_id, execution_id) {
-    // todo: this dialog needs to be reimplemented with a Patternfly modal
-    var dialog = new AddIssueDialog({
-        'action': 'Report',
-        'onSubmit': function (e, dialog) {
-            e.stopPropagation();
-            e.preventDefault();
+function fileBugFromExecution(execution) {
 
-            var tracker_id = dialog.get_data()['bug_system_id'];
-            jsonRPC('Bug.report', [execution_id, tracker_id], function (result) {
-                $('#dialog').hide();
+    // remove all previous event handlers
+    $('.one-click-bug-report-form').off('submit')
 
-                if (result.rc === 0) {
-                    // unescape b/c Issue #1533
-                    const target_url = result.response.replace(/&amp;/g, '&')
-                    window.open(target_url, '_blank');
-                } else {
-                    window.alert(result.response);
-                }
-            });
-        }
-    });
+    // this handler must be here, because if we bind it when the page is loaded.
+    // we have no way of knowing for what execution ID the form is submitted for.
+    $('.one-click-bug-report-form').submit(() => {
+        const trackerId = $('.one-click-bug-report-form #id-issue-tracker').val()
+        jsonRPC('Bug.report', [execution.id, trackerId], result => {
 
-    dialog.show();
+            // unescape b/c Issue #1533
+            const targetUrl = result.response.replace(/&amp;/g, '&')
+            window.open(targetUrl, '_blank')
+
+            // close the modal
+            $('#one-click-bug-report-modal button.close').click()
+        })
+        return false
+    })
+
+    return true // so that the modal is opened
 }
 
 function addLinkToExecution(event, testExecution) {
@@ -275,7 +275,6 @@ function addLinkToExecution(event, testExecution) {
 
         return false;
     })
-
 
     return true; // so that the modal is opened
 }
