@@ -70,7 +70,7 @@ Brief history
   date with the latest versions of Django
 * Sep 2017 - Project name changed to **Kiwi TCMS**; support for Python 3.5,
   started migrating to modern UI using Patternfly
-* Oct 2017 - Launched http://kiwitcms.org and https://demo.kiwitcms.org;
+* Oct 2017 - Launched http://kiwitcms.org and https://public.tenant.kiwitcms.org;
   first bug report from external contributor
 * Nov 2017 - Pushed ``kiwitcms/kiwi`` to Docker Hub; merged upstream API client
   sources and modified them to work with the current code base
