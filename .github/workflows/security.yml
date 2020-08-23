@@ -45,3 +45,15 @@ jobs:
           pip install -r requirements/postgres.txt
 
           make bandit_site_packages
+
+  # this is expected to fail but we need to know what issues are there
+  npm_audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm audit
+        run: |
+          pushd tcms/
+          npm install
+          npm audit
