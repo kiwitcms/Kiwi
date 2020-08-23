@@ -18,7 +18,7 @@ from guardian.decorators import permission_required as object_permission_require
 
 from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Build
-from tcms.testcases.models import TestCasePlan, TestCaseStatus
+from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm
@@ -141,6 +141,7 @@ class GetTestRunView(DetailView):
         context = super().get_context_data(**kwargs)
         context['execution_statuses'] = TestExecutionStatus.objects.order_by('-weight', 'name')
         context['link_form'] = LinkReferenceForm()
+        context['bug_trackers'] = BugSystem.objects.all()
         return context
 
     def render_to_response(self, context, **response_kwargs):

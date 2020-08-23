@@ -196,6 +196,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownKebabRight9">
                                                     <li><a href="#" class="add-link-button" data-toggle="modal" data-target="#add-link-modal">{% trans 'Add hyperlink' %}</a></li>
+                                                    <li><a href="#" class="one-click-bug-report-button" data-toggle="modal" data-target="#one-click-bug-report-modal">{% trans 'Report bug' %}</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -327,8 +328,40 @@
   </div>
 </div>
 
+<div class="modal fade" id="one-click-bug-report-modal" tabindex="-1" role="dialog" aria-labelledby="one-click-bug-report-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="one-click-bug-report-title">{% trans "Report bug" %}</h4>
+      </div>
+      <form class="form-horizontal one-click-bug-report-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="issue-tracker-select">{% trans "Issue Tracker" %}</label>
+            <div class="col-sm-9">
+                <select name="issue-tracker" id="id-issue-tracker" class="form-control selectpicker">
+                    {% for btr in bug_trackers %}
+                        <option value="{{ btr.pk }}">{{ btr.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans "Cancel" %}</button>
+            <button type="submit" class="btn btn-primary one-click-bug-report-button">{% trans "Report Bug" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
 <script src="{% static 'moment/min/moment.min.js' %}"></script>
 <script src="{% static 'moment-timezone/builds/moment-timezone-with-data.min.js' %}"></script>
 
