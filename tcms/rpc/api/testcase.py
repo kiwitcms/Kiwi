@@ -21,7 +21,6 @@ __all__ = (
     'remove_comment',
 
     'add_component',
-    'get_components',
     'remove_component',
 
     'add_notification_cc',
@@ -60,27 +59,6 @@ def add_component(case_id, component):
         Component.objects.get(name=component, product=case.category.product)
     )
     return case.serialize()
-
-
-@permissions_required('testcases.view_testcase')
-@rpc_method(name='TestCase.get_components')
-def get_components(case_id):
-    """
-    .. function:: XML-RPC TestCase.get_components(case_id)
-
-        Get the list of components attached to this case.
-
-        :param case_id: PK if TestCase
-        :type case_id: int
-        :return: Serialized list of :class:`tcms.management.models.Component` objects
-        :rtype: list(dict)
-        :raises: TestCase.DoesNotExist if missing test case matching PK
-    """
-    test_case = TestCase.objects.get(pk=case_id)
-
-    component_ids = test_case.component.values_list('id', flat=True)
-    query = {'id__in': component_ids}
-    return Component.to_xmlrpc(query)
 
 
 @permissions_required('testcases.delete_testcasecomponent')

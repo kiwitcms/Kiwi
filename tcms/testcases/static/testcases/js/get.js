@@ -100,7 +100,7 @@ $(document).ready(function() {
     // components table
     var components_table = $('#components').DataTable({
         ajax: function(data, callback, settings) {
-            dataTableJsonRPC('TestCase.get_components', [case_id], callback);
+            dataTableJsonRPC('Component.filter', [{'cases': case_id}], callback);
         },
         columns: [
             { data: "name" },
