@@ -134,9 +134,29 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
             jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id, 'is_defect': true }, bugs => {
                 listGroupItem.find('.test-execution-bugs-count').html(bugs.length)
             })
+
+            jsonRPC('TestCase.list_attachments', [testCase.id], attachments => {
+
+                const ul = listGroupItem.find(`.test-case-attachments`)
+
+                if (!attachments.length) {
+                    ul.find('.hidden').removeClass('hidden')
+                    return;
+                }
+
+                const liTemplate = $('#attachments-list-item')[0].content
+
+                attachments.forEach(attachment => {
+                    const li = liTemplate.cloneNode(true)
+                    const attachmentLink = $(li).find('a')[0]
+
+                    attachmentLink.href = attachment.url
+                    attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
+                    ul.append(li)
+                })
+            })
         })
     })
-
 }
 
 function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
