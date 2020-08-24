@@ -135,7 +135,7 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
                 const bugCount = links.filter(link => link.is_defect).length;
                 listGroupItem.find('.test-execution-bugs-count').html(bugCount)
 
-                listGroupItem.find('.add-link-button').click(() => addLinkToExecution(testExecution))
+                listGroupItem.find('.add-link-button').click(event => addLinkToExecution(event, testExecution))
 
                 const ul = listGroupItem.find('.test-execution-hyperlinks')
                 links.forEach(link => ul.append(renderLink(link)))
@@ -216,7 +216,7 @@ function fileBugFromExecution(run_id, title_container, container, case_id, execu
     dialog.show();
 }
 
-function addLinkToExecution(testExecution) {
+function addLinkToExecution(event, testExecution) {
 
     // remove all previous event handlers
     $('.add-hyperlink-form').off('submit')
@@ -235,8 +235,12 @@ function addLinkToExecution(testExecution) {
             name: name,
             is_defect: isDefect,
         }, updateTracker], link => {
-            const ul = $(`.test-execution-${testExecution.id} .test-execution-hyperlinks`)
-            ul.append(renderLink(link))
+            const testExecutionRow = $(event.target).closest(`.test-execution-${testExecution.id}`);
+            animate(testExecutionRow, () => {
+                const ul = $(`.test-execution-${testExecution.id} .test-execution-hyperlinks`)
+                ul.append(renderLink(link))
+            })
+
 
             // clean the values
             $('.add-hyperlink-form #id_url').val('')
