@@ -140,6 +140,27 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
                 const ul = listGroupItem.find('.test-execution-hyperlinks')
                 links.forEach(link => ul.append(renderLink(link)))
             })
+
+            jsonRPC('TestCase.list_attachments', [testCase.id], attachments => {
+
+                const ul = listGroupItem.find(`.test-case-attachments`)
+
+                if (!attachments.length) {
+                    ul.find('.hidden').removeClass('hidden')
+                    return;
+                }
+
+                const liTemplate = $('#attachments-list-item')[0].content
+
+                attachments.forEach(attachment => {
+                    const li = liTemplate.cloneNode(true)
+                    const attachmentLink = $(li).find('a')[0]
+
+                    attachmentLink.href = attachment.url
+                    attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
+                    ul.append(li)
+                })
+            })
         })
     })
 }
