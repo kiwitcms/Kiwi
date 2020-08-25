@@ -43,7 +43,7 @@ Nitrate.TestPlans.Instance = {
 			<input id="btn_delete" type="button" value="{% trans "Delete Plan" %}" title="{% trans "Delete test plan" %}" data-param="{% url 'admin:testplans_testplan_delete' object.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
 		</span>
 	</div>
-	<h2 id="display_title" class="{% ifequal object.is_active 0 %}line-through{% endifequal %}">
+	<h2 id="display_title" class="{% if object.is_active == 0 %}line-through{% endif %}">
 		{{ object.name }}
 	</h2>
 	<div class="listinfo_content">

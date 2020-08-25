@@ -83,7 +83,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="list_filter" {% ifnotequal REQUEST_CONTENTS.a 'search' %} style="display:none;" {% endifnotequal %}>
+	<div class="list_filter" {% if REQUEST_CONTENTS.a != 'search' %} style="display:none;" {% endif %}>
             <input type="hidden" name="a" value="search" />
             <input type="hidden" name="from_plan" value="{{ test_plan.pk }}" />
             <div class="leftlistinfo">
