@@ -108,15 +108,16 @@
                                                     {% trans 'Name' %}<span
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                    <li class="selected"><a href="#">{% trans 'Name' %}</a></li>
-                                                    <li><a href="#">{% trans 'Category' %}</a></li>
-                                                    <li><a href="#">{% trans 'Priority' %}</a></li>
-                                                    <li><a href="#">{% trans 'Author' %}</a></li>
-                                                    <li><a href="#">{% trans 'Default tester' %}</a></li>
+                                                    <li class="selected"><a>{% trans 'Name' %}</a></li>
+                                                    <li><a>{% trans 'Category' %}</a></li>
+                                                    <li><a>{% trans 'Priority' %}</a></li>
+                                                    <li><a>{% trans 'Author' %}</a></li>
+                                                    <li><a>{% trans 'Default tester' %}</a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
-                                            <input type="text" class="form-control" id="filter"
-                                                   placeholder="{% trans 'Filter By Name...' %}">
+                                            <input type="text" class="form-control" id="toolbar-filter"
+                                                    {# todo use full form "filter by name..." #}
+                                                   placeholder="{% trans 'Filter' %}...">
                                         </div><!-- /input-group -->
                                     </div>
                                     <div class="form-group">
