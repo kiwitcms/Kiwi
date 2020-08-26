@@ -220,6 +220,10 @@ function toolbarEvents() {
             tc.checked = isChecked;
         });
     });
+
+    $('.toolbar-pf-filter .dropdown-menu li').click(function(ev) {
+        $('#input-filter-button')[0].innerHTML = ev.target.innerText + '<span class="caret"></span>';
+    });
 }
 
 function isTestCaseConfrimed(status) {
