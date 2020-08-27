@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-06 20:03+0000\n"
-"PO-Revision-Date: 2020-08-06 20:12\n"
+"POT-Creation-Date: 2020-08-27 10:05+0000\n"
+"PO-Revision-Date: 2020-08-27 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -227,28 +227,28 @@ msgstr "আইডি"
 msgid "Created at"
 msgstr "তৈরি হয়েছে"
 
-#: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:515
+#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:522
 msgid "Edit"
 msgstr "সম্পাদনা"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
+#: tcms/bugs/views.py:41 tcms/testcases/views.py:535
 msgid "Delete"
 msgstr "মুছুন"
 
-#: tcms/bugs/views.py:64
+#: tcms/bugs/views.py:66
 msgid "New bug"
 msgstr "নতুন বাগ"
 
-#: tcms/bugs/views.py:167
+#: tcms/bugs/views.py:169
 msgid "Edit bug"
 msgstr "বাগ সম্পাদনা করুন"
 
-#: tcms/bugs/views.py:197
+#: tcms/bugs/views.py:200
 msgid "*bug closed*"
 msgstr "*বাগ বন্ধ*"
 
-#: tcms/bugs/views.py:201
+#: tcms/bugs/views.py:204
 msgid "*bug reopened*"
 msgstr "*বাগ আবার খোলা*"
 
@@ -285,15 +285,15 @@ msgstr "Base URL কনফিগার করা হয়নি! দেখা <
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:29
+#: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
 msgstr "এই ই-মেইল ঠিকানাটি ইতিমধ্যে ব্যবহার করা হয়েছে"
 
-#: tcms/kiwi_auth/admin.py:86
+#: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
 msgstr "ব্যক্তিগত তথ্য"
 
-#: tcms/kiwi_auth/admin.py:87
+#: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
 msgstr "অনুমতি"
 
@@ -306,31 +306,31 @@ msgstr "এই ইমেল সহ একজন ব্যবহারকার�
 msgid "Your new %s account confirmation"
 msgstr "আপনার %s অ্যাকাউন্টের নিশ্চয়তা"
 
-#: tcms/kiwi_auth/views.py:52
+#: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "আপনার অ্যাকাউন্ট তৈরি করা হয়েছে, নিশ্চিতকরণের জন্য আপনার মেলবক্সটি পরীক্ষা করুন"
 
-#: tcms/kiwi_auth/views.py:55
+#: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "আপনার অ্যাকাউন্ট তৈরি করা হয়েছে, তবে এটি সক্রিয় করার জন্য আপনার প্রশাসকের প্রয়োজন"
 
-#: tcms/kiwi_auth/views.py:58
+#: tcms/kiwi_auth/views.py:57
 msgid "Following is the administrator list"
 msgstr "প্রশাসকের তালিকা নীচে"
 
-#: tcms/kiwi_auth/views.py:99
+#: tcms/kiwi_auth/views.py:98
 msgid "This activation key no longer exists in the database"
 msgstr "এই অ্যাক্টিভেশন কীটি আর ডেটাবেজে উপস্থিত নেই"
 
-#: tcms/kiwi_auth/views.py:104
+#: tcms/kiwi_auth/views.py:103
 msgid "This activation key has expired"
 msgstr "এই অ্যাক্টিভেশন কীটির মেয়াদ শেষ হয়ে গেছে"
 
-#: tcms/kiwi_auth/views.py:115
+#: tcms/kiwi_auth/views.py:114
 msgid "Your account has been activated successfully"
 msgstr "আপনার অ্যাকাউন্ট সক্রিয় করা হয়েছে"
 
-#: tcms/rpc/api/bug.py:63
+#: tcms/rpc/api/bug.py:68
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "এর base_url কনফিগার করে এই ইস্যু ট্র্যাকারের প্রতিবেদন সক্ষম করুন!"
 
@@ -343,134 +343,134 @@ msgstr "অবৈধ তারিখ বিন্যাস. প্রত্য�
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "মডেল %s এর কোন প্রাথমিক চাবি নেই. ম্যানুয়ালি এ ধরনের ক্ষেত্র উল্লেখ করতে হবে."
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "DASHBOARD"
 msgstr "ড্যাশবোর্ড"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "TESTING"
 msgstr "পরীক্ষামূলক"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:303
 msgid "New Test Plan"
 msgstr "নতুন পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "New Test Case"
 msgstr "নতুন পরীক্ষার কেস"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "New Bug"
 msgstr "নতুন বাগ"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "SEARCH"
 msgstr "অনুসন্ধান"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:311
 msgid "Search Test Plans"
 msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:312
 msgid "Search Test Runs"
 msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:313
 msgid "Search Test Cases"
 msgstr "অনুসন্ধান পরীক্ষার কেস"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:314
 msgid "Search Bugs"
 msgstr "বাগ অনুসন্ধান করুন"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:317
 msgid "TELEMETRY"
 msgstr "টেলিমেট্রি"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Testing"
 msgstr "পরীক্ষা করা হচ্ছে"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:319
 msgid "Breakdown"
 msgstr "ভাঙনের"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "Status matrix"
 msgstr "স্থিতি ম্যাট্রিক্স"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:321
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "এক্সিকিউশন ট্রেন্ড"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:322
 msgid "TestCase health"
 msgstr "TestCase স্বাস্থ্য"
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:327
 msgid "ADMIN"
 msgstr "অ্যাডমিন"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:328
 msgid "Users and groups"
 msgstr "ব্যবহারকারী এবং গোষ্ঠী"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:330
 msgid "Everything else"
 msgstr "অন্য সব কিছুর"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "PLUGINS"
 msgstr "প্লাগিন"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:343
 msgid "Forum"
 msgstr "সভাস্থল"
 
-#: tcms/settings/common.py:343
+#: tcms/settings/common.py:344
 msgid "Report an Issue"
 msgstr "সমস্যার প্রতিবেদন করুন"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:345
 msgid "Ask for help on StackOverflow"
 msgstr "সাহায্য চাইতে StackOverflow"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:346
 msgid "Donate €5 via Open Collective"
 msgstr "ওপেন কালেক্টিভের মাধ্যমে 5 ডলার দান করুন"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:347
 msgid "Administration Guide"
 msgstr "প্রশাসন গাইড"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:348
 msgid "User Guide"
 msgstr "ব্যবহারকারীর নির্দেশিকা"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:349
 msgid "API Help"
 msgstr "API সহায়তা"
 
-#: tcms/signals.py:80
+#: tcms/signals.py:82
 msgid "New user awaiting approval"
 msgstr "নতুন ব্যবহারকারী অনুমোদনের অপেক্ষায়"
 
-#: tcms/signals.py:155
+#: tcms/signals.py:157
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "নতুন: TestRun #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:194
+#: tcms/signals.py:216
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
 msgstr "নতুন: Bug #%(pk)d - %(summary)s"
 
-#: tcms/telemetry/api.py:60
+#: tcms/telemetry/api.py:62
 msgid "OTHER"
 msgstr "অন্যান্য"
 
-#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
+#: tcms/telemetry/api.py:139 tcms/telemetry/api.py:193
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -1151,7 +1151,7 @@ msgid "print view of selected cases"
 msgstr "নির্বাচিত কেসের দৃশ্য মুদ্রণ করুন"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:526
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "ক্লোন"
@@ -1755,20 +1755,20 @@ msgstr "কমা সঙ্গে পৃথক একাধিক মান (,)"
 msgid "Created on"
 msgstr "তৈরির তারিখ"
 
-#: tcms/testcases/views.py:360
+#: tcms/testcases/views.py:363
 msgid "TestPlan not specified or does not exist"
 msgstr "টেস্টপ্ল্যান নির্দিষ্ট করা নেই বা থাকে না"
 
-#: tcms/testcases/views.py:523
+#: tcms/testcases/views.py:530
 msgid "History"
 msgstr "ইতিহাস"
 
-#: tcms/testcases/views.py:660
+#: tcms/testcases/views.py:668
 msgid "TestCase cloning was successful"
 msgstr "টেস্টকেস ক্লোনিং সফল হয়েছে"
 
-#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
-#: tcms/testruns/views.py:413
+#: tcms/testcases/views.py:694 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:416
 msgid "At least one TestCase is required"
 msgstr "কমপক্ষে একটি TestCase প্রয়োজন"
 
@@ -1846,15 +1846,15 @@ msgstr "টেস্ট প্ল্যানের নাম"
 msgid "Test plan"
 msgstr "পরীক্ষণ পরিকল্পনা"
 
-#: tcms/testplans/views.py:234
+#: tcms/testplans/views.py:237
 msgid "TestPlan is required"
 msgstr "TestPlan প্রয়োজন হয়"
 
-#: tcms/testplans/views.py:393
+#: tcms/testplans/views.py:398
 msgid "At least one test plan is required for print"
 msgstr "মুদ্রণের জন্য কমপক্ষে একটি পরীক্ষা পরিকল্পনা প্রয়োজন"
 
-#: tcms/testplans/views.py:401
+#: tcms/testplans/views.py:406
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "টেস্ট প্ল্যান \"%s\" থাকে না"
@@ -1929,15 +1929,15 @@ msgstr "একটি TestRun তৈরি করা একটি TestPlan প্
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "একটি TestRun তৈরি করে কমপক্ষে একটি TestCase প্রয়োজন"
 
-#: tcms/testruns/views.py:368
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "এর ক্লোন "
 
-#: tcms/testruns/views.py:422
+#: tcms/testruns/views.py:425
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID একটি বৈধ পূর্ণসংখ্যা নয়"
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:519
 msgid "The user you typed does not exist in database"
 msgstr "আপনার টাইপ করা ব্যবহারকারীর ডাটাবেজে উপস্থিত নেই"
 
@@ -2007,7 +2007,7 @@ msgstr ""
 msgid "Settings"
 msgstr "সেটিংস"
 
-#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
+#: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "অসমর্থিত GitHub App %d"
@@ -2022,24 +2022,29 @@ msgstr ""
 msgid "%s already exists"
 msgstr ""
 
-#: tcms_github_app/views.py:45
+#: tcms_github_app/views.py:48
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "আপনি GitHub অ্যাকাউন্টের মাধ্যমে লগ-ইন করেন নি! <a href=\"%s\">এখানে ক্লিক করুন</a>!"
 
-#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
+#: tcms_github_app/views.py:62
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "আপনি Kiwi TCMS আপনার GitHub অ্যাকাউন্টে ইনস্টল করেননি!<a href=\"%s\">এখানে ক্লিক করুন</a>!"
 
-#: tcms_github_app/views.py:73
+#: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
 msgstr "একাধিক GitHub অ্যাপ্লিকেশন ইনস্টলেশন সনাক্ত! নিচে দেখুন:"
 
-#: tcms_github_app/views.py:82
+#: tcms_github_app/views.py:85
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "GitHub App সম্পাদনা করুন <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:102
+#, python-format
+msgid "Cannot find GitHub App installation for tenant \"%s\""
+msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
