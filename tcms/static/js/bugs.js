@@ -14,12 +14,10 @@ function loadBugs(selector, filter) {
             },
             {
                 data: null,
-                render: function (data, type, full, meta) {
-                    return `<a href="#bugs" data-toggle="popover" data-html="true"
+                render: (data, type, full, meta) => `<a href="#bugs" data-toggle="popover" data-html="true"
                         data-content="undefined" data-trigger="focus" data-placement="top">
                         <span class="fa fa-info-circle"></span>
-                        </a>`;
-                }
+                        </a>`
             },
         ],
         dom: "t",
@@ -48,4 +46,22 @@ function loadBugs(selector, filter) {
                 element.target,
                 bugDetailsCache);
         });
+}
+
+function fetchBugDetails(source, popover, cache = bugDetailsCache) {
+    if (source.href in cache) {
+        assignPopoverData(source, popover, cache[source.href]);
+        return;
+    }
+
+    jsonRPC('Bug.details', [source.href], data => {
+        cache[source.href] = data;
+        assignPopoverData(source, popover, data);
+    }, true);
+}
+
+function assignPopoverData(source, popover, data) {
+    source.title = data.title;
+    $(popover).attr('data-original-title', data.title);
+    $(popover).attr('data-content', data.description);
 }
