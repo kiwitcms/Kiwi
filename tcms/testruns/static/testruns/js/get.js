@@ -131,12 +131,17 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
             isAutomatedElement.addClass(isAutomatedIcon)
             isAutomatedElement.attr('title', isAutomatedAttr)
 
-            jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id, 'is_defect': true }, bugs => {
-                listGroupItem.find('.test-execution-bugs-count').html(bugs.length)
+            jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id }, links => {
+                const bugCount = links.filter(link => link.is_defect).length;
+                listGroupItem.find('.test-execution-bugs-count').html(bugCount)
+
+                listGroupItem.find('.add-link-button').click(event => addLinkToExecution(event, testExecution))
+
+                const ul = listGroupItem.find('.test-execution-hyperlinks')
+                links.forEach(link => ul.append(renderLink(link)))
             })
         })
     })
-
 }
 
 function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
@@ -209,4 +214,59 @@ function fileBugFromExecution(run_id, title_container, container, case_id, execu
     });
 
     dialog.show();
+}
+
+function addLinkToExecution(event, testExecution) {
+
+    // remove all previous event handlers
+    $('.add-hyperlink-form').off('submit')
+
+    // this handler must be here, because if we bind it when the page is loaded.
+    // we have no way of knowing for what execution ID the form is submitted for.
+    $('.add-hyperlink-form').submit(() => {
+        const url = $('.add-hyperlink-form #id_url').val()
+        const name = $('.add-hyperlink-form #id_name').val()
+        const isDefect = $('.add-hyperlink-form #defectCheckbox').is(':checked')
+        const updateTracker = true
+
+        jsonRPC('TestExecution.add_link', [{
+            execution_id: testExecution.id,
+            url: url,
+            name: name,
+            is_defect: isDefect,
+        }, updateTracker], link => {
+            const testExecutionRow = $(event.target).closest(`.test-execution-${testExecution.id}`);
+            animate(testExecutionRow, () => {
+                const ul = $(`.test-execution-${testExecution.id} .test-execution-hyperlinks`)
+                ul.append(renderLink(link))
+            })
+
+
+            // clean the values
+            $('.add-hyperlink-form #id_url').val('')
+            $('.add-hyperlink-form #id_name').val('')
+            $('.add-hyperlink-form #defectCheckbox').bootstrapSwitch('state', false)
+            $('.add-hyperlink-form #autoUpdateCheckbox').bootstrapSwitch('state', false)
+
+            // close the modal
+            $('#add-link-modal button.close').click()
+        })
+
+        return false;
+    })
+
+
+    return true; // so that the modal is opened
+}
+
+function renderLink(link) {
+    const linkEntryTemplate = $('#link-entry')[0].content
+    const template = $(linkEntryTemplate.cloneNode(true))
+    if (link.is_defect) {
+        template.find('.link-icon').addClass('fa fa-bug')
+    }
+
+    template.find('.link-url').html(link.name || link.url)
+
+    return template
 }
