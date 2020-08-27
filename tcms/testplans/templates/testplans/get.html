@@ -17,6 +17,7 @@
               data-perm-remove-tag="{{ perms.testplans.delete_testplantag }}"
               data-perm-change-testcase="{{ perms.testcases.change_testcase }}"
               data-perm-remove-testcase="{{ perms.testcases.delete_testcaseplan }}"
+              data-perm-add-testcase="{{ perms.testcases.add_testcase }}"
               data-trans-default-tester-prompt-message="{% trans 'Please type new email or username' %}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
     </h1>
@@ -260,6 +261,9 @@
                             </li>
                             <li><a class="js-test-case-menu-edit">{% trans 'Edit' %}</a></li>
                             <li><a class="js-test-case-menu-tester">{% trans 'Default tester' %}</a></li>
+                        {% endif %}
+                        {% if perms.testcases.add_testcase %}
+                            <li><a class="js-test-case-menu-clone">{% trans 'Clone' %}</a></li>
                         {% endif %}
                         {% if perms.testcases.delete_testcaseplan %}
                             <li><a class="js-test-case-menu-delete">{% trans 'Delete' %}</a></li>
