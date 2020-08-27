@@ -257,7 +257,19 @@
                                                 <div>
                                                     <ul class="test-execution-hyperlinks"></ul>
                                                     <template id="link-entry">
-                                                        <li><span class="link-icon"></span><a class="link-url" href="${link.url}">${link.name || link.url}</a></li>
+                                                        <li>
+                                                            <span class="link-icon"></span>
+                                                            <a class="link-url"></a>
+                                                            <a href="#"
+                                                                class="bug-tooltip"
+                                                                style="visibility: hidden;"
+                                                                data-toggle="popover" data-html="true"
+                                                                data-content="undefined"
+                                                                data-trigger="focus"
+                                                                data-placement="right">
+                                                                <span class="fa fa-info-circle"></span>
+                                                            </a>
+                                                        </li>
                                                     </template>
                                                 </div>
                                             </div>
@@ -366,6 +378,7 @@
 <script src="{% static 'moment/min/moment.min.js' %}"></script>
 <script src="{% static 'moment-timezone/builds/moment-timezone-with-data.min.js' %}"></script>
 
+<script src="{% static 'js/bugs.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/tags.js' %}"></script>
