@@ -159,6 +159,7 @@ def add_link(values, update_tracker=False, **kwargs):
     tracker = tracker_from_url(link.url, request)
 
     if (link.is_defect and
+            tracker is not None and
             update_tracker and
             not tracker.is_adding_testcase_to_issue_disabled()) or \
             isinstance(tracker, KiwiTCMS):

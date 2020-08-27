@@ -188,6 +188,17 @@
                                         <div class="list-view-pf-checkbox" style="margin-top: 0; margin-bottom: 0">
                                             <input type="checkbox">
                                         </div>
+                                        <div class="list-view-pf-actions" style="margin-top: 0; margin-bottom: 0;">
+                                            <div class="dropdown pull-right dropdown-kebab-pf">
+                                                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownKebabRight9"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <span class="fa fa-ellipsis-v"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownKebabRight9">
+                                                    <li><a href="#" class="add-link-button" data-toggle="modal" data-target="#add-link-modal">{% trans 'Add hyperlink' %}</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="list-view-pf-body">
                                             <div class="list-view-pf-description" style="flex: 1 0 30%;">
                                                 <div class="list-group-item-text">
@@ -240,8 +251,12 @@
                                                 <p class="test-execution-notes">
                                                     <strong>{% trans 'Notes' %}:</strong>
                                                 </p>
+                                                <strong>{% trans "Bugs and hyperlinks" %}: </strong>
                                                 <div>
-                                                    {% comment %} TODO: bugs come here {% endcomment %}
+                                                    <ul class="test-execution-hyperlinks"></ul>
+                                                    <template id="link-entry">
+                                                        <li><span class="link-icon"></span><a class="link-url" href="${link.url}">${link.name || link.url}</a></li>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,6 +275,45 @@
             {% include 'include/attachments.html' %}
         </div>
     </div> <!-- /row -->
+</div>
+
+<div class="modal fade" id="add-link-modal" tabindex="-1" role="dialog" aria-labelledby="add-hyperlink-modal-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="add-hyperlink-modal-title">{% trans "Add hyperlink" %}</h4>
+      </div>
+      <form class="form-horizontal add-hyperlink-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="{{ link_form.url.id_for_label }}">{% trans "URL" %}</label>
+            <div class="col-sm-9">
+                <input type="url" name="{{ link_form.url.name }}" maxlength="{{ link_form.url.field.max_length }}" {% if link_form.url.field.required %}required{% endif %} id="{{ link_form.url.id_for_label }}" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="{{ link_form.name.id_for_label }}">{% trans "Name" %}</label>
+            <div class="col-sm-9">
+                <input type="text" name="{{ link_form.name.name }}" maxlength="{{ link_form.name.field.max_length }}" {% if link_form.name.field.required %}required{% endif %} id="{{ link_form.name.id_for_label }}" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 col-lg-3 col-sm-3 control-label" for="defectCheckbox">{% trans "Is a defect" %}</label>
+            <div class="col-md-3 col-lg-3 col-sm-3">
+                <input class="bootstrap-switch" type="checkbox" id="defectCheckbox" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans "Cancel" %}</button>
+            <button type="submit" class="btn btn-primary add-hyperlink-button">{% trans "Save" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
