@@ -11,7 +11,8 @@ $(document).ready(function() {
 
     const permissions = {
         'perm-change-testcase': $('#test_plan_pk').data('perm-change-testcase') === 'True',
-        'perm-remove-testcase': $('#test_plan_pk').data('perm-remove-testcase') === 'True'
+        'perm-remove-testcase': $('#test_plan_pk').data('perm-remove-testcase') === 'True',
+        'perm-add-testcase': $('#test_plan_pk').data('perm-add-testcase') === 'True'
     };
 
     // bind everything in tags table
@@ -60,10 +61,16 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
     row.find('.js-test-case-author').html(`${testCase.author}`);
     row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
 
-    // set the link in the kebab menu
+    // set the links in the kebab menu
     if (permissions['perm-change-testcase']) {
         row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit/`;
     }
+
+    if (permissions['perm-add-testcase']) {
+        row.find('.js-test-case-menu-clone')[0].href = `/cases/clone/?case=${testCase.id}`;
+    }
+
+
     //handle automated icon
     var automation_indication_element = row.find('.js-test-case-automated'),
         automated_class_to_remove = 'fa-cog';
