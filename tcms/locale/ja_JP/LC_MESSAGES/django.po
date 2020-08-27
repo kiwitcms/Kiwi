@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-27 10:08\n"
+"PO-Revision-Date: 2020-08-27 12:05\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -2049,7 +2049,7 @@ msgstr "GitHubアプリを編集 <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "テナント \"%s\" の GitHub アプリのインストールが見つかりません"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
