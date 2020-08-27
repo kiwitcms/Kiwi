@@ -21,6 +21,24 @@ $(document).ready(() => {
         }
     });
 
+    $('.add-hyperlink-bulk').click(() => {
+        const testExecutionIds = []
+        const allChecked = $('.test-execution-checkbox:checked')
+
+        if (!allChecked.length) {
+            const warningText = $('#test_run_pk').data('trans-no-executions-selected')
+            alert(warningText)
+            return false
+        }
+
+        allChecked.each((_index, checkbox) => {
+            const testExecutionId = $(checkbox).data('test-execution-id')
+            testExecutionIds.push(testExecutionId)
+        })
+
+        addLinkToExecutions(testExecutionIds)
+    })
+
     const permRemoveTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
 
     // bind everything in tags table
@@ -136,7 +154,7 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
                 const bugCount = links.filter(link => link.is_defect).length;
                 listGroupItem.find('.test-execution-bugs-count').html(bugCount)
 
-                listGroupItem.find('.add-link-button').click(() => addLinkToExecution(testExecution))
+                listGroupItem.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
                 listGroupItem.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
 
                 const ul = listGroupItem.find('.test-execution-hyperlinks')
@@ -168,6 +186,7 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
 }
 
 function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
+    template.find('.test-execution-checkbox').data('test-execution-id', testExecution.id)
     template.find('.list-group-item').addClass(`test-execution-${testExecution.id}`)
     template.find('.test-execution-info').html(`TE-${testExecution.id}`)
     template.find('.test-execution-info-link').html(testExecution.case)
@@ -237,8 +256,7 @@ function fileBugFromExecution(execution) {
     return true // so that the modal is opened
 }
 
-function addLinkToExecution(event, testExecution) {
-
+function addLinkToExecutions(testExecutionIDs) {
     // remove all previous event handlers
     $('.add-hyperlink-form').off('submit')
 
@@ -250,28 +268,29 @@ function addLinkToExecution(event, testExecution) {
         const isDefect = $('.add-hyperlink-form #defectCheckbox').is(':checked')
         const updateTracker = true
 
-        jsonRPC('TestExecution.add_link', [{
-            execution_id: testExecution.id,
-            url: url,
-            name: name,
-            is_defect: isDefect,
-        }, updateTracker], link => {
-            const testExecutionRow = $(event.target).closest(`.test-execution-${testExecution.id}`);
-            animate(testExecutionRow, () => {
-                const ul = $(`.test-execution-${testExecution.id} .test-execution-hyperlinks`)
-                ul.append(renderLink(link))
+        testExecutionIDs.forEach(testExecutionId => {
+            jsonRPC('TestExecution.add_link', [{
+                execution_id: testExecutionId,
+                url: url,
+                name: name,
+                is_defect: isDefect,
+            }, updateTracker], link => {
+                const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`);
+                animate(testExecutionRow, () => {
+                    const ul = testExecutionRow.find('.test-execution-hyperlinks')
+                    ul.append(renderLink(link))
+                })
             })
-
-
-            // clean the values
-            $('.add-hyperlink-form #id_url').val('')
-            $('.add-hyperlink-form #id_name').val('')
-            $('.add-hyperlink-form #defectCheckbox').bootstrapSwitch('state', false)
-            $('.add-hyperlink-form #autoUpdateCheckbox').bootstrapSwitch('state', false)
-
-            // close the modal
-            $('#add-link-modal button.close').click()
         })
+
+        // clean the values
+        $('.add-hyperlink-form #id_url').val('')
+        $('.add-hyperlink-form #id_name').val('')
+        $('.add-hyperlink-form #defectCheckbox').bootstrapSwitch('state', false)
+        $('.add-hyperlink-form #autoUpdateCheckbox').bootstrapSwitch('state', false)
+
+        // close the modal
+        $('#add-link-modal button.close').click()
 
         return false;
     })
