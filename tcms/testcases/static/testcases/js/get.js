@@ -225,23 +225,3 @@ $(document).ready(function() {
     // executions treeview
     treeViewBind();
 });
-
-
-function assignPopoverData(source, popover, data) {
-    source.title = data.title;
-    $(popover).attr('data-original-title', data.title);
-    $(popover).attr('data-content', data.description);
-}
-
-
-function fetchBugDetails(source, popover, cache) {
-    if (source.href in cache) {
-        assignPopoverData(source, popover, cache[source.href]);
-        return;
-    }
-
-    jsonRPC('Bug.details', [source.href], function(data) {
-        cache[source.href] = data;
-        assignPopoverData(source, popover, data);
-    }, true);
-}
