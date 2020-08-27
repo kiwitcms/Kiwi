@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-06 20:03+0000\n"
-"PO-Revision-Date: 2020-08-11 06:12\n"
+"POT-Creation-Date: 2020-08-27 10:05+0000\n"
+"PO-Revision-Date: 2020-08-27 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -227,28 +227,28 @@ msgstr "ID"
 msgid "Created at"
 msgstr "创建于"
 
-#: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:515
+#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:522
 msgid "Edit"
 msgstr "编辑"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
+#: tcms/bugs/views.py:41 tcms/testcases/views.py:535
 msgid "Delete"
 msgstr "删除"
 
-#: tcms/bugs/views.py:64
+#: tcms/bugs/views.py:66
 msgid "New bug"
 msgstr "新建缺陷"
 
-#: tcms/bugs/views.py:167
+#: tcms/bugs/views.py:169
 msgid "Edit bug"
 msgstr "编辑缺陷"
 
-#: tcms/bugs/views.py:197
+#: tcms/bugs/views.py:200
 msgid "*bug closed*"
 msgstr "*缺陷已关闭*"
 
-#: tcms/bugs/views.py:201
+#: tcms/bugs/views.py:204
 msgid "*bug reopened*"
 msgstr "*缺陷重新打开*"
 
@@ -285,15 +285,15 @@ msgstr "基本URL未配置！参见 <a href=\"%(doc_url)s\">documentation</a>  �
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr "您有 %(unapplied_migration_count)s 个未应用的迁移(s)。请参阅 <a href=\"%(doc_url)s\">文档</a>"
 
-#: tcms/kiwi_auth/admin.py:29
+#: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
 msgstr "该电子邮件地址已被使用。"
 
-#: tcms/kiwi_auth/admin.py:86
+#: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
 msgstr "个人信息"
 
-#: tcms/kiwi_auth/admin.py:87
+#: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
 msgstr "权限"
 
@@ -306,31 +306,31 @@ msgstr "已存在使用相同电子邮件的地址的用户。"
 msgid "Your new %s account confirmation"
 msgstr "你的新帐户  %s  确认"
 
-#: tcms/kiwi_auth/views.py:52
+#: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "您的账户已创建，请检查您的收件箱进行确认"
 
-#: tcms/kiwi_auth/views.py:55
+#: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "您的账户已创建，但您需要管理员来激活它"
 
-#: tcms/kiwi_auth/views.py:58
+#: tcms/kiwi_auth/views.py:57
 msgid "Following is the administrator list"
 msgstr "以下是管理员列表"
 
-#: tcms/kiwi_auth/views.py:99
+#: tcms/kiwi_auth/views.py:98
 msgid "This activation key no longer exists in the database"
 msgstr "此激活密钥不再存于数据库中"
 
-#: tcms/kiwi_auth/views.py:104
+#: tcms/kiwi_auth/views.py:103
 msgid "This activation key has expired"
 msgstr "此激活密钥已过期"
 
-#: tcms/kiwi_auth/views.py:115
+#: tcms/kiwi_auth/views.py:114
 msgid "Your account has been activated successfully"
 msgstr "您的账户已被成功激活"
 
-#: tcms/rpc/api/bug.py:63
+#: tcms/rpc/api/bug.py:68
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "通过配置 base_url 来使能 [ 报告给这个问题追踪器 ]"
 
@@ -343,134 +343,134 @@ msgstr "日期格式无效。预期为 YYYY-MM-DD [HH:MM:SS]。"
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "%s 没有主键。你必须手动指定此类字段。"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "DASHBOARD"
 msgstr "仪表盘"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "TESTING"
 msgstr "测试"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:303
 msgid "New Test Plan"
 msgstr "新建测试计划"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "New Test Case"
 msgstr "新建测试用例"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "New Bug"
 msgstr "新建缺陷"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:311
 msgid "Search Test Plans"
 msgstr "搜索测试计划"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:312
 msgid "Search Test Runs"
 msgstr "搜索测试执行"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:313
 msgid "Search Test Cases"
 msgstr "搜索测试用例"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:314
 msgid "Search Bugs"
 msgstr "搜索缺陷"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:317
 msgid "TELEMETRY"
 msgstr "音效"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Testing"
 msgstr "测试中"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:319
 msgid "Breakdown"
 msgstr "分解"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "Status matrix"
 msgstr "状态表"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:321
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "执行趋势"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:322
 msgid "TestCase health"
 msgstr "测试案例健康"
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:327
 msgid "ADMIN"
 msgstr "管理员"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:328
 msgid "Users and groups"
 msgstr "用户和用户组"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:330
 msgid "Everything else"
 msgstr "管理其他事项"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "PLUGINS"
 msgstr "插件"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:343
 msgid "Forum"
 msgstr "论坛"
 
-#: tcms/settings/common.py:343
+#: tcms/settings/common.py:344
 msgid "Report an Issue"
 msgstr "反馈问题"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:345
 msgid "Ask for help on StackOverflow"
 msgstr "在StackOflow上寻求帮助"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:346
 msgid "Donate €5 via Open Collective"
 msgstr "通过开放集体捐赠5欧元"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:347
 msgid "Administration Guide"
 msgstr "管理员指南"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:348
 msgid "User Guide"
 msgstr "用户指南"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:349
 msgid "API Help"
 msgstr "API 参考"
 
-#: tcms/signals.py:80
+#: tcms/signals.py:82
 msgid "New user awaiting approval"
 msgstr "等待审批通过的新用户"
 
-#: tcms/signals.py:155
+#: tcms/signals.py:157
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NEW: 测试执行 #%(pk)d - - %(summary)s"
 
-#: tcms/signals.py:194
+#: tcms/signals.py:216
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
 msgstr "NEW: Bug #%(pk)d - %(summary)s"
 
-#: tcms/telemetry/api.py:60
+#: tcms/telemetry/api.py:62
 msgid "OTHER"
 msgstr "其他"
 
-#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
+#: tcms/telemetry/api.py:139 tcms/telemetry/api.py:193
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -1153,7 +1153,7 @@ msgid "print view of selected cases"
 msgstr "选定用例的打印视图"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:526
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "克隆"
@@ -1757,20 +1757,20 @@ msgstr "使用逗号隔开多个值"
 msgid "Created on"
 msgstr "创建于"
 
-#: tcms/testcases/views.py:360
+#: tcms/testcases/views.py:363
 msgid "TestPlan not specified or does not exist"
 msgstr "测试计划未指定或不存在"
 
-#: tcms/testcases/views.py:523
+#: tcms/testcases/views.py:530
 msgid "History"
 msgstr "历史"
 
-#: tcms/testcases/views.py:660
+#: tcms/testcases/views.py:668
 msgid "TestCase cloning was successful"
 msgstr "测试实例克隆成功"
 
-#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
-#: tcms/testruns/views.py:413
+#: tcms/testcases/views.py:694 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:416
 msgid "At least one TestCase is required"
 msgstr "需要至少一个测试实例"
 
@@ -1848,15 +1848,15 @@ msgstr "测试计划名"
 msgid "Test plan"
 msgstr "测试计划"
 
-#: tcms/testplans/views.py:234
+#: tcms/testplans/views.py:237
 msgid "TestPlan is required"
 msgstr "需要测试计划"
 
-#: tcms/testplans/views.py:393
+#: tcms/testplans/views.py:398
 msgid "At least one test plan is required for print"
 msgstr "需要至少一个测试计划进行打印"
 
-#: tcms/testplans/views.py:401
+#: tcms/testplans/views.py:406
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "测试计划 \"%s\" 不存在"
@@ -1933,15 +1933,15 @@ msgstr "创建一个测试执行需要一个测试计划，请选择一个"
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "新建测试计划至少需要一个测试实例"
 
-#: tcms/testruns/views.py:368
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "克隆来自 "
 
-#: tcms/testruns/views.py:422
+#: tcms/testruns/views.py:425
 msgid "TestCase ID is not a valid integer"
 msgstr "测试实例编号不是有效的整数"
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:519
 msgid "The user you typed does not exist in database"
 msgstr "您指定的计划不存在数据库中。"
 
@@ -2012,7 +2012,7 @@ msgstr "重新同步"
 msgid "Settings"
 msgstr "设置"
 
-#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
+#: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "未配置 GitHub 应用程序 %d"
@@ -2027,24 +2027,29 @@ msgstr "%s 已从 GitHub 导入"
 msgid "%s already exists"
 msgstr "%s 已存在"
 
-#: tcms_github_app/views.py:45
+#: tcms_github_app/views.py:48
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "您尚未通过 GitHub 帐户登录！ <a href=\"%s\">点击这里</a>！"
 
-#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
+#: tcms_github_app/views.py:62
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "您还没有在 GitHub 账户中安装 Kiwi TCMS ！ <a href=\"%s\">点击这里</a>！"
 
-#: tcms_github_app/views.py:73
+#: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
 msgstr "检测到多个GitHub 应用程序安装！请参阅下面："
 
-#: tcms_github_app/views.py:82
+#: tcms_github_app/views.py:85
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "Edit GitHub App <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:102
+#, python-format
+msgid "Cannot find GitHub App installation for tenant \"%s\""
+msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
