@@ -303,9 +303,17 @@ function renderLink(link) {
     const template = $(linkEntryTemplate.cloneNode(true))
     if (link.is_defect) {
         template.find('.link-icon').addClass('fa fa-bug')
+        const bugTooltip = template.find('.bug-tooltip')
+        bugTooltip.css('visibility', 'visible')
+
+        template.find('[data-toggle=popover]')
+            .popovers()
+            .on('show.bs.popover', () => fetchBugDetails({ href: link.url }, bugTooltip))
     }
 
-    template.find('.link-url').html(link.name || link.url)
+    const linkUrlEl = template.find('.link-url')
+    linkUrlEl.html(link.name || link.url)
+    linkUrlEl.attr('href', link.url)
 
     return template
 }
