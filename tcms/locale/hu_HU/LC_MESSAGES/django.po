@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-06 20:03+0000\n"
-"PO-Revision-Date: 2020-08-07 07:32\n"
+"POT-Creation-Date: 2020-08-27 10:05+0000\n"
+"PO-Revision-Date: 2020-08-27 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -227,28 +227,28 @@ msgstr "ID"
 msgid "Created at"
 msgstr "Létrehozva: "
 
-#: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:515
+#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:522
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
+#: tcms/bugs/views.py:41 tcms/testcases/views.py:535
 msgid "Delete"
 msgstr "Törlés"
 
-#: tcms/bugs/views.py:64
+#: tcms/bugs/views.py:66
 msgid "New bug"
 msgstr "Új hibajegy"
 
-#: tcms/bugs/views.py:167
+#: tcms/bugs/views.py:169
 msgid "Edit bug"
 msgstr "Hibajegy szerkesztése"
 
-#: tcms/bugs/views.py:197
+#: tcms/bugs/views.py:200
 msgid "*bug closed*"
 msgstr "*hibajegy lezárva*"
 
-#: tcms/bugs/views.py:201
+#: tcms/bugs/views.py:204
 msgid "*bug reopened*"
 msgstr "*hibajegy újranyitva*"
 
@@ -285,15 +285,15 @@ msgstr "Az alap URL nincs beállítva! Lásd a <a href=\"%(doc_url)s\">dokument�
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr "%(unapplied_migration_count)s nem alkalmazott migrációd van. Lásd a<a href=\"%(doc_url)s\">dokumentációt</a>"
 
-#: tcms/kiwi_auth/admin.py:29
+#: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
 msgstr "Ez az email cím már használatban van"
 
-#: tcms/kiwi_auth/admin.py:86
+#: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
 msgstr "Személyes adatok"
 
-#: tcms/kiwi_auth/admin.py:87
+#: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
 msgstr "Jogosultságok"
 
@@ -306,31 +306,31 @@ msgstr "Már létezik felhasználó ezzel az email címmel."
 msgid "Your new %s account confirmation"
 msgstr "Az új %s fiókod megerősítése"
 
-#: tcms/kiwi_auth/views.py:52
+#: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "A fiókod létrehozva, a megerősítésért ellenőrizd a levelesládádat"
 
-#: tcms/kiwi_auth/views.py:55
+#: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "A fiókod létrehozva, de egy adminisztrátornak aktiválnia kell"
 
-#: tcms/kiwi_auth/views.py:58
+#: tcms/kiwi_auth/views.py:57
 msgid "Following is the administrator list"
 msgstr "Rendszergazda lista"
 
-#: tcms/kiwi_auth/views.py:99
+#: tcms/kiwi_auth/views.py:98
 msgid "This activation key no longer exists in the database"
 msgstr "Az aktiválási kulcs már nem létezik az adatbázisban"
 
-#: tcms/kiwi_auth/views.py:104
+#: tcms/kiwi_auth/views.py:103
 msgid "This activation key has expired"
 msgstr "Ez az aktivációs kulcs elévült"
 
-#: tcms/kiwi_auth/views.py:115
+#: tcms/kiwi_auth/views.py:114
 msgid "Your account has been activated successfully"
 msgstr "A fiók sikeresen aktiválva"
 
-#: tcms/rpc/api/bug.py:63
+#: tcms/rpc/api/bug.py:68
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Engedélyezd a jelentést ehhez a problémakövetőhöz a base_url konfigurálásával!"
 
@@ -343,134 +343,134 @@ msgstr "Érvénytelen dátumformátum. Az elvárt formátum: YYYY-MM-DD [HH:MM:S
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Nincs elsődleges kulcs ehhez a modellhez: %s. Ezt a mezőt kézzel kell megadni."
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "DASHBOARD"
 msgstr "VEZÉRLŐPULT"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "TESTING"
 msgstr "TESZTELÉS"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:303
 msgid "New Test Plan"
 msgstr "Új tesztterv"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "New Test Case"
 msgstr "Új teszteset"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "New Bug"
 msgstr "Új hibajegy"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "SEARCH"
 msgstr "KERESÉS"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:311
 msgid "Search Test Plans"
 msgstr "Teszttervek keresése"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:312
 msgid "Search Test Runs"
 msgstr "Teszt futtatások keresése"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:313
 msgid "Search Test Cases"
 msgstr "Tesztesetek keresése"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:314
 msgid "Search Bugs"
 msgstr "Hibajegyek keresése"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:317
 msgid "TELEMETRY"
 msgstr "TELEMETRIA"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Testing"
 msgstr "Tesztelés"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:319
 msgid "Breakdown"
 msgstr "Üzemzavar"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "Status matrix"
 msgstr "Állapot mátrix"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:321
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Végrehajtási trendek"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:322
 msgid "TestCase health"
 msgstr "Teszteset állapota"
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:327
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:328
 msgid "Users and groups"
 msgstr "Felhasználók és csoportok"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:330
 msgid "Everything else"
 msgstr "Minden más"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "PLUGINS"
 msgstr "BŐVÍTMÉNYEK"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:343
 msgid "Forum"
 msgstr "Fórum"
 
-#: tcms/settings/common.py:343
+#: tcms/settings/common.py:344
 msgid "Report an Issue"
 msgstr "Hibabejelentés"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:345
 msgid "Ask for help on StackOverflow"
 msgstr "Segítségkérés StackOverflow-on keresztül"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:346
 msgid "Donate €5 via Open Collective"
 msgstr "€5 támogatás az Open Collective-en keresztül"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:347
 msgid "Administration Guide"
 msgstr "Adminisztrációs útmutató"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:348
 msgid "User Guide"
 msgstr "Felhasználói útmutató"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:349
 msgid "API Help"
 msgstr "API súgó"
 
-#: tcms/signals.py:80
+#: tcms/signals.py:82
 msgid "New user awaiting approval"
 msgstr "Új felhasználó jóváhagyásra vár"
 
-#: tcms/signals.py:155
+#: tcms/signals.py:157
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "ÚJ: Teszt futtatás #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:194
+#: tcms/signals.py:216
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
 msgstr "ÚJ: Hibajegy #%(pk)d - %(summary)s"
 
-#: tcms/telemetry/api.py:60
+#: tcms/telemetry/api.py:62
 msgid "OTHER"
 msgstr "EGYÉB"
 
-#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
+#: tcms/telemetry/api.py:139 tcms/telemetry/api.py:193
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -1151,7 +1151,7 @@ msgid "print view of selected cases"
 msgstr "kiválasztott esetek nyomtatási nézete"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:526
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Klónozás"
@@ -1755,20 +1755,20 @@ msgstr "Több érték elválasztása vesszővel (,)"
 msgid "Created on"
 msgstr "Létrehozva"
 
-#: tcms/testcases/views.py:360
+#: tcms/testcases/views.py:363
 msgid "TestPlan not specified or does not exist"
 msgstr "Tesztterv nincs megadva vagy nem létezik"
 
-#: tcms/testcases/views.py:523
+#: tcms/testcases/views.py:530
 msgid "History"
 msgstr "Előzmények"
 
-#: tcms/testcases/views.py:660
+#: tcms/testcases/views.py:668
 msgid "TestCase cloning was successful"
 msgstr "A teszteset klónozása sikeres volt"
 
-#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
-#: tcms/testruns/views.py:413
+#: tcms/testcases/views.py:694 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:416
 msgid "At least one TestCase is required"
 msgstr "Legalább egy teszteset szükséges"
 
@@ -1846,15 +1846,15 @@ msgstr "Tesztterv neve"
 msgid "Test plan"
 msgstr "Tesztterv"
 
-#: tcms/testplans/views.py:234
+#: tcms/testplans/views.py:237
 msgid "TestPlan is required"
 msgstr "Tesztterv szükséges"
 
-#: tcms/testplans/views.py:393
+#: tcms/testplans/views.py:398
 msgid "At least one test plan is required for print"
 msgstr "A nyomtatáshoz legalább egy tesztterv szükséges"
 
-#: tcms/testplans/views.py:401
+#: tcms/testplans/views.py:406
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "\"%s\" tesztterv nem létezik"
@@ -1931,15 +1931,15 @@ msgstr "Teszt futtatáshoz szükséges egy tesztterv, ki kell választani egyet"
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
 
-#: tcms/testruns/views.py:368
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "Klónozva a "
 
-#: tcms/testruns/views.py:422
+#: tcms/testruns/views.py:425
 msgid "TestCase ID is not a valid integer"
 msgstr "A teszteset ID nem érvényes egész szám"
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:519
 msgid "The user you typed does not exist in database"
 msgstr "A megadott felhasználó nem létezik az adatbázisban"
 
@@ -2010,7 +2010,7 @@ msgstr "Újraszinkronizálás"
 msgid "Settings"
 msgstr "Beállítások"
 
-#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
+#: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "Nem konfigurált GitHub App %d"
@@ -2025,24 +2025,29 @@ msgstr "%s lett importálva a GitHub-ról"
 msgid "%s already exists"
 msgstr "%s már létezik"
 
-#: tcms_github_app/views.py:45
+#: tcms_github_app/views.py:48
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "Még nem jelentkeztél be GitHub fiókkal! <a href=\"%s\">Kattints ide </a>!"
 
-#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
+#: tcms_github_app/views.py:62
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "A Kiwi TCMS még nincs telepítve a GitHub-fiókba! <a href=\"%s\">Kattints ide </a>!"
 
-#: tcms_github_app/views.py:73
+#: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
 msgstr "Több GitHub App telepítés észlelve! Lásd alább:"
 
-#: tcms_github_app/views.py:82
+#: tcms_github_app/views.py:85
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "A GitHub App szerkesztése <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:102
+#, python-format
+msgid "Cannot find GitHub App installation for tenant \"%s\""
+msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
