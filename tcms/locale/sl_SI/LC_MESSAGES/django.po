@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-06 20:03+0000\n"
-"PO-Revision-Date: 2020-08-11 07:46\n"
+"POT-Creation-Date: 2020-08-27 10:05+0000\n"
+"PO-Revision-Date: 2020-08-27 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -227,28 +227,28 @@ msgstr "ID"
 msgid "Created at"
 msgstr "Ustvarjeno"
 
-#: tcms/bugs/views.py:34 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:515
+#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:522
 msgid "Edit"
 msgstr "Uredi"
 
-#: tcms/bugs/views.py:39 tcms/testcases/views.py:528
+#: tcms/bugs/views.py:41 tcms/testcases/views.py:535
 msgid "Delete"
 msgstr "Izbriši"
 
-#: tcms/bugs/views.py:64
+#: tcms/bugs/views.py:66
 msgid "New bug"
 msgstr "Vnesi napako"
 
-#: tcms/bugs/views.py:167
+#: tcms/bugs/views.py:169
 msgid "Edit bug"
 msgstr "Uredi napako"
 
-#: tcms/bugs/views.py:197
+#: tcms/bugs/views.py:200
 msgid "*bug closed*"
 msgstr "*napaka zaprta*"
 
-#: tcms/bugs/views.py:201
+#: tcms/bugs/views.py:204
 msgid "*bug reopened*"
 msgstr "*napaka je ponovno odprta*"
 
@@ -285,15 +285,15 @@ msgstr "URL aplikacije ni nastavljen! <a href=\"%(doc_url)s\">Preverite dokument
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr "Imate %(unapplied_migration_count)s neizvedenih migracij(). Več informacij na voljo v <a href=\"%(doc_url)s\">dokumentaciji</a>"
 
-#: tcms/kiwi_auth/admin.py:29
+#: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
 msgstr "Ta e-poštni naslov je že v uporabi"
 
-#: tcms/kiwi_auth/admin.py:86
+#: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
 msgstr "Osebne informacije"
 
-#: tcms/kiwi_auth/admin.py:87
+#: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
 msgstr "Dovoljenja"
 
@@ -306,31 +306,31 @@ msgstr "Uporabnik s tem e-mail naslovom že obstaja."
 msgid "Your new %s account confirmation"
 msgstr "Informacije o uporabniškem računu %s ."
 
-#: tcms/kiwi_auth/views.py:52
+#: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik za potrditveno povezavo preko katere ga aktivirate"
 
-#: tcms/kiwi_auth/views.py:55
+#: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še administrator"
 
-#: tcms/kiwi_auth/views.py:58
+#: tcms/kiwi_auth/views.py:57
 msgid "Following is the administrator list"
 msgstr "Seznam administratorjev"
 
-#: tcms/kiwi_auth/views.py:99
+#: tcms/kiwi_auth/views.py:98
 msgid "This activation key no longer exists in the database"
 msgstr "Aktivacijska koda ne obstaja več v bazi"
 
-#: tcms/kiwi_auth/views.py:104
+#: tcms/kiwi_auth/views.py:103
 msgid "This activation key has expired"
 msgstr "Aktivacijska koda je potekla"
 
-#: tcms/kiwi_auth/views.py:115
+#: tcms/kiwi_auth/views.py:114
 msgid "Your account has been activated successfully"
 msgstr "Vaš račun je bil uspešno aktiviran"
 
-#: tcms/rpc/api/bug.py:63
+#: tcms/rpc/api/bug.py:68
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Potrebno je nastaviti Url sistema za beleženje napak!"
 
@@ -343,134 +343,134 @@ msgstr "Neveljaven format vnesenega datuma. Pričakovan format: LLLL-MM-DD [UU:M
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Model %s nima primarnega ključa. Polje bo potrebno ročno dodati."
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "DASHBOARD"
 msgstr "NADZORNA PLOŠČA"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "TESTING"
 msgstr "TESTIRANJE"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:303
 msgid "New Test Plan"
 msgstr "Nova baza testnih scenarijev"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "New Test Case"
 msgstr "Nov testni scenarij"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "New Bug"
 msgstr "Vnesi napako"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "SEARCH"
 msgstr "ISKANJE"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:311
 msgid "Search Test Plans"
 msgstr "Iskanje baz testnih scenarijev"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:312
 msgid "Search Test Runs"
 msgstr "Iskanje testiranj"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:313
 msgid "Search Test Cases"
 msgstr "Iskanje testnih scenarijev"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:314
 msgid "Search Bugs"
 msgstr "Poišči napako"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:317
 msgid "TELEMETRY"
 msgstr "TELEMETRIJA"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Testing"
 msgstr "Testiranje"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:319
 msgid "Breakdown"
 msgstr "Razčlenitev"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "Status matrix"
 msgstr "Matrika statusov"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:321
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Pregled zgodovine testiranj"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:322
 msgid "TestCase health"
 msgstr "Zdravje testnih scenarijev"
 
-#: tcms/settings/common.py:326
+#: tcms/settings/common.py:327
 msgid "ADMIN"
 msgstr "ADMINISTRACIJA"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:328
 msgid "Users and groups"
 msgstr "Uporabniki in skupine"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:330
 msgid "Everything else"
 msgstr "Ostalo"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "PLUGINS"
 msgstr "VTIČNIKI"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:343
 msgid "Forum"
 msgstr "Forum"
 
-#: tcms/settings/common.py:343
+#: tcms/settings/common.py:344
 msgid "Report an Issue"
 msgstr "Prijavi težavo"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:345
 msgid "Ask for help on StackOverflow"
 msgstr "Postavite vprašanje glede uporabe Kiwi TCMS na StackOverflow"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:346
 msgid "Donate €5 via Open Collective"
 msgstr "Prispevajte 5€ preko Open Collective"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:347
 msgid "Administration Guide"
 msgstr "Priročnik za administratorje"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:348
 msgid "User Guide"
 msgstr "Uporabniški priročnik"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:349
 msgid "API Help"
 msgstr "Pomoč za API"
 
-#: tcms/signals.py:80
+#: tcms/signals.py:82
 msgid "New user awaiting approval"
 msgstr "Nov uporabnik - potrebna potrditev uporabniškega računa"
 
-#: tcms/signals.py:155
+#: tcms/signals.py:157
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:194
+#: tcms/signals.py:216
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
 msgstr "NOVO: Napaka #%(pk)d - %(summary)s"
 
-#: tcms/telemetry/api.py:60
+#: tcms/telemetry/api.py:62
 msgid "OTHER"
 msgstr "DRUGO"
 
-#: tcms/telemetry/api.py:135 tcms/telemetry/api.py:189
+#: tcms/telemetry/api.py:139 tcms/telemetry/api.py:193
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/templates/run/status_statistics.html:8
@@ -1152,7 +1152,7 @@ msgid "print view of selected cases"
 msgstr "natisni izbrane testne scenarije"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:519
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:526
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "Podvoji"
@@ -1756,20 +1756,20 @@ msgstr "Ločite več oznak z vejicami (,)"
 msgid "Created on"
 msgstr "Ustvarjeno dne"
 
-#: tcms/testcases/views.py:360
+#: tcms/testcases/views.py:363
 msgid "TestPlan not specified or does not exist"
 msgstr "Baza testnih scenarijev ni izbrana ali ne obstaja"
 
-#: tcms/testcases/views.py:523
+#: tcms/testcases/views.py:530
 msgid "History"
 msgstr "Zgodovina"
 
-#: tcms/testcases/views.py:660
+#: tcms/testcases/views.py:668
 msgid "TestCase cloning was successful"
 msgstr "Kloniranje testnega scenarija je uspelo"
 
-#: tcms/testcases/views.py:686 tcms/testruns/views.py:364
-#: tcms/testruns/views.py:413
+#: tcms/testcases/views.py:694 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:416
 msgid "At least one TestCase is required"
 msgstr "Vsaj en testni scenarij je zahtevan"
 
@@ -1847,15 +1847,15 @@ msgstr "Naziv baze testni scenarijev"
 msgid "Test plan"
 msgstr "Baza testni scenarijev"
 
-#: tcms/testplans/views.py:234
+#: tcms/testplans/views.py:237
 msgid "TestPlan is required"
 msgstr "Baza testnih scenarijev je obvezna"
 
-#: tcms/testplans/views.py:393
+#: tcms/testplans/views.py:398
 msgid "At least one test plan is required for print"
 msgstr "Za tiskanje je potrebno izbrati vsaj eno bazo testnih scenarijev"
 
-#: tcms/testplans/views.py:401
+#: tcms/testplans/views.py:406
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Testiranje \"%s\" ne obstaja"
@@ -1932,15 +1932,15 @@ msgstr "V kolikor želite kreirati novo testiranje morate imeti ustvarjeno bazo 
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "V kolikor želite kreirati novo testiranje morate dodati najmanj en testni scenarij"
 
-#: tcms/testruns/views.py:368
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "Klon "
 
-#: tcms/testruns/views.py:422
+#: tcms/testruns/views.py:425
 msgid "TestCase ID is not a valid integer"
 msgstr "ID testnega scenarija ni celo število"
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:519
 msgid "The user you typed does not exist in database"
 msgstr "Navedeni uporabnik ne obstaja v sistemu"
 
@@ -2011,7 +2011,7 @@ msgstr "Ponovna sinhronizacija"
 msgid "Settings"
 msgstr "Nastavitve"
 
-#: tcms_github_app/middleware.py:41 tcms_github_app/views.py:120
+#: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
 msgstr "Nepravilno nastavljena GitHub aplikacija %d"
@@ -2026,24 +2026,29 @@ msgstr "%s je bil uvožen z GitHub-a"
 msgid "%s already exists"
 msgstr "%s že obstaja"
 
-#: tcms_github_app/views.py:45
+#: tcms_github_app/views.py:48
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "Niste prijavljeni z GitHub računom! <a href=\"%s\">Kliknite tukaj</a>!"
 
-#: tcms_github_app/views.py:59 tcms_github_app/views.py:101
+#: tcms_github_app/views.py:62
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
 msgstr "Kiwi TCMS ni nameščen preko vašega GitHub računa! <a href=\"%s\">Kliknite tukaj</a>!"
 
-#: tcms_github_app/views.py:73
+#: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
 msgstr "Zaznanih je več namestitev GitHub aplikacije! Glejte spodaj:"
 
-#: tcms_github_app/views.py:82
+#: tcms_github_app/views.py:85
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
 msgstr "Uredite GitHub aplikacijo <a href=\"%s\">%s</a>"
+
+#: tcms_github_app/views.py:102
+#, python-format
+msgid "Cannot find GitHub App installation for tenant \"%s\""
+msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
