@@ -165,3 +165,5 @@ function treeViewBind() {
 }
 
 const currentTimeWithTimezone = timeZone => moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
+
+const animate = (target, handler, time = 500) => target.fadeOut(time, handler).fadeIn(time)
