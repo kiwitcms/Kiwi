@@ -15,6 +15,7 @@
         <span id="test_run_pk"
             data-pk="{{ object.pk }}"
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
+            data-trans-no-executions-selected="{% trans 'No executions selected! Please select at least one execution!'%}"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
@@ -161,7 +162,7 @@
                                         </ul>
                                     </div>
                                     <button type="button" class="btn btn-default">{% trans "Add comment" %}</button>
-                                    <button type="button" class="btn btn-default">{% trans "Add hyperlink" %}</button>
+                                    <button type="button" class="btn btn-default add-hyperlink-bulk " data-toggle="modal" data-target="#add-link-modal">{% trans "Add hyperlink" %}</button>
                                 </div>
                             </form>
                             <div class="row toolbar-pf-results">
@@ -186,7 +187,7 @@
                                             <span class="fa fa-angle-right"></span>
                                         </div>
                                         <div class="list-view-pf-checkbox" style="margin-top: 0; margin-bottom: 0">
-                                            <input type="checkbox">
+                                            <input type="checkbox" class="test-execution-checkbox">
                                         </div>
                                         <div class="list-view-pf-actions" style="margin-top: 0; margin-bottom: 0;">
                                             <div class="dropdown pull-right dropdown-kebab-pf">
