@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-28 07:22\n"
+"PO-Revision-Date: 2020-08-28 07:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2039,7 +2039,7 @@ msgstr "你還沒有在 GitHub 帳號中安裝 Kiwi TCMS ！ <a href=\"%s\">點�
 
 #: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr "檢查到多個GitHub 應用程式安裝！請參考下列："
+msgstr "檢查到多個 GitHub 應用程式安裝！請參考下列："
 
 #: tcms_github_app/views.py:85
 #, python-format
@@ -2053,7 +2053,7 @@ msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr "檢測到重複安裝的 GitHub App!"
+msgstr "檢查到多個 GitHub 應用程式安裝！"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
