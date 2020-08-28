@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-28 07:12\n"
+"PO-Revision-Date: 2020-08-28 07:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -538,7 +538,7 @@ msgstr "測試狀態矩陣表"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 msgid "Include child TPs"
-msgstr ""
+msgstr "包含子測試計畫"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
@@ -1002,7 +1002,7 @@ msgstr "進入翻譯模式"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr "進入翻譯模式"
+msgstr "翻譯指南"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -2006,7 +2006,7 @@ msgstr "GitHub 整合"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "重新同步"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -2053,7 +2053,7 @@ msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "檢測到重複安裝的 GitHub App!"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -2111,11 +2111,11 @@ msgstr "訂閱"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
-msgstr ""
+msgstr "直接使用 Kiwi TCMS"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
 msgid "via GitHub Marketplace"
-msgstr ""
+msgstr "經由 GitHub 市集"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
