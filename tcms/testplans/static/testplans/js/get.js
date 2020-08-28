@@ -1,10 +1,7 @@
 var expandedTestCaseIds = [],
     fadeAnimationTime = 500;
 
-const allTestCases = {
-    'confirmed': {},
-    'not_confirmed': {}
-};
+const allTestCases = {};
 
 $(document).ready(function() {
     const testPlanId = $('#test_plan_pk').data('testplanPk');
@@ -22,14 +19,9 @@ $(document).ready(function() {
     jsonRPC('TestCase.filter', [{'plan': testPlanId}], function(data) {
         for (var i = 0; i < data.length; i++) {
             var testCase = data[i];
-            //todo: refactor when testcase_status is replaced with boolean flag
-            if (testCase.case_status_id === 2) {
-                allTestCases.confirmed[testCase.id] = testCase;
-            } else {
-                allTestCases.not_confirmed[testCase.id] = testCase;
-            }
+                allTestCases[testCase.id] = testCase;
         }
-        drawTestCases(allTestCases.confirmed, testPlanId, permissions);
+        drawTestCases(allTestCases, testPlanId, permissions);
         treeViewBind();
     });
 
@@ -37,7 +29,7 @@ $(document).ready(function() {
 });
 
 function drawTestCases(testCases, testPlanId, permissions) {
-    var container = $('#confirmed-testcases'),
+    var container = $('#testcases-list'),
         noCasesTemplate = $('#no_test_cases'),
         testCaseRowDocumentFragment = $('#test_case_row')[0].content;
 
@@ -157,15 +149,11 @@ function attachEvents(testCases, testPlanId, permissions) {
         $('.js-test-case-menu-status').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function(tc) {
-                //todo: refactor when testcase_status is replaced with boolean flag
-                if (tc.case_status_id !== 2) {
-                    delete allTestCases.confirmed[testCaseId];
-                    allTestCases.not_confirmed[testCaseId] = tc;
-                    $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
-                        $(this).remove();
-                    });
-                }
+            jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function() {
+                // todo show the case as not confirmed
+                $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
+                    $(this).remove();
+                });
             });
         });
     }
