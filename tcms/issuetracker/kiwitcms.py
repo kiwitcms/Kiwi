@@ -34,7 +34,9 @@ class KiwiTCMS(IssueTrackerType):
             Provide more details from our own bug tracker!
         """
         bug_id = self.bug_id_from_url(url)
-        bug = Bug.objects.get(pk=bug_id)
+        bug = Bug.objects.filter(pk=bug_id).first()
+        if not bug:
+            return {}
 
         result = {
             'title': bug.summary,

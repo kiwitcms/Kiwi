@@ -39,11 +39,12 @@ class TestKiwiTCMSIntegration(APITestCase):
                                           product=self.execution_1.run.plan.product)
         self.execution_1.case.add_component(self.component)
 
+        self.base_url = "https://%s" % Site.objects.get(id=settings.SITE_ID).domain
+        # note: ^^^ this is https just because .get_full_url() default to that !
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name='KiwiTCMS internal bug tracker',
             tracker_type='tcms.issuetracker.types.KiwiTCMS',
-            base_url="https://%s" % Site.objects.get(id=settings.SITE_ID).domain,
-            # note: ^^^ this is https just because .get_full_url() default to that !
+            base_url=self.base_url
         )
         self.integration = KiwiTCMS(bug_system, None)
 
@@ -107,3 +108,10 @@ class TestKiwiTCMSIntegration(APITestCase):
             url=result['response'],
             is_defect=True,
         ).exists())
+
+    def test_empty_details_when_bug_dont_exist(self):
+        non_existing_bug_id = -1
+        self.assertFalse(Bug.objects.filter(pk=non_existing_bug_id).exists())
+
+        result = self.integration.details("{}/{}".format(self.base_url, non_existing_bug_id))
+        self.assertEqual(result, {})
