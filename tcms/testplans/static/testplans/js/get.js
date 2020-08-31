@@ -62,6 +62,11 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
         row.find('.js-test-case-menu-clone')[0].href = `/cases/clone/?case=${testCase.id}`;
     }
 
+    // apply visual separation between confirmed and not confirmed
+
+    if (!isTestCaseConfrimed(testCase.case_status_id)) {
+        row.find('.list-group-item-header').addClass('bg-danger');
+    }
 
     //handle automated icon
     var automation_indication_element = row.find('.js-test-case-automated'),
@@ -150,10 +155,11 @@ function attachEvents(testCases, testPlanId, permissions) {
             const testCaseId = getCaseIdFromEvent(ev);
 
             jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function() {
-                // todo show the case as not confirmed
-                $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
-                    $(this).remove();
-                });
+                if (isTestCaseConfrimed(ev.target.dataset.id)) {
+                    $(ev.target).closest('.list-group-item-header').removeClass('bg-danger');
+                } else {
+                    $(ev.target).closest('.list-group-item-header').addClass('bg-danger');
+                }
             });
         });
     }
@@ -163,6 +169,7 @@ function attachEvents(testCases, testPlanId, permissions) {
         $('.js-test-case-menu-delete').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
             jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
+                // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
                  $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
                      $(this).remove();
                  });
@@ -213,4 +220,9 @@ function toolbarEvents() {
             tc.checked = isChecked;
         });
     });
+}
+
+function isTestCaseConfrimed(status) {
+    //todo: refactor when testcase_status is replaced with boolean flag
+    return Number(status) === 2;
 }
