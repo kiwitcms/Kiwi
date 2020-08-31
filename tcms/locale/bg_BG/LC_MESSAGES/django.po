@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-27 10:08\n"
+"PO-Revision-Date: 2020-08-31 15:26\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -552,15 +552,15 @@ msgstr "Не"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "Подредба"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "Възходящ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "Низходящ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
@@ -1994,7 +1994,8 @@ msgstr "ОТЛОЖЕН"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr ""
+msgstr "За допълнителни настройки виж\n"
+"<a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -2002,7 +2003,7 @@ msgstr "Интеграция с GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Ре-синхр-не"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -2016,12 +2017,12 @@ msgstr "Не настроен GitHub App %d"
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s е импортнат(о) от GitHub"
 
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s вече съществува"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -2103,15 +2104,15 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Subscribe"
-msgstr ""
+msgstr "Абониране"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
-msgstr ""
+msgstr "с Kiwi TCMS"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
 msgid "via GitHub Marketplace"
-msgstr ""
+msgstr "с GitHub Marketplace"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
@@ -2214,7 +2215,7 @@ msgstr "Схема"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "Модел за валидация"
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
