@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-31 07:11\n"
+"PO-Revision-Date: 2020-09-01 12:13\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -950,11 +950,11 @@ msgstr "Üdvözöllek Vendég"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr "Általam futtatott tesztek"
+msgstr "Teszt futtatásaim"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr "Általam létrehozott teszttervek"
+msgstr "Tesztterveim"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
