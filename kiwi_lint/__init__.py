@@ -21,6 +21,7 @@ from .one_to_one_field import OneToOneFieldChecker
 from .views import ClassBasedViewChecker
 from .datetime import DatetimeChecker
 from .forms import FormFieldChecker, ModelFormChecker
+from .db_column import DbColumnChecker
 
 
 def register(linter):
@@ -43,3 +44,4 @@ def register(linter):
     linter.register_checker(DatetimeChecker(linter))
     linter.register_checker(FormFieldChecker(linter))
     linter.register_checker(ModelFormChecker(linter))
+    linter.register_checker(DbColumnChecker(linter))
