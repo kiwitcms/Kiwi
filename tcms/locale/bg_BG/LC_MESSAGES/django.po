@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-31 15:26\n"
+"PO-Revision-Date: 2020-09-01 10:22\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -2003,7 +2003,7 @@ msgstr "Интеграция с GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr "Ре-синхр-не"
+msgstr ""
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
