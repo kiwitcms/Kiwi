@@ -114,6 +114,11 @@ class TestPlanModel(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        cls.plan_tester = UserFactory(username='tester')
+        cls.plan_tester.set_password('password')
+        cls.plan_tester.save()
+        user_should_have_perm(cls.plan_tester, 'testplans.view_testplan')
+
         cls.plan_1 = TestPlanFactory()
         cls.testcase_1 = TestCaseFactory()
         cls.testcase_2 = TestCaseFactory()
@@ -147,6 +152,17 @@ class TestPlanModel(test.TestCase):
         # between the other cases.
         case_plan = plan.add_case(TestCaseFactory(), sortkey=15)
         self.assertEqual(15, case_plan.sortkey)
+
+    def test_get_full_url(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
+        test_plan_url = self.plan_1.get_full_url()
+        response = self.client.get(test_plan_url, follow=True)
+
+        self.assertIsNotNone(test_plan_url)
+        self.assertNotEqual(test_plan_url[-1], "/")
+        self.assertContains(response, self.plan_1.name)
 
 
 class TestSortCases(BasePlanCase):

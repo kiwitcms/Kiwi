@@ -92,6 +92,9 @@ class TestPlan(TCMSActionModel):
     def get_absolute_url(self):
         return self._get_absolute_url()
 
+    def get_full_url(self):
+        return super().get_full_url().rstrip('/')
+
     def _get_email_conf(self):
         try:
             return self.email_settings
