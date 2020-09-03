@@ -10,7 +10,7 @@ from tcms.rpc.decorators import permissions_required
 @rpc_method(name='PlanType.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC PlanType.filter(query)
+    .. function:: RPC PlanType.filter(query)
 
         Search and return a list of test plan types.
 

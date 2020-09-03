@@ -39,7 +39,7 @@ __all__ = (
 @rpc_method(name='TestCase.add_component')
 def add_component(case_id, component):
     """
-    .. function:: XML-RPC TestCase.add_component(case_id, component)
+    .. function:: RPC TestCase.add_component(case_id, component)
 
         Add component to the selected test case.
 
@@ -65,7 +65,7 @@ def add_component(case_id, component):
 @rpc_method(name='TestCase.remove_component')
 def remove_component(case_id, component_id):
     """
-    .. function:: XML-RPC TestCase.remove_component(case_id, component_id)
+    .. function:: RPC TestCase.remove_component(case_id, component_id)
 
         Remove selected component from the selected test case.
 
@@ -115,7 +115,7 @@ def _validate_cc_list(cc_list):
 @rpc_method(name='TestCase.add_notification_cc')
 def add_notification_cc(case_id, cc_list):
     """
-    .. function:: XML-RPC TestCase.add_notification_cc(case_id, cc_list)
+    .. function:: RPC TestCase.add_notification_cc(case_id, cc_list)
 
         Add email addresses to the notification list of specified TestCase
 
@@ -138,7 +138,7 @@ def add_notification_cc(case_id, cc_list):
 @rpc_method(name='TestCase.remove_notification_cc')
 def remove_notification_cc(case_id, cc_list):
     """
-    .. function:: XML-RPC TestCase.remove_notification_cc(case_id, cc_list)
+    .. function:: RPC TestCase.remove_notification_cc(case_id, cc_list)
 
         Remove email addresses from the notification list of specified TestCase
 
@@ -160,7 +160,7 @@ def remove_notification_cc(case_id, cc_list):
 @rpc_method(name='TestCase.get_notification_cc')
 def get_notification_cc(case_id):
     """
-    .. function:: XML-RPC TestCase.get_notification_cc(case_id)
+    .. function:: RPC TestCase.get_notification_cc(case_id)
 
         Return notification list for specified TestCase
 
@@ -177,7 +177,7 @@ def get_notification_cc(case_id):
 @rpc_method(name='TestCase.add_tag')
 def add_tag(case_id, tag, **kwargs):
     """
-    .. function:: XML-RPC TestCase.add_tag(case_id, tag)
+    .. function:: RPC TestCase.add_tag(case_id, tag)
 
         Add one tag to the specified test case.
 
@@ -201,7 +201,7 @@ def add_tag(case_id, tag, **kwargs):
 @rpc_method(name='TestCase.remove_tag')
 def remove_tag(case_id, tag):
     """
-    .. function:: XML-RPC TestCase.remove_tag(case_id, tag)
+    .. function:: RPC TestCase.remove_tag(case_id, tag)
 
         Remove tag from a test case.
 
@@ -221,7 +221,7 @@ def remove_tag(case_id, tag):
 @rpc_method(name='TestCase.create')
 def create(values, **kwargs):
     """
-    .. function:: XML-RPC TestCase.create(values)
+    .. function:: RPC TestCase.create(values)
 
         Create a new TestCase object and store it in the database.
 
@@ -263,7 +263,7 @@ def create(values, **kwargs):
 @rpc_method(name='TestCase.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC TestCase.filter(query)
+    .. function:: RPC TestCase.filter(query)
 
         Perform a search and return the resulting list of test cases
         augmented with their latest ``text``.
@@ -283,7 +283,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 @rpc_method(name='TestCase.update')
 def update(case_id, values):
     """
-    .. function:: XML-RPC TestCase.update(case_id, values)
+    .. function:: RPC TestCase.update(case_id, values)
 
         Update the fields of the selected test case.
 
@@ -312,7 +312,7 @@ def update(case_id, values):
 @rpc_method(name='TestCase.remove')
 def remove(query):
     """
-    .. function:: XML-RPC TestCase.remove(query)
+    .. function:: RPC TestCase.remove(query)
 
         Remove TestCase object(s).
 
@@ -336,7 +336,7 @@ def remove(query):
 @rpc_method(name='TestCase.list_attachments')
 def list_attachments(case_id, **kwargs):
     """
-    .. function:: XML-RPC TestCase.list_attachments(case_id)
+    .. function:: RPC TestCase.list_attachments(case_id)
 
         List attachments for the given TestCase.
 
@@ -357,7 +357,7 @@ def list_attachments(case_id, **kwargs):
 @rpc_method(name='TestCase.add_attachment')
 def add_attachment(case_id, filename, b64content, **kwargs):
     """
-    .. function:: XML-RPC TestCase.add_attachment(case_id, filename, b64content)
+    .. function:: RPC TestCase.add_attachment(case_id, filename, b64content)
 
         Add attachment to the given TestCase.
 

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 """
-Kiwi TCMS XML-RPC Service
+Kiwi TCMS RPC Service
 -------------------------
 
-You need to invoke it using an XML-RPC Client! For the available XML-RPC methods
+You need to invoke it using an XML-RPC or JSON-RPC Client! For the available RPC methods
 checkout the **Submodules** section!
 
 `tcms-api <https://pypi.org/project/tcms-api/>`_ is the official Python
 interface for Kiwi TCMS! We strongly advise that you use it instead of
-directly calling the XML-RPC methods below!
+directly calling the RPC methods below!
 
 
-How does the XML-RPC interface work?
+How does the RPC interface work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - The XML-RPC enpoint is at ``https://your-kiwi-instance.com/xml-rpc/``.
@@ -34,7 +34,7 @@ How does the XML-RPC interface work?
 How to handle ForeignKey arguments?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The syntax of using ForeignKey in this XML-RPC API follows Django standards::
+The syntax of using ForeignKey in this RPC API follows Django standards::
 
     foreignkeyname + '__' + fieldname + '__' + field_lookup_syntax
 

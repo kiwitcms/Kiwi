@@ -18,7 +18,7 @@ __all__ = (
 @rpc_method(name='Bug.add_tag')
 def add_tag(bug_id, tag, **kwargs):
     """
-    .. function:: XML-RPC Bug.add_tag(bug_id, tag)
+    .. function:: RPC Bug.add_tag(bug_id, tag)
 
         Add one tag to the specified Bug.
 
@@ -42,7 +42,7 @@ def add_tag(bug_id, tag, **kwargs):
 @rpc_method(name='Bug.remove_tag')
 def remove_tag(bug_id, tag):
     """
-    .. function:: XML-RPC Bug.remove_tag(bug_id, tag)
+    .. function:: RPC Bug.remove_tag(bug_id, tag)
 
         Remove tag from a Bug.
 
@@ -62,7 +62,7 @@ def remove_tag(bug_id, tag):
 @rpc_method(name='Bug.remove')
 def remove(query):
     """
-    .. function:: XML-RPC Bug.remove(bug_id)
+    .. function:: RPC Bug.remove(bug_id)
 
         Remove Bug object(s).
 
@@ -77,7 +77,7 @@ def remove(query):
 @rpc_method(name='Bug.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Bug.filter(query)
+    .. function:: RPC Bug.filter(query)
 
         Get list of bugs.
 

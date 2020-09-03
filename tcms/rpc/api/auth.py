@@ -13,7 +13,7 @@ __all__ = (
 @rpc_method(name='Auth.login')
 def login(username, password, **kwargs):  # pylint: disable=missing-api-permissions-required
     """
-    .. function:: XML-RPC Auth.login(username, password)
+    .. function:: RPC Auth.login(username, password)
 
         Login into Kiwi TCMS.
 
@@ -44,7 +44,7 @@ def login(username, password, **kwargs):  # pylint: disable=missing-api-permissi
 @rpc_method(name='Auth.logout')
 def logout(**kwargs):  # pylint: disable=missing-api-permissions-required
     """
-    .. function:: XML-RPC Auth.logout()
+    .. function:: RPC Auth.logout()
 
         Delete session information
     """

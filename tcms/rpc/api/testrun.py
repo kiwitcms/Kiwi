@@ -26,7 +26,7 @@ __all__ = (
 @rpc_method(name='TestRun.add_case')
 def add_case(run_id, case_id):
     """
-    .. function:: XML-RPC TestRun.add_case(run_id, case_id)
+    .. function:: RPC TestRun.add_case(run_id, case_id)
 
         Add a TestCase to the selected test run.
 
@@ -49,7 +49,7 @@ def add_case(run_id, case_id):
 @rpc_method(name='TestRun.remove_case')
 def remove_case(run_id, case_id):
     """
-    .. function:: XML-RPC TestRun.remove_case(run_id, case_id)
+    .. function:: RPC TestRun.remove_case(run_id, case_id)
 
         Remove a TestCase from the selected test run.
 
@@ -66,7 +66,7 @@ def remove_case(run_id, case_id):
 @rpc_method(name='TestRun.get_cases')
 def get_cases(run_id):
     """
-    .. function:: XML-RPC TestRun.get_cases(run_id)
+    .. function:: RPC TestRun.get_cases(run_id)
 
         Get the list of test cases that are attached to a test run.
 
@@ -94,7 +94,7 @@ def get_cases(run_id):
 @rpc_method(name='TestRun.add_tag')
 def add_tag(run_id, tag_name, **kwargs):
     """
-    .. function:: XML-RPC TestRun.add_tag(run_id, tag)
+    .. function:: RPC TestRun.add_tag(run_id, tag)
 
         Add one tag to the specified test run.
 
@@ -122,7 +122,7 @@ def add_tag(run_id, tag_name, **kwargs):
 @rpc_method(name='TestRun.remove_tag')
 def remove_tag(run_id, tag_name):
     """
-    .. function:: XML-RPC TestRun.remove_tag(run_id, tag)
+    .. function:: RPC TestRun.remove_tag(run_id, tag)
 
         Remove a tag from the specified test run.
 
@@ -145,7 +145,7 @@ def remove_tag(run_id, tag_name):
 @rpc_method(name='TestRun.create')
 def create(values):
     """
-    .. function:: XML-RPC TestRun.create(values)
+    .. function:: RPC TestRun.create(values)
 
         Create new TestRun object and store it in the database.
 
@@ -188,7 +188,7 @@ def create(values):
 @rpc_method(name='TestRun.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC TestRun.filter(query)
+    .. function:: RPC TestRun.filter(query)
 
         Perform a search and return the resulting list of test runs.
 
@@ -208,7 +208,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 @rpc_method(name='TestRun.update')
 def update(run_id, values):
     """
-    .. function:: XML-RPC TestRun.update(run_id, values)
+    .. function:: RPC TestRun.update(run_id, values)
 
         Update the selected TestRun
 

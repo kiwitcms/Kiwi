@@ -12,7 +12,7 @@ from tcms.rpc.decorators import permissions_required
 @rpc_method(name='TestExecutionStatus.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC TestExecutionStatus.filter(query)
+    .. function:: RPC TestExecutionStatus.filter(query)
 
         Search and return the list of test case run statuses.
 

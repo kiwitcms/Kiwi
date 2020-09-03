@@ -38,7 +38,7 @@ __all__ = (
 @rpc_method(name='TestExecution.add_comment')
 def add_comment(execution_id, comment, **kwargs):
     """
-    .. function:: XML-RPC TestExecution.add_comment(execution_id, comment)
+    .. function:: RPC TestExecution.add_comment(execution_id, comment)
 
         Add comment to selected test execution.
 
@@ -80,7 +80,7 @@ def remove_comment(execution_id, comment_id=None):
 @rpc_method(name='TestExecution.filter')
 def filter(values):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC TestExecution.filter(values)
+    .. function:: RPC TestExecution.filter(values)
 
         Perform a search and return the resulting list of test case executions.
 
@@ -96,7 +96,7 @@ def filter(values):  # pylint: disable=redefined-builtin
 @rpc_method(name='TestExecution.update')
 def update(execution_id, values):
     """
-    .. function:: XML-RPC TestExecution.update(execution_id, values)
+    .. function:: RPC TestExecution.update(execution_id, values)
 
         Update the selected TestExecution
 
@@ -128,7 +128,7 @@ def update(execution_id, values):
 @rpc_method(name='TestExecution.add_link')
 def add_link(values, update_tracker=False, **kwargs):
     """
-    .. function:: XML-RPC TestExecution.add_link(values)
+    .. function:: RPC TestExecution.add_link(values)
 
         Add new URL link to a TestExecution
 
@@ -167,7 +167,7 @@ def add_link(values, update_tracker=False, **kwargs):
 @rpc_method(name='TestExecution.remove_link')
 def remove_link(query):
     """
-    .. function:: XML-RPC TestExecution.remove_link(query)
+    .. function:: RPC TestExecution.remove_link(query)
 
         Remove URL link from TestExecution
 
@@ -182,7 +182,7 @@ def remove_link(query):
 @rpc_method(name='TestExecution.get_links')
 def get_links(query):
     """
-    .. function:: XML-RPC TestExecution.get_links(query)
+    .. function:: RPC TestExecution.get_links(query)
 
         Get URL links for the specified TestExecution
 

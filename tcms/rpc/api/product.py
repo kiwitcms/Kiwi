@@ -15,7 +15,7 @@ __all__ = (
 @permissions_required('management.add_product')
 def create(values):
     """
-    .. function:: XML-RPC Product.create(values)
+    .. function:: RPC Product.create(values)
 
         Create a new Product object and store it in the database.
 
@@ -32,7 +32,7 @@ def create(values):
 @rpc_method(name='Product.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Product.filter(query)
+    .. function:: RPC Product.filter(query)
 
         Perform a search and return the resulting list of products.
 

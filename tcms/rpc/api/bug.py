@@ -20,7 +20,7 @@ __all__ = (
 @rpc_method(name='Bug.details')
 def details(url, **kwargs):
     """
-    .. function:: XML-RPC Bug.details(url)
+    .. function:: RPC Bug.details(url)
 
         Returns details about bug at the given URL address. This method is
         used when generating additional information which is shown in the UI.
@@ -48,7 +48,7 @@ def details(url, **kwargs):
 @rpc_method(name='Bug.report')
 def report(execution_id, tracker_id, **kwargs):
     """
-    .. function:: XML-RPC Bug.report(execution_id, tracker_id)
+    .. function:: RPC Bug.report(execution_id, tracker_id)
 
         Returns a URL which will open the bug tracker with predefined fields
         indicating the error was detected by the specified TestExecution.

@@ -21,7 +21,7 @@ __all__ = (
 @rpc_method(name='Component.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Component.filter(query)
+    .. function:: RPC Component.filter(query)
 
         Search and return the resulting list of components.
 
@@ -37,7 +37,7 @@ def filter(query):  # pylint: disable=redefined-builtin
 @rpc_method(name='Component.create')
 def create(values, **kwargs):
     """
-    .. function:: XML-RPC Component.create(values)
+    .. function:: RPC Component.create(values)
 
         Create new component.
 
@@ -82,7 +82,7 @@ def create(values, **kwargs):
 @rpc_method(name='Component.update')
 def update(component_id, values):
     """
-    .. function:: XML-RPC Component.update
+    .. function:: RPC Component.update
 
         Update component with new values.
 

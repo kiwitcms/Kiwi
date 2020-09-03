@@ -17,7 +17,7 @@ __all__ = (
 @rpc_method(name='Build.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Build.filter(query)
+    .. function:: RPC Build.filter(query)
 
         Search and return builds matching query.
 
@@ -36,7 +36,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 @permissions_required('management.add_build')
 def create(values):
     """
-    .. function:: XML-RPC Build.create(values)
+    .. function:: RPC Build.create(values)
 
         Create a new build object and store it in the database.
 
@@ -61,7 +61,7 @@ def create(values):
 @rpc_method(name='Build.update')
 def update(build_id, values):
     """
-    .. function:: XML-RPC Build.update(build_id, values)
+    .. function:: RPC Build.update(build_id, values)
 
         Updates the fields of the selected build.
 

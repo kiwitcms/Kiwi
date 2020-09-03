@@ -33,7 +33,7 @@ def _get_user_dict(user):
 @rpc_method(name='User.filter')
 def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC User.filter(query)
+    .. function:: RPC User.filter(query)
 
         Search and return the resulting list of users.
 
@@ -64,7 +64,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 @rpc_method(name='User.update')
 def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permissions-required
     """
-    .. function:: XML-RPC User.update(user_id, values)
+    .. function:: RPC User.update(user_id, values)
 
         Updates the fields of the selected user. Can be used to update
         password as well!
@@ -131,7 +131,7 @@ def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permission
 @rpc_method(name='User.join_group')
 def join_group(username, groupname):
     """
-    .. function:: XML-RPC User.join_group(username, groupname)
+    .. function:: RPC User.join_group(username, groupname)
 
         Add user to a group specified by name.
 
@@ -150,7 +150,7 @@ def join_group(username, groupname):
 @rpc_method(name='User.add_attachment')
 def add_attachment(filename, b64content, **kwargs):
     """
-    .. function:: XML-RPC User.add_attachment(filename, b64content)
+    .. function:: RPC User.add_attachment(filename, b64content)
 
         Attach a file under the currently logged-in user!
 

@@ -14,7 +14,7 @@ __all__ = (
 @rpc_method(name='Attachment.remove_attachment')
 def remove_attachment(attachment_id, **kwargs):
     """
-    .. function:: XML-RPC Attachment.remove_attachment(attachment_id)
+    .. function:: RPC Attachment.remove_attachment(attachment_id)
 
         Remove the given attachment file.
 
