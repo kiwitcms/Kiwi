@@ -50,3 +50,9 @@ class TestBug(APITestCase):
 
         self.assertEqual(result, self.expected_result)
         tracker_from_url.assert_not_called()
+
+    def test_empty_details_when_tracker_does_not_exist(self):
+        url = "http://unknown-tracker.url"
+
+        result = self.rpc_client.Bug.details(url)
+        self.assertEqual(result, {})
