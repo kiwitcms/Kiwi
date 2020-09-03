@@ -34,12 +34,16 @@ def details(url, **kwargs):
         :rtype: dict
     """
     result = cache.get(url)
-    if not result:
-        request = kwargs.get(REQUEST_KEY)
-        tracker = tracker_from_url(url, request)
-        result = tracker.details(url)
-        cache.set(url, result)
+    if result:
+        return result
 
+    request = kwargs.get(REQUEST_KEY)
+    tracker = tracker_from_url(url, request)
+    if not tracker:
+        return {}
+
+    result = tracker.details(url)
+    cache.set(url, result)
     return result
 
 
