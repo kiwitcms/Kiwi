@@ -10,7 +10,7 @@ from tcms.rpc.decorators import permissions_required
 @rpc_method(name='Category.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Category.filter(query)
+    .. function:: RPC Category.filter(query)
 
         Search and return Category objects matching query.
 

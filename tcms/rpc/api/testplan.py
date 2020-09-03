@@ -30,7 +30,7 @@ __all__ = (
 @rpc_method(name='TestPlan.create')
 def create(values, **kwargs):
     """
-    .. function:: XML-RPC TestPlan.create(values)
+    .. function:: RPC TestPlan.create(values)
 
         Create new Test Plan object and store it in the database.
 
@@ -75,7 +75,7 @@ def create(values, **kwargs):
 @rpc_method(name='TestPlan.filter')
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC TestPlan.filter(query)
+    .. function:: RPC TestPlan.filter(query)
 
         Perform a search and return the resulting list of test plans.
 
@@ -95,7 +95,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 @rpc_method(name='TestPlan.add_tag')
 def add_tag(plan_id, tag_name, **kwargs):
     """
-    .. function:: XML-RPC TestPlan.add_tag(plan_id, tag_name)
+    .. function:: RPC TestPlan.add_tag(plan_id, tag_name)
 
         Add a tag to the specified test plan.
 
@@ -119,7 +119,7 @@ def add_tag(plan_id, tag_name, **kwargs):
 @rpc_method(name='TestPlan.remove_tag')
 def remove_tag(plan_id, tag_name):
     """
-    .. function:: XML-RPC TestPlan.remove_tag(plan_id, tag_name)
+    .. function:: RPC TestPlan.remove_tag(plan_id, tag_name)
 
         Remove tag from the specified test plan.
 
@@ -138,7 +138,7 @@ def remove_tag(plan_id, tag_name):
 @rpc_method(name='TestPlan.update')
 def update(plan_id, values):
     """
-    .. function:: XML-RPC TestPlan.update(plan_id, values)
+    .. function:: RPC TestPlan.update(plan_id, values)
 
         Update the fields of the selected test plan.
 
@@ -166,7 +166,7 @@ def update(plan_id, values):
 @rpc_method(name='TestPlan.add_case')
 def add_case(plan_id, case_id):
     """
-    .. function:: XML-RPC TestPlan.add_case(plan_id, case_id)
+    .. function:: RPC TestPlan.add_case(plan_id, case_id)
 
         Link test case to the given plan.
 
@@ -187,7 +187,7 @@ def add_case(plan_id, case_id):
 @rpc_method(name='TestPlan.remove_case')
 def remove_case(plan_id, case_id):
     """
-    .. function:: XML-RPC TestPlan.remove_case(plan_id, case_id)
+    .. function:: RPC TestPlan.remove_case(plan_id, case_id)
 
         Unlink a test case from the given plan.
 
@@ -204,7 +204,7 @@ def remove_case(plan_id, case_id):
 @rpc_method(name='TestPlan.list_attachments')
 def list_attachments(plan_id, **kwargs):
     """
-    .. function:: XML-RPC TestPlan.list_attachments(plan_id)
+    .. function:: RPC TestPlan.list_attachments(plan_id)
 
         List attachments for the given TestPlan.
 
@@ -225,7 +225,7 @@ def list_attachments(plan_id, **kwargs):
 @rpc_method(name='TestPlan.add_attachment')
 def add_attachment(plan_id, filename, b64content, **kwargs):
     """
-    .. function:: XML-RPC TestPlan.add_attachment(plan_id, filename, b64content)
+    .. function:: RPC TestPlan.add_attachment(plan_id, filename, b64content)
 
         Add attachment to the given TestPlan.
 

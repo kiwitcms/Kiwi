@@ -12,7 +12,7 @@ from tcms.rpc.decorators import permissions_required
 @rpc_method(name='Classification.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Classification.filter(query)
+    .. function:: RPC Classification.filter(query)
 
         Perform a search and return the resulting list of classifications.
 

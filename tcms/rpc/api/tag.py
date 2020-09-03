@@ -10,7 +10,7 @@ from tcms.rpc.decorators import permissions_required
 @rpc_method(name='Tag.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Tag.filter(query)
+    .. function:: RPC Tag.filter(query)
 
         Search and return a list of tags
 

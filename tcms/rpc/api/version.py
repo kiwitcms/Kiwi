@@ -18,7 +18,7 @@ __all__ = (
 @rpc_method(name='Version.filter')
 def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: XML-RPC Version.filter(query)
+    .. function:: RPC Version.filter(query)
 
         Search and returns the resulting list of versions.
 
@@ -34,7 +34,7 @@ def filter(query):  # pylint: disable=redefined-builtin
 @rpc_method(name='Version.create')
 def create(values):
     """
-    .. function:: XML-RPC Version.create(values)
+    .. function:: RPC Version.create(values)
 
         Add new version.
 

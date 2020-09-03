@@ -11,7 +11,7 @@ from tcms.testruns.models import TestExecution, TestExecutionStatus
 @rpc_method(name='Testing.breakdown')
 def breakdown(query=None):
     """
-    .. function:: XML-RPC Testing.breakdown(query)
+    .. function:: RPC Testing.breakdown(query)
 
         Perform a search and return the statistics for the selected test cases
 
@@ -71,7 +71,7 @@ def _map_query_set(query_set, field):
 @rpc_method(name='Testing.status_matrix')
 def status_matrix(query=None):
     """
-        .. function:: XML-RPC Testing.status_matrix(query)
+        .. function:: RPC Testing.status_matrix(query)
 
             Perform a search and return data_set needed to visualize the status matrix
             of test plans, test cases and test executions
