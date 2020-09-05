@@ -1,6 +1,6 @@
-import glob
 import json
 
+from django.conf import settings
 from django.db import migrations, models
 
 from tcms.rpc.serializer import Serializer
@@ -10,21 +10,18 @@ def forwards_store_data(apps, schema_editor):
     bug_system_model = apps.get_model('testcases', 'BugSystem')
 
     for bug_system in bug_system_model.objects.all():
-        file_name = '/tmp/kiwitcms-testcases-migration\
--0011-BugSystem-%d' % bug_system.pk  # nosec:B108:hardcoded_tmp_directory
+        file_name = 'kiwitcms-testcases-migration-0011-BugSystem-%d' % bug_system.pk
+        bug_file = settings.TEMP_DIR / file_name
 
-        with open(file_name, 'w') as outfile:
+        with bug_file.open('w') as outfile:
             json.dump(Serializer(model=bug_system).serialize_model(), outfile)
 
 
 def backwards_restore_data(apps, schema_editor):
     bug_system_model = apps.get_model('testcases', 'BugSystem')
 
-    for file_name in glob.glob(
-            '/tmp/kiwitcms-testcases-migration-0011-\
-BugSystem-*'  # nosec:B108:hardcoded_tmp_directory
-    ):
-        with open(file_name, 'r') as infile:
+    for file in settings.TEMP_DIR.glob('kiwitcms-testcases-migration-0011-BugSystem-*'):
+        with file.open('r') as infile:
             data = json.load(infile)
             bug_system = bug_system_model(**data)
             bug_system.save()

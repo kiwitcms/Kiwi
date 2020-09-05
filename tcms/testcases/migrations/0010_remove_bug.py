@@ -1,6 +1,6 @@
-import glob
 import json
 
+from django.conf import settings
 from django.db import migrations
 
 from tcms.rpc.serializer import Serializer
@@ -12,9 +12,9 @@ def forward_copy_data(apps, schema_editor):
     link_reference_ids = []
 
     for bug in bug_model.objects.all():
-        file_name = '/tmp/kiwitcms-testcases-migrations-\
-0010-Bug-%d' % bug.pk  # nosec:B108:hardcoded_tmp_directory
-        with open(file_name, 'w') as outfile:
+        bug_file_name = 'kiwitcms-testcases-migrations-0010-Bug-%d' % bug.pk
+        bug_file = settings.TEMP_DIR / bug_file_name
+        with bug_file.open('w') as outfile:
             json.dump(Serializer(model=bug).serialize_model(), outfile)
 
         if not bug.case_run_id:
@@ -28,28 +28,26 @@ def forward_copy_data(apps, schema_editor):
         )
         link_reference_ids.append(link_reference.pk)
 
-    link_reference_ids_file_name = '/tmp/kiwitcms-testcases-migrations-0010-\
-new-LinkReference-IDs'  # nosec:B108:hardcoded_tmp_directory
-    with open(link_reference_ids_file_name, 'w') as link_reference_ids_file:
-        json.dump(link_reference_ids, link_reference_ids_file)
+    link_reference_ids_file_name = 'kiwitcms-testcases-migrations-0010-new-LinkReference-IDs'
+    link_reference_ids_file = settings.TEMP_DIR / link_reference_ids_file_name
+    with link_reference_ids_file.open('w') as outfile:
+        json.dump(link_reference_ids, outfile)
 
 
 def backward_restore_data(apps, schema_editor):
     bug_model = apps.get_model('testcases', 'Bug')
     link_reference_model = apps.get_model('linkreference', 'LinkReference')
 
-    for file_name in glob.glob(
-            '/tmp/kiwitcms-testcases-migrations-0010-Bug-*'  # nosec:B108:hardcoded_tmp_directory
-    ):
-        with open(file_name, 'r') as infile:
+    for file in settings.TEMP_DIR.glob('kiwitcms-testcases-migrations-0010-Bug-*'):
+        with file.open('r') as infile:
             data = json.load(infile)
             bug = bug_model(**data)
             bug.save()
 
-    link_reference_ids_file_name = '/tmp/kiwitcms-testcases-migrations-0010-\
-new-LinkReference-IDs'  # nosec:B108:hardcoded_tmp_directory
-    with open(link_reference_ids_file_name, 'r') as link_reference_ids_file:
-        link_reference_ids = json.load(link_reference_ids_file)
+    link_reference_ids_file_name = 'kiwitcms-testcases-migrations-0010-new-LinkReference-IDs'
+    link_reference_ids_file = settings.TEMP_DIR / link_reference_ids_file_name
+    with link_reference_ids_file.open('r') as infile:
+        link_reference_ids = json.load(infile)
         link_reference_model.objects.filter(pk__in=link_reference_ids).delete()
 
 
