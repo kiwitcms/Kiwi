@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import pathlib
+import tempfile
 from importlib import import_module
 
 import pkg_resources
@@ -468,3 +470,5 @@ LOGGING = {
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+TEMP_DIR = pathlib.Path(tempfile.gettempdir())

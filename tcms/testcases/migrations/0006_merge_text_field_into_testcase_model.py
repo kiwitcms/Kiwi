@@ -1,6 +1,6 @@
-import glob
 import json
 
+from django.conf import settings
 from django.db import migrations, models
 
 from tcms.rpc.serializer import Serializer
@@ -32,9 +32,9 @@ def forward_copy_data(apps, schema_editor):
     for test_case in test_case_model.objects.all():
         latest_text = test_case_text_model.objects.filter(case=test_case.pk).order_by('-pk').first()
         if latest_text:
-            file_name = '/tmp/kiwitcms-testcases-migrations-0006-\
-TestCaseText-%d' % latest_text.pk  # nosec:B108:hardcoded_tmp_directory
-            with open(file_name, 'w') as outfile:
+            file_name = 'kiwitcms-testcases-migrations-0006-TestCaseText-%d' % latest_text.pk
+            test_case_file = settings.TEMP_DIR / file_name
+            with test_case_file.open('w') as outfile:
                 json.dump(Serializer(model=latest_text).serialize_model(), outfile)
 
             test_case.case_text = convert_test_case_text(latest_text)
@@ -50,11 +50,8 @@ TestCaseText-%d' % latest_text.pk  # nosec:B108:hardcoded_tmp_directory
 def backward_restore_data(apps, schema_editor):
     test_case_text_model = apps.get_model('testcases', 'TestCaseText')
 
-    for file_name in glob.glob(
-            '/tmp/kiwitcms-testcases-migrations-0006-\
-TestCaseText-*'  # nosec:B108:hardcoded_tmp_directory
-    ):
-        with open(file_name, 'r') as infile:
+    for file in settings.TEMP_DIR.glob('kiwitcms-testcases-migrations-0006-TestCaseText-*'):
+        with file.open('r') as infile:
             data = json.load(infile)
             test_case_text = test_case_text_model(**data)
             test_case_text.save()
