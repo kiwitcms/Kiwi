@@ -117,8 +117,6 @@ STATIC_ROOT = '/Kiwi/static/'
 
 
 # WARNING: Do not change this unless you know what you are doing !!!
-# If you want to allow read-only access to anonymous users you can disable
-# global_login_required.GlobalLoginRequiredMiddleware below!
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -127,29 +125,9 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'global_login_required.GlobalLoginRequiredMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
     'tcms.core.middleware.CheckSettingsMiddleware',
     'tcms.core.middleware.CheckUnappliedMigrationsMiddleware',
-]
-
-
-# You can also list additional views which will be available to
-# anonymous users here. Take care to keep the default ones!
-PUBLIC_VIEWS = [
-    'modernrpc.views.RPCEntryPoint',
-    'django.contrib.auth.views.LoginView',
-    'django.contrib.auth.views.LogoutView',
-    'django.contrib.auth.views.PasswordResetView',
-    'django.contrib.auth.views.PasswordResetDoneView',
-    'django.contrib.auth.views.PasswordResetConfirmView',
-    'django.contrib.auth.views.PasswordResetCompleteView',
-    'tcms.kiwi_auth.views.LoginViewWithCustomTemplate',
-    'tcms.kiwi_auth.views.PasswordResetView',
-    'tcms.kiwi_auth.views.Register',
-    'tcms.kiwi_auth.views.Confirm',
-    'tcms.core.views.NavigationView',
-    'tcms.core.views.TranslationMode',
 ]
 
 

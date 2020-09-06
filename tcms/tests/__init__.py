@@ -83,7 +83,7 @@ class LoggedInTestCase(test.TestCase):
 
     def setUp(self):
         """
-            Login because by default we have GlobalLoginRequiredMiddleware enabled!
+            Login because [view] permissions are required by default!
         """
         super().setUp()
         self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
