@@ -1,6 +1,5 @@
 # these do not provide wheel packages
 
-django-glrm==1.1.3
 django-grappelli==2.14.2
 django-uuslug==1.2.0
 django-vinaigrette==2.0.1
