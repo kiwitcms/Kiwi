@@ -136,6 +136,19 @@ Anonymous read-only access
 --------------------------
 
 By default Kiwi TCMS requires permissions, including view permissions which
-means users must be logged in!
+means users must be logged in! If you wish to allow anonymous read-only access
+then define the following setting::
 
-If you wish to allow anonymous read-only access then:
+    AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'tcms.kiwi_auth.backends.AnonymousViewBackend',
+    ]
+
+.. versionadded:: 8.7
+
+.. warning::
+
+    The ``AUTHENTICATION_BACKENDS`` setting is usually not provided and defaults
+    to ``django.contrib.auth.backends.ModelBackend``, see
+    `Django's documentation <https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-AUTHENTICATION_BACKENDS>`_
+    for details.
