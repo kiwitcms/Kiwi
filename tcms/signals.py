@@ -219,16 +219,6 @@ def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
     )
 
 
-# todo: remove then https://github.com/bartTC/django-attachments/pull/75
-# is merged & available in a released version
-def _move_attachment_to(attachment, new_object):
-    from django.contrib.contenttypes.models import ContentType
-
-    attachment.object_id = new_object.pk
-    attachment.content_type = ContentType.objects.get_for_model(new_object)
-    attachment.save()
-
-
 def _introspect_request():
     """
         Introspect the current thread b/c signals are executed synchronously
@@ -259,5 +249,4 @@ def handle_attachments_post_save(sender, instance, created=False, **kwargs):
         return
 
     for attachment in Attachment.objects.attachments_for_object(request.user):
-        # attachment.attach_to(instance)
-        _move_attachment_to(attachment, instance)
+        attachment.attach_to(instance)
