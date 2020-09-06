@@ -42,4 +42,6 @@ class Command(migrate.Command):
             plan=True,
             run_syncdb=False,
             verbosity=1,
+            skip_checks=True,
+            check_unapplied=False,
         )
