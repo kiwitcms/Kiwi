@@ -14,7 +14,7 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/kiwi.devel.sqlite',  # nosec:B108:hardcoded_tmp_directory
+        'NAME': str(TEMP_DIR / 'kiwi.devel.sqlite'),  # noqa: F405
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
