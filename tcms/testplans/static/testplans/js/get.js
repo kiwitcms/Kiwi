@@ -19,7 +19,7 @@ $(document).ready(function() {
     jsonRPC('TestCase.filter', [{'plan': testPlanId}], function(data) {
         for (var i = 0; i < data.length; i++) {
             var testCase = data[i];
-                allTestCases[testCase.id] = testCase;
+            allTestCases[testCase.id] = testCase;
         }
         drawTestCases(allTestCases, testPlanId, permissions);
         treeViewBind();
@@ -170,9 +170,9 @@ function attachEvents(testCases, testPlanId, permissions) {
             const testCaseId = getCaseIdFromEvent(ev);
             jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
                 // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
-                 $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
-                     $(this).remove();
-                 });
+                $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
+                    $(this).remove();
+                });
             });
         });
     }
@@ -212,7 +212,7 @@ function attachEvents(testCases, testPlanId, permissions) {
 
 function toolbarEvents() {
 
-    $('.js-checkbox-toolbar').click(function(ev){
+    $('.js-checkbox-toolbar').click(function(ev) {
         const isChecked = ev.target.checked;
         const testCaseRows = $('.js-testcase-row').find('input');
 
@@ -221,8 +221,44 @@ function toolbarEvents() {
         });
     });
 
-    $('.toolbar-pf-filter .dropdown-menu li').click(function(ev) {
+    $('.js-toolbar-filter-options li').click(function(ev) {
         $('#input-filter-button')[0].innerHTML = ev.target.innerText + '<span class="caret"></span>';
+
+        //remove selected class
+        $('.js-toolbar-filter-options li').each(function(index, el) {
+            el.className = '';
+        });
+
+        // target is the a tag
+        ev.target.parentElement.className = 'selected';
+    });
+
+    $('#toolbar-filter').on("keyup", function() {
+        const filterValue = $(this).val().toLowerCase();
+        const filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType;
+
+        for (let id in allTestCases) {
+            let tc = allTestCases[id];
+
+            // we delete all text from the input
+            if (filterValue.trim().length === 0) {
+                $(`[data-testcase-pk=${id}]`).show();
+                continue;
+            }
+
+            // check if testcase has such property
+            if (tc[filterBy] === undefined) {
+                break;
+            }
+
+            // actual filtering, the property is null or does not contains the string
+            if (!tc[filterBy] || tc[filterBy].toLowerCase().indexOf(filterValue) === -1) {
+                $(`[data-testcase-pk=${id}]`).hide();
+            } else {
+                $(`[data-testcase-pk=${id}]`).show();
+            }
+        }
+
     });
 }
 
