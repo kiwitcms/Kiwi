@@ -107,17 +107,16 @@
                                                         aria-expanded="false">
                                                     {% trans 'Name' %}<span
                                                         class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                    <li class="selected"><a>{% trans 'Name' %}</a></li>
-                                                    <li><a>{% trans 'Category' %}</a></li>
-                                                    <li><a>{% trans 'Priority' %}</a></li>
-                                                    <li><a>{% trans 'Author' %}</a></li>
-                                                    <li><a>{% trans 'Default tester' %}</a></li>
+                                                <ul class="dropdown-menu js-toolbar-filter-options">
+                                                    <li class="selected" data-filter-type="summary"><a>{% trans 'Name' %}</a></li>
+                                                    <li data-filter-type="category"><a>{% trans 'Category' %}</a></li>
+                                                    <li data-filter-type="priority"><a>{% trans 'Priority' %}</a></li>
+                                                    <li data-filter-type="author"><a>{% trans 'Author' %}</a></li>
+                                                    <li data-filter-type="default_tester"><a>{% trans 'Default tester' %}</a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                             <input type="text" class="form-control" id="toolbar-filter"
-                                                    {# todo use full form "filter by name..." #}
-                                                   placeholder="{% trans 'Filter' %}...">
+                                                   placeholder="{% trans 'Filter criteria' %}...">
                                         </div><!-- /input-group -->
                                     </div>
                                     <div class="form-group">
