@@ -33,18 +33,19 @@ function loadBugs(selector, filter) {
         $(selector).find('[data-toggle=popover]')
             .popovers()
             .on('show.bs.popover', (element) => {
-                fetchBugDetails($(element.target).parents('tr').find('.bug-url')[0],
-                    element.target,
-                    bugDetailsCache);
+                fetchBugDetails(
+                    $(element.target).parents('tr').find('.bug-url')[0],
+                    element.target);
             });
     });
 
     $('[data-toggle=popover]')
         .popovers()
         .on('show.bs.popover', (element) => {
-            fetchBugDetails($(element.target).parents('.list-view-pf-body').find('.bug-url')[0],
-                element.target,
-                bugDetailsCache);
+            fetchBugDetails(
+                $(element.target).parents('.list-view-pf-body').find('.bug-url')[0],
+                element.target
+            );
         });
 }
 
