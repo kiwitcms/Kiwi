@@ -43,7 +43,6 @@ This object is used to record scenarios in the database.
 
 For every distinct product build that is being tested you have to create
 a Test Run artifact. The Test Run holds a collection of Test Execution objects,
-information about the testing environment (via tags),
 who the default tester is, start/finish timestamps, etc.
 
 A Test Execution object is the container that links together the actual
@@ -51,7 +50,7 @@ testing scenario with its execution status, additional comments and bugs
 found during testing! A Test Execution object has a 1-to-1 relation to the
 Test Case for which it holds status. Thus a Test Execution object represents
 the actual Test Case that will be/was executed against a particular product
-build and environment combination!
+build!
 
 
 Explanation of additional data entities
@@ -94,11 +93,11 @@ widget. All executions from all Test Plans are shown.
 
 **Answer:** Navigate to the page which shows all executions of that test case
 as instructed above. Find the failing result. Here you have timestamp
-information and link to the Test Run (with possible product build and
-environment) which recorded the failure.
+information and link to the Test Run (with possible product build)
+which recorded the failure.
 
 **Question:** How do I show all test executions for a particular
-Product/Plan/Build/Environment ?
+Product/Plan/Build ?
 
 **Answer:** Navigate to **Search::Search Test Runs** and filter Test Runs by
 desired properties.If you want to filter runs from a particular Test Plan make
@@ -112,8 +111,7 @@ X/Y/Z ?
 examine the results by hand.
 
 **Answer 2:** Perform the search described above and use the product version
-and environment information to answer this question. This is the preferred way
-to do this!
+to answer this question. This is the preferred way to do this!
 
 **Answer 3:** Go to REPORTING -> Testing report, select product/versions and
 select the ``By Plan & Build Per Plan View option``. You can see your Test

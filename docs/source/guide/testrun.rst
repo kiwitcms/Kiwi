@@ -5,8 +5,7 @@ Test Runs
 
 This chapter explains how to create, search, edit, execute, and generate
 reports for Test Runs in Kiwi TCMS. A Test Run in Kiwi TCMS contains the
-execution results of selected test cases against particular product builds
-and environment.
+execution results of selected test cases against particular product builds.
 
 To view Test Runs you have created or are assigned to you click **Main menu::DASHBOARD**
 or alternatively click **Personal menu::My Test Runs**.
@@ -53,7 +52,6 @@ assigned to any user in Kiwi TCMS. To create a Test Run:
    -  If applicable, select the **Set Status Automatically** checkbox.
    -  Enter the **Estimated time**.
    -  Enter any **Notes**.
-   -  Select **Environment** property values.
 
    |The Create New Test Run screen|
 
@@ -123,7 +121,6 @@ The Edit function modifies fields in a Test Run.
    -  Manager
    -  Default Tester
    -  Estimated Time
-   -  Environment Property values
    -  Notes
    -  Finished
 
