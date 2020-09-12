@@ -22,16 +22,13 @@ $(document).ready(() => {
     });
 
     $('.add-hyperlink-bulk').click(() => {
-        const testExecutionIds = []
-        const allChecked = $('.test-execution-checkbox:checked')
-
-        if (!allChecked.length) {
-            const warningText = $('#test_run_pk').data('trans-no-executions-selected')
-            alert(warningText)
+        const checkboxes = selectedCheckboxes()
+        if (!checkboxes.length) {
             return false
         }
 
-        allChecked.each((_index, checkbox) => {
+        const testExecutionIds = []
+        checkboxes.each((_index, checkbox) => {
             const testExecutionId = $(checkbox).data('test-execution-id')
             testExecutionIds.push(testExecutionId)
         })
@@ -40,17 +37,13 @@ $(document).ready(() => {
     })
 
     $('.remove-case-bulk').click(() => {
-        // TODO: extract this check and reuse it
-        const allChecked = $('.test-execution-checkbox:checked')
-
-        if (!allChecked.length) {
-            const warningText = $('#test_run_pk').data('trans-no-executions-selected')
-            alert(warningText)
+        const checkboxes = selectedCheckboxes()
+        if (!checkboxes.length) {
             return false
         }
 
         const testCaseIds = []
-        allChecked.each((_index, checkbox) => {
+        checkboxes.each((_index, checkbox) => {
             const testCaseId = $(checkbox).data('test-execution-case-id')
             testCaseIds.push(testCaseId)
         })
@@ -81,6 +74,16 @@ $(document).ready(() => {
     });
 })
 
+function selectedCheckboxes() {
+    const allSelected = $('.test-execution-checkbox:checked')
+
+    if (!allSelected.length) {
+        const warningText = $('#test_run_pk').data('trans-no-executions-selected')
+        alert(warningText)
+    }
+
+    return allSelected
+}
 
 function drawPercentBar(testExecutions, executionStatuses) {
     let positiveCount = 0;
