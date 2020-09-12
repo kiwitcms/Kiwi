@@ -22,37 +22,27 @@ $(document).ready(() => {
     });
 
     $('.add-hyperlink-bulk').click(() => {
-        const checkboxes = selectedCheckboxes()
-        if (!checkboxes.length) {
+        const selected = selectedCheckboxes()
+        if ($.isEmptyObject(selected)) {
             return false
         }
 
-        const testExecutionIds = []
-        checkboxes.each((_index, checkbox) => {
-            const testExecutionId = $(checkbox).data('test-execution-id')
-            testExecutionIds.push(testExecutionId)
-        })
-
-        addLinkToExecutions(testExecutionIds)
+        addLinkToExecutions(selected.executionIds)
     })
 
     $('.remove-case-bulk').click(() => {
-        const checkboxes = selectedCheckboxes()
-        if (!checkboxes.length) {
+        const selected = selectedCheckboxes()
+        if ($.isEmptyObject(selected)) {
             return false
         }
 
-        const testCaseIds = []
-        checkboxes.each((_index, checkbox) => {
-            const testCaseId = $(checkbox).data('test-execution-case-id')
-            testCaseIds.push(testCaseId)
-        })
-
         const areYouSureText = $('#test_run_pk').data('trans-are-you-sure')
         if (confirm(areYouSureText)) {
-            removeCases(testRunId, testCaseIds)
+            removeCases(testRunId, selected.caseIds)
         }
     })
+
+    $('.change-assignee-bulk').click(changeAssigneeBulk)
 
     const permRemoveTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
 
@@ -80,9 +70,26 @@ function selectedCheckboxes() {
     if (!allSelected.length) {
         const warningText = $('#test_run_pk').data('trans-no-executions-selected')
         alert(warningText)
+
+        return {}
     }
 
-    return allSelected
+    const testCaseIds = []
+    const testExecutionIds = []
+    allSelected.each((_index, checkbox) => {
+        checkbox = $(checkbox)
+
+        const testExecutionId = checkbox.data('test-execution-id')
+        testExecutionIds.push(testExecutionId)
+
+        const testCaseId = checkbox.data('test-execution-case-id')
+        testCaseIds.push(testCaseId)
+    })
+
+    return {
+        caseIds: testCaseIds,
+        executionIds: testExecutionIds,
+    }
 }
 
 function drawPercentBar(testExecutions, executionStatuses) {
@@ -238,19 +245,26 @@ function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
 /////// the functions below were used in bulk-menu actions
 /////// and need updates before they can be used again
 ///////
-function changeExecutionAssignee() {
-    const executions = 0 // todo: this is the list of all selected executions
-    if (!executions.length) {
-        window.alert(default_messages.alert.no_case_selected);
-        return false;
+function changeAssigneeBulk() {
+    const selected = selectedCheckboxes()
+    if ($.isEmptyObject(selected)) {
+        return false
     }
-    //todo: all texts in alert/prompt must come translated from the HTML template
-    var assignee = window.prompt('Please type new email or username for assignee');
+
+    const enterAssigneeText = $('#test_run_pk').data('trans-enter-assignee-name-or-email')
+    const assignee = prompt(enterAssigneeText)
+
     if (!assignee) {
         return false;
     }
-    executions.forEach(execution_id => jsonRPC('TestExecution.update', [execution_id, { 'assignee': assignee }], () => { }, sync = true));
-    window.location.reload();
+    selected.executionIds.forEach(executionId => {
+        jsonRPC('TestExecution.update', [executionId, { 'assignee': assignee }], execution => {
+            const testExecutionRow = $(`div.list-group-item.test-execution-${executionId}`);
+            animate(testExecutionRow, () => {
+                testExecutionRow.find(`.test-execution-asignee`).html(execution.assignee)
+            })
+        })
+    });
 }
 
 function updateExecutionText() {
