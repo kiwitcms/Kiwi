@@ -16,6 +16,7 @@
             data-pk="{{ object.pk }}"
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
             data-trans-no-executions-selected="{% trans 'No executions selected! Please select at least one execution!'%}"
+            data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
@@ -155,7 +156,7 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-default">{% trans "Update case text" %}</button>
-                                    <button type="button" class="btn btn-default">{% trans "Change assignee" %}</button>
+                                    <button type="button" class="btn btn-default change-assignee-bulk">{% trans "Change assignee" %}</button>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default dropdown-toggle" id="filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Change status" %} <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
