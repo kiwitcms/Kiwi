@@ -16,6 +16,7 @@
             data-pk="{{ object.pk }}"
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
             data-trans-no-executions-selected="{% trans 'No executions selected! Please select at least one execution!'%}"
+            data-trans-are-you-sure="{% trans 'Are you sure?' %}"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
@@ -153,7 +154,6 @@
                                     </button>
                                 </div>
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-default">{% trans "Remove case" %}</button>
                                     <button type="button" class="btn btn-default">{% trans "Update case text" %}</button>
                                     <button type="button" class="btn btn-default">{% trans "Change assignee" %}</button>
                                     <div class="btn-group">
@@ -166,6 +166,9 @@
                                     </div>
                                     <button type="button" class="btn btn-default">{% trans "Add comment" %}</button>
                                     <button type="button" class="btn btn-default add-hyperlink-bulk " data-toggle="modal" data-target="#add-link-modal">{% trans "Add hyperlink" %}</button>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-danger remove-case-bulk">{% trans "Delete" %}</button>
                                 </div>
                             </form>
                             <div class="row toolbar-pf-results">
