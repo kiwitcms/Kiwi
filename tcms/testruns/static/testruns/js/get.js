@@ -50,6 +50,13 @@ $(document).ready(() => {
             renderTestExecutions(testExecutions, executionStatuses)
         })
     })
+
+    $('.bulk-select-checkbox').click(event => {
+        const isChecked = event.target.checked;
+        const testExecutionSelectors = $('#test-executions-container').find('.test-execution-checkbox');
+
+        testExecutionSelectors.each((_index, te) => { te.checked = isChecked });
+    });
 })
 
 
