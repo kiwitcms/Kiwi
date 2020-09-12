@@ -39,6 +39,28 @@ $(document).ready(() => {
         addLinkToExecutions(testExecutionIds)
     })
 
+    $('.remove-case-bulk').click(() => {
+        // TODO: extract this check and reuse it
+        const allChecked = $('.test-execution-checkbox:checked')
+
+        if (!allChecked.length) {
+            const warningText = $('#test_run_pk').data('trans-no-executions-selected')
+            alert(warningText)
+            return false
+        }
+
+        const testCaseIds = []
+        allChecked.each((_index, checkbox) => {
+            const testCaseId = $(checkbox).data('test-execution-case-id')
+            testCaseIds.push(testCaseId)
+        })
+
+        const areYouSureText = $('#test_run_pk').data('trans-are-you-sure')
+        if (confirm(areYouSureText)) {
+            removeCases(testRunId, testCaseIds)
+        }
+    })
+
     const permRemoveTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
 
     // bind everything in tags table
@@ -194,7 +216,9 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
 
 function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
     template.find('.test-execution-checkbox').data('test-execution-id', testExecution.id)
+    template.find('.test-execution-checkbox').data('test-execution-case-id', testExecution.case_id)
     template.find('.list-group-item').addClass(`test-execution-${testExecution.id}`)
+    template.find('.list-group-item').addClass(`test-execution-case-${testExecution.case_id}`)
     template.find('.test-execution-info').html(`TE-${testExecution.id}`)
     template.find('.test-execution-info-link').html(testExecution.case)
     template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case_id}/`)
@@ -323,4 +347,16 @@ function renderLink(link) {
     linkUrlEl.attr('href', link.url)
 
     return template
+}
+
+function removeCases(testRunId, testCaseIds) {
+    for (const testCaseId of testCaseIds) {
+        jsonRPC('TestRun.remove_case', [testRunId, testCaseId], () => {
+            $(`.test-execution-case-${testCaseId}`).remove()
+
+            const testExecutionCountEl = $('.test-executions-count')
+            const count = parseInt(testExecutionCountEl[0].innerText)
+            testExecutionCountEl.html(count - 1)
+        }, true);
+    }
 }
