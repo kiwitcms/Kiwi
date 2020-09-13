@@ -118,6 +118,12 @@ CACHES = {
 STATIC_ROOT = '/Kiwi/static/'
 
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+]
+
+
 # WARNING: Do not change this unless you know what you are doing !!!
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -235,6 +241,7 @@ WSGI_APPLICATION = 'tcms.wsgi.application'
 # this is consumed by kiwitcms-tenants/django-tenants
 TENANT_APPS = [
     'django.contrib.sites',
+    'guardian',
 
     'attachments',
     'django_comments',
