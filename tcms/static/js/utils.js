@@ -183,3 +183,24 @@ function markdown2HTML(input, selector) {
         $(selector).html(unescapeHTML(result));
     });
 }
+
+function filterTestCasesByProperty(testCases, filterBy, filterValue) {
+    Object.entries(testCases).forEach(function(testCases){
+
+        let tc = testCases[1],
+            id = testCases[0];
+
+        // we deleted all text from the input
+        if (filterValue.trim().length === 0) {
+            $(`[data-testcase-pk=${id}]`).show();
+            return;
+        }
+
+        // actual filtering, the property is null or does not contains the string
+        if (!tc[filterBy] || tc[filterBy].toLowerCase().indexOf(filterValue) === -1) {
+            $(`[data-testcase-pk=${id}]`).hide();
+        } else {
+            $(`[data-testcase-pk=${id}]`).show();
+        }
+    });
+}
