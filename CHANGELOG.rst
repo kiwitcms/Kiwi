@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+
+Kiwi TCMS 8.6.1 (13 Sep 2020)
+-----------------------------
+
+**IMPORTANT:** this is a PyPI only release which helps development and testing
+for Kiwi TCMS plugins and related packages. Not distributed as container!
+Not intended for use in production!
+
+
+
 Kiwi TCMS 8.6 (23 Aug 2020)
 ---------------------------
 
