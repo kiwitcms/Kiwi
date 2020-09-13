@@ -234,30 +234,14 @@ function toolbarEvents() {
     });
 
     $('#toolbar-filter').on("keyup", function() {
-        const filterValue = $(this).val().toLowerCase();
-        const filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType;
+        let filterValue = $(this).val().toLowerCase();
+        let filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType;
 
-        for (let id in allTestCases) {
-            let tc = allTestCases[id];
-
-            // we delete all text from the input
-            if (filterValue.trim().length === 0) {
-                $(`[data-testcase-pk=${id}]`).show();
-                continue;
-            }
-
-            // check if testcase has such property
-            if (tc[filterBy] === undefined) {
-                break;
-            }
-
-            // actual filtering, the property is null or does not contains the string
-            if (!tc[filterBy] || tc[filterBy].toLowerCase().indexOf(filterValue) === -1) {
-                $(`[data-testcase-pk=${id}]`).hide();
-            } else {
-                $(`[data-testcase-pk=${id}]`).show();
-            }
-        }
+        filterTestCasesByProperty(
+            allTestCases,
+            filterBy,
+            filterValue
+        );
 
     });
 }
