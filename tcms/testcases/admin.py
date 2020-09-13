@@ -7,11 +7,12 @@ from django.forms.widgets import Select
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
 from tcms.testcases.models import BugSystem, Category, TestCase
 
 
-class TestCaseAdmin(ReadOnlyHistoryAdmin):
+class TestCaseAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
     actions = ['delete_selected']
 
     def add_view(self, request, form_url='', extra_context=None):

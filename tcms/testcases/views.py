@@ -14,6 +14,8 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import TemplateView, View
 
+from guardian.decorators import permission_required as object_permission_required
+
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
 from tcms.core.response import ModifySettingsTemplateResponse
@@ -506,7 +508,10 @@ class TestCaseExecutionDetailPanelView(TemplateView):
         return data
 
 
-@method_decorator(permission_required('testcases.view_testcase'), name='dispatch')
+@method_decorator(
+    object_permission_required('testcases.view_testcase', (TestCase, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class TestCaseGetView(DetailView):
 
     model = TestCase
@@ -529,6 +534,11 @@ class TestCaseGetView(DetailView):
                     (
                         _('History'),
                         "/admin/testcases/testcase/%d/history/" % self.object.pk
+                    ),
+                    ('-', '-'),
+                    (
+                        _('Object permissions'),
+                        reverse('admin:testcases_testcase_permissions', args=[self.object.pk])
                     ),
                     ('-', '-'),
                     (
@@ -590,7 +600,10 @@ def printable(request,
     return render(request, template_name, context_data)
 
 
-@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+@method_decorator(
+    object_permission_required('testcases.change_testcase', (TestCase, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class EditTestCaseView(UpdateView):
 
     model = TestCase
