@@ -11,7 +11,12 @@
     {% else %}
     <li class="dropdown{{ dropdown_class }}">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            {{ item.0 }}
+            {% if item.0 == "..." %}
+                <i class="fa fa-cogs"></i>
+            {% else %}
+                {{ item.0 }}
+            {% endif %}
+
             {% if not dropdown_class %}
             <b class="caret"></b>
             {% endif %}
