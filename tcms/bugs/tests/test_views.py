@@ -209,3 +209,41 @@ class TestEditBug(LoggedInTestCase):
             comments.last().comment,
             "Summary: %s -> %s\n" % (old_summary, new_summary)
         )
+
+
+class TestAddComment(LoggedInTestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        user_should_have_perm(cls.tester, 'django_comments.add_comment')
+        user_should_have_perm(cls.tester, 'bugs.view_bug')
+
+        cls.bug = BugFactory()
+        cls.url = reverse('bugs-comment')
+
+    def test_add_close_bug_comment(self):
+        old_comment_count = get_comments(self.bug).count()
+
+        self.client.post(
+            self.url,
+            {'bug': self.bug.pk, 'text': '', 'action': 'close'},
+            follow=True
+        )
+        comments = get_comments(self.bug)
+
+        self.assertEqual(comments.count(), old_comment_count + 1)
+        self.assertEqual(comments.last().comment, _('*bug closed*'))
+
+    def test_add_reopen_bug_comment(self):
+        old_comment_count = get_comments(self.bug).count()
+
+        self.client.post(
+            self.url,
+            {'bug': self.bug.pk, 'text': '', 'action': 'reopen'},
+            follow=True
+        )
+        comments = get_comments(self.bug)
+
+        self.assertEqual(comments.count(), old_comment_count + 1)
+        self.assertEqual(comments.last().comment, _('*bug reopened*'))
