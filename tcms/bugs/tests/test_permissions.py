@@ -15,6 +15,7 @@ from django.utils.translation import gettext_lazy as _      # noqa: E402
 from tcms import tests                                      # noqa: E402
 from tcms.bugs.models import Bug                            # noqa: E402
 from tcms.bugs.tests.factory import BugFactory              # noqa: E402
+from tcms.core.helpers.comments import get_comments         # noqa: E402
 from tcms.tests import factories                            # noqa: E402
 
 
@@ -101,6 +102,40 @@ class TestEdit(tests.PermissionsTestCase):
         self.bug.refresh_from_db()
         self.assertContains(response, 'BUG-%d: %s' % (self.bug.pk, _(self.bug.summary)))
         self.assertTemplateUsed(response, 'bugs/get.html')
+
+
+class TestAddComment(tests.PermissionsTestCase):
+    permission_label = 'django_comments.add_comment'
+    http_method_names = ['post']
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.bug = BugFactory()
+
+        cls.url = reverse('bugs-comment')
+        cls.post_data = {
+            'bug': cls.bug.pk,
+            'text': 'A comment text',
+        }
+
+        super().setUpTestData()
+        tests.user_should_have_perm(cls.tester, 'bugs.view_bug')
+
+    def verify_post_with_permission(self):
+        old_comment_count = get_comments(self.bug).count()
+
+        response = self.client.post(self.url, self.post_data, follow=True)
+        comments = get_comments(self.bug)
+
+        self.assertRedirects(
+            response,
+            reverse('bugs-get', args=(self.bug.pk,)),
+            status_code=302,
+            target_status_code=200
+        )
+
+        self.assertEqual(comments.count(), old_comment_count + 1)
+        self.assertEqual(comments.last().comment, 'A comment text')
 
 
 class TestM2MPermissionsExist(TestCase):
