@@ -138,6 +138,17 @@ class TestAddComment(tests.PermissionsTestCase):
         self.assertEqual(comments.last().comment, 'A comment text')
 
 
+class TestSearch(tests.PermissionsTestCase):
+    permission_label = 'bugs.view_bug'
+    url = reverse('bugs-search')
+    http_method_names = ['get']
+
+    def verify_get_with_permission(self):
+        response = self.client.get(self.url)
+
+        self.assertTemplateUsed(response, 'bugs/search.html')
+
+
 class TestM2MPermissionsExist(TestCase):
     def test_permissions_exist(self):
         ctype = ContentType.objects.get_for_model(Bug.tags.through)

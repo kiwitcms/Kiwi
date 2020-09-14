@@ -14,6 +14,7 @@ from tcms.core.helpers.comments import get_comments                   # noqa: E4
 from tcms.core.templatetags.extra_filters import markdown2html        # noqa: E402
 from tcms.bugs.models import Bug                                      # noqa: E402
 from tcms.bugs.tests.factory import BugFactory                        # noqa: E402
+from tcms.management.models import Product                            # noqa: E402
 from tcms.tests import (                                              # noqa: E402
     BaseCaseRun,
     LoggedInTestCase,
@@ -247,3 +248,25 @@ class TestAddComment(LoggedInTestCase):
 
         self.assertEqual(comments.count(), old_comment_count + 1)
         self.assertEqual(comments.last().comment, _('*bug reopened*'))
+
+
+class TestSearch(LoggedInTestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        user_should_have_perm(cls.tester, 'bugs.view_bug')
+
+        ProductFactory()
+        VersionFactory()
+        BuildFactory()
+
+    def test_initial_form_field_states(self):
+        product_count = Product.objects.count()
+
+        response = self.client.get(reverse('bugs-search'))
+        fields = response.context['form'].fields
+
+        self.assertEqual(fields['product'].queryset.count(), product_count)
+        self.assertEqual(fields['version'].queryset.count(), 0)
+        self.assertEqual(fields['build'].queryset.count(), 0)
