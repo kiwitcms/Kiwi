@@ -45,6 +45,7 @@ $(document).ready(() => {
     })
 
     $('.change-assignee-bulk').click(changeAssigneeBulk)
+    $('.update-case-text-bulk').click(updateCaseText)
 
     $('.bulk-change-status').click(function () {
         // `this` is the clicked link
@@ -313,17 +314,17 @@ function changeAssigneeBulk() {
     });
 }
 
-function updateExecutionText() {
-    const executions = 0 // todo: this is the list of all selected executions
-    if (!executions.length) {
-        window.alert(default_messages.alert.no_case_selected);
-        return false;
+function updateCaseText() {
+    const selected = selectedCheckboxes()
+    if ($.isEmptyObject(selected)) {
+        return false
     }
-    //todo: translations
-    executions.forEach(executionId =>
-        jsonRPC('TestExecution.update', [executionId, { 'case_text_version': 'latest' }], () => { }, sync = true)
+
+    selected.executionIds.forEach(executionId =>
+        jsonRPC('TestExecution.update', [executionId, { 'case_text_version': 'latest' }], execution => {
+            reloadRowFor(execution)
+        })
     );
-    window.location.reload(true);
 }
 
 function fileBugFromExecution(execution) {
