@@ -1,3 +1,5 @@
+let testExecutionStatuses = {}
+
 $(document).ready(() => {
 
     $('.bootstrap-switch').bootstrapSwitch();
@@ -50,9 +52,10 @@ $(document).ready(() => {
     tagsCard('TestRun', testRunId, { run: testRunId }, permRemoveTag);
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
+        testExecutionStatuses = executionStatuses
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
             drawPercentBar(testExecutions, executionStatuses)
-            renderTestExecutions(testExecutions, executionStatuses)
+            renderTestExecutions(testExecutions)
         })
     })
 
@@ -152,18 +155,14 @@ function renderCountPerStatusList(statusCount) {
     }
 }
 
-function renderTestExecutions(testExecutions, executionStatuses) {
+function renderTestExecutions(testExecutions) {
     const container = $('#test-executions-container')
-    const testExecutionRowTemplate = $('#test-execution-row')[0].content
 
     const testCaseIds = []
     testExecutions.forEach(testExecution => {
         testCaseIds.push(testExecution.case_id)
 
-        const executionStatus = executionStatuses.find(status => status.id === testExecution.status_id)
-        const template = $(testExecutionRowTemplate.cloneNode(true))
-
-        container.append(renderTestExecutionRow(template, testExecution, executionStatus))
+        container.append(renderTestExecutionRow(testExecution))
     })
 
     treeViewBind();
@@ -173,6 +172,10 @@ function renderTestExecutions(testExecutions, executionStatuses) {
 function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
     $('.test-executions-count').html(testExecutions.length);
 
+    renderTestCaseInformation(testExecutions, testExecutionCaseIds)
+}
+
+function renderTestCaseInformation(testExecutions, testExecutionCaseIds) {
     jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
         testExecutions.forEach(testExecution => {
             const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
@@ -201,7 +204,6 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
             })
 
             jsonRPC('TestCase.list_attachments', [testCase.id], attachments => {
-
                 const ul = listGroupItem.find(`.test-case-attachments`)
 
                 if (!attachments.length) {
@@ -222,18 +224,24 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
             })
         })
     })
+
 }
 
-function renderTestExecutionRow(template, testExecution, testExecutionStatus) {
+function renderTestExecutionRow(testExecution) {
+    const testExecutionRowTemplate = $('#test-execution-row')[0].content
+    const template = $(testExecutionRowTemplate.cloneNode(true))
+
     template.find('.test-execution-checkbox').data('test-execution-id', testExecution.id)
     template.find('.test-execution-checkbox').data('test-execution-case-id', testExecution.case_id)
-    template.find('.list-group-item').addClass(`test-execution-${testExecution.id}`)
-    template.find('.list-group-item').addClass(`test-execution-case-${testExecution.case_id}`)
+    template.find('.test-execution-element').addClass(`test-execution-${testExecution.id}`)
+    template.find('.test-execution-element').addClass(`test-execution-case-${testExecution.case_id}`)
     template.find('.test-execution-info').html(`TE-${testExecution.id}`)
     template.find('.test-execution-info-link').html(testExecution.case)
     template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case_id}/`)
     template.find('.test-execution-tester').html(testExecution.tested_by || '-')
     template.find('.test-execution-asignee').html(testExecution.assignee || '-')
+
+    const testExecutionStatus = testExecutionStatuses.find(status => status.id === testExecution.status_id)
 
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
@@ -291,12 +299,22 @@ function fileBugFromExecution(execution) {
         const trackerId = $('.one-click-bug-report-form #id-issue-tracker').val()
         jsonRPC('Bug.report', [execution.id, trackerId], result => {
 
+            // close the modal
+            $('#one-click-bug-report-modal button.close').click()
+
+            if (result.rc !== 0) {
+                alert(result.response)
+                return
+            }
+
+            $(`.test-execution-${execution.id}`).replaceWith(renderTestExecutionRow(execution))
+
+            treeViewBind();
+            renderTestCaseInformation([execution], [execution.case_id])
+
             // unescape b/c Issue #1533
             const targetUrl = result.response.replace(/&amp;/g, '&')
             window.open(targetUrl, '_blank')
-
-            // close the modal
-            $('#one-click-bug-report-modal button.close').click()
         })
         return false
     })
