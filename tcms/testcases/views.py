@@ -474,7 +474,7 @@ class TestCaseExecutionDetailPanelView(TemplateView):
             self.execution_id = int(request.GET.get('execution_id'))
             self.case_text_version = int(request.GET.get('case_text_version'))
         except (TypeError, ValueError):
-            raise Http404
+            raise Http404 from None
 
         return super().get(request, *args, **kwargs)
 

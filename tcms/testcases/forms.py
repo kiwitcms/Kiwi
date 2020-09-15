@@ -167,7 +167,7 @@ class QuickSearchCaseForm(forms.Form):
                 case_ids.append(int(case_id))
             return case_ids
         except ValueError:
-            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE)
+            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE) from None
 
 
 class CloneCaseForm(forms.Form):

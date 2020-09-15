@@ -200,7 +200,7 @@ class GetTestRunView(TemplateView):
             # and we're not calling super() anywhere
             test_run = TestRun.objects.select_related().get(pk=kwargs['pk'])
         except ObjectDoesNotExist:
-            raise Http404
+            raise Http404 from None
 
         # Get the test executions that belong to the run
         # 2. get test run's all executions
@@ -430,7 +430,7 @@ class AddCasesToRunView(View):
                 'plan'
             ).only('plan_id').get(pk=pk)
         except ObjectDoesNotExist:
-            raise Http404
+            raise Http404 from None
 
         executions_ids = test_run.case_run.values_list('case', flat=True)
 
