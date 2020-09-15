@@ -144,7 +144,6 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         cls.test_run = factories.TestRunFactory()
 
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
-        cls.post_data = {'summary': 'mock', }
         super().setUpTestData()
 
         cls.add_comment_html = \
