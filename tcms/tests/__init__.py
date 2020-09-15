@@ -370,8 +370,11 @@ class PermissionsTestCase(PermissionsTestMixin, LoggedInTestCase):
         if not cls.url:
             raise RuntimeError("Configure `url` attribute for this test class")
 
-        if not cls.post_data:
+        if 'post' in cls.http_method_names and not cls.post_data:
             raise RuntimeError("Configure `post_data` attribute for this test class")
+
+        if 'post' not in cls.http_method_names and cls.post_data:
+            raise RuntimeError("Unnecessary `post_data` attribute configured for non-POST test!")
 
     def verify_get_without_permission(self):
         """
