@@ -47,3 +47,21 @@ class TestTestRunAdmin(LoggedInTestCase):
                                             args=[self.test_run.pk]), {'post': 'yes'}, follow=True)
         self.assertRedirects(response, reverse('admin:testruns_testrun_changelist'))
         self.assertEqual(TestRun.objects.filter(pk=self.test_run.pk).exists(), False)
+
+
+class TestTestExecutionStatusAdmin(LoggedInTestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        initiate_user_with_default_setups(cls.tester)
+
+    def test_admin_testrun_execution_status_color(self):
+        response = self.client.get(reverse('admin:testruns_testexecutionstatus_changelist'))
+        self.assertContains(response, (
+            '''
+            <span style="background-color: #92d400; height: 20px; display: block;
+                         color: black; font-weight: bold">
+                #92d400
+            </span>
+            '''))
