@@ -24,7 +24,7 @@ def user_should_have_perm(user, perm):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
-            raise ValueError('%s is not valid. Should be in format app_label.perm_codename')
+            raise ValueError('"%s" should be: app_label.perm_codename' % perm) from None
         else:
             if not app_label or not codename:
                 raise ValueError('Invalid app_label or codename')
@@ -43,7 +43,7 @@ def remove_perm_from_user(user, perm):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
-            raise ValueError('%s is not valid. Should be in format app_label.perm_codename')
+            raise ValueError('"%s" should be: app_label.perm_codename' % perm) from None
         else:
             if not app_label or not codename:
                 raise ValueError('Invalid app_label or codename')
