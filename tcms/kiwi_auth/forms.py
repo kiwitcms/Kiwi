@@ -17,9 +17,16 @@ from tcms.utils.permissions import initiate_user_with_default_setups
 
 User = get_user_model()  # pylint: disable=invalid-name
 
+# actually enable only if app is configured
+if 'captcha' in settings.INSTALLED_APPS:
+    from captcha.fields import ReCaptchaField
+else:
+    ReCaptchaField = None.__class__  # pylint: disable=invalid-name
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField()
+    captcha = ReCaptchaField()
 
     class Meta:
         model = User
