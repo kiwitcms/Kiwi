@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for Kiwi TCMS
 title: ''
-labels: ''
+labels: 'feature request'
 assignees: ''
 
 ---
