@@ -2,12 +2,108 @@ Change Log
 ==========
 
 
-Kiwi TCMS 8.6.1 (13 Sep 2020)
------------------------------
+Kiwi TCMS 8.7 (16 Sep 2020)
+---------------------------
 
-**IMPORTANT:** this is a PyPI only release which helps development and testing
-for Kiwi TCMS plugins and related packages. Not distributed as container!
-Not intended for use in production!
+**IMPORTANT:** this is a medium sized release which includes
+improvements, API changes, bug fixes, translation updates and
+new tests. It is the fifth release to include contributions via our
+`open source bounty program`_.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 3.0.9 to 3.1.1
+- Update django-attachments from 1.6 to 1.8
+- Update django-extensions from 3.0.5 to 3.0.8
+- Update psycopg2 from 2.8.5 to 2.8.6
+- Update pygments from 2.6.1 to 2.7.0
+- Update python-gitlab from 2.4.0 to 2.5.0
+- Make it possible to use reCAPTCHA during registration. If you want to enable
+  this then add the following to your settings::
+
+        if 'captcha' not in INSTALLED_APPS:
+            INSTALLED_APPS.append('captcha')
+
+            RECAPTCHA_PUBLIC_KEY = '......'
+            RECAPTCHA_PRIVATE_KEY = '.....'
+            RECAPTCHA_USE_SSL = True
+
+  For more info see https://www.google.com/recaptcha/admin/
+- Replace ``GlobalLoginRequiredMiddleware`` with
+  ``tcms.kiwi_auth.backends.AnonymousViewBackend`` for anonymous read-only
+  functionality. See section
+  `Anonymous read-only access <https://kiwitcms.readthedocs.io/en/latest/configuration.html#anonymous-read-only-access>`_
+  in the documentation
+- Replace the ``...`` in navigation bar with a 3 cogs icon to make the
+  object-level menu more visible
+
+
+Settings
+~~~~~~~~
+
+- Remove setting ``PUBLIC_VIEWS``
+
+
+API
+~~~
+
+- Remove ``TestCase.get_components()`` in favor of ``Component.filter()``
+- ``Bug.details()`` method will now return ``{}`` instead of failing if
+  it can't find an issue tracker from an URL
+
+
+Bug fixes
+~~~~~~~~~
+
+- Remove documentation references to non-existing environment
+- Don't fail internal calls if Kiwi TCMS bug tracker can't find a bug
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add tests for ``tcms.core.templatetags``. Closes
+  `Issue #1602 <https://github.com/kiwitcms/Kiwi/issues/1602>`_ (Mariyan Garvanski)
+- Add tests for ``tcms.bugs.views.Edit``. Closes
+  `Issue #1599 <https://github.com/kiwitcms/Kiwi/issues/1599>`_ (Mfon Eti-mfon)
+- Add tests for ``tcms.bugs.views.AddComment``. Closes
+  `Issue #1600 <https://github.com/kiwitcms/Kiwi/issues/1600>`_ (Mfon Eti-mfon)
+- Make paths used in migrations & settings platform aware in order to
+  enable development mode on Windows (Mfon Eti-mfon)
+- Add new linter checker to check for use of ``db_column`` argument in
+  model field definition. Closes
+  `Issue #736 <https://github.com/kiwitcms/Kiwi/issues/736>`_ (Bryan Mutai)
+- Add tests for ``Bug.details`` API method
+- Replace deprecated ``ifequal``/``ifnotequal`` template tags
+- Adjust ``migrations_order`` for Django 3.1 compatibility
+- Add ``npm audit`` check in CI
+- Resolve several pylint issues
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
 
 
 
