@@ -69,7 +69,7 @@ class RegistrationForm(UserCreationForm):
         )
 
 
-class PasswordResetForm(DjangoPasswordResetForm):
+class PasswordResetForm(DjangoPasswordResetForm):  # pylint: disable=must-inherit-from-model-form
     """
         Overrides the default form b/c it uses Site.objects.get_current()
         which uses an internal cache and produces wrong results when
