@@ -105,14 +105,9 @@
                                                         id="input-filter-button"
                                                         data-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false">
-                                                    {% trans 'Name' %}<span
+                                                    {% trans 'Summary' %}<span
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu js-toolbar-filter-options">
-                                                    <li class="selected" data-filter-type="summary"><a>{% trans 'Summary' %}</a></li>
-                                                    <li data-filter-type="category"><a>{% trans 'Category' %}</a></li>
-                                                    <li data-filter-type="priority"><a>{% trans 'Priority' %}</a></li>
-                                                    <li data-filter-type="author"><a>{% trans 'Author' %}</a></li>
-                                                    <li data-filter-type="default_tester"><a>{% trans 'Default tester' %}</a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                             <input type="text" class="form-control" id="toolbar-filter"
@@ -123,16 +118,12 @@
                                         <div class="dropdown btn-group">
                                             <div class="dropdown btn-group ">
                                                 <button type="button" class="btn btn-default dropdown-toggle"
-                                                        id="filter-button"
+                                                        id="sort-button"
                                                         data-toggle="dropdown"
                                                         aria-haspopup="true"
-                                                        aria-expanded="false">{% trans 'Name' %}<span
+                                                        aria-expanded="false">{% trans 'Summary' %}<span
                                                         class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                    <li class="selected"><a href="#">{% trans 'Name' %}</a></li>
-                                                    <li><a href="#">{% trans 'ID' %}</a></li>
-                                                    <li><a href="#">{% trans 'Status' %}</a></li>
-                                                    <li><a href="#">{% trans 'Priority' %}</a></li>
+                                                <ul class="dropdown-menu js-toolbar-sort-options">
                                                 </ul>
                                             </div>
                                             <button class="btn btn-link" type="button">
@@ -322,6 +313,14 @@
             </div>
         </div>
     </div>
+</template>
+
+<template id="toolbar-dropdown">
+    <li class="selected" data-filter-type="summary"><a>{% trans 'Summary' %}</a></li>
+    <li data-filter-type="category"><a>{% trans 'Category' %}</a></li>
+    <li data-filter-type="priority"><a>{% trans 'Priority' %}</a></li>
+    <li data-filter-type="author"><a>{% trans 'Author' %}</a></li>
+    <li data-filter-type="default_tester"><a>{% trans 'Default tester' %}</a></li>
 </template>
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
