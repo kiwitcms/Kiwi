@@ -1,6 +1,16 @@
 let testExecutionStatuses = {}
 
+const permissions = {
+    removeTag: false,
+    addComment: false,
+    removeComment: false,
+}
+
 $(document).ready(() => {
+
+    permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
+    permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True';
+    permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True';
 
     $('.bootstrap-switch').bootstrapSwitch();
     $('.selectpicker').selectpicker();
@@ -59,10 +69,8 @@ $(document).ready(() => {
         return false
     })
 
-    const permRemoveTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
-
     // bind everything in tags table
-    tagsCard('TestRun', testRunId, { run: testRunId }, permRemoveTag);
+    tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag);
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
         testExecutionStatuses = executionStatuses
@@ -186,6 +194,18 @@ function renderTestExecutions(testExecutions) {
 
 function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
 
+    testExecutions.forEach(testExecution => {
+        const testExecutionRow = $(`.test-execution-${testExecution.id}`)
+
+        renderCommentsForObject(
+            testExecution.id,
+            'TestExecution.get_comments',
+            'TestExecution.remove_comment',
+            permissions.removeComment,
+            testExecutionRow.find('.comments'),
+        )
+    })
+
     jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
         testExecutions.forEach(testExecution => {
             const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
@@ -281,6 +301,41 @@ function renderTestExecutionRow(testExecution) {
 
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
+
+    if (!permissions.addComment) {
+        template.find('.comment-form').css('display', 'none')
+        return template
+    }
+
+    template.find('textarea')[0].id = `comment-for-testexecution-${testExecution.id}`
+    template.find('input[type="file"]')[0].id = `file-upload-for-testexecution-${testExecution.id}`
+
+    const textArea = template.find('textarea')[0];
+    const fileUpload = template.find('input[type="file"]')
+    const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
+
+    const commentsRow = template.find('.comments')
+    template.find('.post-comment').click(() => {
+        const input = editor.value().trim()
+
+        if (input) {
+            jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
+                editor.value('')
+
+                commentsRow.append(renderCommentHTML(
+                    1 + template.find('.js-comment-container').length,
+                    comment,
+                    $('template#comment-template')[0],
+                    parentNode => {
+                        bindDeleteCommentButton(
+                            testExecution.id,
+                            'TestExecution.remove_comment',
+                            permissions.removeComment,
+                            parentNode)
+                    }))
+            })
+        }
+    })
 
     return template
 }
