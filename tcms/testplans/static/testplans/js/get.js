@@ -241,24 +241,17 @@ function toolbarEvents() {
     $('.js-toolbar-sort-options li').click(function(ev) {
         changeDropdownSelectedItem('.js-toolbar-sort-options', '#sort-button', ev.target);
 
-        let sortBy = $('.js-toolbar-sort-options .selected')[0].dataset.filterType,
-            tcsParentElement = $('#testcases-list'),
-            visibleTCrows = $('.js-testcase-row:visible');
+        sortTestCases();
+    });
 
+    //handle asc desc icon
+    $('.js-toolbar-sorting-order > span').click(function(ev) {
+        let icon = $(this);
 
-        // reorder the tc rows
-        visibleTCrows.sort(function(tc1, tc2) {
-            let tc1Id = $(tc1).data('testcasePk'),
-                tc2Id = $(tc2).data('testcasePk');
+        icon.siblings('.hidden').removeClass('hidden');
+        icon.addClass('hidden');
 
-            let value1 = allTestCases[tc1Id][sortBy] || "",
-                value2 = allTestCases[tc2Id][sortBy] || "";
-
-            return value1.localeCompare(value2);
-        });
-
-        //put the new order in the DOM
-        tcsParentElement.html(visibleTCrows);
+        sortTestCases();
     });
 }
 
@@ -285,4 +278,27 @@ function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
 
     // target is a tag
     target.parentElement.className = 'selected';
+}
+
+function sortTestCases() {
+
+    let sortBy = $('.js-toolbar-sort-options .selected')[0].dataset.filterType,
+        tcsParentElement = $('#testcases-list'),
+        visibleTCrows = $('.js-testcase-row:visible'),
+        sortOrder = $('.js-toolbar-sorting-order > span:not(.hidden)').data('order');
+
+
+    // reorder the tc rows
+    visibleTCrows.sort(function(tc1, tc2) {
+        let tc1Id = $(tc1).data('testcasePk'),
+            tc2Id = $(tc2).data('testcasePk');
+
+        let value1 = allTestCases[tc1Id][sortBy] || "",
+            value2 = allTestCases[tc2Id][sortBy] || "";
+
+        return value1.localeCompare(value2) * sortOrder;
+    });
+
+    //put the new order in the DOM
+    tcsParentElement.html(visibleTCrows);
 }
