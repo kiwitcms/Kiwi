@@ -15,6 +15,8 @@
         <span id="test_run_pk"
             data-pk="{{ object.pk }}"
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
+            data-perm-add-comment="{{ perms.django_comments.add_comment }}"
+            data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
             data-trans-no-executions-selected="{% trans 'No executions selected! Please select at least one execution!'%}"
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
@@ -254,7 +256,7 @@
                                 </div>
                                 <div class="list-group-item-container container-fluid hidden">
                                     <div class="row">
-                                        <div class="col-md-9">
+                                        <div class="col-md-6">
                                             <div class="test-execution-text-container markdown-text">
                                                 <p class="test-execution-text"></p>
                                                 <p class="test-execution-notes">
@@ -311,16 +313,28 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <span>{% trans 'Test Case Attachments' %}:</span>
-                                            <ul class="list-group list-unstyled test-case-attachments">
-                                                <template id="attachments-list-item">
-                                                    <li class="list-group-item'">
-                                                        <a></a>
-                                                    </li>
-                                                </template>
-                                                <li class="list-group-item hidden">{% trans "No attachments" %}</li>
-                                            </ul>
+                                        <div class="col-md-6">
+                                            <div>
+                                                <h4> {% trans "Comments "%} </h4>
+                                                <div class="comment-form">
+                                                    {{ comment_form.text }}
+                                                    <div class="form-group" style="padding: 15px; text-align: right;">
+                                                        <button class="btn btn-default post-comment">{% trans "Save" %}</button>
+                                                    </div>
+                                                </div>
+                                                <div class="comments"></div>
+                                            </div>
+                                            <div>
+                                                <span>{% trans 'Test Case Attachments' %}:</span>
+                                                <ul class="list-group list-unstyled test-case-attachments">
+                                                    <template id="attachments-list-item">
+                                                        <li class="list-group-item'">
+                                                            <a></a>
+                                                        </li>
+                                                    </template>
+                                                    <li class="list-group-item hidden">{% trans "No attachments" %}</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -408,6 +422,10 @@
     </div>
   </div>
 </div>
+
+{{ comment_form.media }}
+
+{% include 'include/comments_for_object_template.html' %}
 
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
