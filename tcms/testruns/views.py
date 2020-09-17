@@ -16,6 +16,7 @@ from django.views.generic.edit import UpdateView
 
 from guardian.decorators import permission_required as object_permission_required
 
+from tcms.core.forms import SimpleCommentForm
 from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Build
 from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus
@@ -142,6 +143,7 @@ class GetTestRunView(DetailView):
         context['execution_statuses'] = TestExecutionStatus.objects.order_by('-weight', 'name')
         context['link_form'] = LinkReferenceForm()
         context['bug_trackers'] = BugSystem.objects.all()
+        context['comment_form'] = SimpleCommentForm()
         return context
 
     def render_to_response(self, context, **response_kwargs):
