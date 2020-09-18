@@ -5,11 +5,12 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
+from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
 from tcms.testruns.models import TestRun, TestExecutionStatus
 
 
-class TestRunAdmin(ReadOnlyHistoryAdmin):
+class TestRunAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
     actions = ['delete_selected']
 
     def add_view(self, request, form_url='', extra_context=None):

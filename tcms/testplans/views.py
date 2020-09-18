@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, View
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
+from guardian.decorators import permission_required as object_permission_required
 from uuslug import slugify
 
 from tcms.testcases.forms import QuickSearchCaseForm, SearchCaseForm
@@ -58,7 +59,10 @@ class NewTestPlanView(CreateView):
         return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
 
 
-@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
+@method_decorator(
+    object_permission_required('testplans.change_testplan', (TestPlan, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class Edit(UpdateView):
     model = TestPlan
     form_class = NewPlanForm
@@ -195,7 +199,10 @@ def calculate_stats_for_testplans(plans):
     return plans
 
 
-@method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
+@method_decorator(
+    object_permission_required('testplans.view_testplan', (TestPlan, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class TestPlanGetView(DetailView):
 
     template_name = 'plan/get.html'
@@ -212,7 +219,10 @@ class TestPlanGetView(DetailView):
         return context
 
 
-@method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
+@method_decorator(
+    object_permission_required('testplans.view_testplan', (TestPlan, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class GetTestPlanRedirectView(DetailView):
 
     http_method_names = ['get']

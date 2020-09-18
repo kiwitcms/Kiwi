@@ -16,6 +16,8 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import UpdateView
 from django_comments.models import Comment
 
+from guardian.decorators import permission_required as object_permission_required
+
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.utils import clean_request
 from tcms.management.models import Build, Priority, Tag
@@ -185,7 +187,10 @@ def open_run_get_users(case_runs):
     return (dict(testers.iterator()), dict(assignees.iterator()))
 
 
-@method_decorator(permission_required('testruns.view_testrun'), name='dispatch')
+@method_decorator(
+    object_permission_required('testruns.view_testrun', (TestRun, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class GetTestRunView(TemplateView):
     """Display testrun's details"""
 
@@ -264,7 +269,10 @@ def _walk_executions(test_executions):
                                             execution=execution.pk).count())
 
 
-@method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
+@method_decorator(
+    object_permission_required('testruns.change_testrun', (TestRun, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class EditTestRunView(UpdateView):
     model = TestRun
     template_name = 'testruns/mutable.html'
