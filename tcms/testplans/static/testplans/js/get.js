@@ -25,6 +25,7 @@ $(document).ready(function() {
         treeViewBind();
     });
 
+    toolbarDropdowns();
     toolbarEvents();
 });
 
@@ -222,15 +223,7 @@ function toolbarEvents() {
     });
 
     $('.js-toolbar-filter-options li').click(function(ev) {
-        $('#input-filter-button')[0].innerHTML = ev.target.innerText + '<span class="caret"></span>';
-
-        //remove selected class
-        $('.js-toolbar-filter-options li').each(function(index, el) {
-            el.className = '';
-        });
-
-        // target is the a tag
-        ev.target.parentElement.className = 'selected';
+        changeDropdownSelectedItem('.js-toolbar-filter-options', '#input-filter-button' , ev.target);
     });
 
     $('#toolbar-filter').on("keyup", function() {
@@ -244,9 +237,68 @@ function toolbarEvents() {
         );
 
     });
+
+    $('.js-toolbar-sort-options li').click(function(ev) {
+        changeDropdownSelectedItem('.js-toolbar-sort-options', '#sort-button', ev.target);
+
+        sortTestCases();
+    });
+
+    //handle asc desc icon
+    $('.js-toolbar-sorting-order > span').click(function(ev) {
+        let icon = $(this);
+
+        icon.siblings('.hidden').removeClass('hidden');
+        icon.addClass('hidden');
+
+        sortTestCases();
+    });
+}
+
+function toolbarDropdowns() {
+    let toolbarDropdown= $('#toolbar-dropdown')[0].content;
+
+    $('.js-toolbar-filter-options').append(toolbarDropdown.cloneNode(true));
+    $('.js-toolbar-sort-options').append(toolbarDropdown.cloneNode(true));
 }
 
 function isTestCaseConfrimed(status) {
     //todo: refactor when testcase_status is replaced with boolean flag
     return Number(status) === 2;
+}
+
+// on dropdown change update the label of the button and set new selected list item
+function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
+    $(`${buttonSelector}`)[0].innerHTML = target.innerText + '<span class="caret"></span>';
+
+    //remove selected class
+    $(`${dropDownSelector} li`).each(function(index, el) {
+        el.className = '';
+    });
+
+    // target is a tag
+    target.parentElement.className = 'selected';
+}
+
+function sortTestCases() {
+
+    let sortBy = $('.js-toolbar-sort-options .selected')[0].dataset.filterType,
+        tcsParentElement = $('#testcases-list'),
+        visibleTCrows = $('.js-testcase-row:visible'),
+        sortOrder = $('.js-toolbar-sorting-order > span:not(.hidden)').data('order');
+
+
+    // reorder the tc rows
+    visibleTCrows.sort(function(tc1, tc2) {
+        let tc1Id = $(tc1).data('testcasePk'),
+            tc2Id = $(tc2).data('testcasePk');
+
+        let value1 = allTestCases[tc1Id][sortBy] || "",
+            value2 = allTestCases[tc2Id][sortBy] || "";
+
+        return value1.localeCompare(value2) * sortOrder;
+    });
+
+    //put the new order in the DOM
+    tcsParentElement.html(visibleTCrows);
 }
