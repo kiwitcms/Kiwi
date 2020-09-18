@@ -15,7 +15,7 @@ class KiwiOutputWrapper(OutputWrapper):
         super().__init__(*args, **kwargs)
         self.migrate_heading = migrate_heading
 
-    def write(self, msg, style_func=None, ending=None):
+    def write(self, msg='', style_func=None, ending=None):
         if style_func == self.migrate_heading:
             super().write(msg)
 
