@@ -15,6 +15,10 @@ class MissingPermissionsChecker(checkers.BaseChecker):
         but we're ok with that. Better inspect than forget to add permission
         decorator!
     """
+    allowed_decorators = [
+        'permission_required',
+        'object_permission_required',
+    ]
     inside_views_module = False
 
     __implements__ = (interfaces.IAstroidChecker,)
@@ -67,12 +71,12 @@ class MissingPermissionsChecker(checkers.BaseChecker):
         found_permissions_required = False
         for decorator in node.decorators.nodes:
             if isinstance(decorator, astroid.Call):
-                if decorator.func.name == 'permission_required':
+                if decorator.func.name in self.allowed_decorators:
                     found_permissions_required = True
                     break
                 if decorator.func.name == 'method_decorator' and \
                         isinstance(decorator.args[0], astroid.Call) and \
-                        decorator.args[0].func.name == 'permission_required':
+                        decorator.args[0].func.name in self.allowed_decorators:
                     found_permissions_required = True
                     break
 
