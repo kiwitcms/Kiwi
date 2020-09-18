@@ -6,7 +6,7 @@ Test Cases
 This chapter explains how to create, search, edit, clone,
 review, tag and remove Test Cases in Kiwi TCMS.
 
-There are three ways to associate Test Cases with a Test Plan:
+There are two ways to associate Test Cases with a Test Plan:
 
 #. Create a new Test Case, see :ref:`create-test-case`.
 #. Add an existing Test Case, :ref:`use-existing-test-case`.
@@ -22,14 +22,6 @@ To search Test Cases:
 #. From the **Main menu** click **SEARCH::Search Test Cases**.
 
    |The Testing menu 1|
-
-#. In the **Search Case** screen, enter the required search details.
-
-   |The Search Case screen|
-
-#. Click **Search** button. The search results appear.
-
-   |Test Case search results|
 
 
 .. _create-test-case:
@@ -297,8 +289,6 @@ Removing a Test Plan via the Test Case view
 .. |The Write New Case button| image:: ../_static/Create_New_Case.png
 .. |The add new case screen| image:: ../_static/Case_Enter_Details.png
 .. |The Testing menu 1| image:: ../_static/Click_Cases.png
-.. |The Search Case screen| image:: ../_static/Cases_Home.png
-.. |Test Case search results| image:: ../_static/Test_Case_Search_Results.png
 .. |The Edit button| image:: ../_static/Test_Case_Edit_From_Plan.png
 .. |The Add cases from other plans button| image:: ../_static/TC_Add_To_Plan_TP.png
 .. |Add Selected Cases| image:: ../_static/Click_Add_To_Plan_Name.png

@@ -19,14 +19,6 @@ To search for Test Runs:
 
    |The Testing menu 2|
 
-#. In the **Search Test Run** screen, enter the required search details.
-
-   |The Search Test Run screen|
-
-#. Click **Search** button and the results will appear.
-
-   |Test Run search results|
-
 .. _creating-testrun:
 
 Creating a Test Run
@@ -49,8 +41,6 @@ assigned to any user in Kiwi TCMS. To create a Test Run:
    -  Select the **Build**.
    -  Edit the **Run Manager**.
    -  Edit the **Default Tester**.
-   -  If applicable, select the **Set Status Automatically** checkbox.
-   -  Enter the **Estimated time**.
    -  Enter any **Notes**.
 
    |The Create New Test Run screen|
@@ -120,7 +110,6 @@ The Edit function modifies fields in a Test Run.
    -  Product version
    -  Manager
    -  Default Tester
-   -  Estimated Time
    -  Notes
    -  Finished
 
@@ -131,10 +120,6 @@ Changing the status of a Test Run
 
 A Test Run's status can be changed from **Running** to **Finished** even
 if all Test Cases have not been completed.
-
-If the check box **Set Status Automatically** is selected in the test
-run, when all the test cases in the run have a passed, failed or blocked
-result the test run's status will be changed to **Finished**.
 
 To change the status of a Test Run:
 
@@ -255,8 +240,6 @@ To generate a report for a Test Run:
 .. |The Add cases to run button| image:: ../_static/Click_Add_Cases_to_Run.png
 .. |The Update button| image:: ../_static/Select_Plan_Click_Update.png
 .. |The Testing menu 2| image:: ../_static/Click_Runs.png
-.. |The Search Test Run screen| image:: ../_static/Runs_Home.png
-.. |Test Run search results| image:: ../_static/Search_Results.png
 .. |The Delete confirmation screen.| image:: ../_static/Ok_Delete.png
 .. |The Clone button 2| image:: ../_static/Clone_Test_Run.png
 .. |The Test Run summary| image:: ../_static/Runs_Details.png

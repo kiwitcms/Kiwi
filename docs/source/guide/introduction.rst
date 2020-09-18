@@ -140,10 +140,9 @@ features accessible from the home page.
 **Navigation bar**
 
 The navigation bar consists of the Main menu, Help menu and Personal menu.
-When you click over a menu item, a sub-menu appears. To navigate to a previous
-screen, click on the breadcrumb located below the menu bar.
+When you click over a menu item, a sub-menu appears.
 
-|The TCMS menu bar and breadcrumbs|
+|The TCMS menu bar|
 
 Personal dashboard
 ~~~~~~~~~~~~~~~~~~~
@@ -173,4 +172,4 @@ The **Help menu** provides additional links to help pages:
 
 .. |Models relations| image:: ../_static/kiwi_models_relations_overview.svg
 .. |The TCMS home page| image:: ../_static/Home_Screen.png
-.. |The TCMS menu bar and breadcrumbs| image:: ../_static/Navigation_Tabs.png
+.. |The TCMS menu bar| image:: ../_static/Navigation_Tabs.png
