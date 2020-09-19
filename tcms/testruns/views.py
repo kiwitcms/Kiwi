@@ -164,6 +164,11 @@ class GetTestRunView(DetailView):
                     ),
                     ('-', '-'),
                     (
+                        _('Object permissions'),
+                        reverse('admin:testruns_testrun_permissions', args=[self.object.pk])
+                    ),
+                    ('-', '-'),
+                    (
                         _('Delete'),
                         reverse('admin:testruns_testrun_delete', args=[self.object.pk])
                     )])]}
