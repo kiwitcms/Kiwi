@@ -163,6 +163,11 @@ class TestPlanGetView(DetailView):
                     ),
                     ('-', '-'),
                     (
+                        _('Object permissions'),
+                        reverse('admin:testplans_testplan_permissions', args=[self.object.pk])
+                    ),
+                    ('-', '-'),
+                    (
                         _('Delete'),
                         reverse('admin:testplans_testplan_delete', args=[self.object.pk])
                     )])]}
