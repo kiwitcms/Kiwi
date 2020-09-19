@@ -326,3 +326,22 @@ function sortTestCases() {
     //put the new order in the DOM
     tcsParentElement.html(visibleTCrows);
 }
+
+function getSelectedTestCases() {
+    let inputs = $('.js-testcase-row input:checked'),
+        tcIds = [];
+
+    inputs.each(function(index, el) {
+        let elJq = $(el);
+
+        if (elJq.is(':hidden')) {
+            return;
+        }
+
+        let id = elJq.closest('.js-testcase-row').data('testcase-pk');
+        tcIds.push(id);
+    });
+
+    return tcIds;
+
+}
