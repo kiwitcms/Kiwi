@@ -14,6 +14,8 @@ from django.views.generic import DetailView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
 
+from guardian.decorators import permission_required as object_permission_required
+
 from tcms.bugs.forms import BugCommentForm, NewBugForm
 from tcms.bugs.models import Bug
 from tcms.core.helpers.comments import add_comment
@@ -21,7 +23,10 @@ from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Component
 
 
-@method_decorator(permission_required('bugs.view_bug'), name='dispatch')
+@method_decorator(
+    object_permission_required('bugs.view_bug', (Bug, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class Get(DetailView):
     model = Bug
     template_name = 'bugs/get.html'
@@ -35,6 +40,11 @@ class Get(DetailView):
                     (
                         _('Edit'),
                         reverse('bugs-edit', args=[self.object.pk])
+                    ),
+                    ('-', '-'),
+                    (
+                        _('Object permissions'),
+                        reverse('admin:bugs_bug_permissions', args=[self.object.pk])
                     ),
                     ('-', '-'),
                     (
@@ -145,7 +155,10 @@ class New(CreateView):
         return bug
 
 
-@method_decorator(permission_required('bugs.change_bug'), name='dispatch')
+@method_decorator(
+    object_permission_required('bugs.change_bug', (Bug, 'pk', 'pk'),
+                               accept_global_perms=True),
+    name='dispatch')
 class Edit(UpdateView):
     model = Bug
     # todo: try using NewBugForm instead of duplicating the field names here

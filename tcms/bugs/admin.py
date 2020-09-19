@@ -3,10 +3,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from tcms.bugs.models import Bug
+from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
 
 
-class BugAdmin(ReadOnlyHistoryAdmin):
+class BugAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
     actions = ['delete_selected']
 
     def add_view(self, request, form_url='', extra_context=None):
