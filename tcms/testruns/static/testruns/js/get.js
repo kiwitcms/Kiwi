@@ -46,6 +46,17 @@ $(document).ready(() => {
 
     $('.change-assignee-bulk').click(changeAssigneeBulk)
 
+    $('.bulk-change-status').click(function () {
+        // `this` is the clicked link
+        const statusId = $(this).data('status-id')
+        changeStatusBulk(statusId)
+
+        // close dropdown
+        $('.statuses-dropdown').removeClass('open')
+
+        return false
+    })
+
     const permRemoveTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
 
     // bind everything in tags table
@@ -53,6 +64,7 @@ $(document).ready(() => {
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
         testExecutionStatuses = executionStatuses
+
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
             drawPercentBar(testExecutions, executionStatuses)
             renderTestExecutions(testExecutions)
@@ -249,6 +261,26 @@ function renderTestExecutionRow(testExecution) {
     return template
 }
 
+function changeStatusBulk(statusId) {
+    const selected = selectedCheckboxes()
+    if ($.isEmptyObject(selected)) {
+        return false
+    }
+
+    selected.executionIds.forEach(executionId => {
+        jsonRPC('TestExecution.update', [executionId, {
+            'status': statusId,
+        }], execution => {
+            const testExecutionRow = $(`.test-execution-${executionId}`);
+            animate(testExecutionRow, () => {
+                const testExecutionStatus = testExecutionStatuses.find(s => s.id === statusId)
+                testExecutionRow.find('.test-execution-tester').html(execution.tested_by)
+                testExecutionRow.find('.test-execution-status-icon').removeClass().addClass('fa test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
+                testExecutionRow.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
+            })
+        })
+    });
+}
 
 /////// the functions below were used in bulk-menu actions
 /////// and need updates before they can be used again
