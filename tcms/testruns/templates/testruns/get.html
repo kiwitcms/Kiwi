@@ -157,11 +157,11 @@
                                 <div class="form-group">
                                     <button type="button" class="btn btn-default">{% trans "Update case text" %}</button>
                                     <button type="button" class="btn btn-default change-assignee-bulk">{% trans "Change assignee" %}</button>
-                                    <div class="btn-group">
+                                    <div class="btn-group statuses-dropdown">
                                         <button type="button" class="btn btn-default dropdown-toggle" id="filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "Change status" %} <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             {% for status in execution_statuses %}
-                                                <li><a href="#">{{ status.name }}</a></li>
+                                                <li><a href="#" class="bulk-change-status" data-status-id="{{ status.pk }}">{{ status.name }}</a></li>
                                             {% endfor %}
                                         </ul>
                                     </div>
