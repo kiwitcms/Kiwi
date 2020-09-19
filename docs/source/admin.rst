@@ -71,6 +71,13 @@ permissions.
     individual users too! It is recommended to use groups for permissions
     management.
 
+.. important::
+
+    The standard User and Group permissions are unbound, in other words not
+    related to individual records in the database. They are used to control
+    access to types of resources, e.g. "Can view bug", "Can delete test case"!
+    For object-level permissions see below!
+
 .. warning::
 
     Kiwi TCMS requires the ``auth.view_user`` permission in order to display
@@ -220,6 +227,115 @@ To disable a user:
    |The Active checkbox|
 
 #. Click **Save**.
+
+
+Object-level permissions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.8
+
+Object-level permissions are bound to a particular record in the database.
+They are used to control access to specific objects, e.g.
+“Can view bug 919”, “Can delete test case 2029”! This section describes how
+object-level permissions are used in Kiwi TCMS and their limitations.
+
+    |Object Permissions Menu|
+
+- The following HTML pages honor object-level permissions:
+
+  - Bug page
+  - TestCase page
+  - TestPlan page
+  - TestRun page
+
+- Unlike HTML pages most API methods represent bulk operations
+  and don't support the notion of a single record. Object-level
+  permissions are not honored by the API layer
+- Unbound permissions always supersede object-level permissions.
+  You can't use object-level permissions to prevent access
+- Available permission labels are related to the current object type, e.g.
+  when editing object-level permissions for Bug-919 you can only assign
+  permissions related to bugs
+- Assignning ``add`` permission doesn't make sense here because creating
+  new objects is related to their type, not the individual object
+- ``view`` allows per-object access with the limitation that HTML pages
+  use API calls to render related information!
+  Some parts of the page will not be rendered
+- ``change`` permission will not allow modification of many-to-many properties
+  such as tags, components, comments, attachments because these are controlled
+  via separate types of permissions to allow more granularity to admins
+- ``view`` + ``change`` allows access to object history because the history
+  admin allows you to revert to older versions
+- ``delete`` will allow to cascade-delete all related objects even if
+  the user doesn't have explicit permissions granted for them
+- A record with username ``AnonymousUser`` also exists
+
+
+Example of more granular permission organization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default Kiwi TCMS comes with 2 groups that either contain all available
+permissions or just the ones required by all parts of the application. This
+section describes a more granular approach.
+
+Leave the *Administrator* and *Tester* groups intact and create new ones!
+
+Need-to-know level
+^^^^^^^^^^^^^^^^^^
+
+- Create a *Need-to-know* group without any permissions and assign users to it.
+  You can make this the ``DEFAULT_GROUPS`` setting.
+- Don't assign permissions to individual users
+- Grant object-level permissions on each user that needs access to particular
+  object!
+
+Users will be able to login into Kiwi TCMS and see their dashboard and will
+have direct access to records on which they have been granted
+object-permissions but nothing else. View and change capabilities will be
+limited.
+
+Read-only level
+^^^^^^^^^^^^^^^
+
+- Create a *Read-Only* group and assign only ``view`` permissions to it
+- Will also work with users who are not members of any groups
+
+Users will be able to login into Kiwi TCMS, search and view pages according
+to the permissions granted. If you grant all permissions of type ``view``
+then the user should be able to see everything in Kiwi TCMS.
+
+
+Moderator/Manager level
+^^^^^^^^^^^^^^^^^^^^^^^
+
+- Create a group and assign ``add``, ``delete`` permissions
+- Objects of types Products, Versions, Builds, etc. are controlled via the
+  ``management`` application while other apps control a few more objects like
+  statuses and types. These can be seen in the *Admin panel* page
+
+You will assign users to this group if they are trusted enough to be able to
+create and moderate objects.
+
+Tester level
+^^^^^^^^^^^^
+
+Depending on your process organization you may want to only grant certain
+permissions for the ``attachments``, ``bugs``, ``django_comments``,
+``testcases``, ``testplans`` and ``testruns`` applications. Here a mix of
+``view``, ``change`` and ``add`` will allow group members to test & provide
+execution results but not delete records. Pay attention to permissions for
+many-to-many relationships like tags, components, etc which may be used
+to control specific parts of a page.
+
+
+Mix & match
+^^^^^^^^^^^
+
+Kiwi TCMS will evaluate all individual, group and object-level permissions
+when checking for access. It is possible to create a very granular list of
+groups and then assign users to various groups depending on what level of
+access you want to provide for them!
+
 
 
 .. _explanation-of-entities:
@@ -387,3 +503,4 @@ For this purpose the following fields are available:
 .. |The Add Group button| image:: ./_static/Group_Add.png
 .. |The Staff Status check box| image:: ./_static/Select_Staff_Status.png
 .. |The Active checkbox| image:: ./_static/Disable_User.png
+.. |Object Permissions Menu| image:: ./_static/object_perms_menu.png
