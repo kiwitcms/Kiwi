@@ -163,3 +163,5 @@ function treeViewBind() {
       }
     });
 }
+
+const animate = (target, handler, time = 500) => target.fadeOut(time, handler).fadeIn(time)
