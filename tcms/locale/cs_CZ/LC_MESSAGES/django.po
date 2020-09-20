@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 08:51\n"
+"PO-Revision-Date: 2020-09-20 09:01\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -345,11 +345,11 @@ msgstr "TESTOVÁNÍ"
 
 #: tcms/settings/common.py:290
 msgid "New Test Plan"
-msgstr "Nový Test Plan"
+msgstr "Nový testovací plán"
 
 #: tcms/settings/common.py:292
 msgid "New Test Case"
-msgstr "Nový Test Case"
+msgstr "Nový testovací případ"
 
 #: tcms/settings/common.py:294
 msgid "New Bug"
@@ -361,7 +361,7 @@ msgstr ""
 
 #: tcms/settings/common.py:298
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Vyhledat testovací plány"
 
 #: tcms/settings/common.py:299
 msgid "Search Test Runs"
@@ -369,7 +369,7 @@ msgstr ""
 
 #: tcms/settings/common.py:300
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Vyhledat testovací případy"
 
 #: tcms/settings/common.py:301
 msgid "Search Bugs"
@@ -946,7 +946,7 @@ msgstr ""
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
@@ -1294,19 +1294,19 @@ msgstr "Vítejte v Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Chcete-li začít, přihlaste se"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "nebo"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "zaregistrujte účet"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "pokud ho nemáte!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
@@ -1320,7 +1320,7 @@ msgstr ""
 #: tcms/templates/registration/registration_form.html:31
 #: tcms/templates/run/get_case_runs.html:188
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdit"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
