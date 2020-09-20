@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 16:51\n"
+"PO-Revision-Date: 2020-09-20 17:01\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -736,7 +736,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:30 tcms/templates/dashboard.html:74
 msgid "SEE ALL"
-msgstr ""
+msgstr "ZOBRAZIT VŠE"
 
 #: tcms/templates/dashboard.html:33
 msgid "There are no TestRun(s) assigned to you"
@@ -766,7 +766,8 @@ msgstr ""
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Spravujete %(total_count)s testovací plán(y), %(disabled_count)s jsou zakázány.\n"
+"Zde jsou poslední %(count)s."
 
 #: tcms/templates/dashboard.html:77
 msgid "There are no TestPlan(s) that belong to you"
