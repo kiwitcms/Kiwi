@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 16:41\n"
+"PO-Revision-Date: 2020-09-20 16:51\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -697,7 +697,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
@@ -920,20 +920,20 @@ msgstr ""
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "Mé testovací plány"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "Můj profil"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Změna hesla"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "Odhlásit"
 
 #: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
@@ -1794,7 +1794,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Název testovacího plánu"
 
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/search.html:95
