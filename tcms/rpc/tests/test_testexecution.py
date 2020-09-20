@@ -6,16 +6,66 @@ from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 from django.utils import timezone
-
 from django.forms.models import model_to_dict
+
+from tcms.core.helpers import comments
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.helpers.comments import get_comments, add_comment
 from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import LinkReferenceFactory
 from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import UserFactory
+
+
+class TestExecutionGetComments(APITestCase):
+    """ Test TestExecution.get_comments """
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.comments = ["Text for first comment", "Text for second comment"]
+
+        self.execution = TestExecutionFactory()
+        for comment in self.comments:
+            comments.add_comment([self.execution], comment, self.api_user)
+
+    def test_get_comments(self):
+        execution_comments = self.rpc_client.TestExecution.get_comments(self.execution.pk)
+
+        self.assertEqual(len(self.comments), len(execution_comments))
+        for comment in execution_comments:
+            self.assertTrue(comment['comment'] in self.comments)
+
+    def test_get_comments_non_existing_execution(self):
+        with self.assertRaisesRegex(XmlRPCFault, "TestExecution matching query does not exist."):
+            self.rpc_client.TestExecution.get_comments(-1)
+
+
+class TestExecutionGetCommentsPermissions(APIPermissionsTestCase):
+    """Test permissions of TestExecution.get_comments"""
+
+    permission_label = 'django_comments.view_comment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.execution = TestExecutionFactory()
+        self.comments = ["Text for first comment", "Text for second comment"]
+
+        for comment in self.comments:
+            comments.add_comment([self.execution], comment, self.tester)
+
+    def verify_api_with_permission(self):
+        execution_comments = self.rpc_client.TestExecution.get_comments(self.execution.pk)
+
+        self.assertEqual(len(self.comments), len(execution_comments))
+        for comment in execution_comments:
+            self.assertTrue(comment['comment'] in self.comments)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestExecution.get_comments(self.execution.pk)
 
 
 class TestExecutionAddComment(APITestCase):
@@ -30,10 +80,10 @@ class TestExecutionAddComment(APITestCase):
     def test_add_comment_with_pk_as_int(self):
         created_comment = self.rpc_client.TestExecution.add_comment(self.execution_2.pk,
                                                                     "Hello World!")
-        comments = get_comments(self.execution_2)
-        self.assertEqual(1, comments.count())
+        execution_comments = comments.get_comments(self.execution_2)
+        self.assertEqual(1, execution_comments.count())
 
-        first_comment = comments.first()
+        first_comment = execution_comments.first()
         self.assertEqual("Hello World!", first_comment.comment)
         self.assertEqual(created_comment['comment'], first_comment.comment)
 
@@ -48,21 +98,21 @@ class TestExecutionRemoveComment(APITestCase):
         self.execution = TestExecutionFactory()
 
     def test_delete_all_comments(self):
-        add_comment([self.execution], "Hello World!", self.user)
-        add_comment([self.execution], "More comments", self.user)
+        comments.add_comment([self.execution], "Hello World!", self.user)
+        comments.add_comment([self.execution], "More comments", self.user)
         self.rpc_client.TestExecution.remove_comment(self.execution.pk)
 
-        comments = get_comments(self.execution)
-        self.assertEqual(comments.count(), 0)
+        result = comments.get_comments(self.execution)
+        self.assertEqual(result.count(), 0)
 
     def test_delete_one_comment(self):
-        add_comment([self.execution], "Hello World!", self.user)
-        comment_2 = add_comment([self.execution], "More comments", self.user)
+        comments.add_comment([self.execution], "Hello World!", self.user)
+        comment_2 = comments.add_comment([self.execution], "More comments", self.user)
         comment_2 = model_to_dict(comment_2[0])
 
         self.rpc_client.TestExecution.remove_comment(self.execution.pk, comment_2['id'])
-        comments = get_comments(self.execution)
-        first_comment = comments.first()
+        result = comments.get_comments(self.execution)
+        first_comment = result.first()
 
         self.assertEqual(comments.count(), 1)
         self.assertEqual("Hello World!", first_comment.comment)
@@ -80,14 +130,14 @@ class TestExecutionRemoveCommentPermissions(APIPermissionsTestCase):
         self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
-        add_comment([self.execution], "Hello World!", self.user)
+        comments.add_comment([self.execution], "Hello World!", self.user)
         self.rpc_client.TestExecution.remove_comment(self.execution.pk)
 
-        comments = get_comments(self.execution)
-        self.assertEqual(comments.count(), 0)
+        result = comments.get_comments(self.execution)
+        self.assertEqual(result.count(), 0)
 
     def verify_api_without_permission(self):
-        add_comment([self.execution], "Hello World!", self.user)
+        comments.add_comment([self.execution], "Hello World!", self.user)
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.TestExecution.remove_comment(self.execution.pk)
