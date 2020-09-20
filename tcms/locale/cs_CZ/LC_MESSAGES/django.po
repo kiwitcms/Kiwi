@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 09:31\n"
+"PO-Revision-Date: 2020-09-20 16:41\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -151,13 +151,13 @@ msgstr "Souhrn"
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "Přidat nový produkt"
 
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "přidat novou verzi"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
@@ -825,23 +825,23 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
 msgid "Attachments"
-msgstr ""
+msgstr "Přílohy"
 
 #: tcms/templates/include/attachments.html:14
 msgid "File"
-msgstr ""
+msgstr "Soubor"
 
 #: tcms/templates/include/attachments.html:15
 msgid "Owner"
-msgstr ""
+msgstr "Vlastník"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: tcms/templates/include/attachments.html:31
 msgid "No records found"
-msgstr ""
+msgstr "Nebyly nalezeny žádné záznamy"
 
 #: tcms/templates/include/bug_details.html:3
 #: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
@@ -1534,7 +1534,7 @@ msgstr ""
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:136
 msgid "Bugs"
-msgstr ""
+msgstr "Bugy"
 
 #: tcms/templates/run/report.html:117
 msgid "Bug List"
@@ -1636,7 +1636,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
-msgstr ""
+msgstr "Komponenty"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
