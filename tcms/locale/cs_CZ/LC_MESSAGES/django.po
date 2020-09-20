@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 09:21\n"
+"PO-Revision-Date: 2020-09-20 09:31\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -43,7 +43,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
-msgstr ""
+msgstr "Nahlásil"
 
 #: tcms/bugs/templates/bugs/get.html:46
 #: tcms/bugs/templates/bugs/mutable.html:75
@@ -54,7 +54,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:76
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Přiřazeno"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:26
@@ -144,7 +144,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr ""
+msgstr "Souhrn"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:42
@@ -217,7 +217,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
-msgstr ""
+msgstr "Vytvořeno"
 
 #: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:527
@@ -497,7 +497,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:91
 #: tcms/testcases/templates/testcases/search.html:142
 msgid "Automated"
-msgstr ""
+msgstr "Automaticky"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
@@ -660,7 +660,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:138
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Poznámky"
 
 #: tcms/templates/case/get_details.html:62
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
@@ -1158,7 +1158,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
@@ -1197,7 +1197,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
@@ -1608,17 +1608,17 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:117
 msgid "Arguments"
-msgstr ""
+msgstr "Parametry skriptu"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:125
 msgid "Requirements"
-msgstr ""
+msgstr "Požadavky"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
@@ -1652,7 +1652,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
-msgstr ""
+msgstr "Upozornění"
 
 #: tcms/testcases/templates/testcases/mutable.html:159
 msgid "Manager of runs"
@@ -1668,23 +1668,23 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
-msgstr ""
+msgstr "Upozornit když"
 
 #: tcms/testcases/templates/testcases/mutable.html:195
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Testovací případ je aktualizován"
 
 #: tcms/testcases/templates/testcases/mutable.html:202
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Testovací případ je odstraněn"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "CC to"
-msgstr ""
+msgstr "Kopie"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "E-mailové adresy oddělené čárkou. Na každou e-mailovou adresu v seznamu příjemců kopie bude odeslán e-mail s oznámením."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1702,7 +1702,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr "Oddělit více hodnot čárkou (,)"
+msgstr "Více hodnot oddělit čárkou (,)"
 
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/search.html:113
