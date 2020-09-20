@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 09:01\n"
+"PO-Revision-Date: 2020-09-20 09:11\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -76,7 +76,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:41
@@ -92,7 +92,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Version"
-msgstr ""
+msgstr "Verze"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:59
@@ -300,7 +300,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Váš účet byl vytvořen. Zkontrolujte svůj e-mail pro potvrzení."
 
 #: tcms/kiwi_auth/views.py:54
 msgid "Your account has been created, but you need an administrator to activate it"
@@ -320,7 +320,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:114
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Váš účet byl úspěšně aktivován"
 
 #: tcms/rpc/api/bug.py:72
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -744,7 +744,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:40
 msgid "Your Test plans"
-msgstr ""
+msgstr "Vaše testovací plány"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
@@ -756,7 +756,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
@@ -875,7 +875,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
@@ -942,7 +942,7 @@ msgstr ""
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:58
 msgid "Register"
-msgstr ""
+msgstr "Registrovat"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
@@ -1034,7 +1034,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: tcms/templates/plan/get.html:64
 msgid "Plan Type"
