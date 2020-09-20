@@ -62,7 +62,7 @@ def add_comment(execution_id, comment, **kwargs):
 @rpc_method(name='TestExecution.remove_comment')
 def remove_comment(execution_id, comment_id=None):
     """
-    .. function:: TestExecution.remove_comment(execution_id, comment_id)
+    .. function:: RPC TestExecution.remove_comment(execution_id, comment_id)
 
         Remove all or specified comment(s) from selected test execution.
 
@@ -78,6 +78,25 @@ def remove_comment(execution_id, comment_id=None):
         to_be_deleted = to_be_deleted.filter(pk=comment_id)
 
     to_be_deleted.delete()
+
+
+@permissions_required('django_comments.view_comment')
+@rpc_method(name='TestExecution.get_comments')
+def get_comments(execution_id):
+    """
+    .. function:: RPC TestExecution.get_comments(execution_id)
+
+        Get all comments for selected test execution.
+
+        :param execution_id: PK of a TestExecution object
+        :type execution_id: int
+        :return: Serialized :class:`django_comments.models.Comment` object
+        :rtype: dict
+        :raises PermissionDenied: if missing *django_comments.view_comment* permission
+    """
+    execution = TestExecution.objects.get(pk=execution_id)
+    execution_comments = comments.get_comments(execution).values()
+    return list(execution_comments)
 
 
 @permissions_required('testruns.view_testexecution')
