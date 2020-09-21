@@ -82,7 +82,7 @@ need to be configured via the following settings:
 
 - Common settings::
 
-    DEFAULT_FROM_EMAIL = 'kiwi@example.com'
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL = 'kiwi@example.com'
     # additional Kiwi TCMS setting
     EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
@@ -114,7 +114,7 @@ Using Amazon SES instead of SMTP email
 --------------------------------------
 
 If you'd like to use an external email service, like Amazon SES you need
-to configure the following settings instead::
+to configure the following settings too::
 
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
