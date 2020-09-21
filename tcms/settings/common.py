@@ -272,6 +272,7 @@ INSTALLED_APPS = TENANT_APPS + [
 
     'colorfield',
     'django_extensions',
+    'tree_queries',
     'vinaigrette',
 
     'tcms.core',
