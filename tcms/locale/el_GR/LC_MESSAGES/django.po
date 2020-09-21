@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-27 10:08\n"
+"POT-Creation-Date: 2020-09-19 20:33+0000\n"
+"PO-Revision-Date: 2020-09-19 20:42\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -227,28 +227,32 @@ msgstr "Ταυτότητα"
 msgid "Created at"
 msgstr "Δημιουργήθηκε στο"
 
-#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:522
+#: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:527
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: tcms/bugs/views.py:41 tcms/testcases/views.py:535
+#: tcms/bugs/views.py:46 tcms/testcases/views.py:540
+msgid "Object permissions"
+msgstr ""
+
+#: tcms/bugs/views.py:51 tcms/testcases/views.py:545
 msgid "Delete"
 msgstr "Σβήνω"
 
-#: tcms/bugs/views.py:66
+#: tcms/bugs/views.py:76
 msgid "New bug"
 msgstr "Νέο σφάλμα"
 
-#: tcms/bugs/views.py:169
+#: tcms/bugs/views.py:182
 msgid "Edit bug"
 msgstr "Επεξεργασία σφάλματος"
 
-#: tcms/bugs/views.py:200
+#: tcms/bugs/views.py:213
 msgid "*bug closed*"
 msgstr "*σφάλμα έκλεισε*"
 
-#: tcms/bugs/views.py:204
+#: tcms/bugs/views.py:217
 msgid "*bug reopened*"
 msgstr ""
 
@@ -297,11 +301,11 @@ msgstr "Προσωπικές πληροφορίες"
 msgid "Permissions"
 msgstr "'Αδειες"
 
-#: tcms/kiwi_auth/forms.py:35
+#: tcms/kiwi_auth/forms.py:42
 msgid "A user with that email already exists."
 msgstr "Ενας χρήστης με αυτή την ηλεκτρονική διεύθυνση υπάρχει ήδη."
 
-#: tcms/kiwi_auth/forms.py:63
+#: tcms/kiwi_auth/forms.py:70
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "Η επιβεβαίωση λογαριασμού σας %s"
@@ -330,7 +334,7 @@ msgstr "Αυτό το κλειδί ενεργοποίησης έχει λήξε�
 msgid "Your account has been activated successfully"
 msgstr "Ο λογαριασμός σας έχει ενεργοποιηθεί με επιτυχία"
 
-#: tcms/rpc/api/bug.py:68
+#: tcms/rpc/api/bug.py:72
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr ""
 
@@ -343,112 +347,112 @@ msgstr ""
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:288
 msgid "DASHBOARD"
 msgstr "ΤΑΜΠΛΟ"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:289
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:290
 msgid "New Test Plan"
 msgstr "Νέο σχέδιο δοκιμών"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:292
 msgid "New Test Case"
 msgstr "Περίπτωση νέας δοκιμής"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:294
 msgid "New Bug"
 msgstr "Νέο σφάλμα"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:297
 msgid "SEARCH"
 msgstr "ΨΑΞΙΜΟ"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:298
 msgid "Search Test Plans"
 msgstr "Δοκιμαστικά σχέδια αναζήτησης"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:299
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:300
 msgid "Search Test Cases"
 msgstr "Αναζήτηση δοκιμαστικών περιπτώσεων"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:301
 msgid "Search Bugs"
 msgstr "Αναζήτηση σφαλμάτων"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:304
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:305
 msgid "Testing"
 msgstr "Δοκιμές"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:306
 msgid "Breakdown"
 msgstr "Κατάρρευση"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:307
 msgid "Status matrix"
 msgstr ""
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:308
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr ""
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:309
 msgid "TestCase health"
 msgstr ""
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:314
 msgid "ADMIN"
 msgstr "ΔΙΑΧΕΙΡΙΣΤΗΣ"
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:315
 msgid "Users and groups"
 msgstr "Χρήστες και ομάδες"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:317
 msgid "Everything else"
 msgstr "Οτιδήποτε άλλο"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:319
 msgid "PLUGINS"
 msgstr ""
 
-#: tcms/settings/common.py:343
+#: tcms/settings/common.py:330
 msgid "Forum"
 msgstr ""
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:331
 msgid "Report an Issue"
 msgstr "Αναφέρετε ένα πρόβλημα"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:332
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:333
 msgid "Donate €5 via Open Collective"
 msgstr ""
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:334
 msgid "Administration Guide"
 msgstr "Οδηγός διαχείρισης"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:335
 msgid "User Guide"
 msgstr "Οδηγός χρήσης"
 
-#: tcms/settings/common.py:349
+#: tcms/settings/common.py:336
 msgid "API Help"
 msgstr "Βοήθεια API"
 
@@ -948,7 +952,7 @@ msgid "Login"
 msgstr "Σύνδεση"
 
 #: tcms/templates/navbar.html:60
-#: tcms/templates/registration/registration_form.html:47
+#: tcms/templates/registration/registration_form.html:58
 msgid "Register"
 msgstr ""
 
@@ -1125,7 +1129,7 @@ msgid "print view of selected cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:526
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr ""
@@ -1718,20 +1722,20 @@ msgstr ""
 msgid "Created on"
 msgstr "Δημιουργήθηκε στο"
 
-#: tcms/testcases/views.py:363
+#: tcms/testcases/views.py:365
 msgid "TestPlan not specified or does not exist"
 msgstr "Το TestPlan δεν έχει προσδιοριστεί ή δεν υπάρχει"
 
-#: tcms/testcases/views.py:530
+#: tcms/testcases/views.py:535
 msgid "History"
 msgstr "Ιστορία"
 
-#: tcms/testcases/views.py:668
+#: tcms/testcases/views.py:681
 msgid "TestCase cloning was successful"
 msgstr "Η κλωνοποίηση του TestCase ήταν επιτυχής"
 
-#: tcms/testcases/views.py:694 tcms/testruns/views.py:367
-#: tcms/testruns/views.py:416
+#: tcms/testcases/views.py:707 tcms/testruns/views.py:375
+#: tcms/testruns/views.py:424
 msgid "At least one TestCase is required"
 msgstr "Απαιτείται τουλάχιστον μία TestCase"
 
@@ -1809,24 +1813,24 @@ msgstr "Όνομα σχεδίου δοκιμής"
 msgid "Test plan"
 msgstr "Σχέδιο δοκιμής"
 
-#: tcms/testplans/views.py:237
+#: tcms/testplans/views.py:247
 msgid "TestPlan is required"
 msgstr "Το TestPlan απαιτείται"
 
-#: tcms/testplans/views.py:398
+#: tcms/testplans/views.py:408
 msgid "At least one test plan is required for print"
 msgstr "Για την εκτύπωση απαιτείται τουλάχιστον ένα σχέδιο δοκιμής"
 
-#: tcms/testplans/views.py:406
+#: tcms/testplans/views.py:416
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Δεν υπάρχει σχέδιο δοκιμής \"%s\""
 
-#: tcms/testruns/admin.py:29
+#: tcms/testruns/admin.py:30
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Η άδεια απορρίφθηκε: Το TestRun δεν ανήκει σε εσάς"
 
-#: tcms/testruns/admin.py:39
+#: tcms/testruns/admin.py:40
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
@@ -1883,23 +1887,23 @@ msgstr ""
 msgid "TestPlan ID"
 msgstr ""
 
-#: tcms/testruns/views.py:45
+#: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr ""
 
-#: tcms/testruns/views.py:51
+#: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:371
+#: tcms/testruns/views.py:379
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:425
+#: tcms/testruns/views.py:433
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:519
+#: tcms/testruns/views.py:527
 msgid "The user you typed does not exist in database"
 msgstr ""
 

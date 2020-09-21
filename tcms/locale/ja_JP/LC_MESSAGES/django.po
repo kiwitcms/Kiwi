@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-27 10:05+0000\n"
-"PO-Revision-Date: 2020-08-27 12:05\n"
+"POT-Creation-Date: 2020-09-19 20:33+0000\n"
+"PO-Revision-Date: 2020-09-21 08:32\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -227,28 +227,32 @@ msgstr "ID"
 msgid "Created at"
 msgstr "作成日時"
 
-#: tcms/bugs/views.py:36 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:522
+#: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
+#: tcms/testcases/views.py:527
 msgid "Edit"
 msgstr "編集"
 
-#: tcms/bugs/views.py:41 tcms/testcases/views.py:535
+#: tcms/bugs/views.py:46 tcms/testcases/views.py:540
+msgid "Object permissions"
+msgstr "オブジェクトの権限"
+
+#: tcms/bugs/views.py:51 tcms/testcases/views.py:545
 msgid "Delete"
 msgstr "削除"
 
-#: tcms/bugs/views.py:66
+#: tcms/bugs/views.py:76
 msgid "New bug"
 msgstr "新しいバグ"
 
-#: tcms/bugs/views.py:169
+#: tcms/bugs/views.py:182
 msgid "Edit bug"
 msgstr "バグを編集"
 
-#: tcms/bugs/views.py:200
+#: tcms/bugs/views.py:213
 msgid "*bug closed*"
 msgstr "*バグはクローズされました。*"
 
-#: tcms/bugs/views.py:204
+#: tcms/bugs/views.py:217
 msgid "*bug reopened*"
 msgstr "*バグが再オープンされました。*"
 
@@ -297,11 +301,11 @@ msgstr "個人情報"
 msgid "Permissions"
 msgstr "権限"
 
-#: tcms/kiwi_auth/forms.py:35
+#: tcms/kiwi_auth/forms.py:42
 msgid "A user with that email already exists."
 msgstr "このメールのユーザーはすでに存在しています。"
 
-#: tcms/kiwi_auth/forms.py:63
+#: tcms/kiwi_auth/forms.py:70
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "新しい %s アカウントの確認"
@@ -330,7 +334,7 @@ msgstr "アクティベーションキーの有効期限が切れました。"
 msgid "Your account has been activated successfully"
 msgstr "アカウントがアクティブになりました。"
 
-#: tcms/rpc/api/bug.py:68
+#: tcms/rpc/api/bug.py:72
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "base_urlを設定することで、この課題トラッカーへの報告を有効にします！"
 
@@ -343,112 +347,112 @@ msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "モデル %s には主キーがありません。フィールドを手動で指定する必要があります。"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:288
 msgid "DASHBOARD"
 msgstr "ダッシュボード"
 
-#: tcms/settings/common.py:302
+#: tcms/settings/common.py:289
 msgid "TESTING"
 msgstr "テスト中"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:290
 msgid "New Test Plan"
 msgstr "新しいテスト計画"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:292
 msgid "New Test Case"
 msgstr "新しいテストケース"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:294
 msgid "New Bug"
 msgstr "新しいバグ"
 
-#: tcms/settings/common.py:310
+#: tcms/settings/common.py:297
 msgid "SEARCH"
 msgstr "検索"
 
-#: tcms/settings/common.py:311
+#: tcms/settings/common.py:298
 msgid "Search Test Plans"
 msgstr "テスト計画の検索"
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:299
 msgid "Search Test Runs"
 msgstr "テスト実行を検索"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:300
 msgid "Search Test Cases"
 msgstr "テストケースを検索"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:301
 msgid "Search Bugs"
 msgstr "バグを検索"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:304
 msgid "TELEMETRY"
 msgstr "テレメトリー"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:305
 msgid "Testing"
 msgstr "テスト中"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:306
 msgid "Breakdown"
 msgstr "分解する"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:307
 msgid "Status matrix"
 msgstr "状態マトリクス"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:308
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "実行のトレンド"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:309
 msgid "TestCase health"
 msgstr "テストケースの状況"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:314
 msgid "ADMIN"
 msgstr "管理者"
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:315
 msgid "Users and groups"
 msgstr "ユーザとグループ"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:317
 msgid "Everything else"
 msgstr "他のすべて"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:319
 msgid "PLUGINS"
 msgstr "プラグイン"
 
-#: tcms/settings/common.py:343
+#: tcms/settings/common.py:330
 msgid "Forum"
 msgstr "フォーラム"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:331
 msgid "Report an Issue"
 msgstr "問題を報告する"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:332
 msgid "Ask for help on StackOverflow"
 msgstr "StackOverflowで助けを求める"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:333
 msgid "Donate €5 via Open Collective"
 msgstr "Open Collective経由で€5を寄付する"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:334
 msgid "Administration Guide"
 msgstr "管理ガイド"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:335
 msgid "User Guide"
 msgstr "ユーザーガイド"
 
-#: tcms/settings/common.py:349
+#: tcms/settings/common.py:336
 msgid "API Help"
 msgstr "API ヘルプ"
 
@@ -976,7 +980,7 @@ msgid "Login"
 msgstr "ログイン"
 
 #: tcms/templates/navbar.html:60
-#: tcms/templates/registration/registration_form.html:47
+#: tcms/templates/registration/registration_form.html:58
 msgid "Register"
 msgstr "登録"
 
@@ -1153,7 +1157,7 @@ msgid "print view of selected cases"
 msgstr "選択したケースの印刷ビュー"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:526
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
 msgstr "クローン"
@@ -1757,20 +1761,20 @@ msgstr "複数の値をカンマで区切ってください (,)"
 msgid "Created on"
 msgstr "に作成"
 
-#: tcms/testcases/views.py:363
+#: tcms/testcases/views.py:365
 msgid "TestPlan not specified or does not exist"
 msgstr "テストプランが指定されていないか、存在しません"
 
-#: tcms/testcases/views.py:530
+#: tcms/testcases/views.py:535
 msgid "History"
 msgstr "履歴"
 
-#: tcms/testcases/views.py:668
+#: tcms/testcases/views.py:681
 msgid "TestCase cloning was successful"
 msgstr "テストケースの複製に成功しました"
 
-#: tcms/testcases/views.py:694 tcms/testruns/views.py:367
-#: tcms/testruns/views.py:416
+#: tcms/testcases/views.py:707 tcms/testruns/views.py:375
+#: tcms/testruns/views.py:424
 msgid "At least one TestCase is required"
 msgstr "少なくとも 1 つのテストケースが必要です"
 
@@ -1848,24 +1852,24 @@ msgstr "テスト計画名"
 msgid "Test plan"
 msgstr "テスト計画"
 
-#: tcms/testplans/views.py:237
+#: tcms/testplans/views.py:247
 msgid "TestPlan is required"
 msgstr "テスト計画が必要です"
 
-#: tcms/testplans/views.py:398
+#: tcms/testplans/views.py:408
 msgid "At least one test plan is required for print"
 msgstr "印刷には少なくとも1つのテスト計画が必要です"
 
-#: tcms/testplans/views.py:406
+#: tcms/testplans/views.py:416
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "テスト計画 \"%s\" は存在しません"
 
-#: tcms/testruns/admin.py:29
+#: tcms/testruns/admin.py:30
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "アクセスが拒否されました: テストランはあなたに属していません"
 
-#: tcms/testruns/admin.py:39
+#: tcms/testruns/admin.py:40
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
@@ -1925,23 +1929,23 @@ msgstr "計画ID"
 msgid "TestPlan ID"
 msgstr "テスト計画ID"
 
-#: tcms/testruns/views.py:45
+#: tcms/testruns/views.py:47
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "テストランを作成するにはテストプランが必要です。一つ選択してください"
 
-#: tcms/testruns/views.py:51
+#: tcms/testruns/views.py:53
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "テストランを作成するには少なくとも1つのテストケースが必要です"
 
-#: tcms/testruns/views.py:371
+#: tcms/testruns/views.py:379
 msgid "Clone of "
 msgstr "クローン - "
 
-#: tcms/testruns/views.py:425
+#: tcms/testruns/views.py:433
 msgid "TestCase ID is not a valid integer"
 msgstr "テストケースIDは有効な整数ではありません"
 
-#: tcms/testruns/views.py:519
+#: tcms/testruns/views.py:527
 msgid "The user you typed does not exist in database"
 msgstr "入力したユーザーはデータベースに存在しません"
 
