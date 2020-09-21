@@ -272,14 +272,16 @@ function changeStatusBulk(statusId) {
             'status': statusId,
         }], execution => {
             const testExecutionRow = $(`.test-execution-${executionId}`);
-            animate(testExecutionRow, () => {
-                const testExecutionStatus = testExecutionStatuses.find(s => s.id === statusId)
-                testExecutionRow.find('.test-execution-tester').html(execution.tested_by)
-                testExecutionRow.find('.test-execution-status-icon').removeClass().addClass('fa test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
-                testExecutionRow.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
-            })
+            animate(testExecutionRow, () => reloadRowFor(execution))
         })
     });
+}
+
+function reloadRowFor(execution) {
+    $(`.test-execution-${execution.id}`).replaceWith(renderTestExecutionRow(execution))
+
+    treeViewBind();
+    renderTestCaseInformation([execution], [execution.case_id])
 }
 
 /////// the functions below were used in bulk-menu actions
@@ -339,10 +341,7 @@ function fileBugFromExecution(execution) {
                 return
             }
 
-            $(`.test-execution-${execution.id}`).replaceWith(renderTestExecutionRow(execution))
-
-            treeViewBind();
-            renderTestCaseInformation([execution], [execution.case_id])
+            reloadRowFor(execution)
 
             // unescape b/c Issue #1533
             const targetUrl = result.response.replace(/&amp;/g, '&')
