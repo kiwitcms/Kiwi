@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-19 20:42\n"
+"PO-Revision-Date: 2020-09-21 06:32\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -234,7 +234,7 @@ msgstr "Szerkesztés"
 
 #: tcms/bugs/views.py:46 tcms/testcases/views.py:540
 msgid "Object permissions"
-msgstr ""
+msgstr "Objektum jogosultságok"
 
 #: tcms/bugs/views.py:51 tcms/testcases/views.py:545
 msgid "Delete"
