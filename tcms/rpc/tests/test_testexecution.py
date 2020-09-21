@@ -237,16 +237,17 @@ class TestExecutionUpdate(APITestCase):
         self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
 
     def test_update_with_single_caserun(self):
-        execution = self.rpc_client.TestExecution.update(self.execution_1.pk, {
+        execution = TestExecutionFactory(tested_by=None)
+
+        execution = self.rpc_client.TestExecution.update(execution.pk, {
             "build": self.build.pk,
             "assignee": self.user.pk,
-            "status": self.status_positive.pk,
             "sortkey": 90
         })
         self.assertEqual(execution['build'], self.build.name)
         self.assertEqual(execution['assignee'], self.user.username)
-        self.assertEqual(execution['status'], self.status_positive.name)
         self.assertEqual(execution['sortkey'], 90)
+        self.assertIsNone(execution['tested_by'])
 
     def test_update_with_assignee_id(self):
         self.assertNotEqual(self.execution_1.assignee, self.user)
@@ -382,6 +383,17 @@ class TestExecutionUpdate(APITestCase):
         self.execution_1.case.summary = "Summary Updated"
         self.execution_1.case.text = "Text Updated"
         self.execution_1.case.save()
+
+    def test_update_with_status_changes_tested_by(self):
+        execution = TestExecutionFactory(
+            tested_by=self.user
+        )
+
+        self.rpc_client.TestExecution.update(execution.pk, {"status": self.status_positive.pk})
+        execution.refresh_from_db()
+
+        self.assertEqual(execution.tested_by, self.api_user)
+        self.assertEqual(execution.status, self.status_positive)
 
     def test_update_with_non_existing_status(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
