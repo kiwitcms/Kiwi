@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-19 20:42\n"
+"PO-Revision-Date: 2020-09-21 08:22\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1734,7 +1734,7 @@ msgstr "KP v"
 
 #: tcms/testcases/templates/testcases/mutable.html:216
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr "E-poštni naslovi naj bodo ločeni z vejico. E-poštno spoorčilo bo poslano na vse email naslove v polju KP."
+msgstr "E-poštni naslovi naj bodo ločeni z vejico. E-poštno sporočilo bo poslano na vse email naslove v polju KP."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
