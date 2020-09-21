@@ -98,7 +98,7 @@ def filter(values):  # pylint: disable=redefined-builtin
 
 @permissions_required('testruns.change_testexecution')
 @rpc_method(name='TestExecution.update')
-def update(execution_id, values):
+def update(execution_id, values, **kwargs):
     """
     .. function:: RPC TestExecution.update(execution_id, values)
 
@@ -108,6 +108,8 @@ def update(execution_id, values):
         :type execution_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
+        :param kwargs: Dict providing access to the current request, protocol
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :rtype: dict
         :raises ValueError: if data validations fail
@@ -117,6 +119,9 @@ def update(execution_id, values):
 
     if values.get('case_text_version') == 'latest':
         values['case_text_version'] = test_execution.case.history.latest().history_id
+
+    if values.get('status'):
+        values['tested_by'] = kwargs.get(REQUEST_KEY).user.id
 
     form = UpdateExecutionForm(values, instance=test_execution)
 
