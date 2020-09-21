@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
+
+from tree_queries.models import TreeNode
 from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
@@ -25,7 +27,7 @@ class PlanType(TCMSActionModel):
         ordering = ['name']
 
 
-class TestPlan(TCMSActionModel):
+class TestPlan(TreeNode, TCMSActionModel):
     """A plan within the TCMS"""
     history = KiwiHistoricalRecords()
 
@@ -40,9 +42,6 @@ class TestPlan(TCMSActionModel):
     product = models.ForeignKey('management.Product', related_name='plan',
                                 on_delete=models.CASCADE)
     type = models.ForeignKey(PlanType, on_delete=models.CASCADE)
-    parent = models.ForeignKey('TestPlan', blank=True, null=True, related_name='child_set',
-                               on_delete=models.CASCADE)
-
     tag = models.ManyToManyField('management.Tag',
                                  through='testplans.TestPlanTag',
                                  related_name='plan')
