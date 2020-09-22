@@ -23,6 +23,8 @@ __all__ = (
 
     'add_attachment',
     'list_attachments',
+
+    'tree',
 )
 
 
@@ -244,3 +246,34 @@ def add_attachment(plan_id, filename, b64content, **kwargs):
         kwargs.get(REQUEST_KEY).user,
         filename,
         b64content)
+
+
+@permissions_required('testplans.view_testplan')
+@rpc_method(name='TestPlan.tree')
+def tree(plan_id):
+    """
+    .. function:: RPC TestPlan.tree(plan_id)
+
+        Returns a list of the ancestry tree for the given TestPlan
+        in a depth-first order!
+
+        :param plan_id: PK of TestPlan to inspect
+        :type plan_id: int
+        :return: A DFS ordered list of all test plans in the family tree
+                 starting from the root of the tree
+        :rtype: list
+        :raises TestPlan.DoesNotExit: if object specified by PK is missing
+    """
+    plan = TestPlan.objects.get(pk=plan_id)
+    result = []
+
+    for record in plan.tree_as_list():
+        result.append({
+            'id': record.pk,
+            'name': record.name,
+            'parent_id': record.parent_id,
+            'tree_depth': record.tree_depth,
+            'url': record.get_full_url(),
+        })
+
+    return result
