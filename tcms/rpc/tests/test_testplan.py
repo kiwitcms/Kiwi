@@ -378,3 +378,58 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.TestPlan.add_attachment(self.plan.pk, 'attachment.txt', 'a2l3aXRjbXM=')
+
+
+class TestTreePermission(APIPermissionsTestCase):
+    permission_label = 'testplans.view_testplan'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestPlan.tree(self.plan.pk)
+
+        self.assertEqual(1, len(result))
+        self.assertEqual(result[0]['id'], self.plan.pk)
+        self.assertEqual(result[0]['name'], self.plan.name)
+        self.assertEqual(result[0]['parent_id'], self.plan.parent_id)
+        self.assertEqual(result[0]['tree_depth'], 0)
+        self.assertTrue('url' in result[0])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestPlan.tree(self.plan.pk)
+
+
+class TestTree(APITestCase):
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan_1 = TestPlanFactory()
+        self.plan_2 = TestPlanFactory(parent=self.plan_1)
+        self.plan_3 = TestPlanFactory(parent=self.plan_1)
+        self.plan_4 = TestPlanFactory(parent=self.plan_2)
+
+    def test_tree_returns_dfs_order(self):
+        result = self.rpc_client.TestPlan.tree(self.plan_1.pk)
+
+        self.assertEqual(4, len(result))
+
+        pks = []
+        for test_plan in result:
+            pks.append(test_plan['id'])
+        self.assertEqual(
+            pks, [self.plan_1.pk, self.plan_2.pk, self.plan_4.pk, self.plan_3.pk])
+
+    def test_tree_returns_same_family_for_2_related_plans(self):
+        family3 = self.rpc_client.TestPlan.tree(self.plan_3.pk)
+        family4 = self.rpc_client.TestPlan.tree(self.plan_4.pk)
+
+        self.assertEqual(family3, family4)
+
+    def test_raises_when_testplan_not_found(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'TestPlan matching query does not exist'):
+            self.rpc_client.TestPlan.tree(-1)
