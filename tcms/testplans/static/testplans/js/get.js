@@ -1,5 +1,4 @@
-var expandedTestCaseIds = [],
-    fadeAnimationTime = 500;
+var expandedTestCaseIds = [];
 
 const allTestCases = {};
 
@@ -191,9 +190,9 @@ function attachEvents(testCases, testPlanId, permissions) {
 
             jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(tc) {
                 const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
-                testCaseRow.fadeOut(fadeAnimationTime, function() {
+                animate(testCaseRow, function() {
                     testCaseRow.find('.js-test-case-tester').html(tc.default_tester);
-                }).fadeIn(fadeAnimationTime);
+                });
             });
         });
 
@@ -203,9 +202,9 @@ function attachEvents(testCases, testPlanId, permissions) {
 
             jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
                 const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
-                testCaseRow.fadeOut(fadeAnimationTime, function() {
+                animate(testCaseRow, function() {
                     testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
-                }).fadeIn(fadeAnimationTime);
+                });
             });
         });
 
