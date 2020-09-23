@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-21 06:32\n"
+"PO-Revision-Date: 2020-09-23 12:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -397,7 +397,7 @@ msgstr "Tesztelés"
 
 #: tcms/settings/common.py:306
 msgid "Breakdown"
-msgstr "Üzemzavar"
+msgstr "Bontás"
 
 #: tcms/settings/common.py:307
 msgid "Status matrix"
