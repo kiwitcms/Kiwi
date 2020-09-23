@@ -89,7 +89,7 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
 
     // apply visual separation between confirmed and not confirmed
 
-    if (!isTestCaseConfrimed(testCase.case_status_id)) {
+    if (!isTestCaseConfirmed(testCase.case_status_id)) {
         row.find('.list-group-item-header').addClass('bg-danger');
     }
 
@@ -180,7 +180,7 @@ function attachEvents(testCases, testPlanId, permissions) {
             const testCaseId = getCaseIdFromEvent(ev);
 
             jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function() {
-                if (isTestCaseConfrimed(ev.target.dataset.id)) {
+                if (isTestCaseConfirmed(ev.target.dataset.id)) {
                     $(ev.target).closest('.list-group-item-header').removeClass('bg-danger');
                 } else {
                     $(ev.target).closest('.list-group-item-header').addClass('bg-danger');
@@ -277,6 +277,55 @@ function toolbarEvents() {
 
         sortTestCases();
     });
+
+    $('.js-toolbar-priority').click(function(ev) {
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return;
+        }
+
+        for (let i = 0; i < selectedCases.length; i++) {
+            let testCaseId = selectedCases[i];
+            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
+                const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${testCaseId}]`);
+                animate(testCaseRow, function() {
+                    testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
+                });
+            });
+        }
+
+    });
+
+    $('.js-toolbar-status').click(function(ev) {
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return;
+        }
+
+        for (let i = 0; i < selectedCases.length; i++) {
+            let testCaseId = selectedCases[i],
+                newStatus = ev.target.dataset.id;
+
+            jsonRPC('TestCase.update', [testCaseId, {'case_status': newStatus}], function() {
+                const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${testCaseId}]`);
+                animate(testCaseRow, function() {
+                    let tcRowHeader = $(this).find('.list-group-item-header');
+
+                    if (isTestCaseConfirmed(newStatus)) {
+                        tcRowHeader.removeClass('bg-danger');
+                    } else {
+                        tcRowHeader.addClass('bg-danger');
+                    }
+
+                });
+            });
+        }
+
+    });
 }
 
 function toolbarDropdowns() {
@@ -286,7 +335,7 @@ function toolbarDropdowns() {
     $('.js-toolbar-sort-options').append(toolbarDropdown.cloneNode(true));
 }
 
-function isTestCaseConfrimed(status) {
+function isTestCaseConfirmed(status) {
     //todo: refactor when testcase_status is replaced with boolean flag
     return Number(status) === 2;
 }
@@ -327,6 +376,8 @@ function sortTestCases() {
     tcsParentElement.html(visibleTCrows);
 }
 
+
+// todo check selectedCheckboxes function in testrun/get.js  
 function getSelectedTestCases() {
     let inputs = $('.js-testcase-row input:checked'),
         tcIds = [];
