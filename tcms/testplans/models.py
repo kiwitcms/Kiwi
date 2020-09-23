@@ -156,6 +156,117 @@ class TestPlan(TreeNode, TCMSActionModel):
 
         return tp_dest
 
+    def tree_as_list(self):
+        """
+            Returns the entire tree family as a list of TestPlan
+            object with additional fields from tree_queries!
+        """
+        plan = TestPlan.objects.with_tree_fields().get(pk=self.pk)
+
+        tree_root = plan.ancestors(include_self=True).first()
+        result = tree_root.descendants(include_self=True)
+
+        return result
+
+    def tree_view_html(self):
+        """
+            Returns nested tree structure represented as Patterfly TreeView!
+            Relies on the fact that tree nodes are returned in DFS
+            order!
+        """
+        tree_nodes = self.tree_as_list()
+
+        # TP is not part of a tree
+        if len(tree_nodes) == 1:
+            return ""
+
+        result = ""
+        previous_depth = -1
+
+        for test_plan in tree_nodes:
+            # close tags for previously rendered node before rendering current one
+            if test_plan.tree_depth == previous_depth:
+                result += """
+                    </div><!-- end-subtree -->
+                </div> <!-- end-node -->"""
+
+            # indent
+            if test_plan.tree_depth > previous_depth:
+                previous_depth = test_plan.tree_depth
+
+            # outdent
+            did_outdent = False
+            while test_plan.tree_depth < previous_depth:
+                result += """
+                    </div><!-- end-subtree -->
+                </div> <!-- end-node -->"""
+                previous_depth -= 1
+                did_outdent = True
+
+            if did_outdent:
+                result += """
+                    </div><!-- end-subtree -->
+                </div> <!-- end-node -->"""
+
+            # render the current node
+            active_class = ""
+            if test_plan.pk == self.pk:
+                active_class = "active"
+
+            result += """
+                <!-- begin-node -->
+                <div class="list-group-item %s" style="border: none">
+                    <div class="list-group-item-header" style="padding:0">
+                        <div class="list-view-pf-main-info"
+                             style="padding-top:0; padding-bottom:0">
+                            <div class="list-view-pf-left"
+                                 style="margin-left:3px; padding-right:10px">
+                                <span class="fa fa-angle-right"></span>
+                            </div>
+
+                            <div class="list-view-pf-body">
+                                <div class="list-view-pf-description">
+                                    <div class="list-group-item-text">
+                                        <a href="%s">TP-%d: %s</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- /header -->
+
+                    <!-- begin-subtree -->
+                    <div class="list-group-item-container container-fluid" style="border: none">
+            """ % (active_class, test_plan.get_absolute_url(), test_plan.pk, test_plan.name)
+
+        # close after the last elements in the for loop
+        while previous_depth >= 0:
+            result += """
+                    </div><!-- end-subtree -->
+                </div> <!-- end-node -->"""
+            previous_depth -= 1
+
+        # HTML sanity check
+        begin_node = result.count('<!-- begin-node -->')
+        end_node = result.count('<!-- end-node -->')
+
+        begin_subtree = result.count('<!-- begin-subtree -->')
+        end_subtree = result.count('<!-- end-subtree -->')
+
+        # tese will make sure that we catch errors in production
+        if begin_node != end_node:
+            raise RuntimeError("Begin/End count for tree-view nodes don't match")
+
+        if begin_subtree != end_subtree:
+            raise RuntimeError("Begin/End count for tree-view subtrees don't match")
+
+        return """
+            <div id="test-plan-family-tree"
+                 class="list-group tree-list-view-pf"
+                 style="margin-top:0">
+                %s
+            </div>
+        """ % result
+
 
 class TestPlanTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
