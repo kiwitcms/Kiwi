@@ -33,16 +33,19 @@ def add_comment(objs, comments, user, submit_date=None):
         add_comment([testrun,], comments, testuser)
     """
     site = Site.objects.get(pk=settings.SITE_ID)
+    created = []
     for obj in objs:
         content_type = ContentType.objects.get_for_model(model=obj.__class__)
-        Comment.objects.create(content_type=content_type,
-                               site=site,
-                               object_pk=obj.pk,
-                               user=user,
-                               comment=comments,
-                               submit_date=submit_date or timezone.now(),
-                               user_email=user.email,
-                               user_name=user.username)
+        comment = Comment.objects.create(content_type=content_type,
+                                         site=site,
+                                         object_pk=obj.pk,
+                                         user=user,
+                                         comment=comments,
+                                         submit_date=submit_date or timezone.now(),
+                                         user_email=user.email,
+                                         user_name=user.username)
+        created.append(comment)
+    return created
 
 
 def get_comments(obj):
