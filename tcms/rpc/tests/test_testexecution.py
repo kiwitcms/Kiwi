@@ -27,13 +27,14 @@ class TestExecutionAddComment(APITestCase):
         self.execution_2 = TestExecutionFactory()
 
     def test_add_comment_with_pk_as_int(self):
-        self.rpc_client.TestExecution.add_comment(self.execution_2.pk,
-                                                  "Hello World!")
+        created_comment = self.rpc_client.TestExecution.add_comment(self.execution_2.pk,
+                                                                    "Hello World!")
         comments = get_comments(self.execution_2)
         self.assertEqual(1, comments.count())
 
         first_comment = comments.first()
         self.assertEqual("Hello World!", first_comment.comment)
+        self.assertEqual(created_comment['comment'], first_comment.comment)
 
 
 @override_settings(LANGUAGE_CODE='en')

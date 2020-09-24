@@ -48,10 +48,14 @@ def add_comment(execution_id, comment, **kwargs):
         :type comment: str
         :param kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
+        :return: Serialized :class:`django_comments.models.Comment` object
+        :rtype: dict
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
-    comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
+    created = comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
+    # we always create only one comment
+    return model_to_dict(created[0])
 
 
 @permissions_required('django_comments.delete_comment')
