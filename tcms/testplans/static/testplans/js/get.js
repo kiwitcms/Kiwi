@@ -23,11 +23,35 @@ $(document).ready(function() {
         }
         drawTestCases(allTestCases, testPlanId, permissions);
         treeViewBind();
+
+        // b/c treeViewBind() will modfy handlers/visibility for both
+        // test plan family tree and the test cases tree
+        adjustTestPlanFamilyTree();
     });
 
     toolbarDropdowns();
     toolbarEvents();
 });
+
+function adjustTestPlanFamilyTree() {
+    // remove the > arrows from elements which don't have children
+    $('#test-plan-family-tree').find(".list-group-item-container").each(function(index, element){
+        if (!element.innerHTML.trim()) {
+            const span = $(element).siblings('.list-group-item-header').find('.list-view-pf-left span');
+
+            span.removeClass('fa-angle-right');
+            // this is the exact same width so rows are still aligned
+            span.attr('style', 'width:9px');
+        }
+    });
+
+    // expand all parent elements so that the current one is visible
+    $('#test-plan-family-tree').find(".list-group-item.active").each(function(index, element){
+        $(element).parents('.list-group-item-container').each(function(idx, container){
+            $(container).toggleClass('hidden');
+        });
+    });
+}
 
 function drawTestCases(testCases, testPlanId, permissions) {
     var container = $('#testcases-list'),
