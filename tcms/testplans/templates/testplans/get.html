@@ -21,6 +21,7 @@
               data-trans-default-tester-prompt-message="{% trans 'Please type new email or username' %}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
     </h1>
+
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-12 col-md-9">
             <div class="card-pf card-pf-accented">
@@ -61,15 +62,6 @@
                 </h2>
 
                 <h2 class="card-pf-title">
-                    <span class="fa fa-arrow-circle-o-up"></span>{% trans 'Parent' %}:
-                    {% if object.parent.pk %}
-                        <a href="{% url 'test_plan_url_short' object.parent.pk %}">TP-{{ object.parent.pk }}</a>
-                    {% else %}
-                        -
-                    {% endif %}
-                </h2>
-
-                <h2 class="card-pf-title">
                     <span class="fa fa-link"></span>{% trans 'Reference link' %}:
                     {% if object.extra_link %}
                         <a href="{{ object.extra_link }}">{{ object.extra_link }}</a>
@@ -77,10 +69,14 @@
                         -
                     {% endif %}
                 </h2>
-                <div class="card-pf-body"></div>
+
+                <div class="card-pf-body" style="margin-top:0">
+                    {{ object.tree_view_html|safe }}
+                </div>
             </div>
         </div>
     </div>
+
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="card-pf card-pf-accented">
@@ -329,4 +325,18 @@
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/tags.js' %}"></script>
 <script src="{% static 'testplans/js/get.js' %}"></script>
+
+<style>
+#test-plan-family-tree {
+    overflow: hidden;
+}
+
+#test-plan-family-tree .list-group-item .list-group-item .list-group-item-header::before {
+    border: none;
+}
+
+#test-plan-family-tree .list-group-item-container .list-group-item {
+    padding-left: 25px;
+}
+</style>
 {% endblock %}
