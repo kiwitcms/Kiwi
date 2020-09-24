@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-20 17:01\n"
+"PO-Revision-Date: 2020-09-24 19:22\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -270,7 +270,7 @@ msgstr ""
 #: tcms/core/middleware.py:29
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "Základní URL není nakonfigurována! Viz <a href=\"%(doc_url)s\">dokumentace</a> a <a href=\"%(admin_url)s\">změnit ji</a>"
 
 #: tcms/core/middleware.py:50
 #, python-format
@@ -938,7 +938,7 @@ msgstr "Odhlásit"
 
 #: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
-msgstr ""
+msgstr "Přihlásit"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:58
