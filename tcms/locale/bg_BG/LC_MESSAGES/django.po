@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-19 20:42\n"
+"PO-Revision-Date: 2020-09-25 13:14\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1806,7 +1806,7 @@ msgstr "Създай нов тест план"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr "ID на Главна"
+msgstr "Родител"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
