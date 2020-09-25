@@ -253,6 +253,9 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case_id}/`)
     template.find('.test-execution-tester').html(testExecution.tested_by || '-')
     template.find('.test-execution-asignee').html(testExecution.assignee || '-')
+    template.find('.test-execution-information .run-date').html(testExecution.close_date || '-')
+    template.find('.test-execution-information .build').html(testExecution.build)
+    template.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
     const testExecutionStatus = testExecutionStatuses.find(status => status.id === testExecution.status_id)
 
