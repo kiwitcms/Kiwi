@@ -44,7 +44,13 @@ var simplemde = new SimpleMDE({
             className: "fa fa-paperclip",
             title: "Attach File",
         },
-        "|", "preview", "side-by-side", "fullscreen", "|", "guide"]
+        "|", "preview", "side-by-side", "fullscreen", "|", "guide"
+    ],
+    autosave: {
+        enabled: true,
+        uniqueId: window.location.toString(),
+        delay: 5000,
+    }
 });
 </script>
 """ % attrs['id']
