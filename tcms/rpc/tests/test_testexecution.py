@@ -436,13 +436,30 @@ class TestExecutionUpdate(APITestCase):
 
     def test_update_with_status_changes_tested_by(self):
         execution = TestExecutionFactory(
-            tested_by=self.user
+            tested_by=None
         )
 
         self.rpc_client.TestExecution.update(execution.pk, {"status": self.status_positive.pk})
         execution.refresh_from_db()
 
         self.assertEqual(execution.tested_by, self.api_user)
+        self.assertEqual(execution.status, self.status_positive)
+
+    def test_update_with_status_and_tested_by_does_not_change_tested_by(self):
+        execution = TestExecutionFactory(
+            tested_by=None
+        )
+
+        self.rpc_client.TestExecution.update(
+            execution.pk,
+            {
+                'status': self.status_positive.pk,
+                'tested_by': self.user.pk,
+            }
+        )
+        execution.refresh_from_db()
+
+        self.assertEqual(execution.tested_by, self.user)
         self.assertEqual(execution.status, self.status_positive)
 
     def test_update_with_non_existing_status(self):
