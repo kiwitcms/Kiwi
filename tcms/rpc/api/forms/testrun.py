@@ -42,3 +42,4 @@ class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
 
     assignee = UserField()
     tested_by = UserField()
+    close_date = DateTimeField()
