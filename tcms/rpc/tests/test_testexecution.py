@@ -462,10 +462,46 @@ class TestExecutionUpdate(APITestCase):
         self.assertEqual(execution.tested_by, self.user)
         self.assertEqual(execution.status, self.status_positive)
 
-    def test_update_with_non_existing_status(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
-            self.rpc_client.TestExecution.update(self.execution_1.pk,
-                                                 {"status": 1111111})
+    def test_update_status_changes_build(self):
+        # simulate what happens in reality where TestExeuctions are created
+        # taking their initial .build values from the parent TestRun
+        self.execution_1.build = self.execution_1.run.build
+        self.execution_1.save()
+
+        # now simulate a re-test scenario where TR.build has already changed
+        # e.g. longer test cycle covering multiple builds
+        self.execution_1.run.build = BuildFactory(name='b02')
+        self.execution_1.run.save()
+
+        self.rpc_client.TestExecution.update(
+            self.execution_1.pk, {"status": self.status_positive.pk})
+
+        self.execution_1.refresh_from_db()
+        self.assertEqual(self.execution_1.status, self.status_positive)
+        self.assertEqual(self.execution_1.build.name, 'b02')
+
+    def test_update_status_and_build_does_not_change_build(self):
+        # simulate what happens in reality where TestExeuctions are created
+        # taking their initial .build values from the parent TestRun
+        self.execution_1.build = self.execution_1.run.build
+        self.execution_1.save()
+
+        build03 = BuildFactory(name='b03')
+
+        self.rpc_client.TestExecution.update(
+            self.execution_1.pk,
+            {
+                'status': self.status_positive.pk,
+                'build': build03.pk,
+            }
+        )
+
+        self.execution_1.refresh_from_db()
+        self.assertEqual(self.execution_1.status, self.status_positive)
+        self.assertEqual(self.execution_1.build.name, 'b03')
+        # these are different b/c the API call (e.g. from a plugin) has
+        # passed an explicit build value
+        self.assertNotEqual(self.execution_1.run.build, build03)
 
     def test_update_with_no_perm(self):
         self.rpc_client.Auth.logout()
