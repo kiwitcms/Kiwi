@@ -139,7 +139,7 @@ def update(execution_id, values, **kwargs):
     if values.get('case_text_version') == 'latest':
         values['case_text_version'] = test_execution.case.history.latest().history_id
 
-    if values.get('status'):
+    if values.get('status') and not values.get('tested_by'):
         values['tested_by'] = kwargs.get(REQUEST_KEY).user.id
 
     form = UpdateExecutionForm(values, instance=test_execution)
