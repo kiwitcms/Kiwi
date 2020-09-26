@@ -161,6 +161,9 @@ function treeViewBind() {
     // collapse all child rows
     $('.tree-list-view-pf').find(".list-group-item-container").addClass('hidden');
 
+    // unbind all previous click handlers
+    $('.list-group-item-header').off('click')
+
     // click the list-view heading then expand a row
     $('.list-group-item-header').click(function (event) {
       if(!$(event.target).is('button, a, input, .fa-ellipsis-v')) {
