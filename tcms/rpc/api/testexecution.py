@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.forms.models import model_to_dict
+from django.utils import timezone
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -151,6 +152,14 @@ def update(execution_id, values, **kwargs):
         test_execution = form.save()
     else:
         raise ValueError(form_errors_to_list(form))
+
+    # if this call updated TE.status then adjust timestamps
+    if values.get('status'):
+        if test_execution.status.weight != 0:
+            test_execution.close_date = timezone.now()
+        else:
+            test_execution.close_date = None
+        test_execution.save()
 
     return test_execution.serialize()
 
