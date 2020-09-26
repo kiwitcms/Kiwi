@@ -276,17 +276,19 @@ function changeStatusBulk(statusId) {
         jsonRPC('TestExecution.update', [executionId, {
             'status': statusId,
         }], execution => {
-            const testExecutionRow = $(`.test-execution-${executionId}`);
-            animate(testExecutionRow, () => reloadRowFor(execution))
+            reloadRowFor(execution)
         })
     });
 }
 
 function reloadRowFor(execution) {
-    $(`.test-execution-${execution.id}`).replaceWith(renderTestExecutionRow(execution))
+    const testExecutionRow = $(`.test-execution-${execution.id}`)
+    animate(testExecutionRow, () => {
+        testExecutionRow.replaceWith(renderTestExecutionRow(execution))
 
-    treeViewBind();
-    renderTestCaseInformation([execution], [execution.case_id])
+        treeViewBind()
+        renderTestCaseInformation([execution], [execution.case_id])
+    })
 }
 
 /////// the functions below were used in bulk-menu actions
