@@ -434,7 +434,23 @@ class TestExecutionUpdate(APITestCase):
         self.execution_1.case.text = "Text Updated"
         self.execution_1.case.save()
 
-    def test_update_with_status_changes_tested_by(self):
+    def test_update_with_no_perm(self):
+        self.rpc_client.Auth.logout()
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestExecution.update(self.execution_1.pk,
+                                                 {"close_date": timezone.now()})
+
+
+class TestExecutionUpdateStatus(APITestCase):
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.user = UserFactory()
+        self.execution_1 = TestExecutionFactory()
+        self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
+
+    def test_changes_tested_by(self):
         execution = TestExecutionFactory(
             tested_by=None
         )
@@ -445,7 +461,7 @@ class TestExecutionUpdate(APITestCase):
         self.assertEqual(execution.tested_by, self.api_user)
         self.assertEqual(execution.status, self.status_positive)
 
-    def test_update_with_status_and_tested_by_does_not_change_tested_by(self):
+    def test_when_tested_by_specified_does_not_change_tested_by(self):
         execution = TestExecutionFactory(
             tested_by=None
         )
@@ -462,7 +478,7 @@ class TestExecutionUpdate(APITestCase):
         self.assertEqual(execution.tested_by, self.user)
         self.assertEqual(execution.status, self.status_positive)
 
-    def test_update_status_changes_build(self):
+    def test_changes_build(self):
         # simulate what happens in reality where TestExeuctions are created
         # taking their initial .build values from the parent TestRun
         self.execution_1.build = self.execution_1.run.build
@@ -480,7 +496,7 @@ class TestExecutionUpdate(APITestCase):
         self.assertEqual(self.execution_1.status, self.status_positive)
         self.assertEqual(self.execution_1.build.name, 'b02')
 
-    def test_update_status_and_build_does_not_change_build(self):
+    def test_when_build_specified_does_not_change_build(self):
         # simulate what happens in reality where TestExeuctions are created
         # taking their initial .build values from the parent TestRun
         self.execution_1.build = self.execution_1.run.build
@@ -503,13 +519,7 @@ class TestExecutionUpdate(APITestCase):
         # passed an explicit build value
         self.assertNotEqual(self.execution_1.run.build, build03)
 
-    def test_update_with_no_perm(self):
-        self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestExecution.update(self.execution_1.pk,
-                                                 {"close_date": timezone.now()})
-
-    def test_update_non_zero_status_changes_close_date(self):
+    def test_non_zero_status_changes_close_date(self):
         """
             Non-zero weight statuses will set close_date
         """
@@ -524,7 +534,7 @@ class TestExecutionUpdate(APITestCase):
         self.execution_1.refresh_from_db()
         self.assertGreater(self.execution_1.close_date, few_secs_ago)
 
-    def test_update_zero_status_changes_close_date(self):
+    def test_zero_status_changes_close_date(self):
         """
             Zero weight statuses will set close_date to None,
             e.g. re-test the TE!
