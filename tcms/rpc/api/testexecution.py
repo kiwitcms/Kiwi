@@ -142,6 +142,9 @@ def update(execution_id, values, **kwargs):
     if values.get('status') and not values.get('tested_by'):
         values['tested_by'] = kwargs.get(REQUEST_KEY).user.id
 
+    if values.get('status') and not values.get('build'):
+        values['build'] = test_execution.run.build.pk
+
     form = UpdateExecutionForm(values, instance=test_execution)
 
     if form.is_valid():
