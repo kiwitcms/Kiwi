@@ -23,6 +23,7 @@
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
             data-trans-error-adding-cases="{% trans 'Unconfirmed test cases were not added' %}"
             data-trans-bool-value-required="{% trans 'Type 0 or 1' %}"
+            data-trans-comment="{% trans 'Comment' %}:"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
@@ -178,7 +179,7 @@
                                         {% if perms.django_comments.add_comment %}
                                             <li class="divider"></li>
                                             <li>
-                                                <a href="#" class="bulk-add-comment">
+                                                <a href="#" class="add-comment-bulk">
                                                     <span class="fa fa-comment-o"></span>
                                                     {% trans 'Add comment' %}
                                                 </a>

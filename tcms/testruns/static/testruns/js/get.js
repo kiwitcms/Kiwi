@@ -37,8 +37,32 @@ $(document).ready(() => {
         }
     })
 
+    $('.add-comment-bulk').click(function() {
+        $(this).parents('.dropdown').toggleClass('open')
+
+        const selected = selectedCheckboxes()
+        if ($.isEmptyObject(selected)) {
+            return false
+        }
+
+        const enterCommentText = $('#test_run_pk').data('trans-comment')
+        const comment = prompt(enterCommentText)
+        if (!comment) {
+            return false
+        }
+
+        selected.executionIds.forEach(executionId => {
+            jsonRPC('TestExecution.add_comment', [executionId, comment], () => {
+                delete expandedExecutionIds[expandedExecutionIds.indexOf(executionId)]
+            })
+        })
+
+        return false
+    })
+
     $('.add-hyperlink-bulk').click(function () {
         $(this).parents('.dropdown').toggleClass('open')
+
         const selected = selectedCheckboxes()
         if ($.isEmptyObject(selected)) {
             return false
