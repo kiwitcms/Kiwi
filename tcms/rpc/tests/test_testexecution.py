@@ -508,3 +508,33 @@ class TestExecutionUpdate(APITestCase):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.TestExecution.update(self.execution_1.pk,
                                                  {"close_date": timezone.now()})
+
+    def test_update_non_zero_status_changes_close_date(self):
+        """
+            Non-zero weight statuses will set close_date
+        """
+        few_secs_ago = timezone.now()
+        self.execution_1.close_date = None
+        self.execution_1.save()
+
+        self.rpc_client.TestExecution.update(self.execution_1.pk, {
+            'status': self.status_positive.pk,
+        })
+
+        self.execution_1.refresh_from_db()
+        self.assertGreater(self.execution_1.close_date, few_secs_ago)
+
+    def test_update_zero_status_changes_close_date(self):
+        """
+            Zero weight statuses will set close_date to None,
+            e.g. re-test the TE!
+        """
+        self.execution_1.close_date = timezone.now()
+        self.execution_1.save()
+
+        self.rpc_client.TestExecution.update(self.execution_1.pk, {
+            'status': TestExecutionStatus.objects.filter(weight=0).first().pk,
+        })
+
+        self.execution_1.refresh_from_db()
+        self.assertIsNone(self.execution_1.close_date)
