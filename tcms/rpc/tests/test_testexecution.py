@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
+import time
+
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
@@ -272,6 +274,77 @@ class TestExecutionGetLinks(APITestCase):
         self.assertEqual(logs[0]['id'], execution_log.pk)
         self.assertEqual(logs[0]['name'], "Test logs")
         self.assertEqual(logs[0]['url'], 'http://kiwitcms.org')
+
+
+class TestExecutionHistory(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.execution = TestExecutionFactory()
+
+    def test_history_for_non_existing_execution(self):
+        with self.assertRaisesRegex(XmlRPCFault, "TestExecution matching query does not exist."):
+            self.rpc_client.TestExecution.history(-5)
+
+    def test_history_new_execution(self):
+        execution = TestExecutionFactory()
+
+        history = self.rpc_client.TestExecution.history(execution.pk)
+
+        self.assertEqual(1, len(history))
+
+    def test_history(self):
+        """
+        Test that for an execution that has been updated 3 times,
+        there are 4 history entries (first one is the creation of the object).
+
+        Note: the `time.sleep` call after every update is necessary,
+        because otherwise the changes happen too fast,
+        and the XML-RPC protocol follows ISO 8601 which doesn't have sub-seconds precision.
+        Hence the measurable delta is 1 second.
+        """
+        time.sleep(1)
+
+        self.execution.build = BuildFactory()
+        self.execution.save()
+        time.sleep(1)
+
+        user = UserFactory()
+        self.execution.assignee = user
+        self.execution.save()
+        time.sleep(1)
+
+        self.execution.tested_by = user
+        self.execution.save()
+        time.sleep(1)
+
+        history = self.rpc_client.TestExecution.history(self.execution.pk)
+        self.assertEqual(4, len(history))
+
+        # assert entries are in the right order
+        previous = timezone.now()
+        for history_entry in history:
+            self.assertTrue(history_entry['history_date'] < previous)
+            previous = history_entry['history_date']
+
+
+class TestExecutionHistoryPermissions(APIPermissionsTestCase):
+    """Test permissions of TestExecution.history"""
+
+    permission_label = "testruns.view_testexecution"
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        history = self.rpc_client.TestExecution.history(self.execution.pk)
+        self.assertEqual(1, len(history))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestExecution.history(self.execution.pk)
 
 
 @override_settings(LANGUAGE_CODE='en')
