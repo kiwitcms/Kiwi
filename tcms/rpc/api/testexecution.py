@@ -116,6 +116,25 @@ def filter(values):  # pylint: disable=redefined-builtin
     return TestExecution.to_xmlrpc(values)
 
 
+@permissions_required('testruns.view_testexecution')
+@rpc_method(name='TestExecution.history')
+def history(execution_id):
+    """
+    .. function:: RPC TestExecution.history(execution_id)
+
+        Return the history for the selected test execution.
+
+        :param execution_id: PK of a TestExecution object
+        :type execution_id: int
+        :return: List of serialized :class:`tcms.core.history.KiwiHistoricalRecords` objects
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing *testruns.view_testexecution* permission
+    """
+    execution = TestExecution.objects.get(pk=execution_id)
+    execution_history = execution.history.all().order_by('-history_date').values()
+    return list(execution_history)
+
+
 @permissions_required('testruns.change_testexecution')
 @rpc_method(name='TestExecution.update')
 def update(execution_id, values, **kwargs):
