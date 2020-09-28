@@ -111,8 +111,7 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
 }
 
 function getTestCaseExpandArea(row, testCase) {
-    // todo use markdown converter to show tc.text as html
-    row.find('.js-test-case-expand-text').html(testCase.text);
+    markdown2HTML(testCase.text, row.find('.js-test-case-expand-text'))
     if (testCase.notes.trim().length > 0) {
         row.find('.js-test-case-expand-notes').html(testCase.notes);
     }
