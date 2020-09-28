@@ -273,6 +273,11 @@
                          </div>
                     </div>
                     <div class="list-view-pf-additional-info">
+                        <div title="{% trans 'Status' %}" class="list-view-pf-additional-info-item">
+                            <!-- add customizable icon as part of #1932 -->
+                            <span class="js-test-case-status-icon fa"></span>
+                            <span class="js-test-case-status"></span>
+                        </div>
                         <div class="list-view-pf-additional-info-item">
                             <span class="fa fa-cog fa-thumbs-up js-test-case-automated" data-true="{% trans 'Automated' %}" data-false="{% trans 'Manual' %}"></span>{# one of the classes is removed by the js #}
                         </div>
@@ -321,6 +326,7 @@
 
 <template id="toolbar-dropdown">
     <li class="selected" data-filter-type="summary"><a>{% trans 'Summary' %}</a></li>
+    <li data-filter-type="case_status"><a>{% trans 'Status' %}</a></li>
     <li data-filter-type="category"><a>{% trans 'Category' %}</a></li>
     <li data-filter-type="priority"><a>{% trans 'Priority' %}</a></li>
     <li data-filter-type="author"><a>{% trans 'Author' %}</a></li>
