@@ -395,8 +395,8 @@ function sortTestCases() {
         let tc1Id = $(tc1).data('testcasePk'),
             tc2Id = $(tc2).data('testcasePk');
 
-        let value1 = allTestCases[tc1Id][sortBy] || "",
-            value2 = allTestCases[tc2Id][sortBy] || "";
+        let value1 = allTestCases[tc1Id][sortBy].toString() || "",
+            value2 = allTestCases[tc2Id][sortBy].toString() || "";
 
         return value1.localeCompare(value2) * sortOrder;
     });
