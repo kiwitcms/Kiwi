@@ -31,7 +31,29 @@ $(document).ready(function() {
 
     toolbarDropdowns();
     toolbarEvents();
+
+    collapseDocumentText();
 });
+
+function collapseDocumentText() {
+    // for some reason .height() reports a much higher value than
+    // reality and the 59% reduction seems to work nicely
+    const infoCardHeight = 0.59 * $('#testplan-info').height();
+
+    if ($('#testplan-text').height() > infoCardHeight) {
+        $('#testplan-text-collapse-btn').removeClass('hidden');
+
+        $('#testplan-text').css('min-height', infoCardHeight);
+        $('#testplan-text').css('height', infoCardHeight);
+        $('#testplan-text').css('overflow', 'hidden');
+
+        $('#testplan-text').on('hidden.bs.collapse', function () {
+            $('#testplan-text').removeClass('collapse').css({
+                'height': infoCardHeight
+            })
+        });
+    }
+}
 
 function adjustTestPlanFamilyTree() {
     // remove the > arrows from elements which don't have children
