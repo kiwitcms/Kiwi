@@ -144,11 +144,6 @@
                                                 {% if not perms.testcases.add_testcase %}
                                                     disabled
                                                 {% endif %}>{% trans 'Clone' %}</button>
-                                        <button class="btn btn-default"
-                                                type="button"
-                                            {% if not perms.testcases.change_testcase %}
-                                                    disabled
-                                            {% endif %}>{% trans 'Default tester' %}</button>
                                         <div class="dropdown btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle"
                                                     id="filter-button"
@@ -182,6 +177,11 @@
                                                 {% endfor %}
                                             </ul>
                                         </div>
+                                        <button class="btn btn-default"
+                                                type="button"
+                                            {% if not perms.testcases.change_testcase %}
+                                                    disabled
+                                            {% endif %}>{% trans 'Default tester' %}</button>
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-danger paddingLeft"
@@ -237,15 +237,11 @@
                             <span class="fa fa-ellipsis-v"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownKebabRight9">
+                        {% if perms.testcases.add_testcase %}
+                            <li><a class="js-test-case-menu-clone">{% trans 'Clone' %}</a></li>
+                            <li class="divider"></li>
+                        {% endif %}
                         {% if perms.testcases.change_testcase %}
-                            <li class="dropdown-submenu dropdown-menu-left">
-                                <a tabindex="-1" href="#">{% trans 'Priority' %}</a>
-                                <ul class="dropdown-menu js-test-case-menu-priority">
-                                    {% for priority in priorities %}
-                                        <li><a data-id="{{ priority.id }}">{{ priority.value }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
                             <li class="dropdown-submenu dropdown-menu-left">
                                 <a tabindex="-1" href="#">{% trans 'Status' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-status">
@@ -254,11 +250,18 @@
                                     {% endfor %}
                                 </ul>
                             </li>
-                            <li><a class="js-test-case-menu-edit">{% trans 'Edit' %}</a></li>
+                            <li class="dropdown-submenu dropdown-menu-left">
+                                <a tabindex="-1" href="#">{% trans 'Priority' %}</a>
+                                <ul class="dropdown-menu js-test-case-menu-priority">
+                                    {% for priority in priorities %}
+                                        <li><a data-id="{{ priority.id }}">{{ priority.value }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
                             <li><a class="js-test-case-menu-tester">{% trans 'Default tester' %}</a></li>
-                        {% endif %}
-                        {% if perms.testcases.add_testcase %}
-                            <li><a class="js-test-case-menu-clone">{% trans 'Clone' %}</a></li>
+                            <li class="divider"></li>
+                            <li><a class="js-test-case-menu-edit">{% trans 'Edit' %}</a></li>
+                            <li class="divider"></li>
                         {% endif %}
                         {% if perms.testcases.delete_testcaseplan %}
                             <li><a class="js-test-case-menu-delete">{% trans 'Delete' %}</a></li>
@@ -327,8 +330,8 @@
 <template id="toolbar-dropdown">
     <li class="selected" data-filter-type="summary"><a>{% trans 'Summary' %}</a></li>
     <li data-filter-type="case_status"><a>{% trans 'Status' %}</a></li>
-    <li data-filter-type="category"><a>{% trans 'Category' %}</a></li>
     <li data-filter-type="priority"><a>{% trans 'Priority' %}</a></li>
+    <li data-filter-type="category"><a>{% trans 'Category' %}</a></li>
     <li data-filter-type="author"><a>{% trans 'Author' %}</a></li>
     <li data-filter-type="default_tester"><a>{% trans 'Default tester' %}</a></li>
 </template>
