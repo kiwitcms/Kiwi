@@ -182,6 +182,21 @@
                                             {% if not perms.testcases.change_testcase %}
                                                     disabled
                                             {% endif %}>{% trans 'Default tester' %}</button>
+
+                                        <div class="dropdown btn-group dropdown-kebab-pf">
+                                            <button class="btn btn-link dropdown-toggle"
+                                                    type="button" id="moreToolbarActions"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <span class="fa fa-ellipsis-v"></span>
+                                            </button>
+
+                                            <ul class="dropdown-menu " aria-labelledby="moreToolbarActions">
+                                            {% if perms.testcases.change_testcase %}
+                                                <li><a href="#">{% trans 'Reviewer' %}</a></li>
+                                            {% endif %}
+                                            </ul>
+                                        </div>
+
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-danger paddingLeft"
