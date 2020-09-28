@@ -102,6 +102,7 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
     row.find('.js-test-case-category').html(`${testCase.category}`);
     row.find('.js-test-case-author').html(`${testCase.author}`);
     row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
+    row.find('.js-test-case-reviewer').html(`${testCase.reviewer || '-'}`);
 
     // set the links in the kebab menu
     if (permissions['perm-change-testcase']) {
@@ -119,6 +120,9 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
 
         // add customizable icon as part of #1932
         row.find('.js-test-case-status-icon').addClass('fa-times')
+
+        row.find('.js-test-case-tester-div').toggleClass('hidden');
+        row.find('.js-test-case-reviewer-div').toggleClass('hidden');
     } else {
         row.find('.js-test-case-status-icon').addClass('fa-check-square')
     }
