@@ -95,6 +95,9 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
 
     row[0].firstElementChild.dataset.testcasePk = testCase.id;
     row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/`);
+    // todo: TestCaseStatus here isn't translated b/c TestCase.filter uses a
+    // custom serializer which needs to be refactored as well
+    row.find('.js-test-case-status').html(`${testCase.case_status}`);
     row.find('.js-test-case-priority').html(`${testCase.priority}`);
     row.find('.js-test-case-category').html(`${testCase.category}`);
     row.find('.js-test-case-author').html(`${testCase.author}`);
@@ -113,6 +116,11 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
 
     if (!isTestCaseConfirmed(testCase.case_status_id)) {
         row.find('.list-group-item-header').addClass('bg-danger');
+
+        // add customizable icon as part of #1932
+        row.find('.js-test-case-status-icon').addClass('fa-times')
+    } else {
+        row.find('.js-test-case-status-icon').addClass('fa-check-square')
     }
 
     //handle automated icon
