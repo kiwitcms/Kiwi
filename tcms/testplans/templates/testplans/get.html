@@ -27,14 +27,20 @@
         <div class="col-xs-12 col-sm-12 col-md-9">
             <div class="card-pf card-pf-accented">
                 <div class="card-pf-body">
-                    <div class="markdown-text">
+                    <div class="markdown-text" id="testplan-text">
                         {{ object.text|markdown2html }}
                     </div>
+
+                    <a id="testplan-text-collapse-btn" class="hidden"
+                        style="float: right" title="{% trans 'Show more' %}"
+                        data-toggle="collapse" href="#testplan-text">
+                        <span class="fa fa-angle-double-down"></span>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-xs-12 col-sm-12 col-md-3" id="testplan-info">
             <div class="card-pf card-pf-accented card-pf-aggregate-status" style="text-align: left">
                 <h2 class="card-pf-title">
                     <span class="fa pficon-user"></span>{% trans 'Author' %}:
