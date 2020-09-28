@@ -147,6 +147,16 @@ function escapeHTML(unsafe) {
 }
 
 
+function unescapeHTML(html) {
+  return html.
+    replace(/&amp;/g, '&').
+    replace(/&lt;/g,  '<').
+    replace(/&gt;/g,  '>').
+    replace(/&quot;/g, '"').
+    replace(/&#039;/g, '\'');
+}
+
+
 function treeViewBind() {
     // collapse all child rows
     $('.tree-list-view-pf').find(".list-group-item-container").addClass('hidden');
@@ -184,5 +194,12 @@ function filterTestCasesByProperty(testCases, filterBy, filterValue) {
         } else {
             $(`[data-testcase-pk=${id}]`).show();
         }
+    });
+}
+
+/* render Markdown & assign it to selector */
+function markdown2HTML(input, selector) {
+    jsonRPC('Markdown.render', input, function(result) {
+        $(selector).html(unescapeHTML(result));
     });
 }
