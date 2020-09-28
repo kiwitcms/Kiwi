@@ -197,7 +197,8 @@ function filterTestCasesByProperty(testCases, filterBy, filterValue) {
         }
 
         // actual filtering, the property is null or does not contains the string
-        if (!tc[filterBy] || tc[filterBy].toLowerCase().indexOf(filterValue) === -1) {
+        // WARNING: explicitly compare to null & use .toString() for boolean values
+        if (tc[filterBy] === null || tc[filterBy].toString().toLowerCase().indexOf(filterValue) === -1) {
             $(`[data-testcase-pk=${id}]`).hide();
         } else {
             $(`[data-testcase-pk=${id}]`).show();
