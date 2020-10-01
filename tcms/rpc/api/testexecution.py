@@ -25,6 +25,7 @@ else:
 __all__ = (
     'update',
     'filter',
+    'history',
 
     'add_comment',
     'remove_comment',
@@ -131,7 +132,15 @@ def history(execution_id):
         :raises PermissionDenied: if missing *testruns.view_testexecution* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
-    execution_history = execution.history.all().order_by('-history_date').values()
+    execution_history = execution.history.all() \
+        .order_by(
+            '-history_date'
+        ).values(
+            'history_user__username',
+            'history_change_reason',
+            'history_date',
+            'history_change_reason'
+        )
     return list(execution_history)
 
 

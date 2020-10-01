@@ -180,16 +180,12 @@ function renderTestExecutions(testExecutions) {
     })
 
     treeViewBind();
+    $('.test-executions-count').html(testExecutions.length)
     renderAdditionalInformation(testExecutions, testCaseIds)
 }
 
 function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
-    $('.test-executions-count').html(testExecutions.length);
 
-    renderTestCaseInformation(testExecutions, testExecutionCaseIds)
-}
-
-function renderTestCaseInformation(testExecutions, testExecutionCaseIds) {
     jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
         testExecutions.forEach(testExecution => {
             const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
@@ -236,9 +232,29 @@ function renderTestCaseInformation(testExecutions, testExecutionCaseIds) {
                     ul.append(li)
                 })
             })
+
+            jsonRPC('TestExecution.history', testExecution.id, history => {
+                const historyContainer = $(`.test-execution-${testExecution.id} .history-container`)
+                history.forEach(h => {
+                    historyContainer.append(renderHistoryEntry(h))
+                })
+            })
         })
     })
+}
 
+function renderHistoryEntry(historyEntry) {
+    if (!historyEntry.history_change_reason) {
+        return ''
+    }
+
+    const template = $($('#history-entry')[0].content.cloneNode(true))
+
+    template.find('.history-date').html(historyEntry.history_date)
+    template.find('.history-user').html(historyEntry.history_user__username)
+    template.find('.history-change-reason').html(historyEntry.history_change_reason)
+
+    return template
 }
 
 function renderTestExecutionRow(testExecution) {
@@ -287,7 +303,7 @@ function reloadRowFor(execution) {
         testExecutionRow.replaceWith(renderTestExecutionRow(execution))
 
         treeViewBind()
-        renderTestCaseInformation([execution], [execution.case_id])
+        renderAdditionalInformation([execution], [execution.case_id])
     })
 }
 
