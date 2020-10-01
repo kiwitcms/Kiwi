@@ -28,16 +28,19 @@ until curl -L http://bugtracker.kiwitcms.org | grep "Sign in"; do
 done
 
 
-# Repo: 'root/kiwitcms', Project ID: 1
+# Warning "GitLab Instance / Monitoring" project gets automatically created
+# and has Project ID: 1
+
+# Repo: 'root/kiwitcms', Project ID: 2
 gitlab project create --name kiwitcms --visibility public
 
 # http://bugtracker.kiwitcms.org/root/kiwitcms/-/issues/1
 # http://bugtracker.kiwitcms.org/root/kiwitcms/issues/1
-gitlab project-issue create --project-id 1 --title "Hello GitLab" --description "Created via CLI"
+gitlab project-issue create --project-id 2 --title "Hello GitLab" --description "Created via CLI"
 
-# Repo: 'root/katinar', Project ID: 2
+# Repo: 'root/katinar', Project ID: 3
 gitlab project create --name katinar --visibility private
 
 # http://bugtracker.kiwitcms.org/root/katinar/-/issues/1
 # http://bugtracker.kiwitcms.org/root/katinar/issues/1
-gitlab project-issue create --project-id 2 --title "Hello Private Issue" --description "Created in secret via CLI"
+gitlab project-issue create --project-id 3 --title "Hello Private Issue" --description "Created in secret via CLI"
