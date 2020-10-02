@@ -22,6 +22,9 @@ def add_comment(objs, comments, user, submit_date=None):
     :type user: A User model
     :param submit_date: A time stamp
     :type submit_date: datetime.datetime
+    :return: A list of :class:`django_comments.models.Comment` objects
+             representing the newly created comments
+    :rtype: list
 
     Example::
 
