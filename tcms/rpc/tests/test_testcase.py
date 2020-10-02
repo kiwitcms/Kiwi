@@ -6,6 +6,7 @@ from xmlrpc.client import Fault, ProtocolError
 from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
+from tcms.core.helpers.comments import get_comments
 from tcms.management.models import Priority
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
@@ -519,3 +520,22 @@ class TestAddComponent(APITestCase):
     def test_add_component_from_another_product_is_not_allowed(self):
         with self.assertRaisesRegex(Fault, 'Component matching query does not exist'):
             self.rpc_client.TestCase.add_component(self.test_case.pk, self.bad_component.name)
+
+
+class TestCaseAddComment(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case = TestCaseFactory()
+
+    def test_add_comment_with_pk_as_int(self):
+        created_comment = self.rpc_client.TestCase.add_comment(
+            self.case.pk,
+            "Hello World!")
+
+        comments = get_comments(self.case)
+        self.assertEqual(1, comments.count())
+
+        first_comment = comments.first()
+        self.assertEqual("Hello World!", first_comment.comment)
+        self.assertEqual("Hello World!", created_comment['comment'])

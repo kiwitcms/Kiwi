@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.forms import EmailField, ValidationError
+from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.helpers import comments
@@ -392,6 +393,8 @@ def add_comment(case_id, comment, **kwargs):
         :type comment: str
         :param kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
+        :return: Serialized :class:`django_comments.models.Comment` object
+        :rtype: dict
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
 
         .. important::
@@ -399,7 +402,9 @@ def add_comment(case_id, comment, **kwargs):
             In webUI comments are only shown **only** during test case review!
     """
     case = TestCase.objects.get(pk=case_id)
-    comments.add_comment([case], comment, kwargs.get(REQUEST_KEY).user)
+    created = comments.add_comment([case], comment, kwargs.get(REQUEST_KEY).user)
+    # we always create only one comment
+    return model_to_dict(created[0])
 
 
 @permissions_required('django_comments.delete_comment')
