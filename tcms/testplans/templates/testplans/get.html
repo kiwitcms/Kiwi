@@ -8,6 +8,7 @@
 {% block title %}TP-{{ object.pk }}: {{ object.name }}{% endblock %}
 {% block body_class %}cards-pf{% endblock %}
 
+
 {% block contents %}
 <div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
@@ -18,6 +19,8 @@
               data-perm-change-testcase="{{ perms.testcases.change_testcase }}"
               data-perm-remove-testcase="{{ perms.testcases.delete_testcaseplan }}"
               data-perm-add-testcase="{{ perms.testcases.add_testcase }}"
+              data-perm-add-comment="{{ perms.django_comments.add_comment }}"
+              data-perm-delete-comment="{{ perms.django_comments.delete_comment }}"
               data-trans-default-tester-prompt-message="{% trans 'Enter username, email or user ID:' %}"
               data-trans-no-testcases-selected="{% trans 'No rows selected! Please select at least one!'%}"
               data-trans-are-you-sure="{% trans 'Are you sure?' %}"
@@ -395,6 +398,19 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>{% trans 'Comments' %}:</strong>
+                    <div class="js-comment-form-textarea">
+                        {{ comment_form.text }}
+                        <button type="submit" name="action" value="comment" class="btn btn-default js-post-comment">
+                        {% trans "Save" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -410,6 +426,8 @@
     <li data-filter-type="reviewer"><a>{% trans 'Reviewer' %}</a></li>
 </template>
 
+{% include 'include/comments_for_object_template.html' %}
+
 <script src="{% static 'html5sortable/dist/html5sortable.min.js' %}"></script>
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 
@@ -417,6 +435,8 @@
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/tags.js' %}"></script>
 <script src="{% static 'testplans/js/get.js' %}"></script>
+
+{{ comment_form.media }}
 
 <style>
 #test-plan-family-tree {
