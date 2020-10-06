@@ -421,6 +421,17 @@ function toolbarEvents(testPlanId, permissions) {
         }
 
     });
+
+    $('#bulk-clone-button').click(function() {
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return;
+        }
+
+         window.location.assign(`/cases/clone?case=${selectedCases.join('&case=')}`);
+    });
 }
 
 function toolbarDropdowns() {
