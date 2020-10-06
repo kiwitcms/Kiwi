@@ -30,7 +30,7 @@ $(document).ready(function() {
     });
 
     toolbarDropdowns();
-    toolbarEvents(testPlanId);
+    toolbarEvents(testPlanId, permissions);
 
     collapseDocumentText();
 });
@@ -88,6 +88,15 @@ function drawTestCases(testCases, testPlanId, permissions) {
     } else {
         container.append(noCasesTemplate[0].innerHTML);
     }
+}
+
+function redrawSingleRow(testCaseId, testPlanId, permissions) {
+    var testCaseRowDocumentFragment = $('#test_case_row')[0].content,
+        newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions);
+
+    // replace the element in the dom
+    $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow);
+    attachEvents(allTestCases[testCaseId], testPlanId, permissions);
 }
 
 function getTestCaseRowContent(rowContent, testCase, permissions) {
@@ -183,13 +192,13 @@ function attachEvents(testCases, testPlanId, permissions) {
     if (permissions['perm-change-testcase']) {
         // update default tester
         $('.js-test-case-menu-tester').click(function(ev) {
-            var email_or_username = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
-            if (!email_or_username) {
+            var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
+            if (!emailOrUsername) {
                 return;
             }
             const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'default_tester': email_or_username}], function(tc) {
+            jsonRPC('TestCase.update', [testCaseId, {'default_tester': emailOrUsername}], function(tc) {
                 const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
                 animate(testCaseRow, function() {
                     testCaseRow.find('.js-test-case-tester').html(tc.default_tester);
@@ -268,7 +277,7 @@ function attachEvents(testCases, testPlanId, permissions) {
     }
 }
 
-function toolbarEvents(testPlanId) {
+function toolbarEvents(testPlanId, permissions) {
 
     $('.js-checkbox-toolbar').click(function(ev) {
         const isChecked = ev.target.checked;
@@ -380,6 +389,37 @@ function toolbarEvents(testPlanId) {
                 });
             }
         }
+    });
+
+    $('#default-tester-button').click(function(ev) {
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return;
+        }
+
+        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
+        
+        if (!emailOrUsername) {
+            return;
+        }
+
+        for (let i = 0; i < selectedCases.length; i++) {
+            let testCaseId = selectedCases[i];
+
+            jsonRPC('TestCase.update', [testCaseId, {'default_tester': emailOrUsername}], function(tc) {
+                const testCaseRow = $(`[data-testcase-pk=${testCaseId}]`);
+
+                //update the data
+                allTestCases[testCaseId].default_tester = tc.default_tester;
+
+                animate(testCaseRow, function() {
+                    redrawSingleRow(testCaseId, testPlanId, permissions);
+                });
+            });
+        }
+
     });
 }
 
