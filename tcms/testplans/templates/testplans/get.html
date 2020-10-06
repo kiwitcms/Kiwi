@@ -20,6 +20,7 @@
               data-perm-add-testcase="{{ perms.testcases.add_testcase }}"
               data-trans-default-tester-prompt-message="{% trans 'Enter username, email or user ID:' %}"
               data-trans-no-testcases-selected="{% trans 'No rows selected! Please select at least one!'%}"
+              data-trans-are-you-sure="{% trans 'Are you sure?' %}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
     </h1>
 
@@ -200,7 +201,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-danger paddingLeft"
-                                                type="button"
+                                                type="button" id="delete_button"
                                                 {% if not perms.testcases.delete_testcaseplan %}
                                                     disabled
                                                 {% endif %}>{% trans 'Delete' %}</button>
