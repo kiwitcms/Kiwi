@@ -11,7 +11,9 @@ $(document).ready(function() {
     const permissions = {
         'perm-change-testcase': $('#test_plan_pk').data('perm-change-testcase') === 'True',
         'perm-remove-testcase': $('#test_plan_pk').data('perm-remove-testcase') === 'True',
-        'perm-add-testcase': $('#test_plan_pk').data('perm-add-testcase') === 'True'
+        'perm-add-testcase': $('#test_plan_pk').data('perm-add-testcase') === 'True',
+        'perm-add-comment': $('#test_plan_pk').data('perm-add-comment') === 'True',
+        'perm-delete-comment': $('#test_plan_pk').data('perm-delete-comment') === 'True'
     };
 
     $('#btn-search-cases').click(function () {
@@ -277,7 +279,7 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
     return row;
 }
 
-function getTestCaseExpandArea(row, testCase) {
+function getTestCaseExpandArea(row, testCase, permissions) {
     markdown2HTML(testCase.text, row.find('.js-test-case-expand-text'))
     if (testCase.notes.trim().length > 0) {
         row.find('.js-test-case-expand-notes').html(testCase.notes);
@@ -310,6 +312,45 @@ function getTestCaseExpandArea(row, testCase) {
             ulElement.append(liElement);
         }
     });
+
+    // render comments form
+    const commentFormTextArea = row.find('.js-comment-form-textarea');
+    if (!isTestCaseConfirmed(testCase.case_status_id) && permissions['perm-add-comment']) {
+        const textArea = row.find('textarea')[0];
+        textArea.id = `comment-for-testcase-${testCase.id}`;
+
+        const fileUpload = row.find('input[type="file"]')
+        fileUpload[0].id = `file-upload-for-testcase-${testCase.id}`;
+        const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
+
+        row.find('.js-post-comment').click(function(event) {
+            event.preventDefault();
+            const input = editor.value().trim()
+
+            if (input) {
+                jsonRPC('TestCase.add_comment', [testCase.id, input], comment => {
+                    editor.value('')
+
+                    // show the newly added comment and bind its delete button
+                    row.find('.comments').append(
+                        renderCommentHTML(
+                            1+row.find('.js-comment-container').length,
+                            comment,
+                            $('template#comment-template')[0],
+                            function(parentNode) {
+                                bindDeleteCommentButton(
+                                    testCase.id,
+                                    'TestCase.remove_comment',
+                                    permissions['perm-delete-comment'], // b/c we already know it's unconfirmed
+                                    parentNode)
+                            })
+                    )
+                })
+            }
+        });
+    } else {
+        commentFormTextArea.hide();
+    }
 }
 
 function attachEvents(testCases, testPlanId, permissions) {
@@ -381,7 +422,7 @@ function attachEvents(testCases, testPlanId, permissions) {
 
         const tcRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
         expandedTestCaseIds.push(testCaseId);
-        getTestCaseExpandArea(tcRow, testCases[testCaseId]);
+        getTestCaseExpandArea(tcRow, testCases[testCaseId], permissions);
     });
 
 
