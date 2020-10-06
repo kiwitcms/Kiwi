@@ -141,7 +141,7 @@
                                                 {% if not perms.testruns.add_testrun %}
                                                     disabled
                                                 {% endif %}>{% trans 'New TestRun' %}</button>
-                                        <button class="btn btn-default" type="button"
+                                        <button class="btn btn-default" type="button" id="bulk-clone-button"
                                                 {% if not perms.testcases.add_testcase %}
                                                     disabled
                                                 {% endif %}>{% trans 'Clone' %}</button>
