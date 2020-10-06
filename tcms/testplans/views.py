@@ -16,6 +16,7 @@ from guardian.decorators import permission_required as object_permission_require
 
 from uuslug import slugify
 
+from tcms.core.forms import SimpleCommentForm
 from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
 from tcms.testplans.models import PlanType, TestPlan
@@ -178,6 +179,7 @@ class TestPlanGetView(DetailView):
         context = super().get_context_data(**kwargs)
         context['statues'] = TestCaseStatus.objects.all()
         context['priorities'] = Priority.objects.filter(is_active=True)
+        context['comment_form'] = SimpleCommentForm()
         # todo: this can be passed to the new template and consumed
         # in the JavaScript when rendering test cases based on status
         # confirmed_status = TestCaseStatus.get_confirmed()
