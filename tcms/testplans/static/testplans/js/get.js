@@ -1,4 +1,5 @@
-var expandedTestCaseIds = [];
+var expandedTestCaseIds = [],
+    fadeAnimationTime = 500;
 
 const allTestCases = {};
 
@@ -29,7 +30,7 @@ $(document).ready(function() {
     });
 
     toolbarDropdowns();
-    toolbarEvents();
+    toolbarEvents(testPlanId);
 
     collapseDocumentText();
 });
@@ -267,7 +268,7 @@ function attachEvents(testCases, testPlanId, permissions) {
     }
 }
 
-function toolbarEvents() {
+function toolbarEvents(testPlanId) {
 
     $('.js-checkbox-toolbar').click(function(ev) {
         const isChecked = ev.target.checked;
@@ -357,6 +358,28 @@ function toolbarEvents() {
             });
         }
 
+    });
+
+    $('#delete_button').click(function(ev) {
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return;
+        }
+
+        const areYouSureText = $('#test_plan_pk').data('trans-are-you-sure');
+        if (confirm(areYouSureText)) {
+            for (let i = 0; i < selectedCases.length; i++) {
+                let testCaseId = selectedCases[i];
+                jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
+                    // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
+                    $(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
+                        $(this).remove();
+                    });
+                });
+            }
+        }
     });
 }
 
