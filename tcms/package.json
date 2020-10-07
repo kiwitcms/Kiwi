@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bootstrap-switch": "3.3.4",
+    "html5sortable": "0.9.18",
     "marked": "1.2.0",
     "patternfly": "3.59.5",
     "prismjs": "1.22.0",

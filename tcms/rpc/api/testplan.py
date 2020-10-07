@@ -17,6 +17,7 @@ __all__ = (
 
     'add_case',
     'remove_case',
+    'update_case_order',
 
     'add_tag',
     'remove_tag',
@@ -200,6 +201,26 @@ def remove_case(plan_id, case_id):
         :raises PermissionDenied: if missing *testcases.delete_testcaseplan* permission
     """
     TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
+
+
+@permissions_required('testcases.change_testcaseplan')
+@rpc_method(name='TestPlan.update_case_order')
+def update_case_order(plan_id, case_id, sortkey):
+    """
+    .. function:: RPC TestPlan.update_case_order(plan_id, case_id, sortkey)
+
+        Update sortkey which controls display order of the given test case in
+        the given test plan.
+
+        :param plan_id: PK of TestPlan holding the selected TestCase
+        :type plan_id: int
+        :param case_id: PK of TestCase to be modified
+        :type case_id: int
+        :param sortkey: Ordering value, e.g. 10, 20, 30
+        :type sortkey: int
+        :raises PermissionDenied: if missing *testcases.delete_testcaseplan* permission
+    """
+    TestCasePlan.objects.filter(case=case_id, plan=plan_id).update(sortkey=sortkey)
 
 
 @permissions_required('attachments.view_attachment')
