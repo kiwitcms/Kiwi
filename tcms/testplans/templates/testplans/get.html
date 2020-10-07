@@ -134,6 +134,12 @@
                                                 <span class="fa fa-sort-alpha-asc" data-order="1"></span>
                                                 <span class="fa fa-sort-alpha-desc hidden" data-order="-1"></span>
                                             </button>
+
+                                            {% if perms.testcases.change_testcaseplan %}
+                                            <button class="btn btn-link js-toolbar-manual-sort" type="button" title="{% trans 'Re-order cases' %}">
+                                                <span class="fa fa-sort"></span>
+                                            </button>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -195,6 +201,7 @@
                                             {% if perms.testcases.change_testcase %}
                                                 <li><a href="#">{% trans 'Reviewer' %}</a></li>
                                             {% endif %}
+
                                             </ul>
                                         </div>
 
@@ -240,10 +247,13 @@
     <div class="list-group-item js-testcase-row" data-testcase-pk="">
         <div class="list-group-item-header">
             <div class="list-view-pf-main-info">
-                <div class="list-view-pf-left">
+                <div class="list-view-pf-left hidden js-testcase-sort-handler">
+                    <span class="fa fa-sort handle"></span>
+                </div>
+                <div class="list-view-pf-left js-testcase-expand-arrow">
                     <span class="fa fa-angle-right"></span>
                 </div>
-                <div class="list-view-pf-checkbox" style="margin-top: 0; margin-bottom: 0">
+                <div class="list-view-pf-checkbox js-testcase-checkbox" style="margin-top: 0; margin-bottom: 0">
                     <input type="checkbox">
                 </div>
                 <div class="list-view-pf-actions" style="margin-top: 0; margin-bottom: 0;">
@@ -359,6 +369,7 @@
     <li data-filter-type="reviewer"><a>{% trans 'Reviewer' %}</a></li>
 </template>
 
+<script src="{% static 'html5sortable/dist/html5sortable.min.js' %}"></script>
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/jsonrpc.js' %}"></script>
