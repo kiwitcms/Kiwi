@@ -24,13 +24,14 @@ $(document).ready(function() {
         drawTestCases(allTestCases, testPlanId, permissions);
         treeViewBind();
 
-        // b/c treeViewBind() will modfy handlers/visibility for both
+        // b/c treeViewBind() will modify handlers/visibility for both
         // test plan family tree and the test cases tree
         adjustTestPlanFamilyTree();
-    });
 
-    toolbarDropdowns();
-    toolbarEvents(testPlanId, permissions);
+        // b/c drag & reorder needs the initial order of test cases and
+        // they may not be fully loaded when sortable() is initialized!
+        toolbarEvents(testPlanId, permissions);
+    });
 
     collapseDocumentText();
 });
@@ -278,6 +279,7 @@ function attachEvents(testCases, testPlanId, permissions) {
 }
 
 function toolbarEvents(testPlanId, permissions) {
+    toolbarDropdowns();
 
     $('.js-checkbox-toolbar').click(function(ev) {
         const isChecked = ev.target.checked;
@@ -319,6 +321,37 @@ function toolbarEvents(testPlanId, permissions) {
 
         sortTestCases();
     });
+
+
+    // always initialize the sortable list however you can only
+    // move items using the handle icon on the left which becomes
+    // visible only when the manual sorting button is clicked
+    sortable('#testcases-list', {
+        handle: '.handle',
+        itemSerializer: (serializedItem, sortableContainer) => {
+            return parseInt(serializedItem.node.getAttribute('data-testcase-pk'))
+        }
+    });
+
+    // IMPORTANT: this is not empty b/c sortable() is initialized *after*
+    // all of the test cases have been rendered !!!
+    const initialOrder = sortable('#testcases-list', 'serialize')[0].items;
+
+    $('.js-toolbar-manual-sort').click(function(event) {
+        $(this).blur();
+        $('.js-toolbar-manual-sort').find('span').toggleClass(['fa-sort', 'fa-check-square']);
+        $('.js-testcase-sort-handler, .js-testcase-expand-arrow, .js-testcase-checkbox').toggleClass('hidden');
+
+        const currentOrder = sortable('#testcases-list', 'serialize')[0].items;
+
+        // rows have been rearranged and the results must be committed to the DB
+        if (currentOrder.join() !== initialOrder.join()) {
+            currentOrder.forEach(function(tc_pk, index) {
+                jsonRPC('TestPlan.update_case_order', [testPlanId, tc_pk, index*10], function(result) {});
+            });
+        }
+    });
+
 
     $('.js-toolbar-priority').click(function(ev) {
         let selectedCases = getSelectedTestCases();
