@@ -60,3 +60,23 @@ jobs:
 
         export LANG=en-us
         make pylint
+
+  pylint_site_packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Lint with pylint
+      run: |
+        pip install pylint pylint-django
+        pip install -r requirements/mariadb.txt
+        pip install -r requirements/postgres.txt
+
+        make pylint_site_packages

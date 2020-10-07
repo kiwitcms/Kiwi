@@ -52,6 +52,12 @@ pylint:
 	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django.checkers.migrations -d missing-docstring -d duplicate-code --module-naming-style=any  tcms/*/migrations/*
 	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django --load-plugins=kiwi_lint --load-plugins=pylint.extensions.docparams -d missing-docstring -d duplicate-code tcms/ tcms_settings_dir/
 
+.PHONY: pylint_site_packages
+pylint_site_packages:
+	if [ -d "$(PATH_TO_SITE_PACKAGES)" ]; then \
+	    PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=tcms.settings.common find $(PATH_TO_SITE_PACKAGES) -type d -maxdepth 1 -not -path '$(PATH_TO_SITE_PACKAGES)' -exec pylint --load-plugins=kiwi_lint --disable=all --enable=avoid-generic-foreign-key '{}' \; ;\
+	fi
+
 .PHONY: bandit
 bandit:
 	bandit -r *.py tcms/ kiwi_lint/ tcms_settings_dir/
