@@ -10,12 +10,13 @@ from tcms.management.models import Component, Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCase, TestCasePlan
 
 __all__ = (
     'create',
     'update',
     'filter',
+    'sortkeys',
     'remove',
 
     'add_comment',
@@ -278,6 +279,27 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         query = {}
 
     return TestCase.to_xmlrpc(query)
+
+
+@permissions_required('testcases.view_testcase')
+@rpc_method(name='TestCase.sortkeys')
+def sortkeys(query=None):
+    """
+    .. function:: RPC TestCase.sortkeys(query)
+
+        Return information about TestCase position inside TestPlan.
+
+        For example `TestCase.sortkeys({'plan': 3})`
+
+        :param query: Field lookups for :class:`tcms.testcases.models.TestCasePlan`
+        :type query: dict
+        :return: Serialized list of :class:`tcms.testcases.models.TestCasePlan` objects.
+        :rtype: list(dict)
+    """
+    if query is None:
+        query = {}
+
+    return list(TestCasePlan.objects.filter(**query).values())
 
 
 @permissions_required('testcases.change_testcase')
