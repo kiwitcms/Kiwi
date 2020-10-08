@@ -8,7 +8,7 @@ from tcms_api import xmlrpc
 
 from tcms.core.helpers.comments import get_comments
 from tcms.management.models import Priority
-from tcms.rpc.tests.utils import APITestCase
+from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (CategoryFactory, ComponentFactory,
@@ -539,3 +539,45 @@ class TestCaseAddComment(APITestCase):
         first_comment = comments.first()
         self.assertEqual("Hello World!", first_comment.comment)
         self.assertEqual("Hello World!", created_comment['comment'])
+
+
+class TestCaseSortkeysPermissions(APIPermissionsTestCase):
+    permission_label = 'testcases.view_testcase'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+        # add TCs with non-standard sortkeys
+        self.case_1 = TestCaseFactory()
+        self.plan.add_case(self.case_1, sortkey=5)
+
+        self.case_2 = TestCaseFactory()
+        self.plan.add_case(self.case_2, sortkey=15)
+
+        self.case_3 = TestCaseFactory()
+        self.plan.add_case(self.case_3, sortkey=25)
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestCase.sortkeys({
+            "plan": self.plan.pk,
+        })
+
+        for entry in result:
+            self.assertEqual(entry['plan_id'], self.plan.pk)
+
+        self.assertEqual(result[0]['case_id'], self.case_1.pk)
+        self.assertEqual(result[0]['sortkey'], 5)
+
+        self.assertEqual(result[1]['case_id'], self.case_2.pk)
+        self.assertEqual(result[1]['sortkey'], 15)
+
+        self.assertEqual(result[2]['case_id'], self.case_3.pk)
+        self.assertEqual(result[2]['sortkey'], 25)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.sortkeys({
+                "plan": self.plan.pk,
+            })
