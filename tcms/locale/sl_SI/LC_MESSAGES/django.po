@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-21 08:22\n"
+"PO-Revision-Date: 2020-10-09 12:17\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -234,7 +234,7 @@ msgstr "Uredi"
 
 #: tcms/bugs/views.py:46 tcms/testcases/views.py:540
 msgid "Object permissions"
-msgstr ""
+msgstr "Dovoljenja objekta"
 
 #: tcms/bugs/views.py:51 tcms/testcases/views.py:545
 msgid "Delete"
