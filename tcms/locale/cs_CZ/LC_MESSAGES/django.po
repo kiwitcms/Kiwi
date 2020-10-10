@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 10:21\n"
+"PO-Revision-Date: 2020-10-10 13:32\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2133,7 +2133,7 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Vytvořit"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
