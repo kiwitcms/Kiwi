@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 09:52\n"
+"PO-Revision-Date: 2020-10-10 10:03\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -402,7 +402,7 @@ msgstr ""
 
 #: tcms/settings/common.py:314
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMINISTRACE"
 
 #: tcms/settings/common.py:315
 msgid "Users and groups"
@@ -666,7 +666,7 @@ msgstr "Poznámky"
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Komentáře"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
@@ -717,7 +717,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
@@ -857,7 +857,7 @@ msgstr "Nebyly nalezeny žádné záznamy"
 #: tcms/testcases/templates/testcases/search.html:141
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
@@ -1338,11 +1338,11 @@ msgstr ""
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Resetovat heslo"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
