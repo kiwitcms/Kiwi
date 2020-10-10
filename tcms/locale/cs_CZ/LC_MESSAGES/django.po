@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 10:13\n"
+"PO-Revision-Date: 2020-10-10 10:21\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -251,7 +251,7 @@ msgstr ""
 #: tcms/core/ajax.py:150
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Uživatel %s nebyl nalezen!"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -279,7 +279,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Tato e-mailová adresa je již používána"
 
 #: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
@@ -296,7 +296,7 @@ msgstr "Uživatel s tímto e-mailem již existuje."
 #: tcms/kiwi_auth/forms.py:70
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Potvrzení vašeno nového účtu %s"
 
 #: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -544,7 +544,7 @@ msgstr "Ne"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "Pořadí"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
