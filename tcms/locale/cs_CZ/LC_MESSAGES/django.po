@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 13:32\n"
+"PO-Revision-Date: 2020-10-10 14:12\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -357,7 +357,7 @@ msgstr "Nový bug"
 
 #: tcms/settings/common.py:297
 msgid "SEARCH"
-msgstr ""
+msgstr "VYHLEDÁVÁNÍ"
 
 #: tcms/settings/common.py:298
 msgid "Search Test Plans"
@@ -748,7 +748,7 @@ msgstr "Vaše testovací plány"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Testovací plán"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -760,7 +760,7 @@ msgstr "Typ"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Spuštění"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
@@ -1065,7 +1065,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
@@ -1089,7 +1089,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Datum vytvoření"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
@@ -1394,7 +1394,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Datum Vytvoření"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1524,7 +1524,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Testováno"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
@@ -1596,7 +1596,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Klonovat TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1641,11 +1641,11 @@ msgstr "Komponenty"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Upravit TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "Nový TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
