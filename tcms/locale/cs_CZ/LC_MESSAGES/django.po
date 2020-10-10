@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 09:42\n"
+"PO-Revision-Date: 2020-10-10 09:52\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -983,11 +983,11 @@ msgstr "Aktuální stránka"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Další stránka"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Poslední stránka"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -1186,7 +1186,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Tester"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1221,7 +1221,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Výchozí tester"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1233,7 +1233,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Zobrazit více"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
@@ -1257,7 +1257,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "Rychlé vyhledávání"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
@@ -1265,7 +1265,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "Vytvořeno"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
@@ -1406,11 +1406,11 @@ msgstr ""
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Poznámka"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "Dokončeno"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1479,7 +1479,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
@@ -1491,7 +1491,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
@@ -1717,7 +1717,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:535
 msgid "History"
-msgstr ""
+msgstr "Historie"
 
 #: tcms/testcases/views.py:681
 msgid "TestCase cloning was successful"
@@ -1758,7 +1758,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Nadřazené ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
@@ -1843,12 +1843,12 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "verze"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Uživatelské jméno nebo e-mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
@@ -1960,7 +1960,7 @@ msgstr ""
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
