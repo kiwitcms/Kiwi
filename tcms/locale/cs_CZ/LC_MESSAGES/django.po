@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 14:23\n"
+"PO-Revision-Date: 2020-10-10 14:31\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1325,7 +1325,7 @@ msgstr "Potvrdit"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Zadejte prosím své nové heslo dvakrát, aby bylo možné ověřit, že je zadané správně"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1451,7 +1451,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
-msgstr ""
+msgstr "Komentář"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
@@ -1568,7 +1568,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "Žádné spuštění nenalezeno"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1633,7 +1633,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Testovací plány"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Výchozí tester spuštění"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1750,7 +1750,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Upravit Testovací Plán"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
@@ -1791,7 +1791,7 @@ msgstr "Aktivní"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Vyhledat testovací plány"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1975,7 +1975,7 @@ msgstr ""
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s již existuje"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -2025,7 +2025,7 @@ msgstr "Tenant"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "Organizace"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -2057,7 +2057,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Subscribe"
-msgstr ""
+msgstr "Subskripce"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
@@ -2079,7 +2079,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:159
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:160
 msgid "Vendor"
-msgstr ""
+msgstr "Dodavatel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:165
