@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-24 20:13\n"
+"PO-Revision-Date: 2020-10-10 14:31\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -107,7 +107,7 @@ msgstr "Verze"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
-msgstr ""
+msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
@@ -128,7 +128,7 @@ msgstr "Uložit"
 
 #: tcms/bugs/templates/bugs/get.html:130
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
@@ -168,7 +168,7 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
-msgstr ""
+msgstr "Hledat chyby"
 
 #: tcms/bugs/templates/bugs/search.html:16
 #: tcms/telemetry/templates/telemetry/include/filters.html:48
@@ -212,7 +212,7 @@ msgstr "Hledat"
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:103
 #: tcms/templates/include/bug_details.html:5
@@ -222,15 +222,15 @@ msgstr "Vytvořeno"
 #: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:527
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: tcms/bugs/views.py:46 tcms/testcases/views.py:540
 msgid "Object permissions"
-msgstr ""
+msgstr "Oprávnění objektu"
 
 #: tcms/bugs/views.py:51 tcms/testcases/views.py:545
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #: tcms/bugs/views.py:76
 msgid "New bug"
@@ -238,7 +238,7 @@ msgstr ""
 
 #: tcms/bugs/views.py:182
 msgid "Edit bug"
-msgstr ""
+msgstr "Upravit chybu"
 
 #: tcms/bugs/views.py:213
 msgid "*bug closed*"
@@ -251,7 +251,7 @@ msgstr ""
 #: tcms/core/ajax.py:150
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Uživatel %s nebyl nalezen!"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -279,24 +279,24 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Tato e-mailová adresa je již používána"
 
 #: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
-msgstr ""
+msgstr "Osobní údaje"
 
 #: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
-msgstr ""
+msgstr "Oprávnění"
 
 #: tcms/kiwi_auth/forms.py:42
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Uživatel s tímto e-mailem již existuje."
 
 #: tcms/kiwi_auth/forms.py:70
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Potvrzení vašeno nového účtu %s"
 
 #: tcms/kiwi_auth/views.py:51
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -312,11 +312,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:98
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Tento aktivační klíč již v databázi neexistuje"
 
 #: tcms/kiwi_auth/views.py:103
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Platnost tohoto aktivačního klíče vypršela"
 
 #: tcms/kiwi_auth/views.py:114
 msgid "Your account has been activated successfully"
@@ -357,7 +357,7 @@ msgstr "Nový bug"
 
 #: tcms/settings/common.py:297
 msgid "SEARCH"
-msgstr ""
+msgstr "VYHLEDÁVÁNÍ"
 
 #: tcms/settings/common.py:298
 msgid "Search Test Plans"
@@ -381,7 +381,7 @@ msgstr ""
 
 #: tcms/settings/common.py:305
 msgid "Testing"
-msgstr ""
+msgstr "Testování"
 
 #: tcms/settings/common.py:306
 msgid "Breakdown"
@@ -402,7 +402,7 @@ msgstr ""
 
 #: tcms/settings/common.py:314
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMINISTRACE"
 
 #: tcms/settings/common.py:315
 msgid "Users and groups"
@@ -418,11 +418,11 @@ msgstr "PLUGINY"
 
 #: tcms/settings/common.py:330
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: tcms/settings/common.py:331
 msgid "Report an Issue"
-msgstr ""
+msgstr "Nahlásit problém"
 
 #: tcms/settings/common.py:332
 msgid "Ask for help on StackOverflow"
@@ -434,11 +434,11 @@ msgstr ""
 
 #: tcms/settings/common.py:334
 msgid "Administration Guide"
-msgstr ""
+msgstr "Administrátorská příručka"
 
 #: tcms/settings/common.py:335
 msgid "User Guide"
-msgstr ""
+msgstr "Uživatelská příručka"
 
 #: tcms/settings/common.py:336
 msgid "API Help"
@@ -477,7 +477,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Testovací plán"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -485,7 +485,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "Celkem"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/plan/get_cases.html:107
@@ -502,15 +502,15 @@ msgstr "Automaticky"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
 msgid "Manual"
-msgstr ""
+msgstr "Manuální"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr ""
+msgstr "Priority"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -535,24 +535,24 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:16
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:19
 msgid "Order"
-msgstr ""
+msgstr "Pořadí"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Ascending"
-msgstr ""
+msgstr "Vzestupně"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 msgid "Descending"
-msgstr ""
+msgstr "Sestupně"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
@@ -585,7 +585,7 @@ msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Stránka nebyla nalezena"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
@@ -603,16 +603,16 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:104
 #: tcms/testcases/templates/testcases/search.html:117
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Příloha"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:137
 msgid "No attachment found"
-msgstr ""
+msgstr "Žádná příloha nenalezena"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:147
@@ -645,7 +645,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:40
 msgid "bug"
-msgstr ""
+msgstr "chyba"
 
 #: tcms/templates/case/get_details.html:45
 msgid "From Run"
@@ -666,7 +666,7 @@ msgstr "Poznámky"
 #: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Komentáře"
 
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
@@ -674,7 +674,7 @@ msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:66
 msgid "Run Date"
-msgstr ""
+msgstr "Datum spuštění"
 
 #: tcms/templates/case/get_details_case_run.html:67
 msgid "Text Version"
@@ -717,7 +717,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
@@ -748,7 +748,7 @@ msgstr "Vaše testovací plány"
 
 #: tcms/templates/dashboard.html:46
 msgid "TestPlan"
-msgstr ""
+msgstr "Testovací plán"
 
 #: tcms/templates/dashboard.html:48
 #: tcms/testcases/templates/testcases/get.html:165
@@ -760,7 +760,7 @@ msgstr "Typ"
 
 #: tcms/templates/dashboard.html:49 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Spuštění"
 
 #: tcms/templates/dashboard.html:70
 #, python-format
@@ -857,7 +857,7 @@ msgstr "Nebyly nalezeny žádné záznamy"
 #: tcms/testcases/templates/testcases/search.html:141
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
 #: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
@@ -905,7 +905,7 @@ msgstr ""
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Přidat tag"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -951,7 +951,7 @@ msgstr "Nápověda"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "Jazyk"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
@@ -971,23 +971,23 @@ msgstr "Průvodce překladem"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "První stránka"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Předchozí stránka"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Aktuální stránka"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Další stránka"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Poslední stránka"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
@@ -1053,7 +1053,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:80
 msgid "Create Time"
-msgstr ""
+msgstr "Čas vytvoření"
 
 #: tcms/templates/plan/get.html:85
 msgid "Parent"
@@ -1065,7 +1065,7 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:104
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #: tcms/templates/plan/get.html:110
 msgid "Reviewing Cases"
@@ -1081,7 +1081,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
-msgstr ""
+msgstr "Název souboru"
 
 #: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
@@ -1089,7 +1089,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
-msgstr ""
+msgstr "Datum vytvoření"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
@@ -1145,7 +1145,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
-msgstr ""
+msgstr "Změnit výchozího testera"
 
 #: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
 #: tcms/templates/plan/get_cases.html:202
@@ -1163,12 +1163,12 @@ msgstr "Priorita"
 
 #: tcms/templates/plan/get_cases.html:69
 msgid "Click to show filter options"
-msgstr ""
+msgstr "Kliknutím zobrazíte možnosti filtru"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:6
 msgid "Show filter options"
-msgstr ""
+msgstr "Zobrazit možnosti filtru"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
@@ -1186,7 +1186,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_executions.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Tester"
 
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
@@ -1221,7 +1221,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Výchozí tester"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
@@ -1233,7 +1233,7 @@ msgstr ""
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Zobrazit více"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
@@ -1257,19 +1257,19 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:36
 msgid "Quick Search"
-msgstr ""
+msgstr "Rychlé vyhledávání"
 
 #: tcms/templates/plan/search_case.html:41
 msgid "Normal Search"
-msgstr ""
+msgstr "Normální Vyhledávání"
 
 #: tcms/templates/plan/search_case.html:81
 msgid "Created"
-msgstr ""
+msgstr "Vytvořeno"
 
 #: tcms/templates/plan/search_case.html:111
 msgid "No test cases found."
-msgstr ""
+msgstr "Testovací přápady nenalezeny."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1311,11 +1311,11 @@ msgstr "pokud ho nemáte!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Vaše heslo bylo nastaveno. Můžete pokračovat a"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "nyní"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
@@ -1325,32 +1325,32 @@ msgstr "Potvrdit"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Zadejte prosím své nové heslo dvakrát, aby bylo možné ověřit, že je zadané správně"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "požádat o obnovení nového hesla"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "E-mail pro obnovení hesla byl odeslán"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Resetovat heslo"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Obnovení hesla Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Registrovat nový účet"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
@@ -1394,7 +1394,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Datum Vytvoření"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
@@ -1406,11 +1406,11 @@ msgstr ""
 
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Poznámka"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
-msgstr ""
+msgstr "Dokončeno"
 
 #: tcms/templates/run/get.html:134
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1451,7 +1451,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:44
 msgid "Comment"
-msgstr ""
+msgstr "Komentář"
 
 #: tcms/templates/run/get_case_runs.html:52
 msgid "Hyperlink"
@@ -1479,7 +1479,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/templates/run/get_case_runs.html:145
 msgid "URL points to a defect"
@@ -1491,7 +1491,7 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
@@ -1524,7 +1524,7 @@ msgstr ""
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Testováno"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
@@ -1568,7 +1568,7 @@ msgstr ""
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "Žádné spuštění nenalezeno"
 
 #: tcms/testcases/forms.py:20
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1596,7 +1596,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Klonovat TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:12
 msgid "Add new TC into TP"
@@ -1633,7 +1633,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:155
 msgid "Test plans"
-msgstr ""
+msgstr "Testovací plány"
 
 #: tcms/testcases/templates/testcases/get.html:204
 msgid "Components"
@@ -1641,15 +1641,15 @@ msgstr "Komponenty"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr ""
+msgstr "Upravit TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr ""
+msgstr "Nový TestCase"
 
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
-msgstr ""
+msgstr "přidat novou Kategorii"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Výchozí tester spuštění"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Notify when"
@@ -1717,7 +1717,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:535
 msgid "History"
-msgstr ""
+msgstr "Historie"
 
 #: tcms/testcases/views.py:681
 msgid "TestCase cloning was successful"
@@ -1750,7 +1750,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Upravit Testovací Plán"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
@@ -1758,7 +1758,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Nadřazené ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
@@ -1791,7 +1791,7 @@ msgstr "Aktivní"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Vyhledat testovací plány"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -1831,24 +1831,24 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Upravit TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Klonovat TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Nový TestRun"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "verze"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Uživatelské jméno nebo e-mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:83
 msgid "Selected TestCase(s):"
@@ -1918,11 +1918,11 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "PROBÍHAJÍCÍ"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "POZASTAVENO"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
@@ -1938,7 +1938,7 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "CHYBA"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
@@ -1956,11 +1956,11 @@ msgstr ""
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Resynchronizovat"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
-msgstr ""
+msgstr "Nastavení"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -1975,7 +1975,7 @@ msgstr ""
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s již existuje"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -2007,7 +2007,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Subskripce"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -2019,13 +2019,13 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "Tenant"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr ""
+msgstr "Organizace"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
 msgid "You own the following tenants"
@@ -2034,7 +2034,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
 msgid "Price"
-msgstr ""
+msgstr "Cena"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
@@ -2049,7 +2049,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "Zrušit subskripce"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -2057,7 +2057,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Subscribe"
-msgstr ""
+msgstr "Subskripce"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
@@ -2079,7 +2079,7 @@ msgstr ""
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:159
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:160
 msgid "Vendor"
-msgstr ""
+msgstr "Dodavatel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:165
@@ -2125,7 +2125,7 @@ msgstr ""
 
 #: tcms_tenants/admin.py:108
 msgid "Full name"
-msgstr ""
+msgstr "Celé jméno"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
@@ -2133,7 +2133,7 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Vytvořit"
 
 #: tcms_tenants/menu.py:14
 msgid "Authorized users"
@@ -2156,7 +2156,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "Nový tenant"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
@@ -2164,7 +2164,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "Schéma"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
@@ -2172,9 +2172,9 @@ msgstr ""
 
 #: tcms_tenants/utils.py:40
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Název schéma už je použitý"
 
 #: tcms_tenants/utils.py:100
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Nový Kiwi TCMS tenant vytvořen"
 
