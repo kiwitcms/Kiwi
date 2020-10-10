@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-25 13:14\n"
+"PO-Revision-Date: 2020-10-10 22:31\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -230,7 +230,7 @@ msgstr "Създаден на"
 #: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
 #: tcms/testcases/views.py:527
 msgid "Edit"
-msgstr "Редакция"
+msgstr "Редактиране"
 
 #: tcms/bugs/views.py:46 tcms/testcases/views.py:540
 msgid "Object permissions"
@@ -238,7 +238,7 @@ msgstr ""
 
 #: tcms/bugs/views.py:51 tcms/testcases/views.py:545
 msgid "Delete"
-msgstr "Изтрий"
+msgstr "Изтриване"
 
 #: tcms/bugs/views.py:76
 msgid "New bug"
@@ -709,7 +709,7 @@ msgstr "Бъгове и хиперлинкове"
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
 msgid "Add"
-msgstr "Добави"
+msgstr "Добавяне"
 
 #: tcms/templates/case/get_details_case_run.html:101
 msgid "Report bug"
