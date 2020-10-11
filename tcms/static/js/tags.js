@@ -89,13 +89,15 @@ function tagsCard(model, object_id, display_filter, perm_remove) {
         highlight: true
         }, {
         name: 'tags-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function(element) {
+            return element.name;
+        },
         source: function(query, processSync, processAsync) {
-            jsonRPC('Tag.filter', {name__startswith: query}, function(data) {
-                var processedData = [];
-                data.forEach(function(element) {
-                    processedData.push(element.name);
-                });
-                return processAsync(processedData);
+            jsonRPC('Tag.filter', {name__icontains: query}, function(data) {
+                return processAsync(data);
             });
         }
     });
