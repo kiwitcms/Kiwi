@@ -237,9 +237,9 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
 
     testExecutions.forEach(testExecution => {
         jsonRPC('TestExecution.history', testExecution.id, history => {
-            const liHistory = $(`.test-execution-${testExecution.id} .history-container`)
+            const historyContainer = $(`.test-execution-${testExecution.id} .history-container`)
             history.forEach(h => {
-                liHistory.append(renderHistoryEntry(h))
+                historyContainer.append(renderHistoryEntry(h))
             })
         })
     })
