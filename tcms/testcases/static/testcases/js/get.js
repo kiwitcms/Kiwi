@@ -154,13 +154,15 @@ $(document).ready(function() {
         highlight: true
         }, {
         name: 'components-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function(element) {
+            return element.name;
+        },
         source: function(query, processSync, processAsync) {
-            jsonRPC('Component.filter', {name__startswith: query, product: product_id}, function(data) {
-                var processedData = [];
-                data.forEach(function(element) {
-                    processedData.push(element.name);
-                });
-                return processAsync(processedData);
+            jsonRPC('Component.filter', {name__icontains: query, product: product_id}, function(data) {
+                return processAsync(data);
             });
         }
     });
