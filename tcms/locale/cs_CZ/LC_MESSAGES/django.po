@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 14:31\n"
+"PO-Revision-Date: 2020-10-11 14:02\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -414,7 +414,7 @@ msgstr "Všechno ostatní"
 
 #: tcms/settings/common.py:319
 msgid "PLUGINS"
-msgstr "PLUGINY"
+msgstr "DOPLŇKY"
 
 #: tcms/settings/common.py:330
 msgid "Forum"
@@ -1121,7 +1121,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
 #: tcms/testplans/templates/testplans/clone.html:70
 msgid "Clone"
-msgstr ""
+msgstr "Klonovat"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
@@ -1661,7 +1661,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:166
 msgid "Asignees"
-msgstr ""
+msgstr "Přiřazení uživatelé"
 
 #: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Default tester of runs"
@@ -1898,7 +1898,7 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "NAVRŽENÝ"
 
 #: testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
