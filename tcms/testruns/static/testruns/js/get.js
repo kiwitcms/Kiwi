@@ -186,33 +186,6 @@ function renderTestExecutions(testExecutions) {
 
 function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
 
-    renderTestCaseInformation(testExecutions, testExecutionCaseIds)
-
-    testExecutions.forEach(testExecution => {
-        jsonRPC('TestExecution.history', testExecution.id, history => {
-            const liHistory = $(`.test-execution-${testExecution.id} .history-container`)
-            history.forEach(h => {
-                liHistory.append(renderHistoryEntry(h))
-            })
-        })
-    })
-}
-
-function renderHistoryEntry(historyEntry) {
-    if (!historyEntry.history_change_reason) {
-        return ''
-    }
-
-    const template = $($('#history-entry')[0].content.cloneNode(true))
-
-    template.find('.history-date').html(historyEntry.history_date)
-    template.find('.history-user').html(historyEntry.history_user__username)
-    template.find('.history-change-reason').html(historyEntry.history_change_reason)
-
-    return template
-}
-
-function renderTestCaseInformation(testExecutions, testExecutionCaseIds) {
     jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
         testExecutions.forEach(testExecution => {
             const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
@@ -262,6 +235,28 @@ function renderTestCaseInformation(testExecutions, testExecutionCaseIds) {
         })
     })
 
+    testExecutions.forEach(testExecution => {
+        jsonRPC('TestExecution.history', testExecution.id, history => {
+            const liHistory = $(`.test-execution-${testExecution.id} .history-container`)
+            history.forEach(h => {
+                liHistory.append(renderHistoryEntry(h))
+            })
+        })
+    })
+}
+
+function renderHistoryEntry(historyEntry) {
+    if (!historyEntry.history_change_reason) {
+        return ''
+    }
+
+    const template = $($('#history-entry')[0].content.cloneNode(true))
+
+    template.find('.history-date').html(historyEntry.history_date)
+    template.find('.history-user').html(historyEntry.history_user__username)
+    template.find('.history-change-reason').html(historyEntry.history_change_reason)
+
+    return template
 }
 
 function renderTestExecutionRow(testExecution) {
