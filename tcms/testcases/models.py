@@ -64,7 +64,7 @@ class TestCase(TCMSActionModel):
     script = models.TextField(blank=True, null=True)
     arguments = models.TextField(blank=True, null=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
-    summary = models.CharField(max_length=255)
+    summary = models.CharField(max_length=255, db_index=True)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     text = models.TextField(blank=True)
