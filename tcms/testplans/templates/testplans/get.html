@@ -106,7 +106,17 @@
                                                 <span class="fa fa-bars"></span>
                                             </button>
 
-                                            <ul class="dropdown-menu " aria-labelledby="testCaseActions">
+                                            <ul class="dropdown-menu" aria-labelledby="testCaseActions">
+                                            {% if perms.testruns.add_testrun %}
+                                                <li>
+                                                    <a href="#">
+                                                        <span class="fa fa-file-text-o"></span>
+                                                        {% trans 'New TestRun' %}
+                                                    </a>
+                                                </li>
+                                                <li class="divider"></li>
+                                            {% endif %}
+
                                             {% if perms.testcases.add_testcase %}
                                                 <li>
                                                     <a href="{% url "testcases-new" %}?from_plan={{ object.pk }}">
@@ -114,8 +124,70 @@
                                                         {% trans 'New Test Case' %}
                                                     </a>
                                                 </li>
-                                            {% endif %}
+
+                                                <li>
+                                                    <a id="bulk-clone-button" href="#">
+                                                        <span class="fa fa-code-fork" style="margin-left: 1px; margin-right: 1px"></span>
+                                                        {% trans 'Clone' %}
+                                                    </a>
+                                                </li>
+
                                                 <li class="divider"></li>
+                                            {% endif %}
+
+                                            {% if perms.testcases.change_testcase %}
+                                                <li class="dropdown-submenu">
+                                                    <a href="#">
+                                                        <span class="fa fa-stethoscope"></span>
+                                                        {% trans 'Status' %}
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right js-toolbar-status">
+                                                    {% for status in statues %}
+                                                        <li><a data-id="{{ status.id }}">{{ status.name }}</a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                </li>
+
+                                                <li class="dropdown-submenu">
+                                                    <a href="#">
+                                                        <span class="fa fa-hourglass"></span>
+                                                        {% trans 'Priority' %}
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right js-toolbar-priority">
+                                                    {% for priority in priorities %}
+                                                        <li><a data-id="{{ priority.id }}">{{ priority.value }}</a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                </li>
+
+                                                <li>
+                                                    <a id="default-tester-button" href="#">
+                                                        <span class="fa fa-search"></span>
+                                                        {% trans 'Default tester' %}
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a id="bulk-reviewer-button" href="#">
+                                                        <span class="fa fa-history"></span>
+                                                        {% trans 'Reviewer' %}
+                                                    </a>
+                                                </li>
+
+                                                <li class="divider"></li>
+                                            {% endif %}
+
+                                            {% if perms.testcases.delete_testcaseplan %}
+                                                <li>
+                                                    <a id="delete_button" href="#" class="bg-danger">
+                                                        <span class="fa fa-trash-o"></span>
+                                                        {% trans 'Delete' %}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+
                                             </ul>
                                         </div>
                                     </div>
@@ -162,77 +234,6 @@
                                             </button>
                                             {% endif %}
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-default" type="button"
-                                                {% if not perms.testruns.add_testrun %}
-                                                    disabled
-                                                {% endif %}>{% trans 'New TestRun' %}</button>
-                                        <button class="btn btn-default" type="button" id="bulk-clone-button"
-                                                {% if not perms.testcases.add_testcase %}
-                                                    disabled
-                                                {% endif %}>{% trans 'Clone' %}</button>
-                                        <div class="dropdown btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle"
-                                                    id="filter-button"
-                                                    data-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                            {% if not perms.testcases.change_testcase %}
-                                                    disabled
-                                            {% endif %}>{% trans 'Status' %}<span
-                                                    class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu js-toolbar-status">
-                                                {% for status in statues %}
-                                                    <li><a data-id="{{ status.id }}">{{ status.name }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <div class="dropdown btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle"
-                                                    id="filter-button"
-                                                    data-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                            {% if not perms.testcases.change_testcase %}
-                                                    disabled
-                                            {% endif %}>{% trans 'Priority' %}<span
-                                                    class="caret"></span></button>
-                                            <ul class="dropdown-menu js-toolbar-priority">
-                                                {% for priority in priorities %}
-                                                    <li><a data-id="{{ priority.id }}">{{ priority.value }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                        <button class="btn btn-default"
-                                                type="button" id="default-tester-button"
-                                            {% if not perms.testcases.change_testcase %}
-                                                    disabled
-                                            {% endif %}>{% trans 'Default tester' %}</button>
-
-                                        <div class="dropdown btn-group dropdown-kebab-pf">
-                                            <button class="btn btn-link dropdown-toggle"
-                                                    type="button" id="moreToolbarActions"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                <span class="fa fa-ellipsis-v"></span>
-                                            </button>
-
-                                            <ul class="dropdown-menu " aria-labelledby="moreToolbarActions">
-                                            {% if perms.testcases.change_testcase %}
-                                                <li><a href="#">{% trans 'Reviewer' %}</a></li>
-                                            {% endif %}
-
-                                            </ul>
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-danger paddingLeft"
-                                                type="button" id="delete_button"
-                                                {% if not perms.testcases.delete_testcaseplan %}
-                                                    disabled
-                                                {% endif %}>{% trans 'Delete' %}</button>
                                     </div>
                                 </form>
                             </div><!-- /col -->
