@@ -237,6 +237,8 @@ function attachEvents(testCases, testPlanId, permissions) {
         $('.js-test-case-menu-delete').click(function(ev) {
             const testCaseId = getCaseIdFromEvent(ev);
             jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
+                delete allTestCases[testCaseId];
+
                 // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
                 $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
                     $(this).remove();
@@ -415,6 +417,8 @@ function toolbarEvents(testPlanId, permissions) {
             for (let i = 0; i < selectedCases.length; i++) {
                 let testCaseId = selectedCases[i];
                 jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
+                    delete allTestCases[testCaseId];
+
                     // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
                     $(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function() {
                         $(this).remove();
