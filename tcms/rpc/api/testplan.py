@@ -177,13 +177,20 @@ def add_case(plan_id, case_id):
         :type plan_id: int
         :param case_id: PK of TestCase to be added to plan
         :type case_id: int
+        :return: Serialized :class:`tcms.testcases.models.TestCase` object
+                 augmented with a 'sortkey' value
+        :rtype: dict
         :raises TestPlan.DoesNotExit or TestCase.DoesNotExist: if objects specified
                  by PKs are missing
         :raises PermissionDenied: if missing *testcases.add_testcaseplan* permission
     """
     plan = TestPlan.objects.get(pk=plan_id)
     case = TestCase.objects.get(pk=case_id)
-    plan.add_case(case)
+    test_case_plan = plan.add_case(case)
+
+    result = case.serialize()
+    result['sortkey'] = test_case_plan.sortkey
+    return result
 
 
 @permissions_required('testcases.delete_testcaseplan')
