@@ -54,6 +54,14 @@ function initAddPlan(case_id, plans_table) {
         highlight: true
         }, {
         name: 'plans-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function(element) {
+            const display_name = 'TP-' + element.id + ': ' + element.name;
+            plan_cache[display_name] = element;
+            return display_name;
+        },
         source: function(query, processSync, processAsync) {
             // accepts "TP-1234" or "tp-1234" or "1234"
             query = query.toLowerCase().replace('tp-', '');
@@ -73,13 +81,7 @@ function initAddPlan(case_id, plans_table) {
             }
 
             jsonRPC('TestPlan.filter', rpc_query, function(data) {
-                var processedData = [];
-                data.forEach(function(element) {
-                    const display_name = 'TP-' + element.id + ': ' + element.name
-                    processedData.push(display_name);
-                    plan_cache[display_name] = element;
-                });
-                return processAsync(processedData);
+                return processAsync(data);
             });
         }
     });
