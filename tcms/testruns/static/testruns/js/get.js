@@ -252,7 +252,10 @@ function renderHistoryEntry(historyEntry) {
 
     template.find('.history-date').html(historyEntry.history_date)
     template.find('.history-user').html(historyEntry.history_user__username)
-    template.find('.history-change-reason').html(historyEntry.history_change_reason)
+
+    // convert to markdown code block for the diff language
+    const changeReason = `\`\`\`diff\n${historyEntry.history_change_reason}\n\`\`\``
+    markdown2HTML(changeReason, template.find('.history-change-reason')[0])
 
     return template
 }
