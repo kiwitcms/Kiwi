@@ -232,14 +232,12 @@ function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
                     ul.append(li)
                 })
             })
-        })
-    })
 
-    testExecutions.forEach(testExecution => {
-        jsonRPC('TestExecution.history', testExecution.id, history => {
-            const historyContainer = $(`.test-execution-${testExecution.id} .history-container`)
-            history.forEach(h => {
-                historyContainer.append(renderHistoryEntry(h))
+            jsonRPC('TestExecution.history', testExecution.id, history => {
+                const historyContainer = $(`.test-execution-${testExecution.id} .history-container`)
+                history.forEach(h => {
+                    historyContainer.append(renderHistoryEntry(h))
+                })
             })
         })
     })
