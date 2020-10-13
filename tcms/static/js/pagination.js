@@ -44,4 +44,11 @@ function hookIntoPagination(tableSelector, table) {
     $(tableSelector).on('order.dt', function() {
         updateCurrentPage(table);
     });
+
+    // hide the select checkboxes if not in use
+    if (window.location.href.indexOf('allow_select') === -1) {
+        $(tableSelector).on('draw.dt', function() {
+            $('.js-select-checkbox').hide();
+        });
+    }
 }
