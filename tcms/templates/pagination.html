@@ -1,6 +1,12 @@
 {% load i18n %}
 
 <form class="content-view-pf-pagination table-view-pf-pagination clearfix" id="pagination1">
+{% if REQUEST_CONTENTS.allow_select %}
+    <div class="form-group">
+        <button id="select-btn" type="submit" class="btn btn-primary">{% trans "Select" %}</button>
+    </div>
+{% endif %}
+
     <div class="form-group">
         <ul class="pagination pagination-pf-back">
             <li class="first-page">
