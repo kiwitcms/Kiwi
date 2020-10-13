@@ -48,7 +48,7 @@ Line 2</p>""")
         self.assertEqual(markdown2html("""```python
 def hello():
     pass
-```"""), """<div class="python codehilite"><pre><span></span>\
+```"""), """<div class="codehilite"><pre><span></span>\
 <code><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
     <span class="k">pass</span>
 </code></pre></div>""")
