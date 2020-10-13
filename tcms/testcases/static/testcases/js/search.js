@@ -69,7 +69,22 @@ $(document).ready(function() {
 
             dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data);
         },
+        select: {
+            className: 'success',
+            style:    'multi',
+            selector: 'td > input'
+        },
         columns: [
+            {
+                data: null,
+                sortable: false,
+                orderable: false,
+                target: 1,
+                className: 'js-select-checkbox',
+                render: function (data, type, full, meta) {
+                    return `<input type="checkbox" value="${data.id}">`;
+                }
+            },
             { data: "id" },
             {
                 data: null,
@@ -98,10 +113,26 @@ $(document).ready(function() {
             processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: "No records found"
         },
-        order: [[ 0, 'asc' ]],
+        order: [[ 1, 'asc' ]],
     });
 
     hookIntoPagination('#resultsTable', table);
+
+    $('#select-btn').click(function(event){
+        event.preventDefault();
+        let testCaseIDs = [];
+
+        table.rows({ selected:true }).data().each(function(selected){
+            testCaseIDs.push(selected.id);
+        });
+
+        if (testCaseIDs && window.opener) {
+            window.opener.$('#popup-selection').val(testCaseIDs);
+            window.close();
+        }
+
+        return false;
+    });
 
     $('#btn_search').click(function() {
         table.ajax.reload();
