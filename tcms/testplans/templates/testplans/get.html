@@ -247,10 +247,11 @@
                                             <span class="fa fa-plus"></span>
                                         </button>
 
-                                        <button class="btn btn-default" href="#"
+                                        <button class="btn btn-default" href="{% url 'testcases-search' %}"
                                             id="btn-search-cases" title="{% trans 'Advanced search' %}">
                                             <span class="fa fa-search"></span>
                                         </button>
+                                        <input type="hidden" id="popup-selection">
                                     </div>
                                 {% endif %}
                                 </form>
@@ -411,6 +412,7 @@
 
 <script src="{% static 'html5sortable/dist/html5sortable.min.js' %}"></script>
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
+
 <script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/tags.js' %}"></script>
