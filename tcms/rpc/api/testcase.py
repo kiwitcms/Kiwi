@@ -4,7 +4,7 @@ from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.core.helpers import comments
+from tcms.core import helpers
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
@@ -23,6 +23,7 @@ __all__ = (
     'remove_comment',
 
     'add_component',
+    'comments',
     'remove_component',
 
     'add_notification_cc',
@@ -424,7 +425,7 @@ def add_comment(case_id, comment, **kwargs):
             In webUI comments are only shown **only** during test case review!
     """
     case = TestCase.objects.get(pk=case_id)
-    created = comments.add_comment([case], comment, kwargs.get(REQUEST_KEY).user)
+    created = helpers.comments.add_comment([case], comment, kwargs.get(REQUEST_KEY).user)
     # we always create only one comment
     return model_to_dict(created[0])
 
@@ -444,8 +445,30 @@ def remove_comment(case_id, comment_id=None):
         :raises PermissionDenied: if missing *django_comments.delete_comment* permission
     """
     case = TestCase.objects.get(pk=case_id)
-    to_be_deleted = comments.get_comments(case)
+    to_be_deleted = helpers.comments.get_comments(case)
     if comment_id:
         to_be_deleted = to_be_deleted.filter(pk=comment_id)
 
     to_be_deleted.delete()
+
+
+@permissions_required('django_comments.view_comment')
+@rpc_method(name='TestCase.comments')
+def comments(case_id):
+    """
+    .. function:: TestCase.comments(case_id)
+
+        Return all comment(s) for the specified test case.
+
+        :param case_id: PK of a TestCase object
+        :type case_id: int
+        :return: Serialized list of :class:`django_comments.models.Comment` objects
+        :rtype: list
+        :raises PermissionDenied: if missing *django_comments.view_comment* permission
+    """
+    case = TestCase.objects.get(pk=case_id)
+    result = []
+    for comment in helpers.comments.get_comments(case):
+        result.append(model_to_dict(comment))
+
+    return result
