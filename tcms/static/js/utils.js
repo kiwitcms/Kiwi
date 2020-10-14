@@ -183,3 +183,44 @@ function markdown2HTML(input, selector) {
         $(selector).html(unescapeHTML(result));
     });
 }
+
+function renderCommentHTML(index, comment, template, bindDeleteFunc) {
+    const newNode = $(template.content.cloneNode(true))
+
+    newNode.find('.js-comment-container').attr('data-comment-id', comment.id)
+    newNode.find('.index').html(`#${index}`)
+    newNode.find('.user').html(comment.user_name)
+    newNode.find('.date').html(comment.submit_date)
+    markdown2HTML(comment.comment, newNode.find('.comment')[0])
+
+    if (bindDeleteFunc) {
+        bindDeleteFunc(newNode)
+    }
+
+    return newNode
+}
+
+function bindDeleteCommentButton(objId, deleteMethod, canDelete, parentNode) {
+    if (canDelete) {
+        parentNode.find('.js-comment-delete-btn').click(function(event) {
+            const commentId = $(event.target).parents('.js-comment-container').data('comment-id')
+            jsonRPC(deleteMethod, [objId, commentId], function(result) {
+                $(event.target).parents('.js-comment-container').hide()
+            })
+
+            return false;
+        })
+    } else {
+        parentNode.find('.js-comment-delete-btn').hide()
+    }
+}
+
+function renderCommentsForObject(objId, getMethod, deleteMethod, canDelete, parentNode) {
+    const commentTemplate = $('template#comment-template')[0];
+
+    jsonRPC(getMethod, [objId], comments => {
+        comments.forEach((comment, index) => parentNode.append(renderCommentHTML(index+1, comment, commentTemplate)))
+
+        bindDeleteCommentButton(objId, deleteMethod, canDelete, parentNode)
+    })
+}
