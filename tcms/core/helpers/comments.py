@@ -6,6 +6,7 @@ of objects.
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.db.models.signals import post_save
 from django.utils import timezone
 from django_comments.models import Comment
 
@@ -48,6 +49,8 @@ def add_comment(objs, comments, user, submit_date=None):
                                          user_email=user.email,
                                          user_name=user.username)
         created.append(comment)
+        post_save.send(created=False, instance=obj, sender=obj.__class__)
+
     return created
 
 
