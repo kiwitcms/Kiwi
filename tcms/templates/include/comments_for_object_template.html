@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<template id="comment-template">
+    <div class="js-comment-container" data-comment-id="">
+        <div style="display: flex; justify-content: space-between;">
+            <em class="index" style="color: gray"></em>
+            <strong class="user"></strong>
+            <div class="date" style="color: gray"></div>
+            <a class="js-comment-delete-btn"
+               href="#" title="{% trans 'Delete' %}">
+                <span class="pficon-error-circle-o"></span>
+            </a>
+        </div>
+        <div class="comment" style="overflow: auto"></div>
+    </div>
+</template>
