@@ -6,7 +6,7 @@ from xmlrpc.client import Fault, ProtocolError
 from django.contrib.auth.models import Permission
 from tcms_api import xmlrpc
 
-from tcms.core.helpers.comments import get_comments
+from tcms.core.helpers import comments
 from tcms.management.models import Priority
 from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
@@ -533,10 +533,10 @@ class TestCaseAddComment(APITestCase):
             self.case.pk,
             "Hello World!")
 
-        comments = get_comments(self.case)
-        self.assertEqual(1, comments.count())
+        result = comments.get_comments(self.case)
+        self.assertEqual(1, result.count())
 
-        first_comment = comments.first()
+        first_comment = result.first()
         self.assertEqual("Hello World!", first_comment.comment)
         self.assertEqual("Hello World!", created_comment['comment'])
 
@@ -581,3 +581,32 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
             self.rpc_client.TestCase.sortkeys({
                 "plan": self.plan.pk,
             })
+
+
+class TestCaseCommentsPermissions(APIPermissionsTestCase):
+    permission_label = 'django_comments.view_comment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case = TestCaseFactory()
+        comments.add_comment([self.case], 'First one', self.tester)
+        comments.add_comment([self.case], 'Second one', self.tester)
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestCase.comments(self.case.pk)
+
+        self.assertEqual(2, len(result))
+
+        # also takes case to verify functionality b/c the target
+        # method under test is very simple
+        self.assertEqual(result[0]['comment'], 'First one')
+        self.assertEqual(result[1]['comment'], 'Second one')
+        for entry in result:
+            self.assertEqual(entry['object_pk'], str(self.case.pk))
+            self.assertEqual(entry['user'], self.tester.pk)
+            self.assertEqual(entry['user_name'], self.tester.username)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.comments(self.case.pk)
