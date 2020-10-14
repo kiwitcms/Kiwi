@@ -313,6 +313,15 @@ function getTestCaseExpandArea(row, testCase, permissions) {
         }
     });
 
+    // render previous comments
+    renderCommentsForObject(
+        testCase.id,
+        'TestCase.comments',
+        'TestCase.remove_comment',
+        !isTestCaseConfirmed(testCase.case_status_id) && permissions['perm-delete-comment'],
+        row.find('.comments'),
+    )
+
     // render comments form
     const commentFormTextArea = row.find('.js-comment-form-textarea');
     if (!isTestCaseConfirmed(testCase.case_status_id) && permissions['perm-add-comment']) {
