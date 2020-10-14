@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% load comments %}
 {% load extra_filters %}
 {% load attachments_tags %}
 
@@ -402,12 +401,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <strong>{% trans 'Comments' %}:</strong>
-                    <div class="js-comment-form-textarea">
-                        {{ comment_form.text }}
-                        <button type="submit" name="action" value="comment" class="btn btn-default js-post-comment">
-                        {% trans "Save" %}
-                        </button>
+                    <div class="comments">
                     </div>
+                </div>
+
+                <div class="col-md-6 js-comment-form-textarea">
+                    {{ comment_form.text }}
+                    <button type="submit" name="action" class="btn btn-default js-post-comment">
+                    {% trans "Save" %}
+                    </button>
                 </div>
             </div>
 
