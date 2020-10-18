@@ -24,16 +24,22 @@ $(document).ready(function() {
     const perm_remove_tag = $('#test_plan_pk').data('perm-remove-tag') === 'True';
     tagsCard('TestPlan', testPlanId, {plan: testPlanId}, perm_remove_tag);
 
-    jsonRPC('TestCase.filter', [{'plan': testPlanId}], function(data) {
-        for (var i = 0; i < data.length; i++) {
-            var testCase = data[i];
-            allTestCases[testCase.id] = testCase;
-        }
-        drawTestCases(Object.values(allTestCases), testPlanId, permissions);
+    jsonRPC('TestCase.sortkeys', {'plan': testPlanId}, function(sortkeys) {
+        jsonRPC('TestCase.filter', {'plan': testPlanId}, function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var testCase = data[i];
 
-        // b/c drag & reorder needs the initial order of test cases and
-        // they may not be fully loaded when sortable() is initialized!
-        toolbarEvents(testPlanId, permissions);
+                testCase.sortkey = sortkeys[testCase.id];
+                allTestCases[testCase.id] = testCase;
+            }
+            // TODO: UI shows `Summary` as selected for initial sort but that isn't true,
+            // not sure if I want to change it now.
+            sortTestCases(Object.values(allTestCases), testPlanId, permissions, 'sortkey');
+
+            // drag & reorder needs the initial order of test cases and
+            // they may not be fully loaded when sortable() is initialized!
+            toolbarEvents(testPlanId, permissions);
+        });
     });
 
     adjustTestPlanFamilyTree();
@@ -486,7 +492,7 @@ function toolbarEvents(testPlanId, permissions) {
     $('.js-toolbar-sort-options li').click(function(ev) {
         changeDropdownSelectedItem('.js-toolbar-sort-options', '#sort-button', ev.target);
 
-        sortTestCases();
+        sortTestCases(Object.values(allTestCases), testPlanId, permissions);
     });
 
     //handle asc desc icon
@@ -496,7 +502,7 @@ function toolbarEvents(testPlanId, permissions) {
         icon.siblings('.hidden').removeClass('hidden');
         icon.addClass('hidden');
 
-        sortTestCases();
+        sortTestCases(Object.values(allTestCases), testPlanId, permissions);
     });
 
 
@@ -671,27 +677,25 @@ function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
     target.parentElement.className = 'selected';
 }
 
-function sortTestCases() {
-
-    let sortBy = $('.js-toolbar-sort-options .selected')[0].dataset.filterType,
-        tcsParentElement = $('#testcases-list'),
-        visibleTCrows = $('.js-testcase-row:visible'),
+function sortTestCases(testCases, testPlanId, permissions, defaultSortBy = undefined) {
+    let sortBy = defaultSortBy || $('.js-toolbar-sort-options .selected')[0].dataset.filterType,
         sortOrder = $('.js-toolbar-sorting-order > span:not(.hidden)').data('order');
 
+    $('#testcases-list').html('');
 
-    // reorder the tc rows
-    visibleTCrows.sort(function(tc1, tc2) {
-        let tc1Id = $(tc1).data('testcase-pk'),
-            tc2Id = $(tc2).data('testcase-pk');
+    testCases.sort(function(tc1, tc2) {
+        let value1 = tc1[sortBy] || "",
+            value2 = tc2[sortBy] || "";
 
-        let value1 = allTestCases[tc1Id][sortBy].toString() || "",
-            value2 = allTestCases[tc2Id][sortBy].toString() || "";
+        if (Number.isInteger(value1) && Number.isInteger(value2)) {
+            return (value1 - value2) * sortOrder;
+        }
 
-        return value1.localeCompare(value2) * sortOrder;
+        return value1.toString().localeCompare(value2.toString()) * sortOrder;
     });
 
-    //put the new order in the DOM
-    tcsParentElement.html(visibleTCrows);
+    // put the new order in the DOM
+    drawTestCases(testCases, testPlanId, permissions);
 }
 
 
