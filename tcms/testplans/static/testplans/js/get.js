@@ -437,6 +437,8 @@ function attachEvents(testCases, testPlanId, permissions) {
 
     let inputs = $('.js-testcase-row').find('input');
     inputs.click(function(ev) {
+        // stop trigerring row.click()
+        ev.stopPropagation();
         const checkbox = $('.js-checkbox-toolbar')[0];
 
         inputs.each(function(index, tc) {
