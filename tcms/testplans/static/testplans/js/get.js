@@ -29,7 +29,7 @@ $(document).ready(function() {
             var testCase = data[i];
             allTestCases[testCase.id] = testCase;
         }
-        drawTestCases(allTestCases, testPlanId, permissions);
+        drawTestCases(Object.values(allTestCases), testPlanId, permissions);
 
         // b/c treeViewBind() will modify handlers/visibility for both
         // test plan family tree and the test cases tree
@@ -205,11 +205,11 @@ function drawTestCases(testCases, testPlanId, permissions) {
         noCasesTemplate = $('#no_test_cases'),
         testCaseRowDocumentFragment = $('#test_case_row')[0].content;
 
-    if (Object.keys(testCases).length > 0) {
-        for (const testCaseId in testCases) {
-            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), testCases[testCaseId], permissions));
-        }
-        attachEvents(testCases, testPlanId, permissions);
+    if (testCases.length > 0) {
+        testCases.forEach(function(element) {
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions));
+        })
+        attachEvents(testPlanId, permissions);
     } else {
         container.append(noCasesTemplate[0].innerHTML);
     }
@@ -221,7 +221,7 @@ function redrawSingleRow(testCaseId, testPlanId, permissions) {
 
     // replace the element in the dom
     $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow);
-    attachEvents(allTestCases, testPlanId, permissions);
+    attachEvents(testPlanId, permissions);
 }
 
 function getTestCaseRowContent(rowContent, testCase, permissions) {
@@ -361,7 +361,7 @@ function getTestCaseExpandArea(row, testCase, permissions) {
     }
 }
 
-function attachEvents(testCases, testPlanId, permissions) {
+function attachEvents(testPlanId, permissions) {
     treeViewBind();
 
     if (permissions['perm-change-testcase']) {
@@ -432,7 +432,7 @@ function attachEvents(testCases, testPlanId, permissions) {
 
         const tcRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
         expandedTestCaseIds.push(testCaseId);
-        getTestCaseExpandArea(tcRow, testCases[testCaseId], permissions);
+        getTestCaseExpandArea(tcRow, allTestCases[testCaseId], permissions);
     });
 
 
