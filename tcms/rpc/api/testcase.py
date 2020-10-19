@@ -294,13 +294,19 @@ def sortkeys(query=None):
 
         :param query: Field lookups for :class:`tcms.testcases.models.TestCasePlan`
         :type query: dict
-        :return: Serialized list of :class:`tcms.testcases.models.TestCasePlan` objects.
-        :rtype: list(dict)
+        :return: Dictionary of (case_id, sortkey) pairs!
+        :rtype: dict(case_id, sortkey)
     """
     if query is None:
         query = {}
 
-    return list(TestCasePlan.objects.filter(**query).values())
+    result = {}
+    for record in TestCasePlan.objects.filter(**query):
+        # NOTE: convert to str() otherwise we get:
+        # Unable to serialize result as valid XML: dictionary key must be string
+        result[str(record.case_id)] = record.sortkey
+
+    return result
 
 
 @permissions_required('testcases.change_testcase')
