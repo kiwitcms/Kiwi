@@ -157,13 +157,13 @@ function unescapeHTML(html) {
 }
 
 
-function treeViewBind() {
+function treeViewBind(selector = '.tree-list-view-pf') {
     // collapse all child rows
-    $('.tree-list-view-pf').find(".list-group-item-container").addClass('hidden');
+    $(selector).find(".list-group-item-container").addClass('hidden');
 
     // unbind previous events b/c this function is now reentrant
     // click the list-view heading then expand a row
-    $('.list-group-item-header').off("click").click(function (event) {
+    $(selector).find('.list-group-item-header').off("click").click(function (event) {
       if(!$(event.target).is('button, a, input, .fa-ellipsis-v')) {
         var $this = $(this);
         $this.find('.fa-angle-right').toggleClass('fa-angle-down');
