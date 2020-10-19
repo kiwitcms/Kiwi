@@ -612,7 +612,7 @@ function toolbarEvents(testPlanId, permissions) {
         }
 
         var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
-        
+
         if (!emailOrUsername) {
             return;
         }
@@ -681,8 +681,8 @@ function sortTestCases() {
 
     // reorder the tc rows
     visibleTCrows.sort(function(tc1, tc2) {
-        let tc1Id = $(tc1).data('testcasePk'),
-            tc2Id = $(tc2).data('testcasePk');
+        let tc1Id = $(tc1).data('testcase-pk'),
+            tc2Id = $(tc2).data('testcase-pk');
 
         let value1 = allTestCases[tc1Id][sortBy].toString() || "",
             value2 = allTestCases[tc2Id][sortBy].toString() || "";
