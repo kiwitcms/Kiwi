@@ -564,17 +564,10 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
             "plan": self.plan.pk,
         })
 
-        for entry in result:
-            self.assertEqual(entry['plan_id'], self.plan.pk)
-
-        self.assertEqual(result[0]['case_id'], self.case_1.pk)
-        self.assertEqual(result[0]['sortkey'], 5)
-
-        self.assertEqual(result[1]['case_id'], self.case_2.pk)
-        self.assertEqual(result[1]['sortkey'], 15)
-
-        self.assertEqual(result[2]['case_id'], self.case_3.pk)
-        self.assertEqual(result[2]['sortkey'], 25)
+        # note: keys are of type str()
+        self.assertEqual(result[str(self.case_1.pk)], 5)
+        self.assertEqual(result[str(self.case_2.pk)], 15)
+        self.assertEqual(result[str(self.case_3.pk)], 25)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
