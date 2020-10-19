@@ -30,7 +30,6 @@ $(document).ready(function() {
             allTestCases[testCase.id] = testCase;
         }
         drawTestCases(allTestCases, testPlanId, permissions);
-        treeViewBind();
 
         // b/c treeViewBind() will modify handlers/visibility for both
         // test plan family tree and the test cases tree
@@ -222,7 +221,7 @@ function redrawSingleRow(testCaseId, testPlanId, permissions) {
 
     // replace the element in the dom
     $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow);
-    attachEvents(allTestCases[testCaseId], testPlanId, permissions);
+    attachEvents(allTestCases, testPlanId, permissions);
 }
 
 function getTestCaseRowContent(rowContent, testCase, permissions) {
@@ -363,6 +362,8 @@ function getTestCaseExpandArea(row, testCase, permissions) {
 }
 
 function attachEvents(testCases, testPlanId, permissions) {
+    treeViewBind();
+
     if (permissions['perm-change-testcase']) {
         // update default tester
         $('.js-test-case-menu-tester').click(function(ev) {
