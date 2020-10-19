@@ -31,15 +31,12 @@ $(document).ready(function() {
         }
         drawTestCases(Object.values(allTestCases), testPlanId, permissions);
 
-        // b/c treeViewBind() will modify handlers/visibility for both
-        // test plan family tree and the test cases tree
-        adjustTestPlanFamilyTree();
-
         // b/c drag & reorder needs the initial order of test cases and
         // they may not be fully loaded when sortable() is initialized!
         toolbarEvents(testPlanId, permissions);
     });
 
+    adjustTestPlanFamilyTree();
     collapseDocumentText();
     initTestCaseSearchAndAdd(testPlanId);
 });
@@ -181,6 +178,8 @@ function collapseDocumentText() {
 }
 
 function adjustTestPlanFamilyTree() {
+    treeViewBind('#test-plan-family-tree');
+
     // remove the > arrows from elements which don't have children
     $('#test-plan-family-tree').find(".list-group-item-container").each(function(index, element){
         if (!element.innerHTML.trim()) {
@@ -362,7 +361,7 @@ function getTestCaseExpandArea(row, testCase, permissions) {
 }
 
 function attachEvents(testPlanId, permissions) {
-    treeViewBind();
+    treeViewBind('#testcases-list');
 
     if (permissions['perm-change-testcase']) {
         // update default tester
