@@ -317,6 +317,26 @@ function getTestCaseExpandArea(row, testCase, permissions) {
         }
     });
 
+    // load components
+    const componentTemplate = row.find('.js-testcase-expand-components').find('template')[0].content;
+    jsonRPC('Component.filter', {cases: testCase.id}, function(result) {
+        result.forEach(function(element) {
+            const newComponent = componentTemplate.cloneNode(true);
+            $(newComponent).find('span').html(element.name);
+            row.find('.js-testcase-expand-components').append(newComponent);
+        });
+    });
+
+    // load tags
+    const tagTemplate = row.find('.js-testcase-expand-tags').find('template')[0].content;
+    jsonRPC('Tag.filter', {case: testCase.id}, function(result) {
+        result.forEach(function(element) {
+            const newTag = tagTemplate.cloneNode(true);
+            $(newTag).find('span').html(element.name);
+            row.find('.js-testcase-expand-tags').append(newTag);
+        });
+    });
+
     // render previous comments
     renderCommentsForObject(
         testCase.id,
