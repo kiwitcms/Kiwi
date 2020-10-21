@@ -698,6 +698,9 @@ function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
 
     // target is a tag
     target.parentElement.className = 'selected';
+
+    // clear the text & the current filter
+    $('#toolbar-filter').val('').keyup().focus();
 }
 
 function sortTestCases(testCases, testPlanId, permissions, defaultSortBy = undefined) {
