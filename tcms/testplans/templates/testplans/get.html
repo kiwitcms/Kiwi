@@ -146,7 +146,7 @@
 
                                                     <ul class="dropdown-menu dropdown-menu-right js-toolbar-status">
                                                     {% for status in statues %}
-                                                        <li><a data-id="{{ status.id }}">{{ status.name }}</a></li>
+                                                        <li><a data-id="{{ status.id }}" href="#">{{ status.name }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                 </li>
@@ -159,7 +159,7 @@
 
                                                     <ul class="dropdown-menu dropdown-menu-right js-toolbar-priority">
                                                     {% for priority in priorities %}
-                                                        <li><a data-id="{{ priority.id }}">{{ priority.value }}</a></li>
+                                                        <li><a data-id="{{ priority.id }}" href="#">{{ priority.value }}</a></li>
                                                     {% endfor %}
                                                     </ul>
                                                 </li>
@@ -320,7 +320,7 @@
                                 <a tabindex="-1" href="#">{% trans 'Status' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-status">
                                     {% for status in statues %}
-                                        <li><a data-id="{{ status.id }}">{{ status.name }}</a></li>
+                                        <li><a data-id="{{ status.id }}" href="#">{{ status.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
@@ -328,17 +328,17 @@
                                 <a tabindex="-1" href="#">{% trans 'Priority' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-priority">
                                     {% for priority in priorities %}
-                                        <li><a data-id="{{ priority.id }}">{{ priority.value }}</a></li>
+                                        <li><a data-id="{{ priority.id }}" href="#">{{ priority.value }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
-                            <li><a class="js-test-case-menu-tester">{% trans 'Default tester' %}</a></li>
+                            <li><a class="js-test-case-menu-tester" href="#">{% trans 'Default tester' %}</a></li>
                             <li class="divider"></li>
                             <li><a class="js-test-case-menu-edit">{% trans 'Edit' %}</a></li>
                             <li class="divider"></li>
                         {% endif %}
                         {% if perms.testcases.delete_testcaseplan %}
-                            <li><a class="js-test-case-menu-delete">{% trans 'Delete' %}</a></li>
+                            <li><a class="js-test-case-menu-delete bg-danger" href="#">{% trans 'Delete' %}</a></li>
                         {% endif %}
                         </ul>
                     </div>
