@@ -482,8 +482,6 @@ function attachEvents(testPlanId, permissions) {
 }
 
 function toolbarEvents(testPlanId, permissions) {
-    toolbarDropdowns();
-
     $('.js-checkbox-toolbar').click(function(ev) {
         const isChecked = ev.target.checked;
         const testCaseRows = $('.js-testcase-row').find('input');
@@ -671,13 +669,6 @@ function toolbarEvents(testPlanId, permissions) {
 
          window.location.assign(`/cases/clone?case=${selectedCases.join('&case=')}`);
     });
-}
-
-function toolbarDropdowns() {
-    let toolbarDropdown= $('#toolbar-dropdown')[0].content;
-
-    $('.js-toolbar-filter-options').append(toolbarDropdown.cloneNode(true));
-    $('.js-toolbar-sort-options').append(toolbarDropdown.cloneNode(true));
 }
 
 function isTestCaseConfirmed(status) {

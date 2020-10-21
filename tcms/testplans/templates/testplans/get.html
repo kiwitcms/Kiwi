@@ -207,6 +207,9 @@
                                                     {% trans 'Summary' %}<span
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu js-toolbar-filter-options">
+                                                    {% include "include/tp_toolbar_dropdown.html" with first_class="selected" %}
+                                                    <li data-filter-type="component"><a>{% trans 'Component' %}</a></li>
+                                                    <li data-filter-type="tag"><a>{% trans 'Tag' %}</a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
                                             <input type="text" class="form-control" id="toolbar-filter"
@@ -223,6 +226,7 @@
                                                         aria-expanded="false">{% trans 'Summary' %}<span
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu js-toolbar-sort-options">
+                                                    {% include "include/tp_toolbar_dropdown.html" with first_class="selected" %}
                                                 </ul>
                                             </div>
                                             <button class="btn btn-link js-toolbar-sorting-order" type="button">
