@@ -20,7 +20,7 @@
               data-perm-add-testcase="{{ perms.testcases.add_testcase }}"
               data-perm-add-comment="{{ perms.django_comments.add_comment }}"
               data-perm-delete-comment="{{ perms.django_comments.delete_comment }}"
-              data-trans-default-tester-prompt-message="{% trans 'Enter username, email or user ID:' %}"
+              data-trans-username-email-prompt="{% trans 'Enter username, email or user ID:' %}"
               data-trans-no-testcases-selected="{% trans 'No rows selected! Please select at least one!'%}"
               data-trans-are-you-sure="{% trans 'Are you sure?' %}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
