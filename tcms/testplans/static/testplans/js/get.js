@@ -578,10 +578,12 @@ function toolbarEvents(testPlanId, permissions) {
 
         for (let i = 0; i < selectedCases.length; i++) {
             let testCaseId = selectedCases[i];
-            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
+            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(updatedTC) {
                 const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${testCaseId}]`);
+                // update internal data
+                allTestCases[testCaseId] = updatedTC;
                 animate(testCaseRow, function() {
-                    testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
+                    redrawSingleRow(testCaseId, testPlanId, permissions);
                 });
             });
         }
@@ -602,17 +604,12 @@ function toolbarEvents(testPlanId, permissions) {
             let testCaseId = selectedCases[i],
                 newStatus = ev.target.dataset.id;
 
-            jsonRPC('TestCase.update', [testCaseId, {'case_status': newStatus}], function() {
+            jsonRPC('TestCase.update', [testCaseId, {'case_status': newStatus}], function(updatedTC) {
                 const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${testCaseId}]`);
+                // update internal data
+                allTestCases[testCaseId] = updatedTC;
                 animate(testCaseRow, function() {
-                    let tcRowHeader = $(this).find('.list-group-item-header');
-
-                    if (isTestCaseConfirmed(newStatus)) {
-                        tcRowHeader.removeClass('bg-danger');
-                    } else {
-                        tcRowHeader.addClass('bg-danger');
-                    }
-
+                    redrawSingleRow(testCaseId, testPlanId, permissions);
                 });
             });
         }
@@ -665,12 +662,11 @@ function toolbarEvents(testPlanId, permissions) {
         for (let i = 0; i < selectedCases.length; i++) {
             let testCaseId = selectedCases[i];
 
-            jsonRPC('TestCase.update', [testCaseId, {'default_tester': emailOrUsername}], function(tc) {
+            jsonRPC('TestCase.update', [testCaseId, {'default_tester': emailOrUsername}], function(updatedTC) {
                 const testCaseRow = $(`[data-testcase-pk=${testCaseId}]`);
 
-                //update the data
-                allTestCases[testCaseId].default_tester = tc.default_tester;
-
+                // update internal data
+                allTestCases[testCaseId] = updatedTC;
                 animate(testCaseRow, function() {
                     redrawSingleRow(testCaseId, testPlanId, permissions);
                 });
@@ -698,12 +694,11 @@ function toolbarEvents(testPlanId, permissions) {
         for (let i = 0; i < selectedCases.length; i++) {
             let testCaseId = selectedCases[i];
 
-            jsonRPC('TestCase.update', [testCaseId, {'reviewer': emailOrUsername}], function(tc) {
+            jsonRPC('TestCase.update', [testCaseId, {'reviewer': emailOrUsername}], function(updatedTC) {
                 const testCaseRow = $(`[data-testcase-pk=${testCaseId}]`);
 
-                //update the data
-                allTestCases[testCaseId].reviewer = tc.reviewer;
-
+                // update internal data
+                allTestCases[testCaseId] = updatedTC;
                 animate(testCaseRow, function() {
                     redrawSingleRow(testCaseId, testPlanId, permissions);
                 });
