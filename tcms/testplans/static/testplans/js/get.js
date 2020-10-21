@@ -32,8 +32,6 @@ $(document).ready(function() {
                 testCase.sortkey = sortkeys[testCase.id];
                 allTestCases[testCase.id] = testCase;
             }
-            // TODO: UI shows `Summary` as selected for initial sort but that isn't true,
-            // not sure if I want to change it now.
             sortTestCases(Object.values(allTestCases), testPlanId, permissions, 'sortkey');
 
             // drag & reorder needs the initial order of test cases and
