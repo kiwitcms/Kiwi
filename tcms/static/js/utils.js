@@ -227,13 +227,13 @@ function renderCommentsForObject(objId, getMethod, deleteMethod, canDelete, pare
 }
 
 function filterTestCasesByProperty(testCases, filterBy, filterValue) {
-    testCases.forEach(function(tc){
-        // we deleted all text from the input
-        if (filterValue.trim().length === 0) {
-            $(`[data-testcase-pk=${tc.id}]`).show();
-            return;
-        }
+    // no input => show all rows
+    if (filterValue.trim().length === 0) {
+        $('.js-testcase-row').show();
+        return;
+    }
 
+    testCases.forEach(function(tc){
         // actual filtering, the property is null or does not contains the string
         // WARNING: explicitly compare to null & use .toString() for boolean values
         if (tc[filterBy] === null || tc[filterBy].toString().toLowerCase().indexOf(filterValue) === -1) {
