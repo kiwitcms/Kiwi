@@ -223,10 +223,11 @@
                                                         id="sort-button"
                                                         data-toggle="dropdown"
                                                         aria-haspopup="true"
-                                                        aria-expanded="false">{% trans 'Summary' %}<span
+                                                        aria-expanded="false">{% trans 'Sort key' %}<span
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu js-toolbar-sort-options">
-                                                    {% include "include/tp_toolbar_dropdown.html" with first_class="selected" %}
+                                                    <li class="selected" data-filter-type="sortkey"><a>{% trans 'Sort key' %}</a></li>
+                                                    {% include "include/tp_toolbar_dropdown.html" %}
                                                 </ul>
                                             </div>
                                             <button class="btn btn-link js-toolbar-sorting-order" type="button">
