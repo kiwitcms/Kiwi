@@ -390,9 +390,11 @@ function attachEvents(testPlanId, permissions) {
     if (permissions['perm-change-testcase']) {
         // update default tester
         $('.js-test-case-menu-tester').click(function(ev) {
+            $(this).parents('.dropdown').toggleClass('open');
+
             var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
             if (!emailOrUsername) {
-                return;
+                return false;
             }
             const testCaseId = getCaseIdFromEvent(ev);
 
@@ -402,10 +404,13 @@ function attachEvents(testPlanId, permissions) {
                     testCaseRow.find('.js-test-case-tester').html(tc.default_tester);
                 });
             });
+
+            return false;
         });
 
 
         $('.js-test-case-menu-priority').click(function(ev) {
+            $(this).parents('.dropdown').toggleClass('open');
             const testCaseId = getCaseIdFromEvent(ev);
 
             jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
@@ -414,9 +419,12 @@ function attachEvents(testPlanId, permissions) {
                     testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
                 });
             });
+
+            return false;
         });
 
         $('.js-test-case-menu-status').click(function(ev) {
+            $(this).parents('.dropdown').toggleClass('open');
             const testCaseId = getCaseIdFromEvent(ev);
 
             jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function() {
@@ -426,13 +434,17 @@ function attachEvents(testPlanId, permissions) {
                     $(ev.target).closest('.list-group-item-header').addClass('bg-danger');
                 }
             });
+
+            return false;
         });
     }
 
     if (permissions['perm-remove-testcase']) {
         // delete testcase from the plan
         $('.js-test-case-menu-delete').click(function(ev) {
+            $(this).parents('.dropdown').toggleClass('open');
             const testCaseId = getCaseIdFromEvent(ev);
+
             jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function() {
                 delete allTestCases[testCaseId];
 
@@ -441,6 +453,8 @@ function attachEvents(testPlanId, permissions) {
                     $(this).remove();
                 });
             });
+
+            return false;
         });
     }
 
@@ -554,11 +568,12 @@ function toolbarEvents(testPlanId, permissions) {
 
 
     $('.js-toolbar-priority').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
         let selectedCases = getSelectedTestCases();
 
         if (!selectedCases.length) {
             alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return;
+            return false;
         }
 
         for (let i = 0; i < selectedCases.length; i++) {
@@ -571,14 +586,16 @@ function toolbarEvents(testPlanId, permissions) {
             });
         }
 
+        return false;
     });
 
     $('.js-toolbar-status').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
         let selectedCases = getSelectedTestCases();
 
         if (!selectedCases.length) {
             alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return;
+            return false;
         }
 
         for (let i = 0; i < selectedCases.length; i++) {
@@ -600,14 +617,16 @@ function toolbarEvents(testPlanId, permissions) {
             });
         }
 
+        return false;
     });
 
     $('#delete_button').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
         let selectedCases = getSelectedTestCases();
 
         if (!selectedCases.length) {
             alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return;
+            return false;
         }
 
         const areYouSureText = $('#test_plan_pk').data('trans-are-you-sure');
@@ -624,20 +643,23 @@ function toolbarEvents(testPlanId, permissions) {
                 });
             }
         }
+
+        return false;
     });
 
     $('#default-tester-button').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
         let selectedCases = getSelectedTestCases();
 
         if (!selectedCases.length) {
             alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return;
+            return false;
         }
 
         var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
 
         if (!emailOrUsername) {
-            return;
+            return false;
         }
 
         for (let i = 0; i < selectedCases.length; i++) {
@@ -655,14 +677,16 @@ function toolbarEvents(testPlanId, permissions) {
             });
         }
 
+        return false;
     });
 
     $('#bulk-clone-button').click(function() {
+        $(this).parents('.dropdown').toggleClass('open');
         let selectedCases = getSelectedTestCases();
 
         if (!selectedCases.length) {
             alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return;
+            return false;
         }
 
          window.location.assign(`/cases/clone?case=${selectedCases.join('&case=')}`);
