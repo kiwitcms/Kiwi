@@ -396,14 +396,9 @@ function attachEvents(testPlanId, permissions) {
             if (!emailOrUsername) {
                 return false;
             }
-            const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'default_tester': emailOrUsername}], function(tc) {
-                const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
-                animate(testCaseRow, function() {
-                    testCaseRow.find('.js-test-case-tester').html(tc.default_tester);
-                });
-            });
+            updateTestCasesViaAPI([getCaseIdFromEvent(ev)], {default_tester: emailOrUsername},
+                                  testPlanId, permissions);
 
             return false;
         });
@@ -411,29 +406,17 @@ function attachEvents(testPlanId, permissions) {
 
         $('.js-test-case-menu-priority').click(function(ev) {
             $(this).parents('.dropdown').toggleClass('open');
-            const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function() {
-                const testCaseRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`);
-                animate(testCaseRow, function() {
-                    testCaseRow.find('.js-test-case-priority').html(ev.target.innerText);
-                });
-            });
-
+            updateTestCasesViaAPI([getCaseIdFromEvent(ev)], {priority: ev.target.dataset.id},
+                                  testPlanId, permissions);
             return false;
         });
 
         $('.js-test-case-menu-status').click(function(ev) {
             $(this).parents('.dropdown').toggleClass('open');
-            const testCaseId = getCaseIdFromEvent(ev);
 
-            jsonRPC('TestCase.update', [testCaseId, {'case_status': ev.target.dataset.id}], function() {
-                if (isTestCaseConfirmed(ev.target.dataset.id)) {
-                    $(ev.target).closest('.list-group-item-header').removeClass('bg-danger');
-                } else {
-                    $(ev.target).closest('.list-group-item-header').addClass('bg-danger');
-                }
-            });
+            updateTestCasesViaAPI([getCaseIdFromEvent(ev)], {case_status: ev.target.dataset.id},
+                                  testPlanId, permissions);
 
             return false;
         });
@@ -493,8 +476,8 @@ function attachEvents(testPlanId, permissions) {
     }
 }
 
-function updateTestCasesViaAPI(selectedCases, updateQuery, testPlanId, permissions) {
-    selectedCases.forEach(function(caseId) {
+function updateTestCasesViaAPI(testCaseIds, updateQuery, testPlanId, permissions) {
+    testCaseIds.forEach(function(caseId) {
         jsonRPC('TestCase.update', [caseId, updateQuery], function(updatedTC) {
             const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`);
 
