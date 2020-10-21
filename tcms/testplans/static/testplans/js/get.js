@@ -502,6 +502,7 @@ function toolbarEvents(testPlanId, permissions) {
         let filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType;
 
         filterTestCasesByProperty(
+            testPlanId,
             Object.values(allTestCases),
             filterBy,
             filterValue
