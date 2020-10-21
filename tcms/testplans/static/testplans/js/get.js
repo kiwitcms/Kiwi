@@ -392,7 +392,7 @@ function attachEvents(testPlanId, permissions) {
         $('.js-test-case-menu-tester').click(function(ev) {
             $(this).parents('.dropdown').toggleClass('open');
 
-            var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
+            var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
             if (!emailOrUsername) {
                 return false;
             }
@@ -656,7 +656,7 @@ function toolbarEvents(testPlanId, permissions) {
             return false;
         }
 
-        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-default-tester-prompt-message'));
+        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
 
         if (!emailOrUsername) {
             return false;
@@ -670,6 +670,39 @@ function toolbarEvents(testPlanId, permissions) {
 
                 //update the data
                 allTestCases[testCaseId].default_tester = tc.default_tester;
+
+                animate(testCaseRow, function() {
+                    redrawSingleRow(testCaseId, testPlanId, permissions);
+                });
+            });
+        }
+
+        return false;
+    });
+
+    $('#bulk-reviewer-button').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return false;
+        }
+
+        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
+
+        if (!emailOrUsername) {
+            return false;
+        }
+
+        for (let i = 0; i < selectedCases.length; i++) {
+            let testCaseId = selectedCases[i];
+
+            jsonRPC('TestCase.update', [testCaseId, {'reviewer': emailOrUsername}], function(tc) {
+                const testCaseRow = $(`[data-testcase-pk=${testCaseId}]`);
+
+                //update the data
+                allTestCases[testCaseId].reviewer = tc.reviewer;
 
                 animate(testCaseRow, function() {
                     redrawSingleRow(testCaseId, testPlanId, permissions);
