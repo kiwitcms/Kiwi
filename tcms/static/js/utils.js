@@ -226,20 +226,26 @@ function renderCommentsForObject(objId, getMethod, deleteMethod, canDelete, pare
     })
 }
 
-function filterTestCasesByProperty(testCases, filterBy, filterValue) {
+function filterTestCasesByProperty(planId, testCases, filterBy, filterValue) {
     // no input => show all rows
     if (filterValue.trim().length === 0) {
         $('.js-testcase-row').show();
         return;
     }
 
-    testCases.forEach(function(tc){
-        // actual filtering, the property is null or does not contains the string
-        // WARNING: explicitly compare to null & use .toString() for boolean values
-        if (tc[filterBy] === null || tc[filterBy].toString().toLowerCase().indexOf(filterValue) === -1) {
-            $(`[data-testcase-pk=${tc.id}]`).hide();
-        } else {
-            $(`[data-testcase-pk=${tc.id}]`).show();
-        }
-    });
+    $('.js-testcase-row').hide();
+    if (filterBy === 'component' || filterBy === 'tag') {
+        let query = {plan: planId}
+        query[`${filterBy}__name__icontains`] = filterValue
+
+        jsonRPC('TestCase.filter', query, function(filtered) {
+            // hide again if a previous async request showed something else
+            $('.js-testcase-row').hide();
+            filtered.forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show());
+        })
+    } else {
+        testCases.filter(function(tc){
+            return (tc[filterBy] && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
+        }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show());
+    }
 }
