@@ -414,9 +414,11 @@ function attachEvents(testPlanId, permissions) {
 
         $('.js-test-case-menu-status').click(function(ev) {
             $(this).parents('.dropdown').toggleClass('open');
-
-            updateTestCasesViaAPI([getCaseIdFromEvent(ev)], {case_status: ev.target.dataset.id},
+            const testCaseId = getCaseIdFromEvent(ev);
+            updateTestCasesViaAPI([testCaseId], {case_status: ev.target.dataset.id},
                                   testPlanId, permissions);
+            // status controls comment editor
+            delete expandedTestCaseIds[expandedTestCaseIds.indexOf(testCaseId)];
 
             return false;
         });
@@ -591,7 +593,10 @@ function toolbarEvents(testPlanId, permissions) {
 
         updateTestCasesViaAPI(selectedCases, {case_status: ev.target.dataset.id},
                               testPlanId, permissions);
-
+        // status controls comment editor
+        selectedCases.forEach(function(caseId) {
+            delete expandedTestCaseIds[expandedTestCaseIds.indexOf(caseId)];
+        })
         return false;
     });
 
