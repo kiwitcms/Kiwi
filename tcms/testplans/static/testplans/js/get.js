@@ -493,6 +493,21 @@ function attachEvents(testPlanId, permissions) {
     }
 }
 
+function updateTestCasesViaAPI(selectedCases, updateQuery, testPlanId, permissions) {
+    selectedCases.forEach(function(caseId) {
+        jsonRPC('TestCase.update', [caseId, updateQuery], function(updatedTC) {
+            const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`);
+
+            // update internal data
+            allTestCases[caseId] = updatedTC;
+
+            animate(testCaseRow, function() {
+                redrawSingleRow(caseId, testPlanId, permissions);
+            });
+        });
+    });
+}
+
 function toolbarEvents(testPlanId, permissions) {
     $('.js-checkbox-toolbar').click(function(ev) {
         const isChecked = ev.target.checked;
@@ -576,17 +591,8 @@ function toolbarEvents(testPlanId, permissions) {
             return false;
         }
 
-        for (let i = 0; i < selectedCases.length; i++) {
-            let testCaseId = selectedCases[i];
-            jsonRPC('TestCase.update', [testCaseId, {'priority': ev.target.dataset.id}], function(updatedTC) {
-                const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${testCaseId}]`);
-                // update internal data
-                allTestCases[testCaseId] = updatedTC;
-                animate(testCaseRow, function() {
-                    redrawSingleRow(testCaseId, testPlanId, permissions);
-                });
-            });
-        }
+        updateTestCasesViaAPI(selectedCases, {priority: ev.target.dataset.id},
+                              testPlanId, permissions);
 
         return false;
     });
@@ -600,19 +606,50 @@ function toolbarEvents(testPlanId, permissions) {
             return false;
         }
 
-        for (let i = 0; i < selectedCases.length; i++) {
-            let testCaseId = selectedCases[i],
-                newStatus = ev.target.dataset.id;
+        updateTestCasesViaAPI(selectedCases, {case_status: ev.target.dataset.id},
+                              testPlanId, permissions);
 
-            jsonRPC('TestCase.update', [testCaseId, {'case_status': newStatus}], function(updatedTC) {
-                const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${testCaseId}]`);
-                // update internal data
-                allTestCases[testCaseId] = updatedTC;
-                animate(testCaseRow, function() {
-                    redrawSingleRow(testCaseId, testPlanId, permissions);
-                });
-            });
+        return false;
+    });
+
+    $('#default-tester-button').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return false;
         }
+
+        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
+
+        if (!emailOrUsername) {
+            return false;
+        }
+
+        updateTestCasesViaAPI(selectedCases, {default_tester: emailOrUsername},
+                              testPlanId, permissions);
+
+        return false;
+    });
+
+    $('#bulk-reviewer-button').click(function(ev) {
+        $(this).parents('.dropdown').toggleClass('open');
+        let selectedCases = getSelectedTestCases();
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return false;
+        }
+
+        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
+
+        if (!emailOrUsername) {
+            return false;
+        }
+
+        updateTestCasesViaAPI(selectedCases, {reviewer: emailOrUsername},
+                              testPlanId, permissions);
 
         return false;
     });
@@ -639,70 +676,6 @@ function toolbarEvents(testPlanId, permissions) {
                     });
                 });
             }
-        }
-
-        return false;
-    });
-
-    $('#default-tester-button').click(function(ev) {
-        $(this).parents('.dropdown').toggleClass('open');
-        let selectedCases = getSelectedTestCases();
-
-        if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return false;
-        }
-
-        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
-
-        if (!emailOrUsername) {
-            return false;
-        }
-
-        for (let i = 0; i < selectedCases.length; i++) {
-            let testCaseId = selectedCases[i];
-
-            jsonRPC('TestCase.update', [testCaseId, {'default_tester': emailOrUsername}], function(updatedTC) {
-                const testCaseRow = $(`[data-testcase-pk=${testCaseId}]`);
-
-                // update internal data
-                allTestCases[testCaseId] = updatedTC;
-                animate(testCaseRow, function() {
-                    redrawSingleRow(testCaseId, testPlanId, permissions);
-                });
-            });
-        }
-
-        return false;
-    });
-
-    $('#bulk-reviewer-button').click(function(ev) {
-        $(this).parents('.dropdown').toggleClass('open');
-        let selectedCases = getSelectedTestCases();
-
-        if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
-            return false;
-        }
-
-        var emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'));
-
-        if (!emailOrUsername) {
-            return false;
-        }
-
-        for (let i = 0; i < selectedCases.length; i++) {
-            let testCaseId = selectedCases[i];
-
-            jsonRPC('TestCase.update', [testCaseId, {'reviewer': emailOrUsername}], function(updatedTC) {
-                const testCaseRow = $(`[data-testcase-pk=${testCaseId}]`);
-
-                // update internal data
-                allTestCases[testCaseId] = updatedTC;
-                animate(testCaseRow, function() {
-                    redrawSingleRow(testCaseId, testPlanId, permissions);
-                });
-            });
         }
 
         return false;
