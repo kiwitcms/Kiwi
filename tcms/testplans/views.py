@@ -159,9 +159,7 @@ class TestPlanGetView(DetailView):
         context['statues'] = TestCaseStatus.objects.all()
         context['priorities'] = Priority.objects.filter(is_active=True)
         context['comment_form'] = SimpleCommentForm()
-        # todo: this can be passed to the new template and consumed
-        # in the JavaScript when rendering test cases based on status
-        # confirmed_status = TestCaseStatus.get_confirmed()
+        context['testcasestatus_confirmed'] = TestCaseStatus.get_confirmed()
         return context
 
 
