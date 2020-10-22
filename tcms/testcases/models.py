@@ -27,11 +27,13 @@ class TestCaseStatus(TCMSActionModel):
 
     @classmethod
     def get_proposed(cls):
-        return cls.objects.get(name='PROPOSED')
+        with override('en'):
+            return cls.objects.get(name='PROPOSED')
 
     @classmethod
     def get_confirmed(cls):
-        return cls.objects.get(name='CONFIRMED')
+        with override('en'):
+            return cls.objects.get(name='CONFIRMED')
 
     def is_confirmed(self):
         with override('en'):
