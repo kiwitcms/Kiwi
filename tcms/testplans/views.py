@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.decorators import permission_required
-from django.db.models import Count
 from django.http import (HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.test import modify_settings
@@ -113,26 +112,6 @@ class SearchTestPlanView(TemplateView):
         }
 
         return context_data
-
-
-# todo: this may still be used depending on how we design TP tree view
-def get_number_of_children_plans(plan_ids):
-    """Get the number of children plans related to each plan
-
-    :param plan_ids: a tuple or list of TestPlans' ids
-    :type plan_ids: list or tuple
-
-    :return: a dict where key is plan_id and the value is the
-        total count.
-    :rtype: dict
-    """
-    query_set = TestPlan.objects.filter(parent__in=plan_ids).values('parent').annotate(
-        total_count=Count('parent')).order_by('-parent')
-    number_of_children_plans = {}
-    for item in query_set:
-        number_of_children_plans[item['parent']] = item['total_count']
-
-    return number_of_children_plans
 
 
 @method_decorator(
