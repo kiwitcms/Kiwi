@@ -6,7 +6,7 @@ const allTestCases = {},
 
 
 $(document).ready(function() {
-    const testPlanId = $('#test_plan_pk').data('testplanPk');
+    const testPlanId = $('#test_plan_pk').data('testplan-pk');
 
     const permissions = {
         'perm-change-testcase': $('#test_plan_pk').data('perm-change-testcase') === 'True',
@@ -683,8 +683,7 @@ function toolbarEvents(testPlanId, permissions) {
 }
 
 function isTestCaseConfirmed(status) {
-    //todo: refactor when testcase_status is replaced with boolean flag
-    return Number(status) === 2;
+    return Number(status) === Number($('#test_plan_pk').data('testcasestatus-confirmed-pk'));
 }
 
 // on dropdown change update the label of the button and set new selected list item
