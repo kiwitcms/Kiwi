@@ -376,6 +376,7 @@ if 'tcms.bugs.apps.AppConfig' in INSTALLED_APPS:
 # this list with their own integration classes!
 # https://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers
 EXTERNAL_BUG_TRACKERS = [
+    'tcms.issuetracker.azure_boards.AzureBoards',
     'tcms.issuetracker.types.Bugzilla',
     'tcms.issuetracker.types.JIRA',
     'tcms.issuetracker.types.GitHub',

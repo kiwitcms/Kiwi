@@ -12,6 +12,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   tcms.issuetracker.azure_boards
    tcms.issuetracker.base
    tcms.issuetracker.bugzilla_integration
    tcms.issuetracker.github_integration
