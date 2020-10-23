@@ -16,7 +16,7 @@
         {% for plan in form.plan.field.queryset %}
         <div class="form-group">
             <div class="col-md-2 col-lg-2">
-                <input class="bootstrap-switch" name="plan" type="checkbox" checked value="{{ plan.pk }}">
+                <input class="bootstrap-switch" name="plan" type="checkbox" checked value="{{ plan.pk }}" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
             </div>
             <label class="col-md-10 col-lg-10">TP-{{ plan.pk }}: {{ plan.name }}</label>
         </div>
@@ -30,7 +30,7 @@
         {% for case in form.case.field.queryset %}
         <div class="form-group">
             <div class="col-md-2 col-lg-2">
-                <input class="bootstrap-switch" name="case" type="checkbox" checked value="{{ case.pk }}">
+                <input class="bootstrap-switch" name="case" type="checkbox" checked value="{{ case.pk }}" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
             </div>
             <label class="col-md-10 col-lg-10">TC-{{ case.pk }}: {{ case.summary }}</label>
         </div>
