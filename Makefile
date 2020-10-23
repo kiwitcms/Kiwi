@@ -55,7 +55,9 @@ pylint:
 .PHONY: pylint_site_packages
 pylint_site_packages:
 	if [ -d "$(PATH_TO_SITE_PACKAGES)" ]; then \
-	    PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=tcms.settings.common find $(PATH_TO_SITE_PACKAGES) -type d -maxdepth 1 -not -path '$(PATH_TO_SITE_PACKAGES)' -exec pylint --load-plugins=kiwi_lint --disable=all --enable=avoid-generic-foreign-key '{}' \; ;\
+	    PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=tcms.settings.common \
+	        pylint --load-plugins=kiwi_lint --disable=all --enable=avoid-generic-foreign-key \
+	                --ignore=setuptools $(PATH_TO_SITE_PACKAGES) ;\
 	fi
 
 .PHONY: bandit
