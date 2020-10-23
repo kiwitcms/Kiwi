@@ -38,7 +38,6 @@ var default_messages = {
   'alert': {
     'no_case_selected': 'No cases selected! Please select at least one case.',
     'no_category_selected': 'No category selected! Please select a category firstly.',
-    'ajax_failure': 'Communication with server got some unknown errors.',
     'tree_reloaded': 'The tree has been reloaded.',
     'last_case_run': 'It is the last case run',
     'no_bugs_specified': 'Please specify bug ID',
@@ -65,33 +64,6 @@ var default_messages = {
   }
 };
 
-
-// Exceptions for Ajax
-var json_failure = function(t) {
-  returnobj = jQ.parseJSON(t.responseText);
-  if (returnobj.response) {
-    window.alert(returnobj.response);
-  } else {
-    window.alert(returnobj);
-  }
-  return false;
-};
-
-var html_failure = function() {
-  window.alert(default_messages.alert.ajax_failure);
-  return false;
-};
-
-
-function splitString(str, num) {
-  cut_for_dot = num - 3;
-
-  if (str.length > num) {
-    return str.substring(0, cut_for_dot) + "...";
-  }
-
-  return str;
-}
 
 // todo: remove this
 // Stolen from http://www.webdeveloper.com/forum/showthread.php?t=161317
@@ -162,43 +134,6 @@ function setAddTagAutocomplete() {
     });
 }
 
-
-function constructTagZone(container, parameters) {
-  $(container).html('<div class="ajax_loading">MIGRATED TO PATTERNFLY+JSON-RPC</div>');
-}
-
-
-// add tag to TestPlan or TestCase
-// called from the 'Tabs' tab in the get view
-function addTag(container) {
-    var tags = $('#id_tags')[0];
-    var tag_name = tags.value;
-    var params = $(tags).data('params');
-    var method = params[0] + '.add_tag';
-    var search_params = {};
-    search_params[params[0].replace('Test', '').toLowerCase()] = params[1];
-
-    if (tag_name.length > 0) {
-        jsonRPC(method, [params[1], tag_name], function(data) {
-            constructTagZone(container, search_params);
-        });
-    }
-}
-
-
-// remove tag from TestPlan or TestCase
-// called from the 'Tabs' tab in the get view
-function removeTag(container, params) {
-    var method = params[0] + '.remove_tag';
-    var search_params = {};
-    search_params[params[0].replace('Test', '').toLowerCase()] = params[1];
-
-    jsonRPC(method, [params[1], params[2]], function(data) {
-        constructTagZone(container, search_params);
-    });
-}
-
-
 function updateCommentsCount(caseId, increase) {
   var commentDiv = jQ("#"+caseId+"_case_comment_count");
   var countText = jQ("#"+caseId+"_comments_count");
@@ -217,35 +152,6 @@ function updateCommentsCount(caseId, increase) {
   }
 }
 
-function previewPlan(planIds, action, callback) {
-  let realIds = Array();
-  planIds.split(',').forEach(function(element) {
-    element = element.trim();
-    if (element !== "") {
-        realIds.push(element);
-    }
-  });
-
-  var dialog = getDialog();
-  clearDialog();
-  $(dialog).show();
-
-  jsonRPC('TestPlan.filter', {'pk__in': realIds}, function(data) {
-    let htmlText = "";
-
-    data.forEach(function(element) {
-        htmlText = htmlText +
-            "<div class='listinfo'>" +
-                "<input id='id_preview_plan_" + element.id + "' type='checkbox' name='plan_id' value='" + element.id + "' checked>"+
-                "<label>TP-" + element.id + ":</label> " + element.name +
-            "</div>"
-    });
-
-    var form = constructForm(htmlText, action, callback);
-    jQ(dialog).html(form);
-  });
-}
-
 function getDialog(element) {
   if (!element) {
     var element = jQ('#dialog')[0];
@@ -254,13 +160,6 @@ function getDialog(element) {
   return element;
 }
 
-var clearDialog = function(element) {
-  var dialog = getDialog(element);
-
-  jQ(dialog).html(getAjaxLoading());
-  return jQ(dialog).hide()[0];
-};
-
 function getAjaxLoading(id) {
   var e = jQ('<div>', {'class': 'ajax_loading'})[0];
   if (id) {
@@ -268,43 +167,6 @@ function getAjaxLoading(id) {
   }
 
   return e;
-}
-
-function clickedSelectAll(checkbox, form, name) {
-  var checkboxes = jQ(form).parent().find('input[name='+ name + ']');
-  for (i = 0; i < checkboxes.length; i++) {
-	checkboxes[i].checked = checkbox.checked? true:false;
-  }
-}
-
-function constructForm(content, action, form_observe, info, s, c) {
-  var f = jQ('<form>', {'action': action});
-  var i = jQ('<div>', {'class': 'alert'});
-  if (info) {
-    i.html(info);
-  }
-
-  if (!s) {
-    var s = jQ('<input>', {'type': 'submit', 'value': 'Submit'});
-  }
-
-  if (!c) {
-    var c = jQ('<input>', {'type': 'button', 'value': 'Cancel'});
-    c.bind('click', function(e) {
-      clearDialog();
-    });
-  }
-
-  if (form_observe) {
-    f.bind('submit', form_observe);
-  }
-
-  f.html(content);
-  f.append(i);
-  f.append(s);
-  f.append(c);
-
-  return f[0];
 }
 
 var reloadWindow = function(t) {
