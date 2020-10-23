@@ -152,21 +152,21 @@
                     <label> {% trans "Author" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_case_author" type="checkbox" {% if notify_form.auto_to_case_author.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_case_author" type="checkbox" {% if notify_form.auto_to_case_author.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
 
                 <div class="col-md-1 col-lg-1">
                     <label> {% trans "Manager of runs" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_run_manager" type="checkbox" {% if notify_form.auto_to_run_manager.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_run_manager" type="checkbox" {% if notify_form.auto_to_run_manager.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
 
                 <div class="col-md-1 col-lg-1">
                     <label> {% trans "Asignees" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_case_run_assignee" type="checkbox" {% if notify_form.auto_to_case_run_assignee.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_case_run_assignee" type="checkbox" {% if notify_form.auto_to_case_run_assignee.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
             </div>
 
@@ -175,14 +175,14 @@
                     <label> {% trans "Default tester" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_case_tester" type="checkbox" {% if notify_form.auto_to_case_tester.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_case_tester" type="checkbox" {% if notify_form.auto_to_case_tester.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
 
                 <div class="col-md-1 col-lg-1">
                     <label> {% trans "Default tester of runs" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_run_tester" type="checkbox" {% if notify_form.auto_to_run_tester.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_run_tester" type="checkbox" {% if notify_form.auto_to_run_tester.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
             </div>
 
@@ -195,14 +195,14 @@
                     <label> {% trans "TestCase is updated" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-notify_on_case_update" type="checkbox" {% if notify_form.notify_on_case_update.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-notify_on_case_update" type="checkbox" {% if notify_form.notify_on_case_update.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
 
                 <div class="col-md-1 col-lg-1">
                     <label> {% trans "TestCase is deleted" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-notify_on_case_delete" type="checkbox" {% if notify_form.notify_on_case_delete.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-notify_on_case_delete" type="checkbox" {% if notify_form.notify_on_case_delete.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
             </div>
 
