@@ -33,10 +33,11 @@ def markdown2html(md_str):
                                         'markdown.extensions.fenced_code',
                                         'markdown.extensions.nl2br',
                                         'markdown.extensions.tables',
+                                        'tcms.utils.markdown',
                                     ])
 
     html = bleach.clean(rendered_md,
-                        markdown_tags + print_tags,
+                        markdown_tags + print_tags + ["del", "s"],
                         {**markdown_attrs, **print_attrs})
     return mark_safe(html)  # nosec:B308:blacklist
 
