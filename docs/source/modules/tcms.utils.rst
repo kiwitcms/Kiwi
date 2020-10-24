@@ -13,6 +13,7 @@ Submodules
    :maxdepth: 4
 
    tcms.utils.github
+   tcms.utils.markdown
    tcms.utils.permissions
    tcms.utils.settings
    tcms.utils.user
