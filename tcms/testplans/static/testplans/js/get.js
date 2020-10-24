@@ -278,6 +278,10 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
     );
     automation_indication_element.removeClass(automated_class_to_remove);
 
+    // produce unique IDs for comments textarea and file upload fields
+    row.find('textarea')[0].id = `comment-for-testcase-${testCase.id}`;
+    row.find('input[type="file"]')[0].id = `file-upload-for-testcase-${testCase.id}`;
+
     return row;
 }
 
@@ -348,10 +352,7 @@ function getTestCaseExpandArea(row, testCase, permissions) {
     const commentFormTextArea = row.find('.js-comment-form-textarea');
     if (!isTestCaseConfirmed(testCase.case_status_id) && permissions['perm-add-comment']) {
         const textArea = row.find('textarea')[0];
-        textArea.id = `comment-for-testcase-${testCase.id}`;
-
         const fileUpload = row.find('input[type="file"]')
-        fileUpload[0].id = `file-upload-for-testcase-${testCase.id}`;
         const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
 
         row.find('.js-post-comment').click(function(event) {
