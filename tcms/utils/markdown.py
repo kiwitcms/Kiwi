@@ -1,6 +1,6 @@
 # Copyright (c) 2020 Alexander Todorov <atodorov@MrSenko.com>
 
-import xml.etree.ElementTree as etree
+import xml.etree.ElementTree as etree  # nosec: B405
 import markdown
 
 
