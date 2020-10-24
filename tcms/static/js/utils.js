@@ -180,7 +180,7 @@ const animate = (target, handler, time = 500) => target.fadeOut(time, handler).f
 
 /* render Markdown & assign it to selector */
 function markdown2HTML(input, selector) {
-    jsonRPC('Markdown.render', input, function(result) {
+    jsonRPC('Markdown.render', unescapeHTML(input), function(result) {
         $(selector).html(unescapeHTML(result));
     });
 }
