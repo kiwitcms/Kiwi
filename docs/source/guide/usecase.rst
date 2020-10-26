@@ -37,8 +37,7 @@ Manager Assigns Testing Priorities
 
 #. Manager searches for a Test Plan. See the section
    :ref:`searching-testplans`.
-#. Manager assigns priorities to Test Cases. See the section
-   :ref:`editing-testcase`.
+#. Manager assigns priorities to Test Cases.
 #. QA searches for Test Plan.
 #. QA creates new Test Run. See the section :ref:`creating-testrun`.
 #. QA executes Test Run, based on Test Case priorities. See the
