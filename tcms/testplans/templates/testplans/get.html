@@ -12,6 +12,7 @@
 <div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12" style="margin-top: 0">
+        {% if not object.is_active %}<s>{% endif %}
         <span id="test_plan_pk"
               data-testplan-pk="{{ object.pk }}"
               data-testcasestatus-confirmed-pk="{{ testcasestatus_confirmed.pk }}"
@@ -25,6 +26,7 @@
               data-trans-no-testcases-selected="{% trans 'No rows selected! Please select at least one!'%}"
               data-trans-are-you-sure="{% trans 'Are you sure?' %}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
+        {% if not object.is_active %}</s>{% endif %}
     </h1>
 
     <div class="row row-cards-pf">
