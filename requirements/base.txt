@@ -11,7 +11,7 @@ django-modern-rpc==0.12.1
 django-recaptcha==2.0.6
 django-simple-history==2.12.0
 jira==2.0.0
-Markdown==3.3.2
+Markdown==3.3.3
 Pygments==2.7.2
 python-gitlab==2.5.0
 python-redmine==2.3.0
