@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import Group, Permission
 from django.test import TestCase
 
@@ -19,9 +20,13 @@ class TestAssignDefaultGroupPermissions(TestCase):
                          self.admin.permissions.count())
 
     def test_tester_has_kiwi_apps_permissions(self):
+        kiwi_apps = ['django_comments', 'linkreference', 'management',
+                     'testcases', 'testplans', 'testruns']
+        if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+            kiwi_apps.append('bugs')
+
         assign_default_group_permissions()
-        for app_name in ['bugs', 'django_comments', 'linkreference', 'management',
-                         'testcases', 'testplans', 'testruns']:
+        for app_name in kiwi_apps:
             self.assertTrue(self.tester.permissions.filter(
                 pk__in=Permission.objects.filter(
                     content_type__app_label__contains=app_name)).exists())
@@ -42,8 +47,6 @@ class TestAssignDefaultGroupPermissions(TestCase):
             content_type__app_label='attachments',
             codename='delete_foreign_attachments').exists())
 
+        kiwi_apps.append('attachments')
         self.assertFalse(self.tester.permissions.exclude(
-            content_type__app_label__in=['bugs', 'django_comments', 'linkreference',
-                                         'management', 'testcases', 'testplans',
-                                         'testruns', 'attachments']
-                        ).exists())
+            content_type__app_label__in=kiwi_apps).exists())
