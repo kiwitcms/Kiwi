@@ -13,7 +13,7 @@ Searching for Test Plans
 
 To view the Test Plans you have created, click **Personal menu::My Test Plans**.
 
-   |My Test Plans menu|
+|My Test Plans menu|
 
 Other Test Plans can be searched via the **SEARCH** item in the **Main menu**:
 
@@ -79,11 +79,11 @@ Cloning allows a user to replicate an existing Test Plan for a new
 product or a new version of the current product. To clone a Test Plan:
 
 #. Open the Test Plan which will be cloned.
-#. Click the **Clone Plan** button.
+#. From the object navigation menu click the **Clone** item.
 
    |Test plan action buttons|
 
-#. In the **Clone Test Plan** screen, perform the following actions:
+#. In the **Clone TestPlan** screen, perform the following actions:
 
    -  Enter the **Name**.
    -  In **Product**, select the product.
@@ -104,7 +104,7 @@ The Edit function modifies fields in a Test Plan. It does not change any
 Test Cases or Test Runs associated with the Test Plan. To edit a Test Plan:
 
 #. Open the Test Plan to be edited.
-#. Click the **Edit plan** button.
+#. From the object navigation menu click the **Edit** item.
 
    |Test plan action buttons|
 
@@ -114,140 +114,64 @@ Test Cases or Test Runs associated with the Test Plan. To edit a Test Plan:
 
 #. Click the **Save** button.
 
-Edit History
-~~~~~~~~~~~~
-
-To view the changelog of a Test Plan document,
-click the **View Edit History**.
-
-    |View Test Plan Edit History|
-
-Test Plan Tags
+Change History
 ~~~~~~~~~~~~~~
 
-The tag function is used to classify and organize Test Plans. Test Plans may
-be searched/filtered by tag and they can have more than one tag.
-To add a new tag:
+To view changes of a Test Plan document:
 
-#. Open the Test Plan to be edited.
-#. Click the **Tags** tab
+#. Open the Test Plan
+#. From the object navigation menu click the **History** item
 
-   |The Tags tab.|
+   |Test plan action buttons|
 
-#. Enter tag name next to the **Add Tag** label.
-#. Click the **Add** button.
-#. To remove a tag click the **Remove** action.
+Bulk update
+~~~~~~~~~~~
 
-Updating the default tester
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To perform bulk-update for selected test cases:
 
-The default tester for a Test Case can be edited in the Test Plan window:
+#. Select the test cases to be updated
+#. Click the bulk-update menu dropdown
 
-#. Click the **Cases** tab.
-#. Select the Test Cases to be updated.
-#. Click the **Default tester** button.
+   |Test Plan bulk-update|
 
-   |The default tester screen|
-
-#. Enter the new tester's email.
-#. Click **Ok**.
-
-Using Tree View
-~~~~~~~~~~~~~~~
-
-The **Tree View** tab shows the current plan, its parents and children
-using a tree style layout. It provides the ability to edit both parent
-and child plans.
-
-   |The Tree View screen.|
-
-Procedure: Changing the parent node
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To change the parent node.
-
-#. Click **Tree View** tab.
-#. Click **Change parent node**.
-
-   |Change parent.|
-
-#. Enter the parent node ID.
-#. Click **Ok**. The tree updates.
-#. Verify the changes and click **Submit**. The tree updates.
-
-
-Procedure: Adding child nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To add child nodes.
-
-#. Click **Tree View** tab.
-#. Click **Add child node**.
-
-   |Add child node.|
-
-#. Enter the child node IDs. Separate multiple IDs with a comma.
-#. Click **Ok**.
-#. Verify the changes and click **Submit**. The tree updates.
-
-Procedure: Removing child nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To remove child nodes.
-
-#. Click **Tree View** tab.
-#. Click **Remove child node**.
-
-   |Remove child node.|
-
-#. Enter the child node IDs. Separate multiple IDs with a comma.
-#. Click **Ok**.
-#. Verify the changes. and click **Submit**. The tree updates.
-
+#. Select which attribute to update
+#. Enter the new value
+#. Click **OK**.
 
 Disabling a Test Plan
 ~~~~~~~~~~~~~~~~~~~~~
 
-This section outlines the process for disabling a Test Plan in Kiwi TCMS.
 A disabled Test Plan can not be used to create Test Runs. However,
 unlike deletion, it does not permanently remove the Test Plan from the
 database. It is best to disable older Test Plans instead of deleting them
 otherwise you will lose your testing history. To disable a Test Plan:
 
 #. Open the Test Plan to be disabled.
-#. Click **Edit Plan** button.
-#. Toggle **Active** status button to **Off**
+#. From the object navigation menu click the **Edit** item.
+#. At the bottom of the screen toggle the **Active** button to **Off**
+
+   |Test Plan Active Button|
+
 #. Click on **Save** button to confirm changes.
 
-   |Test Plan Disabled|
+The plan headline changes to a strike-through font.
 
-   The plan name changes to a strike through font.
+|Test Plan Disabled|
+
 
 Re-enable a Test Plan
 ~~~~~~~~~~~~~~~~~~~~~
 
-#. To enable a disabled plan, click **Edit Plan**.
-#. Set **Active** status button to **On**
+To enable a disabled plan:
+
+#. From the object navigation menu click the **Edit** item
+#. Toggle **Active** button to **On**
 #. Click on **Save** button to confirm changes.
-
-Printing a Test Plan
---------------------
-
-To print a Test Plan:
-
-#. Open the Test Plan to be printed.
-#. Click **Print Plan** button.
-
-   |Test plan action buttons|
-
-#. A printer friendly version displays.
-#. From the **File** menu in your Browser, click **Print**.
-
 
 Exporting Test Cases from a Test Plan
 -------------------------------------
 
-Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwitcms.readthedocs.io/en/latest/import-export/>`_
+See :ref:`import-export`.
 
 
 .. |The Planning menu 1| image:: ../_static/Click_New_Plan.png
@@ -258,12 +182,7 @@ Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwit
 .. |Click column to sort by.| image:: ../_static/Sort_By_Column.png
 .. |The Clone Test Plan screen| image:: ../_static/Clone_Details.png
 .. |Edit a Test Plan| image:: ../_static/Edit_Test_Plan.png
-.. |View Test Plan Edit History| image:: ../_static/Test_Plan_View_Edit_History.png
-.. |The Tags tab.| image:: ../_static/Test_Plan_Tags.png
-.. |The default tester screen| image:: ../_static/TP_Update_Default_Tester.png
-.. |The Tree View screen.| image:: ../_static/Tree_View_Home.png
-.. |Change parent.| image:: ../_static/Tree_View_Change_Parent.png
-.. |Add child node.| image:: ../_static/Tree_View_Add_Child.png
-.. |Remove child node.| image:: ../_static/Tree_View_Remove_Child.png
+.. |Test Plan bulk-update| image:: ../_static/Test_Plan_Bulk_Update.png
 .. |Test Plan Disabled| image:: ../_static/Test_Plan_Disabled.png
 .. |Test plan action buttons| image:: ../_static/Test_Plan_Actions.png
+.. |Test Plan Active Button| image:: ../_static/Test_Plan_Active_Button.png
