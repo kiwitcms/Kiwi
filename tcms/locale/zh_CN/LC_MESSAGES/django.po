@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-21 02:02\n"
+"PO-Revision-Date: 2020-10-26 07:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -152,7 +152,7 @@ msgstr "关闭"
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
-msgstr "总结"
+msgstr "无"
 
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/testcases/templates/testcases/mutable.html:42
