@@ -94,11 +94,10 @@ class TestRun(TCMSActionModel):
     def create_execution(self, case, status=None, assignee=None,
                          case_text_version=None, build=None,
                          sortkey=0):
-        _case_text_version = case_text_version
-        if not _case_text_version:
-            _case_text_version = case.history.latest().history_id
+        if not case_text_version:
+            case_text_version = case.history.latest().history_id
 
-        _assignee = assignee \
+        assignee = assignee \
             or (case.default_tester_id and case.default_tester) \
             or (self.default_tester_id and self.default_tester)
 
@@ -107,10 +106,10 @@ class TestRun(TCMSActionModel):
             status = TestExecutionStatus.objects.filter(weight=0).first()
 
         return self.case_run.create(case=case,
-                                    assignee=_assignee,
+                                    assignee=assignee,
                                     tested_by=None,
                                     status=status,
-                                    case_text_version=_case_text_version,
+                                    case_text_version=case_text_version,
                                     build=build or self.build,
                                     sortkey=sortkey,
                                     close_date=None)
