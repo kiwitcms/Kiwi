@@ -91,7 +91,7 @@ class TestRun(TCMSActionModel):
                                 'email', ''))
         return list(send_to)
 
-    def create_execution(self, case, status=1, assignee=None,
+    def create_execution(self, case, status=None, assignee=None,
                          case_text_version=None, build=None,
                          sortkey=0):
         _case_text_version = case_text_version
@@ -102,13 +102,14 @@ class TestRun(TCMSActionModel):
             or (case.default_tester_id and case.default_tester) \
             or (self.default_tester_id and self.default_tester)
 
-        _status = TestExecutionStatus.objects.get(id=status) \
-            if isinstance(status, int) else status
+        if not status:
+            # usually IDLE but users can customize statuses
+            status = TestExecutionStatus.objects.filter(weight=0).first()
 
         return self.case_run.create(case=case,
                                     assignee=_assignee,
                                     tested_by=None,
-                                    status=_status,
+                                    status=status,
                                     case_text_version=_case_text_version,
                                     build=build or self.build,
                                     sortkey=sortkey,
