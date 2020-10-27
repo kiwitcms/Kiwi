@@ -57,15 +57,15 @@ class TestRunMethods(test.TestCase):
         # we need 1 version in the history
         cls.test_case.save()
 
-    def test_add_case_run_without_status(self):
-        execution = self.test_run.add_case_run(self.test_case)
+    def test_create_execution_without_status(self):
+        execution = self.test_run.create_execution(self.test_case)
 
         self.assertEqual(execution.status.weight, 0)
         self.assertEqual(execution.status.name, _('IDLE'))
 
-    def test_add_case_run_with_status(self):
+    def test_create_execution_with_status(self):
         status = TestExecutionStatus.objects.filter(weight__gt=0).last()
-        execution = self.test_run.add_case_run(self.test_case, status=status)
+        execution = self.test_run.create_execution(self.test_case, status=status)
 
         self.assertGreater(execution.status.weight, 0)
         self.assertEqual(execution.status.pk, status.pk)

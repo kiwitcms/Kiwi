@@ -91,9 +91,9 @@ class TestRun(TCMSActionModel):
                                 'email', ''))
         return list(send_to)
 
-    def add_case_run(self, case, status=1, assignee=None,
-                     case_text_version=None, build=None,
-                     sortkey=0):
+    def create_execution(self, case, status=1, assignee=None,
+                         case_text_version=None, build=None,
+                         sortkey=0):
         _case_text_version = case_text_version
         if not _case_text_version:
             _case_text_version = case.history.latest().history_id
