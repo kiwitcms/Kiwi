@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-ancestors
 
+from django import test
 from django.utils.translation import gettext_lazy as _
 from mock import patch
 
+from tcms.testruns.models import TestExecutionStatus
 from tcms.tests import BaseCaseRun
-from tcms.tests.factories import LinkReferenceFactory, TestRunFactory
+from tcms.tests.factories import LinkReferenceFactory
+from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestRunFactory
 
 
 class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
@@ -41,3 +45,27 @@ class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
                       send_mail.call_args_list[0][0][0])
         for recipient in recipients:
             self.assertIn(recipient, send_mail.call_args_list[0][0][-1])
+
+
+class TestRunMethods(test.TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.test_run = TestRunFactory()
+        cls.test_case = TestCaseFactory()
+        # we need 1 version in the history
+        cls.test_case.save()
+
+    def test_add_case_run_without_status(self):
+        execution = self.test_run.add_case_run(self.test_case)
+
+        self.assertEqual(execution.status.weight, 0)
+        self.assertEqual(execution.status.name, _('IDLE'))
+
+    def test_add_case_run_with_status(self):
+        status = TestExecutionStatus.objects.filter(weight__gt=0).last()
+        execution = self.test_run.add_case_run(self.test_case, status=status)
+
+        self.assertGreater(execution.status.weight, 0)
+        self.assertEqual(execution.status.pk, status.pk)
