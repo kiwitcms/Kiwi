@@ -65,6 +65,30 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
 
     visual_icon.short_description = 'icon'
 
+    @admin.options.csrf_protect_m
+    def delete_view(self, request, object_id, extra_context=None):
+        obj = self.model.objects.get(pk=object_id)
+
+        if obj.weight > 0:
+            lookup = 'weight__gt'
+        elif obj.weight == 0:
+            lookup = 'weight'
+        else:
+            lookup = 'weight__lt'
+
+        if not self.model.objects.filter(
+                **{lookup: 0}
+                ).exclude(pk=object_id).exists():
+            messages.add_message(
+                request,
+                messages.ERROR,
+                _('1 negative, 1 neutral & 1 positive status required!'),
+            )
+
+            return HttpResponseRedirect(reverse('admin:testruns_testexecutionstatus_changelist'))
+
+        return super().delete_view(request, object_id, extra_context)
+
 
 admin.site.register(TestRun, TestRunAdmin)
 admin.site.register(TestExecutionStatus, TestExecutionStatusAdmin)
