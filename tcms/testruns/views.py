@@ -21,11 +21,10 @@ from guardian.decorators import permission_required as object_permission_require
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.utils import clean_request
 from tcms.management.models import Build, Priority, Tag
-from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus
-from tcms.testcases.views import get_selected_testcases
+from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus, TestCase
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import TestExecutionDataMixin
-from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm
+from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm, CloneRunForm
 from tcms.testruns.models import TestExecution, TestExecutionStatus, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -33,28 +32,27 @@ User = get_user_model()  # pylint: disable=invalid-name
 
 @method_decorator(permission_required('testruns.add_testrun'), name='dispatch')
 class CreateTestRunView(View):
-    """Display the create test run page."""
+    """Display the create new test run page."""
 
     template_name = 'testruns/mutable.html'
-    http_method_names = ['post']
+    http_method_names = ['post', 'get']
 
-    def post(self, request):
-        # If from_plan does not exist will redirect to plans for select a plan
-        plan_id = request.POST.get('from_plan')
+    def get(self, request):
+
+        plan_id = request.GET.get('p')
         if not plan_id:
             messages.add_message(request,
                                  messages.ERROR,
                                  _('Creating a TestRun requires a TestPlan, select one'))
             return HttpResponseRedirect(reverse('plans-search'))
 
-        if not request.POST.get('case'):
+        if not request.GET.get('c'):
             messages.add_message(request,
                                  messages.ERROR,
                                  _('Creating a TestRun requires at least one TestCase'))
             return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
-        # Ready to write cases to test plan
-        test_cases = get_selected_testcases(request)
+        test_cases = TestCase.objects.filter(pk__in=request.GET.getlist('c'))
         test_plan = TestPlan.objects.get(pk=plan_id)
 
         # note: ordered by pk for test_show_create_new_run_page()
@@ -63,55 +61,61 @@ class CreateTestRunView(View):
                                                'category',
                                                'priority').order_by('pk')
 
-        if request.POST.get('POSTING_TO_CREATE'):
-            form = NewRunForm(request.POST)
-            form.populate(product_id=test_plan.product_id)
+        form = NewRunForm(initial={
+            'summary': 'Test run for %s' % test_plan.name,
+            'manager': test_plan.author.email,
+            'default_tester': request.user.email,
+            'notes': '',
+            'plan': test_plan
+        })
+        form.populate(test_plan)
 
-            if form.is_valid():
-                # Process the data in form.cleaned_data
-                default_tester = form.cleaned_data['default_tester']
+        context_data = {
+            'test_cases': tcs_values,
+            'form': form,
+            'disabled_cases': get_disabled_test_cases_count(test_cases)
+        }
+        return render(request, self.template_name, context_data)
 
-                test_run = TestRun.objects.create(
-                    product_version=test_plan.product_version,
-                    stop_date=None,
-                    summary=form.cleaned_data.get('summary'),
-                    notes=form.cleaned_data.get('notes'),
-                    plan=test_plan,
-                    build=form.cleaned_data['build'],
-                    manager=form.cleaned_data['manager'],
-                    default_tester=default_tester,
-                )
+    def post(self, request):
+        test_plan = TestPlan.objects.get(pk=request.POST.get('plan'))
 
-                loop = 1
-                for case in form.cleaned_data['case']:
-                    try:
-                        tcp = TestCasePlan.objects.get(plan=test_plan, case=case)
-                        sortkey = tcp.sortkey
-                    except ObjectDoesNotExist:
-                        sortkey = loop * 10
+        form = NewRunForm(data=request.POST)
+        form.populate(test_plan)
 
-                    test_run.create_execution(case=case, sortkey=sortkey,
-                                              assignee=default_tester)
-                    loop += 1
+        if form.is_valid():
+            test_run = form.save()
+            loop = 1
 
-                return HttpResponseRedirect(
-                    reverse('testruns-get', args=[test_run.pk, ])
-                )
+            for case in form.cleaned_data['case']:
+                try:
+                    tcp = TestCasePlan.objects.get(plan=form.cleaned_data['plan'], case=case)
+                    sortkey = tcp.sortkey
+                except ObjectDoesNotExist:
+                    sortkey = loop * 10
 
-        else:
-            form = NewRunForm(initial={
-                'summary': 'Test run for %s' % test_plan.name,
-                'manager': test_plan.author.email,
-                'default_tester': request.user.email,
-                'notes': '',
-            })
-            form.populate(product_id=test_plan.product_id)
+                test_run.create_execution(case=case, sortkey=sortkey,
+                                          assignee=form.cleaned_data['default_tester'])
+                loop += 1
 
+            return HttpResponseRedirect(
+                reverse('testruns-get', args=[test_run.pk, ])
+            )
+
+        test_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case'))
+
+        test_plan = TestPlan.objects.get(pk=request.POST.get('plan'))
+        tcs_values = test_cases.select_related('author',
+                                               'case_status',
+                                               'category',
+                                               'priority').order_by('pk')
         context_data = {
             'test_plan': test_plan,
             'test_cases': tcs_values,
             'form': form,
+            'disabled_cases': get_disabled_test_cases_count(test_cases)
         }
+
         return render(request, self.template_name, context_data)
 
 
@@ -375,7 +379,7 @@ class CloneTestRunView(View):
                                  _('At least one TestCase is required'))
             return HttpResponseRedirect(reverse('testruns-get', args=[pk]))
 
-        form = NewRunForm(initial={
+        form = CloneRunForm(initial={
             'summary': _('Clone of ') + test_run.summary,
             'notes': test_run.notes,
             'manager': test_run.manager,
@@ -561,3 +565,7 @@ def get_caseruns_of_runs(runs, kwargs=None):
     if status:
         caseruns = caseruns.filter(status__name__iexact=status)
     return caseruns
+
+
+def get_disabled_test_cases_count(test_cases):
+    return test_cases.exclude(case_status=TestCaseStatus.get_confirmed()).count()

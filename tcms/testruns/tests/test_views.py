@@ -101,7 +101,7 @@ class TestCreateNewRun(BasePlanCase):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        response = self.client.post(self.url, {'from_plan': self.plan.pk}, follow=True)
+        response = self.client.get(self.url, {'p': self.plan.pk}, follow=True)
         self.assertContains(response, _('Creating a TestRun requires at least one TestCase'))
 
     def test_show_create_new_run_page(self):
@@ -109,9 +109,9 @@ class TestCreateNewRun(BasePlanCase):
             username=self.tester.username,
             password='password')
 
-        response = self.client.post(self.url, {
-            'from_plan': self.plan.pk,
-            'case': [self.case_1.pk, self.case_2.pk, self.case_3.pk]
+        response = self.client.get(self.url, {
+            'p': self.plan.pk,
+            'c': [self.case_1.pk, self.case_2.pk, self.case_3.pk]
         })
 
         # Assert listed cases
@@ -222,7 +222,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'from_plan': self.plan.pk,
             'product_id': self.test_run.plan.product_id,
             'do': 'clone_run',
-            'POSTING_TO_CREATE': 'YES',
             'product': self.test_run.plan.product_id,
             'product_version': self.test_run.product_version.pk,
             'build': self.test_run.build.pk,

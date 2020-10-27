@@ -23,10 +23,25 @@ class BaseRunForm(forms.ModelForm):
         self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
 
 
-class NewRunForm(BaseRunForm):
+class CloneRunForm(BaseRunForm):
     case = forms.ModelMultipleChoiceField(
         queryset=TestCase.objects.filter(case_status__id=2).all(),
     )
+
+class NewRunForm(forms.ModelForm):
+    class Meta:
+        model = TestRun
+        exclude = ('tag', 'cc')
+
+    manager = UserField()
+    default_tester = UserField(required=False)
+
+    case = forms.ModelMultipleChoiceField(
+        queryset=TestCase.objects.filter(case_status__id=2).all(),
+    )
+
+    def populate(self, product_id):
+        self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
 
 
 # =========== Forms for search/filter ==============

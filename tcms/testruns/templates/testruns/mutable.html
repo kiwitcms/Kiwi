@@ -21,8 +21,9 @@
             <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
             <div class="col-md-11 col-lg-11">
                 <input type="text" id="id_summary" name="summary" value="{{ form.summary.value }}" class="form-control" required>
-                <input type="hidden" name="from_plan" value="{{ test_plan.pk }}"> <!-- used in new() -->
-                <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
+                <input type="hidden" name="plan" value="{{ form.plan.value }}"> <!-- used in new() -->
+                <input type="hidden" name="product_version" value="{{ test_plan.product_id }}"> <!-- used in new() -->
+                <p class="help-block"><a href="{% url 'test_plan_url_short' form.plan.value %}">TP-{{ form.plan.value }}: {{ test_plan.name }}</a></p>
             </div>
         </div>
 
@@ -74,8 +75,6 @@
         </div>
 
         {% if test_cases %}
-        {# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
-        <input type="hidden" name="POSTING_TO_CREATE" value="YES" />
 
         <div class="panel {% if disabled_cases %}panel-danger{% else%}panel-default{% endif%} col-lg-12"
              style="padding:0; margin-top:2em">
