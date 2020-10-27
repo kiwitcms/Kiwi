@@ -37,7 +37,8 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
     fieldsets = [
         ('', {
             'fields': ('name', 'weight', 'icon', 'color'),
-            'description': _("""For more information about customizing test execution statuses see
+            'description': "<h1>%s</h1>" %
+                           _("""For more information about customizing test execution statuses see
         <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses">
         the documentation</a>!"""),
         }),
