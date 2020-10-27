@@ -10,6 +10,7 @@ jobs:
     name: ${{ matrix.tracker }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: [3.7]
         tracker: [bugzilla, github, gitlab_ce, gitlab_ee, jira, kiwitcms, redmine]
