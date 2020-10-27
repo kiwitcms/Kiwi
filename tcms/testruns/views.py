@@ -90,8 +90,8 @@ class CreateTestRunView(View):
                     except ObjectDoesNotExist:
                         sortkey = loop * 10
 
-                    test_run.add_case_run(case=case, sortkey=sortkey,
-                                          assignee=default_tester)
+                    test_run.create_execution(case=case, sortkey=sortkey,
+                                              assignee=default_tester)
                     loop += 1
 
                 return HttpResponseRedirect(
@@ -457,10 +457,10 @@ class AddCasesToRunView(View):
             sort_keys_in_plan = dict((row['case'], row['sortkey']) for row in query_set.iterator())
             for test_case in test_cases:
                 sort_key = sort_keys_in_plan.get(test_case.pk, 0)
-                test_run.add_case_run(case=test_case, sortkey=sort_key)
+                test_run.create_execution(case=test_case, sortkey=sort_key)
         else:
             for test_case in test_cases:
-                test_run.add_case_run(case=test_case)
+                test_run.create_execution(case=test_case)
 
         return HttpResponseRedirect(reverse('testruns-get',
                                             args=[test_run.pk, ]))
