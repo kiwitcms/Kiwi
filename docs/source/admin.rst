@@ -104,6 +104,14 @@ created
   ``management``, ``testcases``, ``testplans`` and ``testruns`` applications.
   These are the permissions required for normal usage of Kiwi TCMS!
 
+To ensure that all necessary permissions are assigned to the default
+group (Tester) and that the stale permission objects are removed, after
+the system installation or upgrade use the following management
+command::
+
+    ./manage.py refresh_permissions
+
+
 .. important::
 
     *Tester* is the default group to which new user accounts are assigned!
