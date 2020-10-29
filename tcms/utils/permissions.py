@@ -3,6 +3,17 @@ from django.conf import settings
 from django.contrib.auth.models import Group, Permission
 
 
+def generate_output(output, permissions, group):
+    """
+        Generates verbose output for added permissions
+    """
+    if output:
+        for perm in permissions:
+            output.write('%s.%s added to %s group' %
+                         (perm.content_type.app_label, perm.codename,
+                          group.name))
+
+
 def assign_default_group_permissions(output=None, refresh_all=False):
     """
         Adds the default permissions for Administrator and Tester
@@ -10,14 +21,10 @@ def assign_default_group_permissions(output=None, refresh_all=False):
     """
     admin = Group.objects.get(name='Administrator')
     if admin.permissions.count() == 0 or refresh_all:
-        perms_to_add = Permission.objects.all().exclude(
+        perms_to_add = Permission.objects.exclude(
             pk__in=admin.permissions.all())
         admin.permissions.add(*perms_to_add)
-        if output:
-            for perm in perms_to_add:
-                output.write('%s.%s added to %s group' %
-                             (perm.content_type.app_label, perm.codename,
-                              admin.name))
+        generate_output(output, perms_to_add, admin)
 
     tester = Group.objects.get(name='Tester')
     tester_perms = tester.permissions.all()
@@ -31,11 +38,7 @@ def assign_default_group_permissions(output=None, refresh_all=False):
                 content_type__app_label='attachments',
                 codename='delete_foreign_attachments')
             tester.permissions.add(*app_perms)
-            if output:
-                for perm in app_perms:
-                    output.write('%s.%s added to %s group' %
-                                 (perm.content_type.app_label, perm.codename,
-                                  tester.name))
+            generate_output(output, app_perms, tester)
 
 
 def initiate_user_with_default_setups(user):
