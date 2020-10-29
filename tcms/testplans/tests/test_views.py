@@ -49,8 +49,8 @@ class EditPlanViewTest(LoggedInTestCase):
         self.assert_notify_form(response)
         self.assertContains(
             response,
-            '<input class="bootstrap-switch" name="is_active" type="checkbox" checked>',
-            html=True)
+            '<input class="bootstrap-switch" name="is_active" type="checkbox" checked',
+            html=False)
 
     def test_edit_testplan_text_field(self):
         edit_data = self.testplan_edit_data.copy()
@@ -78,7 +78,7 @@ class EditPlanViewTest(LoggedInTestCase):
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
-            'type="checkbox">', html=True)
+            'type="checkbox"', html=False)
 
     def test_with_invalid_product_shows_error(self):
         edit_data = self.testplan_edit_data.copy()
@@ -94,7 +94,7 @@ class EditPlanViewTest(LoggedInTestCase):
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
-            'type="checkbox">', html=True)
+            'type="checkbox"', html=False)
 
     def test_with_invalid_type_shows_error(self):
         edit_data = self.testplan_edit_data.copy()
@@ -110,7 +110,7 @@ class EditPlanViewTest(LoggedInTestCase):
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_owner" '
-            'type="checkbox">', html=True)
+            'type="checkbox"', html=False)
 
     def test_with_invalid_version_shows_error(self):
         edit_data = self.testplan_edit_data.copy()
@@ -129,20 +129,20 @@ class EditPlanViewTest(LoggedInTestCase):
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_owner" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_default_tester" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-notify_on_case_update" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-notify_on_plan_update" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)

@@ -46,28 +46,28 @@ class NewPlanViewTest(BasePlanTest):
 
         self.assertContains(
             response,
-            '<input class="bootstrap-switch" name="is_active" type="checkbox" checked>',
-            html=True)
+            '<input class="bootstrap-switch" name="is_active" type="checkbox" checked',
+            html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_owner" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_default_tester" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-notify_on_plan_update" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-notify_on_case_update" '
-            'type="checkbox" checked>', html=True)
+            'type="checkbox" checked', html=False)
 
     def test_plan_create_new_active(self):
         self._test_plan_create_new(is_active=True)
