@@ -25,6 +25,10 @@ jobs:
 
     - name: Dockerize
       run: |
+        echo "======================"
+        export
+        echo "======================"
+
         docker-compose -f tests/${{ matrix.tracker}}/docker-compose.yml build
         docker-compose -f tests/${{ matrix.tracker}}/docker-compose.yml up -d
         sleep 10
