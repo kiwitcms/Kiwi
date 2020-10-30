@@ -77,6 +77,15 @@ Then you need to create the first user account::
 
     docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
+
+A special group called Tester is created during the installation. This
+is the default group for testers and we do not recommend to alter or
+delete it. It needs certain permissions which can be assigned by the
+command::
+
+    docker exec -it kiwi_web /Kiwi/manage.py refresh_permissions
+
+
 .. warning::
 
     In the command ``docker exec`` the option ``-i`` keeps STDIN open
