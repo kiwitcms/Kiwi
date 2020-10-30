@@ -37,7 +37,6 @@ jobs:
     # runs the tests. Some trackers may end up with empty initialization!
     - name: Install Python dependencies
       run: |
-        sudo apt-get install libkrb5-dev
         pip install -r requirements/devel.txt
 
     - name: Initialize bugs DB

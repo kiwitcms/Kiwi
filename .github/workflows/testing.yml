@@ -22,7 +22,7 @@ jobs:
 
       - name: Execute tests
         run: |
-          sudo apt-get install libkrb5-dev gettext
+          sudo apt-get install gettext
 
           pip install -r requirements/devel.txt
           pushd tcms/ && npm install && popd
@@ -52,7 +52,7 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        sudo apt-get install libkrb5-dev gettext
+        sudo apt-get install gettext
         pip install -r requirements/devel.txt
         pushd tcms/ && npm install && popd
 
@@ -83,7 +83,7 @@ jobs:
 
       - name: Execute tests
         run: |
-          sudo apt-get install libkrb5-dev gettext
+          sudo apt-get install gettext
 
           pip install -r requirements/devel.txt
           pushd tcms/ && npm install && popd
@@ -118,7 +118,7 @@ jobs:
 
       - name: Execute tests
         run: |
-          sudo apt-get install libkrb5-dev gettext
+          sudo apt-get install gettext
 
           pip install -r requirements/devel.txt
           pip install -r requirements/mariadb.txt
@@ -153,7 +153,7 @@ jobs:
 
       - name: Execute tests
         run: |
-          sudo apt-get install libkrb5-dev gettext
+          sudo apt-get install gettext
 
           pip install -r requirements/devel.txt
           pip install -r requirements/postgres.txt

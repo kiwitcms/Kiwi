@@ -57,7 +57,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: test-for-missing-migrations
       run: |
-        sudo apt-get install libkrb5-dev
         pip install -r requirements/devel.txt
         pushd tcms/ && npm install && popd
 
@@ -84,7 +83,6 @@ jobs:
 
     - name: migrations rollback
       run: |
-        sudo apt-get install libkrb5-dev
         pip install -r requirements/devel.txt
         pip install -r requirements/postgres.txt
         pushd tcms/ && npm install && popd
