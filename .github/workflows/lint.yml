@@ -55,7 +55,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Lint with pylint
       run: |
-        sudo apt-get install libkrb5-dev
         pip install -r requirements/devel.txt
 
         export LANG=en-us
