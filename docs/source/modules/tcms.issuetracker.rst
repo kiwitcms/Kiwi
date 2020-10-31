@@ -14,6 +14,7 @@ Submodules
 
    tcms.issuetracker.azure_boards
    tcms.issuetracker.base
+   tcms.issuetracker.bitbucket
    tcms.issuetracker.bugzilla_integration
    tcms.issuetracker.github_integration
    tcms.issuetracker.gitlab_integration
