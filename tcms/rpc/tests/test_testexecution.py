@@ -7,8 +7,9 @@ from xmlrpc.client import ProtocolError
 from django.test import override_settings
 from django.utils import timezone
 
+from django.forms.models import model_to_dict
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.helpers.comments import get_comments
+from tcms.core.helpers.comments import get_comments, add_comment
 from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import BuildFactory
@@ -35,6 +36,61 @@ class TestExecutionAddComment(APITestCase):
         first_comment = comments.first()
         self.assertEqual("Hello World!", first_comment.comment)
         self.assertEqual(created_comment['comment'], first_comment.comment)
+
+
+class TestExecutionRemoveComment(APITestCase):
+    """Test TestExecution.remove_comment"""
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.user = UserFactory()
+        self.execution = TestExecutionFactory()
+
+    def test_delete_all_comments(self):
+        add_comment([self.execution], "Hello World!", self.user)
+        add_comment([self.execution], "More comments", self.user)
+        self.rpc_client.TestExecution.remove_comment(self.execution.pk)
+
+        comments = get_comments(self.execution)
+        self.assertEqual(comments.count(), 0)
+
+    def test_delete_one_comment(self):
+        add_comment([self.execution], "Hello World!", self.user)
+        comment_2 = add_comment([self.execution], "More comments", self.user)
+        comment_2 = model_to_dict(comment_2[0])
+
+        self.rpc_client.TestExecution.remove_comment(self.execution.pk, comment_2['id'])
+        comments = get_comments(self.execution)
+        first_comment = comments.first()
+
+        self.assertEqual(comments.count(), 1)
+        self.assertEqual("Hello World!", first_comment.comment)
+
+
+class TestExecutionRemoveCommentPermissions(APIPermissionsTestCase):
+    """Test TestExecution.remove_comment permissions"""
+
+    permission_label = 'django_comments.delete_comment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.user = UserFactory()
+        self.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        add_comment([self.execution], "Hello World!", self.user)
+        self.rpc_client.TestExecution.remove_comment(self.execution.pk)
+
+        comments = get_comments(self.execution)
+        self.assertEqual(comments.count(), 0)
+
+    def verify_api_without_permission(self):
+        add_comment([self.execution], "Hello World!", self.user)
+
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestExecution.remove_comment(self.execution.pk)
 
 
 @override_settings(LANGUAGE_CODE='en')
