@@ -446,6 +446,11 @@ function attachEvents(testPlanId, permissions) {
 
     // get details and draw expand area only on expand
     $('.js-testcase-row').click(function(ev) {
+        // don't trigger row expansion when kebab menu is clicked
+        if($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
+            return;
+        }
+
         const testCaseId = getCaseIdFromEvent(ev);
 
         // tc was expanded once, dom is ready
