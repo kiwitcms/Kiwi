@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-10-10 22:31\n"
+"PO-Revision-Date: 2020-11-01 18:32\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1908,7 +1908,7 @@ msgstr "Избран(и) тест кейс(ове):"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr "%(count)s от избраните тест кейосве не е/са ПОТВЪРДЕН/И и няма да бъде/ат клонирани! Виж тест плана за повече информация!"
+msgstr "%(count)s от избраните тест кейсове не са ПОТВЪРДЕНИ и няма да бъдат клонирани! Виж тест плана за повече информация!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
