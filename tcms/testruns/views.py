@@ -20,19 +20,19 @@ from guardian.decorators import permission_required as object_permission_require
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.utils import clean_request
-from tcms.management.models import Build, Priority, Tag
+from tcms.management.models import Priority, Tag
 from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus, TestCase
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import TestExecutionDataMixin
-from tcms.testruns.forms import BaseRunForm, NewRunForm, SearchRunForm, CloneRunForm
+from tcms.testruns.forms import NewRunForm, SearchRunForm
 from tcms.testruns.models import TestExecution, TestExecutionStatus, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 
 
 @method_decorator(permission_required('testruns.add_testrun'), name='dispatch')
-class CreateTestRunView(View):
-    """Display the create new test run page."""
+class NewTestRunView(View):
+    """Display new test run page."""
 
     template_name = 'testruns/mutable.html'
     http_method_names = ['post', 'get']
@@ -104,13 +104,11 @@ class CreateTestRunView(View):
 
         test_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case'))
 
-        test_plan = TestPlan.objects.get(pk=request.POST.get('plan'))
         tcs_values = test_cases.select_related('author',
                                                'case_status',
                                                'category',
                                                'priority').order_by('pk')
         context_data = {
-            'test_plan': test_plan,
             'test_cases': tcs_values,
             'form': form,
             'disabled_cases': get_disabled_test_cases_count(test_cases)
@@ -280,18 +278,11 @@ def _walk_executions(test_executions):
 class EditTestRunView(UpdateView):
     model = TestRun
     template_name = 'testruns/mutable.html'
-    form_class = BaseRunForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['test_plan'] = self.object.plan
-        context['builds'] = Build.objects.filter(product=self.object.plan.product, is_active=True)
-
-        return context
+    form_class = NewRunForm
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.populate(self.object.plan.product_id)
+        form.populate(self.object.plan)
 
         return form
 
@@ -379,19 +370,20 @@ class CloneTestRunView(View):
                                  _('At least one TestCase is required'))
             return HttpResponseRedirect(reverse('testruns-get', args=[pk]))
 
-        form = CloneRunForm(initial={
+        form = NewRunForm(initial={
             'summary': _('Clone of ') + test_run.summary,
             'notes': test_run.notes,
             'manager': test_run.manager,
             'build': test_run.build_id,
             'default_tester': test_run.default_tester,
+            'plan': test_run.plan
         })
-        form.populate(product_id=test_run.plan.product_id)
+
+        form.populate(test_plan=test_run.plan)
 
         context_data = {
             'is_cloning': True,
             'disabled_cases': disabled_cases,
-            'test_plan': test_run.plan,
             'test_cases': test_cases,
             'form': form,
         }

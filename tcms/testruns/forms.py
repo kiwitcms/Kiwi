@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from tcms.core.forms.fields import UserField
 from tcms.core.utils import string_to_list
 from tcms.management.models import Build, Product, Version
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCase, TestCaseStatus
 from .models import TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -23,25 +23,27 @@ class BaseRunForm(forms.ModelForm):
         self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
 
 
-class CloneRunForm(BaseRunForm):
-    case = forms.ModelMultipleChoiceField(
-        queryset=TestCase.objects.filter(case_status__id=2).all(),
-    )
-
 class NewRunForm(forms.ModelForm):
     class Meta:
         model = TestRun
-        exclude = ('tag', 'cc')
+        exclude = ('tag', 'cc')  # pylint: disable=modelform-uses-exclude
 
     manager = UserField()
     default_tester = UserField(required=False)
 
     case = forms.ModelMultipleChoiceField(
-        queryset=TestCase.objects.filter(case_status__id=2).all(),
+        queryset=TestCase.objects.none(),
+        required=False,
     )
 
-    def populate(self, product_id):
-        self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
+    def populate(self, test_plan):
+        self.fields['build'].queryset = Build.objects.filter(product_id=test_plan.product_id,
+                                                             is_active=True)
+        self.fields['case'].queryset = TestCase.objects.filter(
+            case_status=TestCaseStatus.get_confirmed()).all()
+        # plan is ModelChoiceField which contains all the plans
+        # as we need only the plan for current run we filter the queryset
+        self.fields['plan'].queryset = self.fields['plan'].queryset.filter(pk=test_plan.pk)
 
 
 # =========== Forms for search/filter ==============

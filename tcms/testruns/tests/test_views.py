@@ -14,7 +14,7 @@ from tcms.testruns.models import TestExecutionStatus, TestRun
 from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
                         user_should_have_perm)
 from tcms.tests.factories import (TagFactory, TestCaseFactory,
-                                  UserFactory)
+                                  UserFactory, BuildFactory)
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
@@ -84,6 +84,8 @@ class TestCreateNewRun(BasePlanCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
+        cls.build = BuildFactory(product=cls.product)
+
         user_should_have_perm(cls.tester, 'testruns.add_testrun')
         user_should_have_perm(cls.tester, 'testruns.view_testrun')
         cls.url = reverse('testruns-new')
@@ -94,7 +96,7 @@ class TestCreateNewRun(BasePlanCase):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        response = self.client.post(self.url, {})
+        response = self.client.get(self.url, {})
         self.assertRedirects(response, reverse('plans-search'))
 
     def test_refuse_if_missing_cases_pks(self):
@@ -104,7 +106,7 @@ class TestCreateNewRun(BasePlanCase):
         response = self.client.get(self.url, {'p': self.plan.pk}, follow=True)
         self.assertContains(response, _('Creating a TestRun requires at least one TestCase'))
 
-    def test_show_create_new_run_page(self):
+    def test_get_shows_selected_cases(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
@@ -121,6 +123,40 @@ class TestCreateNewRun(BasePlanCase):
                 response,
                 '<a href="%s">TC-%d: %s</a>' % (case_url, case.pk, case.summary),
                 html=True)
+
+    def test_post_creates_new_run(self):
+        new_run_summary = 'TestRun summary'
+
+        post_data = {
+            'summary': new_run_summary,
+            'plan': self.plan.pk,
+            'product_id': self.plan.product_id,
+            'product': self.plan.product_id,
+            'product_version': self.plan.product_version.pk,
+            'build': self.build.pk,
+            'manager': self.tester.email,
+            'default_tester': self.tester.email,
+            'notes': '',
+            'case':  [self.case_1.pk, self.case_2.pk]
+        }
+
+        url = reverse('testruns-new')
+        response = self.client.post(url, post_data)
+
+        new_run = TestRun.objects.last()
+
+        self.assertRedirects(
+            response,
+            reverse('testruns-get', args=[new_run.pk]))
+
+        for case, execution in zip((self.case_1, self.case_2),
+                                   new_run.case_run.order_by('case')):
+            self.assertEqual(case, execution.case)
+            self.assertIsNone(execution.tested_by)
+            self.assertEqual(self.tester, execution.assignee)
+            self.assertEqual(case.history.latest().history_id, execution.case_text_version)
+            self.assertEqual(new_run.build, execution.build)
+            self.assertIsNone(execution.close_date)
 
 
 class CloneRunBaseTest(BaseCaseRun):
@@ -183,10 +219,9 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
         clone_data = {
             'summary': new_summary,
-            'from_plan': self.plan.pk,
+            'plan': self.plan.pk,
             'product_id': self.test_run.plan.product_id,
             'do': 'clone_run',
-            'POSTING_TO_CREATE': 'YES',
             'product': self.test_run.plan.product_id,
             'product_version': self.test_run.product_version.pk,
             'build': self.test_run.build.pk,
