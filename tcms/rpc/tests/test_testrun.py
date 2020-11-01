@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, objects-update-used
 from datetime import datetime
+from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
 from django.contrib.auth.models import Permission
 from django.utils.translation import gettext_lazy as _
-
 from tcms_api import xmlrpc
-
-from tcms.rpc.tests.utils import APITestCase
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testruns.models import TestExecution, TestRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (BuildFactory, ProductFactory, TagFactory,
@@ -104,6 +103,46 @@ class TestRemovesCase(APITestCase):
     def test_should_remove_a_case_run(self):
         self.rpc_client.TestRun.remove_case(self.test_run.pk, self.test_case.pk)
         self.assertFalse(TestExecution.objects.filter(pk=self.test_execution.pk).exists())
+
+
+class TestGetCases(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.test_case = TestCaseFactory()
+        self.test_case.save()
+        self.test_run = TestRunFactory()
+
+    def test_get_empty_result_if_no_case_added(self):
+        result = self.rpc_client.TestRun.get_cases(self.test_run.pk)
+        self.assertEqual(0, len(result))
+
+    def test_get_cases(self):
+        self.rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
+        result = self.rpc_client.TestRun.get_cases(self.test_run.pk)
+        self.assertEqual(1, len(result))
+
+        case = result[0]
+        self.assertEqual(self.test_case.pk, case['id'])
+        self.assertTrue('execution_id' in case.keys())
+        self.assertTrue('status' in case.keys())
+
+
+class TestGetCasesPermission(APIPermissionsTestCase):
+    permission_label = 'testruns.view_testrun'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.test_run = TestRunFactory()
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestRun.get_cases(self.test_run.pk)
+        self.assertTrue(isinstance(result, list))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestRun.get_cases(self.test_run.pk)
 
 
 class TestAddTag(APITestCase):
@@ -250,6 +289,82 @@ class TestProductVersionWhenCreating(APITestCase):
         # not the one we specified above
         self.assertEqual(result['product_version'], self.plan.product_version.value)
 
+    def test_create_with_invalid_value(self):
+        test_run_fields = {
+            'plan': self.plan.pk,
+            'build': self.build.pk,
+            'summary': 'TR without product_version',
+            'manager': 'manager',
+        }
+
+        err_msg = 'Unknown user: "manager"'
+        with self.assertRaisesRegex(XmlRPCFault, err_msg):
+            self.rpc_client.TestRun.create(test_run_fields)
+
+
+class TestCreatePermission(APIPermissionsTestCase):
+    permission_label = 'testruns.add_testrun'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.product = ProductFactory()
+        self.version = VersionFactory()
+        self.build = self.product.build.first()
+        self.plan = TestPlanFactory(product=self.product,
+                                    product_version=self.version)
+        self.test_run_fields = {
+            'plan': self.plan.pk,
+            'build': self.build.pk,
+            'summary': 'TR created',
+            'manager': UserFactory().pk
+        }
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestRun.create(self.test_run_fields)
+        self.assertEqual(result['summary'], self.test_run_fields['summary'])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestRun.create(self.test_run_fields)
+
+
+class TestFilter(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory()
+
+        self.test_case = TestCaseFactory()
+        self.test_case.save()
+        self.plan.add_case(self.test_case)
+
+        self.test_run = TestRunFactory(plan=self.plan)
+
+    def test_empty_query(self):
+        result = self.rpc_client.TestRun.filter()
+        self.assertTrue(isinstance(result, list))
+        self.assertEqual(1, len(result))
+        self.assertEqual(self.test_run.pk, result[0]['id'])
+
+    def test_filter(self):
+        _ = TestRunFactory()
+        result = self.rpc_client.TestRun.filter({'plan': self.plan.pk})
+        self.assertEqual(1, len(result))
+        self.assertEqual(self.test_run.pk, result[0]['id'])
+
+
+class TestFilterPermission(APIPermissionsTestCase):
+    permission_label = 'testruns.view_testrun'
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestRun.filter()
+        self.assertTrue(isinstance(result, list))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestRun.filter(None)
+
 
 class TestUpdateTestRun(APITestCase):
     def _fixture_setup(self):
@@ -312,3 +427,51 @@ class TestUpdateTestRun(APITestCase):
         self.assertNotEqual(update_fields['summary'], test_run.summary)
         self.assertNotEqual(datetime.strptime(update_fields['stop_date'], '%d-%m-%Y'),
                             test_run.stop_date)
+
+    def test_update_with_product(self):
+        test_run = TestRunFactory()
+        product = ProductFactory()
+        updated_test_plan = TestPlanFactory(product=product)
+        updated_build = BuildFactory(product=product)
+        updated_summary = 'Updated summary.'
+        updated_stop_date = '2020-05-05 00:00:00'
+
+        updated_test_run = self.rpc_client.TestRun.update(test_run.pk, {
+            'plan': updated_test_plan.pk,
+            'product': product.id,
+            'build': updated_build.pk,
+            'summary': updated_summary,
+            'stop_date': updated_stop_date
+        })
+        self.test_run.refresh_from_db()
+
+        self.assertEqual(updated_test_run['plan'], updated_test_plan.name)
+        self.assertEqual(updated_test_run['build'], updated_build.name)
+        self.assertEqual(updated_test_run['summary'], updated_summary)
+        self.assertEqual(updated_test_run['stop_date'], updated_stop_date)
+
+
+class TestUpdatePermission(APIPermissionsTestCase):
+    permission_label = 'testruns.change_testrun'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.test_run = TestRunFactory()
+        self.update_fields = {
+            'plan': TestPlanFactory().pk,
+            'build': BuildFactory().pk,
+            'summary': 'Updated summary.',
+            'stop_date': '2020-05-05 00:00:00'
+        }
+
+    def verify_api_with_permission(self):
+        updated_test_run = self.rpc_client.TestRun.update(self.test_run.pk, self.update_fields)
+        self.test_run.refresh_from_db()
+
+        self.assertEqual(updated_test_run['summary'], self.update_fields['summary'])
+        self.assertEqual(updated_test_run['stop_date'], self.update_fields['stop_date'])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestRun.update(self.test_run.pk, self.update_fields)
