@@ -2,6 +2,170 @@ Change Log
 ==========
 
 
+Kiwi TCMS 8.8 (07 Nov 2020, the 200K edition)
+---------------------------------------------
+
+.. important::
+
+    This release includes many improvements,
+    API changes, bug fixes, translation updates,
+    new tests and internal refactoring.
+    It is the sixth release to include contributions via our
+    `open source bounty program`_.
+
+    This is also the first release after `Kiwi TCMS reached 200K pulls
+    <https://kiwitcms.org/blog/kiwi-tcms-team/2020/10/26/kiwi-tcms-celebrates-200k-downloads/>`_
+    on Docker Hub!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 3.1.5 to 3.2.1
+- Update django-extensions from 3.0.8 to 3.0.9
+- Update django from 3.1.1 to 3.1.3
+- Update django-simple-history from 2.11.0 to 2.12.0
+- Update markdown from 3.2.2 to 3.3.3
+- Update pygments from 2.7.0 to 2.7.2
+- Update python-bugzilla from 2.5.0 to 3.0.1
+- Update node_modules/marked from 1.1.1 to 1.2.3
+- Update node_modules/prismjs from 1.21.0 to 1.22.0
+- Add management command ``refresh_permission``. Closes
+  `Issue #1137 <https://github.com/kiwitcms/Kiwi/issues/1137>`_ (Ivajlo Karabojkov)
+- Add bug tracker integration for Azure Boards. Closes
+  `Issue #1979 <https://github.com/kiwitcms/Kiwi/issues/1979>`_ (@cmbahadir)
+- Add autosave configuration to web editor. Closes
+  `Issue #1958 <https://github.com/kiwitcms/Kiwi/issues/1958>`_ (Mfon Eti-mfon)
+- Change ON/OFF buttons messages to Yes/No for several buttons (Alexander Tsvetanov)
+- Add support for object-level permissions for TestCase,
+  TestPlan, TestRun and Bug objects via ``django-guardian``
+- Complete redesign of Test Plan page to match the rest of Kiwi TCMS:
+
+  - modern look and feel using the PatternFly UI library
+  - remove unused legacy code & HTML templates
+  - closes
+    `Issue #663 <https://github.com/kiwitcms/Kiwi/issues/663>`_,
+    `Issue #1977 <https://github.com/kiwitcms/Kiwi/issues/1977>`_
+
+- Enable Markdown support for strike-through text
+- Always pull latest RPMs when building container images
+- Update documentation and images
+
+
+Database
+~~~~~~~~
+
+- Add index to ``TestCase.summary`` field
+- Additional migrations from ``django-guardian`` around object-level permissions
+- Start using ``django-tree-queries`` which improves how tree based structures
+  are stored in the database.
+
+  .. important::
+
+    Requires PostgreSQL, sqlite3 >= 3.8.3, MariaDB >= 10.2.2 or
+    MySQL >= 8.0 (if running without ``ONLY_FULL_GROUP_BY``).
+
+  .. warning::
+
+    Supports only trees with max. 50 levels on MySQL/MariaDB, since those databases
+    do not support arrays and require us to provide a maximum length upfront.
+    This means up to 50 levels of nested child-parent test plans!
+
+
+API
+~~~
+
+- Method ``TestExecution.update()`` will now modify field ``close_date``
+  depending on test execution status. Fixes
+  `Issue #1820 <https://github.com/kiwitcms/Kiwi/issues/1820>`_
+- Method ``TestCase.add_comment()`` now returns the created comment
+- Method ``TestExecution.add_comment()`` now returns the created comment
+- Method ``TestPlan.add_case()`` now returns the newly added test case
+- Add method ``TestCase.sortkeys()``. Fixes
+  `Issue #444 <https://github.com/kiwitcms/Kiwi/issues/444>`_
+- Add method ``Markdown.render()``
+- Add method ``TestCase.comments()``
+- Add method ``TestPlan.tree()``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix url formatting. Fixes
+  `Issue #1806 <https://github.com/kiwitcms/Kiwi/issues/1806>`_ (Rosen Sasov)
+- When deleting TestExecutionStatus check that there will be at least 1 left
+  before deleting! Closes
+  `Issue #1978 <https://github.com/kiwitcms/Kiwi/issues/1978>`_
+- Update typeahead definitions for test case components, tags and
+  for adding test plans to test cases. Fixes
+  `Issue #882 <https://github.com/kiwitcms/Kiwi/issues/882>`_
+- Add option to filter by reviewer in Test Plan page. Fixes
+  `Issue #564 <https://github.com/kiwitcms/Kiwi/issues/564>`_
+- Pass the number of disabled test cases to HTML template when
+  creating a new test run. Fixes
+  `Issue #718 <https://github.com/kiwitcms/Kiwi/issues/718>`_
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- New linter to warn against ``GenericForeignKey`` fields in models. Closes
+  `Issue #1303 <https://github.com/kiwitcms/Kiwi/issues/1303>`_ (Bryan Mutai)
+- Add tests for ``assign_default_group_permissions()`` (Ivajlo Karabojkov)
+- Add tests for ``TestExecutionStatusAdmin``. Refs
+  `Issue #1618 <https://github.com/kiwitcms/Kiwi/issues/1618>`_ (Mariyan Garvanski)
+- Add tests for ``tcms.bugs.views.Search``. Closes
+  `Issue #1601 <https://github.com/kiwitcms/Kiwi/issues/1601>`_ (Mfon Eti-mfon)
+- Add tests for ``tcms.rpc.api.testrun``. Closes
+  `Issue #1628 <https://github.com/kiwitcms/Kiwi/issues/1628>`_ (@lcmtwn)
+- Add tests for ``tcms.rpc.api.classification``. Closes
+  `Issue #1621 <https://github.com/kiwitcms/Kiwi/issues/1621>`_ (Abhishek Chaurasia)
+- Add tests for ``tcms.rpc.api.priority``. Closes
+  `Issue #1622 <https://github.com/kiwitcms/Kiwi/issues/1622>`_ (Abhishek Chaurasia)
+- Add tests for ``tcms.rpc.api.testcasestatus``. Closes
+  `Issue #1624 <https://github.com/kiwitcms/Kiwi/issues/1624>`_ (Abhishek Chaurasia)
+- Add tests for ``tcms.rpc.api.attachment``. Closes
+  `Issue #1619 <https://github.com/kiwitcms/Kiwi/issues/1619>`_ (@awalvie)
+- Add tests for ``tcms.rpc.api.testexecution.remove_comment``. Closes
+  `Issue #1625 <https://github.com/kiwitcms/Kiwi/issues/1625>`_ (@awalvie)
+- Add tests for ``tcms.rpc.api.testexecutionstatus``. Closes
+  `Issue #1626 <https://github.com/kiwitcms/Kiwi/issues/1626>`_ (@awalvie)
+- Add tests for ``TestRun.add_case_run()`` method and rename it to
+  ``TestRun.create_execution()``
+- ``libkrb5-dev`` is not needed anymore in CI with newer ``tcms-api``
+- Use Fedora 32 to build Bugzilla docker image in CI
+- Update signature for overriden class to match Django 3.1
+- Move SimpleMDE initialization to simplemde_security_overide.js
+- Move ``post_save.send()`` from ``bugs.views`` to ``comments.add_comment()``
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Czech translation <https://crowdin.com/project/kiwitcms/cs#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Italian translation <https://crowdin.com/project/kiwitcms/it#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 8.7 (16 Sep 2020)
 ---------------------------
 
