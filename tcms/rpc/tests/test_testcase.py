@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
+import unittest
+
 from xmlrpc.client import Fault, ProtocolError
 
+from attachments.models import Attachment
 from django.contrib.auth.models import Permission
+from django.core.exceptions import ValidationError
 from tcms_api import xmlrpc
 
 from tcms.core.helpers import comments
 from tcms.management.models import Priority
+from tcms.rpc.api.testcase import _validate_cc_list
 from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
@@ -16,28 +21,95 @@ from tcms.tests.factories import (CategoryFactory, ComponentFactory,
                                   TestPlanFactory, UserFactory, VersionFactory)
 
 
-class TestNotificationRemoveCC(APITestCase):
-    """ Tests the XML-RPC testcase.notication_remove_cc method """
+class TestValidateEmail(unittest.TestCase):
+    def test_non_list_email_collection(self):
+        with self.assertRaisesRegex(TypeError, 'cc_list should be a list object.'):
+            _validate_cc_list('example@example.com')
+
+    def test_invalid_email(self):
+        with self.assertRaises(ValidationError):
+            _validate_cc_list(['@example.com'])
+
+    def test_valid_email_list(self):  # pylint: disable=no-self-use
+        _validate_cc_list(['example@example.com'])
+
+
+class TestAddNotificationCCPermission(APIPermissionsTestCase):
+    permission_label = 'testcases.change_testcase'
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.default_cc = 'example@MrSenko.com'
+        self.default_cc = 'example@example.com'
+        self.testcase = TestCaseFactory()
+
+    def verify_api_with_permission(self):
+        self.rpc_client.TestCase.add_notification_cc(self.testcase.pk, [self.default_cc])
+        self.assertEqual(len(self.testcase.emailing.get_cc_list()), 1)
+        self.assertEqual(self.testcase.emailing.get_cc_list(), [self.default_cc])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.add_notification_cc(self.testcase.pk, [self.default_cc])
+
+
+class TestAddNotificationCC(APITestCase):
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.add_notification_cc(-1, ['example@example.com'])
+
+
+class TestGetNotificationCCPermission(APIPermissionsTestCase):
+    permission_label = 'testcases.view_testcase'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.default_cc = 'example@example.com'
         self.testcase = TestCaseFactory()
         self.testcase.emailing.add_cc(self.default_cc)
 
-    def tearDown(self):
-        super().tearDown()
-        self.rpc_client.Auth.logout()
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestCase.get_notification_cc(self.testcase.pk)
+        self.assertListEqual(result, [self.default_cc])
 
-    def test_remove_existing_cc(self):
-        # initially testcase has the default CC listed
-        # and we issue XMLRPC request to remove the cc
-        self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.get_notification_cc(self.testcase.pk)
 
-        # now verify that the CC email has been removed
+
+class TestGetNotificationCC(APITestCase):
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.get_notification_cc(-1)
+
+
+class TestRemoveNotificationCCPermission(APIPermissionsTestCase):
+    permission_label = 'testcases.change_testcase'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.default_cc = 'example@example.com'
+        self.testcase = TestCaseFactory()
+        self.testcase.emailing.add_cc(self.default_cc)
+
+    def verify_api_with_permission(self):
+        self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk,
+                                                        [self.default_cc])
         self.testcase.emailing.refresh_from_db()
         self.assertEqual([], self.testcase.emailing.get_cc_list())
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk,
+                                                            [self.default_cc])
+
+
+class TestRemoveNotificationCC(APITestCase):
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.remove_notification_cc(-1, ['example@example.com'])
 
 
 class TestFilterCases(APITestCase):
@@ -63,6 +135,11 @@ class TestFilterCases(APITestCase):
                 default_tester=None,
                 plan=[self.plan])
             self.cases.append(test_case)
+
+    def test_filter_query_none(self):
+        result = self.rpc_client.TestCase.filter()
+        self.assertIsNotNone(result)
+        self.assertGreater(len(result), 0)
 
     def test_filter_by_product_id(self):
         cases = self.rpc_client.TestCase.filter({'category__product': self.product.pk})
@@ -430,6 +507,27 @@ class TestCreate(APITestCase):
             )
 
 
+class TestRemovePermissions(APIPermissionsTestCase):
+    permission_label = 'testcases.delete_testcase'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case_1 = TestCaseFactory()
+        self.case_2 = TestCaseFactory()
+        self.case_3 = TestCaseFactory()
+
+        self.query = {'pk__in': [self.case_1.pk, self.case_2.pk, self.case_3.pk]}
+
+    def verify_api_with_permission(self):
+        num_deleted, _ = self.rpc_client.TestCase.remove(self.query)
+        self.assertEqual(num_deleted, 3)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.remove(self.query)
+
+
 class TestAddTag(APITestCase):
 
     def _fixture_setup(self):
@@ -522,16 +620,47 @@ class TestAddComponent(APITestCase):
             self.rpc_client.TestCase.add_component(self.test_case.pk, self.bad_component.name)
 
 
-class TestCaseAddComment(APITestCase):
+class TestRemoveComponentPermission(APIPermissionsTestCase):
+    permission_label = 'testcases.delete_testcasecomponent'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+        self.test_case = TestCaseFactory()
+        self.good_component = ComponentFactory(product=self.test_case.category.product)
+        self.bad_component = ComponentFactory(product=self.test_case.category.product)
+        self.test_case.add_component(self.good_component)
+        self.test_case.add_component(self.bad_component)
+
+    def verify_api_with_permission(self):
+        self.rpc_client.TestCase.remove_component(self.test_case.pk,
+                                                  self.bad_component.pk)
+        result = self.test_case.component
+        self.assertEqual(result.count(), 1)
+        self.assertEqual(result.first(), self.good_component)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.remove_component(self.test_case.pk,
+                                                      self.good_component.pk)
+
+
+class TestRemoveComponent(APITestCase):
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.remove_component(-1, -1)
+
+
+class TestAddCommentPermissions(APIPermissionsTestCase):
+    permission_label = 'django_comments.add_comment'
+
     def _fixture_setup(self):
         super()._fixture_setup()
 
         self.case = TestCaseFactory()
 
-    def test_add_comment_with_pk_as_int(self):
-        created_comment = self.rpc_client.TestCase.add_comment(
-            self.case.pk,
-            "Hello World!")
+    def verify_api_with_permission(self):
+        created_comment = self.rpc_client.TestCase.add_comment(self.case.pk,
+                                                               "Hello World!")
 
         result = comments.get_comments(self.case)
         self.assertEqual(1, result.count())
@@ -539,6 +668,48 @@ class TestCaseAddComment(APITestCase):
         first_comment = result.first()
         self.assertEqual("Hello World!", first_comment.comment)
         self.assertEqual("Hello World!", created_comment['comment'])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.add_comment(self.case.pk,
+                                                 "Hello World!")
+
+
+class TestAddComment(APITestCase):
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.add_comment(-1, "Hello World!")
+
+
+class TestRemoveCommentPermissions(APIPermissionsTestCase):
+    permission_label = 'django_comments.delete_comment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case = TestCaseFactory()
+        self.comment_1 = comments.add_comment([self.case], 'First one', self.tester)[0]
+        self.comment_2 = comments.add_comment([self.case], 'Second one', self.tester)[0]
+        self.comment_3 = comments.add_comment([self.case], 'Third one', self.tester)[0]
+
+    def verify_api_with_permission(self):
+        # Remove a specific comment
+        self.rpc_client.TestCase.remove_comment(self.case.pk, self.comment_1.pk)
+        self.assertEqual(len(comments.get_comments(self.case)), 2)
+
+        # Remove all comments
+        self.rpc_client.TestCase.remove_comment(self.case.pk)
+        self.assertEqual(len(comments.get_comments(self.case)), 0)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.remove_comment(self.case.pk)
+
+
+class TestRemoveComment(APITestCase):
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.remove_comment(-1)
 
 
 class TestCaseSortkeysPermissions(APIPermissionsTestCase):
@@ -569,6 +740,11 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
         self.assertEqual(result[str(self.case_2.pk)], 15)
         self.assertEqual(result[str(self.case_3.pk)], 25)
 
+        # Test query None
+        result = self.rpc_client.TestCase.sortkeys()
+        self.assertIsNotNone(result)
+        self.assertGreater(len(result), 0)
+
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.TestCase.sortkeys({
@@ -576,7 +752,7 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
             })
 
 
-class TestCaseCommentsPermissions(APIPermissionsTestCase):
+class TestCaseCommentPermissions(APIPermissionsTestCase):
     permission_label = 'django_comments.view_comment'
 
     def _fixture_setup(self):
@@ -603,3 +779,59 @@ class TestCaseCommentsPermissions(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             self.rpc_client.TestCase.comments(self.case.pk)
+
+
+class TestAddAttachmentPermissions(APIPermissionsTestCase):
+    permission_label = 'attachments.add_attachment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case = TestCaseFactory()
+
+    def verify_api_with_permission(self):
+        self.rpc_client.TestCase.add_attachment(self.case.pk,
+                                                'test.txt',
+                                                'a2l3aXRjbXM=')
+        attachments = Attachment.objects.attachments_for_object(self.case)
+        self.assertEqual(len(attachments), 1)
+        self.assertEqual(attachments[0].object_id, str(self.case.pk))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.add_attachment(self.case.pk,
+                                                    'test.txt',
+                                                    'a2l3aXRjbXM=')
+
+
+class TestListAttachments(APITestCase):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case = TestCaseFactory()
+
+    def test_list_attachments(self):
+        self.rpc_client.TestCase.add_attachment(self.case.pk, 'attachment.txt', 'a2l3aXRjbXM=')
+        attachments = self.rpc_client.TestCase.list_attachments(self.case.pk)
+        self.assertEqual(len(attachments), 1)
+
+    def test_invalid_testcase_id(self):
+        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+            self.rpc_client.TestCase.list_attachments(-1)
+
+
+class TestListAttachmentPermissions(APIPermissionsTestCase):
+    permission_label = 'attachments.view_attachment'
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.case = TestCaseFactory()
+
+    def verify_api_with_permission(self):
+        attachments = self.rpc_client.TestCase.list_attachments(self.case.pk)
+        self.assertEqual(len(attachments), 0)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCase.list_attachments(self.case.pk)
