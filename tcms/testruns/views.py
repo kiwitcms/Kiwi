@@ -38,7 +38,6 @@ class NewTestRunView(View):
     http_method_names = ['post', 'get']
 
     def get(self, request):
-
         plan_id = request.GET.get('p')
         if not plan_id:
             messages.add_message(request,
@@ -53,7 +52,6 @@ class NewTestRunView(View):
             return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
         test_cases = TestCase.objects.filter(pk__in=request.GET.getlist('c'))
-        test_plan = TestPlan.objects.get(pk=plan_id)
 
         # note: ordered by pk for test_show_create_new_run_page()
         tcs_values = test_cases.select_related('author',
@@ -61,14 +59,15 @@ class NewTestRunView(View):
                                                'category',
                                                'priority').order_by('pk')
 
+        test_plan = TestPlan.objects.get(pk=plan_id)
         form = NewRunForm(initial={
             'summary': 'Test run for %s' % test_plan.name,
             'manager': test_plan.author.email,
             'default_tester': request.user.email,
             'notes': '',
-            'plan': test_plan
+            'plan': plan_id,
         })
-        form.populate(test_plan.pk)
+        form.populate(plan_id)
 
         context_data = {
             'test_cases': tcs_values,
@@ -78,10 +77,8 @@ class NewTestRunView(View):
         return render(request, self.template_name, context_data)
 
     def post(self, request):
-        test_plan = TestPlan.objects.get(pk=request.POST.get('plan'))
-
         form = NewRunForm(data=request.POST)
-        form.populate(test_plan.pk)
+        form.populate(request.POST.get('plan'))
 
         if form.is_valid():
             test_run = form.save()
