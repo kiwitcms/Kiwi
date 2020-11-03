@@ -170,19 +170,10 @@ def create(values):
     form.populate(values.get('plan'))
 
     if form.is_valid():
-        test_run = TestRun.objects.create(
-            product_version=form.cleaned_data['plan'].product_version,
-            summary=form.cleaned_data['summary'],
-            notes=form.cleaned_data['notes'],
-            plan=form.cleaned_data['plan'],
-            build=form.cleaned_data['build'],
-            manager=form.cleaned_data['manager'],
-            default_tester=form.cleaned_data['default_tester'],
-        )
-    else:
-        raise ValueError(form_errors_to_list(form))
+        test_run = form.save()
+        return test_run.serialize()
 
-    return test_run.serialize()
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required('testruns.view_testrun')

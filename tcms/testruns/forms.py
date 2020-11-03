@@ -29,6 +29,17 @@ class NewRunForm(forms.ModelForm):
         # as we need only the plan for current run we filter the queryset
         self.fields['plan'].queryset = self.fields['plan'].queryset.filter(pk=plan_id)
 
+        # reusing version from plan b/c TestRun.product_version is scheduled for removal
+        # vvv allow modifying an immutable QueryDict.
+        if hasattr(self.data, '_mutable'):
+            self.data._mutable = True   # pylint: disable=protected-access
+        self.data['product_version'] = self.fields['plan'].queryset.first().product_version_id
+        if hasattr(self.data, '_mutable'):
+            self.data._mutable = False  # pylint: disable=protected-access
+
+        self.fields['product_version'].queryset = Version.objects.filter(
+            pk=self.fields['plan'].queryset.first().product_version_id)
+
         self.fields['build'].queryset = Build.objects.filter(
             product_id=self.fields['plan'].queryset.first().product_id,
             is_active=True)
