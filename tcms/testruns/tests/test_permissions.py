@@ -30,6 +30,8 @@ class EditTestRunViewTestCase(PermissionsTestCase):
             'manager': cls.test_run.manager.email,
             'default_tester': intern.email,
             'notes': 'New run notes',
+            'product_version': cls.test_run.plan.product_version.pk,
+            'plan': cls.test_run.plan.pk
         }
         super().setUpTestData()
 
@@ -62,9 +64,9 @@ class EditTestRunViewTestCase(PermissionsTestCase):
             reverse('testruns-get', args=[self.test_run.pk]))
 
 
-class CreateTestRunViewTestCase(tests.PermissionsTestCase):
+class TestNewRunViewTestCase(tests.PermissionsTestCase):
     permission_label = 'testruns.add_testrun'
-    http_method_names = ['post']
+    http_method_names = ['post', 'get']
     url = reverse('testruns-new')
 
     @classmethod
@@ -76,10 +78,10 @@ class CreateTestRunViewTestCase(tests.PermissionsTestCase):
 
         cls.post_data = {
             'summary': cls.plan.name,
-            'from_plan': cls.plan.pk,
+            'plan': cls.plan.pk,
             'build': cls.build_fast.pk,
             'notes': 'Create new test run',
-            'POSTING_TO_CREATE': 'YES',
+            'product_version': cls.plan.product_version.pk,
         }
 
         super().setUpTestData()
@@ -106,6 +108,14 @@ class CreateTestRunViewTestCase(tests.PermissionsTestCase):
         cls.case_2.save()  # will generate history object
 
         cls.post_data['case'] = [cls.case_1.pk, cls.case_2.pk]
+
+    def verify_get_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.view_testrun')
+
+        response = self.client.get(self.url, {'p': self.plan.pk, 'c': self.case_1.pk})
+
+        self.assertContains(response, self.plan.name)
+        self.assertContains(response, self.case_1.summary)
 
     def verify_post_with_permission(self):
         user_should_have_perm(self.tester, 'testruns.view_testrun')
