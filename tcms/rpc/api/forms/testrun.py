@@ -4,21 +4,9 @@ from django.contrib.auth import get_user_model
 from tcms.core.forms.fields import UserField
 from tcms.management.models import Build
 from tcms.rpc.api.forms import UpdateModelFormMixin, DateTimeField
-from tcms.testplans.models import TestPlan
-from tcms.testruns.forms import BaseRunForm
 from tcms.testruns.models import TestRun, TestExecution
 
 User = get_user_model()  # pylint: disable=invalid-name
-
-
-class NewForm(BaseRunForm):
-    plan = forms.ModelChoiceField(
-        queryset=TestPlan.objects.none(),
-    )
-
-    def assign_plan(self, plan_id):
-        self.fields['plan'].queryset = TestPlan.objects.filter(pk=plan_id)
-        self.populate(self.fields['plan'].queryset.first().product_id)
 
 
 class UpdateForm(UpdateModelFormMixin, forms.ModelForm):

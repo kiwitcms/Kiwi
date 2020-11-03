@@ -68,7 +68,7 @@ class NewTestRunView(View):
             'notes': '',
             'plan': test_plan
         })
-        form.populate(test_plan)
+        form.populate(test_plan.pk)
 
         context_data = {
             'test_cases': tcs_values,
@@ -81,7 +81,7 @@ class NewTestRunView(View):
         test_plan = TestPlan.objects.get(pk=request.POST.get('plan'))
 
         form = NewRunForm(data=request.POST)
-        form.populate(test_plan)
+        form.populate(test_plan.pk)
 
         if form.is_valid():
             test_run = form.save()
@@ -282,7 +282,7 @@ class EditTestRunView(UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.populate(self.object.plan)
+        form.populate(self.object.plan_id)
 
         return form
 
@@ -379,7 +379,7 @@ class CloneTestRunView(View):
             'plan': test_run.plan
         })
 
-        form.populate(test_plan=test_run.plan)
+        form.populate(test_run.plan_id)
 
         context_data = {
             'is_cloning': True,
