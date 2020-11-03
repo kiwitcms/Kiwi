@@ -3,9 +3,10 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
-from tcms.rpc.api.forms.testrun import NewForm, UpdateForm
+from tcms.rpc.api.forms.testrun import UpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase
+from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import TestExecution, TestRun
 
 __all__ = (
@@ -165,8 +166,8 @@ def create(values):
             }
             >>> TestRun.create(values)
     """
-    form = NewForm(values)
-    form.assign_plan(values.get('plan'))
+    form = NewRunForm(values)
+    form.populate(values.get('plan'))
 
     if form.is_valid():
         test_run = TestRun.objects.create(
