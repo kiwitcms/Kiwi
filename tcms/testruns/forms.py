@@ -11,18 +11,6 @@ from .models import TestRun
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-class BaseRunForm(forms.ModelForm):
-    class Meta:
-        model = TestRun
-        fields = ['notes', 'default_tester', 'build', 'manager', 'summary']
-
-    manager = UserField()
-    default_tester = UserField(required=False)
-
-    def populate(self, product_id):
-        self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
-
-
 class NewRunForm(forms.ModelForm):
     class Meta:
         model = TestRun
@@ -36,17 +24,17 @@ class NewRunForm(forms.ModelForm):
         required=False,
     )
 
-    def populate(self, test_plan):
-        self.fields['build'].queryset = Build.objects.filter(product_id=test_plan.product_id,
-                                                             is_active=True)
-        self.fields['case'].queryset = TestCase.objects.filter(
-            case_status=TestCaseStatus.get_confirmed()).all()
+    def populate(self, plan_id):
         # plan is ModelChoiceField which contains all the plans
         # as we need only the plan for current run we filter the queryset
-        self.fields['plan'].queryset = self.fields['plan'].queryset.filter(pk=test_plan.pk)
+        self.fields['plan'].queryset = self.fields['plan'].queryset.filter(pk=plan_id)
 
+        self.fields['build'].queryset = Build.objects.filter(
+            product_id=self.fields['plan'].queryset.first().product_id,
+            is_active=True)
+        self.fields['case'].queryset = TestCase.objects.filter(
+            case_status=TestCaseStatus.get_confirmed()).all()
 
-# =========== Forms for search/filter ==============
 
 class SearchRunForm(forms.Form):
     """
