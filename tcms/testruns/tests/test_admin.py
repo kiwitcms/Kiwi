@@ -56,7 +56,7 @@ class TestTestExecutionStatusAdmin(LoggedInTestCase):
         super().setUpTestData()
         initiate_user_with_default_setups(cls.tester)
 
-    def test_admin_testrun_execution_status_color(self):
+    def test_changelist_view_color_column(self):
         response = self.client.get(reverse('admin:testruns_testexecutionstatus_changelist'))
         self.assertContains(response, (
             '''
@@ -64,4 +64,11 @@ class TestTestExecutionStatusAdmin(LoggedInTestCase):
                          color: black; font-weight: bold">
                 #92d400
             </span>
+            '''))
+
+    def test_changelist_view_icon_column(self):
+        response = self.client.get(reverse('admin:testruns_testexecutionstatus_changelist'))
+        self.assertContains(response, (
+            '''
+            <span class="fa fa-check-circle-o" style="font-size: 18px; color: #92d400;"></span>
             '''))
