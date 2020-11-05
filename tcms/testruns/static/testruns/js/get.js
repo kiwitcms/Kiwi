@@ -303,7 +303,7 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
 
     if (!permissions.addComment) {
-        template.find('.comment-form').css('display', 'none')
+        template.find('.comment-form').hide()
         return template
     }
 
