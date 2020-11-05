@@ -17,7 +17,7 @@ def login(username, password, **kwargs):  # pylint: disable=missing-api-permissi
 
         Login into Kiwi TCMS.
 
-        :param username: A Kiwi TCMS login or email address
+        :param username: A Kiwi TCMS login
         :type username: str
         :param password: The password
         :type password: str
