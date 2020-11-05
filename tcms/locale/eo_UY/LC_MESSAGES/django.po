@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-19 20:42\n"
+"POT-Creation-Date: 2020-11-05 22:19+0000\n"
+"PO-Revision-Date: 2020-11-05 22:43\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -62,17 +62,17 @@ msgstr "crwdns790:0crwdne790:0"
 #: tcms/bugs/templates/bugs/search.html:104
 #: tcms/telemetry/templates/telemetry/include/filters.html:11
 #: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:13
-#: tcms/templates/plan/get.html:56 tcms/templates/run/get.html:104
-#: tcms/templates/run/report.html:35
+#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:41
 #: tcms/testcases/templates/testcases/search.html:41
 #: tcms/testplans/templates/testplans/clone.html:20
+#: tcms/testplans/templates/testplans/get.html:63
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
@@ -84,8 +84,8 @@ msgstr "crwdns361:0crwdne361:0"
 #: tcms/bugs/templates/bugs/search.html:105
 #: tcms/telemetry/templates/telemetry/include/filters.html:20
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:76
-#: tcms/templates/plan/get.html:60
 #: tcms/testplans/templates/testplans/clone.html:35
+#: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:115
@@ -101,9 +101,9 @@ msgstr "crwdns384:0crwdne384:0"
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:17
-#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
+#: tcms/templates/run/assign_case.html:23 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
-#: tcms/testruns/templates/testruns/mutable.html:31
+#: tcms/testruns/templates/testruns/mutable.html:32
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
@@ -119,10 +119,10 @@ msgstr "crwdns1102:0crwdne1102:0"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
-#: tcms/templates/case/get_details.html:93
 #: tcms/testcases/templates/testcases/mutable.html:229
+#: tcms/testplans/templates/testplans/get.html:438
 #: tcms/testplans/templates/testplans/mutable.html:154
-#: tcms/testruns/templates/testruns/mutable.html:72
+#: tcms/testruns/templates/testruns/mutable.html:73
 msgid "Save"
 msgstr "crwdns407:0crwdne407:0"
 
@@ -133,14 +133,16 @@ msgstr "crwdns1026:0crwdne1026:0"
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
 #: tcms/bugs/templates/bugs/search.html:102
-#: tcms/templates/plan/search_case.html:77
+#: tcms/templates/include/tp_toolbar_dropdown.html:3
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:22
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testplans/templates/testplans/get.html:211
+#: tcms/testplans/templates/testplans/get.html:448
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:94
+#: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
@@ -161,8 +163,8 @@ msgstr "crwdns454:0crwdne454:0"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
+#: tcms/testruns/templates/testruns/mutable.html:36
 msgid "add new Build"
 msgstr "crwdns401:0crwdne401:0"
 
@@ -198,17 +200,16 @@ msgstr "crwdns366:0crwdne366:0"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
 msgstr "crwdns392:0crwdne392:0"
 
 #: tcms/bugs/templates/bugs/search.html:101
-#: tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:76
-#: tcms/templates/run/assign_case.html:71
+#: tcms/templates/run/assign_case.html:70
 #: tcms/testcases/templates/testcases/get.html:162
-#: tcms/testcases/templates/testcases/search.html:135
+#: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
@@ -219,39 +220,38 @@ msgstr "crwdns393:0crwdne393:0"
 msgid "Created at"
 msgstr "crwdns1030:0crwdne1030:0"
 
-#: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:527
+#: tcms/bugs/views.py:40 tcms/testcases/views.py:290
+#: tcms/testplans/templates/testplans/get.html:341 tcms/testplans/views.py:133
 msgid "Edit"
 msgstr "crwdns510:0crwdne510:0"
 
-#: tcms/bugs/views.py:46 tcms/testcases/views.py:540
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:303
+#: tcms/testplans/views.py:146
 msgid "Object permissions"
 msgstr "crwdns1240:0crwdne1240:0"
 
-#: tcms/bugs/views.py:51 tcms/testcases/views.py:545
+#: tcms/bugs/views.py:50
+#: tcms/templates/include/comments_for_object_template.html:10
+#: tcms/testcases/views.py:308 tcms/testplans/templates/testplans/get.html:192
+#: tcms/testplans/templates/testplans/get.html:345 tcms/testplans/views.py:151
 msgid "Delete"
 msgstr "crwdns516:0crwdne516:0"
 
-#: tcms/bugs/views.py:76
+#: tcms/bugs/views.py:75
 msgid "New bug"
 msgstr "crwdns1032:0crwdne1032:0"
 
-#: tcms/bugs/views.py:182
+#: tcms/bugs/views.py:181
 msgid "Edit bug"
 msgstr "crwdns1034:0crwdne1034:0"
 
-#: tcms/bugs/views.py:213
+#: tcms/bugs/views.py:211
 msgid "*bug closed*"
 msgstr "crwdns1036:0crwdne1036:0"
 
-#: tcms/bugs/views.py:217
+#: tcms/bugs/views.py:215
 msgid "*bug reopened*"
 msgstr "crwdns1104:0crwdne1104:0"
-
-#: tcms/core/ajax.py:150
-#, python-format
-msgid "User %s not found!"
-msgstr "crwdns322:0%scrwdne322:0"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -335,112 +335,112 @@ msgstr "crwdns1112:0crwdne1112:0"
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "crwdns442:0%scrwdne442:0"
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:289
 msgid "DASHBOARD"
 msgstr "crwdns330:0crwdne330:0"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:290
 msgid "TESTING"
 msgstr "crwdns331:0crwdne331:0"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:291
 msgid "New Test Plan"
 msgstr "crwdns332:0crwdne332:0"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:293 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "crwdns333:0crwdne333:0"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:295
 msgid "New Bug"
 msgstr "crwdns1040:0crwdne1040:0"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:298
 msgid "SEARCH"
 msgstr "crwdns334:0crwdne334:0"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:299
 msgid "Search Test Plans"
 msgstr "crwdns335:0crwdne335:0"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:300
 msgid "Search Test Runs"
 msgstr "crwdns336:0crwdne336:0"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "Search Test Cases"
 msgstr "crwdns337:0crwdne337:0"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "Search Bugs"
 msgstr "crwdns1042:0crwdne1042:0"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "TELEMETRY"
 msgstr "crwdns912:0crwdne912:0"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:306
 msgid "Testing"
 msgstr "crwdns952:0crwdne952:0"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "Breakdown"
 msgstr "crwdns954:0crwdne954:0"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:308
 msgid "Status matrix"
 msgstr "crwdns972:0crwdne972:0"
 
-#: tcms/settings/common.py:308
+#: tcms/settings/common.py:309
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "crwdns980:0crwdne980:0"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "TestCase health"
 msgstr "crwdns1038:0crwdne1038:0"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:315
 msgid "ADMIN"
 msgstr "crwdns344:0crwdne344:0"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:316
 msgid "Users and groups"
 msgstr "crwdns347:0crwdne347:0"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Everything else"
 msgstr "crwdns348:0crwdne348:0"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "PLUGINS"
 msgstr "crwdns1085:0crwdne1085:0"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:331
 msgid "Forum"
 msgstr "crwdns1096:0crwdne1096:0"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "Report an Issue"
 msgstr "crwdns417:0crwdne417:0"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:333
 msgid "Ask for help on StackOverflow"
 msgstr "crwdns418:0crwdne418:0"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:334
 msgid "Donate €5 via Open Collective"
 msgstr "crwdns1206:0crwdne1206:0"
 
-#: tcms/settings/common.py:334
+#: tcms/settings/common.py:335
 msgid "Administration Guide"
 msgstr "crwdns420:0crwdne420:0"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:336
 msgid "User Guide"
 msgstr "crwdns419:0crwdne419:0"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:337
 msgid "API Help"
 msgstr "crwdns421:0crwdne421:0"
 
@@ -474,7 +474,7 @@ msgid "Detailed information about test execution status"
 msgstr "crwdns1082:0crwdne1082:0"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/assign_case.html:31 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
 msgstr "crwdns756:0crwdne756:0"
@@ -488,19 +488,21 @@ msgid "Total"
 msgstr "crwdns958:0crwdne958:0"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
-#: tcms/templates/plan/get_cases.html:107
-#: tcms/templates/plan/get_cases.html:187
+#: tcms/templates/include/tp_toolbar_dropdown.html:5
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
 #: tcms/templates/run/table_executions.html:20
 #: tcms/testcases/templates/testcases/get.html:92
 #: tcms/testcases/templates/testcases/mutable.html:96
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testcases/templates/testcases/search.html:143
+#: tcms/testplans/templates/testplans/get.html:363
+#: tcms/testplans/templates/testplans/get.html:450
 msgid "Automated"
 msgstr "crwdns424:0crwdne424:0"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
+#: tcms/testplans/templates/testplans/get.html:363
 msgid "Manual"
 msgstr "crwdns792:0crwdne792:0"
 
@@ -599,75 +601,6 @@ msgstr "crwdns914:0crwdne914:0"
 msgid "the leading open source test case management system"
 msgstr "crwdns352:0crwdne352:0"
 
-#: tcms/templates/case/get_details.html:8
-#: tcms/testcases/templates/testcases/mutable.html:104
-#: tcms/testcases/templates/testcases/search.html:117
-msgid "Text"
-msgstr "crwdns526:0crwdne526:0"
-
-#: tcms/templates/case/get_details.html:12
-msgid "Attachment"
-msgstr "crwdns600:0crwdne600:0"
-
-#: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:137
-msgid "No attachment found"
-msgstr "crwdns602:0crwdne602:0"
-
-#: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:147
-#: tcms/templates/plan/get_cases.html:123
-#: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:139
-msgid "Component"
-msgstr "crwdns427:0crwdne427:0"
-
-#: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:152
-msgid "No component found"
-msgstr "crwdns604:0crwdne604:0"
-
-#: tcms/templates/case/get_details.html:32
-#: tcms/templates/management/get_tag.html:6
-#: tcms/templates/plan/get_cases.html:127
-#: tcms/templates/run/get_case_runs.html:112
-#: tcms/testcases/templates/testcases/search.html:111
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Tag"
-msgstr "crwdns388:0crwdne388:0"
-
-#: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:163
-#: tcms/templates/management/get_tag.html:28
-msgid "No tag found"
-msgstr "crwdns606:0crwdne606:0"
-
-#: tcms/templates/case/get_details.html:40
-msgid "bug"
-msgstr "crwdns608:0crwdne608:0"
-
-#: tcms/templates/case/get_details.html:45
-msgid "From Run"
-msgstr "crwdns610:0crwdne610:0"
-
-#: tcms/templates/case/get_details.html:49
-msgid "No bug found"
-msgstr "crwdns612:0crwdne612:0"
-
-#: tcms/templates/case/get_details.html:56
-#: tcms/testcases/templates/testcases/get.html:32
-#: tcms/testcases/templates/testcases/mutable.html:138
-#: tcms/testruns/templates/testruns/mutable.html:64
-msgid "Notes"
-msgstr "crwdns406:0crwdne406:0"
-
-#: tcms/templates/case/get_details.html:62
-#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
-#: tcms/templates/run/table_executions.html:25
-msgid "Comments"
-msgstr "crwdns614:0crwdne614:0"
-
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
 msgstr "crwdns938:0crwdne938:0"
@@ -690,12 +623,12 @@ msgstr "crwdns1054:0crwdne1054:0"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
-#: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
 #: tcms/templates/run/get_case_runs.html:47
 #: tcms/templates/run/get_case_runs.html:55
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
+#: tcms/testplans/templates/testplans/get.html:257
 msgid "Add"
 msgstr "crwdns496:0crwdne496:0"
 
@@ -703,17 +636,24 @@ msgstr "crwdns496:0crwdne496:0"
 msgid "Report bug"
 msgstr "crwdns1056:0crwdne1056:0"
 
-#: tcms/templates/case/printable.html:31
-msgid "Contents"
-msgstr "crwdns630:0crwdne630:0"
+#: tcms/templates/case/get_details_case_run.html:137
+msgid "No attachment found"
+msgstr "crwdns602:0crwdne602:0"
 
-#: tcms/templates/case/printable.html:41
-msgid "Test Plan Document"
-msgstr "crwdns632:0crwdne632:0"
+#: tcms/templates/case/get_details_case_run.html:147
+#: tcms/testcases/templates/testcases/search.html:61
+#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testplans/templates/testplans/get.html:215
+msgid "Component"
+msgstr "crwdns427:0crwdne427:0"
 
-#: tcms/templates/case/printable.html:49
-msgid "Test Cases"
-msgstr "crwdns634:0crwdne634:0"
+#: tcms/templates/case/get_details_case_run.html:152
+msgid "No component found"
+msgstr "crwdns604:0crwdne604:0"
+
+#: tcms/templates/case/get_details_case_run.html:163
+msgid "No tag found"
+msgstr "crwdns606:0crwdne606:0"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -823,7 +763,8 @@ msgid "Dear Administrator,\n"
 "Go to %(user_url)s to activate the account!"
 msgstr "crwdns1010:0%(username)scrwdnd1010:0%(user_url)scrwdne1010:0"
 
-#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
+#: tcms/templates/include/attachments.html:7
+#: tcms/testplans/templates/testplans/get.html:398
 msgid "Attachments"
 msgstr "crwdns500:0crwdne500:0"
 
@@ -840,28 +781,31 @@ msgid "Date"
 msgstr "crwdns506:0crwdne506:0"
 
 #: tcms/templates/include/attachments.html:31
+#: tcms/testplans/templates/testplans/get.html:293
 msgid "No records found"
 msgstr "crwdns508:0crwdne508:0"
 
 #: tcms/templates/include/bug_details.html:3
-#: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
-#: tcms/templates/plan/get_cases.html:192
-#: tcms/templates/plan/search_case.html:82 tcms/templates/run/get.html:126
-#: tcms/templates/run/get_case_runs.html:34
+#: tcms/templates/include/tp_toolbar_dropdown.html:4
+#: tcms/templates/run/get.html:126 tcms/templates/run/get_case_runs.html:34
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:72
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:141
-#: tcms/testruns/templates/testruns/mutable.html:97
+#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testplans/templates/testplans/get.html:148
+#: tcms/testplans/templates/testplans/get.html:324
+#: tcms/testplans/templates/testplans/get.html:357
+#: tcms/testplans/templates/testplans/get.html:449
+#: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Status"
 msgstr "crwdns411:0crwdne411:0"
 
-#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
-#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
+#: tcms/templates/include/tags_card.html:6 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
-#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testcases/templates/testcases/search.html:145
+#: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
@@ -872,39 +816,81 @@ msgstr "crwdns494:0crwdne494:0"
 #: tcms/testcases/templates/testcases/get.html:163
 #: tcms/testcases/templates/testcases/get.html:211
 #: tcms/testplans/templates/testplans/clone.html:13
+#: tcms/testplans/templates/testplans/get.html:204
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "crwdns226:0crwdne226:0"
 
-#: tcms/templates/management/get_tag.html:7
-msgid "Plans"
-msgstr "crwdns636:0crwdne636:0"
+#: tcms/templates/include/tp_toolbar_dropdown.html:6
+#: tcms/templates/run/assign_case.html:75
+#: tcms/templates/run/get_case_runs.html:103
+#: tcms/templates/run/table_executions.html:22
+#: tcms/testcases/templates/testcases/get.html:78
+#: tcms/testcases/templates/testcases/mutable.html:84
+#: tcms/testcases/templates/testcases/search.html:73
+#: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testplans/templates/testplans/get.html:161
+#: tcms/testplans/templates/testplans/get.html:332
+#: tcms/testplans/templates/testplans/get.html:365
+#: tcms/testplans/templates/testplans/get.html:451
+#: tcms/testruns/templates/testruns/mutable.html:98
+msgid "Priority"
+msgstr "crwdns413:0crwdne413:0"
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
-#: tcms/templates/plan/get_cases.html:139
-msgid "Cases"
-msgstr "crwdns638:0crwdne638:0"
+#: tcms/templates/include/tp_toolbar_dropdown.html:7
+#: tcms/templates/run/assign_case.html:74 tcms/templates/run/report.html:69
+#: tcms/templates/run/table_executions.html:21
+#: tcms/testcases/templates/testcases/get.html:63
+#: tcms/testcases/templates/testcases/mutable.html:56
+#: tcms/testcases/templates/testcases/search.html:51
+#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testplans/templates/testplans/get.html:369
+#: tcms/testplans/templates/testplans/get.html:452
+#: tcms/testruns/templates/testruns/mutable.html:97
+msgid "Category"
+msgstr "crwdns412:0crwdne412:0"
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
-msgid "Runs"
-msgstr "crwdns640:0crwdne640:0"
+#: tcms/templates/include/tp_toolbar_dropdown.html:8
+#: tcms/templates/run/assign_case.html:72
+#: tcms/testcases/templates/testcases/get.html:42
+#: tcms/testcases/templates/testcases/get.html:164
+#: tcms/testcases/templates/testcases/mutable.html:152
+#: tcms/testcases/templates/testcases/search.html:106
+#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testplans/templates/testplans/get.html:53
+#: tcms/testplans/templates/testplans/get.html:373
+#: tcms/testplans/templates/testplans/get.html:453
+#: tcms/testplans/templates/testplans/mutable.html:104
+#: tcms/testplans/templates/testplans/search.html:74
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/mutable.html:94
+msgid "Author"
+msgstr "crwdns385:0crwdne385:0"
 
-#: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/get_attachments.html:10
-msgid "Action"
-msgstr "crwdns550:0crwdne550:0"
+#: tcms/templates/include/tp_toolbar_dropdown.html:9
+#: tcms/templates/run/get_case_runs.html:72
+#: tcms/testcases/templates/testcases/get.html:47
+#: tcms/testcases/templates/testcases/mutable.html:34
+#: tcms/testcases/templates/testcases/mutable.html:175
+#: tcms/testplans/templates/testplans/get.html:174
+#: tcms/testplans/templates/testplans/get.html:339
+#: tcms/testplans/templates/testplans/get.html:377
+#: tcms/testplans/templates/testplans/get.html:454
+#: tcms/testplans/templates/testplans/mutable.html:116
+#: tcms/testplans/templates/testplans/search.html:80
+#: tcms/testruns/templates/testruns/mutable.html:56
+#: tcms/testruns/templates/testruns/search.html:61
+#: tcms/testruns/templates/testruns/search.html:100
+msgid "Default tester"
+msgstr "crwdns429:0crwdne429:0"
 
-#: tcms/templates/management/get_tag.html:21
-#: tcms/templates/management/get_tag.html:23
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-#: tcms/templates/run/get_case_runs.html:23
-msgid "Remove"
-msgstr "crwdns642:0crwdne642:0"
-
-#: tcms/templates/management/get_tag.html:35
-msgid "Add Tag"
-msgstr "crwdns644:0crwdne644:0"
+#: tcms/templates/include/tp_toolbar_dropdown.html:10
+#: tcms/testplans/templates/testplans/get.html:181
+#: tcms/testplans/templates/testplans/get.html:382
+#: tcms/testplans/templates/testplans/get.html:455
+msgid "Reviewer"
+msgstr "crwdns712:0crwdne712:0"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -968,307 +954,29 @@ msgstr "crwdns1066:0crwdne1066:0"
 msgid "Translation guide"
 msgstr "crwdns1068:0crwdne1068:0"
 
-#: tcms/templates/pagination.html:7
+#: tcms/templates/pagination.html:6
+msgid "Select"
+msgstr "crwdns1242:0crwdne1242:0"
+
+#: tcms/templates/pagination.html:13
 msgid "First page"
 msgstr "crwdns437:0crwdne437:0"
 
-#: tcms/templates/pagination.html:10
+#: tcms/templates/pagination.html:16
 msgid "Previous page"
 msgstr "crwdns438:0crwdne438:0"
 
-#: tcms/templates/pagination.html:14
+#: tcms/templates/pagination.html:20
 msgid "Current page"
 msgstr "crwdns439:0crwdne439:0"
 
-#: tcms/templates/pagination.html:22
+#: tcms/templates/pagination.html:28
 msgid "Next page"
 msgstr "crwdns440:0crwdne440:0"
 
-#: tcms/templates/pagination.html:25
+#: tcms/templates/pagination.html:31
 msgid "Last page"
 msgstr "crwdns441:0crwdne441:0"
-
-#: tcms/templates/plan/cases_rows.html:73
-msgid "No test case was found in this plan."
-msgstr "crwdns660:0crwdne660:0"
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit Plan"
-msgstr "crwdns856:0crwdne856:0"
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit test plan"
-msgstr "crwdns858:0crwdne858:0"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone Plan"
-msgstr "crwdns662:0crwdne662:0"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone this plan to other product"
-msgstr "crwdns860:0crwdne860:0"
-
-#: tcms/templates/plan/get.html:42
-msgid "Print Plan"
-msgstr "crwdns862:0crwdne862:0"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete Plan"
-msgstr "crwdns864:0crwdne864:0"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete test plan"
-msgstr "crwdns866:0crwdne866:0"
-
-#: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171
-#: tcms/templates/plan/search_case.html:78
-#: tcms/templates/run/assign_case.html:73
-#: tcms/testcases/templates/testcases/get.html:42
-#: tcms/testcases/templates/testcases/get.html:164
-#: tcms/testcases/templates/testcases/mutable.html:152
-#: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:143
-#: tcms/testplans/templates/testplans/mutable.html:104
-#: tcms/testplans/templates/testplans/search.html:74
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/mutable.html:95
-msgid "Author"
-msgstr "crwdns385:0crwdne385:0"
-
-#: tcms/templates/plan/get.html:64
-msgid "Plan Type"
-msgstr "crwdns562:0crwdne562:0"
-
-#: tcms/templates/plan/get.html:70
-msgid "Reference Link"
-msgstr "crwdns586:0crwdne586:0"
-
-#: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
-#: tcms/templates/run/table_executions.html:53
-#: tcms/templates/run/table_executions.html:59
-msgid "None"
-msgstr "crwdns674:0crwdne674:0"
-
-#: tcms/templates/plan/get.html:80
-msgid "Create Time"
-msgstr "crwdns676:0crwdne676:0"
-
-#: tcms/templates/plan/get.html:85
-msgid "Parent"
-msgstr "crwdns678:0crwdne678:0"
-
-#: tcms/templates/plan/get.html:95
-msgid "View Edit History"
-msgstr "crwdns680:0crwdne680:0"
-
-#: tcms/templates/plan/get.html:104
-msgid "Document"
-msgstr "crwdns682:0crwdne682:0"
-
-#: tcms/templates/plan/get.html:110
-msgid "Reviewing Cases"
-msgstr "crwdns684:0crwdne684:0"
-
-#: tcms/templates/plan/get.html:122
-msgid "Tree View"
-msgstr "crwdns686:0crwdne686:0"
-
-#: tcms/templates/plan/get.html:131
-msgid "The document for this plan hasn't been written yet."
-msgstr "crwdns688:0crwdne688:0"
-
-#: tcms/templates/plan/get_attachments.html:7
-msgid "File name"
-msgstr "crwdns544:0crwdne544:0"
-
-#: tcms/templates/plan/get_attachments.html:8
-msgid "Submitter"
-msgstr "crwdns546:0crwdne546:0"
-
-#: tcms/templates/plan/get_attachments.html:9
-msgid "Create date"
-msgstr "crwdns548:0crwdne548:0"
-
-#: tcms/templates/plan/get_attachments.html:23
-msgid "No attachments"
-msgstr "crwdns692:0crwdne692:0"
-
-#: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
-#: tcms/templates/plan/get_cases.html:91
-msgid "Case"
-msgstr "crwdns694:0crwdne694:0"
-
-#: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
-msgid "Write new case"
-msgstr "crwdns868:0crwdne868:0"
-
-#: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
-#: tcms/templates/plan/search_case.html:4
-msgid "Add cases from other plans"
-msgstr "crwdns726:0crwdne726:0"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "Print"
-msgstr "crwdns870:0crwdne870:0"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "print view of selected cases"
-msgstr "crwdns872:0crwdne872:0"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
-#: tcms/testplans/templates/testplans/clone.html:70
-msgid "Clone"
-msgstr "crwdns512:0crwdne512:0"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-msgid "Clone selected cases to another test plan"
-msgstr "crwdns874:0crwdne874:0"
-
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-msgid "Remove selected cases from this plan"
-msgstr "crwdns876:0crwdne876:0"
-
-#: tcms/templates/plan/get_cases.html:40
-msgid "Run"
-msgstr "crwdns696:0crwdne696:0"
-
-#: tcms/templates/plan/get_cases.html:42
-msgid "Create new TestRun"
-msgstr "crwdns878:0crwdne878:0"
-
-#: tcms/templates/plan/get_cases.html:48
-msgid "Change TestCase reviewer"
-msgstr "crwdns880:0crwdne880:0"
-
-#: tcms/templates/plan/get_cases.html:50
-msgid "Change default tester"
-msgstr "crwdns882:0crwdne882:0"
-
-#: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
-#: tcms/templates/plan/get_cases.html:202
-#: tcms/templates/plan/search_case.html:80
-#: tcms/templates/run/assign_case.html:76
-#: tcms/templates/run/get_case_runs.html:103
-#: tcms/templates/run/table_executions.html:22
-#: tcms/testcases/templates/testcases/get.html:78
-#: tcms/testcases/templates/testcases/mutable.html:84
-#: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:140
-#: tcms/testruns/templates/testruns/mutable.html:99
-msgid "Priority"
-msgstr "crwdns413:0crwdne413:0"
-
-#: tcms/templates/plan/get_cases.html:69
-msgid "Click to show filter options"
-msgstr "crwdns884:0crwdne884:0"
-
-#: tcms/templates/plan/get_cases.html:69
-#: tcms/templates/run/get_case_runs.html:6
-msgid "Show filter options"
-msgstr "crwdns698:0crwdne698:0"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "crwdns886:0crwdne886:0"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Re-order cases"
-msgstr "crwdns700:0crwdne700:0"
-
-#: tcms/templates/plan/get_cases.html:81
-#: tcms/templates/run/get_case_runs.html:130
-msgid "No tags in cases"
-msgstr "crwdns702:0crwdne702:0"
-
-#: tcms/templates/plan/get_cases.html:99
-#: tcms/templates/run/table_executions.html:18
-msgid "Tester"
-msgstr "crwdns704:0crwdne704:0"
-
-#: tcms/templates/plan/get_cases.html:115
-#: tcms/templates/plan/get_cases.html:197
-#: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
-#: tcms/templates/run/table_executions.html:21
-#: tcms/testcases/templates/testcases/get.html:63
-#: tcms/testcases/templates/testcases/mutable.html:56
-#: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:138
-#: tcms/testruns/templates/testruns/mutable.html:98
-msgid "Category"
-msgstr "crwdns412:0crwdne412:0"
-
-#: tcms/templates/plan/get_cases.html:131
-msgid "Items per page"
-msgstr "crwdns706:0crwdne706:0"
-
-#: tcms/templates/plan/get_cases.html:146
-msgid "Also select all cases that are not yet shown below."
-msgstr "crwdns708:0crwdne708:0"
-
-#: tcms/templates/plan/get_cases.html:166
-#: tcms/templates/run/assign_case.html:72
-msgid "Test Case Summary"
-msgstr "crwdns710:0crwdne710:0"
-
-#: tcms/templates/plan/get_cases.html:177
-msgid "Reviewer"
-msgstr "crwdns712:0crwdne712:0"
-
-#: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
-#: tcms/templates/run/report.html:41
-msgid "Default Tester"
-msgstr "crwdns584:0crwdne584:0"
-
-#: tcms/templates/plan/get_cases.html:205
-msgid "Text version"
-msgstr "crwdns714:0crwdne714:0"
-
-#: tcms/templates/plan/get_cases.html:211
-msgid "Actions"
-msgstr "crwdns716:0crwdne716:0"
-
-#: tcms/templates/plan/get_cases.html:220
-msgid "Show more"
-msgstr "crwdns888:0crwdne888:0"
-
-#: tcms/templates/plan/get_cases.html:222
-msgid "cases left"
-msgstr "crwdns718:0crwdne718:0"
-
-#: tcms/templates/plan/get_cases.html:224
-msgid "All cases have been loaded."
-msgstr "crwdns720:0crwdne720:0"
-
-#: tcms/templates/plan/get_treeview.html:4
-msgid "Add child node to current plan"
-msgstr "crwdns890:0crwdne890:0"
-
-#: tcms/templates/plan/get_treeview.html:6
-msgid "Remove child node from current plan"
-msgstr "crwdns892:0crwdne892:0"
-
-#: tcms/templates/plan/search_case.html:25
-msgid "Search cases to add into this test plan."
-msgstr "crwdns728:0crwdne728:0"
-
-#: tcms/templates/plan/search_case.html:36
-msgid "Quick Search"
-msgstr "crwdns730:0crwdne730:0"
-
-#: tcms/templates/plan/search_case.html:41
-msgid "Normal Search"
-msgstr "crwdns732:0crwdne732:0"
-
-#: tcms/templates/plan/search_case.html:81
-msgid "Created"
-msgstr "crwdns588:0crwdne588:0"
-
-#: tcms/templates/plan/search_case.html:111
-msgid "No test cases found."
-msgstr "crwdns734:0crwdne734:0"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1355,47 +1063,51 @@ msgstr "crwdns377:0crwdne377:0"
 msgid "Add TestCase to TestRun"
 msgstr "crwdns754:0crwdne754:0"
 
-#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
+#: tcms/templates/run/assign_case.html:27 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
-#: tcms/testruns/templates/testruns/mutable.html:48
+#: tcms/testruns/templates/testruns/mutable.html:49
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "crwdns403:0crwdne403:0"
 
-#: tcms/templates/run/assign_case.html:34
+#: tcms/templates/run/assign_case.html:33
 msgid "All Confirmed Cases"
 msgstr "crwdns758:0crwdne758:0"
 
-#: tcms/templates/run/assign_case.html:40
+#: tcms/templates/run/assign_case.html:39
 msgid "Test Cases in Run"
 msgstr "crwdns760:0crwdne760:0"
 
-#: tcms/templates/run/assign_case.html:47
+#: tcms/templates/run/assign_case.html:46
 msgid "Cases in this Run"
 msgstr "crwdns762:0crwdne762:0"
 
-#: tcms/templates/run/assign_case.html:49
+#: tcms/templates/run/assign_case.html:48
 msgid "Use the sortkey stored in plan"
 msgstr "crwdns764:0crwdne764:0"
 
-#: tcms/templates/run/assign_case.html:53
+#: tcms/templates/run/assign_case.html:52
 msgid "How to Assign case?"
 msgstr "crwdns766:0crwdne766:0"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "The table below list all the confirmed test cases of plan"
 msgstr "crwdns768:0crwdne768:0"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "check the checkbox to add cases into test run. Remember to update at last"
 msgstr "crwdns770:0crwdne770:0"
 
-#: tcms/templates/run/assign_case.html:74
+#: tcms/templates/run/assign_case.html:71
+msgid "Test Case Summary"
+msgstr "crwdns710:0crwdne710:0"
+
+#: tcms/templates/run/assign_case.html:73
 msgid "Created Date"
 msgstr "crwdns772:0crwdne772:0"
 
-#: tcms/templates/run/assign_case.html:77
+#: tcms/templates/run/assign_case.html:76
 msgid "Selected"
 msgstr "crwdns774:0crwdne774:0"
 
@@ -1406,6 +1118,10 @@ msgstr "crwdns560:0crwdne560:0"
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
 msgstr "crwdns776:0crwdne776:0"
+
+#: tcms/templates/run/get.html:116 tcms/templates/run/report.html:41
+msgid "Default Tester"
+msgstr "crwdns584:0crwdne584:0"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
@@ -1424,6 +1140,10 @@ msgstr "crwdns780:0crwdne780:0"
 msgid "CC"
 msgstr "crwdns782:0crwdne782:0"
 
+#: tcms/templates/run/get_case_runs.html:6
+msgid "Show filter options"
+msgstr "crwdns698:0crwdne698:0"
+
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
 msgstr "crwdns784:0crwdne784:0"
@@ -1435,6 +1155,10 @@ msgstr "crwdns786:0crwdne786:0"
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
 msgstr "crwdns964:0crwdne964:0"
+
+#: tcms/templates/run/get_case_runs.html:23
+msgid "Remove"
+msgstr "crwdns642:0crwdne642:0"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1456,18 +1180,6 @@ msgstr "crwdns229:0crwdne229:0"
 msgid "Hyperlink"
 msgstr "crwdns1070:0crwdne1070:0"
 
-#: tcms/templates/run/get_case_runs.html:72
-#: tcms/testcases/templates/testcases/get.html:47
-#: tcms/testcases/templates/testcases/mutable.html:34
-#: tcms/testcases/templates/testcases/mutable.html:175
-#: tcms/testplans/templates/testplans/mutable.html:116
-#: tcms/testplans/templates/testplans/search.html:80
-#: tcms/testruns/templates/testruns/mutable.html:55
-#: tcms/testruns/templates/testruns/search.html:61
-#: tcms/testruns/templates/testruns/search.html:100
-msgid "Default tester"
-msgstr "crwdns429:0crwdne429:0"
-
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
 msgstr "crwdns794:0crwdne794:0"
@@ -1475,6 +1187,18 @@ msgstr "crwdns794:0crwdne794:0"
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
 msgstr "crwdns796:0crwdne796:0"
+
+#: tcms/templates/run/get_case_runs.html:112
+#: tcms/testcases/templates/testcases/search.html:111
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Tag"
+msgstr "crwdns388:0crwdne388:0"
+
+#: tcms/templates/run/get_case_runs.html:130
+msgid "No tags in cases"
+msgstr "crwdns702:0crwdne702:0"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1487,6 +1211,12 @@ msgstr "crwdns1072:0crwdne1072:0"
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
 msgstr "crwdns1074:0crwdne1074:0"
+
+#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
+#: tcms/templates/run/table_executions.html:25
+#: tcms/testplans/templates/testplans/get.html:430
+msgid "Comments"
+msgstr "crwdns614:0crwdne614:0"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1565,15 +1295,20 @@ msgstr "crwdns842:0crwdne842:0"
 msgid "Execution ID"
 msgstr "crwdns940:0crwdne940:0"
 
+#: tcms/templates/run/table_executions.html:18
+msgid "Tester"
+msgstr "crwdns704:0crwdne704:0"
+
+#: tcms/templates/run/table_executions.html:53
+#: tcms/templates/run/table_executions.html:59
+msgid "None"
+msgstr "crwdns674:0crwdne674:0"
+
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
 msgstr "crwdns942:0crwdne942:0"
 
-#: tcms/testcases/forms.py:20
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "crwdns416:0crwdne416:0"
-
-#: tcms/testcases/forms.py:43
+#: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1605,6 +1340,21 @@ msgstr "crwdns992:0crwdne992:0"
 msgid "Selected TC"
 msgstr "crwdns994:0crwdne994:0"
 
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:294
+#: tcms/testplans/templates/testplans/clone.html:72
+#: tcms/testplans/templates/testplans/get.html:137
+#: tcms/testplans/templates/testplans/get.html:319 tcms/testplans/views.py:137
+msgid "Clone"
+msgstr "crwdns512:0crwdne512:0"
+
+#: tcms/testcases/templates/testcases/get.html:32
+#: tcms/testcases/templates/testcases/mutable.html:138
+#: tcms/testplans/templates/testplans/get.html:394
+#: tcms/testplans/templates/testplans/get.html:395
+#: tcms/testruns/templates/testruns/mutable.html:65
+msgid "Notes"
+msgstr "crwdns406:0crwdne406:0"
+
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
@@ -1622,6 +1372,7 @@ msgstr "crwdns486:0crwdne486:0"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
+#: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
 msgstr "crwdns458:0crwdne458:0"
@@ -1635,6 +1386,7 @@ msgid "Test plans"
 msgstr "crwdns492:0crwdne492:0"
 
 #: tcms/testcases/templates/testcases/get.html:204
+#: tcms/testplans/templates/testplans/get.html:408
 msgid "Components"
 msgstr "crwdns498:0crwdne498:0"
 
@@ -1649,6 +1401,11 @@ msgstr "crwdns522:0crwdne522:0"
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
 msgstr "crwdns524:0crwdne524:0"
+
+#: tcms/testcases/templates/testcases/mutable.html:104
+#: tcms/testcases/templates/testcases/search.html:117
+msgid "Text"
+msgstr "crwdns526:0crwdne526:0"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1704,26 +1461,22 @@ msgstr "crwdns532:0crwdne532:0"
 msgid "Separate multiple values with comma (,)"
 msgstr "crwdns389:0crwdne389:0"
 
-#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Created on"
 msgstr "crwdns410:0crwdne410:0"
 
-#: tcms/testcases/views.py:365
-msgid "TestPlan not specified or does not exist"
-msgstr "crwdns317:0crwdne317:0"
-
-#: tcms/testcases/views.py:535
+#: tcms/testcases/views.py:298 tcms/testplans/views.py:141
 msgid "History"
 msgstr "crwdns514:0crwdne514:0"
 
-#: tcms/testcases/views.py:681
+#: tcms/testcases/views.py:403
 msgid "TestCase cloning was successful"
 msgstr "crwdns304:0crwdne304:0"
 
-#: tcms/testcases/views.py:707 tcms/testruns/views.py:375
-#: tcms/testruns/views.py:424
+#: tcms/testcases/views.py:429 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:417
 msgid "At least one TestCase is required"
 msgstr "crwdns303:0crwdne303:0"
 
@@ -1735,17 +1488,71 @@ msgstr "crwdns664:0crwdne664:0"
 msgid "Clone TCs"
 msgstr "crwdns982:0crwdne982:0"
 
-#: tcms/testplans/templates/testplans/clone.html:57
+#: tcms/testplans/templates/testplans/clone.html:58
 msgid "Clone or link existing TCs into new TP"
 msgstr "crwdns984:0crwdne984:0"
 
-#: tcms/testplans/templates/testplans/clone.html:61
+#: tcms/testplans/templates/testplans/clone.html:62
 msgid "Parent TP"
 msgstr "crwdns986:0crwdne986:0"
 
-#: tcms/testplans/templates/testplans/clone.html:64
+#: tcms/testplans/templates/testplans/clone.html:66
 msgid "Set the source TP as parent of new TP"
 msgstr "crwdns988:0crwdne988:0"
+
+#: tcms/testplans/templates/testplans/get.html:25
+msgid "Enter username, email or user ID:"
+msgstr "crwdns1244:0crwdne1244:0"
+
+#: tcms/testplans/templates/testplans/get.html:26
+msgid "No rows selected! Please select at least one!"
+msgstr "crwdns1246:0crwdne1246:0"
+
+#: tcms/testplans/templates/testplans/get.html:27
+msgid "Are you sure?"
+msgstr "crwdns1248:0crwdne1248:0"
+
+#: tcms/testplans/templates/testplans/get.html:28
+msgid "Cannot create TestRun with unconfirmed test cases"
+msgstr "crwdns1250:0crwdne1250:0"
+
+#: tcms/testplans/templates/testplans/get.html:42
+msgid "Show more"
+msgstr "crwdns888:0crwdne888:0"
+
+#: tcms/testplans/templates/testplans/get.html:74
+msgid "Plan Type"
+msgstr "crwdns562:0crwdne562:0"
+
+#: tcms/testplans/templates/testplans/get.html:99
+msgid "Test cases"
+msgstr "crwdns1252:0crwdne1252:0"
+
+#: tcms/testplans/templates/testplans/get.html:120
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New TestRun"
+msgstr "crwdns398:0crwdne398:0"
+
+#: tcms/testplans/templates/testplans/get.html:230
+#: tcms/testplans/templates/testplans/get.html:233
+msgid "Sort key"
+msgstr "crwdns1254:0crwdne1254:0"
+
+#: tcms/testplans/templates/testplans/get.html:243
+msgid "Re-order cases"
+msgstr "crwdns700:0crwdne700:0"
+
+#: tcms/testplans/templates/testplans/get.html:253
+msgid "Search and add test cases"
+msgstr "crwdns1256:0crwdne1256:0"
+
+#: tcms/testplans/templates/testplans/get.html:262
+msgid "Advanced search"
+msgstr "crwdns1258:0crwdne1258:0"
+
+#: tcms/testplans/templates/testplans/get.html:405
+msgid "No attachments"
+msgstr "crwdns692:0crwdne692:0"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1801,28 +1608,19 @@ msgstr "crwdns381:0crwdne381:0"
 msgid "Test plan"
 msgstr "crwdns394:0crwdne394:0"
 
-#: tcms/testplans/views.py:247
-msgid "TestPlan is required"
-msgstr "crwdns379:0crwdne379:0"
-
-#: tcms/testplans/views.py:408
-msgid "At least one test plan is required for print"
-msgstr "crwdns308:0crwdne308:0"
-
-#: tcms/testplans/views.py:416
-#, python-format
-msgid "Test Plan \"%s\" does not exist"
-msgstr "crwdns309:0%scrwdne309:0"
-
 #: tcms/testruns/admin.py:30
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "crwdns311:0crwdne311:0"
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:41
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
 msgstr "crwdns1094:0crwdne1094:0"
+
+#: tcms/testruns/admin.py:86
+msgid "1 negative, 1 neutral & 1 positive status required!"
+msgstr "crwdns1260:0crwdne1260:0"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1836,24 +1634,20 @@ msgstr "crwdns396:0crwdne396:0"
 msgid "Clone TestRun"
 msgstr "crwdns397:0crwdne397:0"
 
-#: tcms/testruns/templates/testruns/mutable.html:11
-msgid "New TestRun"
-msgstr "crwdns398:0crwdne398:0"
-
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 msgid "version"
 msgstr "crwdns402:0crwdne402:0"
 
-#: tcms/testruns/templates/testruns/mutable.html:51
-#: tcms/testruns/templates/testruns/mutable.html:58
+#: tcms/testruns/templates/testruns/mutable.html:52
+#: tcms/testruns/templates/testruns/mutable.html:59
 msgid "Username or email"
 msgstr "crwdns404:0crwdne404:0"
 
-#: tcms/testruns/templates/testruns/mutable.html:83
+#: tcms/testruns/templates/testruns/mutable.html:82
 msgid "Selected TestCase(s):"
 msgstr "crwdns408:0crwdne408:0"
 
-#: tcms/testruns/templates/testruns/mutable.html:86
+#: tcms/testruns/templates/testruns/mutable.html:85
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -1875,23 +1669,23 @@ msgstr "crwdns432:0crwdne432:0"
 msgid "TestPlan ID"
 msgstr "crwdns433:0crwdne433:0"
 
-#: tcms/testruns/views.py:47
+#: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "crwdns414:0crwdne414:0"
 
-#: tcms/testruns/views.py:53
+#: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "crwdns310:0crwdne310:0"
 
-#: tcms/testruns/views.py:379
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "crwdns415:0crwdne415:0"
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:426
 msgid "TestCase ID is not a valid integer"
 msgstr "crwdns315:0crwdne315:0"
 
-#: tcms/testruns/views.py:527
+#: tcms/testruns/views.py:520
 msgid "The user you typed does not exist in database"
 msgstr "crwdns998:0crwdne998:0"
 
