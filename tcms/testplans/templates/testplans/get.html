@@ -25,6 +25,7 @@
               data-trans-username-email-prompt="{% trans 'Enter username, email or user ID:' %}"
               data-trans-no-testcases-selected="{% trans 'No rows selected! Please select at least one!'%}"
               data-trans-are-you-sure="{% trans 'Are you sure?' %}"
+              data-trans-cannot-create-testrun="{% trans 'Cannot create TestRun with unconfirmed test cases'%}"
         >TP-{{ object.pk }}:</span> {{ object.name }}
         {% if not object.is_active %}</s>{% endif %}
     </h1>
@@ -114,7 +115,7 @@
                                             <ul class="dropdown-menu" aria-labelledby="testCaseActions">
                                             {% if perms.testruns.add_testrun %}
                                                 <li>
-                                                    <a href="#">
+                                                    <a id="testplan-toolbar-newrun" href="#">
                                                         <span class="fa fa-file-text-o"></span>
                                                         {% trans 'New TestRun' %}
                                                     </a>

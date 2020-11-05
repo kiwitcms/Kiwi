@@ -686,6 +686,27 @@ function toolbarEvents(testPlanId, permissions) {
 
          window.location.assign(`/cases/clone?case=${selectedCases.join('&case=')}`);
     });
+
+    $('#testplan-toolbar-newrun').click(function() {
+        $(this).parents('.dropdown').toggleClass('open');
+        let selectedTestCases = getSelectedTestCases();
+
+        if (!selectedTestCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'));
+            return false;
+        }
+
+        for (let i = 0; i < selectedTestCases.length; i++) {
+            let status = allTestCases[selectedTestCases[i]].case_status_id;
+            if (!isTestCaseConfirmed(status)) {
+                alert($('#test_plan_pk').data('trans-cannot-create-testrun'));
+                return false;
+            }
+        }
+
+        window.location.assign(`/runs/new?p=${testPlanId}&c=${selectedTestCases.join('&c=')}`);
+        return false;
+    });
 }
 
 function isTestCaseConfirmed(status) {
