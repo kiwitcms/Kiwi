@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-05 22:43\n"
+"PO-Revision-Date: 2020-11-06 07:12\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -995,7 +995,7 @@ msgstr "Navodila za prevajanje"
 
 #: tcms/templates/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Izberite"
 
 #: tcms/templates/pagination.html:13
 msgid "First page"
