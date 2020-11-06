@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-21 02:02\n"
+"POT-Creation-Date: 2020-11-05 22:19+0000\n"
+"PO-Revision-Date: 2020-11-05 22:43\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -70,17 +70,17 @@ msgstr "被分配的执行人"
 #: tcms/bugs/templates/bugs/search.html:104
 #: tcms/telemetry/templates/telemetry/include/filters.html:11
 #: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:13
-#: tcms/templates/plan/get.html:56 tcms/templates/run/get.html:104
-#: tcms/templates/run/report.html:35
+#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:41
 #: tcms/testcases/templates/testcases/search.html:41
 #: tcms/testplans/templates/testplans/clone.html:20
+#: tcms/testplans/templates/testplans/get.html:63
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
@@ -92,8 +92,8 @@ msgstr "产品"
 #: tcms/bugs/templates/bugs/search.html:105
 #: tcms/telemetry/templates/telemetry/include/filters.html:20
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:76
-#: tcms/templates/plan/get.html:60
 #: tcms/testplans/templates/testplans/clone.html:35
+#: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:115
@@ -109,9 +109,9 @@ msgstr "版本"
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:17
-#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
+#: tcms/templates/run/assign_case.html:23 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
-#: tcms/testruns/templates/testruns/mutable.html:31
+#: tcms/testruns/templates/testruns/mutable.html:32
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
@@ -127,10 +127,10 @@ msgstr "重新打开"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
-#: tcms/templates/case/get_details.html:93
 #: tcms/testcases/templates/testcases/mutable.html:229
+#: tcms/testplans/templates/testplans/get.html:438
 #: tcms/testplans/templates/testplans/mutable.html:154
-#: tcms/testruns/templates/testruns/mutable.html:72
+#: tcms/testruns/templates/testruns/mutable.html:73
 msgid "Save"
 msgstr "保存"
 
@@ -141,14 +141,16 @@ msgstr "关闭"
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
 #: tcms/bugs/templates/bugs/search.html:102
-#: tcms/templates/plan/search_case.html:77
+#: tcms/templates/include/tp_toolbar_dropdown.html:3
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:22
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testplans/templates/testplans/get.html:211
+#: tcms/testplans/templates/testplans/get.html:448
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:94
+#: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
@@ -169,8 +171,8 @@ msgstr "添加新版本"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
+#: tcms/testruns/templates/testruns/mutable.html:36
 msgid "add new Build"
 msgstr "添加新的构建"
 
@@ -206,17 +208,16 @@ msgstr "用户名"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
 msgstr "搜索"
 
 #: tcms/bugs/templates/bugs/search.html:101
-#: tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:76
-#: tcms/templates/run/assign_case.html:71
+#: tcms/templates/run/assign_case.html:70
 #: tcms/testcases/templates/testcases/get.html:162
-#: tcms/testcases/templates/testcases/search.html:135
+#: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
@@ -227,39 +228,38 @@ msgstr "ID"
 msgid "Created at"
 msgstr "创建于"
 
-#: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:527
+#: tcms/bugs/views.py:40 tcms/testcases/views.py:290
+#: tcms/testplans/templates/testplans/get.html:341 tcms/testplans/views.py:133
 msgid "Edit"
 msgstr "编辑"
 
-#: tcms/bugs/views.py:46 tcms/testcases/views.py:540
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:303
+#: tcms/testplans/views.py:146
 msgid "Object permissions"
 msgstr "对象权限"
 
-#: tcms/bugs/views.py:51 tcms/testcases/views.py:545
+#: tcms/bugs/views.py:50
+#: tcms/templates/include/comments_for_object_template.html:10
+#: tcms/testcases/views.py:308 tcms/testplans/templates/testplans/get.html:192
+#: tcms/testplans/templates/testplans/get.html:345 tcms/testplans/views.py:151
 msgid "Delete"
 msgstr "删除"
 
-#: tcms/bugs/views.py:76
+#: tcms/bugs/views.py:75
 msgid "New bug"
 msgstr "新建缺陷"
 
-#: tcms/bugs/views.py:182
+#: tcms/bugs/views.py:181
 msgid "Edit bug"
 msgstr "编辑缺陷"
 
-#: tcms/bugs/views.py:213
+#: tcms/bugs/views.py:211
 msgid "*bug closed*"
 msgstr "*缺陷已关闭*"
 
-#: tcms/bugs/views.py:217
+#: tcms/bugs/views.py:215
 msgid "*bug reopened*"
 msgstr "*缺陷重新打开*"
-
-#: tcms/core/ajax.py:150
-#, python-format
-msgid "User %s not found!"
-msgstr "用户 %s 不存在！"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -347,112 +347,112 @@ msgstr "日期格式无效。预期为 YYYY-MM-DD [HH:MM:SS]。"
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "%s 没有主键。你必须手动指定此类字段。"
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:289
 msgid "DASHBOARD"
 msgstr "仪表盘"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:290
 msgid "TESTING"
 msgstr "测试"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:291
 msgid "New Test Plan"
 msgstr "新建测试计划"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:293 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "新建测试用例"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:295
 msgid "New Bug"
 msgstr "新建缺陷"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:298
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:299
 msgid "Search Test Plans"
 msgstr "搜索测试计划"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:300
 msgid "Search Test Runs"
 msgstr "搜索测试执行"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "Search Test Cases"
 msgstr "搜索测试用例"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "Search Bugs"
 msgstr "搜索缺陷"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "TELEMETRY"
 msgstr "音效"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:306
 msgid "Testing"
 msgstr "测试中"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "Breakdown"
 msgstr "分解"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:308
 msgid "Status matrix"
 msgstr "状态表"
 
-#: tcms/settings/common.py:308
+#: tcms/settings/common.py:309
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "执行趋势"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "TestCase health"
 msgstr "测试案例健康"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:315
 msgid "ADMIN"
 msgstr "管理员"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:316
 msgid "Users and groups"
 msgstr "用户和用户组"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Everything else"
 msgstr "管理其他事项"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "PLUGINS"
 msgstr "插件"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:331
 msgid "Forum"
 msgstr "论坛"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "Report an Issue"
 msgstr "反馈问题"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:333
 msgid "Ask for help on StackOverflow"
 msgstr "在StackOflow上寻求帮助"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:334
 msgid "Donate €5 via Open Collective"
 msgstr "通过开放集体捐赠5欧元"
 
-#: tcms/settings/common.py:334
+#: tcms/settings/common.py:335
 msgid "Administration Guide"
 msgstr "管理员指南"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:336
 msgid "User Guide"
 msgstr "用户指南"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:337
 msgid "API Help"
 msgstr "API 参考"
 
@@ -486,7 +486,7 @@ msgid "Detailed information about test execution status"
 msgstr "测试执行状态的详细信息"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/assign_case.html:31 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
 msgstr "测试计划"
@@ -500,19 +500,21 @@ msgid "Total"
 msgstr "总计"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
-#: tcms/templates/plan/get_cases.html:107
-#: tcms/templates/plan/get_cases.html:187
+#: tcms/templates/include/tp_toolbar_dropdown.html:5
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
 #: tcms/templates/run/table_executions.html:20
 #: tcms/testcases/templates/testcases/get.html:92
 #: tcms/testcases/templates/testcases/mutable.html:96
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testcases/templates/testcases/search.html:143
+#: tcms/testplans/templates/testplans/get.html:363
+#: tcms/testplans/templates/testplans/get.html:450
 msgid "Automated"
 msgstr "自动化的"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
+#: tcms/testplans/templates/testplans/get.html:363
 msgid "Manual"
 msgstr "手动"
 
@@ -611,75 +613,6 @@ msgstr "是否确实要删除附件？"
 msgid "the leading open source test case management system"
 msgstr "领先的开源测试用例管理系统"
 
-#: tcms/templates/case/get_details.html:8
-#: tcms/testcases/templates/testcases/mutable.html:104
-#: tcms/testcases/templates/testcases/search.html:117
-msgid "Text"
-msgstr "文字"
-
-#: tcms/templates/case/get_details.html:12
-msgid "Attachment"
-msgstr "附件"
-
-#: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:137
-msgid "No attachment found"
-msgstr "未找到附件"
-
-#: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:147
-#: tcms/templates/plan/get_cases.html:123
-#: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:139
-msgid "Component"
-msgstr "组件"
-
-#: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:152
-msgid "No component found"
-msgstr "没有找到组件"
-
-#: tcms/templates/case/get_details.html:32
-#: tcms/templates/management/get_tag.html:6
-#: tcms/templates/plan/get_cases.html:127
-#: tcms/templates/run/get_case_runs.html:112
-#: tcms/testcases/templates/testcases/search.html:111
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Tag"
-msgstr "标签"
-
-#: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:163
-#: tcms/templates/management/get_tag.html:28
-msgid "No tag found"
-msgstr "没有找到标签"
-
-#: tcms/templates/case/get_details.html:40
-msgid "bug"
-msgstr "bug"
-
-#: tcms/templates/case/get_details.html:45
-msgid "From Run"
-msgstr "来自执行"
-
-#: tcms/templates/case/get_details.html:49
-msgid "No bug found"
-msgstr "未找到 bug"
-
-#: tcms/templates/case/get_details.html:56
-#: tcms/testcases/templates/testcases/get.html:32
-#: tcms/testcases/templates/testcases/mutable.html:138
-#: tcms/testruns/templates/testruns/mutable.html:64
-msgid "Notes"
-msgstr "备注"
-
-#: tcms/templates/case/get_details.html:62
-#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
-#: tcms/templates/run/table_executions.html:25
-msgid "Comments"
-msgstr "评论"
-
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
 msgstr "测试执行信息"
@@ -702,12 +635,12 @@ msgstr "错误链接和超链接"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
-#: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
 #: tcms/templates/run/get_case_runs.html:47
 #: tcms/templates/run/get_case_runs.html:55
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
+#: tcms/testplans/templates/testplans/get.html:257
 msgid "Add"
 msgstr "添加"
 
@@ -715,17 +648,24 @@ msgstr "添加"
 msgid "Report bug"
 msgstr "报告 bug"
 
-#: tcms/templates/case/printable.html:31
-msgid "Contents"
-msgstr "内容"
+#: tcms/templates/case/get_details_case_run.html:137
+msgid "No attachment found"
+msgstr "未找到附件"
 
-#: tcms/templates/case/printable.html:41
-msgid "Test Plan Document"
-msgstr "测试计划文档"
+#: tcms/templates/case/get_details_case_run.html:147
+#: tcms/testcases/templates/testcases/search.html:61
+#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testplans/templates/testplans/get.html:215
+msgid "Component"
+msgstr "组件"
 
-#: tcms/templates/case/printable.html:49
-msgid "Test Cases"
-msgstr "测试用例"
+#: tcms/templates/case/get_details_case_run.html:152
+msgid "No component found"
+msgstr "没有找到组件"
+
+#: tcms/templates/case/get_details_case_run.html:163
+msgid "No tag found"
+msgstr "没有找到标签"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -863,7 +803,8 @@ msgstr "尊敬的管理员，\n"
 "Kiwi TCMS实例注册了一个用户名为 %(username)s 的帐户，正在等待您的批准！\n\n"
 "访问 %(user_url)s 激活帐户！"
 
-#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
+#: tcms/templates/include/attachments.html:7
+#: tcms/testplans/templates/testplans/get.html:398
 msgid "Attachments"
 msgstr "附件"
 
@@ -880,28 +821,31 @@ msgid "Date"
 msgstr "日期"
 
 #: tcms/templates/include/attachments.html:31
+#: tcms/testplans/templates/testplans/get.html:293
 msgid "No records found"
 msgstr "没有找到记录"
 
 #: tcms/templates/include/bug_details.html:3
-#: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
-#: tcms/templates/plan/get_cases.html:192
-#: tcms/templates/plan/search_case.html:82 tcms/templates/run/get.html:126
-#: tcms/templates/run/get_case_runs.html:34
+#: tcms/templates/include/tp_toolbar_dropdown.html:4
+#: tcms/templates/run/get.html:126 tcms/templates/run/get_case_runs.html:34
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:72
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:141
-#: tcms/testruns/templates/testruns/mutable.html:97
+#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testplans/templates/testplans/get.html:148
+#: tcms/testplans/templates/testplans/get.html:324
+#: tcms/testplans/templates/testplans/get.html:357
+#: tcms/testplans/templates/testplans/get.html:449
+#: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Status"
 msgstr "状态"
 
-#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
-#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
+#: tcms/templates/include/tags_card.html:6 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
-#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testcases/templates/testcases/search.html:145
+#: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
@@ -912,39 +856,81 @@ msgstr "标签"
 #: tcms/testcases/templates/testcases/get.html:163
 #: tcms/testcases/templates/testcases/get.html:211
 #: tcms/testplans/templates/testplans/clone.html:13
+#: tcms/testplans/templates/testplans/get.html:204
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "名称"
 
-#: tcms/templates/management/get_tag.html:7
-msgid "Plans"
-msgstr "计划"
+#: tcms/templates/include/tp_toolbar_dropdown.html:6
+#: tcms/templates/run/assign_case.html:75
+#: tcms/templates/run/get_case_runs.html:103
+#: tcms/templates/run/table_executions.html:22
+#: tcms/testcases/templates/testcases/get.html:78
+#: tcms/testcases/templates/testcases/mutable.html:84
+#: tcms/testcases/templates/testcases/search.html:73
+#: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testplans/templates/testplans/get.html:161
+#: tcms/testplans/templates/testplans/get.html:332
+#: tcms/testplans/templates/testplans/get.html:365
+#: tcms/testplans/templates/testplans/get.html:451
+#: tcms/testruns/templates/testruns/mutable.html:98
+msgid "Priority"
+msgstr "优先级"
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
-#: tcms/templates/plan/get_cases.html:139
-msgid "Cases"
-msgstr "用例"
+#: tcms/templates/include/tp_toolbar_dropdown.html:7
+#: tcms/templates/run/assign_case.html:74 tcms/templates/run/report.html:69
+#: tcms/templates/run/table_executions.html:21
+#: tcms/testcases/templates/testcases/get.html:63
+#: tcms/testcases/templates/testcases/mutable.html:56
+#: tcms/testcases/templates/testcases/search.html:51
+#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testplans/templates/testplans/get.html:369
+#: tcms/testplans/templates/testplans/get.html:452
+#: tcms/testruns/templates/testruns/mutable.html:97
+msgid "Category"
+msgstr "类别"
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
-msgid "Runs"
-msgstr "执行"
+#: tcms/templates/include/tp_toolbar_dropdown.html:8
+#: tcms/templates/run/assign_case.html:72
+#: tcms/testcases/templates/testcases/get.html:42
+#: tcms/testcases/templates/testcases/get.html:164
+#: tcms/testcases/templates/testcases/mutable.html:152
+#: tcms/testcases/templates/testcases/search.html:106
+#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testplans/templates/testplans/get.html:53
+#: tcms/testplans/templates/testplans/get.html:373
+#: tcms/testplans/templates/testplans/get.html:453
+#: tcms/testplans/templates/testplans/mutable.html:104
+#: tcms/testplans/templates/testplans/search.html:74
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/mutable.html:94
+msgid "Author"
+msgstr "作者"
 
-#: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/get_attachments.html:10
-msgid "Action"
-msgstr "操作"
+#: tcms/templates/include/tp_toolbar_dropdown.html:9
+#: tcms/templates/run/get_case_runs.html:72
+#: tcms/testcases/templates/testcases/get.html:47
+#: tcms/testcases/templates/testcases/mutable.html:34
+#: tcms/testcases/templates/testcases/mutable.html:175
+#: tcms/testplans/templates/testplans/get.html:174
+#: tcms/testplans/templates/testplans/get.html:339
+#: tcms/testplans/templates/testplans/get.html:377
+#: tcms/testplans/templates/testplans/get.html:454
+#: tcms/testplans/templates/testplans/mutable.html:116
+#: tcms/testplans/templates/testplans/search.html:80
+#: tcms/testruns/templates/testruns/mutable.html:56
+#: tcms/testruns/templates/testruns/search.html:61
+#: tcms/testruns/templates/testruns/search.html:100
+msgid "Default tester"
+msgstr "默认测试者"
 
-#: tcms/templates/management/get_tag.html:21
-#: tcms/templates/management/get_tag.html:23
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-#: tcms/templates/run/get_case_runs.html:23
-msgid "Remove"
-msgstr "删除"
-
-#: tcms/templates/management/get_tag.html:35
-msgid "Add Tag"
-msgstr "添加标签"
+#: tcms/templates/include/tp_toolbar_dropdown.html:10
+#: tcms/testplans/templates/testplans/get.html:181
+#: tcms/testplans/templates/testplans/get.html:382
+#: tcms/testplans/templates/testplans/get.html:455
+msgid "Reviewer"
+msgstr "评审人"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1008,307 +994,29 @@ msgstr "翻译模式"
 msgid "Translation guide"
 msgstr "翻译指南"
 
-#: tcms/templates/pagination.html:7
+#: tcms/templates/pagination.html:6
+msgid "Select"
+msgstr ""
+
+#: tcms/templates/pagination.html:13
 msgid "First page"
 msgstr "第一页"
 
-#: tcms/templates/pagination.html:10
+#: tcms/templates/pagination.html:16
 msgid "Previous page"
 msgstr "上一页"
 
-#: tcms/templates/pagination.html:14
+#: tcms/templates/pagination.html:20
 msgid "Current page"
 msgstr "当前页"
 
-#: tcms/templates/pagination.html:22
+#: tcms/templates/pagination.html:28
 msgid "Next page"
 msgstr "下一页"
 
-#: tcms/templates/pagination.html:25
+#: tcms/templates/pagination.html:31
 msgid "Last page"
 msgstr "最后一页"
-
-#: tcms/templates/plan/cases_rows.html:73
-msgid "No test case was found in this plan."
-msgstr "在这个计划中没有发现测试用例。"
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit Plan"
-msgstr "编辑计划"
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit test plan"
-msgstr "编辑测试计划"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone Plan"
-msgstr "克隆计划"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone this plan to other product"
-msgstr "将此计划克隆到其他产品"
-
-#: tcms/templates/plan/get.html:42
-msgid "Print Plan"
-msgstr "打印计划"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete Plan"
-msgstr "删除计划"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete test plan"
-msgstr "删除测试计划"
-
-#: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171
-#: tcms/templates/plan/search_case.html:78
-#: tcms/templates/run/assign_case.html:73
-#: tcms/testcases/templates/testcases/get.html:42
-#: tcms/testcases/templates/testcases/get.html:164
-#: tcms/testcases/templates/testcases/mutable.html:152
-#: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:143
-#: tcms/testplans/templates/testplans/mutable.html:104
-#: tcms/testplans/templates/testplans/search.html:74
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/mutable.html:95
-msgid "Author"
-msgstr "作者"
-
-#: tcms/templates/plan/get.html:64
-msgid "Plan Type"
-msgstr "计划类型"
-
-#: tcms/templates/plan/get.html:70
-msgid "Reference Link"
-msgstr "参考链接"
-
-#: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
-#: tcms/templates/run/table_executions.html:53
-#: tcms/templates/run/table_executions.html:59
-msgid "None"
-msgstr "空"
-
-#: tcms/templates/plan/get.html:80
-msgid "Create Time"
-msgstr "创建时间"
-
-#: tcms/templates/plan/get.html:85
-msgid "Parent"
-msgstr "上级"
-
-#: tcms/templates/plan/get.html:95
-msgid "View Edit History"
-msgstr "查看编辑历史"
-
-#: tcms/templates/plan/get.html:104
-msgid "Document"
-msgstr "文档"
-
-#: tcms/templates/plan/get.html:110
-msgid "Reviewing Cases"
-msgstr "评审用例"
-
-#: tcms/templates/plan/get.html:122
-msgid "Tree View"
-msgstr "树视图"
-
-#: tcms/templates/plan/get.html:131
-msgid "The document for this plan hasn't been written yet."
-msgstr "此计划的文档还未撰写。"
-
-#: tcms/templates/plan/get_attachments.html:7
-msgid "File name"
-msgstr "文件名称"
-
-#: tcms/templates/plan/get_attachments.html:8
-msgid "Submitter"
-msgstr "提交者"
-
-#: tcms/templates/plan/get_attachments.html:9
-msgid "Create date"
-msgstr "创建日期"
-
-#: tcms/templates/plan/get_attachments.html:23
-msgid "No attachments"
-msgstr "无附件"
-
-#: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
-#: tcms/templates/plan/get_cases.html:91
-msgid "Case"
-msgstr "用例"
-
-#: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
-msgid "Write new case"
-msgstr "编辑新用例"
-
-#: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
-#: tcms/templates/plan/search_case.html:4
-msgid "Add cases from other plans"
-msgstr "从其他计划中添加用例"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "Print"
-msgstr "打印"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "print view of selected cases"
-msgstr "选定用例的打印视图"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
-#: tcms/testplans/templates/testplans/clone.html:70
-msgid "Clone"
-msgstr "克隆"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-msgid "Clone selected cases to another test plan"
-msgstr "选定用例克隆到另一测试计划"
-
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-msgid "Remove selected cases from this plan"
-msgstr "从计划中删除选定用例"
-
-#: tcms/templates/plan/get_cases.html:40
-msgid "Run"
-msgstr "执行"
-
-#: tcms/templates/plan/get_cases.html:42
-msgid "Create new TestRun"
-msgstr "创建新的执行"
-
-#: tcms/templates/plan/get_cases.html:48
-msgid "Change TestCase reviewer"
-msgstr "更改测试用例审阅者"
-
-#: tcms/templates/plan/get_cases.html:50
-msgid "Change default tester"
-msgstr "更改默认测试者"
-
-#: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
-#: tcms/templates/plan/get_cases.html:202
-#: tcms/templates/plan/search_case.html:80
-#: tcms/templates/run/assign_case.html:76
-#: tcms/templates/run/get_case_runs.html:103
-#: tcms/templates/run/table_executions.html:22
-#: tcms/testcases/templates/testcases/get.html:78
-#: tcms/testcases/templates/testcases/mutable.html:84
-#: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:140
-#: tcms/testruns/templates/testruns/mutable.html:99
-msgid "Priority"
-msgstr "优先级"
-
-#: tcms/templates/plan/get_cases.html:69
-msgid "Click to show filter options"
-msgstr "点击以显示过滤选项"
-
-#: tcms/templates/plan/get_cases.html:69
-#: tcms/templates/run/get_case_runs.html:6
-msgid "Show filter options"
-msgstr "显示过滤选项"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "点击拖动再释放一行来调整顺序，最后点击“完成排序”链接提交更改"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Re-order cases"
-msgstr "重新排序的用例"
-
-#: tcms/templates/plan/get_cases.html:81
-#: tcms/templates/run/get_case_runs.html:130
-msgid "No tags in cases"
-msgstr "测试用例中没有标签"
-
-#: tcms/templates/plan/get_cases.html:99
-#: tcms/templates/run/table_executions.html:18
-msgid "Tester"
-msgstr "测试者"
-
-#: tcms/templates/plan/get_cases.html:115
-#: tcms/templates/plan/get_cases.html:197
-#: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
-#: tcms/templates/run/table_executions.html:21
-#: tcms/testcases/templates/testcases/get.html:63
-#: tcms/testcases/templates/testcases/mutable.html:56
-#: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:138
-#: tcms/testruns/templates/testruns/mutable.html:98
-msgid "Category"
-msgstr "类别"
-
-#: tcms/templates/plan/get_cases.html:131
-msgid "Items per page"
-msgstr "每页的项目"
-
-#: tcms/templates/plan/get_cases.html:146
-msgid "Also select all cases that are not yet shown below."
-msgstr "此外, 请选择下面尚未显示的所有案例。"
-
-#: tcms/templates/plan/get_cases.html:166
-#: tcms/templates/run/assign_case.html:72
-msgid "Test Case Summary"
-msgstr "测试用例总结"
-
-#: tcms/templates/plan/get_cases.html:177
-msgid "Reviewer"
-msgstr "评审人"
-
-#: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
-#: tcms/templates/run/report.html:41
-msgid "Default Tester"
-msgstr "默认测试者"
-
-#: tcms/templates/plan/get_cases.html:205
-msgid "Text version"
-msgstr "文本版本"
-
-#: tcms/templates/plan/get_cases.html:211
-msgid "Actions"
-msgstr "操作"
-
-#: tcms/templates/plan/get_cases.html:220
-msgid "Show more"
-msgstr "显示更多"
-
-#: tcms/templates/plan/get_cases.html:222
-msgid "cases left"
-msgstr "剩余的用例"
-
-#: tcms/templates/plan/get_cases.html:224
-msgid "All cases have been loaded."
-msgstr "已加载的所有用例。"
-
-#: tcms/templates/plan/get_treeview.html:4
-msgid "Add child node to current plan"
-msgstr "在当前的计划中添加子节点"
-
-#: tcms/templates/plan/get_treeview.html:6
-msgid "Remove child node from current plan"
-msgstr "从当前计划中删除子节点"
-
-#: tcms/templates/plan/search_case.html:25
-msgid "Search cases to add into this test plan."
-msgstr "搜索用例添加到此测试计划。"
-
-#: tcms/templates/plan/search_case.html:36
-msgid "Quick Search"
-msgstr "快速搜索"
-
-#: tcms/templates/plan/search_case.html:41
-msgid "Normal Search"
-msgstr "正常搜索"
-
-#: tcms/templates/plan/search_case.html:81
-msgid "Created"
-msgstr "已创建"
-
-#: tcms/templates/plan/search_case.html:111
-msgid "No test cases found."
-msgstr "没有发现测试用例。"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1395,47 +1103,51 @@ msgstr "注册新账户"
 msgid "Add TestCase to TestRun"
 msgstr "将测试用例添加到测试执行"
 
-#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
+#: tcms/templates/run/assign_case.html:27 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
-#: tcms/testruns/templates/testruns/mutable.html:48
+#: tcms/testruns/templates/testruns/mutable.html:49
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "管理者"
 
-#: tcms/templates/run/assign_case.html:34
+#: tcms/templates/run/assign_case.html:33
 msgid "All Confirmed Cases"
 msgstr "所有已确认的用例"
 
-#: tcms/templates/run/assign_case.html:40
+#: tcms/templates/run/assign_case.html:39
 msgid "Test Cases in Run"
 msgstr "在执行中的测试用例"
 
-#: tcms/templates/run/assign_case.html:47
+#: tcms/templates/run/assign_case.html:46
 msgid "Cases in this Run"
 msgstr "在这个执行中的用例"
 
-#: tcms/templates/run/assign_case.html:49
+#: tcms/templates/run/assign_case.html:48
 msgid "Use the sortkey stored in plan"
 msgstr "使用计划中存储的排序密钥"
 
-#: tcms/templates/run/assign_case.html:53
+#: tcms/templates/run/assign_case.html:52
 msgid "How to Assign case?"
 msgstr "如何指派用例？"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "The table below list all the confirmed test cases of plan"
 msgstr "下表列出了计划里所有已确认测试用例"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "check the checkbox to add cases into test run. Remember to update at last"
 msgstr "选中复选框以将用例添加到测试执行中。记得最后要更新一下"
 
-#: tcms/templates/run/assign_case.html:74
+#: tcms/templates/run/assign_case.html:71
+msgid "Test Case Summary"
+msgstr "测试用例总结"
+
+#: tcms/templates/run/assign_case.html:73
 msgid "Created Date"
 msgstr "创建日期"
 
-#: tcms/templates/run/assign_case.html:77
+#: tcms/templates/run/assign_case.html:76
 msgid "Selected"
 msgstr "已选择"
 
@@ -1446,6 +1158,10 @@ msgstr "产品版本"
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
 msgstr "备注"
+
+#: tcms/templates/run/get.html:116 tcms/templates/run/report.html:41
+msgid "Default Tester"
+msgstr "默认测试者"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
@@ -1464,6 +1180,10 @@ msgstr "完成于"
 msgid "CC"
 msgstr "CC"
 
+#: tcms/templates/run/get_case_runs.html:6
+msgid "Show filter options"
+msgstr "显示过滤选项"
+
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
 msgstr "自动"
@@ -1475,6 +1195,10 @@ msgstr "突出显示"
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
 msgstr "删除选中的测试运行的案例"
+
+#: tcms/templates/run/get_case_runs.html:23
+msgid "Remove"
+msgstr "删除"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1496,18 +1220,6 @@ msgstr "评论"
 msgid "Hyperlink"
 msgstr "超链接"
 
-#: tcms/templates/run/get_case_runs.html:72
-#: tcms/testcases/templates/testcases/get.html:47
-#: tcms/testcases/templates/testcases/mutable.html:34
-#: tcms/testcases/templates/testcases/mutable.html:175
-#: tcms/testplans/templates/testplans/mutable.html:116
-#: tcms/testplans/templates/testplans/search.html:80
-#: tcms/testruns/templates/testruns/mutable.html:55
-#: tcms/testruns/templates/testruns/search.html:61
-#: tcms/testruns/templates/testruns/search.html:100
-msgid "Default tester"
-msgstr "默认测试者"
-
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
 msgstr "自动"
@@ -1515,6 +1227,18 @@ msgstr "自动"
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
 msgstr "Bug"
+
+#: tcms/templates/run/get_case_runs.html:112
+#: tcms/testcases/templates/testcases/search.html:111
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Tag"
+msgstr "标签"
+
+#: tcms/templates/run/get_case_runs.html:130
+msgid "No tags in cases"
+msgstr "测试用例中没有标签"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1527,6 +1251,12 @@ msgstr "URL指向故障"
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
 msgstr "自动更新问题跟踪器"
+
+#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
+#: tcms/templates/run/table_executions.html:25
+#: tcms/testplans/templates/testplans/get.html:430
+msgid "Comments"
+msgstr "评论"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1605,15 +1335,20 @@ msgstr "展开所有用例"
 msgid "Execution ID"
 msgstr "执行 ID"
 
+#: tcms/templates/run/table_executions.html:18
+msgid "Tester"
+msgstr "测试者"
+
+#: tcms/templates/run/table_executions.html:53
+#: tcms/templates/run/table_executions.html:59
+msgid "None"
+msgstr "空"
+
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
 msgstr "未找到执行"
 
-#: tcms/testcases/forms.py:20
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "请输入有效的用例ID。使用逗号分割多个用例 id。比如“111, 222”"
-
-#: tcms/testcases/forms.py:43
+#: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1656,6 +1391,21 @@ msgstr "添加新的 TC 到 TP"
 msgid "Selected TC"
 msgstr "选定的 TC"
 
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:294
+#: tcms/testplans/templates/testplans/clone.html:72
+#: tcms/testplans/templates/testplans/get.html:137
+#: tcms/testplans/templates/testplans/get.html:319 tcms/testplans/views.py:137
+msgid "Clone"
+msgstr "克隆"
+
+#: tcms/testcases/templates/testcases/get.html:32
+#: tcms/testcases/templates/testcases/mutable.html:138
+#: tcms/testplans/templates/testplans/get.html:394
+#: tcms/testplans/templates/testplans/get.html:395
+#: tcms/testruns/templates/testruns/mutable.html:65
+msgid "Notes"
+msgstr "备注"
+
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
@@ -1673,6 +1423,7 @@ msgstr "需求"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
+#: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
 msgstr "参考链接"
@@ -1686,6 +1437,7 @@ msgid "Test plans"
 msgstr "测试计划"
 
 #: tcms/testcases/templates/testcases/get.html:204
+#: tcms/testplans/templates/testplans/get.html:408
 msgid "Components"
 msgstr "组件"
 
@@ -1700,6 +1452,11 @@ msgstr "新的测试用例"
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
 msgstr "添加新分类"
+
+#: tcms/testcases/templates/testcases/mutable.html:104
+#: tcms/testcases/templates/testcases/search.html:117
+msgid "Text"
+msgstr "文字"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1755,26 +1512,22 @@ msgstr "都"
 msgid "Separate multiple values with comma (,)"
 msgstr "使用逗号隔开多个值"
 
-#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Created on"
 msgstr "创建于"
 
-#: tcms/testcases/views.py:365
-msgid "TestPlan not specified or does not exist"
-msgstr "测试计划未指定或不存在"
-
-#: tcms/testcases/views.py:535
+#: tcms/testcases/views.py:298 tcms/testplans/views.py:141
 msgid "History"
 msgstr "历史"
 
-#: tcms/testcases/views.py:681
+#: tcms/testcases/views.py:403
 msgid "TestCase cloning was successful"
 msgstr "测试实例克隆成功"
 
-#: tcms/testcases/views.py:707 tcms/testruns/views.py:375
-#: tcms/testruns/views.py:424
+#: tcms/testcases/views.py:429 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:417
 msgid "At least one TestCase is required"
 msgstr "需要至少一个测试实例"
 
@@ -1786,17 +1539,71 @@ msgstr "克隆测试计划"
 msgid "Clone TCs"
 msgstr "克隆TCs"
 
-#: tcms/testplans/templates/testplans/clone.html:57
+#: tcms/testplans/templates/testplans/clone.html:58
 msgid "Clone or link existing TCs into new TP"
 msgstr "克隆或将现有 TCs 连接到新的 TP"
 
-#: tcms/testplans/templates/testplans/clone.html:61
+#: tcms/testplans/templates/testplans/clone.html:62
 msgid "Parent TP"
 msgstr "上级TP"
 
-#: tcms/testplans/templates/testplans/clone.html:64
+#: tcms/testplans/templates/testplans/clone.html:66
 msgid "Set the source TP as parent of new TP"
 msgstr "将源TP设置为新TP的父目录"
+
+#: tcms/testplans/templates/testplans/get.html:25
+msgid "Enter username, email or user ID:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:26
+msgid "No rows selected! Please select at least one!"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:27
+msgid "Are you sure?"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:28
+msgid "Cannot create TestRun with unconfirmed test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:42
+msgid "Show more"
+msgstr "显示更多"
+
+#: tcms/testplans/templates/testplans/get.html:74
+msgid "Plan Type"
+msgstr "计划类型"
+
+#: tcms/testplans/templates/testplans/get.html:99
+msgid "Test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:120
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New TestRun"
+msgstr "新的测试执行"
+
+#: tcms/testplans/templates/testplans/get.html:230
+#: tcms/testplans/templates/testplans/get.html:233
+msgid "Sort key"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:243
+msgid "Re-order cases"
+msgstr "重新排序的用例"
+
+#: tcms/testplans/templates/testplans/get.html:253
+msgid "Search and add test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:262
+msgid "Advanced search"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:405
+msgid "No attachments"
+msgstr "无附件"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1852,30 +1659,21 @@ msgstr "测试计划名"
 msgid "Test plan"
 msgstr "测试计划"
 
-#: tcms/testplans/views.py:247
-msgid "TestPlan is required"
-msgstr "需要测试计划"
-
-#: tcms/testplans/views.py:408
-msgid "At least one test plan is required for print"
-msgstr "需要至少一个测试计划进行打印"
-
-#: tcms/testplans/views.py:416
-#, python-format
-msgid "Test Plan \"%s\" does not exist"
-msgstr "测试计划 \"%s\" 不存在"
-
 #: tcms/testruns/admin.py:30
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "拒绝访问: 测试运行不属于您"
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:41
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
 msgstr "欲了解更多关于自定义测试执行状态的信息，请参阅\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        文档</a>！"
+
+#: tcms/testruns/admin.py:86
+msgid "1 negative, 1 neutral & 1 positive status required!"
+msgstr ""
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1889,24 +1687,20 @@ msgstr "编辑测试执行"
 msgid "Clone TestRun"
 msgstr "克隆测试执行"
 
-#: tcms/testruns/templates/testruns/mutable.html:11
-msgid "New TestRun"
-msgstr "新的测试执行"
-
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 msgid "version"
 msgstr "版本"
 
-#: tcms/testruns/templates/testruns/mutable.html:51
-#: tcms/testruns/templates/testruns/mutable.html:58
+#: tcms/testruns/templates/testruns/mutable.html:52
+#: tcms/testruns/templates/testruns/mutable.html:59
 msgid "Username or email"
 msgstr "用户名或邮箱"
 
-#: tcms/testruns/templates/testruns/mutable.html:83
+#: tcms/testruns/templates/testruns/mutable.html:82
 msgid "Selected TestCase(s):"
 msgstr "已选测试用例："
 
-#: tcms/testruns/templates/testruns/mutable.html:86
+#: tcms/testruns/templates/testruns/mutable.html:85
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -1929,23 +1723,23 @@ msgstr "计划 ID"
 msgid "TestPlan ID"
 msgstr "测试计划 ID"
 
-#: tcms/testruns/views.py:47
+#: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "创建一个测试执行需要一个测试计划，请选择一个"
 
-#: tcms/testruns/views.py:53
+#: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "新建测试计划至少需要一个测试实例"
 
-#: tcms/testruns/views.py:379
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "克隆来自 "
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:426
 msgid "TestCase ID is not a valid integer"
 msgstr "测试实例编号不是有效的整数"
 
-#: tcms/testruns/views.py:527
+#: tcms/testruns/views.py:520
 msgid "The user you typed does not exist in database"
 msgstr "您指定的计划不存在数据库中。"
 

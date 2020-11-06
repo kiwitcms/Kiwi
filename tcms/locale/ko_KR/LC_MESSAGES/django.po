@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-19 20:42\n"
+"POT-Creation-Date: 2020-11-05 22:19+0000\n"
+"PO-Revision-Date: 2020-11-05 22:43\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -70,17 +70,17 @@ msgstr "담당자"
 #: tcms/bugs/templates/bugs/search.html:104
 #: tcms/telemetry/templates/telemetry/include/filters.html:11
 #: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:13
-#: tcms/templates/plan/get.html:56 tcms/templates/run/get.html:104
-#: tcms/templates/run/report.html:35
+#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:41
 #: tcms/testcases/templates/testcases/search.html:41
 #: tcms/testplans/templates/testplans/clone.html:20
+#: tcms/testplans/templates/testplans/get.html:63
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
@@ -92,8 +92,8 @@ msgstr "제품"
 #: tcms/bugs/templates/bugs/search.html:105
 #: tcms/telemetry/templates/telemetry/include/filters.html:20
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:76
-#: tcms/templates/plan/get.html:60
 #: tcms/testplans/templates/testplans/clone.html:35
+#: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:115
@@ -109,9 +109,9 @@ msgstr "버전"
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:17
-#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
+#: tcms/templates/run/assign_case.html:23 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
-#: tcms/testruns/templates/testruns/mutable.html:31
+#: tcms/testruns/templates/testruns/mutable.html:32
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
@@ -127,10 +127,10 @@ msgstr "다시 열기"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
-#: tcms/templates/case/get_details.html:93
 #: tcms/testcases/templates/testcases/mutable.html:229
+#: tcms/testplans/templates/testplans/get.html:438
 #: tcms/testplans/templates/testplans/mutable.html:154
-#: tcms/testruns/templates/testruns/mutable.html:72
+#: tcms/testruns/templates/testruns/mutable.html:73
 msgid "Save"
 msgstr "저장"
 
@@ -141,14 +141,16 @@ msgstr "닫기"
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
 #: tcms/bugs/templates/bugs/search.html:102
-#: tcms/templates/plan/search_case.html:77
+#: tcms/templates/include/tp_toolbar_dropdown.html:3
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:22
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testplans/templates/testplans/get.html:211
+#: tcms/testplans/templates/testplans/get.html:448
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:94
+#: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
@@ -169,8 +171,8 @@ msgstr "새 버전 추가"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
+#: tcms/testruns/templates/testruns/mutable.html:36
 msgid "add new Build"
 msgstr "새로운 빌드 추가"
 
@@ -206,17 +208,16 @@ msgstr "사용자이름"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
 msgstr "검색"
 
 #: tcms/bugs/templates/bugs/search.html:101
-#: tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:76
-#: tcms/templates/run/assign_case.html:71
+#: tcms/templates/run/assign_case.html:70
 #: tcms/testcases/templates/testcases/get.html:162
-#: tcms/testcases/templates/testcases/search.html:135
+#: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
@@ -227,39 +228,38 @@ msgstr "아이디"
 msgid "Created at"
 msgstr "생성 위치"
 
-#: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:527
+#: tcms/bugs/views.py:40 tcms/testcases/views.py:290
+#: tcms/testplans/templates/testplans/get.html:341 tcms/testplans/views.py:133
 msgid "Edit"
 msgstr "편집"
 
-#: tcms/bugs/views.py:46 tcms/testcases/views.py:540
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:303
+#: tcms/testplans/views.py:146
 msgid "Object permissions"
 msgstr ""
 
-#: tcms/bugs/views.py:51 tcms/testcases/views.py:545
+#: tcms/bugs/views.py:50
+#: tcms/templates/include/comments_for_object_template.html:10
+#: tcms/testcases/views.py:308 tcms/testplans/templates/testplans/get.html:192
+#: tcms/testplans/templates/testplans/get.html:345 tcms/testplans/views.py:151
 msgid "Delete"
 msgstr "삭제"
 
-#: tcms/bugs/views.py:76
+#: tcms/bugs/views.py:75
 msgid "New bug"
 msgstr "새로운 버그"
 
-#: tcms/bugs/views.py:182
+#: tcms/bugs/views.py:181
 msgid "Edit bug"
 msgstr "버그 편집"
 
-#: tcms/bugs/views.py:213
+#: tcms/bugs/views.py:211
 msgid "*bug closed*"
 msgstr "*버그 마감*"
 
-#: tcms/bugs/views.py:217
+#: tcms/bugs/views.py:215
 msgid "*bug reopened*"
 msgstr "*버그 재개*"
-
-#: tcms/core/ajax.py:150
-#, python-format
-msgid "User %s not found!"
-msgstr "사용자 %s를 찾을 수 없습니다!"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -347,112 +347,112 @@ msgstr "날짜 형식이 잘못되었습니다. YYYY-MM-DD가 예상됩니다 [H
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "모델 %s 에는 기본 키가 없습니다. 이러한 필드를 수동으로 지정해야 합니다."
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:289
 msgid "DASHBOARD"
 msgstr "계기반"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:290
 msgid "TESTING"
 msgstr "테스트"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:291
 msgid "New Test Plan"
 msgstr "새로운 테스트 계획"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:293 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "새로운 테스트 케이스"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:295
 msgid "New Bug"
 msgstr "새로운 버그"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:298
 msgid "SEARCH"
 msgstr "검색"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:299
 msgid "Search Test Plans"
 msgstr "검색 테스트 계획"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:300
 msgid "Search Test Runs"
 msgstr "검색 테스트 실행"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "Search Test Cases"
 msgstr "검색 테스트 사례"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "Search Bugs"
 msgstr "검색 버그"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "TELEMETRY"
 msgstr "텔레 메 트리"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:306
 msgid "Testing"
 msgstr "테스트"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "Breakdown"
 msgstr "중단"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:308
 msgid "Status matrix"
 msgstr "상태 매트릭스"
 
-#: tcms/settings/common.py:308
+#: tcms/settings/common.py:309
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "실행 동향"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "TestCase health"
 msgstr "TestCase 건강"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:315
 msgid "ADMIN"
 msgstr "관리자"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:316
 msgid "Users and groups"
 msgstr "사용자 및 그룹"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Everything else"
 msgstr "다른 모든 것들"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "PLUGINS"
 msgstr "플러그"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:331
 msgid "Forum"
 msgstr "포럼"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "Report an Issue"
 msgstr "문제를 보고"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:333
 msgid "Ask for help on StackOverflow"
 msgstr "StackOverflow에 대한 도움말은 k로"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:334
 msgid "Donate €5 via Open Collective"
 msgstr "Open Collective를 통해 € 5 기부"
 
-#: tcms/settings/common.py:334
+#: tcms/settings/common.py:335
 msgid "Administration Guide"
 msgstr "관리 안내서"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:336
 msgid "User Guide"
 msgstr "사용자 설명서"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:337
 msgid "API Help"
 msgstr "API 도움말"
 
@@ -486,7 +486,7 @@ msgid "Detailed information about test execution status"
 msgstr "테스트 실행 상태에 대한 자세한 정보"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/assign_case.html:31 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
 msgstr "테스트 계획"
@@ -500,19 +500,21 @@ msgid "Total"
 msgstr "합계"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
-#: tcms/templates/plan/get_cases.html:107
-#: tcms/templates/plan/get_cases.html:187
+#: tcms/templates/include/tp_toolbar_dropdown.html:5
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
 #: tcms/templates/run/table_executions.html:20
 #: tcms/testcases/templates/testcases/get.html:92
 #: tcms/testcases/templates/testcases/mutable.html:96
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testcases/templates/testcases/search.html:143
+#: tcms/testplans/templates/testplans/get.html:363
+#: tcms/testplans/templates/testplans/get.html:450
 msgid "Automated"
 msgstr "자동화"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
+#: tcms/testplans/templates/testplans/get.html:363
 msgid "Manual"
 msgstr "수동"
 
@@ -611,75 +613,6 @@ msgstr "정말 이 첨부 파일을 삭제 하시겠습니까?"
 msgid "the leading open source test case management system"
 msgstr "선도적인 오픈 소스 테스트 사례 관리 시스템"
 
-#: tcms/templates/case/get_details.html:8
-#: tcms/testcases/templates/testcases/mutable.html:104
-#: tcms/testcases/templates/testcases/search.html:117
-msgid "Text"
-msgstr "텍스트"
-
-#: tcms/templates/case/get_details.html:12
-msgid "Attachment"
-msgstr "첨부파일"
-
-#: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:137
-msgid "No attachment found"
-msgstr "첨부 파일이 없습니다."
-
-#: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:147
-#: tcms/templates/plan/get_cases.html:123
-#: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:139
-msgid "Component"
-msgstr "구성요소"
-
-#: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:152
-msgid "No component found"
-msgstr "컴포넌트가 없습니다"
-
-#: tcms/templates/case/get_details.html:32
-#: tcms/templates/management/get_tag.html:6
-#: tcms/templates/plan/get_cases.html:127
-#: tcms/templates/run/get_case_runs.html:112
-#: tcms/testcases/templates/testcases/search.html:111
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Tag"
-msgstr "태그"
-
-#: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:163
-#: tcms/templates/management/get_tag.html:28
-msgid "No tag found"
-msgstr "태그를 찾을 수 없습니다"
-
-#: tcms/templates/case/get_details.html:40
-msgid "bug"
-msgstr "버그"
-
-#: tcms/templates/case/get_details.html:45
-msgid "From Run"
-msgstr "달리다"
-
-#: tcms/templates/case/get_details.html:49
-msgid "No bug found"
-msgstr "버그가 없습니다."
-
-#: tcms/templates/case/get_details.html:56
-#: tcms/testcases/templates/testcases/get.html:32
-#: tcms/testcases/templates/testcases/mutable.html:138
-#: tcms/testruns/templates/testruns/mutable.html:64
-msgid "Notes"
-msgstr "노트"
-
-#: tcms/templates/case/get_details.html:62
-#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
-#: tcms/templates/run/table_executions.html:25
-msgid "Comments"
-msgstr "코멘트"
-
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
 msgstr "테스트 실행 정보"
@@ -702,12 +635,12 @@ msgstr "버그와 하이퍼 링크"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
-#: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
 #: tcms/templates/run/get_case_runs.html:47
 #: tcms/templates/run/get_case_runs.html:55
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
+#: tcms/testplans/templates/testplans/get.html:257
 msgid "Add"
 msgstr "추가"
 
@@ -715,17 +648,24 @@ msgstr "추가"
 msgid "Report bug"
 msgstr "버그 신고"
 
-#: tcms/templates/case/printable.html:31
-msgid "Contents"
-msgstr "콘텐츠"
+#: tcms/templates/case/get_details_case_run.html:137
+msgid "No attachment found"
+msgstr "첨부 파일이 없습니다."
 
-#: tcms/templates/case/printable.html:41
-msgid "Test Plan Document"
-msgstr "시험 계획서"
+#: tcms/templates/case/get_details_case_run.html:147
+#: tcms/testcases/templates/testcases/search.html:61
+#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testplans/templates/testplans/get.html:215
+msgid "Component"
+msgstr "구성요소"
 
-#: tcms/templates/case/printable.html:49
-msgid "Test Cases"
-msgstr "테스트 사례"
+#: tcms/templates/case/get_details_case_run.html:152
+msgid "No component found"
+msgstr "컴포넌트가 없습니다"
+
+#: tcms/templates/case/get_details_case_run.html:163
+msgid "No tag found"
+msgstr "태그를 찾을 수 없습니다"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -863,7 +803,8 @@ msgstr "친애하는 관리자님,\n"
 "Kiwi TCMS 인스턴스및 귀하의 승인을 기다리고 있습니다!\n\n"
 "계정을 활성화하려면 %(user_url)s 로 이동하십시오!"
 
-#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
+#: tcms/templates/include/attachments.html:7
+#: tcms/testplans/templates/testplans/get.html:398
 msgid "Attachments"
 msgstr "첨부 파일"
 
@@ -880,28 +821,31 @@ msgid "Date"
 msgstr "날짜"
 
 #: tcms/templates/include/attachments.html:31
+#: tcms/testplans/templates/testplans/get.html:293
 msgid "No records found"
 msgstr "기록을 찾을 수 없습니다"
 
 #: tcms/templates/include/bug_details.html:3
-#: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
-#: tcms/templates/plan/get_cases.html:192
-#: tcms/templates/plan/search_case.html:82 tcms/templates/run/get.html:126
-#: tcms/templates/run/get_case_runs.html:34
+#: tcms/templates/include/tp_toolbar_dropdown.html:4
+#: tcms/templates/run/get.html:126 tcms/templates/run/get_case_runs.html:34
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:72
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:141
-#: tcms/testruns/templates/testruns/mutable.html:97
+#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testplans/templates/testplans/get.html:148
+#: tcms/testplans/templates/testplans/get.html:324
+#: tcms/testplans/templates/testplans/get.html:357
+#: tcms/testplans/templates/testplans/get.html:449
+#: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Status"
 msgstr "상태"
 
-#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
-#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
+#: tcms/templates/include/tags_card.html:6 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
-#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testcases/templates/testcases/search.html:145
+#: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
@@ -912,39 +856,81 @@ msgstr "태그"
 #: tcms/testcases/templates/testcases/get.html:163
 #: tcms/testcases/templates/testcases/get.html:211
 #: tcms/testplans/templates/testplans/clone.html:13
+#: tcms/testplans/templates/testplans/get.html:204
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "이름"
 
-#: tcms/templates/management/get_tag.html:7
-msgid "Plans"
-msgstr "플랜"
+#: tcms/templates/include/tp_toolbar_dropdown.html:6
+#: tcms/templates/run/assign_case.html:75
+#: tcms/templates/run/get_case_runs.html:103
+#: tcms/templates/run/table_executions.html:22
+#: tcms/testcases/templates/testcases/get.html:78
+#: tcms/testcases/templates/testcases/mutable.html:84
+#: tcms/testcases/templates/testcases/search.html:73
+#: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testplans/templates/testplans/get.html:161
+#: tcms/testplans/templates/testplans/get.html:332
+#: tcms/testplans/templates/testplans/get.html:365
+#: tcms/testplans/templates/testplans/get.html:451
+#: tcms/testruns/templates/testruns/mutable.html:98
+msgid "Priority"
+msgstr "우선순위"
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
-#: tcms/templates/plan/get_cases.html:139
-msgid "Cases"
-msgstr "케이스"
+#: tcms/templates/include/tp_toolbar_dropdown.html:7
+#: tcms/templates/run/assign_case.html:74 tcms/templates/run/report.html:69
+#: tcms/templates/run/table_executions.html:21
+#: tcms/testcases/templates/testcases/get.html:63
+#: tcms/testcases/templates/testcases/mutable.html:56
+#: tcms/testcases/templates/testcases/search.html:51
+#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testplans/templates/testplans/get.html:369
+#: tcms/testplans/templates/testplans/get.html:452
+#: tcms/testruns/templates/testruns/mutable.html:97
+msgid "Category"
+msgstr "카테고리"
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
-msgid "Runs"
-msgstr "뛰다"
+#: tcms/templates/include/tp_toolbar_dropdown.html:8
+#: tcms/templates/run/assign_case.html:72
+#: tcms/testcases/templates/testcases/get.html:42
+#: tcms/testcases/templates/testcases/get.html:164
+#: tcms/testcases/templates/testcases/mutable.html:152
+#: tcms/testcases/templates/testcases/search.html:106
+#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testplans/templates/testplans/get.html:53
+#: tcms/testplans/templates/testplans/get.html:373
+#: tcms/testplans/templates/testplans/get.html:453
+#: tcms/testplans/templates/testplans/mutable.html:104
+#: tcms/testplans/templates/testplans/search.html:74
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/mutable.html:94
+msgid "Author"
+msgstr "작성자"
 
-#: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/get_attachments.html:10
-msgid "Action"
-msgstr "액션"
+#: tcms/templates/include/tp_toolbar_dropdown.html:9
+#: tcms/templates/run/get_case_runs.html:72
+#: tcms/testcases/templates/testcases/get.html:47
+#: tcms/testcases/templates/testcases/mutable.html:34
+#: tcms/testcases/templates/testcases/mutable.html:175
+#: tcms/testplans/templates/testplans/get.html:174
+#: tcms/testplans/templates/testplans/get.html:339
+#: tcms/testplans/templates/testplans/get.html:377
+#: tcms/testplans/templates/testplans/get.html:454
+#: tcms/testplans/templates/testplans/mutable.html:116
+#: tcms/testplans/templates/testplans/search.html:80
+#: tcms/testruns/templates/testruns/mutable.html:56
+#: tcms/testruns/templates/testruns/search.html:61
+#: tcms/testruns/templates/testruns/search.html:100
+msgid "Default tester"
+msgstr "기본 테스터"
 
-#: tcms/templates/management/get_tag.html:21
-#: tcms/templates/management/get_tag.html:23
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-#: tcms/templates/run/get_case_runs.html:23
-msgid "Remove"
-msgstr "삭제"
-
-#: tcms/templates/management/get_tag.html:35
-msgid "Add Tag"
-msgstr "태그 추가"
+#: tcms/templates/include/tp_toolbar_dropdown.html:10
+#: tcms/testplans/templates/testplans/get.html:181
+#: tcms/testplans/templates/testplans/get.html:382
+#: tcms/testplans/templates/testplans/get.html:455
+msgid "Reviewer"
+msgstr "비평가"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1008,307 +994,29 @@ msgstr "번역 모드"
 msgid "Translation guide"
 msgstr "번역 가이드"
 
-#: tcms/templates/pagination.html:7
+#: tcms/templates/pagination.html:6
+msgid "Select"
+msgstr ""
+
+#: tcms/templates/pagination.html:13
 msgid "First page"
 msgstr "첫 페이지"
 
-#: tcms/templates/pagination.html:10
+#: tcms/templates/pagination.html:16
 msgid "Previous page"
 msgstr "이전 페이지"
 
-#: tcms/templates/pagination.html:14
+#: tcms/templates/pagination.html:20
 msgid "Current page"
 msgstr "현재 페이지"
 
-#: tcms/templates/pagination.html:22
+#: tcms/templates/pagination.html:28
 msgid "Next page"
 msgstr "다음 페이지"
 
-#: tcms/templates/pagination.html:25
+#: tcms/templates/pagination.html:31
 msgid "Last page"
 msgstr "마지막 페이지"
-
-#: tcms/templates/plan/cases_rows.html:73
-msgid "No test case was found in this plan."
-msgstr "이 계획에서는 테스트 사례를 찾을 수 없습니다."
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit Plan"
-msgstr "계획 수정"
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit test plan"
-msgstr "테스트 계획 편집"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone Plan"
-msgstr "복제 계획"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone this plan to other product"
-msgstr "이 계획을 다른 제품으로 복제"
-
-#: tcms/templates/plan/get.html:42
-msgid "Print Plan"
-msgstr "인쇄 계획"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete Plan"
-msgstr "계획 삭제"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete test plan"
-msgstr "테스트 계획 삭제"
-
-#: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171
-#: tcms/templates/plan/search_case.html:78
-#: tcms/templates/run/assign_case.html:73
-#: tcms/testcases/templates/testcases/get.html:42
-#: tcms/testcases/templates/testcases/get.html:164
-#: tcms/testcases/templates/testcases/mutable.html:152
-#: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:143
-#: tcms/testplans/templates/testplans/mutable.html:104
-#: tcms/testplans/templates/testplans/search.html:74
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/mutable.html:95
-msgid "Author"
-msgstr "작성자"
-
-#: tcms/templates/plan/get.html:64
-msgid "Plan Type"
-msgstr "플랜 유형"
-
-#: tcms/templates/plan/get.html:70
-msgid "Reference Link"
-msgstr "참조 링크"
-
-#: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
-#: tcms/templates/run/table_executions.html:53
-#: tcms/templates/run/table_executions.html:59
-msgid "None"
-msgstr "없음"
-
-#: tcms/templates/plan/get.html:80
-msgid "Create Time"
-msgstr "시간을 창조하십시요"
-
-#: tcms/templates/plan/get.html:85
-msgid "Parent"
-msgstr "상위"
-
-#: tcms/templates/plan/get.html:95
-msgid "View Edit History"
-msgstr "편집 내역보기"
-
-#: tcms/templates/plan/get.html:104
-msgid "Document"
-msgstr "문서"
-
-#: tcms/templates/plan/get.html:110
-msgid "Reviewing Cases"
-msgstr "사례 검토"
-
-#: tcms/templates/plan/get.html:122
-msgid "Tree View"
-msgstr "나무 전망"
-
-#: tcms/templates/plan/get.html:131
-msgid "The document for this plan hasn't been written yet."
-msgstr "이 계획에 대한 문서는 아직 작성되지 않았습니다."
-
-#: tcms/templates/plan/get_attachments.html:7
-msgid "File name"
-msgstr "파일 이름"
-
-#: tcms/templates/plan/get_attachments.html:8
-msgid "Submitter"
-msgstr "제출자"
-
-#: tcms/templates/plan/get_attachments.html:9
-msgid "Create date"
-msgstr "생성된 날짜"
-
-#: tcms/templates/plan/get_attachments.html:23
-msgid "No attachments"
-msgstr "첨부 파일이 없습니다"
-
-#: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
-#: tcms/templates/plan/get_cases.html:91
-msgid "Case"
-msgstr "사례"
-
-#: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
-msgid "Write new case"
-msgstr "새로운 사건을 쓰다"
-
-#: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
-#: tcms/templates/plan/search_case.html:4
-msgid "Add cases from other plans"
-msgstr "다른 계획의 서비스 케이스 추가"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "Print"
-msgstr "인쇄하기"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "print view of selected cases"
-msgstr "선택한 서비스 케이스의 인쇄 보기"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
-#: tcms/testplans/templates/testplans/clone.html:70
-msgid "Clone"
-msgstr "복제"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-msgid "Clone selected cases to another test plan"
-msgstr "선택한 사례를 다른 테스트 계획으로 복제"
-
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-msgid "Remove selected cases from this plan"
-msgstr "이 계획에서 선택한 서비스 케이스 제거"
-
-#: tcms/templates/plan/get_cases.html:40
-msgid "Run"
-msgstr "실행"
-
-#: tcms/templates/plan/get_cases.html:42
-msgid "Create new TestRun"
-msgstr "새로운 TestRun 생성"
-
-#: tcms/templates/plan/get_cases.html:48
-msgid "Change TestCase reviewer"
-msgstr "TestCase 검토 자 변경"
-
-#: tcms/templates/plan/get_cases.html:50
-msgid "Change default tester"
-msgstr "기본 테스터 변경"
-
-#: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
-#: tcms/templates/plan/get_cases.html:202
-#: tcms/templates/plan/search_case.html:80
-#: tcms/templates/run/assign_case.html:76
-#: tcms/templates/run/get_case_runs.html:103
-#: tcms/templates/run/table_executions.html:22
-#: tcms/testcases/templates/testcases/get.html:78
-#: tcms/testcases/templates/testcases/mutable.html:84
-#: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:140
-#: tcms/testruns/templates/testruns/mutable.html:99
-msgid "Priority"
-msgstr "우선순위"
-
-#: tcms/templates/plan/get_cases.html:69
-msgid "Click to show filter options"
-msgstr "필터 옵션을 표시하려면 클릭하십시오."
-
-#: tcms/templates/plan/get_cases.html:69
-#: tcms/templates/run/get_case_runs.html:6
-msgid "Show filter options"
-msgstr "필터 옵션 보기"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "나를 클릭한 다음 행을 드래그 앤 드롭하여 순서를 조정하고 '정렬 완료' 링크를 클릭하여 변경 사항을 제출합니다."
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Re-order cases"
-msgstr "서비스 케이스 재주문"
-
-#: tcms/templates/plan/get_cases.html:81
-#: tcms/templates/run/get_case_runs.html:130
-msgid "No tags in cases"
-msgstr "경우에 태그가 없습니다"
-
-#: tcms/templates/plan/get_cases.html:99
-#: tcms/templates/run/table_executions.html:18
-msgid "Tester"
-msgstr "테스터"
-
-#: tcms/templates/plan/get_cases.html:115
-#: tcms/templates/plan/get_cases.html:197
-#: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
-#: tcms/templates/run/table_executions.html:21
-#: tcms/testcases/templates/testcases/get.html:63
-#: tcms/testcases/templates/testcases/mutable.html:56
-#: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:138
-#: tcms/testruns/templates/testruns/mutable.html:98
-msgid "Category"
-msgstr "카테고리"
-
-#: tcms/templates/plan/get_cases.html:131
-msgid "Items per page"
-msgstr "한 페이지당 상품 수"
-
-#: tcms/templates/plan/get_cases.html:146
-msgid "Also select all cases that are not yet shown below."
-msgstr "아래에 아직 표시되지 않은 모든 사례를 선택하십시오."
-
-#: tcms/templates/plan/get_cases.html:166
-#: tcms/templates/run/assign_case.html:72
-msgid "Test Case Summary"
-msgstr "테스트 사례 요약"
-
-#: tcms/templates/plan/get_cases.html:177
-msgid "Reviewer"
-msgstr "비평가"
-
-#: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
-#: tcms/templates/run/report.html:41
-msgid "Default Tester"
-msgstr "기본 테스터"
-
-#: tcms/templates/plan/get_cases.html:205
-msgid "Text version"
-msgstr "텍스트 버전"
-
-#: tcms/templates/plan/get_cases.html:211
-msgid "Actions"
-msgstr "동작"
-
-#: tcms/templates/plan/get_cases.html:220
-msgid "Show more"
-msgstr "더 보기"
-
-#: tcms/templates/plan/get_cases.html:222
-msgid "cases left"
-msgstr "남은 사례"
-
-#: tcms/templates/plan/get_cases.html:224
-msgid "All cases have been loaded."
-msgstr "모든 케이스가로드되었습니다."
-
-#: tcms/templates/plan/get_treeview.html:4
-msgid "Add child node to current plan"
-msgstr "현재 계획에 자식 노드 추가"
-
-#: tcms/templates/plan/get_treeview.html:6
-msgid "Remove child node from current plan"
-msgstr "현재 계획에서 하위 노드 제거"
-
-#: tcms/templates/plan/search_case.html:25
-msgid "Search cases to add into this test plan."
-msgstr "이 테스트 계획에 추가 할 검색 사례."
-
-#: tcms/templates/plan/search_case.html:36
-msgid "Quick Search"
-msgstr "빠른 검색"
-
-#: tcms/templates/plan/search_case.html:41
-msgid "Normal Search"
-msgstr "일반 검색"
-
-#: tcms/templates/plan/search_case.html:81
-msgid "Created"
-msgstr "작성일"
-
-#: tcms/templates/plan/search_case.html:111
-msgid "No test cases found."
-msgstr "테스트 사례가 없습니다."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1395,47 +1103,51 @@ msgstr "신규 계정 등록"
 msgid "Add TestCase to TestRun"
 msgstr "TestRun에 TestCase 추가"
 
-#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
+#: tcms/templates/run/assign_case.html:27 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
-#: tcms/testruns/templates/testruns/mutable.html:48
+#: tcms/testruns/templates/testruns/mutable.html:49
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "상사"
 
-#: tcms/templates/run/assign_case.html:34
+#: tcms/templates/run/assign_case.html:33
 msgid "All Confirmed Cases"
 msgstr "모든 확인 된 사례"
 
-#: tcms/templates/run/assign_case.html:40
+#: tcms/templates/run/assign_case.html:39
 msgid "Test Cases in Run"
 msgstr "실행중인 테스트 사례"
 
-#: tcms/templates/run/assign_case.html:47
+#: tcms/templates/run/assign_case.html:46
 msgid "Cases in this Run"
 msgstr "이번 실행 사례"
 
-#: tcms/templates/run/assign_case.html:49
+#: tcms/templates/run/assign_case.html:48
 msgid "Use the sortkey stored in plan"
 msgstr "계획에 저장된 정렬 키 사용"
 
-#: tcms/templates/run/assign_case.html:53
+#: tcms/templates/run/assign_case.html:52
 msgid "How to Assign case?"
 msgstr "대/소문자를 할당하는 방법?"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "The table below list all the confirmed test cases of plan"
 msgstr "아래 표는 계획의 확인된 모든 테스트 사례를 나열합니다."
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "check the checkbox to add cases into test run. Remember to update at last"
 msgstr "검사란을 선택하여 테스트 실행에 사례를 추가합니다. 마침내 업데이트해야 합니다."
 
-#: tcms/templates/run/assign_case.html:74
+#: tcms/templates/run/assign_case.html:71
+msgid "Test Case Summary"
+msgstr "테스트 사례 요약"
+
+#: tcms/templates/run/assign_case.html:73
 msgid "Created Date"
 msgstr "생성된 날짜"
 
-#: tcms/templates/run/assign_case.html:77
+#: tcms/templates/run/assign_case.html:76
 msgid "Selected"
 msgstr "선정"
 
@@ -1446,6 +1158,10 @@ msgstr "제품 버전"
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
 msgstr "알림"
+
+#: tcms/templates/run/get.html:116 tcms/templates/run/report.html:41
+msgid "Default Tester"
+msgstr "기본 테스터"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
@@ -1464,6 +1180,10 @@ msgstr "Finished At"
 msgid "CC"
 msgstr "CC"
 
+#: tcms/templates/run/get_case_runs.html:6
+msgid "Show filter options"
+msgstr "필터 옵션 보기"
+
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
 msgstr "자동"
@@ -1475,6 +1195,10 @@ msgstr "하이라이트"
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
 msgstr "선택한 서비스 케이스 제거가 테스트 실행을 형성합니다."
+
+#: tcms/templates/run/get_case_runs.html:23
+msgid "Remove"
+msgstr "삭제"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1496,18 +1220,6 @@ msgstr "코멘트"
 msgid "Hyperlink"
 msgstr "하이퍼링크"
 
-#: tcms/templates/run/get_case_runs.html:72
-#: tcms/testcases/templates/testcases/get.html:47
-#: tcms/testcases/templates/testcases/mutable.html:34
-#: tcms/testcases/templates/testcases/mutable.html:175
-#: tcms/testplans/templates/testplans/mutable.html:116
-#: tcms/testplans/templates/testplans/search.html:80
-#: tcms/testruns/templates/testruns/mutable.html:55
-#: tcms/testruns/templates/testruns/search.html:61
-#: tcms/testruns/templates/testruns/search.html:100
-msgid "Default tester"
-msgstr "기본 테스터"
-
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
 msgstr "방문 허용"
@@ -1515,6 +1227,18 @@ msgstr "방문 허용"
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
 msgstr "버그"
+
+#: tcms/templates/run/get_case_runs.html:112
+#: tcms/testcases/templates/testcases/search.html:111
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Tag"
+msgstr "태그"
+
+#: tcms/templates/run/get_case_runs.html:130
+msgid "No tags in cases"
+msgstr "경우에 태그가 없습니다"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1527,6 +1251,12 @@ msgstr "URL이 결함을 가리킵니다."
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
 msgstr "자동 업데이트 문제 추적기"
+
+#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
+#: tcms/templates/run/table_executions.html:25
+#: tcms/testplans/templates/testplans/get.html:430
+msgid "Comments"
+msgstr "코멘트"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1605,15 +1335,20 @@ msgstr "모든 서비스 케이스 확장"
 msgid "Execution ID"
 msgstr "실행 ID"
 
+#: tcms/templates/run/table_executions.html:18
+msgid "Tester"
+msgstr "테스터"
+
+#: tcms/templates/run/table_executions.html:53
+#: tcms/templates/run/table_executions.html:59
+msgid "None"
+msgstr "없음"
+
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
 msgstr "실행을 찾을 수 없습니다."
 
-#: tcms/testcases/forms.py:20
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "유효한 대/소문자 ID(들)를 입력하십시오. 쉼표를 사용하여 두 개 이상의 대/소문자 ID를 분할합니다. 예를 들어 \"111, 222\""
-
-#: tcms/testcases/forms.py:43
+#: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1656,6 +1391,21 @@ msgstr "TP에 새로운 TC 추가"
 msgid "Selected TC"
 msgstr "선택된 TC"
 
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:294
+#: tcms/testplans/templates/testplans/clone.html:72
+#: tcms/testplans/templates/testplans/get.html:137
+#: tcms/testplans/templates/testplans/get.html:319 tcms/testplans/views.py:137
+msgid "Clone"
+msgstr "복제"
+
+#: tcms/testcases/templates/testcases/get.html:32
+#: tcms/testcases/templates/testcases/mutable.html:138
+#: tcms/testplans/templates/testplans/get.html:394
+#: tcms/testplans/templates/testplans/get.html:395
+#: tcms/testruns/templates/testruns/mutable.html:65
+msgid "Notes"
+msgstr "노트"
+
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
@@ -1673,6 +1423,7 @@ msgstr "요구 사항"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
+#: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
 msgstr "참조 링크"
@@ -1686,6 +1437,7 @@ msgid "Test plans"
 msgstr "테스트 계획"
 
 #: tcms/testcases/templates/testcases/get.html:204
+#: tcms/testplans/templates/testplans/get.html:408
 msgid "Components"
 msgstr "구성 요소"
 
@@ -1700,6 +1452,11 @@ msgstr "새로운 테스트 케이스"
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
 msgstr "새 분류 추가"
+
+#: tcms/testcases/templates/testcases/mutable.html:104
+#: tcms/testcases/templates/testcases/search.html:117
+msgid "Text"
+msgstr "텍스트"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1755,26 +1512,22 @@ msgstr "모두"
 msgid "Separate multiple values with comma (,)"
 msgstr "여러 값을 쉼표 (,) 로 구분"
 
-#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Created on"
 msgstr "작성일"
 
-#: tcms/testcases/views.py:365
-msgid "TestPlan not specified or does not exist"
-msgstr "TestPlan이 지정되지 않았거나 존재하지 않습니다"
-
-#: tcms/testcases/views.py:535
+#: tcms/testcases/views.py:298 tcms/testplans/views.py:141
 msgid "History"
 msgstr "지난 기록"
 
-#: tcms/testcases/views.py:681
+#: tcms/testcases/views.py:403
 msgid "TestCase cloning was successful"
 msgstr "TestCase 복제 성공"
 
-#: tcms/testcases/views.py:707 tcms/testruns/views.py:375
-#: tcms/testruns/views.py:424
+#: tcms/testcases/views.py:429 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:417
 msgid "At least one TestCase is required"
 msgstr "적어도 하나의 TestCase가 필요합니다"
 
@@ -1786,17 +1539,71 @@ msgstr "클론 테스트 계획"
 msgid "Clone TCs"
 msgstr "클론 테스트 사례"
 
-#: tcms/testplans/templates/testplans/clone.html:57
+#: tcms/testplans/templates/testplans/clone.html:58
 msgid "Clone or link existing TCs into new TP"
 msgstr "기존 TC를 복제하거나 새 TP에 연결"
 
-#: tcms/testplans/templates/testplans/clone.html:61
+#: tcms/testplans/templates/testplans/clone.html:62
 msgid "Parent TP"
 msgstr "부모 TP"
 
-#: tcms/testplans/templates/testplans/clone.html:64
+#: tcms/testplans/templates/testplans/clone.html:66
 msgid "Set the source TP as parent of new TP"
 msgstr "소스 TP를 새 TP의 상위로 설정"
+
+#: tcms/testplans/templates/testplans/get.html:25
+msgid "Enter username, email or user ID:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:26
+msgid "No rows selected! Please select at least one!"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:27
+msgid "Are you sure?"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:28
+msgid "Cannot create TestRun with unconfirmed test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:42
+msgid "Show more"
+msgstr "더 보기"
+
+#: tcms/testplans/templates/testplans/get.html:74
+msgid "Plan Type"
+msgstr "플랜 유형"
+
+#: tcms/testplans/templates/testplans/get.html:99
+msgid "Test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:120
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New TestRun"
+msgstr "새 테스트 실행"
+
+#: tcms/testplans/templates/testplans/get.html:230
+#: tcms/testplans/templates/testplans/get.html:233
+msgid "Sort key"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:243
+msgid "Re-order cases"
+msgstr "서비스 케이스 재주문"
+
+#: tcms/testplans/templates/testplans/get.html:253
+msgid "Search and add test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:262
+msgid "Advanced search"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:405
+msgid "No attachments"
+msgstr "첨부 파일이 없습니다"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1852,28 +1659,19 @@ msgstr "테스트 계획 이름"
 msgid "Test plan"
 msgstr "테스트 계획"
 
-#: tcms/testplans/views.py:247
-msgid "TestPlan is required"
-msgstr "테스트 플랜이 필요합니다."
-
-#: tcms/testplans/views.py:408
-msgid "At least one test plan is required for print"
-msgstr "인쇄를 위해 하나 이상의 테스트 계획이 필요합니다."
-
-#: tcms/testplans/views.py:416
-#, python-format
-msgid "Test Plan \"%s\" does not exist"
-msgstr "테스트 계획 \"%s\" 존재 하지 않습니다."
-
 #: tcms/testruns/admin.py:30
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "권한 거부: TestRun이 회원님의 소유가 아닙니다."
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:41
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
 msgstr "테스트 실행 상태 사용자 지정에 대한 자세한 내용은<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">설명서</a>!"
+
+#: tcms/testruns/admin.py:86
+msgid "1 negative, 1 neutral & 1 positive status required!"
+msgstr ""
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1887,24 +1685,20 @@ msgstr "테스트 실행 편집"
 msgid "Clone TestRun"
 msgstr "복제 테스트 실행"
 
-#: tcms/testruns/templates/testruns/mutable.html:11
-msgid "New TestRun"
-msgstr "새 테스트 실행"
-
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 msgid "version"
 msgstr "버전"
 
-#: tcms/testruns/templates/testruns/mutable.html:51
-#: tcms/testruns/templates/testruns/mutable.html:58
+#: tcms/testruns/templates/testruns/mutable.html:52
+#: tcms/testruns/templates/testruns/mutable.html:59
 msgid "Username or email"
 msgstr "사용자 이름 또는 전자 메일"
 
-#: tcms/testruns/templates/testruns/mutable.html:83
+#: tcms/testruns/templates/testruns/mutable.html:82
 msgid "Selected TestCase(s):"
 msgstr "선택한 테스트 케이스:"
 
-#: tcms/testruns/templates/testruns/mutable.html:86
+#: tcms/testruns/templates/testruns/mutable.html:85
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -1927,23 +1721,23 @@ msgstr "플랜 ID"
 msgid "TestPlan ID"
 msgstr "테스트 플랜 ID"
 
-#: tcms/testruns/views.py:47
+#: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "테스트 실행을 만들려면 테스트 계획이 필요하고 하나를 선택합니다."
 
-#: tcms/testruns/views.py:53
+#: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "테스트 실행을 만들려면 테스트 계획이 필요하고 하나를 선택합니다."
 
-#: tcms/testruns/views.py:379
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "의 복제 "
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:426
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID가 유효한 정수가 아닙니다"
 
-#: tcms/testruns/views.py:527
+#: tcms/testruns/views.py:520
 msgid "The user you typed does not exist in database"
 msgstr "입력 한 사용자가 데이터베이스에 없습니다"
 

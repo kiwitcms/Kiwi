@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-19 20:33+0000\n"
-"PO-Revision-Date: 2020-09-24 08:10\n"
+"POT-Creation-Date: 2020-11-05 22:19+0000\n"
+"PO-Revision-Date: 2020-11-06 08:03\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -70,17 +70,17 @@ msgstr "Felelős"
 #: tcms/bugs/templates/bugs/search.html:104
 #: tcms/telemetry/templates/telemetry/include/filters.html:11
 #: tcms/templates/dashboard.html:47 tcms/templates/include/bug_details.html:13
-#: tcms/templates/plan/get.html:56 tcms/templates/run/get.html:104
-#: tcms/templates/run/report.html:35
+#: tcms/templates/run/get.html:104 tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:58
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/mutable.html:41
 #: tcms/testcases/templates/testcases/search.html:41
 #: tcms/testplans/templates/testplans/clone.html:20
+#: tcms/testplans/templates/testplans/get.html:63
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Product"
@@ -92,8 +92,8 @@ msgstr "Termék"
 #: tcms/bugs/templates/bugs/search.html:105
 #: tcms/telemetry/templates/telemetry/include/filters.html:20
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:76
-#: tcms/templates/plan/get.html:60
 #: tcms/testplans/templates/testplans/clone.html:35
+#: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:115
@@ -109,9 +109,9 @@ msgstr "Verzió"
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/case/get_details_case_run.html:67
 #: tcms/templates/include/bug_details.html:17
-#: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:110
+#: tcms/templates/run/assign_case.html:23 tcms/templates/run/get.html:110
 #: tcms/templates/run/report.html:38
-#: tcms/testruns/templates/testruns/mutable.html:31
+#: tcms/testruns/templates/testruns/mutable.html:32
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Build"
@@ -127,10 +127,10 @@ msgstr "Újranyit"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
-#: tcms/templates/case/get_details.html:93
 #: tcms/testcases/templates/testcases/mutable.html:229
+#: tcms/testplans/templates/testplans/get.html:438
 #: tcms/testplans/templates/testplans/mutable.html:154
-#: tcms/testruns/templates/testruns/mutable.html:72
+#: tcms/testruns/templates/testruns/mutable.html:73
 msgid "Save"
 msgstr "Mentés"
 
@@ -141,14 +141,16 @@ msgstr "Lezárás"
 #: tcms/bugs/templates/bugs/mutable.html:17
 #: tcms/bugs/templates/bugs/search.html:11
 #: tcms/bugs/templates/bugs/search.html:102
-#: tcms/templates/plan/search_case.html:77
+#: tcms/templates/include/tp_toolbar_dropdown.html:3
 #: tcms/templates/run/get_case_runs.html:68 tcms/templates/run/report.html:66
 #: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:22
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testplans/templates/testplans/get.html:211
+#: tcms/testplans/templates/testplans/get.html:448
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:94
+#: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Summary"
@@ -169,8 +171,8 @@ msgstr "új verzió hozzáadása"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
+#: tcms/testruns/templates/testruns/mutable.html:36
 msgid "add new Build"
 msgstr "új build hozzáadása"
 
@@ -206,17 +208,16 @@ msgstr "Felhasználónév"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:101
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
 msgstr "Keresés"
 
 #: tcms/bugs/templates/bugs/search.html:101
-#: tcms/templates/plan/get_cases.html:161
-#: tcms/templates/plan/search_case.html:76
-#: tcms/templates/run/assign_case.html:71
+#: tcms/templates/run/assign_case.html:70
 #: tcms/testcases/templates/testcases/get.html:162
-#: tcms/testcases/templates/testcases/search.html:135
+#: tcms/testcases/templates/testcases/search.html:136
 #: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "ID"
@@ -227,39 +228,38 @@ msgstr "ID"
 msgid "Created at"
 msgstr "Létrehozva: "
 
-#: tcms/bugs/views.py:41 tcms/templates/plan/cases_rows.html:61
-#: tcms/testcases/views.py:527
+#: tcms/bugs/views.py:40 tcms/testcases/views.py:290
+#: tcms/testplans/templates/testplans/get.html:341 tcms/testplans/views.py:133
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: tcms/bugs/views.py:46 tcms/testcases/views.py:540
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:303
+#: tcms/testplans/views.py:146
 msgid "Object permissions"
 msgstr "Objektum jogosultságok"
 
-#: tcms/bugs/views.py:51 tcms/testcases/views.py:545
+#: tcms/bugs/views.py:50
+#: tcms/templates/include/comments_for_object_template.html:10
+#: tcms/testcases/views.py:308 tcms/testplans/templates/testplans/get.html:192
+#: tcms/testplans/templates/testplans/get.html:345 tcms/testplans/views.py:151
 msgid "Delete"
 msgstr "Törlés"
 
-#: tcms/bugs/views.py:76
+#: tcms/bugs/views.py:75
 msgid "New bug"
 msgstr "Új hibajegy"
 
-#: tcms/bugs/views.py:182
+#: tcms/bugs/views.py:181
 msgid "Edit bug"
 msgstr "Hibajegy szerkesztése"
 
-#: tcms/bugs/views.py:213
+#: tcms/bugs/views.py:211
 msgid "*bug closed*"
 msgstr "*hibajegy lezárva*"
 
-#: tcms/bugs/views.py:217
+#: tcms/bugs/views.py:215
 msgid "*bug reopened*"
 msgstr "*hibajegy újranyitva*"
-
-#: tcms/core/ajax.py:150
-#, python-format
-msgid "User %s not found!"
-msgstr "%s felhasználó nem található!"
 
 #: tcms/core/history.py:42
 #, python-format
@@ -347,112 +347,112 @@ msgstr "Érvénytelen dátumformátum. Az elvárt formátum: YYYY-MM-DD [HH:MM:S
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "Nincs elsődleges kulcs ehhez a modellhez: %s. Ezt a mezőt kézzel kell megadni."
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:289
 msgid "DASHBOARD"
 msgstr "VEZÉRLŐPULT"
 
-#: tcms/settings/common.py:289
+#: tcms/settings/common.py:290
 msgid "TESTING"
 msgstr "TESZTELÉS"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:291
 msgid "New Test Plan"
 msgstr "Új tesztterv"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:293 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "Új teszteset"
 
-#: tcms/settings/common.py:294
+#: tcms/settings/common.py:295
 msgid "New Bug"
 msgstr "Új hibajegy"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:298
 msgid "SEARCH"
 msgstr "KERESÉS"
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:299
 msgid "Search Test Plans"
 msgstr "Teszttervek keresése"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:300
 msgid "Search Test Runs"
 msgstr "Teszt futtatások keresése"
 
-#: tcms/settings/common.py:300
+#: tcms/settings/common.py:301
 msgid "Search Test Cases"
 msgstr "Tesztesetek keresése"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:302
 msgid "Search Bugs"
 msgstr "Hibajegyek keresése"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:305
 msgid "TELEMETRY"
 msgstr "TELEMETRIA"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:306
 msgid "Testing"
 msgstr "Tesztelés"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:307
 msgid "Breakdown"
 msgstr "Elemzés"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:308
 msgid "Status matrix"
 msgstr "Állapot mátrix"
 
-#: tcms/settings/common.py:308
+#: tcms/settings/common.py:309
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Végrehajtási trendek"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:310
 msgid "TestCase health"
 msgstr "Teszteset állapota"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:315
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:316
 msgid "Users and groups"
 msgstr "Felhasználók és csoportok"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:318
 msgid "Everything else"
 msgstr "Minden más"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:320
 msgid "PLUGINS"
 msgstr "BŐVÍTMÉNYEK"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:331
 msgid "Forum"
 msgstr "Fórum"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:332
 msgid "Report an Issue"
 msgstr "Hibabejelentés"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:333
 msgid "Ask for help on StackOverflow"
 msgstr "Segítségkérés StackOverflow-on keresztül"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:334
 msgid "Donate €5 via Open Collective"
 msgstr "€5 támogatás az Open Collective-en keresztül"
 
-#: tcms/settings/common.py:334
+#: tcms/settings/common.py:335
 msgid "Administration Guide"
 msgstr "Adminisztrációs útmutató"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:336
 msgid "User Guide"
 msgstr "Felhasználói útmutató"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:337
 msgid "API Help"
 msgstr "API súgó"
 
@@ -486,7 +486,7 @@ msgid "Detailed information about test execution status"
 msgstr "Részletes információ teszt végrehajtásának állapotáról"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:49
+#: tcms/templates/run/assign_case.html:31 tcms/templates/run/get.html:49
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
 msgstr "Tesztterv"
@@ -500,19 +500,21 @@ msgid "Total"
 msgstr "Összesen"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
-#: tcms/templates/plan/get_cases.html:107
-#: tcms/templates/plan/get_cases.html:187
+#: tcms/templates/include/tp_toolbar_dropdown.html:5
 #: tcms/templates/run/get_case_runs.html:80 tcms/templates/run/report.html:67
 #: tcms/templates/run/table_executions.html:20
 #: tcms/testcases/templates/testcases/get.html:92
 #: tcms/testcases/templates/testcases/mutable.html:96
 #: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testcases/templates/testcases/search.html:143
+#: tcms/testplans/templates/testplans/get.html:363
+#: tcms/testplans/templates/testplans/get.html:450
 msgid "Automated"
 msgstr "Automatizált"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/templates/run/get_case_runs.html:83
+#: tcms/testplans/templates/testplans/get.html:363
 msgid "Manual"
 msgstr "Kézi"
 
@@ -611,75 +613,6 @@ msgstr "Biztosan törölhető ez a melléklet?"
 msgid "the leading open source test case management system"
 msgstr "a vezető nyílt forráskódú teszteset kezelő rendszer"
 
-#: tcms/templates/case/get_details.html:8
-#: tcms/testcases/templates/testcases/mutable.html:104
-#: tcms/testcases/templates/testcases/search.html:117
-msgid "Text"
-msgstr "Szöveg"
-
-#: tcms/templates/case/get_details.html:12
-msgid "Attachment"
-msgstr "Melléklet"
-
-#: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:137
-msgid "No attachment found"
-msgstr "Nem található melléklet"
-
-#: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:147
-#: tcms/templates/plan/get_cases.html:123
-#: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testcases/templates/testcases/search.html:139
-msgid "Component"
-msgstr "Komponens"
-
-#: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:152
-msgid "No component found"
-msgstr "Nem található komponens"
-
-#: tcms/templates/case/get_details.html:32
-#: tcms/templates/management/get_tag.html:6
-#: tcms/templates/plan/get_cases.html:127
-#: tcms/templates/run/get_case_runs.html:112
-#: tcms/testcases/templates/testcases/search.html:111
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Tag"
-msgstr "Címke"
-
-#: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:163
-#: tcms/templates/management/get_tag.html:28
-msgid "No tag found"
-msgstr "Nincsenek címkék"
-
-#: tcms/templates/case/get_details.html:40
-msgid "bug"
-msgstr "hiba"
-
-#: tcms/templates/case/get_details.html:45
-msgid "From Run"
-msgstr "Futtatásból"
-
-#: tcms/templates/case/get_details.html:49
-msgid "No bug found"
-msgstr "Nincsenek hibajegyek"
-
-#: tcms/templates/case/get_details.html:56
-#: tcms/testcases/templates/testcases/get.html:32
-#: tcms/testcases/templates/testcases/mutable.html:138
-#: tcms/testruns/templates/testruns/mutable.html:64
-msgid "Notes"
-msgstr "Megjegyzések"
-
-#: tcms/templates/case/get_details.html:62
-#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
-#: tcms/templates/run/table_executions.html:25
-msgid "Comments"
-msgstr "Hozzászólások"
-
 #: tcms/templates/case/get_details_case_run.html:65
 msgid "Test Execution Information"
 msgstr "Teszt végrehajtás információ"
@@ -702,12 +635,12 @@ msgstr "Hibajegyek és hiperhivatkozások"
 
 #: tcms/templates/case/get_details_case_run.html:100
 #: tcms/templates/include/tags_card.html:27
-#: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:20
 #: tcms/templates/run/get_case_runs.html:47
 #: tcms/templates/run/get_case_runs.html:55
 #: tcms/testcases/templates/testcases/get.html:180
 #: tcms/testcases/templates/testcases/get.html:225
+#: tcms/testplans/templates/testplans/get.html:257
 msgid "Add"
 msgstr "Hozzáad"
 
@@ -715,17 +648,24 @@ msgstr "Hozzáad"
 msgid "Report bug"
 msgstr "Hibajelentés"
 
-#: tcms/templates/case/printable.html:31
-msgid "Contents"
-msgstr "Tartalmak"
+#: tcms/templates/case/get_details_case_run.html:137
+msgid "No attachment found"
+msgstr "Nem található melléklet"
 
-#: tcms/templates/case/printable.html:41
-msgid "Test Plan Document"
-msgstr "Tesztterv leírás"
+#: tcms/templates/case/get_details_case_run.html:147
+#: tcms/testcases/templates/testcases/search.html:61
+#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/testplans/templates/testplans/get.html:215
+msgid "Component"
+msgstr "Komponens"
 
-#: tcms/templates/case/printable.html:49
-msgid "Test Cases"
-msgstr "Tesztesetek"
+#: tcms/templates/case/get_details_case_run.html:152
+msgid "No component found"
+msgstr "Nem található komponens"
+
+#: tcms/templates/case/get_details_case_run.html:163
+msgid "No tag found"
+msgstr "Nincsenek címkék"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -861,7 +801,8 @@ msgstr "Kedves Adminisztrátor,\n"
 "A következő felhasználói fiók regisztrálásra került, és jóváhagyásra vár a Kiwi TCMS-ben. Felhasználónév %(username)s.\n\n"
 "A fiók aktiválásához kattints ide %(user_url)s!"
 
-#: tcms/templates/include/attachments.html:7 tcms/templates/plan/get.html:116
+#: tcms/templates/include/attachments.html:7
+#: tcms/testplans/templates/testplans/get.html:398
 msgid "Attachments"
 msgstr "Mellékletek"
 
@@ -878,28 +819,31 @@ msgid "Date"
 msgstr "Dátum"
 
 #: tcms/templates/include/attachments.html:31
+#: tcms/testplans/templates/testplans/get.html:293
 msgid "No records found"
 msgstr "Nincs találat"
 
 #: tcms/templates/include/bug_details.html:3
-#: tcms/templates/plan/get_cases.html:52 tcms/templates/plan/get_cases.html:119
-#: tcms/templates/plan/get_cases.html:192
-#: tcms/templates/plan/search_case.html:82 tcms/templates/run/get.html:126
-#: tcms/templates/run/get_case_runs.html:34
+#: tcms/templates/include/tp_toolbar_dropdown.html:4
+#: tcms/templates/run/get.html:126 tcms/templates/run/get_case_runs.html:34
 #: tcms/templates/run/get_case_runs.html:94 tcms/templates/run/report.html:70
 #: tcms/templates/run/table_executions.html:24
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:72
 #: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:141
-#: tcms/testruns/templates/testruns/mutable.html:97
+#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testplans/templates/testplans/get.html:148
+#: tcms/testplans/templates/testplans/get.html:324
+#: tcms/testplans/templates/testplans/get.html:357
+#: tcms/testplans/templates/testplans/get.html:449
+#: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Status"
 msgstr "Állapot"
 
-#: tcms/templates/include/tags_card.html:6 tcms/templates/plan/get.html:119
-#: tcms/templates/plan/get_cases.html:76 tcms/templates/run/get.html:73
+#: tcms/templates/include/tags_card.html:6 tcms/templates/run/get.html:73
 #: tcms/templates/run/get_case_runs.html:125
-#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testcases/templates/testcases/search.html:145
+#: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
@@ -910,39 +854,81 @@ msgstr "Címkék"
 #: tcms/testcases/templates/testcases/get.html:163
 #: tcms/testcases/templates/testcases/get.html:211
 #: tcms/testplans/templates/testplans/clone.html:13
+#: tcms/testplans/templates/testplans/get.html:204
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "Név"
 
-#: tcms/templates/management/get_tag.html:7
-msgid "Plans"
-msgstr "Tervek"
+#: tcms/templates/include/tp_toolbar_dropdown.html:6
+#: tcms/templates/run/assign_case.html:75
+#: tcms/templates/run/get_case_runs.html:103
+#: tcms/templates/run/table_executions.html:22
+#: tcms/testcases/templates/testcases/get.html:78
+#: tcms/testcases/templates/testcases/mutable.html:84
+#: tcms/testcases/templates/testcases/search.html:73
+#: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testplans/templates/testplans/get.html:161
+#: tcms/testplans/templates/testplans/get.html:332
+#: tcms/testplans/templates/testplans/get.html:365
+#: tcms/testplans/templates/testplans/get.html:451
+#: tcms/testruns/templates/testruns/mutable.html:98
+msgid "Priority"
+msgstr "Prioritás"
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:107
-#: tcms/templates/plan/get_cases.html:139
-msgid "Cases"
-msgstr "Esetek"
+#: tcms/templates/include/tp_toolbar_dropdown.html:7
+#: tcms/templates/run/assign_case.html:74 tcms/templates/run/report.html:69
+#: tcms/templates/run/table_executions.html:21
+#: tcms/testcases/templates/testcases/get.html:63
+#: tcms/testcases/templates/testcases/mutable.html:56
+#: tcms/testcases/templates/testcases/search.html:51
+#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testplans/templates/testplans/get.html:369
+#: tcms/testplans/templates/testplans/get.html:452
+#: tcms/testruns/templates/testruns/mutable.html:97
+msgid "Category"
+msgstr "Kategória"
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:113
-msgid "Runs"
-msgstr "Futtatások"
+#: tcms/templates/include/tp_toolbar_dropdown.html:8
+#: tcms/templates/run/assign_case.html:72
+#: tcms/testcases/templates/testcases/get.html:42
+#: tcms/testcases/templates/testcases/get.html:164
+#: tcms/testcases/templates/testcases/mutable.html:152
+#: tcms/testcases/templates/testcases/search.html:106
+#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testplans/templates/testplans/get.html:53
+#: tcms/testplans/templates/testplans/get.html:373
+#: tcms/testplans/templates/testplans/get.html:453
+#: tcms/testplans/templates/testplans/mutable.html:104
+#: tcms/testplans/templates/testplans/search.html:74
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/mutable.html:94
+msgid "Author"
+msgstr "Szerző"
 
-#: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/get_attachments.html:10
-msgid "Action"
-msgstr "Művelet"
+#: tcms/templates/include/tp_toolbar_dropdown.html:9
+#: tcms/templates/run/get_case_runs.html:72
+#: tcms/testcases/templates/testcases/get.html:47
+#: tcms/testcases/templates/testcases/mutable.html:34
+#: tcms/testcases/templates/testcases/mutable.html:175
+#: tcms/testplans/templates/testplans/get.html:174
+#: tcms/testplans/templates/testplans/get.html:339
+#: tcms/testplans/templates/testplans/get.html:377
+#: tcms/testplans/templates/testplans/get.html:454
+#: tcms/testplans/templates/testplans/mutable.html:116
+#: tcms/testplans/templates/testplans/search.html:80
+#: tcms/testruns/templates/testruns/mutable.html:56
+#: tcms/testruns/templates/testruns/search.html:61
+#: tcms/testruns/templates/testruns/search.html:100
+msgid "Default tester"
+msgstr "Alapértelmezett tesztelő"
 
-#: tcms/templates/management/get_tag.html:21
-#: tcms/templates/management/get_tag.html:23
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-#: tcms/templates/run/get_case_runs.html:23
-msgid "Remove"
-msgstr "Eltávolítás"
-
-#: tcms/templates/management/get_tag.html:35
-msgid "Add Tag"
-msgstr "Címke hozzáadása"
+#: tcms/templates/include/tp_toolbar_dropdown.html:10
+#: tcms/testplans/templates/testplans/get.html:181
+#: tcms/testplans/templates/testplans/get.html:382
+#: tcms/testplans/templates/testplans/get.html:455
+msgid "Reviewer"
+msgstr "Áttekintő"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1006,307 +992,29 @@ msgstr "Fordítási mód"
 msgid "Translation guide"
 msgstr "Fordítási útmutató"
 
-#: tcms/templates/pagination.html:7
+#: tcms/templates/pagination.html:6
+msgid "Select"
+msgstr "Választ"
+
+#: tcms/templates/pagination.html:13
 msgid "First page"
 msgstr "Első oldal"
 
-#: tcms/templates/pagination.html:10
+#: tcms/templates/pagination.html:16
 msgid "Previous page"
 msgstr "Előző oldal"
 
-#: tcms/templates/pagination.html:14
+#: tcms/templates/pagination.html:20
 msgid "Current page"
 msgstr "Aktuális oldal"
 
-#: tcms/templates/pagination.html:22
+#: tcms/templates/pagination.html:28
 msgid "Next page"
 msgstr "Következő oldal"
 
-#: tcms/templates/pagination.html:25
+#: tcms/templates/pagination.html:31
 msgid "Last page"
 msgstr "Utolsó oldal"
-
-#: tcms/templates/plan/cases_rows.html:73
-msgid "No test case was found in this plan."
-msgstr "Nem található teszteset ebben a tervben."
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit Plan"
-msgstr "Terv szerkesztése"
-
-#: tcms/templates/plan/get.html:40
-msgid "Edit test plan"
-msgstr "Tesztterv szerkesztése"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone Plan"
-msgstr "Terv klónozása"
-
-#: tcms/templates/plan/get.html:41
-msgid "Clone this plan to other product"
-msgstr "Terv klónozása egy másik termékbe"
-
-#: tcms/templates/plan/get.html:42
-msgid "Print Plan"
-msgstr "Terv nyomtatása"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete Plan"
-msgstr "Terv törlése"
-
-#: tcms/templates/plan/get.html:43
-msgid "Delete test plan"
-msgstr "Tesztterv törlése"
-
-#: tcms/templates/plan/get.html:52 tcms/templates/plan/get_cases.html:95
-#: tcms/templates/plan/get_cases.html:171
-#: tcms/templates/plan/search_case.html:78
-#: tcms/templates/run/assign_case.html:73
-#: tcms/testcases/templates/testcases/get.html:42
-#: tcms/testcases/templates/testcases/get.html:164
-#: tcms/testcases/templates/testcases/mutable.html:152
-#: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testcases/templates/testcases/search.html:143
-#: tcms/testplans/templates/testplans/mutable.html:104
-#: tcms/testplans/templates/testplans/search.html:74
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/mutable.html:95
-msgid "Author"
-msgstr "Szerző"
-
-#: tcms/templates/plan/get.html:64
-msgid "Plan Type"
-msgstr "Terv típusa"
-
-#: tcms/templates/plan/get.html:70
-msgid "Reference Link"
-msgstr "Referencia hivatkozás"
-
-#: tcms/templates/plan/get.html:75 tcms/templates/plan/get.html:90
-#: tcms/templates/run/table_executions.html:53
-#: tcms/templates/run/table_executions.html:59
-msgid "None"
-msgstr "Nincs"
-
-#: tcms/templates/plan/get.html:80
-msgid "Create Time"
-msgstr "Létrehozás ideje"
-
-#: tcms/templates/plan/get.html:85
-msgid "Parent"
-msgstr "Szülő"
-
-#: tcms/templates/plan/get.html:95
-msgid "View Edit History"
-msgstr "Szerkesztési előzmények"
-
-#: tcms/templates/plan/get.html:104
-msgid "Document"
-msgstr "Dokumentum"
-
-#: tcms/templates/plan/get.html:110
-msgid "Reviewing Cases"
-msgstr "Esetek felülvizsgálata"
-
-#: tcms/templates/plan/get.html:122
-msgid "Tree View"
-msgstr "Fa nézet"
-
-#: tcms/templates/plan/get.html:131
-msgid "The document for this plan hasn't been written yet."
-msgstr "Ehhez a tervhez még nem készült leírás."
-
-#: tcms/templates/plan/get_attachments.html:7
-msgid "File name"
-msgstr "Fájlnév"
-
-#: tcms/templates/plan/get_attachments.html:8
-msgid "Submitter"
-msgstr "Beküldő"
-
-#: tcms/templates/plan/get_attachments.html:9
-msgid "Create date"
-msgstr "Létrehozás dátuma"
-
-#: tcms/templates/plan/get_attachments.html:23
-msgid "No attachments"
-msgstr "Nincsenek mellékletek"
-
-#: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
-#: tcms/templates/plan/get_cases.html:91
-msgid "Case"
-msgstr "Eset"
-
-#: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
-msgid "Write new case"
-msgstr "Új eset írása"
-
-#: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
-#: tcms/templates/plan/search_case.html:4
-msgid "Add cases from other plans"
-msgstr "Esetek hozzáadása másik tervből"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "Print"
-msgstr "Nyomtatás"
-
-#: tcms/templates/plan/get_cases.html:25
-msgid "print view of selected cases"
-msgstr "kiválasztott esetek nyomtatási nézete"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:531
-#: tcms/testplans/templates/testplans/clone.html:70
-msgid "Clone"
-msgstr "Klónozás"
-
-#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-msgid "Clone selected cases to another test plan"
-msgstr "Kiválasztott esetek klónozása egy másik teszttervbe"
-
-#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
-msgid "Remove selected cases from this plan"
-msgstr "A kiválasztott esetek eltávolítása ebből a tervből"
-
-#: tcms/templates/plan/get_cases.html:40
-msgid "Run"
-msgstr "Futtatás"
-
-#: tcms/templates/plan/get_cases.html:42
-msgid "Create new TestRun"
-msgstr "Új teszt futtatás létrehozása"
-
-#: tcms/templates/plan/get_cases.html:48
-msgid "Change TestCase reviewer"
-msgstr "Teszteset felülvizsgáló megváltoztatása"
-
-#: tcms/templates/plan/get_cases.html:50
-msgid "Change default tester"
-msgstr "Alapértelmezett tesztelő megváltoztatása"
-
-#: tcms/templates/plan/get_cases.html:59 tcms/templates/plan/get_cases.html:103
-#: tcms/templates/plan/get_cases.html:202
-#: tcms/templates/plan/search_case.html:80
-#: tcms/templates/run/assign_case.html:76
-#: tcms/templates/run/get_case_runs.html:103
-#: tcms/templates/run/table_executions.html:22
-#: tcms/testcases/templates/testcases/get.html:78
-#: tcms/testcases/templates/testcases/mutable.html:84
-#: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:140
-#: tcms/testruns/templates/testruns/mutable.html:99
-msgid "Priority"
-msgstr "Prioritás"
-
-#: tcms/templates/plan/get_cases.html:69
-msgid "Click to show filter options"
-msgstr "Kattintás a szűrési lehetőségek megjelenítéséhez"
-
-#: tcms/templates/plan/get_cases.html:69
-#: tcms/templates/run/get_case_runs.html:6
-msgid "Show filter options"
-msgstr "Szűrő beállítás"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr "Kattints ide, majd húzd és ejtsd a sorokat a sorrend beállításához, majd kattints a 'Rendezés kész' linkre a módosítások beküldéséhez"
-
-#: tcms/templates/plan/get_cases.html:71
-msgid "Re-order cases"
-msgstr "Esetek újrarendezése"
-
-#: tcms/templates/plan/get_cases.html:81
-#: tcms/templates/run/get_case_runs.html:130
-msgid "No tags in cases"
-msgstr "Nincsenek címkék az esetekben"
-
-#: tcms/templates/plan/get_cases.html:99
-#: tcms/templates/run/table_executions.html:18
-msgid "Tester"
-msgstr "Tesztelő"
-
-#: tcms/templates/plan/get_cases.html:115
-#: tcms/templates/plan/get_cases.html:197
-#: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
-#: tcms/templates/run/table_executions.html:21
-#: tcms/testcases/templates/testcases/get.html:63
-#: tcms/testcases/templates/testcases/mutable.html:56
-#: tcms/testcases/templates/testcases/search.html:51
-#: tcms/testcases/templates/testcases/search.html:138
-#: tcms/testruns/templates/testruns/mutable.html:98
-msgid "Category"
-msgstr "Kategória"
-
-#: tcms/templates/plan/get_cases.html:131
-msgid "Items per page"
-msgstr "Elemek száma oldalanként"
-
-#: tcms/templates/plan/get_cases.html:146
-msgid "Also select all cases that are not yet shown below."
-msgstr "Válassza ki az összes olyan esetet is, amely még nem látható alább."
-
-#: tcms/templates/plan/get_cases.html:166
-#: tcms/templates/run/assign_case.html:72
-msgid "Test Case Summary"
-msgstr "Teszteset összefoglaló"
-
-#: tcms/templates/plan/get_cases.html:177
-msgid "Reviewer"
-msgstr "Áttekintő"
-
-#: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
-#: tcms/templates/run/report.html:41
-msgid "Default Tester"
-msgstr "Alapértelmezett tesztelő"
-
-#: tcms/templates/plan/get_cases.html:205
-msgid "Text version"
-msgstr "Szöveges verzió"
-
-#: tcms/templates/plan/get_cases.html:211
-msgid "Actions"
-msgstr "Műveletek"
-
-#: tcms/templates/plan/get_cases.html:220
-msgid "Show more"
-msgstr "Több mutatása"
-
-#: tcms/templates/plan/get_cases.html:222
-msgid "cases left"
-msgstr "eset(ek) maradt"
-
-#: tcms/templates/plan/get_cases.html:224
-msgid "All cases have been loaded."
-msgstr "Minden eset betöltve."
-
-#: tcms/templates/plan/get_treeview.html:4
-msgid "Add child node to current plan"
-msgstr "Adjon hozzá gyermek csomópontot az aktuális tervhez"
-
-#: tcms/templates/plan/get_treeview.html:6
-msgid "Remove child node from current plan"
-msgstr "Gyermek csomópont eltávolítása az aktuális tervből"
-
-#: tcms/templates/plan/search_case.html:25
-msgid "Search cases to add into this test plan."
-msgstr "Esetek keresése, amelyek felvehetők a teszttervbe."
-
-#: tcms/templates/plan/search_case.html:36
-msgid "Quick Search"
-msgstr "Gyors keresés"
-
-#: tcms/templates/plan/search_case.html:41
-msgid "Normal Search"
-msgstr "Normál keresés"
-
-#: tcms/templates/plan/search_case.html:81
-msgid "Created"
-msgstr "Létrehozva"
-
-#: tcms/templates/plan/search_case.html:111
-msgid "No test cases found."
-msgstr "Nincsenek tesztesetek."
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1393,47 +1101,51 @@ msgstr "Új fiók regisztrálása"
 msgid "Add TestCase to TestRun"
 msgstr "Teszteset hozzáadása teszt futtatáshoz"
 
-#: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:61
+#: tcms/templates/run/assign_case.html:27 tcms/templates/run/get.html:61
 #: tcms/templates/run/report.html:30
-#: tcms/testruns/templates/testruns/mutable.html:48
+#: tcms/testruns/templates/testruns/mutable.html:49
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Manager"
 msgstr "Menedzser"
 
-#: tcms/templates/run/assign_case.html:34
+#: tcms/templates/run/assign_case.html:33
 msgid "All Confirmed Cases"
 msgstr "Minden megerősített eset"
 
-#: tcms/templates/run/assign_case.html:40
+#: tcms/templates/run/assign_case.html:39
 msgid "Test Cases in Run"
 msgstr "Tesztesetek a futtatásban"
 
-#: tcms/templates/run/assign_case.html:47
+#: tcms/templates/run/assign_case.html:46
 msgid "Cases in this Run"
 msgstr "Esetek a futtatásban"
 
-#: tcms/templates/run/assign_case.html:49
+#: tcms/templates/run/assign_case.html:48
 msgid "Use the sortkey stored in plan"
 msgstr "A tervben tárolt sortkey használata"
 
-#: tcms/templates/run/assign_case.html:53
+#: tcms/templates/run/assign_case.html:52
 msgid "How to Assign case?"
 msgstr "Hogyan lehet kiosztani az esetet?"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "The table below list all the confirmed test cases of plan"
 msgstr "A lenti tábla kilistázza a terv összes megerősített tesztesetét"
 
-#: tcms/templates/run/assign_case.html:59
+#: tcms/templates/run/assign_case.html:58
 msgid "check the checkbox to add cases into test run. Remember to update at last"
 msgstr "ahhoz hogy esetet adj a teszt futtatásához, jelöld be a jelölőnégyzetet. Ne felejtsd el a végén frissíteni"
 
-#: tcms/templates/run/assign_case.html:74
+#: tcms/templates/run/assign_case.html:71
+msgid "Test Case Summary"
+msgstr "Teszteset összefoglaló"
+
+#: tcms/templates/run/assign_case.html:73
 msgid "Created Date"
 msgstr "Létrehozás dátuma"
 
-#: tcms/templates/run/assign_case.html:77
+#: tcms/templates/run/assign_case.html:76
 msgid "Selected"
 msgstr "Kiválasztott"
 
@@ -1444,6 +1156,10 @@ msgstr "Termékverzió"
 #: tcms/templates/run/get.html:97 tcms/templates/run/report.html:51
 msgid "Note"
 msgstr "Megjegyzés"
+
+#: tcms/templates/run/get.html:116 tcms/templates/run/report.html:41
+msgid "Default Tester"
+msgstr "Alapértelmezett tesztelő"
 
 #: tcms/templates/run/get.html:129
 msgid "Finished"
@@ -1462,6 +1178,10 @@ msgstr "Befejezve"
 msgid "CC"
 msgstr "CC"
 
+#: tcms/templates/run/get_case_runs.html:6
+msgid "Show filter options"
+msgstr "Szűrő beállítás"
+
 #: tcms/templates/run/get_case_runs.html:11
 msgid "Automatically"
 msgstr "Automatikusan"
@@ -1473,6 +1193,10 @@ msgstr "Kiemelés"
 #: tcms/templates/run/get_case_runs.html:23
 msgid "Remove selected cases form this test run"
 msgstr "A kiválasztott esetek eltávolítása ebből a teszt futtatásból"
+
+#: tcms/templates/run/get_case_runs.html:23
+msgid "Remove"
+msgstr "Eltávolítás"
 
 #: tcms/templates/run/get_case_runs.html:26
 msgid "Update the IDLE case runs to newest case text"
@@ -1494,18 +1218,6 @@ msgstr "Hozzászólás"
 msgid "Hyperlink"
 msgstr "Hiperhivatkozás"
 
-#: tcms/templates/run/get_case_runs.html:72
-#: tcms/testcases/templates/testcases/get.html:47
-#: tcms/testcases/templates/testcases/mutable.html:34
-#: tcms/testcases/templates/testcases/mutable.html:175
-#: tcms/testplans/templates/testplans/mutable.html:116
-#: tcms/testplans/templates/testplans/search.html:80
-#: tcms/testruns/templates/testruns/mutable.html:55
-#: tcms/testruns/templates/testruns/search.html:61
-#: tcms/testruns/templates/testruns/search.html:100
-msgid "Default tester"
-msgstr "Alapértelmezett tesztelő"
-
 #: tcms/templates/run/get_case_runs.html:84
 msgid "Auto"
 msgstr "Automatikus"
@@ -1513,6 +1225,18 @@ msgstr "Automatikus"
 #: tcms/templates/run/get_case_runs.html:90
 msgid "Bug"
 msgstr "Hibajegy"
+
+#: tcms/templates/run/get_case_runs.html:112
+#: tcms/testcases/templates/testcases/search.html:111
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Tag"
+msgstr "Címke"
+
+#: tcms/templates/run/get_case_runs.html:130
+msgid "No tags in cases"
+msgstr "Nincsenek címkék az esetekben"
 
 #: tcms/templates/run/get_case_runs.html:140
 msgid "URL"
@@ -1525,6 +1249,12 @@ msgstr "Hiba URL"
 #: tcms/templates/run/get_case_runs.html:149
 msgid "Auto-update Issue Tracker"
 msgstr "Hibakövető automatikus frissítése"
+
+#: tcms/templates/run/get_case_runs.html:185 tcms/templates/run/report.html:94
+#: tcms/templates/run/table_executions.html:25
+#: tcms/testplans/templates/testplans/get.html:430
+msgid "Comments"
+msgstr "Hozzászólások"
 
 #: tcms/templates/run/get_case_runs.html:189
 msgid "Cancel"
@@ -1603,15 +1333,20 @@ msgstr "Összes eset kibontása"
 msgid "Execution ID"
 msgstr "Végrehajtás ID"
 
+#: tcms/templates/run/table_executions.html:18
+msgid "Tester"
+msgstr "Tesztelő"
+
+#: tcms/templates/run/table_executions.html:53
+#: tcms/templates/run/table_executions.html:59
+msgid "None"
+msgstr "Nincs"
+
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
 msgstr "Nincsenek végrehajtások"
 
-#: tcms/testcases/forms.py:20
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "Érvényes esetazonosítókat kell megadni. Több esetazonosítót vesszővel kell elválasztani, pl.: \"111, 222\""
-
-#: tcms/testcases/forms.py:43
+#: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1654,6 +1389,21 @@ msgstr "Új teszteset hozzáadása a teszttervhez"
 msgid "Selected TC"
 msgstr "Kiválasztott teszteset"
 
+#: tcms/testcases/templates/testcases/clone.html:42 tcms/testcases/views.py:294
+#: tcms/testplans/templates/testplans/clone.html:72
+#: tcms/testplans/templates/testplans/get.html:137
+#: tcms/testplans/templates/testplans/get.html:319 tcms/testplans/views.py:137
+msgid "Clone"
+msgstr "Klónozás"
+
+#: tcms/testcases/templates/testcases/get.html:32
+#: tcms/testcases/templates/testcases/mutable.html:138
+#: tcms/testplans/templates/testplans/get.html:394
+#: tcms/testplans/templates/testplans/get.html:395
+#: tcms/testruns/templates/testruns/mutable.html:65
+msgid "Notes"
+msgstr "Megjegyzések"
+
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Script"
@@ -1671,6 +1421,7 @@ msgstr "Követelmények"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:130
+#: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
 msgstr "Referencia link"
@@ -1684,6 +1435,7 @@ msgid "Test plans"
 msgstr "Teszttervek"
 
 #: tcms/testcases/templates/testcases/get.html:204
+#: tcms/testplans/templates/testplans/get.html:408
 msgid "Components"
 msgstr "Komponensek"
 
@@ -1698,6 +1450,11 @@ msgstr "Új teszteset"
 #: tcms/testcases/templates/testcases/mutable.html:57
 msgid "add new Category"
 msgstr "új kategória hozzáadása"
+
+#: tcms/testcases/templates/testcases/mutable.html:104
+#: tcms/testcases/templates/testcases/search.html:117
+msgid "Text"
+msgstr "Szöveg"
 
 #: tcms/testcases/templates/testcases/mutable.html:148
 msgid "Notify"
@@ -1753,26 +1510,22 @@ msgstr "Mindkettő"
 msgid "Separate multiple values with comma (,)"
 msgstr "Több érték elválasztása vesszővel (,)"
 
-#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:138
 #: tcms/testplans/templates/testplans/search.html:113
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Created on"
 msgstr "Létrehozva"
 
-#: tcms/testcases/views.py:365
-msgid "TestPlan not specified or does not exist"
-msgstr "Tesztterv nincs megadva vagy nem létezik"
-
-#: tcms/testcases/views.py:535
+#: tcms/testcases/views.py:298 tcms/testplans/views.py:141
 msgid "History"
 msgstr "Előzmények"
 
-#: tcms/testcases/views.py:681
+#: tcms/testcases/views.py:403
 msgid "TestCase cloning was successful"
 msgstr "A teszteset klónozása sikeres volt"
 
-#: tcms/testcases/views.py:707 tcms/testruns/views.py:375
-#: tcms/testruns/views.py:424
+#: tcms/testcases/views.py:429 tcms/testruns/views.py:367
+#: tcms/testruns/views.py:417
 msgid "At least one TestCase is required"
 msgstr "Legalább egy teszteset szükséges"
 
@@ -1784,17 +1537,71 @@ msgstr "Tesztterv klónozása"
 msgid "Clone TCs"
 msgstr "Tesztesetek klónozása"
 
-#: tcms/testplans/templates/testplans/clone.html:57
+#: tcms/testplans/templates/testplans/clone.html:58
 msgid "Clone or link existing TCs into new TP"
 msgstr "A meglévő tesztesetek összekapcsolása vagy klónozása új teszttervbe"
 
-#: tcms/testplans/templates/testplans/clone.html:61
+#: tcms/testplans/templates/testplans/clone.html:62
 msgid "Parent TP"
 msgstr "Szülő tesztterv"
 
-#: tcms/testplans/templates/testplans/clone.html:64
+#: tcms/testplans/templates/testplans/clone.html:66
 msgid "Set the source TP as parent of new TP"
 msgstr "Forrás tesztterv beállítása mint az új tesztterv szülője"
+
+#: tcms/testplans/templates/testplans/get.html:25
+msgid "Enter username, email or user ID:"
+msgstr "Add neg a felhasználóneved, e-mail címed, vagy a felhasználói azonosítód:"
+
+#: tcms/testplans/templates/testplans/get.html:26
+msgid "No rows selected! Please select at least one!"
+msgstr "Nincs sor kiválasztva! Válasszon legalább egyet!"
+
+#: tcms/testplans/templates/testplans/get.html:27
+msgid "Are you sure?"
+msgstr "Biztos benne?"
+
+#: tcms/testplans/templates/testplans/get.html:28
+msgid "Cannot create TestRun with unconfirmed test cases"
+msgstr "Nem hozható létre teszt futtatás meg nem erősített tesztesetekkel"
+
+#: tcms/testplans/templates/testplans/get.html:42
+msgid "Show more"
+msgstr "Több mutatása"
+
+#: tcms/testplans/templates/testplans/get.html:74
+msgid "Plan Type"
+msgstr "Terv típusa"
+
+#: tcms/testplans/templates/testplans/get.html:99
+msgid "Test cases"
+msgstr "Tesztesetek"
+
+#: tcms/testplans/templates/testplans/get.html:120
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New TestRun"
+msgstr "Új teszt futtatás"
+
+#: tcms/testplans/templates/testplans/get.html:230
+#: tcms/testplans/templates/testplans/get.html:233
+msgid "Sort key"
+msgstr "Rendezési kulcs"
+
+#: tcms/testplans/templates/testplans/get.html:243
+msgid "Re-order cases"
+msgstr "Esetek újrarendezése"
+
+#: tcms/testplans/templates/testplans/get.html:253
+msgid "Search and add test cases"
+msgstr "Teszteset keresése és hozzáadása"
+
+#: tcms/testplans/templates/testplans/get.html:262
+msgid "Advanced search"
+msgstr "Részletes keresés"
+
+#: tcms/testplans/templates/testplans/get.html:405
+msgid "No attachments"
+msgstr "Nincsenek mellékletek"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1850,30 +1657,21 @@ msgstr "Tesztterv neve"
 msgid "Test plan"
 msgstr "Tesztterv"
 
-#: tcms/testplans/views.py:247
-msgid "TestPlan is required"
-msgstr "Tesztterv szükséges"
-
-#: tcms/testplans/views.py:408
-msgid "At least one test plan is required for print"
-msgstr "A nyomtatáshoz legalább egy tesztterv szükséges"
-
-#: tcms/testplans/views.py:416
-#, python-format
-msgid "Test Plan \"%s\" does not exist"
-msgstr "\"%s\" tesztterv nem létezik"
-
 #: tcms/testruns/admin.py:30
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Hozzáférés megtagadva: A teszt futtatás nem hozzád tartozik"
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:41
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
 msgstr "További információk a tesztfuttatás státuszainak testreszabásáról lásd\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        dokumentációt</a>!"
+
+#: tcms/testruns/admin.py:86
+msgid "1 negative, 1 neutral & 1 positive status required!"
+msgstr "1 negatív, 1 semleges és 1 pozitív állapot szükséges!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1887,24 +1685,20 @@ msgstr "Teszt futtatás szerkesztése"
 msgid "Clone TestRun"
 msgstr "Teszt futtatás klónozása"
 
-#: tcms/testruns/templates/testruns/mutable.html:11
-msgid "New TestRun"
-msgstr "Új teszt futtatás"
-
-#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/mutable.html:45
 msgid "version"
 msgstr "verzió"
 
-#: tcms/testruns/templates/testruns/mutable.html:51
-#: tcms/testruns/templates/testruns/mutable.html:58
+#: tcms/testruns/templates/testruns/mutable.html:52
+#: tcms/testruns/templates/testruns/mutable.html:59
 msgid "Username or email"
 msgstr "Felhasználónév vagy email cím"
 
-#: tcms/testruns/templates/testruns/mutable.html:83
+#: tcms/testruns/templates/testruns/mutable.html:82
 msgid "Selected TestCase(s):"
 msgstr "Kiválasztott teszteset(ek):"
 
-#: tcms/testruns/templates/testruns/mutable.html:86
+#: tcms/testruns/templates/testruns/mutable.html:85
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -1927,23 +1721,23 @@ msgstr "Terv ID"
 msgid "TestPlan ID"
 msgstr "Tesztterv ID"
 
-#: tcms/testruns/views.py:47
+#: tcms/testruns/views.py:45
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "Teszt futtatáshoz szükséges egy tesztterv, ki kell választani egyet"
 
-#: tcms/testruns/views.py:53
+#: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
 
-#: tcms/testruns/views.py:379
+#: tcms/testruns/views.py:371
 msgid "Clone of "
 msgstr "Klónozva a "
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:426
 msgid "TestCase ID is not a valid integer"
 msgstr "A teszteset ID nem érvényes egész szám"
 
-#: tcms/testruns/views.py:527
+#: tcms/testruns/views.py:520
 msgid "The user you typed does not exist in database"
 msgstr "A megadott felhasználó nem létezik az adatbázisban"
 
