@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-07 09:01\n"
+"PO-Revision-Date: 2020-11-07 09:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1673,7 +1673,7 @@ msgstr "テスト実行ステータスのカスタマイズの詳細について
 
 #: tcms/testruns/admin.py:86
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "1つのネガティブ、1つの ニュートラル 、1つのポジティブなステータスが必要です!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
