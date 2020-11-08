@@ -65,11 +65,20 @@ Improvements
 - Update documentation and images
 
 
+Settings
+~~~~~~~~
+
+- ``AUTHENTICATION_BACKENDS`` setting is now explicitly specified because of
+  ``django-guardian``. Take care to include the default backends if you
+  override this setting. See ``tcms/settings/common.py`` for more information.
+
+
 Database
 ~~~~~~~~
 
 - Add index to ``TestCase.summary`` field
 - Additional migrations from ``django-guardian`` around object-level permissions
+- New ``AnonymousUser`` record added by ``django-guardian``
 - Start using ``django-tree-queries`` which improves how tree based structures
   are stored in the database.
 
