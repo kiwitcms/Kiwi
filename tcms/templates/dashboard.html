@@ -11,7 +11,13 @@
             {% for test_run in last_15_test_runs %}
                 <tr>
                     <td>
-                        {% include "run/status_progress_patternfly.html" with stats=test_run.stats_executions_status %}
+                    {% with test_run.stats_executions_status as stats %}
+                        <span>{% blocktrans with amount=stats.CompletedPercentage|floatformat:0 %}{{ amount }}% complete{% endblocktrans %}</span>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-striped progress-bar-success" style="width: {{ stats.SuccessPercentage|floatformat:0}}%;"></div>
+                          <div class="progress-bar progress-bar-striped progress-bar-danger" style="width: {{ stats.FailurePercentage|floatformat:0 }}%"></div>
+                        </div>
+                    {% endwith %}
                     </td>
                     <td>
                         <a href="{% url "testruns-get" test_run.pk %}">{{ test_run.summary }}</a>
