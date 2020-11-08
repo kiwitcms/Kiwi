@@ -16,7 +16,6 @@ from tcms.testcases.views import get_selected_testcases
 from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
                         user_should_have_perm)
 from tcms.tests.factories import TestCaseFactory
-from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestGetTestCase(BaseCaseRun):
