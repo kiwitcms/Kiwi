@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-08 20:12\n"
+"PO-Revision-Date: 2020-11-08 20:22\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1557,15 +1557,15 @@ msgstr "Entrez le nom d'utilisateur, l'email ou l'identifiant de l'utilisateur:"
 
 #: tcms/testplans/templates/testplans/get.html:26
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "Pas de lignes sélectionnées! Veuillez en sélectionner au moins une!"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Are you sure?"
-msgstr ""
+msgstr "Êtes-vous sûr ?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "Impossible de créer un TestRun avec des cas de test non confirmés"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1577,7 +1577,7 @@ msgstr "Type de plan"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Scénario de test"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1587,7 +1587,7 @@ msgstr "Nouvel essai"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "Clé de tri"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1595,11 +1595,11 @@ msgstr "Ré-ordonner les scénarios"
 
 #: tcms/testplans/templates/testplans/get.html:253
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Rechercher et ajouter des scénarios de test"
 
 #: tcms/testplans/templates/testplans/get.html:262
 msgid "Advanced search"
-msgstr ""
+msgstr "Recherche avancé"
 
 #: tcms/testplans/templates/testplans/get.html:405
 msgid "No attachments"
@@ -1673,7 +1673,7 @@ msgstr "Pour plus d'information à propos des états de configuration des tests 
 
 #: tcms/testruns/admin.py:86
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "1 négatif, 1 neutre et 1 statut positif requis !"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
