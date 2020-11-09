@@ -116,7 +116,7 @@ class TestExecutionRemoveComment(APITestCase):
         result = comments.get_comments(self.execution)
         first_comment = result.first()
 
-        self.assertEqual(comments.count(), 1)
+        self.assertEqual(result.count(), 1)
         self.assertEqual("Hello World!", first_comment.comment)
 
 
