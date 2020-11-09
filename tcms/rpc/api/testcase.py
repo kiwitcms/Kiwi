@@ -99,7 +99,9 @@ def _validate_cc_list(cc_list):
     if not isinstance(cc_list, list):
         raise TypeError('cc_list should be a list object.')
 
-    field = EmailField(required=True)
+    field = EmailField(required=True,
+                       error_messages={
+                           'invalid': 'Following email address(es) are invalid: %s'})
     invalid_emails = []
 
     for item in cc_list:
@@ -110,8 +112,7 @@ def _validate_cc_list(cc_list):
 
     if invalid_emails:
         raise ValidationError(
-            field.error_messages['invalid'] % {
-                'value': ', '.join(invalid_emails)})
+            field.error_messages['invalid'] % ', '.join(invalid_emails))
 
 
 @permissions_required('testcases.change_testcase')
@@ -173,7 +174,7 @@ def get_notification_cc(case_id):
         :rtype: list(str)
         :raises: TestCase.DoesNotExist if object with case_id doesn't exist
     """
-    return TestCase.objects.get(pk=case_id).get_cc_list()
+    return TestCase.objects.get(pk=case_id).emailing.get_cc_list()
 
 
 @permissions_required('testcases.add_testcasetag')
@@ -376,7 +377,7 @@ def list_attachments(case_id, **kwargs):
                 entry point name and handler instance from the rpc method
         :return: A list containing information and download URLs for attachements
         :rtype: list
-        :raises: TestCase.DoesNotExit if object specified by PK is missing
+        :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
     request = kwargs.get(REQUEST_KEY)
@@ -425,6 +426,7 @@ def add_comment(case_id, comment, **kwargs):
         :return: Serialized :class:`django_comments.models.Comment` object
         :rtype: dict
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
+        :raises TestCase.DoesNotExist: if object specified by PK is missing
 
         .. important::
 
@@ -449,6 +451,7 @@ def remove_comment(case_id, comment_id=None):
         :param comment_id: PK of a Comment object or None
         :type comment_id: int
         :raises PermissionDenied: if missing *django_comments.delete_comment* permission
+        :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
     to_be_deleted = helpers.comments.get_comments(case)
@@ -471,6 +474,7 @@ def comments(case_id):
         :return: Serialized list of :class:`django_comments.models.Comment` objects
         :rtype: list
         :raises PermissionDenied: if missing *django_comments.view_comment* permission
+        :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
     result = []
