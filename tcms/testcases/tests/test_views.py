@@ -179,6 +179,21 @@ class TestNewCase(BasePlanCase):
         user_should_have_perm(cls.tester, 'testcases.add_testcase')
         user_should_have_perm(cls.tester, 'testcases.view_testcase')
 
+    def test_form_invalid(self):
+
+        data = self.data.copy()
+        error_messages = ["Ensure this value has at most 255 characters",
+                          "Unknown user:", "This field is required."]
+        data['summary'] = 'Lorem'*54
+        data['default_tester'] = 'NotARealUser'
+        data['product'] = ''
+        data['category'] = ''
+
+        response = self.client.post(self.new_case_url, data)
+
+        for error_message in error_messages:
+            self.assertContains(response, error_message)
+
     def test_create_test_case_successfully(self):
         response = self.client.post(self.new_case_url, self.data)
 
