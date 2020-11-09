@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-05 22:43\n"
+"PO-Revision-Date: 2020-11-09 09:52\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -37,7 +37,7 @@ msgstr "Otevřít"
 #: tcms/bugs/templates/bugs/get.html:29
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr ""
+msgstr "Uzavřeno"
 
 #: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:73
 #: tcms/bugs/templates/bugs/search.html:107
@@ -115,7 +115,7 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:126
 msgid "Reopen"
-msgstr ""
+msgstr "Znovu otevřít"
 
 #: tcms/bugs/templates/bugs/get.html:128
 #: tcms/bugs/templates/bugs/mutable.html:97
@@ -239,7 +239,7 @@ msgstr "Smazat"
 
 #: tcms/bugs/views.py:75
 msgid "New bug"
-msgstr ""
+msgstr "Nový bug"
 
 #: tcms/bugs/views.py:181
 msgid "Edit bug"
@@ -558,7 +558,7 @@ msgstr "Sestupně"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test case"
-msgstr ""
+msgstr "Zkušební případ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:30
 msgid "Test run"
@@ -574,7 +574,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "Zkušební případ"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
