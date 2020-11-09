@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-05 22:43\n"
+"PO-Revision-Date: 2020-11-09 07:51\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -994,7 +994,7 @@ msgstr "Ръководство за превод"
 
 #: tcms/templates/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Избери"
 
 #: tcms/templates/pagination.html:13
 msgid "First page"
@@ -1551,7 +1551,7 @@ msgstr "Настройване като родител на новия ТП"
 
 #: tcms/testplans/templates/testplans/get.html:25
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "Въведи потребителско име или ID или мейл:"
 
 #: tcms/testplans/templates/testplans/get.html:26
 msgid "No rows selected! Please select at least one!"
@@ -1559,7 +1559,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Are you sure?"
-msgstr ""
+msgstr "Сигурни ли сте?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
@@ -1575,7 +1575,7 @@ msgstr "Тип на плана"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Тест Кейсове"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1593,11 +1593,11 @@ msgstr "Подреди кейсовете"
 
 #: tcms/testplans/templates/testplans/get.html:253
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Търси и добави тест кейсове"
 
 #: tcms/testplans/templates/testplans/get.html:262
 msgid "Advanced search"
-msgstr ""
+msgstr "Разширено търсене"
 
 #: tcms/testplans/templates/testplans/get.html:405
 msgid "No attachments"
@@ -1671,7 +1671,7 @@ msgstr "Относно как да се настроят статуси на т�
 
 #: tcms/testruns/admin.py:86
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "Необходими са: 1 негативен, 1 неутрален и 1 позитивен статус!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
