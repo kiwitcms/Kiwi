@@ -159,8 +159,8 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         super().setUpTestData()
 
         cls.add_comment_html = \
-            '<a href="#" class="addBlue9 js-show-commentdialog">{0}</a>' \
-            .format(_('Add'))
+            '<button class="btn btn-default" type="button">{0}</button>' \
+            .format(_('Add comment'))
 
         user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
@@ -169,15 +169,11 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         self.assertContains(response, self.test_run.plan)
         self.assertContains(response, self.test_run.build)
 
-    # TODO: un-skip this test, when the whole template has been refactored
-    @unittest.skip('not implemented yet')
     def verify_get_with_permission(self):
         response = self.client.get(self.url)
         self.assert_on_testrun_page(response)
         self.assertContains(response, self.add_comment_html, html=True)
 
-    # TODO: un-skip this test, when the whole template has been refactored
-    @unittest.skip('not implemented yet')
     def verify_get_without_permission(self):
         response = self.client.get(self.url)
         self.assert_on_testrun_page(response)
