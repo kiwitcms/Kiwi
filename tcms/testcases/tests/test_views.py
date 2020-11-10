@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, too-many-ancestors
+# pylint: disable=objects-update-used
 
 import unittest
 from http import HTTPStatus
-
 from django.forms import ValidationError
 from django.test import RequestFactory
 from django.urls import reverse
@@ -11,12 +11,12 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import Priority
 from tcms.testcases.fields import MultipleEmailField
-from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.models import TestExecutionStatus
 from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
-                        user_should_have_perm)
-from tcms.tests.factories import LinkReferenceFactory, TestCaseFactory
+                        user_should_have_perm, PermissionsTestCase)
+from tcms.tests.factories import (LinkReferenceFactory, TestCaseFactory)
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
@@ -179,20 +179,21 @@ class TestNewCase(BasePlanCase):
         user_should_have_perm(cls.tester, 'testcases.add_testcase')
         user_should_have_perm(cls.tester, 'testcases.view_testcase')
 
-    def test_form_invalid(self):
-
+    def test_notify_formset_invalid(self):
+        # Note: Boolean fields are always valid - either False or True
+        # That's why the only way to make the notify formset invalid is to
+        # reference a non-existing email_settings ID !!!
         data = self.data.copy()
-        error_messages = ["Ensure this value has at most 255 characters",
-                          "Unknown user:", "This field is required."]
-        data['summary'] = 'Lorem'*54
-        data['default_tester'] = 'NotARealUser'
-        data['product'] = ''
-        data['category'] = ''
+        data['email_settings-0-id'] = -1
+        del data['email_settings-0-auto_to_case_tester']
 
         response = self.client.post(self.new_case_url, data)
 
-        for error_message in error_messages:
-            self.assertContains(response, error_message)
+        self.assertContains(response, _('New TestCase'))
+        self.assertContains(
+            response,
+            '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_tester" '
+            'type="checkbox"', html=False)
 
     def test_create_test_case_successfully(self):
         response = self.client.post(self.new_case_url, self.data)
@@ -216,18 +217,6 @@ class TestNewCase(BasePlanCase):
         self.assertEqual(TestCasePlan.objects.filter(case=test_case, plan=self.plan).count(), 1)
         self._assertTestCase(test_case)
 
-    def test_create_test_case_without_permissions(self):
-        remove_perm_from_user(self.tester, 'testcases.add_testcase')
-
-        response = self.client.post(self.new_case_url, self.data)
-        redirect_url = "{0}?next={1}".format(
-            reverse('tcms-login'), reverse('testcases-new')
-        )
-
-        self.assertRedirects(response, redirect_url)
-        # assert test case has not been created
-        self.assertEqual(TestCase.objects.filter(summary=self.summary).count(), 0)
-
     def _assertTestCase(self, test_case):
         self.assertEqual(test_case.author, self.tester)
         self.assertEqual(test_case.summary, self.summary)
@@ -241,6 +230,71 @@ class TestNewCase(BasePlanCase):
         self.assertEqual(test_case.requirement, self.requirement)
         self.assertEqual(test_case.extra_link, self.link)
         self.assertEqual(test_case.notes, self.notes)
+
+
+class TestNewCasePermission(PermissionsTestCase):
+    permission_label = 'testcases.add_testcase'
+    http_method_names = ['get', 'post']
+    url = reverse('testcases-new')
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.summary = 'summary'
+        cls.post_data = {
+            'summary': cls.summary,
+        }
+        super().setUpTestData()
+        user_should_have_perm(cls.tester, 'testcases.view_testcase')
+
+        case_status_confirmed = TestCaseStatus.get_confirmed()
+
+        case = TestCaseFactory(
+            author=cls.tester,
+            default_tester=None,
+            reviewer=cls.tester,
+            case_status=case_status_confirmed,
+        )
+        case.save()  # creates a new case entry in the database
+
+        cls.post_data.update({
+            'author': cls.tester.pk,
+            'default_tester': cls.tester.pk,
+            'priority': case.priority.pk,
+            'product': case.category.product.pk,
+            'category': case.category.pk,
+            'case_status': case_status_confirmed.pk,
+            'text': 'some text description',
+            'script': 'some script',
+            'arguments': 'args1, args2, args3',
+            'email_settings-0-auto_to_case_author': 'on',
+            'email_settings-0-auto_to_run_manager': 'on',
+            'email_settings-0-auto_to_case_run_assignee': 'on',
+            'email_settings-0-auto_to_case_tester': 'on',
+            'email_settings-0-auto_to_run_tester': 'on',
+            'email_settings-0-notify_on_case_update': 'on',
+            'email_settings-0-notify_on_case_delete ': 'on',
+            'email_settings-0-cc_list': 'info@example.com',
+            'email_settings-0-case': '',
+            'email_settings-0-id': case.emailing.pk,
+            'email_settings-TOTAL_FORMS': '1',
+            'email_settings-INITIAL_FORMS': '1',
+            'email_settings-MIN_NUM_FORMS': '0',
+            'email_settings-MAX_NUM_FORMS': '1',
+        })
+
+    def verify_get_with_permission(self):
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, _('New TestCase'))
+
+    def verify_post_with_permission(self):
+        response = self.client.post(self.url, self.post_data, follow=True)
+        test_case = TestCase.objects.get(summary=self.summary)
+        redirect_url = reverse('testcases-get', args=[test_case.pk])
+
+        self.assertRedirects(response, redirect_url, status_code=302, target_status_code=200)
+        self.assertContains(response, self.summary)
 
 
 class TestEditCase(BasePlanCase):
@@ -258,7 +312,7 @@ class TestEditCase(BasePlanCase):
             plan=[cls.plan])
 
         # test data for https://github.com/kiwitcms/Kiwi/issues/334
-        # pylint: disable=objects-update-used
+
         Priority.objects.filter(value='P4').update(is_active=False)
 
         user_should_have_perm(cls.tester, 'testcases.change_testcase')
