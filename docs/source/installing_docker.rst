@@ -69,6 +69,15 @@ The above command will create two containers:
 Initial configuration of running container
 ------------------------------------------
 
+You may use the following command line tool to perform interactive initial
+configuration of a new Kiwi TCMS installation::
+
+    docker exec -it kiwi_web /Kiwi/manage.py initial_setup
+
+.. versionadded:: 8.9
+
+Alternatively you can use more automation-friendly setup described below:
+
 You need to create the database schema by executing::
 
     docker exec -it kiwi_web /Kiwi/manage.py migrate
