@@ -4,8 +4,12 @@ var expandedTestCaseIds = [],
 const allTestCases = {},
       autocomplete_cache = {};
 
+let testCaseStatusConfirmedPK = null;
+
 
 $(document).ready(function() {
+    testCaseStatusConfirmedPK = Number($('#test_plan_pk').data('testcasestatus-confirmed-pk'));
+    
     const testPlanId = $('#test_plan_pk').data('testplan-pk');
 
     const permissions = {
@@ -710,7 +714,7 @@ function toolbarEvents(testPlanId, permissions) {
 }
 
 function isTestCaseConfirmed(status) {
-    return Number(status) === Number($('#test_plan_pk').data('testcasestatus-confirmed-pk'));
+    return Number(status) === testCaseStatusConfirmedPK;
 }
 
 // on dropdown change update the label of the button and set new selected list item
