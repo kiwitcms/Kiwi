@@ -62,9 +62,6 @@ $(document).ready(() => {
         const statusId = $(this).data('status-id')
         changeStatusBulk(statusId)
 
-        // close dropdown
-        $('.statuses-dropdown').removeClass('open')
-
         // so that we don't follow the link
         return false
     })
