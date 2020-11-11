@@ -1,10 +1,11 @@
-let allExecutionStatuses = {}
-
-const permissions = {
-    removeTag: false,
-    addComment: false,
-    removeComment: false,
-}
+const allExecutionStatuses = {},
+      allExecutions = {},
+      expandedExecutionIds = [],
+      permissions = {
+        removeTag: false,
+        addComment: false,
+        removeComment: false,
+     }
 
 $(document).ready(() => {
 
@@ -92,6 +93,10 @@ $(document).ready(() => {
         }
 
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
+            // convert from list to a dict
+            for (var i = 0; i < testExecutions.length; i++) {
+                allExecutions[testExecutions[i].id] = testExecutions[i];
+            }
             drawPercentBar(testExecutions, executionStatuses)
             renderTestExecutions(testExecutions)
         })
@@ -196,17 +201,117 @@ function renderCountPerStatusList(statusCount) {
 function renderTestExecutions(testExecutions) {
     const container = $('#test-executions-container')
 
-    const testCaseIds = []
     testExecutions.forEach(testExecution => {
-        testCaseIds.push(testExecution.case_id)
-
         container.append(renderTestExecutionRow(testExecution))
     })
 
     treeViewBind();
+    $('.test-execution-element').click(function(ev) {
+        // don't trigger row expansion when kebab menu is clicked
+        if($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
+            return;
+        }
+
+        const tePK = $(ev.target).
+            parents('.test-execution-element').
+            find('.test-execution-checkbox').
+            data('test-execution-id');
+
+        // row was expanded once, dom is ready
+        if (expandedExecutionIds.indexOf(tePK) > -1) {
+            return;
+        }
+        expandedExecutionIds.push(tePK);
+
+        getExpandArea(allExecutions[tePK]);
+    });
+
     $('.test-executions-count').html(testExecutions.length)
-    renderAdditionalInformation(testExecutions, testCaseIds)
 }
+
+function getExpandArea(testExecution) {
+    const container = $(`.test-execution-${testExecution.id}`)
+
+    container.find('.test-execution-information .run-date').html(testExecution.close_date || '-')
+    container.find('.test-execution-information .build').html(testExecution.build)
+    container.find('.test-execution-information .text-version').html(testExecution.case_text_version)
+
+// todo: filter by historical ID
+    jsonRPC('TestCase.filter', {pk: testExecution.case_id}, (data) => {
+        data.forEach((entry) => {
+            markdown2HTML(entry.text, container.find('.test-execution-text')[0])
+            container.find('.test-execution-notes').append(entry.notes)
+        });
+    });
+
+    const textArea = container.find('textarea')[0];
+    const fileUpload = container.find('input[type="file"]')
+    const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
+    const commentsRow = container.find('.comments')
+
+    container.find('.post-comment').click(() => {
+        const input = editor.value().trim()
+
+        if (input) {
+            jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
+                editor.value('')
+
+                commentsRow.append(renderCommentHTML(
+                    1 + template.find('.js-comment-container').length,
+                    comment,
+                    $('template#comment-template')[0],
+                    parentNode => {
+                        bindDeleteCommentButton(
+                            testExecution.id,
+                            'TestExecution.remove_comment',
+                            permissions.removeComment,
+                            parentNode)
+                    }))
+            })
+        }
+    })
+
+    renderCommentsForObject(
+        testExecution.id,
+        'TestExecution.get_comments',
+        'TestExecution.remove_comment',
+        permissions.removeComment,
+        commentsRow,
+    )
+
+    jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id }, links => {
+        const ul = container.find('.test-execution-hyperlinks')
+        links.forEach(link => ul.append(renderLink(link)))
+    })
+
+    jsonRPC('TestCase.list_attachments', [testExecution.case_id], attachments => {
+        const ul = container.find(`.test-case-attachments`)
+
+        if (!attachments.length) {
+            ul.find('.hidden').removeClass('hidden')
+            return;
+        }
+
+        const liTemplate = $('#attachments-list-item')[0].content
+
+        attachments.forEach(attachment => {
+            const li = liTemplate.cloneNode(true)
+            const attachmentLink = $(li).find('a')[0]
+
+            attachmentLink.href = attachment.url
+            attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
+            ul.append(li)
+        })
+    })
+
+    jsonRPC('TestExecution.history', testExecution.id, history => {
+        const historyContainer = container.find('.history-container')
+        history.forEach(h => {
+            historyContainer.append(renderHistoryEntry(h))
+        })
+    })
+}
+
 
 function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
 
@@ -309,9 +414,6 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case_id}/`)
     template.find('.test-execution-tester').html(testExecution.tested_by || '-')
     template.find('.test-execution-asignee').html(testExecution.assignee || '-')
-    template.find('.test-execution-information .run-date').html(testExecution.close_date || '-')
-    template.find('.test-execution-information .build').html(testExecution.build)
-    template.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
     const testExecutionStatus = allExecutionStatuses[testExecution.status_id]
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
@@ -324,33 +426,6 @@ function renderTestExecutionRow(testExecution) {
 
     template.find('textarea')[0].id = `comment-for-testexecution-${testExecution.id}`
     template.find('input[type="file"]')[0].id = `file-upload-for-testexecution-${testExecution.id}`
-
-    const textArea = template.find('textarea')[0];
-    const fileUpload = template.find('input[type="file"]')
-    const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
-
-    const commentsRow = template.find('.comments')
-    template.find('.post-comment').click(() => {
-        const input = editor.value().trim()
-
-        if (input) {
-            jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
-                editor.value('')
-
-                commentsRow.append(renderCommentHTML(
-                    1 + template.find('.js-comment-container').length,
-                    comment,
-                    $('template#comment-template')[0],
-                    parentNode => {
-                        bindDeleteCommentButton(
-                            testExecution.id,
-                            'TestExecution.remove_comment',
-                            permissions.removeComment,
-                            parentNode)
-                    }))
-            })
-        }
-    })
 
     return template
 }
