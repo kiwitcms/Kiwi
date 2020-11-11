@@ -99,6 +99,7 @@ $(document).ready(() => {
             }
             drawPercentBar(testExecutions, executionStatuses)
             renderTestExecutions(testExecutions)
+            renderAdditionalInformation(testRunId)
         })
     })
 
@@ -315,73 +316,33 @@ function getExpandArea(testExecution) {
 }
 
 
-function renderAdditionalInformation(testExecutions, testExecutionCaseIds) {
-
-    testExecutions.forEach(testExecution => {
-        const testExecutionRow = $(`.test-execution-${testExecution.id}`)
-
-        renderCommentsForObject(
-            testExecution.id,
-            'TestExecution.get_comments',
-            'TestExecution.remove_comment',
-            permissions.removeComment,
-            testExecutionRow.find('.comments'),
-        )
+function renderAdditionalInformation(testRunId) {
+    // update bug icons for all executions
+    jsonRPC('TestExecution.get_links', {execution__run: testRunId}, (links) => {
+        const withDefects = new Set();
+        links.forEach((link) => {
+            if (link.is_defect) {
+                withDefects.add(link.execution_id);
+            }
+        })
+        withDefects.forEach((te) => {
+            $(`.test-execution-${te}`).find('.js-bugs').toggleClass('hidden');
+        })
     })
 
-    jsonRPC('TestCase.filter', { 'id__in': testExecutionCaseIds }, testCases => {
-        testExecutions.forEach(testExecution => {
-            const testCase = testCases.find(testCase => testCase.id === testExecution.case_id)
+    // update priority, category & automation status for all executions
+    jsonRPC('TestCase.filter', { 'case_run__run': testRunId }, testCases => {
+        testCases.forEach(testCase => {
+            const row = $(`.test-execution-case-${testCase.id}`);
 
-            const listGroupItem = $(`.test-execution-${testExecution.id}`)
-            listGroupItem.find('.test-execution-priority').html(testCase.priority)
-            listGroupItem.find('.test-execution-category').html(testCase.category)
-            markdown2HTML(testCase.text, listGroupItem.find('.test-execution-text')[0])
-            listGroupItem.find('.test-execution-notes').append(testCase.notes)
+            row.find('.test-execution-priority').html(testCase.priority)
+            row.find('.test-execution-category').html(testCase.category)
 
-            const isAutomatedElement = listGroupItem.find('.test-execution-automated')
+            const isAutomatedElement = row.find('.test-execution-automated')
             const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
             const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
             isAutomatedElement.addClass(isAutomatedIcon)
             isAutomatedElement.attr('title', isAutomatedAttr)
-
-            jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id }, links => {
-                const bugCount = links.filter(link => link.is_defect).length;
-                listGroupItem.find('.test-execution-bugs-count').html(bugCount)
-
-                listGroupItem.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
-                listGroupItem.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
-
-                const ul = listGroupItem.find('.test-execution-hyperlinks')
-                links.forEach(link => ul.append(renderLink(link)))
-            })
-
-            jsonRPC('TestCase.list_attachments', [testCase.id], attachments => {
-                const ul = listGroupItem.find(`.test-case-attachments`)
-
-                if (!attachments.length) {
-                    ul.find('.hidden').removeClass('hidden')
-                    return;
-                }
-
-                const liTemplate = $('#attachments-list-item')[0].content
-
-                attachments.forEach(attachment => {
-                    const li = liTemplate.cloneNode(true)
-                    const attachmentLink = $(li).find('a')[0]
-
-                    attachmentLink.href = attachment.url
-                    attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
-                    ul.append(li)
-                })
-            })
-
-            jsonRPC('TestExecution.history', testExecution.id, history => {
-                const historyContainer = $(`.test-execution-${testExecution.id} .history-container`)
-                history.forEach(h => {
-                    historyContainer.append(renderHistoryEntry(h))
-                })
-            })
         })
     })
 }
@@ -453,7 +414,6 @@ function reloadRowFor(execution) {
         testExecutionRow.replaceWith(renderTestExecutionRow(execution))
 
         treeViewBind()
-        renderAdditionalInformation([execution], [execution.case_id])
     })
 }
 
