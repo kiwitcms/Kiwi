@@ -378,27 +378,29 @@ class TestRunStatusMenu(BaseCaseRun):
         user_should_have_perm(cls.tester, 'testruns.view_testrun')
         cls.status_menu_html = []
 
-        for execution_status in TestExecutionStatus.objects.all():
-            cls.status_menu_html.append(
-                '<i class="{0}" style="color: {1}"></i>{2}'
-                .format(execution_status.icon, execution_status.color, execution_status.name)
-            )
-
     def test_get_status_options_with_permission(self):
         user_should_have_perm(self.tester, 'testruns.change_testexecution')
         response = self.client.get(self.url)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
-        for html_code in self.status_menu_html:
-            self.assertContains(response, html_code, html=True)
+        for execution_status in TestExecutionStatus.objects.all():
+            self.assertContains(
+                response,
+                '<span class="{0}"></span>{1}'
+                .format(execution_status.icon, execution_status.name),
+                html=True)
 
     def test_get_status_options_without_permission(self):
         remove_perm_from_user(self.tester, 'testruns.change_testexecution')
         response = self.client.get(self.url)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
-        for _tcrs in TestExecutionStatus.objects.all():
-            self.assertNotContains(response, self.status_menu_html, html=True)
+        for execution_status in TestExecutionStatus.objects.all():
+            self.assertNotContains(
+                response,
+                '<span class="{0}"></span>{1}'
+                .format(execution_status.icon, execution_status.name),
+                html=True)
 
 
 class TestChangeTestRunStatus(BaseCaseRun):
