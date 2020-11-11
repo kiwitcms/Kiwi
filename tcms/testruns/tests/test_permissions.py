@@ -158,10 +158,7 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
         super().setUpTestData()
 
-        cls.add_comment_html = \
-            '<button class="btn btn-default" type="button">{0}</button>' \
-            .format(_('Add comment'))
-
+        cls.add_comment_html = '<a href="#" class="bulk-add-comment">'
         user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
     def assert_on_testrun_page(self, response):
@@ -172,9 +169,9 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
     def verify_get_with_permission(self):
         response = self.client.get(self.url)
         self.assert_on_testrun_page(response)
-        self.assertContains(response, self.add_comment_html, html=True)
+        self.assertContains(response, self.add_comment_html, html=False)
 
     def verify_get_without_permission(self):
         response = self.client.get(self.url)
         self.assert_on_testrun_page(response)
-        self.assertNotContains(response, self.add_comment_html, html=True)
+        self.assertNotContains(response, self.add_comment_html, html=False)
