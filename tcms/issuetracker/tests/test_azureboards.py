@@ -6,7 +6,7 @@ import unittest
 from django.utils import timezone
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.issuetracker.azure_boards import AzureAPI, AzureBoards
+from tcms.issuetracker.azure_boards import AzureBoardsAPI, AzureBoards
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import BugSystem
 
@@ -132,14 +132,14 @@ class TestAzureIntegration(APITestCase):
 
 @unittest.skipUnless(os.getenv('TEST_BUGTRACKER_INTEGRATION'),
                      'Bug tracker integration testing not enabled')
-class TestAzureAPI(unittest.TestCase):
+class TestAzureBoardsAPI(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         api_password = os.getenv('AZURE_BOARDS_INTEGRATION_API_TOKEN')
         base_url = 'https://dev.azure.com/kiwitcms/boards-integration'
-        cls.api_instance = AzureAPI(base_url, api_password)
+        cls.api_instance = AzureBoardsAPI(base_url, api_password)
 
         test_create_body = [
             {

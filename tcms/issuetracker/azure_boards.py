@@ -7,7 +7,7 @@ from tcms.core.templatetags.extra_filters import markdown2html
 from tcms.issuetracker.base import IssueTrackerType, IntegrationThread
 
 
-class AzureAPI():
+class AzureBoardAPI():
     """
         Azure Boards API interaction class.
 
@@ -81,8 +81,7 @@ class AzureBoards(IssueTrackerType):
     it_class = AzureThread
 
     def _rpc_connection(self):
-        # NOTE: we use an access token so only the password field is required
-        return AzureAPI(self.bug_system.base_url, self.bug_system.api_password)
+        return AzureBoardsAPI(self.bug_system.base_url, self.bug_system.api_password)
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
