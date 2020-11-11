@@ -236,8 +236,10 @@ function getExpandArea(testExecution) {
     container.find('.test-execution-information .build').html(testExecution.build)
     container.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
-// todo: filter by historical ID
-    jsonRPC('TestCase.filter', {pk: testExecution.case_id}, (data) => {
+    jsonRPC('TestCase.history',
+            [testExecution.case_id, {
+                history_id: testExecution.case_text_version
+            }], (data) => {
         data.forEach((entry) => {
             markdown2HTML(entry.text, container.find('.test-execution-text')[0])
             container.find('.test-execution-notes').append(entry.notes)
