@@ -46,20 +46,10 @@ class TestGetRun(BaseCaseRun):
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, 'Add Tag')
-        self.assertContains(response, 'js-remove-tag')
-
-        for i, case_run in enumerate(
-                (self.execution_1, self.execution_2, self.execution_3), 1):
-            self.assertContains(
-                response,
-                '<a href="#caserun_{0}">#{0}</a>'.format(case_run.pk),
-                html=True)
-            self.assertContains(
-                response,
-                '<a id="link_{0}" href="#caserun_{1}" title="Expand test case">'
-                '{2}</a>'.format(i, case_run.pk, case_run.case.summary),
-                html=True)
+        self.assertContains(
+            response,
+            '<h2 class="card-pf-title"><span class="fa fa-tags"></span>{0}</h2>'.format(
+            _('Tags')), html=True)
 
     def test_get_run_without_permissions_to_add_or_remove_tags(self):
         self.client.logout()
