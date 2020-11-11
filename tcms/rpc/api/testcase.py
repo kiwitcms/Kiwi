@@ -16,6 +16,7 @@ __all__ = (
     'create',
     'update',
     'filter',
+    'history',
     'sortkeys',
     'remove',
 
@@ -280,6 +281,27 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         query = {}
 
     return TestCase.to_xmlrpc(query)
+
+
+@permissions_required('testcases.view_testcase')
+@rpc_method(name='TestCase.history')
+def history(case_id, query=None):
+    """
+    .. function:: RPC TestCase.history(case_id, query)
+
+        Return the history for a specified test case.
+
+        :param case_id: TestCase PK
+        :type case_id: int
+        :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
+        :type query: dict
+        :return: Serialized list of HistoricalTestCase objects.
+        :rtype: list(dict)
+    """
+    if query is None:
+        query = {}
+
+    return list(TestCase.objects.get(pk=case_id).history.filter(**query).values())
 
 
 @permissions_required('testcases.view_testcase')
