@@ -81,7 +81,7 @@ class BitBucket(IssueTrackerType):
     """
         Support for BitBucket. Requires:
 
-        :base_url: - e.g. https://bitbucket.org/{workspace}/{repository}
+        :base_url: Repository URL - e.g. https://bitbucket.org/{workspace}/{repository}
         :api_username: BitBucket Username
         :api_password: BitBucket App Password - needs Issues: Read & write permission.
 
@@ -94,7 +94,7 @@ class BitBucket(IssueTrackerType):
 
             ``api_username`` is your BitBucket username, which you use to log in.
 
-        .. info::
+        .. note::
 
             ``api_password`` is "App Password" created in BitBucket.
             Here is a guide about creating and using an "App Password";

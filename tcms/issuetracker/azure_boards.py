@@ -70,9 +70,8 @@ class AzureBoards(IssueTrackerType):
     """
         Support for AzureBoards. Requires:
 
-        :base_url: - URL to a AzureBoards project for which we're going to report issues
-        e.g. https://dev.azure.com/{organization}/{project}
-        :api_password: - AzureBoards API token - requires "Read & Write" permission
+        :base_url: URL to AzureBoards Project - e.g. https://dev.azure.com/{organization}/{project}
+        :api_password: AzureBoards API token - requires "Read & Write" permission
 
         .. note::
 
