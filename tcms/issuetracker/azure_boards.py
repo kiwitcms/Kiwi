@@ -7,10 +7,9 @@ from tcms.core.templatetags.extra_filters import markdown2html
 from tcms.issuetracker.base import IssueTrackerType, IntegrationThread
 
 
-class AzureBoardAPI():
+class AzureBoardsAPI():
     """
         Azure Boards API interaction class.
-
     """
     def __init__(self, base_url=None, password=None):
         self.api_version = "?api-version=6.0"
