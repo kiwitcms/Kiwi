@@ -1,4 +1,4 @@
-let testExecutionStatuses = {}
+let allExecutionStatuses = {}
 
 const permissions = {
     removeTag: false,
@@ -86,7 +86,10 @@ $(document).ready(() => {
     tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag);
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
-        testExecutionStatuses = executionStatuses
+        // convert from list to a dict for easier indexing later
+        for (var i = 0; i < executionStatuses.length; i++) {
+            allExecutionStatuses[executionStatuses[i].id] = executionStatuses[i];
+        }
 
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
             drawPercentBar(testExecutions, executionStatuses)
@@ -310,8 +313,7 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-information .build').html(testExecution.build)
     template.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
-    const testExecutionStatus = testExecutionStatuses.find(status => status.id === testExecution.status_id)
-
+    const testExecutionStatus = allExecutionStatuses[testExecution.status_id]
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
 
