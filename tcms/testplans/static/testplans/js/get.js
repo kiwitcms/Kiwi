@@ -8,16 +8,17 @@ let testCaseStatusConfirmedPK = null;
 
 
 $(document).ready(function() {
-    testCaseStatusConfirmedPK = Number($('#test_plan_pk').data('testcasestatus-confirmed-pk'));
+    const testPlanDataElement = $('#test_plan_pk');
+    testCaseStatusConfirmedPK = Number(testPlanDataElement.data('testcasestatus-confirmed-pk'));
     
-    const testPlanId = $('#test_plan_pk').data('testplan-pk');
+    const testPlanId = testPlanDataElement.data('testplan-pk');
 
     const permissions = {
-        'perm-change-testcase': $('#test_plan_pk').data('perm-change-testcase') === 'True',
-        'perm-remove-testcase': $('#test_plan_pk').data('perm-remove-testcase') === 'True',
-        'perm-add-testcase': $('#test_plan_pk').data('perm-add-testcase') === 'True',
-        'perm-add-comment': $('#test_plan_pk').data('perm-add-comment') === 'True',
-        'perm-delete-comment': $('#test_plan_pk').data('perm-delete-comment') === 'True'
+        'perm-change-testcase': testPlanDataElement.data('perm-change-testcase') === 'True',
+        'perm-remove-testcase': testPlanDataElement.data('perm-remove-testcase') === 'True',
+        'perm-add-testcase': testPlanDataElement.data('perm-add-testcase') === 'True',
+        'perm-add-comment': testPlanDataElement.data('perm-add-comment') === 'True',
+        'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True'
     };
 
     $('#btn-search-cases').click(function () {
@@ -25,7 +26,7 @@ $(document).ready(function() {
     });
 
     // bind everything in tags table
-    const perm_remove_tag = $('#test_plan_pk').data('perm-remove-tag') === 'True';
+    const perm_remove_tag = testPlanDataElement.data('perm-remove-tag') === 'True';
     tagsCard('TestPlan', testPlanId, {plan: testPlanId}, perm_remove_tag);
 
     jsonRPC('TestCase.sortkeys', {'plan': testPlanId}, function(sortkeys) {
