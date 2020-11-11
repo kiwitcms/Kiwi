@@ -33,16 +33,18 @@ $(document).ready(() => {
         }
     });
 
-    $('.add-hyperlink-bulk').click(() => {
+    $('.add-hyperlink-bulk').click(function() {
+        $(this).parents('.dropdown').toggleClass('open');
         const selected = selectedCheckboxes()
         if ($.isEmptyObject(selected)) {
             return false
         }
 
-        addLinkToExecutions(selected.executionIds)
+        return addLinkToExecutions(selected.executionIds)
     })
 
-    $('.remove-case-bulk').click(() => {
+    $('.remove-execution-bulk').click(function() {
+        $(this).parents('.dropdown').toggleClass('open');
         const selected = selectedCheckboxes()
         if ($.isEmptyObject(selected)) {
             return false
@@ -52,12 +54,26 @@ $(document).ready(() => {
         if (confirm(areYouSureText)) {
             removeCases(testRunId, selected.caseIds)
         }
+
+        return false;
     })
 
-    $('.change-assignee-bulk').click(changeAssigneeBulk)
-    $('.update-case-text-bulk').click(updateCaseText)
+    $('.change-assignee-bulk').click(function() {
+        $(this).parents('.dropdown').toggleClass('open');
+        changeAssigneeBulk()
+
+        return false;
+    })
+
+    $('.update-case-text-bulk').click(function() {
+        $(this).parents('.dropdown').toggleClass('open');
+        updateCaseText()
+
+        return false;
+    })
 
     $('.bulk-change-status').click(function () {
+        $(this).parents('.dropdown').toggleClass('open');
         // `this` is the clicked link
         const statusId = $(this).data('status-id')
         changeStatusBulk(statusId)
