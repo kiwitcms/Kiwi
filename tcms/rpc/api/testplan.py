@@ -227,7 +227,11 @@ def update_case_order(plan_id, case_id, sortkey):
         :type sortkey: int
         :raises PermissionDenied: if missing *testcases.delete_testcaseplan* permission
     """
-    TestCasePlan.objects.filter(case=case_id, plan=plan_id).update(sortkey=sortkey)
+    TestCasePlan.objects.filter(  # pylint:disable=objects-update-used
+        case=case_id, plan=plan_id
+    ).update(
+        sortkey=sortkey
+    )
 
 
 @permissions_required('attachments.view_attachment')
