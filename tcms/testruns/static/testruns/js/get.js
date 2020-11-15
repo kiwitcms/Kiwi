@@ -316,9 +316,19 @@ function getExpandArea(testExecution) {
 }
 
 
-function renderAdditionalInformation(testRunId) {
+function renderAdditionalInformation(testRunId, execution) {
+    let linksQuery = { execution__run: testRunId },
+        casesQuery = { case_run__run: testRunId }
+
+    // if called from reloadRowFor(execution) then filter only for
+    // that one row
+    if (execution) {
+        linksQuery = { execution: execution.id }
+        casesQuery = { case_run: execution.id }
+    }
+
     // update bug icons for all executions
-    jsonRPC('TestExecution.get_links', {execution__run: testRunId}, (links) => {
+    jsonRPC('TestExecution.get_links', linksQuery, (links) => {
         const withDefects = new Set();
         links.forEach((link) => {
             if (link.is_defect) {
@@ -331,7 +341,7 @@ function renderAdditionalInformation(testRunId) {
     })
 
     // update priority, category & automation status for all executions
-    jsonRPC('TestCase.filter', { 'case_run__run': testRunId }, testCases => {
+    jsonRPC('TestCase.filter', casesQuery, testCases => {
         testCases.forEach(testCase => {
             const row = $(`.test-execution-case-${testCase.id}`);
 
@@ -412,6 +422,7 @@ function reloadRowFor(execution) {
     const testExecutionRow = $(`.test-execution-${execution.id}`)
     animate(testExecutionRow, () => {
         testExecutionRow.replaceWith(renderTestExecutionRow(execution))
+        renderAdditionalInformation(execution.run_id, execution)
 
         treeViewBind()
     })
@@ -435,9 +446,7 @@ function changeAssigneeBulk() {
     selected.executionIds.forEach(executionId => {
         jsonRPC('TestExecution.update', [executionId, { 'assignee': assignee }], execution => {
             const testExecutionRow = $(`div.list-group-item.test-execution-${executionId}`);
-            animate(testExecutionRow, () => {
-                testExecutionRow.find(`.test-execution-asignee`).html(execution.assignee)
-            })
+            reloadRowFor(execution);
         })
     });
 }
