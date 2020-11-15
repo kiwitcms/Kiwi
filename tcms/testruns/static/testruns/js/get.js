@@ -93,10 +93,6 @@ $(document).ready(() => {
         }
 
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
-            // convert from list to a dict
-            for (var i = 0; i < testExecutions.length; i++) {
-                allExecutions[testExecutions[i].id] = testExecutions[i];
-            }
             drawPercentBar(testExecutions, executionStatuses)
             renderTestExecutions(testExecutions)
             renderAdditionalInformation(testRunId)
@@ -380,6 +376,10 @@ function renderHistoryEntry(historyEntry) {
 }
 
 function renderTestExecutionRow(testExecution) {
+    // refresh the internal data structure b/c some fields are used
+    // to render the expand area and may have changed via bulk-update meanwhile
+    allExecutions[testExecution.id] = testExecution;
+
     const testExecutionRowTemplate = $('#test-execution-row')[0].content
     const template = $(testExecutionRowTemplate.cloneNode(true))
 
