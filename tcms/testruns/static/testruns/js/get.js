@@ -400,6 +400,9 @@ function renderTestExecutionRow(testExecution) {
     template.find('textarea')[0].id = `comment-for-testexecution-${testExecution.id}`
     template.find('input[type="file"]')[0].id = `file-upload-for-testexecution-${testExecution.id}`
 
+    // remove from expanded list b/c data may have changed
+    delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)];
+
     return template
 }
 
