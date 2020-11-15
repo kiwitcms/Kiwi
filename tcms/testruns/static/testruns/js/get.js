@@ -356,8 +356,8 @@ function renderTestExecutions(testExecutions) {
     $('.test-executions-count').html(testExecutions.length)
 }
 
-function bindEvents() {
-    treeViewBind()
+function bindEvents(selector) {
+    treeViewBind(selector)
 
     $('.test-execution-element').click(function (ev) {
         // don't trigger row expansion when kebab menu is clicked
@@ -426,8 +426,27 @@ function getExpandArea(testExecution) {
                 })
             }
         })
-    }
 
+        container.find('.change-status-button').click(function () {
+            const statusId = $(this).attr('data-status-id')
+
+            const comment = editor.value().trim()
+            addCommentToExecution(testExecution, comment, () => {
+                editor.value('')
+            })
+
+            const $this = $(this)
+            jsonRPC('TestExecution.update', [testExecution.id, {
+                'status': statusId,
+            }], execution => {
+                reloadRowFor(execution)
+
+                $this.parents('.list-group-item-container').addClass('hidden')
+                // click the .list-group-item-header, not the .test-execution-element itself, because otherwise the handler will fail
+                $this.parents('.test-execution-element').next().find('.list-group-item-header').click()
+            })
+        })
+    }
 
     renderCommentsForObject(
         testExecution.id,
@@ -469,6 +488,14 @@ function getExpandArea(testExecution) {
             historyContainer.append(renderHistoryEntry(h))
         })
     })
+}
+
+function addCommentToExecution(testExecution, input, handler) {
+    if (!input) {
+        return
+    }
+
+    jsonRPC('TestExecution.add_comment', [testExecution.id, input], handler)
 }
 
 
@@ -618,11 +645,13 @@ function renderTestExecutionRow(testExecution) {
         template.find('.comment-form').hide()
         return template
     }
+
     template.find('textarea')[0].id = `comment-for-testexecution-${testExecution.id}`
     template.find('input[type="file"]')[0].id = `file-upload-for-testexecution-${testExecution.id}`
 
     return template
 }
+
 
 function changeStatusBulk(statusId) {
     const selected = selectedCheckboxes()
@@ -649,7 +678,7 @@ function reloadRowFor(execution) {
         drawPercentBar(Object.values(allExecutions))
         renderAdditionalInformation(execution.run_id, execution)
 
-        bindEvents()
+        bindEvents(`.test-execution-${execution.id}`)
     })
 }
 
