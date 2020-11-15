@@ -682,9 +682,6 @@ function reloadRowFor(execution) {
     })
 }
 
-/////// the functions below were used in bulk-menu actions
-/////// and need updates before they can be used again
-///////
 function changeAssigneeBulk() {
     const selected = selectedCheckboxes()
     if ($.isEmptyObject(selected)) {
