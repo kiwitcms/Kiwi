@@ -285,6 +285,7 @@ function getExpandArea(testExecution) {
 
     jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id }, links => {
         const ul = container.find('.test-execution-hyperlinks')
+        ul.innerHTML = '';
         links.forEach(link => ul.append(renderLink(link)))
     })
 
@@ -524,6 +525,9 @@ function addLinkToExecutions(testExecutionIDs) {
             }, updateTracker], link => {
                 const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`);
                 animate(testExecutionRow, () => {
+                    if (link.is_defect) {
+                        testExecutionRow.find('.js-bugs').toggleClass('hidden');
+                    }
                     const ul = testExecutionRow.find('.test-execution-hyperlinks')
                     ul.append(renderLink(link))
                 })
