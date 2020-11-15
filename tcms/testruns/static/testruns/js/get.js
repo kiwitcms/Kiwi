@@ -206,7 +206,14 @@ function renderTestExecutions(testExecutions) {
         container.append(renderTestExecutionRow(testExecution))
     })
 
+    bindEvents();
+
+    $('.test-executions-count').html(testExecutions.length)
+}
+
+function bindEvents() {
     treeViewBind();
+
     $('.test-execution-element').click(function(ev) {
         // don't trigger row expansion when kebab menu is clicked
         if($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
@@ -226,8 +233,6 @@ function renderTestExecutions(testExecutions) {
 
         getExpandArea(allExecutions[tePK]);
     });
-
-    $('.test-executions-count').html(testExecutions.length)
 }
 
 function getExpandArea(testExecution) {
@@ -427,7 +432,7 @@ function reloadRowFor(execution) {
         testExecutionRow.replaceWith(renderTestExecutionRow(execution))
         renderAdditionalInformation(execution.run_id, execution)
 
-        treeViewBind()
+        bindEvents()
     })
 }
 
