@@ -9,10 +9,15 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.testruns.models import TestExecutionStatus, TestRun
-from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
-                        user_should_have_perm)
+from tcms.tests import BaseCaseRun
+from tcms.tests import BasePlanCase
+from tcms.tests import PermissionsTestCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TagFactory
+from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import UserFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -148,10 +153,24 @@ class TestCreateNewRun(BasePlanCase):
             self.assertIsNone(execution.close_date)
 
 
-class CloneRunBaseTest(BaseCaseRun):
+class TestCloneRunView(PermissionsTestCase):
+    permission_label = 'testruns.add_testrun'
+    http_method_names = ['get']
 
-    def assert_one_run_clone_page(self, response):
-        """Verify clone page for cloning one test run"""
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_run = TestRunFactory()
+        cls.execution_1 = TestExecutionFactory(run=cls.test_run)
+        cls.execution_2 = TestExecutionFactory(run=cls.test_run)
+
+        cls.url = reverse('testruns-clone', args=[cls.test_run.pk])
+
+        super().setUpTestData()
+
+    def verify_get_with_permission(self):
+        response = self.client.get(self.url)
+
+        self.assertContains(response, _('Clone TestRun'))
 
         self.assertContains(
             response,
@@ -159,118 +178,14 @@ class CloneRunBaseTest(BaseCaseRun):
             'type="text" value="%s%s" required>' % (_('Clone of '), self.test_run.summary),
             html=True)
 
-        for case_run in (self.execution_1, self.execution_2):
-            case_url = reverse('testcases-get', args=[case_run.case.pk])
+        for execution in (self.execution_1, self.execution_2):
+            case_url = reverse('testcases-get', args=[execution.case.pk])
 
             self.assertContains(
                 response,
-                '<a href="%s">TC-%d: %s</a>' % (case_url, case_run.case.pk, case_run.case.summary),
+                '<a href="%s">TC-%d: %s</a>' % (
+                    case_url, execution.case.pk, execution.case.summary),
                 html=True)
-
-
-class TestStartCloneRunFromRunPage(CloneRunBaseTest):
-    """Test case for cloning run from a run page"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestStartCloneRunFromRunPage, cls).setUpTestData()
-
-        cls.permission = 'testruns.add_testrun'
-        user_should_have_perm(cls.tester, cls.permission)
-        user_should_have_perm(cls.tester, 'testruns.view_testrun')
-
-    def test_refuse_without_selecting_case_runs(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-        url = reverse('testruns-clone', args=[self.test_run.pk])
-
-        response = self.client.post(url, {}, follow=True)
-
-        self.assertContains(response, _('At least one TestCase is required'))
-
-    def test_open_clone_page_by_selecting_case_runs(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-        url = reverse('testruns-clone', args=[self.test_run.pk])
-
-        response = self.client.post(url, {'case_run': [self.execution_1.pk, self.execution_2.pk]})
-
-        self.assert_one_run_clone_page(response)
-
-    def test_clone_a_run(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        new_summary = 'Clone {} - {}'.format(self.test_run.pk, self.test_run.summary)
-
-        clone_data = {
-            'summary': new_summary,
-            'plan': self.plan.pk,
-            'product_id': self.test_run.plan.product_id,
-            'do': 'clone_run',
-            'product': self.test_run.plan.product_id,
-            'product_version': self.test_run.product_version.pk,
-            'build': self.test_run.build.pk,
-            'errata_id': '',
-            'manager': self.test_run.manager.email,
-            'default_tester': self.test_run.default_tester.email,
-            'notes': '',
-            'case': [self.execution_1.case.pk, self.execution_2.case.pk],
-            'execution_id': [self.execution_1.pk, self.execution_2.pk],
-        }
-
-        url = reverse('testruns-new')
-        response = self.client.post(url, clone_data)
-
-        cloned_run = TestRun.objects.get(summary=new_summary)
-
-        self.assertRedirects(
-            response,
-            reverse('testruns-get', args=[cloned_run.pk]))
-
-        self.assert_cloned_run(cloned_run)
-
-    def test_clone_a_run_without_permissions(self):
-        remove_perm_from_user(self.tester, 'testruns.add_testrun')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        new_summary = 'Clone {} - {}'.format(self.test_run.pk, self.test_run.summary)
-
-        clone_data = {
-            'summary': new_summary,
-            'from_plan': self.plan.pk,
-            'product_id': self.test_run.plan.product_id,
-            'do': 'clone_run',
-            'product': self.test_run.plan.product_id,
-            'product_version': self.test_run.product_version.pk,
-            'build': self.test_run.build.pk,
-            'errata_id': '',
-            'manager': self.test_run.manager.email,
-            'default_tester': self.test_run.default_tester.email,
-            'notes': '',
-            'case': [self.execution_1.case.pk, self.execution_2.case.pk],
-            'execution_id': [self.execution_1.pk, self.execution_2.pk],
-        }
-
-        url = reverse('testruns-new')
-        response = self.client.post(url, clone_data)
-
-        self.assertRedirects(
-            response,
-            reverse('tcms-login') + '?next=' + url)
-
-    def assert_cloned_run(self, cloned_run):
-        # Assert clone settings result
-        for origin_case_run, cloned_case_run in zip((self.execution_1, self.execution_2),
-                                                    cloned_run.case_run.order_by('pk')):
-            self.assertEqual(TestExecutionStatus.objects.filter(weight=0).first(),
-                             cloned_case_run.status)
-            self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
 
 class TestSearchRuns(BaseCaseRun):

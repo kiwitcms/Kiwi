@@ -34,7 +34,7 @@ class NewTestRunView(View):
     template_name = 'testruns/mutable.html'
     http_method_names = ['post', 'get']
 
-    def get(self, request):
+    def get(self, request, form_initial=None, is_cloning=False):
         plan_id = request.GET.get('p')
         if not plan_id:
             messages.add_message(request,
@@ -57,19 +57,22 @@ class NewTestRunView(View):
                                                'priority').order_by('pk')
 
         test_plan = TestPlan.objects.get(pk=plan_id)
-        form = NewRunForm(initial={
-            'summary': 'Test run for %s' % test_plan.name,
-            'manager': test_plan.author.email,
-            'default_tester': request.user.email,
-            'notes': '',
-            'plan': plan_id,
-        })
+        if not form_initial:
+            form_initial = {
+                'summary': 'Test run for %s' % test_plan.name,
+                'manager': test_plan.author.email,
+                'default_tester': request.user.email,
+                'notes': '',
+                'plan': plan_id,
+            }
+        form = NewRunForm(initial=form_initial)
         form.populate(plan_id)
 
         context_data = {
             'test_cases': tcs_values,
             'form': form,
-            'disabled_cases': get_disabled_test_cases_count(test_cases)
+            'disabled_cases': get_disabled_test_cases_count(test_cases),
+            'is_cloning': is_cloning,
         }
         return render(request, self.template_name, context_data)
 
@@ -154,8 +157,6 @@ class GetTestRunView(DetailView):
                     ),
                     (
                         _('Clone'),
-                        # todo: URL accepts POST, need to refactor to use GET+POST
-                        # e.g. runs/3/clone/
                         reverse('testruns-clone', args=[self.object.pk])
                     ),
                     (
@@ -199,51 +200,28 @@ class EditTestRunView(UpdateView):
 
 
 @method_decorator(permission_required('testruns.add_testrun'), name='dispatch')
-class CloneTestRunView(View):
-    """Clone cases from filter caserun"""
+class CloneTestRunView(NewTestRunView):
+    # note: post is handled directly by NewTestRunView
+    # b/c <form action> points to testruns-new URL
+    http_method_names = ['get']
 
-    template_name = 'testruns/mutable.html'
-    http_method_names = ['post']
-
-    def post(self, request, pk):
+    def get(self, request, pk):  # pylint: disable=arguments-differ
         test_run = get_object_or_404(TestRun, pk=pk)
-        confirmed_case_status = TestCaseStatus.get_confirmed()
-        disabled_cases = 0
 
-        if request.POST.get('case_run'):
-            test_cases = []
-            for test_case_run in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
-                if test_case_run.case.case_status == confirmed_case_status:
-                    test_cases.append(test_case_run.case)
-                else:
-                    disabled_cases += 1
-        else:
-            test_cases = None
+        request.GET._mutable = True  # pylint: disable=protected-access
+        request.GET['p'] = test_run.plan_id
+        request.GET.setlist('c', test_run.case_run.all().values_list('case', flat=True))
 
-        if not test_cases:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 _('At least one TestCase is required'))
-            return HttpResponseRedirect(reverse('testruns-get', args=[pk]))
-
-        form = NewRunForm(initial={
+        form_initial = {
             'summary': _('Clone of ') + test_run.summary,
             'notes': test_run.notes,
             'manager': test_run.manager,
             'build': test_run.build_id,
             'default_tester': test_run.default_tester,
-            'plan': test_run.plan
-        })
-
-        form.populate(test_run.plan_id)
-
-        context_data = {
-            'is_cloning': True,
-            'disabled_cases': disabled_cases,
-            'test_cases': test_cases,
-            'form': form,
+            'plan': test_run.plan_id,
         }
-        return render(request, self.template_name, context_data)
+
+        return super().get(request, form_initial=form_initial, is_cloning=True)
 
 
 @method_decorator(permission_required('testruns.change_testrun'), name='dispatch')
