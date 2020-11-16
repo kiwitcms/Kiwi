@@ -1,20 +1,20 @@
 const allExecutionStatuses = {},
-      allExecutions = {},
-      expandedExecutionIds = [],
-      permissions = {
+    allExecutions = {},
+    expandedExecutionIds = [],
+    permissions = {
         removeTag: false,
         addComment: false,
         removeComment: false,
-     }
+    }
 
 $(document).ready(() => {
 
-    permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True';
-    permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True';
-    permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True';
+    permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True'
+    permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
+    permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'
 
-    $('.bootstrap-switch').bootstrapSwitch();
-    $('.selectpicker').selectpicker();
+    $('.bootstrap-switch').bootstrapSwitch()
+    $('.selectpicker').selectpicker()
 
     const testRunId = $('#test_run_pk').data('pk')
 
@@ -32,10 +32,10 @@ $(document).ready(() => {
                 $('.stop-date').html(stopDate)
             })
         }
-    });
+    })
 
-    $('.add-hyperlink-bulk').click(function() {
-        $(this).parents('.dropdown').toggleClass('open');
+    $('.add-hyperlink-bulk').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
         const selected = selectedCheckboxes()
         if ($.isEmptyObject(selected)) {
             return false
@@ -44,8 +44,8 @@ $(document).ready(() => {
         return addLinkToExecutions(selected.executionIds)
     })
 
-    $('.remove-execution-bulk').click(function() {
-        $(this).parents('.dropdown').toggleClass('open');
+    $('.remove-execution-bulk').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
         const selected = selectedCheckboxes()
         if ($.isEmptyObject(selected)) {
             return false
@@ -56,25 +56,25 @@ $(document).ready(() => {
             removeCases(testRunId, selected.caseIds)
         }
 
-        return false;
+        return false
     })
 
-    $('.change-assignee-bulk').click(function() {
-        $(this).parents('.dropdown').toggleClass('open');
+    $('.change-assignee-bulk').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
         changeAssigneeBulk()
 
-        return false;
+        return false
     })
 
-    $('.update-case-text-bulk').click(function() {
-        $(this).parents('.dropdown').toggleClass('open');
+    $('.update-case-text-bulk').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
         updateCaseText()
 
-        return false;
+        return false
     })
 
     $('.bulk-change-status').click(function () {
-        $(this).parents('.dropdown').toggleClass('open');
+        $(this).parents('.dropdown').toggleClass('open')
         // `this` is the clicked link
         const statusId = $(this).data('status-id')
         changeStatusBulk(statusId)
@@ -84,12 +84,12 @@ $(document).ready(() => {
     })
 
     // bind everything in tags table
-    tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag);
+    tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag)
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
         // convert from list to a dict for easier indexing later
-        for (var i = 0; i < executionStatuses.length; i++) {
-            allExecutionStatuses[executionStatuses[i].id] = executionStatuses[i];
+        for (var i = 0 i < executionStatuses.length i++) {
+            allExecutionStatuses[executionStatuses[i].id] = executionStatuses[i]
         }
 
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
@@ -100,11 +100,11 @@ $(document).ready(() => {
     })
 
     $('.bulk-select-checkbox').click(event => {
-        const isChecked = event.target.checked;
-        const testExecutionSelectors = $('#test-executions-container').find('.test-execution-checkbox');
+        const isChecked = event.target.checked
+        const testExecutionSelectors = $('#test-executions-container').find('.test-execution-checkbox')
 
-        testExecutionSelectors.each((_index, te) => { te.checked = isChecked });
-    });
+        testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
+    })
 })
 
 function selectedCheckboxes() {
@@ -136,9 +136,9 @@ function selectedCheckboxes() {
 }
 
 function drawPercentBar(testExecutions, executionStatuses) {
-    let positiveCount = 0;
-    let negativeCount = 0;
-    let allCount = testExecutions.length;
+    let positiveCount = 0
+    let negativeCount = 0
+    let allCount = testExecutions.length
     let statusCount = {}
     executionStatuses.forEach(s => statusCount[s.name] = { count: 0, id: s.id })
 
@@ -189,9 +189,9 @@ function renderProgressBars(positiveCount, negativeCount, allCount) {
 
 function renderCountPerStatusList(statusCount) {
     for (var status in statusCount) {
-        const statusId = statusCount[status].id;
+        const statusId = statusCount[status].id
 
-        $(`#count-for-status-${statusId}`).attr('href', `?status_id=${statusId}`).text(statusCount[status].count);
+        $(`#count-for-status-${statusId}`).attr('href', `?status_id=${statusId}`).text(statusCount[status].count)
     }
 }
 
@@ -202,33 +202,33 @@ function renderTestExecutions(testExecutions) {
         container.append(renderTestExecutionRow(testExecution))
     })
 
-    bindEvents();
+    bindEvents()
 
     $('.test-executions-count').html(testExecutions.length)
 }
 
 function bindEvents() {
-    treeViewBind();
+    treeViewBind()
 
-    $('.test-execution-element').click(function(ev) {
+    $('.test-execution-element').click(function (ev) {
         // don't trigger row expansion when kebab menu is clicked
-        if($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
-            return;
+        if ($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
+            return
         }
 
         const tePK = $(ev.target).
             parents('.test-execution-element').
             find('.test-execution-checkbox').
-            data('test-execution-id');
+            data('test-execution-id')
 
         // row was expanded once, dom is ready
         if (expandedExecutionIds.indexOf(tePK) > -1) {
-            return;
+            return
         }
-        expandedExecutionIds.push(tePK);
+        expandedExecutionIds.push(tePK)
 
-        getExpandArea(allExecutions[tePK]);
-    });
+        getExpandArea(allExecutions[tePK])
+    })
 }
 
 function getExpandArea(testExecution) {
@@ -239,16 +239,16 @@ function getExpandArea(testExecution) {
     container.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
     jsonRPC('TestCase.history',
-            [testExecution.case_id, {
-                history_id: testExecution.case_text_version
-            }], (data) => {
-        data.forEach((entry) => {
-            markdown2HTML(entry.text, container.find('.test-execution-text')[0])
-            container.find('.test-execution-notes').append(entry.notes)
-        });
-    });
+        [testExecution.case_id, {
+            history_id: testExecution.case_text_version
+        }], (data) => {
+            data.forEach((entry) => {
+                markdown2HTML(entry.text, container.find('.test-execution-text')[0])
+                container.find('.test-execution-notes').append(entry.notes)
+            })
+        })
 
-    const textArea = container.find('textarea')[0];
+    const textArea = container.find('textarea')[0]
     const fileUpload = container.find('input[type="file"]')
     const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
     const commentsRow = container.find('.comments')
@@ -285,7 +285,7 @@ function getExpandArea(testExecution) {
 
     jsonRPC('TestExecution.get_links', { 'execution_id': testExecution.id }, links => {
         const ul = container.find('.test-execution-hyperlinks')
-        ul.innerHTML = '';
+        ul.innerHTML = ''
         links.forEach(link => ul.append(renderLink(link)))
     })
 
@@ -294,7 +294,7 @@ function getExpandArea(testExecution) {
 
         if (!attachments.length) {
             ul.find('.hidden').removeClass('hidden')
-            return;
+            return
         }
 
         const liTemplate = $('#attachments-list-item')[0].content
@@ -331,21 +331,21 @@ function renderAdditionalInformation(testRunId, execution) {
 
     // update bug icons for all executions
     jsonRPC('TestExecution.get_links', linksQuery, (links) => {
-        const withDefects = new Set();
+        const withDefects = new Set()
         links.forEach((link) => {
             if (link.is_defect) {
-                withDefects.add(link.execution_id);
+                withDefects.add(link.execution_id)
             }
         })
         withDefects.forEach((te) => {
-            $(`.test-execution-${te}`).find('.js-bugs').toggleClass('hidden');
+            $(`.test-execution-${te}`).find('.js-bugs').toggleClass('hidden')
         })
     })
 
     // update priority, category & automation status for all executions
     jsonRPC('TestCase.filter', casesQuery, testCases => {
         testCases.forEach(testCase => {
-            const row = $(`.test-execution-case-${testCase.id}`);
+            const row = $(`.test-execution-case-${testCase.id}`)
 
             row.find('.test-execution-priority').html(testCase.priority)
             row.find('.test-execution-category').html(testCase.category)
@@ -379,7 +379,7 @@ function renderHistoryEntry(historyEntry) {
 function renderTestExecutionRow(testExecution) {
     // refresh the internal data structure b/c some fields are used
     // to render the expand area and may have changed via bulk-update meanwhile
-    allExecutions[testExecution.id] = testExecution;
+    allExecutions[testExecution.id] = testExecution
 
     const testExecutionRowTemplate = $('#test-execution-row')[0].content
     const template = $(testExecutionRowTemplate.cloneNode(true))
@@ -407,7 +407,7 @@ function renderTestExecutionRow(testExecution) {
     template.find('input[type="file"]')[0].id = `file-upload-for-testexecution-${testExecution.id}`
 
     // remove from expanded list b/c data may have changed
-    delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)];
+    delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)]
 
     return template
 }
@@ -424,7 +424,7 @@ function changeStatusBulk(statusId) {
         }], execution => {
             reloadRowFor(execution)
         })
-    });
+    })
 }
 
 function reloadRowFor(execution) {
@@ -450,14 +450,14 @@ function changeAssigneeBulk() {
     const assignee = prompt(enterAssigneeText)
 
     if (!assignee) {
-        return false;
+        return false
     }
     selected.executionIds.forEach(executionId => {
         jsonRPC('TestExecution.update', [executionId, { 'assignee': assignee }], execution => {
-            const testExecutionRow = $(`div.list-group-item.test-execution-${executionId}`);
-            reloadRowFor(execution);
+            const testExecutionRow = $(`div.list-group-item.test-execution-${executionId}`)
+            reloadRowFor(execution)
         })
-    });
+    })
 }
 
 function updateCaseText() {
@@ -470,7 +470,7 @@ function updateCaseText() {
         jsonRPC('TestExecution.update', [executionId, { 'case_text_version': 'latest' }], execution => {
             reloadRowFor(execution)
         })
-    );
+    )
 }
 
 function fileBugFromExecution(execution) {
@@ -495,7 +495,7 @@ function fileBugFromExecution(execution) {
             reloadRowFor(execution)
 
             // unescape b/c Issue #1533
-            const targetUrl = result.response.replace(/&amp;/g, '&')
+            const targetUrl = result.response.replace(/&amp/g, '&')
             window.open(targetUrl, '_blank')
         })
         return false
@@ -523,10 +523,10 @@ function addLinkToExecutions(testExecutionIDs) {
                 name: name,
                 is_defect: isDefect,
             }, updateTracker], link => {
-                const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`);
+                const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`)
                 animate(testExecutionRow, () => {
                     if (link.is_defect) {
-                        testExecutionRow.find('.js-bugs').toggleClass('hidden');
+                        testExecutionRow.find('.js-bugs').toggleClass('hidden')
                     }
                     const ul = testExecutionRow.find('.test-execution-hyperlinks')
                     ul.append(renderLink(link))
@@ -543,10 +543,10 @@ function addLinkToExecutions(testExecutionIDs) {
         // close the modal
         $('#add-link-modal button.close').click()
 
-        return false;
+        return false
     })
 
-    return true; // so that the modal is opened
+    return true // so that the modal is opened
 }
 
 function renderLink(link) {
@@ -577,6 +577,6 @@ function removeCases(testRunId, testCaseIds) {
             const testExecutionCountEl = $('.test-executions-count')
             const count = parseInt(testExecutionCountEl[0].innerText)
             testExecutionCountEl.html(count - 1)
-        }, true);
+        }, true)
     }
 }
