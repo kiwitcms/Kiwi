@@ -398,6 +398,9 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
 
+    template.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
+    template.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
+
     // remove from expanded list b/c data may have changed
     delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)]
 
