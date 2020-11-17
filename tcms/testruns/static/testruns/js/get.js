@@ -495,7 +495,7 @@ function fileBugFromExecution(execution) {
             reloadRowFor(execution)
 
             // unescape b/c Issue #1533
-            const targetUrl = result.response.replace(/&amp/g, '&')
+            const targetUrl = result.response.replace(/&amp;/g, '&')
             window.open(targetUrl, '_blank')
         })
         return false
