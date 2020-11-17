@@ -88,7 +88,7 @@ $(document).ready(() => {
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
         // convert from list to a dict for easier indexing later
-        for (var i = 0 i < executionStatuses.length i++) {
+        for (var i = 0; i < executionStatuses.length; i++) {
             allExecutionStatuses[executionStatuses[i].id] = executionStatuses[i]
         }
 
