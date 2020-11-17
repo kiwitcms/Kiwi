@@ -227,6 +227,9 @@ function redrawSingleRow(testCaseId, testPlanId, permissions) {
     var testCaseRowDocumentFragment = $('#test_case_row')[0].content,
         newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions);
 
+    // remove from expanded list b/c the comment section may have changed
+    delete expandedTestCaseIds[expandedTestCaseIds.indexOf(testCaseId)];
+
     // replace the element in the dom
     $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow);
     attachEvents(testPlanId, permissions);
@@ -423,9 +426,6 @@ function attachEvents(testPlanId, permissions) {
             const testCaseId = getCaseIdFromEvent(ev);
             updateTestCasesViaAPI([testCaseId], {case_status: ev.target.dataset.id},
                                   testPlanId, permissions);
-            // status controls comment editor
-            delete expandedTestCaseIds[expandedTestCaseIds.indexOf(testCaseId)];
-
             return false;
         });
     }
@@ -495,7 +495,10 @@ function updateTestCasesViaAPI(testCaseIds, updateQuery, testPlanId, permissions
             const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`);
 
             // update internal data
+            sortkey = allTestCases[caseId].sortkey;
             allTestCases[caseId] = updatedTC;
+            // note: updatedTC doesn't have sortkey information
+            allTestCases[caseId].sortkey = sortkey;
 
             animate(testCaseRow, function() {
                 redrawSingleRow(caseId, testPlanId, permissions);
@@ -604,10 +607,6 @@ function toolbarEvents(testPlanId, permissions) {
 
         updateTestCasesViaAPI(selectedCases, {case_status: ev.target.dataset.id},
                               testPlanId, permissions);
-        // status controls comment editor
-        selectedCases.forEach(function(caseId) {
-            delete expandedTestCaseIds[expandedTestCaseIds.indexOf(caseId)];
-        })
         return false;
     });
 
