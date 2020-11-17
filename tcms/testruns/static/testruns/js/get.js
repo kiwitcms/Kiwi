@@ -338,7 +338,7 @@ function renderAdditionalInformation(testRunId, execution) {
             }
         })
         withDefects.forEach((te) => {
-            $(`.test-execution-${te}`).find('.js-bugs').toggleClass('hidden')
+            $(`.test-execution-${te}`).find('.js-bugs').removeClass('hidden')
         })
     })
 
@@ -529,7 +529,7 @@ function addLinkToExecutions(testExecutionIDs) {
                 const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`)
                 animate(testExecutionRow, () => {
                     if (link.is_defect) {
-                        testExecutionRow.find('.js-bugs').toggleClass('hidden')
+                        testExecutionRow.find('.js-bugs').removeClass('hidden')
                     }
                     const ul = testExecutionRow.find('.test-execution-hyperlinks')
                     ul.append(renderLink(link))
