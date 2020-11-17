@@ -37,7 +37,7 @@ $(document).ready(() => {
         }
     })
 
-    $('.add-comment-bulk').click(function() {
+    $('.add-comment-bulk').click(function () {
         $(this).parents('.dropdown').toggleClass('open')
 
         const selected = selectedCheckboxes()
@@ -53,7 +53,10 @@ $(document).ready(() => {
 
         selected.executionIds.forEach(executionId => {
             jsonRPC('TestExecution.add_comment', [executionId, comment], () => {
-                delete expandedExecutionIds[expandedExecutionIds.indexOf(executionId)]
+                const testExecutionRow = $(`.test-execution-${executionId}`)
+                animate(testExecutionRow, () => {
+                    delete expandedExecutionIds[expandedExecutionIds.indexOf(executionId)]
+                })
             })
         })
 
@@ -709,8 +712,8 @@ function addLinkToExecutions(testExecutionIDs) {
         })
 
         // clean the values
-        $('.add-hyperlink-form #id_url').val('')
         $('.add-hyperlink-form #id_name').val('')
+        $('.add-hyperlink-form #id_url').val('')
         $('.add-hyperlink-form #defectCheckbox').bootstrapSwitch('state', false)
         $('.add-hyperlink-form #autoUpdateCheckbox').bootstrapSwitch('state', false)
 
