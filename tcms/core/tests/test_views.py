@@ -3,9 +3,11 @@
 from http import HTTPStatus
 
 from django import test
+from django.urls import path, include
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from tcms import urls
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import (TestExecutionFactory, TestPlanFactory,
                                   TestRunFactory, UserFactory)
@@ -83,3 +85,27 @@ class TestDashboard(BaseCaseRun):
 
         response = self.client.get(reverse('core-views-index'))
         self.assertContains(response, execution.run.summary)
+
+
+def exception_view(request):
+    raise Exception
+
+
+urlpatterns = [
+    path('will-trigger-500/', exception_view),
+    path('', include(urls)),
+]
+
+
+handler500 = 'tcms.core.views.server_error'
+
+
+@test.override_settings(ROOT_URLCONF=__name__)
+class TestServerError(test.TestCase):
+
+    def test_custom_server_error_view(self):
+        client = test.Client(raise_request_exception=False)
+        response = client.get('/will-trigger-500/')
+
+        self.assertEqual(response.status_code, 500)
+        self.assertTemplateUsed(response, '500.html')
