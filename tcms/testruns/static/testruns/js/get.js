@@ -398,16 +398,16 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
 
+    // remove from expanded list b/c data may have changed
+    delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)]
+
+    // WARNING: only comments related stuff below
     if (!permissions.addComment) {
         template.find('.comment-form').hide()
         return template
     }
-
     template.find('textarea')[0].id = `comment-for-testexecution-${testExecution.id}`
     template.find('input[type="file"]')[0].id = `file-upload-for-testexecution-${testExecution.id}`
-
-    // remove from expanded list b/c data may have changed
-    delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)]
 
     return template
 }
