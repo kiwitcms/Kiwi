@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, too-many-ancestors
 
-import unittest
 from http import HTTPStatus
 
 from django.contrib.auth.models import Permission
@@ -217,8 +216,6 @@ class TestRunCasesMenu(BaseCaseRun):
 
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
 
-        cls.add_cases_html = '<a href="{0}" class="addBlue9">{1}</a>'
-
         cls.update_text_version_html = """
             <a href="#" class="update-case-text-bulk">
                 <span class="fa fa-refresh"></span>{0}
@@ -239,17 +236,17 @@ class TestRunCasesMenu(BaseCaseRun):
             </a>
         """.format(_('Delete'))
 
-    @unittest.skip('adding executions to TR not implemented yet')
     def test_add_cases_to_run_with_permission(self):
         user_should_have_perm(self.tester, 'testruns.add_testexecution')
         response = self.client.get(self.url)
-        self.assertContains(response, self.add_cases_html, html=True)
+        self.assertContains(response, _('Search and add test cases'))
+        self.assertContains(response, _('Advanced search'))
 
-    @unittest.skip('adding executions to TR not implemented yet')
     def test_add_cases_to_run_without_permission(self):
         remove_perm_from_user(self.tester, 'testruns.add_testexecution')
         response = self.client.get(self.url)
-        self.assertNotContains(response, self.add_cases_html, html=True)
+        self.assertNotContains(response, _('Search and add test cases'))
+        self.assertNotContains(response, _('Advanced search'))
 
     def test_change_assignee_with_permission(self):
         user_should_have_perm(self.tester, 'testruns.change_testexecution')
