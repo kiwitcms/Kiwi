@@ -40,9 +40,13 @@ def add_case(run_id, case_id):
         :raises DoesNotExist: if objects specified by the PKs don't exist
         :raises PermissionDenied: if missing *testruns.add_testexecution* permission
     """
-    execution = TestRun.objects.get(pk=run_id).create_execution(
-        case=TestCase.objects.get(pk=case_id)
-    )
+    run = TestRun.objects.get(pk=run_id)
+    case = TestCase.objects.get(pk=case_id)
+
+    if run.case_run.filter(case=case).exists():
+        return run.case_run.filter(case=case).first().serialize()
+
+    execution = run.create_execution(case=case)
     return execution.serialize()
 
 
