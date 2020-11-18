@@ -43,7 +43,7 @@ $(document).ready(function() {
 
     adjustTestPlanFamilyTree();
     collapseDocumentText();
-    initTestCaseSearchAndAdd(testPlanId);
+    quickSearchAndAddTestCase(testPlanId, addTestCaseToPlan, autocomplete_cache);
     $('#btn-search-cases').click(function () {
         return advancedSearchAndAddTestCases(testPlanId, 'TestPlan.add_case', $(this).attr('href'));
     });
@@ -70,65 +70,6 @@ function addTestCaseToPlan(planId) {
         $('#search-testcase').val('');
     });
 }
-
-
-function initTestCaseSearchAndAdd(planId) {
-    // + button
-    $('#btn-add-case').click(function() {
-        addTestCaseToPlan(planId);
-
-        return false;
-    });
-
-    // Enter key
-    $('#search-testcase').keyup(function(event) {
-        if (event.keyCode === 13) {
-            addTestCaseToPlan(planId);
-
-            return false;
-        };
-    });
-
-    // autocomplete
-    $('#search-testcase.typeahead').typeahead({
-        minLength: 1,
-        highlight: true
-        }, {
-        name: 'testcases-autocomplete',
-        // will display up to X results even if more were returned
-        limit: 100,
-        async: true,
-        display: function(element) {
-            const displayName = `TC-${element.id}: ${element.summary}`;
-            autocomplete_cache[displayName] = element;
-            return displayName;
-        },
-        source: function(query, processSync, processAsync) {
-            // accepts "TC-1234" or "tc-1234" or "1234"
-            query = query.toLowerCase().replace('tc-', '');
-            if (query === '') {
-                return;
-            }
-
-            var rpc_query = {pk: query};
-
-            // or arbitrary string
-            if (isNaN(query)) {
-                if (query.length >=3) {
-                    rpc_query = {summary__icontains: query};
-                } else {
-                    return;
-                }
-            }
-
-            jsonRPC('TestCase.filter', rpc_query, function(data) {
-                return processAsync(data);
-            });
-        }
-    });
-}
-
-
 
 function collapseDocumentText() {
     // for some reason .height() reports a much higher value than
