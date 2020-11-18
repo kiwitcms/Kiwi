@@ -220,7 +220,25 @@
                                         <input type="text" class="form-control" id="filter" placeholder='{% trans "Filter By Name..." %}'>
                                     </div><!-- /input-group -->
                                 </div>
+                            {% if perms.testruns.add_testexecution %}
+                                <div class="form-group">
+                                    <input id="search-testcase"
+                                        type="text"
+                                        placeholder="{% trans 'Search and add test cases' %}"
+                                        class="form-control typeahead">
 
+                                    <button class="btn btn-default"
+                                        href="#" id="btn-add-case" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+
+                                    <button class="btn btn-default" href="{% url 'testcases-search' %}"
+                                        id="btn-search-cases" title="{% trans 'Advanced search' %}">
+                                        <span class="fa fa-search"></span>
+                                    </button>
+                                    <input type="hidden" id="popup-selection">
+                                </div>
+                            {% endif %}
                             </form>
                             <div class="row toolbar-pf-results">
                                 <div class="col-sm-12">

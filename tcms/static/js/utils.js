@@ -250,3 +250,16 @@ function filterTestCasesByProperty(planId, testCases, filterBy, filterValue) {
         }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show());
     }
 }
+
+function showPopup(href) {
+    if (href.indexOf('?') === -1) {
+        href += '?nonav=1';
+    } else {
+        href += '&nonav=1';
+    }
+
+    const win = window.open(href, 'popup page', 'width=1024,height=612');
+    win.focus();
+
+    return win;
+}
