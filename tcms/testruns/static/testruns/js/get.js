@@ -5,7 +5,8 @@ const allExecutionStatuses = {},
         removeTag: false,
         addComment: false,
         removeComment: false,
-    }
+    },
+    autocomplete_cache = {}
 
 $(document).ready(() => {
 
@@ -105,7 +106,111 @@ $(document).ready(() => {
 
         testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
     })
+
+    initTestCaseSearchAndAdd(testRunId)
+    $('#btn-search-cases').click(function () {
+        return searchAndSelectTestCases(testRunId, $(this).attr('href'));
+    });
 })
+
+function searchAndSelectTestCases(runId, href) {
+    $('#popup-selection').val('');
+    popupWindow = showPopup(`${href}?allow_select=1`);
+
+    $(popupWindow).on('beforeunload', function(){
+        const testCaseIDs = $('#popup-selection').val();
+
+        if (testCaseIDs) {
+            // add the selected test cases
+            testCaseIDs.split(",").forEach(function(testCase) {
+                jsonRPC('TestRun.add_case', [runId, testCase], function(result) {}, true)
+            })
+
+            window.location.reload(true);
+            // TODO: remove the page reload above and add the new case to the list
+        }
+    });
+
+    return false;
+}
+
+
+function addTestCaseToRun(runId) {
+    const caseName = $('#search-testcase')[0].value;
+    const testCase = autocomplete_cache[caseName];
+
+    // test case is already present so don't add it
+// TODO: fix me
+//    if (allTestCases[testCase.id]) {
+//        $('#search-testcase').val('');
+//        return false;
+//    }
+
+    jsonRPC('TestRun.add_case', [runId, testCase.id], function(result) {
+        // IMPORTANT: the API result includes a 'sortkey' field value!
+        window.location.reload(true);
+
+        // TODO: remove the page reload above and add the new case to the list
+        $('#search-testcase').val('');
+    });
+}
+
+function initTestCaseSearchAndAdd(runId) {
+    // + button
+    $('#btn-add-case').click(function() {
+        addTestCaseToRun(runId)
+
+        return false
+    });
+
+    // Enter key
+    $('#search-testcase').keyup(function(event) {
+        if (event.keyCode === 13) {
+            addTestCaseToRun(runId)
+
+            return false
+        };
+    });
+
+    // autocomplete
+    $('#search-testcase.typeahead').typeahead({
+        minLength: 1,
+        highlight: true
+        }, {
+        name: 'testcases-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function(element) {
+            const displayName = `TC-${element.id}: ${element.summary}`;
+            autocomplete_cache[displayName] = element;
+            return displayName;
+        },
+        source: function(query, processSync, processAsync) {
+            // accepts "TC-1234" or "tc-1234" or "1234"
+            query = query.toLowerCase().replace('tc-', '');
+            if (query === '') {
+                return;
+            }
+
+            // todo: limit search to confirmed TCs
+            var rpc_query = {pk: query};
+
+            // or arbitrary string
+            if (isNaN(query)) {
+                if (query.length >=3) {
+                    rpc_query = {summary__icontains: query};
+                } else {
+                    return;
+                }
+            }
+
+            jsonRPC('TestCase.filter', rpc_query, function(data) {
+                return processAsync(data);
+            });
+        }
+    });
+}
 
 function selectedCheckboxes() {
     const allSelected = $('.test-execution-checkbox:checked')
