@@ -67,19 +67,6 @@ function searchAndSelectTestCases(planId, href) {
     return false;
 }
 
-function showPopup(href) {
-    if (href.indexOf('?') === -1) {
-        href += '?nonav=1';
-    } else {
-        href += '&nonav=1';
-    }
-
-    const win = window.open(href, 'popup page', 'width=1024,height=612');
-    win.focus();
-
-    return win;
-}
-
 function addTestCaseToPlan(planId) {
     const caseName = $('#search-testcase')[0].value;
     const testCase = autocomplete_cache[caseName];
