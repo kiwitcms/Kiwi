@@ -142,6 +142,7 @@ class GetTestRunView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['execution_statuses'] = TestExecutionStatus.objects.order_by('-weight', 'name')
+        context['testcasestatus_confirmed'] = TestCaseStatus.get_confirmed()
         context['link_form'] = LinkReferenceForm()
         context['bug_trackers'] = BugSystem.objects.all()
         context['comment_form'] = SimpleCommentForm()

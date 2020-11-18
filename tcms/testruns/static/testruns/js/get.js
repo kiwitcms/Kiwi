@@ -107,8 +107,8 @@ $(document).ready(() => {
         testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
     })
 
-// todo: search only for CONFIRMED cases
-    quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, {})
+    const confirmedPK = Number($('#test_run_pk').data('testcasestatus-confirmed-pk'));
+    quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, {case_status: confirmedPK})
     $('#btn-search-cases').click(function () {
         return advancedSearchAndAddTestCases(testRunId, 'TestRun.add_case', $(this).attr('href'));
     });
@@ -119,11 +119,11 @@ function addTestCaseToRun(runId) {
     const testCase = autocomplete_cache[caseName];
 
     // test case is already present so don't add it
-// TODO: fix me
-//    if (allTestCases[testCase.id]) {
-//        $('#search-testcase').val('');
-//        return false;
-//    }
+    const allCaseIds = Object.values(allExecutions).map(te => te.case_id)
+    if (allCaseIds.indexOf(testCase.id) > -1) {
+        $('#search-testcase').val('');
+        return false;
+    }
 
     jsonRPC('TestRun.add_case', [runId, testCase.id], function(result) {
         // IMPORTANT: the API result includes a 'sortkey' field value!

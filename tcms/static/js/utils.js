@@ -270,7 +270,13 @@ function showPopup(href) {
 // href - URL of the search page
 function advancedSearchAndAddTestCases(objId, rpcMethod, href) {
     $('#popup-selection').val('');
-    popupWindow = showPopup(`${href}?allow_select=1`);
+
+    if (href.indexOf('?') === -1) {
+        href += '?allow_select=1';
+    } else {
+        href += '&allow_select=1';
+    }
+    popupWindow = showPopup(href);
 
     $(popupWindow).on('beforeunload', function(){
         const testCaseIDs = $('#popup-selection').val();
