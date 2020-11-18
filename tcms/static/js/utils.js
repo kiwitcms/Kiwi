@@ -288,3 +288,70 @@ function advancedSearchAndAddTestCases(objId, rpcMethod, href) {
 
     return false;
 }
+
+// used in both testplans/get.html and testruns/get.html to initialize and
+// handle the quicksearch widget
+// objId - PK of the object we're adding to
+// pageCallback - function which performs the actual RPC call of adding
+//                the selected TC to objId and refreshes the page
+// cache - cache of previous values fetched for typeahead
+// initialQuery - an initial RPC query that is AND'ed to the internal conditions
+//                for example: filter only CONFIRMED TCs.
+function quickSearchAndAddTestCase(objId, pageCallback, cache, initialQuery = {}) {
+    // + button
+    $('#btn-add-case').click(function() {
+        pageCallback(objId)
+
+        return false
+    });
+
+    // Enter key
+    $('#search-testcase').keyup(function(event) {
+        if (event.keyCode === 13) {
+            pageCallback(objId)
+
+            return false
+        };
+    });
+
+    // autocomplete
+    $('#search-testcase.typeahead').typeahead({
+        minLength: 1,
+        highlight: true
+        }, {
+        name: 'testcases-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function(element) {
+            const displayName = `TC-${element.id}: ${element.summary}`;
+            cache[displayName] = element;
+            return displayName;
+        },
+        source: function(query, processSync, processAsync) {
+            // accepts "TC-1234" or "tc-1234" or "1234"
+            query = query.toLowerCase().replace('tc-', '');
+            if (query === '') {
+                return;
+            }
+
+            var rpc_query = {pk: query};
+
+            // or arbitrary string
+            if (isNaN(query)) {
+                if (query.length >=3) {
+                    rpc_query = {summary__icontains: query};
+                } else {
+                    return;
+                }
+            }
+
+            // merge initial query for more filtering if specified
+            rpc_query = Object.assign({}, rpc_query, initialQuery)
+
+            jsonRPC('TestCase.filter', rpc_query, function(data) {
+                return processAsync(data);
+            });
+        }
+    });
+}
