@@ -109,31 +109,9 @@ $(document).ready(() => {
 
     initTestCaseSearchAndAdd(testRunId)
     $('#btn-search-cases').click(function () {
-        return searchAndSelectTestCases(testRunId, $(this).attr('href'));
+        return advancedSearchAndAddTestCases(testRunId, 'TestRun.add_case', $(this).attr('href'));
     });
 })
-
-function searchAndSelectTestCases(runId, href) {
-    $('#popup-selection').val('');
-    popupWindow = showPopup(`${href}?allow_select=1`);
-
-    $(popupWindow).on('beforeunload', function(){
-        const testCaseIDs = $('#popup-selection').val();
-
-        if (testCaseIDs) {
-            // add the selected test cases
-            testCaseIDs.split(",").forEach(function(testCase) {
-                jsonRPC('TestRun.add_case', [runId, testCase], function(result) {}, true)
-            })
-
-            window.location.reload(true);
-            // TODO: remove the page reload above and add the new case to the list
-        }
-    });
-
-    return false;
-}
-
 
 function addTestCaseToRun(runId) {
     const caseName = $('#search-testcase')[0].value;
