@@ -263,3 +263,28 @@ function showPopup(href) {
 
     return win;
 }
+
+// used in testplans/get.html and testruns/get.html
+// objId - PK of the object we're adding to
+// rpcMethod - must accept [pk, case_id] - the method used to do the work
+// href - URL of the search page
+function advancedSearchAndAddTestCases(objId, rpcMethod, href) {
+    $('#popup-selection').val('');
+    popupWindow = showPopup(`${href}?allow_select=1`);
+
+    $(popupWindow).on('beforeunload', function(){
+        const testCaseIDs = $('#popup-selection').val();
+
+        if (testCaseIDs) {
+            // add the selected test cases
+            testCaseIDs.split(",").forEach(function(testCase) {
+                jsonRPC(rpcMethod, [objId, testCase], function(result) {}, true)
+            })
+
+            window.location.reload(true);
+            // TODO: figure out how to reload above and add the new value to the page
+        }
+    });
+
+    return false;
+}

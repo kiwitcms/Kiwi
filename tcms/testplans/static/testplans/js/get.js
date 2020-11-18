@@ -21,10 +21,6 @@ $(document).ready(function() {
         'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True'
     };
 
-    $('#btn-search-cases').click(function () {
-        return searchAndSelectTestCases(testPlanId, $(this).attr('href'));
-    });
-
     // bind everything in tags table
     const perm_remove_tag = testPlanDataElement.data('perm-remove-tag') === 'True';
     tagsCard('TestPlan', testPlanId, {plan: testPlanId}, perm_remove_tag);
@@ -48,29 +44,10 @@ $(document).ready(function() {
     adjustTestPlanFamilyTree();
     collapseDocumentText();
     initTestCaseSearchAndAdd(testPlanId);
-});
-
-
-function searchAndSelectTestCases(planId, href) {
-    $('#popup-selection').val('');
-    popupWindow = showPopup(`${href}?allow_select=1`);
-
-    $(popupWindow).on('beforeunload', function(){
-        const testCaseIDs = $('#popup-selection').val();
-
-        if (testCaseIDs) {
-            // add the selected test cases
-            testCaseIDs.split(",").forEach(function(testCase) {
-                jsonRPC('TestPlan.add_case', [planId, testCase], function(result) {}, true)
-            })
-
-            window.location.reload(true);
-            // TODO: remove the page reload above and add the new case to the list
-        }
+    $('#btn-search-cases').click(function () {
+        return advancedSearchAndAddTestCases(testPlanId, 'TestPlan.add_case', $(this).attr('href'));
     });
-
-    return false;
-}
+});
 
 function addTestCaseToPlan(planId) {
     const caseName = $('#search-testcase')[0].value;
