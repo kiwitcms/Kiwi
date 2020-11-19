@@ -83,7 +83,7 @@
             <div class="col-md-3 col-lg-3">
                 <select class="form-control selectpicker" id="id_status" multiple>
                 {% for option in form.case_status.field.queryset %}
-                    <option value="{{ option.pk }}">{{ option.name }}</option>
+                    <option value="{{ option.pk }}" {% if form.case_status.value.0|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
                 {% endfor %}
                 </select>
             </div>
