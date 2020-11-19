@@ -6,8 +6,10 @@ from xmlrpc.client import ProtocolError
 
 from django.contrib.auth.models import Permission
 from django.utils.translation import gettext_lazy as _
+
 from tcms_api import xmlrpc
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
+from tcms.testcases.models import TestCaseStatus
 from tcms.testruns.models import TestExecution, TestRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (BuildFactory, ProductFactory, TagFactory,
@@ -23,6 +25,7 @@ class TestAddCase(APITestCase):
         self.plan = TestPlanFactory(author=self.api_user)
 
         self.test_case = TestCaseFactory()
+        self.test_case.case_status = TestCaseStatus.get_confirmed()
         self.test_case.save()  # generate history object
         self.plan.add_case(self.test_case)
 
@@ -110,6 +113,7 @@ class TestGetCases(APITestCase):
         super()._fixture_setup()
 
         self.test_case = TestCaseFactory()
+        self.test_case.case_status = TestCaseStatus.get_confirmed()
         self.test_case.save()
         self.test_run = TestRunFactory()
 
@@ -118,7 +122,7 @@ class TestGetCases(APITestCase):
         self.assertEqual(0, len(result))
 
     def test_get_cases(self):
-        self.rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
+        self.test_run.create_execution(case=self.test_case)
         result = self.rpc_client.TestRun.get_cases(self.test_run.pk)
         self.assertEqual(1, len(result))
 
