@@ -76,19 +76,20 @@ def update(build_id, values):
     """
     selected_build = Build.objects.get(pk=build_id)
 
-    def _update_value(obj, name, value):
-        setattr(obj, name, value)
-        update_fields.append(name)
-
     # todo: this needs to start using model forms
     update_fields = list()
     if values.get('product'):
-        _update_value(selected_build, 'product', pre_check_product(values))
+        _update_value(selected_build, 'product', pre_check_product(values), update_fields)
     if values.get('name'):
-        _update_value(selected_build, 'name', values['name'])
+        _update_value(selected_build, 'name', values['name'], update_fields)
     if values.get('is_active') is not None:
-        _update_value(selected_build, 'is_active', values['is_active'])
+        _update_value(selected_build, 'is_active', values['is_active'], update_fields)
 
     selected_build.save(update_fields=update_fields)
 
     return selected_build.serialize()
+
+
+def _update_value(obj, name, value, update_fields):
+    setattr(obj, name, value)
+    update_fields.append(name)
