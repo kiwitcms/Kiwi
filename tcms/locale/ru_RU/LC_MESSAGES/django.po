@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-05 22:43\n"
+"PO-Revision-Date: 2020-11-19 10:12\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1960,7 +1960,7 @@ msgstr "Требуется адрес электронной почты"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "или нажмите ниже, чтобы войти в аккаунт через"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
