@@ -76,10 +76,11 @@ def update(build_id, values):
     """
     selected_build = Build.objects.get(pk=build_id)
 
+    update_fields.append(name)
+
     def _update_value(obj, name, value):
         setattr(obj, name, value)
-        update_fields.append(name)
-
+        
     # todo: this needs to start using model forms
     update_fields = list()
     if values.get('product'):
