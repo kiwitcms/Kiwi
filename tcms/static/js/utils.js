@@ -268,7 +268,8 @@ function showPopup(href) {
 // objId - PK of the object we're adding to
 // rpcMethod - must accept [pk, case_id] - the method used to do the work
 // href - URL of the search page
-function advancedSearchAndAddTestCases(objId, rpcMethod, href) {
+// errorMessage - message to display in case of RPC errors
+function advancedSearchAndAddTestCases(objId, rpcMethod, href, errorMessage) {
     $('#popup-selection').val('');
 
     if (href.indexOf('?') === -1) {
@@ -276,17 +277,40 @@ function advancedSearchAndAddTestCases(objId, rpcMethod, href) {
     } else {
         href += '&allow_select=1';
     }
+
+    let rpcErrors = 0,
+        testCaseIDs = [];
     popupWindow = showPopup(href);
 
     $(popupWindow).on('beforeunload', function(){
-        const testCaseIDs = $('#popup-selection').val();
+        testCaseIDs = $('#popup-selection').val();
 
         if (testCaseIDs) {
+            // monkey-patch the alert() function
+            const oldAlert = window.alert;
+            alert = window.alert = function(message) {
+                rpcErrors += 1;
+            }
+
             // add the selected test cases
             testCaseIDs.split(",").forEach(function(testCase) {
                 jsonRPC(rpcMethod, [objId, testCase], function(result) {}, true)
             })
 
+            // revert monkey-patch
+            alert = window.alert = oldAlert;
+        }
+    });
+
+    $(popupWindow).on('unload', function(){
+        let message;
+
+        if (rpcErrors) {
+            alert(errorMessage);
+        }
+
+        // something was added so reload the page
+        if (testCaseIDs.length > rpcErrors) {
             window.location.reload(true);
             // TODO: figure out how to reload above and add the new value to the page
         }
