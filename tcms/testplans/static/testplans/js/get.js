@@ -45,7 +45,10 @@ $(document).ready(function() {
     collapseDocumentText();
     quickSearchAndAddTestCase(testPlanId, addTestCaseToPlan, autocomplete_cache);
     $('#btn-search-cases').click(function () {
-        return advancedSearchAndAddTestCases(testPlanId, 'TestPlan.add_case', $(this).attr('href'));
+        return advancedSearchAndAddTestCases(
+            testPlanId, 'TestPlan.add_case', $(this).attr('href'),
+            $('#test_plan_pk').data('trans-error-adding-cases')
+        );
     });
 });
 

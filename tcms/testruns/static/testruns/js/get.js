@@ -110,7 +110,10 @@ $(document).ready(() => {
     const confirmedPK = Number($('#test_run_pk').data('testcasestatus-confirmed-pk'));
     quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, {case_status: confirmedPK})
     $('#btn-search-cases').click(function () {
-        return advancedSearchAndAddTestCases(testRunId, 'TestRun.add_case', $(this).attr('href'));
+        return advancedSearchAndAddTestCases(
+            testRunId, 'TestRun.add_case', $(this).attr('href'),
+            $('#test_run_pk').data('trans-error-adding-cases')
+        );
     });
 })
 
