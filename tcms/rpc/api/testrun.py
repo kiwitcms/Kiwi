@@ -5,7 +5,7 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.rpc.api.forms.testrun import UpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCase, TestCaseStatus
 from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import TestExecution, TestRun
 
@@ -39,12 +39,16 @@ def add_case(run_id, case_id):
         :rtype: dict
         :raises DoesNotExist: if objects specified by the PKs don't exist
         :raises PermissionDenied: if missing *testruns.add_testexecution* permission
+        :raises RuntimeError: if test case status is not CONFIRMED
     """
     run = TestRun.objects.get(pk=run_id)
     case = TestCase.objects.get(pk=case_id)
 
     if run.case_run.filter(case=case).exists():
         return run.case_run.filter(case=case).first().serialize()
+
+    if case.case_status != TestCaseStatus.get_confirmed():
+        raise RuntimeError("TC-%d status is not confirmed" % case.pk)
 
     execution = run.create_execution(case=case)
     return execution.serialize()
