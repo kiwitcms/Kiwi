@@ -156,7 +156,7 @@ class TestPlanGetView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['statues'] = TestCaseStatus.objects.all()
+        context['statuses'] = TestCaseStatus.objects.all()
         context['priorities'] = Priority.objects.filter(is_active=True)
         context['comment_form'] = SimpleCommentForm()
         return context
