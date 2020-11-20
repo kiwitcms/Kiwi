@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from tcms.core.forms.fields import UserField
 from tcms.core.utils import string_to_list
 from tcms.management.models import Build, Product, Version
-from tcms.testcases.models import TestCase, TestCaseStatus
+from tcms.testcases.models import TestCase
 from .models import TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -44,7 +44,7 @@ class NewRunForm(forms.ModelForm):
             product_id=self.fields['plan'].queryset.first().product_id,
             is_active=True)
         self.fields['case'].queryset = TestCase.objects.filter(
-            case_status=TestCaseStatus.get_confirmed()).all()
+            case_status__is_confirmed=True).all()
 
 
 class SearchRunForm(forms.Form):

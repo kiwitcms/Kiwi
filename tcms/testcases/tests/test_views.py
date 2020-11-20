@@ -191,7 +191,7 @@ class TestNewCasePermission(PermissionsTestCase):
         super().setUpTestData()
         user_should_have_perm(cls.tester, 'testcases.view_testcase')
 
-        case_status_confirmed = TestCaseStatus.get_confirmed()
+        case_status_confirmed = TestCaseStatus.objects.filter(is_confirmed=True).first()
 
         case = TestCaseFactory(
             author=cls.tester,

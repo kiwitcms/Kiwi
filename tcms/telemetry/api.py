@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from modernrpc.auth.basic import http_basic_auth_login_required
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import TestCase, TestCaseStatus
+from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestExecution, TestExecutionStatus
 
 
@@ -45,20 +45,18 @@ def breakdown(query=None):
 
 
 def _get_field_count_map(test_cases, expression, field):
-    confirmed = TestCaseStatus.get_confirmed()
-
     query_set_confirmed = test_cases.filter(
-        case_status=confirmed
+        case_status__is_confirmed=True
     ).values(field).annotate(
         count=Count(expression)
     )
     query_set_not_confirmed = test_cases.exclude(
-        case_status=confirmed
+        case_status__is_confirmed=True
     ).values(field).annotate(
         count=Count(expression)
     )
     return {
-        confirmed.name: _map_query_set(query_set_confirmed, field),
+        str(_('CONFIRMED')): _map_query_set(query_set_confirmed, field),
         str(_('OTHER')): _map_query_set(query_set_not_confirmed, field)
     }
 
