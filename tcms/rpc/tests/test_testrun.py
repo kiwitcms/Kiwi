@@ -25,7 +25,7 @@ class TestAddCase(APITestCase):
         self.plan = TestPlanFactory(author=self.api_user)
 
         self.test_case = TestCaseFactory()
-        self.test_case.case_status = TestCaseStatus.get_confirmed()
+        self.test_case.case_status = TestCaseStatus.objects.filter(is_confirmed=True).first()
         self.test_case.save()  # generate history object
         self.plan.add_case(self.test_case)
 
@@ -113,7 +113,7 @@ class TestGetCases(APITestCase):
         super()._fixture_setup()
 
         self.test_case = TestCaseFactory()
-        self.test_case.case_status = TestCaseStatus.get_confirmed()
+        self.test_case.case_status = TestCaseStatus.objects.filter(is_confirmed=True).first()
         self.test_case.save()
         self.test_run = TestRunFactory()
 

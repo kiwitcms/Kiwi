@@ -107,8 +107,7 @@ $(document).ready(() => {
         testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
     })
 
-    const confirmedPK = Number($('#test_run_pk').data('testcasestatus-confirmed-pk'));
-    quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, {case_status: confirmedPK})
+    quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, {case_status__is_confirmed: true})
     $('#btn-search-cases').click(function () {
         return advancedSearchAndAddTestCases(
             testRunId, 'TestRun.add_case', $(this).attr('href'),

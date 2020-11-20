@@ -14,7 +14,6 @@
     <h1 class="col-md-12" style="margin-top: 0">
         <span id="test_run_pk"
             data-pk="{{ object.pk }}"
-            data-testcasestatus-confirmed-pk="{{ testcasestatus_confirmed.pk }}"
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
             data-perm-add-comment="{{ perms.django_comments.add_comment }}"
             data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
@@ -234,7 +233,8 @@
                                         <span class="fa fa-plus"></span>
                                     </button>
 
-                                    <button class="btn btn-default" href="{% url 'testcases-search' %}?product={{ object.plan.product_id }}&case_status={{ testcasestatus_confirmed.pk }}"
+                                    <button class="btn btn-default"
+                                        href="{% url 'testcases-search' %}?product={{ object.plan.product_id }}{% for status in confirmed_statuses %}&case_status={{ status.pk }}{% endfor %}"
                                         id="btn-search-cases" title="{% trans 'Advanced search' %}">
                                         <span class="fa fa-search"></span>
                                     </button>

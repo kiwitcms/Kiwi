@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import ObjectDoesNotExist
 from django.db.models import Q
 from django.urls import reverse
-from django.utils.translation import override
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
@@ -17,27 +17,14 @@ from tcms.testcases.fields import MultipleEmailField
 class TestCaseStatus(TCMSActionModel):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
+    is_confirmed = models.BooleanField(db_index=True, default=False)
 
     class Meta:
-        verbose_name = "Test case status"
-        verbose_name_plural = "Test case statuses"
+        verbose_name = _('Test case status')
+        verbose_name_plural = _('Test case statuses')
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def get_proposed(cls):
-        with override('en'):
-            return cls.objects.get(name='PROPOSED')
-
-    @classmethod
-    def get_confirmed(cls):
-        with override('en'):
-            return cls.objects.get(name='CONFIRMED')
-
-    def is_confirmed(self):
-        with override('en'):
-            return self.name == 'CONFIRMED'
 
 
 # register model for DB translations
@@ -234,7 +221,7 @@ class TestCase(TCMSActionModel):
             extra_link=self.extra_link,
             summary=self.summary,
             requirement=self.requirement,
-            case_status=TestCaseStatus.get_proposed(),
+            case_status=TestCaseStatus.objects.filter(is_confirmed=False).first(),
             category=self.category,
             priority=self.priority,
             notes=self.notes,
