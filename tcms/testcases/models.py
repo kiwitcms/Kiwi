@@ -32,13 +32,8 @@ class TestCaseStatus(TCMSActionModel):
 
     @classmethod
     def get_confirmed(cls):
-        # todo: refactor this method as part of
-        # https://github.com/kiwitcms/Kiwi/issues/1932
-        for obj in cls.objects.all():
-            if obj.is_confirmed():
-                return obj
-
-        return None
+        with override('en'):
+            return cls.objects.get(name='CONFIRMED')
 
     def is_confirmed(self):
         with override('en'):
