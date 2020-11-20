@@ -75,8 +75,7 @@ def update(build_id, values):
         :raises: PermissionDenied if missing *management.change_build* permission
     """
     selected_build = Build.objects.get(pk=build_id)
-    
-    
+
     # todo: this needs to start using model forms
     update_fields = list()
     if values.get('product'):
@@ -85,12 +84,10 @@ def update(build_id, values):
         _update_value(selected_build, 'name', values['name'])
     if values.get('is_active') is not None:
         _update_value(selected_build, 'is_active', values['is_active'])
-
     selected_build.save(update_fields=update_fields)
-
     return selected_build.serialize()
 
+
 def _update_value(obj, name, value):
-        setattr(obj, name, value)
-        update_fields.append(name)
-        
+    setattr(obj, name, value)
+    update_fields.append(name)
