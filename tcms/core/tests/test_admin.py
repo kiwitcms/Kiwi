@@ -49,7 +49,7 @@ class TestAdminView(LoggedInTestCase):
         self.assertContains(response, 'Bug trackers')
         self.assertContains(response, 'Test case categories')
 
-        self.assertNotContains(response, 'Test case status')
+        self.assertContains(response, _('Test case statuses'))
         self.assertContains(response, 'Testcases')
         self.assertContains(response, 'Test cases')
 

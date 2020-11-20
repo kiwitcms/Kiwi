@@ -89,7 +89,7 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
         cls.post_data['manager'] = cls.tester.email
         cls.post_data['default_tester'] = cls.tester.email
 
-        case_status_confirmed = TestCaseStatus.get_confirmed()
+        case_status_confirmed = TestCaseStatus.objects.filter(is_confirmed=True).first()
 
         cls.case_1 = factories.TestCaseFactory(
             author=cls.tester,
