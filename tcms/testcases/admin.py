@@ -2,14 +2,46 @@
 
 from django import forms
 from django.conf import settings
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.forms.widgets import Select
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
-from tcms.testcases.models import BugSystem, Category, TestCase
+from tcms.testcases.models import BugSystem, Category, TestCase, TestCaseStatus
+
+
+class TestCaseStatusAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'is_confirmed')
+    ordering = ['-is_confirmed', 'id']
+    fieldsets = [
+        ('', {
+            'fields': ('name', 'description', 'is_confirmed'),
+            'description': "<h1>%s</h1>" %
+                           _("""For more information about customizing test case statuses see
+        <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses">
+        the documentation</a>!"""),
+        }),
+    ]
+
+    @admin.options.csrf_protect_m
+    def delete_view(self, request, object_id, extra_context=None):
+        obj = self.model.objects.get(pk=object_id)
+
+        if not self.model.objects.filter(
+                is_confirmed=obj.is_confirmed
+                ).exclude(pk=object_id).exists():
+            messages.add_message(
+                request,
+                messages.ERROR,
+                _('1 confirmed & 1 uncomfirmed status required!'),
+            )
+
+            return HttpResponseRedirect(reverse('admin:testcases_testcasestatus_changelist'))
+
+        return super().delete_view(request, object_id, extra_context)
 
 
 class TestCaseAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
@@ -100,3 +132,4 @@ Configure external bug trackers</a> section before editting the values below!</h
 admin.site.register(BugSystem, BugSystemAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(TestCase, TestCaseAdmin)
+admin.site.register(TestCaseStatus, TestCaseStatusAdmin)

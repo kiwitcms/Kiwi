@@ -159,7 +159,6 @@ class TestPlanGetView(DetailView):
         context['statues'] = TestCaseStatus.objects.all()
         context['priorities'] = Priority.objects.filter(is_active=True)
         context['comment_form'] = SimpleCommentForm()
-        context['testcasestatus_confirmed'] = TestCaseStatus.get_confirmed()
         return context
 
 

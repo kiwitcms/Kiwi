@@ -4,13 +4,11 @@ var expandedTestCaseIds = [],
 const allTestCases = {},
       autocomplete_cache = {};
 
-let testCaseStatusConfirmedPK = null;
+let confirmedStatuses = [];
 
 
 $(document).ready(function() {
     const testPlanDataElement = $('#test_plan_pk');
-    testCaseStatusConfirmedPK = Number(testPlanDataElement.data('testcasestatus-confirmed-pk'));
-    
     const testPlanId = testPlanDataElement.data('testplan-pk');
 
     const permissions = {
@@ -25,19 +23,26 @@ $(document).ready(function() {
     const perm_remove_tag = testPlanDataElement.data('perm-remove-tag') === 'True';
     tagsCard('TestPlan', testPlanId, {plan: testPlanId}, perm_remove_tag);
 
-    jsonRPC('TestCase.sortkeys', {'plan': testPlanId}, function(sortkeys) {
-        jsonRPC('TestCase.filter', {'plan': testPlanId}, function(data) {
-            for (var i = 0; i < data.length; i++) {
-                var testCase = data[i];
+    jsonRPC('TestCaseStatus.filter', {is_confirmed: true}, function(statuses) {
+        // save for later use
+        for (let i = 0; i < statuses.length; i++) {
+            confirmedStatuses.push(statuses[i].id);
+        }
 
-                testCase.sortkey = sortkeys[testCase.id];
-                allTestCases[testCase.id] = testCase;
-            }
-            sortTestCases(Object.values(allTestCases), testPlanId, permissions, 'sortkey');
+        jsonRPC('TestCase.sortkeys', {'plan': testPlanId}, function(sortkeys) {
+            jsonRPC('TestCase.filter', {'plan': testPlanId}, function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    var testCase = data[i];
 
-            // drag & reorder needs the initial order of test cases and
-            // they may not be fully loaded when sortable() is initialized!
-            toolbarEvents(testPlanId, permissions);
+                    testCase.sortkey = sortkeys[testCase.id];
+                    allTestCases[testCase.id] = testCase;
+                }
+                sortTestCases(Object.values(allTestCases), testPlanId, permissions, 'sortkey');
+
+                // drag & reorder needs the initial order of test cases and
+                // they may not be fully loaded when sortable() is initialized!
+                toolbarEvents(testPlanId, permissions);
+            });
         });
     });
 
@@ -622,7 +627,7 @@ function toolbarEvents(testPlanId, permissions) {
 }
 
 function isTestCaseConfirmed(status) {
-    return Number(status) === testCaseStatusConfirmedPK;
+    return confirmedStatuses.indexOf(Number(status)) > -1 ;
 }
 
 // on dropdown change update the label of the button and set new selected list item

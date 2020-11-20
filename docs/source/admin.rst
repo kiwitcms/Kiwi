@@ -439,6 +439,36 @@ information may also be conveyed with tags, properties or in other way
 so it is up to you to decide how you want to organize your testing workflow!
 
 
+Test Case statuses
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.9
+
+Kiwi TCMS installs several pre-configured statuses by default. Starting with
+v8.9 you can fully customize them!
+
+  .. important::
+
+      Confirmed statuses indicate that a test case is ready for execution
+      and can be added to a test run. Kiwi TCMS doesn't implement any
+      additional behavior wrt status names.
+
+  .. warning::
+
+      Make sure to always have at least 1 confirmed and 1 unconfirmed status,
+      e.g. ``CONFIRMED``, ``NEEDS_UPDATE``. If you delete all statuses within
+      a certain group Kiwi TCMS will crash!
+
+  .. note::
+
+      For statuses shipped with Kiwi TCMS the names may appear translated
+      into local language! If you change these default names they will
+      appear untranslated!
+
+      Translation of non-default names is currently not straight forward,
+      see https://github.com/ecometrica/django-vinaigrette/issues/45.
+
+
 Test Execution statuses
 ~~~~~~~~~~~~~~~~~~~~~~~
 
