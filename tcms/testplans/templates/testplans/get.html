@@ -149,7 +149,7 @@
                                                     </a>
 
                                                     <ul class="dropdown-menu dropdown-menu-right js-toolbar-status">
-                                                    {% for status in statues %}
+                                                    {% for status in statuses %}
                                                         <li><a data-id="{{ status.id }}" href="#">{{ status.name }}</a></li>
                                                     {% endfor %}
                                                     </ul>
@@ -323,7 +323,7 @@
                             <li class="dropdown-submenu dropdown-menu-left">
                                 <a tabindex="-1" href="#">{% trans 'Status' %}</a>
                                 <ul class="dropdown-menu js-test-case-menu-status">
-                                    {% for status in statues %}
+                                    {% for status in statuses %}
                                         <li><a data-id="{{ status.id }}" href="#">{{ status.name }}</a></li>
                                     {% endfor %}
                                 </ul>
