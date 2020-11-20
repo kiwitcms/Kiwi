@@ -23,6 +23,7 @@ $(document).ready(() => {
         if (state) {
             jsonRPC('TestRun.update', [testRunId, { 'stop_date': null }], () => {
                 $('.stop-date').html('-')
+                $('#test_run_pk').parent('h1').css({'text-decoration': 'none'})
             })
         } else {
             const timeZone = $('#clock').data('time-zone')
@@ -31,6 +32,7 @@ $(document).ready(() => {
             jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], testRun => {
                 const stopDate = moment(testRun.stop_date).format("DD MMM YYYY, HH:mm a")
                 $('.stop-date').html(stopDate)
+                $('#test_run_pk').parent('h1').css({'text-decoration': 'line-through'})
             })
         }
     })
