@@ -108,6 +108,9 @@
                             <label>{% trans "TOTAL" %}</label> - <a href="{% url 'testruns-get' object.pk %}" class="total-execution-count"></a>
                         </div>
                     </div>
+                    <div style="text-align: left">
+                        {{ object.notes|markdown2html }}
+                    </div>
                 </div>
             </div>
         </div>
