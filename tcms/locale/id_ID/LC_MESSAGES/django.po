@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-05 22:43\n"
+"PO-Revision-Date: 2020-11-21 01:39\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -995,7 +995,7 @@ msgstr "Panduan terjemahan"
 
 #: tcms/templates/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Pilih"
 
 #: tcms/templates/pagination.html:13
 msgid "First page"
@@ -1552,7 +1552,7 @@ msgstr "Atur sumber TP sebagai induk TP yang baru"
 
 #: tcms/testplans/templates/testplans/get.html:25
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "Masukkan username, email atau user ID:"
 
 #: tcms/testplans/templates/testplans/get.html:26
 msgid "No rows selected! Please select at least one!"
@@ -1560,11 +1560,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Are you sure?"
-msgstr ""
+msgstr "Anda yakin?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "Tidak dapat membuat TestRun dengan uji kasus yang belum terkonfirmasi"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1576,7 +1576,7 @@ msgstr "Tipe Rencana"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Uji Kasus"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1586,7 +1586,7 @@ msgstr "UjiOperasi Baru"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "Urutkan kunci"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1594,11 +1594,11 @@ msgstr "Atur ulang kasus"
 
 #: tcms/testplans/templates/testplans/get.html:253
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Cari dan tambah uji kasus"
 
 #: tcms/testplans/templates/testplans/get.html:262
 msgid "Advanced search"
-msgstr ""
+msgstr "Pencarian lanjut"
 
 #: tcms/testplans/templates/testplans/get.html:405
 msgid "No attachments"
@@ -1670,7 +1670,7 @@ msgstr "Untuk informasi lebih lanjut mengenai kostumisasi status uji eksekusi ku
 
 #: tcms/testruns/admin.py:86
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "Status 1 negatif, 1 netral & 1 positif dibutuhkan!"
 
 #: tcms/testruns/models.py:236
 msgid "Test execution statuses"
@@ -1792,7 +1792,7 @@ msgstr "DICABUT"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr ""
+msgstr "Untuk konfigurasi tambahan silakan lihat <a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1800,7 +1800,7 @@ msgstr "Intergrasi Github"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Selaraskan ulang"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -1814,12 +1814,12 @@ msgstr "GitHub App Tidak Diterkonfigurasi %d"
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s sudah diimpor dari Github"
 
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s sudah ada"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -1843,11 +1843,11 @@ msgstr "Sunting Github App <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "Tidak dapat menemukan instalasi GitHub App untuk tenant \"%s\""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Beberapa instalasi GitHub App terdeteksi!"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1901,15 +1901,15 @@ msgstr "Anda tidak memiliki satupun Tenant"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Subscribe"
-msgstr ""
+msgstr "Langganan"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:115
 msgid "directly with Kiwi TCMS"
-msgstr ""
+msgstr "langsung dengan Kiwi TCMS"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:116
 msgid "via GitHub Marketplace"
-msgstr ""
+msgstr "via GitHub Marketplace"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:132
 msgid "Transaction history"
