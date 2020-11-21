@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-05 22:43\n"
+"PO-Revision-Date: 2020-11-21 03:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -996,7 +996,7 @@ msgstr "翻译指南"
 
 #: tcms/templates/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "选择"
 
 #: tcms/templates/pagination.html:13
 msgid "First page"
@@ -1553,7 +1553,7 @@ msgstr "将源TP设置为新TP的父目录"
 
 #: tcms/testplans/templates/testplans/get.html:25
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "输入用户名、电子邮件或用户ID："
 
 #: tcms/testplans/templates/testplans/get.html:26
 msgid "No rows selected! Please select at least one!"
