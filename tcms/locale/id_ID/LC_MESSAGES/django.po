@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 22:19+0000\n"
-"PO-Revision-Date: 2020-11-21 01:39\n"
+"PO-Revision-Date: 2020-11-21 01:47\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -236,7 +236,7 @@ msgstr "Sunting"
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:303
 #: tcms/testplans/views.py:146
 msgid "Object permissions"
-msgstr ""
+msgstr "Izin Objek"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -1556,7 +1556,7 @@ msgstr "Masukkan username, email atau user ID:"
 
 #: tcms/testplans/templates/testplans/get.html:26
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "Tidak ada baris terpilih! Silakan pilih setidaknya satu!"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Are you sure?"
