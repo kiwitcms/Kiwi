@@ -630,22 +630,6 @@ function isTestCaseConfirmed(status) {
     return confirmedStatuses.indexOf(Number(status)) > -1 ;
 }
 
-// on dropdown change update the label of the button and set new selected list item
-function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
-    $(`${buttonSelector}`)[0].innerHTML = target.innerText + '<span class="caret"></span>';
-
-    //remove selected class
-    $(`${dropDownSelector} li`).each(function(index, el) {
-        el.className = '';
-    });
-
-    // target is a tag
-    target.parentElement.className = 'selected';
-
-    // clear the text & the current filter
-    $('#toolbar-filter').val('').keyup().focus();
-}
-
 function sortTestCases(testCases, testPlanId, permissions, defaultSortBy = undefined) {
     let sortBy = defaultSortBy || $('.js-toolbar-sort-options .selected')[0].dataset.filterType,
         sortOrder = $('.js-toolbar-sorting-order > span:not(.hidden)').data('order');
