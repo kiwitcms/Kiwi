@@ -118,7 +118,12 @@ $(document).ready(() => {
     });
 
     $('.js-toolbar-filter-options li').click(function(ev) {
-        changeDropdownSelectedItem('.js-toolbar-filter-options', '#input-filter-button' , ev.target);
+        return changeDropdownSelectedItem(
+            '.js-toolbar-filter-options',
+            '#input-filter-button',
+            ev.target,
+            $('#toolbar-filter')
+        )
     });
 
     $('#toolbar-filter').on("keyup", function() {
