@@ -21,6 +21,7 @@
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
             data-trans-error-adding-cases="{% trans 'Unconfirmed test cases were not added' %}"
+            data-trans-bool-value-required="{% trans 'Type 0 or 1' %}"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
@@ -210,20 +211,32 @@
                                 <div class="form-group" style="margin-right:15px; padding-right: 8px;">
                                     <input type="checkbox" class="bulk-select-checkbox">
                                 </div>
+
                                 <div class="form-group toolbar-pf-filter">
-                                    <label class="sr-only" for="filter">Name</label>
+                                    <label class="sr-only" for="filter">{% trans 'Summary' %}</label>
                                     <div class="input-group">
                                         <div class="input-group-btn">
-                                            <button type="button" class="btn btn-default dropdown-toggle" id="input-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Name <span class="caret"></span></button>
-                                            <ul class="dropdown-menu">
-                                                <li class="selected"><a href="#">{% trans "Name" %}</a></li>
-                                                <li><a href="#">{% trans "Priority" %}</a></li>
-                                                <li><a href="#">{% trans "Category" %}</a></li>
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    id="input-filter-button"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                {% trans 'Summary' %}<span
+                                                    class="caret"></span></button>
+                                            <ul class="dropdown-menu js-toolbar-filter-options">
+                                                <li data-filter-type="case" class="selected"><a href="#">{% trans 'Summary' %}</a></li>
+                                                <li data-filter-type="is_automated"><a href="#">{% trans 'Automated' %}</a></li>
+                                                <li data-filter-type="priority"><a href="#">{% trans 'Priority' %}</a></li>
+                                                <li data-filter-type="category"><a href="#">{% trans 'Category' %}</a></li>
+                                                <li data-filter-type="assignee"><a href="#">{% trans 'Assignee' %}</a></li>
+                                                <li data-filter-type="tested_by"><a href="#">{% trans 'Tested by' %}</a></li>
+                                                <li data-filter-type="status"><a href="#">{% trans 'Status' %}</a></li>
                                             </ul>
-                                        </div><!-- /input-group-btn -->
-                                        <input type="text" class="form-control" id="filter" placeholder='{% trans "Filter By Name..." %}'>
+                                        </div><!-- /btn-group -->
+                                        <input type="text" class="form-control" id="toolbar-filter"
+                                               placeholder="{% trans 'Search' %}">
                                     </div><!-- /input-group -->
                                 </div>
+
                             {% if perms.testruns.add_testexecution %}
                                 <div class="form-group">
                                     <input id="search-testcase"

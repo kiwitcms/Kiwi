@@ -116,7 +116,59 @@ $(document).ready(() => {
             $('#test_run_pk').data('trans-error-adding-cases')
         );
     });
+
+    $('.js-toolbar-filter-options li').click(function(ev) {
+        changeDropdownSelectedItem('.js-toolbar-filter-options', '#input-filter-button' , ev.target);
+    });
+
+    $('#toolbar-filter').on("keyup", function() {
+        let filterValue = $(this).val().toLowerCase();
+        let filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType;
+
+        filterTestExecutionsByProperty(
+            testRunId,
+            Object.values(allExecutions),
+            filterBy,
+            filterValue
+        );
+    });
 })
+
+function filterTestExecutionsByProperty(runId, executions, filterBy, filterValue) {
+    // no input => show all rows
+    if (filterValue.trim().length === 0) {
+        $('.test-execution-element').show();
+        return;
+    }
+
+    if (filterBy === 'is_automated' && filterValue !== '0' && filterValue !== '1') {
+        alert($('#test_run_pk').data('trans-bool-value-required'))
+        return
+    }
+
+    $('.test-execution-element').hide();
+
+    if (filterBy === 'is_automated' || filterBy === 'priority' || filterBy === 'category') {
+        let query = {case_run__run: runId}
+        if ( filterBy === 'is_automated' ) {
+            query[filterBy] = filterValue
+        } else if ( filterBy === 'priority' ) {
+            query['priority__value__icontains'] = filterValue
+        } else if ( filterBy === 'category' ) {
+            query['category__name__icontains'] = filterValue
+        }
+
+        jsonRPC('TestCase.filter', query, function(filtered) {
+            // hide again if a previous async request showed something else
+            $('.test-execution-element').hide();
+            filtered.forEach(tc => $(`.test-execution-case-${tc.id}`).show());
+        })
+    } else {
+        executions.filter(function(te){
+            return (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
+        }).forEach(te => $(`.test-execution-${te.id}`).show());
+    }
+}
 
 function addTestCaseToRun(runId) {
     const caseName = $('#search-testcase')[0].value;
@@ -428,6 +480,8 @@ function renderTestExecutionRow(testExecution) {
     const testExecutionStatus = allExecutionStatuses[testExecution.status_id]
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
+    // todo: will not be needed when status names come translated from backend
+    allExecutions[testExecution.id].status = testExecutionStatus.name
 
     template.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
     template.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
