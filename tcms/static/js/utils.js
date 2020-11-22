@@ -227,30 +227,6 @@ function renderCommentsForObject(objId, getMethod, deleteMethod, canDelete, pare
     })
 }
 
-function filterTestCasesByProperty(planId, testCases, filterBy, filterValue) {
-    // no input => show all rows
-    if (filterValue.trim().length === 0) {
-        $('.js-testcase-row').show();
-        return;
-    }
-
-    $('.js-testcase-row').hide();
-    if (filterBy === 'component' || filterBy === 'tag') {
-        let query = {plan: planId}
-        query[`${filterBy}__name__icontains`] = filterValue
-
-        jsonRPC('TestCase.filter', query, function(filtered) {
-            // hide again if a previous async request showed something else
-            $('.js-testcase-row').hide();
-            filtered.forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show());
-        })
-    } else {
-        testCases.filter(function(tc){
-            return (tc[filterBy] && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
-        }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show());
-    }
-}
-
 function showPopup(href) {
     if (href.indexOf('?') === -1) {
         href += '?nonav=1';
