@@ -408,13 +408,17 @@ function getExpandArea(testExecution) {
 
 function renderAdditionalInformation(testRunId, execution) {
     let linksQuery = { execution__run: testRunId },
-        casesQuery = { case_run__run: testRunId }
+        casesQuery = { case_run__run: testRunId },
+        componentQ = { cases__case_run__run: testRunId },
+        tagsQ = { case__case_run__run: testRunId }
 
     // if called from reloadRowFor(execution) then filter only for
     // that one row
     if (execution) {
         linksQuery = { execution: execution.id }
         casesQuery = { case_run: execution.id }
+        componentQ = { cases__case_run: execution.id }
+        tagsQ = { case__case_run: execution.id }
     }
 
     // update bug icons for all executions
@@ -431,18 +435,57 @@ function renderAdditionalInformation(testRunId, execution) {
     })
 
     // update priority, category & automation status for all executions
-    jsonRPC('TestCase.filter', casesQuery, testCases => {
-        testCases.forEach(testCase => {
-            const row = $(`.test-execution-case-${testCase.id}`)
+    // also tags & components via nested API calls
+    jsonRPC('Component.filter', componentQ, componentData => {
+        const components = {}
+        for (let i = 0; i < componentData.length; i++) {
+            components[componentData[i].id] = componentData[i]
+        }
 
-            row.find('.test-execution-priority').html(testCase.priority)
-            row.find('.test-execution-category').html(testCase.category)
+        jsonRPC('Tag.filter', tagsQ, tagData => {
+            const tags = {}
+            for (let i = 0; i < tagData.length; i++) {
+                tags[tagData[i].id] = tagData[i]
+            }
 
-            const isAutomatedElement = row.find('.test-execution-automated')
-            const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
-            const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
-            isAutomatedElement.addClass(isAutomatedIcon)
-            isAutomatedElement.attr('title', isAutomatedAttr)
+            jsonRPC('TestCase.filter', casesQuery, testCases => {
+                testCases.forEach(testCase => {
+                    const row = $(`.test-execution-case-${testCase.id}`)
+
+                    row.find('.test-execution-priority').html(testCase.priority)
+                    row.find('.test-execution-category').html(testCase.category)
+
+                    const isAutomatedElement = row.find('.test-execution-automated')
+                    const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
+                    const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
+                    isAutomatedElement.addClass(isAutomatedIcon)
+                    isAutomatedElement.attr('title', isAutomatedAttr)
+
+                    // render tags and components if available
+                    testCase.tagNames = []
+                    for (let i = 0; i < testCase.tag.length; i++) {
+                        testCase.tagNames.push(tags[testCase.tag[i]].name)
+                    }
+                    if (testCase.tagNames.length) {
+                        row.find('.js-row-tags').toggleClass('hidden')
+                        row.find('.js-row-tags').append(testCase.tagNames.join(', '))
+                    }
+
+                    testCase.componentNames = []
+                    for (let i = 0; i < testCase.component.length; i++) {
+                        testCase.componentNames.push(components[testCase.component[i]].name)
+                    }
+                    if (testCase.componentNames.length) {
+                        row.find('.js-row-components').toggleClass('hidden')
+                        row.find('.js-row-components').append(testCase.componentNames.join(', '))
+                    }
+
+                    // update internal data structure
+                    const teID = row.find('.test-execution-checkbox').data('test-execution-id')
+                    allExecutions[teID].tags = testCase.tagNames;
+                    allExecutions[teID].components = testCase.componentNames;
+                })
+            })
         })
     })
 }
