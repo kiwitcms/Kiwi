@@ -387,7 +387,7 @@ function quickSearchAndAddTestCase(objId, pageCallback, cache, initialQuery = {}
 }
 
 // on dropdown change update the label of the button and set new selected list item
-function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
+function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target, focusTarget) {
     $(`${buttonSelector}`)[0].innerHTML = target.innerText + '<span class="caret"></span>';
 
     //remove selected class
@@ -398,6 +398,14 @@ function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target) {
     // target is a tag
     target.parentElement.className = 'selected';
 
+    // close the parent menu
+    $(target).parents('.open').toggleClass('open')
+
     // clear the text & the current filter
-    $('#toolbar-filter').val('').keyup().focus();
+    if (focusTarget) {
+        focusTarget.val('').keyup().focus();
+    }
+
+    // don't follow links
+    return false;
 }

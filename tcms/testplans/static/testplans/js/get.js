@@ -431,7 +431,12 @@ function toolbarEvents(testPlanId, permissions) {
     });
 
     $('.js-toolbar-filter-options li').click(function(ev) {
-        changeDropdownSelectedItem('.js-toolbar-filter-options', '#input-filter-button' , ev.target);
+        return changeDropdownSelectedItem(
+            '.js-toolbar-filter-options',
+            '#input-filter-button',
+            ev.target,
+            $('#toolbar-filter')
+        );
     });
 
     $('#toolbar-filter').on("keyup", function() {
@@ -444,13 +449,13 @@ function toolbarEvents(testPlanId, permissions) {
             filterBy,
             filterValue
         );
-
     });
 
     $('.js-toolbar-sort-options li').click(function(ev) {
         changeDropdownSelectedItem('.js-toolbar-sort-options', '#sort-button', ev.target);
 
         sortTestCases(Object.values(allTestCases), testPlanId, permissions);
+        return false;
     });
 
     //handle asc desc icon
