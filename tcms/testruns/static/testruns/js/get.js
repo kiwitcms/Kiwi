@@ -410,7 +410,8 @@ function renderAdditionalInformation(testRunId, execution) {
     let linksQuery = { execution__run: testRunId },
         casesQuery = { case_run__run: testRunId },
         componentQ = { cases__case_run__run: testRunId },
-        tagsQ = { case__case_run__run: testRunId }
+        tagsQ = { case__case_run__run: testRunId },
+        planId = Number($('#test_run_pk').data('plan-pk'))
 
     // if called from reloadRowFor(execution) then filter only for
     // that one row
@@ -460,6 +461,11 @@ function renderAdditionalInformation(testRunId, execution) {
                     const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
                     isAutomatedElement.addClass(isAutomatedIcon)
                     isAutomatedElement.attr('title', isAutomatedAttr)
+
+                    // test case isn't part of the parent test plan
+                    if (testCase.plan.indexOf(planId) === -1) {
+                        row.find('.js-tc-not-in-tp').toggleClass('hidden')
+                    }
 
                     // render tags and components if available
                     testCase.tagNames = []

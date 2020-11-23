@@ -14,6 +14,7 @@
     <h1 class="col-md-12" style="margin-top: 0; {% if object.stop_date %}text-decoration: line-through{% endif %}">
         <span id="test_run_pk"
             data-pk="{{ object.pk }}"
+            data-plan-pk="{{ object.plan_id }}"
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
             data-perm-add-comment="{{ perms.django_comments.add_comment }}"
             data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
@@ -295,6 +296,7 @@
                                         <div class="list-view-pf-body">
                                             <div class="list-view-pf-description" style="flex: 1 0 30%;">
                                                 <div class="list-group-item-text">
+                                                    <span class="fa fa-bolt js-tc-not-in-tp hidden" title="{% trans 'Test case is not part of parent test plan' %}"></span>
                                                     <span class="test-execution-info"></span>
                                                     <a class="test-execution-info-link"></a>
 
