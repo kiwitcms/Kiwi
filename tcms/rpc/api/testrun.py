@@ -50,7 +50,13 @@ def add_case(run_id, case_id):
     if not case.case_status.is_confirmed:
         raise RuntimeError("TC-%d status is not confirmed" % case.pk)
 
-    execution = run.create_execution(case=case)
+    # always add new TEs at the end of TR
+    sortkey = 10
+    last_te = run.case_run.order_by('sortkey').last()
+    if last_te:  # in case there are no other TEs
+        sortkey += last_te.sortkey
+
+    execution = run.create_execution(case=case, sortkey=sortkey)
     return execution.serialize()
 
 
