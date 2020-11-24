@@ -577,6 +577,10 @@ function reloadRowFor(execution) {
     const testExecutionRow = $(`.test-execution-${execution.id}`)
     animate(testExecutionRow, () => {
         testExecutionRow.replaceWith(renderTestExecutionRow(execution))
+        // note: this is here b/c animate() is async and we risk race conditions
+        // b/c we use global variables for state. The drawback is that progress
+        // will be updated even if statuses aren't changed !!!
+        drawPercentBar(Object.values(allExecutions))
         renderAdditionalInformation(execution.run_id, execution)
 
         bindEvents()
