@@ -284,6 +284,10 @@ function renderCountPerStatusList(statusCount) {
 }
 
 function renderTestExecutions(testExecutions) {
+    // sort executions by sortkey
+    testExecutions.sort(function(te1, te2) {
+        return te1.sortkey - te2.sortkey;
+    });
     const container = $('#test-executions-container')
 
     testExecutions.forEach(testExecution => {
