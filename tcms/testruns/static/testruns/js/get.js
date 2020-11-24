@@ -96,7 +96,7 @@ $(document).ready(() => {
         }
 
         jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
-            drawPercentBar(testExecutions, executionStatuses)
+            drawPercentBar(testExecutions)
             renderTestExecutions(testExecutions)
             renderAdditionalInformation(testRunId)
         })
@@ -223,15 +223,15 @@ function selectedCheckboxes() {
     }
 }
 
-function drawPercentBar(testExecutions, executionStatuses) {
+function drawPercentBar(testExecutions) {
     let positiveCount = 0
     let negativeCount = 0
     let allCount = testExecutions.length
     let statusCount = {}
-    executionStatuses.forEach(s => statusCount[s.name] = { count: 0, id: s.id })
+    Object.values(allExecutionStatuses).forEach(s => statusCount[s.name] = { count: 0, id: s.id })
 
     testExecutions.forEach(testExecution => {
-        const executionStatus = executionStatuses.find(s => s.id === testExecution.status_id)
+        const executionStatus = allExecutionStatuses[testExecution.status_id]
 
         if (executionStatus.weight > 0) {
             positiveCount++
