@@ -91,4 +91,3 @@ def update(build_id, values):
 def _update_value(obj, name, value):
     setattr(obj, name, value)
     update_fields.append(name)
-
