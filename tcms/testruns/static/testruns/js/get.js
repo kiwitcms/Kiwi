@@ -367,32 +367,37 @@ function getExpandArea(testExecution) {
             })
         })
 
-    const textArea = container.find('textarea')[0]
-    const fileUpload = container.find('input[type="file"]')
-    const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
     const commentsRow = container.find('.comments')
+    const simpleMDEinitialized = container.find('.comment-form').data('simple-mde-initialized')
+    if (!simpleMDEinitialized) {
+        const textArea = container.find('textarea')[0]
+        const fileUpload = container.find('input[type="file"]')
+        const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
+        container.find('.comment-form').data('simple-mde-initialized', true)
 
-    container.find('.post-comment').click(() => {
-        const input = editor.value().trim()
+        container.find('.post-comment').click(() => {
+            const input = editor.value().trim()
 
-        if (input) {
-            jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
-                editor.value('')
+            if (input) {
+                jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
+                    editor.value('')
 
-                commentsRow.append(renderCommentHTML(
-                    1 + template.find('.js-comment-container').length,
-                    comment,
-                    $('template#comment-template')[0],
-                    parentNode => {
-                        bindDeleteCommentButton(
-                            testExecution.id,
-                            'TestExecution.remove_comment',
-                            permissions.removeComment,
-                            parentNode)
-                    }))
-            })
-        }
-    })
+                    commentsRow.append(renderCommentHTML(
+                        1 + container.find('.js-comment-container').length,
+                        comment,
+                        $('template#comment-template')[0],
+                        parentNode => {
+                            bindDeleteCommentButton(
+                                testExecution.id,
+                                'TestExecution.remove_comment',
+                                permissions.removeComment,
+                                parentNode)
+                        }))
+                })
+            }
+        })
+    }
+
 
     renderCommentsForObject(
         testExecution.id,
