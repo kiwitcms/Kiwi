@@ -23,7 +23,7 @@ $(document).ready(() => {
         if (state) {
             jsonRPC('TestRun.update', [testRunId, { 'stop_date': null }], () => {
                 $('.stop-date').html('-')
-                $('#test_run_pk').parent('h1').css({'text-decoration': 'none'})
+                $('#test_run_pk').parent('h1').css({ 'text-decoration': 'none' })
             })
         } else {
             const timeZone = $('#clock').data('time-zone')
@@ -32,7 +32,7 @@ $(document).ready(() => {
             jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], testRun => {
                 const stopDate = moment(testRun.stop_date).format("DD MMM YYYY, HH:mm a")
                 $('.stop-date').html(stopDate)
-                $('#test_run_pk').parent('h1').css({'text-decoration': 'line-through'})
+                $('#test_run_pk').parent('h1').css({ 'text-decoration': 'line-through' })
             })
         }
     })
@@ -109,7 +109,7 @@ $(document).ready(() => {
         testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
     })
 
-    quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, {case_status__is_confirmed: true})
+    quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, { case_status__is_confirmed: true })
     $('#btn-search-cases').click(function () {
         return advancedSearchAndAddTestCases(
             testRunId, 'TestRun.add_case', $(this).attr('href'),
@@ -117,7 +117,7 @@ $(document).ready(() => {
         );
     });
 
-    $('.js-toolbar-filter-options li').click(function(ev) {
+    $('.js-toolbar-filter-options li').click(function (ev) {
         return changeDropdownSelectedItem(
             '.js-toolbar-filter-options',
             '#input-filter-button',
@@ -126,7 +126,7 @@ $(document).ready(() => {
         )
     });
 
-    $('#toolbar-filter').on("keyup", function() {
+    $('#toolbar-filter').on("keyup", function () {
         let filterValue = $(this).val().toLowerCase();
         let filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType;
 
@@ -154,22 +154,22 @@ function filterTestExecutionsByProperty(runId, executions, filterBy, filterValue
     $('.test-execution-element').hide();
 
     if (filterBy === 'is_automated' || filterBy === 'priority' || filterBy === 'category') {
-        let query = {case_run__run: runId}
-        if ( filterBy === 'is_automated' ) {
+        let query = { case_run__run: runId }
+        if (filterBy === 'is_automated') {
             query[filterBy] = filterValue
-        } else if ( filterBy === 'priority' ) {
+        } else if (filterBy === 'priority') {
             query['priority__value__icontains'] = filterValue
-        } else if ( filterBy === 'category' ) {
+        } else if (filterBy === 'category') {
             query['category__name__icontains'] = filterValue
         }
 
-        jsonRPC('TestCase.filter', query, function(filtered) {
+        jsonRPC('TestCase.filter', query, function (filtered) {
             // hide again if a previous async request showed something else
             $('.test-execution-element').hide();
             filtered.forEach(tc => $(`.test-execution-case-${tc.id}`).show());
         })
     } else {
-        executions.filter(function(te){
+        executions.filter(function (te) {
             return (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
         }).forEach(te => $(`.test-execution-${te.id}`).show());
     }
@@ -186,7 +186,7 @@ function addTestCaseToRun(runId) {
         return false;
     }
 
-    jsonRPC('TestRun.add_case', [runId, testCase.id], function(result) {
+    jsonRPC('TestRun.add_case', [runId, testCase.id], function (result) {
         // IMPORTANT: the API result includes a 'sortkey' field value!
         window.location.reload(true);
 
@@ -285,7 +285,7 @@ function renderCountPerStatusList(statusCount) {
 
 function renderTestExecutions(testExecutions) {
     // sort executions by sortkey
-    testExecutions.sort(function(te1, te2) {
+    testExecutions.sort(function (te1, te2) {
         return te1.sortkey - te2.sortkey;
     });
     const container = $('#test-executions-container')
