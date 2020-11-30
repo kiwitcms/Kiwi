@@ -37,8 +37,35 @@ $(document).ready(() => {
         }
     })
 
+    $('.add-comment-bulk').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
+
+        const selected = selectedCheckboxes()
+        if ($.isEmptyObject(selected)) {
+            return false
+        }
+
+        const enterCommentText = $('#test_run_pk').data('trans-comment')
+        const comment = prompt(enterCommentText)
+        if (!comment) {
+            return false
+        }
+
+        selected.executionIds.forEach(executionId => {
+            jsonRPC('TestExecution.add_comment', [executionId, comment], () => {
+                const testExecutionRow = $(`.test-execution-${executionId}`)
+                animate(testExecutionRow, () => {
+                    delete expandedExecutionIds[expandedExecutionIds.indexOf(executionId)]
+                })
+            })
+        })
+
+        return false
+    })
+
     $('.add-hyperlink-bulk').click(function () {
         $(this).parents('.dropdown').toggleClass('open')
+
         const selected = selectedCheckboxes()
         if ($.isEmptyObject(selected)) {
             return false
@@ -340,32 +367,37 @@ function getExpandArea(testExecution) {
             })
         })
 
-    const textArea = container.find('textarea')[0]
-    const fileUpload = container.find('input[type="file"]')
-    const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
     const commentsRow = container.find('.comments')
+    const simpleMDEinitialized = container.find('.comment-form').data('simple-mde-initialized')
+    if (!simpleMDEinitialized) {
+        const textArea = container.find('textarea')[0]
+        const fileUpload = container.find('input[type="file"]')
+        const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
+        container.find('.comment-form').data('simple-mde-initialized', true)
 
-    container.find('.post-comment').click(() => {
-        const input = editor.value().trim()
+        container.find('.post-comment').click(() => {
+            const input = editor.value().trim()
 
-        if (input) {
-            jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
-                editor.value('')
+            if (input) {
+                jsonRPC('TestExecution.add_comment', [testExecution.id, input], comment => {
+                    editor.value('')
 
-                commentsRow.append(renderCommentHTML(
-                    1 + template.find('.js-comment-container').length,
-                    comment,
-                    $('template#comment-template')[0],
-                    parentNode => {
-                        bindDeleteCommentButton(
-                            testExecution.id,
-                            'TestExecution.remove_comment',
-                            permissions.removeComment,
-                            parentNode)
-                    }))
-            })
-        }
-    })
+                    commentsRow.append(renderCommentHTML(
+                        1 + container.find('.js-comment-container').length,
+                        comment,
+                        $('template#comment-template')[0],
+                        parentNode => {
+                            bindDeleteCommentButton(
+                                testExecution.id,
+                                'TestExecution.remove_comment',
+                                permissions.removeComment,
+                                parentNode)
+                        }))
+                })
+            }
+        })
+    }
+
 
     renderCommentsForObject(
         testExecution.id,
@@ -685,8 +717,8 @@ function addLinkToExecutions(testExecutionIDs) {
         })
 
         // clean the values
-        $('.add-hyperlink-form #id_url').val('')
         $('.add-hyperlink-form #id_name').val('')
+        $('.add-hyperlink-form #id_url').val('')
         $('.add-hyperlink-form #defectCheckbox').bootstrapSwitch('state', false)
         $('.add-hyperlink-form #autoUpdateCheckbox').bootstrapSwitch('state', false)
 
