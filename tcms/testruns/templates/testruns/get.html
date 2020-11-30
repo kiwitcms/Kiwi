@@ -18,11 +18,12 @@
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
             data-perm-add-comment="{{ perms.django_comments.add_comment }}"
             data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
-            data-trans-no-executions-selected="{% trans 'No executions selected! Please select at least one execution!'%}"
+            data-trans-no-executions-selected="{% trans 'No rows selected! Please select at least one!'%}"
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
             data-trans-error-adding-cases="{% trans 'Unconfirmed test cases were not added' %}"
             data-trans-bool-value-required="{% trans 'Type 0 or 1' %}"
+            data-trans-comment="{% trans 'Comment' %}:"
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
@@ -178,7 +179,7 @@
                                         {% if perms.django_comments.add_comment %}
                                             <li class="divider"></li>
                                             <li>
-                                                <a href="#" class="bulk-add-comment">
+                                                <a href="#" class="add-comment-bulk">
                                                     <span class="fa fa-comment-o"></span>
                                                     {% trans 'Add comment' %}
                                                 </a>

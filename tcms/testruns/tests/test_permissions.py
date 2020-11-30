@@ -156,7 +156,7 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
         super().setUpTestData()
 
-        cls.add_comment_html = '<a href="#" class="bulk-add-comment">'
+        cls.add_comment_html = '<a href="#" class="add-comment-bulk">'
         user_should_have_perm(cls.tester, 'testruns.view_testrun')
 
     def assert_on_testrun_page(self, response):
