@@ -122,7 +122,15 @@ $(document).ready(() => {
             allExecutionStatuses[executionStatuses[i].id] = executionStatuses[i]
         }
 
-        jsonRPC('TestExecution.filter', { 'run_id': testRunId }, testExecutions => {
+        const rpcQuery = { 'run_id': testRunId }
+
+        // if page has URI params then try filtering, e.g. by status
+        const filterParams = new URLSearchParams(location.search);
+        if (filterParams.has('status_id')) {
+            rpcQuery['status_id__in'] = filterParams.getAll('status_id')
+        }
+
+        jsonRPC('TestExecution.filter', rpcQuery, testExecutions => {
             drawPercentBar(testExecutions)
             renderTestExecutions(testExecutions)
             renderAdditionalInformation(testRunId)
@@ -486,8 +494,12 @@ function renderAdditionalInformation(testRunId, execution) {
             }
 
             jsonRPC('TestCase.filter', casesQuery, testCases => {
-                testCases.forEach(testCase => {
+                for (const testCase of testCases) {
                     const row = $(`.test-execution-case-${testCase.id}`)
+
+                    // when loading this page filtered by status some TCs do not exist
+                    // but we don't know about it b/c the above queries are overzealous
+                    if (!row.length) { continue }
 
                     row.find('.test-execution-priority').html(testCase.priority)
                     row.find('.test-execution-category').html(testCase.category)
@@ -526,7 +538,7 @@ function renderAdditionalInformation(testRunId, execution) {
                     const teID = row.find('.test-execution-checkbox').data('test-execution-id')
                     allExecutions[teID].tags = testCase.tagNames;
                     allExecutions[teID].components = testCase.componentNames;
-                })
+                }
             })
         })
     })
