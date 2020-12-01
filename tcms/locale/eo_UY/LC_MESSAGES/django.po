@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 19:34+0000\n"
-"PO-Revision-Date: 2020-12-01 19:47\n"
+"POT-Creation-Date: 2020-12-01 20:43+0000\n"
+"PO-Revision-Date: 2020-12-01 20:54\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -761,6 +761,7 @@ msgstr "crwdns1010:0%(username)scrwdnd1010:0%(user_url)scrwdne1010:0"
 
 #: tcms/templates/include/attachments.html:7
 #: tcms/testplans/templates/testplans/get.html:398
+#: tcms/testruns/templates/testruns/get.html:421
 msgid "Attachments"
 msgstr "crwdns500:0crwdne500:0"
 
@@ -1509,10 +1510,6 @@ msgstr "crwdns1288:0crwdne1288:0"
 #: tcms/testruns/templates/testruns/get.html:378
 msgid "Bugs and hyperlinks"
 msgstr "crwdns1054:0crwdne1054:0"
-
-#: tcms/testruns/templates/testruns/get.html:421
-msgid "Test Case Attachments"
-msgstr "crwdns1290:0crwdne1290:0"
 
 #: tcms/testruns/templates/testruns/get.html:473
 msgid "Is a defect"
