@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 19:34+0000\n"
-"PO-Revision-Date: 2020-12-01 19:47\n"
+"POT-Creation-Date: 2020-12-01 20:43+0000\n"
+"PO-Revision-Date: 2020-12-01 20:53\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -762,6 +762,7 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7
 #: tcms/testplans/templates/testplans/get.html:398
+#: tcms/testruns/templates/testruns/get.html:421
 msgid "Attachments"
 msgstr "Přílohy"
 
@@ -1509,10 +1510,6 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:378
 msgid "Bugs and hyperlinks"
-msgstr ""
-
-#: tcms/testruns/templates/testruns/get.html:421
-msgid "Test Case Attachments"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:473
