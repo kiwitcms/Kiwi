@@ -172,6 +172,28 @@ $(document).ready(() => {
             filterValue
         );
     });
+
+    // email notifications card
+    $('#add-cc').click(() => {
+        const username = prompt($('#test_run_pk').data('trans-enter-assignee-name-or-email'))
+
+        if (!username) {
+            return false
+        }
+
+        jsonRPC('TestRun.add_cc', [testRunId, username], result => {
+            // todo: instead of reloading render this in the form above
+            window.location.reload(true);
+        })
+    })
+
+    $('.js-remove-cc').click((event) => {
+        const uid = $(event.target).parent('[data-uid]').data('uid')
+
+        jsonRPC('TestRun.remove_cc', [testRunId, uid], result => {
+            $(event.target).parents('tr').hide()
+        })
+    })
 })
 
 function filterTestExecutionsByProperty(runId, executions, filterBy, filterValue) {
