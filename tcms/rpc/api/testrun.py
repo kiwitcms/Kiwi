@@ -3,7 +3,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
-from tcms.rpc.api.forms.testrun import UpdateForm
+from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
@@ -20,6 +20,9 @@ __all__ = (
 
     'add_tag',
     'remove_tag',
+
+    'add_cc',
+    'remove_cc',
 )
 
 
@@ -238,3 +241,53 @@ def update(run_id, values):
 
     test_run = form.save()
     return test_run.serialize()
+
+
+@permissions_required('testruns.change_testrun')
+@rpc_method(name='TestRun.add_cc')
+def add_cc(run_id, username):
+    """
+    .. function:: RPC TestRun.add_cc(run_id, username)
+
+        Add the chosen user to TestRun CC
+
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param username: PK, email or username
+        :type username: string
+        :raises DoesNotExist: if test run specified by the PK doesn't exist
+        :raises PermissionDenied: if missing *testruns.change_testrun* permission
+        :raises ValueError: if data validations fail
+    """
+    test_run = TestRun.objects.get(pk=run_id)
+    form = UserForm({'user': username})
+
+    if not form.is_valid():
+        raise ValueError(form_errors_to_list(form))
+
+    test_run.add_cc(form.cleaned_data['user'])
+
+
+@permissions_required('testruns.change_testrun')
+@rpc_method(name='TestRun.remove_cc')
+def remove_cc(run_id, username):
+    """
+    .. function:: RPC TestRun.remove_cc(run_id, username)
+
+        Remove the chosen user from TestRun CC
+
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param username: PK, email or username
+        :type username: string
+        :raises DoesNotExist: if test run specified by the PK doesn't exist
+        :raises PermissionDenied: if missing *testruns.change_testrun* permission
+        :raises ValueError: if data validations fail
+    """
+    test_run = TestRun.objects.get(pk=run_id)
+    form = UserForm({'user': username})
+
+    if not form.is_valid():
+        raise ValueError(form_errors_to_list(form))
+
+    test_run.remove_cc(form.cleaned_data['user'])
