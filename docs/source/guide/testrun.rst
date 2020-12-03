@@ -24,30 +24,27 @@ To search for Test Runs:
 Creating a Test Run
 -------------------
 
-Test Runs are created for a specific Test Plan. Only Test Cases with a
-status of **CONFIRMED** can be added to the Test Run. A Test Run can be
-assigned to any user in Kiwi TCMS. To create a Test Run:
+Test runs are created for a specific Test Plan. Only Test Cases which are
+confirmed (aka ready for execution) can be added to the Test Run. A Test Run
+can be assigned to any user in Kiwi TCMS. To create a Test Run:
 
-#. Open a Test Plan and click the **Cases** tab
-#. From the **Run** sub-menu click on **Write new run**
+#. Open a Test Plan
+#. Select test cases for execution
+#. From the bulk-update menu click **New TestRun**
 
    |The New Run button|
 
-#. In the **Create New Test Run** screen, perform the following actions:
+#. In the **New TestRun** page, perform the following actions:
 
    -  Edit the **Summary**.
-   -  Select the **Product**.
-   -  Select the **Product Version**.
-   -  Select the **Build**.
-   -  Edit the **Run Manager**.
-   -  Edit the **Default Tester**.
+   -  Select **Build**.
+   -  Select **Manager**.
+   -  Select **Default Tester**.
    -  Enter any **Notes**.
 
    |The Create New Test Run screen|
 
-#. Test Cases will be shown under the above screen.
-#. Click **Remove** action on any Test Cases that are not required for this
-   Test Run.
+#. Confirmed Test Cases will be shown at the bottom of the above page.
 #. Click **Save** button.
 
 .. note::
@@ -60,60 +57,54 @@ Add Test Cases to an existing Test Run
 
 To add a Test Case to an existing Test Run:
 
-#. Open the Test Plan containing this Test Case.
-#. Select Test Cases you want to add.
-#. From **Run** sub-menu click **Add into Run** item.
+#. Open the Test Run.
+#. Use the quick search widget to find and add test cases.
 
    |The Add cases to run button|
 
-#. Select the Test Run to which Test Cases will be added.
-#. Click **Update** button.
-
-   |The Update button|
+#. Confirmed test cases will be added to the test run.
+#. Alternatively you can use the advanced search widget which allows more
+   flexible search for test cases across the entire database.
 
 .. note::
 
-    Test Cases can be added via the Test Run view as well. While the Test Run
-    is opened you may use the **Cases** sub-menu to add/remove other
-    Test Cases to this Test Run.
+    As of version 8.9 Kiwi TCMS allows test runs to contain test cases
+    which are not part of the parent test plan. They are indicated with
+    a thunderbolt icon in front of their name.
+
+        |Stand alone TC|
 
 
 Cloning a Test Run
 ------------------
 
 Test Runs can be cloned for easier creation of testing tasks between
-team members.
-To clone a Test Run:
+team members. To clone a Test Run:
 
 #. Open the Test Run.
-#. Select which Test Case executions (aka test case-runs) to be cloned.
-   Use a filter, if required, to help restrict the number of visible
-   runs.
-#. Click **Clone** button at the top of the page.
-
-   |The Clone button 2|
-
+#. From the object navigation menu click the Clone item.
 #. Enter the details for the cloned Test Run. Details are auto-populated
    from the original.
 #. Click **Save** button.
+
 
 Editing a Test Run
 ------------------
 
 The Edit function modifies fields in a Test Run.
 
-#. Open the Test Run to be edited, and then click **Edit** button.
+#. Open the Test Run to be edited
+#. From the object navigation menu click the Edit item.
 #. Edit the fields as required:
 
-   -  Summary
-   -  Product
-   -  Product version
-   -  Manager
-   -  Default Tester
-   -  Notes
-   -  Finished
+   - Summary
+   - Build
+   - Manager
+   - Default Tester
+   - Notes
 
 #. Click **Save** button.
+
 
 Changing the status of a Test Run
 ---------------------------------
@@ -124,18 +115,14 @@ if all Test Cases have not been completed.
 To change the status of a Test Run:
 
 #. Open the Test Run.
-#. Click **Set to Finished**.
+#. Toggle the **Status** button to OFF which also updates **Finished at** field
 
    |The Set to finished button|
 
-#. To re-activate a Test Run, click **Set to Running**.
+#. To re-activate a Test Run, toggle the **Status** button again.
 
    |The Set to running button|
 
-.. note::
-
-  It is also possible to change the status of a Test Run from the Edit
-  Test Run menu.
 
 Deleting a Test Run
 -------------------
@@ -143,108 +130,30 @@ Deleting a Test Run
 To delete a Test Run:
 
 #. Open the Test Run to be deleted.
-#. Click **Delete** button.
-#. Click **Ok** to delete or **Cancel** to return.
+#. From the object navigation menu click the Delete item.
+#. Confirm the deletion.
 
-   |The Delete confirmation screen.|
 
 .. _executing-testrun:
 
 Executing a Test Run
 --------------------
 
-Test Runs can be executed at any time. The user can execute any of the
-Test Cases within a run, regardless of the order they appear. Use the
-**Comment** field to make notes about a Test Case. All comments will be
-displayed when a report is generated for a Test Run.
+Test Runs can be executed at any time. Testers can execute any of the
+Test Cases within a TR, regardless of the order they appear. Testers may also
+add comments to annotate test executions:
 
-To execute a Test Run:
-
-#. From the Dashboard or a Test Runs list, click the Test Run to execute. The
-   Test Run summary is displayed.  You are able to change Test Case statuses
-   from this page.
-
-   |The Test Run summary|
-
-
-#. After executing a Test Case expand its widget, enter a **Comment** and
-   select the appropriate **Status** icon.
+#. Expand a test execution row, follow the steps to reproduce and when ready
+   enter a **Comment** and select the appropriate **Status** button.
 
    |A Test Case|
 
 
-Bulk update of Test Cases
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Bulk operations include change case-runs status, add/remove bug by entering
-bug ID, add comment to case-run.
-
-#. Select the Test Cases to be updated.
-#. Click on the sub-menu for the required operation:
-
-    |Test Case-run bulk menu|
-
-.. _generate-testrun-report:
-
-Generating a Test Run report
-----------------------------
-
-Kiwi TCMS generates reports for Test Runs, regardless of their state. A
-report provides the following information:
-
--  **Plan details:**
-
-   -  Product
-   -  Product version
-   -  Plan
-   -  Plan version
-   -  Platform
-   -  Operating system
-   -  Run summary
-   -  Run notes
-   -  Start date
-   -  Stop date.
-
--  **Test Case details:**
-
-   -  Closed at
-   -  ID
-   -  Summary
-   -  Case ID
-   -  Tested by
-   -  Group
-   -  Status
-
--  **Summary statistics:**
-
-   -  Total number of Test Cases Run.
-   -  Total number of Pending Test Cases.
-   -  Test Run completed (%).
-
--  **Bug List:**
-
-   -  Individual bugs
-   -  View all bugs (if bug tracker allows it)
-
-To generate a report for a Test Run:
-
-#. Open the Test Run.
-#. From the **Case Status** widget, click **Report**.
-
-   |The Report button|
-
-#. A printer friendly version displays.
-
 .. |The New Run button| image:: ../_static/Click_Write_New_Run.png
 .. |The Create New Test Run screen| image:: ../_static/Create_New_Test_Run.png
 .. |The Add cases to run button| image:: ../_static/Click_Add_Cases_to_Run.png
-.. |The Update button| image:: ../_static/Select_Plan_Click_Update.png
 .. |The Testing menu 2| image:: ../_static/Click_Runs.png
-.. |The Delete confirmation screen.| image:: ../_static/Ok_Delete.png
-.. |The Clone button 2| image:: ../_static/Clone_Test_Run.png
-.. |The Test Run summary| image:: ../_static/Runs_Details.png
 .. |A Test Case| image:: ../_static/Enter_Test_Results.png
 .. |The Set to finished button| image:: ../_static/Set_To_Finished.png
 .. |The Set to running button| image:: ../_static/Set_To_Running.png
-.. |The Report button| image:: ../_static/Click_Report.png
-.. |Test Case-run bulk menu| image:: ../_static/Test_Run_Bulk_Update_Menu.png
+.. |Stand alone TC| image:: ../_static/TC_not_part_of_TP.png
