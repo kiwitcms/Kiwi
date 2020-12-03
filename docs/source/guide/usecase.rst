@@ -13,8 +13,6 @@ Manual Testing
 #. QA creates new Test Run to record execution results. See the section
    :ref:`creating-testrun`.
 #. QA executes Test Run. See the section :ref:`executing-testrun`.
-#. Test Run report is available for viewing. See the section
-   :ref:`generate-testrun-report`.
 
 |Manual Testing Use Case.|
 
@@ -42,8 +40,6 @@ Manager Assigns Testing Priorities
 #. QA creates new Test Run. See the section :ref:`creating-testrun`.
 #. QA executes Test Run, based on Test Case priorities. See the
    section :ref:`executing-testrun`.
-#. Test Run report available for viewing. See the section
-   :ref:`generate-testrun-report`.
 
 |PM Reporting Use Case.|
 
@@ -56,8 +52,6 @@ Cloning a Test Plan
 #. QA clones Test Plan. See the section :ref:`cloning-testplan`.
 #. QA creates new Test Run. See the section :ref:`creating-testrun`.
 #. QA executes Test Run. See the section :ref:`executing-testrun`.
-#. Test Run report available for viewing. See the section
-   :ref:`generate-testrun-report`.
 
 |Cloning a Test Plan Use Case.|
 
