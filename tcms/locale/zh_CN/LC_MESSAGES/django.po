@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 20:43+0000\n"
-"PO-Revision-Date: 2020-12-01 20:54\n"
+"POT-Creation-Date: 2020-12-02 20:41+0000\n"
+"PO-Revision-Date: 2020-12-02 21:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -58,8 +58,8 @@ msgstr "报告人"
 #: tcms/bugs/templates/bugs/search.html:78
 #: tcms/bugs/templates/bugs/search.html:108
 #: tcms/templates/include/bug_details.html:10
-#: tcms/testruns/templates/testruns/get.html:174
-#: tcms/testruns/templates/testruns/get.html:234
+#: tcms/testruns/templates/testruns/get.html:219
+#: tcms/testruns/templates/testruns/get.html:279
 msgid "Assignee"
 msgstr "被分配的执行人"
 
@@ -109,7 +109,7 @@ msgstr "版本"
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:50
-#: tcms/testruns/templates/testruns/get.html:367
+#: tcms/testruns/templates/testruns/get.html:412
 #: tcms/testruns/templates/testruns/mutable.html:32
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:98
@@ -129,8 +129,8 @@ msgstr "重新打开"
 #: tcms/testcases/templates/testcases/mutable.html:229
 #: tcms/testplans/templates/testplans/get.html:438
 #: tcms/testplans/templates/testplans/mutable.html:154
-#: tcms/testruns/templates/testruns/get.html:414
-#: tcms/testruns/templates/testruns/get.html:481
+#: tcms/testruns/templates/testruns/get.html:459
+#: tcms/testruns/templates/testruns/get.html:526
 #: tcms/testruns/templates/testruns/mutable.html:73
 msgid "Save"
 msgstr "保存"
@@ -148,9 +148,9 @@ msgstr "关闭"
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testplans/templates/testplans/get.html:211
 #: tcms/testplans/templates/testplans/get.html:448
-#: tcms/testruns/templates/testruns/get.html:218
-#: tcms/testruns/templates/testruns/get.html:225
-#: tcms/testruns/templates/testruns/get.html:228
+#: tcms/testruns/templates/testruns/get.html:263
+#: tcms/testruns/templates/testruns/get.html:270
+#: tcms/testruns/templates/testruns/get.html:273
 #: tcms/testruns/templates/testruns/mutable.html:21
 #: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/search.html:11
@@ -203,6 +203,7 @@ msgstr "在之前"
 #: tcms/testcases/templates/testcases/search.html:108
 #: tcms/testplans/templates/testplans/search.html:76
 #: tcms/testplans/templates/testplans/search.html:82
+#: tcms/testruns/templates/testruns/get.html:136
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
@@ -212,7 +213,7 @@ msgstr "用户名"
 #: tcms/testcases/templates/testcases/search.html:125
 #: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:101
-#: tcms/testruns/templates/testruns/get.html:240
+#: tcms/testruns/templates/testruns/get.html:285
 #: tcms/testruns/templates/testruns/search.html:83
 msgid "Search"
 msgstr "搜索"
@@ -245,7 +246,7 @@ msgstr "对象权限"
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/testcases/views.py:308 tcms/testplans/templates/testplans/get.html:192
 #: tcms/testplans/templates/testplans/get.html:345 tcms/testplans/views.py:151
-#: tcms/testruns/templates/testruns/get.html:205 tcms/testruns/views.py:174
+#: tcms/testruns/templates/testruns/get.html:250 tcms/testruns/views.py:174
 msgid "Delete"
 msgstr "删除"
 
@@ -513,14 +514,14 @@ msgstr "总计"
 #: tcms/testcases/templates/testcases/search.html:143
 #: tcms/testplans/templates/testplans/get.html:363
 #: tcms/testplans/templates/testplans/get.html:450
-#: tcms/testruns/templates/testruns/get.html:231
-#: tcms/testruns/templates/testruns/get.html:318
+#: tcms/testruns/templates/testruns/get.html:276
+#: tcms/testruns/templates/testruns/get.html:363
 msgid "Automated"
 msgstr "自动化的"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/testplans/templates/testplans/get.html:363
-#: tcms/testruns/templates/testruns/get.html:318
+#: tcms/testruns/templates/testruns/get.html:363
 msgid "Manual"
 msgstr "手动"
 
@@ -572,7 +573,7 @@ msgstr "包括子TP"
 #: tcms/testplans/templates/testplans/mutable.html:135
 #: tcms/testplans/templates/testplans/mutable.html:148
 #: tcms/testplans/templates/testplans/search.html:95
-#: tcms/testruns/templates/testruns/get.html:475
+#: tcms/testruns/templates/testruns/get.html:520
 msgid "Yes"
 msgstr "是的"
 
@@ -596,7 +597,7 @@ msgstr "是的"
 #: tcms/testplans/templates/testplans/mutable.html:135
 #: tcms/testplans/templates/testplans/mutable.html:148
 #: tcms/testplans/templates/testplans/search.html:95
-#: tcms/testruns/templates/testruns/get.html:475
+#: tcms/testruns/templates/testruns/get.html:520
 msgid "No"
 msgstr "不"
 
@@ -662,7 +663,7 @@ msgid "Dashboard"
 msgstr "监控面板"
 
 #: tcms/templates/dashboard.html:8
-#: tcms/testruns/templates/testruns/get.html:130
+#: tcms/testruns/templates/testruns/get.html:175
 msgid "Test executions"
 msgstr "测试执行"
 
@@ -801,7 +802,7 @@ msgstr "尊敬的管理员，\n"
 
 #: tcms/templates/include/attachments.html:7
 #: tcms/testplans/templates/testplans/get.html:398
-#: tcms/testruns/templates/testruns/get.html:421
+#: tcms/testruns/templates/testruns/get.html:466
 msgid "Attachments"
 msgstr "附件"
 
@@ -834,15 +835,15 @@ msgstr "没有找到记录"
 #: tcms/testplans/templates/testplans/get.html:357
 #: tcms/testplans/templates/testplans/get.html:449
 #: tcms/testruns/templates/testruns/get.html:67
-#: tcms/testruns/templates/testruns/get.html:156
-#: tcms/testruns/templates/testruns/get.html:236
-#: tcms/testruns/templates/testruns/get.html:341
+#: tcms/testruns/templates/testruns/get.html:201
+#: tcms/testruns/templates/testruns/get.html:281
+#: tcms/testruns/templates/testruns/get.html:386
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Status"
 msgstr "状态"
 
 #: tcms/templates/include/bugs_table.html:15
-#: tcms/testruns/templates/testruns/get.html:461
+#: tcms/testruns/templates/testruns/get.html:506
 msgid "URL"
 msgstr "网址"
 
@@ -850,7 +851,7 @@ msgstr "网址"
 #: tcms/testcases/templates/testcases/search.html:145
 #: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/search.html:118
-#: tcms/testruns/templates/testruns/get.html:310
+#: tcms/testruns/templates/testruns/get.html:355
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Tags"
 msgstr "标签"
@@ -862,7 +863,7 @@ msgstr "标签"
 #: tcms/testplans/templates/testplans/get.html:204
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
-#: tcms/testruns/templates/testruns/get.html:467
+#: tcms/testruns/templates/testruns/get.html:512
 msgid "Name"
 msgstr "名称"
 
@@ -870,7 +871,8 @@ msgstr "名称"
 #: tcms/testcases/templates/testcases/get.html:164
 #: tcms/testcases/templates/testcases/get.html:209
 #: tcms/testplans/templates/testplans/get.html:257
-#: tcms/testruns/templates/testruns/get.html:252
+#: tcms/testruns/templates/testruns/get.html:158
+#: tcms/testruns/templates/testruns/get.html:297
 msgid "Add"
 msgstr "添加"
 
@@ -883,8 +885,8 @@ msgstr "添加"
 #: tcms/testplans/templates/testplans/get.html:332
 #: tcms/testplans/templates/testplans/get.html:365
 #: tcms/testplans/templates/testplans/get.html:451
-#: tcms/testruns/templates/testruns/get.html:232
-#: tcms/testruns/templates/testruns/get.html:320
+#: tcms/testruns/templates/testruns/get.html:277
+#: tcms/testruns/templates/testruns/get.html:365
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Priority"
 msgstr "优先级"
@@ -896,8 +898,8 @@ msgstr "优先级"
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/get.html:369
 #: tcms/testplans/templates/testplans/get.html:452
-#: tcms/testruns/templates/testruns/get.html:233
-#: tcms/testruns/templates/testruns/get.html:324
+#: tcms/testruns/templates/testruns/get.html:278
+#: tcms/testruns/templates/testruns/get.html:369
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Category"
 msgstr "类别"
@@ -1181,7 +1183,7 @@ msgstr "克隆"
 #: tcms/testcases/templates/testcases/mutable.html:138
 #: tcms/testplans/templates/testplans/get.html:394
 #: tcms/testplans/templates/testplans/get.html:395
-#: tcms/testruns/templates/testruns/get.html:356
+#: tcms/testruns/templates/testruns/get.html:401
 #: tcms/testruns/templates/testruns/mutable.html:65
 msgid "Notes"
 msgstr "备注"
@@ -1209,7 +1211,7 @@ msgid "Reference link"
 msgstr "参考链接"
 
 #: tcms/testcases/templates/testcases/get.html:132
-#: tcms/testruns/templates/testruns/get.html:336
+#: tcms/testruns/templates/testruns/get.html:381
 msgid "Bugs"
 msgstr "软件Bug"
 
@@ -1219,7 +1221,7 @@ msgstr "测试计划"
 
 #: tcms/testcases/templates/testcases/get.html:188
 #: tcms/testplans/templates/testplans/get.html:408
-#: tcms/testruns/templates/testruns/get.html:306
+#: tcms/testruns/templates/testruns/get.html:351
 msgid "Components"
 msgstr "组件"
 
@@ -1287,7 +1289,7 @@ msgstr "测试用例总结"
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:215
-#: tcms/testruns/templates/testruns/get.html:229
+#: tcms/testruns/templates/testruns/get.html:274
 msgid "Component"
 msgstr "组件"
 
@@ -1298,7 +1300,7 @@ msgstr "都"
 #: tcms/testcases/templates/testcases/search.html:111
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/get.html:230
+#: tcms/testruns/templates/testruns/get.html:275
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
 msgstr "标签"
@@ -1316,7 +1318,7 @@ msgid "Created on"
 msgstr "创建于"
 
 #: tcms/testcases/views.py:298 tcms/testplans/views.py:141
-#: tcms/testruns/templates/testruns/get.html:397 tcms/testruns/views.py:164
+#: tcms/testruns/templates/testruns/get.html:442 tcms/testruns/views.py:164
 msgid "History"
 msgstr "历史"
 
@@ -1398,22 +1400,22 @@ msgid "Re-order cases"
 msgstr "重新排序的用例"
 
 #: tcms/testplans/templates/testplans/get.html:253
-#: tcms/testruns/templates/testruns/get.html:248
+#: tcms/testruns/templates/testruns/get.html:293
 msgid "Search and add test cases"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:262
-#: tcms/testruns/templates/testruns/get.html:258
+#: tcms/testruns/templates/testruns/get.html:303
 msgid "Advanced search"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:405
-#: tcms/testruns/templates/testruns/get.html:428
+#: tcms/testruns/templates/testruns/get.html:473
 msgid "No attachments"
 msgstr "无附件"
 
 #: tcms/testplans/templates/testplans/get.html:430
-#: tcms/testruns/templates/testruns/get.html:417
+#: tcms/testruns/templates/testruns/get.html:462
 msgid "Comments"
 msgstr "评论"
 
@@ -1434,6 +1436,7 @@ msgid "Test plan document:"
 msgstr "测试计划文档："
 
 #: tcms/testplans/templates/testplans/mutable.html:102
+#: tcms/testruns/templates/testruns/get.html:129
 msgid "Notify:"
 msgstr "提醒:"
 
@@ -1515,65 +1518,65 @@ msgstr "管理者"
 msgid "Finished at"
 msgstr "完成于"
 
-#: tcms/testruns/templates/testruns/get.html:149
+#: tcms/testruns/templates/testruns/get.html:194
 msgid "Update text version"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:184
+#: tcms/testruns/templates/testruns/get.html:229
 msgid "Add comment"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:195
-#: tcms/testruns/templates/testruns/get.html:292
-#: tcms/testruns/templates/testruns/get.html:456
+#: tcms/testruns/templates/testruns/get.html:240
+#: tcms/testruns/templates/testruns/get.html:337
+#: tcms/testruns/templates/testruns/get.html:501
 msgid "Add hyperlink"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:235
-#: tcms/testruns/templates/testruns/get.html:332
+#: tcms/testruns/templates/testruns/get.html:280
+#: tcms/testruns/templates/testruns/get.html:377
 msgid "Tested by"
 msgstr "测试由"
 
-#: tcms/testruns/templates/testruns/get.html:267
+#: tcms/testruns/templates/testruns/get.html:312
 msgid "records"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:293
-#: tcms/testruns/templates/testruns/get.html:495
-#: tcms/testruns/templates/testruns/get.html:512
+#: tcms/testruns/templates/testruns/get.html:338
+#: tcms/testruns/templates/testruns/get.html:540
+#: tcms/testruns/templates/testruns/get.html:557
 msgid "Report bug"
 msgstr "报告 bug"
 
-#: tcms/testruns/templates/testruns/get.html:300
+#: tcms/testruns/templates/testruns/get.html:345
 msgid "Test case is not part of parent test plan"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:328
+#: tcms/testruns/templates/testruns/get.html:373
 msgid "Assigned to"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:361
+#: tcms/testruns/templates/testruns/get.html:406
 msgid "Run Date"
 msgstr "执行日期"
 
-#: tcms/testruns/templates/testruns/get.html:373
+#: tcms/testruns/templates/testruns/get.html:418
 msgid "Text version"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:378
+#: tcms/testruns/templates/testruns/get.html:423
 msgid "Bugs and hyperlinks"
 msgstr "错误链接和超链接"
 
-#: tcms/testruns/templates/testruns/get.html:473
+#: tcms/testruns/templates/testruns/get.html:518
 msgid "Is a defect"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:480
-#: tcms/testruns/templates/testruns/get.html:511
+#: tcms/testruns/templates/testruns/get.html:525
+#: tcms/testruns/templates/testruns/get.html:556
 msgid "Cancel"
 msgstr "取消"
 
-#: tcms/testruns/templates/testruns/get.html:500
+#: tcms/testruns/templates/testruns/get.html:545
 msgid "Issue Tracker"
 msgstr ""
 
