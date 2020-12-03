@@ -3,9 +3,9 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin, sensitive_post_parameters_m
+from django.contrib.auth.admin import UserAdmin, GroupAdmin, sensitive_post_parameters_m
 from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 from django.http import HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -144,6 +144,35 @@ class KiwiUserAdmin(UserAdmin):
         delete_user(obj)
 
 
+class KiwiGroupAdmin(GroupAdmin):
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.name in ['Tester', 'Administrator']:
+            return False
+        return super().has_delete_permission(request, obj)
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj=obj)
+        name_index = fields.index('name')
+
+        # make sure Name is always the first field
+        if name_index > 0:
+            del fields[name_index]
+            fields.insert(0, 'name')
+
+        return fields
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super().get_readonly_fields(request, obj)
+
+        if obj and obj.name in ['Tester', 'Administrator']:
+            readonly_fields = readonly_fields + ('name',)
+
+        return readonly_fields
+
+
 # user admin extended functionality
 admin.site.unregister(User)
 admin.site.register(User, KiwiUserAdmin)
+admin.site.unregister(Group)
+admin.site.register(Group, KiwiGroupAdmin)

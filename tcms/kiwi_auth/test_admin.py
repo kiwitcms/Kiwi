@@ -5,10 +5,12 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 from tcms.tests import LoggedInTestCase
 from tcms.tests import user_should_have_perm
-from tcms.tests.factories import UserFactory
+from tcms.tests.factories import UserFactory, GroupFactory
+from tcms.kiwi_auth.admin import Group
 
 
 class TestUserAdmin(LoggedInTestCase):
@@ -109,3 +111,50 @@ class TestUserAdmin(LoggedInTestCase):
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertTrue(get_user_model().objects.filter(username='added-by-admin').exists())
+
+
+class TestGroupAdmin(LoggedInTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.tester.is_superuser = True
+        cls.tester.save()
+
+        cls.group = GroupFactory(name='NewGroupName')
+        cls.group.save()
+        cls.defaultGroups = Group.objects.filter(name__in=['Administrator', 'Tester'])
+
+    def test_should_not_be_allowed_to_change_groups_with_default_names(self):
+        for group in self.defaultGroups:
+            response = self.client.get(reverse('admin:auth_group_change', args=[group.id]))
+            self.assertNotContains(response,
+                                   '<input type="text" name="name" value="%s" class="vTextField"'
+                                   ' maxlength="150" required="" id="id_name">'
+                                   % group.name)
+            self.assertContains(response, '<div class="grp-readonly">%s</div>' % group.name)
+
+    def test_should_not_be_allowed_to_delete_default_groups(self):
+        for group in self.defaultGroups:
+            response = self.client.get(reverse('admin:auth_group_change', args=[group.id]))
+            self.assertNotContains(response,
+                                   '<a href="%s" class="grp-button grp-delete-link">%s</a>'
+                                   % (reverse('admin:auth_group_delete', args=[self.group.id]),
+                                      _('Delete')))
+
+    def test_should_be_allowed_to_create_new_group(self):
+        response = self.client.get(reverse('admin:auth_group_add'))
+        self.assertContains(response, '<h1>%s</h1>' % (_('Add %s') % _('group')))
+        self.assertContains(response,
+                            '<input type="text" name="name" class="vTextField" '
+                            'maxlength="150" required id="id_name">')
+
+    def test_should_be_able_to_delete_a_non_default_group(self):
+        response = self.client.get(reverse('admin:auth_group_delete', args=[self.group.id]),
+                                   follow=True)
+        self.assertContains(response, '<h1>%s</h1>' % _('Are you sure?'))
+
+    def test_should_be_able_to_edit_a_non_default_group(self):
+        response = self.client.get(reverse('admin:auth_group_change', args=[self.group.id]))
+        self.assertContains(response, '<input type="text" name="name" value="%s" class="vTextField"'
+                                      ' maxlength="150" required id="id_name">' % self.group.name)
