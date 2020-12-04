@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-02 21:12\n"
+"PO-Revision-Date: 2020-12-04 09:40\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1113,11 +1113,13 @@ msgstr "Registriraj nov račun"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Več informacij glede prilagajanja statusov izvajanja testiranj si preberite v\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        dokumentaciji</a>!"
 
 #: tcms/testcases/admin.py:39
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "Zahtevana sta 1 potrjen in 1 nepotrjen status!"
 
 #: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1152,7 +1154,7 @@ msgstr "Izbrisan: Testni scenarij #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr ""
+msgstr "Status testnega scenarija"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
