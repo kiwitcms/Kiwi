@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-04 09:42\n"
+"PO-Revision-Date: 2020-12-04 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1570,7 +1570,7 @@ msgstr "Napake in povezave"
 
 #: tcms/testruns/templates/testruns/get.html:518
 msgid "Is a defect"
-msgstr ""
+msgstr "Je napaka"
 
 #: tcms/testruns/templates/testruns/get.html:525
 #: tcms/testruns/templates/testruns/get.html:556
@@ -1579,7 +1579,7 @@ msgstr "Prekliči"
 
 #: tcms/testruns/templates/testruns/get.html:545
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Seznam prijav"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
