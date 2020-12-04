@@ -15,7 +15,7 @@ from mock import patch
 from tcms import signals
 from tcms.tests.factories import UserFactory
 
-from .models import UserActivationKey
+from tcms.kiwi_auth.models import UserActivationKey
 
 User = get_user_model()  # pylint: disable=invalid-name
 
