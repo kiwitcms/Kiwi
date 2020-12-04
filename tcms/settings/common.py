@@ -461,3 +461,6 @@ MESSAGE_TAGS = {
 }
 
 TEMP_DIR = pathlib.Path(tempfile.gettempdir())
+
+# See https://github.com/django-guardian/django-guardian/issues/726
+ANONYMOUS_USER_NAME = "AnonymousUser"
