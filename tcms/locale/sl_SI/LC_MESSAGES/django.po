@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-04 09:40\n"
+"PO-Revision-Date: 2020-12-04 09:42\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1158,7 +1158,7 @@ msgstr "Status testnega scenarija"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "Statusi testnih scenarijev"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1372,7 +1372,7 @@ msgstr "Ustvarjanje testiranja ni mogoče dokler niso vsi testni scenariji v sta
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Napaka pri dodajanju testnih scenarijev"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1498,11 +1498,11 @@ msgstr "Statusi izvajanja testa"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "Nepotrjeni testni scenariji niso bili dodani"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Vnesite 0 ali 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1521,17 +1521,17 @@ msgstr "Končano ob"
 
 #: tcms/testruns/templates/testruns/get.html:194
 msgid "Update text version"
-msgstr ""
+msgstr "Posodobljena verzija besedila"
 
 #: tcms/testruns/templates/testruns/get.html:229
 msgid "Add comment"
-msgstr ""
+msgstr "Dodaj komentar"
 
 #: tcms/testruns/templates/testruns/get.html:240
 #: tcms/testruns/templates/testruns/get.html:337
 #: tcms/testruns/templates/testruns/get.html:501
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Dodaj povezavo"
 
 #: tcms/testruns/templates/testruns/get.html:280
 #: tcms/testruns/templates/testruns/get.html:377
@@ -1540,7 +1540,7 @@ msgstr "Testiral"
 
 #: tcms/testruns/templates/testruns/get.html:312
 msgid "records"
-msgstr ""
+msgstr "zapisi"
 
 #: tcms/testruns/templates/testruns/get.html:338
 #: tcms/testruns/templates/testruns/get.html:540
@@ -1550,11 +1550,11 @@ msgstr "Prijavi napako"
 
 #: tcms/testruns/templates/testruns/get.html:345
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "Testni scenarij ni del nadrejene baze testnih scenarijev"
 
 #: tcms/testruns/templates/testruns/get.html:373
 msgid "Assigned to"
-msgstr ""
+msgstr "Dodeljeno"
 
 #: tcms/testruns/templates/testruns/get.html:406
 msgid "Run Date"
@@ -1562,7 +1562,7 @@ msgstr "Pričetek testiranja"
 
 #: tcms/testruns/templates/testruns/get.html:418
 msgid "Text version"
-msgstr ""
+msgstr "Verzija besedila"
 
 #: tcms/testruns/templates/testruns/get.html:423
 msgid "Bugs and hyperlinks"
