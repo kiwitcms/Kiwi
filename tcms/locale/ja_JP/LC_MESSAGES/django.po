@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-04 14:24\n"
+"PO-Revision-Date: 2020-12-04 14:45\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1399,7 +1399,7 @@ msgstr "並べ替えのキー"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
-msgstr "ケースを再利用する"
+msgstr "順序を変える"
 
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:293
