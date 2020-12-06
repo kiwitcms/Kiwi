@@ -1,6 +1,151 @@
 Change Log
 ==========
 
+Kiwi TCMS 8.9 (07 Dec 2020)
+---------------------------
+
+.. important::
+
+    This release includes many improvements,
+    API changes, bug fixes, translation updates,
+    new tests and internal refactoring.
+    It is the seventh release to include contributions via our
+    `open source bounty program`_.
+
+    This is the second release after `Kiwi TCMS reached 200K pulls
+    <https://kiwitcms.org/blog/kiwi-tcms-team/2020/10/26/kiwi-tcms-celebrates-200k-downloads/>`_
+    on Docker Hub!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 3.1.3 to 3.1.4
+- Update django-extensions from 3.0.9 to 3.1.0
+- Update django-grappelli from 2.14.2 to 2.14.3
+- Update pygments from 2.7.2 to 2.7.3
+- Update python-bugzilla from 3.0.1 to 3.0.2
+- Update node_modules/marked from 1.2.3 to 1.2.5
+- Update node_modules/html5sortable from 0.9.18 to 0.10.0
+- New ``manage.py initial_setup`` command for one-stop initial setup
+  (Ivajlo Karabojkov)
+- Bug tracker integration with BitBucket (bitbucket.org). Fixes
+  `Issue #1916 <https://github.com/kiwitcms/Kiwi/issues/1916>`_ (@cmbahadir)
+- Complete redesign and refactoring of Test Run page:
+
+  - Closes
+    `Issue #189 <https://github.com/kiwitcms/Kiwi/issues/189>`_,
+    `Issue #241 <https://github.com/kiwitcms/Kiwi/issues/241>`_,
+    `Issue #212 <https://github.com/kiwitcms/Kiwi/issues/212>`_,
+    `Issue #431 <https://github.com/kiwitcms/Kiwi/issues/431>`_,
+    `Issue #1382 <https://github.com/kiwitcms/Kiwi/issues/1382>`_
+  - Add filter by component & tag. Closes
+    `Issue #833 <https://github.com/kiwitcms/Kiwi/issues/833>`_
+  - Don't limit the user to test cases from the parent test plan like before.
+    Testers can add any test case for execution inside a test run,
+    even mix & match test cases between products. Fixes
+    `Issue #1934 <https://github.com/kiwitcms/Kiwi/issues/1934>`_
+  - Add attachments to Test Run page. Fixes
+    `Issue #872 <https://github.com/kiwitcms/Kiwi/issues/872>`_
+  - Refresh execution row after reporting a bug. Closes
+    `Issue #479 <https://github.com/kiwitcms/Kiwi/issues/479>`_
+- ``TestCaseStatus`` can now be customized. Fixes
+  `Issue #1932 <https://github.com/kiwitcms/Kiwi/issues/1932>`_
+- Update documantation & screenshots
+
+
+Settings
+~~~~~~~~
+
+- Setting ``ANONYMOUS_USER_NAME`` is now explicitly defined due to upstream bug
+  in django-guardian (Abhishek Chaurasia)
+
+
+Database
+~~~~~~~~
+
+- New migrations for customizeable ``TestCaseStatus``
+
+
+API
+~~~
+
+- Add ``TestExecution.history()`` meethod
+- Add ``TestCase.history()`` method
+- Add ``TestRun.add_cc()`` method
+- Add ``TestRun.remove_cc()`` method
+- Method ``TestExecution.update()`` will use build from parent test run if a
+  ``build`` field isn't explicitly specified in the arguments
+- Update method ``TestRun.add_case()``
+
+  - will return existing TestExecution if available
+  - will raise if test case status is not confirmed
+  - will always create new test executions with the highest sortkey
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fixed miscellaneous bugs in ``tcms.rpc.testcase`` (Gagan Deep)
+- Disable name change in admin for the default groups. Fixes
+  `Issue #1313 <https://github.com/kiwitcms/Kiwi/issues/1313>`_
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add automated tests for ``tcms.core.views.server_error``. Fixes
+  `Issue #1606 <https://github.com/kiwitcms/Kiwi/issues/1606>`_
+  (Abhishek Chaurasia)
+- Add automated tests for ``tcms.rpc.api.auth``. Fixes
+  `Issue #1620 <https://github.com/kiwitcms/Kiwi/issues/1620>`_
+  (Abhishek Chaurasia)
+- Add automated test for ``AnonymousViewBackend.has_perm`` method. Fixes
+  `Issue #1905 <https://github.com/kiwitcms/Kiwi/issues/1905>`_
+  (Abhishek Chaurasia)
+- Add automated tests for ``tcms.core.utils.maito``. Fixes
+  `Issue #1603 <https://github.com/kiwitcms/Kiwi/issues/1603>`_ (Gagan Deep)
+- Add automated tests for ``tcms.utils.github``. Fixes
+  `Issue #1612 <https://github.com/kiwitcms/Kiwi/issues/1612>`_ (Gagan Deep)
+- Add automated tests for ``tcms.rpc.api.testscase``. Fixes
+  `Issue #1623 <https://github.com/kiwitcms/Kiwi/issues/1623>`_ (Gagan Deep)
+- Add automated tests for ``tcms.testcases.views.NewCaseView``. Fixes
+  `Issue #1614 <https://github.com/kiwitcms/Kiwi/issues/1614>`_ (@rish07)
+- Add automated tests for ``tcms.testplans.views.NewTestPlanView.`` Fixes
+  `Issue #1616 <https://github.com/kiwitcms/Kiwi/issues/1616>`_ (@awalvie)
+- Separate two functions one from another (Alexander Tsvetanov)
+- Disable pylint checks (Alexander Tsvetanov)
+- Upgrade to MySQL 8 in Travis CI
+- Remove unused setup in Travis CI
+- Be more robust when keeping internal state for TestPlan page
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Czech translation <https://crowdin.com/project/kiwitcms/cs#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Indonesian translation <https://crowdin.com/project/kiwitcms/id#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
 
 Kiwi TCMS 8.8 (07 Nov 2020, the 200K edition)
 ---------------------------------------------
