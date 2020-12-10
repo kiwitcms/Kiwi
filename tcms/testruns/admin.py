@@ -11,8 +11,6 @@ from tcms.testruns.models import TestRun, TestExecutionStatus
 
 
 class TestRunAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
-    actions = ['delete_selected']
-
     def add_view(self, request, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('admin:testruns_testrun_changelist'))
 

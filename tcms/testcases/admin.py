@@ -45,8 +45,6 @@ class TestCaseStatusAdmin(admin.ModelAdmin):
 
 
 class TestCaseAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
-    actions = ['delete_selected']
-
     def add_view(self, request, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('testcases-new'))
 
