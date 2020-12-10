@@ -8,7 +8,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.rpc.api.forms.testrun import UpdateExecutionForm
+from tcms.rpc.api.forms.testexecution import UpdateExecutionForm, AddExecutionLinkForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import TestExecution
@@ -262,8 +262,14 @@ def add_link(values, update_tracker=False, **kwargs):
 
             Always 'link' with IT instance if URL is from Kiwi TCMS own bug tracker!
     """
-    link, _ = LinkReference.objects.get_or_create(**values)
-    response = model_to_dict(link)
+    form = AddExecutionLinkForm(values)
+    form.populate(execution_id=values['execution_id'])
+
+    if form.is_valid():
+        link = form.save()
+    else:
+        raise ValueError(form_errors_to_list(form))
+
     request = kwargs.get(REQUEST_KEY)
     tracker = tracker_from_url(link.url, request)
 
@@ -275,7 +281,7 @@ def add_link(values, update_tracker=False, **kwargs):
     ) or isinstance(tracker, KiwiTCMS):
         tracker.add_testexecution_to_issue([link.execution], link.url)
 
-    return response
+    return link.serialize()
 
 
 @permissions_required("linkreference.delete_linkreference")
