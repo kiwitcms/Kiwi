@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from mock import patch
 
 from tcms import signals
+from tcms.kiwi_auth import forms
 from tcms.tests.factories import UserFactory
 
 from tcms.kiwi_auth.models import UserActivationKey
@@ -199,6 +200,25 @@ To activate your account, click this link:
                                 '<a href="mailto:{}">{}</a>'.format(email, name),
                                 html=True)
 
+    def test_invalid_form(self):
+        response = self.client.post(
+            self.register_url,
+            {
+                "username": "kiwi-tester",
+                "password1": "password-1",
+                "password2": "password-2",
+                "email": "new-tester@example.com",
+            },
+            follow=False,
+        )
+
+        self.assertContains(
+            response,
+            _('The two password fields didn’t match.')
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/registration_form.html")
+
 
 class TestConfirm(TestCase):
     """Test for activation key confirmation"""
@@ -262,3 +282,23 @@ class TestConfirm(TestCase):
         self.assertTrue(user.is_active)
         activate_key_deleted = not UserActivationKey.objects.filter(user=user).exists()
         self.assertTrue(activate_key_deleted)
+
+
+class TestLoginViewWithCustomTemplate(TestCase):
+    """Test for login view with custom template"""
+
+    def test_get_template_names(self):
+        response = self.client.get(reverse("tcms-login"))
+        self.assertIsNotNone(response.template_name)
+        self.assertEqual(
+            response.template_name,
+            ["registration/custom_login.html", "registration/login.html"],
+        )
+
+
+class TestPasswordResetView(TestCase):
+    """Test for password reset view"""
+
+    def test_form_class(self):
+        response = self.client.get(reverse("tcms-password_reset"))
+        self.assertIsInstance(response.context["form"], forms.PasswordResetForm)
