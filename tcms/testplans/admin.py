@@ -17,8 +17,6 @@ class TestPlanAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
     """
         Does not allow adding new or changing plans.
     """
-    actions = ['delete_selected']
-
     def add_view(self, request, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('admin:testplans_testplan_changelist'))
 
