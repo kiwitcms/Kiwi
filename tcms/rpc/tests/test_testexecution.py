@@ -13,6 +13,8 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testruns.models import TestExecutionStatus
+
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
@@ -179,6 +181,15 @@ class TestExecutionAddLink(APITestCase):
         self.assertGreater(result["id"], 0)
         self.assertEqual(result["url"], url)
 
+    def test_attach_log_with_too_long_name(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'has at most 64 characters'):
+            name = 'a' * 65
+            url = "http://127.0.0.1/test/test-log.log"
+            self.rpc_client.TestExecution.add_link({
+                'execution_id': self.execution.pk,
+                'name': name,
+                'url': url})
+
 
 class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
     """Test permissions of TestExecution.add_link"""
@@ -187,7 +198,6 @@ class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
-
         self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
