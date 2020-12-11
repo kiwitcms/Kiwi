@@ -2,7 +2,7 @@
   "dependencies": {
     "bootstrap-switch": "3.3.4",
     "html5sortable": "0.10.0",
-    "marked": "1.2.5",
+    "marked": "1.2.6",
     "patternfly": "3.59.5",
     "prismjs": "1.22.0",
     "simplemde": "1.11.2",
