@@ -2,6 +2,7 @@
 {% load static %}
 
 <form class="form-horizontal">
+    {% csrf_token %}
     <div class="form-group">
         <div class="fa pficon-help help-tooltip" data-toggle="tooltip" data-placement="left"
             title="{% trans 'Detailed information about test execution status' %}"></div>
