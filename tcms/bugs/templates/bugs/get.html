@@ -112,6 +112,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="card-pf">
                 <form class="form-horizontal" action="{% url 'bugs-comment' %}" method="post">
+                    {% csrf_token %}
                     <input name="bug" type="hidden" value="{{ object.pk }}">
                     <div class="form-group">
                         <div>

@@ -12,6 +12,7 @@
 {% block contents %}
     <div class="container-fluid container-cards-pf">
         <form class="form-horizontal" action="{{ form_post_url }}" method="post">
+            {% csrf_token %}
             <input type="hidden" name="reporter" value="{{ form.reporter.value }}">
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>

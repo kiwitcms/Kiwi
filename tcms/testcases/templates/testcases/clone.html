@@ -7,6 +7,8 @@
 {% block contents %}
 <div class="container-fluid container-cards-pf">
     <form class="form-horizontal" method="post" action="{% url "testcases-clone" %}">
+        {% csrf_token %}
+
         {% if form.plan.field.queryset %}
         <div class="form-group">
             <label class="col-md-12 col-lg-12">{% trans 'Add new TC into TP' %}</label>
