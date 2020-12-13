@@ -17,6 +17,7 @@ from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
     TestExecutionFactory,
+    TestRunFactory,
     UserFactory,
 )
 
@@ -602,6 +603,8 @@ class TestExecutionUpdateStatus(APITestCase):
         self.user = UserFactory()
         self.execution_1 = TestExecutionFactory()
         self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
+        self.status_negative = TestExecutionStatus.objects.filter(weight__lt=0).last()
+        self.status_in_progress = TestExecutionStatus.objects.filter(weight=0).last()
 
     def test_changes_tested_by(self):
         execution = TestExecutionFactory(tested_by=None)
@@ -706,3 +709,38 @@ class TestExecutionUpdateStatus(APITestCase):
 
         self.execution_1.refresh_from_db()
         self.assertIsNone(self.execution_1.close_date)
+
+    def test_update_status_changes_run_status_completed(self):
+        """
+        When updating the status of a TestExecution to a completed one (status.weigth != 0),
+        if all executions for a run are completed, set the run as completed
+        """
+        run = TestRunFactory(stop_date=None)
+
+        TestExecutionFactory(status=self.status_positive, run=run)
+        TestExecutionFactory(status=self.status_negative, run=run)
+        execution = TestExecutionFactory(status=self.status_in_progress, run=run)
+
+        self.rpc_client.TestExecution.update(
+            execution.pk, {"status": self.status_positive.pk}
+        )
+
+        run.refresh_from_db()
+        self.assertIsNotNone(run.stop_date)
+
+    def test_update_status_changes_run_neutral(self):
+        """
+        When updating the status of a TestExecution to a not completed one (status.weigth == 0),
+        set the run as not completed
+        """
+        run = TestRunFactory(stop_date=timezone.now())
+
+        execution = TestExecutionFactory(status=self.status_positive, run=run)
+        _ = TestExecutionFactory(status=self.status_negative, run=run)
+
+        self.rpc_client.TestExecution.update(
+            execution.pk, {"status": self.status_in_progress.pk}
+        )
+
+        run.refresh_from_db()
+        self.assertIsNone(run.stop_date)

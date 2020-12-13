@@ -183,11 +183,23 @@ def update(execution_id, values, **kwargs):
 
     # if this call updated TE.status then adjust timestamps
     if values.get("status"):
+        now = timezone.now()
         if test_execution.status.weight != 0:
-            test_execution.close_date = timezone.now()
+            test_execution.close_date = now
         else:
             test_execution.close_date = None
         test_execution.save()
+
+        all_executions = TestExecution.objects.filter(run=test_execution.run)
+        if (
+            test_execution.status.weight != 0
+            and not all_executions.filter(status__weight=0).exists()
+        ):
+            test_execution.run.stop_date = now
+            test_execution.run.save()
+        elif test_execution.status.weight == 0 and test_execution.run.stop_date:
+            test_execution.run.stop_date = None
+            test_execution.run.save()
 
     return test_execution.serialize()
 
