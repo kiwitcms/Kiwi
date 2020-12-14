@@ -25,26 +25,26 @@ from tcms.testplans.forms import (
 from tcms.testplans.models import PlanType, TestPlan
 
 
-@method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
+@method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
 class NewTestPlanView(CreateView):
     model = TestPlan
     form_class = NewPlanForm
-    template_name = 'testplans/mutable.html'
+    template_name = "testplans/mutable.html"
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         # clear fields which are set dynamically via JavaScript
-        form.populate(self.request.POST.get('product', -1))
+        form.populate(self.request.POST.get("product", -1))
         return form
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['initial']['author'] = self.request.user
+        kwargs["initial"]["author"] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['notify_formset'] = kwargs.get('notify_formset') or PlanNotifyFormSet()
+        context["notify_formset"] = kwargs.get("notify_formset") or PlanNotifyFormSet()
         return context
 
     def form_valid(self, form):
@@ -57,30 +57,35 @@ class NewTestPlanView(CreateView):
             return HttpResponseRedirect(test_plan.get_absolute_url())
 
         # taken from FormMixin.form_invalid()
-        return self.render_to_response(self.get_context_data(notify_formset=notify_formset))
+        return self.render_to_response(
+            self.get_context_data(notify_formset=notify_formset)
+        )
 
 
 @method_decorator(
-    object_permission_required('testplans.change_testplan', (TestPlan, 'pk', 'pk'),
-                               accept_global_perms=True),
-    name='dispatch')
+    object_permission_required(
+        "testplans.change_testplan", (TestPlan, "pk", "pk"), accept_global_perms=True
+    ),
+    name="dispatch",
+)
 class Edit(UpdateView):
     model = TestPlan
     form_class = NewPlanForm
-    template_name = 'testplans/mutable.html'
+    template_name = "testplans/mutable.html"
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        if self.request.POST.get('product'):
-            form.populate(product_id=self.request.POST['product'])
+        if self.request.POST.get("product"):
+            form.populate(product_id=self.request.POST["product"])
         else:
             form.populate(product_id=self.object.product_id)
         return form
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['notify_formset'] = kwargs.get('notify_formset') or \
-            PlanNotifyFormSet(instance=self.object)
+        context["notify_formset"] = kwargs.get("notify_formset") or PlanNotifyFormSet(
+            instance=self.object
+        )
         return context
 
     def form_valid(self, form):
@@ -99,104 +104,116 @@ class Edit(UpdateView):
         return self.render_to_response(context_data)
 
 
-@method_decorator(permission_required('testplans.view_testplan'), name='dispatch')
+@method_decorator(permission_required("testplans.view_testplan"), name="dispatch")
 class SearchTestPlanView(TemplateView):
 
-    template_name = 'testplans/search.html'
+    template_name = "testplans/search.html"
 
     def get_context_data(self, **kwargs):
         form = SearchPlanForm(self.request.GET)
-        form.populate(product_id=self.request.GET.get('product'))
+        form.populate(product_id=self.request.GET.get("product"))
 
         context_data = {
-            'form': form,
-            'plan_types': PlanType.objects.all().only('pk', 'name').order_by('name'),
+            "form": form,
+            "plan_types": PlanType.objects.all().only("pk", "name").order_by("name"),
         }
 
         return context_data
 
 
 @method_decorator(
-    object_permission_required('testplans.view_testplan', (TestPlan, 'pk', 'pk'),
-                               accept_global_perms=True),
-    name='dispatch')
+    object_permission_required(
+        "testplans.view_testplan", (TestPlan, "pk", "pk"), accept_global_perms=True
+    ),
+    name="dispatch",
+)
 class TestPlanGetView(DetailView):
 
-    template_name = 'testplans/get.html'
-    http_method_names = ['get']
+    template_name = "testplans/get.html"
+    http_method_names = ["get"]
     model = TestPlan
     response_class = ModifySettingsTemplateResponse
 
     def render_to_response(self, context, **response_kwargs):
         self.response_class.modify_settings = modify_settings(
-            MENU_ITEMS={'append': [
-                ('...', [
+            MENU_ITEMS={
+                "append": [
                     (
-                        _('Edit'),
-                        reverse('plan-edit', args=[self.object.pk])
-                    ),
-                    (
-                        _('Clone'),
-                        reverse('plans-clone', args=[self.object.pk])
-                    ),
-                    (
-                        _('History'),
-                        "/admin/testplans/testplan/%d/history/" % self.object.pk
-                    ),
-                    ('-', '-'),
-                    (
-                        _('Object permissions'),
-                        reverse('admin:testplans_testplan_permissions', args=[self.object.pk])
-                    ),
-                    ('-', '-'),
-                    (
-                        _('Delete'),
-                        reverse('admin:testplans_testplan_delete', args=[self.object.pk])
-                    )])]}
+                        "...",
+                        [
+                            (_("Edit"), reverse("plan-edit", args=[self.object.pk])),
+                            (_("Clone"), reverse("plans-clone", args=[self.object.pk])),
+                            (
+                                _("History"),
+                                "/admin/testplans/testplan/%d/history/"
+                                % self.object.pk,
+                            ),
+                            ("-", "-"),
+                            (
+                                _("Object permissions"),
+                                reverse(
+                                    "admin:testplans_testplan_permissions",
+                                    args=[self.object.pk],
+                                ),
+                            ),
+                            ("-", "-"),
+                            (
+                                _("Delete"),
+                                reverse(
+                                    "admin:testplans_testplan_delete",
+                                    args=[self.object.pk],
+                                ),
+                            ),
+                        ],
+                    )
+                ]
+            }
         )
         return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['statuses'] = TestCaseStatus.objects.all()
-        context['priorities'] = Priority.objects.filter(is_active=True)
-        context['comment_form'] = SimpleCommentForm()
+        context["statuses"] = TestCaseStatus.objects.all()
+        context["priorities"] = Priority.objects.filter(is_active=True)
+        context["comment_form"] = SimpleCommentForm()
         return context
 
 
 @method_decorator(
-    object_permission_required('testplans.view_testplan', (TestPlan, 'pk', 'pk'),
-                               accept_global_perms=True),
-    name='dispatch')
+    object_permission_required(
+        "testplans.view_testplan", (TestPlan, "pk", "pk"), accept_global_perms=True
+    ),
+    name="dispatch",
+)
 class GetTestPlanRedirectView(DetailView):
 
-    http_method_names = ['get']
+    http_method_names = ["get"]
     model = TestPlan
 
     def get(self, request, *args, **kwargs):
         test_plan = self.get_object()
-        return HttpResponsePermanentRedirect(reverse('test_plan_url',
-                                                     args=[test_plan.pk,
-                                                           slugify(test_plan.name)]))
+        return HttpResponsePermanentRedirect(
+            reverse("test_plan_url", args=[test_plan.pk, slugify(test_plan.name)])
+        )
 
 
-@method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
+@method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
 class Clone(FormView):
-    template_name = 'testplans/clone.html'
+    template_name = "testplans/clone.html"
     form_class = ClonePlanForm
     object = None
 
     def get(self, request, *args, **kwargs):
-        self.object = TestPlan.objects.get(pk=kwargs['pk'])
+        self.object = TestPlan.objects.get(pk=kwargs["pk"])
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.object = TestPlan.objects.get(pk=kwargs['pk'])
+        self.object = TestPlan.objects.get(pk=kwargs["pk"])
         return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object'] = self.object
+        context["object"] = self.object
         return context
 
     def get_form(self, form_class=None):
@@ -206,14 +223,15 @@ class Clone(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['initial']['name'] = self.object.make_cloned_name()
-        kwargs['initial']['product'] = self.object.product
-        kwargs['initial']['version'] = self.object.product_version
+        kwargs["initial"]["name"] = self.object.make_cloned_name()
+        kwargs["initial"]["product"] = self.object.product
+        kwargs["initial"]["version"] = self.object.product_version
         return kwargs
 
     def form_valid(self, form):
-        form.cleaned_data['new_author'] = self.request.user
+        form.cleaned_data["new_author"] = self.request.user
         cloned_plan = self.object.clone(**form.cleaned_data)
 
         return HttpResponseRedirect(
-            reverse('test_plan_url_short', args=[cloned_plan.pk]))
+            reverse("test_plan_url_short", args=[cloned_plan.pk])
+        )

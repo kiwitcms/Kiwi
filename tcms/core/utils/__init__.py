@@ -4,7 +4,7 @@
 import sys
 
 
-def string_to_list(strs, spliter=','):
+def string_to_list(strs, spliter=","):
     """Convert the string to list"""
     if isinstance(strs, list):
         str_list = (str(item).strip() for item in strs)
@@ -32,16 +32,16 @@ def form_errors_to_list(form):
 
 
 def request_host_link(request, domain_name=None):
-    protocol = 'https://'
-    if 'runserver' in sys.argv:
-        protocol = 'http://'
+    protocol = "https://"
+    if "runserver" in sys.argv:
+        protocol = "http://"
 
     if request:
         if not domain_name:
             domain_name = request.get_host()
         # default to https if in production and we don't know
-        protocol = 'https://'
+        protocol = "https://"
         if not request.is_secure():
-            protocol = 'http://'
+            protocol = "http://"
 
     return protocol + domain_name

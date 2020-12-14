@@ -10,24 +10,21 @@ from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import TestExecution, TestRun
 
 __all__ = (
-    'create',
-    'update',
-    'filter',
-
-    'add_case',
-    'get_cases',
-    'remove_case',
-
-    'add_tag',
-    'remove_tag',
-
-    'add_cc',
-    'remove_cc',
+    "create",
+    "update",
+    "filter",
+    "add_case",
+    "get_cases",
+    "remove_case",
+    "add_tag",
+    "remove_tag",
+    "add_cc",
+    "remove_cc",
 )
 
 
-@permissions_required('testruns.add_testexecution')
-@rpc_method(name='TestRun.add_case')
+@permissions_required("testruns.add_testexecution")
+@rpc_method(name="TestRun.add_case")
 def add_case(run_id, case_id):
     """
     .. function:: RPC TestRun.add_case(run_id, case_id)
@@ -55,7 +52,7 @@ def add_case(run_id, case_id):
 
     # always add new TEs at the end of TR
     sortkey = 10
-    last_te = run.case_run.order_by('sortkey').last()
+    last_te = run.case_run.order_by("sortkey").last()
     if last_te:  # in case there are no other TEs
         sortkey += last_te.sortkey
 
@@ -63,8 +60,8 @@ def add_case(run_id, case_id):
     return execution.serialize()
 
 
-@permissions_required('testruns.delete_testexecution')
-@rpc_method(name='TestRun.remove_case')
+@permissions_required("testruns.delete_testexecution")
+@rpc_method(name="TestRun.remove_case")
 def remove_case(run_id, case_id):
     """
     .. function:: RPC TestRun.remove_case(run_id, case_id)
@@ -80,8 +77,8 @@ def remove_case(run_id, case_id):
     TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
 
-@permissions_required('testruns.view_testrun')
-@rpc_method(name='TestRun.get_cases')
+@permissions_required("testruns.view_testrun")
+@rpc_method(name="TestRun.get_cases")
 def get_cases(run_id):
     """
     .. function:: RPC TestRun.get_cases(run_id)
@@ -94,22 +91,23 @@ def get_cases(run_id):
                  augmented with ``execution_id`` and ``status`` information.
         :rtype: list(dict)
     """
-    tcs_serializer = TestCase.to_xmlrpc(query={'case_run__run_id': run_id})
+    tcs_serializer = TestCase.to_xmlrpc(query={"case_run__run_id": run_id})
 
     qs = TestExecution.objects.filter(run_id=run_id).values(
-        'case', 'pk', 'status__name')
-    extra_info = dict(((row['case'], row) for row in qs.iterator()))
+        "case", "pk", "status__name"
+    )
+    extra_info = dict(((row["case"], row) for row in qs.iterator()))
 
     for case in tcs_serializer:
-        info = extra_info[case['id']]
-        case['execution_id'] = info['pk']
-        case['status'] = info['status__name']
+        info = extra_info[case["id"]]
+        case["execution_id"] = info["pk"]
+        case["status"] = info["status__name"]
 
     return tcs_serializer
 
 
-@permissions_required('testruns.add_testruntag')
-@rpc_method(name='TestRun.add_tag')
+@permissions_required("testruns.add_testruntag")
+@rpc_method(name="TestRun.add_tag")
 def add_tag(run_id, tag_name, **kwargs):
     """
     .. function:: RPC TestRun.add_tag(run_id, tag)
@@ -133,11 +131,11 @@ def add_tag(run_id, tag_name, **kwargs):
     tag, _ = Tag.get_or_create(request.user, tag_name)
     test_run = TestRun.objects.get(pk=run_id)
     test_run.add_tag(tag)
-    return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})
+    return Tag.to_xmlrpc({"pk__in": test_run.tag.all()})
 
 
-@permissions_required('testruns.delete_testruntag')
-@rpc_method(name='TestRun.remove_tag')
+@permissions_required("testruns.delete_testruntag")
+@rpc_method(name="TestRun.remove_tag")
 def remove_tag(run_id, tag_name):
     """
     .. function:: RPC TestRun.remove_tag(run_id, tag)
@@ -156,11 +154,11 @@ def remove_tag(run_id, tag_name):
     tag = Tag.objects.get(name=tag_name)
     test_run = TestRun.objects.get(pk=run_id)
     test_run.remove_tag(tag)
-    return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})
+    return Tag.to_xmlrpc({"pk__in": test_run.tag.all()})
 
 
-@permissions_required('testruns.add_testrun')
-@rpc_method(name='TestRun.create')
+@permissions_required("testruns.add_testrun")
+@rpc_method(name="TestRun.create")
 def create(values):
     """
     .. function:: RPC TestRun.create(values)
@@ -184,7 +182,7 @@ def create(values):
             >>> TestRun.create(values)
     """
     form = NewRunForm(values)
-    form.populate(values.get('plan'))
+    form.populate(values.get("plan"))
 
     if form.is_valid():
         test_run = form.save()
@@ -193,8 +191,8 @@ def create(values):
     raise ValueError(form_errors_to_list(form))
 
 
-@permissions_required('testruns.view_testrun')
-@rpc_method(name='TestRun.filter')
+@permissions_required("testruns.view_testrun")
+@rpc_method(name="TestRun.filter")
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestRun.filter(query)
@@ -213,8 +211,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     return TestRun.to_xmlrpc(query)
 
 
-@permissions_required('testruns.change_testrun')
-@rpc_method(name='TestRun.update')
+@permissions_required("testruns.change_testrun")
+@rpc_method(name="TestRun.update")
 def update(run_id, values):
     """
     .. function:: RPC TestRun.update(run_id, values)
@@ -233,8 +231,8 @@ def update(run_id, values):
     test_run = TestRun.objects.get(pk=run_id)
     form = UpdateForm(values, instance=test_run)
 
-    if values.get('product'):
-        form.populate(product_id=values['product'])
+    if values.get("product"):
+        form.populate(product_id=values["product"])
 
     if not form.is_valid():
         raise ValueError(form_errors_to_list(form))
@@ -243,8 +241,8 @@ def update(run_id, values):
     return test_run.serialize()
 
 
-@permissions_required('testruns.change_testrun')
-@rpc_method(name='TestRun.add_cc')
+@permissions_required("testruns.change_testrun")
+@rpc_method(name="TestRun.add_cc")
 def add_cc(run_id, username):
     """
     .. function:: RPC TestRun.add_cc(run_id, username)
@@ -260,16 +258,16 @@ def add_cc(run_id, username):
         :raises ValueError: if data validations fail
     """
     test_run = TestRun.objects.get(pk=run_id)
-    form = UserForm({'user': username})
+    form = UserForm({"user": username})
 
     if not form.is_valid():
         raise ValueError(form_errors_to_list(form))
 
-    test_run.add_cc(form.cleaned_data['user'])
+    test_run.add_cc(form.cleaned_data["user"])
 
 
-@permissions_required('testruns.change_testrun')
-@rpc_method(name='TestRun.remove_cc')
+@permissions_required("testruns.change_testrun")
+@rpc_method(name="TestRun.remove_cc")
 def remove_cc(run_id, username):
     """
     .. function:: RPC TestRun.remove_cc(run_id, username)
@@ -285,9 +283,9 @@ def remove_cc(run_id, username):
         :raises ValueError: if data validations fail
     """
     test_run = TestRun.objects.get(pk=run_id)
-    form = UserForm({'user': username})
+    form = UserForm({"user": username})
 
     if not form.is_valid():
         raise ValueError(form_errors_to_list(form))
 
-    test_run.remove_cc(form.cleaned_data['user'])
+    test_run.remove_cc(form.cleaned_data["user"])

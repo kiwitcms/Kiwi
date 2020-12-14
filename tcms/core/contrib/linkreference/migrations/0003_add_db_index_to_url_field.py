@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('linkreference', '0002_update_fields'),
+        ("linkreference", "0002_update_fields"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='linkreference',
-            name='url',
+            model_name="linkreference",
+            name="url",
             field=models.URLField(db_index=True),
         ),
     ]

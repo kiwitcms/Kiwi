@@ -29,49 +29,53 @@ from tcms.tests.factories import (
 
 class TestValidateEmail(unittest.TestCase):
     def test_non_list_email_collection(self):
-        with self.assertRaisesRegex(TypeError, 'cc_list should be a list object.'):
-            _validate_cc_list('example@example.com')
+        with self.assertRaisesRegex(TypeError, "cc_list should be a list object."):
+            _validate_cc_list("example@example.com")
 
     def test_invalid_email(self):
         with self.assertRaises(ValidationError):
-            _validate_cc_list(['@example.com'])
+            _validate_cc_list(["@example.com"])
 
     def test_valid_email_list(self):  # pylint: disable=no-self-use
-        _validate_cc_list(['example@example.com'])
+        _validate_cc_list(["example@example.com"])
 
 
 class TestAddNotificationCCPermission(APIPermissionsTestCase):
-    permission_label = 'testcases.change_testcase'
+    permission_label = "testcases.change_testcase"
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.default_cc = 'example@example.com'
+        self.default_cc = "example@example.com"
         self.testcase = TestCaseFactory()
 
     def verify_api_with_permission(self):
-        self.rpc_client.TestCase.add_notification_cc(self.testcase.pk, [self.default_cc])
+        self.rpc_client.TestCase.add_notification_cc(
+            self.testcase.pk, [self.default_cc]
+        )
         self.assertEqual(len(self.testcase.emailing.get_cc_list()), 1)
         self.assertEqual(self.testcase.emailing.get_cc_list(), [self.default_cc])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCase.add_notification_cc(self.testcase.pk, [self.default_cc])
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.TestCase.add_notification_cc(
+                self.testcase.pk, [self.default_cc]
+            )
 
 
 class TestAddNotificationCC(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
-            self.rpc_client.TestCase.add_notification_cc(-1, ['example@example.com'])
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+            self.rpc_client.TestCase.add_notification_cc(-1, ["example@example.com"])
 
 
 class TestGetNotificationCCPermission(APIPermissionsTestCase):
-    permission_label = 'testcases.view_testcase'
+    permission_label = "testcases.view_testcase"
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.default_cc = 'example@example.com'
+        self.default_cc = "example@example.com"
         self.testcase = TestCaseFactory()
         self.testcase.emailing.add_cc(self.default_cc)
 
@@ -80,56 +84,59 @@ class TestGetNotificationCCPermission(APIPermissionsTestCase):
         self.assertListEqual(result, [self.default_cc])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestCase.get_notification_cc(self.testcase.pk)
 
 
 class TestGetNotificationCC(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
             self.rpc_client.TestCase.get_notification_cc(-1)
 
 
 class TestRemoveNotificationCCPermission(APIPermissionsTestCase):
-    permission_label = 'testcases.change_testcase'
+    permission_label = "testcases.change_testcase"
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.default_cc = 'example@example.com'
+        self.default_cc = "example@example.com"
         self.testcase = TestCaseFactory()
         self.testcase.emailing.add_cc(self.default_cc)
 
     def verify_api_with_permission(self):
-        self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk,
-                                                        [self.default_cc])
+        self.rpc_client.TestCase.remove_notification_cc(
+            self.testcase.pk, [self.default_cc]
+        )
         self.testcase.emailing.refresh_from_db()
         self.assertEqual([], self.testcase.emailing.get_cc_list())
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk,
-                                                            [self.default_cc])
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.TestCase.remove_notification_cc(
+                self.testcase.pk, [self.default_cc]
+            )
 
 
 class TestRemoveNotificationCC(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
-            self.rpc_client.TestCase.remove_notification_cc(-1, ['example@example.com'])
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+            self.rpc_client.TestCase.remove_notification_cc(-1, ["example@example.com"])
 
 
 class TestFilterCases(APITestCase):
-
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.tester = UserFactory(username='great tester')
-        self.product = ProductFactory(name='StarCraft')
-        self.version = VersionFactory(value='0.1', product=self.product)
-        self.plan = TestPlanFactory(name='Test product.get_cases',
-                                    author=self.tester,
-                                    product=self.product,
-                                    product_version=self.version)
+        self.tester = UserFactory(username="great tester")
+        self.product = ProductFactory(name="StarCraft")
+        self.version = VersionFactory(value="0.1", product=self.product)
+        self.plan = TestPlanFactory(
+            name="Test product.get_cases",
+            author=self.tester,
+            product=self.product,
+            product_version=self.version,
+        )
         self.case_category = CategoryFactory(product=self.product)
         self.cases_count = 10
         self.cases = []
@@ -139,7 +146,8 @@ class TestFilterCases(APITestCase):
                 author=self.tester,
                 reviewer=self.tester,
                 default_tester=None,
-                plan=[self.plan])
+                plan=[self.plan],
+            )
             self.cases.append(test_case)
 
     def test_filter_query_none(self):
@@ -148,43 +156,45 @@ class TestFilterCases(APITestCase):
         self.assertGreater(len(result), 0)
 
     def test_filter_by_product_id(self):
-        cases = self.rpc_client.TestCase.filter({'category__product': self.product.pk})
+        cases = self.rpc_client.TestCase.filter({"category__product": self.product.pk})
         self.assertIsNotNone(cases)
         self.assertEqual(len(cases), self.cases_count)
 
 
 class TestUpdate(APITestCase):
-    non_existing_username = 'FakeUsername'
+    non_existing_username = "FakeUsername"
     non_existing_user_id = 999
-    non_existing_email = 'fake@email.com'
+    non_existing_email = "fake@email.com"
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory(summary='Sanity test case',
-                                        text='Given-When-Then',
-                                        default_tester=None)
+        self.testcase = TestCaseFactory(
+            summary="Sanity test case", text="Given-When-Then", default_tester=None
+        )
         self.new_author = UserFactory()
 
     def test_update_text_and_product(self):
         author_pk = self.testcase.author.pk
-        self.assertEqual('Sanity test case', self.testcase.summary)
-        self.assertEqual('Given-When-Then', self.testcase.text)
+        self.assertEqual("Sanity test case", self.testcase.summary)
+        self.assertEqual("Given-When-Then", self.testcase.text)
 
         # update the test case
-        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
-            self.testcase.pk,
-            {
-                'summary': 'This was updated',
-                'text': 'new TC text',
-            }
+        updated = (
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    "summary": "This was updated",
+                    "text": "new TC text",
+                },
+            )
         )
 
         self.testcase.refresh_from_db()
 
-        self.assertEqual(updated['id'], self.testcase.pk)
-        self.assertEqual('This was updated', self.testcase.summary)
-        self.assertEqual('new TC text', self.testcase.text)
+        self.assertEqual(updated["id"], self.testcase.pk)
+        self.assertEqual("This was updated", self.testcase.summary)
+        self.assertEqual("new TC text", self.testcase.text)
         # FK for author not passed above. Make sure it didn't change!
         self.assertEqual(author_pk, self.testcase.author.pk)
 
@@ -192,16 +202,18 @@ class TestUpdate(APITestCase):
         self.assertNotEqual(self.new_author, self.testcase.author)
 
         # update the test case
-        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
-            self.testcase.pk,
-            {
-                'author': self.new_author.pk,
-            }
+        updated = (
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    "author": self.new_author.pk,
+                },
+            )
         )
 
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
-        self.assertEqual(self.new_author.pk, updated['author_id'])
+        self.assertEqual(self.new_author.pk, updated["author_id"])
 
     def test_update_author_should_fail_for_non_existing_user_id(self):
         initial_author_id = self.testcase.author.pk
@@ -209,8 +221,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'author': self.non_existing_user_id,
-                }
+                    "author": self.non_existing_user_id,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -220,16 +232,18 @@ class TestUpdate(APITestCase):
         self.assertNotEqual(self.new_author, self.testcase.author)
 
         # update the test case
-        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
-            self.testcase.pk,
-            {
-                'author': self.new_author.username,
-            }
+        updated = (
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    "author": self.new_author.username,
+                },
+            )
         )
 
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
-        self.assertEqual(self.new_author.pk, updated['author_id'])
+        self.assertEqual(self.new_author.pk, updated["author_id"])
 
     def test_update_author_should_fail_for_non_existing_username(self):
         initial_author_username = self.testcase.author.username
@@ -237,8 +251,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'author': self.non_existing_username,
-                }
+                    "author": self.non_existing_username,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -248,16 +262,18 @@ class TestUpdate(APITestCase):
         self.assertNotEqual(self.new_author, self.testcase.author)
 
         # update the test case
-        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
-            self.testcase.pk,
-            {
-                'author': self.new_author.email,
-            }
+        updated = (
+            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+                self.testcase.pk,
+                {
+                    "author": self.new_author.email,
+                },
+            )
         )
 
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
-        self.assertEqual(self.new_author.pk, updated['author_id'])
+        self.assertEqual(self.new_author.pk, updated["author_id"])
 
     def test_update_author_should_fail_for_non_existing_email(self):
         initial_author_email = self.testcase.author.email
@@ -265,26 +281,28 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'author': self.non_existing_email,
-                }
+                    "author": self.non_existing_email,
+                },
             )
 
         self.testcase.refresh_from_db()
         self.assertEqual(initial_author_email, self.testcase.author.email)
 
     def test_update_priority_issue_1318(self):
-        expected_priority = Priority.objects.exclude(pk=self.testcase.priority.pk).first()
+        expected_priority = Priority.objects.exclude(
+            pk=self.testcase.priority.pk
+        ).first()
 
         self.assertNotEqual(expected_priority.pk, self.testcase.priority.pk)
-        self.assertEqual('Sanity test case', self.testcase.summary)
-        self.assertEqual('Given-When-Then', self.testcase.text)
+        self.assertEqual("Sanity test case", self.testcase.summary)
+        self.assertEqual("Given-When-Then", self.testcase.text)
 
         # update the test case
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'priority': expected_priority.pk,
-            }
+                "priority": expected_priority.pk,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -293,8 +311,8 @@ class TestUpdate(APITestCase):
         self.assertEqual(expected_priority.pk, self.testcase.priority.pk)
 
         # but nothing else changed, issue #1318
-        self.assertEqual('Sanity test case', self.testcase.summary)
-        self.assertEqual('Given-When-Then', self.testcase.text)
+        self.assertEqual("Sanity test case", self.testcase.summary)
+        self.assertEqual("Given-When-Then", self.testcase.text)
 
     def test_update_default_tester_accepts_user_id(self):
         self.assertIsNone(self.testcase.default_tester)
@@ -302,8 +320,8 @@ class TestUpdate(APITestCase):
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'default_tester': self.new_author.pk,
-            }
+                "default_tester": self.new_author.pk,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -317,8 +335,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': self.non_existing_user_id,
-                }
+                    "default_tester": self.non_existing_user_id,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -331,8 +349,8 @@ class TestUpdate(APITestCase):
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'default_tester': self.new_author.username,
-            }
+                "default_tester": self.new_author.username,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -346,8 +364,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': self.non_existing_username,
-                }
+                    "default_tester": self.non_existing_username,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -359,8 +377,8 @@ class TestUpdate(APITestCase):
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'default_tester': self.new_author.email,
-            }
+                "default_tester": self.new_author.email,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -374,8 +392,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'default_tester': self.non_existing_email,
-                }
+                    "default_tester": self.non_existing_email,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -388,8 +406,8 @@ class TestUpdate(APITestCase):
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'reviewer': self.new_author.pk,
-            }
+                "reviewer": self.new_author.pk,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -402,8 +420,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'reviewer': self.non_existing_user_id,
-                }
+                    "reviewer": self.non_existing_user_id,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -415,8 +433,8 @@ class TestUpdate(APITestCase):
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'reviewer': self.new_author.username,
-            }
+                "reviewer": self.new_author.username,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -428,8 +446,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'reviewer': self.non_existing_username,
-                }
+                    "reviewer": self.non_existing_username,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -441,8 +459,8 @@ class TestUpdate(APITestCase):
         self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
-                'reviewer': self.new_author.email,
-            }
+                "reviewer": self.new_author.email,
+            },
         )
 
         self.testcase.refresh_from_db()
@@ -454,8 +472,8 @@ class TestUpdate(APITestCase):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
-                    'reviewer': self.non_existing_email,
-                }
+                    "reviewer": self.non_existing_email,
+                },
             )
 
         self.testcase.refresh_from_db()
@@ -472,49 +490,51 @@ class TestCreate(APITestCase):
     def test_passes_with_valid_data(self):
         result = self.rpc_client.TestCase.create(
             {
-                'summary': 'Newly created TC via API',
-                'text': 'Given-When-Then',
-                'case_status': TestCaseStatus.objects.first().pk,
-                'priority': Priority.objects.first().pk,
-                'category': Category.objects.first().pk,
+                "summary": "Newly created TC via API",
+                "text": "Given-When-Then",
+                "case_status": TestCaseStatus.objects.first().pk,
+                "priority": Priority.objects.first().pk,
+                "category": Category.objects.first().pk,
             }
         )
 
-        tc_from_db = TestCase.objects.get(summary=result['summary'], text=result['text'])
+        tc_from_db = TestCase.objects.get(
+            summary=result["summary"], text=result["text"]
+        )
 
-        self.assertEqual(result['id'], tc_from_db.pk)
+        self.assertEqual(result["id"], tc_from_db.pk)
         # author field is auto-configured if not passed
-        self.assertEqual(result['author'], tc_from_db.author.username)
+        self.assertEqual(result["author"], tc_from_db.author.username)
         self.assertEqual(self.api_user, tc_from_db.author)
 
     def test_author_can_be_specified(self):
         new_author = UserFactory()
         result = self.rpc_client.TestCase.create(
             {
-                'summary': 'TC via API with author',
-                'case_status': TestCaseStatus.objects.last().pk,
-                'priority': Priority.objects.last().pk,
-                'category': Category.objects.last().pk,
-                'author': new_author.pk,
+                "summary": "TC via API with author",
+                "case_status": TestCaseStatus.objects.last().pk,
+                "priority": Priority.objects.last().pk,
+                "category": Category.objects.last().pk,
+                "author": new_author.pk,
             }
         )
 
-        tc_from_db = TestCase.objects.get(summary=result['summary'], author=new_author)
+        tc_from_db = TestCase.objects.get(summary=result["summary"], author=new_author)
 
-        self.assertEqual(result['id'], tc_from_db.pk)
+        self.assertEqual(result["id"], tc_from_db.pk)
         self.assertEqual(new_author, tc_from_db.author)
 
     def test_fails_when_mandatory_fields_not_specified(self):
         with self.assertRaises(Fault):
             self.rpc_client.TestCase.create(
                 {
-                    'summary': 'TC via API without mandatory FK fields',
+                    "summary": "TC via API without mandatory FK fields",
                 }
             )
 
 
 class TestRemovePermissions(APIPermissionsTestCase):
-    permission_label = 'testcases.delete_testcase'
+    permission_label = "testcases.delete_testcase"
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -523,19 +543,18 @@ class TestRemovePermissions(APIPermissionsTestCase):
         self.case_2 = TestCaseFactory()
         self.case_3 = TestCaseFactory()
 
-        self.query = {'pk__in': [self.case_1.pk, self.case_2.pk, self.case_3.pk]}
+        self.query = {"pk__in": [self.case_1.pk, self.case_2.pk, self.case_3.pk]}
 
     def verify_api_with_permission(self):
         num_deleted, _ = self.rpc_client.TestCase.remove(self.query)
         self.assertEqual(num_deleted, 3)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestCase.remove(self.query)
 
 
 class TestAddTag(APITestCase):
-
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -546,31 +565,36 @@ class TestAddTag(APITestCase):
 
     def test_add_tag(self):
         self.rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
-        tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag1.pk).exists()
+        tag_exists = TestCase.objects.filter(
+            pk=self.testcase.pk, tag__pk=self.tag1.pk
+        ).exists()
         self.assertTrue(tag_exists)
 
     def test_add_tag_without_permissions(self):
         unauthorized_user = UserFactory()
-        unauthorized_user.set_password('api-testing')
+        unauthorized_user.set_password("api-testing")
         unauthorized_user.save()
 
         unauthorized_user.user_permissions.add(*Permission.objects.all())
-        remove_perm_from_user(unauthorized_user, 'testcases.add_testcasetag')
+        remove_perm_from_user(unauthorized_user, "testcases.add_testcasetag")
 
-        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
-                                       'api-testing',
-                                       '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(
+            unauthorized_user.username,
+            "api-testing",
+            "%s/xml-rpc/" % self.live_server_url,
+        ).server
 
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
 
         # tags were not modified
-        tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag1.pk).exists()
+        tag_exists = TestCase.objects.filter(
+            pk=self.testcase.pk, tag__pk=self.tag1.pk
+        ).exists()
         self.assertFalse(tag_exists)
 
 
 class TestRemoveTag(APITestCase):
-
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -582,34 +606,41 @@ class TestRemoveTag(APITestCase):
 
     def test_remove_tag(self):
         self.rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
-        tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag0.pk).exists()
+        tag_exists = TestCase.objects.filter(
+            pk=self.testcase.pk, tag__pk=self.tag0.pk
+        ).exists()
         self.assertFalse(tag_exists)
 
     def test_remove_tag_without_permissions(self):
         unauthorized_user = UserFactory()
-        unauthorized_user.set_password('api-testing')
+        unauthorized_user.set_password("api-testing")
         unauthorized_user.save()
 
         unauthorized_user.user_permissions.add(*Permission.objects.all())
-        remove_perm_from_user(unauthorized_user, 'testcases.delete_testcasetag')
+        remove_perm_from_user(unauthorized_user, "testcases.delete_testcasetag")
 
-        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
-                                       'api-testing',
-                                       '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(
+            unauthorized_user.username,
+            "api-testing",
+            "%s/xml-rpc/" % self.live_server_url,
+        ).server
 
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
 
         # tags were not modified
-        tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag0.pk).exists()
+        tag_exists = TestCase.objects.filter(
+            pk=self.testcase.pk, tag__pk=self.tag0.pk
+        ).exists()
         self.assertTrue(tag_exists)
 
-        tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag1.pk).exists()
+        tag_exists = TestCase.objects.filter(
+            pk=self.testcase.pk, tag__pk=self.tag1.pk
+        ).exists()
         self.assertFalse(tag_exists)
 
 
 class TestAddComponent(APITestCase):
-
     def _fixture_setup(self):
         super()._fixture_setup()
         self.test_case = TestCaseFactory()
@@ -617,17 +648,20 @@ class TestAddComponent(APITestCase):
         self.bad_component = ComponentFactory()
 
     def test_add_component_from_same_product_is_allowed(self):
-        result = self.rpc_client.TestCase.add_component(self.test_case.pk,
-                                                        self.good_component.name)
-        self.assertEqual(result['component'][0], self.good_component.pk)
+        result = self.rpc_client.TestCase.add_component(
+            self.test_case.pk, self.good_component.name
+        )
+        self.assertEqual(result["component"][0], self.good_component.pk)
 
     def test_add_component_from_another_product_is_not_allowed(self):
-        with self.assertRaisesRegex(Fault, 'Component matching query does not exist'):
-            self.rpc_client.TestCase.add_component(self.test_case.pk, self.bad_component.name)
+        with self.assertRaisesRegex(Fault, "Component matching query does not exist"):
+            self.rpc_client.TestCase.add_component(
+                self.test_case.pk, self.bad_component.name
+            )
 
 
 class TestRemoveComponentPermission(APIPermissionsTestCase):
-    permission_label = 'testcases.delete_testcasecomponent'
+    permission_label = "testcases.delete_testcasecomponent"
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -638,26 +672,28 @@ class TestRemoveComponentPermission(APIPermissionsTestCase):
         self.test_case.add_component(self.bad_component)
 
     def verify_api_with_permission(self):
-        self.rpc_client.TestCase.remove_component(self.test_case.pk,
-                                                  self.bad_component.pk)
+        self.rpc_client.TestCase.remove_component(
+            self.test_case.pk, self.bad_component.pk
+        )
         result = self.test_case.component
         self.assertEqual(result.count(), 1)
         self.assertEqual(result.first(), self.good_component)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCase.remove_component(self.test_case.pk,
-                                                      self.good_component.pk)
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.TestCase.remove_component(
+                self.test_case.pk, self.good_component.pk
+            )
 
 
 class TestRemoveComponent(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
             self.rpc_client.TestCase.remove_component(-1, -1)
 
 
 class TestAddCommentPermissions(APIPermissionsTestCase):
-    permission_label = 'django_comments.add_comment'
+    permission_label = "django_comments.add_comment"
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -665,38 +701,38 @@ class TestAddCommentPermissions(APIPermissionsTestCase):
         self.case = TestCaseFactory()
 
     def verify_api_with_permission(self):
-        created_comment = self.rpc_client.TestCase.add_comment(self.case.pk,
-                                                               "Hello World!")
+        created_comment = self.rpc_client.TestCase.add_comment(
+            self.case.pk, "Hello World!"
+        )
 
         result = comments.get_comments(self.case)
         self.assertEqual(1, result.count())
 
         first_comment = result.first()
         self.assertEqual("Hello World!", first_comment.comment)
-        self.assertEqual("Hello World!", created_comment['comment'])
+        self.assertEqual("Hello World!", created_comment["comment"])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCase.add_comment(self.case.pk,
-                                                 "Hello World!")
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.TestCase.add_comment(self.case.pk, "Hello World!")
 
 
 class TestAddComment(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
             self.rpc_client.TestCase.add_comment(-1, "Hello World!")
 
 
 class TestRemoveCommentPermissions(APIPermissionsTestCase):
-    permission_label = 'django_comments.delete_comment'
+    permission_label = "django_comments.delete_comment"
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
         self.case = TestCaseFactory()
-        self.comment_1 = comments.add_comment([self.case], 'First one', self.tester)[0]
-        self.comment_2 = comments.add_comment([self.case], 'Second one', self.tester)[0]
-        self.comment_3 = comments.add_comment([self.case], 'Third one', self.tester)[0]
+        self.comment_1 = comments.add_comment([self.case], "First one", self.tester)[0]
+        self.comment_2 = comments.add_comment([self.case], "Second one", self.tester)[0]
+        self.comment_3 = comments.add_comment([self.case], "Third one", self.tester)[0]
 
     def verify_api_with_permission(self):
         # Remove a specific comment
@@ -708,18 +744,18 @@ class TestRemoveCommentPermissions(APIPermissionsTestCase):
         self.assertEqual(len(comments.get_comments(self.case)), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestCase.remove_comment(self.case.pk)
 
 
 class TestRemoveComment(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
             self.rpc_client.TestCase.remove_comment(-1)
 
 
 class TestCaseSortkeysPermissions(APIPermissionsTestCase):
-    permission_label = 'testcases.view_testcase'
+    permission_label = "testcases.view_testcase"
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -737,9 +773,11 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
         self.plan.add_case(self.case_3, sortkey=25)
 
     def verify_api_with_permission(self):
-        result = self.rpc_client.TestCase.sortkeys({
-            "plan": self.plan.pk,
-        })
+        result = self.rpc_client.TestCase.sortkeys(
+            {
+                "plan": self.plan.pk,
+            }
+        )
 
         # note: keys are of type str()
         self.assertEqual(result[str(self.case_1.pk)], 5)
@@ -752,21 +790,23 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
         self.assertGreater(len(result), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCase.sortkeys({
-                "plan": self.plan.pk,
-            })
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.TestCase.sortkeys(
+                {
+                    "plan": self.plan.pk,
+                }
+            )
 
 
 class TestCaseCommentPermissions(APIPermissionsTestCase):
-    permission_label = 'django_comments.view_comment'
+    permission_label = "django_comments.view_comment"
 
     def _fixture_setup(self):
         super()._fixture_setup()
 
         self.case = TestCaseFactory()
-        comments.add_comment([self.case], 'First one', self.tester)
-        comments.add_comment([self.case], 'Second one', self.tester)
+        comments.add_comment([self.case], "First one", self.tester)
+        comments.add_comment([self.case], "Second one", self.tester)
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestCase.comments(self.case.pk)
@@ -775,20 +815,20 @@ class TestCaseCommentPermissions(APIPermissionsTestCase):
 
         # also takes case to verify functionality b/c the target
         # method under test is very simple
-        self.assertEqual(result[0]['comment'], 'First one')
-        self.assertEqual(result[1]['comment'], 'Second one')
+        self.assertEqual(result[0]["comment"], "First one")
+        self.assertEqual(result[1]["comment"], "Second one")
         for entry in result:
-            self.assertEqual(entry['object_pk'], str(self.case.pk))
-            self.assertEqual(entry['user'], self.tester.pk)
-            self.assertEqual(entry['user_name'], self.tester.username)
+            self.assertEqual(entry["object_pk"], str(self.case.pk))
+            self.assertEqual(entry["user"], self.tester.pk)
+            self.assertEqual(entry["user_name"], self.tester.username)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestCase.comments(self.case.pk)
 
 
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
-    permission_label = 'attachments.add_attachment'
+    permission_label = "attachments.add_attachment"
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -796,18 +836,18 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         self.case = TestCaseFactory()
 
     def verify_api_with_permission(self):
-        self.rpc_client.TestCase.add_attachment(self.case.pk,
-                                                'test.txt',
-                                                'a2l3aXRjbXM=')
+        self.rpc_client.TestCase.add_attachment(
+            self.case.pk, "test.txt", "a2l3aXRjbXM="
+        )
         attachments = Attachment.objects.attachments_for_object(self.case)
         self.assertEqual(len(attachments), 1)
         self.assertEqual(attachments[0].object_id, str(self.case.pk))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCase.add_attachment(self.case.pk,
-                                                    'test.txt',
-                                                    'a2l3aXRjbXM=')
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.TestCase.add_attachment(
+                self.case.pk, "test.txt", "a2l3aXRjbXM="
+            )
 
 
 class TestListAttachments(APITestCase):
@@ -817,17 +857,19 @@ class TestListAttachments(APITestCase):
         self.case = TestCaseFactory()
 
     def test_list_attachments(self):
-        self.rpc_client.TestCase.add_attachment(self.case.pk, 'attachment.txt', 'a2l3aXRjbXM=')
+        self.rpc_client.TestCase.add_attachment(
+            self.case.pk, "attachment.txt", "a2l3aXRjbXM="
+        )
         attachments = self.rpc_client.TestCase.list_attachments(self.case.pk)
         self.assertEqual(len(attachments), 1)
 
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, 'TestCase matching query does not exist'):
+        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
             self.rpc_client.TestCase.list_attachments(-1)
 
 
 class TestListAttachmentPermissions(APIPermissionsTestCase):
-    permission_label = 'attachments.view_attachment'
+    permission_label = "attachments.view_attachment"
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -839,5 +881,5 @@ class TestListAttachmentPermissions(APIPermissionsTestCase):
         self.assertEqual(len(attachments), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestCase.list_attachments(self.case.pk)

@@ -23,11 +23,12 @@ class PlanType(TCMSActionModel):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class TestPlan(TreeNode, TCMSActionModel):
     """A plan within the TCMS"""
+
     history = KiwiHistoricalRecords()
 
     name = models.CharField(max_length=255, db_index=True)
@@ -36,14 +37,17 @@ class TestPlan(TreeNode, TCMSActionModel):
     is_active = models.BooleanField(default=True, db_index=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
-    product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)
+    product_version = models.ForeignKey(
+        Version, related_name="plans", on_delete=models.CASCADE
+    )
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    product = models.ForeignKey('management.Product', related_name='plan',
-                                on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        "management.Product", related_name="plan", on_delete=models.CASCADE
+    )
     type = models.ForeignKey(PlanType, on_delete=models.CASCADE)
-    tag = models.ManyToManyField('management.Tag',
-                                 through='testplans.TestPlanTag',
-                                 related_name='plan')
+    tag = models.ManyToManyField(
+        "management.Tag", through="testplans.TestPlanTag", related_name="plan"
+    )
 
     def __str__(self):
         return self.name
@@ -52,31 +56,24 @@ class TestPlan(TreeNode, TCMSActionModel):
     def to_xmlrpc(cls, query=None):
 
         _query = query or {}
-        qs = distinct_filter(TestPlan, _query).order_by('pk')
+        qs = distinct_filter(TestPlan, _query).order_by("pk")
         serializer = TestPlanRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
     def add_case(self, case, sortkey=None):
         if sortkey is None:
-            lastcase = self.testcaseplan_set.order_by('-sortkey').first()
+            lastcase = self.testcaseplan_set.order_by("-sortkey").first()
             if lastcase and lastcase.sortkey is not None:
                 sortkey = lastcase.sortkey + 10
             else:
                 sortkey = 0
 
         return TestCasePlan.objects.get_or_create(
-            plan=self,
-            case=case,
-            defaults={
-                'sortkey': sortkey
-            }
+            plan=self, case=case, defaults={"sortkey": sortkey}
         )[0]
 
     def add_tag(self, tag):
-        return TestPlanTag.objects.get_or_create(
-            plan=self,
-            tag=tag
-        )
+        return TestPlanTag.objects.get_or_create(plan=self, tag=tag)
 
     def remove_tag(self, tag):
         TestPlanTag.objects.filter(plan=self, tag=tag).delete()
@@ -85,13 +82,13 @@ class TestPlan(TreeNode, TCMSActionModel):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
 
     def _get_absolute_url(self):
-        return reverse('test_plan_url', args=[self.pk, slugify(self.name)])
+        return reverse("test_plan_url", args=[self.pk, slugify(self.name)])
 
     def get_absolute_url(self):
         return self._get_absolute_url()
 
     def get_full_url(self):
-        return super().get_full_url().rstrip('/')
+        return super().get_full_url().rstrip("/")
 
     def _get_email_conf(self):
         try:
@@ -103,10 +100,18 @@ class TestPlan(TreeNode, TCMSActionModel):
 
     def make_cloned_name(self):
         """Make default name of cloned plan"""
-        return 'Copy of {}'.format(self.name)
+        return "Copy of {}".format(self.name)
 
-    def clone(self, name=None, product=None, version=None,
-              new_author=None, set_parent=False, copy_testcases=False, **_kwargs):
+    def clone(
+        self,
+        name=None,
+        product=None,
+        version=None,
+        new_author=None,
+        set_parent=False,
+        copy_testcases=False,
+        **_kwargs
+    ):
         """Clone this plan
 
         :param name: New name of cloned plan. If not passed, make_cloned_name is called
@@ -140,7 +145,8 @@ class TestPlan(TreeNode, TCMSActionModel):
             is_active=self.is_active,
             extra_link=self.extra_link,
             parent=self if set_parent else None,
-            text=self.text)
+            text=self.text,
+        )
 
         # Copy the plan tags
         for tp_tag_src in self.tag.all():
@@ -160,8 +166,8 @@ class TestPlan(TreeNode, TCMSActionModel):
 
     def tree_as_list(self):
         """
-            Returns the entire tree family as a list of TestPlan
-            object with additional fields from tree_queries!
+        Returns the entire tree family as a list of TestPlan
+        object with additional fields from tree_queries!
         """
         plan = TestPlan.objects.with_tree_fields().get(pk=self.pk)
 
@@ -172,9 +178,9 @@ class TestPlan(TreeNode, TCMSActionModel):
 
     def tree_view_html(self):
         """
-            Returns nested tree structure represented as Patterfly TreeView!
-            Relies on the fact that tree nodes are returned in DFS
-            order!
+        Returns nested tree structure represented as Patterfly TreeView!
+        Relies on the fact that tree nodes are returned in DFS
+        order!
         """
         tree_nodes = self.tree_as_list()
 
@@ -238,7 +244,12 @@ class TestPlan(TreeNode, TCMSActionModel):
 
                     <!-- begin-subtree -->
                     <div class="list-group-item-container container-fluid" style="border: none">
-            """ % (active_class, test_plan.get_absolute_url(), test_plan.pk, test_plan.name)
+            """ % (
+                active_class,
+                test_plan.get_absolute_url(),
+                test_plan.pk,
+                test_plan.name,
+            )
 
         # close after the last elements in the for loop
         while previous_depth >= 0:
@@ -248,11 +259,11 @@ class TestPlan(TreeNode, TCMSActionModel):
             previous_depth -= 1
 
         # HTML sanity check
-        begin_node = result.count('<!-- begin-node -->')
-        end_node = result.count('<!-- end-node -->')
+        begin_node = result.count("<!-- begin-node -->")
+        end_node = result.count("<!-- end-node -->")
 
-        begin_subtree = result.count('<!-- begin-subtree -->')
-        end_subtree = result.count('<!-- end-subtree -->')
+        begin_subtree = result.count("<!-- begin-subtree -->")
+        end_subtree = result.count("<!-- end-subtree -->")
 
         # tese will make sure that we catch errors in production
         if begin_node != end_node:
@@ -261,22 +272,27 @@ class TestPlan(TreeNode, TCMSActionModel):
         if begin_subtree != end_subtree:
             raise RuntimeError("Begin/End count for tree-view subtrees don't match")
 
-        return """
+        return (
+            """
             <div id="test-plan-family-tree"
                  class="list-group tree-list-view-pf"
                  style="margin-top:0">
                 %s
             </div>
-        """ % result
+        """
+            % result
+        )
 
 
 class TestPlanTag(models.Model):
-    tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
+    tag = models.ForeignKey("management.Tag", on_delete=models.CASCADE)
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
 
 
 class TestPlanEmailSettings(models.Model):
-    plan = models.OneToOneField(TestPlan, related_name='email_settings', on_delete=models.CASCADE)
+    plan = models.OneToOneField(
+        TestPlan, related_name="email_settings", on_delete=models.CASCADE
+    )
     auto_to_plan_author = models.BooleanField(default=True)
     auto_to_case_owner = models.BooleanField(default=True)
     auto_to_case_default_tester = models.BooleanField(default=True)

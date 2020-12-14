@@ -6,40 +6,44 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('management', '0004_remove_sortkey_description'),
+        ("management", "0004_remove_sortkey_description"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='build',
+            name="build",
             options={
-                'ordering': ['name'],
-                'verbose_name': 'build',
-                'verbose_name_plural': 'builds'
+                "ordering": ["name"],
+                "verbose_name": "build",
+                "verbose_name_plural": "builds",
             },
         ),
         migrations.AlterModelOptions(
-            name='classification',
-            options={'ordering': ['name']},
+            name="classification",
+            options={"ordering": ["name"]},
         ),
         migrations.AlterModelOptions(
-            name='component',
-            options={'ordering': ['name']},
+            name="component",
+            options={"ordering": ["name"]},
         ),
         migrations.AlterModelOptions(
-            name='priority',
-            options={'ordering': ['value'], 'verbose_name_plural': 'priorities'},
+            name="priority",
+            options={"ordering": ["value"], "verbose_name_plural": "priorities"},
         ),
         migrations.AlterModelOptions(
-            name='product',
-            options={'ordering': ['name']},
+            name="product",
+            options={"ordering": ["name"]},
         ),
         migrations.AlterModelOptions(
-            name='tag',
-            options={'ordering': ['name'], 'verbose_name': 'tag', 'verbose_name_plural': 'tags'},
+            name="tag",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "tag",
+                "verbose_name_plural": "tags",
+            },
         ),
         migrations.AlterModelOptions(
-            name='version',
-            options={'ordering': ['value']},
+            name="version",
+            options={"ordering": ["value"]},
         ),
     ]

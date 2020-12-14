@@ -17,12 +17,16 @@ from tcms.core.models import TCMSActionModel
 from tcms.rpc.serializer import TestExecutionRPCSerializer, TestRunRPCSerializer
 from tcms.rpc.utils import distinct_filter
 
-TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [
-    'StatusSubtotal',
-    'CaseRunsTotalCount',
-    'CompletedPercentage',
-    'FailurePercentage',
-    'SuccessPercentage'])
+TestExecutionStatusSubtotal = namedtuple(
+    "TestExecutionStatusSubtotal",
+    [
+        "StatusSubtotal",
+        "CaseRunsTotalCount",
+        "CompletedPercentage",
+        "FailurePercentage",
+        "SuccessPercentage",
+    ],
+)
 
 
 class TestRun(TCMSActionModel):
@@ -30,30 +34,37 @@ class TestRun(TCMSActionModel):
 
     # todo: this field should be removed in favor of plan.product_version
     # no longer shown in edit forms
-    product_version = models.ForeignKey('management.Version', related_name='version_run',
-                                        on_delete=models.CASCADE)
+    product_version = models.ForeignKey(
+        "management.Version", related_name="version_run", on_delete=models.CASCADE
+    )
 
     start_date = models.DateTimeField(auto_now_add=True, db_index=True)
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
 
-    plan = models.ForeignKey('testplans.TestPlan', related_name='run',
-                             on_delete=models.CASCADE)
-    build = models.ForeignKey('management.Build', related_name='build_run',
-                              on_delete=models.CASCADE)
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='manager',
-                                on_delete=models.CASCADE)
-    default_tester = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                       null=True, blank=True,
-                                       related_name='default_tester',
-                                       on_delete=models.CASCADE)
+    plan = models.ForeignKey(
+        "testplans.TestPlan", related_name="run", on_delete=models.CASCADE
+    )
+    build = models.ForeignKey(
+        "management.Build", related_name="build_run", on_delete=models.CASCADE
+    )
+    manager = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="manager", on_delete=models.CASCADE
+    )
+    default_tester = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        related_name="default_tester",
+        on_delete=models.CASCADE,
+    )
 
-    tag = models.ManyToManyField('management.Tag',
-                                 through='testruns.TestRunTag',
-                                 related_name='run')
+    tag = models.ManyToManyField(
+        "management.Tag", through="testruns.TestRunTag", related_name="run"
+    )
 
-    cc = models.ManyToManyField(settings.AUTH_USER_MODEL, through='testruns.TestRunCC')
+    cc = models.ManyToManyField(settings.AUTH_USER_MODEL, through="testruns.TestRunCC")
 
     def __str__(self):
         return self.summary
@@ -61,12 +72,17 @@ class TestRun(TCMSActionModel):
     @classmethod
     def to_xmlrpc(cls, query=None):
         _query = query or {}
-        qs = distinct_filter(TestRun, _query).order_by('pk')
+        qs = distinct_filter(TestRun, _query).order_by("pk")
         serializer = TestRunRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
     def _get_absolute_url(self):
-        return reverse('testruns-get', args=[self.pk, ])
+        return reverse(
+            "testruns-get",
+            args=[
+                self.pk,
+            ],
+        )
 
     def get_absolute_url(self):
         return self._get_absolute_url()
@@ -76,48 +92,60 @@ class TestRun(TCMSActionModel):
         Get the all related mails from the run
         """
         send_to = [self.manager.email]
-        send_to.extend(self.cc.values_list('email', flat=True))
+        send_to.extend(self.cc.values_list("email", flat=True))
         if self.default_tester_id:
             send_to.append(self.default_tester.email)
 
-        for tcr in self.case_run.select_related('assignee').all():
+        for tcr in self.case_run.select_related("assignee").all():
             if tcr.assignee_id:
                 send_to.append(tcr.assignee.email)
 
         send_to = set(send_to)
         # don't email author of last change
-        send_to.discard(getattr(self.history.latest().history_user,  # pylint: disable=no-member
-                                'email', ''))
+        send_to.discard(
+            getattr(
+                self.history.latest().history_user,  # pylint: disable=no-member
+                "email",
+                "",
+            )
+        )
         return list(send_to)
 
-    def create_execution(self, case, status=None, assignee=None,
-                         case_text_version=None, build=None,
-                         sortkey=0):
+    def create_execution(
+        self,
+        case,
+        status=None,
+        assignee=None,
+        case_text_version=None,
+        build=None,
+        sortkey=0,
+    ):
         if not case_text_version:
             case_text_version = case.history.latest().history_id
 
-        assignee = assignee \
-            or (case.default_tester_id and case.default_tester) \
+        assignee = (
+            assignee
+            or (case.default_tester_id and case.default_tester)
             or (self.default_tester_id and self.default_tester)
+        )
 
         if not status:
             # usually IDLE but users can customize statuses
             status = TestExecutionStatus.objects.filter(weight=0).first()
 
-        return self.case_run.create(case=case,
-                                    assignee=assignee,
-                                    tested_by=None,
-                                    status=status,
-                                    case_text_version=case_text_version,
-                                    build=build or self.build,
-                                    sortkey=sortkey,
-                                    close_date=None)
+        return self.case_run.create(
+            case=case,
+            assignee=assignee,
+            tested_by=None,
+            status=status,
+            case_text_version=case_text_version,
+            build=build or self.build,
+            sortkey=sortkey,
+            close_date=None,
+        )
 
     def add_tag(self, tag):
-        return TestRunTag.objects.get_or_create(
-            run=self,
-            tag=tag
-        )
+        return TestRunTag.objects.get_or_create(run=self, tag=tag)
 
     def add_cc(self, user):
         return TestRunCC.objects.get_or_create(
@@ -133,15 +161,19 @@ class TestRun(TCMSActionModel):
 
     def get_bug_count(self):
         """
-            Return the count of distinct bug numbers recorded for
-            this particular TestRun.
+        Return the count of distinct bug numbers recorded for
+        this particular TestRun.
         """
         # note fom Django docs: A count() call performs a SELECT COUNT(*)
         # behind the scenes !!!
-        return LinkReference.objects.filter(
-            execution__run=self.pk,
-            is_defect=True,
-        ).distinct().count()
+        return (
+            LinkReference.objects.filter(
+                execution__run=self.pk,
+                is_defect=True,
+            )
+            .distinct()
+            .count()
+        )
 
     def get_percentage(self, count):
         case_run_count = self.total_num_caseruns
@@ -152,10 +184,9 @@ class TestRun(TCMSActionModel):
         return percent
 
     def _get_completed_case_run_percentage(self):
-        ids = TestExecutionStatus.objects.exclude(weight=0).values_list('pk', flat=True)
+        ids = TestExecutionStatus.objects.exclude(weight=0).values_list("pk", flat=True)
 
-        completed_caserun = self.case_run.filter(
-            status__in=ids)
+        completed_caserun = self.case_run.filter(status__in=ids)
 
         return self.get_percentage(completed_caserun.count())
 
@@ -172,32 +203,33 @@ class TestRun(TCMSActionModel):
         else:
             self.stop_date = None
 
-    @override('en')
+    @override("en")
     def stats_executions_status(self, statuses=None):
         """
-            Get statistics based on executions' status
+        Get statistics based on executions' status
 
-            :param statuses: iterable object containing TestExecutionStatus
-                             objects representing PASS, FAIL, WAIVED, etc.
-            :type statuses: iterable
-            :return: the statistics including the number of each status mapping,
-                     total number of executions, complete percent, and failure percent.
-            :rtype: namedtuple
+        :param statuses: iterable object containing TestExecutionStatus
+                         objects representing PASS, FAIL, WAIVED, etc.
+        :type statuses: iterable
+        :return: the statistics including the number of each status mapping,
+                 total number of executions, complete percent, and failure percent.
+        :rtype: namedtuple
         """
         if statuses is None:
-            statuses = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
+            statuses = TestExecutionStatus.objects.only("pk", "name").order_by("pk")
 
-        rows = TestExecution.objects.filter(
-            run=self.pk
-        ).values(
-            'status'
-        ).annotate(status_count=Count('status'))
+        rows = (
+            TestExecution.objects.filter(run=self.pk)
+            .values("status")
+            .annotate(status_count=Count("status"))
+        )
 
-        caserun_statuses_subtotal = dict((status.pk, [0, status])
-                                         for status in statuses)
+        caserun_statuses_subtotal = dict(
+            (status.pk, [0, status]) for status in statuses
+        )
 
         for row in rows:
-            caserun_statuses_subtotal[row['status']][0] = row['status_count']
+            caserun_statuses_subtotal[row["status"]][0] = row["status_count"]
 
         complete_count = 0
         failure_count = 0
@@ -214,22 +246,23 @@ class TestRun(TCMSActionModel):
                 failure_count += status_caseruns_count
 
         # Final calculation
-        complete_percent = .0
+        complete_percent = 0.0
         if caseruns_total_count:
             complete_percent = complete_count * 100.0 / caseruns_total_count
-        failure_percent = .0
+        failure_percent = 0.0
         if complete_count:
             failure_percent = failure_count * 100.0 / caseruns_total_count
 
-        return TestExecutionStatusSubtotal(caserun_statuses_subtotal,
-                                           caseruns_total_count,
-                                           complete_percent,
-                                           failure_percent,
-                                           complete_percent - failure_percent)
+        return TestExecutionStatusSubtotal(
+            caserun_statuses_subtotal,
+            caseruns_total_count,
+            complete_percent,
+            failure_percent,
+            complete_percent - failure_percent,
+        )
 
 
 class TestExecutionStatus(TCMSActionModel):
-
     class Meta:
         # used in the admin view
         verbose_name_plural = _("Test execution statuses")
@@ -245,7 +278,7 @@ class TestExecutionStatus(TCMSActionModel):
     @classmethod
     def get_names(cls):
         """ Get all status names in mapping between id and name """
-        return dict(cls.objects.values_list('pk', 'name'))
+        return dict(cls.objects.values_list("pk", "name"))
 
     @classmethod
     def get_names_ids(cls):
@@ -254,69 +287,76 @@ class TestExecutionStatus(TCMSActionModel):
 
 
 # register model for DB translations
-vinaigrette.register(TestExecutionStatus, ['name'])
+vinaigrette.register(TestExecutionStatus, ["name"])
 
 
 class TestExecution(TCMSActionModel):
     history = KiwiHistoricalRecords()
 
-    assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
-                                 related_name='case_run_assignee',
-                                 on_delete=models.CASCADE)
-    tested_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
-                                  related_name='case_run_tester',
-                                  on_delete=models.CASCADE)
+    assignee = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name="case_run_assignee",
+        on_delete=models.CASCADE,
+    )
+    tested_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name="case_run_tester",
+        on_delete=models.CASCADE,
+    )
     case_text_version = models.IntegerField()
     close_date = models.DateTimeField(null=True, blank=True)
     sortkey = models.IntegerField(null=True, blank=True)
 
-    run = models.ForeignKey(TestRun, related_name='case_run', on_delete=models.CASCADE)
-    case = models.ForeignKey('testcases.TestCase', related_name='case_run',
-                             on_delete=models.CASCADE)
+    run = models.ForeignKey(TestRun, related_name="case_run", on_delete=models.CASCADE)
+    case = models.ForeignKey(
+        "testcases.TestCase", related_name="case_run", on_delete=models.CASCADE
+    )
     status = models.ForeignKey(TestExecutionStatus, on_delete=models.CASCADE)
-    build = models.ForeignKey('management.Build', on_delete=models.CASCADE)
+    build = models.ForeignKey("management.Build", on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('case', 'run', 'case_text_version')
+        unique_together = ("case", "run", "case_text_version")
 
     def links(self):
         """
-            Returns all links attached to this object!
+        Returns all links attached to this object!
         """
         return LinkReference.objects.filter(execution=self.pk)
 
     def __str__(self):
-        return '%s: %s' % (self.pk, self.case_id)
+        return "%s: %s" % (self.pk, self.case_id)
 
     @classmethod
     def to_xmlrpc(cls, query: dict = None):
         if query is None:
             query = {}
-        query_set = distinct_filter(TestExecution, query).order_by('pk')
+        query_set = distinct_filter(TestExecution, query).order_by("pk")
         serializer = TestExecutionRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def get_bugs(self):
-        return LinkReference.objects.filter(
-            execution=self.pk,
-            is_defect=True)
+        return LinkReference.objects.filter(execution=self.pk, is_defect=True)
 
     def get_bugs_count(self):
         return self.get_bugs().count()
 
     def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestExecution!
-        return reverse('testruns-get', args=[self.run_id])
+        return reverse("testruns-get", args=[self.run_id])
 
 
 class TestRunTag(models.Model):
-    tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
-    run = models.ForeignKey(TestRun, related_name='tags', on_delete=models.CASCADE)
+    tag = models.ForeignKey("management.Tag", on_delete=models.CASCADE)
+    run = models.ForeignKey(TestRun, related_name="tags", on_delete=models.CASCADE)
 
 
 class TestRunCC(models.Model):
-    run = models.ForeignKey(TestRun, related_name='cc_list', on_delete=models.CASCADE)
+    run = models.ForeignKey(TestRun, related_name="cc_list", on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('run', 'user')
+        unique_together = ("run", "user")

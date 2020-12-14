@@ -10,14 +10,18 @@ from pylint.checkers import utils
 class DunderClassAttributeChecker(checkers.BaseChecker):
     __implements__ = (interfaces.IAstroidChecker,)
 
-    name = 'dunder-class-attribute-checker'
+    name = "dunder-class-attribute-checker"
 
-    msgs = {'C4401': ('Class attributes should not contain double underscores',
-                      'dunder-class-attribute',
-                      'Dunders, e.g. "__some_name__", are reserved for Python. '
-                      'Do not name your class attributes this way!')}
+    msgs = {
+        "C4401": (
+            "Class attributes should not contain double underscores",
+            "dunder-class-attribute",
+            'Dunders, e.g. "__some_name__", are reserved for Python. '
+            "Do not name your class attributes this way!",
+        )
+    }
 
-    @utils.check_messages('dunder-class-attribute')
+    @utils.check_messages("dunder-class-attribute")
     def visit_classdef(self, node):
         """Detect when class attributes use double underscores."""
         # we can redefine special methods (e.g. __iter__) and some attributes,
@@ -28,8 +32,10 @@ class DunderClassAttributeChecker(checkers.BaseChecker):
         for child in node.body:
             if isinstance(child, astroid.Assign):
                 for target in child.targets:
-                    if (isinstance(target, astroid.AssignName)
-                            and target.name not in allowed_attributes
-                            and target.name.startswith('__')
-                            and target.name.endswith('__')):
-                        self.add_message('dunder-class-attribute', node=child)
+                    if (
+                        isinstance(target, astroid.AssignName)
+                        and target.name not in allowed_attributes
+                        and target.name.startswith("__")
+                        and target.name.endswith("__")
+                    ):
+                        self.add_message("dunder-class-attribute", node=child)

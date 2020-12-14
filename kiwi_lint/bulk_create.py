@@ -9,14 +9,18 @@ from pylint.checkers import utils
 class BulkCreateChecker(checkers.BaseChecker):
     __implements__ = (interfaces.IAstroidChecker,)
 
-    name = 'bulk-create-checker'
+    name = "bulk-create-checker"
 
-    msgs = {'E4451': ("Use bulk_create_with_history() instead of bulk_create()",
-                      'bulk-create-used',
-                      "bulk_create() will not save model history. "
-                      "Use bulk_create_with_history() instead!")}
+    msgs = {
+        "E4451": (
+            "Use bulk_create_with_history() instead of bulk_create()",
+            "bulk-create-used",
+            "bulk_create() will not save model history. "
+            "Use bulk_create_with_history() instead!",
+        )
+    }
 
-    @utils.check_messages('bulk-create-used')
+    @utils.check_messages("bulk-create-used")
     def visit_attribute(self, node):
-        if node.attrname == 'bulk_create':
-            self.add_message('bulk-create-used', node=node)
+        if node.attrname == "bulk_create":
+            self.add_message("bulk-create-used", node=node)

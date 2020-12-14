@@ -5,13 +5,15 @@ from django.core.exceptions import PermissionDenied
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 __all__ = (
-    'login',
-    'logout',
+    "login",
+    "logout",
 )
 
 
-@rpc_method(name='Auth.login')
-def login(username, password, **kwargs):  # pylint: disable=missing-api-permissions-required
+@rpc_method(name="Auth.login")
+def login(
+    username, password, **kwargs
+):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: RPC Auth.login(username, password)
 
@@ -31,17 +33,19 @@ def login(username, password, **kwargs):  # pylint: disable=missing-api-permissi
     request = kwargs.get(REQUEST_KEY)
 
     if not username or not password:
-        raise PermissionDenied('Username and password is required')
+        raise PermissionDenied("Username and password is required")
 
-    user = django.contrib.auth.authenticate(request, username=username, password=password)
+    user = django.contrib.auth.authenticate(
+        request, username=username, password=password
+    )
     if user is not None:
         django.contrib.auth.login(request, user)
         return request.session.session_key
 
-    raise PermissionDenied('Wrong username or password')
+    raise PermissionDenied("Wrong username or password")
 
 
-@rpc_method(name='Auth.logout')
+@rpc_method(name="Auth.logout")
 def logout(**kwargs):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: RPC Auth.logout()

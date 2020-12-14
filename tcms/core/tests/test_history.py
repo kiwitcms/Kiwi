@@ -6,7 +6,7 @@ from tcms.tests import BasePlanCase
 
 class RemoveUserWhenThereIsHistory(BasePlanCase):
     def setUp(self):
-        self.case.summary = 'editted to generate history'
+        self.case.summary = "editted to generate history"
         self.case.save()
         # map history to a user which we try to delete later
         for history_record in self.case.history.all():

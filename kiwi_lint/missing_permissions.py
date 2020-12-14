@@ -8,27 +8,32 @@ from pylint import checkers, interfaces
 
 class MissingPermissionsChecker(checkers.BaseChecker):
     """
-        Will inspect functions and classes inside a views.py module for the
-        presence of permissions decorator. May generate lots of false negatives
-        but we're ok with that. Better inspect than forget to add permission
-        decorator!
+    Will inspect functions and classes inside a views.py module for the
+    presence of permissions decorator. May generate lots of false negatives
+    but we're ok with that. Better inspect than forget to add permission
+    decorator!
     """
+
     allowed_decorators = [
-        'permission_required',
-        'object_permission_required',
+        "permission_required",
+        "object_permission_required",
     ]
     inside_views_module = False
 
     __implements__ = (interfaces.IAstroidChecker,)
 
-    name = 'mising-permissions-checker'
+    name = "mising-permissions-checker"
 
-    msgs = {'R4511': ("View is missing @permission_required decorator!",
-                      'missing-permission-required',
-                      "All views must require permissions!")}
+    msgs = {
+        "R4511": (
+            "View is missing @permission_required decorator!",
+            "missing-permission-required",
+            "All views must require permissions!",
+        )
+    }
 
     def visit_module(self, node):
-        self.inside_views_module = node.name.endswith('.views')
+        self.inside_views_module = node.name.endswith(".views")
 
     def visit_functiondef(self, node):
         if not self.inside_views_module:
@@ -38,7 +43,7 @@ class MissingPermissionsChecker(checkers.BaseChecker):
         if node.args.args:
             arg0 = node.args.args[0]
 
-        if arg0 and arg0.name != 'request':
+        if arg0 and arg0.name != "request":
             return
         # this function is a confirmed view so start checking
         self._check_for_missing_decorator(node)
@@ -63,7 +68,7 @@ class MissingPermissionsChecker(checkers.BaseChecker):
             return
 
         if not node.decorators:
-            self.add_message('missing-permission-required', node=node)
+            self.add_message("missing-permission-required", node=node)
             return
 
         found_permissions_required = False
@@ -72,27 +77,34 @@ class MissingPermissionsChecker(checkers.BaseChecker):
                 if decorator.func.name in self.allowed_decorators:
                     found_permissions_required = True
                     break
-                if decorator.func.name == 'method_decorator' and \
-                        isinstance(decorator.args[0], astroid.Call) and \
-                        decorator.args[0].func.name in self.allowed_decorators:
+                if (
+                    decorator.func.name == "method_decorator"
+                    and isinstance(decorator.args[0], astroid.Call)
+                    and decorator.args[0].func.name in self.allowed_decorators
+                ):
                     found_permissions_required = True
                     break
 
         if not found_permissions_required:
-            self.add_message('missing-permission-required', node=node)
+            self.add_message("missing-permission-required", node=node)
 
 
 class MissingAPIPermissionsChecker(checkers.BaseChecker):
     """
-        Will inspect API functions for the presence of permissions decorator!
+    Will inspect API functions for the presence of permissions decorator!
     """
+
     __implements__ = (interfaces.IAstroidChecker,)
 
-    name = 'mising-api-permissions-checker'
+    name = "mising-api-permissions-checker"
 
-    msgs = {'R4512': ("API function is missing @permissions_required decorator!",
-                      'missing-api-permissions-required',
-                      "All API functions must require permissions!")}
+    msgs = {
+        "R4512": (
+            "API function is missing @permissions_required decorator!",
+            "missing-api-permissions-required",
+            "All API functions must require permissions!",
+        )
+    }
 
     def visit_functiondef(self, node):
         # API functions always have @rpc_method decorator
@@ -101,9 +113,11 @@ class MissingAPIPermissionsChecker(checkers.BaseChecker):
 
         is_api_function = False
         for decorator in node.decorators.nodes:
-            if isinstance(decorator, astroid.Call) and \
-                    isinstance(decorator.func, astroid.Name) and \
-                    decorator.func.name == 'rpc_method':
+            if (
+                isinstance(decorator, astroid.Call)
+                and isinstance(decorator.func, astroid.Name)
+                and decorator.func.name == "rpc_method"
+            ):
                 is_api_function = True
                 break
 
@@ -112,16 +126,20 @@ class MissingAPIPermissionsChecker(checkers.BaseChecker):
 
         found_permissions_required = False
         for decorator in node.decorators.nodes:
-            if isinstance(decorator, astroid.Call) and \
-                    isinstance(decorator.func, astroid.Name) and \
-                    decorator.func.name == 'permissions_required':
+            if (
+                isinstance(decorator, astroid.Call)
+                and isinstance(decorator.func, astroid.Name)
+                and decorator.func.name == "permissions_required"
+            ):
                 found_permissions_required = True
                 break
 
-            if isinstance(decorator, astroid.Name) and \
-                    decorator.name == 'http_basic_auth_login_required':
+            if (
+                isinstance(decorator, astroid.Name)
+                and decorator.name == "http_basic_auth_login_required"
+            ):
                 found_permissions_required = True
                 break
 
         if not found_permissions_required:
-            self.add_message('missing-api-permissions-required', node=node)
+            self.add_message("missing-api-permissions-required", node=node)

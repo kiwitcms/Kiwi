@@ -16,11 +16,11 @@ class TestFilter(APITestCase):
 
         self.assertGreater(len(execution_statuses), 0)
         for execution_status in execution_statuses:
-            self.assertLess(execution_status['weight'], 0)
-            self.assertIsNotNone(execution_status['id'])
-            self.assertIsNotNone(execution_status['name'])
-            self.assertIsNotNone(execution_status['color'])
-            self.assertIsNotNone(execution_status['icon'])
+            self.assertLess(execution_status["weight"], 0)
+            self.assertIsNotNone(execution_status["id"])
+            self.assertIsNotNone(execution_status["name"])
+            self.assertIsNotNone(execution_status["color"])
+            self.assertIsNotNone(execution_status["icon"])
 
 
 class TestFilterPermission(APIPermissionsTestCase):

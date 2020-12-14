@@ -46,7 +46,7 @@ class TestAddTag(APITestCase):
         self.tag = TagFactory()
 
     def test_add_tag_to_non_existent_bug(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Bug matching query does not exist'):
+        with self.assertRaisesRegex(XmlRPCFault, "Bug matching query does not exist"):
             self.rpc_client.Bug.add_tag(-9, self.tag.name)
 
 

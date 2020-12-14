@@ -8,10 +8,9 @@ from tcms.tests.factories import UserFactory
 
 
 class TestUserField(TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.user = UserFactory(username='admin', email='admin@example.com')
+        cls.user = UserFactory(username="admin", email="admin@example.com")
         cls.user_field = UserField()
 
     def setUp(self):
@@ -23,11 +22,15 @@ class TestUserField(TestCase):
         self.assertEqual(form_user.username, self.user.username)
 
     def test_empty_username_when_required_throws_error(self):
-        with self.assertRaisesRegex(ValidationError, 'A user name or user ID is required.'):
-            self.user_field.clean('')
+        with self.assertRaisesRegex(
+            ValidationError, "A user name or user ID is required."
+        ):
+            self.user_field.clean("")
 
     def test_none_username_when_required_throws_error(self):
-        with self.assertRaisesRegex(ValidationError, 'A user name or user ID is required.'):
+        with self.assertRaisesRegex(
+            ValidationError, "A user name or user ID is required."
+        ):
             self.user_field.clean(None)
 
     def test_none_username_accepted_when_not_required(self):
@@ -36,7 +39,7 @@ class TestUserField(TestCase):
 
     def test_empty_username_accepted_when_not_required(self):
         self.user_field.required = False
-        self.assertIsNone(self.user_field.clean(''))
+        self.assertIsNone(self.user_field.clean(""))
 
     def test_int_instance_username_accepted(self):
         form_user = self.user_field.clean(self.user.pk)
@@ -45,7 +48,9 @@ class TestUserField(TestCase):
 
     def test_not_existing_int_instance_username_throws_error(self):
         user_id = -1
-        with self.assertRaisesRegex(ValidationError, ('Unknown user_id: "%d"' % user_id)):
+        with self.assertRaisesRegex(
+            ValidationError, ('Unknown user_id: "%d"' % user_id)
+        ):
             self.user_field.clean(user_id)
 
     def test_digit_username_accepted(self):
@@ -55,9 +60,11 @@ class TestUserField(TestCase):
 
     def test_not_existing_digit_username_throws_error(self):
         user_id = "999999"
-        with self.assertRaisesRegex(ValidationError, ('Unknown user_id: "%s"' % user_id)):
+        with self.assertRaisesRegex(
+            ValidationError, ('Unknown user_id: "%s"' % user_id)
+        ):
             self.user_field.clean(user_id)
 
     def test_not_existing_string_username_throws_error(self):
         with self.assertRaisesRegex(ValidationError, 'Unknown user: "UnknownUser"'):
-            self.user_field.clean('UnknownUser')
+            self.user_field.clean("UnknownUser")

@@ -20,31 +20,31 @@ class TestNavigation(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         super(TestNavigation, cls).setUpTestData()
-        cls.user = UserFactory(email='user+1@example.com')
-        cls.user.set_password('testing')
+        cls.user = UserFactory(email="user+1@example.com")
+        cls.user.set_password("testing")
         cls.user.save()
 
     def test_navigation_displays_currently_for_logged_user(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.user.username,
-            password='testing')
-        response = self.client.get(reverse('iframe-navigation'))
+            username=self.user.username, password="testing"
+        )
+        response = self.client.get(reverse("iframe-navigation"))
 
         self.assertContains(response, self.user.username)
-        self.assertContains(response, _('My profile'))
+        self.assertContains(response, _("My profile"))
         self._common_navigation_assertions(response)
 
     def test_navigation_displays_currently_for_guest_user(self):
-        response = self.client.get(reverse('iframe-navigation'))
-        self.assertContains(response, _('Welcome Guest'))
+        response = self.client.get(reverse("iframe-navigation"))
+        self.assertContains(response, _("Welcome Guest"))
         self._common_navigation_assertions(response)
 
     def _common_navigation_assertions(self, response):
-        self.assertContains(response, _('DASHBOARD'))
-        self.assertContains(response, _('TESTING'))
-        self.assertContains(response, _('SEARCH'))
-        self.assertContains(response, _('TELEMETRY'))
-        self.assertContains(response, _('ADMIN'))
+        self.assertContains(response, _("DASHBOARD"))
+        self.assertContains(response, _("TESTING"))
+        self.assertContains(response, _("SEARCH"))
+        self.assertContains(response, _("TELEMETRY"))
+        self.assertContains(response, _("ADMIN"))
 
 
 class TestDashboard(BaseCaseRun):
@@ -53,40 +53,40 @@ class TestDashboard(BaseCaseRun):
         super().setUpTestData()
         # used to reproduce Sentry #KIWI-TCMS-38 where rendering fails
         # with that particular value
-        cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求",
-                                         author=cls.tester)
+        cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求", author=cls.tester)
 
     def test_when_not_logged_in_redirects_to_login(self):
         self.client.logout()
-        response = self.client.get(reverse('core-views-index'))
+        response = self.client.get(reverse("core-views-index"))
         self.assertRedirects(
             response,
-            reverse('tcms-login')+'?next=/',
-            target_status_code=HTTPStatus.OK)
+            reverse("tcms-login") + "?next=/",
+            target_status_code=HTTPStatus.OK,
+        )
 
     def test_when_logged_in_renders_dashboard(self):
-        response = self.client.get(reverse('core-views-index'))
+        response = self.client.get(reverse("core-views-index"))
 
-        self.assertContains(response, _('Test executions'))
-        self.assertContains(response, _('Dashboard'))
-        self.assertContains(response, _('Your Test plans'))
+        self.assertContains(response, _("Test executions"))
+        self.assertContains(response, _("Dashboard"))
+        self.assertContains(response, _("Your Test plans"))
 
     def test_dashboard_shows_testruns_for_manager(self):
         test_run = TestRunFactory(manager=self.tester)
 
-        response = self.client.get(reverse('core-views-index'))
+        response = self.client.get(reverse("core-views-index"))
         self.assertContains(response, test_run.summary)
 
     def test_dashboard_shows_testruns_for_default_tester(self):
         test_run = TestRunFactory(default_tester=self.tester)
 
-        response = self.client.get(reverse('core-views-index'))
+        response = self.client.get(reverse("core-views-index"))
         self.assertContains(response, test_run.summary)
 
     def test_dashboard_shows_testruns_for_execution_assignee(self):
         execution = TestExecutionFactory(assignee=self.tester)
 
-        response = self.client.get(reverse('core-views-index'))
+        response = self.client.get(reverse("core-views-index"))
         self.assertContains(response, execution.run.summary)
 
 
@@ -95,20 +95,19 @@ def exception_view(request):
 
 
 urlpatterns = [
-    path('will-trigger-500/', exception_view),
-    path('', include(urls)),
+    path("will-trigger-500/", exception_view),
+    path("", include(urls)),
 ]
 
 
-handler500 = 'tcms.core.views.server_error'
+handler500 = "tcms.core.views.server_error"
 
 
 @test.override_settings(ROOT_URLCONF=__name__)
 class TestServerError(test.TestCase):
-
     def test_custom_server_error_view(self):
         client = test.Client(raise_request_exception=False)
-        response = client.get('/will-trigger-500/')
+        response = client.get("/will-trigger-500/")
 
         self.assertEqual(response.status_code, 500)
-        self.assertTemplateUsed(response, '500.html')
+        self.assertTemplateUsed(response, "500.html")

@@ -16,22 +16,24 @@ from tcms.issuetracker.base import IssueTrackerType
 
 class KiwiTCMS(IssueTrackerType):
     """
-        Support for Kiwi TCMS. Required fields:
+    Support for Kiwi TCMS. Required fields:
 
-        :base_url: the FQDN of the current instance. Used to match against defect URLs.
+    :base_url: the FQDN of the current instance. Used to match against defect URLs.
 
-        The rest of the fields are not used!
+    The rest of the fields are not used!
     """
 
     def _rpc_connection(self):
         return None
 
-    def is_adding_testcase_to_issue_disabled(self):  # pylint: disable=invalid-name, no-self-use
+    def is_adding_testcase_to_issue_disabled(
+        self,
+    ):  # pylint: disable=invalid-name, no-self-use
         return False
 
     def details(self, url):
         """
-            Provide more details from our own bug tracker!
+        Provide more details from our own bug tracker!
         """
         bug_id = self.bug_id_from_url(url)
         bug = Bug.objects.filter(pk=bug_id).first()
@@ -39,23 +41,24 @@ class KiwiTCMS(IssueTrackerType):
             return {}
 
         result = {
-            'title': bug.summary,
-            'description': render_to_string('include/bug_details.html',
-                                            {'object': bug})
+            "title": bug.summary,
+            "description": render_to_string(
+                "include/bug_details.html", {"object": bug}
+            ),
         }
 
         return result
 
     def add_testexecution_to_issue(self, executions, issue_url):
         """
-            Directly 'link' BUG and TE objects via their m2m
-            relationship.
+        Directly 'link' BUG and TE objects via their m2m
+        relationship.
 
-            .. note::
+        .. note::
 
-                This method takes extra steps to safeguard from
-                bogus input b/c it is called unconditionally from
-                API method ``TestCase.add_link()``!
+            This method takes extra steps to safeguard from
+            bogus input b/c it is called unconditionally from
+            API method ``TestCase.add_link()``!
         """
         try:
             bug_id = self.bug_id_from_url(issue_url)
@@ -72,17 +75,17 @@ class KiwiTCMS(IssueTrackerType):
 
     def report_issue_from_testexecution(self, execution, user):
         """
-            Create the new bug using internal API instead of
-            going through the RPC layer and return its URL
+        Create the new bug using internal API instead of
+        going through the RPC layer and return its URL
         """
         data = {
-            'reporter': user,
-            'summary': 'Failed test: %s' % execution.case.summary,
-            'product': execution.run.plan.product,
-            'version': execution.run.product_version,
-            'build': execution.build,
-            'text': self._report_comment(execution),
-            '_execution': execution,
+            "reporter": user,
+            "summary": "Failed test: %s" % execution.case.summary,
+            "product": execution.run.plan.product,
+            "version": execution.run.product_version,
+            "build": execution.build,
+            "text": self._report_comment(execution),
+            "_execution": execution,
         }
 
         bug = New.create_bug(data)
@@ -102,6 +105,6 @@ class KiwiTCMS(IssueTrackerType):
     @classmethod
     def bug_id_from_url(cls, url):
         """
-            Strips the last '/' and returns the PK
+        Strips the last '/' and returns the PK
         """
-        return super().bug_id_from_url(url.strip('/'))
+        return super().bug_id_from_url(url.strip("/"))

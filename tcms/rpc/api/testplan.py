@@ -11,26 +11,22 @@ from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.models import TestPlan
 
 __all__ = (
-    'create',
-    'update',
-    'filter',
-
-    'add_case',
-    'remove_case',
-    'update_case_order',
-
-    'add_tag',
-    'remove_tag',
-
-    'add_attachment',
-    'list_attachments',
-
-    'tree',
+    "create",
+    "update",
+    "filter",
+    "add_case",
+    "remove_case",
+    "update_case_order",
+    "add_tag",
+    "remove_tag",
+    "add_attachment",
+    "list_attachments",
+    "tree",
 )
 
 
-@permissions_required('testplans.add_testplan')
-@rpc_method(name='TestPlan.create')
+@permissions_required("testplans.add_testplan")
+@rpc_method(name="TestPlan.create")
 def create(values, **kwargs):
     """
     .. function:: RPC TestPlan.create(values)
@@ -60,11 +56,11 @@ def create(values, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
 
-    if not (values.get('author') or values.get('author_id')):
-        values['author'] = request.user.pk
+    if not (values.get("author") or values.get("author_id")):
+        values["author"] = request.user.pk
 
     form = NewPlanForm(values)
-    form.populate(product_id=values['product'])
+    form.populate(product_id=values["product"])
 
     if form.is_valid():
         test_plan = form.save()
@@ -74,8 +70,8 @@ def create(values, **kwargs):
     return test_plan.serialize()
 
 
-@permissions_required('testplans.view_testplan')
-@rpc_method(name='TestPlan.filter')
+@permissions_required("testplans.view_testplan")
+@rpc_method(name="TestPlan.filter")
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestPlan.filter(query)
@@ -94,8 +90,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     return TestPlan.to_xmlrpc(query)
 
 
-@permissions_required('testplans.add_testplantag')
-@rpc_method(name='TestPlan.add_tag')
+@permissions_required("testplans.add_testplantag")
+@rpc_method(name="TestPlan.add_tag")
 def add_tag(plan_id, tag_name, **kwargs):
     """
     .. function:: RPC TestPlan.add_tag(plan_id, tag_name)
@@ -118,8 +114,8 @@ def add_tag(plan_id, tag_name, **kwargs):
     TestPlan.objects.get(pk=plan_id).add_tag(tag)
 
 
-@permissions_required('testplans.delete_testplantag')
-@rpc_method(name='TestPlan.remove_tag')
+@permissions_required("testplans.delete_testplantag")
+@rpc_method(name="TestPlan.remove_tag")
 def remove_tag(plan_id, tag_name):
     """
     .. function:: RPC TestPlan.remove_tag(plan_id, tag_name)
@@ -137,8 +133,8 @@ def remove_tag(plan_id, tag_name):
     TestPlan.objects.get(pk=plan_id).remove_tag(tag)
 
 
-@permissions_required('testplans.change_testplan')
-@rpc_method(name='TestPlan.update')
+@permissions_required("testplans.change_testplan")
+@rpc_method(name="TestPlan.update")
 def update(plan_id, values):
     """
     .. function:: RPC TestPlan.update(plan_id, values)
@@ -165,8 +161,8 @@ def update(plan_id, values):
     return test_plan.serialize()
 
 
-@permissions_required('testcases.add_testcaseplan')
-@rpc_method(name='TestPlan.add_case')
+@permissions_required("testcases.add_testcaseplan")
+@rpc_method(name="TestPlan.add_case")
 def add_case(plan_id, case_id):
     """
     .. function:: RPC TestPlan.add_case(plan_id, case_id)
@@ -189,12 +185,12 @@ def add_case(plan_id, case_id):
     test_case_plan = plan.add_case(case)
 
     result = case.serialize()
-    result['sortkey'] = test_case_plan.sortkey
+    result["sortkey"] = test_case_plan.sortkey
     return result
 
 
-@permissions_required('testcases.delete_testcaseplan')
-@rpc_method(name='TestPlan.remove_case')
+@permissions_required("testcases.delete_testcaseplan")
+@rpc_method(name="TestPlan.remove_case")
 def remove_case(plan_id, case_id):
     """
     .. function:: RPC TestPlan.remove_case(plan_id, case_id)
@@ -210,8 +206,8 @@ def remove_case(plan_id, case_id):
     TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
 
 
-@permissions_required('testcases.change_testcaseplan')
-@rpc_method(name='TestPlan.update_case_order')
+@permissions_required("testcases.change_testcaseplan")
+@rpc_method(name="TestPlan.update_case_order")
 def update_case_order(plan_id, case_id, sortkey):
     """
     .. function:: RPC TestPlan.update_case_order(plan_id, case_id, sortkey)
@@ -229,13 +225,11 @@ def update_case_order(plan_id, case_id, sortkey):
     """
     TestCasePlan.objects.filter(  # pylint:disable=objects-update-used
         case=case_id, plan=plan_id
-    ).update(
-        sortkey=sortkey
-    )
+    ).update(sortkey=sortkey)
 
 
-@permissions_required('attachments.view_attachment')
-@rpc_method(name='TestPlan.list_attachments')
+@permissions_required("attachments.view_attachment")
+@rpc_method(name="TestPlan.list_attachments")
 def list_attachments(plan_id, **kwargs):
     """
     .. function:: RPC TestPlan.list_attachments(plan_id)
@@ -255,8 +249,8 @@ def list_attachments(plan_id, **kwargs):
     return utils.get_attachments_for(request, plan)
 
 
-@permissions_required('attachments.add_attachment')
-@rpc_method(name='TestPlan.add_attachment')
+@permissions_required("attachments.add_attachment")
+@rpc_method(name="TestPlan.add_attachment")
 def add_attachment(plan_id, filename, b64content, **kwargs):
     """
     .. function:: RPC TestPlan.add_attachment(plan_id, filename, b64content)
@@ -274,14 +268,15 @@ def add_attachment(plan_id, filename, b64content, **kwargs):
     """
     utils.add_attachment(
         plan_id,
-        'testplans.TestPlan',
+        "testplans.TestPlan",
         kwargs.get(REQUEST_KEY).user,
         filename,
-        b64content)
+        b64content,
+    )
 
 
-@permissions_required('testplans.view_testplan')
-@rpc_method(name='TestPlan.tree')
+@permissions_required("testplans.view_testplan")
+@rpc_method(name="TestPlan.tree")
 def tree(plan_id):
     """
     .. function:: RPC TestPlan.tree(plan_id)
@@ -300,12 +295,14 @@ def tree(plan_id):
     result = []
 
     for record in plan.tree_as_list():
-        result.append({
-            'id': record.pk,
-            'name': record.name,
-            'parent_id': record.parent_id,
-            'tree_depth': record.tree_depth,
-            'url': record.get_full_url(),
-        })
+        result.append(
+            {
+                "id": record.pk,
+                "name": record.name,
+                "parent_id": record.parent_id,
+                "tree_depth": record.tree_depth,
+                "url": record.get_full_url(),
+            }
+        )
 
     return result

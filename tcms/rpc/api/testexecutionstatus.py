@@ -8,8 +8,8 @@ from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import TestExecutionStatus
 
 
-@permissions_required('testruns.view_testexecutionstatus')
-@rpc_method(name='TestExecutionStatus.filter')
+@permissions_required("testruns.view_testexecutionstatus")
+@rpc_method(name="TestExecutionStatus.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestExecutionStatus.filter(query)

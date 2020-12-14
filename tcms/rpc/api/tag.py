@@ -6,8 +6,8 @@ from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
 
 
-@permissions_required('management.view_tag')
-@rpc_method(name='Tag.filter')
+@permissions_required("management.view_tag")
+@rpc_method(name="Tag.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Tag.filter(query)

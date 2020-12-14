@@ -14,16 +14,28 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='UserActivationKey',
+            name="UserActivationKey",
             fields=[
-                ('id', models.AutoField(auto_created=True,
-                                        primary_key=True,
-                                        serialize=False,
-                                        verbose_name='ID')),
-                ('activation_key', models.CharField(blank=True, max_length=64, null=True)),
-                ('key_expires', models.DateTimeField(blank=True, null=True)),
-                ('user', models.ForeignKey(on_delete=models.deletion.CASCADE,
-                                           to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "activation_key",
+                    models.CharField(blank=True, max_length=64, null=True),
+                ),
+                ("key_expires", models.DateTimeField(blank=True, null=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
     ]

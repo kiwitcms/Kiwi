@@ -8,22 +8,19 @@ from django.http import HttpResponseForbidden
 
 def calculate_signature(secret, contents):
     """
-        Calculate GitHub signature header.
+    Calculate GitHub signature header.
 
-        WARNING: both parameters must be bytes, not string!
+    WARNING: both parameters must be bytes, not string!
     """
-    return 'sha1=' + hmac.new(
-        secret,
-        msg=contents,
-        digestmod=hashlib.sha1).hexdigest()
+    return "sha1=" + hmac.new(secret, msg=contents, digestmod=hashlib.sha1).hexdigest()
 
 
 def verify_signature(request, secret):
     """
-        Verifies request comes from GitHub, see:
-        https://developer.github.com/webhooks/securing/
+    Verifies request comes from GitHub, see:
+    https://developer.github.com/webhooks/securing/
     """
-    signature = request.headers.get('X-Hub-Signature', None)
+    signature = request.headers.get("X-Hub-Signature", None)
     if not signature:
         return HttpResponseForbidden()
 

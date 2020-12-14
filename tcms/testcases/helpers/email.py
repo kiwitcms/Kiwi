@@ -19,10 +19,12 @@ def email_case_deletion(case):
     cc_list = case.emailing.get_cc_list()
     if not recipients:
         return
-    subject = _('DELETED: TestCase #%(pk)d - %(summary)s') % {'pk': case.pk,
-                                                              'summary': case.summary}
-    context = {'case': case}
-    mailto('email/post_case_delete/email.txt', subject, recipients, context, cc=cc_list)
+    subject = _("DELETED: TestCase #%(pk)d - %(summary)s") % {
+        "pk": case.pk,
+        "summary": case.summary,
+    }
+    context = {"case": case}
+    mailto("email/post_case_delete/email.txt", subject, recipients, context, cc=cc_list)
 
 
 def get_case_notification_recipients(case):
@@ -35,18 +37,17 @@ def get_case_notification_recipients(case):
         recipients.add(case.default_tester.email)
 
     if case.emailing.auto_to_run_manager:
-        managers = case.case_run.values_list('run__manager__email', flat=True)
+        managers = case.case_run.values_list("run__manager__email", flat=True)
         recipients.update(managers)  # pylint: disable=objects-update-used
 
     if case.emailing.auto_to_run_tester:
-        run_testers = case.case_run.values_list('run__default_tester__email',
-                                                flat=True)
+        run_testers = case.case_run.values_list("run__default_tester__email", flat=True)
         recipients.update(run_testers)  # pylint: disable=objects-update-used
 
     if case.emailing.auto_to_case_run_assignee:
-        assignees = case.case_run.values_list('assignee__email', flat=True)
+        assignees = case.case_run.values_list("assignee__email", flat=True)
         recipients.update(assignees)  # pylint: disable=objects-update-used
 
     # don't email author of last change
-    recipients.discard(getattr(case.history.latest().history_user, 'email', ''))
+    recipients.discard(getattr(case.history.latest().history_user, "email", ""))
     return list(filter(None, recipients))

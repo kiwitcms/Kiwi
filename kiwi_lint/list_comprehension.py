@@ -9,13 +9,16 @@ from pylint.checkers import utils
 class ListComprehensionChecker(checkers.BaseChecker):
     __implements__ = (interfaces.IAstroidChecker,)
 
-    name = 'list-comprehension-checker'
+    name = "list-comprehension-checker"
 
-    msgs = {'R4411': ('Avoid using list comprehensions',
-                      'avoid-list-comprehension',
-                      'List comprehensions are harder to read and debug '
-                      'so try to avoid them!')}
+    msgs = {
+        "R4411": (
+            "Avoid using list comprehensions",
+            "avoid-list-comprehension",
+            "List comprehensions are harder to read and debug so try to avoid them!",
+        )
+    }
 
-    @utils.check_messages('avoid-list-comprehension')
+    @utils.check_messages("avoid-list-comprehension")
     def visit_listcomp(self, node):
-        self.add_message('avoid-list-comprehension', node=node)
+        self.add_message("avoid-list-comprehension", node=node)

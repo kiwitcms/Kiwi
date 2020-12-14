@@ -5,11 +5,11 @@ from django.db import migrations
 
 
 def rename_permissions(apps, schema_editor):
-    permission_model = apps.get_model('auth', 'Permission')
+    permission_model = apps.get_model("auth", "Permission")
 
-    for permission in permission_model.objects.filter(codename__contains='testcaserun'):
-        new_name = permission.name.replace('test case run', 'test execution')
-        new_codename = permission.codename.replace('testcaserun', 'testexecution')
+    for permission in permission_model.objects.filter(codename__contains="testcaserun"):
+        new_name = permission.name.replace("test case run", "test execution")
+        new_codename = permission.codename.replace("testcaserun", "testexecution")
 
         permission.codename = new_codename
         permission.name = new_name
@@ -17,11 +17,13 @@ def rename_permissions(apps, schema_editor):
 
 
 def backward_rename_permissions(apps, schema_editor):
-    permission_model = apps.get_model('auth', 'Permission')
+    permission_model = apps.get_model("auth", "Permission")
 
-    for permission in permission_model.objects.filter(codename__contains='testexecution'):
-        old_name = permission.name.replace('test execution', 'test case run')
-        old_codename = permission.codename.replace('testexecution', 'testcaserun')
+    for permission in permission_model.objects.filter(
+        codename__contains="testexecution"
+    ):
+        old_name = permission.name.replace("test execution", "test case run")
+        old_codename = permission.codename.replace("testexecution", "testcaserun")
 
         permission.codename = old_codename
         permission.name = old_name
@@ -33,32 +35,30 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('testcases', '0008_notifications_default_true'),
-        ('management', '0005_order_by_name'),
-        ('testruns', '0005_remove_unused_fields'),
+        ("testcases", "0008_notifications_default_true"),
+        ("management", "0005_order_by_name"),
+        ("testruns", "0005_remove_unused_fields"),
         # enforces migrations order b/c linkreference.0001
         # refers to TestCaseRun which we rename here
-        ('linkreference', '0001_squashed'),
+        ("linkreference", "0001_squashed"),
     ]
 
     operations = [
+        migrations.RenameModel(old_name="TestCaseRun", new_name="TestExecution"),
         migrations.RenameModel(
-            old_name='TestCaseRun',
-            new_name='TestExecution'),
-        migrations.RenameModel(
-            old_name='TestCaseRunStatus',
-            new_name='TestExecutionStatus',
+            old_name="TestCaseRunStatus",
+            new_name="TestExecutionStatus",
         ),
         migrations.RenameModel(
-            old_name='HistoricalTestCaseRun',
-            new_name='HistoricalTestExecution',
+            old_name="HistoricalTestCaseRun",
+            new_name="HistoricalTestExecution",
         ),
         migrations.AlterModelOptions(
-            name='historicaltestexecution',
+            name="historicaltestexecution",
             options={
-                'get_latest_by': 'history_date',
-                'ordering': ('-history_date', '-history_id'),
-                'verbose_name': 'historical test execution'
+                "get_latest_by": "history_date",
+                "ordering": ("-history_date", "-history_id"),
+                "verbose_name": "historical test execution",
             },
         ),
         migrations.RunPython(rename_permissions, backward_rename_permissions),

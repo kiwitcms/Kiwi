@@ -11,13 +11,13 @@ from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 
 __all__ = (
-    'details',
-    'report',
+    "details",
+    "report",
 )
 
 
 @http_basic_auth_login_required
-@rpc_method(name='Bug.details')
+@rpc_method(name="Bug.details")
 def details(url, **kwargs):
     """
     .. function:: RPC Bug.details(url)
@@ -47,9 +47,10 @@ def details(url, **kwargs):
     return result
 
 
-@permissions_required(('testruns.view_testexecution',
-                       'linkreference.add_linkreference'))
-@rpc_method(name='Bug.report')
+@permissions_required(
+    ("testruns.view_testexecution", "linkreference.add_linkreference")
+)
+@rpc_method(name="Bug.report")
 def report(execution_id, tracker_id, **kwargs):
     """
     .. function:: RPC Bug.report(execution_id, tracker_id)
@@ -68,8 +69,10 @@ def report(execution_id, tracker_id, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
     response = {
-        'rc': 1,
-        'response': _('Enable reporting to this Issue Tracker by configuring its base_url!'),
+        "rc": 1,
+        "response": _(
+            "Enable reporting to this Issue Tracker by configuring its base_url!"
+        ),
     }
 
     execution = TestExecution.objects.get(pk=execution_id)
@@ -77,6 +80,6 @@ def report(execution_id, tracker_id, **kwargs):
     tracker = import_string(bug_system.tracker_type)(bug_system, request)
     if not tracker.is_adding_testcase_to_issue_disabled():
         url = tracker.report_issue_from_testexecution(execution, request.user)
-        response = {'rc': 0, 'response': url}
+        response = {"rc": 0, "response": url}
 
     return response

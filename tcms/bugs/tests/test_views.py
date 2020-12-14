@@ -4,8 +4,8 @@ import unittest
 
 from django.conf import settings
 
-if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
-    raise unittest.SkipTest('tcms.bugs is disabled')
+if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
+    raise unittest.SkipTest("tcms.bugs is disabled")
 
 from django.urls import reverse  # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
@@ -43,23 +43,19 @@ class TestBugStatusChange(BaseCaseRun):
         super().setUpTestData()
 
         initiate_user_with_default_setups(cls.tester)
-        cls.comment_bug_url = reverse('bugs-comment')
-        user_should_have_perm(cls.tester, 'bugs.change_bug')
+        cls.comment_bug_url = reverse("bugs-comment")
+        user_should_have_perm(cls.tester, "bugs.change_bug")
 
     def test_close_an_open_bug(self):
         bug = BugFactory(status=True)
 
-        edit_bug_data = {
-            'bug': bug.pk,
-            'text': 'Close the bug.',
-            'action': 'close'
-        }
+        edit_bug_data = {"bug": bug.pk, "text": "Close the bug.", "action": "close"}
 
-        redirect_url = reverse('bugs-get', args=[bug.pk])
+        redirect_url = reverse("bugs-get", args=[bug.pk])
         response = self.client.post(self.comment_bug_url, edit_bug_data, follow=True)
 
-        self.assertContains(response, markdown2html(_('*bug closed*')))
-        self.assertContains(response, 'Close the bug.')
+        self.assertContains(response, markdown2html(_("*bug closed*")))
+        self.assertContains(response, "Close the bug.")
         self.assertRedirects(response, redirect_url)
         bug.refresh_from_db()
         self.assertFalse(bug.status)
@@ -68,56 +64,51 @@ class TestBugStatusChange(BaseCaseRun):
     def test_reopen_a_closed_bug(self):
         bug = BugFactory(status=False)
 
-        edit_bug_data = {
-            'bug': bug.pk,
-            'text': 'Reopen the bug.',
-            'action': 'reopen'
-        }
+        edit_bug_data = {"bug": bug.pk, "text": "Reopen the bug.", "action": "reopen"}
 
-        redirect_url = reverse('bugs-get', args=[bug.pk])
+        redirect_url = reverse("bugs-get", args=[bug.pk])
         response = self.client.post(self.comment_bug_url, edit_bug_data, follow=True)
 
-        self.assertContains(response, markdown2html(_('*bug reopened*')))
-        self.assertContains(response, 'Reopen the bug.')
+        self.assertContains(response, markdown2html(_("*bug reopened*")))
+        self.assertContains(response, "Reopen the bug.")
         self.assertRedirects(response, redirect_url)
         bug.refresh_from_db()
         self.assertTrue(bug.status)
 
 
 class TestNewBug(LoggedInTestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        user_should_have_perm(cls.tester, 'bugs.add_bug')
-        user_should_have_perm(cls.tester, 'bugs.view_bug')
+        user_should_have_perm(cls.tester, "bugs.add_bug")
+        user_should_have_perm(cls.tester, "bugs.view_bug")
 
-        cls.url = reverse('bugs-new')
+        cls.url = reverse("bugs-new")
 
-        cls.summary = 'A shiny new bug!'
+        cls.summary = "A shiny new bug!"
         cls.product = ProductFactory()
         cls.version = VersionFactory(product=cls.product)
         cls.build = BuildFactory(product=cls.product)
         cls.post_data = {
-            'summary': cls.summary,
-            'reporter': cls.tester.pk,
-            'product': cls.product.pk,
-            'version': cls.version.pk,
-            'build': cls.version.pk,
+            "summary": cls.summary,
+            "reporter": cls.tester.pk,
+            "product": cls.product.pk,
+            "version": cls.version.pk,
+            "build": cls.version.pk,
         }
 
     def test_get_view(self):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['page_title'], _('New bug'))
-        self.assertEqual(response.context['form_post_url'], reverse('bugs-new'))
-        self.assertTemplateUsed(response, 'bugs/mutable.html')
+        self.assertEqual(response.context["page_title"], _("New bug"))
+        self.assertEqual(response.context["form_post_url"], reverse("bugs-new"))
+        self.assertTemplateUsed(response, "bugs/mutable.html")
 
-        form = response.context['form']
-        self.assertEqual(form.initial['reporter'].pk, self.tester.pk)
-        self.assertEqual(form.fields['version'].queryset.count(), 0)
-        self.assertEqual(form.fields['build'].queryset.count(), 0)
+        form = response.context["form"]
+        self.assertEqual(form.initial["reporter"].pk, self.tester.pk)
+        self.assertEqual(form.fields["version"].queryset.count(), 0)
+        self.assertEqual(form.fields["build"].queryset.count(), 0)
 
     def test_create_new_bug(self):
         initial_bug_count = Bug.objects.count()
@@ -127,9 +118,9 @@ class TestNewBug(LoggedInTestCase):
         bug_created = Bug.objects.last()
         self.assertRedirects(
             response,
-            reverse('bugs-get', args=(bug_created.pk,)),
+            reverse("bugs-get", args=(bug_created.pk,)),
             status_code=302,
-            target_status_code=200
+            target_status_code=200,
         )
         self.assertEqual(Bug.objects.count(), initial_bug_count + 1)
         self.assertEqual(bug_created.summary, self.summary)
@@ -145,40 +136,39 @@ class TestNewBug(LoggedInTestCase):
 
 
 class TestEditBug(LoggedInTestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        user_should_have_perm(cls.tester, 'bugs.change_bug')
-        user_should_have_perm(cls.tester, 'bugs.view_bug')
+        user_should_have_perm(cls.tester, "bugs.change_bug")
+        user_should_have_perm(cls.tester, "bugs.view_bug")
 
     def setUp(self):
         super().setUp()
         self.bug = BugFactory()
         self.created_at = self.bug.created_at
-        self.url = reverse('bugs-edit', args=(self.bug.pk,))
+        self.url = reverse("bugs-edit", args=(self.bug.pk,))
 
     def test_edit_bug(self):
-        summary_edit = 'An edited summary'
+        summary_edit = "An edited summary"
         version_edit = VersionFactory()
         build_edit = BuildFactory()
 
         edit_data = {
-            'summary': summary_edit,
-            'version': version_edit.pk,
-            'build': build_edit.pk,
-            'reporter': self.bug.reporter.pk,
-            'assignee': self.bug.assignee.pk,
-            'product': self.bug.product.pk
+            "summary": summary_edit,
+            "version": version_edit.pk,
+            "build": build_edit.pk,
+            "reporter": self.bug.reporter.pk,
+            "assignee": self.bug.assignee.pk,
+            "product": self.bug.product.pk,
         }
 
         response = self.client.post(self.url, edit_data, follow=True)
 
         self.assertRedirects(
             response,
-            reverse('bugs-get', args=(self.bug.pk,)),
+            reverse("bugs-get", args=(self.bug.pk,)),
             status_code=302,
-            target_status_code=200
+            target_status_code=200,
         )
 
         self.bug.refresh_from_db()
@@ -189,16 +179,16 @@ class TestEditBug(LoggedInTestCase):
 
     def test_record_changes(self):
         old_summary = self.bug.summary
-        new_summary = 'An edited summary'
+        new_summary = "An edited summary"
         old_comment_count = get_comments(self.bug).count()
 
         edit_data = {
-            'summary': new_summary,
-            'version': self.bug.version.pk,
-            'build': self.bug.build.pk,
-            'reporter': self.bug.reporter.pk,
-            'assignee': self.bug.assignee.pk,
-            'product': self.bug.product.pk
+            "summary": new_summary,
+            "version": self.bug.version.pk,
+            "build": self.bug.build.pk,
+            "reporter": self.bug.reporter.pk,
+            "assignee": self.bug.assignee.pk,
+            "product": self.bug.product.pk,
         }
 
         self.client.post(self.url, edit_data, follow=True)
@@ -207,55 +197,48 @@ class TestEditBug(LoggedInTestCase):
 
         self.assertEqual(comments.count(), old_comment_count + 1)
         self.assertEqual(
-            comments.last().comment,
-            "Summary: %s -> %s\n" % (old_summary, new_summary)
+            comments.last().comment, "Summary: %s -> %s\n" % (old_summary, new_summary)
         )
 
 
 class TestAddComment(LoggedInTestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        user_should_have_perm(cls.tester, 'django_comments.add_comment')
-        user_should_have_perm(cls.tester, 'bugs.view_bug')
+        user_should_have_perm(cls.tester, "django_comments.add_comment")
+        user_should_have_perm(cls.tester, "bugs.view_bug")
 
         cls.bug = BugFactory()
-        cls.url = reverse('bugs-comment')
+        cls.url = reverse("bugs-comment")
 
     def test_add_close_bug_comment(self):
         old_comment_count = get_comments(self.bug).count()
 
         self.client.post(
-            self.url,
-            {'bug': self.bug.pk, 'text': '', 'action': 'close'},
-            follow=True
+            self.url, {"bug": self.bug.pk, "text": "", "action": "close"}, follow=True
         )
         comments = get_comments(self.bug)
 
         self.assertEqual(comments.count(), old_comment_count + 1)
-        self.assertEqual(comments.last().comment, _('*bug closed*'))
+        self.assertEqual(comments.last().comment, _("*bug closed*"))
 
     def test_add_reopen_bug_comment(self):
         old_comment_count = get_comments(self.bug).count()
 
         self.client.post(
-            self.url,
-            {'bug': self.bug.pk, 'text': '', 'action': 'reopen'},
-            follow=True
+            self.url, {"bug": self.bug.pk, "text": "", "action": "reopen"}, follow=True
         )
         comments = get_comments(self.bug)
 
         self.assertEqual(comments.count(), old_comment_count + 1)
-        self.assertEqual(comments.last().comment, _('*bug reopened*'))
+        self.assertEqual(comments.last().comment, _("*bug reopened*"))
 
 
 class TestSearch(LoggedInTestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        user_should_have_perm(cls.tester, 'bugs.view_bug')
+        user_should_have_perm(cls.tester, "bugs.view_bug")
 
         ProductFactory()
         VersionFactory()
@@ -264,9 +247,9 @@ class TestSearch(LoggedInTestCase):
     def test_initial_form_field_states(self):
         product_count = Product.objects.count()
 
-        response = self.client.get(reverse('bugs-search'))
-        fields = response.context['form'].fields
+        response = self.client.get(reverse("bugs-search"))
+        fields = response.context["form"].fields
 
-        self.assertEqual(fields['product'].queryset.count(), product_count)
-        self.assertEqual(fields['version'].queryset.count(), 0)
-        self.assertEqual(fields['build'].queryset.count(), 0)
+        self.assertEqual(fields["product"].queryset.count(), product_count)
+        self.assertEqual(fields["version"].queryset.count(), 0)
+        self.assertEqual(fields["build"].queryset.count(), 0)

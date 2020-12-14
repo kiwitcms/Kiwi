@@ -9,7 +9,7 @@ def find_files():
     found_files = OrderedDict()
     for finder in get_finders():
         for path, storage in finder.list([]):
-            path = path.replace('\\', '/')
+            path = path.replace("\\", "/")
             if path not in found_files:
                 found_files[path] = (storage, path)
 
@@ -26,6 +26,8 @@ class RaiseWhenFileNotFound(StaticFilesStorage):
 
     def url(self, name):
         if (name not in self._files_found) and (name not in self._white_list):
-            raise Exception('Static file "%s" does not exist and will cause 404 errors!' % name)
+            raise Exception(
+                'Static file "%s" does not exist and will cause 404 errors!' % name
+            )
 
         return super().url(name)

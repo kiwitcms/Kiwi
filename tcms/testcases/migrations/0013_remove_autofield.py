@@ -8,55 +8,57 @@ class Migration(migrations.Migration):
     atomic = False
 
     dependencies = [
-        ('testcases', '0012_remove_autofield_max_length'),
+        ("testcases", "0012_remove_autofield_max_length"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='historicaltestcase',
-            name='create_date',
+            model_name="historicaltestcase",
+            name="create_date",
             field=models.DateTimeField(blank=True, editable=False),
         ),
         migrations.AlterField(
-            model_name='testcase',
-            name='create_date',
+            model_name="testcase",
+            name="create_date",
             field=models.DateTimeField(auto_now_add=True),
         ),
-
         # rename case_id to id and let Django handle this field
         migrations.RenameField(
-            model_name='testcase',
-            old_name='case_id',
-            new_name='id',
+            model_name="testcase",
+            old_name="case_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='historicaltestcase',
-            old_name='case_id',
-            new_name='id',
+            model_name="historicaltestcase",
+            old_name="case_id",
+            new_name="id",
         ),
         migrations.AlterField(
-            model_name='testcase',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True,
-                                   serialize=False, verbose_name='ID'),
+            model_name="testcase",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='historicaltestcase',
-            name='id',
-            field=models.IntegerField(auto_created=True, blank=True,
-                                      db_index=True, verbose_name='ID'),
-        ),
-
-        migrations.AlterField(
-            model_name='category',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True,
-                                   serialize=False, verbose_name='ID'),
+            model_name="historicaltestcase",
+            name="id",
+            field=models.IntegerField(
+                auto_created=True, blank=True, db_index=True, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='testcasestatus',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True,
-                                   serialize=False, verbose_name='ID'),
+            model_name="category",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="testcasestatus",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
     ]

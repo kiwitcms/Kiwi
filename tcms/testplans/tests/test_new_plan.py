@@ -19,7 +19,7 @@ class TestNewTestPlanView(LoggedInTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.plan_name = 'TestNewTestPlanView'
+        cls.plan_name = "TestNewTestPlanView"
         cls.product = ProductFactory()
         cls.product_version = VersionFactory(product=cls.product)
         cls.plan_type = PlanTypeFactory()
@@ -36,13 +36,11 @@ class TestNewTestPlanView(LoggedInTestCase):
             "product_version": cls.product_version.pk,
             "type": cls.plan_type.pk,
             "name": cls.plan_name,
-
             "email_settings-0-auto_to_plan_author": "on",
             "email_settings-0-auto_to_case_owner": "on",
             "email_settings-0-auto_to_case_default_tester": "on",
             "email_settings-0-notify_on_case_update": "on",
             "email_settings-0-notify_on_plan_update": "on",
-
             "email_settings-0-id": cls.test_plan.emailing.pk,
             "email_settings-TOTAL_FORMS": "1",
             "email_settings-INITIAL_FORMS": "1",
@@ -57,27 +55,38 @@ class TestNewTestPlanView(LoggedInTestCase):
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="is_active" type="checkbox" checked',
-            html=False)
+            html=False,
+        )
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
-            'type="checkbox" checked', html=False)
+            'type="checkbox" checked',
+            html=False,
+        )
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_owner" '
-            'type="checkbox" checked', html=False)
+            'type="checkbox" checked',
+            html=False,
+        )
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_default_tester" '
-            'type="checkbox" checked', html=False)
+            'type="checkbox" checked',
+            html=False,
+        )
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-notify_on_plan_update" '
-            'type="checkbox" checked', html=False)
+            'type="checkbox" checked',
+            html=False,
+        )
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-notify_on_case_update" '
-            'type="checkbox" checked', html=False)
+            'type="checkbox" checked',
+            html=False,
+        )
 
     def test_notify_formset_invalid(self):
         # Note: Boolean fields are always valid - either False or True
@@ -93,7 +102,9 @@ class TestNewTestPlanView(LoggedInTestCase):
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_plan_author" '
-            'type="checkbox"', html=False)
+            'type="checkbox"',
+            html=False,
+        )
 
     def test_plan_create_new_active(self):
         self._test_plan_create_new(is_active=True)
@@ -102,7 +113,7 @@ class TestNewTestPlanView(LoggedInTestCase):
         self._test_plan_create_new(is_active=False)
 
     def _test_plan_create_new(self, is_active):
-        self.request['is_active'] = is_active
+        self.request["is_active"] = is_active
 
         response = self.client.post(self.location, self.request)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
@@ -144,7 +155,9 @@ class TestNewTestPlanView(LoggedInTestCase):
         )
 
 
-class TestNewTestPlanViewPermissions(PermissionsTestCase):  # pylint: disable=too-many-ancestors
+class TestNewTestPlanViewPermissions(
+    PermissionsTestCase
+):  # pylint: disable=too-many-ancestors
 
     add_testplan_permission = "testplans.add_testplan"
     permission_label = add_testplan_permission
@@ -156,7 +169,7 @@ class TestNewTestPlanViewPermissions(PermissionsTestCase):  # pylint: disable=to
         cls.post_data = {"description": "test"}
         super().setUpTestData()
 
-        cls.plan_name = 'TestNewTestPlanViewPermissions'
+        cls.plan_name = "TestNewTestPlanViewPermissions"
         cls.product = ProductFactory()
         cls.product_version = VersionFactory(product=cls.product)
         cls.plan_type = PlanTypeFactory()
@@ -171,13 +184,11 @@ class TestNewTestPlanViewPermissions(PermissionsTestCase):  # pylint: disable=to
                 "product_version": cls.product_version.pk,
                 "type": cls.plan_type.pk,
                 "name": cls.plan_name,
-
                 "email_settings-0-auto_to_plan_author": "on",
                 "email_settings-0-auto_to_case_owner": "on",
                 "email_settings-0-auto_to_case_default_tester": "on",
                 "email_settings-0-notify_on_case_update": "on",
                 "email_settings-0-notify_on_plan_update": "on",
-
                 "email_settings-0-id": cls.test_plan.emailing.pk,
                 "email_settings-TOTAL_FORMS": "1",
                 "email_settings-INITIAL_FORMS": "1",
@@ -191,14 +202,16 @@ class TestNewTestPlanViewPermissions(PermissionsTestCase):  # pylint: disable=to
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, _('Create new TestPlan'))
+        self.assertContains(response, _("Create new TestPlan"))
 
     def verify_post_with_permission(self):
         response = self.client.post(self.url, self.post_data, follow=True)
         test_plan = TestPlan.objects.get(
             name=self.post_data["name"],
         )
-        redirect_url = reverse('test_plan_url', args=[test_plan.pk, slugify(test_plan.name)])
+        redirect_url = reverse(
+            "test_plan_url", args=[test_plan.pk, slugify(test_plan.name)]
+        )
 
         self.assertRedirects(response, redirect_url)
         self.assertContains(response, self.post_data["name"])

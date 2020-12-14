@@ -9,10 +9,9 @@ from tcms.tests.factories import ProductFactory
 
 
 class TestPreCheckProduct(test.TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.product = ProductFactory(name='World Of Warcraft')
+        cls.product = ProductFactory(name="World Of Warcraft")
 
     def test_pre_check_product_with_dict(self):
         product = U.pre_check_product({"product": self.product.pk})
@@ -26,7 +25,9 @@ class TestPreCheckProduct(test.TestCase):
 
     def test_pre_check_product_with_illegal_types(self):
         for arg in [(), [], self]:
-            with self.assertRaisesRegex(ValueError, 'The type of product is not recognizable.'):
+            with self.assertRaisesRegex(
+                ValueError, "The type of product is not recognizable."
+            ):
                 U.pre_check_product(arg)
 
     def test_pre_check_product_with_number(self):
@@ -41,4 +42,6 @@ class TestPreCheckProduct(test.TestCase):
 
     def test_pre_check_product_with_no_exist(self):
         self.assertRaises(ObjectDoesNotExist, U.pre_check_product, {"product": 9999})
-        self.assertRaises(ObjectDoesNotExist, U.pre_check_product, {"product": "unknown name"})
+        self.assertRaises(
+            ObjectDoesNotExist, U.pre_check_product, {"product": "unknown name"}
+        )

@@ -16,7 +16,7 @@ class TestCaseAttachments(LoggedInTestCase):
         cls.case = TestCaseFactory()
 
     def test_delete_testcase_deletes_attachments(self):
-        self.attach_file_to('testcases.TestCase', self.case)
+        self.attach_file_to("testcases.TestCase", self.case)
         attachments = Attachment.objects.attachments_for_object(self.case)
         self.assertGreater(attachments.count(), 0)
 

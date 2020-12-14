@@ -6,8 +6,8 @@ from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCaseStatus
 
 
-@permissions_required('testcases.view_testcasestatus')
-@rpc_method(name='TestCaseStatus.filter')
+@permissions_required("testcases.view_testcasestatus")
+@rpc_method(name="TestCaseStatus.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestCaseStatus.filter(query)

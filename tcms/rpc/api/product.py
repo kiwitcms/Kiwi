@@ -6,13 +6,13 @@ from tcms.management.models import Product
 from tcms.rpc.decorators import permissions_required
 
 __all__ = (
-    'create',
-    'filter',
+    "create",
+    "filter",
 )
 
 
-@rpc_method(name='Product.create')
-@permissions_required('management.add_product')
+@rpc_method(name="Product.create")
+@permissions_required("management.add_product")
 def create(values):
     """
     .. function:: RPC Product.create(values)
@@ -28,8 +28,8 @@ def create(values):
     return Product.objects.create(**values).serialize()
 
 
-@permissions_required('management.view_product')
-@rpc_method(name='Product.filter')
+@permissions_required("management.view_product")
+@rpc_method(name="Product.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Product.filter(query)

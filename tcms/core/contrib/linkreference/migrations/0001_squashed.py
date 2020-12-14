@@ -8,22 +8,31 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('testruns', '0004_squashed'),
+        ("testruns", "0004_squashed"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='LinkReference',
+            name="LinkReference",
             fields=[
-                ('id', models.AutoField(auto_created=True,
-                                        primary_key=True,
-                                        serialize=False,
-                                        verbose_name='ID')),
-                ('test_case_run', models.ForeignKey(on_delete=models.deletion.CASCADE,
-                                                    to='testruns.TestCaseRun')),
-                ('name', models.CharField(blank=True, default='', max_length=64)),
-                ('url', models.URLField()),
-                ('created_on', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "test_case_run",
+                    models.ForeignKey(
+                        on_delete=models.deletion.CASCADE, to="testruns.TestCaseRun"
+                    ),
+                ),
+                ("name", models.CharField(blank=True, default="", max_length=64)),
+                ("url", models.URLField()),
+                ("created_on", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

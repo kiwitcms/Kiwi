@@ -19,9 +19,9 @@ class UserField(forms.CharField):
         Form-validation:  accept a string/integer.
         Looks at both email address and real name.
         """
-        if value == '' or value is None:
+        if value == "" or value is None:
             if self.required:
-                raise ValidationError('A user name or user ID is required.')
+                raise ValidationError("A user name or user ID is required.")
             return None
         if isinstance(value, int):
             try:
@@ -37,7 +37,6 @@ class UserField(forms.CharField):
                     raise ValidationError('Unknown user_id: "%s"' % value) from None
             else:
                 try:
-                    return User.objects.get(
-                        (Q(email=value) | Q(username=value)))
+                    return User.objects.get((Q(email=value) | Q(username=value)))
                 except User.DoesNotExist:
                     raise ValidationError('Unknown user: "%s"' % value) from None

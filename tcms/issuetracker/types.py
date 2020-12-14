@@ -24,7 +24,7 @@ from tcms.issuetracker.bugzilla_integration import (  # noqa, pylint: disable=un
 )
 
 # conditional import b/c this App can be disabled
-if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
     from tcms.issuetracker.kiwitcms import (  # noqa, pylint: disable=unused-import
         KiwiTCMS,
     )
@@ -32,20 +32,21 @@ if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
 
 class JIRA(IssueTrackerType):
     """
-        Support for JIRA. Requires:
+    Support for JIRA. Requires:
 
-        :base_url: - the URL of this JIRA instance
-        :api_username: - a username registered in JIRA
-        :api_password: - the password for this username
+    :base_url: - the URL of this JIRA instance
+    :api_username: - a username registered in JIRA
+    :api_password: - the password for this username
 
-        Additional control can be applied via the ``JIRA_OPTIONS`` configuration
-        setting (in ``product.py``). By default this setting is not provided and
-        the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
+    Additional control can be applied via the ``JIRA_OPTIONS`` configuration
+    setting (in ``product.py``). By default this setting is not provided and
+    the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
     """
+
     it_class = jira_integration.JiraThread
 
     def _rpc_connection(self):
-        if hasattr(settings, 'JIRA_OPTIONS'):
+        if hasattr(settings, "JIRA_OPTIONS"):
             options = settings.JIRA_OPTIONS
         else:
             options = None
@@ -57,38 +58,40 @@ class JIRA(IssueTrackerType):
         )
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.bug_system.base_url
-                    and self.bug_system.api_username
-                    and self.bug_system.api_password)
+        return not (
+            self.bug_system.base_url
+            and self.bug_system.api_username
+            and self.bug_system.api_password
+        )
 
     @classmethod
     def bug_id_from_url(cls, url):
         """
-            Jira IDs are the last group of chars at the end of the URL.
-            For example https://issues.jenkins-ci.org/browse/JENKINS-31044
+        Jira IDs are the last group of chars at the end of the URL.
+        For example https://issues.jenkins-ci.org/browse/JENKINS-31044
         """
-        return url.strip().split('/')[-1]
+        return url.strip().split("/")[-1]
 
     def details(self, url):
         try:
             issue = self.rpc.issue(self.bug_id_from_url(url))
             return {
-                'title': issue.fields.summary,
-                'description': issue.fields.description,
+                "title": issue.fields.summary,
+                "description": issue.fields.description,
             }
         except jira.exceptions.JIRAError:
             return super().details(url)
 
     def report_issue_from_testexecution(self, execution, user):
         """
-            JIRA Project == Kiwi TCMS Product, otherwise defaults to the first found
-            Issue Type == Bug or the first one found
+        JIRA Project == Kiwi TCMS Product, otherwise defaults to the first found
+        Issue Type == Bug or the first one found
 
-            If 1-click bug report doesn't work then fall back to manual
-            reporting!
+        If 1-click bug report doesn't work then fall back to manual
+        reporting!
 
-            For the HTML API description see:
-            https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
+        For the HTML API description see:
+        https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
         """
         try:
             project = self.rpc.project(execution.run.plan.product.name)
@@ -96,15 +99,15 @@ class JIRA(IssueTrackerType):
             project = self.rpc.projects()[0]
 
         try:
-            issue_type = self.rpc.issue_type_by_name('Bug')
+            issue_type = self.rpc.issue_type_by_name("Bug")
         except KeyError:
             issue_type = self.rpc.issue_types()[0]
 
         try:
             new_issue = self.rpc.create_issue(
                 project=project.id,
-                issuetype={'name': issue_type.name},
-                summary='Failed test: %s' % execution.case.summary,
+                issuetype={"name": issue_type.name},
+                summary="Failed test: %s" % execution.case.summary,
                 description=self._report_comment(execution),
             )
             new_url = self.bug_system.base_url + "/browse/" + new_issue.key
@@ -121,32 +124,33 @@ class JIRA(IssueTrackerType):
             pass
 
         args = {
-            'pid': project.id,
-            'issuetype': issue_type.id,
-            'summary': 'Failed test: %s' % execution.case.summary,
-            'description': self._report_comment(execution),
+            "pid": project.id,
+            "issuetype": issue_type.id,
+            "summary": "Failed test: %s" % execution.case.summary,
+            "description": self._report_comment(execution),
         }
 
         url = self.bug_system.base_url
-        if not url.endswith('/'):
-            url += '/'
+        if not url.endswith("/"):
+            url += "/"
 
-        return url + '/secure/CreateIssueDetails!init.jspa?' + urlencode(args, True)
+        return url + "/secure/CreateIssueDetails!init.jspa?" + urlencode(args, True)
 
 
 class GitHub(IssueTrackerType):
     """
-        Support for GitHub. Requires:
+    Support for GitHub. Requires:
 
-        :base_url: - URL to a GitHub repository for which we're going to report issues
-        :api_password: - GitHub API token - needs ``repo`` or ``public_repo``
-                         permissions.
+    :base_url: - URL to a GitHub repository for which we're going to report issues
+    :api_password: - GitHub API token - needs ``repo`` or ``public_repo``
+                     permissions.
 
-        .. note::
+    .. note::
 
-            You can leave the ``api_url`` and ``api_username`` fields blank because
-            the integration code doesn't use them!
+        You can leave the ``api_url`` and ``api_username`` fields blank because
+        the integration code doesn't use them!
     """
+
     it_class = github_integration.GitHubThread
 
     def _rpc_connection(self):
@@ -158,11 +162,11 @@ class GitHub(IssueTrackerType):
 
     def report_issue_from_testexecution(self, execution, user):
         """
-            GitHub only supports title and body parameters
+        GitHub only supports title and body parameters
         """
         args = {
-            'title': 'Failed test: %s' % execution.case.summary,
-            'body': self._report_comment(execution),
+            "title": "Failed test: %s" % execution.case.summary,
+            "body": self._report_comment(execution),
         }
 
         try:
@@ -182,44 +186,46 @@ class GitHub(IssueTrackerType):
             # something above didn't work so return a link for manually
             # entering issue details with info pre-filled
             url = self.bug_system.base_url
-            if not url.endswith('/'):
-                url += '/'
+            if not url.endswith("/"):
+                url += "/"
 
-            return url + '/issues/new?' + urlencode(args, True)
+            return url + "/issues/new?" + urlencode(args, True)
 
     def details(self, url):
         """
-            Use GitHub's API instead of OpenGraph to return bug
-            details b/c it will work for both public and private URLs.
+        Use GitHub's API instead of OpenGraph to return bug
+        details b/c it will work for both public and private URLs.
         """
         repo_id = self.it_class.repo_id(self.bug_system)
         repo = self.rpc.get_repo(repo_id)
         issue = repo.get_issue(self.bug_id_from_url(url))
         return {
-            'title': issue.title,
-            'description': issue.body,
+            "title": issue.title,
+            "description": issue.body,
         }
 
 
 class Gitlab(IssueTrackerType):
     """
-        Support for Gitlab. Requires:
+    Support for Gitlab. Requires:
 
-        :base_url: URL to a GitLab repository for which we're going to report issues
-        :api_url: URL to GitLab instance. Usually gitlab.com!
-        :api_password: GitLab API token.
+    :base_url: URL to a GitLab repository for which we're going to report issues
+    :api_url: URL to GitLab instance. Usually gitlab.com!
+    :api_password: GitLab API token.
 
-        .. note::
+    .. note::
 
-            You can leave ``api_username`` field blank because
-            the integration code doesn't use it!
+        You can leave ``api_username`` field blank because
+        the integration code doesn't use it!
     """
+
     it_class = gitlab_integration.GitlabThread
 
     def _rpc_connection(self):
         # we use an access token so only the password field is required
-        return gitlab.Gitlab(self.bug_system.api_url,
-                             private_token=self.bug_system.api_password)
+        return gitlab.Gitlab(
+            self.bug_system.api_url, private_token=self.bug_system.api_password
+        )
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.api_url and self.bug_system.api_password)
@@ -227,69 +233,74 @@ class Gitlab(IssueTrackerType):
     def report_issue_from_testexecution(self, execution, user):
         repo_id = self.it_class.repo_id(self.bug_system)
         project = self.rpc.projects.get(repo_id)
-        new_issue = project.issues.create({
-            'title': 'Failed test: %s' % execution.case.summary,
-            'description': self._report_comment(execution),
-        })
+        new_issue = project.issues.create(
+            {
+                "title": "Failed test: %s" % execution.case.summary,
+                "description": self._report_comment(execution),
+            }
+        )
 
         # and also add a link reference that will be shown in the UI
         LinkReference.objects.get_or_create(
             execution=execution,
-            url=new_issue.attributes['web_url'],
+            url=new_issue.attributes["web_url"],
             is_defect=True,
         )
-        return new_issue.attributes['web_url']
+        return new_issue.attributes["web_url"]
 
     def details(self, url):
         """
-            Use Gitlab API instead of OpenGraph to return bug
-            details b/c it will work for both public and private URLs.
+        Use Gitlab API instead of OpenGraph to return bug
+        details b/c it will work for both public and private URLs.
         """
         repo_id = self.it_class.repo_id(self.bug_system)
         project = self.rpc.projects.get(repo_id)
         issue = project.issues.get(self.bug_id_from_url(url))
         return {
-            'title': issue.title,
-            'description': issue.description,
+            "title": issue.title,
+            "description": issue.description,
         }
 
 
 class Redmine(IssueTrackerType):
     """
-        Support for Redmine. Requires:
+    Support for Redmine. Requires:
 
-        :base_url: - the URL for this Redmine instance
-        :api_username: - a username registered in Redmine
-        :api_password: - the password for this username
+    :base_url: - the URL for this Redmine instance
+    :api_username: - a username registered in Redmine
+    :api_password: - the password for this username
     """
+
     it_class = redmine_integration.RedmineThread
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.bug_system.base_url
-                    and self.bug_system.api_username
-                    and self.bug_system.api_password)
+        return not (
+            self.bug_system.base_url
+            and self.bug_system.api_username
+            and self.bug_system.api_password
+        )
 
     def _rpc_connection(self):
         return redminelib.Redmine(
             self.bug_system.base_url,
             username=self.bug_system.api_username,
-            password=self.bug_system.api_password
+            password=self.bug_system.api_password,
         )
 
     def details(self, url):
         try:
             issue = self.rpc.issue.get(self.bug_id_from_url(url))
             return {
-                'title': issue.subject,
-                'description': issue.description,
+                "title": issue.subject,
+                "description": issue.description,
             }
         except redminelib.exceptions.ResourceNotFoundError:
             return super().details(url)
 
     def redmine_project_by_name(self, name):
         """
-            Return a Redmine project which matches the given product name.
-            If there is no match then return the first project in Redmine!
+        Return a Redmine project which matches the given product name.
+        If there is no match then return the first project in Redmine!
         """
         all_projects = self.rpc.project.all()
         for project in all_projects:
@@ -301,8 +312,8 @@ class Redmine(IssueTrackerType):
     @staticmethod
     def redmine_tracker_by_name(project, name):
         """
-            Return a Redmine tracker matching name ('Bugs').
-            If there is no match then return the first one!
+        Return a Redmine tracker matching name ('Bugs').
+        If there is no match then return the first one!
         """
         all_trackers = project.trackers
 
@@ -313,7 +324,7 @@ class Redmine(IssueTrackerType):
         return all_trackers[0]
 
     def redmine_priority_by_name(self, name):
-        all_priorities = self.rpc.enumeration.filter(resource='issue_priorities')
+        all_priorities = self.rpc.enumeration.filter(resource="issue_priorities")
 
         for priority in all_priorities:
             if priority.name.lower() == name.lower():
@@ -323,7 +334,7 @@ class Redmine(IssueTrackerType):
 
     def report_issue_from_testexecution(self, execution, user):
         project = self.redmine_project_by_name(execution.run.plan.product.name)
-        tracker = self.redmine_tracker_by_name(project, 'Bugs')
+        tracker = self.redmine_tracker_by_name(project, "Bugs")
 
         # the first Issue Status in Redmine
         status = self.rpc.issue_status.all()[0]
@@ -332,7 +343,7 @@ class Redmine(IssueTrackerType):
         priority = self.redmine_priority_by_name(execution.case.priority.value)
 
         new_issue = self.rpc.issue.create(
-            subject='Failed test: %s' % execution.case.summary,
+            subject="Failed test: %s" % execution.case.summary,
             description=self._report_comment(execution),
             project_id=project.id,
             tracker_id=tracker.id,

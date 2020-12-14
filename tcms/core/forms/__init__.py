@@ -9,9 +9,10 @@ from tcms.core.widgets import SimpleMDE
 
 class SimpleCommentForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     """
-        A simple class for rendering comment forms which could be
-        then manipulated via the JSON-RPC API!
+    A simple class for rendering comment forms which could be
+    then manipulated via the JSON-RPC API!
     """
+
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,

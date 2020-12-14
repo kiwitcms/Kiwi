@@ -5,13 +5,11 @@ from modernrpc.core import rpc_method
 
 from tcms.core.templatetags.extra_filters import markdown2html
 
-__all__ = (
-    'render',
-)
+__all__ = ("render",)
 
 
 @http_basic_auth_login_required
-@rpc_method(name='Markdown.render')
+@rpc_method(name="Markdown.render")
 def render(text):
     """
     .. function:: RPC Markdown.render(text)

@@ -7,17 +7,17 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testruns', '0007_test_execution_statuses'),
+        ("testruns", "0007_test_execution_statuses"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='testexecutionstatus',
-            options={'verbose_name_plural': 'Test execution statuses'},
+            name="testexecutionstatus",
+            options={"verbose_name_plural": "Test execution statuses"},
         ),
         migrations.AlterField(
-            model_name='testexecutionstatus',
-            name='color',
+            model_name="testexecutionstatus",
+            name="color",
             field=colorfield.fields.ColorField(max_length=18),
         ),
     ]

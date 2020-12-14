@@ -21,10 +21,10 @@ class SafeJSONRPCHandler(JSONRPCHandler):
 
     def execute_procedure(self, name, args=None, kwargs=None):
         """
-            HTML escape every string before returning it to
-            the client, which may as well be the webUI. This will
-            prevent XSS attacks for pages which display whatever
-            is in the DB (e.g. tags, components)
+        HTML escape every string before returning it to
+        the client, which may as well be the webUI. This will
+        prevent XSS attacks for pages which display whatever
+        is in the DB (e.g. tags, components)
         """
         result = super().execute_procedure(name, args, kwargs)
 

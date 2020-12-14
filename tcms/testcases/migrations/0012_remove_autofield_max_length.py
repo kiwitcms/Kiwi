@@ -3,22 +3,23 @@
 from django.conf import settings
 from django.db import migrations, models
 
-CASE_STATUS_ID_COLUMN = 'case_status_id'
-if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
-    CASE_STATUS_ID_COLUMN = ''
+CASE_STATUS_ID_COLUMN = "case_status_id"
+if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
+    CASE_STATUS_ID_COLUMN = ""
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testcases', '0011_trim_bugsystem_fields'),
+        ("testcases", "0011_trim_bugsystem_fields"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='testcasestatus',
-            name='id',
-            field=models.AutoField(db_column=CASE_STATUS_ID_COLUMN,
-                                   primary_key=True, serialize=False),
+            model_name="testcasestatus",
+            name="id",
+            field=models.AutoField(
+                db_column=CASE_STATUS_ID_COLUMN, primary_key=True, serialize=False
+            ),
         ),
     ]

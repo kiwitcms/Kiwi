@@ -8,8 +8,8 @@ from tcms.management.models import Classification
 from tcms.rpc.decorators import permissions_required
 
 
-@permissions_required('management.view_classification')
-@rpc_method(name='Classification.filter')
+@permissions_required("management.view_classification")
+@rpc_method(name="Classification.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Classification.filter(query)

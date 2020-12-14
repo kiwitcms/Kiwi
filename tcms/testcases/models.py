@@ -19,26 +19,27 @@ class TestCaseStatus(TCMSActionModel):
     is_confirmed = models.BooleanField(db_index=True, default=False)
 
     class Meta:
-        verbose_name = _('Test case status')
-        verbose_name_plural = _('Test case statuses')
+        verbose_name = _("Test case status")
+        verbose_name_plural = _("Test case statuses")
 
     def __str__(self):
         return self.name
 
 
 # register model for DB translations
-vinaigrette.register(TestCaseStatus, ['name'])
+vinaigrette.register(TestCaseStatus, ["name"])
 
 
 class Category(TCMSActionModel):
     name = models.CharField(max_length=255)
-    product = models.ForeignKey('management.Product', related_name="category",
-                                on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        "management.Product", related_name="category", on_delete=models.CASCADE
+    )
     description = models.TextField(blank=True)
 
     class Meta:
-        verbose_name_plural = u'test case categories'
-        unique_together = ('product', 'name')
+        verbose_name_plural = u"test case categories"
+        unique_together = ("product", "name")
 
     def __str__(self):
         return self.name
@@ -58,32 +59,46 @@ class TestCase(TCMSActionModel):
     text = models.TextField(blank=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, related_name='category_case',
-                                 on_delete=models.CASCADE)
-    priority = models.ForeignKey('management.Priority', related_name='priority_case',
-                                 on_delete=models.CASCADE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='cases_as_author',
-                               on_delete=models.CASCADE)
-    default_tester = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                       related_name='cases_as_default_tester',
-                                       blank=True,
-                                       null=True,
-                                       on_delete=models.CASCADE)
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                 related_name='cases_as_reviewer',
-                                 null=True,
-                                 on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, related_name="category_case", on_delete=models.CASCADE
+    )
+    priority = models.ForeignKey(
+        "management.Priority", related_name="priority_case", on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="cases_as_author",
+        on_delete=models.CASCADE,
+    )
+    default_tester = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="cases_as_default_tester",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    reviewer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="cases_as_reviewer",
+        null=True,
+        on_delete=models.CASCADE,
+    )
 
     # FIXME: related_name should be cases instead of case. But now keep it
     # named case due to historical reason.
-    plan = models.ManyToManyField('testplans.TestPlan', related_name='case',
-                                  through='testcases.TestCasePlan')
+    plan = models.ManyToManyField(
+        "testplans.TestPlan", related_name="case", through="testcases.TestCasePlan"
+    )
 
-    component = models.ManyToManyField('management.Component', related_name='cases',
-                                       through='testcases.TestCaseComponent')
+    component = models.ManyToManyField(
+        "management.Component",
+        related_name="cases",
+        through="testcases.TestCaseComponent",
+    )
 
-    tag = models.ManyToManyField('management.Tag', related_name='case',
-                                 through='testcases.TestCaseTag')
+    tag = models.ManyToManyField(
+        "management.Tag", related_name="case", through="testcases.TestCaseTag"
+    )
 
     def __str__(self):
         return self.summary
@@ -92,7 +107,7 @@ class TestCase(TCMSActionModel):
     def to_xmlrpc(cls, query=None):
 
         _query = query or {}
-        qs = distinct_filter(TestCase, _query).order_by('pk')
+        qs = distinct_filter(TestCase, _query).order_by("pk")
         serializer = TestCaseRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
@@ -105,55 +120,51 @@ class TestCase(TCMSActionModel):
         else:
             queryset = cls.objects.filter(plan=plan)
 
-        if query.get('case_id_set'):
-            queryset = queryset.filter(pk__in=query['case_id_set'])
+        if query.get("case_id_set"):
+            queryset = queryset.filter(pk__in=query["case_id_set"])
 
-        if query.get('search'):
+        if query.get("search"):
             queryset = queryset.filter(
-                Q(pk__icontains=query['search']) |
-                Q(summary__icontains=query['search']) |
-                Q(author__email__startswith=query['search'])
+                Q(pk__icontains=query["search"])
+                | Q(summary__icontains=query["search"])
+                | Q(author__email__startswith=query["search"])
             )
 
-        if query.get('summary'):
-            queryset = queryset.filter(Q(summary__icontains=query['summary']))
+        if query.get("summary"):
+            queryset = queryset.filter(Q(summary__icontains=query["summary"]))
 
-        if query.get('author'):
+        if query.get("author"):
             queryset = queryset.filter(
-                Q(author__first_name__startswith=query['author']) |
-                Q(author__last_name__startswith=query['author']) |
-                Q(author__username__icontains=query['author']) |
-                Q(author__email__startswith=query['author'])
+                Q(author__first_name__startswith=query["author"])
+                | Q(author__last_name__startswith=query["author"])
+                | Q(author__username__icontains=query["author"])
+                | Q(author__email__startswith=query["author"])
             )
 
-        if query.get('default_tester'):
+        if query.get("default_tester"):
             queryset = queryset.filter(
-                Q(default_tester__first_name__startswith=query[
-                    'default_tester']) |
-                Q(default_tester__last_name__startswith=query[
-                    'default_tester']) |
-                Q(default_tester__username__icontains=query[
-                    'default_tester']) |
-                Q(default_tester__email__startswith=query[
-                    'default_tester'])
+                Q(default_tester__first_name__startswith=query["default_tester"])
+                | Q(default_tester__last_name__startswith=query["default_tester"])
+                | Q(default_tester__username__icontains=query["default_tester"])
+                | Q(default_tester__email__startswith=query["default_tester"])
             )
 
-        if query.get('tag__name__in'):
-            queryset = queryset.filter(tag__name__in=query['tag__name__in'])
+        if query.get("tag__name__in"):
+            queryset = queryset.filter(tag__name__in=query["tag__name__in"])
 
-        if query.get('category'):
-            queryset = queryset.filter(category__name=query['category'].name)
+        if query.get("category"):
+            queryset = queryset.filter(category__name=query["category"].name)
 
-        if query.get('priority'):
-            queryset = queryset.filter(priority__in=query['priority'])
+        if query.get("priority"):
+            queryset = queryset.filter(priority__in=query["priority"])
 
-        if query.get('case_status'):
-            queryset = queryset.filter(case_status__in=query['case_status'])
+        if query.get("case_status"):
+            queryset = queryset.filter(case_status__in=query["case_status"])
 
         # If plan exists, remove leading and trailing whitespace from it.
         # todo: this is the same as the if condition above !!! - this entire method
         # should be removed in favor of API
-        plan_str = query.get('plan', '').strip()
+        plan_str = query.get("plan", "").strip()
         if plan_str:
             try:
                 # Is it an integer?  If so treat as a plan_id:
@@ -164,14 +175,14 @@ class TestCase(TCMSActionModel):
                 queryset = queryset.filter(plan__name__icontains=plan_str)
         del plan_str
 
-        if query.get('product'):
-            queryset = queryset.filter(category__product=query['product'])
+        if query.get("product"):
+            queryset = queryset.filter(category__product=query["product"])
 
-        if query.get('component'):
-            queryset = queryset.filter(component=query['component'])
+        if query.get("component"):
+            queryset = queryset.filter(component=query["component"])
 
-        if query.get('is_automated'):
-            queryset = queryset.filter(is_automated=query['is_automated'])
+        if query.get("is_automated"):
+            queryset = queryset.filter(is_automated=query["is_automated"])
 
         return queryset.distinct()
 
@@ -193,13 +204,20 @@ class TestCase(TCMSActionModel):
     def remove_component(self, component):
         # note: cannot use self.component.remove(component) on a ManyToManyField
         # which specifies an intermediary model so we use the model manager!
-        self.component.through.objects.filter(case=self.pk, component=component.pk).delete()
+        self.component.through.objects.filter(
+            case=self.pk, component=component.pk
+        ).delete()
 
     def remove_tag(self, tag):
         self.tag.through.objects.filter(case=self.pk, tag=tag.pk).delete()
 
     def _get_absolute_url(self, request=None):
-        return reverse('testcases-get', args=[self.pk, ])
+        return reverse(
+            "testcases-get",
+            args=[
+                self.pk,
+            ],
+        )
 
     def get_absolute_url(self):
         return self._get_absolute_url()
@@ -267,104 +285,105 @@ class TestCase(TCMSActionModel):
 
 
 class TestCasePlan(models.Model):
-    plan = models.ForeignKey('testplans.TestPlan', on_delete=models.CASCADE)
+    plan = models.ForeignKey("testplans.TestPlan", on_delete=models.CASCADE)
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
     sortkey = models.IntegerField(null=True, blank=True)
 
     class Meta:
-        unique_together = ('plan', 'case')
+        unique_together = ("plan", "case")
 
 
 class TestCaseComponent(models.Model):
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
-    component = models.ForeignKey('management.Component', on_delete=models.CASCADE)
+    component = models.ForeignKey("management.Component", on_delete=models.CASCADE)
 
 
 class TestCaseTag(models.Model):
-    tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
+    tag = models.ForeignKey("management.Tag", on_delete=models.CASCADE)
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
 
 
 class BugSystem(TCMSActionModel):
     """
-        This model describes a bug tracking system used in
-        Kiwi TCMS. Fields below can be configured via
-        the admin interface and their meaning is:
+    This model describes a bug tracking system used in
+    Kiwi TCMS. Fields below can be configured via
+    the admin interface and their meaning is:
 
-        #. **name:** a visual name for this bug tracker, e.g. `Kiwi TCMS GitHub`;
-        #. **tracker_type:** a select menu to specify what kind of external
-           system we interface with, e.g. Bugzilla, JIRA, others;
-           The available options for this field are automatically populated
-           by Kiwi TCMS;
+    #. **name:** a visual name for this bug tracker, e.g. `Kiwi TCMS GitHub`;
+    #. **tracker_type:** a select menu to specify what kind of external
+       system we interface with, e.g. Bugzilla, JIRA, others;
+       The available options for this field are automatically populated
+       by Kiwi TCMS;
 
-           .. warning::
+       .. warning::
 
-                Once this field is set it can't be reset to ``NULL``. Although
-                Kiwi TCMS takes care to handle misconfigurations we advise you to
-                configure your API credentials properly!
+            Once this field is set it can't be reset to ``NULL``. Although
+            Kiwi TCMS takes care to handle misconfigurations we advise you to
+            configure your API credentials properly!
 
-        #. **base_url:** base URL of this bug tracker.
+    #. **base_url:** base URL of this bug tracker.
 
-           .. warning::
+       .. warning::
 
-                If this field is left empty funtionality that depends on it will be disabled!
+            If this field is left empty funtionality that depends on it will be disabled!
 
-        #. **api_url, api_username, api_password:** configuration for an internal RPC object
-           that communicate to the issue tracking system when necessary. Depending on the
-           actual type of IT we're interfacing with some of these values may not be necessary.
-           Refer to :mod:`tcms.issuetracker.types` for more information!
+    #. **api_url, api_username, api_password:** configuration for an internal RPC object
+       that communicate to the issue tracking system when necessary. Depending on the
+       actual type of IT we're interfacing with some of these values may not be necessary.
+       Refer to :mod:`tcms.issuetracker.types` for more information!
 
-           .. warning::
+       .. warning::
 
-                This is saved as plain-text in the database because it needs to be passed
-                to the internal RPC object!
+            This is saved as plain-text in the database because it needs to be passed
+            to the internal RPC object!
     """
+
     name = models.CharField(max_length=255, unique=True)
     tracker_type = models.CharField(
         max_length=128,
-        verbose_name='Type',
-        help_text='This determines how Kiwi TCMS integrates with the IT system',
-        default='IssueTrackerType',
+        verbose_name="Type",
+        help_text="This determines how Kiwi TCMS integrates with the IT system",
+        default="IssueTrackerType",
     )
 
     base_url = models.CharField(
         max_length=1024,
         null=True,
         blank=True,
-        verbose_name='Base URL',
+        verbose_name="Base URL",
         help_text="""Base URL, for example <strong>https://bugzilla.example.com</strong>!
 Leave empty to disable!
-""")
+""",
+    )
 
     api_url = models.CharField(
         max_length=1024,
         null=True,
         blank=True,
-        verbose_name='API URL',
-        help_text='This is the URL to which API requests will be sent. Leave empty to disable!')
+        verbose_name="API URL",
+        help_text="This is the URL to which API requests will be sent. Leave empty to disable!",
+    )
 
     api_username = models.CharField(
-        max_length=256,
-        null=True,
-        blank=True,
-        verbose_name='API username')
+        max_length=256, null=True, blank=True, verbose_name="API username"
+    )
 
     api_password = models.CharField(
-        max_length=256,
-        null=True,
-        blank=True,
-        verbose_name='API password or token')
+        max_length=256, null=True, blank=True, verbose_name="API password or token"
+    )
 
     class Meta:
-        verbose_name = 'Bug tracker'
-        verbose_name_plural = 'Bug trackers'
+        verbose_name = "Bug tracker"
+        verbose_name_plural = "Bug trackers"
 
     def __str__(self):
         return self.name
 
 
 class TestCaseEmailSettings(models.Model):
-    case = models.OneToOneField(TestCase, related_name='email_settings', on_delete=models.CASCADE)
+    case = models.OneToOneField(
+        TestCase, related_name="email_settings", on_delete=models.CASCADE
+    )
     notify_on_case_update = models.BooleanField(default=True)
     notify_on_case_delete = models.BooleanField(default=True)
     auto_to_case_author = models.BooleanField(default=True)
@@ -373,7 +392,7 @@ class TestCaseEmailSettings(models.Model):
     auto_to_run_tester = models.BooleanField(default=True)
     auto_to_case_run_assignee = models.BooleanField(default=True)
 
-    cc_list = models.TextField(default='')
+    cc_list = models.TextField(default="")
 
     def add_cc(self, email_addrs):
         """Add email addresses to CC list

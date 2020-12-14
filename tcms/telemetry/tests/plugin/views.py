@@ -6,4 +6,4 @@ from django.views.generic.base import TemplateView
 
 
 class Example(TemplateView):  # pylint: disable=missing-permission-required
-    template_name = 'a_fake_plugin/example.html'
+    template_name = "a_fake_plugin/example.html"

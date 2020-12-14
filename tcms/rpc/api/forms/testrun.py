@@ -12,7 +12,7 @@ User = get_user_model()  # pylint: disable=invalid-name
 class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     class Meta:
         model = TestRun
-        exclude = ('tag', 'cc')  # pylint: disable=modelform-uses-exclude
+        exclude = ("tag", "cc")  # pylint: disable=modelform-uses-exclude
 
     manager = UserField()
     default_tester = UserField()
@@ -20,13 +20,15 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     stop_date = DateTimeField()
 
     def populate(self, product_id):
-        self.fields['build'].queryset = Build.objects.filter(product_id=product_id, is_active=True)
+        self.fields["build"].queryset = Build.objects.filter(
+            product_id=product_id, is_active=True
+        )
 
 
 class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
     class Meta:
         model = TestExecution
-        fields = '__all__'
+        fields = "__all__"
 
     assignee = UserField()
     tested_by = UserField()
