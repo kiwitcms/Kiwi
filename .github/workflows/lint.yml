@@ -79,3 +79,24 @@ jobs:
         pip install -r requirements/postgres.txt
 
         make pylint_site_packages
+
+  isort:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: isort --check
+      run: |
+        pip install -r requirements/devel.txt
+
+        export LANG=en-us
+        # skip kiwi_lint/__init__.py b/c the import order is used to easily
+        # figure out pylint numerical IDs by looking at the last import !!!
+        isort --check --color --diff --skip kiwi_lint/__init__.py .
