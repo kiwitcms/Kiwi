@@ -1,3 +1,4 @@
 -r readthedocs.txt
 tcms-api
 doc8
+isort==5.6.4
