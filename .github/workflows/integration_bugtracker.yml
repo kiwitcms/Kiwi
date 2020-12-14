@@ -37,6 +37,7 @@ jobs:
     # runs the tests. Some trackers may end up with empty initialization!
     - name: Install Python dependencies
       run: |
+        pip install -U pip
         pip install -r requirements/devel.txt
 
     - name: Initialize bugs DB
