@@ -13,12 +13,13 @@ from tcms.management.models import Build, Version
 class NewBugForm(forms.ModelForm):
     class Meta:
         model = Bug
-        fields = ['summary', 'assignee', 'reporter', 'product', 'version', 'build']
+        fields = ["summary", "assignee", "reporter", "product", "version", "build"]
 
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,
-        initial=_("""Description of problem:
+        initial=_(
+            """Description of problem:
 
 
 How often reproducible:
@@ -35,15 +36,19 @@ Actual results:
 Expected results:
 
 
-Additional info:"""))
+Additional info:"""
+        ),
+    )
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields['version'].queryset = Version.objects.filter(product_id=product_id)
-            self.fields['build'].queryset = Build.objects.filter(product_id=product_id)
+            self.fields["version"].queryset = Version.objects.filter(
+                product_id=product_id
+            )
+            self.fields["build"].queryset = Build.objects.filter(product_id=product_id)
         else:
-            self.fields['version'].queryset = Version.objects.all()
-            self.fields['build'].queryset = Build.objects.all()
+            self.fields["version"].queryset = Version.objects.all()
+            self.fields["build"].queryset = Build.objects.all()
 
 
 class BugCommentForm(forms.Form):
@@ -57,4 +62,4 @@ class BugCommentForm(forms.Form):
     )
 
     def populate(self, bug_id):
-        self.fields['bug'].queryset = Bug.objects.filter(pk=bug_id)
+        self.fields["bug"].queryset = Bug.objects.filter(pk=bug_id)

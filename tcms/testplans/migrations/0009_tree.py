@@ -6,23 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testplans', '0008_remove_autofield'),
+        ("testplans", "0008_remove_autofield"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='historicaltestplan',
-            name='parent',
-            field=models.ForeignKey(blank=True, db_constraint=False, null=True,
-                                    on_delete=models.deletion.DO_NOTHING,
-                                    related_name='+', to='testplans.testplan',
-                                    verbose_name='parent'),
+            model_name="historicaltestplan",
+            name="parent",
+            field=models.ForeignKey(
+                blank=True,
+                db_constraint=False,
+                null=True,
+                on_delete=models.deletion.DO_NOTHING,
+                related_name="+",
+                to="testplans.testplan",
+                verbose_name="parent",
+            ),
         ),
         migrations.AlterField(
-            model_name='testplan',
-            name='parent',
-            field=models.ForeignKey(blank=True, null=True, on_delete=models.deletion.CASCADE,
-                                    related_name='children', to='testplans.testplan',
-                                    verbose_name='parent'),
+            model_name="testplan",
+            name="parent",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=models.deletion.CASCADE,
+                related_name="children",
+                to="testplans.testplan",
+                verbose_name="parent",
+            ),
         ),
     ]

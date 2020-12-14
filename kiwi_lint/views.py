@@ -29,7 +29,7 @@ class DjangoViewsChecker(checkers.BaseChecker):
     def __init__(self, linter):
         super().__init__(linter)
 
-        if 'DJANGO_SETTINGS_MODULE' in os.environ:
+        if "DJANGO_SETTINGS_MODULE" in os.environ:
             django.setup()
 
             project_urls = import_module(settings.ROOT_URLCONF)
@@ -41,12 +41,12 @@ class DjangoViewsChecker(checkers.BaseChecker):
 
     @classmethod
     def _url_view_mapping(cls, root_urlpatterns):
-        def flatten(urlpatterns, prefix='^', result=None):
+        def flatten(urlpatterns, prefix="^", result=None):
             """
-                Flattens the url graph
+            Flattens the url graph
 
-                Returns a dictionary of the url pattern string as a key
-                and tuple of the module name and the view name
+            Returns a dictionary of the url pattern string as a key
+            and tuple of the module name and the view name
             """
 
             if result is None:
@@ -55,46 +55,55 @@ class DjangoViewsChecker(checkers.BaseChecker):
             for url in urlpatterns:
                 if isinstance(url, URLPattern):
                     # path('someurl', view), meaning this is leaf node url
-                    result.setdefault(url.callback.__module__, set()).add(url.callback.__name__)
+                    result.setdefault(url.callback.__module__, set()).add(
+                        url.callback.__name__
+                    )
                 elif isinstance(url, URLResolver):
                     # path('someurl', include(some_url_patterns)), recurse on some_url_patterns
-                    flatten(url.url_patterns,
-                            prefix + url.pattern.regex.pattern.strip('^$'),
-                            result)
+                    flatten(
+                        url.url_patterns,
+                        prefix + url.pattern.regex.pattern.strip("^$"),
+                        result,
+                    )
 
             return result
 
         return flatten(root_urlpatterns)
 
     def visit_module(self, node):
-        if node.name in self.views_by_module.keys() and not node.name.endswith(".admin"):
+        if node.name in self.views_by_module.keys() and not node.name.endswith(
+            ".admin"
+        ):
             self.view_module = node.name
 
     def leave_module(self, node):  # pylint: disable=unused-argument
         """
-            Reset the current view module b/c otherwise we get false
-            reports if a function in another module matches a view name for
-            unreset module!
+        Reset the current view module b/c otherwise we get false
+        reports if a function in another module matches a view name for
+        unreset module!
         """
         self.view_module = None
 
 
 class ClassBasedViewChecker(DjangoViewsChecker):
     """
-        This is where we are going to require that all views in
-        this project be class based!
+    This is where we are going to require that all views in
+    this project be class based!
     """
-    __implements__ = (interfaces.IAstroidChecker, )
 
-    name = 'class-based-view-checker'
+    __implements__ = (interfaces.IAstroidChecker,)
+
+    name = "class-based-view-checker"
 
     msgs = {
-        'R4611': ('Use class based views',
-                  'class-based-view-required',
-                  'Where possible use generic views. See: '
-                  'https://docs.djangoproject.com/en/2.2/topics/class-based-views/generic-display/')
+        "R4611": (
+            "Use class based views",
+            "class-based-view-required",
+            "Where possible use generic views. See: "
+            "https://docs.djangoproject.com/en/2.2/topics/class-based-views/generic-display/",
+        )
     }
 
     def visit_functiondef(self, node):
         if node.name in self.views_by_module[self.view_module]:
-            self.add_message('class-based-view-required', node=node)
+            self.add_message("class-based-view-required", node=node)

@@ -9,8 +9,8 @@ from mock import MagicMock, patch
 
 from tcms.rpc.tests.utils import APITestCase
 
-if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
-    raise unittest.SkipTest('tcms.bugs is disabled')
+if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
+    raise unittest.SkipTest("tcms.bugs is disabled")
 
 
 class TestBug(APITestCase):
@@ -18,11 +18,11 @@ class TestBug(APITestCase):
         super()._fixture_setup()
         self.url = "http://some.url"
         self.expected_result = {
-            'title': 'Bug from cache',
-            'description': 'This bug came from the Django cache'
+            "title": "Bug from cache",
+            "description": "This bug came from the Django cache",
         }
 
-    @patch('tcms.rpc.api.bug.tracker_from_url')
+    @patch("tcms.rpc.api.bug.tracker_from_url")
     def test_get_details_from_tracker(self, tracker_from_url):
         returned_tracker = MagicMock()
         returned_tracker.details.return_value = self.expected_result
@@ -35,14 +35,16 @@ class TestBug(APITestCase):
 
     # override the cache settings, because by default we are using DummyCache,
     # which satisfies the interface, but does no caching
-    @override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'kiwitcms',
-            'TIMEOUT': 3600,
+    @override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "kiwitcms",
+                "TIMEOUT": 3600,
+            }
         }
-    })
-    @patch('tcms.rpc.api.bug.tracker_from_url')
+    )
+    @patch("tcms.rpc.api.bug.tracker_from_url")
     def test_get_details_from_cache(self, tracker_from_url):
         cache.set(self.url, self.expected_result)
 

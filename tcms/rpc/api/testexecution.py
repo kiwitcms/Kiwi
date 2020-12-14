@@ -15,29 +15,28 @@ from tcms.rpc.serializer import Serializer
 from tcms.testruns.models import TestExecution
 
 # conditional import b/c this App can be disabled
-if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
+if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
     from tcms.issuetracker.kiwitcms import KiwiTCMS
 else:
+
     class KiwiTCMS:  # pylint: disable=remove-empty-class,nested-class-found,too-few-public-methods
         pass
 
 
 __all__ = (
-    'update',
-    'filter',
-    'history',
-
-    'add_comment',
-    'remove_comment',
-
-    'add_link',
-    'get_links',
-    'remove_link',
+    "update",
+    "filter",
+    "history",
+    "add_comment",
+    "remove_comment",
+    "add_link",
+    "get_links",
+    "remove_link",
 )
 
 
-@permissions_required('django_comments.add_comment')
-@rpc_method(name='TestExecution.add_comment')
+@permissions_required("django_comments.add_comment")
+@rpc_method(name="TestExecution.add_comment")
 def add_comment(execution_id, comment, **kwargs):
     """
     .. function:: RPC TestExecution.add_comment(execution_id, comment)
@@ -60,8 +59,8 @@ def add_comment(execution_id, comment, **kwargs):
     return model_to_dict(created[0])
 
 
-@permissions_required('django_comments.delete_comment')
-@rpc_method(name='TestExecution.remove_comment')
+@permissions_required("django_comments.delete_comment")
+@rpc_method(name="TestExecution.remove_comment")
 def remove_comment(execution_id, comment_id=None):
     """
     .. function:: RPC TestExecution.remove_comment(execution_id, comment_id)
@@ -82,8 +81,8 @@ def remove_comment(execution_id, comment_id=None):
     to_be_deleted.delete()
 
 
-@permissions_required('django_comments.view_comment')
-@rpc_method(name='TestExecution.get_comments')
+@permissions_required("django_comments.view_comment")
+@rpc_method(name="TestExecution.get_comments")
 def get_comments(execution_id):
     """
     .. function:: RPC TestExecution.get_comments(execution_id)
@@ -101,8 +100,8 @@ def get_comments(execution_id):
     return list(execution_comments)
 
 
-@permissions_required('testruns.view_testexecution')
-@rpc_method(name='TestExecution.filter')
+@permissions_required("testruns.view_testexecution")
+@rpc_method(name="TestExecution.filter")
 def filter(values):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestExecution.filter(values)
@@ -117,8 +116,8 @@ def filter(values):  # pylint: disable=redefined-builtin
     return TestExecution.to_xmlrpc(values)
 
 
-@permissions_required('testruns.view_testexecution')
-@rpc_method(name='TestExecution.history')
+@permissions_required("testruns.view_testexecution")
+@rpc_method(name="TestExecution.history")
 def history(execution_id):
     """
     .. function:: RPC TestExecution.history(execution_id)
@@ -132,20 +131,21 @@ def history(execution_id):
         :raises PermissionDenied: if missing *testruns.view_testexecution* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
-    execution_history = execution.history.all() \
-        .order_by(
-            '-history_date'
-        ).values(
-            'history_user__username',
-            'history_change_reason',
-            'history_date',
-            'history_change_reason'
+    execution_history = (
+        execution.history.all()
+        .order_by("-history_date")
+        .values(
+            "history_user__username",
+            "history_change_reason",
+            "history_date",
+            "history_change_reason",
         )
+    )
     return list(execution_history)
 
 
-@permissions_required('testruns.change_testexecution')
-@rpc_method(name='TestExecution.update')
+@permissions_required("testruns.change_testexecution")
+@rpc_method(name="TestExecution.update")
 def update(execution_id, values, **kwargs):
     """
     .. function:: RPC TestExecution.update(execution_id, values)
@@ -165,14 +165,14 @@ def update(execution_id, values, **kwargs):
     """
     test_execution = TestExecution.objects.get(pk=execution_id)
 
-    if values.get('case_text_version') == 'latest':
-        values['case_text_version'] = test_execution.case.history.latest().history_id
+    if values.get("case_text_version") == "latest":
+        values["case_text_version"] = test_execution.case.history.latest().history_id
 
-    if values.get('status') and not values.get('tested_by'):
-        values['tested_by'] = kwargs.get(REQUEST_KEY).user.id
+    if values.get("status") and not values.get("tested_by"):
+        values["tested_by"] = kwargs.get(REQUEST_KEY).user.id
 
-    if values.get('status') and not values.get('build'):
-        values['build'] = test_execution.run.build.pk
+    if values.get("status") and not values.get("build"):
+        values["build"] = test_execution.run.build.pk
 
     form = UpdateExecutionForm(values, instance=test_execution)
 
@@ -182,7 +182,7 @@ def update(execution_id, values, **kwargs):
         raise ValueError(form_errors_to_list(form))
 
     # if this call updated TE.status then adjust timestamps
-    if values.get('status'):
+    if values.get("status"):
         if test_execution.status.weight != 0:
             test_execution.close_date = timezone.now()
         else:
@@ -192,8 +192,8 @@ def update(execution_id, values, **kwargs):
     return test_execution.serialize()
 
 
-@permissions_required('linkreference.add_linkreference')
-@rpc_method(name='TestExecution.add_link')
+@permissions_required("linkreference.add_linkreference")
+@rpc_method(name="TestExecution.add_link")
 def add_link(values, update_tracker=False, **kwargs):
     """
     .. function:: RPC TestExecution.add_link(values)
@@ -222,18 +222,19 @@ def add_link(values, update_tracker=False, **kwargs):
     request = kwargs.get(REQUEST_KEY)
     tracker = tracker_from_url(link.url, request)
 
-    if (link.is_defect and
-            tracker is not None and
-            update_tracker and
-            not tracker.is_adding_testcase_to_issue_disabled()) or \
-            isinstance(tracker, KiwiTCMS):
+    if (
+        link.is_defect
+        and tracker is not None
+        and update_tracker
+        and not tracker.is_adding_testcase_to_issue_disabled()
+    ) or isinstance(tracker, KiwiTCMS):
         tracker.add_testexecution_to_issue([link.execution], link.url)
 
     return response
 
 
-@permissions_required('linkreference.delete_linkreference')
-@rpc_method(name='TestExecution.remove_link')
+@permissions_required("linkreference.delete_linkreference")
+@rpc_method(name="TestExecution.remove_link")
 def remove_link(query):
     """
     .. function:: RPC TestExecution.remove_link(query)
@@ -247,8 +248,8 @@ def remove_link(query):
     LinkReference.objects.filter(**query).delete()
 
 
-@permissions_required('linkreference.view_linkreference')
-@rpc_method(name='TestExecution.get_links')
+@permissions_required("linkreference.view_linkreference")
+@rpc_method(name="TestExecution.get_links")
 def get_links(query):
     """
     .. function:: RPC TestExecution.get_links(query)

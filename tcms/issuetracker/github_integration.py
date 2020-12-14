@@ -7,14 +7,19 @@ from tcms.issuetracker.base import IntegrationThread
 
 class GitHubThread(IntegrationThread):
     """
-        Execute GitHub RPC code in a thread!
+    Execute GitHub RPC code in a thread!
 
-        Executed from the IssueTracker interface methods.
+    Executed from the IssueTracker interface methods.
     """
+
     @staticmethod
     def repo_id(bug_system):
-        repo_id = bug_system.base_url.strip().strip('/').lower()
-        repo_id = repo_id.replace('https://', '').replace('http://', '').replace('github.com/', '')
+        repo_id = bug_system.base_url.strip().strip("/").lower()
+        repo_id = (
+            repo_id.replace("https://", "")
+            .replace("http://", "")
+            .replace("github.com/", "")
+        )
         return repo_id
 
     def __init__(self, rpc, bug_system, execution, bug_id):

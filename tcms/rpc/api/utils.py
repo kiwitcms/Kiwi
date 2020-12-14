@@ -9,9 +9,9 @@ from tcms.testcases.models import BugSystem
 
 def tracker_from_url(url, request):
     """
-        Return the IssueTrackerType object for the system
-        where ``base_url`` is part of ``url``. Usually we pass
-        URLs to pre-existing defects to this method.
+    Return the IssueTrackerType object for the system
+    where ``base_url`` is part of ``url``. Usually we pass
+    URLs to pre-existing defects to this method.
     """
     for bug_system in BugSystem.objects.all():
         if bug_system.base_url and url.startswith(bug_system.base_url):

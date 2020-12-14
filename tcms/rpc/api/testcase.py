@@ -13,34 +13,29 @@ from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase, TestCasePlan
 
 __all__ = (
-    'create',
-    'update',
-    'filter',
-    'history',
-    'sortkeys',
-    'remove',
-
-    'add_comment',
-    'remove_comment',
-
-    'add_component',
-    'comments',
-    'remove_component',
-
-    'add_notification_cc',
-    'get_notification_cc',
-    'remove_notification_cc',
-
-    'add_tag',
-    'remove_tag',
-
-    'add_attachment',
-    'list_attachments',
+    "create",
+    "update",
+    "filter",
+    "history",
+    "sortkeys",
+    "remove",
+    "add_comment",
+    "remove_comment",
+    "add_component",
+    "comments",
+    "remove_component",
+    "add_notification_cc",
+    "get_notification_cc",
+    "remove_notification_cc",
+    "add_tag",
+    "remove_tag",
+    "add_attachment",
+    "list_attachments",
 )
 
 
-@permissions_required('testcases.add_testcasecomponent')
-@rpc_method(name='TestCase.add_component')
+@permissions_required("testcases.add_testcasecomponent")
+@rpc_method(name="TestCase.add_component")
 def add_component(case_id, component):
     """
     .. function:: RPC TestCase.add_component(case_id, component)
@@ -65,8 +60,8 @@ def add_component(case_id, component):
     return case.serialize()
 
 
-@permissions_required('testcases.delete_testcasecomponent')
-@rpc_method(name='TestCase.remove_component')
+@permissions_required("testcases.delete_testcasecomponent")
+@rpc_method(name="TestCase.remove_component")
 def remove_component(case_id, component_id):
     """
     .. function:: RPC TestCase.remove_component(case_id, component_id)
@@ -89,20 +84,21 @@ def remove_component(case_id, component_id):
 
 def _validate_cc_list(cc_list):
     """
-        Validate each email address given in argument. Called by
-        notification RPC methods.
+    Validate each email address given in argument. Called by
+    notification RPC methods.
 
-        :param cc_list: List of email addresses
-        :type cc_list: list
-        :raises TypeError or ValidationError: if addresses are not valid.
+    :param cc_list: List of email addresses
+    :type cc_list: list
+    :raises TypeError or ValidationError: if addresses are not valid.
     """
 
     if not isinstance(cc_list, list):
-        raise TypeError('cc_list should be a list object.')
+        raise TypeError("cc_list should be a list object.")
 
-    field = EmailField(required=True,
-                       error_messages={
-                           'invalid': 'Following email address(es) are invalid: %s'})
+    field = EmailField(
+        required=True,
+        error_messages={"invalid": "Following email address(es) are invalid: %s"},
+    )
     invalid_emails = []
 
     for item in cc_list:
@@ -113,11 +109,12 @@ def _validate_cc_list(cc_list):
 
     if invalid_emails:
         raise ValidationError(
-            field.error_messages['invalid'] % ', '.join(invalid_emails))
+            field.error_messages["invalid"] % ", ".join(invalid_emails)
+        )
 
 
-@permissions_required('testcases.change_testcase')
-@rpc_method(name='TestCase.add_notification_cc')
+@permissions_required("testcases.change_testcase")
+@rpc_method(name="TestCase.add_notification_cc")
 def add_notification_cc(case_id, cc_list):
     """
     .. function:: RPC TestCase.add_notification_cc(case_id, cc_list)
@@ -139,8 +136,8 @@ def add_notification_cc(case_id, cc_list):
     test_case.emailing.add_cc(cc_list)
 
 
-@permissions_required('testcases.change_testcase')
-@rpc_method(name='TestCase.remove_notification_cc')
+@permissions_required("testcases.change_testcase")
+@rpc_method(name="TestCase.remove_notification_cc")
 def remove_notification_cc(case_id, cc_list):
     """
     .. function:: RPC TestCase.remove_notification_cc(case_id, cc_list)
@@ -161,8 +158,8 @@ def remove_notification_cc(case_id, cc_list):
     TestCase.objects.get(pk=case_id).emailing.remove_cc(cc_list)
 
 
-@permissions_required('testcases.view_testcase')
-@rpc_method(name='TestCase.get_notification_cc')
+@permissions_required("testcases.view_testcase")
+@rpc_method(name="TestCase.get_notification_cc")
 def get_notification_cc(case_id):
     """
     .. function:: RPC TestCase.get_notification_cc(case_id)
@@ -178,8 +175,8 @@ def get_notification_cc(case_id):
     return TestCase.objects.get(pk=case_id).emailing.get_cc_list()
 
 
-@permissions_required('testcases.add_testcasetag')
-@rpc_method(name='TestCase.add_tag')
+@permissions_required("testcases.add_testcasetag")
+@rpc_method(name="TestCase.add_tag")
 def add_tag(case_id, tag, **kwargs):
     """
     .. function:: RPC TestCase.add_tag(case_id, tag)
@@ -202,8 +199,8 @@ def add_tag(case_id, tag, **kwargs):
     TestCase.objects.get(pk=case_id).add_tag(tag)
 
 
-@permissions_required('testcases.delete_testcasetag')
-@rpc_method(name='TestCase.remove_tag')
+@permissions_required("testcases.delete_testcasetag")
+@rpc_method(name="TestCase.remove_tag")
 def remove_tag(case_id, tag):
     """
     .. function:: RPC TestCase.remove_tag(case_id, tag)
@@ -217,13 +214,11 @@ def remove_tag(case_id, tag):
         :raises PermissionDenied: if missing *testcases.delete_testcasetag* permission
         :raises DoesNotExist: if objects specified don't exist
     """
-    TestCase.objects.get(pk=case_id).remove_tag(
-        Tag.objects.get(name=tag)
-    )
+    TestCase.objects.get(pk=case_id).remove_tag(Tag.objects.get(name=tag))
 
 
-@permissions_required('testcases.add_testcase')
-@rpc_method(name='TestCase.create')
+@permissions_required("testcases.add_testcase")
+@rpc_method(name="TestCase.create")
 def create(values, **kwargs):
     """
     .. function:: RPC TestCase.create(values)
@@ -251,8 +246,8 @@ def create(values, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
 
-    if not (values.get('author') or values.get('author_id')):
-        values['author'] = request.user.pk
+    if not (values.get("author") or values.get("author_id")):
+        values["author"] = request.user.pk
 
     form = NewForm(values)
 
@@ -264,8 +259,8 @@ def create(values, **kwargs):
     return test_case.serialize()
 
 
-@permissions_required('testcases.view_testcase')
-@rpc_method(name='TestCase.filter')
+@permissions_required("testcases.view_testcase")
+@rpc_method(name="TestCase.filter")
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestCase.filter(query)
@@ -284,8 +279,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     return TestCase.to_xmlrpc(query)
 
 
-@permissions_required('testcases.view_testcase')
-@rpc_method(name='TestCase.history')
+@permissions_required("testcases.view_testcase")
+@rpc_method(name="TestCase.history")
 def history(case_id, query=None):
     """
     .. function:: RPC TestCase.history(case_id, query)
@@ -305,8 +300,8 @@ def history(case_id, query=None):
     return list(TestCase.objects.get(pk=case_id).history.filter(**query).values())
 
 
-@permissions_required('testcases.view_testcase')
-@rpc_method(name='TestCase.sortkeys')
+@permissions_required("testcases.view_testcase")
+@rpc_method(name="TestCase.sortkeys")
 def sortkeys(query=None):
     """
     .. function:: RPC TestCase.sortkeys(query)
@@ -332,8 +327,8 @@ def sortkeys(query=None):
     return result
 
 
-@permissions_required('testcases.change_testcase')
-@rpc_method(name='TestCase.update')
+@permissions_required("testcases.change_testcase")
+@rpc_method(name="TestCase.update")
 def update(case_id, values):
     """
     .. function:: RPC TestCase.update(case_id, values)
@@ -361,8 +356,8 @@ def update(case_id, values):
     return test_case.serialize()
 
 
-@permissions_required('testcases.delete_testcase')
-@rpc_method(name='TestCase.remove')
+@permissions_required("testcases.delete_testcase")
+@rpc_method(name="TestCase.remove")
 def remove(query):
     """
     .. function:: RPC TestCase.remove(query)
@@ -385,8 +380,8 @@ def remove(query):
     return TestCase.objects.filter(**query).delete()
 
 
-@permissions_required('attachments.view_attachment')
-@rpc_method(name='TestCase.list_attachments')
+@permissions_required("attachments.view_attachment")
+@rpc_method(name="TestCase.list_attachments")
 def list_attachments(case_id, **kwargs):
     """
     .. function:: RPC TestCase.list_attachments(case_id)
@@ -406,8 +401,8 @@ def list_attachments(case_id, **kwargs):
     return utils.get_attachments_for(request, case)
 
 
-@permissions_required('attachments.add_attachment')
-@rpc_method(name='TestCase.add_attachment')
+@permissions_required("attachments.add_attachment")
+@rpc_method(name="TestCase.add_attachment")
 def add_attachment(case_id, filename, b64content, **kwargs):
     """
     .. function:: RPC TestCase.add_attachment(case_id, filename, b64content)
@@ -425,14 +420,15 @@ def add_attachment(case_id, filename, b64content, **kwargs):
     """
     utils.add_attachment(
         case_id,
-        'testcases.TestCase',
+        "testcases.TestCase",
         kwargs.get(REQUEST_KEY).user,
         filename,
-        b64content)
+        b64content,
+    )
 
 
-@permissions_required('django_comments.add_comment')
-@rpc_method(name='TestCase.add_comment')
+@permissions_required("django_comments.add_comment")
+@rpc_method(name="TestCase.add_comment")
 def add_comment(case_id, comment, **kwargs):
     """
     .. function:: TestCase.add_comment(case_id, comment)
@@ -455,13 +451,15 @@ def add_comment(case_id, comment, **kwargs):
             In webUI comments are only shown **only** during test case review!
     """
     case = TestCase.objects.get(pk=case_id)
-    created = helpers.comments.add_comment([case], comment, kwargs.get(REQUEST_KEY).user)
+    created = helpers.comments.add_comment(
+        [case], comment, kwargs.get(REQUEST_KEY).user
+    )
     # we always create only one comment
     return model_to_dict(created[0])
 
 
-@permissions_required('django_comments.delete_comment')
-@rpc_method(name='TestCase.remove_comment')
+@permissions_required("django_comments.delete_comment")
+@rpc_method(name="TestCase.remove_comment")
 def remove_comment(case_id, comment_id=None):
     """
     .. function:: TestCase.remove_comment(case_id, comment_id)
@@ -483,8 +481,8 @@ def remove_comment(case_id, comment_id=None):
     to_be_deleted.delete()
 
 
-@permissions_required('django_comments.view_comment')
-@rpc_method(name='TestCase.comments')
+@permissions_required("django_comments.view_comment")
+@rpc_method(name="TestCase.comments")
 def comments(case_id):
     """
     .. function:: TestCase.comments(case_id)

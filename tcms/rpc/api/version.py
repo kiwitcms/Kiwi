@@ -9,13 +9,13 @@ from tcms.rpc.decorators import permissions_required
 from tcms.rpc.utils import pre_check_product
 
 __all__ = (
-    'create',
-    'filter',
+    "create",
+    "filter",
 )
 
 
-@permissions_required('management.view_version')
-@rpc_method(name='Version.filter')
+@permissions_required("management.view_version")
+@rpc_method(name="Version.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Version.filter(query)
@@ -30,8 +30,8 @@ def filter(query):  # pylint: disable=redefined-builtin
     return Version.to_xmlrpc(query)
 
 
-@permissions_required('management.add_version')
-@rpc_method(name='Version.create')
+@permissions_required("management.add_version")
+@rpc_method(name="Version.create")
 def create(values):
     """
     .. function:: RPC Version.create(values)
@@ -53,7 +53,7 @@ def create(values):
     """
     product = pre_check_product(values)
     form_values = values.copy()
-    form_values['product'] = product.pk
+    form_values["product"] = product.pk
 
     form = VersionForm(form_values)
     if form.is_valid():

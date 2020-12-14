@@ -11,19 +11,17 @@ from tcms.testplans.models import TestPlan, TestPlanEmailSettings
 class NewPlanForm(forms.ModelForm):
     class Meta:
         model = TestPlan
-        exclude = ('tag', )  # pylint: disable=modelform-uses-exclude
+        exclude = ("tag",)  # pylint: disable=modelform-uses-exclude
 
-    text = forms.CharField(
-        widget=SimpleMDE(),
-        required=False
-    )
+    text = forms.CharField(widget=SimpleMDE(), required=False)
 
     def populate(self, product_id):
         if product_id:
-            self.fields['product_version'].queryset = Version.objects.filter(
-                product_id=product_id)
+            self.fields["product_version"].queryset = Version.objects.filter(
+                product_id=product_id
+            )
         else:
-            self.fields['product_version'].queryset = Version.objects.all()
+            self.fields["product_version"].queryset = Version.objects.all()
 
 
 # note: these fields can't change during runtime !
@@ -44,25 +42,22 @@ PlanNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
 
 class SearchPlanForm(forms.Form):
     product = forms.ModelChoiceField(
-        queryset=Product.objects.all().order_by('name'),
-        required=False
+        queryset=Product.objects.all().order_by("name"), required=False
     )
-    version = forms.ModelChoiceField(
-        queryset=Version.objects.none(),
-        required=False
-    )
+    version = forms.ModelChoiceField(queryset=Version.objects.none(), required=False)
     author__username__startswith = forms.CharField(required=False)
     tag__name__in = forms.CharField(required=False)
 
     def clean_tag__name__in(self):
-        return string_to_list(self.cleaned_data['tag__name__in'])
+        return string_to_list(self.cleaned_data["tag__name__in"])
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields['version'].queryset = Version.objects.filter(
-                product_id=product_id)
+            self.fields["version"].queryset = Version.objects.filter(
+                product_id=product_id
+            )
         else:
-            self.fields['version'].queryset = Version.objects.none()
+            self.fields["version"].queryset = Version.objects.none()
 
 
 class ClonePlanForm(forms.Form):
@@ -82,7 +77,8 @@ class ClonePlanForm(forms.Form):
 
     def populate(self, product_pk):
         if product_pk:
-            self.fields['version'].queryset = Version.objects.filter(
-                product_id=product_pk)
+            self.fields["version"].queryset = Version.objects.filter(
+                product_id=product_pk
+            )
         else:
-            self.fields['version'].queryset = Version.objects.none()
+            self.fields["version"].queryset = Version.objects.none()

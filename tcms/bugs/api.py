@@ -7,15 +7,15 @@ from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
 
 __all__ = (
-    'add_tag',
-    'remove_tag',
-    'filter',
-    'remove',
+    "add_tag",
+    "remove_tag",
+    "filter",
+    "remove",
 )
 
 
-@permissions_required('bugs.add_bug_tags')
-@rpc_method(name='Bug.add_tag')
+@permissions_required("bugs.add_bug_tags")
+@rpc_method(name="Bug.add_tag")
 def add_tag(bug_id, tag, **kwargs):
     """
     .. function:: RPC Bug.add_tag(bug_id, tag)
@@ -38,8 +38,8 @@ def add_tag(bug_id, tag, **kwargs):
     Bug.objects.get(pk=bug_id).tags.add(tag)
 
 
-@permissions_required('bugs.delete_bug_tags')
-@rpc_method(name='Bug.remove_tag')
+@permissions_required("bugs.delete_bug_tags")
+@rpc_method(name="Bug.remove_tag")
 def remove_tag(bug_id, tag):
     """
     .. function:: RPC Bug.remove_tag(bug_id, tag)
@@ -53,13 +53,11 @@ def remove_tag(bug_id, tag):
         :raises PermissionDenied: if missing *bugs.delete_bug_tags* permission
         :raises DoesNotExist: if objects specified don't exist
     """
-    Bug.objects.get(pk=bug_id).tags.remove(
-        Tag.objects.get(name=tag)
-    )
+    Bug.objects.get(pk=bug_id).tags.remove(Tag.objects.get(name=tag))
 
 
-@permissions_required('bugs.delete_bug')
-@rpc_method(name='Bug.remove')
+@permissions_required("bugs.delete_bug")
+@rpc_method(name="Bug.remove")
 def remove(query):
     """
     .. function:: RPC Bug.remove(bug_id)
@@ -73,8 +71,8 @@ def remove(query):
     Bug.objects.filter(**query).delete()
 
 
-@permissions_required('bugs.view_bug')
-@rpc_method(name='Bug.filter')
+@permissions_required("bugs.view_bug")
+@rpc_method(name="Bug.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Bug.filter(query)
@@ -87,13 +85,13 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: list
     """
     result = Bug.objects.filter(**query).values(
-        'pk',
-        'summary',
-        'created_at',
-        'product__name',
-        'version__value',
-        'build__name',
-        'reporter__username',
-        'assignee__username',
+        "pk",
+        "summary",
+        "created_at",
+        "product__name",
+        "version__value",
+        "build__name",
+        "reporter__username",
+        "assignee__username",
     )
     return list(result)

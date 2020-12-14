@@ -4,8 +4,8 @@ from django.db import migrations, models
 
 
 def forward_migrate_data(apps, schema_editor):
-    test_case_model = apps.get_model('testcases', 'TestCase')
-    historical_test_case_model = apps.get_model('testcases', 'HistoricalTestCase')
+    test_case_model = apps.get_model("testcases", "TestCase")
+    historical_test_case_model = apps.get_model("testcases", "HistoricalTestCase")
 
     for test_case in test_case_model.objects.all():
         test_case.new_is_automated = test_case.is_automated >= 1
@@ -17,8 +17,8 @@ def forward_migrate_data(apps, schema_editor):
 
 
 def backward_restore_data(apps, schema_editor):
-    test_case_model = apps.get_model('testcases', 'TestCase')
-    historical_test_case_model = apps.get_model('testcases', 'HistoricalTestCase')
+    test_case_model = apps.get_model("testcases", "TestCase")
+    historical_test_case_model = apps.get_model("testcases", "HistoricalTestCase")
 
     for test_case in test_case_model.objects.all():
         test_case.is_automated = int(test_case.new_is_automated)
@@ -32,40 +32,37 @@ def backward_restore_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testcases', '0006_merge_text_field_into_testcase_model'),
+        ("testcases", "0006_merge_text_field_into_testcase_model"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='historicaltestcase',
-            name='new_is_automated',
+            model_name="historicaltestcase",
+            name="new_is_automated",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='testcase',
-            name='new_is_automated',
+            model_name="testcase",
+            name="new_is_automated",
             field=models.BooleanField(default=False),
         ),
-
         migrations.RunPython(forward_migrate_data, backward_restore_data),
-
         migrations.RemoveField(
-            model_name='historicaltestcase',
-            name='is_automated',
+            model_name="historicaltestcase",
+            name="is_automated",
         ),
         migrations.RemoveField(
-            model_name='testcase',
-            name='is_automated',
-        ),
-
-        migrations.RenameField(
-            model_name='historicaltestcase',
-            old_name='new_is_automated',
-            new_name='is_automated',
+            model_name="testcase",
+            name="is_automated",
         ),
         migrations.RenameField(
-            model_name='testcase',
-            old_name='new_is_automated',
-            new_name='is_automated',
+            model_name="historicaltestcase",
+            old_name="new_is_automated",
+            new_name="is_automated",
+        ),
+        migrations.RenameField(
+            model_name="testcase",
+            old_name="new_is_automated",
+            new_name="is_automated",
         ),
     ]

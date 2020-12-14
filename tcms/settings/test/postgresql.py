@@ -2,10 +2,12 @@
 
 from tcms.settings.test import *  # noqa: F403
 
-DATABASES['default'].update({     # noqa: F405
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'kiwi',
-    'USER': 'kiwi',
-    'PASSWORD': 'kiwi',
-    'HOST': 'localhost',
-})
+DATABASES["default"].update(  # noqa: F405
+    {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "kiwi",
+        "USER": "kiwi",
+        "PASSWORD": "kiwi",
+        "HOST": "localhost",
+    }
+)

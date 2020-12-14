@@ -6,8 +6,13 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 
-def mailto(template_name, subject, recipients=None,  # pylint: disable=invalid-name
-           context=None, cc=None):
+def mailto(  # pylint: disable=invalid-name
+    template_name,
+    subject,
+    recipients=None,
+    context=None,
+    cc=None,
+):
 
     # make a list with recipients and filter out duplicates
     if isinstance(recipients, list):
@@ -34,7 +39,7 @@ def mailto(template_name, subject, recipients=None,  # pylint: disable=invalid-n
     email_thread = threading.Thread(
         target=send_mail,
         args=(settings.EMAIL_SUBJECT_PREFIX + subject, body, sender, recipients),
-        kwargs={'fail_silently': False}
+        kwargs={"fail_silently": False},
     )
     # This is to tell Python not to wait for the thread to return
     email_thread.setDaemon(True)

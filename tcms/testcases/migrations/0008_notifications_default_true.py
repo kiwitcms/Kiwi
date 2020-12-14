@@ -6,43 +6,43 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testcases', '0007_convert_is_automated_to_boolean'),
+        ("testcases", "0007_convert_is_automated_to_boolean"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='auto_to_case_author',
+            model_name="testcaseemailsettings",
+            name="auto_to_case_author",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='auto_to_case_run_assignee',
+            model_name="testcaseemailsettings",
+            name="auto_to_case_run_assignee",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='auto_to_case_tester',
+            model_name="testcaseemailsettings",
+            name="auto_to_case_tester",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='auto_to_run_manager',
+            model_name="testcaseemailsettings",
+            name="auto_to_run_manager",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='auto_to_run_tester',
+            model_name="testcaseemailsettings",
+            name="auto_to_run_tester",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='notify_on_case_delete',
+            model_name="testcaseemailsettings",
+            name="notify_on_case_delete",
             field=models.BooleanField(default=True),
         ),
         migrations.AlterField(
-            model_name='testcaseemailsettings',
-            name='notify_on_case_update',
+            model_name="testcaseemailsettings",
+            name="notify_on_case_update",
             field=models.BooleanField(default=True),
         ),
     ]

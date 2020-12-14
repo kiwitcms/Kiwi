@@ -6,24 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('management', '0003_squashed'),
+        ("management", "0003_squashed"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='build',
-            name='description',
+            model_name="build",
+            name="description",
         ),
         migrations.RemoveField(
-            model_name='classification',
-            name='description',
+            model_name="classification",
+            name="description",
         ),
         migrations.RemoveField(
-            model_name='classification',
-            name='sortkey',
+            model_name="classification",
+            name="sortkey",
         ),
         migrations.RemoveField(
-            model_name='priority',
-            name='sortkey',
+            model_name="priority",
+            name="sortkey",
         ),
     ]

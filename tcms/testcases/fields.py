@@ -5,10 +5,10 @@ from django.forms import EmailField, ValidationError
 class MultipleEmailField(EmailField):
     """ Holding mulitple email addresses """
 
-    delimiter = ','
+    delimiter = ","
 
     default_error_messages = {
-        'invalid': u'%(value)s is/are not valid email addresse(s).',
+        "invalid": u"%(value)s is/are not valid email addresse(s).",
     }
 
     def to_python(self, value):
@@ -16,13 +16,12 @@ class MultipleEmailField(EmailField):
             return []
 
         if not isinstance(value, str):
-            raise ValidationError(
-                '%s is not a valid string value.' % str(value))
+            raise ValidationError("%s is not a valid string value." % str(value))
 
         result = []
 
         for item in value.split(self.delimiter):
-            if item.strip() != '':
+            if item.strip() != "":
                 result.append(item.strip())
 
         return result
@@ -46,7 +45,8 @@ class MultipleEmailField(EmailField):
 
         if invalid_email_addrs:
             raise ValidationError(
-                self.error_messages['invalid'] % {
-                    'value': ', '.join(invalid_email_addrs)})
+                self.error_messages["invalid"]
+                % {"value": ", ".join(invalid_email_addrs)}
+            )
 
         return self.delimiter.join(valid_email_addrs)

@@ -14,9 +14,9 @@ class TestCaseStatusFilter(APITestCase):
 
         self.assertGreater(len(case_statuses), 0)
         for case_status in case_statuses:
-            self.assertIsNotNone(case_status['id'])
-            self.assertIsNotNone(case_status['name'])
-            self.assertIsNotNone(case_status['description'])
+            self.assertIsNotNone(case_status["id"])
+            self.assertIsNotNone(case_status["name"])
+            self.assertIsNotNone(case_status["description"])
 
 
 class TestCaseStatusFilterPermissions(APIPermissionsTestCase):

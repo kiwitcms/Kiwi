@@ -3,8 +3,8 @@ import unittest
 
 from django.conf import settings
 
-if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
-    raise unittest.SkipTest('tcms.bugs is disabled')
+if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
+    raise unittest.SkipTest("tcms.bugs is disabled")
 
 from django.template.loader import render_to_string  # noqa: E402
 from django.test import TestCase  # noqa: E402
@@ -23,14 +23,16 @@ class TestSendMailOnAssigneeChange(TestCase):
     * Assignee is assigned bug which was previously assigned to someone other assignee
     """
 
-    @patch('tcms.core.utils.mailto.send_mail')
+    @patch("tcms.core.utils.mailto.send_mail")
     def test_notify_assignee_on_bug_creation(self, send_mail):
         assignee = UserFactory()
         bug = BugFactory(assignee=assignee)
 
-        expected_subject = _('NEW: Bug #%(pk)d - %(summary)s') % {'pk': bug.pk,
-                                                                  'summary': bug.summary}
-        expected_body = render_to_string('email/post_bug_save/email.txt', {'bug': bug})
+        expected_subject = _("NEW: Bug #%(pk)d - %(summary)s") % {
+            "pk": bug.pk,
+            "summary": bug.summary,
+        }
+        expected_body = render_to_string("email/post_bug_save/email.txt", {"bug": bug})
         expected_recipients = [assignee.email]
 
         send_mail.assert_called_once_with(
@@ -38,11 +40,11 @@ class TestSendMailOnAssigneeChange(TestCase):
             expected_body,
             settings.DEFAULT_FROM_EMAIL,
             expected_recipients,
-            fail_silently=False
+            fail_silently=False,
         )
         self.assertTrue(send_mail.called)
 
-    @patch('tcms.core.utils.mailto.send_mail')
+    @patch("tcms.core.utils.mailto.send_mail")
     def test_no_notification_if_assignee_not_set(self, send_mail):
         BugFactory(assignee=None)
 

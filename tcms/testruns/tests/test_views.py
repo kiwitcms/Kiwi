@@ -37,41 +37,44 @@ class TestGetRun(BaseCaseRun):
             cls.test_run.add_tag(TagFactory())
 
         cls.unauthorized = UserFactory()
-        cls.unauthorized.set_password('password')
+        cls.unauthorized.set_password("password")
         cls.unauthorized.save()
 
         cls.unauthorized.user_permissions.add(*Permission.objects.all())
-        remove_perm_from_user(cls.unauthorized, 'testruns.add_testruntag')
-        remove_perm_from_user(cls.unauthorized, 'testruns.delete_testruntag')
+        remove_perm_from_user(cls.unauthorized, "testruns.add_testruntag")
+        remove_perm_from_user(cls.unauthorized, "testruns.delete_testruntag")
 
     def test_404_if_non_existing_pk(self):
-        url = reverse('testruns-get', args=[99999999])
+        url = reverse("testruns-get", args=[99999999])
         response = self.client.get(url)
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_get_a_run(self):
-        url = reverse('testruns-get', args=[self.test_run.pk])
+        url = reverse("testruns-get", args=[self.test_run.pk])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(
             response,
             '<h2 class="card-pf-title"><span class="fa fa-tags"></span>{0}</h2>'.format(
-                _('Tags')), html=True)
+                _("Tags")
+            ),
+            html=True,
+        )
 
     def test_get_run_without_permissions_to_add_or_remove_tags(self):
         self.client.logout()
 
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.unauthorized.username,
-            password='password')
+            username=self.unauthorized.username, password="password"
+        )
 
-        url = reverse('testruns-get', args=[self.test_run.pk])
+        url = reverse("testruns-get", args=[self.test_run.pk])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertNotContains(response, 'Add Tag')
-        self.assertNotContains(response, 'js-remove-tag')
+        self.assertNotContains(response, "Add Tag")
+        self.assertNotContains(response, "js-remove-tag")
 
 
 class TestCreateNewRun(BasePlanCase):
@@ -83,82 +86,86 @@ class TestCreateNewRun(BasePlanCase):
 
         cls.build = BuildFactory(product=cls.product)
 
-        user_should_have_perm(cls.tester, 'testruns.add_testrun')
-        user_should_have_perm(cls.tester, 'testruns.view_testrun')
-        cls.url = reverse('testruns-new')
+        user_should_have_perm(cls.tester, "testruns.add_testrun")
+        user_should_have_perm(cls.tester, "testruns.view_testrun")
+        cls.url = reverse("testruns-new")
 
     def test_refuse_if_missing_plan_pk(self):
-        user_should_have_perm(self.tester, 'testplans.view_testplan')
+        user_should_have_perm(self.tester, "testplans.view_testplan")
 
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
+            username=self.tester.username, password="password"
+        )
         response = self.client.get(self.url, {})
-        self.assertRedirects(response, reverse('plans-search'))
+        self.assertRedirects(response, reverse("plans-search"))
 
     def test_refuse_if_missing_cases_pks(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-        response = self.client.get(self.url, {'p': self.plan.pk}, follow=True)
-        self.assertContains(response, _('Creating a TestRun requires at least one TestCase'))
+            username=self.tester.username, password="password"
+        )
+        response = self.client.get(self.url, {"p": self.plan.pk}, follow=True)
+        self.assertContains(
+            response, _("Creating a TestRun requires at least one TestCase")
+        )
 
     def test_get_shows_selected_cases(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
+            username=self.tester.username, password="password"
+        )
 
-        response = self.client.get(self.url, {
-            'p': self.plan.pk,
-            'c': [self.case_1.pk, self.case_2.pk, self.case_3.pk]
-        })
+        response = self.client.get(
+            self.url,
+            {"p": self.plan.pk, "c": [self.case_1.pk, self.case_2.pk, self.case_3.pk]},
+        )
 
         # Assert listed cases
         for _i, case in enumerate((self.case_1, self.case_2, self.case_3), 1):
-            case_url = reverse('testcases-get', args=[case.pk])
+            case_url = reverse("testcases-get", args=[case.pk])
             self.assertContains(
                 response,
                 '<a href="%s">TC-%d: %s</a>' % (case_url, case.pk, case.summary),
-                html=True)
+                html=True,
+            )
 
     def test_post_creates_new_run(self):
-        new_run_summary = 'TestRun summary'
+        new_run_summary = "TestRun summary"
 
         post_data = {
-            'summary': new_run_summary,
-            'plan': self.plan.pk,
-            'product_id': self.plan.product_id,
-            'product': self.plan.product_id,
-            'product_version': self.plan.product_version.pk,
-            'build': self.build.pk,
-            'manager': self.tester.email,
-            'default_tester': self.tester.email,
-            'notes': '',
-            'case':  [self.case_1.pk, self.case_2.pk]
+            "summary": new_run_summary,
+            "plan": self.plan.pk,
+            "product_id": self.plan.product_id,
+            "product": self.plan.product_id,
+            "product_version": self.plan.product_version.pk,
+            "build": self.build.pk,
+            "manager": self.tester.email,
+            "default_tester": self.tester.email,
+            "notes": "",
+            "case": [self.case_1.pk, self.case_2.pk],
         }
 
-        url = reverse('testruns-new')
+        url = reverse("testruns-new")
         response = self.client.post(url, post_data)
 
         new_run = TestRun.objects.last()
 
-        self.assertRedirects(
-            response,
-            reverse('testruns-get', args=[new_run.pk]))
+        self.assertRedirects(response, reverse("testruns-get", args=[new_run.pk]))
 
-        for case, execution in zip((self.case_1, self.case_2),
-                                   new_run.case_run.order_by('case')):
+        for case, execution in zip(
+            (self.case_1, self.case_2), new_run.case_run.order_by("case")
+        ):
             self.assertEqual(case, execution.case)
             self.assertIsNone(execution.tested_by)
             self.assertEqual(self.tester, execution.assignee)
-            self.assertEqual(case.history.latest().history_id, execution.case_text_version)
+            self.assertEqual(
+                case.history.latest().history_id, execution.case_text_version
+            )
             self.assertEqual(new_run.build, execution.build)
             self.assertIsNone(execution.close_date)
 
 
 class TestCloneRunView(PermissionsTestCase):
-    permission_label = 'testruns.add_testrun'
-    http_method_names = ['get']
+    permission_label = "testruns.add_testrun"
+    http_method_names = ["get"]
 
     @classmethod
     def setUpTestData(cls):
@@ -166,119 +173,129 @@ class TestCloneRunView(PermissionsTestCase):
         cls.execution_1 = TestExecutionFactory(run=cls.test_run)
         cls.execution_2 = TestExecutionFactory(run=cls.test_run)
 
-        cls.url = reverse('testruns-clone', args=[cls.test_run.pk])
+        cls.url = reverse("testruns-clone", args=[cls.test_run.pk])
 
         super().setUpTestData()
 
     def verify_get_with_permission(self):
         response = self.client.get(self.url)
 
-        self.assertContains(response, _('Clone TestRun'))
+        self.assertContains(response, _("Clone TestRun"))
 
         self.assertContains(
             response,
             '<input id="id_summary" class="form-control" name="summary" '
-            'type="text" value="%s%s" required>' % (_('Clone of '), self.test_run.summary),
-            html=True)
+            'type="text" value="%s%s" required>'
+            % (_("Clone of "), self.test_run.summary),
+            html=True,
+        )
 
         for execution in (self.execution_1, self.execution_2):
-            case_url = reverse('testcases-get', args=[execution.case.pk])
+            case_url = reverse("testcases-get", args=[execution.case.pk])
 
             self.assertContains(
                 response,
-                '<a href="%s">TC-%d: %s</a>' % (
-                    case_url, execution.case.pk, execution.case.summary),
-                html=True)
+                '<a href="%s">TC-%d: %s</a>'
+                % (case_url, execution.case.pk, execution.case.summary),
+                html=True,
+            )
 
 
 class TestSearchRuns(BaseCaseRun):
-
     @classmethod
     def setUpTestData(cls):
         super(TestSearchRuns, cls).setUpTestData()
 
-        cls.search_runs_url = reverse('testruns-search')
-        user_should_have_perm(cls.tester, 'testruns.view_testrun')
+        cls.search_runs_url = reverse("testruns-search")
+        user_should_have_perm(cls.tester, "testruns.view_testrun")
 
     def test_search_page_is_shown(self):
         response = self.client.get(self.search_runs_url)
         self.assertContains(response, '<input id="id_summary" type="text"')
 
     def test_search_page_is_shown_with_get_parameter_used(self):
-        response = self.client.get(self.search_runs_url, {'product': self.product.pk})
-        self.assertContains(response,
-                            '<option value="%d" selected>%s</option>' % (self.product.pk,
-                                                                         self.product.name),
-                            html=True)
+        response = self.client.get(self.search_runs_url, {"product": self.product.pk})
+        self.assertContains(
+            response,
+            '<option value="%d" selected>%s</option>'
+            % (self.product.pk, self.product.name),
+            html=True,
+        )
 
 
 class TestRunCasesMenu(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        user_should_have_perm(cls.tester, 'testruns.view_testrun')
+        user_should_have_perm(cls.tester, "testruns.view_testrun")
 
-        cls.url = reverse('testruns-get', args=[cls.test_run.pk])
+        cls.url = reverse("testruns-get", args=[cls.test_run.pk])
 
         cls.update_text_version_html = """
             <a href="#" class="update-case-text-bulk">
                 <span class="fa fa-refresh"></span>{0}
             </a>
-        """.format(_('Update text version'))
+        """.format(
+            _("Update text version")
+        )
 
         cls.change_assignee_html = """
             <a class="change-assignee-bulk" href="#">
                 <span class="fa pficon-user"></span>
                 {0}
             </a>
-        """.format(_('Assignee'))
+        """.format(
+            _("Assignee")
+        )
 
         cls.remove_executions_html = """
             <a class="bg-danger remove-execution-bulk" href="#">
                 <span class="fa fa-trash-o"></span>
                 {0}
             </a>
-        """.format(_('Delete'))
+        """.format(
+            _("Delete")
+        )
 
     def test_add_cases_to_run_with_permission(self):
-        user_should_have_perm(self.tester, 'testruns.add_testexecution')
+        user_should_have_perm(self.tester, "testruns.add_testexecution")
         response = self.client.get(self.url)
-        self.assertContains(response, _('Search and add test cases'))
-        self.assertContains(response, _('Advanced search'))
+        self.assertContains(response, _("Search and add test cases"))
+        self.assertContains(response, _("Advanced search"))
 
     def test_add_cases_to_run_without_permission(self):
-        remove_perm_from_user(self.tester, 'testruns.add_testexecution')
+        remove_perm_from_user(self.tester, "testruns.add_testexecution")
         response = self.client.get(self.url)
-        self.assertNotContains(response, _('Search and add test cases'))
-        self.assertNotContains(response, _('Advanced search'))
+        self.assertNotContains(response, _("Search and add test cases"))
+        self.assertNotContains(response, _("Advanced search"))
 
     def test_change_assignee_with_permission(self):
-        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+        user_should_have_perm(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertContains(response, self.change_assignee_html, html=True)
 
     def test_change_assignee_without_permission(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+        remove_perm_from_user(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertNotContains(response, self.change_assignee_html, html=True)
 
     def test_update_text_version_with_permission(self):
-        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+        user_should_have_perm(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertContains(response, self.update_text_version_html, html=True)
 
     def test_update_text_version_without_permission(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+        remove_perm_from_user(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertNotContains(response, self.update_text_version_html, html=True)
 
     def test_remove_executions_with_permission(self):
-        user_should_have_perm(self.tester, 'testruns.delete_testexecution')
+        user_should_have_perm(self.tester, "testruns.delete_testexecution")
         response = self.client.get(self.url)
         self.assertContains(response, self.remove_executions_html, html=True)
 
     def test_remove_executions_without_permission(self):
-        remove_perm_from_user(self.tester, 'testruns.delete_testexecution')
+        remove_perm_from_user(self.tester, "testruns.delete_testexecution")
         response = self.client.get(self.url)
         self.assertNotContains(response, self.remove_executions_html, html=True)
 
@@ -287,71 +304,73 @@ class TestRunStatusMenu(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.url = reverse('testruns-get', args=[cls.test_run.pk])
-        user_should_have_perm(cls.tester, 'testruns.view_testrun')
+        cls.url = reverse("testruns-get", args=[cls.test_run.pk])
+        user_should_have_perm(cls.tester, "testruns.view_testrun")
         cls.status_menu_html = []
 
     def test_get_status_options_with_permission(self):
-        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+        user_should_have_perm(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
         for execution_status in TestExecutionStatus.objects.all():
             self.assertContains(
                 response,
-                '<span class="{0}"></span>{1}'
-                .format(execution_status.icon, execution_status.name),
-                html=True)
+                '<span class="{0}"></span>{1}'.format(
+                    execution_status.icon, execution_status.name
+                ),
+                html=True,
+            )
 
     def test_get_status_options_without_permission(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+        remove_perm_from_user(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
         for execution_status in TestExecutionStatus.objects.all():
             self.assertNotContains(
                 response,
-                '<span class="{0}"></span>{1}'
-                .format(execution_status.icon, execution_status.name),
-                html=True)
+                '<span class="{0}"></span>{1}'.format(
+                    execution_status.icon, execution_status.name
+                ),
+                html=True,
+            )
 
 
 class TestChangeTestRunStatus(BaseCaseRun):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.url = reverse('testruns-change_status', args=[cls.test_run.pk])
-        user_should_have_perm(cls.tester, 'testruns.view_testrun')
+        cls.url = reverse("testruns-change_status", args=[cls.test_run.pk])
+        user_should_have_perm(cls.tester, "testruns.view_testrun")
 
     def test_change_status_to_finished(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(self.url, {'finished': 1})
-        self.assertRedirects(
-            response,
-            reverse('testruns-get', args=[self.test_run.pk]))
+        user_should_have_perm(self.tester, "testruns.change_testrun")
+        response = self.client.get(self.url, {"finished": 1})
+        self.assertRedirects(response, reverse("testruns-get", args=[self.test_run.pk]))
 
         self.test_run.refresh_from_db()
         self.assertIsNotNone(self.test_run.stop_date)
 
     def test_change_status_to_running(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(self.url, {'finished': 0})
+        user_should_have_perm(self.tester, "testruns.change_testrun")
+        response = self.client.get(self.url, {"finished": 0})
 
-        self.assertRedirects(
-            response,
-            reverse('testruns-get', args=[self.test_run.pk]))
+        self.assertRedirects(response, reverse("testruns-get", args=[self.test_run.pk]))
 
         self.test_run.refresh_from_db()
         self.assertIsNone(self.test_run.stop_date)
 
     def test_should_throw_404_on_non_existing_testrun(self):
-        user_should_have_perm(self.tester, 'testruns.change_testrun')
-        response = self.client.get(reverse('testruns-change_status', args=[99999]), {'finished': 0})
+        user_should_have_perm(self.tester, "testruns.change_testrun")
+        response = self.client.get(
+            reverse("testruns-change_status", args=[99999]), {"finished": 0}
+        )
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_should_fail_when_try_to_change_status_without_permissions(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testrun')
+        remove_perm_from_user(self.tester, "testruns.change_testrun")
         self.assertRedirects(
-            self.client.get(self.url, {'finished': 1}),
-            reverse('tcms-login') + '?next=%s?finished=1' % self.url)
+            self.client.get(self.url, {"finished": 1}),
+            reverse("tcms-login") + "?next=%s?finished=1" % self.url,
+        )

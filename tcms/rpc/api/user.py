@@ -15,22 +15,22 @@ User = get_user_model()  # pylint: disable=invalid-name
 
 
 __all__ = (
-    'update',
-    'filter',
-    'join_group',
-    'add_attachment',
+    "update",
+    "filter",
+    "join_group",
+    "add_attachment",
 )
 
 
 def _get_user_dict(user):
     user_dict = Serializer(model=user).serialize_model()
-    if 'password' in user_dict:
-        del user_dict['password']
+    if "password" in user_dict:
+        del user_dict["password"]
     return user_dict
 
 
-@permissions_required('auth.view_user')
-@rpc_method(name='User.filter')
+@permissions_required("auth.view_user")
+@rpc_method(name="User.filter")
 def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC User.filter(query)
@@ -50,7 +50,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
         If query is ``None`` will return the user issuing the RPC request.
     """
     if not query:
-        query = {'pk': kwargs.get(REQUEST_KEY).user.pk}
+        query = {"pk": kwargs.get(REQUEST_KEY).user.pk}
 
     users = User.objects.filter(**query)
 
@@ -61,8 +61,10 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     return filtered_users
 
 
-@rpc_method(name='User.update')
-def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permissions-required
+@rpc_method(name="User.update")
+def update(
+    user_id, values, **kwargs
+):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: RPC User.update(user_id, values)
 
@@ -94,13 +96,13 @@ def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permission
     else:
         user_being_updated = request.user
 
-    editable_fields = ('first_name', 'last_name', 'email', 'password')
-    can_change_user = request.user.has_perm('auth.change_user')
+    editable_fields = ("first_name", "last_name", "email", "password")
+    can_change_user = request.user.has_perm("auth.change_user")
 
     is_updating_other = request.user != user_being_updated
     # If changing other's attributes, current user must have proper permission
     if is_updating_other and not can_change_user:
-        raise PermissionDenied('Permission denied')
+        raise PermissionDenied("Permission denied")
 
     update_fields = []
     for field in editable_fields:
@@ -108,18 +110,20 @@ def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permission
             continue
 
         update_fields.append(field)
-        if field == 'password':
+        if field == "password":
             if is_updating_other:
-                raise PermissionDenied('Password updates for other users are not allowed via RPC!')
+                raise PermissionDenied(
+                    "Password updates for other users are not allowed via RPC!"
+                )
 
-            old_password = values.get('old_password')
+            old_password = values.get("old_password")
             if not old_password:
-                raise PermissionDenied('Old password is required')
+                raise PermissionDenied("Old password is required")
 
             if not user_being_updated.check_password(old_password):
-                raise PermissionDenied('Password is incorrect')
+                raise PermissionDenied("Password is incorrect")
 
-            user_being_updated.set_password(values['password'])
+            user_being_updated.set_password(values["password"])
         else:
             setattr(user_being_updated, field, values[field])
 
@@ -127,8 +131,8 @@ def update(user_id, values, **kwargs):  # pylint: disable=missing-api-permission
     return _get_user_dict(user_being_updated)
 
 
-@permissions_required('auth.change_user')
-@rpc_method(name='User.join_group')
+@permissions_required("auth.change_user")
+@rpc_method(name="User.join_group")
 def join_group(username, groupname):
     """
     .. function:: RPC User.join_group(username, groupname)
@@ -146,8 +150,8 @@ def join_group(username, groupname):
     user.groups.add(group)
 
 
-@permissions_required('attachments.add_attachment')
-@rpc_method(name='User.add_attachment')
+@permissions_required("attachments.add_attachment")
+@rpc_method(name="User.add_attachment")
 def add_attachment(filename, b64content, **kwargs):
     """
     .. function:: RPC User.add_attachment(filename, b64content)
@@ -175,12 +179,14 @@ def add_attachment(filename, b64content, **kwargs):
         settings.AUTH_USER_MODEL,
         kwargs.get(REQUEST_KEY).user,
         filename,
-        b64content)
+        b64content,
+    )
 
     # take the last attachment for this user and return information about it
-    attachment = Attachment.objects.attachments_for_object(
-        user).order_by('created').last()
+    attachment = (
+        Attachment.objects.attachments_for_object(user).order_by("created").last()
+    )
     return {
-        'url': attachment.attachment_file.url,
-        'filename': attachment.filename,
+        "url": attachment.attachment_file.url,
+        "filename": attachment.filename,
     }

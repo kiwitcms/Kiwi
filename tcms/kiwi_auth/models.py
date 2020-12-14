@@ -20,7 +20,9 @@ class UserActivationKey(models.Model):
         user_activation_key, created = cls.objects.get_or_create(user=user)
         if created or force:
             user_activation_key.activation_key = activation_key
-            user_activation_key.key_expires = datetime.datetime.today() + datetime.timedelta(7)
+            user_activation_key.key_expires = (
+                datetime.datetime.today() + datetime.timedelta(7)
+            )
             user_activation_key.save()
 
         return user_activation_key

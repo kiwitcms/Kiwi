@@ -25,18 +25,17 @@ from django.dispatch import Signal
 from django.utils.translation import gettext_lazy as _
 
 __all__ = [
-    'USER_REGISTERED_SIGNAL',
-
-    'notify_admins',
-    'pre_save_clean',
-    'handle_attachments_pre_delete',
-    'handle_attachments_post_save',
-    'handle_comments_pre_delete',
-    'handle_emails_post_case_save',
-    'handle_emails_pre_case_delete',
-    'handle_emails_post_plan_save',
-    'handle_emails_post_run_save',
-    'handle_emails_post_bug_save',
+    "USER_REGISTERED_SIGNAL",
+    "notify_admins",
+    "pre_save_clean",
+    "handle_attachments_pre_delete",
+    "handle_attachments_post_save",
+    "handle_comments_pre_delete",
+    "handle_emails_post_case_save",
+    "handle_emails_pre_case_delete",
+    "handle_emails_post_plan_save",
+    "handle_emails_post_run_save",
+    "handle_emails_post_bug_save",
 ]
 
 
@@ -47,12 +46,12 @@ USER_REGISTERED_SIGNAL = Signal()
 
 def notify_admins(sender, **kwargs):
     """
-        Very simple signal handler which sends emails to site
-        admins when a new user has been registered!
+    Very simple signal handler which sends emails to site
+    admins when a new user has been registered!
 
-        .. warning::
+    .. warning::
 
-            This handler isn't connected to the ``USER_REGISTERED_SIGNAL`` by default!
+        This handler isn't connected to the ``USER_REGISTERED_SIGNAL`` by default!
     """
     from django.conf import settings
     from django.contrib.auth import get_user_model
@@ -61,7 +60,7 @@ def notify_admins(sender, **kwargs):
     from tcms.core.utils import request_host_link
     from tcms.core.utils.mailto import mailto
 
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
     admin_emails = set()
@@ -72,41 +71,44 @@ def notify_admins(sender, **kwargs):
     for _name, email in settings.ADMINS:
         admin_emails.add(email)
 
-    request = kwargs.get('request')
-    user = kwargs.get('user')
-    user_url = request_host_link(request) + reverse('admin:auth_user_change', args=[user.pk])
+    request = kwargs.get("request")
+    user = kwargs.get("user")
+    user_url = request_host_link(request) + reverse(
+        "admin:auth_user_change", args=[user.pk]
+    )
 
     mailto(
-        template_name='email/user_registered/notify_admins.txt',
+        template_name="email/user_registered/notify_admins.txt",
         recipients=list(admin_emails),
-        subject=str(_('New user awaiting approval')),
+        subject=str(_("New user awaiting approval")),
         context={
-            'username': user.username,
-            'user_url': user_url,
-        }
+            "username": user.username,
+            "user_url": user_url,
+        },
     )
 
 
 def handle_emails_post_case_save(sender, instance, created=False, **kwargs):
     """
-        Send email updates after a TestCase has been updated!
+    Send email updates after a TestCase has been updated!
     """
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
     if not created and instance.emailing.notify_on_case_update:
         from tcms.testcases.helpers import email
+
         email.email_case_update(instance)
 
 
 def handle_emails_pre_case_delete(sender, **kwargs):
     """
-        Send email updates before a TestCase will be deleted!
+    Send email updates before a TestCase will be deleted!
     """
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
 
     try:
         # note: using the `email_settings` related object instead of the
@@ -115,48 +117,52 @@ def handle_emails_pre_case_delete(sender, **kwargs):
         # so email will not going to be sent and the exception is safe to ignore
         if instance.email_settings.notify_on_case_delete:
             from tcms.testcases.helpers import email
+
             email.email_case_deletion(instance)
     except ObjectDoesNotExist:
         pass
 
 
 def pre_save_clean(sender, **kwargs):
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
     instance.clean()
 
 
 def handle_emails_post_plan_save(sender, instance, created=False, **kwargs):
     """
-        Send email updates after a TestPlan has been updated!
+    Send email updates after a TestPlan has been updated!
     """
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
     if not created and instance.emailing.notify_on_plan_update:
         from tcms.testplans.helpers import email
+
         email.email_plan_update(instance)
 
 
 def handle_emails_post_run_save(sender, *_args, **kwargs):
     """
-        Send email updates after a TestRus has been created or updated!
+    Send email updates after a TestRus has been created or updated!
     """
     from tcms.core.history import history_email_for
     from tcms.core.utils.mailto import mailto
 
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
 
-    if kwargs.get('created'):
-        template_name = 'email/post_run_save/email.txt'
-        subject = _('NEW: TestRun #%(pk)d - %(summary)s') % {'pk': instance.pk,
-                                                             'summary': instance.summary}
-        context = {'test_run': instance}
+    if kwargs.get("created"):
+        template_name = "email/post_run_save/email.txt"
+        subject = _("NEW: TestRun #%(pk)d - %(summary)s") % {
+            "pk": instance.pk,
+            "summary": instance.summary,
+        }
+        context = {"test_run": instance}
     else:
         template_name = None
         subject, context = history_email_for(instance, instance.summary)
@@ -166,17 +172,17 @@ def handle_emails_post_run_save(sender, *_args, **kwargs):
 
 def handle_attachments_pre_delete(sender, **kwargs):
     """
-        Delete files attached to object which is about to be
-        deleted b/c django-attachments' object_id is not a FK relationship
-        and we can't rely on cascading delete!
+    Delete files attached to object which is about to be
+    deleted b/c django-attachments' object_id is not a FK relationship
+    and we can't rely on cascading delete!
     """
     from attachments.models import Attachment
     from attachments.views import remove_file_from_disk
 
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
 
     attached_files = Attachment.objects.attachments_for_object(instance)
     for attachment in attached_files:
@@ -186,24 +192,24 @@ def handle_attachments_pre_delete(sender, **kwargs):
 
 def handle_comments_pre_delete(sender, **kwargs):
     """
-        Delete comments attached to object which is about to be
-        deleted b/c django-comments' object_pk is not a FK relationship
-        and we can't rely on cascading delete!
+    Delete comments attached to object which is about to be
+    deleted b/c django-comments' object_pk is not a FK relationship
+    and we can't rely on cascading delete!
     """
     from tcms.core.helpers.comments import get_comments
 
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
 
     get_comments(instance).delete()
 
 
 def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
     """
-        Send email updates to assignee after they've been
-        assigned a bug on bug creation.
+    Send email updates to assignee after they've been
+    assigned a bug on bug creation.
     """
     if not created or instance.assignee is None:
         return
@@ -211,37 +217,37 @@ def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
     from tcms.core.utils.mailto import mailto
 
     mailto(
-        template_name='email/post_bug_save/email.txt',
+        template_name="email/post_bug_save/email.txt",
         recipients=[instance.assignee.email],
-        subject=_('NEW: Bug #%(pk)d - %(summary)s') % {'pk': instance.pk,
-                                                       'summary': instance.summary},
-        context={'bug': instance}
+        subject=_("NEW: Bug #%(pk)d - %(summary)s")
+        % {"pk": instance.pk, "summary": instance.summary},
+        context={"bug": instance},
     )
 
 
 def _introspect_request():
     """
-        Introspect the current thread b/c signals are executed synchronously
-        after .save() and find out the `request` variable.
+    Introspect the current thread b/c signals are executed synchronously
+    after .save() and find out the `request` variable.
     """
     import inspect
 
     for frame_record in inspect.stack():
-        if frame_record[3] == 'get_response':
-            return frame_record[0].f_locals['request']
+        if frame_record[3] == "get_response":
+            return frame_record[0].f_locals["request"]
 
     return None
 
 
 def handle_attachments_post_save(sender, instance, created=False, **kwargs):
     """
-        SimpleMDE image/file buttons will upload attachments under the currently
-        logged-in user. This signal handler will re-attach these files under the
-        document which is being saved!
+    SimpleMDE image/file buttons will upload attachments under the currently
+    logged-in user. This signal handler will re-attach these files under the
+    document which is being saved!
     """
     from attachments.models import Attachment
 
-    if kwargs.get('raw', False):
+    if kwargs.get("raw", False):
         return
 
     request = _introspect_request()

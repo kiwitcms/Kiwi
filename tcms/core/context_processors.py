@@ -7,15 +7,15 @@ def request_contents_processor(request):
     """
     Django request contents RequestContext Handler
     """
-    return {'REQUEST_CONTENTS': request.GET or request.POST}
+    return {"REQUEST_CONTENTS": request.GET or request.POST}
 
 
 def settings_processor(_request):
     """
     Django settings RequestContext Handler
     """
-    return {'SETTINGS': settings}
+    return {"SETTINGS": settings}
 
 
 def server_time_processor(_request):
-    return {'SERVER_TIME': timezone.now()}
+    return {"SERVER_TIME": timezone.now()}

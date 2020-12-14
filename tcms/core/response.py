@@ -8,29 +8,30 @@ from django.template.response import TemplateResponse
 
 class ModifySettingsTemplateResponse(TemplateResponse):
     """
-        A response class which knows how to modify settings
-        while rendering. The attribute ``modify_settings`` must
-        be assigned to a :class:`django.test.utils.modify_settings`
-        instance before calling ``render()``. For example::
+    A response class which knows how to modify settings
+    while rendering. The attribute ``modify_settings`` must
+    be assigned to a :class:`django.test.utils.modify_settings`
+    instance before calling ``render()``. For example::
 
-            from django.test.utils import modify_settings
+        from django.test.utils import modify_settings
 
-            class MyView(TemplateView):
-                ...
-                response_class = ModifySettingsTemplateResponse
+        class MyView(TemplateView):
+            ...
+            response_class = ModifySettingsTemplateResponse
 
-                def render_to_response(self, context, **response_kwargs):
-                    self.response_class.modify_settings = modify_settings(...)
-                    return super().render_to_response(context, **response_kwargs)
+            def render_to_response(self, context, **response_kwargs):
+                self.response_class.modify_settings = modify_settings(...)
+                return super().render_to_response(context, **response_kwargs)
 
 
-        .. important::
+    .. important::
 
-            The reason we need this class is because when using class
-            based views Django supports delayed rendering. Which means
-            modifying settings in the view class will not work because
-            rendering happens later in the cycle.
+        The reason we need this class is because when using class
+        based views Django supports delayed rendering. Which means
+        modifying settings in the view class will not work because
+        rendering happens later in the cycle.
     """
+
     modify_settings = None
 
     def render(self):
@@ -50,6 +51,8 @@ class ModifySettingsTemplateResponse(TemplateResponse):
             # Maybe the switch to CBV and this response class made #991 harder to
             # reproduce. It was easier to reproduce in the past by triggering some kind
             # of exception in the FBV which used modify_settings() !!!
-            if hasattr(self.modify_settings, 'wrapped'):
-                settings._wrapped = self.modify_settings.wrapped  # pylint: disable=protected-access
+            if hasattr(self.modify_settings, "wrapped"):
+                settings._wrapped = (  # pylint: disable=protected-access
+                    self.modify_settings.wrapped
+                )
                 del self.modify_settings.wrapped

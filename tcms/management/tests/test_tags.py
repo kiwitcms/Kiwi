@@ -12,7 +12,7 @@ class TestTagsWithPermission(LoggedInTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        user_should_have_perm(cls.tester, 'management.add_tag')
+        user_should_have_perm(cls.tester, "management.add_tag")
 
         cls.existing_tag = TagFactory()
 
@@ -23,7 +23,7 @@ class TestTagsWithPermission(LoggedInTestCase):
         self.assertFalse(created)
 
     def test_autocreate_new_tag(self):
-        tag, created = Tag.get_or_create(self.tester, 'non-existing-autocreated-tag')
+        tag, created = Tag.get_or_create(self.tester, "non-existing-autocreated-tag")
 
         self.assertNotEqual(tag.pk, self.existing_tag.pk)
         self.assertTrue(created)
@@ -36,7 +36,7 @@ class TestTagsWithoutPermission(LoggedInTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        remove_perm_from_user(cls.tester, 'management.add_tag')
+        remove_perm_from_user(cls.tester, "management.add_tag")
 
         cls.existing_tag = TagFactory()
 
@@ -48,4 +48,4 @@ class TestTagsWithoutPermission(LoggedInTestCase):
 
     def test_autocreate_new_tag(self):
         with self.assertRaises(Tag.DoesNotExist):
-            Tag.get_or_create(self.tester, 'non-existing-tag-without-permission')
+            Tag.get_or_create(self.tester, "non-existing-tag-without-permission")

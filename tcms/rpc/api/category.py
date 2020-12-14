@@ -6,8 +6,8 @@ from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import Category
 
 
-@permissions_required('testcases.view_category')
-@rpc_method(name='Category.filter')
+@permissions_required("testcases.view_category")
+@rpc_method(name="Category.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Category.filter(query)

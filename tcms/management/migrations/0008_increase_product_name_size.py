@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('management', '0007_remove_autofield'),
+        ("management", "0007_remove_autofield"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='product',
-            name='name',
+            model_name="product",
+            name="name",
             field=models.CharField(max_length=255, unique=True),
         ),
     ]

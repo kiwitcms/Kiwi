@@ -20,6 +20,7 @@ except ImportError:
 
 try:
     import tcms_settings_dir
+
     import_local_settings(os.path.dirname(tcms_settings_dir.__file__))
 except ImportError:
     pass

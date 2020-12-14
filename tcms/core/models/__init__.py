@@ -6,7 +6,7 @@ from django.db import models
 from tcms.core.models.base import UrlMixin
 from tcms.rpc.serializer import Serializer
 
-get_user_model()._meta.ordering = ['username']
+get_user_model()._meta.ordering = ["username"]
 
 
 class TCMSActionModel(models.Model, UrlMixin):

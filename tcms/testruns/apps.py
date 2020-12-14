@@ -3,7 +3,7 @@ from django.apps import AppConfig as DjangoAppConfig
 
 
 class AppConfig(DjangoAppConfig):
-    name = 'tcms.testruns'
+    name = "tcms.testruns"
 
     def ready(self):
         from django.db.models.signals import post_save, pre_delete, pre_save

@@ -35,10 +35,9 @@ def timedelta_to_str(value):
     total_seconds = value.seconds + (value.days * SECONDS_PER_DAY)
     hours = total_seconds / SECONDS_PER_HOUR
     # minutes - Total seconds subtract the used hours
-    minutes = total_seconds / SECONDS_PER_MIN - \
-        total_seconds / SECONDS_PER_HOUR * 60
+    minutes = total_seconds / SECONDS_PER_MIN - total_seconds / SECONDS_PER_HOUR * 60
     seconds = total_seconds % SECONDS_PER_MIN
-    return '%02i:%02i:%02i' % (hours, minutes, seconds)
+    return "%02i:%02i:%02i" % (hours, minutes, seconds)
 
 
 # ## End of functions ###
@@ -65,10 +64,10 @@ class Serializer:
 
     def __init__(self, queryset=None, model=None):
         """Initial the class"""
-        if hasattr(queryset, '__iter__'):
+        if hasattr(queryset, "__iter__"):
             self.queryset = queryset
             return
-        if hasattr(model, '__dict__'):
+        if hasattr(model, "__dict__"):
             self.model = model
             return
 
@@ -80,7 +79,7 @@ class Serializer:
 
         Returns: Dictionary
         """
-        if not hasattr(self.model, '__dict__'):
+        if not hasattr(self.model, "__dict__"):
             raise TypeError("Models or Dictionary is required")
         response = {}
         opts = self.model._meta
@@ -105,7 +104,7 @@ class Serializer:
             response[field.name] = value
         for field in opts.local_many_to_many:
             value = getattr(self.model, field.name)
-            value = value.values_list('pk', flat=True)
+            value = value.values_list("pk", flat=True)
             response[field.name] = list(value)
         return response
 
@@ -196,9 +195,9 @@ class QuerySetBasedRPCSerializer(Serializer):
     def __init__(self, model_class, queryset):
         super().__init__(model_class, queryset)
         if model_class is None:
-            raise ValueError('model_class should not be None')
+            raise ValueError("model_class should not be None")
         if queryset is None:
-            raise ValueError('queryset should not be None')
+            raise ValueError("queryset should not be None")
 
         self.model_class = model_class
         self.queryset = queryset
@@ -212,7 +211,7 @@ class QuerySetBasedRPCSerializer(Serializer):
         This method can also be override in subclass to provide the extra
         fields programatically.
         """
-        fields = getattr(self, 'extra_fields', None)
+        fields = getattr(self, "extra_fields", None)
         if fields is None:
             fields = {}
         return fields
@@ -227,7 +226,7 @@ class QuerySetBasedRPCSerializer(Serializer):
         dictionary object.
         :rtype: dict
         """
-        return getattr(self.__class__, 'values_fields_mapping', {})
+        return getattr(self.__class__, "values_fields_mapping", {})
 
     def _get_values_fields(self):
         """Return ORM side field names defined in the values fields mapping
@@ -265,8 +264,7 @@ class QuerySetBasedRPCSerializer(Serializer):
         if self.m2m_fields:
             return self.m2m_fields
 
-        return tuple(field.name for field in
-                     self.model_class._meta.many_to_many)
+        return tuple(field.name for field in self.model_class._meta.many_to_many)
 
     def _get_primary_key_field(self):
         """
@@ -284,8 +282,12 @@ class QuerySetBasedRPCSerializer(Serializer):
                 return field.name
 
         raise ValueError(
-            _('Model %s has no primary key. You have to specify such '
-              'field manually.') % self.model_class.__name__)
+            _(
+                "Model %s has no primary key. You have to specify such "
+                "field manually."
+            )
+            % self.model_class.__name__
+        )
 
     def _query_m2m_field(self, field_name):
         """Query ManyToManyField order by model's pk
@@ -306,14 +308,17 @@ class QuerySetBasedRPCSerializer(Serializer):
         :return: dictionary mapping between model's pk and related object's pk
         :rtype: dict
         """
-        qs = self.queryset.values('pk', field_name).order_by('pk')
-        return dict((pk, tuple(values)) for pk, values in
-                    groupby(qs.iterator(), lambda item: item['pk']))
+        qs = self.queryset.values("pk", field_name).order_by("pk")
+        return dict(
+            (pk, tuple(values))
+            for pk, values in groupby(qs.iterator(), lambda item: item["pk"])
+        )
 
     def _query_m2m_fields(self):
         m2m_fields = self._get_m2m_fields()
-        result = ((field_name, self._query_m2m_field(field_name))
-                  for field_name in m2m_fields)
+        result = (
+            (field_name, self._query_m2m_field(field_name)) for field_name in m2m_fields
+        )
         return dict(result)
 
     def _handle_extra_fields(self, data):
@@ -328,7 +333,7 @@ class QuerySetBasedRPCSerializer(Serializer):
         extra_fields = self.get_extra_fields()
 
         for handle_name, value in extra_fields.items():
-            if handle_name == 'alias':
+            if handle_name == "alias":
                 for original_name, alias in value.items():
                     if original_name in data:
                         data[alias] = data[original_name]
@@ -372,7 +377,8 @@ class QuerySetBasedRPCSerializer(Serializer):
             model_pk = row[primary_key_field]
             for field_name in m2m_fields:
                 related_object_pks = _get_related_object_pks(
-                    m2m_fields_query, model_pk, field_name)
+                    m2m_fields_query, model_pk, field_name
+                )
                 new_serialized_data[field_name] = related_object_pks
 
             # Finally, there might be some extra fields to added to final JSON
@@ -391,52 +397,51 @@ class TestPlanRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestPlan"""
 
     values_fields_mapping = {
-        'id': ('id', do_nothing),
-        'create_date': ('create_date', datetime_to_str),
-        'extra_link': ('extra_link', do_nothing),
-        'is_active': ('is_active', do_nothing),
-        'name': ('name', do_nothing),
-        'text': ('text', do_nothing),
-        'author': ('author_id', do_nothing),
-        'author__username': ('author', to_str),
-        'parent': ('parent_id', do_nothing),
-        'parent__name': ('parent', do_nothing),
-        'product': ('product_id', do_nothing),
-        'product__name': ('product', do_nothing),
-        'product_version': ('product_version_id', do_nothing),
-        'product_version__value': ('product_version', do_nothing),
-        'type': ('type_id', do_nothing),
-        'type__name': ('type', do_nothing),
+        "id": ("id", do_nothing),
+        "create_date": ("create_date", datetime_to_str),
+        "extra_link": ("extra_link", do_nothing),
+        "is_active": ("is_active", do_nothing),
+        "name": ("name", do_nothing),
+        "text": ("text", do_nothing),
+        "author": ("author_id", do_nothing),
+        "author__username": ("author", to_str),
+        "parent": ("parent_id", do_nothing),
+        "parent__name": ("parent", do_nothing),
+        "product": ("product_id", do_nothing),
+        "product__name": ("product", do_nothing),
+        "product_version": ("product_version_id", do_nothing),
+        "product_version__value": ("product_version", do_nothing),
+        "type": ("type_id", do_nothing),
+        "type__name": ("type", do_nothing),
     }
 
     extra_fields = {
-        'alias': {'product_version': 'default_product_version'},
+        "alias": {"product_version": "default_product_version"},
     }
 
-    m2m_fields = ('case', 'tag')
+    m2m_fields = ("case", "tag")
 
 
 class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestExecution"""
 
     values_fields_mapping = {
-        'id': ('id', do_nothing),
-        'case_text_version': ('case_text_version', do_nothing),
-        'close_date': ('close_date', datetime_to_str),
-        'sortkey': ('sortkey', do_nothing),
-
-        'assignee': ('assignee_id', do_nothing),
-        'assignee__username': ('assignee', to_str),
-        'build': ('build_id', do_nothing),
-        'build__name': ('build', do_nothing),
-        'case': ('case_id', do_nothing),
-        'case__summary': ('case', do_nothing),
-        'status': ('status_id', do_nothing),
-        'status__name': ('status', do_nothing),
-        'run': ('run_id', do_nothing),
-        'run__summary': ('run', do_nothing),
-        'tested_by': ('tested_by_id', do_nothing),
-        'tested_by__username': ('tested_by', to_str),
+        "id": ("id", do_nothing),
+        "case_text_version": ("case_text_version", do_nothing),
+        "close_date": ("close_date", datetime_to_str),
+        "sortkey": ("sortkey", do_nothing),
+        "assignee": ("assignee_id", do_nothing),
+        "assignee__username": ("assignee", to_str),
+        "build": ("build_id", do_nothing),
+        "build__name": ("build", do_nothing),
+        "case": ("case_id", do_nothing),
+        "case__summary": ("case", do_nothing),
+        "status": ("status_id", do_nothing),
+        "status__name": ("status", do_nothing),
+        "run": ("run_id", do_nothing),
+        "run__summary": ("run", do_nothing),
+        "tested_by": ("tested_by_id", do_nothing),
+        "tested_by__username": ("tested_by", to_str),
     }
 
 
@@ -444,22 +449,21 @@ class TestRunRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestRun"""
 
     values_fields_mapping = {
-        'notes': ('notes', do_nothing),
-        'id': ('id', do_nothing),
-        'start_date': ('start_date', datetime_to_str),
-        'stop_date': ('stop_date', datetime_to_str),
-        'summary': ('summary', do_nothing),
-
-        'build': ('build_id', do_nothing),
-        'build__name': ('build', do_nothing),
-        'default_tester': ('default_tester_id', do_nothing),
-        'default_tester__username': ('default_tester', to_str),
-        'manager': ('manager_id', do_nothing),
-        'manager__username': ('manager', to_str),
-        'plan': ('plan_id', do_nothing),
-        'plan__name': ('plan', do_nothing),
-        'product_version': ('product_version_id', do_nothing),
-        'product_version__value': ('product_version', do_nothing),
+        "notes": ("notes", do_nothing),
+        "id": ("id", do_nothing),
+        "start_date": ("start_date", datetime_to_str),
+        "stop_date": ("stop_date", datetime_to_str),
+        "summary": ("summary", do_nothing),
+        "build": ("build_id", do_nothing),
+        "build__name": ("build", do_nothing),
+        "default_tester": ("default_tester_id", do_nothing),
+        "default_tester__username": ("default_tester", to_str),
+        "manager": ("manager_id", do_nothing),
+        "manager__username": ("manager", to_str),
+        "plan": ("plan_id", do_nothing),
+        "plan__name": ("plan", do_nothing),
+        "product_version": ("product_version_id", do_nothing),
+        "product_version__value": ("product_version", do_nothing),
     }
 
 
@@ -467,29 +471,28 @@ class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestCase"""
 
     values_fields_mapping = {
-        'arguments': ('arguments', do_nothing),
-        'id': ('id', do_nothing),
-        'create_date': ('create_date', datetime_to_str),
-        'extra_link': ('extra_link', do_nothing),
-        'is_automated': ('is_automated', do_nothing),
-        'notes': ('notes', do_nothing),
-        'text': ('text', do_nothing),
-        'requirement': ('requirement', do_nothing),
-        'script': ('script', do_nothing),
-        'summary': ('summary', do_nothing),
-
-        'author': ('author_id', do_nothing),
-        'author__username': ('author', to_str),
-        'case_status': ('case_status_id', do_nothing),
-        'case_status__name': ('case_status', do_nothing),
-        'category': ('category_id', do_nothing),
-        'category__name': ('category', do_nothing),
-        'default_tester': ('default_tester_id', do_nothing),
-        'default_tester__username': ('default_tester', to_str),
-        'priority': ('priority_id', do_nothing),
-        'priority__value': ('priority', do_nothing),
-        'reviewer': ('reviewer_id', do_nothing),
-        'reviewer__username': ('reviewer', to_str),
+        "arguments": ("arguments", do_nothing),
+        "id": ("id", do_nothing),
+        "create_date": ("create_date", datetime_to_str),
+        "extra_link": ("extra_link", do_nothing),
+        "is_automated": ("is_automated", do_nothing),
+        "notes": ("notes", do_nothing),
+        "text": ("text", do_nothing),
+        "requirement": ("requirement", do_nothing),
+        "script": ("script", do_nothing),
+        "summary": ("summary", do_nothing),
+        "author": ("author_id", do_nothing),
+        "author__username": ("author", to_str),
+        "case_status": ("case_status_id", do_nothing),
+        "case_status__name": ("case_status", do_nothing),
+        "category": ("category_id", do_nothing),
+        "category__name": ("category", do_nothing),
+        "default_tester": ("default_tester_id", do_nothing),
+        "default_tester__username": ("default_tester", to_str),
+        "priority": ("priority_id", do_nothing),
+        "priority__value": ("priority", do_nothing),
+        "reviewer": ("reviewer_id", do_nothing),
+        "reviewer__username": ("reviewer", to_str),
     }
 
 
@@ -497,11 +500,11 @@ class ProductRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for Product"""
 
     values_fields_mapping = {
-        'id': ('id', do_nothing),
-        'name': ('name', do_nothing),
-        'description': ('description', do_nothing),
-        'classification': ('classification_id', do_nothing),
-        'classification__name': ('classification', do_nothing),
+        "id": ("id", do_nothing),
+        "name": ("name", do_nothing),
+        "description": ("description", do_nothing),
+        "classification": ("classification_id", do_nothing),
+        "classification__name": ("classification", do_nothing),
     }
 
 
@@ -509,9 +512,9 @@ class BuildRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for Build"""
 
     values_fields_mapping = {
-        'id': ('id', do_nothing),
-        'is_active': ('is_active', do_nothing),
-        'name': ('name', do_nothing),
-        'product': ('product_id', do_nothing),
-        'product__name': ('product', do_nothing),
+        "id": ("id", do_nothing),
+        "is_active": ("is_active", do_nothing),
+        "name": ("name", do_nothing),
+        "product": ("product_id", do_nothing),
+        "product__name": ("product", do_nothing),
     }

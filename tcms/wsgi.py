@@ -26,7 +26,7 @@ from django.core.wsgi import get_wsgi_application
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "tcms.settings"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tcms.settings.product")
-os.environ['PYTHON_EGG_CACHE'] = tempfile.mkdtemp(prefix='.python-eggs-')
+os.environ["PYTHON_EGG_CACHE"] = tempfile.mkdtemp(prefix=".python-eggs-")
 
 
 # This application object is used by any WSGI server configured to use this
@@ -36,8 +36,8 @@ _APPLICATION = get_wsgi_application()
 
 
 def application(environ, start_response):
-    environ['PATH_INFO'] = environ['SCRIPT_NAME'] + environ['PATH_INFO']
-    if environ['wsgi.url_scheme'] == 'https':
-        environ['HTTPS'] = 'on'
+    environ["PATH_INFO"] = environ["SCRIPT_NAME"] + environ["PATH_INFO"]
+    if environ["wsgi.url_scheme"] == "https":
+        environ["HTTPS"] = "on"
 
     return _APPLICATION(environ, start_response)

@@ -17,7 +17,7 @@ from tcms.utils.permissions import initiate_user_with_default_setups
 User = get_user_model()  # pylint: disable=invalid-name
 
 # actually enable only if app is configured
-if 'captcha' in settings.INSTALLED_APPS:
+if "captcha" in settings.INSTALLED_APPS:
     from captcha.fields import ReCaptchaField
 else:
     ReCaptchaField = None.__class__  # pylint: disable=invalid-name
@@ -32,17 +32,16 @@ class RegistrationForm(UserCreationForm):
         fields = ("username",)
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.cleaned_data["email"]
         try:
             User.objects.get(email=email)
         except User.DoesNotExist:
             return email
-        raise forms.ValidationError(
-            _("A user with that email already exists."))
+        raise forms.ValidationError(_("A user with that email already exists."))
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
+        user.email = self.cleaned_data["email"]
         user.is_active = False
         user.set_password(self.cleaned_data["password1"])
 
@@ -59,34 +58,48 @@ class RegistrationForm(UserCreationForm):
 
     def send_confirm_mail(self, request, activation_key):
         current_site = Site.objects.get(pk=settings.SITE_ID)
-        confirm_url = '%s%s' % (
+        confirm_url = "%s%s" % (
             request_host_link(request, current_site.domain),
-            reverse('tcms-confirm',
-                    args=[activation_key.activation_key, ])
+            reverse(
+                "tcms-confirm",
+                args=[
+                    activation_key.activation_key,
+                ],
+            ),
         )
         mailto(
-            template_name='email/confirm_registration.txt', recipients=self.cleaned_data['email'],
-            subject=_('Your new %s account confirmation') % current_site.domain,
+            template_name="email/confirm_registration.txt",
+            recipients=self.cleaned_data["email"],
+            subject=_("Your new %s account confirmation") % current_site.domain,
             context={
-                'user': self.instance,
-                'site_domain': current_site.domain,
-                'confirm_url': confirm_url,
-            }
+                "user": self.instance,
+                "site_domain": current_site.domain,
+                "confirm_url": confirm_url,
+            },
         )
 
 
-class PasswordResetForm(DjangoPasswordResetForm):  # pylint: disable=must-inherit-from-model-form
+class PasswordResetForm(
+    DjangoPasswordResetForm
+):  # pylint: disable=must-inherit-from-model-form
     """
-        Overrides the default form b/c it uses Site.objects.get_current()
-        which uses an internal cache and produces wrong results when
-        kiwitcms-tenants is installed.
+    Overrides the default form b/c it uses Site.objects.get_current()
+    which uses an internal cache and produces wrong results when
+    kiwitcms-tenants is installed.
     """
-    def save(self, domain_override=None,  # pylint: disable=too-many-arguments
-             subject_template_name='registration/password_reset_subject.txt',
-             email_template_name='registration/password_reset_email.html',
-             use_https=False, token_generator=default_token_generator,
-             from_email=None, request=None, html_email_template_name=None,
-             extra_email_context=None):
+
+    def save(  # pylint: disable=too-many-arguments
+        self,
+        domain_override=None,
+        subject_template_name="registration/password_reset_subject.txt",
+        email_template_name="registration/password_reset_email.html",
+        use_https=False,
+        token_generator=default_token_generator,
+        from_email=None,
+        request=None,
+        html_email_template_name=None,
+        extra_email_context=None,
+    ):
         current_site = Site.objects.get(pk=settings.SITE_ID)
         # call the stock method and just overrides the domain
         super().save(

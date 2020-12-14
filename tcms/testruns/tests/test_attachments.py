@@ -17,12 +17,14 @@ class TestRunAttachments(LoggedInTestCase):
         cls.execution = TestExecutionFactory(run=cls.test_run)
 
     def test_delete_testrun_deletes_attachments(self):
-        self.attach_file_to('testruns.TestRun', self.test_run)
+        self.attach_file_to("testruns.TestRun", self.test_run)
         attachments_for_run = Attachment.objects.attachments_for_object(self.test_run)
         self.assertGreater(attachments_for_run.count(), 0)
 
-        self.attach_file_to('testruns.TestExecution', self.execution)
-        attachments_for_execution = Attachment.objects.attachments_for_object(self.execution)
+        self.attach_file_to("testruns.TestExecution", self.execution)
+        attachments_for_execution = Attachment.objects.attachments_for_object(
+            self.execution
+        )
         self.assertGreater(attachments_for_execution.count(), 0)
 
         # will cascade-delete self.execution

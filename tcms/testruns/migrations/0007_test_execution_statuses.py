@@ -4,80 +4,80 @@ from django.db import migrations, models
 
 
 def insert_default_values(apps, schema_editor):
-    test_execution_status_model = apps.get_model('testruns', 'TestExecutionStatus')
+    test_execution_status_model = apps.get_model("testruns", "TestExecutionStatus")
 
-    failed = test_execution_status_model.objects.get(name='FAILED')
+    failed = test_execution_status_model.objects.get(name="FAILED")
     failed.weight = -30
-    failed.color = '#cc0000'
-    failed.icon = 'fa fa-times-circle-o'
+    failed.color = "#cc0000"
+    failed.icon = "fa fa-times-circle-o"
     failed.save()
 
-    error = test_execution_status_model.objects.get(name='ERROR')
+    error = test_execution_status_model.objects.get(name="ERROR")
     error.weight = -20
-    error.color = '#cc0000'
-    error.icon = 'fa fa-minus-circle'
+    error.color = "#cc0000"
+    error.icon = "fa fa-minus-circle"
     error.save()
 
-    blocked = test_execution_status_model.objects.get(name='BLOCKED')
+    blocked = test_execution_status_model.objects.get(name="BLOCKED")
     blocked.weight = -10
-    blocked.color = '#cc0000'
-    blocked.icon = 'fa fa-stop-circle-o'
+    blocked.color = "#cc0000"
+    blocked.icon = "fa fa-stop-circle-o"
     blocked.save()
 
-    idle = test_execution_status_model.objects.get(name='IDLE')
+    idle = test_execution_status_model.objects.get(name="IDLE")
     idle.weight = 0
-    idle.color = '#72767b'
-    idle.icon = 'fa fa-question-circle-o'
+    idle.color = "#72767b"
+    idle.icon = "fa fa-question-circle-o"
     idle.save()
 
-    paused = test_execution_status_model.objects.get(name='PAUSED')
+    paused = test_execution_status_model.objects.get(name="PAUSED")
     paused.weight = 0
-    paused.color = '#72767b'
-    paused.icon = 'fa fa-pause-circle-o'
+    paused.color = "#72767b"
+    paused.icon = "fa fa-pause-circle-o"
     paused.save()
 
-    running = test_execution_status_model.objects.get(name='RUNNING')
+    running = test_execution_status_model.objects.get(name="RUNNING")
     running.weight = 0
-    running.color = '#72767b'
-    running.icon = 'fa fa-play-circle-o'
+    running.color = "#72767b"
+    running.icon = "fa fa-play-circle-o"
     running.save()
 
-    waived = test_execution_status_model.objects.get(name='WAIVED')
+    waived = test_execution_status_model.objects.get(name="WAIVED")
     waived.weight = 10
-    waived.color = '#92d400'
-    waived.icon = 'fa fa-commenting-o'
+    waived.color = "#92d400"
+    waived.icon = "fa fa-commenting-o"
     waived.save()
 
-    passed = test_execution_status_model.objects.get(name='PASSED')
+    passed = test_execution_status_model.objects.get(name="PASSED")
     passed.weight = 20
-    passed.color = '#92d400'
-    passed.icon = 'fa fa-check-circle-o'
+    passed.color = "#92d400"
+    passed.icon = "fa fa-check-circle-o"
     passed.save()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testruns', '0006_rename_test_case_run_to_test_execution'),
+        ("testruns", "0006_rename_test_case_run_to_test_execution"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='testexecutionstatus',
-            name='icon',
-            field=models.CharField(default='', max_length=64),
+            model_name="testexecutionstatus",
+            name="icon",
+            field=models.CharField(default="", max_length=64),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='testexecutionstatus',
-            name='color',
-            field=models.CharField(default='', max_length=8),
+            model_name="testexecutionstatus",
+            name="color",
+            field=models.CharField(default="", max_length=8),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='testexecutionstatus',
-            name='weight',
+            model_name="testexecutionstatus",
+            name="weight",
             field=models.IntegerField(default=0),
         ),
-        migrations.RunPython(insert_default_values, migrations.RunPython.noop)
+        migrations.RunPython(insert_default_values, migrations.RunPython.noop),
     ]

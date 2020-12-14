@@ -6,20 +6,20 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testplans', '0005_squashed'),
+        ("testplans", "0005_squashed"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='historicaltestplan',
-            name='owner',
+            model_name="historicaltestplan",
+            name="owner",
         ),
         migrations.RemoveField(
-            model_name='testplan',
-            name='owner',
+            model_name="testplan",
+            name="owner",
         ),
         migrations.RemoveField(
-            model_name='testplanemailsettings',
-            name='auto_to_plan_owner',
+            model_name="testplanemailsettings",
+            name="auto_to_plan_owner",
         ),
     ]

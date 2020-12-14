@@ -24,26 +24,30 @@ def _get_builtin_permissions(opts):
     """
     perms = []
     for action in opts.default_permissions:
-        perms.append((
-            get_permission_codename(action, opts),
-            'Can %s %s' % (action, opts.verbose_name_raw)
-        ))
+        perms.append(
+            (
+                get_permission_codename(action, opts),
+                "Can %s %s" % (action, opts.verbose_name_raw),
+            )
+        )
     return perms
 
 
-def create_permissions(app_config,
-                       verbosity=2,
-                       interactive=True,
-                       using=DEFAULT_DB_ALIAS,
-                       apps=global_apps,
-                       **kwargs):
+def create_permissions(
+    app_config,
+    verbosity=2,
+    interactive=True,
+    using=DEFAULT_DB_ALIAS,
+    apps=global_apps,
+    **kwargs
+):
     """
-        Create the missing permissions for the Bug<->Tag m2m model, see
-        https://code.djangoproject.com/ticket/31633
+    Create the missing permissions for the Bug<->Tag m2m model, see
+    https://code.djangoproject.com/ticket/31633
 
-        Copied from django.contrib.auth.management.create_permissions()
+    Copied from django.contrib.auth.management.create_permissions()
     """
-    if app_config.name != 'tcms.bugs':
+    if app_config.name != "tcms.bugs":
         return
 
     if not app_config.models_module:
@@ -52,18 +56,20 @@ def create_permissions(app_config,
     # Ensure that contenttypes are created for this app. Needed if
     # 'django.contrib.auth' is in INSTALLED_APPS before
     # 'django.contrib.contenttypes'.
-    create_contenttypes(app_config,
-                        verbosity=verbosity,
-                        interactive=interactive,
-                        using=using,
-                        apps=apps,
-                        **kwargs)
+    create_contenttypes(
+        app_config,
+        verbosity=verbosity,
+        interactive=interactive,
+        using=using,
+        apps=apps,
+        **kwargs
+    )
 
     app_label = app_config.label
     try:
         app_config = apps.get_app_config(app_label)
-        ContentType = apps.get_model('contenttypes', 'ContentType')
-        Permission = apps.get_model('auth', 'Permission')
+        ContentType = apps.get_model("contenttypes", "ContentType")
+        Permission = apps.get_model("auth", "Permission")
     except LookupError:
         return
 
@@ -79,7 +85,9 @@ def create_permissions(app_config,
 
         # Force looking up the content types in the current database
         # before creating foreign keys to them.
-        ctype = ContentType.objects.db_manager(using).get_for_model(klass, for_concrete_model=False)
+        ctype = ContentType.objects.db_manager(using).get_for_model(
+            klass, for_concrete_model=False
+        )
 
         ctypes.add(ctype)
         for perm in _get_all_permissions(klass._meta):
@@ -88,11 +96,13 @@ def create_permissions(app_config,
     # Find all the Permissions that have a content_type for a model we're
     # looking for.  We don't need to check for codenames since we already have
     # a list of the ones we're going to create.
-    all_perms = set(Permission.objects.using(using).filter(
-        content_type__in=ctypes,
-    ).values_list(
-        "content_type", "codename"
-    ))
+    all_perms = set(
+        Permission.objects.using(using)
+        .filter(
+            content_type__in=ctypes,
+        )
+        .values_list("content_type", "codename")
+    )
 
     perms = [
         Permission(codename=codename, name=name, content_type=ct)

@@ -7,14 +7,14 @@ from tcms.rpc.decorators import permissions_required
 from tcms.rpc.utils import pre_check_product
 
 __all__ = (
-    'create',
-    'update',
-    'filter',
+    "create",
+    "update",
+    "filter",
 )
 
 
-@permissions_required('management.view_build')
-@rpc_method(name='Build.filter')
+@permissions_required("management.view_build")
+@rpc_method(name="Build.filter")
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Build.filter(query)
@@ -32,8 +32,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     return Build.to_xmlrpc(query)
 
 
-@rpc_method(name='Build.create')
-@permissions_required('management.add_build')
+@rpc_method(name="Build.create")
+@permissions_required("management.add_build")
 def create(values):
     """
     .. function:: RPC Build.create(values)
@@ -47,18 +47,18 @@ def create(values):
         :raises ValueError: if product or name not specified
         :raises: PermissionDenied if missing *management.add_build* permission
     """
-    if not values.get('product') or not values.get('name'):
-        raise ValueError('Product and name are both required.')
+    if not values.get("product") or not values.get("name"):
+        raise ValueError("Product and name are both required.")
 
     return Build.objects.create(
         product=pre_check_product(values),
-        name=values['name'],
-        is_active=values.get('is_active', True)
+        name=values["name"],
+        is_active=values.get("is_active", True),
     ).serialize()
 
 
-@permissions_required('management.change_build')
-@rpc_method(name='Build.update')
+@permissions_required("management.change_build")
+@rpc_method(name="Build.update")
 def update(build_id, values):
     """
     .. function:: RPC Build.update(build_id, values)
@@ -78,12 +78,14 @@ def update(build_id, values):
 
     # todo: this needs to start using model forms
     update_fields = list()
-    if values.get('product'):
-        _update_value(selected_build, 'product', pre_check_product(values), update_fields)
-    if values.get('name'):
-        _update_value(selected_build, 'name', values['name'], update_fields)
-    if values.get('is_active') is not None:
-        _update_value(selected_build, 'is_active', values['is_active'], update_fields)
+    if values.get("product"):
+        _update_value(
+            selected_build, "product", pre_check_product(values), update_fields
+        )
+    if values.get("name"):
+        _update_value(selected_build, "name", values["name"], update_fields)
+    if values.get("is_active") is not None:
+        _update_value(selected_build, "is_active", values["is_active"], update_fields)
 
     selected_build.save(update_fields=update_fields)
 

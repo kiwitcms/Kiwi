@@ -16,18 +16,18 @@ from tcms.testcases.models import (
 )
 from tcms.testplans.models import TestPlan
 
-ITEMS_PER_PAGE_CHOICES = (
-    ('20', '20'),
-    ('50', '50'),
-    ('100', '100')
-)
+ITEMS_PER_PAGE_CHOICES = (("20", "20"), ("50", "50"), ("100", "100"))
 
 
 class TestCaseForm(forms.ModelForm):
-
     class Meta:
         model = TestCase
-        exclude = ['reviewer', 'tag', 'component', 'plan']  # pylint: disable=modelform-uses-exclude
+        exclude = [  # pylint: disable=modelform-uses-exclude
+            "reviewer",
+            "tag",
+            "component",
+            "plan",
+        ]
 
     default_tester = UserField(required=False)
     priority = forms.ModelChoiceField(
@@ -41,7 +41,8 @@ class TestCaseForm(forms.ModelForm):
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,
-        initial=_("""**Scenario**: ... what behavior will be tested ...
+        initial=_(
+            """**Scenario**: ... what behavior will be tested ...
   **Given** ... conditions ...
   **When** ... actions ...
   **Then** ... expected results ...
@@ -56,21 +57,24 @@ class TestCaseForm(forms.ModelForm):
 
 1. item
 2. item
-3. item"""))
+3. item"""
+        ),
+    )
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields['category'].queryset = Category.objects.filter(
-                product_id=product_id)
+            self.fields["category"].queryset = Category.objects.filter(
+                product_id=product_id
+            )
         else:
-            self.fields['category'].queryset = Category.objects.all()
+            self.fields["category"].queryset = Category.objects.all()
 
 
 # only useful b/c we want to override the cc_list field
 class CaseNotifyForm(forms.ModelForm):
     class Meta:
         model = TestCaseEmailSettings
-        fields = '__all__'
+        fields = "__all__"
 
     cc_list = MultipleEmailField(required=False)
 
@@ -100,39 +104,35 @@ class BaseCaseSearchForm(forms.Form):
     author = forms.CharField(required=False)
     default_tester = forms.CharField(required=False)
     tag__name__in = forms.CharField(required=False)
-    category = forms.ModelChoiceField(
-        queryset=Category.objects.none(),
-        required=False
-    )
+    category = forms.ModelChoiceField(queryset=Category.objects.none(), required=False)
     priority = forms.ModelMultipleChoiceField(
         queryset=Priority.objects.filter(is_active=True),
         widget=forms.CheckboxSelectMultiple(),
-        required=False
+        required=False,
     )
     case_status = forms.ModelMultipleChoiceField(
         queryset=TestCaseStatus.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
-        required=False
+        required=False,
     )
     component = forms.ModelChoiceField(
-        queryset=Component.objects.none(),
-        required=False
+        queryset=Component.objects.none(), required=False
     )
     is_automated = forms.BooleanField(required=False)
-    items_per_page = forms.ChoiceField(
-        required=False,
-        choices=ITEMS_PER_PAGE_CHOICES)
+    items_per_page = forms.ChoiceField(required=False, choices=ITEMS_PER_PAGE_CHOICES)
 
     def clean_tag__name__in(self):
-        return string_to_list(self.cleaned_data['tag__name__in'])
+        return string_to_list(self.cleaned_data["tag__name__in"])
 
     def populate(self, product_id=None):
         """Limit the query to fit the plan"""
         if product_id:
-            self.fields['category'].queryset = Category.objects.filter(
-                product_id=product_id)
-            self.fields['component'].queryset = Component.objects.filter(
-                product_id=product_id)
+            self.fields["category"].queryset = Category.objects.filter(
+                product_id=product_id
+            )
+            self.fields["component"].queryset = Component.objects.filter(
+                product_id=product_id
+            )
 
 
 # todo BaseCaseSearchForm is never used stand-alone and nothing else
@@ -141,16 +141,13 @@ class SearchCaseForm(BaseCaseSearchForm):
     search = forms.CharField(required=False)
     # todo: is the plan field used ?
     plan = forms.CharField(required=False)
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        required=False
-    )
+    product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
 
     def clean_case_status(self):
-        return list(self.cleaned_data['case_status'])
+        return list(self.cleaned_data["case_status"])
 
     def clean_priority(self):
-        return list(self.cleaned_data['priority'])
+        return list(self.cleaned_data["priority"])
 
 
 class CloneCaseForm(forms.Form):
@@ -163,6 +160,6 @@ class CloneCaseForm(forms.Form):
     )
 
     def populate(self, case_ids):
-        self.fields['case'].queryset = TestCase.objects.filter(pk__in=case_ids)
-        plan_ids = self.fields['case'].queryset.values_list('plan', flat=True)
-        self.fields['plan'].queryset = TestPlan.objects.filter(pk__in=plan_ids)
+        self.fields["case"].queryset = TestCase.objects.filter(pk__in=case_ids)
+        plan_ids = self.fields["case"].queryset.values_list("plan", flat=True)
+        self.fields["plan"].queryset = TestPlan.objects.filter(pk__in=plan_ids)

@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('linkreference', '0001_squashed'),
+        ("linkreference", "0001_squashed"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='linkreference',
-            old_name='test_case_run',
-            new_name='execution',
+            model_name="linkreference",
+            old_name="test_case_run",
+            new_name="execution",
         ),
         migrations.AlterField(
-            model_name='linkreference',
-            name='created_on',
+            model_name="linkreference",
+            name="created_on",
             field=models.DateTimeField(auto_now_add=True, db_index=True),
         ),
         migrations.AddField(
-            model_name='linkreference',
-            name='is_defect',
+            model_name="linkreference",
+            name="is_defect",
             field=models.BooleanField(db_index=True, default=False),
         ),
     ]

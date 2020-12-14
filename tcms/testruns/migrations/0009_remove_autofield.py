@@ -10,71 +10,75 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('testruns', '0008_test_execution_status_color_field'),
+        ("testruns", "0008_test_execution_status_color_field"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='testexecution',
-            old_name='case_run_id',
-            new_name='id',
+            model_name="testexecution",
+            old_name="case_run_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='historicaltestexecution',
-            old_name='case_run_id',
-            new_name='id',
+            model_name="historicaltestexecution",
+            old_name="case_run_id",
+            new_name="id",
         ),
         migrations.AlterField(
-            model_name='testexecution',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True,
-                                   serialize=False, verbose_name='ID'),
+            model_name="testexecution",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='historicaltestexecution',
-            name='id',
-            field=models.IntegerField(auto_created=True, blank=True,
-                                      db_index=True, verbose_name='ID'),
+            model_name="historicaltestexecution",
+            name="id",
+            field=models.IntegerField(
+                auto_created=True, blank=True, db_index=True, verbose_name="ID"
+            ),
         ),
-
         migrations.AlterField(
-            model_name='testruncc',
-            name='user',
-            field=models.ForeignKey(on_delete=models.deletion.CASCADE,
-                                    to=settings.AUTH_USER_MODEL),
+            model_name="testruncc",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+            ),
         ),
-
         # drop TestRun.run_id in favor of TestRun.id
         migrations.AlterUniqueTogether(
-            name='testrun',
+            name="testrun",
             unique_together=set(),
         ),
         migrations.RenameField(
-            model_name='testrun',
-            old_name='run_id',
-            new_name='id',
+            model_name="testrun",
+            old_name="run_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='historicaltestrun',
-            old_name='run_id',
-            new_name='id',
+            model_name="historicaltestrun",
+            old_name="run_id",
+            new_name="id",
         ),
         migrations.AlterField(
-            model_name='testrun',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True,
-                                   serialize=False, verbose_name='ID'),
+            model_name="testrun",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='historicaltestrun',
-            name='id',
-            field=models.IntegerField(auto_created=True, blank=True,
-                                      db_index=True, verbose_name='ID'),
+            model_name="historicaltestrun",
+            name="id",
+            field=models.IntegerField(
+                auto_created=True, blank=True, db_index=True, verbose_name="ID"
+            ),
         ),
         migrations.AlterField(
-            model_name='testexecutionstatus',
-            name='id',
-            field=models.AutoField(auto_created=True, primary_key=True,
-                                   serialize=False, verbose_name='ID'),
+            model_name="testexecutionstatus",
+            name="id",
+            field=models.AutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+            ),
         ),
     ]

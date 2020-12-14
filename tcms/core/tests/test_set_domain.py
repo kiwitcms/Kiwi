@@ -12,16 +12,14 @@ class TestSetDomainCommand(TestCase):
     def test_without_params_returns_domain(self):
         """Test command without params returns current domain"""
         out = StringIO()
-        call_command('set_domain', stdout=out)
-        self.assertEqual(
-            '127.0.0.1:8000\n',
-            out.getvalue())
+        call_command("set_domain", stdout=out)
+        self.assertEqual("127.0.0.1:8000\n", out.getvalue())
 
     def test_set_domain(self):
         """Test if command sets the domain correctly"""
         out = StringIO()
         newdomain = "kiwi.test.bogus:1234"
-        call_command('set_domain', newdomain, stdout=out)
+        call_command("set_domain", newdomain, stdout=out)
         site = Site.objects.get(id=settings.SITE_ID)
         self.assertEqual(newdomain, site.domain)
-        self.assertEqual('Kiwi TCMS', site.name)
+        self.assertEqual("Kiwi TCMS", site.name)

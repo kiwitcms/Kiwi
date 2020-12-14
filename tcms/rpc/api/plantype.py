@@ -6,8 +6,8 @@ from tcms.rpc.decorators import permissions_required
 from tcms.testplans.models import PlanType
 
 
-@permissions_required('testplans.view_plantype')
-@rpc_method(name='PlanType.filter')
+@permissions_required("testplans.view_plantype")
+@rpc_method(name="PlanType.filter")
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC PlanType.filter(query)

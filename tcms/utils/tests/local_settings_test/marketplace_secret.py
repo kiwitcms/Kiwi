@@ -1,1 +1,1 @@
-KIWI_MARKETPLACE = 'newly-added-setting'
+KIWI_MARKETPLACE = "newly-added-setting"

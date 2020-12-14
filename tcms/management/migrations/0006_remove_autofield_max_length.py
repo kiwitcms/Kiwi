@@ -3,41 +3,43 @@
 from django.conf import settings
 from django.db import migrations, models
 
-TAG_ID_COLUMN = 'tag_id'
-if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
-    TAG_ID_COLUMN = ''
+TAG_ID_COLUMN = "tag_id"
+if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
+    TAG_ID_COLUMN = ""
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('management', '0005_order_by_name'),
+        ("management", "0005_order_by_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='build',
-            name='build_id',
+            model_name="build",
+            name="build_id",
             field=models.AutoField(primary_key=True, serialize=False, unique=True),
         ),
         migrations.AlterField(
-            model_name='component',
-            name='id',
+            model_name="component",
+            name="id",
             field=models.AutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='priority',
-            name='id',
+            model_name="priority",
+            name="id",
             field=models.AutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='id',
+            model_name="product",
+            name="id",
             field=models.AutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='tag',
-            name='id',
-            field=models.AutoField(db_column=TAG_ID_COLUMN, primary_key=True, serialize=False),
+            model_name="tag",
+            name="id",
+            field=models.AutoField(
+                db_column=TAG_ID_COLUMN, primary_key=True, serialize=False
+            ),
         ),
     ]

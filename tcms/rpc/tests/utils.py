@@ -21,19 +21,19 @@ class APITestCase(test.LiveServerTestCase):
         # this includes default groups and permissions
         super()._fixture_setup()
         self.api_user = UserFactory()
-        self.api_user.set_password('api-testing')
+        self.api_user.set_password("api-testing")
         initiate_user_with_default_setups(self.api_user)
 
         # this is the XML-RPC ServerProxy with cookies support
         self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
             self.api_user.username,
-            'api-testing',
-            '%s/xml-rpc/' % self.live_server_url,
+            "api-testing",
+            "%s/xml-rpc/" % self.live_server_url,
         ).server
 
 
 class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
-    http_method_names = ['api']
+    http_method_names = ["api"]
     permission_label = None
     serialized_rollback = True
 
@@ -46,24 +46,24 @@ class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
         self.check_mandatory_attributes()
 
         self.tester = UserFactory()
-        self.tester.set_password('password')
+        self.tester.set_password("password")
         self.tester.save()
 
         # this is the XML-RPC ServerProxy with cookies support
         self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
             self.tester.username,
-            'password',
-            '%s/xml-rpc/' % self.live_server_url,
+            "password",
+            "%s/xml-rpc/" % self.live_server_url,
         ).server
 
     def verify_api_with_permission(self):
         """
-            Call your RPC method under test here and assert the results
+        Call your RPC method under test here and assert the results
         """
-        self.fail('Not implemented')
+        self.fail("Not implemented")
 
     def verify_api_without_permission(self):
         """
-            Call your RPC method under test here and assert the results
+        Call your RPC method under test here and assert the results
         """
-        self.fail('Not implemented')
+        self.fail("Not implemented")
