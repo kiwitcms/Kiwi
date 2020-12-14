@@ -3,9 +3,7 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 import astroid
-
-from pylint import interfaces
-from pylint import checkers
+from pylint import checkers, interfaces
 from pylint.checkers import utils
 
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+
 from tcms.core.templatetags.report_tags import percentage
 
 

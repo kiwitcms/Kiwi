@@ -4,10 +4,12 @@
 import factory
 from factory.django import DjangoModelFactory
 
-from tcms.tests.factories import BuildFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
+from tcms.tests.factories import (
+    BuildFactory,
+    ProductFactory,
+    UserFactory,
+    VersionFactory,
+)
 
 
 class BugFactory(DjangoModelFactory):

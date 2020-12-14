@@ -7,9 +7,7 @@ from mock import patch
 
 from tcms.testruns.models import TestExecutionStatus
 from tcms.tests import BaseCaseRun
-from tcms.tests.factories import LinkReferenceFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import LinkReferenceFactory, TestCaseFactory, TestRunFactory
 
 
 class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name

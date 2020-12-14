@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+
 from tcms.core.templatetags.extra_filters import markdown2html
 
 

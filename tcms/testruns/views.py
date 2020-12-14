@@ -13,16 +13,15 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import UpdateView
-
 from guardian.decorators import permission_required as object_permission_required
 
+from tcms.core.contrib.linkreference.forms import LinkReferenceForm
 from tcms.core.forms import SimpleCommentForm
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.testcases.models import BugSystem, TestCasePlan, TestCaseStatus, TestCase
+from tcms.testcases.models import BugSystem, TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import NewRunForm, SearchRunForm
 from tcms.testruns.models import TestExecutionStatus, TestRun
-from tcms.core.contrib.linkreference.forms import LinkReferenceForm
 
 User = get_user_model()  # pylint: disable=invalid-name
 

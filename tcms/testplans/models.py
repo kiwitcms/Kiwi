@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
-
 from tree_queries.models import TreeNode
 from uuslug import slugify
 

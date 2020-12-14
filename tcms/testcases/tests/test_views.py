@@ -4,6 +4,7 @@
 
 import unittest
 from http import HTTPStatus
+
 from django.forms import ValidationError
 from django.test import RequestFactory
 from django.urls import reverse
@@ -13,8 +14,13 @@ from tcms.management.models import Priority
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
-from tcms.tests import (BaseCaseRun, BasePlanCase, remove_perm_from_user,
-                        user_should_have_perm, PermissionsTestCase)
+from tcms.tests import (
+    BaseCaseRun,
+    BasePlanCase,
+    PermissionsTestCase,
+    remove_perm_from_user,
+    user_should_have_perm,
+)
 from tcms.tests.factories import TestCaseFactory
 
 

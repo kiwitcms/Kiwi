@@ -3,10 +3,8 @@
 """
 
 import bleach
-from bleach_allowlist import markdown_attrs, print_attrs
-from bleach_allowlist import markdown_tags, print_tags
 import markdown
-
+from bleach_allowlist import markdown_attrs, markdown_tags, print_attrs, print_tags
 from django import template
 from django.contrib.messages import constants as messages
 from django.utils.safestring import mark_safe

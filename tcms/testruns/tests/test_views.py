@@ -8,16 +8,20 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.testruns.models import TestExecutionStatus, TestRun
-from tcms.tests import BaseCaseRun
-from tcms.tests import BasePlanCase
-from tcms.tests import PermissionsTestCase
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
-from tcms.tests.factories import BuildFactory
-from tcms.tests.factories import TagFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import UserFactory
+from tcms.tests import (
+    BaseCaseRun,
+    BasePlanCase,
+    PermissionsTestCase,
+    remove_perm_from_user,
+    user_should_have_perm,
+)
+from tcms.tests.factories import (
+    BuildFactory,
+    TagFactory,
+    TestExecutionFactory,
+    TestRunFactory,
+    UserFactory,
+)
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 

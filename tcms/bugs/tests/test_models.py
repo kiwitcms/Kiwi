@@ -6,13 +6,13 @@ from django.conf import settings
 if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
     raise unittest.SkipTest('tcms.bugs is disabled')
 
-from django.template.loader import render_to_string     # noqa: E402
-from django.test import TestCase                        # noqa: E402
+from django.template.loader import render_to_string  # noqa: E402
+from django.test import TestCase  # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
-from mock import patch                                  # noqa: E402
+from mock import patch  # noqa: E402
 
-from tcms.tests.factories import UserFactory            # noqa: E402
-from tcms.bugs.tests.factory import BugFactory          # noqa: E402
+from tcms.bugs.tests.factory import BugFactory  # noqa: E402
+from tcms.tests.factories import UserFactory  # noqa: E402
 
 
 class TestSendMailOnAssigneeChange(TestCase):

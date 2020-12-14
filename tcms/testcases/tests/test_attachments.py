@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from attachments.models import Attachment
-from tcms.utils.permissions import initiate_user_with_default_setups
 
 from tcms.tests import LoggedInTestCase
 from tcms.tests.factories import TestCaseFactory
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestCaseAttachments(LoggedInTestCase):

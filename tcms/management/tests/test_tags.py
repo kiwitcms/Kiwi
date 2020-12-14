@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tcms.management.models import Tag
-from tcms.tests import (LoggedInTestCase, remove_perm_from_user,
-                        user_should_have_perm)
+from tcms.tests import LoggedInTestCase, remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import TagFactory
 
 

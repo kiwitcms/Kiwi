@@ -2,20 +2,19 @@
 from collections import namedtuple
 
 import vinaigrette
+from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
 from django.db.models import Count
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import override
 from django.utils.translation import gettext_lazy as _
-from colorfield.fields import ColorField
+from django.utils.translation import override
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
-from tcms.rpc.serializer import (TestExecutionRPCSerializer,
-                                 TestRunRPCSerializer)
+from tcms.rpc.serializer import TestExecutionRPCSerializer, TestRunRPCSerializer
 from tcms.rpc.utils import distinct_filter
 
 TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [

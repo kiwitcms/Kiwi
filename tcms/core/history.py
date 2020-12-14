@@ -5,7 +5,6 @@ from django.db.models import signals
 from django.http import HttpResponseRedirect
 from django.template.defaultfilters import safe
 from django.utils.translation import gettext_lazy as _
-
 from simple_history.admin import SimpleHistoryAdmin
 from simple_history.models import HistoricalRecords
 

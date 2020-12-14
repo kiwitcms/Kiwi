@@ -2,17 +2,21 @@
 # pylint: disable=invalid-name, no-member
 
 from django.conf import settings
-from django.test import TestCase
 from django.template.loader import render_to_string
+from django.test import TestCase
 from django.utils.translation import gettext_lazy as _
 from mock import patch
 
 from tcms.core.history import history_email_for
 from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
-from tcms.tests.factories import (ComponentFactory, TagFactory,
-                                  TestCaseComponentFactory, TestCaseTagFactory)
-from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import (
+    ComponentFactory,
+    TagFactory,
+    TestCaseComponentFactory,
+    TestCaseFactory,
+    TestCaseTagFactory,
+)
 
 
 class SupportsCyrillic(TestCase):

@@ -11,15 +11,18 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import TemplateView, View
-
+from django.views.generic.edit import CreateView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 
 from tcms.core.helpers.comments import get_comments
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.testcases.forms import CloneCaseForm, SearchCaseForm, TestCaseForm
-from tcms.testcases.forms import CaseNotifyFormSet
+from tcms.testcases.forms import (
+    CaseNotifyFormSet,
+    CloneCaseForm,
+    SearchCaseForm,
+    TestCaseForm,
+)
 from tcms.testcases.models import TestCase, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestExecution, TestExecutionStatus

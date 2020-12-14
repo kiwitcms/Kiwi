@@ -4,8 +4,8 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.testruns.models import TestExecutionStatus
 from tcms.rpc.decorators import permissions_required
+from tcms.testruns.models import TestExecutionStatus
 
 
 @permissions_required('testruns.view_testexecutionstatus')

@@ -3,7 +3,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.issuetracker.base import IssueTrackerType, IntegrationThread
+from tcms.issuetracker.base import IntegrationThread, IssueTrackerType
 
 
 class BitBucketAPI():

@@ -2,7 +2,8 @@
 # pylint: disable=attribute-defined-outside-init
 
 from xmlrpc.client import ProtocolError
-from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
+
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 
 
 class TestCaseStatusFilter(APITestCase):

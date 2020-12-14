@@ -8,12 +8,12 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.views.generic.base import View, RedirectView
+from django.views.generic.base import RedirectView, View
 
 from tcms.kiwi_auth import forms
+from tcms.kiwi_auth.forms import RegistrationForm
 from tcms.kiwi_auth.models import UserActivationKey
 from tcms.signals import USER_REGISTERED_SIGNAL
-from tcms.kiwi_auth.forms import RegistrationForm
 
 User = get_user_model()  # pylint: disable=invalid-name
 

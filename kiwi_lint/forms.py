@@ -1,5 +1,4 @@
-from pylint import checkers
-from pylint import interfaces
+from pylint import checkers, interfaces
 from pylint_django.utils import node_is_subclass
 
 

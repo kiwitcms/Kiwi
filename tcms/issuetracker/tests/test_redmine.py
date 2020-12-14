@@ -8,9 +8,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker.types import Redmine
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import BugSystem
-
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import TestExecutionFactory
+from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 
 
 @unittest.skipUnless(os.getenv('TEST_BUGTRACKER_INTEGRATION'),

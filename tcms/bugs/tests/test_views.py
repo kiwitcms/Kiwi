@@ -7,25 +7,25 @@ from django.conf import settings
 if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
     raise unittest.SkipTest('tcms.bugs is disabled')
 
-from django.urls import reverse                         # noqa: E402
+from django.urls import reverse  # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
 
-from tcms.core.helpers.comments import get_comments                   # noqa: E402
-from tcms.core.templatetags.extra_filters import markdown2html        # noqa: E402
-from tcms.bugs.models import Bug                                      # noqa: E402
-from tcms.bugs.tests.factory import BugFactory                        # noqa: E402
-from tcms.management.models import Product                            # noqa: E402
-from tcms.tests import (                                              # noqa: E402
+from tcms.bugs.models import Bug  # noqa: E402
+from tcms.bugs.tests.factory import BugFactory  # noqa: E402
+from tcms.core.helpers.comments import get_comments  # noqa: E402
+from tcms.core.templatetags.extra_filters import markdown2html  # noqa: E402
+from tcms.management.models import Product  # noqa: E402
+from tcms.tests import (  # noqa: E402
     BaseCaseRun,
     LoggedInTestCase,
-    user_should_have_perm
+    user_should_have_perm,
 )
-from tcms.tests.factories import (                                    # noqa: E402
+from tcms.tests.factories import (  # noqa: E402
     BuildFactory,
     ComponentFactory,
     ProductFactory,
     UserFactory,
-    VersionFactory
+    VersionFactory,
 )
 from tcms.utils.permissions import initiate_user_with_default_setups  # noqa: E402
 

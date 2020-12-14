@@ -12,7 +12,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
-
 from guardian.decorators import permission_required as object_permission_required
 
 from tcms.bugs.forms import BugCommentForm, NewBugForm

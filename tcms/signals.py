@@ -54,12 +54,12 @@ def notify_admins(sender, **kwargs):
 
             This handler isn't connected to the ``USER_REGISTERED_SIGNAL`` by default!
     """
-    from django.urls import reverse
     from django.conf import settings
     from django.contrib.auth import get_user_model
+    from django.urls import reverse
 
-    from tcms.core.utils.mailto import mailto
     from tcms.core.utils import request_host_link
+    from tcms.core.utils.mailto import mailto
 
     if kwargs.get('raw', False):
         return

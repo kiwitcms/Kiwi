@@ -9,13 +9,14 @@ from tcms.issuetracker.types import Bugzilla
 from tcms.management.models import Version
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import BugSystem
-
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import (
+    ComponentFactory,
+    ProductFactory,
+    TestCaseFactory,
+    TestExecutionFactory,
+    TestPlanFactory,
+    TestRunFactory,
+)
 
 
 @unittest.skipUnless(os.getenv('TEST_BUGTRACKER_INTEGRATION'),

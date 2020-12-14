@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.decorators import permission_required
-from django.http import (HttpResponsePermanentRedirect,
-                         HttpResponseRedirect)
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -10,17 +9,20 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView
-
 from guardian.decorators import permission_required as object_permission_required
-
 from uuslug import slugify
 
 from tcms.core.forms import SimpleCommentForm
 from tcms.core.response import ModifySettingsTemplateResponse
-from tcms.testplans.forms import ClonePlanForm, NewPlanForm, PlanNotifyFormSet, SearchPlanForm
-from tcms.testplans.models import PlanType, TestPlan
-from tcms.testcases.models import TestCaseStatus
 from tcms.management.models import Priority
+from tcms.testcases.models import TestCaseStatus
+from tcms.testplans.forms import (
+    ClonePlanForm,
+    NewPlanForm,
+    PlanNotifyFormSet,
+    SearchPlanForm,
+)
+from tcms.testplans.models import PlanType, TestPlan
 
 
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')

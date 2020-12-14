@@ -1,7 +1,7 @@
 # Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
 
-import hmac
 import hashlib
+import hmac
 
 from django.http import HttpResponseForbidden
 

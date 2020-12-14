@@ -1,8 +1,8 @@
 # Copyright (c) 2020 Alexander Todorov <atodorov@MrSenko.com>
 
-import os
 import glob
 import inspect
+import os
 
 
 def import_local_settings(scan_dir, **kwargs):

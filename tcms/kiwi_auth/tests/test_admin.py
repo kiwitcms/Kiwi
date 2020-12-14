@@ -4,13 +4,12 @@ from http import HTTPStatus
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
-from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
-from tcms.tests import LoggedInTestCase
-from tcms.tests import user_should_have_perm
-from tcms.tests.factories import UserFactory, GroupFactory
 from tcms.kiwi_auth.admin import Group
+from tcms.tests import LoggedInTestCase, user_should_have_perm
+from tcms.tests.factories import GroupFactory, UserFactory
 
 
 class TestUserAdmin(LoggedInTestCase):

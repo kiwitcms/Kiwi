@@ -1,4 +1,4 @@
-from pylint import interfaces, checkers
+from pylint import checkers, interfaces
 from pylint.checkers import utils
 
 

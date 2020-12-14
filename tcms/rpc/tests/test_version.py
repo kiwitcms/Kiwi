@@ -7,7 +7,7 @@ from xmlrpc.client import ProtocolError
 from django.test import override_settings
 
 from tcms.management.models import Version
-from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.tests.factories import ProductFactory, VersionFactory
 
 

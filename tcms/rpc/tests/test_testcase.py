@@ -2,7 +2,6 @@
 # pylint: disable=attribute-defined-outside-init
 
 import unittest
-
 from xmlrpc.client import Fault, ProtocolError
 
 from attachments.models import Attachment
@@ -13,12 +12,19 @@ from tcms_api import xmlrpc
 from tcms.core.helpers import comments
 from tcms.management.models import Priority
 from tcms.rpc.api.testcase import _validate_cc_list
-from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import Category, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
-from tcms.tests.factories import (CategoryFactory, ComponentFactory,
-                                  ProductFactory, TagFactory, TestCaseFactory,
-                                  TestPlanFactory, UserFactory, VersionFactory)
+from tcms.tests.factories import (
+    CategoryFactory,
+    ComponentFactory,
+    ProductFactory,
+    TagFactory,
+    TestCaseFactory,
+    TestPlanFactory,
+    UserFactory,
+    VersionFactory,
+)
 
 
 class TestValidateEmail(unittest.TestCase):

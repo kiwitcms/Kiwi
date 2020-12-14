@@ -1,7 +1,7 @@
 from django import forms
 
-from tcms.rpc.api.forms import UpdateModelFormMixin
 from tcms.core.forms.fields import UserField
+from tcms.rpc.api.forms import UpdateModelFormMixin
 from tcms.testcases.models import TestCase
 
 
