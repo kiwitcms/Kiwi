@@ -12,17 +12,22 @@ import redminelib
 from django.conf import settings
 
 from tcms.core.contrib.linkreference.models import LinkReference
-
-from tcms.issuetracker.bugzilla_integration import Bugzilla  # noqa, pylint: disable=unused-import
-from tcms.issuetracker import (github_integration,
-                               gitlab_integration, jira_integration,
-                               redmine_integration)
+from tcms.issuetracker import (
+    github_integration,
+    gitlab_integration,
+    jira_integration,
+    redmine_integration,
+)
 from tcms.issuetracker.base import IssueTrackerType
-
+from tcms.issuetracker.bugzilla_integration import (  # noqa, pylint: disable=unused-import
+    Bugzilla,
+)
 
 # conditional import b/c this App can be disabled
 if 'tcms.bugs.apps.AppConfig' in settings.INSTALLED_APPS:
-    from tcms.issuetracker.kiwitcms import KiwiTCMS  # noqa, pylint: disable=unused-import
+    from tcms.issuetracker.kiwitcms import (  # noqa, pylint: disable=unused-import
+        KiwiTCMS,
+    )
 
 
 class JIRA(IssueTrackerType):

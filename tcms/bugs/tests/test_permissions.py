@@ -6,17 +6,17 @@ from django.conf import settings
 if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
     raise unittest.SkipTest('tcms.bugs is disabled')
 
-from django.contrib.auth.models import Permission           # noqa: E402
+from django.contrib.auth.models import Permission  # noqa: E402
 from django.contrib.contenttypes.models import ContentType  # noqa: E402
-from django.test import TestCase                            # noqa: E402
-from django.urls import reverse                             # noqa: E402
-from django.utils.translation import gettext_lazy as _      # noqa: E402
+from django.test import TestCase  # noqa: E402
+from django.urls import reverse  # noqa: E402
+from django.utils.translation import gettext_lazy as _  # noqa: E402
 
-from tcms import tests                                      # noqa: E402
-from tcms.bugs.models import Bug                            # noqa: E402
-from tcms.bugs.tests.factory import BugFactory              # noqa: E402
-from tcms.core.helpers.comments import get_comments         # noqa: E402
-from tcms.tests import factories                            # noqa: E402
+from tcms import tests  # noqa: E402
+from tcms.bugs.models import Bug  # noqa: E402
+from tcms.bugs.tests.factory import BugFactory  # noqa: E402
+from tcms.core.helpers.comments import get_comments  # noqa: E402
+from tcms.tests import factories  # noqa: E402
 
 
 class TestNew(tests.PermissionsTestCase):

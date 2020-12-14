@@ -2,20 +2,15 @@ from http import HTTPStatus
 
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
 from uuslug import slugify
 
 from tcms.testplans.models import TestPlan
-from tcms.tests import (
-    user_should_have_perm,
-    LoggedInTestCase,
-    PermissionsTestCase,
-)
+from tcms.tests import LoggedInTestCase, PermissionsTestCase, user_should_have_perm
 from tcms.tests.factories import (
-    TestPlanFactory,
-    ProductFactory,
-    VersionFactory,
     PlanTypeFactory,
+    ProductFactory,
+    TestPlanFactory,
+    VersionFactory,
 )
 
 

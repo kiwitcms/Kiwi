@@ -1,11 +1,10 @@
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests import LoggedInTestCase
-
-from tcms.utils.permissions import initiate_user_with_default_setups
 from tcms.testplans.models import TestPlan
+from tcms.tests import LoggedInTestCase
+from tcms.tests.factories import TestPlanFactory
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestTestPlanAdmin(LoggedInTestCase):

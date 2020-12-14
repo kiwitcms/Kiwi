@@ -2,6 +2,7 @@
 # pylint: disable=import-outside-toplevel,wrong-import-position, protected-access
 import os
 import warnings
+
 import pkg_resources
 
 # pretend there are plugins (custom telemetry) installed so we can check
@@ -14,7 +15,6 @@ pkg_resources.working_set.add(dist)
 
 # this needs to be here so that  discovery tests can work
 from tcms.settings.devel import *  # noqa: F401,E402,F403
-
 
 # silence resource warnings while testing, see
 # https://emptysqua.re/blog/against-resourcewarnings-in-python-3/

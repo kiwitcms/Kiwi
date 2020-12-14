@@ -4,9 +4,7 @@
 
 import sys
 
-from django.core.management.base import (
-    OutputWrapper, no_translations,
-)
+from django.core.management.base import OutputWrapper, no_translations
 from django.core.management.commands import migrate
 
 

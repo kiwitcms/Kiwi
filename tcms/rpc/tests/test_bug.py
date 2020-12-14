@@ -1,11 +1,11 @@
 # pylint: disable=attribute-defined-outside-init
 
 import unittest
-from mock import patch, MagicMock
 
 from django.conf import settings
 from django.core.cache import cache
 from django.test import override_settings
+from mock import MagicMock, patch
 
 from tcms.rpc.tests.utils import APITestCase
 

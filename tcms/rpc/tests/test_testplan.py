@@ -8,13 +8,19 @@ from django.contrib.auth.models import Permission
 from django.test import override_settings
 from tcms_api import xmlrpc
 
-from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.tests import remove_perm_from_user
-from tcms.tests.factories import (PlanTypeFactory, ProductFactory, TagFactory,
-                                  TestCaseFactory, TestPlanFactory,
-                                  UserFactory, VersionFactory)
+from tcms.tests.factories import (
+    PlanTypeFactory,
+    ProductFactory,
+    TagFactory,
+    TestCaseFactory,
+    TestPlanFactory,
+    UserFactory,
+    VersionFactory,
+)
 
 
 class TestFilter(APITestCase):

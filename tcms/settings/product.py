@@ -9,7 +9,6 @@ import os
 from tcms.settings.common import *  # noqa: F401,F403
 from tcms.utils.settings import import_local_settings
 
-
 # Debug settings
 DEBUG = False
 

@@ -2,22 +2,23 @@
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
 import time
-
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
+from django.forms.models import model_to_dict
 from django.test import override_settings
 from django.utils import timezone
-from django.forms.models import model_to_dict
 
-from tcms.core.helpers import comments
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase
+from tcms.core.helpers import comments
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testruns.models import TestExecutionStatus
-from tcms.tests.factories import BuildFactory
-from tcms.tests.factories import LinkReferenceFactory
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import UserFactory
+from tcms.tests.factories import (
+    BuildFactory,
+    LinkReferenceFactory,
+    TestExecutionFactory,
+    UserFactory,
+)
 
 
 class TestExecutionGetComments(APITestCase):

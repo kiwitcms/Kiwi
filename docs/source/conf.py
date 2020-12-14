@@ -14,17 +14,20 @@
 
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath('../../'))
 
 
 # setup Django so we can generate documentation for models
 import django
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'tcms.settings.devel'
 django.setup()
 
 
-import tcms
 import subprocess
+
+import tcms
 
 manage_py = os.path.abspath(os.path.join('..', '..', 'manage.py'))
 docs_dir = os.path.abspath(os.path.join('..', '..', 'docs/source'))

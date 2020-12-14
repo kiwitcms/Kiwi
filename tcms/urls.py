@@ -4,10 +4,10 @@ from importlib import import_module
 import pkg_resources
 from attachments import urls as attachments_urls
 from django.conf import settings
-from django.urls import re_path
 from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import re_path
 from django.views.generic import TemplateView
 from django.views.i18n import JavaScriptCatalog
 from grappelli import urls as grappelli_urls

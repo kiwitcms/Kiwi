@@ -8,7 +8,6 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django_comments.models import Comment
-
 from guardian.admin import GuardedModelAdminMixin
 
 

@@ -6,8 +6,7 @@ from http import HTTPStatus
 from django.http import HttpResponseForbidden
 from django.urls import reverse
 
-from tcms.tests import create_request_user, LoggedInTestCase
-from tcms.tests import user_should_have_perm
+from tcms.tests import LoggedInTestCase, create_request_user, user_should_have_perm
 
 
 class TestProfilesView(LoggedInTestCase):

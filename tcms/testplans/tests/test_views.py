@@ -5,8 +5,12 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.tests import LoggedInTestCase, user_should_have_perm
-from tcms.tests.factories import (TestPlanFactory,
-                                  ProductFactory, VersionFactory, PlanTypeFactory)
+from tcms.tests.factories import (
+    PlanTypeFactory,
+    ProductFactory,
+    TestPlanFactory,
+    VersionFactory,
+)
 
 
 class EditPlanViewTest(LoggedInTestCase):

@@ -2,8 +2,8 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import TestCaseStatus
 from tcms.rpc.decorators import permissions_required
+from tcms.testcases.models import TestCaseStatus
 
 
 @permissions_required('testcases.view_testcasestatus')

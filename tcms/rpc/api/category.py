@@ -2,8 +2,8 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import Category
 from tcms.rpc.decorators import permissions_required
+from tcms.testcases.models import Category
 
 
 @permissions_required('testcases.view_category')

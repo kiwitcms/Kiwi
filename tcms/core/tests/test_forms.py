@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
-from django.test import TestCase
 from django.core.exceptions import ValidationError
+from django.test import TestCase
 
 from tcms.core.forms.fields import UserField
 from tcms.tests.factories import UserFactory

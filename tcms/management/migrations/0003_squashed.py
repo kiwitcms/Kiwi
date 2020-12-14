@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 import tcms.core.models.base
 
-
 TAG_ID_COLUMN = 'tag_id'
 if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
     TAG_ID_COLUMN = ''

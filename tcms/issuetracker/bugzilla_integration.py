@@ -5,7 +5,6 @@ from urllib.parse import urlencode
 from xmlrpc.client import Fault
 
 import bugzilla
-
 from django.conf import settings
 
 from tcms.core.contrib.linkreference.models import LinkReference

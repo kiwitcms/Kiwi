@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.urls import re_path
 from django.contrib.auth import views as contrib_auth_views
-from django.urls import reverse_lazy
+from django.urls import re_path, reverse_lazy
 
 from tcms.kiwi_auth import views
 

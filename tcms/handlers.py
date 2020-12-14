@@ -1,5 +1,6 @@
 # coding: utf-8
 import html
+
 from modernrpc.handlers import JSONRPCHandler
 
 

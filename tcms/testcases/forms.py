@@ -8,7 +8,12 @@ from tcms.core.utils import string_to_list
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Component, Priority, Product
 from tcms.testcases.fields import MultipleEmailField
-from tcms.testcases.models import Category, TestCase, TestCaseStatus, TestCaseEmailSettings
+from tcms.testcases.models import (
+    Category,
+    TestCase,
+    TestCaseEmailSettings,
+    TestCaseStatus,
+)
 from tcms.testplans.models import TestPlan
 
 ITEMS_PER_PAGE_CHOICES = (

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from requests.auth import HTTPBasicAuth
 import requests
+from requests.auth import HTTPBasicAuth
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.templatetags.extra_filters import markdown2html
-from tcms.issuetracker.base import IssueTrackerType, IntegrationThread
+from tcms.issuetracker.base import IntegrationThread, IssueTrackerType
 
 
 class AzureBoardsAPI():

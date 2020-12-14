@@ -6,6 +6,7 @@ from tcms.core.forms.fields import UserField
 from tcms.core.utils import string_to_list
 from tcms.management.models import Build, Product, Version
 from tcms.testcases.models import TestCase
+
 from .models import TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name

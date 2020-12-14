@@ -5,10 +5,9 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms import tests
-from tcms.tests import user_should_have_perm
-from tcms.tests import PermissionsTestCase, factories
-from tcms.testruns.models import TestRun
 from tcms.testcases.models import TestCaseStatus
+from tcms.testruns.models import TestRun
+from tcms.tests import PermissionsTestCase, factories, user_should_have_perm
 
 
 class EditTestRunViewTestCase(PermissionsTestCase):

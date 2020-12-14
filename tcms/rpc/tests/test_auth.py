@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import Fault as XmlRPCFault, ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
+from xmlrpc.client import ProtocolError
+
 from tcms.rpc.tests.utils import APITestCase
 
 

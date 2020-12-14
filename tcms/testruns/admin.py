@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
-from tcms.testruns.models import TestRun, TestExecutionStatus
+from tcms.testruns.models import TestExecutionStatus, TestRun
 
 
 class TestRunAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):

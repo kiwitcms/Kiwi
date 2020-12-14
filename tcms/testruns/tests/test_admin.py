@@ -3,10 +3,10 @@
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from tcms.tests import LoggedInTestCase
-from tcms.utils.permissions import initiate_user_with_default_setups
-from tcms.tests.factories import TestRunFactory, UserFactory
 from tcms.testruns.models import TestRun
+from tcms.tests import LoggedInTestCase
+from tcms.tests.factories import TestRunFactory, UserFactory
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestTestRunAdmin(LoggedInTestCase):

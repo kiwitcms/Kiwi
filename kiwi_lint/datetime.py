@@ -5,9 +5,7 @@
 """
 
 from astroid import nodes
-
-from pylint import checkers
-from pylint import interfaces
+from pylint import checkers, interfaces
 
 
 class DatetimeChecker(checkers.BaseChecker):

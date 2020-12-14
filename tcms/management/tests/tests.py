@@ -8,8 +8,12 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import Product, Version
 from tcms.testplans.models import TestPlan, TestPlanEmailSettings
-from tcms.tests.factories import (PlanTypeFactory, ProductFactory, UserFactory,
-                                  VersionFactory)
+from tcms.tests.factories import (
+    PlanTypeFactory,
+    ProductFactory,
+    UserFactory,
+    VersionFactory,
+)
 
 
 class ProductTests(TestCase):

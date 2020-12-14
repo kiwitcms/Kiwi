@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
+
 from django.contrib import messages
 from django.contrib.messages.storage.base import Message
+
 from tcms.core.templatetags.extra_filters import message_icon
 
 

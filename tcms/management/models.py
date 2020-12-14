@@ -4,8 +4,7 @@ from django.conf import settings
 from django.db import models
 
 from tcms.core.models import TCMSActionModel
-from tcms.rpc.serializer import BuildRPCSerializer
-from tcms.rpc.serializer import ProductRPCSerializer
+from tcms.rpc.serializer import BuildRPCSerializer, ProductRPCSerializer
 
 
 class Classification(TCMSActionModel):

@@ -2,7 +2,6 @@
 
 import redminelib
 
-
 # REST API is enabled by default in our container, otherwise go to
 # Administration -> Settings -> API to enable it by hand
 rpc = redminelib.Redmine(

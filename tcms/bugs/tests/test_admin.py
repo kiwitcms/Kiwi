@@ -7,11 +7,11 @@ from django.conf import settings
 if 'tcms.bugs.apps.AppConfig' not in settings.INSTALLED_APPS:
     raise unittest.SkipTest('tcms.bugs is disabled')
 
-from django.urls import reverse                                         # noqa: E402
+from django.urls import reverse  # noqa: E402
 
-from tcms.tests import LoggedInTestCase                                 # noqa: E402
-from tcms.bugs.tests.factory import BugFactory                          # noqa: E402
-from tcms.utils.permissions import initiate_user_with_default_setups    # noqa: E402
+from tcms.bugs.tests.factory import BugFactory  # noqa: E402
+from tcms.tests import LoggedInTestCase  # noqa: E402
+from tcms.utils.permissions import initiate_user_with_default_setups  # noqa: E402
 
 
 class TestBugAdmin(LoggedInTestCase):

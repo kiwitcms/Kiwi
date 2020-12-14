@@ -2,8 +2,8 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.testplans.models import PlanType
 from tcms.rpc.decorators import permissions_required
+from tcms.testplans.models import PlanType
 
 
 @permissions_required('testplans.view_plantype')

@@ -12,15 +12,13 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 
 from tcms.bugs.models import Bug
+from tcms.bugs.tests.factory import BugFactory
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers.comments import get_comments
 from tcms.issuetracker.types import KiwiTCMS
 from tcms.rpc.tests.utils import APITestCase
 from tcms.testcases.models import BugSystem
-
-from tcms.bugs.tests.factory import BugFactory
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import TestExecutionFactory
+from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 
 
 @unittest.skipUnless(os.getenv('TEST_BUGTRACKER_INTEGRATION'),

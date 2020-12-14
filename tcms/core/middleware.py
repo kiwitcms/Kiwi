@@ -3,12 +3,12 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.sites.models import Site
+from django.db import DEFAULT_DB_ALIAS, connections
+from django.db.migrations.executor import MigrationExecutor
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.db import DEFAULT_DB_ALIAS, connections
-from django.db.migrations.executor import MigrationExecutor
 
 
 class CheckSettingsMiddleware(MiddlewareMixin):

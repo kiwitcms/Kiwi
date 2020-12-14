@@ -11,9 +11,15 @@ from tcms.management.models import Product, Version
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.tests import BasePlanCase, user_should_have_perm
-from tcms.tests.factories import (ClassificationFactory, PlanTypeFactory,
-                                  ProductFactory, TestCaseFactory,
-                                  TestPlanFactory, UserFactory, VersionFactory)
+from tcms.tests.factories import (
+    ClassificationFactory,
+    PlanTypeFactory,
+    ProductFactory,
+    TestCaseFactory,
+    TestPlanFactory,
+    UserFactory,
+    VersionFactory,
+)
 
 
 class BasePlanTest(test.TestCase):

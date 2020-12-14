@@ -2,15 +2,13 @@
     against using function based views in Django.
 """
 
+import os
 from importlib import import_module
 
-import os
 import django
 from django.conf import settings
-from django.urls.resolvers import URLResolver, URLPattern
-
-from pylint import checkers
-from pylint import interfaces
+from django.urls.resolvers import URLPattern, URLResolver
+from pylint import checkers, interfaces
 
 
 class DjangoViewsChecker(checkers.BaseChecker):

@@ -3,11 +3,10 @@
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin, GroupAdmin, sensitive_post_parameters_m
+from django.contrib.auth.admin import GroupAdmin, UserAdmin, sensitive_post_parameters_m
 from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth.models import Permission, Group
-from django.http import HttpResponseForbidden
-from django.http import HttpResponseRedirect
+from django.contrib.auth.models import Group, Permission
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 

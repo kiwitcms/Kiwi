@@ -1,5 +1,5 @@
 import astroid
-from pylint.checkers import utils, BaseChecker
+from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
 

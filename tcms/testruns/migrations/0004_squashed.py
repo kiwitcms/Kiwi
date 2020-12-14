@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 import tcms.core.models.base
 
-
 CASE_RUN_STATUS_ID_COLUMN = 'case_run_status_id'
 if settings.DATABASES['default']['ENGINE'].find('sqlite') > -1:
     CASE_RUN_STATUS_ID_COLUMN = ''

@@ -9,10 +9,11 @@ from django.conf import settings
 if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")
 
-from tcms.bugs.models import Bug                                        # noqa: E402
-from tcms.bugs.tests.factory import BugFactory                          # noqa: E402
-from tcms.rpc.tests.utils import APITestCase, APIPermissionsTestCase    # noqa: E402
-from tcms.tests.factories import TagFactory                             # noqa: E402
+from tcms.bugs.models import Bug  # noqa: E402
+from tcms.bugs.tests.factory import BugFactory  # noqa: E402
+from tcms.rpc.tests.utils import APIPermissionsTestCase  # noqa: E402
+from tcms.rpc.tests.utils import APITestCase
+from tcms.tests.factories import TagFactory  # noqa: E402
 
 
 class TestAddTagPermissions(APIPermissionsTestCase):

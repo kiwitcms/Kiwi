@@ -2,21 +2,23 @@
 # pylint: disable=invalid-name
 
 from django import test
-from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.urls import reverse
 
-from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.models import TestCaseStatus
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestExecutionFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
-from tcms.tests.factories import BuildFactory
+from tcms.testruns.models import TestExecutionStatus
+from tcms.tests.factories import (
+    BuildFactory,
+    ProductFactory,
+    TestCaseFactory,
+    TestExecutionFactory,
+    TestPlanFactory,
+    TestRunFactory,
+    UserFactory,
+    VersionFactory,
+)
 
 
 def user_should_have_perm(user, perm):
