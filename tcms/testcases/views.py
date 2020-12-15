@@ -445,14 +445,9 @@ class CloneTestCaseView(View):
         if not self._is_request_data_valid(request):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
-        selected_cases = get_selected_testcases(request)
-        # Initial the clone case form
-        clone_form = CloneCaseForm(
-            initial={
-                "case": selected_cases,
-            }
-        )
-        clone_form.populate(case_ids=selected_cases)
+        # Initialize the clone case form
+        clone_form = CloneCaseForm(request.GET)
+        clone_form.populate(case_ids=request.GET.getlist("case"))
 
         context = {
             "form": clone_form,
