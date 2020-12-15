@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-15 07:42\n"
+"PO-Revision-Date: 2020-12-15 08:12\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1537,7 +1537,7 @@ msgstr "Tesztelte"
 
 #: tcms/testruns/templates/testruns/get.html:312
 msgid "records"
-msgstr ""
+msgstr "rekordok"
 
 #: tcms/testruns/templates/testruns/get.html:338
 #: tcms/testruns/templates/testruns/get.html:540
@@ -1547,11 +1547,11 @@ msgstr "Hibajelentés"
 
 #: tcms/testruns/templates/testruns/get.html:345
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "A teszteset nem része a szülő teszttervnek"
 
 #: tcms/testruns/templates/testruns/get.html:373
 msgid "Assigned to"
-msgstr ""
+msgstr "Hozzárendelve"
 
 #: tcms/testruns/templates/testruns/get.html:406
 msgid "Run Date"
@@ -1559,7 +1559,7 @@ msgstr "Futtatás dátuma"
 
 #: tcms/testruns/templates/testruns/get.html:418
 msgid "Text version"
-msgstr ""
+msgstr "Szöveges változat"
 
 #: tcms/testruns/templates/testruns/get.html:423
 msgid "Bugs and hyperlinks"
@@ -1567,7 +1567,7 @@ msgstr "Hibajegyek és hiperhivatkozások"
 
 #: tcms/testruns/templates/testruns/get.html:518
 msgid "Is a defect"
-msgstr ""
+msgstr "Hiba"
 
 #: tcms/testruns/templates/testruns/get.html:525
 #: tcms/testruns/templates/testruns/get.html:556
@@ -1576,7 +1576,7 @@ msgstr "Mégse"
 
 #: tcms/testruns/templates/testruns/get.html:545
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Hibajegy követő"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
