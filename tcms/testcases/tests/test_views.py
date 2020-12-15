@@ -6,14 +6,12 @@ import unittest
 from http import HTTPStatus
 
 from django.forms import ValidationError
-from django.test import RequestFactory
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import Priority
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
-from tcms.testcases.views import get_selected_testcases
 from tcms.tests import (
     BaseCaseRun,
     BasePlanCase,
@@ -398,31 +396,3 @@ class TestSearchCases(BasePlanCase):
             % (self.product.pk, self.product.name),
             html=True,
         )
-
-
-class TestGetSelectedTestcases(BasePlanCase):
-    def test_get_selected_testcases_works_with_both_string_and_int_pks(self):
-        """
-        Assures that tcms.testcases.views.get_selected_testcases
-        returns the same results, regardless of whether the
-        passed request contains the case pks as strings or
-        integers, as long as they are the same in both occasions.
-        """
-
-        case_int_pks = [self.case.pk, self.case_1.pk, self.case_2.pk, self.case_3.pk]
-        case_str_pks = []
-
-        for _pk in case_int_pks:
-            case_str_pks.append(str(_pk))
-
-        int_pk_query = get_selected_testcases(
-            RequestFactory().post(reverse("testcases-clone"), {"case": case_int_pks})
-        )
-
-        str_pk_query = get_selected_testcases(
-            RequestFactory().post(reverse("testcases-clone"), {"case": case_str_pks})
-        )
-
-        for case in TestCase.objects.filter(pk__in=case_int_pks):
-            self.assertTrue(case in int_pk_query)
-            self.assertTrue(case in str_pk_query)

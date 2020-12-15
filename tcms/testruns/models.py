@@ -7,7 +7,6 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Count
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import override
 
@@ -196,12 +195,6 @@ class TestRun(TCMSActionModel):
         return self.case_run.count()
 
     total_num_caseruns = property(_get_total_case_run_num)
-
-    def update_completion_status(self, is_finished):
-        if is_finished:
-            self.stop_date = timezone.now()
-        else:
-            self.stop_date = None
 
     @override("en")
     def stats_executions_status(self, statuses=None):

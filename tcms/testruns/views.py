@@ -255,27 +255,5 @@ class CloneTestRunView(NewTestRunView):
         return super().get(request, form_initial=form_initial, is_cloning=True)
 
 
-@method_decorator(permission_required("testruns.change_testrun"), name="dispatch")
-class ChangeTestRunStatusView(View):
-    """Change test run finished or running"""
-
-    http_method_names = ["get"]
-
-    def get(self, request, pk):
-        test_run = get_object_or_404(TestRun, pk=pk)
-
-        test_run.update_completion_status(request.GET.get("finished") == "1")
-        test_run.save()
-
-        return HttpResponseRedirect(
-            reverse(
-                "testruns-get",
-                args=[
-                    pk,
-                ],
-            )
-        )
-
-
 def get_disabled_test_cases_count(test_cases):
     return test_cases.filter(case_status__is_confirmed=False).count()
