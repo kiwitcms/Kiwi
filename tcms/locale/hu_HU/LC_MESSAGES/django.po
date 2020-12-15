@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-02 21:12\n"
+"PO-Revision-Date: 2020-12-15 07:42\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1112,11 +1112,11 @@ msgstr "Új fiók regisztrálása"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "A teszteset állapotok testreszabásáról további információ a <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">dokumentációban</a> található!"
 
 #: tcms/testcases/admin.py:39
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "1 megerősített & 1 nem megerősített státusz szükséges!"
 
 #: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1151,11 +1151,11 @@ msgstr "TÖRÖLT: Teszteset #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr ""
+msgstr "Teszteset státusz"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "Teszteset státuszok"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1369,7 +1369,7 @@ msgstr "Nem hozható létre teszt futtatás meg nem erősített tesztesetekkel"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Hiba a teszteset hozzáadása közben"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1495,11 +1495,11 @@ msgstr "Teszt végrehajtás állapotok"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "Nem megerősített tesztesetetk nem kerültek hozzáadásra"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "0 vagy 1 típus"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1518,17 +1518,17 @@ msgstr "Befejezve"
 
 #: tcms/testruns/templates/testruns/get.html:194
 msgid "Update text version"
-msgstr ""
+msgstr "Szöveges verzió frissítése"
 
 #: tcms/testruns/templates/testruns/get.html:229
 msgid "Add comment"
-msgstr ""
+msgstr "Megjegyzés hozzáadása"
 
 #: tcms/testruns/templates/testruns/get.html:240
 #: tcms/testruns/templates/testruns/get.html:337
 #: tcms/testruns/templates/testruns/get.html:501
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Hivatkozás hozzáadása"
 
 #: tcms/testruns/templates/testruns/get.html:280
 #: tcms/testruns/templates/testruns/get.html:377
