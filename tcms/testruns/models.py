@@ -158,44 +158,6 @@ class TestRun(TCMSActionModel):
     def remove_cc(self, user):
         TestRunCC.objects.filter(run=self, user=user).delete()
 
-    def get_bug_count(self):
-        """
-        Return the count of distinct bug numbers recorded for
-        this particular TestRun.
-        """
-        # note fom Django docs: A count() call performs a SELECT COUNT(*)
-        # behind the scenes !!!
-        return (
-            LinkReference.objects.filter(
-                execution__run=self.pk,
-                is_defect=True,
-            )
-            .distinct()
-            .count()
-        )
-
-    def get_percentage(self, count):
-        case_run_count = self.total_num_caseruns
-        if case_run_count == 0:
-            return 0
-        percent = float(count) / case_run_count * 100
-        percent = round(percent, 2)
-        return percent
-
-    def _get_completed_case_run_percentage(self):
-        ids = TestExecutionStatus.objects.exclude(weight=0).values_list("pk", flat=True)
-
-        completed_caserun = self.case_run.filter(status__in=ids)
-
-        return self.get_percentage(completed_caserun.count())
-
-    completed_case_run_percent = property(_get_completed_case_run_percentage)
-
-    def _get_total_case_run_num(self):
-        return self.case_run.count()
-
-    total_num_caseruns = property(_get_total_case_run_num)
-
     @override("en")
     def stats_executions_status(self, statuses=None):
         """
@@ -268,16 +230,6 @@ class TestExecutionStatus(TCMSActionModel):
     def __str__(self):
         return self.name
 
-    @classmethod
-    def get_names(cls):
-        """ Get all status names in mapping between id and name """
-        return dict(cls.objects.values_list("pk", "name"))
-
-    @classmethod
-    def get_names_ids(cls):
-        """ Get all status names in reverse mapping between name and id """
-        return dict((name, _id) for _id, name in cls.get_names().items())
-
 
 # register model for DB translations
 vinaigrette.register(TestExecutionStatus, ["name"])
@@ -315,9 +267,7 @@ class TestExecution(TCMSActionModel):
         unique_together = ("case", "run", "case_text_version")
 
     def links(self):
-        """
-        Returns all links attached to this object!
-        """
+        # used in tests
         return LinkReference.objects.filter(execution=self.pk)
 
     def __str__(self):
@@ -333,9 +283,6 @@ class TestExecution(TCMSActionModel):
 
     def get_bugs(self):
         return LinkReference.objects.filter(execution=self.pk, is_defect=True)
-
-    def get_bugs_count(self):
-        return self.get_bugs().count()
 
     def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestExecution!

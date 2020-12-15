@@ -2,7 +2,7 @@
 import vinaigrette
 from django.conf import settings
 from django.db import models
-from django.db.models import ObjectDoesNotExist, Q
+from django.db.models import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -110,81 +110,6 @@ class TestCase(TCMSActionModel):
         qs = distinct_filter(TestCase, _query).order_by("pk")
         serializer = TestCaseRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
-
-    @classmethod
-    def list(cls, query, plan=None):
-        """List the cases with request"""
-
-        if not plan:
-            queryset = cls.objects
-        else:
-            queryset = cls.objects.filter(plan=plan)
-
-        if query.get("case_id_set"):
-            queryset = queryset.filter(pk__in=query["case_id_set"])
-
-        if query.get("search"):
-            queryset = queryset.filter(
-                Q(pk__icontains=query["search"])
-                | Q(summary__icontains=query["search"])
-                | Q(author__email__startswith=query["search"])
-            )
-
-        if query.get("summary"):
-            queryset = queryset.filter(Q(summary__icontains=query["summary"]))
-
-        if query.get("author"):
-            queryset = queryset.filter(
-                Q(author__first_name__startswith=query["author"])
-                | Q(author__last_name__startswith=query["author"])
-                | Q(author__username__icontains=query["author"])
-                | Q(author__email__startswith=query["author"])
-            )
-
-        if query.get("default_tester"):
-            queryset = queryset.filter(
-                Q(default_tester__first_name__startswith=query["default_tester"])
-                | Q(default_tester__last_name__startswith=query["default_tester"])
-                | Q(default_tester__username__icontains=query["default_tester"])
-                | Q(default_tester__email__startswith=query["default_tester"])
-            )
-
-        if query.get("tag__name__in"):
-            queryset = queryset.filter(tag__name__in=query["tag__name__in"])
-
-        if query.get("category"):
-            queryset = queryset.filter(category__name=query["category"].name)
-
-        if query.get("priority"):
-            queryset = queryset.filter(priority__in=query["priority"])
-
-        if query.get("case_status"):
-            queryset = queryset.filter(case_status__in=query["case_status"])
-
-        # If plan exists, remove leading and trailing whitespace from it.
-        # todo: this is the same as the if condition above !!! - this entire method
-        # should be removed in favor of API
-        plan_str = query.get("plan", "").strip()
-        if plan_str:
-            try:
-                # Is it an integer?  If so treat as a plan_id:
-                plan_id = int(plan_str)
-                queryset = queryset.filter(plan__pk=plan_id)
-            except ValueError:
-                # Not an integer - treat plan_str as a plan name:
-                queryset = queryset.filter(plan__name__icontains=plan_str)
-        del plan_str
-
-        if query.get("product"):
-            queryset = queryset.filter(category__product=query["product"])
-
-        if query.get("component"):
-            queryset = queryset.filter(component=query["component"])
-
-        if query.get("is_automated"):
-            queryset = queryset.filter(is_automated=query["is_automated"])
-
-        return queryset.distinct()
 
     def add_component(self, component):
         return TestCaseComponent.objects.get_or_create(case=self, component=component)
