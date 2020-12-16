@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-16 06:02\n"
+"PO-Revision-Date: 2020-12-16 06:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1369,11 +1369,11 @@ msgstr "您确定吗？"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "无法以未经确认的测试实例创建测试执行"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "添加测试案例时出错"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1385,7 +1385,7 @@ msgstr "计划类型"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "测试用例"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1395,7 +1395,7 @@ msgstr "新的测试执行"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "排序关键字"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1404,12 +1404,12 @@ msgstr "重新排序的用例"
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:293
 msgid "Search and add test cases"
-msgstr ""
+msgstr "搜索并添加测试用例"
 
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:303
 msgid "Advanced search"
-msgstr ""
+msgstr "高级搜索"
 
 #: tcms/testplans/templates/testplans/get.html:405
 #: tcms/testruns/templates/testruns/get.html:473
@@ -1499,11 +1499,11 @@ msgstr "测试执行状态"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "未添加未经确认的测试用例"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "类型 0 或 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1532,7 +1532,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:337
 #: tcms/testruns/templates/testruns/get.html:501
 msgid "Add hyperlink"
-msgstr ""
+msgstr "添加超链接"
 
 #: tcms/testruns/templates/testruns/get.html:280
 #: tcms/testruns/templates/testruns/get.html:377
@@ -1555,7 +1555,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:373
 msgid "Assigned to"
-msgstr ""
+msgstr "分配给"
 
 #: tcms/testruns/templates/testruns/get.html:406
 msgid "Run Date"
@@ -1563,7 +1563,7 @@ msgstr "执行日期"
 
 #: tcms/testruns/templates/testruns/get.html:418
 msgid "Text version"
-msgstr ""
+msgstr "文本版本"
 
 #: tcms/testruns/templates/testruns/get.html:423
 msgid "Bugs and hyperlinks"
