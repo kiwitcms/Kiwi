@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-02 21:13\n"
+"PO-Revision-Date: 2020-12-16 06:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1114,11 +1114,13 @@ msgstr "注册新账户"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "欲了解更多关于自定义测试执行状态的信息，请参阅文档\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        </a>！"
 
 #: tcms/testcases/admin.py:39
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "1 已确认 & 1 个未确认的状态！"
 
 #: tcms/testcases/forms.py:39
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1153,11 +1155,11 @@ msgstr "已删除: 测试用例 #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr ""
+msgstr "测试案例状态"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "测试案例状态"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1358,20 +1360,20 @@ msgstr "输入用户名、电子邮件或用户ID："
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "没有选择任何行！请选择至少一个 ！"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:23
 msgid "Are you sure?"
-msgstr ""
+msgstr "您确定吗？"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "无法以未经确认的测试实例创建测试执行"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "添加测试案例时出错"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1383,7 +1385,7 @@ msgstr "计划类型"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "测试用例"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1393,7 +1395,7 @@ msgstr "新的测试执行"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "排序关键字"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1402,12 +1404,12 @@ msgstr "重新排序的用例"
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:293
 msgid "Search and add test cases"
-msgstr ""
+msgstr "搜索并添加测试用例"
 
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:303
 msgid "Advanced search"
-msgstr ""
+msgstr "高级搜索"
 
 #: tcms/testplans/templates/testplans/get.html:405
 #: tcms/testruns/templates/testruns/get.html:473
@@ -1497,11 +1499,11 @@ msgstr "测试执行状态"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "未添加未经确认的测试用例"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "类型 0 或 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1530,7 +1532,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:337
 #: tcms/testruns/templates/testruns/get.html:501
 msgid "Add hyperlink"
-msgstr ""
+msgstr "添加超链接"
 
 #: tcms/testruns/templates/testruns/get.html:280
 #: tcms/testruns/templates/testruns/get.html:377
@@ -1553,7 +1555,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:373
 msgid "Assigned to"
-msgstr ""
+msgstr "分配给"
 
 #: tcms/testruns/templates/testruns/get.html:406
 msgid "Run Date"
@@ -1561,7 +1563,7 @@ msgstr "执行日期"
 
 #: tcms/testruns/templates/testruns/get.html:418
 msgid "Text version"
-msgstr ""
+msgstr "文本版本"
 
 #: tcms/testruns/templates/testruns/get.html:423
 msgid "Bugs and hyperlinks"
