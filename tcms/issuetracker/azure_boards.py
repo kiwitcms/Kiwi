@@ -47,7 +47,7 @@ class AzureBoardsAPI:
         headers = {"Content-type": "application/json"}
         url = "{0}{1}{2}{3}{4}{5}".format(
             self.base_url,
-            "wit/workitems/",
+            "wit/workItems/",
             issue_id,
             "/comments",
             self.api_version,
