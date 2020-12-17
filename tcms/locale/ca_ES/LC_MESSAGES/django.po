@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-17 07:01\n"
+"PO-Revision-Date: 2020-12-17 07:03\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -168,7 +168,7 @@ msgstr "afegeix una nova versió"
 #: tcms/testruns/templates/testruns/mutable.html:35
 #: tcms/testruns/templates/testruns/mutable.html:36
 msgid "add new Build"
-msgstr ""
+msgstr "afegeix un nou muntatge"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -292,7 +292,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
-msgstr ""
+msgstr "Permisos"
 
 #: tcms/kiwi_auth/forms.py:42
 msgid "A user with that email already exists."
