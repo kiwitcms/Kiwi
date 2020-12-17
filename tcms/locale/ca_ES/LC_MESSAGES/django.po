@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-17 07:12\n"
+"PO-Revision-Date: 2020-12-17 07:42\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -284,11 +284,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:30
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Aquesta adreça de correu ja està en ús"
 
 #: tcms/kiwi_auth/admin.py:96
 msgid "Personal info"
-msgstr ""
+msgstr "Informació personal"
 
 #: tcms/kiwi_auth/admin.py:97
 msgid "Permissions"
@@ -296,7 +296,7 @@ msgstr "Permisos"
 
 #: tcms/kiwi_auth/forms.py:42
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Ja existeix un usuari amb aquesta adreça electrònica."
 
 #: tcms/kiwi_auth/forms.py:70
 #, python-format
