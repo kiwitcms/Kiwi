@@ -68,7 +68,7 @@
 
             <label class="col-md-1 col-lg-1" for="id_running">{% trans "Running" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_running" type="checkbox" checked>
+                <input class="bootstrap-switch" id="id_running" name="running" type="checkbox" {% if form.running.value != "0" %} checked="checked"{% endif %}>
             </div>
         </div>
 
