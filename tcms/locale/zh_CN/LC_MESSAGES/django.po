@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-02 20:41+0000\n"
-"PO-Revision-Date: 2020-12-16 06:11\n"
+"PO-Revision-Date: 2020-12-19 08:01\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -394,7 +394,7 @@ msgstr "搜索缺陷"
 
 #: tcms/settings/common.py:305
 msgid "TELEMETRY"
-msgstr "音效"
+msgstr "度量"
 
 #: tcms/settings/common.py:306
 msgid "Testing"
