@@ -67,6 +67,19 @@ class AzureBoardsAPI:
         )
         return self._request("POST", url, headers=headers, auth=self.auth, json=body)
 
+    def delete_comment(self, issue_id, comment_id):
+        headers = {"Content-type": "application/json"}
+        url = "{0}{1}{2}{3}{4}{5}{6}".format(
+            self.base_url,
+            "wit/workItems/",
+            issue_id,
+            "/comments/",
+            comment_id,
+            self.api_version,
+            "-preview.3",
+        )
+        return requests.request("DELETE", url, headers=headers, auth=self.auth)
+
     @staticmethod
     def _request(method, url, **kwargs):
         return requests.request(method, url, **kwargs).json()
