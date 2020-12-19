@@ -17,9 +17,9 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
     "Bug tracker integration testing not enabled",
 )
 class TestAzureIntegration(APITestCase):
-    existing_bug_id = 1
+    existing_bug_id = 717
     existing_bug_url = (
-        "https://dev.azure.com/kiwitcms/boards-integration/_workitems/edit/1"
+        "https://dev.azure.com/kiwitcms/boards-integration/_workitems/edit/717"
     )
 
     def _fixture_setup(self):
