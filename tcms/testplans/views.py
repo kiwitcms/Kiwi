@@ -23,6 +23,7 @@ from tcms.testplans.forms import (
     SearchPlanForm,
 )
 from tcms.testplans.models import PlanType, TestPlan
+from tcms.testruns.models import TestRun
 
 
 @method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
@@ -176,6 +177,10 @@ class TestPlanGetView(DetailView):
         context["statuses"] = TestCaseStatus.objects.all()
         context["priorities"] = Priority.objects.filter(is_active=True)
         context["comment_form"] = SimpleCommentForm()
+        context["test_runs"] = TestRun.objects.filter(
+            plan_id=self.object.pk, stop_date__isnull=True
+        ).order_by("-id")[:5]
+
         return context
 
 

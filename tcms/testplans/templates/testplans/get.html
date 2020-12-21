@@ -277,6 +277,44 @@
     </div>
 
     <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <div class="card-pf-heading">
+                    <h2 class="card-pf-title">
+                        <span class="fa fa-forward">
+                        </span>
+                        {% trans 'Active test runs' %}
+                    </h2>
+                </div>
+                <div class="card-pf-body">
+                    <div id="testruns-list" class="list-group list-view-pf list-view-pf-view">
+                        <div class="card-pf-items">
+                            <div class="card-pf-item">
+                                {% for test_run in test_runs %}
+                                    <div class="list-group-item">
+                                        <div class="list-group-item-header">
+                                            <div class="list-view-pf-main-info">
+                                                <div class="list-group-item-text">
+                                                    <a href="{% url 'testruns-get' test_run.pk %}">
+                                                        TR-{{ test_run.pk }}: {{ test_run }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="card-pf-item text-center">
+                                <a href="{% url "testruns-search" %}?plan={{ object.pk }}">{% trans 'More' %}</a>
+                                |
+                                <a href="{% url "testruns-search" %}?plan={{ object.pk }}&running=0">{% trans 'Inactive' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xs-12 col-sm-6 col-md-3">
             {% include 'include/tags_card.html' with add_perm=perms.testcases.add_testcasetag %}
         </div>
@@ -285,6 +323,7 @@
             {% include 'include/attachments.html' %}
         </div>
     </div>
+
 </div>
 
 <template id="no_test_cases">
