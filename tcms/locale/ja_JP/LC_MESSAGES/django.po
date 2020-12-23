@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-23 13:59+0000\n"
-"PO-Revision-Date: 2020-12-23 14:03\n"
+"POT-Creation-Date: 2020-12-23 15:31+0000\n"
+"PO-Revision-Date: 2020-12-23 15:34\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1934,7 +1934,7 @@ msgstr "Kiwi TCMS テナントが作成されました:\n"
 "%(tenant_url)s\n\n"
 "問題が発生した場合は、サポートにお問い合わせください!"
 
-#: tcms_tenants/templates/tcms_tenants/invite_users.html:18
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
 msgstr ""
 
@@ -1962,8 +1962,8 @@ msgstr "スキーマ名はすでに使用されています"
 msgid "New Kiwi TCMS tenant created"
 msgstr "新しい Kiwi TCMS テナントが作成されました"
 
-#: tcms_tenants/utils.py:181
-msgid "Invitation to join to Kiwi TCMS"
+#: tcms_tenants/utils.py:190
+msgid "Invitation to join Kiwi TCMS"
 msgstr ""
 
 #: tcms_tenants/views.py:92
