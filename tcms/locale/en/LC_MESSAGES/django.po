@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-23 13:59+0000\n"
+"POT-Creation-Date: 2020-12-23 15:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1931,7 +1931,7 @@ msgid ""
 "If you have troubles please contact support!"
 msgstr ""
 
-#: tcms_tenants/templates/tcms_tenants/invite_users.html:18
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
 msgstr ""
 
@@ -1959,8 +1959,8 @@ msgstr ""
 msgid "New Kiwi TCMS tenant created"
 msgstr ""
 
-#: tcms_tenants/utils.py:181
-msgid "Invitation to join to Kiwi TCMS"
+#: tcms_tenants/utils.py:190
+msgid "Invitation to join Kiwi TCMS"
 msgstr ""
 
 #: tcms_tenants/views.py:92

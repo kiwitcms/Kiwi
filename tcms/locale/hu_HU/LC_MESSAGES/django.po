@@ -1959,7 +1959,7 @@ msgid "New Kiwi TCMS tenant created"
 msgstr "Új Kiwi TCMS bérlő létrehozva"
 
 #: tcms_tenants/utils.py:181
-msgid "Invitation to join to Kiwi TCMS"
+msgid "Invitation to join Kiwi TCMS"
 msgstr "Meghívó küldése a Kiwi TCMS-hez"
 
 #: tcms_tenants/views.py:92

@@ -1962,7 +1962,7 @@ msgid "New Kiwi TCMS tenant created"
 msgstr "Nova instanca Kiwi TCMS je bila ustvarjena"
 
 #: tcms_tenants/utils.py:181
-msgid "Invitation to join to Kiwi TCMS"
+msgid "Invitation to join Kiwi TCMS"
 msgstr "Povabilo za pridružitev Kiwi TCMS"
 
 #: tcms_tenants/views.py:92
