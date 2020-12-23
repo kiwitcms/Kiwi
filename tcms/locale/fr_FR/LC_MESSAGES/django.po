@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 15:34\n"
+"PO-Revision-Date: 2020-12-23 19:22\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1413,15 +1413,15 @@ msgstr "Recherche avancé"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr ""
+msgstr "Exécution de test actif"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
-msgstr ""
+msgstr "En savoir plus"
 
 #: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
-msgstr ""
+msgstr "Inactif"
 
 #: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:478
@@ -1885,7 +1885,7 @@ msgstr "Non autorisé"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Nom d'utilisateur, email ou identifiant d'utilisateur existant"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -1902,7 +1902,7 @@ msgstr "Créer"
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Inviter des utilisateurs"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
