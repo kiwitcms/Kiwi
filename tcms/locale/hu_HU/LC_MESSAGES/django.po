@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 15:33\n"
+"PO-Revision-Date: 2020-12-23 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1960,7 +1960,7 @@ msgstr "Új Kiwi TCMS bérlő létrehozva"
 
 #: tcms_tenants/utils.py:190
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Meghívó küldése a Kiwi TCMS-hez"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
