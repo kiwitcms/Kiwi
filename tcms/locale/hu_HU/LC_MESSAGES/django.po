@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 13:59+0000\n"
-"PO-Revision-Date: 2020-12-23 14:03\n"
+"PO-Revision-Date: 2020-12-23 15:02\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1409,15 +1409,15 @@ msgstr "Részletes keresés"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr ""
+msgstr "Aktív teszt futtatások"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
-msgstr ""
+msgstr "Több"
 
 #: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktív"
 
 #: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:478
@@ -1878,7 +1878,7 @@ msgstr "Jogosulatlan"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Meglévő felhasználónév, email vagy felhasználói azonosító"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
