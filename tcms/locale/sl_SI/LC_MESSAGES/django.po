@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 13:59+0000\n"
-"PO-Revision-Date: 2020-12-23 14:03\n"
+"PO-Revision-Date: 2020-12-23 14:34\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1412,15 +1412,15 @@ msgstr "Napredno iskanje"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr ""
+msgstr "Aktivna testiranja"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
-msgstr ""
+msgstr "Več"
 
 #: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
-msgstr ""
+msgstr "Neaktiven"
 
 #: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:478
@@ -1884,7 +1884,7 @@ msgstr "Nimate pooblastil"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Vnesite uporabniško ime, email ali uporabniški ID"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -1901,7 +1901,7 @@ msgstr "Ustvari"
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Povabite uporabnike"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
@@ -1935,7 +1935,7 @@ msgstr "Nova instanca Kiwi TCMS je bila ustvarjena na naslovu:\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:18
 msgid "Email"
-msgstr ""
+msgstr "E-pošta"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -1963,7 +1963,7 @@ msgstr "Nova instanca Kiwi TCMS je bila ustvarjena"
 
 #: tcms_tenants/utils.py:181
 msgid "Invitation to join to Kiwi TCMS"
-msgstr ""
+msgstr "Povabilo za pridružitev Kiwi TCMS"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
