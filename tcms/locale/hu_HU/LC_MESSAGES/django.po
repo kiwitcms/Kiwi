@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 13:59+0000\n"
-"PO-Revision-Date: 2020-12-23 15:02\n"
+"PO-Revision-Date: 2020-12-23 15:13\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1895,7 +1895,7 @@ msgstr "Létrehozás"
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Felhasználók meghívása"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
@@ -1916,7 +1916,10 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "Kedves Tesztelő,\n"
+"%(invited_by)s meghívott hogy csatlakozz a Kiwi TCMS-hez\n"
+"%(tenant_url)s\n\n"
+"Abban az esetben ha még soha nem jelentkeztél be, egy felhasználói fiók automatikusan létrehozásra került számodra. Az első belépés előtt szükséges lesz a jelszót megváltoztatni!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -1929,7 +1932,7 @@ msgstr "A Kiwi TCMS bérlő létrehozásra került:\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:18
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -1957,9 +1960,9 @@ msgstr "Új Kiwi TCMS bérlő létrehozva"
 
 #: tcms_tenants/utils.py:181
 msgid "Invitation to join to Kiwi TCMS"
-msgstr ""
+msgstr "Meghívó küldése a Kiwi TCMS-hez"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Csak azok a felhasználók hívhatnak meg másokat akik erre jogosultak"
 
