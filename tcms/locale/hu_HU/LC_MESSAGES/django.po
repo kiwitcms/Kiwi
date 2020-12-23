@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-23 13:59+0000\n"
-"PO-Revision-Date: 2020-12-23 15:13\n"
+"POT-Creation-Date: 2020-12-23 15:31+0000\n"
+"PO-Revision-Date: 2020-12-23 15:53\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1930,7 +1930,7 @@ msgstr "A Kiwi TCMS bérlő létrehozásra került:\n"
 "%(tenant_url)s\n\n"
 "Probléma esetén vedd fel a kapcsolatot a támogatókkal!"
 
-#: tcms_tenants/templates/tcms_tenants/invite_users.html:18
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
 msgstr "Email"
 
@@ -1958,9 +1958,9 @@ msgstr "A sémanév már használatban van"
 msgid "New Kiwi TCMS tenant created"
 msgstr "Új Kiwi TCMS bérlő létrehozva"
 
-#: tcms_tenants/utils.py:181
+#: tcms_tenants/utils.py:190
 msgid "Invitation to join Kiwi TCMS"
-msgstr "Meghívó küldése a Kiwi TCMS-hez"
+msgstr "Kiwi TCMS meghívó küldése"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
