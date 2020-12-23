@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 19:22\n"
+"PO-Revision-Date: 2020-12-23 19:32\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1923,7 +1923,11 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "Cher testeur,\n"
+"%(invited_by)s vous a invité à rejoindre son instance Kiwi TCMS à\n"
+"%(tenant_url)s\n\n"
+"Si vous ne vous êtes jamais connecté avant qu'un compte ne vous ait été créé\n"
+"automatiquement. Vous devrez réinitialiser votre mot de passe avant de pouvoir vous connecter!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -1936,7 +1940,7 @@ msgstr "Votre locataire Kiwi TCMS a été créé sur:\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "Courriel"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -1968,5 +1972,5 @@ msgstr ""
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'autres utilisateurs"
 
