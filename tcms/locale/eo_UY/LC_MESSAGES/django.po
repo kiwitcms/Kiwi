@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-23 13:59+0000\n"
-"PO-Revision-Date: 2020-12-23 14:04\n"
+"POT-Creation-Date: 2020-12-23 15:31+0000\n"
+"PO-Revision-Date: 2020-12-23 15:34\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1870,7 +1870,7 @@ msgid "Your Kiwi TCMS tenant was created at:\n"
 "If you have troubles please contact support!"
 msgstr "crwdns1198:0%(tenant_url)scrwdne1198:0"
 
-#: tcms_tenants/templates/tcms_tenants/invite_users.html:18
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
 msgstr "crwdns1308:0crwdne1308:0"
 
@@ -1898,9 +1898,9 @@ msgstr "crwdns1192:0crwdne1192:0"
 msgid "New Kiwi TCMS tenant created"
 msgstr "crwdns1194:0crwdne1194:0"
 
-#: tcms_tenants/utils.py:181
-msgid "Invitation to join to Kiwi TCMS"
-msgstr "crwdns1310:0crwdne1310:0"
+#: tcms_tenants/utils.py:190
+msgid "Invitation to join Kiwi TCMS"
+msgstr "crwdns1314:0crwdne1314:0"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
