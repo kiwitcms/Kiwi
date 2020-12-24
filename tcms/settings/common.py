@@ -438,9 +438,6 @@ LOGGING = {
             "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
         },
         "simple": {"format": "[%(asctime)s] %(levelname)s %(message)s"},
-        "rpc_log": {
-            "format": '[%(asctime)s] %(levelname)s XMLRPC %(process)d "%(message)s"'
-        },
     },
     "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {
@@ -448,11 +445,6 @@ LOGGING = {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "simple",
-        },
-        "rpc": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "rpc_log",
         },
         "mail_admins": {
             "level": "ERROR",
@@ -464,11 +456,6 @@ LOGGING = {
         "django.request": {
             "handlers": ["mail_admins"],
             "level": "ERROR",
-            "propagate": True,
-        },
-        "kiwi.rpc": {
-            "handlers": ["rpc"],
-            "level": "DEBUG",
             "propagate": True,
         },
     },
