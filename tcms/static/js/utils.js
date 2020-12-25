@@ -181,6 +181,10 @@ const currentTimeWithTimezone = timeZone => moment().tz(timeZone).format('YYYY-M
 
 /* render Markdown & assign it to selector */
 function markdown2HTML(input, selector) {
+    // first display raw input in case user is not logged in and
+    // Markdown.render returns 403 forbidden
+    $(selector).html(input);
+
     jsonRPC('Markdown.render', unescapeHTML(input), function(result) {
         $(selector).html(unescapeHTML(result));
     });
