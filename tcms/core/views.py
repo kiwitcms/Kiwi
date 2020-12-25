@@ -36,7 +36,7 @@ class DashboardView(TemplateView):
             TestRun.objects.filter(
                 Q(manager=self.request.user)
                 | Q(default_tester=self.request.user)
-                | Q(case_run__assignee=self.request.user),
+                | Q(executions__assignee=self.request.user),
                 stop_date__isnull=True,
             )
             .order_by("-pk")

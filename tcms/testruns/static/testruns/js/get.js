@@ -211,7 +211,7 @@ function filterTestExecutionsByProperty(runId, executions, filterBy, filterValue
     $('.test-execution-element').hide();
 
     if (filterBy === 'is_automated' || filterBy === 'priority' || filterBy === 'category') {
-        let query = { case_run__run: runId }
+        let query = { executions__run: runId }
         if (filterBy === 'is_automated') {
             query[filterBy] = filterValue
         } else if (filterBy === 'priority') {
@@ -501,18 +501,18 @@ function addCommentToExecution(testExecution, input, handler) {
 
 function renderAdditionalInformation(testRunId, execution) {
     let linksQuery = { execution__run: testRunId },
-        casesQuery = { case_run__run: testRunId },
-        componentQ = { cases__case_run__run: testRunId },
-        tagsQ = { case__case_run__run: testRunId },
+        casesQuery = { executions__run: testRunId },
+        componentQ = { cases__executions__run: testRunId },
+        tagsQ = { case__executions__run: testRunId },
         planId = Number($('#test_run_pk').data('plan-pk'))
 
     // if called from reloadRowFor(execution) then filter only for
     // that one row
     if (execution) {
         linksQuery = { execution: execution.id }
-        casesQuery = { case_run: execution.id }
-        componentQ = { cases__case_run: execution.id }
-        tagsQ = { case__case_run: execution.id }
+        casesQuery = { executions: execution.id }
+        componentQ = { cases__executions: execution.id }
+        tagsQ = { case__executions: execution.id }
     }
 
     // update bug icons for all executions

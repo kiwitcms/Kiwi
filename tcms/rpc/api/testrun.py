@@ -44,15 +44,15 @@ def add_case(run_id, case_id):
     run = TestRun.objects.get(pk=run_id)
     case = TestCase.objects.get(pk=case_id)
 
-    if run.case_run.filter(case=case).exists():
-        return run.case_run.filter(case=case).first().serialize()
+    if run.executions.filter(case=case).exists():
+        return run.executions.filter(case=case).first().serialize()
 
     if not case.case_status.is_confirmed:
         raise RuntimeError("TC-%d status is not confirmed" % case.pk)
 
     # always add new TEs at the end of TR
     sortkey = 10
-    last_te = run.case_run.order_by("sortkey").last()
+    last_te = run.executions.order_by("sortkey").last()
     if last_te:  # in case there are no other TEs
         sortkey += last_te.sortkey
 
@@ -91,7 +91,7 @@ def get_cases(run_id):
                  augmented with ``execution_id`` and ``status`` information.
         :rtype: list(dict)
     """
-    tcs_serializer = TestCase.to_xmlrpc(query={"case_run__run_id": run_id})
+    tcs_serializer = TestCase.to_xmlrpc(query={"executions__run_id": run_id})
 
     qs = TestExecution.objects.filter(run_id=run_id).values(
         "case", "pk", "status__name"

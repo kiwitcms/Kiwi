@@ -241,7 +241,9 @@ class CloneTestRunView(NewTestRunView):
 
         request.GET._mutable = True  # pylint: disable=protected-access
         request.GET["p"] = test_run.plan_id
-        request.GET.setlist("c", test_run.case_run.all().values_list("case", flat=True))
+        request.GET.setlist(
+            "c", test_run.executions.all().values_list("case", flat=True)
+        )
 
         form_initial = {
             "summary": _("Clone of ") + test_run.summary,
