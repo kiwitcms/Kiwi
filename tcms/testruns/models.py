@@ -95,9 +95,9 @@ class TestRun(TCMSActionModel):
         if self.default_tester_id:
             send_to.append(self.default_tester.email)
 
-        for tcr in self.case_run.select_related("assignee").all():
-            if tcr.assignee_id:
-                send_to.append(tcr.assignee.email)
+        for execution in self.executions.select_related("assignee").all():
+            if execution.assignee_id:
+                send_to.append(execution.assignee.email)
 
         send_to = set(send_to)
         # don't email author of last change
@@ -132,7 +132,7 @@ class TestRun(TCMSActionModel):
             # usually IDLE but users can customize statuses
             status = TestExecutionStatus.objects.filter(weight=0).first()
 
-        return self.case_run.create(
+        return self.executions.create(
             case=case,
             assignee=assignee,
             tested_by=None,
@@ -242,23 +242,25 @@ class TestExecution(TCMSActionModel):
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
-        related_name="case_run_assignee",
+        related_name="execution_assignee",
         on_delete=models.CASCADE,
     )
     tested_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
-        related_name="case_run_tester",
+        related_name="execution_tester",
         on_delete=models.CASCADE,
     )
     case_text_version = models.IntegerField()
     close_date = models.DateTimeField(null=True, blank=True)
     sortkey = models.IntegerField(null=True, blank=True)
 
-    run = models.ForeignKey(TestRun, related_name="case_run", on_delete=models.CASCADE)
+    run = models.ForeignKey(
+        TestRun, related_name="executions", on_delete=models.CASCADE
+    )
     case = models.ForeignKey(
-        "testcases.TestCase", related_name="case_run", on_delete=models.CASCADE
+        "testcases.TestCase", related_name="executions", on_delete=models.CASCADE
     )
     status = models.ForeignKey(TestExecutionStatus, on_delete=models.CASCADE)
     build = models.ForeignKey("management.Build", on_delete=models.CASCADE)

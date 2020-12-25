@@ -151,7 +151,7 @@ class TestCreateNewRun(BasePlanCase):
         self.assertRedirects(response, reverse("testruns-get", args=[new_run.pk]))
 
         for case, execution in zip(
-            (self.case_1, self.case_2), new_run.case_run.order_by("case")
+            (self.case_1, self.case_2), new_run.executions.order_by("case")
         ):
             self.assertEqual(case, execution.case)
             self.assertIsNone(execution.tested_by)

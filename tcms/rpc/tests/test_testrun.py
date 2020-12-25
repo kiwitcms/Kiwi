@@ -128,7 +128,7 @@ class TestRemovesCase(APITestCase):
         ).exists()
         self.assertTrue(exists)
 
-    def test_should_remove_a_case_run(self):
+    def test_should_remove_an_execution(self):
         self.rpc_client.TestRun.remove_case(self.test_run.pk, self.test_case.pk)
         self.assertFalse(
             TestExecution.objects.filter(pk=self.test_execution.pk).exists()

@@ -136,17 +136,17 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
         self.assertEqual(self.build_fast, last_run.build)
         self.assertEqual(self.tester, last_run.manager)
         self.assertEqual(self.tester, last_run.default_tester)
-        for case, case_run in zip(
-            (self.case_1, self.case_2), last_run.case_run.order_by("case")
+        for case, execution in zip(
+            (self.case_1, self.case_2), last_run.executions.order_by("case")
         ):
-            self.assertEqual(case, case_run.case)
-            self.assertEqual(None, case_run.tested_by)
-            self.assertEqual(self.tester, case_run.assignee)
+            self.assertEqual(case, execution.case)
+            self.assertEqual(None, execution.tested_by)
+            self.assertEqual(self.tester, execution.assignee)
             self.assertEqual(
-                case.history.latest().history_id, case_run.case_text_version
+                case.history.latest().history_id, execution.case_text_version
             )
-            self.assertEqual(last_run.build, case_run.build)
-            self.assertEqual(None, case_run.close_date)
+            self.assertEqual(last_run.build, execution.build)
+            self.assertEqual(None, execution.close_date)
 
 
 class MenuAddCommentItemTestCase(PermissionsTestCase):

@@ -315,7 +315,7 @@ class TestCaseEmailSettings(models.Model):
     auto_to_case_tester = models.BooleanField(default=True)
     auto_to_run_manager = models.BooleanField(default=True)
     auto_to_run_tester = models.BooleanField(default=True)
-    auto_to_case_run_assignee = models.BooleanField(default=True)
+    auto_to_execution_assignee = models.BooleanField(default=True)
 
     cc_list = models.TextField(default="")
 

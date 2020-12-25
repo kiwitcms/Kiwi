@@ -166,11 +166,10 @@ class TestCaseGetView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        test_case_runs = self.object.case_run.select_related(
+        context["executions"] = self.object.executions.select_related(
             "run", "tested_by", "assignee", "case", "status"
         ).order_by("run__plan", "run")
 
-        context["executions"] = test_case_runs
         return context
 
 
