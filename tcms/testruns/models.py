@@ -266,10 +266,6 @@ class TestExecution(TCMSActionModel):
     class Meta:
         unique_together = ("case", "run", "case_text_version")
 
-    def links(self):
-        # used in tests
-        return LinkReference.objects.filter(execution=self.pk)
-
     def __str__(self):
         return "%s: %s" % (self.pk, self.case_id)
 
@@ -281,8 +277,11 @@ class TestExecution(TCMSActionModel):
         serializer = TestExecutionRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
+    def links(self):
+        return LinkReference.objects.filter(execution=self.pk)
+
     def get_bugs(self):
-        return LinkReference.objects.filter(execution=self.pk, is_defect=True)
+        return self.links().filter(is_defect=True)
 
     def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestExecution!
