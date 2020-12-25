@@ -153,7 +153,7 @@ class TestPlan(TreeNode, TCMSActionModel):
             tp_dest.add_tag(tag=tp_tag_src)
 
         # include TCs inside cloned TP
-        for tc_src in self.case.all():
+        for tc_src in self.cases.all():
             # this parameter should really be named clone_testcases b/c if set
             # it clones the source TC and then adds it to the new TP
             if copy_testcases:

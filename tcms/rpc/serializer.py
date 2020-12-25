@@ -419,7 +419,7 @@ class TestPlanRPCSerializer(QuerySetBasedRPCSerializer):
         "alias": {"product_version": "default_product_version"},
     }
 
-    m2m_fields = ("case", "tag")
+    m2m_fields = ("cases", "tag")
 
 
 class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):

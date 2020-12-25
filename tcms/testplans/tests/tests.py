@@ -261,13 +261,13 @@ class TestCloneView(BasePlanCase):
 
     def _verify_options(self, original_plan, cloned_plan, copy_cases):
         # number of TCs should always be the same
-        self.assertEqual(cloned_plan.case.count(), original_plan.case.count())
+        self.assertEqual(cloned_plan.cases.count(), original_plan.cases.count())
 
         # Verify option set_parent
         self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
 
         # Verify option copy_testcases
-        for case in cloned_plan.case.all():
+        for case in cloned_plan.cases.all():
             is_case_linked = TestCasePlan.objects.filter(
                 plan=original_plan, case=case
             ).exists()
@@ -282,7 +282,7 @@ class TestCloneView(BasePlanCase):
                 self.assertTrue(is_case_linked)
 
             for original_case, copied_case in zip(
-                original_plan.case.all(), cloned_plan.case.all()
+                original_plan.cases.all(), cloned_plan.cases.all()
             ):
                 # default tester is always kept
                 self.assertEqual(
