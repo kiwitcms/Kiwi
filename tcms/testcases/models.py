@@ -84,10 +84,8 @@ class TestCase(TCMSActionModel):
         on_delete=models.CASCADE,
     )
 
-    # FIXME: related_name should be cases instead of case. But now keep it
-    # named case due to historical reason.
     plan = models.ManyToManyField(
-        "testplans.TestPlan", related_name="case", through="testcases.TestCasePlan"
+        "testplans.TestPlan", related_name="cases", through="testcases.TestCasePlan"
     )
 
     component = models.ManyToManyField(

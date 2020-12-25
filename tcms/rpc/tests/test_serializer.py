@@ -82,7 +82,7 @@ class MockTestPlanSerializer(QuerySetBasedRPCSerializer):
         "alias": {"product_version": "default_product_version"},
     }
 
-    m2m_fields = ("case",)
+    m2m_fields = ("cases",)
 
 
 class MockTestCaseSerializer(QuerySetBasedRPCSerializer):
@@ -229,7 +229,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
                 self.assertTrue(m2m_field_name in object_value)
 
     def test_query_m2m_field(self):
-        m2m_field_name = "case"
+        m2m_field_name = "cases"
 
         result = self.plan_serializer._query_m2m_field(m2m_field_name)
 
@@ -254,7 +254,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
             self.verify_m2m_field_query_result(m2m_field_name, this_query_result)
 
     def test_get_related_object_pks(self):
-        m2m_field_name = "case"
+        m2m_field_name = "cases"
 
         m2m_query_result = self.plan_serializer._query_m2m_fields()
 
@@ -265,7 +265,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
 
         expected_values = []
 
-        for case in self.plans[0].case.all():
+        for case in self.plans[0].cases.all():
             expected_values.append(case.pk)
 
         expected_values.sort()

@@ -46,7 +46,7 @@ def _lookup_fields_in_model(cls, fields):
 
     Example:
         cls is TestRun (<class 'tcms.testruns.models.TestRun'>)
-        fields is 'plan__case__is_automated'
+        fields is 'plan__cases__is_automated'
                     |     |         |----- Normal Field in TestCase
                     |     |--------------- ManyToManyKey in TestPlan
                     |--------------------- ForeignKey in TestRun
