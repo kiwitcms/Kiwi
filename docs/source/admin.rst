@@ -345,6 +345,29 @@ groups and then assign users to various groups depending on what level of
 access you want to provide for them!
 
 
+Management commands
+-------------------
+
+Kiwi TCMS and its components ship with multiple management commands.
+They are generally executed in the form::
+
+    docker exec -it kiwi_web /Kiwi/manage.py <command_name> [args]
+
+Here are a few useful commands:
+
+- ``initial_setup`` - initial configuration of Kiwi TCMS
+- ``set_domain`` - configure Kiwi TCMS public domain
+- ``createsuperuser`` - create a superuser in the database
+- ``migrate`` - apply DB migrations if necessary
+- ``showmigrations`` - show the list of applied/pending DB migrations
+- ``refresh_permissions`` - refresh permissions for the special ``Tester``
+  and ``Administrator`` groups and remove stale ones
+- ``delete_stale_attachments`` - remove attachments for which the related
+  objects don't exist anymore. Follows the ``DELETE_ATTACHMENTS_FROM_DISK``
+  setting
+- ``delete_stale_comments`` - remove comments for which the related objects
+  don't exist anymore
+
 
 .. _explanation-of-entities:
 
