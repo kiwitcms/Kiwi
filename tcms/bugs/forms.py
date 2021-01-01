@@ -6,6 +6,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from tcms.bugs.models import Bug
+from tcms.core.forms.fields import UserField
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Build, Version
 
@@ -14,6 +15,8 @@ class NewBugForm(forms.ModelForm):
     class Meta:
         model = Bug
         fields = ["summary", "assignee", "reporter", "product", "version", "build"]
+
+    assignee = UserField(required=False)
 
     text = forms.CharField(
         widget=SimpleMDE(),
@@ -51,7 +54,7 @@ Additional info:"""
             self.fields["build"].queryset = Build.objects.all()
 
 
-class BugCommentForm(forms.Form):
+class BugCommentForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     bug = forms.ModelChoiceField(
         queryset=Bug.objects.all(),
     )

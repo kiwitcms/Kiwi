@@ -172,16 +172,18 @@ class New(CreateView):
 )
 class Edit(UpdateView):
     model = Bug
-    # todo: try using NewBugForm instead of duplicating the field names here
-    # must figure out how to collect info about changes and hide comments
-    fields = ["summary", "assignee", "reporter", "product", "version", "build"]
+    form_class = NewBugForm
     template_name = "bugs/mutable.html"
     _values_before_update = {}
 
     def _record_changes(self, new_data):
         result = ""
-        for field in self.fields:
-            if self._values_before_update[field] != new_data[field]:
+        for field in self.model._meta.fields:
+            field = field.name
+            if (
+                field in new_data
+                and self._values_before_update[field] != new_data[field]
+            ):
                 result += "%s: %s -> %s\n" % (
                     field.title(),
                     self._values_before_update[field],
@@ -189,6 +191,11 @@ class Edit(UpdateView):
                 )
         if result:
             add_comment([self.object], result, self.request.user)
+
+    def get_initial(self):
+        return {
+            "assignee": self.object.assignee,
+        }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -203,8 +210,8 @@ class Edit(UpdateView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        for field in self.fields:
-            self._values_before_update[field] = getattr(obj, field)
+        for field in self.model._meta.fields:
+            self._values_before_update[field.name] = getattr(obj, field.name)
         return obj
 
     def form_valid(self, form):

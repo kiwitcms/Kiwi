@@ -75,13 +75,9 @@
                 <div class="col-md-1 col-lg-1">
                     <label for="id_assignee">{% trans "Assignee" %}</label>
                 </div>
-                <div class="col-md-2 col-lg-2">
-                    <select class="form-control selectpicker" id="id_assignee" name="assignee">
-                        <option value="">----------</option>
-                    {% for option in form.assignee.field.queryset %}
-                        <option value="{{ option.pk }}" {% if option.pk|escape == form.assignee.value|escape %}selected{% endif %}>{{ option.username }}</option>
-                    {% endfor %}
-                    </select>
+                <div class="col-md-2 col-lg-2 {% if form.assignee.errors %}has-error{% endif %}">
+                    <input id="id_assignee" name="assignee" value="{{ form.assignee.value|default:'' }}"
+                        type="text" class="form-control" placeholder="{% trans 'Username or email' %}">
                     {{ form.assignee.errors }}
                 </div>
             </div>
