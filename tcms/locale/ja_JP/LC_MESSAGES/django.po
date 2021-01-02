@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 15:34\n"
+"PO-Revision-Date: 2021-01-02 07:59\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1964,7 +1964,7 @@ msgstr "新しい Kiwi TCMS テナントが作成されました"
 
 #: tcms_tenants/utils.py:190
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Kiwi TCMS への招待"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
