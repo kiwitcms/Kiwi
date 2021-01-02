@@ -3,7 +3,9 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Build
+from tcms.rpc.api.forms.build import BuildForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.utils import pre_check_product
 
@@ -55,16 +57,15 @@ def create(values):
         :raises ValueError: if product or name not specified
         :raises: PermissionDenied if missing *management.add_build* permission
     """
-    if not values.get("product") or not values.get("name"):
-        raise ValueError("Product and name are both required.")
+    if "is_active" not in values:
+        values["is_active"] = True
 
-    build = Build.objects.create(
-        product=pre_check_product(values),
-        name=values["name"],
-        is_active=values.get("is_active", True),
-    )
+    form = BuildForm(values)
+    if form.is_valid():
+        build = form.save()
+        return model_to_dict(build)
 
-    return model_to_dict(build)
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("management.change_build")
