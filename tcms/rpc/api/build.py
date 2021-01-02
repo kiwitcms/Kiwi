@@ -5,9 +5,8 @@ from modernrpc.core import rpc_method
 
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Build
-from tcms.rpc.api.forms.build import BuildForm
+from tcms.rpc.api.forms.build import BuildForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.utils import pre_check_product
 
 __all__ = (
     "create",
@@ -54,7 +53,7 @@ def create(values):
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Build` object
         :rtype: dict
-        :raises ValueError: if product or name not specified
+        :raises ValueError: if input values don't validate
         :raises: PermissionDenied if missing *management.add_build* permission
     """
     if "is_active" not in values:
@@ -84,25 +83,13 @@ def update(build_id, values):
         :rtype: dict
         :raises: Build.DoesNotExist if build not found
         :raises: PermissionDenied if missing *management.change_build* permission
+        :raises ValueError: if input values don't validate
     """
-    selected_build = Build.objects.get(pk=build_id)
+    build = Build.objects.get(pk=build_id)
+    form = UpdateForm(values, instance=build)
 
-    # todo: this needs to start using model forms
-    update_fields = list()
-    if values.get("product"):
-        _update_value(
-            selected_build, "product", pre_check_product(values), update_fields
-        )
-    if values.get("name"):
-        _update_value(selected_build, "name", values["name"], update_fields)
-    if values.get("is_active") is not None:
-        _update_value(selected_build, "is_active", values["is_active"], update_fields)
+    if form.is_valid():
+        build = form.save()
+        return model_to_dict(build)
 
-    selected_build.save(update_fields=update_fields)
-
-    return model_to_dict(selected_build)
-
-
-def _update_value(obj, name, value, update_fields):
-    setattr(obj, name, value)
-    update_fields.append(name)
+    raise ValueError(form_errors_to_list(form))

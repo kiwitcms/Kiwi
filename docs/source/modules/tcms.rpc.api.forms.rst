@@ -12,6 +12,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   tcms.rpc.api.forms.build
    tcms.rpc.api.forms.testcase
    tcms.rpc.api.forms.testplan
    tcms.rpc.api.forms.testrun
