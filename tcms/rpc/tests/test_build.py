@@ -4,10 +4,13 @@
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
+from django.test import override_settings
+
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import BuildFactory, ProductFactory
 
 
+@override_settings(LANGUAGE_CODE="en")
 class BuildCreate(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -62,6 +65,7 @@ class BuildCreate(APITestCase):
         self.assertTrue(b["is_active"])
 
 
+@override_settings(LANGUAGE_CODE="en")
 class BuildUpdate(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -88,16 +92,8 @@ class BuildUpdate(APITestCase):
             self.rpc_client.Build.update(builds, {})
 
     def test_build_update_with_non_existing_product_id(self):
-        with self.assertRaisesRegex(
-            XmlRPCFault, "Product matching query does not exist"
-        ):
+        with self.assertRaisesRegex(XmlRPCFault, "product.*Select a valid choice"):
             self.rpc_client.Build.update(self.build_1.pk, {"product": -9999})
-
-    def test_build_update_with_non_existing_product_name(self):
-        with self.assertRaisesRegex(
-            XmlRPCFault, "Product matching query does not exist"
-        ):
-            self.rpc_client.Build.update(self.build_1.pk, {"product": "AAAAAAAAAAAAAA"})
 
     def test_build_update(self):
         b = self.rpc_client.Build.update(
