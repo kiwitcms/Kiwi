@@ -14,12 +14,6 @@ class BuildCreate(APITestCase):
 
         self.product = ProductFactory()
 
-    def test_build_create_with_no_args(self):
-        bad_args = ([], (), {})
-        for arg in bad_args:
-            with self.assertRaisesRegex(XmlRPCFault, "Internal error:"):
-                self.rpc_client.Build.create(arg)
-
     def test_build_create_with_no_perms(self):
         self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
@@ -27,29 +21,27 @@ class BuildCreate(APITestCase):
 
     def test_build_create_with_no_required_fields(self):
         values = {"is_active": False}
-        with self.assertRaisesRegex(XmlRPCFault, "Product and name are both required"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "name.*This field is required.*product.*This field is required"
+        ):
             self.rpc_client.Build.create(values)
 
         values["name"] = "TB"
-        with self.assertRaisesRegex(XmlRPCFault, "Product and name are both required"):
+        with self.assertRaisesRegex(XmlRPCFault, "product.*This field is required"):
             self.rpc_client.Build.create(values)
 
         del values["name"]
         values["product"] = self.product.pk
-        with self.assertRaisesRegex(XmlRPCFault, "Product and name are both required"):
+        with self.assertRaisesRegex(XmlRPCFault, "name.*This field is required"):
             self.rpc_client.Build.create(values)
 
     def test_build_create_with_non_existing_product(self):
         values = {"product": 9999, "name": "B7", "is_active": False}
-        with self.assertRaisesRegex(
-            XmlRPCFault, "Product matching query does not exist"
-        ):
+        with self.assertRaisesRegex(XmlRPCFault, "product.*Select a valid choice"):
             self.rpc_client.Build.create(values)
 
         values["product"] = "AAAAAAAAAA"
-        with self.assertRaisesRegex(
-            XmlRPCFault, "Product matching query does not exist"
-        ):
+        with self.assertRaisesRegex(XmlRPCFault, "product.*Select a valid choice"):
             self.rpc_client.Build.create(values)
 
     def test_build_create_with_chinese(self):
@@ -62,12 +54,12 @@ class BuildCreate(APITestCase):
         self.assertEqual(b["is_active"], False)
 
     def test_build_create(self):
-        values = {"product": self.product.pk, "name": "B7", "is_active": False}
+        values = {"product": self.product.pk, "name": "B7"}
         b = self.rpc_client.Build.create(values)
         self.assertIsNotNone(b)
         self.assertEqual(b["product"], self.product.pk)
         self.assertEqual(b["name"], "B7")
-        self.assertEqual(b["is_active"], False)
+        self.assertTrue(b["is_active"])
 
 
 class BuildUpdate(APITestCase):
