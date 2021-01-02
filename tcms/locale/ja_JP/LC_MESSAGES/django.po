@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-01-02 08:03\n"
+"PO-Revision-Date: 2021-01-02 08:13\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -187,14 +187,14 @@ msgstr "バグを検索"
 #: tcms/testcases/templates/testcases/search.html:17
 #: tcms/testplans/templates/testplans/search.html:18
 msgid "After"
-msgstr "後に"
+msgstr "以後"
 
 #: tcms/bugs/templates/bugs/search.html:28
 #: tcms/telemetry/templates/telemetry/include/filters.html:61
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:30
 msgid "Before"
-msgstr "前に"
+msgstr "以前"
 
 #: tcms/bugs/templates/bugs/search.html:76
 #: tcms/bugs/templates/bugs/search.html:81
@@ -317,7 +317,7 @@ msgstr "新しい %s アカウントの確認"
 
 #: tcms/kiwi_auth/views.py:59
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "あなたのアカウントが作成されました。確認用のリンクについては、メールをチェックしてください。"
+msgstr "あなたのアカウントが作成されました。確認用のリンクについては、メールをチェックしてください"
 
 #: tcms/kiwi_auth/views.py:64
 msgid "Your account has been created, but you need an administrator to activate it"
@@ -402,7 +402,7 @@ msgstr "テスト中"
 
 #: tcms/settings/common.py:317
 msgid "Breakdown"
-msgstr "分解する"
+msgstr "ブレイクダウン"
 
 #: tcms/settings/common.py:318
 msgid "Status matrix"
@@ -481,7 +481,7 @@ msgstr "確認済み"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr "他の"
+msgstr "その他"
 
 #: tcms/telemetry/api.py:136 tcms/telemetry/api.py:190
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
@@ -1668,11 +1668,11 @@ msgstr "更新が必要"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr "そこで待て"
+msgstr "待機中"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr "ランニング"
+msgstr "実行中"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
