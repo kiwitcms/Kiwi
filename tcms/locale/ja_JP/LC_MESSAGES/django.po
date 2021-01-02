@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-01-02 07:59\n"
+"PO-Revision-Date: 2021-01-02 08:03\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1873,7 +1873,7 @@ msgstr "メールアドレスは必須項目です"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr "または続行"
+msgstr "または以下でログイン"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
