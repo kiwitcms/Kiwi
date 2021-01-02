@@ -57,7 +57,7 @@ class BuildCreate(APITestCase):
         values = {"product": self.product.pk, "name": "开源中国", "is_active": False}
         b = self.rpc_client.Build.create(values)
         self.assertIsNotNone(b)
-        self.assertEqual(b["product_id"], self.product.pk)
+        self.assertEqual(b["product"], self.product.pk)
         self.assertEqual(b["name"], "开源中国")
         self.assertEqual(b["is_active"], False)
 
@@ -65,7 +65,7 @@ class BuildCreate(APITestCase):
         values = {"product": self.product.pk, "name": "B7", "is_active": False}
         b = self.rpc_client.Build.create(values)
         self.assertIsNotNone(b)
-        self.assertEqual(b["product_id"], self.product.pk)
+        self.assertEqual(b["product"], self.product.pk)
         self.assertEqual(b["name"], "B7")
         self.assertEqual(b["is_active"], False)
 
@@ -116,7 +116,7 @@ class BuildUpdate(APITestCase):
             },
         )
         self.assertIsNotNone(b)
-        self.assertEqual(b["product_id"], self.another_product.pk)
+        self.assertEqual(b["product"], self.another_product.pk)
         self.assertEqual(b["name"], "Update")
 
 
@@ -135,7 +135,7 @@ class BuildFilter(APITestCase):
         self.assertIsNotNone(b)
         self.assertEqual(b["id"], self.build.pk)
         self.assertEqual(b["name"], self.build.name)
-        self.assertEqual(b["product_id"], self.product.pk)
+        self.assertEqual(b["product"], self.product.pk)
         self.assertTrue(b["is_active"])
 
     def test_build_filter_with_name_and_product(self):
@@ -145,5 +145,5 @@ class BuildFilter(APITestCase):
         self.assertIsNotNone(b)
         self.assertEqual(b["id"], self.build.pk)
         self.assertEqual(b["name"], self.build.name)
-        self.assertEqual(b["product_id"], self.product.pk)
+        self.assertEqual(b["product"], self.product.pk)
         self.assertEqual(b["is_active"], True)

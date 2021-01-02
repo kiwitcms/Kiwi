@@ -2,9 +2,10 @@
 
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.models import TCMSActionModel
-from tcms.rpc.serializer import BuildRPCSerializer, ProductRPCSerializer
+from tcms.rpc.serializer import ProductRPCSerializer
 
 
 class Classification(TCMSActionModel):
@@ -107,7 +108,7 @@ class Version(TCMSActionModel):
         return self.value
 
 
-class Build(TCMSActionModel):
+class Build(models.Model):
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name="build", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
@@ -115,15 +116,8 @@ class Build(TCMSActionModel):
     class Meta:
         ordering = ["name"]
         unique_together = ("product", "name")
-        verbose_name = u"build"
-        verbose_name_plural = u"builds"
-
-    @classmethod
-    def to_xmlrpc(cls, query=None):
-        query = query or {}
-        query_set = cls.objects.filter(**query).order_by("pk")
-        serializer = BuildRPCSerializer(model_class=cls, queryset=query_set)
-        return serializer.serialize_queryset()
+        verbose_name = _("Build")
+        verbose_name_plural = _("Builds")
 
     def __str__(self):
         return self.name

@@ -506,15 +506,3 @@ class ProductRPCSerializer(QuerySetBasedRPCSerializer):
         "classification": ("classification_id", do_nothing),
         "classification__name": ("classification", do_nothing),
     }
-
-
-class BuildRPCSerializer(QuerySetBasedRPCSerializer):
-    """Serializer for Build"""
-
-    values_fields_mapping = {
-        "id": ("id", do_nothing),
-        "is_active": ("is_active", do_nothing),
-        "name": ("name", do_nothing),
-        "product": ("product_id", do_nothing),
-        "product__name": ("product", do_nothing),
-    }

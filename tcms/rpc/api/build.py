@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
 from tcms.management.models import Build
@@ -29,7 +30,14 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 
     if query is None:
         query = {}
-    return Build.to_xmlrpc(query)
+    return list(
+        Build.objects.filter(**query).values(
+            "id",
+            "name",
+            "product",
+            "is_active",
+        )
+    )
 
 
 @rpc_method(name="Build.create")
@@ -50,11 +58,13 @@ def create(values):
     if not values.get("product") or not values.get("name"):
         raise ValueError("Product and name are both required.")
 
-    return Build.objects.create(
+    build = Build.objects.create(
         product=pre_check_product(values),
         name=values["name"],
         is_active=values.get("is_active", True),
-    ).serialize()
+    )
+
+    return model_to_dict(build)
 
 
 @permissions_required("management.change_build")
@@ -89,7 +99,7 @@ def update(build_id, values):
 
     selected_build.save(update_fields=update_fields)
 
-    return selected_build.serialize()
+    return model_to_dict(selected_build)
 
 
 def _update_value(obj, name, value, update_fields):
