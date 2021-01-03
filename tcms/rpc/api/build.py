@@ -35,7 +35,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         Build.objects.filter(**query).values(
             "id",
             "name",
-            "product",
+            "version",
             "is_active",
         )
     )

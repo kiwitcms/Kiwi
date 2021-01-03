@@ -231,8 +231,11 @@ def update(run_id, values):
     test_run = TestRun.objects.get(pk=run_id)
     form = UpdateForm(values, instance=test_run)
 
-    if values.get("product"):
-        form.populate(product_id=values["product"])
+    # In the rare case where this TR is reassigned to another TP
+    # don't validate if TR.build has a FK relationship with TP.product_version.
+    # Instead all Build IDs should be valid
+    if "plan" not in values:
+        form.populate(version_id=test_run.plan.product_version_id)
 
     if not form.is_valid():
         raise ValueError(form_errors_to_list(form))

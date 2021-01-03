@@ -183,8 +183,8 @@ class TestAddTag(APITestCase):
         super()._fixture_setup()
 
         self.product = ProductFactory()
-        self.version = VersionFactory()
-        self.build = self.product.build.first()
+        self.version = VersionFactory(product=self.product)
+        self.build = BuildFactory(version=self.version)
         self.plan = TestPlanFactory(author=self.api_user, product=self.product)
 
         self.test_runs = [
@@ -245,8 +245,8 @@ class TestRemoveTag(APITestCase):
         super()._fixture_setup()
 
         self.product = ProductFactory()
-        self.version = VersionFactory()
-        self.build = self.product.build.first()
+        self.version = VersionFactory(product=self.product)
+        self.build = BuildFactory(version=self.version)
         self.plan = TestPlanFactory(author=self.api_user, product=self.product)
 
         self.test_runs = [
@@ -323,8 +323,8 @@ class TestProductVersionWhenCreating(APITestCase):
         super()._fixture_setup()
 
         self.product = ProductFactory()
-        self.version = VersionFactory()
-        self.build = self.product.build.first()
+        self.version = VersionFactory(product=self.product)
+        self.build = BuildFactory(version=self.version)
         self.plan = TestPlanFactory(
             author=self.api_user, product=self.product, product_version=self.version
         )
@@ -376,8 +376,8 @@ class TestCreatePermission(APIPermissionsTestCase):
         super()._fixture_setup()
 
         self.product = ProductFactory()
-        self.version = VersionFactory()
-        self.build = self.product.build.first()
+        self.version = VersionFactory(product=self.product)
+        self.build = BuildFactory(version=self.version)
         self.plan = TestPlanFactory(product=self.product, product_version=self.version)
         self.test_run_fields = {
             "plan": self.plan.pk,
@@ -502,7 +502,7 @@ class TestUpdateTestRun(APITestCase):
         test_run = TestRunFactory()
         product = ProductFactory()
         updated_test_plan = TestPlanFactory(product=product)
-        updated_build = BuildFactory(product=product)
+        updated_build = BuildFactory(version=product.version.first())
         updated_summary = "Updated summary."
         updated_stop_date = "2020-05-05 00:00:00"
 

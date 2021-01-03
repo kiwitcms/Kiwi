@@ -88,7 +88,7 @@ class TestNewBug(LoggedInTestCase):
         cls.summary = "A shiny new bug!"
         cls.product = ProductFactory()
         cls.version = VersionFactory(product=cls.product)
-        cls.build = BuildFactory(product=cls.product)
+        cls.build = BuildFactory(version=cls.version)
         cls.post_data = {
             "summary": cls.summary,
             "reporter": cls.tester.pk,

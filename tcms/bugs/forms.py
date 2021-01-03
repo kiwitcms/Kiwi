@@ -48,7 +48,9 @@ Additional info:"""
             self.fields["version"].queryset = Version.objects.filter(
                 product_id=product_id
             )
-            self.fields["build"].queryset = Build.objects.filter(product_id=product_id)
+            self.fields["build"].queryset = Build.objects.filter(
+                version__product=product_id
+            )
         else:
             self.fields["version"].queryset = Version.objects.all()
             self.fields["build"].queryset = Build.objects.all()

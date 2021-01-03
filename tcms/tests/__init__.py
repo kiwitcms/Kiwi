@@ -213,11 +213,11 @@ class BaseCaseRun(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(BaseCaseRun, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
 
-        cls.build = BuildFactory(product=cls.product)
+        cls.build = BuildFactory(version=cls.version)
 
         cls.test_run = TestRunFactory(
             product_version=cls.version,

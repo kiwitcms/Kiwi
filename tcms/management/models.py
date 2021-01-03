@@ -44,8 +44,8 @@ class Product(TCMSActionModel):
         )
 
         self.category.get_or_create(name="--default--")
-        self.version.get_or_create(value="unspecified")
-        self.build.get_or_create(name="unspecified")
+        version, _ = self.version.get_or_create(value="unspecified")
+        version.build.get_or_create(name="unspecified")
 
     class Meta:
         ordering = ["name"]
@@ -83,9 +83,6 @@ class Component(TCMSActionModel):
     )
     description = models.TextField()
 
-    # Auto-generated attributes from back-references:
-    #   'cases' : list of TestCases (from TestCases.components)
-
     class Meta:
         ordering = ["name"]
         unique_together = ("product", "name")
@@ -107,15 +104,27 @@ class Version(TCMSActionModel):
     def __str__(self):
         return self.value
 
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        super().save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields,
+        )
+
+        self.build.get_or_create(name="unspecified")
+
 
 class Build(models.Model):
     name = models.CharField(max_length=255)
-    product = models.ForeignKey(Product, related_name="build", on_delete=models.CASCADE)
+    version = models.ForeignKey(Version, related_name="build", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["name"]
-        unique_together = ("product", "name")
+        unique_together = ("version", "name")
         verbose_name = _("Build")
         verbose_name_plural = _("Builds")
 

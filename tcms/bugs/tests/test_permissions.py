@@ -27,7 +27,7 @@ class TestNew(tests.PermissionsTestCase):
     @classmethod
     def setUpTestData(cls):
         version = factories.VersionFactory()
-        build = factories.BuildFactory(product=version.product)
+        build = factories.BuildFactory(version=version)
 
         cls.post_data = {
             "summary": "Bug created by test suite",

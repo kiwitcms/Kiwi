@@ -21,7 +21,7 @@ class EditTestRunViewTestCase(PermissionsTestCase):
         cls.test_run = factories.TestRunFactory(summary="Old summary")
         cls.url = reverse("testruns-edit", args=[cls.test_run.pk])
         cls.new_build = factories.BuildFactory(
-            name="FastTest", product=cls.test_run.plan.product
+            name="FastTest", version=cls.test_run.plan.product_version
         )
         intern = factories.UserFactory(username="intern", email="intern@example.com")
         cls.post_data = {
@@ -75,7 +75,9 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
 
         cls.plan = factories.TestPlanFactory()
 
-        cls.build_fast = factories.BuildFactory(name="fast", product=cls.plan.product)
+        cls.build_fast = factories.BuildFactory(
+            name="fast", version=cls.plan.product_version
+        )
 
         cls.post_data = {
             "summary": cls.plan.name,

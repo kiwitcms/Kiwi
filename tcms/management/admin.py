@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from tcms.management.models import (
     Build,
@@ -47,8 +48,13 @@ class VersionAdmin(admin.ModelAdmin):
 
 class BuildAdmin(admin.ModelAdmin):
     search_fields = ("name", "id")
-    list_display = ("id", "name", "product", "is_active")
-    list_filter = ("product",)
+    list_display = ("id", "name", "version", "product_name", "is_active")
+    list_filter = ("version__product", "version", "is_active")
+
+    def product_name(self, obj):  # pylint: disable=no-self-use
+        return obj.version.product
+
+    product_name.short_description = _("Product")
 
 
 class AttachmentAdmin(admin.ModelAdmin):
