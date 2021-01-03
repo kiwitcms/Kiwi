@@ -84,7 +84,7 @@ class TestCreateNewRun(BasePlanCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.build = BuildFactory(product=cls.product)
+        cls.build = BuildFactory(version=cls.plan.product_version)
 
         user_should_have_perm(cls.tester, "testruns.add_testrun")
         user_should_have_perm(cls.tester, "testruns.view_testrun")

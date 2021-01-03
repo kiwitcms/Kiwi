@@ -45,7 +45,8 @@ class NewRunForm(forms.ModelForm):
         )
 
         self.fields["build"].queryset = Build.objects.filter(
-            product_id=self.fields["plan"].queryset.first().product_id, is_active=True
+            version_id=self.fields["plan"].queryset.first().product_version_id,
+            is_active=True,
         )
         self.fields["case"].queryset = TestCase.objects.filter(
             case_status__is_confirmed=True
@@ -79,4 +80,6 @@ class SearchRunForm(forms.Form):
             self.fields["product_version"].queryset = Version.objects.filter(
                 product__pk=product_id
             )
-            self.fields["build"].queryset = Build.objects.filter(product__pk=product_id)
+            self.fields["build"].queryset = Build.objects.filter(
+                version__product=product_id
+            )

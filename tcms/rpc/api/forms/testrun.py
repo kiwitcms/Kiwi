@@ -19,9 +19,9 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     start_date = DateTimeField()
     stop_date = DateTimeField()
 
-    def populate(self, product_id):
+    def populate(self, version_id):
         self.fields["build"].queryset = Build.objects.filter(
-            product_id=product_id, is_active=True
+            version_id=version_id, is_active=True
         )
 
 

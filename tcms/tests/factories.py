@@ -87,7 +87,7 @@ class BuildFactory(DjangoModelFactory):
         model = "management.Build"
 
     name = factory.Sequence(lambda n: "Build %d" % n)
-    product = factory.SubFactory(ProductFactory)
+    version = factory.SubFactory(VersionFactory)
 
 
 class TagFactory(DjangoModelFactory):

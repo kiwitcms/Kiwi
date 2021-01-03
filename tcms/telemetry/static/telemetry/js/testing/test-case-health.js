@@ -6,11 +6,16 @@ $(document).ready(() => {
 
     document.getElementById('id_product').onchange = () => {
         update_version_select_from_product();
-        update_build_select_from_product(true);
-        updateTestPlanSelectFromProduct(drawPage);
+        // note: don't pass drawPage as callback to avoid calling it twice
+        // b/c update_version_select... triggers .onchange()
+        updateTestPlanSelectFromProduct();
     };
 
-    document.getElementById('id_version').onchange = drawPage;
+    document.getElementById('id_version').onchange = () => {
+        drawPage();
+        update_build_select_from_version(true);
+    }
+
     document.getElementById('id_build').onchange = drawPage;
     document.getElementById('id_test_plan').onchange = drawPage;
 
