@@ -40,7 +40,7 @@
 
                 <div class="col-md-1 col-lg-1">
                     <label for="id_version">{% trans "Version" %}</label>
-                    <a href="{% url 'admin:management_version_add' %}?_popup&product={{ form.product.pk }}"
+                    <a href="{% url 'admin:management_version_add' %}?_popup&product={{ form.product.value }}"
                        id="add_id_version" alt="{% trans 'add new Version' %}" title="{% trans 'add new Version' %}">
                         +
                     </a>
