@@ -10,6 +10,9 @@ $(document).ready(() => {
     document.getElementById('id_product').onchange = () => {
         updateTestPlanSelectFromProduct(reloadCharts);
     };
+
+    // not relevant in this context
+    $('#version_and_build').hide();
 });
 
 function reloadCharts() {
