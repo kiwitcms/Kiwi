@@ -2,7 +2,7 @@
 
 bleach==3.2.1
 bleach-allowlist==1.0.3
-Django==3.1.4
+Django==3.1.5
 django-attachments==1.8
 django-contrib-comments==2.0.0
 django-extensions==3.1.0
