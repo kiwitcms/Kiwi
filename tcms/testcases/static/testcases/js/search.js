@@ -82,7 +82,7 @@ $(document).ready(function() {
                 target: 1,
                 className: 'js-select-checkbox',
                 render: function (data, type, full, meta) {
-                    return `<input type="checkbox" value="${data.id}">`;
+                    return `<input type="checkbox" value="${data.id}" name="row-check">`;
                 }
             },
             { data: "id" },
@@ -117,6 +117,29 @@ $(document).ready(function() {
     });
 
     hookIntoPagination('#resultsTable', table);
+
+    const selectAllButton = $("#check-all")
+
+    selectAllButton.click(function () {
+        const rowCheckboxInputButton = $("input:checkbox[name='row-check']")
+        const isChecked = selectAllButton.prop("checked")
+        rowCheckboxInputButton.prop("checked", isChecked)
+        isChecked ? table.rows().select() : table.rows().deselect()
+    });
+
+    table.on('select', function (e, dt, type, indexes) {
+        if (type === 'row') {
+            const totalRows = $("input:checkbox[name='row-check']").length;
+            const selectedRows = $("input:checkbox[name='row-check']:checked").length;
+            selectAllButton.prop("checked", totalRows === selectedRows)
+        }
+    });
+
+    table.on('deselect', function (e, dt, type, indexes) {
+        if (type === 'row') {
+            selectAllButton.prop("checked", false)
+        } 
+    });
 
     $('#select-btn').click(function(event){
         event.preventDefault();
