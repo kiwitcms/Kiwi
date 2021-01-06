@@ -94,7 +94,7 @@ class TestNewBug(LoggedInTestCase):
             "reporter": cls.tester.pk,
             "product": cls.product.pk,
             "version": cls.version.pk,
-            "build": cls.version.pk,
+            "build": cls.build.pk,
         }
 
     def test_get_view(self):
