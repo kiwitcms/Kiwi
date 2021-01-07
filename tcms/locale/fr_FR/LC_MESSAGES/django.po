@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 19:32\n"
+"PO-Revision-Date: 2021-01-07 10:54\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -394,7 +394,7 @@ msgstr "Recherche dans les anomalies"
 
 #: tcms/settings/common.py:312
 msgid "TELEMETRY"
-msgstr "TELEMETRIE"
+msgstr "TÉLÉMÉTRIE"
 
 #: tcms/settings/common.py:315
 msgid "Testing"
@@ -1968,7 +1968,7 @@ msgstr "Nouveau locataire Kiwi TCMS créé"
 
 #: tcms_tenants/utils.py:190
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Invitation à rejoindre Kiwi TCMS"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
