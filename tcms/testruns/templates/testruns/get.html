@@ -67,7 +67,8 @@
                     <span class="fa fa-spinner"></span>{% trans 'Status' %}:
                     <input class="bootstrap-switch" id="status_button" type="checkbox"
                         {% if not object.stop_date %}checked{% endif %}
-                        {% if not perms.testruns.change_testrun %}disabled{% endif %}>
+                        {% if not perms.testruns.change_testrun %}disabled{% endif %}
+                        data-on-text="{% trans 'Running' %}" data-off-text="{% trans 'Finished' %}">
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">

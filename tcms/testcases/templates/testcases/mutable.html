@@ -96,7 +96,7 @@
 
                 <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="is_automated" type="checkbox" {% if form.is_automated.value %}checked{% endif %}>
+                    <input class="bootstrap-switch" name="is_automated" type="checkbox" {% if form.is_automated.value %}checked{% endif %} data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
             </div>
 
@@ -245,4 +245,3 @@
 <script src="{% static 'testcases/js/mutable.js' %}"></script>
 
 {% endblock %}
-
