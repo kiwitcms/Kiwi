@@ -3,3 +3,4 @@ tcms-api
 doc8
 isort==5.7.0
 black
+parameterized
