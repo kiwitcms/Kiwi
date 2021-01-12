@@ -1,6 +1,134 @@
 Change Log
 ==========
 
+Kiwi TCMS 9.0 (12 Jan 2021)
+---------------------------
+
+.. important::
+
+    This is a major release which includes backwards incompatible
+    database and API changes, improvements, bug fixes, translation updates,
+    new tests and internal refactoring.
+    It is the eight release to include contributions via our
+    `open source bounty program`_.
+
+    This is the third release after `Kiwi TCMS reached 200K pulls
+    <https://kiwitcms.org/blog/kiwi-tcms-team/2020/10/26/kiwi-tcms-celebrates-200k-downloads/>`_
+    on Docker Hub!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 3.1.4 to 3.1.5
+- Update django-contrib-comments from 1.9.2 to 2.0.0
+- Update pygithub from 1.53 to 1.54.1
+- Update pygments from 2.7.3 to 2.7.4
+- Update mysqlclient from 2.0.1 to 2.0.3
+- Update node_modules/prismjs from 1.22.0 to 1.23.0
+- Update node_modules/marked from 1.2.5 to 1.2.7
+- Implement 'Select all' for TestCase Search page. Resolves
+  `Issue #2103 <https://github.com/kiwitcms/Kiwi/issues/2103>`_ (Bryan Mutai)
+- Change ON/OFF button messages for several buttons (Krum Petkov)
+- Remove ``delete_selected`` action from admin pages
+- Show active test runs in TestPlan page
+- Hide irrelevant Version & Build selectors for Testing breakdown telemetry
+- Allow ``running`` to be passed as URL query param to TestRun Search page
+
+
+Settings
+~~~~~~~~
+
+- Remove unused ``kiwi.rpc`` log handler from ``LOGGING`` setting
+
+
+Database
+~~~~~~~~
+
+.. warning::
+
+    Contains backwards incompatible changes.
+
+- Replace ``Build.product`` with ``Build.version``. Closes
+  `Issue #246 <https://github.com/kiwitcms/Kiwi/issues/246>`_. Build objects
+  are now associated with Version objects, not with Product objects!
+
+  .. warning::
+
+     After migration existing builds will point to the "unspecified" version!
+     If you want your telemetry to be accurate you will have to update these
+     objects manually and point them to the appropriate version value!
+
+- Rename related_name for TestExecution model: ``case_run`` -> ``executions``
+- Rename related_name for TestCase model: ``case`` -> ``cases``
+
+
+API
+~~~
+
+.. warning::
+
+    Contains backwards incompatible changes.
+
+- Methods ``Build.filter``, ``Build.create`` and ``Build.update`` replace the
+  ``product`` field with a ``version`` field
+
+
+Bug fixes
+~~~~~~~~~
+
+- Display raw Markdown text before rendering to fix a bug where anymous users
+  don't see any text on the screen even if they are allowed to view an object
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add tests for ``tcms.core.middleware``. Fixes
+  `Issue #1605 <https://github.com/kiwitcms/Kiwi/issues/1605>`_ (Gagan Deep)
+- Add tests for ``tcms.handlers``. Fixes
+  `Issue #1611 <https://github.com/kiwitcms/Kiwi/issues/1611>`_ (Gagan Deep)
+- Add tests for ``tcms.kiwi_auth.views``. Fixes
+  `Issue #1608 <https://github.com/kiwitcms/Kiwi/issues/1608>`_
+  (Abhishek Chaurasia)
+- Update pip during bugtracker integration tests to fix dependency issues
+- Reformat all files with black and isort. Closes
+  `Issue #1193 <https://github.com/kiwitcms/Kiwi/issues/1193>`_
+- Refactor ``TestExecution.get_bugs()`` to use ``TestExecution.links()``
+- Add return statement for invalid form to make pylint happy
+- Make ``Bug.assignee`` field a ``UserField``
+- Replace deprecated ``ugettext_lazy`` with ``gettext_lazy``
+- Fixes for Azure Boards integration tests
+- Remove ``CsrfDisableMiddleware``. Closes
+  `Issue #297 <https://github.com/kiwitcms/Kiwi/issues/297>`_
+- Remove unused methods & left-over views
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Catalan translation <https://crowdin.com/project/kiwitcms/ca#>`_
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 8.9 (07 Dec 2020)
 ---------------------------
 
@@ -194,7 +322,7 @@ Improvements
   `Issue #1979 <https://github.com/kiwitcms/Kiwi/issues/1979>`_ (@cmbahadir)
 - Add autosave configuration to web editor. Closes
   `Issue #1958 <https://github.com/kiwitcms/Kiwi/issues/1958>`_ (Mfon Eti-mfon)
-- Change ON/OFF buttons messages to Yes/No for several buttons (Alexander Tsvetanov)
+- Change ON/OFF button messages to Yes/No for several buttons (Alexander Tsvetanov)
 - Add support for object-level permissions for TestCase,
   TestPlan, TestRun and Bug objects via ``django-guardian``
 - Complete redesign of Test Plan page to match the rest of Kiwi TCMS:
