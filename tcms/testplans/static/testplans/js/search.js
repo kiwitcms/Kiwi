@@ -42,7 +42,7 @@ $(document).ready(function() {
             };
 
             if ($('#id_default_tester').val()) {
-                params['case__default_tester__username__startswith'] = $('#id_default_tester').val();
+                params['cases__default_tester__username__startswith'] = $('#id_default_tester').val();
             };
 
             updateParamsToSearchTags('#id_tag', params);
