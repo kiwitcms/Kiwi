@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Kiwi TCMS 9.0.1 (14 Jan 2021)
+-----------------------------
+
+Bug fixes
+~~~~~~~~~
+
+- Update name of query parameter. Fixes
+  `Issue #2196 <https://github.com/kiwitcms/Kiwi/issues/2196>`_
+
+
 Kiwi TCMS 9.0 (12 Jan 2021)
 ---------------------------
 
