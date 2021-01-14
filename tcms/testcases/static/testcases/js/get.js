@@ -169,7 +169,7 @@ $(document).ready(function() {
     // testplans table
     var plans_table = $('#plans').DataTable({
         ajax: function(data, callback, settings) {
-            dataTableJsonRPC('TestPlan.filter', {case: case_id}, callback);
+            dataTableJsonRPC('TestPlan.filter', {cases: case_id}, callback);
         },
         columns: [
             { data: "id" },
