@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-01-19 10:37\n"
+"PO-Revision-Date: 2021-01-19 10:56\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1369,7 +1369,7 @@ msgstr "Sind Sie sicher?"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "Der Testlauf kann nicht mit unbestätigten Testfällen erstellt werden"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
