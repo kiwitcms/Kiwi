@@ -272,6 +272,9 @@
                                         <input type="text" class="form-control" id="toolbar-filter"
                                                placeholder="{% trans 'Search' %}">
                                     </div><!-- /input-group -->
+                                    <div>
+                                        <a href="#" id="assigned-to-me-filter" style="display: none;">{{ user }}</a>
+                                    </div>
                                 </div>
 
                             {% if perms.testruns.add_testexecution %}

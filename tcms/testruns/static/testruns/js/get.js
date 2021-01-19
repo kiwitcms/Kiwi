@@ -133,6 +133,19 @@ $(document).ready(() => {
     return false
   })
 
+  const assignedToMeFilter = $('#assigned-to-me-filter')
+  assignedToMeFilter.click(({ target }) => {
+    const currentUser = $(target).text()
+    assignedToMeFilter.css('display', 'none')
+
+    const toolbarFilter = $('#toolbar-filter')
+    toolbarFilter.val(currentUser)
+    toolbarFilter.trigger('keyup')
+
+    // so that we don't follow the link
+    return false
+  })
+
   // bind everything in tags table
   tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag)
 
@@ -173,6 +186,12 @@ $(document).ready(() => {
   })
 
   $('.js-toolbar-filter-options li').click(function (ev) {
+    if ($(ev.currentTarget).data('filter-type') === 'assignee__username') {
+      $('#assigned-to-me-filter').css('display', 'block')
+    } else {
+      $('#assigned-to-me-filter').css('display', 'none')
+    }
+
     return changeDropdownSelectedItem(
       '.js-toolbar-filter-options',
       '#input-filter-button',
