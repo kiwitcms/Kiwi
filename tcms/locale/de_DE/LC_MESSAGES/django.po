@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 15:34\n"
+"PO-Revision-Date: 2021-01-19 10:34\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1008,7 +1008,7 @@ msgstr "Übersetzungsanleitung"
 
 #: tcms/templates/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Auswählen"
 
 #: tcms/templates/pagination.html:13
 msgid "First page"
@@ -1114,11 +1114,13 @@ msgstr "Neues Benutzerkonto anlegen"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Weitere Informationen zur Anpassung des Testfallstatus finden Sie unter\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        in der Dokumentation</a>!"
 
 #: tcms/testcases/admin.py:46
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "1 bestätigter & 1 unbestätigter Status erforderlich!"
 
 #: tcms/testcases/forms.py:45
 msgid "**Scenario**: ... what behavior will be tested ...\n"
