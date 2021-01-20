@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Product
+from tcms.rpc.api.forms.management import ProductForm
 from tcms.rpc.decorators import permissions_required
 
 __all__ = (
@@ -23,9 +26,16 @@ def create(values):
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Product` object
         :rtype: dict
-        :raises: PermissionDenied if missing *management.add_product* permission
+        :raises ValueError: if input values don't validate
+        :raises PermissionDenied: if missing *management.add_product* permission
     """
-    return Product.objects.create(**values).serialize()
+    form = ProductForm(values)
+
+    if form.is_valid():
+        product = form.save()
+        return model_to_dict(product)
+
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("management.view_product")
