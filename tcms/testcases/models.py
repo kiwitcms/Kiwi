@@ -262,14 +262,14 @@ class BugSystem(TCMSActionModel):
     """
 
     name = models.CharField(max_length=255, unique=True)
-    tracker_type = models.CharField(
+    tracker_type = models.CharField(  # pylint:disable=form-field-help-text-used
         max_length=128,
         verbose_name="Type",
         help_text="This determines how Kiwi TCMS integrates with the IT system",
         default="IssueTrackerType",
     )
 
-    base_url = models.CharField(
+    base_url = models.CharField(  # pylint:disable=form-field-help-text-used
         max_length=1024,
         null=True,
         blank=True,
@@ -279,7 +279,7 @@ Leave empty to disable!
 """,
     )
 
-    api_url = models.CharField(
+    api_url = models.CharField(  # pylint:disable=form-field-help-text-used
         max_length=1024,
         null=True,
         blank=True,
