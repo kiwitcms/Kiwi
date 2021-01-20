@@ -5,7 +5,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.models import TCMSActionModel
-from tcms.rpc.serializer import ProductRPCSerializer
 
 
 class Classification(TCMSActionModel):
@@ -25,13 +24,6 @@ class Product(TCMSActionModel):
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def to_xmlrpc(cls, query=None):
-        _query = query or {}
-        query_set = cls.objects.filter(**_query).order_by("pk")
-        serializer = ProductRPCSerializer(model_class=cls, queryset=query_set)
-        return serializer.serialize_queryset()
 
     def save(
         self, force_insert=False, force_update=False, using=None, update_fields=None
