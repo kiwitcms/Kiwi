@@ -5,7 +5,7 @@ from modernrpc.core import rpc_method
 
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Build
-from tcms.rpc.api.forms.build import BuildForm, UpdateForm
+from tcms.rpc.api.forms.management import BuildForm, BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
 
 __all__ = (
@@ -86,7 +86,7 @@ def update(build_id, values):
         :raises ValueError: if input values don't validate
     """
     build = Build.objects.get(pk=build_id)
-    form = UpdateForm(values, instance=build)
+    form = BuildUpdateForm(values, instance=build)
 
     if form.is_valid():
         build = form.save()
