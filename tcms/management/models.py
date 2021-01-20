@@ -8,7 +8,7 @@ from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import UrlMixin
 
 
-class Classification(TCMSActionModel):
+class Classification(models.Model, UrlMixin):
     name = models.CharField(unique=True, max_length=64)
 
     def __str__(self):
