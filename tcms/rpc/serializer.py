@@ -494,15 +494,3 @@ class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
         "reviewer": ("reviewer_id", do_nothing),
         "reviewer__username": ("reviewer", to_str),
     }
-
-
-class ProductRPCSerializer(QuerySetBasedRPCSerializer):
-    """Serializer for Product"""
-
-    values_fields_mapping = {
-        "id": ("id", do_nothing),
-        "name": ("name", do_nothing),
-        "description": ("description", do_nothing),
-        "classification": ("classification_id", do_nothing),
-        "classification__name": ("classification", do_nothing),
-    }
