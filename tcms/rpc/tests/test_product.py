@@ -18,7 +18,6 @@ class TestFilter(APITestCase):
         self.assertEqual(result[0]["name"], "Kiwi TCMS")
         self.assertEqual(result[0]["description"], "")
         self.assertIn("classification", result[0])
-        self.assertIn("classification_id", result[0])
 
     def test_filter_non_existing(self):
         result = self.rpc_client.Product.filter({"name": "Non Existing"})
