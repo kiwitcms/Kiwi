@@ -19,4 +19,6 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.management.models.Priority` objects
         :rtype: dict
     """
-    return Priority.to_xmlrpc(query)
+    return list(
+        Priority.objects.filter(**query).values("id", "value", "is_active").distinct()
+    )
