@@ -13,15 +13,13 @@ class TestFilter(APITestCase):
         self.product_xmlrpc = ProductFactory(name="XMLRPC API")
 
     def test_filter_by_id(self):
-        prod = self.rpc_client.Product.filter({"id": self.product.pk})
-        self.assertIsNotNone(prod)
-        self.assertEqual(prod[0]["name"], "Kiwi TCMS")
-
-    def test_filter_by_name(self):
-        prod = self.rpc_client.Product.filter({"name": "Kiwi TCMS"})
-        self.assertIsNotNone(prod)
-        self.assertEqual(prod[0]["name"], "Kiwi TCMS")
+        result = self.rpc_client.Product.filter({"id": self.product.pk})
+        self.assertIsNotNone(result)
+        self.assertEqual(result[0]["name"], "Kiwi TCMS")
+        self.assertEqual(result[0]["description"], "")
+        self.assertIn("classification", result[0])
+        self.assertIn("classification_id", result[0])
 
     def test_filter_non_existing(self):
-        found = self.rpc_client.Product.filter({"name": "Non Existing"})
-        self.assertEqual(0, len(found))
+        result = self.rpc_client.Product.filter({"name": "Non Existing"})
+        self.assertEqual(0, len(result))
