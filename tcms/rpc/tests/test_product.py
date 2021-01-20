@@ -38,7 +38,7 @@ class TestProductCreatePermissions(APIPermissionsTestCase):
         result = self.rpc_client.Product.create(
             {
                 "name": "Product with Permissions",
-                "classification_id": self.classification.pk,
+                "classification": self.classification.pk,
             }
         )
 
@@ -56,6 +56,6 @@ class TestProductCreatePermissions(APIPermissionsTestCase):
             self.rpc_client.Product.create(
                 {
                     "name": "Product with Permissions",
-                    "classification_id": self.classification.pk,
+                    "classification": self.classification.pk,
                 }
             )
