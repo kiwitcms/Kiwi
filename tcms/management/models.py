@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.models import TCMSActionModel
+from tcms.core.models.base import UrlMixin
 
 
 class Classification(TCMSActionModel):
@@ -17,7 +18,7 @@ class Classification(TCMSActionModel):
         ordering = ["name"]
 
 
-class Product(TCMSActionModel):
+class Product(models.Model, UrlMixin):
     name = models.CharField(unique=True, max_length=255)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
