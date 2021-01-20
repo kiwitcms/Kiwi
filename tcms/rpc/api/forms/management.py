@@ -10,5 +10,5 @@ class BuildForm(forms.ModelForm):
         fields = "__all__"
 
 
-class UpdateForm(UpdateModelFormMixin, BuildForm):  # pylint: disable=remove-empty-class
+class BuildUpdateForm(UpdateModelFormMixin, BuildForm):  # pylint: disable=remove-empty-class
     pass
