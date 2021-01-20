@@ -111,7 +111,7 @@ class BugSystemAdminForm(forms.ModelForm):
     )
 
     # select only tracker types for which we have available integrations
-    tracker_type = IssueTrackerTypeField(
+    tracker_type = IssueTrackerTypeField(  # pylint:disable=form-field-help-text-used
         help_text="This determines how Kiwi TCMS integrates with the IT system",
     )
 
