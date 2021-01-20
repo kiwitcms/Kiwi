@@ -9,13 +9,14 @@ from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
+from tcms.core.models.base import UrlMixin
 from tcms.management.models import Version
 from tcms.rpc.serializer import TestPlanRPCSerializer
 from tcms.rpc.utils import distinct_filter
 from tcms.testcases.models import TestCasePlan
 
 
-class PlanType(TCMSActionModel):
+class PlanType(models.Model, UrlMixin):
     name = models.CharField(max_length=64, unique=True)
     description = models.TextField(blank=True, null=True)
 

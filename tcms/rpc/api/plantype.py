@@ -19,4 +19,12 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.testplans.models.PlanType` objects
         :rtype: dict
     """
-    return PlanType.to_xmlrpc(query)
+    return list(
+        PlanType.objects.filter(**query)
+        .values(
+            "id",
+            "name",
+            "description",
+        )
+        .distinct()
+    )
