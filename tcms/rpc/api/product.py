@@ -30,7 +30,7 @@ def create(values):
 
 @permissions_required("management.view_product")
 @rpc_method(name="Product.filter")
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Product.filter(query)
 
@@ -46,4 +46,17 @@ def filter(query):  # pylint: disable=redefined-builtin
         # Get all of products named 'Red Hat Enterprise Linux 5'
         >>> Product.filter({'name': 'Red Hat Enterprise Linux 5'})
     """
-    return Product.to_xmlrpc(query)
+    if query is None:
+        query = {}
+
+    return list(
+        Product.objects.filter(**query)
+        .values(
+            "id",
+            "name",
+            "description",
+            "classification",
+        )
+        .distinct()
+        .order_by("pk")
+    )
