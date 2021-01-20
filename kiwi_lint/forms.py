@@ -10,12 +10,12 @@ class FormFieldChecker(checkers.BaseChecker):
 
     msgs = {
         'R4811': ('Do not use label in form Field class constructor.',
-                  'form-field-label-used',
+                  'form-field-label-used',# pylint:disable
                   'Do not use label in form Field class constructor,'
                   'place template label in HTML. See:'
                   'https://github.com/kiwitcms/Kiwi/issues/738'),
         'R4812': ('Do not use help_text in form Field class constructor.',
-                  'form-field-help-text-used',
+                  'form-field-help-text-used',# pylint:disable
                   'Do not use help_text in form Field class constructor,'
                   'place template help_text in HTML. See:'
                   'https://github.com/kiwitcms/Kiwi/issues/738'),
@@ -25,9 +25,9 @@ class FormFieldChecker(checkers.BaseChecker):
         if node.func.as_string().endswith('Field') and node.keywords:
             for keyword in node.keywords:
                 if keyword.arg == 'label':
-                    self.add_message('form-field-label-used', node=node)
+                    self.add_message('form-field-label-used', node=node)# pylint:disable
                 if keyword.arg == 'help_text':
-                    self.add_message('form-field-help-text-used', node=node)
+                    self.add_message('form-field-help-text-used', node=node)# pylint:disable
 
 
 class ModelFormChecker(checkers.BaseChecker):
