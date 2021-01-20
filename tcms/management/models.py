@@ -44,7 +44,7 @@ class Product(models.Model, UrlMixin):
         ordering = ["name"]
 
 
-class Priority(TCMSActionModel):
+class Priority(models.Model, UrlMixin):
     value = models.CharField(unique=True, max_length=64)
     is_active = models.BooleanField(default=True)
 
