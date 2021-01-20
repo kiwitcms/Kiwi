@@ -4,6 +4,7 @@
 from xmlrpc.client import ProtocolError
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase
+from tcms.testplans.models import PlanType
 from tcms.tests.factories import PlanTypeFactory
 
 
@@ -23,3 +24,20 @@ class TestPlanTypeFilter(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.PlanType.filter({"name": self.plan_type.name})
+
+
+class TestPlanTypeCreate(APIPermissionsTestCase):
+    permission_label = "testplans.add_plantype"
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.PlanType.create({"name": "API-TP"})
+        self.assertEqual(result["name"], "API-TP")
+        self.assertIn("description", result)
+        self.assertIn("id", result)
+
+        obj_from_db = PlanType.objects.get(pk=result["id"])
+        self.assertEqual(result["name"], obj_from_db.name)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.PlanType.create({"name": "API-TP"})
