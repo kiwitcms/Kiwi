@@ -1,0 +1,29 @@
+{% load extra_filters %}
+{% for item in menu_items %}
+    {% if not item.1|is_list %}
+        {% if item.0 == '-' %}
+            <li class="divider"></li>
+        {% else %}
+        <li>
+            <a href="{{ item.1 }}" target="_parent">{{ item.0 }}</a>
+        </li>
+        {% endif %}
+    {% else %}
+    <li class="dropdown{{ dropdown_class }}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {% if item.0 == "..." %}
+                <i class="fa fa-cogs"></i>
+            {% else %}
+                {{ item.0 }}
+            {% endif %}
+
+            {% if not dropdown_class %}
+            <b class="caret"></b>
+            {% endif %}
+        </a>
+        <ul class="dropdown-menu">
+            {% include "include/menu_items.html" with menu_items=item.1 dropdown_class="-submenu" %}
+        </ul>
+    </li>
+    {% endif %}
+{% endfor %}
