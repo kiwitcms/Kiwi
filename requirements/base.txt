@@ -1,6 +1,6 @@
 -r tarballs.txt
 
-bleach==3.2.2
+bleach==3.2.3
 bleach-allowlist==1.0.3
 Django==3.1.5
 django-attachments==1.8
