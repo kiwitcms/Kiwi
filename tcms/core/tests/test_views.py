@@ -8,43 +8,6 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms import urls
 from tcms.tests import BaseCaseRun
-from tcms.tests.factories import (
-    TestExecutionFactory,
-    TestPlanFactory,
-    TestRunFactory,
-    UserFactory,
-)
-
-
-class TestNavigation(test.TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        super(TestNavigation, cls).setUpTestData()
-        cls.user = UserFactory(email="user+1@example.com")
-        cls.user.set_password("testing")
-        cls.user.save()
-
-    def test_navigation_displays_currently_for_logged_user(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.user.username, password="testing"
-        )
-        response = self.client.get(reverse("iframe-navigation"))
-
-        self.assertContains(response, self.user.username)
-        self.assertContains(response, _("My profile"))
-        self._common_navigation_assertions(response)
-
-    def test_navigation_displays_currently_for_guest_user(self):
-        response = self.client.get(reverse("iframe-navigation"))
-        self.assertContains(response, _("Welcome Guest"))
-        self._common_navigation_assertions(response)
-
-    def _common_navigation_assertions(self, response):
-        self.assertContains(response, _("DASHBOARD"))
-        self.assertContains(response, _("TESTING"))
-        self.assertContains(response, _("SEARCH"))
-        self.assertContains(response, _("TELEMETRY"))
-        self.assertContains(response, _("ADMIN"))
 
 
 class TestDashboard(BaseCaseRun):
