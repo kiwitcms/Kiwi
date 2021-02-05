@@ -26,9 +26,6 @@ urlpatterns = [
     re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
     re_path(r"^json-rpc/$", RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
     re_path(
-        r"^navigation/", core_views.NavigationView.as_view(), name="iframe-navigation"
-    ),
-    re_path(
         r"^translation-mode/",
         core_views.TranslationMode.as_view(),
         name="translation-mode",
