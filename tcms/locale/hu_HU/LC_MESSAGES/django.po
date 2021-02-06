@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 14:23\n"
+"PO-Revision-Date: 2021-02-06 14:33\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1113,7 +1113,9 @@ msgstr "Új fiók regisztrálása"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr "A teszteset állapotok testreszabásáról további információ a <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">dokumentációban</a> található!"
+msgstr "A teszteset állapotok testreszabásáról további információ a \n"
+"<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"dokumentációban</a> található!"
 
 #: tcms/testcases/admin.py:46
 msgid "1 confirmed & 1 uncomfirmed status required!"
@@ -1352,7 +1354,7 @@ msgstr "Forrás tesztterv beállítása mint az új tesztterv szülője"
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr "Felhasználónév, e-mail cím, vagy a felhasználó azonosító (ID) adható meg:"
+msgstr "Felhasználónév, e-mail cím, vagy a felhasználó ID adható meg:"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
@@ -1508,7 +1510,7 @@ msgstr "Teszt végrehajtás állapotok"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr "Nem megerősített tesztesetetk nem kerültek hozzáadásra"
+msgstr "A nem megerősített tesztesetek nem kerültek hozzáadásra"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
@@ -1637,7 +1639,7 @@ msgstr "Tesztterv ID"
 
 #: tcms/testruns/templates/testruns/search.html:69
 msgid "Running"
-msgstr "Futó"
+msgstr "Folyamatban"
 
 #: tcms/testruns/views.py:42
 msgid "Creating a TestRun requires a TestPlan, select one"
@@ -1669,7 +1671,7 @@ msgstr "TÉTLEN"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr "FUTÓ"
+msgstr "FOLYAMATBAN"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
@@ -1737,7 +1739,7 @@ msgstr "Még nem jelentkeztél be GitHub fiókkal! <a href=\"%s\">Kattints ide <
 #: tcms_github_app/views.py:62
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "A Kiwi TCMS még nincs telepítve a GitHub-fiókba! <a href=\"%s\">Kattints ide </a>!"
+msgstr "A Kiwi TCMS még nincs telepítve a GitHub fiókba! <a href=\"%s\">Kattints ide </a>!"
 
 #: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
@@ -1751,7 +1753,7 @@ msgstr "A GitHub App szerkesztése <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr "A(z) \"%s\" bérlő számára nincs feltelepítve a GitHub applikáció"
+msgstr "A \"%s\" bérlő számára nincs feltelepítve a GitHub applikáció"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
