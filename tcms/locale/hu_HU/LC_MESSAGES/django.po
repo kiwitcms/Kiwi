@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 15:13\n"
+"PO-Revision-Date: 2021-02-06 15:23\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1368,7 +1368,7 @@ msgstr "Biztos benne?"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr "Nem hozható létre teszt futtatás meg nem erősített tesztesetekkel"
+msgstr "Nem hozható létre Tesztfuttatás meg nem erősített Tesztesetekkel"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
@@ -1389,7 +1389,7 @@ msgstr "Tesztesetek"
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr "Új teszt futtatás"
+msgstr "Új Tesztfuttatás"
 
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
@@ -1438,7 +1438,7 @@ msgstr "Tesztterv szerkesztése"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr "Új tesztterv készítése"
+msgstr "Új Tesztterv készítése"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1595,11 +1595,11 @@ msgstr "Hibajegy követő"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr "Teszt futtatás szerkesztése"
+msgstr "Tesztfuttatás szerkesztése"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "Teszt futtatás klónozása"
+msgstr "Tesztfuttatás klónozása"
 
 #: tcms/testruns/templates/testruns/mutable.html:45
 msgid "version"
@@ -1623,11 +1623,11 @@ msgstr "%(count)s az előre kiválasztott tesztesetek közül nincs MEGERŐSÍTV
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr "Teszt futtatások keresése"
+msgstr "Tesztfuttatások keresése"
 
 #: tcms/testruns/templates/testruns/search.html:15
 msgid "Test run summary"
-msgstr "Teszt futtatás összefoglaló"
+msgstr "Tesztfuttatás összefoglaló"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "Plan ID"
@@ -1643,11 +1643,11 @@ msgstr "Folyamatban"
 
 #: tcms/testruns/views.py:42
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "Teszt futtatáshoz szükséges egy tesztterv, ki kell választani egyet"
+msgstr "Tesztfuttatáshoz szükséges egy tesztterv, ki kell választani egyet"
 
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr "Teszt futtatás létrehozásához szükséges legalább egy teszteset"
+msgstr "Tesztfuttatás létrehozásához szükséges legalább egy teszteset"
 
 #: tcms/testruns/views.py:247
 msgid "Clone of "
