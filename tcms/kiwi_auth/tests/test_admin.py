@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
 from django.urls import reverse
+from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from tcms.kiwi_auth.admin import Group
@@ -173,6 +174,14 @@ class TestGroupAdmin(LoggedInTestCase):
             'maxlength="150" required id="id_name">',
         )
 
+        # check for the user widget
+        self.assertContains(
+            response,
+            '<select name="users" id="id_users" multiple '
+            'class="selectfilter" data-field-name="users" data-is-stacked="0">',
+        )
+        self.assertContains(response, '<label for="id_users">%s' % capfirst(_("users")))
+
     def test_should_be_able_to_delete_a_non_default_group(self):
         response = self.client.get(
             reverse("admin:auth_group_delete", args=[self.group.id]), follow=True
@@ -188,3 +197,38 @@ class TestGroupAdmin(LoggedInTestCase):
             '<input type="text" name="name" value="%s" class="vTextField"'
             ' maxlength="150" required id="id_name">' % self.group.name,
         )
+
+    def test_should_be_allowed_to_create_new_group_with_added_user(self):
+        self.assertFalse(self.tester.groups.filter(name=self.group.name).exists())
+
+        group_name = "TestGroupName"
+        response = self.client.post(
+            reverse("admin:auth_group_add"),
+            {"name": group_name, "users": [self.tester.id]},
+            follow=True,
+        )
+
+        group = self.tester.groups.get(name=group_name)
+
+        self.assertIsNotNone(group)
+        self.assertContains(response, group_name)
+        self.assertContains(
+            response,
+            '<a href="%s">%s</a>'
+            % (reverse("admin:auth_group_change", args=[group.pk]), group_name),
+        )
+
+    def test_should_be_able_to_add_user_while_editing_a_group(self):
+        self.assertFalse(self.tester.groups.filter(name=self.group.name).exists())
+        response = self.client.post(
+            reverse("admin:auth_group_change", args=[self.group.id]),
+            {"name": self.group.name, "users": [self.tester.id], "_continue": True},
+            follow=True,
+        )
+
+        self.assertContains(
+            response,
+            '<option value="%s" selected>%s</option>'
+            % (self.tester.pk, self.tester.username),
+        )
+        self.assertTrue(self.tester.groups.filter(name=self.group.name).exists())
