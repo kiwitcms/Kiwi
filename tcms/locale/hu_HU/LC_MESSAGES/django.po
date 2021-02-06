@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 14:33\n"
+"PO-Revision-Date: 2021-02-06 14:43\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -690,7 +690,7 @@ msgstr "ÖSSZES"
 
 #: tcms/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "Nincs hozzád rendelt teszt futtatás"
+msgstr "Nem tartozik hozzád teszt futtatás"
 
 #: tcms/templates/dashboard.html:46
 msgid "Your Test plans"
@@ -721,7 +721,7 @@ msgstr "%(total_count)s saját kezelésű tesztterv, %(disabled_count)s letiltva
 
 #: tcms/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Nem tartozik tesztterv hozzád"
+msgstr "Nem tartozik hozzád tesztterv"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -1922,7 +1922,8 @@ msgid "Dear tester,\n"
 msgstr "Kedves Tesztelő,\n"
 "%(invited_by)s meghívott hogy csatlakozz a Kiwi TCMS-hez\n"
 "%(tenant_url)s\n\n"
-"Abban az esetben ha még soha nem jelentkeztél be, egy felhasználói fiók automatikusan létrehozásra került számodra. Az első belépés előtt szükséges lesz a jelszót megváltoztatni!"
+"Abban az esetben ha még soha nem jelentkeztél be, egy felhasználói fiók automatikusan létrehozásra került számodra.\n"
+"Az első belépés előtt szükséges lesz a jelszót megváltoztatni!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
