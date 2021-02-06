@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 15:03\n"
+"PO-Revision-Date: 2021-02-06 15:13\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -681,7 +681,7 @@ msgstr "Kezdés időpontja"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr "%(total_count)s teszt futtatás(ok) vagy teszteset(ek) van hozzád rendelve végrehajtásra.\n"
+msgstr "%(total_count)s Tesztfuttatás(ok) vagy Teszteset(ek) van hozzád rendelve végrehajtásra.\n"
 "Itt van a legújabb %(count)s."
 
 #: tcms/templates/dashboard.html:36 tcms/templates/dashboard.html:80
@@ -690,7 +690,7 @@ msgstr "ÖSSZES"
 
 #: tcms/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "Nem tartozik hozzád teszt futtatás"
+msgstr "Nem tartozik hozzád Tesztfuttatás"
 
 #: tcms/templates/dashboard.html:46
 msgid "Your Test plans"
@@ -710,7 +710,7 @@ msgstr "Típus"
 
 #: tcms/templates/dashboard.html:55 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr "Végrehajtások száma"
+msgstr "Végrehajtások"
 
 #: tcms/templates/dashboard.html:76
 #, python-format
@@ -721,7 +721,7 @@ msgstr "%(total_count)s saját kezelésű tesztterv, %(disabled_count)s letiltva
 
 #: tcms/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Nem tartozik hozzád tesztterv"
+msgstr "Nem tartozik hozzád Tesztterv"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -775,9 +775,9 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr "Teszt futtatás %(pk)s létrehozva vagy frissítve lett.\n\n"
+msgstr "Tesztfuttatás %(pk)s létrehozva vagy frissítve lett.\n\n"
 "### Linkek ###\n"
-"Teszt futtatás: %(run_url)s\n"
+"Tesztfuttatás: %(run_url)s\n"
 "Tesztterv: %(plan_url)s\n\n"
 "### Alapvető futtatási információk ###\n"
 "Összefoglalás: %(summary)s\n\n"
@@ -1166,11 +1166,11 @@ msgstr "Teszteset klónozása"
 
 #: tcms/testcases/templates/testcases/clone.html:14
 msgid "Add new TC into TP"
-msgstr "Új teszteset hozzáadása a teszttervhez"
+msgstr "Új Teszteset hozzáadása a Teszttervhez"
 
 #: tcms/testcases/templates/testcases/clone.html:29
 msgid "Selected TC"
-msgstr "Kiválasztott teszteset"
+msgstr "Kiválasztott Teszteset"
 
 #: tcms/testcases/templates/testcases/clone.html:44 tcms/testcases/views.py:135
 #: tcms/testplans/templates/testplans/clone.html:72
@@ -1178,7 +1178,7 @@ msgstr "Kiválasztott teszteset"
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:146
 #: tcms/testruns/views.py:178
 msgid "Clone"
-msgstr "Klónozás"
+msgstr "Klón"
 
 #: tcms/testcases/templates/testcases/get.html:32
 #: tcms/testcases/templates/testcases/mutable.html:139
@@ -1232,11 +1232,11 @@ msgstr "Teszteset szerkesztése"
 
 #: tcms/testcases/templates/testcases/mutable.html:12
 msgid "New TestCase"
-msgstr "Új teszteset"
+msgstr "Új Teszteset"
 
 #: tcms/testcases/templates/testcases/mutable.html:58
 msgid "add new Category"
-msgstr "új kategória hozzáadása"
+msgstr "új Kategória hozzáadása"
 
 #: tcms/testcases/templates/testcases/mutable.html:105
 #: tcms/testcases/templates/testcases/search.html:118
@@ -1265,7 +1265,7 @@ msgstr "Értesítsen, amikor"
 
 #: tcms/testcases/templates/testcases/mutable.html:196
 msgid "TestCase is updated"
-msgstr "Tesztkészletek frissítésre kerültek"
+msgstr "Tesztkészlet frissítve"
 
 #: tcms/testcases/templates/testcases/mutable.html:203
 msgid "TestCase is deleted"
@@ -1329,7 +1329,7 @@ msgstr "A teszteset klónozása sikeres volt"
 
 #: tcms/testcases/views.py:287
 msgid "At least one TestCase is required"
-msgstr "Legalább egy teszteset szükséges"
+msgstr "Legalább egy Teszteset szükséges"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1341,20 +1341,20 @@ msgstr "Tesztesetek klónozása"
 
 #: tcms/testplans/templates/testplans/clone.html:58
 msgid "Clone or link existing TCs into new TP"
-msgstr "A meglévő tesztesetek összekapcsolása vagy klónozása új teszttervbe"
+msgstr "A meglévő Tesztesetek összekapcsolása vagy klónozása új Teszttervbe"
 
 #: tcms/testplans/templates/testplans/clone.html:62
 msgid "Parent TP"
-msgstr "Szülő tesztterv"
+msgstr "Szülő Tesztterv"
 
 #: tcms/testplans/templates/testplans/clone.html:66
 msgid "Set the source TP as parent of new TP"
-msgstr "Forrás tesztterv beállítása mint az új tesztterv szülője"
+msgstr "Forrás Tesztterv beállítása mint az új Tesztterv szülője"
 
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr "Felhasználónév, e-mail cím, vagy a felhasználó ID adható meg:"
+msgstr "Felhasználónév, e-mail cím, vagy a felhasználó ID megadása:"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
