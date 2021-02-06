@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 14:53\n"
+"PO-Revision-Date: 2021-02-06 15:03\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -431,7 +431,7 @@ msgstr "Minden más"
 
 #: tcms/settings/common.py:337
 msgid "PLUGINS"
-msgstr "BŐVÍTMÉNYEK"
+msgstr "PLUGINOK"
 
 #: tcms/settings/common.py:347
 msgid "Forum"
@@ -451,15 +451,15 @@ msgstr "€5 támogatás az Open Collective-en keresztül"
 
 #: tcms/settings/common.py:357
 msgid "Administration Guide"
-msgstr "Adminisztrációs útmutató"
+msgstr "Admin Útmutató"
 
 #: tcms/settings/common.py:358
 msgid "User Guide"
-msgstr "Felhasználói útmutató"
+msgstr "Felhasználói Útmutató"
 
 #: tcms/settings/common.py:359
 msgid "API Help"
-msgstr "API súgó"
+msgstr "API Súgó"
 
 #: tcms/signals.py:83
 msgid "New user awaiting approval"
@@ -468,7 +468,7 @@ msgstr "Új felhasználó jóváhagyásra vár"
 #: tcms/signals.py:161
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "ÚJ: Teszt futtatás #%(pk)d - %(summary)s"
+msgstr "ÚJ: Tesztfuttatás #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:222
 #, python-format
@@ -500,11 +500,11 @@ msgstr "Tesztterv"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr "Tesztelési üzemzavar"
+msgstr "Tesztelés Elemzés"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr "Összesen"
+msgstr "Összes"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/templates/include/tp_toolbar_dropdown.html:5
@@ -547,7 +547,7 @@ msgstr "Negatív"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr "Tesztelési státusz mátrix"
+msgstr "Tesztelési Státusz Mátrix"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Include child TPs"
@@ -660,7 +660,7 @@ msgstr "a vezető nyílt forráskódú teszteset kezelő rendszer"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr "Vezérlőpult"
+msgstr "Dashboard"
 
 #: tcms/templates/dashboard.html:8
 #: tcms/testruns/templates/testruns/get.html:175
