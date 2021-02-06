@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2020-12-23 15:53\n"
+"PO-Revision-Date: 2021-02-06 14:09\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1351,7 +1351,7 @@ msgstr "Forrás tesztterv beállítása mint az új tesztterv szülője"
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr "Add neg a felhasználóneved, e-mail címed, vagy a felhasználói azonosítód:"
+msgstr "Felhasználónév, e-mail cím, vagy a felhasználó azonosító (ID) adható meg:"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
