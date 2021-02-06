@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 14:09\n"
+"PO-Revision-Date: 2021-02-06 14:13\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -118,7 +118,7 @@ msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
-msgstr "hozzászólt: "
+msgstr "hozzászólt"
 
 #: tcms/bugs/templates/bugs/get.html:127
 msgid "Reopen"
@@ -156,7 +156,7 @@ msgstr "Lezárás"
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Summary"
-msgstr "Összefoglaló"
+msgstr "Összegzés"
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -229,7 +229,7 @@ msgstr "ID"
 #: tcms/bugs/templates/bugs/search.html:104
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
-msgstr "Létrehozva: "
+msgstr "Létrehozva"
 
 #: tcms/bugs/views.py:43 tcms/testcases/views.py:131
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:145
