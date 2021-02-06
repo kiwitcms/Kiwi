@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-06 14:13\n"
+"PO-Revision-Date: 2021-02-06 14:23\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -716,7 +716,8 @@ msgstr "Végrehajtások száma"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr "%(total_count)s saját kezelésű tesztterv, %(disabled_count)s letiltva. Itt van a legújabb %(count)s."
+msgstr "%(total_count)s saját kezelésű tesztterv, %(disabled_count)s letiltva.\n"
+"Itt van a legújabb %(count)s."
 
 #: tcms/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
@@ -1048,7 +1049,7 @@ msgstr "Bejelentkezés"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr "Üdvözöllek a Kiwi TCMS-ben"
+msgstr "Üdvözöl a Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
