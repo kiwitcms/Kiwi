@@ -2,12 +2,14 @@
 
 from django import forms
 from django.contrib import admin
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import GroupAdmin, UserAdmin, sensitive_post_parameters_m
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Group, Permission
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
+from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from tcms.utils.user import delete_user
@@ -34,6 +36,33 @@ class MyUserChangeForm(UserChangeForm):
 
 def _modifying_myself(request, object_id):
     return request.user.pk == int(object_id)
+
+
+class GroupAdminForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ["name", "permissions"]
+
+    users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=FilteredSelectMultiple("users", False),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["users"].label = capfirst(_("users"))
+        if self.instance.pk:
+            self.fields["users"].initial = self.instance.user_set.all()
+
+    def save(self, commit=True):
+        instance = super().save(commit=commit)
+        instance.save()
+
+        self.instance.user_set.set(self.cleaned_data["users"])
+        self.save_m2m()
+
+        return instance
 
 
 class KiwiUserAdmin(UserAdmin):
@@ -162,6 +191,8 @@ class KiwiUserAdmin(UserAdmin):
 
 
 class KiwiGroupAdmin(GroupAdmin):
+    form = GroupAdminForm
+
     def has_delete_permission(self, request, obj=None):
         if obj and obj.name in ["Tester", "Administrator"]:
             return False
