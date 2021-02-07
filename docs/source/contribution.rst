@@ -31,6 +31,11 @@ following syntax is supported::
     and configured! ``make check`` uses the configuration files under
     ``tcms/settings/test/``. Make sure to edit them if necessary!
 
+.. important::
+
+    If you are having troubles with ``make`` on Windows then take a look at
+    ``Makefile`` and copy the individual commands used for testing!
+
 
 Security Issues
 ---------------

@@ -7,48 +7,53 @@ Get source code
 The Kiwi TCMS source code is available at https://github.com/kiwitcms/Kiwi::
 
     git clone https://github.com/kiwitcms/Kiwi.git
+    cd Kiwi/
 
 Install Python 3
 ----------------
 
-Kiwi TCMS is a Python 3 project! On CentOS 7 this is available via
-`SoftwareCollections.org <https://www.softwarecollections.org/en/scls/rhscl/rh-python35/>`_.
-All further instructions assume that you have Python 3 enabled. If you are
-using software collections then execute::
+Kiwi TCMS is a Python 3 project! Linux is our preferred environment but
+you can work on Kiwi TCMS on Windows as well!
 
-    scl enable rh-python36 /bin/bash
-
-If you are using a different Linux distribution then consult its documentation
-for more details on how to install and enable Python 3!
+Download & install Python from https://www.python.org/downloads/.
+All further instructions assume that you have Python 3 enabled.
 
 .. note::
 
-    At the time of writing Kiwi TCMS has been tested with Python 3.6. You can always consult
-    ``Dockerfile`` to find out the latest version which we use!
+    At the time of writing Kiwi TCMS has been developed and tested with Python 3.6.
+    You can always consult ``Dockerfile`` to find out the exact version which we use!
+
 
 Setup virtualenv
 ----------------
 
 Create a virtual environment for Kiwi TCMS::
 
-    virtualenv ~/virtualenvs/kiwi
+    $ python3 -m venv ~/kiwi-env
+    $ source ~/kiwi-env/bin/activate
+
+On Windows, activating the virtual environment is different::
+
+    > python3 -m venv C:\kiwi-env
+    > C:\kiwi-env\Scripts\activate
+
+See https://docs.python.org/3/tutorial/venv.html for more information!
 
 
 Dependencies
 ------------
 
-First install RPM packages which are needed to compile some of the Python
-dependencies::
+On Linux you have to install packages which are needed to compile some of the
+Python dependencies::
 
-    sudo yum install gcc rh-python36-python-devel mariadb-devel libffi-devel npm graphviz
+    sudo yum install gcc python-devel mariadb-devel libffi-devel npm graphviz
 
 .. note::
 
     Graphviz is only used to build model diagrams from source code!
 
-Then install dependencies for development::
+Then install the necessary Python packages inside your virtual environment::
 
-    . ~/virtualenvs/kiwi/bin/activate
     pip install -r requirements/mariadb.txt
     pip install -r requirements/devel.txt
 
@@ -57,12 +62,13 @@ Then install dependencies for development::
 
     Alternatively you can use ``requirements/postgres.txt`` for PostgreSQL!
 
-The user interface needs the `PatternFly <http://www.patternfly.org/>`_ library so::
+The user interface needs several Node.js packages.
+`Download & install Node first <https://nodejs.org/en/download/>`_ and then::
 
     cd tcms/
     npm install
 
-inside the project directory.
+inside the ``Kiwi/`` directory.
 
 
 Initialize database
