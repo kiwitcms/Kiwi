@@ -18,10 +18,14 @@ class TestCategory(APITestCase):
         ]
 
     def test_filter_by_name_and_product_id(self):
-        cat = self.rpc_client.Category.filter(
+        result = self.rpc_client.Category.filter(
             {"name": "manual", "product": self.product_nitrate.pk}
         )[0]
-        self.assertEqual(cat["name"], "manual")
+
+        self.assertEqual(result["name"], "manual")
+        self.assertEqual(result["name"], "manual")
+        self.assertEqual(result["product"], self.product_nitrate.pk)
+        self.assertEqual(result["description"], "")
 
     def test_filter_by_product_id(self):
         categories = self.rpc_client.Category.filter(
