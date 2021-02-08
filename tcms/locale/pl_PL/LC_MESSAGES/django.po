@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-08 10:19\n"
+"PO-Revision-Date: 2021-02-08 10:35\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -106,7 +106,7 @@ msgstr "Wersja"
 #: tcms/testruns/templates/testruns/search.html:46
 #: tcms/testruns/templates/testruns/search.html:100
 msgid "Build"
-msgstr ""
+msgstr "Kompilacja"
 
 #: tcms/bugs/templates/bugs/get.html:97
 msgid "commented on"
@@ -366,11 +366,11 @@ msgstr "SZUKAJ"
 
 #: tcms/settings/common.py:303
 msgid "Search Test Plans"
-msgstr "Wyszukaj plany testowych"
+msgstr "Wyszukaj plany testów"
 
 #: tcms/settings/common.py:304
 msgid "Search Test Runs"
-msgstr "Wyszukaj przebiegi testowe"
+msgstr "Wyszukaj przebiegi testów"
 
 #: tcms/settings/common.py:305
 msgid "Search Test Cases"
@@ -595,11 +595,11 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Ascending"
-msgstr ""
+msgstr "Rosnąco"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Descending"
-msgstr ""
+msgstr "Malejąco"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
@@ -677,11 +677,11 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Nie ma przebiegów testów przypisanych do Ciebie"
 
 #: tcms/templates/dashboard.html:46
 msgid "Your Test plans"
-msgstr ""
+msgstr "Twoje plany testów"
 
 #: tcms/templates/dashboard.html:52
 msgid "TestPlan"
@@ -707,7 +707,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Nie ma planów testów, które należą do Ciebie"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -814,7 +814,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:355
 #: tcms/testruns/templates/testruns/search.html:103
 msgid "Tags"
-msgstr ""
+msgstr "Tagi"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:147
@@ -895,7 +895,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:63
 #: tcms/testruns/templates/testruns/search.html:102
 msgid "Default tester"
-msgstr ""
+msgstr "Domyślny tester"
 
 #: tcms/templates/include/tp_toolbar_dropdown.html:10
 #: tcms/testplans/templates/testplans/get.html:181
@@ -914,24 +914,24 @@ msgstr "Witaj Gościu"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "Moje przebiegi testów"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "Moje plany testów"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "Mój profil"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Zmiana hasła"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "Wyloguj się"
 
 #: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
@@ -972,23 +972,23 @@ msgstr ""
 
 #: tcms/templates/pagination.html:13
 msgid "First page"
-msgstr ""
+msgstr "Pierwsza strona"
 
 #: tcms/templates/pagination.html:16
 msgid "Previous page"
-msgstr ""
+msgstr "Poprzednia strona"
 
 #: tcms/templates/pagination.html:20
 msgid "Current page"
-msgstr ""
+msgstr "Bieżąca strona"
 
 #: tcms/templates/pagination.html:28
 msgid "Next page"
-msgstr ""
+msgstr "Następna strona"
 
 #: tcms/templates/pagination.html:31
 msgid "Last page"
-msgstr ""
+msgstr "Ostatnia strona"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -1434,7 +1434,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:35
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Test plan"
-msgstr ""
+msgstr "Plan testów"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
@@ -1471,7 +1471,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Manager"
-msgstr ""
+msgstr "Menedżer"
 
 #: tcms/testruns/templates/testruns/get.html:79
 msgid "Finished at"
@@ -1568,7 +1568,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Wyszukaj przebiegi testowe"
 
 #: tcms/testruns/templates/testruns/search.html:15
 msgid "Test run summary"
