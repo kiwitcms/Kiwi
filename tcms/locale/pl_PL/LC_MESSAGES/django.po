@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-08 10:35\n"
+"PO-Revision-Date: 2021-02-08 10:40\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -125,7 +125,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:531
 #: tcms/testruns/templates/testruns/mutable.html:73
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: tcms/bugs/templates/bugs/get.html:131
 msgid "Close"
@@ -179,14 +179,14 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:17
 #: tcms/testplans/templates/testplans/search.html:18
 msgid "After"
-msgstr ""
+msgstr "Po"
 
 #: tcms/bugs/templates/bugs/search.html:28
 #: tcms/telemetry/templates/telemetry/include/filters.html:61
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:30
 msgid "Before"
-msgstr ""
+msgstr "Przed"
 
 #: tcms/bugs/templates/bugs/search.html:76
 #: tcms/bugs/templates/bugs/search.html:81
@@ -484,7 +484,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:41
 msgid "Test Plan"
-msgstr ""
+msgstr "Plan testów"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -539,7 +539,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Include child TPs"
-msgstr ""
+msgstr "Dołącz podrzędne PT"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
@@ -563,7 +563,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:97
 #: tcms/testruns/templates/testruns/get.html:525
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
@@ -587,11 +587,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:97
 #: tcms/testruns/templates/testruns/get.html:525
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:20
 msgid "Order"
-msgstr ""
+msgstr "Kolejność"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Ascending"
@@ -603,11 +603,11 @@ msgstr "Malejąco"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
-msgstr ""
+msgstr "Przypadek testowy"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test run"
-msgstr ""
+msgstr "Przebieg testu"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
@@ -825,7 +825,7 @@ msgstr "Tagi"
 #: tcms/testplans/templates/testplans/search.html:13
 #: tcms/testruns/templates/testruns/get.html:517
 msgid "Name"
-msgstr ""
+msgstr "Nazwa"
 
 #: tcms/templates/include/tags_card.html:27
 #: tcms/testcases/templates/testcases/get.html:164
@@ -878,7 +878,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:119
 #: tcms/testruns/templates/testruns/mutable.html:94
 msgid "Author"
-msgstr ""
+msgstr "Autora"
 
 #: tcms/templates/include/tp_toolbar_dropdown.html:9
 #: tcms/testcases/templates/testcases/get.html:47
@@ -1390,7 +1390,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "ID rodzica"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
@@ -1399,28 +1399,28 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:102
 #: tcms/testruns/templates/testruns/get.html:129
 msgid "Notify:"
-msgstr ""
+msgstr "Powiadom:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr ""
+msgstr "Autora Przypadku Testowego"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "Powiadom gdy:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Plan testów został zaktualizowany"
 
 #: tcms/testplans/templates/testplans/mutable.html:132
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Przypadek testowy został zaktualizowany"
 
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:95
 msgid "Active"
-msgstr ""
+msgstr "Aktywny"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
