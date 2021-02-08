@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-08 09:10\n"
+"PO-Revision-Date: 2021-02-08 09:16\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -92,7 +92,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:36
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Version"
-msgstr ""
+msgstr "Wersja"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:60
@@ -342,31 +342,31 @@ msgstr ""
 
 #: tcms/settings/common.py:287
 msgid "DASHBOARD"
-msgstr ""
+msgstr "PULPIT"
 
 #: tcms/settings/common.py:289
 msgid "TESTING"
-msgstr ""
+msgstr "TESTOWANIE"
 
 #: tcms/settings/common.py:291
 msgid "New Test Plan"
-msgstr ""
+msgstr "Nowy plan testów"
 
 #: tcms/settings/common.py:293 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
-msgstr ""
+msgstr "Nowy przypadek testowy"
 
 #: tcms/settings/common.py:295
 msgid "New Bug"
-msgstr ""
+msgstr "Nowy błąd"
 
 #: tcms/settings/common.py:301
 msgid "SEARCH"
-msgstr ""
+msgstr "SZUKAJ"
 
 #: tcms/settings/common.py:303
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Szukaj planów testowych"
 
 #: tcms/settings/common.py:304
 msgid "Search Test Runs"
@@ -378,15 +378,15 @@ msgstr ""
 
 #: tcms/settings/common.py:306
 msgid "Search Bugs"
-msgstr ""
+msgstr "Szukaj błędów"
 
 #: tcms/settings/common.py:312
 msgid "TELEMETRY"
-msgstr ""
+msgstr "TELEMETRIA"
 
 #: tcms/settings/common.py:315
 msgid "Testing"
-msgstr ""
+msgstr "Testowanie"
 
 #: tcms/settings/common.py:317
 msgid "Breakdown"
@@ -411,15 +411,15 @@ msgstr ""
 
 #: tcms/settings/common.py:332
 msgid "Users and groups"
-msgstr ""
+msgstr "Użytkownicy i grupy"
 
 #: tcms/settings/common.py:334
 msgid "Everything else"
-msgstr ""
+msgstr "Wszystko inne"
 
 #: tcms/settings/common.py:337
 msgid "PLUGINS"
-msgstr ""
+msgstr "WTYCZKI"
 
 #: tcms/settings/common.py:347
 msgid "Forum"
@@ -644,7 +644,7 @@ msgstr ""
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "wiodący otwartoźródłowy system zarządzania przypadkami testowymi"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -948,23 +948,23 @@ msgstr "Pomoc"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
-msgstr ""
+msgstr "Język"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "Obsługiwane języki"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
-msgstr ""
+msgstr "Zaproponuj nowy język"
 
 #: tcms/templates/navbar.html:94
 msgid "Translation mode"
-msgstr ""
+msgstr "Tryb tłumaczenia"
 
 #: tcms/templates/navbar.html:98
 msgid "Translation guide"
-msgstr ""
+msgstr "Przewodnik tłumaczeń"
 
 #: tcms/templates/pagination.html:6
 msgid "Select"
@@ -1650,15 +1650,15 @@ msgstr ""
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr ""
+msgstr "Integracja z GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Ponowna synchronizacja"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
-msgstr ""
+msgstr "Ustawienia"
 
 #: tcms_github_app/middleware.py:41
 #, python-format
@@ -1705,7 +1705,7 @@ msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr ""
+msgstr "Sybskrypcje"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
@@ -1815,7 +1815,7 @@ msgstr "albo kontynuuj z"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Informacje prawne"
 
 #: tcms_tenants/admin.py:40 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
@@ -1835,16 +1835,16 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Zaproś użytkowników"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
-msgstr ""
+msgstr "Autoryzowani użytkownicy"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
