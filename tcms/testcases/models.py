@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
+from tcms.core.models.base import UrlMixin
 from tcms.rpc.serializer import TestCaseRPCSerializer
 from tcms.rpc.utils import distinct_filter
 from tcms.testcases.fields import MultipleEmailField
@@ -30,7 +31,7 @@ class TestCaseStatus(TCMSActionModel):
 vinaigrette.register(TestCaseStatus, ["name"])
 
 
-class Category(TCMSActionModel):
+class Category(models.Model, UrlMixin):
     name = models.CharField(max_length=255)
     product = models.ForeignKey(
         "management.Product", related_name="category", on_delete=models.CASCADE
