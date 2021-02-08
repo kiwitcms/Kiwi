@@ -56,7 +56,7 @@ class Priority(models.Model, UrlMixin):
         return self.value
 
 
-class Component(TCMSActionModel):
+class Component(models.Model, UrlMixin):
     name = models.CharField(max_length=64)
     product = models.ForeignKey(
         Product, related_name="component", on_delete=models.CASCADE
