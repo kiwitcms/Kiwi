@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-08 10:40\n"
+"PO-Revision-Date: 2021-02-08 10:46\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -148,20 +148,20 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Summary"
-msgstr ""
+msgstr "Podsumowanie"
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 #: tcms/testcases/templates/testcases/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "dodaj nowy produkt"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "dodaj nową wersję"
 
 #: tcms/bugs/templates/bugs/mutable.html:63
 #: tcms/bugs/templates/bugs/mutable.html:64
@@ -370,7 +370,7 @@ msgstr "Wyszukaj plany testów"
 
 #: tcms/settings/common.py:304
 msgid "Search Test Runs"
-msgstr "Wyszukaj przebiegi testów"
+msgstr "Wyszukaj uruchomienia testów"
 
 #: tcms/settings/common.py:305
 msgid "Search Test Cases"
@@ -390,11 +390,11 @@ msgstr "Testowanie"
 
 #: tcms/settings/common.py:317
 msgid "Breakdown"
-msgstr ""
+msgstr "Awaria"
 
 #: tcms/settings/common.py:318
 msgid "Status matrix"
-msgstr ""
+msgstr "Matryca statusu"
 
 #: tcms/settings/common.py:319
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
@@ -465,7 +465,7 @@ msgstr ""
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr ""
+msgstr "POTWIERDZONY"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
@@ -505,7 +505,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:276
 #: tcms/testruns/templates/testruns/get.html:363
 msgid "Automated"
-msgstr ""
+msgstr "Zautomatyzowany"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/testplans/templates/testplans/get.html:402
@@ -800,7 +800,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:386
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:511
@@ -849,7 +849,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:365
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Priority"
-msgstr ""
+msgstr "Priorytet"
 
 #: tcms/templates/include/tp_toolbar_dropdown.html:7
 #: tcms/testcases/templates/testcases/get.html:63
@@ -862,7 +862,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:369
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Category"
-msgstr ""
+msgstr "Kategoria"
 
 #: tcms/templates/include/tp_toolbar_dropdown.html:8
 #: tcms/testcases/templates/testcases/get.html:42
@@ -1093,7 +1093,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Scenariusz**: ... jakie zachowanie zostanie przetestowane ...\n"
+"  **Given** ... warunki ...\n"
+"  **When** ... działania ...\n"
+"  **Then** ... oczekiwane rezultaty ...\n\n"
+"*Działania*:\n\n"
+"1. pozycja\n"
+"2. pozycja\n"
+"3. pozycja\n\n"
+"*Oczekiwane rezultaty*:\n\n"
+"1. pozycja\n"
+"2. pozycja\n"
+"3. pozycja"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1135,29 +1146,29 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:401
 #: tcms/testruns/templates/testruns/mutable.html:65
 msgid "Notes"
-msgstr ""
+msgstr "Notatki"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:112
 msgid "Script"
-msgstr ""
+msgstr "Skrypt"
 
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:118
 msgid "Arguments"
-msgstr ""
+msgstr "Parametry"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:126
 msgid "Requirements"
-msgstr ""
+msgstr "Wymagania"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:131
 #: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Odnośnik"
 
 #: tcms/testcases/templates/testcases/get.html:132
 #: tcms/testruns/templates/testruns/get.html:381
@@ -1184,20 +1195,20 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:58
 msgid "add new Category"
-msgstr ""
+msgstr "dodaj nową kategorie"
 
 #: tcms/testcases/templates/testcases/mutable.html:105
 #: tcms/testcases/templates/testcases/search.html:118
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: tcms/testcases/templates/testcases/mutable.html:149
 msgid "Notify"
-msgstr ""
+msgstr "Powiadom"
 
 #: tcms/testcases/templates/testcases/mutable.html:160
 msgid "Manager of runs"
-msgstr ""
+msgstr "Menedżer uruchomień"
 
 #: tcms/testcases/templates/testcases/mutable.html:167
 msgid "Asignees"
@@ -1386,7 +1397,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Utwórz nowy Plan Testów"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1394,7 +1405,7 @@ msgstr "ID rodzica"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Dokument planu testów:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 #: tcms/testruns/templates/testruns/get.html:129
@@ -1600,15 +1611,15 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "PROPOZYCJA"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "WYŁĄCZONY"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "WYMAGA AKTUALIZACJI"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
