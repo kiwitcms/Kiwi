@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-05 17:53\n"
+"PO-Revision-Date: 2021-02-08 09:10\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -199,7 +199,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:60
 #: tcms/testruns/templates/testruns/search.html:65
 msgid "Username"
-msgstr ""
+msgstr "Nazwa użytkownika"
 
 #: tcms/bugs/templates/bugs/search.html:92
 #: tcms/testcases/templates/testcases/search.html:126
@@ -423,31 +423,31 @@ msgstr ""
 
 #: tcms/settings/common.py:347
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: tcms/settings/common.py:348
 msgid "Report an Issue"
-msgstr ""
+msgstr "Zgłoś błąd"
 
 #: tcms/settings/common.py:351
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Poproś o pomoc na StackOverflow"
 
 #: tcms/settings/common.py:355
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Wesprzyj €5 za pośrednictwem Open Collective"
 
 #: tcms/settings/common.py:357
 msgid "Administration Guide"
-msgstr ""
+msgstr "Przewodnik administratora"
 
 #: tcms/settings/common.py:358
 msgid "User Guide"
-msgstr ""
+msgstr "Przewodnik użytkownika"
 
 #: tcms/settings/common.py:359
 msgid "API Help"
-msgstr ""
+msgstr "Pomoc API"
 
 #: tcms/signals.py:83
 msgid "New user awaiting approval"
@@ -906,11 +906,11 @@ msgstr ""
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Przełącz nawigacje"
 
 #: tcms/templates/navbar.html:24
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Witaj Gościu"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
@@ -935,16 +935,16 @@ msgstr ""
 
 #: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
-msgstr ""
+msgstr "Zaloguj się"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:58
 msgid "Register"
-msgstr ""
+msgstr "Zarejestruj się"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
-msgstr ""
+msgstr "Pomoc"
 
 #: tcms/templates/navbar.html:83
 msgid "Language"
@@ -994,39 +994,39 @@ msgstr ""
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Hasło"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Nie pamiętasz"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "hasła"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Zaloguj się"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Witaj w Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Zaloguj się, aby rozpocząć"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "lub"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "zarejestruj konto"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "jeśli go nie posiadasz!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
@@ -1811,7 +1811,7 @@ msgstr ""
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "albo kontynuuj z"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
