@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-23 15:31+0000\n"
-"PO-Revision-Date: 2021-02-08 09:56\n"
+"PO-Revision-Date: 2021-02-08 10:19\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -75,7 +75,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:26
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:42
@@ -366,7 +366,7 @@ msgstr "SZUKAJ"
 
 #: tcms/settings/common.py:303
 msgid "Search Test Plans"
-msgstr "Szukaj planów testowych"
+msgstr "Wyszukaj plany testowych"
 
 #: tcms/settings/common.py:304
 msgid "Search Test Runs"
@@ -378,7 +378,7 @@ msgstr "Wyszukaj przypadki testowe"
 
 #: tcms/settings/common.py:306
 msgid "Search Bugs"
-msgstr "Szukaj błędów"
+msgstr "Wyszukaj błędy"
 
 #: tcms/settings/common.py:312
 msgid "TELEMETRY"
@@ -653,7 +653,7 @@ msgstr ""
 #: tcms/templates/dashboard.html:8
 #: tcms/testruns/templates/testruns/get.html:175
 msgid "Test executions"
-msgstr ""
+msgstr "Wykonania testów"
 
 #: tcms/templates/dashboard.html:15
 #, python-format
@@ -685,7 +685,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:52
 msgid "TestPlan"
-msgstr ""
+msgstr "Plan Testów"
 
 #: tcms/templates/dashboard.html:54
 #: tcms/testcases/templates/testcases/get.html:149
@@ -693,11 +693,11 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:64
 #: tcms/testplans/templates/testplans/search.html:118
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: tcms/templates/dashboard.html:55 tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Wykonania"
 
 #: tcms/templates/dashboard.html:76
 #, python-format
