@@ -30,7 +30,19 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: List of serialized :class:`tcms.management.models.Component` objects
         :rtype: list(dict)
     """
-    return Component.to_xmlrpc(query)
+    return list(
+        Component.objects.filter(**query)
+        .values(
+            "id",
+            "name",
+            "product",
+            "initial_owner",
+            "initial_qa_contact",
+            "description",
+            "cases",
+        )
+        .distinct()
+    )
 
 
 @permissions_required("management.add_component")

@@ -21,9 +21,15 @@ class TestFilterComponents(APITestCase):
         )
 
     def test_filter_by_product_id(self):
-        com = self.rpc_client.Component.filter({"product": self.product.pk})
-        self.assertIsNotNone(com)
-        self.assertEqual(com[0]["name"], "application")
+        result = self.rpc_client.Component.filter({"product": self.product.pk})[0]
+        self.assertIsNotNone(result)
+
+        self.assertEqual(result["id"], self.component.pk)
+        self.assertEqual(result["name"], "application")
+        self.assertEqual(result["product"], self.product.pk)
+        self.assertIn("description", result)
+        self.assertIn("initial_owner", result)
+        self.assertIn("initial_qa_contact", result)
 
     def test_filter_by_name(self):
         com = self.rpc_client.Component.filter({"name": "application"})
