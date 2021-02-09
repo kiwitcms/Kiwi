@@ -52,21 +52,8 @@ class TestVersionCreateFunctionality(APITestCase):
         self.assertEqual(prod["value"], "New Version 1")
         self.assertEqual(prod["product_id"], self.product.pk)
 
-    def test_add_version_with_product_name(self):
-        new_version = "New Version 2"
-        prod = self.rpc_client.Version.create(
-            {
-                "product": self.product_name,
-                "value": new_version,
-            }
-        )
-        self.assertEqual(prod["value"], new_version)
-        self.assertEqual(prod["product_id"], self.product.pk)
-
     def test_add_version_with_non_exist_prod(self):
-        with self.assertRaisesRegex(
-            XmlRPCFault, "Product matching query does not exist"
-        ):
+        with self.assertRaisesRegex(XmlRPCFault, ".*product.*Select a valid choice.*"):
             self.rpc_client.Version.create({"product": -9, "value": "0.1"})
 
     def test_add_version_with_missing_argument(self):
@@ -75,7 +62,9 @@ class TestVersionCreateFunctionality(APITestCase):
         ):
             self.rpc_client.Version.create({"product": self.product.pk})
 
-        with self.assertRaisesRegex(XmlRPCFault, "No product given"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Internal error:.*product.*This field is required"
+        ):
             self.rpc_client.Version.create({"value": "0.1"})
 
     def test_add_version_with_extra_unrecognized_field(self):
