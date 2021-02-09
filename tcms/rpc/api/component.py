@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import get_user_model
+from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component
+from tcms.rpc.api.forms.management import ComponentForm, ComponentUpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.utils import pre_check_product
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -67,27 +69,23 @@ def create(values, **kwargs):
         not specified or don't exist in the database these fields are set to the
         user issuing the RPC request!
     """
-    initial_owner_id = values.get("initial_owner_id", None)
-    initial_qa_contact_id = values.get("initial_qa_contact_id", None)
-    product = pre_check_product(values)
-
     request = kwargs.get(REQUEST_KEY)
-    if User.objects.filter(pk=initial_owner_id).exists():
-        _initial_owner_id = initial_owner_id
-    else:
-        _initial_owner_id = request.user.pk
+    if "initial_owner" not in values:
+        values["initial_owner"] = request.user.pk
 
-    if User.objects.filter(pk=initial_qa_contact_id).exists():
-        _initial_qa_contact_id = initial_qa_contact_id
-    else:
-        _initial_qa_contact_id = request.user.pk
+    if "initial_qa_contact" not in values:
+        values["initial_qa_contact"] = request.user.pk
 
-    return Component.objects.create(
-        name=values["name"],
-        product=product,
-        initial_owner_id=_initial_owner_id,
-        initial_qa_contact_id=_initial_qa_contact_id,
-    ).serialize()
+    if "description" not in values:
+        values["description"] = "Created via API"
+
+    form = ComponentForm(values)
+
+    if form.is_valid():
+        component = form.save()
+        return model_to_dict(component)
+
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("management.change_component")
