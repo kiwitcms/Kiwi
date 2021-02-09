@@ -27,7 +27,9 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: List of serialized :class:`tcms.management.models.Version` objects
         :rtype: list(dict)
     """
-    return Version.to_xmlrpc(query)
+    return list(
+        Version.objects.filter(**query).values("id", "value", "product").distinct()
+    )
 
 
 @permissions_required("management.add_version")

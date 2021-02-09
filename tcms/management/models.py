@@ -84,7 +84,7 @@ class Component(models.Model, UrlMixin):
         return self.name
 
 
-class Version(TCMSActionModel):
+class Version(models.Model, UrlMixin):
     value = models.CharField(max_length=192)
     product = models.ForeignKey(
         Product, related_name="version", on_delete=models.CASCADE

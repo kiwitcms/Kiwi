@@ -19,9 +19,12 @@ class TestFilterVersions(APITestCase):
         self.version = VersionFactory(value="0.7", product=self.product)
 
     def test_filter_by_version_id(self):
-        ver = self.rpc_client.Version.filter({"id": self.version.pk})
-        self.assertIsNotNone(ver)
-        self.assertEqual(ver[0]["value"], "0.7")
+        result = self.rpc_client.Version.filter({"id": self.version.pk})[0]
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result["id"], self.version.pk)
+        self.assertEqual(result["value"], "0.7")
+        self.assertEqual(result["product"], self.version.product_id)
 
     def test_filter_by_product_id(self):
         versions = self.rpc_client.Version.filter({"product_id": self.product.pk})
