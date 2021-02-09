@@ -111,3 +111,15 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: psf/black@stable
+
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run eslint
+        run: |
+          cd tcms/
+          npm install --dev
+
+          ./node_modules/.bin/eslint .
