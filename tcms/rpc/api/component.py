@@ -61,7 +61,8 @@ def create(values, **kwargs):
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
-        :raises: PermissionDenied if missing *management.add_component* permission
+        :raises ValueError: if data validation fails
+        :raises PermissionDenied: if missing *management.add_component* permission
 
     .. note::
 
@@ -102,27 +103,14 @@ def update(component_id, values):
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
-        :raises ValueError: if ``name`` is missing or empty string
+        :raises ValueError: if data validation fails
         :raises PermissionDenied: if missing *management.change_component* permission
     """
-    if not isinstance(values, dict) or "name" not in values:
-        raise ValueError("Component name is not in values {0}.".format(values))
+    component = Component.objects.get(pk=component_id)
+    form = ComponentUpdateForm(values, instance=component)
 
-    name = values["name"]
-    if not isinstance(name, str) or not name:
-        raise ValueError("Component name {0} is not a string value.".format(name))
+    if form.is_valid():
+        component = form.save()
+        return model_to_dict(component)
 
-    component = Component.objects.get(pk=int(component_id))
-    component.name = name
-    if (
-        values.get("initial_owner_id")
-        and User.objects.filter(pk=values["initial_owner_id"]).exists()
-    ):
-        component.initial_owner_id = values["initial_owner_id"]
-    if (
-        values.get("initial_qa_contact_id")
-        and User.objects.filter(pk=values["initial_qa_contact_id"]).exists()
-    ):
-        component.initial_qa_contact_id = values["initial_qa_contact_id"]
-    component.save()
-    return component.serialize()
+    raise ValueError(form_errors_to_list(form))
