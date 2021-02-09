@@ -47,20 +47,21 @@ class TestCreateComponent(APITestCase):
 
         self.product = ProductFactory()
 
-        # Any added component in tests will be added to this list and then remove them all
-        self.components_to_delete = []
-
     def test_add_component(self):
-        com = self.rpc_client.Component.create(
+        result = self.rpc_client.Component.create(
             {
                 "name": "application",
                 "product": self.product.pk,
             }
         )
-        self.components_to_delete.append(com["id"])
-        self.assertIsNotNone(com)
-        self.assertEqual(com["name"], "application")
-        self.assertEqual(com["initial_owner"], self.api_user.username)
+        self.assertIsNotNone(result)
+
+        self.assertIn("id", result)
+        self.assertEqual(result["name"], "application")
+        self.assertEqual(result["product"], self.product.pk)
+        self.assertEqual(result["initial_owner"], self.api_user.pk)
+        self.assertEqual(result["initial_qa_contact"], self.api_user.pk)
+        self.assertEqual(result["description"], "Created via API")
 
     def test_add_component_with_no_perms(self):
         self.rpc_client.Auth.logout()
