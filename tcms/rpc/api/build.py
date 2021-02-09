@@ -56,7 +56,7 @@ def create(values):
         :return: Serialized :class:`tcms.management.models.Build` object
         :rtype: dict
         :raises ValueError: if input values don't validate
-        :raises: PermissionDenied if missing *management.add_build* permission
+        :raises PermissionDenied: if missing *management.add_build* permission
     """
     if "is_active" not in values:
         values["is_active"] = True
@@ -83,8 +83,8 @@ def update(build_id, values):
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Build` object
         :rtype: dict
-        :raises: Build.DoesNotExist if build not found
-        :raises: PermissionDenied if missing *management.change_build* permission
+        :raises Build.DoesNotExist: if build not found
+        :raises PermissionDenied: if missing *management.change_build* permission
         :raises ValueError: if input values don't validate
     """
     build = Build.objects.get(pk=build_id)

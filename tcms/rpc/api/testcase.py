@@ -169,7 +169,7 @@ def get_notification_cc(case_id):
         :type case_id: int
         :return: List of email addresses
         :rtype: list(str)
-        :raises: TestCase.DoesNotExist if object with case_id doesn't exist
+        :raises TestCase.DoesNotExist: if object with case_id doesn't exist
     """
     return TestCase.objects.get(pk=case_id).emailing.get_cc_list()
 
@@ -365,7 +365,7 @@ def remove(query):
 
         :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
         :type query: dict
-        :raises: PermissionDenied if missing the *testcases.delete_testcase* permission
+        :raises PermissionDenied: if missing the *testcases.delete_testcase* permission
         :return: The number of objects deleted and a dictionary with the
                  number of deletions per object type.
         :rtype: int, dict
