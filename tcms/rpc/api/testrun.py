@@ -122,9 +122,9 @@ def add_tag(run_id, tag_name, **kwargs):
                 entry point name and handler instance from the rpc method
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: dict
-        :raises: PermissionDenied if missing *testruns.add_testruntag* permission
-        :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
-        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag_name*
+        :raises PermissionDenied: if missing *testruns.add_testruntag* permission
+        :raises TestRun.DoesNotExist: if object specified by PK doesn't exist
+        :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag_name*
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
@@ -148,8 +148,8 @@ def remove_tag(run_id, tag_name):
         :type tag_name: str
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: dict
-        :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
-        :raises: DoesNotExist if objects specified don't exist
+        :raises PermissionDenied: if missing *testruns.delete_testruntag* permission
+        :raises DoesNotExist: if objects specified don't exist
     """
     tag = Tag.objects.get(name=tag_name)
     test_run = TestRun.objects.get(pk=run_id)
