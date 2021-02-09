@@ -6,7 +6,6 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.forms import VersionForm
 from tcms.management.models import Version
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.utils import pre_check_product
 
 __all__ = (
     "create",
@@ -49,14 +48,11 @@ def create(values):
 
         # Add version for specified product:
         >>> Version.create({'value': 'devel', 'product': 272})
-        {'product': 'QE Test Product', 'id': '1106', 'value': 'devel', 'product_id': 272}
+        {'id': '1106', 'value': 'devel', 'product': 272}
     """
-    product = pre_check_product(values)
-    form_values = values.copy()
-    form_values["product"] = product.pk
-
-    form = VersionForm(form_values)
+    form = VersionForm(values)
     if form.is_valid():
         version = form.save()
         return version.serialize()
+
     raise ValueError(form_errors_to_list(form))
