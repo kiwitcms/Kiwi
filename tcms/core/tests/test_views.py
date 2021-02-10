@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms import urls
 from tcms.tests import BaseCaseRun
+from tcms.tests.factories import TestExecutionFactory, TestPlanFactory, TestRunFactory
 
 
 class TestDashboard(BaseCaseRun):
