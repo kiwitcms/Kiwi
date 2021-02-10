@@ -8,11 +8,8 @@ from tree_queries.models import TreeNode
 from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
-from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import UrlMixin
 from tcms.management.models import Version
-from tcms.rpc.serializer import TestPlanRPCSerializer
-from tcms.rpc.utils import distinct_filter
 from tcms.testcases.models import TestCasePlan
 
 
@@ -27,7 +24,7 @@ class PlanType(models.Model, UrlMixin):
         ordering = ["name"]
 
 
-class TestPlan(TreeNode, TCMSActionModel):
+class TestPlan(TreeNode, UrlMixin):
     """A plan within the TCMS"""
 
     history = KiwiHistoricalRecords()
@@ -52,14 +49,6 @@ class TestPlan(TreeNode, TCMSActionModel):
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def to_xmlrpc(cls, query=None):
-
-        _query = query or {}
-        qs = distinct_filter(TestPlan, _query).order_by("pk")
-        serializer = TestPlanRPCSerializer(model_class=cls, queryset=qs)
-        return serializer.serialize_queryset()
 
     def add_case(self, case, sortkey=None):
         if sortkey is None:
