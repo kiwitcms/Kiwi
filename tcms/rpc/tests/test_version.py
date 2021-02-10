@@ -46,11 +46,12 @@ class TestVersionCreateFunctionality(APITestCase):
         self.product = ProductFactory(name=self.product_name)
 
     def test_add_version_with_product_id(self):
-        prod = self.rpc_client.Version.create(
+        result = self.rpc_client.Version.create(
             {"product": self.product.pk, "value": "New Version 1"}
         )
-        self.assertEqual(prod["value"], "New Version 1")
-        self.assertEqual(prod["product_id"], self.product.pk)
+        self.assertEqual(result["value"], "New Version 1")
+        self.assertEqual(result["product"], self.product.pk)
+        self.assertIn("id", result)
 
     def test_add_version_with_non_exist_prod(self):
         with self.assertRaisesRegex(XmlRPCFault, ".*product.*Select a valid choice.*"):
@@ -75,8 +76,7 @@ class TestVersionCreateFunctionality(APITestCase):
                 "extra-data-field": "Extra value that is not expected",
             }
         )
-        self.assertEqual(self.product.pk, new_version["product_id"])
-        self.assertEqual(self.product.name, new_version["product"])
+        self.assertEqual(self.product.pk, new_version["product"])
         self.assertEqual("New version", new_version["value"])
 
 
@@ -93,8 +93,9 @@ class TestVersionCreatePermissions(APIPermissionsTestCase):
         )
 
         # verify the serialized result
+        self.assertIn("id", result)
         self.assertEqual(result["value"], "Version with Permissions")
-        self.assertEqual(result["product_id"], self.product.pk)
+        self.assertEqual(result["product"], self.product.pk)
 
         # verify the object from the DB
         version = Version.objects.get(pk=result["id"])
