@@ -17,6 +17,7 @@ class TestCaseStatusFilter(APITestCase):
             self.assertIsNotNone(case_status["id"])
             self.assertIsNotNone(case_status["name"])
             self.assertIsNotNone(case_status["description"])
+            self.assertIsNotNone(case_status["is_confirmed"])
 
 
 class TestCaseStatusFilterPermissions(APIPermissionsTestCase):

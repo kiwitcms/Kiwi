@@ -19,4 +19,8 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.testcases.models.TestCaseStatus` objects
         :rtype: list(dict)
     """
-    return TestCaseStatus.to_xmlrpc(query)
+    return list(
+        TestCaseStatus.objects.filter(**query)
+        .values("id", "name", "description", "is_confirmed")
+        .distinct()
+    )
