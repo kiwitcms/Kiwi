@@ -87,7 +87,27 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return TestPlan.to_xmlrpc(query)
+    return list(
+        TestPlan.objects.filter(**query)
+        .values(
+            "id",
+            "name",
+            "text",
+            "create_date",
+            "is_active",
+            "extra_link",
+            "product_version",
+            "product_version__value",
+            "product",
+            "product__name",
+            "author",
+            "author__username",
+            "type",
+            "type__name",
+            "parent",
+        )
+        .distinct()
+    )
 
 
 @permissions_required("testplans.add_testplantag")
