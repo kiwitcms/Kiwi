@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
+from django.conf import settings
+
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import TagFactory
 
@@ -49,3 +51,10 @@ class Tag(APITestCase):
         self.assertEqual(test_tag[1]["name"], "fedora")
         self.assertEqual(test_tag[2]["id"], self.tag_python.pk)
         self.assertEqual(test_tag[2]["name"], "python")
+
+        if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
+            self.assertIn("bugs", test_tag[0])
+
+        self.assertIn("case", test_tag[0])
+        self.assertIn("plan", test_tag[0])
+        self.assertIn("run", test_tag[0])
