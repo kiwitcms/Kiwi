@@ -298,7 +298,7 @@ by editing ``docker-compose.yml``:
             - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
   If this file exists it is imported before any of the files under
-  ``local_settings_dir/``!
+  ``tcms_settings_dir/``!
 
 .. versionadded:: 8.1
 .. versionchanged:: 8.2
