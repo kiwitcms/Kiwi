@@ -13,6 +13,7 @@ from django.utils.translation import override
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
+from tcms.core.models.base import UrlMixin
 from tcms.rpc.serializer import TestExecutionRPCSerializer, TestRunRPCSerializer
 from tcms.rpc.utils import distinct_filter
 
@@ -221,7 +222,7 @@ class TestRun(TCMSActionModel):
         )
 
 
-class TestExecutionStatus(TCMSActionModel):
+class TestExecutionStatus(models.Model, UrlMixin):
     class Meta:
         # used in the admin view
         verbose_name_plural = _("Test execution statuses")
