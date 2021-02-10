@@ -1,4 +1,4 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019,2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -21,4 +21,8 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.testruns.models.TestExecutionStatus` objects
         :rtype: list(dict)
     """
-    return TestExecutionStatus.to_xmlrpc(query)
+    return list(
+        TestExecutionStatus.objects.filter(**query).values(
+            "id", "name", "weight", "icon", "color"
+        )
+    )
