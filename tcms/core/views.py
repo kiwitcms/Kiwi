@@ -52,10 +52,6 @@ class DashboardView(TemplateView):
         }
 
 
-class NavigationView(TemplateView):  # pylint: disable=missing-permission-required
-    template_name = "navigation.html"
-
-
 @requires_csrf_token
 def server_error(request):  # pylint: disable=missing-permission-required
     """
