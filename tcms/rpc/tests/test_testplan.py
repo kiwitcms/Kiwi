@@ -306,14 +306,18 @@ class TestCreate(APITestCase):
             "author": user.pk,
         }
         result = self.rpc_client.TestPlan.create(params)
-        self.assertEqual(params["product"], result["product_id"])
-        self.assertEqual(params["product_version"], result["product_version_id"])
+
+        self.assertIn("id", result)
         self.assertEqual(params["name"], result["name"])
-        self.assertEqual(params["type"], result["type_id"])
         self.assertEqual(params["text"], result["text"])
+        self.assertIn("create_date", result)
+        self.assertTrue(result["is_active"])
+        self.assertIn("extra_link", result)
+        self.assertEqual(params["product_version"], result["product_version"])
+        self.assertEqual(params["product"], result["product"])
+        self.assertEqual(user.pk, result["author"])
+        self.assertEqual(params["type"], result["type"])
         self.assertEqual(params["parent"], result["parent"])
-        self.assertEqual(user.username, result["author"])
-        self.assertEqual(user.pk, result["author_id"])
 
 
 class TestCreatePermission(APIPermissionsTestCase):
@@ -336,17 +340,17 @@ class TestCreatePermission(APIPermissionsTestCase):
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestPlan.create(self.params)
-        self.assertEqual(self.params["product"], result["product_id"])
-        self.assertEqual(self.params["product_version"], result["product_version_id"])
+        self.assertEqual(self.params["product"], result["product"])
+        self.assertEqual(self.params["product_version"], result["product_version"])
         self.assertEqual(self.params["name"], result["name"])
-        self.assertEqual(self.params["type"], result["type_id"])
+        self.assertEqual(self.params["type"], result["type"])
         self.assertEqual(self.params["text"], result["text"])
         self.assertEqual(self.params["parent"], result["parent"])
-        self.assertEqual(self.tester.username, result["author"])
+        self.assertEqual(self.tester.pk, result["author"])
 
         # verify object from DB
         testplan = TestPlan.objects.get(name=self.params["name"])
-        self.assertEqual(testplan.serialize(), result)
+        self.assertEqual(testplan.pk, result["id"])
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
