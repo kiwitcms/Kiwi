@@ -131,7 +131,7 @@ def add_tag(run_id, tag_name, **kwargs):
     tag, _ = Tag.get_or_create(request.user, tag_name)
     test_run = TestRun.objects.get(pk=run_id)
     test_run.add_tag(tag)
-    return Tag.to_xmlrpc({"pk__in": test_run.tag.all()})
+    return list(test_run.tag.values("id", "name"))
 
 
 @permissions_required("testruns.delete_testruntag")
@@ -154,7 +154,7 @@ def remove_tag(run_id, tag_name):
     tag = Tag.objects.get(name=tag_name)
     test_run = TestRun.objects.get(pk=run_id)
     test_run.remove_tag(tag)
-    return Tag.to_xmlrpc({"pk__in": test_run.tag.all()})
+    return list(test_run.tag.values("id", "name"))
 
 
 @permissions_required("testruns.add_testrun")
