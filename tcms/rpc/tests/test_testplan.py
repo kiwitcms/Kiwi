@@ -45,13 +45,21 @@ class TestFilter(APITestCase):
         )
 
     def test_filter_plans(self):
-        plans = self.rpc_client.TestPlan.filter(
+        result = self.rpc_client.TestPlan.filter(
             {"pk__in": [self.plan_1.pk, self.plan_2.pk]}
-        )
-        plan = plans[0]
-        self.assertEqual(self.plan_1.name, plan["name"])
-        self.assertEqual(self.plan_1.product_version.pk, plan["product_version_id"])
-        self.assertEqual(self.plan_1.author.pk, plan["author_id"])
+        )[0]
+
+        self.assertEqual(result["id"], self.plan_1.pk)
+        self.assertEqual(result["name"], self.plan_1.name)
+        self.assertIn("text", result)
+        self.assertIn("create_date", result)
+        self.assertIn("is_active", result)
+        self.assertIn("extra_link", result)
+        self.assertEqual(result["product_version"], self.plan_1.product_version.pk)
+        self.assertEqual(result["product"], self.plan_1.product.pk)
+        self.assertEqual(result["author"], self.plan_1.author.pk)
+        self.assertIn("type", result)
+        self.assertIn("parent", result)
 
     def test_filter_out_all_plans(self):
         plans_total = TestPlan.objects.all().count()

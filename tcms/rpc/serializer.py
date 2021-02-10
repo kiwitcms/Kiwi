@@ -393,35 +393,6 @@ class QuerySetBasedRPCSerializer(Serializer):
         return serialize_result
 
 
-class TestPlanRPCSerializer(QuerySetBasedRPCSerializer):
-    """Serializer for TestPlan"""
-
-    values_fields_mapping = {
-        "id": ("id", do_nothing),
-        "create_date": ("create_date", datetime_to_str),
-        "extra_link": ("extra_link", do_nothing),
-        "is_active": ("is_active", do_nothing),
-        "name": ("name", do_nothing),
-        "text": ("text", do_nothing),
-        "author": ("author_id", do_nothing),
-        "author__username": ("author", to_str),
-        "parent": ("parent_id", do_nothing),
-        "parent__name": ("parent", do_nothing),
-        "product": ("product_id", do_nothing),
-        "product__name": ("product", do_nothing),
-        "product_version": ("product_version_id", do_nothing),
-        "product_version__value": ("product_version", do_nothing),
-        "type": ("type_id", do_nothing),
-        "type__name": ("type", do_nothing),
-    }
-
-    extra_fields = {
-        "alias": {"product_version": "default_product_version"},
-    }
-
-    m2m_fields = ("cases", "tag")
-
-
 class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestExecution"""
 
