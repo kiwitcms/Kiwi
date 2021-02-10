@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
 from tcms.core.utils import form_errors_to_list
@@ -53,6 +54,6 @@ def create(values):
     form = VersionForm(values)
     if form.is_valid():
         version = form.save()
-        return version.serialize()
+        return model_to_dict(version)
 
     raise ValueError(form_errors_to_list(form))
