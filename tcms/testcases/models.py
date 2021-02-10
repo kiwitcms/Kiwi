@@ -14,7 +14,7 @@ from tcms.rpc.utils import distinct_filter
 from tcms.testcases.fields import MultipleEmailField
 
 
-class TestCaseStatus(TCMSActionModel):
+class TestCaseStatus(models.Model, UrlMixin):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     is_confirmed = models.BooleanField(db_index=True, default=False)
