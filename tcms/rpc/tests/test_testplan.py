@@ -192,7 +192,22 @@ class TestUpdatePermission(APIPermissionsTestCase):
         self.plan = TestPlanFactory()
 
     def verify_api_with_permission(self):
-        self.rpc_client.TestPlan.update(self.plan.pk, {"text": "This has been updated"})
+        result = self.rpc_client.TestPlan.update(
+            self.plan.pk, {"text": "This has been updated"}
+        )
+
+        self.assertEqual(result["id"], self.plan.pk)
+        self.assertEqual(result["name"], self.plan.name)
+        self.assertEqual(result["text"], "This has been updated")
+        self.assertEqual(result["create_date"], self.plan.create_date)
+        self.assertEqual(result["is_active"], self.plan.is_active)
+        self.assertEqual(result["extra_link"], self.plan.extra_link)
+        self.assertEqual(result["product_version"], self.plan.product_version.pk)
+        self.assertEqual(result["product"], self.plan.product.pk)
+        self.assertEqual(result["author"], self.plan.author.pk)
+        self.assertEqual(result["type"], self.plan.type.pk)
+        self.assertEqual(result["parent"], self.plan.parent_id)
+
         # reload from db
         self.plan.refresh_from_db()
         # assert

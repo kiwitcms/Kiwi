@@ -70,8 +70,9 @@ def create(values, **kwargs):
         test_plan = form.save()
         result = model_to_dict(test_plan, exclude=["tag"])
 
-        # b/c value is set in the DB directly
-        result['create_date'] = test_plan.create_date
+        # b/c value is set in the DB directly and if None
+        # model_to_dict() will not return it
+        result["create_date"] = test_plan.create_date
         return result
 
     raise ValueError(form_errors_to_list(form))
@@ -182,10 +183,14 @@ def update(plan_id, values):
     form = EditPlanForm(values, instance=test_plan)
     if form.is_valid():
         test_plan = form.save()
-    else:
-        raise ValueError(form_errors_to_list(form))
+        result = model_to_dict(test_plan, exclude=["tag"])
 
-    return test_plan.serialize()
+        # b/c value is set in the DB directly and if None
+        # model_to_dict() will not return it
+        result["create_date"] = test_plan.create_date
+        return result
+
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("testcases.add_testcaseplan")
