@@ -4,7 +4,6 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import UrlMixin
 
 
@@ -125,7 +124,7 @@ class Build(models.Model):
         return self.name
 
 
-class Tag(TCMSActionModel):
+class Tag(models.Model, UrlMixin):
     name = models.CharField(max_length=255)
 
     class Meta:

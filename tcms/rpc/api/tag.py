@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.conf import settings
 from modernrpc.core import rpc_method
 
 from tcms.management.models import Tag
@@ -19,4 +19,8 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: list(dict)
     """
-    return Tag.to_xmlrpc(query)
+    fields_list = ["id", "name", "case", "plan", "run"]
+    if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
+        fields_list.append("bugs")
+
+    return list(Tag.objects.filter(**query).values(*fields_list).distinct())
