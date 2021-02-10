@@ -1,11 +1,10 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019,2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 import pkg_resources
 from django.conf import settings
 from django.test import TestCase
-from django.urls import reverse
 from django.urls.resolvers import URLResolver
 from django.utils.translation import gettext_lazy as _
 
@@ -65,7 +64,7 @@ class MenuDiscoveryTestCase(TestCase):
         Then navigation menu under PLUGINS will be rendered
             with several levels of sub menus.
         """
-        response = self.client.get(reverse("iframe-navigation"))
+        response = self.client.get("/", follow=True)
         self.assertContains(response, "Fake Telemetry plugin")
         self.assertContains(
             response,
