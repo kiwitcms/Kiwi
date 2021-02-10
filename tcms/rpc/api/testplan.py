@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
@@ -56,18 +57,24 @@ def create(values, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
 
-    if not (values.get("author") or values.get("author_id")):
+    if not values.get("author"):
         values["author"] = request.user.pk
+
+    if not values.get("is_active"):
+        values["is_active"] = True
 
     form = NewPlanForm(values)
     form.populate(product_id=values["product"])
 
     if form.is_valid():
         test_plan = form.save()
-    else:
-        raise ValueError(form_errors_to_list(form))
+        result = model_to_dict(test_plan, exclude=["tag"])
 
-    return test_plan.serialize()
+        # b/c value is set in the DB directly
+        result['create_date'] = test_plan.create_date
+        return result
+
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("testplans.view_testplan")
