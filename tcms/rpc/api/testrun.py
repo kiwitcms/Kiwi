@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
@@ -186,7 +187,13 @@ def create(values):
 
     if form.is_valid():
         test_run = form.save()
-        return test_run.serialize()
+        result = model_to_dict(test_run, exclude=["cc", "tag"])
+
+        # b/c value is set in the DB directly and if None
+        # model_to_dict() will not return it
+        result["start_date"] = test_run.start_date
+
+        return result
 
     raise ValueError(form_errors_to_list(form))
 

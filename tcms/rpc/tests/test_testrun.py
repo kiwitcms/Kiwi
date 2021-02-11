@@ -338,7 +338,7 @@ class TestProductVersionWhenCreating(APITestCase):
         }
 
         result = self.rpc_client.TestRun.create(test_run_fields)
-        self.assertEqual(result["product_version"], self.plan.product_version.value)
+        self.assertEqual(result["product_version"], self.plan.product_version.pk)
 
     def test_create_with_product_version(self):
         version2 = VersionFactory()
@@ -354,7 +354,7 @@ class TestProductVersionWhenCreating(APITestCase):
         result = self.rpc_client.TestRun.create(test_run_fields)
         # the result is still using product_version from TR.plan.product_version
         # not the one we specified above
-        self.assertEqual(result["product_version"], self.plan.product_version.value)
+        self.assertEqual(result["product_version"], self.plan.product_version.pk)
 
     def test_create_with_invalid_value(self):
         test_run_fields = {
@@ -388,7 +388,17 @@ class TestCreatePermission(APIPermissionsTestCase):
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestRun.create(self.test_run_fields)
+
+        self.assertIn("id", result)
+        self.assertIn("product_version", result)
+        self.assertIn("start_date", result)
+        self.assertIn("stop_date", result)
         self.assertEqual(result["summary"], self.test_run_fields["summary"])
+        self.assertIn("notes", result)
+        self.assertEqual(result["plan"], self.plan.pk)
+        self.assertEqual(result["build"], self.build.pk)
+        self.assertEqual(result["manager"], self.test_run_fields["manager"])
+        self.assertIn("default_tester", result)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
