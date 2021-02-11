@@ -11,26 +11,8 @@ from django.middleware.csrf import get_token
 from mock import MagicMock
 
 from tcms.core.utils import request_host_link
-from tcms.management.models import Product
 
 QUERY_DISTINCT = 1
-
-
-def pre_check_product(values):
-    if isinstance(values, dict):
-        if not values.get("product"):
-            raise ValueError("No product given.")
-        product_str = values["product"]
-    else:
-        product_str = values
-
-    if isinstance(product_str, str):
-        if not product_str:
-            raise ValueError("Got empty product name.")
-        return Product.objects.get(name=product_str)
-    if isinstance(product_str, int):
-        return Product.objects.get(pk=product_str)
-    raise ValueError("The type of product is not recognizable.")
 
 
 def _lookup_fields_in_model(cls, fields):
