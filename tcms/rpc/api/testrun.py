@@ -208,7 +208,26 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return TestRun.to_xmlrpc(query)
+    return list(
+        TestRun.objects.filter(**query).values(
+            "id",
+            "product_version",
+            "product_version__value",
+            "start_date",
+            "stop_date",
+            "summary",
+            "notes",
+            "plan",
+            "plan__product",
+            "plan__name",
+            "build",
+            "build__name",
+            "manager",
+            "manager__username",
+            "default_tester",
+            "default_tester__username",
+        )
+    )
 
 
 @permissions_required("testruns.change_testrun")
