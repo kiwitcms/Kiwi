@@ -473,28 +473,26 @@ class TestUpdateTestRun(APITestCase):
             "stop_date": self.updated_stop_date,
         }
 
-        # assert test plan is not already updated
+        # assert test run is not updated yet
         self.assertNotEqual(self.updated_test_plan, self.test_run.plan.name)
         self.assertNotEqual(self.updated_build, self.test_run.build.name)
         self.assertNotEqual(self.updated_summary, self.test_run.summary)
         self.assertNotEqual(self.updated_stop_date, self.test_run.stop_date)
 
-        updated_test_run = self.rpc_client.TestRun.update(
-            self.test_run.pk, update_fields
-        )
+        result = self.rpc_client.TestRun.update(self.test_run.pk, update_fields)
         self.test_run.refresh_from_db()
 
         # compare result, returned from API call with test run from DB
-        self.assertEqual(updated_test_run["plan"], self.test_run.plan.name)
-        self.assertEqual(updated_test_run["build"], self.test_run.build.name)
-        self.assertEqual(updated_test_run["summary"], self.test_run.summary)
-        self.assertEqual(updated_test_run["stop_date"], str(self.test_run.stop_date))
-
-        # compare result, returned from API call with params sent to the API
-        self.assertEqual(updated_test_run["plan"], self.updated_test_plan.name)
-        self.assertEqual(updated_test_run["build"], self.updated_build.name)
-        self.assertEqual(updated_test_run["summary"], self.updated_summary)
-        self.assertEqual(updated_test_run["stop_date"], str(self.updated_stop_date))
+        self.assertEqual(result["id"], self.test_run.pk)
+        self.assertEqual(result["product_version"], self.test_run.product_version.pk)
+        self.assertEqual(result["start_date"], self.test_run.start_date)
+        self.assertEqual(result["stop_date"], self.test_run.stop_date)
+        self.assertEqual(result["summary"], self.test_run.summary)
+        self.assertEqual(result["notes"], self.test_run.notes)
+        self.assertEqual(result["plan"], self.test_run.plan.pk)
+        self.assertEqual(result["build"], self.test_run.build.pk)
+        self.assertEqual(result["manager"], self.test_run.manager.pk)
+        self.assertEqual(result["default_tester"], self.test_run.default_tester.pk)
 
     def test_wrong_date_format(self):
         test_run = TestRunFactory()
@@ -538,12 +536,13 @@ class TestUpdateTestRun(APITestCase):
                 "stop_date": updated_stop_date,
             },
         )
-        self.test_run.refresh_from_db()
 
-        self.assertEqual(updated_test_run["plan"], updated_test_plan.name)
-        self.assertEqual(updated_test_run["build"], updated_build.name)
+        test_run.refresh_from_db()
+
+        self.assertEqual(updated_test_run["plan"], updated_test_plan.pk)
+        self.assertEqual(updated_test_run["build"], updated_build.pk)
         self.assertEqual(updated_test_run["summary"], updated_summary)
-        self.assertEqual(updated_test_run["stop_date"], updated_stop_date)
+        self.assertEqual(updated_test_run["stop_date"], test_run.stop_date)
 
 
 class TestUpdatePermission(APIPermissionsTestCase):
@@ -567,7 +566,7 @@ class TestUpdatePermission(APIPermissionsTestCase):
         self.test_run.refresh_from_db()
 
         self.assertEqual(updated_test_run["summary"], self.update_fields["summary"])
-        self.assertEqual(updated_test_run["stop_date"], self.update_fields["stop_date"])
+        self.assertEqual(updated_test_run["stop_date"], self.test_run.stop_date)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
