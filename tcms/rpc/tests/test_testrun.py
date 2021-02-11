@@ -417,7 +417,19 @@ class TestFilter(APITestCase):
         _ = TestRunFactory()
         result = self.rpc_client.TestRun.filter({"plan": self.plan.pk})
         self.assertEqual(1, len(result))
-        self.assertEqual(self.test_run.pk, result[0]["id"])
+
+        result = result[0]
+
+        self.assertEqual(result["id"], self.test_run.pk)
+        self.assertEqual(result["product_version"], self.test_run.product_version.pk)
+        self.assertEqual(result["start_date"], self.test_run.start_date)
+        self.assertEqual(result["stop_date"], self.test_run.stop_date)
+        self.assertEqual(result["summary"], self.test_run.summary)
+        self.assertEqual(result["notes"], self.test_run.notes)
+        self.assertEqual(result["plan"], self.test_run.plan.pk)
+        self.assertEqual(result["build"], self.test_run.build.pk)
+        self.assertEqual(result["manager"], self.test_run.manager.pk)
+        self.assertEqual(result["default_tester"], self.test_run.default_tester.pk)
 
 
 class TestFilterPermission(APIPermissionsTestCase):

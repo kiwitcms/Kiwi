@@ -14,7 +14,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import UrlMixin
-from tcms.rpc.serializer import TestExecutionRPCSerializer, TestRunRPCSerializer
+from tcms.rpc.serializer import TestExecutionRPCSerializer
 from tcms.rpc.utils import distinct_filter
 
 TestExecutionStatusSubtotal = namedtuple(
@@ -29,7 +29,7 @@ TestExecutionStatusSubtotal = namedtuple(
 )
 
 
-class TestRun(TCMSActionModel):
+class TestRun(models.Model, UrlMixin):
     history = KiwiHistoricalRecords()
 
     # todo: this field should be removed in favor of plan.product_version
@@ -71,13 +71,6 @@ class TestRun(TCMSActionModel):
 
     def __str__(self):
         return self.summary
-
-    @classmethod
-    def to_xmlrpc(cls, query=None):
-        _query = query or {}
-        qs = distinct_filter(TestRun, _query).order_by("pk")
-        serializer = TestRunRPCSerializer(model_class=cls, queryset=qs)
-        return serializer.serialize_queryset()
 
     def _get_absolute_url(self):
         return reverse(

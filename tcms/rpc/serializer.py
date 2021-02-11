@@ -416,28 +416,6 @@ class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
     }
 
 
-class TestRunRPCSerializer(QuerySetBasedRPCSerializer):
-    """Serializer for TestRun"""
-
-    values_fields_mapping = {
-        "notes": ("notes", do_nothing),
-        "id": ("id", do_nothing),
-        "start_date": ("start_date", datetime_to_str),
-        "stop_date": ("stop_date", datetime_to_str),
-        "summary": ("summary", do_nothing),
-        "build": ("build_id", do_nothing),
-        "build__name": ("build", do_nothing),
-        "default_tester": ("default_tester_id", do_nothing),
-        "default_tester__username": ("default_tester", to_str),
-        "manager": ("manager_id", do_nothing),
-        "manager__username": ("manager", to_str),
-        "plan": ("plan_id", do_nothing),
-        "plan__name": ("plan", do_nothing),
-        "product_version": ("product_version_id", do_nothing),
-        "product_version__value": ("product_version", do_nothing),
-    }
-
-
 class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestCase"""
 
