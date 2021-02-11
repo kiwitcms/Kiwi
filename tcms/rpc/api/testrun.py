@@ -188,11 +188,9 @@ def create(values):
     if form.is_valid():
         test_run = form.save()
         result = model_to_dict(test_run, exclude=["cc", "tag"])
-
         # b/c value is set in the DB directly and if None
         # model_to_dict() will not return it
         result["start_date"] = test_run.start_date
-
         return result
 
     raise ValueError(form_errors_to_list(form))
@@ -263,11 +261,16 @@ def update(run_id, values):
     if "plan" not in values:
         form.populate(version_id=test_run.plan.product_version_id)
 
-    if not form.is_valid():
-        raise ValueError(form_errors_to_list(form))
+    if form.is_valid():
+        test_run = form.save()
+        result = model_to_dict(test_run, exclude=["cc", "tag"])
+        # b/c value is set in the DB directly and if None
+        # model_to_dict() will not return it
+        result["start_date"] = test_run.start_date
+        result["stop_date"] = test_run.stop_date
+        return result
 
-    test_run = form.save()
-    return test_run.serialize()
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("testruns.change_testrun")
