@@ -11,7 +11,6 @@ from tcms.core.utils import form_errors_to_list
 from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.serializer import Serializer
 from tcms.testruns.models import TestExecution
 
 # conditional import b/c this App can be disabled
@@ -294,6 +293,13 @@ def get_links(query):
                  objects
         :rtype: dict
     """
-    links = LinkReference.objects.filter(**query)
-    serialier = Serializer(links)
-    return serialier.serialize_queryset()
+    return list(
+        LinkReference.objects.filter(**query).values(
+            "id",
+            "name",
+            "url",
+            "execution",
+            "created_on",
+            "is_defect",
+        )
+    )
