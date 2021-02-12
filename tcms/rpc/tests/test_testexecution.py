@@ -300,14 +300,21 @@ class TestExecutionFilter(APITestCase):
 
     def test_filter_by_id(self):
         execution = self.rpc_client.TestExecution.filter({"pk": self.execution.pk})[0]
+
         self.assertIsNotNone(execution)
-        self.assertEqual(execution["build_id"], self.execution.build.pk)
-        self.assertEqual(execution["case_id"], self.execution.case.pk)
-        self.assertEqual(execution["assignee_id"], self.tester.pk)
-        self.assertEqual(execution["tested_by_id"], None)
-        self.assertEqual(execution["sortkey"], 10)
-        self.assertEqual(execution["status"], self.status_idle.name)
-        self.assertEqual(execution["status_id"], self.status_idle.pk)
+        self.assertEqual(execution["id"], self.execution.pk)
+        self.assertEqual(execution["assignee"], self.tester.pk)
+        self.assertEqual(execution["tested_by"], None)
+        self.assertEqual(
+            execution["case_text_version"], self.execution.case_text_version
+        )
+        self.assertEqual(execution["start_date"], self.execution.start_date)
+        self.assertEqual(execution["stop_date"], self.execution.stop_date)
+        self.assertEqual(execution["sortkey"], self.execution.sortkey)
+        self.assertEqual(execution["run"], self.execution.run.pk)
+        self.assertEqual(execution["case"], self.execution.case.pk)
+        self.assertEqual(execution["build"], self.execution.build.pk)
+        self.assertEqual(execution["status"], self.status_idle.pk)
 
 
 class TestExecutionGetLinks(APITestCase):

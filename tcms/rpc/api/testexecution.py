@@ -102,18 +102,37 @@ def get_comments(execution_id):
 
 @permissions_required("testruns.view_testexecution")
 @rpc_method(name="TestExecution.filter")
-def filter(values):  # pylint: disable=redefined-builtin
+def filter(query):  # pylint: disable=redefined-builtin
     """
-    .. function:: RPC TestExecution.filter(values)
+    .. function:: RPC TestExecution.filter(query)
 
         Perform a search and return the resulting list of test case executions.
 
-        :param values: Field lookups for :class:`tcms.testruns.models.TestExecution`
-        :type values: dict
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
+        :type query: dict
         :return: List of serialized :class:`tcms.testruns.models.TestExecution` objects
         :rtype: list(dict)
     """
-    return TestExecution.to_xmlrpc(values)
+    return list(
+        TestExecution.objects.filter(**query).values(
+            "id",
+            "assignee",
+            "assignee__username",
+            "tested_by",
+            "tested_by__username",
+            "case_text_version",
+            "start_date",
+            "stop_date",
+            "sortkey",
+            "run",
+            "case",
+            "case__summary",
+            "build",
+            "build__name",
+            "status",
+            "status__name",
+        )
+    )
 
 
 @permissions_required("testruns.view_testexecution")

@@ -237,7 +237,7 @@ function addTestCaseToRun(runId) {
     const testCase = autocomplete_cache[caseName];
 
     // test case is already present so don't add it
-    const allCaseIds = Object.values(allExecutions).map(te => te.case_id)
+    const allCaseIds = Object.values(allExecutions).map(te => te.case)
     if (allCaseIds.indexOf(testCase.id) > -1) {
         $('#search-testcase').val('');
         return false;
@@ -288,7 +288,7 @@ function drawPercentBar(testExecutions) {
     Object.values(allExecutionStatuses).forEach(s => statusCount[s.name] = { count: 0, id: s.id })
 
     testExecutions.forEach(testExecution => {
-        const executionStatus = allExecutionStatuses[testExecution.status_id]
+        const executionStatus = allExecutionStatuses[testExecution.status]
 
         if (executionStatus.weight > 0) {
             positiveCount++
@@ -388,7 +388,7 @@ function getExpandArea(testExecution) {
     container.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
     jsonRPC('TestCase.history',
-        [testExecution.case_id, {
+        [testExecution.case, {
             history_id: testExecution.case_text_version
         }], (data) => {
             data.forEach((entry) => {
@@ -462,7 +462,7 @@ function getExpandArea(testExecution) {
         links.forEach(link => ul.append(renderLink(link)))
     })
 
-    jsonRPC('TestCase.list_attachments', [testExecution.case_id], attachments => {
+    jsonRPC('TestCase.list_attachments', [testExecution.case], attachments => {
         const ul = container.find(`.test-case-attachments`)
 
         if (!attachments.length) {
@@ -619,20 +619,21 @@ function renderTestExecutionRow(testExecution) {
     const template = $(testExecutionRowTemplate.cloneNode(true))
 
     template.find('.test-execution-checkbox').data('test-execution-id', testExecution.id)
-    template.find('.test-execution-checkbox').data('test-execution-case-id', testExecution.case_id)
+    template.find('.test-execution-checkbox').data('test-execution-case-id', testExecution.case)
     template.find('.test-execution-element').addClass(`test-execution-${testExecution.id}`)
-    template.find('.test-execution-element').addClass(`test-execution-case-${testExecution.case_id}`)
+    template.find('.test-execution-element').addClass(`test-execution-case-${testExecution.case}`)
     template.find('.test-execution-info').html(`TE-${testExecution.id}`)
-    template.find('.test-execution-info-link').html(testExecution.case)
-    template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case_id}/`)
+    template.find('.test-execution-info-link').html('--- fix me: case summary') // todo: fix me, was testExecution.case
+    template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case}/`)
     template.find('.test-execution-tester').html(testExecution.tested_by || '-')
     template.find('.test-execution-asignee').html(testExecution.assignee || '-')
 
-    const testExecutionStatus = allExecutionStatuses[testExecution.status_id]
+    const testExecutionStatus = allExecutionStatuses[testExecution.status]
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
     // todo: will not be needed when status names come translated from backend
-    allExecutions[testExecution.id].status = testExecutionStatus.name
+    // fixme: do we even need this ???
+    // allExecutions[testExecution.id].status_name = testExecutionStatus.name
 
     template.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
     template.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))

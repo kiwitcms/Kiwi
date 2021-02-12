@@ -393,29 +393,6 @@ class QuerySetBasedRPCSerializer(Serializer):
         return serialize_result
 
 
-class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
-    """Serializer for TestExecution"""
-
-    values_fields_mapping = {
-        "id": ("id", do_nothing),
-        "case_text_version": ("case_text_version", do_nothing),
-        "stop_date": ("stop_date", datetime_to_str),
-        "sortkey": ("sortkey", do_nothing),
-        "assignee": ("assignee_id", do_nothing),
-        "assignee__username": ("assignee", to_str),
-        "build": ("build_id", do_nothing),
-        "build__name": ("build", do_nothing),
-        "case": ("case_id", do_nothing),
-        "case__summary": ("case", do_nothing),
-        "status": ("status_id", do_nothing),
-        "status__name": ("status", do_nothing),
-        "run": ("run_id", do_nothing),
-        "run__summary": ("run", do_nothing),
-        "tested_by": ("tested_by_id", do_nothing),
-        "tested_by__username": ("tested_by", to_str),
-    }
-
-
 class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
     """Serializer for TestCase"""
 
