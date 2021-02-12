@@ -12,10 +12,7 @@ from django.utils.translation import override
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
-from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import UrlMixin
-from tcms.rpc.serializer import TestExecutionRPCSerializer
-from tcms.rpc.utils import distinct_filter
 
 TestExecutionStatusSubtotal = namedtuple(
     "TestExecutionStatusSubtotal",
@@ -233,7 +230,7 @@ class TestExecutionStatus(models.Model, UrlMixin):
 vinaigrette.register(TestExecutionStatus, ["name"])
 
 
-class TestExecution(TCMSActionModel):
+class TestExecution(models.Model, UrlMixin):
     history = KiwiHistoricalRecords()
 
     assignee = models.ForeignKey(
@@ -273,14 +270,6 @@ class TestExecution(TCMSActionModel):
 
     def __str__(self):
         return "%s: %s" % (self.pk, self.case_id)
-
-    @classmethod
-    def to_xmlrpc(cls, query: dict = None):
-        if query is None:
-            query = {}
-        query_set = distinct_filter(TestExecution, query).order_by("pk")
-        serializer = TestExecutionRPCSerializer(model_class=cls, queryset=query_set)
-        return serializer.serialize_queryset()
 
     def links(self):
         return LinkReference.objects.filter(execution=self.pk)
