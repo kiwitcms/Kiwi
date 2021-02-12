@@ -349,9 +349,13 @@ class TestExecutionGetLinks(APITestCase):
         )
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
+
         self.assertEqual(logs[0]["id"], execution_log.pk)
         self.assertEqual(logs[0]["name"], "Test logs")
         self.assertEqual(logs[0]["url"], "http://kiwitcms.org")
+        self.assertEqual(logs[0]["execution"], self.execution_1.pk)
+        self.assertIn("created_on", logs[0])
+        self.assertFalse(logs[0]["is_defect"])
 
 
 class TestExecutionHistory(APITestCase):
