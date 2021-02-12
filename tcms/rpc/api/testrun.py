@@ -46,7 +46,7 @@ def add_case(run_id, case_id):
     case = TestCase.objects.get(pk=case_id)
 
     if run.executions.filter(case=case).exists():
-        return run.executions.filter(case=case).first().serialize()
+        return model_to_dict(run.executions.filter(case=case).first())
 
     if not case.case_status.is_confirmed:
         raise RuntimeError("TC-%d status is not confirmed" % case.pk)
@@ -58,7 +58,7 @@ def add_case(run_id, case_id):
         sortkey += last_te.sortkey
 
     execution = run.create_execution(case=case, sortkey=sortkey)
-    return execution.serialize()
+    return model_to_dict(execution)
 
 
 @permissions_required("testruns.delete_testexecution")
