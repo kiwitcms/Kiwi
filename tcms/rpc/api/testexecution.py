@@ -218,7 +218,20 @@ def update(execution_id, values, **kwargs):
             test_execution.run.stop_date = None
             test_execution.run.save()
 
-    return test_execution.serialize()
+    result = model_to_dict(test_execution)
+
+    # augment result with additional information
+    result["assignee__username"] = (
+        test_execution.assignee.username if test_execution.assignee else None
+    )
+    result["tested_by__username"] = (
+        test_execution.tested_by.username if test_execution.tested_by else None
+    )
+    result["case__summary"] = test_execution.case.summary
+    result["build__name"] = test_execution.build.name
+    result["status__name"] = test_execution.status.name
+
+    return result
 
 
 @permissions_required("linkreference.add_linkreference")
