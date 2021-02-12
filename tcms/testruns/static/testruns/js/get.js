@@ -520,7 +520,7 @@ function renderAdditionalInformation(testRunId, execution) {
         const withDefects = new Set()
         links.forEach((link) => {
             if (link.is_defect) {
-                withDefects.add(link.execution_id)
+                withDefects.add(link.execution)
             }
         })
         withDefects.forEach((te) => {
