@@ -445,14 +445,21 @@ class TestExecutionUpdate(APITestCase):
     def test_update_with_single_caserun(self):
         execution = TestExecutionFactory(tested_by=None)
 
-        execution = self.rpc_client.TestExecution.update(
+        result = self.rpc_client.TestExecution.update(
             execution.pk,
             {"build": self.build.pk, "assignee": self.user.pk, "sortkey": 90},
         )
-        self.assertEqual(execution["build"], self.build.name)
-        self.assertEqual(execution["assignee"], self.user.username)
-        self.assertEqual(execution["sortkey"], 90)
-        self.assertIsNone(execution["tested_by"])
+
+        self.assertEqual(result["id"], execution.pk)
+        self.assertEqual(result["assignee"], self.user.pk)
+        self.assertEqual(result["tested_by"], None)
+        self.assertIn("case_text_version", result)
+        self.assertIn("close_date", result)
+        self.assertEqual(result["sortkey"], 90)
+        self.assertIn("run", result)
+        self.assertIn("case", result)
+        self.assertEqual(result["build"], self.build.pk)
+        self.assertIn("status", result)
 
     def test_update_with_assignee_id(self):
         self.assertNotEqual(self.execution_1.assignee, self.user)
@@ -461,7 +468,7 @@ class TestExecutionUpdate(APITestCase):
         )
         self.execution_1.refresh_from_db()
 
-        self.assertEqual(execution["assignee"], self.user.username)
+        self.assertEqual(execution["assignee"], self.user.pk)
         self.assertEqual(self.execution_1.assignee, self.user)
 
     def test_update_with_assignee_email(self):
@@ -471,7 +478,7 @@ class TestExecutionUpdate(APITestCase):
         )
         self.execution_1.refresh_from_db()
 
-        self.assertEqual(execution["assignee"], self.user.username)
+        self.assertEqual(execution["assignee"], self.user.pk)
         self.assertEqual(self.execution_1.assignee, self.user)
 
     def test_update_with_assignee_username(self):
@@ -481,7 +488,7 @@ class TestExecutionUpdate(APITestCase):
         )
         self.execution_1.refresh_from_db()
 
-        self.assertEqual(execution["assignee"], self.user.username)
+        self.assertEqual(execution["assignee"], self.user.pk)
         self.assertEqual(self.execution_1.assignee, self.user)
 
     def test_update_with_tested_by_id(self):
@@ -491,7 +498,7 @@ class TestExecutionUpdate(APITestCase):
         )
         self.execution_2.refresh_from_db()
 
-        self.assertEqual(execution["tested_by"], self.user.username)
+        self.assertEqual(execution["tested_by"], self.user.pk)
         self.assertEqual(self.execution_2.tested_by, self.user)
 
     def test_update_with_tested_by_email(self):
@@ -501,7 +508,7 @@ class TestExecutionUpdate(APITestCase):
         )
         self.execution_2.refresh_from_db()
 
-        self.assertEqual(execution["tested_by"], self.user.username)
+        self.assertEqual(execution["tested_by"], self.user.pk)
         self.assertEqual(self.execution_2.tested_by, self.user)
 
     def test_update_with_tested_by_username(self):
@@ -511,7 +518,7 @@ class TestExecutionUpdate(APITestCase):
         )
         self.execution_2.refresh_from_db()
 
-        self.assertEqual(execution["tested_by"], self.user.username)
+        self.assertEqual(execution["tested_by"], self.user.pk)
         self.assertEqual(self.execution_2.tested_by, self.user)
 
     def test_update_with_non_existing_build(self):
