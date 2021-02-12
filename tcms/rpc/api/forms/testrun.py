@@ -32,7 +32,8 @@ class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
 
     assignee = UserField()
     tested_by = UserField()
-    close_date = DateTimeField()
+    stop_date = DateTimeField()
+    start_date = DateTimeField()
 
 
 class UserForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
