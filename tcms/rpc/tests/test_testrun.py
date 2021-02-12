@@ -47,9 +47,17 @@ class TestAddCase(APITestCase):
         execution = TestExecution.objects.get(
             run=self.test_run.pk, case=self.test_case.pk
         )
-        self.assertEqual(execution.pk, result["id"])
-        self.assertEqual(execution.case.pk, result["case_id"])
-        self.assertEqual(execution.run.pk, result["run_id"])
+
+        self.assertEqual(result["id"], execution.pk)
+        self.assertIn("assignee", result)
+        self.assertEqual(result["tested_by"], None)
+        self.assertIn("case_text_version", result)
+        self.assertIn("close_date", result)
+        self.assertIn("sortkey", result)
+        self.assertEqual(result["run"], execution.run.pk)
+        self.assertEqual(result["case"], execution.case.pk)
+        self.assertIn("build", result)
+        self.assertIn("status", result)
 
     def test_add_case_without_permissions(self):
         unauthorized_user = UserFactory()
