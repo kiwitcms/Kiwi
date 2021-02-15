@@ -7,10 +7,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import KiwiHistoricalRecords
-from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import UrlMixin
-from tcms.rpc.serializer import TestCaseRPCSerializer
-from tcms.rpc.utils import distinct_filter
 from tcms.testcases.fields import MultipleEmailField
 
 
@@ -46,7 +43,7 @@ class Category(models.Model, UrlMixin):
         return self.name
 
 
-class TestCase(TCMSActionModel):
+class TestCase(models.Model, UrlMixin):
     history = KiwiHistoricalRecords()
 
     create_date = models.DateTimeField(auto_now_add=True)
@@ -101,14 +98,6 @@ class TestCase(TCMSActionModel):
 
     def __str__(self):
         return self.summary
-
-    @classmethod
-    def to_xmlrpc(cls, query=None):
-
-        _query = query or {}
-        qs = distinct_filter(TestCase, _query).order_by("pk")
-        serializer = TestCaseRPCSerializer(model_class=cls, queryset=qs)
-        return serializer.serialize_queryset()
 
     def add_component(self, component):
         return TestCaseComponent.objects.get_or_create(case=self, component=component)
@@ -227,7 +216,7 @@ class TestCaseTag(models.Model):
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
 
 
-class BugSystem(TCMSActionModel):
+class BugSystem(models.Model, UrlMixin):
     """
     This model describes a bug tracking system used in
     Kiwi TCMS. Fields below can be configured via
