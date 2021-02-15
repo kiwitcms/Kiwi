@@ -391,32 +391,3 @@ class QuerySetBasedRPCSerializer(Serializer):
             serialize_result.append(new_serialized_data)
 
         return serialize_result
-
-
-class TestCaseRPCSerializer(QuerySetBasedRPCSerializer):
-    """Serializer for TestCase"""
-
-    values_fields_mapping = {
-        "arguments": ("arguments", do_nothing),
-        "id": ("id", do_nothing),
-        "create_date": ("create_date", datetime_to_str),
-        "extra_link": ("extra_link", do_nothing),
-        "is_automated": ("is_automated", do_nothing),
-        "notes": ("notes", do_nothing),
-        "text": ("text", do_nothing),
-        "requirement": ("requirement", do_nothing),
-        "script": ("script", do_nothing),
-        "summary": ("summary", do_nothing),
-        "author": ("author_id", do_nothing),
-        "author__username": ("author", to_str),
-        "case_status": ("case_status_id", do_nothing),
-        "case_status__name": ("case_status", do_nothing),
-        "category": ("category_id", do_nothing),
-        "category__name": ("category", do_nothing),
-        "default_tester": ("default_tester_id", do_nothing),
-        "default_tester__username": ("default_tester", to_str),
-        "priority": ("priority_id", do_nothing),
-        "priority__value": ("priority", do_nothing),
-        "reviewer": ("reviewer_id", do_nothing),
-        "reviewer__username": ("reviewer", to_str),
-    }

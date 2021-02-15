@@ -124,7 +124,7 @@ class TestRemoveNotificationCC(APITestCase):
             self.rpc_client.TestCase.remove_notification_cc(-1, ["example@example.com"])
 
 
-class TestFilterCases(APITestCase):
+class TestCaseFilter(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
@@ -152,8 +152,26 @@ class TestFilterCases(APITestCase):
 
     def test_filter_query_none(self):
         result = self.rpc_client.TestCase.filter()
+
         self.assertIsNotNone(result)
         self.assertGreater(len(result), 0)
+
+        self.assertIn("id", result[0])
+        self.assertIn("create_date", result[0])
+        self.assertIn("is_automated", result[0])
+        self.assertIn("script", result[0])
+        self.assertIn("arguments", result[0])
+        self.assertIn("extra_link", result[0])
+        self.assertIn("summary", result[0])
+        self.assertIn("requirement", result[0])
+        self.assertIn("notes", result[0])
+        self.assertIn("text", result[0])
+        self.assertIn("case_status", result[0])
+        self.assertIn("category", result[0])
+        self.assertIn("priority", result[0])
+        self.assertIn("author", result[0])
+        self.assertIn("default_tester", result[0])
+        self.assertIn("reviewer", result[0])
 
     def test_filter_by_product_id(self):
         cases = self.rpc_client.TestCase.filter({"category__product": self.product.pk})

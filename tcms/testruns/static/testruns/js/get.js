@@ -560,24 +560,27 @@ function renderAdditionalInformation(testRunId, execution) {
                     isAutomatedElement.attr('title', isAutomatedAttr)
 
                     // test case isn't part of the parent test plan
-                    if (testCase.plan.indexOf(planId) === -1) {
-                        row.find('.js-tc-not-in-tp').toggleClass('hidden')
-                    }
+// TODO: fix me, why remove .plan
+//                    if (testCase.plan.indexOf(planId) === -1) {
+//                        row.find('.js-tc-not-in-tp').toggleClass('hidden')
+//                    }
 
                     // render tags and components if available
                     testCase.tagNames = []
-                    for (let i = 0; i < testCase.tag.length; i++) {
-                        testCase.tagNames.push(tags[testCase.tag[i]].name)
-                    }
+// todo: fix me, why remove .tag
+//                    for (let i = 0; i < testCase.tag.length; i++) {
+//                        testCase.tagNames.push(tags[testCase.tag[i]].name)
+//                    }
                     if (testCase.tagNames.length) {
                         row.find('.js-row-tags').toggleClass('hidden')
                         row.find('.js-row-tags').append(testCase.tagNames.join(', '))
                     }
 
                     testCase.componentNames = []
-                    for (let i = 0; i < testCase.component.length; i++) {
-                        testCase.componentNames.push(components[testCase.component[i]].name)
-                    }
+// todo: why remove components
+//                    for (let i = 0; i < testCase.component.length; i++) {
+//                        testCase.componentNames.push(components[testCase.component[i]].name)
+//                    }
                     if (testCase.componentNames.length) {
                         row.find('.js-row-components').toggleClass('hidden')
                         row.find('.js-row-components').append(testCase.componentNames.join(', '))

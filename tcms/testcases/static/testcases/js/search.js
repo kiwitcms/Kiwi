@@ -3,8 +3,11 @@ function pre_process_data(data) {
     var tags_cache = {};
 
     data.forEach(function(element) {
-        addResourceToData(element, 'component', 'Component.filter', component_cache);
-        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+        element['component'] = [{'name': 'fix me'}]
+        element['tag'] = [{'name': 'fix me'}]
+// TODO: temporary disable this
+//        addResourceToData(element, 'component', 'Component.filter', component_cache);
+//        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
     });
 }
 
