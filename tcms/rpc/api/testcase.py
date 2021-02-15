@@ -275,7 +275,32 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return TestCase.to_xmlrpc(query)
+    return list(
+        TestCase.objects.filter(**query).values(
+            "id",
+            "create_date",
+            "is_automated",
+            "script",
+            "arguments",
+            "extra_link",
+            "summary",
+            "requirement",
+            "notes",
+            "text",
+            "case_status",
+            "case_status__name",
+            "category",
+            "category__name",
+            "priority",
+            "priority__value",
+            "author",
+            "author__username",
+            "default_tester",
+            "default_tester__username",
+            "reviewer",
+            "reviewer__username",
+        )
+    )
 
 
 @permissions_required("testcases.view_testcase")
