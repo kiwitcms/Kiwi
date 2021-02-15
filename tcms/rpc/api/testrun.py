@@ -92,19 +92,38 @@ def get_cases(run_id):
                  augmented with ``execution_id`` and ``status`` information.
         :rtype: list(dict)
     """
-    tcs_serializer = TestCase.to_xmlrpc(query={"executions__run_id": run_id})
+    result = list(
+        TestCase.objects.filter(executions__run_id=run_id).values(
+            "id",
+            "create_date",
+            "is_automated",
+            "script",
+            "arguments",
+            "extra_link",
+            "summary",
+            "requirement",
+            "notes",
+            "text",
+            "case_status",
+            "category",
+            "priority",
+            "author",
+            "default_tester",
+            "reviewer",
+        )
+    )
 
-    qs = TestExecution.objects.filter(run_id=run_id).values(
+    executions = TestExecution.objects.filter(run_id=run_id).values(
         "case", "pk", "status__name"
     )
-    extra_info = dict(((row["case"], row) for row in qs.iterator()))
+    extra_info = dict(((row["case"], row) for row in executions.iterator()))
 
-    for case in tcs_serializer:
+    for case in result:
         info = extra_info[case["id"]]
         case["execution_id"] = info["pk"]
         case["status"] = info["status__name"]
 
-    return tcs_serializer
+    return result
 
 
 @permissions_required("testruns.add_testruntag")
