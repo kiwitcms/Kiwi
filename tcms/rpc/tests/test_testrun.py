@@ -165,9 +165,26 @@ class TestGetCases(APITestCase):
         self.assertEqual(1, len(result))
 
         case = result[0]
-        self.assertEqual(self.test_case.pk, case["id"])
-        self.assertTrue("execution_id" in case.keys())
-        self.assertTrue("status" in case.keys())
+
+        self.assertEqual(case["id"], self.test_case.pk)
+        self.assertIn("execution_id", case)
+        self.assertIn("status", case)
+
+        self.assertIn("create_date", case)
+        self.assertIn("is_automated", case)
+        self.assertIn("script", case)
+        self.assertIn("arguments", case)
+        self.assertIn("extra_link", case)
+        self.assertIn("summary", case)
+        self.assertIn("requirement", case)
+        self.assertIn("notes", case)
+        self.assertIn("text", case)
+        self.assertIn("case_status", case)
+        self.assertIn("category", case)
+        self.assertIn("priority", case)
+        self.assertIn("author", case)
+        self.assertIn("default_tester", case)
+        self.assertIn("reviewer", case)
 
 
 class TestGetCasesPermission(APIPermissionsTestCase):
