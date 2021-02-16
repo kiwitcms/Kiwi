@@ -216,7 +216,8 @@ def add_case(plan_id, case_id):
     case = TestCase.objects.get(pk=case_id)
     test_case_plan = plan.add_case(case)
 
-    result = case.serialize()
+    result = model_to_dict(case, exclude=["component", "plan", "tag"])
+    result["create_date"] = case.create_date
     result["sortkey"] = test_case_plan.sortkey
     return result
 
