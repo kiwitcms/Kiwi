@@ -46,7 +46,7 @@ def add_component(case_id, component):
         :type case_id: int
         :param component: Name of Component to add
         :type component: str
-        :return: Serialized :class:`tcms.testcases.models.TestCase` object
+        :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
         :raises PermissionDenied: if missing the *testcases.add_testcasecomponent*
                  permission
@@ -54,10 +54,9 @@ def add_component(case_id, component):
                  specified PKs
     """
     case = TestCase.objects.get(pk=case_id)
-    case.add_component(
-        Component.objects.get(name=component, product=case.category.product)
-    )
-    return case.serialize()
+    component_obj = Component.objects.get(name=component, product=case.category.product)
+    case.add_component(component_obj)
+    return model_to_dict(component_obj)
 
 
 @permissions_required("testcases.delete_testcasecomponent")
