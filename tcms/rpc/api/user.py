@@ -5,11 +5,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
+from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
-from tcms.rpc.serializer import Serializer
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -23,7 +23,7 @@ __all__ = (
 
 
 def _get_user_dict(user):
-    user_dict = Serializer(model=user).serialize_model()
+    user_dict = model_to_dict(user)
     if "password" in user_dict:
         del user_dict["password"]
     return user_dict
@@ -52,7 +52,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     if not query:
         query = {"pk": kwargs.get(REQUEST_KEY).user.pk}
 
-    users = User.objects.filter(**query)
+    users = User.objects.filter(**query).distinct()
 
     filtered_users = []
     for user in users:
