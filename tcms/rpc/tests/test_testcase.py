@@ -522,8 +522,24 @@ class TestCreate(APITestCase):
 
         self.assertEqual(result["id"], tc_from_db.pk)
         # author field is auto-configured if not passed
-        self.assertEqual(result["author"], tc_from_db.author.username)
+        self.assertEqual(result["author"], tc_from_db.author.pk)
         self.assertEqual(self.api_user, tc_from_db.author)
+
+        self.assertIn("create_date", result)
+        self.assertIn("is_automated", result)
+        self.assertIn("script", result)
+        self.assertIn("arguments", result)
+        self.assertIn("extra_link", result)
+        self.assertEqual(result["summary"], tc_from_db.summary)
+        self.assertIn("requirement", result)
+        self.assertIn("notes", result)
+        self.assertEqual(result["text"], tc_from_db.text)
+        self.assertEqual(result["case_status"], tc_from_db.case_status.pk)
+        self.assertEqual(result["category"], tc_from_db.category.pk)
+        self.assertEqual(result["priority"], tc_from_db.priority.pk)
+        self.assertIn("default_tester", result)
+        self.assertIn("reviewer", result)
+
 
     def test_author_can_be_specified(self):
         new_author = UserFactory()
