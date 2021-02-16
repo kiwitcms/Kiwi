@@ -651,7 +651,8 @@ class TestAddComponent(APITestCase):
         result = self.rpc_client.TestCase.add_component(
             self.test_case.pk, self.good_component.name
         )
-        self.assertEqual(result["component"][0], self.good_component.pk)
+        self.assertEqual(result["id"], self.good_component.pk)
+        self.assertEqual(result["name"], self.good_component.name)
 
     def test_add_component_from_another_product_is_not_allowed(self):
         with self.assertRaisesRegex(Fault, "Component matching query does not exist"):
