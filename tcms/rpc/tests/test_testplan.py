@@ -269,7 +269,27 @@ class TestAddCase(APITestCase):
 
         for plan_id in plans:
             for case_id in cases:
-                self.rpc_client.TestPlan.add_case(plan_id, case_id)
+                result = self.rpc_client.TestPlan.add_case(plan_id, case_id)
+
+                self.assertEqual(result["id"], case_id)
+                self.assertIn("create_date", result)
+                self.assertIn("is_automated", result)
+                self.assertIn("script", result)
+                self.assertIn("arguments", result)
+                self.assertIn("extra_link", result)
+                self.assertIn("summary", result)
+                self.assertIn("requirement", result)
+                self.assertIn("notes", result)
+                self.assertIn("text", result)
+                self.assertIn("case_status", result)
+                self.assertIn("category", result)
+                self.assertIn("priority", result)
+                self.assertIn("author", result)
+                self.assertIn("default_tester", result)
+                self.assertIn("reviewer", result)
+
+                # this is an extra field
+                self.assertIn("sortkey", result)
 
         # no duplicates for plan1/case1 were created
         self.assertEqual(
