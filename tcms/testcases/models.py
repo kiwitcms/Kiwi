@@ -57,6 +57,12 @@ class TestCase(TCMSActionModel):
     requirement = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     text = models.TextField(blank=True)
+    setup_duration = models.DurationField(db_index=True, null=True, blank=True)
+    testing_duration = models.DurationField(db_index=True, null=True, blank=True)
+
+    @property
+    def expected_duration(self):
+        return self.setup_duration + self.testing_duration
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
     category = models.ForeignKey(
