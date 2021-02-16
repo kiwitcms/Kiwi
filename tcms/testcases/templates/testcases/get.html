@@ -84,6 +84,21 @@
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-clock-o"></span>{% trans 'Setup duration' %}:
+                {{ object.setup_duration }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-clock-o"></span>{% trans 'Testing duration' %}:
+                {{ object.testing_duration }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-clock-o"></span>{% trans 'Expected duration' %}:
+                {{ object.expected_duration }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa
                     {% if object.is_automated %}
                         fa-cog
