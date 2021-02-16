@@ -2,8 +2,7 @@ import json
 
 from django.conf import settings
 from django.db import migrations
-
-from tcms.rpc.serializer import Serializer
+from django.forms.models import model_to_dict
 
 
 def forward_copy_data(apps, schema_editor):
@@ -15,7 +14,7 @@ def forward_copy_data(apps, schema_editor):
         bug_file_name = "kiwitcms-testcases-migrations-0010-Bug-%d" % bug.pk
         bug_file = settings.TEMP_DIR / bug_file_name
         with bug_file.open("w") as outfile:
-            json.dump(Serializer(model=bug).serialize_model(), outfile)
+            json.dump(model_to_dict(bug), outfile)
 
         if not bug.case_run_id:
             continue

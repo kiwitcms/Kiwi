@@ -2,8 +2,7 @@ import json
 
 from django.conf import settings
 from django.db import migrations, models
-
-from tcms.rpc.serializer import Serializer
+from django.forms.models import model_to_dict
 
 
 def convert_test_case_text(test_case_text):
@@ -43,7 +42,7 @@ def forward_copy_data(apps, schema_editor):
             )
             test_case_file = settings.TEMP_DIR / file_name
             with test_case_file.open("w") as outfile:
-                json.dump(Serializer(model=latest_text).serialize_model(), outfile)
+                json.dump(model_to_dict(latest_text), outfile)
 
             test_case.case_text = convert_test_case_text(latest_text)
             test_case.save()
