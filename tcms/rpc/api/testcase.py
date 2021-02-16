@@ -376,10 +376,27 @@ def update(case_id, values):
 
     if form.is_valid():
         test_case = form.save()
-    else:
-        raise ValueError(form_errors_to_list(form))
+        result = model_to_dict(test_case, exclude=["component", "plan", "tag"])
+        # b/c date may be None and model_to_dict() doesn't return it
+        result["create_date"] = test_case.create_date
 
-    return test_case.serialize()
+        # additional information
+        result["case_status__name"] = test_case.case_status.name
+        result["category__name"] = test_case.category.name
+        result["priority__value"] = test_case.priority.value
+        result["author__username"] = (
+            test_case.author.username if test_case.author else None
+        )
+        result["default_tester__username"] = (
+            test_case.default_tester.username if test_case.default_tester else None
+        )
+        result["reviewer__username"] = (
+            test_case.reviewer.username if test_case.reviewer else None
+        )
+
+        return result
+
+    raise ValueError(form_errors_to_list(form))
 
 
 @permissions_required("testcases.delete_testcase")

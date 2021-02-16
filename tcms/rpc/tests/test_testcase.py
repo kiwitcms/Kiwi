@@ -198,23 +198,37 @@ class TestUpdate(APITestCase):
         self.assertEqual("Given-When-Then", self.testcase.text)
 
         # update the test case
-        updated = (
-            self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
-                self.testcase.pk,
-                {
-                    "summary": "This was updated",
-                    "text": "new TC text",
-                },
-            )
+        result = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+            self.testcase.pk,
+            {
+                "summary": "This was updated",
+                "text": "new TC text",
+            },
         )
 
         self.testcase.refresh_from_db()
 
-        self.assertEqual(updated["id"], self.testcase.pk)
+        self.assertEqual(result["id"], self.testcase.pk)
         self.assertEqual("This was updated", self.testcase.summary)
         self.assertEqual("new TC text", self.testcase.text)
         # FK for author not passed above. Make sure it didn't change!
         self.assertEqual(author_pk, self.testcase.author.pk)
+
+        self.assertIn("author", result)
+        self.assertIn("create_date", result)
+        self.assertIn("is_automated", result)
+        self.assertIn("script", result)
+        self.assertIn("arguments", result)
+        self.assertIn("extra_link", result)
+        self.assertIn("summary", result)
+        self.assertIn("requirement", result)
+        self.assertIn("notes", result)
+        self.assertEqual(result["text"], self.testcase.text)
+        self.assertEqual(result["case_status"], self.testcase.case_status.pk)
+        self.assertEqual(result["category"], self.testcase.category.pk)
+        self.assertEqual(result["priority"], self.testcase.priority.pk)
+        self.assertIn("default_tester", result)
+        self.assertIn("reviewer", result)
 
     def test_update_author_issue_630(self):
         self.assertNotEqual(self.new_author, self.testcase.author)
@@ -231,7 +245,7 @@ class TestUpdate(APITestCase):
 
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
-        self.assertEqual(self.new_author.pk, updated["author_id"])
+        self.assertEqual(self.new_author.pk, updated["author"])
 
     def test_update_author_should_fail_for_non_existing_user_id(self):
         initial_author_id = self.testcase.author.pk
@@ -261,7 +275,7 @@ class TestUpdate(APITestCase):
 
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
-        self.assertEqual(self.new_author.pk, updated["author_id"])
+        self.assertEqual(self.new_author.pk, updated["author"])
 
     def test_update_author_should_fail_for_non_existing_username(self):
         initial_author_username = self.testcase.author.username
@@ -291,7 +305,7 @@ class TestUpdate(APITestCase):
 
         self.testcase.refresh_from_db()
         self.assertEqual(self.new_author, self.testcase.author)
-        self.assertEqual(self.new_author.pk, updated["author_id"])
+        self.assertEqual(self.new_author.pk, updated["author"])
 
     def test_update_author_should_fail_for_non_existing_email(self):
         initial_author_email = self.testcase.author.email
@@ -539,7 +553,6 @@ class TestCreate(APITestCase):
         self.assertEqual(result["priority"], tc_from_db.priority.pk)
         self.assertIn("default_tester", result)
         self.assertIn("reviewer", result)
-
 
     def test_author_can_be_specified(self):
         new_author = UserFactory()
