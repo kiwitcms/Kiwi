@@ -428,7 +428,7 @@ class TestExecutionRPCSerializer(QuerySetBasedRPCSerializer):
     values_fields_mapping = {
         "id": ("id", do_nothing),
         "case_text_version": ("case_text_version", do_nothing),
-        "close_date": ("close_date", datetime_to_str),
+        "stop_date": ("stop_date", datetime_to_str),
         "sortkey": ("sortkey", do_nothing),
         "assignee": ("assignee_id", do_nothing),
         "assignee__username": ("assignee", to_str),

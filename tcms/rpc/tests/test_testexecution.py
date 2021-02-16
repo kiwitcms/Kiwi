@@ -592,7 +592,7 @@ class TestExecutionUpdate(APITestCase):
         self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestExecution.update(
-                self.execution_1.pk, {"close_date": timezone.now()}
+                self.execution_1.pk, {"stop_date": timezone.now()}
             )
 
 
@@ -674,12 +674,12 @@ class TestExecutionUpdateStatus(APITestCase):
         # passed an explicit build value
         self.assertNotEqual(self.execution_1.run.build, build03)
 
-    def test_non_zero_status_changes_close_date(self):
+    def test_non_zero_status_changes_stop_date(self):
         """
-        Non-zero weight statuses will set close_date
+        Non-zero weight statuses will set stop_date
         """
         few_secs_ago = timezone.now()
-        self.execution_1.close_date = None
+        self.execution_1.stop_date = None
         self.execution_1.save()
 
         self.rpc_client.TestExecution.update(
@@ -690,14 +690,14 @@ class TestExecutionUpdateStatus(APITestCase):
         )
 
         self.execution_1.refresh_from_db()
-        self.assertGreater(self.execution_1.close_date, few_secs_ago)
+        self.assertGreater(self.execution_1.stop_date, few_secs_ago)
 
-    def test_zero_status_changes_close_date(self):
+    def test_zero_status_changes_stop_date(self):
         """
-        Zero weight statuses will set close_date to None,
+        Zero weight statuses will set stop_date to None,
         e.g. re-test the TE!
         """
-        self.execution_1.close_date = timezone.now()
+        self.execution_1.stop_date = timezone.now()
         self.execution_1.save()
 
         self.rpc_client.TestExecution.update(
@@ -708,7 +708,7 @@ class TestExecutionUpdateStatus(APITestCase):
         )
 
         self.execution_1.refresh_from_db()
-        self.assertIsNone(self.execution_1.close_date)
+        self.assertIsNone(self.execution_1.stop_date)
 
     def test_update_status_changes_run_status_completed(self):
         """

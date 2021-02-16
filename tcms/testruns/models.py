@@ -143,7 +143,8 @@ class TestRun(TCMSActionModel):
             case_text_version=case_text_version,
             build=build or self.build,
             sortkey=sortkey,
-            close_date=None,
+            stop_date=None,
+            start_date=None,
         )
 
     def add_tag(self, tag):
@@ -256,8 +257,13 @@ class TestExecution(TCMSActionModel):
         on_delete=models.CASCADE,
     )
     case_text_version = models.IntegerField()
-    close_date = models.DateTimeField(null=True, blank=True)
+    start_date = models.DateTimeField(null=True, blank=True, db_index=True)
+    stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     sortkey = models.IntegerField(null=True, blank=True)
+
+    @property
+    def actual_duration(self):
+        return self.stop_date - self.start_date
 
     run = models.ForeignKey(
         TestRun, related_name="executions", on_delete=models.CASCADE
