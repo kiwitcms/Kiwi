@@ -160,7 +160,7 @@ class TestCreateNewRun(BasePlanCase):
                 case.history.latest().history_id, execution.case_text_version
             )
             self.assertEqual(new_run.build, execution.build)
-            self.assertIsNone(execution.close_date)
+            self.assertIsNone(execution.stop_date)
 
 
 class TestCloneRunView(PermissionsTestCase):

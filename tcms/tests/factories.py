@@ -263,7 +263,8 @@ class TestExecutionFactory(DjangoModelFactory):
     case_text_version = factory.LazyAttribute(
         lambda obj: obj.case.history.latest().history_id
     )
-    close_date = None
+    stop_date = None
+    start_date = None
     sortkey = factory.Sequence(lambda n: n)
     run = factory.SubFactory(TestRunFactory)
     case = factory.SubFactory(TestCaseFactory)

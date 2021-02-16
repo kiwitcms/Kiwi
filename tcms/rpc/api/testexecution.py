@@ -185,9 +185,9 @@ def update(execution_id, values, **kwargs):
     if values.get("status"):
         now = timezone.now()
         if test_execution.status.weight != 0:
-            test_execution.close_date = now
+            test_execution.stop_date = now
         else:
-            test_execution.close_date = None
+            test_execution.stop_date = None
         test_execution.save()
 
         all_executions = TestExecution.objects.filter(run=test_execution.run)

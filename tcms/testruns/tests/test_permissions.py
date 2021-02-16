@@ -148,7 +148,7 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
                 case.history.latest().history_id, execution.case_text_version
             )
             self.assertEqual(last_run.build, execution.build)
-            self.assertEqual(None, execution.close_date)
+            self.assertEqual(None, execution.stop_date)
 
 
 class MenuAddCommentItemTestCase(PermissionsTestCase):
