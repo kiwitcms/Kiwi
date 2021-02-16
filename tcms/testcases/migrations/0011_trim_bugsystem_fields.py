@@ -2,8 +2,7 @@ import json
 
 from django.conf import settings
 from django.db import migrations, models
-
-from tcms.rpc.serializer import Serializer
+from django.forms.models import model_to_dict
 
 
 def forwards_store_data(apps, schema_editor):
@@ -14,7 +13,7 @@ def forwards_store_data(apps, schema_editor):
         bug_file = settings.TEMP_DIR / file_name
 
         with bug_file.open("w") as outfile:
-            json.dump(Serializer(model=bug_system).serialize_model(), outfile)
+            json.dump(model_to_dict(bug_system), outfile)
 
 
 def backwards_restore_data(apps, schema_editor):
