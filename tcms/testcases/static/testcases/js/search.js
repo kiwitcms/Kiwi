@@ -166,9 +166,11 @@ $(document).ready(function() {
     });
 
     $('#id_product').change(function() {
+        // todo: this is duplicate with update_category_from_product()
         var updateCategory = function(data) {
             updateSelect(data, '#id_category', 'id', 'name');
         }
+        // todo: this is duplicate with update_component_from_product()
         var updateComponent = function(data) {
             updateSelect(data, '#id_component', 'id', 'name');
         }
