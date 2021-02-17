@@ -7,7 +7,7 @@ function addComponent(object_id, _input, to_table) {
     if (_name.length > 0) {
         jsonRPC('TestCase.add_component', [object_id, _name], function(data) {
             if (data !== undefined) {
-                to_table.row.add({name: _name}).draw();
+                to_table.row.add({name: data.name, id: data.id}).draw();
                 $(_input).val('');
             } else {
                 $(_input).parents('div.input-group').addClass('has-error');
@@ -106,11 +106,11 @@ $(document).ready(function() {
         columns: [
             { data: "name" },
             {
-                data: null,
+                data: "id",
                 sortable: false,
                 render: function (data, type, full, meta) {
                     if (perm_remove_component) {
-                        return '<a href="#components" class="remove-component" data-pk="' + data.id  + '"><span class="pficon-error-circle-o"></span></a>';
+                        return '<a href="#components" class="remove-component" data-pk="' + data  + '"><span class="pficon-error-circle-o"></span></a>';
                     }
                     return '';
                 }
