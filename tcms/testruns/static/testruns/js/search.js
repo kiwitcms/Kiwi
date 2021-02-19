@@ -1,20 +1,49 @@
-function pre_process_data(data) {
-    var product_cache = {};
-    var tags_cache = {};
+function arrayToDict(arr) {
+    return arr.reduce(function(map, obj) {
+        map[obj.id] = obj;
+        return map;
+    }, {});
+}
 
+function pre_process_data(data, callback) {
+    const runIds = [],
+          planIds = []
     data.forEach(function(element) {
-        // collect info about products
-        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+        runIds.push(element.id)
+        planIds.push(element.plan)
+    })
 
-        if (element.plan_id in product_cache) {
-            element['product'] = product_cache[element.plan_id];
-        } else {
-            jsonRPC('TestPlan.filter', {pk: element.plan_id}, function(data) {
-                element['product'] = data[0].product;
-            }, true);
-            product_cache[element.plan_id] = element.product;
-        }
-    });
+    // get tags for all objects
+    const tagsPerRun = {}
+    jsonRPC('Tag.filter', {run__in: runIds}, function(tags) {
+        tags.forEach(function(element) {
+            if (tagsPerRun[element.run] === undefined) {
+                tagsPerRun[element.run] = []
+            }
+
+            // push only if unique
+            if (tagsPerRun[element.run].indexOf(element.name) === -1) {
+                tagsPerRun[element.run].push(element.name)
+            }
+        })
+
+        jsonRPC('Product.filter', {plan__in: planIds}, function(products) {
+            products = arrayToDict(products)
+
+            // augment data set with additional info
+            data.forEach(function(element) {
+                if (element.id in tagsPerRun) {
+                    element.tag = tagsPerRun[element.id]
+                } else {
+                    element.tag = []
+                }
+
+                element.product_name = products[element.plan__product].name
+            });
+
+            callback({data: data}) // renders everything
+        })
+    })
 }
 
 
@@ -63,7 +92,7 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    result = '<a href="/runs/'+ data.id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
+                    result = '<a href="/runs/'+ data.id + '/">' + escapeHTML(data.summary) + '</a>';
                     if (data.stop_date) {
                         result += '<p class="help-block">' + data.stop_date + '</p>';
                     }
@@ -73,19 +102,15 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/plan/'+ data.plan_id + '/" target="_parent">TP-' + data.plan_id + ': ' + escapeHTML(data.plan) + '</a>';
+                    return '<a href="/plan/'+ data.plan + '/">TP-' + data.plan + ': ' + escapeHTML(data.plan__name) + '</a>';
                 }
             },
-            { data: "product" },
-            { data: "product_version"},
-            { data: "build"},
-
-            { data: "manager" },
-            { data: "default_tester" },
-            {
-                data: "tag",
-                render: renderFromCache,
-            },
+            { data: "product_name" },
+            { data: "product_version__value"},
+            { data: "build__name"},
+            { data: "manager__username" },
+            { data: "default_tester__username" },
+            { data: "tag" },
         ],
         dom: "t",
         language: {
