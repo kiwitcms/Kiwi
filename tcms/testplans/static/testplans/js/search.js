@@ -1,9 +1,34 @@
-function pre_process_data(data) {
-    var tags_cache = {};
-
+function pre_process_data(data, callback) {
+    const planIds = []
     data.forEach(function(element) {
-        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
-    });
+        planIds.push(element.id)
+    })
+
+    // get tags for all objects
+    const tagsPerPlan = {}
+    jsonRPC('Tag.filter', {plan__in: planIds}, function(tags) {
+        tags.forEach(function(element) {
+            if (tagsPerPlan[element.plan] === undefined) {
+                tagsPerPlan[element.plan] = []
+            }
+
+            // push only if unique
+            if (tagsPerPlan[element.plan].indexOf(element.name) === -1) {
+                tagsPerPlan[element.plan].push(element.name)
+            }
+        })
+
+        // augment data set with additional info
+        data.forEach(function(element) {
+            if (element.id in tagsPerPlan) {
+                element.tag = tagsPerPlan[element.id]
+            } else {
+                element.tag = []
+            }
+        });
+
+        callback({data: data}) // renders everything
+    })
 }
 
 
@@ -64,14 +89,11 @@ $(document).ready(function() {
                 }
             },
             { data: "create_date" },
-            { data: "product" },
-            { data: "product_version" },
-            { data: "type"},
-            { data: "author" },
-            {
-                data: "tag",
-                render: renderFromCache,
-            },
+            { data: "product__name" },
+            { data: "product_version__value" },
+            { data: "type__name"},
+            { data: "author__username" },
+            { data: "tag" },
         ],
         dom: "t",
         language: {
