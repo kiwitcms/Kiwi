@@ -32,12 +32,14 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
     return list(
-        Build.objects.filter(**query).values(
+        Build.objects.filter(**query)
+        .values(
             "id",
             "name",
             "version",
             "is_active",
         )
+        .distinct()
     )
 
 
