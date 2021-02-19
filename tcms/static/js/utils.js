@@ -392,3 +392,10 @@ function changeDropdownSelectedItem(dropDownSelector, buttonSelector, target, fo
     // don't follow links
     return false;
 }
+
+function arrayToDict(arr) {
+    return arr.reduce(function(map, obj) {
+        map[obj.id] = obj;
+        return map;
+    }, {});
+}

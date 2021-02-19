@@ -36,7 +36,12 @@ function tagsCard(model, object_id, display_filter, perm_remove) {
     // load the tags table
     var tags_table = $('#tags').DataTable({
         ajax: function(data, callback, settings) {
-            dataTableJsonRPC('Tag.filter', display_filter, callback);
+            dataTableJsonRPC('Tag.filter', display_filter, callback, function(data, callback) {
+                // b/c tags are now annotated with case, run, plan IDs there are duplicate names.
+                // Filter them out by only looking at Tag.id uniqueness!
+                data = arrayToDict(data)
+                callback({'data': Object.values(data)})
+            })
         },
         columns: [
             { data: "name" },
@@ -97,7 +102,10 @@ function tagsCard(model, object_id, display_filter, perm_remove) {
         },
         source: function(query, processSync, processAsync) {
             jsonRPC('Tag.filter', {name__icontains: query}, function(data) {
-                return processAsync(data);
+                // b/c tags are now annotated with case, run, plan IDs there are duplicate names.
+                // Filter them out by only looking at Tag.id uniqueness!
+                data = arrayToDict(data)
+                return processAsync(Object.values(data));
             });
         }
     });
