@@ -1,10 +1,3 @@
-function arrayToDict(arr) {
-    return arr.reduce(function(map, obj) {
-        map[obj.id] = obj;
-        return map;
-    }, {});
-}
-
 function pre_process_data(data, callback) {
     const runIds = [],
           planIds = []
