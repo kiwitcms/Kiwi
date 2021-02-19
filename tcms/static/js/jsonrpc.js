@@ -38,9 +38,10 @@ function dataTableJsonRPC(rpc_method, rpc_params, callback, pre_process_data) {
     var internal_callback = function(data) {
         // used to collect additional information about columns via ForeignKeys
         if (pre_process_data !== undefined) {
-            pre_process_data(data);
+            pre_process_data(data, callback);
+        } else {
+            callback({'data': data})
         }
-        callback({'data': data})
     };
 
     jsonRPC(rpc_method, rpc_params, internal_callback);
