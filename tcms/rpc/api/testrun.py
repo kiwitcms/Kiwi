@@ -239,6 +239,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "product_version__value",
             "start_date",
             "stop_date",
+            "planned_start",
+            "planned_stop",
             "summary",
             "notes",
             "plan",
