@@ -43,13 +43,13 @@ class TestMultipleEmailField(unittest.TestCase):
         cls.field = MultipleEmailField()
 
     def test_to_python(self):
-        value = u"zhangsan@localhost"
+        value = "zhangsan@localhost"
         pyobj = self.field.to_python(value)
         self.assertEqual(pyobj, [value])
 
-        value = u"zhangsan@localhost,,lisi@example.com,"
+        value = "zhangsan@localhost,,lisi@example.com,"
         pyobj = self.field.to_python(value)
-        self.assertEqual(pyobj, [u"zhangsan@localhost", u"lisi@example.com"])
+        self.assertEqual(pyobj, ["zhangsan@localhost", "lisi@example.com"])
 
         for value in ("", None, []):
             pyobj = self.field.to_python(value)
@@ -251,7 +251,7 @@ class TestNewCasePermission(PermissionsTestCase):
         self.assertContains(response, self.summary)
 
 
-class TestEditCase(BasePlanCase):
+class TestEditCaseView(BasePlanCase):
     """Test edit view method"""
 
     @classmethod
@@ -330,6 +330,108 @@ class TestEditCase(BasePlanCase):
 
         self.case_1.refresh_from_db()
         self.assertEqual(new_summary, self.case_1.summary)
+
+    def test_invalid_notify_formset(self):
+        # Note: Boolean fields are always valid - either False or True
+        # That's why the only way to make the notify formset invalid is to
+        # reference a non-existing email_settings_id
+        data = self.edit_data.copy()
+        data["email_settings-0-id"] = -1
+        del data["email_settings-0-auto_to_case_tester"]
+
+        response = self.client.post(self.case_edit_url, data)
+        self.assertContains(response, _("Edit TestCase"))
+        self.assertContains(
+            response,
+            '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_tester" '
+            'type="checkbox"',
+            html=False,
+        )
+
+    def test_initial_default_tester(self):
+        testcase = TestCaseFactory(
+            author=self.tester,
+            default_tester=self.tester,
+            reviewer=self.tester,
+            case_status=self.case_status_proposed,
+            plan=[self.plan],
+        )
+        response = self.client.get(reverse("testcases-edit", args=[testcase.pk]))
+        self.assertContains(
+            response,
+            '<input type="text" id="id_default_tester" name="default_tester" '
+            f'value="{self.tester.email}" class="form-control">',
+        )
+
+
+class TestEditTestCaseViewPermission(PermissionsTestCase):
+    permission_label = "testcases.change_testcase"
+    http_method_names = ["get", "post"]
+    url = reverse(
+        "testcases-edit", args=[0]
+    )  # Workaround for passing check_mandatory_attributes
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.summary = "updated summary"
+        cls.post_data = {
+            "summary": cls.summary,
+        }
+        super().setUpTestData()
+        user_should_have_perm(cls.tester, "testcases.view_testcase")
+
+        case_status_confirmed = TestCaseStatus.objects.filter(is_confirmed=True).first()
+
+        cls.case = TestCaseFactory(
+            author=cls.tester,
+            default_tester=None,
+            reviewer=cls.tester,
+            case_status=case_status_confirmed,
+        )
+        cls.url = reverse("testcases-edit", args=[cls.case.pk])
+        # case.save()  # creates a new case entry in the database
+
+        cls.post_data.update(
+            {
+                "author": cls.tester.pk,
+                "default_tester": cls.tester.pk,
+                "priority": cls.case.priority.pk,
+                "product": cls.case.category.product.pk,
+                "category": cls.case.category.pk,
+                "case_status": case_status_confirmed.pk,
+                "text": "some text description",
+                "script": "some script",
+                "arguments": "args1, args2, args3",
+                "email_settings-0-auto_to_case_author": "on",
+                "email_settings-0-auto_to_run_manager": "on",
+                "email_settings-0-auto_to_execution_assignee": "on",
+                "email_settings-0-auto_to_case_tester": "on",
+                "email_settings-0-auto_to_run_tester": "on",
+                "email_settings-0-notify_on_case_update": "on",
+                "email_settings-0-notify_on_case_delete ": "on",
+                "email_settings-0-cc_list": "info@example.com",
+                "email_settings-0-case": "",
+                "email_settings-0-id": cls.case.emailing.pk,
+                "email_settings-TOTAL_FORMS": "1",
+                "email_settings-INITIAL_FORMS": "1",
+                "email_settings-MIN_NUM_FORMS": "0",
+                "email_settings-MAX_NUM_FORMS": "1",
+            }
+        )
+
+    def verify_get_with_permission(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, _("Edit TestCase"))
+        self.assertContains(response, self.case.summary)
+
+    def verify_post_with_permission(self):
+        response = self.client.post(self.url, self.post_data, follow=True)
+        redirect_url = reverse("testcases-get", args=[self.case.pk])
+        self.assertRedirects(
+            response, redirect_url, status_code=302, target_status_code=200
+        )
+        self.assertContains(response, self.summary)
 
 
 class TestCloneCase(BasePlanCase):
