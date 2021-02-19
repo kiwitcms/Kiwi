@@ -1,14 +1,55 @@
-function pre_process_data(data) {
-    var component_cache = {};
-    var tags_cache = {};
-
+function pre_process_data(data, callback) {
+    const caseIds = []
     data.forEach(function(element) {
-        element['component'] = [{'name': 'fix me'}]
-        element['tag'] = [{'name': 'fix me'}]
-// TODO: temporary disable this
-//        addResourceToData(element, 'component', 'Component.filter', component_cache);
-//        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
-    });
+        caseIds.push(element.id)
+    })
+
+    // get tags for all objects
+    const tagsPerCase = {}
+    jsonRPC('Tag.filter', {case__in: caseIds}, function(tags) {
+        tags.forEach(function(element) {
+            if (tagsPerCase[element.case] === undefined) {
+                tagsPerCase[element.case] = []
+            }
+
+            // push only if unique
+            if (tagsPerCase[element.case].indexOf(element.name) === -1) {
+                tagsPerCase[element.case].push(element.name)
+            }
+        })
+
+        // get components for all objects
+        const componentsPerCase = {}
+        jsonRPC('Component.filter', {cases__in: caseIds}, function(components) {
+            components.forEach(function(element) {
+                if (componentsPerCase[element.cases] === undefined) {
+                    componentsPerCase[element.cases] = []
+                }
+
+                // push only if unique
+                if (componentsPerCase[element.cases].indexOf(element.name) === -1) {
+                    componentsPerCase[element.cases].push(element.name)
+                }
+            })
+
+            // augment data set with additional info
+            data.forEach(function(element) {
+                if (element.id in tagsPerCase) {
+                    element.tag_names = tagsPerCase[element.id]
+                } else {
+                    element.tag_names = []
+                }
+
+                if (element.id in componentsPerCase) {
+                    element.component_names = componentsPerCase[element.id]
+                } else {
+                    element.component_names = []
+                }
+            });
+
+            callback({data: data}) // renders everything
+        })
+    })
 }
 
 
@@ -96,19 +137,13 @@ $(document).ready(function() {
                 }
             },
             { data: "create_date"},
-            { data: "category"},
-            {
-                data: "component",
-                render: renderFromCache,
-            },
-            { data: "priority" },
-            { data: "case_status"},
+            { data: "category__name"},
+            { data: "component_names" },
+            { data: "priority__value" },
+            { data: "case_status__name"},
             { data: "is_automated" },
-            { data: "author" },
-            {
-                data: "tag",
-                render: renderFromCache,
-            },
+            { data: "author__username" },
+            { data: "tag_names" },
         ],
         dom: "t",
         language: {
