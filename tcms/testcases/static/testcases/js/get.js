@@ -25,9 +25,9 @@ function addTestPlanToTestCase(case_id, plans_table) {
         plans_table.row.add({
             id: plan.id,
             name: plan.name,
-            author: plan.author,
-            type: plan.type,
-            product: plan.product
+            author__username: plan.author__username,
+            type__name: plan.type__name,
+            product__name: plan.product__name
         }).draw();
         $('#input-add-plan').val('');
     });
@@ -179,9 +179,9 @@ $(document).ready(function() {
                     return '<a href="/plan/'+ data.id + '/">' + escapeHTML(data.name) + '</a>';
                 }
             },
-            { data: "author" },
-            { data: "type"},
-            { data: "product" },
+            { data: "author__username" },
+            { data: "type__name" },
+            { data: "product__name" },
             {
                 data: null,
                 sortable: false,
