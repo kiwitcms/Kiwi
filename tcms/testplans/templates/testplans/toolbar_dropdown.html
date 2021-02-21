@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<li class="{{ first_class }}" data-filter-type="summary"><a href="#">{% trans 'Summary' %}</a></li>
+<li data-filter-type="case_status__name"><a href="#">{% trans 'Status' %}</a></li>
+<li data-filter-type="is_automated"><a href="#">{% trans 'Automated' %}</a></li>
+<li data-filter-type="priority__value"><a href="#">{% trans 'Priority' %}</a></li>
+<li data-filter-type="category__name"><a href="#">{% trans 'Category' %}</a></li>
+<li data-filter-type="author__username"><a href="#">{% trans 'Author' %}</a></li>
+<li data-filter-type="default_tester__username"><a href="#">{% trans 'Default tester' %}</a></li>
+<li data-filter-type="reviewer__username"><a href="#">{% trans 'Reviewer' %}</a></li>
