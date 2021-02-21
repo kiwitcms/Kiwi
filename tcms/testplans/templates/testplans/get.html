@@ -211,7 +211,7 @@
                                                     {% trans 'Summary' %}<span
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu js-toolbar-filter-options">
-                                                    {% include "include/tp_toolbar_dropdown.html" with first_class="selected" %}
+                                                    {% include "testplans/toolbar_dropdown.html" with first_class="selected" %}
                                                     <li data-filter-type="component"><a href="#">{% trans 'Component' %}</a></li>
                                                     <li data-filter-type="tag"><a href="#">{% trans 'Tag' %}</a></li>
                                                 </ul>
@@ -231,7 +231,7 @@
                                                         class="caret"></span></button>
                                                 <ul class="dropdown-menu js-toolbar-sort-options">
                                                     <li class="selected" data-filter-type="sortkey"><a href="#">{% trans 'Sort key' %}</a></li>
-                                                    {% include "include/tp_toolbar_dropdown.html" %}
+                                                    {% include "testplans/toolbar_dropdown.html" %}
                                                 </ul>
                                             </div>
                                             <button class="btn btn-link js-toolbar-sorting-order" type="button">
