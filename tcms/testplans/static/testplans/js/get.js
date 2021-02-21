@@ -155,12 +155,12 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
     row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/`);
     // todo: TestCaseStatus here isn't translated b/c TestCase.filter uses a
     // custom serializer which needs to be refactored as well
-    row.find('.js-test-case-status').html(`${testCase.case_status}`);
-    row.find('.js-test-case-priority').html(`${testCase.priority}`);
-    row.find('.js-test-case-category').html(`${testCase.category}`);
-    row.find('.js-test-case-author').html(`${testCase.author}`);
-    row.find('.js-test-case-tester').html(`${testCase.default_tester || '-'}`);
-    row.find('.js-test-case-reviewer').html(`${testCase.reviewer || '-'}`);
+    row.find('.js-test-case-status').html(`${testCase.case_status__name}`);
+    row.find('.js-test-case-priority').html(`${testCase.priority__value}`);
+    row.find('.js-test-case-category').html(`${testCase.category__name}`);
+    row.find('.js-test-case-author').html(`${testCase.author__username}`);
+    row.find('.js-test-case-tester').html(`${testCase.default_tester__username || '-'}`);
+    row.find('.js-test-case-reviewer').html(`${testCase.reviewer__username || '-'}`);
 
     // set the links in the kebab menu
     if (permissions['perm-change-testcase']) {
@@ -173,7 +173,7 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
 
     // apply visual separation between confirmed and not confirmed
 
-    if (!isTestCaseConfirmed(testCase.case_status_id)) {
+    if (!isTestCaseConfirmed(testCase.case_status)) {
         row.find('.list-group-item-header').addClass('bg-danger');
 
         // add customizable icon as part of #1932
@@ -265,13 +265,13 @@ function getTestCaseExpandArea(row, testCase, permissions) {
         testCase.id,
         'TestCase.comments',
         'TestCase.remove_comment',
-        !isTestCaseConfirmed(testCase.case_status_id) && permissions['perm-delete-comment'],
+        !isTestCaseConfirmed(testCase.case_status) && permissions['perm-delete-comment'],
         row.find('.comments'),
     )
 
     // render comments form
     const commentFormTextArea = row.find('.js-comment-form-textarea');
-    if (!isTestCaseConfirmed(testCase.case_status_id) && permissions['perm-add-comment']) {
+    if (!isTestCaseConfirmed(testCase.case_status) && permissions['perm-add-comment']) {
         const textArea = row.find('textarea')[0];
         const fileUpload = row.find('input[type="file"]')
         const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
@@ -619,7 +619,7 @@ function toolbarEvents(testPlanId, permissions) {
         }
 
         for (let i = 0; i < selectedTestCases.length; i++) {
-            let status = allTestCases[selectedTestCases[i]].case_status_id;
+            let status = allTestCases[selectedTestCases[i]].case_status;
             if (!isTestCaseConfirmed(status)) {
                 alert($('#test_plan_pk').data('trans-cannot-create-testrun'));
                 return false;

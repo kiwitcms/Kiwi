@@ -384,7 +384,7 @@ function getExpandArea(testExecution) {
     const container = $(`.test-execution-${testExecution.id}`)
 
     container.find('.test-execution-information .run-date').html(testExecution.close_date || '-')
-    container.find('.test-execution-information .build').html(testExecution.build)
+    container.find('.test-execution-information .build').html(testExecution.build__name)
     container.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
     jsonRPC('TestCase.history',
@@ -530,67 +530,67 @@ function renderAdditionalInformation(testRunId, execution) {
 
     // update priority, category & automation status for all executions
     // also tags & components via nested API calls
-    jsonRPC('Component.filter', componentQ, componentData => {
-        const components = {}
-        for (let i = 0; i < componentData.length; i++) {
-            components[componentData[i].id] = componentData[i]
-        }
-
-        jsonRPC('Tag.filter', tagsQ, tagData => {
-            const tags = {}
-            for (let i = 0; i < tagData.length; i++) {
-                tags[tagData[i].id] = tagData[i]
-            }
-
+    jsonRPC('Component.filter', componentQ, components => {
+        jsonRPC('Tag.filter', tagsQ, tags => {
             jsonRPC('TestCase.filter', casesQuery, testCases => {
-                for (const testCase of testCases) {
-                    const row = $(`.test-execution-case-${testCase.id}`)
+                jsonRPC('TestCase.filter', {plan: planId}, function(casesInPlan) {
+                    casesInPlan = arrayToDict(casesInPlan)
+                    casesInPlan = Object.keys(casesInPlan).map(id => parseInt(id))
 
-                    // when loading this page filtered by status some TCs do not exist
-                    // but we don't know about it b/c the above queries are overzealous
-                    if (!row.length) { continue }
+                    for (const testCase of testCases) {
+                        const row = $(`.test-execution-case-${testCase.id}`)
 
-                    row.find('.test-execution-priority').html(testCase.priority)
-                    row.find('.test-execution-category').html(testCase.category)
+                        // when loading this page filtered by status some TCs do not exist
+                        // but we don't know about it b/c the above queries are overzealous
+                        if (!row.length) { continue }
 
-                    const isAutomatedElement = row.find('.test-execution-automated')
-                    const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
-                    const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
-                    isAutomatedElement.addClass(isAutomatedIcon)
-                    isAutomatedElement.attr('title', isAutomatedAttr)
+                        row.find('.test-execution-priority').html(testCase.priority__value)
+                        row.find('.test-execution-category').html(testCase.category__name)
 
-                    // test case isn't part of the parent test plan
-// TODO: fix me, why remove .plan
-//                    if (testCase.plan.indexOf(planId) === -1) {
-//                        row.find('.js-tc-not-in-tp').toggleClass('hidden')
-//                    }
+                        const isAutomatedElement = row.find('.test-execution-automated')
+                        const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
+                        const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
+                        isAutomatedElement.addClass(isAutomatedIcon)
+                        isAutomatedElement.attr('title', isAutomatedAttr)
 
-                    // render tags and components if available
-                    testCase.tagNames = []
-// todo: fix me, why remove .tag
-//                    for (let i = 0; i < testCase.tag.length; i++) {
-//                        testCase.tagNames.push(tags[testCase.tag[i]].name)
-//                    }
-                    if (testCase.tagNames.length) {
-                        row.find('.js-row-tags').toggleClass('hidden')
-                        row.find('.js-row-tags').append(testCase.tagNames.join(', '))
+                        // test case isn't part of the parent test plan
+                        if (casesInPlan.indexOf(testCase.id) === -1) {
+                            row.find('.js-tc-not-in-tp').toggleClass('hidden')
+                        }
+
+                        // render tags and components if available
+                        testCase.tagNames = []
+                        // todo: this is sub-optimal b/c it searches whether tag is attached
+                        // to the current testCase and does so for every case in the list
+                        for (let i = 0; i < tags.length; i++) {
+                            if (tags[i].case === testCase.id && testCase.tagNames.indexOf(tags[i].name) === -1) {
+                                testCase.tagNames.push(tags[i].name)
+                            }
+                        }
+                        if (testCase.tagNames.length) {
+                            row.find('.js-row-tags').toggleClass('hidden')
+                            row.find('.js-row-tags').append(testCase.tagNames.join(', '))
+                        }
+
+                        testCase.componentNames = []
+                        // todo: this is sub-optimal b/c it searches whether component is attached
+                        // to the current testCase and does so for every case in the list
+                        for (let i = 0; i < components.length; i++) {
+                            if (components[i].cases === testCase.id) {
+                                testCase.componentNames.push(components[i].name)
+                            }
+                        }
+                        if (testCase.componentNames.length) {
+                            row.find('.js-row-components').toggleClass('hidden')
+                            row.find('.js-row-components').append(testCase.componentNames.join(', '))
+                        }
+
+                        // update internal data structure
+                        const teID = row.find('.test-execution-checkbox').data('test-execution-id')
+                        allExecutions[teID].tags = testCase.tagNames;
+                        allExecutions[teID].components = testCase.componentNames;
                     }
-
-                    testCase.componentNames = []
-// todo: why remove components
-//                    for (let i = 0; i < testCase.component.length; i++) {
-//                        testCase.componentNames.push(components[testCase.component[i]].name)
-//                    }
-                    if (testCase.componentNames.length) {
-                        row.find('.js-row-components').toggleClass('hidden')
-                        row.find('.js-row-components').append(testCase.componentNames.join(', '))
-                    }
-
-                    // update internal data structure
-                    const teID = row.find('.test-execution-checkbox').data('test-execution-id')
-                    allExecutions[teID].tags = testCase.tagNames;
-                    allExecutions[teID].components = testCase.componentNames;
-                }
+                })
             })
         })
     })
@@ -626,17 +626,14 @@ function renderTestExecutionRow(testExecution) {
     template.find('.test-execution-element').addClass(`test-execution-${testExecution.id}`)
     template.find('.test-execution-element').addClass(`test-execution-case-${testExecution.case}`)
     template.find('.test-execution-info').html(`TE-${testExecution.id}`)
-    template.find('.test-execution-info-link').html('--- fix me: case summary') // todo: fix me, was testExecution.case
+    template.find('.test-execution-info-link').html(`TE-${testExecution.case__summary}`)
     template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case}/`)
-    template.find('.test-execution-tester').html(testExecution.tested_by || '-')
-    template.find('.test-execution-asignee').html(testExecution.assignee || '-')
+    template.find('.test-execution-tester').html(testExecution.tested_by__username || '-')
+    template.find('.test-execution-asignee').html(testExecution.assignee__username || '-')
 
     const testExecutionStatus = allExecutionStatuses[testExecution.status]
     template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
     template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
-    // todo: will not be needed when status names come translated from backend
-    // fixme: do we even need this ???
-    // allExecutions[testExecution.id].status_name = testExecutionStatus.name
 
     template.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
     template.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
