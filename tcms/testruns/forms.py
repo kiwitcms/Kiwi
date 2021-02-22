@@ -5,9 +5,9 @@ from django.contrib.auth import get_user_model
 from tcms.core.forms.fields import UserField
 from tcms.core.utils import string_to_list
 from tcms.management.models import Build, Product, Version
+from tcms.rpc.api.forms import DateTimeField
 from tcms.testcases.models import TestCase
-
-from .models import TestRun
+from tcms.testruns.models import TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -19,6 +19,10 @@ class NewRunForm(forms.ModelForm):
 
     manager = UserField()
     default_tester = UserField(required=False)
+    start_date = DateTimeField(required=False)
+    stop_date = DateTimeField(required=False)
+    planned_start = DateTimeField(required=False)
+    planned_stop = DateTimeField(required=False)
 
     case = forms.ModelMultipleChoiceField(
         queryset=TestCase.objects.none(),
