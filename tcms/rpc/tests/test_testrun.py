@@ -418,6 +418,8 @@ class TestCreatePermission(APIPermissionsTestCase):
         self.assertIn("product_version", result)
         self.assertIn("start_date", result)
         self.assertIn("stop_date", result)
+        self.assertIn("planned_start", result)
+        self.assertIn("planned_stop", result)
         self.assertEqual(result["summary"], self.test_run_fields["summary"])
         self.assertIn("notes", result)
         self.assertEqual(result["plan"], self.plan.pk)
@@ -459,6 +461,8 @@ class TestFilter(APITestCase):
         self.assertEqual(result["product_version"], self.test_run.product_version.pk)
         self.assertEqual(result["start_date"], self.test_run.start_date)
         self.assertEqual(result["stop_date"], self.test_run.stop_date)
+        self.assertEqual(result["planned_start"], self.test_run.planned_start)
+        self.assertEqual(result["planned_stop"], self.test_run.planned_stop)
         self.assertEqual(result["summary"], self.test_run.summary)
         self.assertEqual(result["notes"], self.test_run.notes)
         self.assertEqual(result["plan"], self.test_run.plan.pk)
@@ -489,6 +493,10 @@ class TestUpdateTestRun(APITestCase):
         self.updated_build = BuildFactory()
         self.updated_summary = "Updated summary."
         self.updated_stop_date = datetime.strptime("2020-05-05", "%Y-%m-%d")
+        self.updated_planned_start = datetime.strptime(
+            "2020-05-05 09:00:00", "%Y-%m-%d %H:%M:%S"
+        )
+        self.updated_planned_stop = datetime.strptime("2020-05-06", "%Y-%m-%d")
 
     def test_successful_update(self):
         update_fields = {
@@ -496,6 +504,8 @@ class TestUpdateTestRun(APITestCase):
             "build": self.updated_build.pk,
             "summary": self.updated_summary,
             "stop_date": self.updated_stop_date,
+            "planned_start": self.updated_planned_start,
+            "planned_stop": self.updated_planned_stop,
         }
 
         # assert test run is not updated yet
@@ -503,6 +513,8 @@ class TestUpdateTestRun(APITestCase):
         self.assertNotEqual(self.updated_build, self.test_run.build.name)
         self.assertNotEqual(self.updated_summary, self.test_run.summary)
         self.assertNotEqual(self.updated_stop_date, self.test_run.stop_date)
+        self.assertNotEqual(self.updated_planned_start, self.test_run.planned_start)
+        self.assertNotEqual(self.updated_planned_stop, self.test_run.planned_stop)
 
         result = self.rpc_client.TestRun.update(self.test_run.pk, update_fields)
         self.test_run.refresh_from_db()
@@ -512,6 +524,8 @@ class TestUpdateTestRun(APITestCase):
         self.assertEqual(result["product_version"], self.test_run.product_version.pk)
         self.assertEqual(result["start_date"], self.test_run.start_date)
         self.assertEqual(result["stop_date"], self.test_run.stop_date)
+        self.assertEqual(result["planned_start"], self.test_run.planned_start)
+        self.assertEqual(result["planned_stop"], self.test_run.planned_stop)
         self.assertEqual(result["summary"], self.test_run.summary)
         self.assertEqual(result["notes"], self.test_run.notes)
         self.assertEqual(result["plan"], self.test_run.plan.pk)
@@ -526,6 +540,7 @@ class TestUpdateTestRun(APITestCase):
             "build": self.updated_build.pk,
             "summary": self.updated_summary,
             "stop_date": "10-10-2010",
+            "planned_stop": "11-10-2010",
         }
 
         with self.assertRaisesMessage(
@@ -541,6 +556,10 @@ class TestUpdateTestRun(APITestCase):
         self.assertNotEqual(
             datetime.strptime(update_fields["stop_date"], "%d-%m-%Y"),
             test_run.stop_date,
+        )
+        self.assertNotEqual(
+            datetime.strptime(update_fields["planned_stop"], "%d-%m-%Y"),
+            test_run.planned_stop,
         )
 
     def test_update_with_product(self):
