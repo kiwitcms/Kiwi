@@ -404,24 +404,38 @@ class TestCreatePermission(APIPermissionsTestCase):
         self.version = VersionFactory(product=self.product)
         self.build = BuildFactory(version=self.version)
         self.plan = TestPlanFactory(product=self.product, product_version=self.version)
+        self.start_date = datetime.strptime("2020-05-05", "%Y-%m-%d")
+        self.stop_date = datetime.strptime("2020-05-05 00:00:00", "%Y-%m-%d %H:%M:%S")
+        self.planned_start = datetime.strptime(
+            "2020-05-05 09:00:00", "%Y-%m-%d %H:%M:%S"
+        )
+        self.planned_stop = datetime.strptime("2020-05-06", "%Y-%m-%d")
+
         self.test_run_fields = {
             "plan": self.plan.pk,
             "build": self.build.pk,
             "summary": "TR created",
             "manager": UserFactory().pk,
+            "start_date": self.start_date,
+            "stop_date": self.stop_date,
+            "planned_start": self.planned_start,
+            "planned_stop": self.planned_stop,
         }
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestRun.create(self.test_run_fields)
 
+        run_id = result["id"]
+        test_run = TestRun.objects.get(pk=run_id)
+
         self.assertIn("id", result)
         self.assertIn("product_version", result)
-        self.assertIn("start_date", result)
-        self.assertIn("stop_date", result)
-        self.assertIn("planned_start", result)
-        self.assertIn("planned_stop", result)
         self.assertEqual(result["summary"], self.test_run_fields["summary"])
         self.assertIn("notes", result)
+        self.assertEqual(result["stop_date"], test_run.stop_date)
+        self.assertEqual(result["start_date"], test_run.start_date)
+        self.assertEqual(result["planned_start"], test_run.planned_start)
+        self.assertEqual(result["planned_stop"], test_run.planned_stop)
         self.assertEqual(result["plan"], self.plan.pk)
         self.assertEqual(result["build"], self.build.pk)
         self.assertEqual(result["manager"], self.test_run_fields["manager"])
