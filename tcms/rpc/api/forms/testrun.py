@@ -18,6 +18,8 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     default_tester = UserField()
     start_date = DateTimeField()
     stop_date = DateTimeField()
+    planned_start = DateTimeField()
+    planned_stop = DateTimeField()
 
     def populate(self, version_id):
         self.fields["build"].queryset = Build.objects.filter(
