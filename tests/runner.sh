@@ -6,10 +6,13 @@
 rm -rf /var/tmp/beakerlib-*/
 export BEAKERLIB_JOURNAL=0
 
-# install beakerlib from a fork b/c
-# https://github.com/beakerlib/beakerlib/pull/11
+# install beakerlib from source b/c beakerlib doesn't ship
+# .deb packages
 if [ ! -f "/usr/share/beakerlib/beakerlib.sh" ]; then
-    curl -o- https://raw.githubusercontent.com/atodorov/beakerlib/web-install/install.sh | bash
+    sudo apt-get update
+    sudo apt-get install git make
+    git clone https://github.com/beakerlib/beakerlib.git
+    make -C beakerlib/ install
 fi
 
 # execute test scripts
