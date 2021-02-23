@@ -22,4 +22,4 @@ fi
 grep RESULT_STRING /var/tmp/beakerlib-*/TestResults | grep -v PASS && exit 1
 
 # explicit return code for Makefile
-exit 0
+exit $?
