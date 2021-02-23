@@ -19,7 +19,8 @@ fi
 
 
 # look for failures
-grep RESULT_STRING /var/tmp/beakerlib-*/TestResults | grep -v PASS && exit 1
+cat /var/tmp/beakerlib-*/TestResults || exit 11
+grep RESULT_STRING /var/tmp/beakerlib-*/TestResults | grep -v PASS && exit 22
 
 # explicit return code for Makefile
 exit 0
