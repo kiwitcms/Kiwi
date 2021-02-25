@@ -253,6 +253,41 @@ To activate your account, click this link:
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "registration/registration_form.html")
 
+    def test_register_user_already_registered(self):
+        User.objects.create_user("kiwi-tester", "new-tester@example.com", "password")
+
+        response = self.client.post(
+            self.register_url,
+            {
+                "username": "test_user",
+                "password1": "password",
+                "password2": "password",
+                "email": "new-tester@example.com",
+            },
+            follow=False,
+        )
+        self.assertContains(response, _("A user with that email already exists."))
+
+        user = User.objects.filter(username="test_user")
+        self.assertEqual(user.count(), 0)
+
+    def test_first_user_is_superuser(self):
+        response, _user = self.assert_user_registration("tester_1")
+
+        self.assertTrue(_user.is_superuser)
+
+    def test_only_one_superuser(self):
+        user1 = User.objects.create_user(
+            "kiwi-tester", "tester@example.com", "password"
+        )
+        user1.is_superuser = True
+        user1.save()
+
+        self.assertTrue(user1.is_superuser)
+
+        response, user2 = self.assert_user_registration("plan-tester")
+        self.assertFalse(user2.is_superuser)
+
 
 class TestConfirm(TestCase):
     """Test for activation key confirmation"""
@@ -329,6 +364,30 @@ class TestLoginViewWithCustomTemplate(TestCase):
 class TestPasswordResetView(TestCase):
     """Test for password reset view"""
 
+    def setUp(self):
+        self.password_reset_url = reverse("tcms-password_reset")
+
     def test_form_class(self):
-        response = self.client.get(reverse("tcms-password_reset"))
-        self.assertIsInstance(response.context["form"], forms.PasswordResetForm)
+        response = self.client.get(self.password_reset_url)
+        self.assertEqual(
+            str(type(response.context["form"])),
+            str(forms.PasswordResetForm),
+        )
+
+    def test_open_password_reset_page(self):
+        response = self.client.get(self.password_reset_url)
+
+        self.assertContains(response, ">%s</button>" % _("Password reset"))
+
+    @patch("tcms.kiwi_auth.forms.DjangoPasswordResetForm.send_mail")
+    def test_send_mail_for_password_reset(self, mail_sent):
+        user = User.objects.create_user("kiwi-tester", "tester@example.com", "password")
+        user.is_active = True
+        user.save()
+        data = {"email": "tester@example.com"}
+        response = self.client.post(self.password_reset_url, data, follow=True)
+
+        self.assertContains(response, _("Password reset email was sent"))
+
+        # Verify mail is sent
+        mail_sent.assert_called_once()
