@@ -50,6 +50,38 @@ $(document).ready(function() {
                 params['summary__icontains'] = $('#id_summary').val();
             }
 
+            if ($('#id_after_start_date').val()) {
+                params['start_date__gte'] = $('#id_after_start_date').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+            }
+
+            if ($('#id_before_start_date').val()) {
+                params['start_date__lte'] = $('#id_before_start_date').data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+            }
+
+            if ($('#id_after_stop_date').val()) {
+                params['stop_date__gte'] = $('#id_after_stop_date').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+            }
+
+            if ($('#id_before_stop_date').val()) {
+                params['stop_date__lte'] = $('#id_before_stop_date').data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+            }
+
+            if ($('#id_after_planned_start').val()) {
+                params['planned_start__gte'] = $('#id_after_planned_start').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+            }
+
+            if ($('#id_before_planned_start').val()) {
+                params['planned_start__lte'] = $('#id_before_planned_start').data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+            }
+
+            if ($('#id_after_planned_stop').val()) {
+                params['planned_stop__gte'] = $('#id_after_planned_stop').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+            }
+
+            if ($('#id_before_planned_stop').val()) {
+                params['planned_stop__lte'] = $('#id_before_planned_stop').data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+            }
+
             if ($('#id_plan').val()) {
                 params['plan'] = $('#id_plan').val();
             }
