@@ -24,7 +24,7 @@
                 <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
                 <td><a href="{% url 'tcms-profile' attachment.creator %}">{{ attachment.creator }}</a></td>
                 <td>{{ attachment.created }}</td>
-                <td>{% attachment_delete_link attachment %}</td>
+                <td class="hidden-print">{% attachment_delete_link attachment %}</td>
             </tr>
             {% empty %}
             <tr>
@@ -33,7 +33,7 @@
             {% endfor %}
             </tbody>
             {% if perms.attachments.add_attachment %}
-            <tfoot>
+            <tfoot class="hidden-print">
             <tr>
                 <th colspan="4">
                     {% attachment_form object %}
