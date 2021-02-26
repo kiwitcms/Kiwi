@@ -45,7 +45,7 @@ function tagsCard(model, object_id, display_filter, perm_remove) {
                 sortable: false,
                 render: function (data, type, full, meta) {
                     if (perm_remove) {
-                        return '<a href="#tags" class="remove-tag" data-name="' + data.name  + '"><span class="pficon-error-circle-o"></span></a>';
+                        return '<a href="#tags" class="remove-tag" data-name="' + data.name  + '"><span class="pficon-error-circle-o hidden-print"></span></a>';
                     }
                     return '';
                 }

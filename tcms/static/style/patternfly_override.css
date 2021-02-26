@@ -39,3 +39,9 @@ nav.navbar-default { border-top-color: #3C8D2C; }
     border: 1px solid #ccc;
     padding: 5px;
 }
+
+@media print {
+    a[href]:after {
+        display: none !important;
+    }
+}
