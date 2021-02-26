@@ -71,6 +71,28 @@
                 <input class="bootstrap-switch" id="id_running" name="running" type="checkbox" {% if form.running.value != "0" %}checked{% endif %} data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_start_date">{% trans "Start Date" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_start_date" type="datetime-local" class="form-control">
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_stop_date">{% trans "Stop Date" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_stop_date" type="datetime-local" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_planned_start">{% trans "Planned Start" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_planned_start" type="datetime-local" class="form-control">
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_planned_stop">{% trans "Planned Stop" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_planned_start" type="datetime-local" class="form-control">
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_tag">{% trans "Tag" %}</label>
