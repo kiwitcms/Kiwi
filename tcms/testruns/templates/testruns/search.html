@@ -22,6 +22,12 @@
                 <input id="id_plan" type="text" class="form-control" placeholder="{% trans 'TestPlan ID' %}"
                     value="{{ form.plan.value|default:'' }}">
             </div>
+
+            <label class="col-md-1 col-lg-1" for="id_tag">{% trans "Tag" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <input id="id_tag" type="text" class="form-control" value="{{ form.tag.value|default:'' }}">
+                    <p class="help-block">{% trans "Separate multiple values with comma (,)" %}</p>
+                </div>
         </div>
 
         <div class="form-group">
@@ -76,10 +82,93 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-1 col-lg-1" for="id_tag">{% trans "Tag" %}</label>
+            <label class="col-md-1 col-lg-1">{% trans "Start date" %}</label>
+
             <div class="col-md-3 col-lg-3">
-                <input id="id_tag" type="text" class="form-control" value="{{ form.tag.value|default:'' }}">
-                <p class="help-block">{% trans "Separate multiple values with comma (,)" %}</p>
+                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
+                    <label for="id_before_start_date"></label>
+                    <input type="text" class="form-control" id="id_before_start_date">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before_start_date" %}
+
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <label for="id_after_start_date"></label>
+                    <input type="text" class="form-control" id="id_after_start_date">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after_start_date" %}
+                </div>
+            </div>
+
+            <label class="col-md-1 col-lg-1">{% trans "Stop date" %}</label>
+
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
+                    <label for="id_before_stop_date"></label>
+                    <input type="text" class="form-control" id="id_before_stop_date">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before_stop_date" %}
+
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <label for="id_after_stop_date"></label>
+                    <input type="text" class="form-control" id="id_after_stop_date">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after_stop_date" %}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1">{% trans "Planned start" %}</label>
+
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
+                    <label for="id_before_planned_start"></label>
+                    <input type="text" class="form-control" id="id_before_planned_start">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before_planned_start" %}
+
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <label for="id_after_planned_start"></label>
+                    <input type="text" class="form-control" id="id_after_planned_start">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after_planned_start" %}
+                </div>
+            </div>
+
+            <label class="col-md-1 col-lg-1">{% trans "Planned stop" %}</label>
+
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
+                    <label for="id_before_planned_stop"></label>
+                    <input type="text" class="form-control" id="id_before_planned_stop">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before_planned_stop" %}
+
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <label for="id_after_planned_stop"></label>
+                    <input type="text" class="form-control" id="id_after_planned_stop">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after_planned_stop" %}
+                </div>
             </div>
         </div>
 
@@ -114,6 +203,8 @@
 </div><!-- /container -->
 
 <!-- JavaScript that is used in this page -->
+    <script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
 <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
 <script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
 
