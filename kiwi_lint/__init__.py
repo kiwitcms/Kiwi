@@ -23,6 +23,7 @@ from .datetime import DatetimeChecker
 from .forms import FormFieldChecker, ModelFormChecker
 from .db_column import DbColumnChecker
 from .generic_foreign_key import GenericForeignKeyChecker
+from .api_distinct import APIDistinctChecker
 
 
 def register(linter):
@@ -47,3 +48,4 @@ def register(linter):
     linter.register_checker(ModelFormChecker(linter))
     linter.register_checker(DbColumnChecker(linter))
     linter.register_checker(GenericForeignKeyChecker(linter))
+    linter.register_checker(APIDistinctChecker(linter))

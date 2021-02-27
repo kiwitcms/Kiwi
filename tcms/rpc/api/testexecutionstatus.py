@@ -22,7 +22,7 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: list(dict)
     """
     return list(
-        TestExecutionStatus.objects.filter(**query).values(
-            "id", "name", "weight", "icon", "color"
-        )
+        TestExecutionStatus.objects.filter(**query)
+        .values("id", "name", "weight", "icon", "color")
+        .distinct()
     )

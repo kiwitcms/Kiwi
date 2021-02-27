@@ -278,7 +278,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         query = {}
 
     return list(
-        TestCase.objects.filter(**query).values(
+        TestCase.objects.filter(**query)
+        .values(
             "id",
             "create_date",
             "is_automated",
@@ -302,6 +303,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "reviewer",
             "reviewer__username",
         )
+        .distinct()
     )
 
 

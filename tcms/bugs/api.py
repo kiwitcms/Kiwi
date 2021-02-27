@@ -84,14 +84,18 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: List of serialized :class:`tcms.bugs.models.Bug` objects.
         :rtype: list
     """
-    result = Bug.objects.filter(**query).values(
-        "pk",
-        "summary",
-        "created_at",
-        "product__name",
-        "version__value",
-        "build__name",
-        "reporter__username",
-        "assignee__username",
+    result = (
+        Bug.objects.filter(**query)
+        .values(
+            "pk",
+            "summary",
+            "created_at",
+            "product__name",
+            "version__value",
+            "build__name",
+            "reporter__username",
+            "assignee__username",
+        )
+        .distinct()
     )
     return list(result)

@@ -233,7 +233,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         query = {}
 
     return list(
-        TestRun.objects.filter(**query).values(
+        TestRun.objects.filter(**query)
+        .values(
             "id",
             "product_version",
             "product_version__value",
@@ -253,6 +254,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester",
             "default_tester__username",
         )
+        .distinct()
     )
 
 
