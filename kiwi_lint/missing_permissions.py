@@ -1,9 +1,11 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 import astroid
 from pylint import checkers, interfaces
+
+from .utils import is_api_function
 
 
 class MissingPermissionsChecker(checkers.BaseChecker):
@@ -107,21 +109,7 @@ class MissingAPIPermissionsChecker(checkers.BaseChecker):
     }
 
     def visit_functiondef(self, node):
-        # API functions always have @rpc_method decorator
-        if not node.decorators:
-            return
-
-        is_api_function = False
-        for decorator in node.decorators.nodes:
-            if (
-                isinstance(decorator, astroid.Call)
-                and isinstance(decorator.func, astroid.Name)
-                and decorator.func.name == "rpc_method"
-            ):
-                is_api_function = True
-                break
-
-        if not is_api_function:
+        if not is_api_function(node):
             return
 
         found_permissions_required = False

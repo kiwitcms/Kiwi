@@ -21,4 +21,4 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.management.models.Classification` objects
         :rtype: dict
     """
-    return list(Classification.objects.filter(**query).values("id", "name"))
+    return list(Classification.objects.filter(**query).values("id", "name").distinct())

@@ -113,7 +113,8 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: list(dict)
     """
     return list(
-        TestExecution.objects.filter(**query).values(
+        TestExecution.objects.filter(**query)
+        .values(
             "id",
             "assignee",
             "assignee__username",
@@ -131,6 +132,7 @@ def filter(query):  # pylint: disable=redefined-builtin
             "status",
             "status__name",
         )
+        .distinct()
     )
 
 
