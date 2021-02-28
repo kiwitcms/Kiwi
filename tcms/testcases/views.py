@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -13,7 +12,6 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 
-from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.testcases.forms import (
     CaseNotifyFormSet,
     CloneCaseForm,
@@ -118,57 +116,47 @@ class TestCaseGetView(DetailView):
     model = TestCase
     template_name = "testcases/get.html"
     http_method_names = ["get"]
-    response_class = ModifySettingsTemplateResponse
-
-    def render_to_response(self, context, **response_kwargs):
-        self.response_class.modify_settings = modify_settings(
-            MENU_ITEMS={
-                "append": [
-                    (
-                        "...",
-                        [
-                            (
-                                _("Edit"),
-                                reverse("testcases-edit", args=[self.object.pk]),
-                            ),
-                            (
-                                _("Clone"),
-                                reverse("testcases-clone")
-                                + "?case=%d" % self.object.pk,
-                            ),
-                            (
-                                _("History"),
-                                "/admin/testcases/testcase/%d/history/"
-                                % self.object.pk,
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Object permissions"),
-                                reverse(
-                                    "admin:testcases_testcase_permissions",
-                                    args=[self.object.pk],
-                                ),
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Delete"),
-                                reverse(
-                                    "admin:testcases_testcase_delete",
-                                    args=[self.object.pk],
-                                ),
-                            ),
-                        ],
-                    )
-                ]
-            }
-        )
-        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["executions"] = self.object.executions.select_related(
             "run", "tested_by", "assignee", "case", "status"
         ).order_by("run__plan", "run")
+        context["OBJECT_MENU_ITEMS"] = [
+            (
+                "...",
+                [
+                    (
+                        _("Edit"),
+                        reverse("testcases-edit", args=[self.object.pk]),
+                    ),
+                    (
+                        _("Clone"),
+                        reverse("testcases-clone") + "?case=%d" % self.object.pk,
+                    ),
+                    (
+                        _("History"),
+                        "/admin/testcases/testcase/%d/history/" % self.object.pk,
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Object permissions"),
+                        reverse(
+                            "admin:testcases_testcase_permissions",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Delete"),
+                        reverse(
+                            "admin:testcases_testcase_delete",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                ],
+            )
+        ]
 
         return context
 

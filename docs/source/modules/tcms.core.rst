@@ -30,6 +30,5 @@ Submodules
    tcms.core.context_processors
    tcms.core.history
    tcms.core.middleware
-   tcms.core.response
    tcms.core.views
    tcms.core.widgets
