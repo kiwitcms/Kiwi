@@ -1,11 +1,10 @@
-# Copyright (c) 2019-2020 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseRedirect
-from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +16,6 @@ from guardian.decorators import permission_required as object_permission_require
 from tcms.bugs.forms import BugCommentForm, NewBugForm
 from tcms.bugs.models import Bug
 from tcms.core.helpers.comments import add_comment
-from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Component
 
 
@@ -31,40 +29,30 @@ class Get(DetailView):
     model = Bug
     template_name = "bugs/get.html"
     http_method_names = ["get"]
-    response_class = ModifySettingsTemplateResponse
-
-    def render_to_response(self, context, **response_kwargs):
-        self.response_class.modify_settings = modify_settings(
-            MENU_ITEMS={
-                "append": [
-                    (
-                        "...",
-                        [
-                            (_("Edit"), reverse("bugs-edit", args=[self.object.pk])),
-                            ("-", "-"),
-                            (
-                                _("Object permissions"),
-                                reverse(
-                                    "admin:bugs_bug_permissions", args=[self.object.pk]
-                                ),
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Delete"),
-                                reverse("admin:bugs_bug_delete", args=[self.object.pk]),
-                            ),
-                        ],
-                    )
-                ]
-            }
-        )
-        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["comment_form"] = BugCommentForm()
         context["comment_form"].populate(self.object.pk)
         context["executions"] = self.object.executions.all()
+        context["OBJECT_MENU_ITEMS"] = [
+            (
+                "...",
+                [
+                    (_("Edit"), reverse("bugs-edit", args=[self.object.pk])),
+                    ("-", "-"),
+                    (
+                        _("Object permissions"),
+                        reverse("admin:bugs_bug_permissions", args=[self.object.pk]),
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Delete"),
+                        reverse("admin:bugs_bug_delete", args=[self.object.pk]),
+                    ),
+                ],
+            )
+        ]
 
         return context
 

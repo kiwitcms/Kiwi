@@ -2,7 +2,6 @@
 
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -13,7 +12,6 @@ from guardian.decorators import permission_required as object_permission_require
 from uuslug import slugify
 
 from tcms.core.forms import SimpleCommentForm
-from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.forms import (
@@ -133,44 +131,6 @@ class TestPlanGetView(DetailView):
     template_name = "testplans/get.html"
     http_method_names = ["get"]
     model = TestPlan
-    response_class = ModifySettingsTemplateResponse
-
-    def render_to_response(self, context, **response_kwargs):
-        self.response_class.modify_settings = modify_settings(
-            MENU_ITEMS={
-                "append": [
-                    (
-                        "...",
-                        [
-                            (_("Edit"), reverse("plan-edit", args=[self.object.pk])),
-                            (_("Clone"), reverse("plans-clone", args=[self.object.pk])),
-                            (
-                                _("History"),
-                                "/admin/testplans/testplan/%d/history/"
-                                % self.object.pk,
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Object permissions"),
-                                reverse(
-                                    "admin:testplans_testplan_permissions",
-                                    args=[self.object.pk],
-                                ),
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Delete"),
-                                reverse(
-                                    "admin:testplans_testplan_delete",
-                                    args=[self.object.pk],
-                                ),
-                            ),
-                        ],
-                    )
-                ]
-            }
-        )
-        return super().render_to_response(context, **response_kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -180,6 +140,35 @@ class TestPlanGetView(DetailView):
         context["test_runs"] = TestRun.objects.filter(
             plan_id=self.object.pk, stop_date__isnull=True
         ).order_by("-id")[:5]
+        context["OBJECT_MENU_ITEMS"] = [
+            (
+                "...",
+                [
+                    (_("Edit"), reverse("plan-edit", args=[self.object.pk])),
+                    (_("Clone"), reverse("plans-clone", args=[self.object.pk])),
+                    (
+                        _("History"),
+                        "/admin/testplans/testplan/%d/history/" % self.object.pk,
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Object permissions"),
+                        reverse(
+                            "admin:testplans_testplan_permissions",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Delete"),
+                        reverse(
+                            "admin:testplans_testplan_delete",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                ],
+            )
+        ]
 
         return context
 

@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.test import modify_settings
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +16,6 @@ from guardian.decorators import permission_required as object_permission_require
 
 from tcms.core.contrib.linkreference.forms import LinkReferenceForm
 from tcms.core.forms import SimpleCommentForm
-from tcms.core.response import ModifySettingsTemplateResponse
 from tcms.testcases.models import BugSystem, TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import NewRunForm, SearchRunForm
@@ -150,7 +148,6 @@ class GetTestRunView(DetailView):
     template_name = "testruns/get.html"
     http_method_names = ["get"]
     model = TestRun
-    response_class = ModifySettingsTemplateResponse
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -161,49 +158,43 @@ class GetTestRunView(DetailView):
         context["link_form"] = LinkReferenceForm()
         context["bug_trackers"] = BugSystem.objects.all()
         context["comment_form"] = SimpleCommentForm()
-        return context
-
-    def render_to_response(self, context, **response_kwargs):
-        self.response_class.modify_settings = modify_settings(
-            MENU_ITEMS={
-                "append": [
+        context["OBJECT_MENU_ITEMS"] = [
+            (
+                "...",
+                [
                     (
-                        "...",
-                        [
-                            (
-                                _("Edit"),
-                                reverse("testruns-edit", args=[self.object.pk]),
-                            ),
-                            (
-                                _("Clone"),
-                                reverse("testruns-clone", args=[self.object.pk]),
-                            ),
-                            (
-                                _("History"),
-                                "/admin/testruns/testrun/%d/history/" % self.object.pk,
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Object permissions"),
-                                reverse(
-                                    "admin:testruns_testrun_permissions",
-                                    args=[self.object.pk],
-                                ),
-                            ),
-                            ("-", "-"),
-                            (
-                                _("Delete"),
-                                reverse(
-                                    "admin:testruns_testrun_delete",
-                                    args=[self.object.pk],
-                                ),
-                            ),
-                        ],
-                    )
-                ]
-            }
-        )
-        return super().render_to_response(context, **response_kwargs)
+                        _("Edit"),
+                        reverse("testruns-edit", args=[self.object.pk]),
+                    ),
+                    (
+                        _("Clone"),
+                        reverse("testruns-clone", args=[self.object.pk]),
+                    ),
+                    (
+                        _("History"),
+                        "/admin/testruns/testrun/%d/history/" % self.object.pk,
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Object permissions"),
+                        reverse(
+                            "admin:testruns_testrun_permissions",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Delete"),
+                        reverse(
+                            "admin:testruns_testrun_delete",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                ],
+            )
+        ]
+
+        return context
 
 
 @method_decorator(

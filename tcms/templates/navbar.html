@@ -111,6 +111,9 @@
 
             <ul class="nav navbar-nav navbar-primary">
                 {% include "include/menu_items.html" with menu_items=SETTINGS.MENU_ITEMS %}
+                {% if OBJECT_MENU_ITEMS %}
+                    {% include "include/menu_items.html" with menu_items=OBJECT_MENU_ITEMS %}
+                {% endif %}
             </ul>
         </div>
     </nav>
