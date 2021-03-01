@@ -1,6 +1,222 @@
 Change Log
 ==========
 
+Kiwi TCMS 10.0 (02 March 2021)
+------------------------------
+
+.. important::
+
+    This is a major release which includes backwards incompatible API changes,
+    new database fields, improvements, bug fixes, translation updates,
+    new tests and internal refactoring.
+    It is the ninth release to include contributions via our
+    `open source bounty program`_.
+
+    This is the first release after Kiwi TCMS reached 400K pulls
+    on Docker Hub!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Update node_modules/marked from 1.2.7 to 2.0.1. Also fixes
+  `SNYK-JS-MARKED-1070800 <https://snyk.io/vuln/SNYK-JS-MARKED-1070800>`_
+- Update django from 3.1.5 to 3.1.7 for CVE-2021-3281 and CVE-2021-23336
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 3.2.1 to 3.3.0
+- Update django-colorfield from 0.3.2 to 0.4.1
+- Update django-extensions from 3.1.0 to 3.1.1
+- Update markdown from 3.3.3 to 3.3.4
+- Update pygments from 2.7.4 to 2.8.0
+- Update python-gitlab from 2.5.0 to 2.6.0
+- Change ON/OFF button messages (Krum Petkov)
+- Automatically set test run to finished/not-finished depending on
+  the state of all executions. Closes
+  `Issue #441 <https://github.com/kiwitcms/Kiwi/issues/441>`_
+- Allow assigning users from group admin page. Fixes
+  `Issue #1844 <https://github.com/kiwitcms/Kiwi/issues/1844>`_
+- Improve documentation around setting up devel environment
+
+
+Database
+~~~~~~~~
+
+- Add ``TestRun.planned_start`` and ``TestRun.planned_stop`` fields. Refs
+  `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
+- Add ``TestExecution.start_date`` field. Refs
+  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_ (Anastasiya Uraleva)
+- Rename field ``TestExecution.close_date`` to ``TestExecution.stop_date`` (Anastasiya Uraleva)
+
+
+API
+~~~
+
+.. warning::
+
+    This release changes how Kiwi TCMS serializes API results and thus
+    introduces multiple backwards incompatible changes.
+
+.. important::
+
+    All ``.filter()`` methods now return distinct records!
+
+- New method ``PlanType.create()``
+- Method ``TestCase.add_component()`` now returns a serialized ``Component``
+  instead of a serialized ``TestCase``. Refs
+  `Issue #2145 <https://github.com/kiwitcms/Kiwi/issues/2145>`_
+- Methods ``Product.filter()``, ``Product.create()`` and ``Product.update()``:
+
+  - change input parameter ``classification_id`` to ``classification`` - type int
+  - change result field ``classification_id`` to ``classification`` - type int
+- Method ``Category.filter()`` changes result field
+  ``product_id`` to ``product`` - type int
+- Methods ``Component.filter()``, ``Component.create()`` and ``Component.update()``:
+
+  - change input parameter ``product_id`` to ``product`` - type int
+  - change input parameter ``initial_owner_id`` to ``initial_owner`` - type int
+  - change input parameter ``initial_qa_contact_id`` to ``initial_qa_contact`` - type int
+  - change result field ``product_id`` to ``product`` - type int
+  - change result field ``initial_owner_id`` to ``initial_owner`` - type int
+  - change result field ``initial_qa_contact_id`` to ``initial_qa_contact`` - type int
+  - adds result field ``cases`` - type int - a TestCase ID if this component is
+    attached to a test case
+- Methods ``Version.filter()`` and ``Version.create()``:
+
+  - change input parameter ``product_id`` to ``product`` - type int
+  - change result field ``product_id`` to ``product`` - type int
+- Method ``Tag.filter()`` now returns additional fields: 
+  ``bugs``, ``case``, ``plan`` and ``run`` which causes existing queries to
+  return similar records attached to different parent objects. Consumers of these
+  results should be updated
+- Methods ``TestPlan.filter()``, ``TestPlan.create()`` and ``TestPlan.update()``:
+
+  - change input parameter ``author_id`` to ``author`` - type int
+  - change input parameter ``parent_id`` to ``parent`` - type int
+  - change input parameter ``product_id`` to ``product`` - type int
+  - change input parameter ``product_version_id`` to ``product_version`` - type int
+  - change input parameter ``type_id`` to ``type`` - type int
+  - change result field ``author_id`` to ``author`` - type int
+  - change result field ``parent_id`` to ``parent`` - type int
+  - change result field ``product_id`` to ``product`` - type int
+  - change result field ``product_version_id`` to ``product_version`` - type int
+  - change result field ``type_id`` to ``type`` - type int
+  - remove result fields ``cases``, ``tag``, ``default_product_version``
+- Method ``TestPlan.filter()``
+  adds result fields ``product_version__value``, ``product__name``,
+  ``author__username`` and ``type__name``
+- Methods ``TestRun.filter()``, ``TestRun.create()`` and ``TestRun.update()``:
+
+  - change result field ``build_id`` to ``build`` - type int
+  - change result field ``default_tester_id`` to ``default_tester`` - type int
+  - change result field ``manager_id`` to ``manager`` - type int
+  - change result field ``plan_id`` to ``plan`` - type int
+  - change result field ``product_version_id`` to ``product_version`` - type int
+  - remove result fields ``cc``, ``tag``
+- Method ``TestRun.filter()`` adds result fields ``product_version__value``,
+  ``plan__product``, ``plan__name``, ``build__name``, ``manager__username`` and
+  ``default_tester__username``
+- Methods ``TestExecution.filter()`` and ``TestExecution.update()``:
+
+  - change input parameter ``assigee_id`` to ``assignee`` - type int
+  - change input parameter ``build_id`` to ``build`` - type int
+  - change input parameter ``case_id`` to ``case`` - type int
+  - change input parameter ``run_id`` to ``run`` - type int
+  - change input parameter ``status_id`` to ``status`` - type int
+  - change input parameter ``tested_by_id`` to ``tested_by`` - type int
+  - change result field ``assigee_id`` to ``assignee`` - type int
+  - change result field ``build_id`` to ``build`` - type int
+  - change result field ``case_id`` to ``case`` - type int
+  - change result field ``run_id`` to ``run`` - type int
+  - change result field ``status_id`` to ``status`` - type int
+  - change result field ``tested_by_id`` to ``tested_by`` - type int
+- Method ``TestExecution.filter()`` adds result fields ``assignee__username``,
+  ``tested_by__username``, ``case__summary``, ``build__name`` and ``status__name``
+- Method ``TestExecution.get_links()`` change result field
+  ``execution_id`` to ``execution`` - type int
+- Method ``TestRun.add_case()`` changes result field names similarly to
+  ``TestExecution.filter()`` method
+- Methods ``TestCase.filter()``, ``TestCase.create()`` and ``TestCase.update()``:
+
+  - change input parameter ``author_id`` to ``author`` - type int
+  - change input parameter ``case_status_id`` to ``case_status`` - type int
+  - change input parameter ``category_id`` to ``category`` - type int
+  - change input parameter ``default_tester_id`` to ``default_tester`` - type int
+  - change input parameter ``priority_id`` to ``priority`` - type int
+  - change input parameter ``reviewer_id`` to ``reviewer`` - type int
+  - change result field ``author_id`` to ``author`` - type int
+  - change result field ``case_status_id`` to ``case_status`` - type int
+  - change result field ``category_id`` to ``category`` - type int
+  - change result field ``default_tester_id`` to ``default_tester`` - type int
+  - change result field ``priority_id`` to ``priority`` - type int
+  - change result field ``reviewer_id`` to ``reviewer`` - type int
+  - remove result fields ``component``, ``plan``, ``tag``
+- Method ``TestCase.filter()`` adds result fields ``case_status__name``, 
+  ``category__name``, ``priority__value``, ``author__username``,
+  ``default_tester__username`` and ``reviewer__username``
+- Methods ``TestRun.get_cases()`` and ``TestPlan.add_case()`` change
+  result field names similarly to ``TestCase.filter()`` method
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix removing a component from a test case immediately after it has been added. Fixes
+  `Issue #2145 <https://github.com/kiwitcms/Kiwi/issues/2145>`_ (Gagan Deep)
+- Fix broken object navigation in navbar. Fixes
+  `Issue #991 <https://github.com/kiwitcms/Kiwi/issues/991>`_
+- Refactor search pages rendering to speed it up. Closes
+  `Issue #1014 <https://github.com/kiwitcms/Kiwi/issues/1014>`_
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Update tests for ``TestRun.create()`` API method. Refs
+  `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
+- Add automation tests. Closes
+  `Issue #1618 <https://github.com/kiwitcms/Kiwi/issues/1618>`_ (Mariyan Garvanski)
+- Add additional automation tests for ``tcms.management.admin``. Closes
+  `Issue #1610 <https://github.com/kiwitcms/Kiwi/issues/1610>`_ (Gagan Deep)
+- Add additional automation tests for ``tcms.testcases.views.EditTestCaseView``. Closes
+  `Issue #1615 <https://github.com/kiwitcms/Kiwi/issues/1615>`_ (Gagan Deep)
+- Add additional automation tests for ``tcms.kiwi_auth.forms``. Closes
+  `Issue #1609 <https://github.com/kiwitcms/Kiwi/issues/1609>`_ (Kapil Bansal)
+- Change location of included HTML templates (Alexander Tsvetanov, Krum Petkov)
+- Erase unused view & templates (Alexander Tsvetanov)
+- Enable eslint. Closes
+  `Issue #1281 <https://github.com/kiwitcms/Kiwi/issues/1281>`_
+- Change how beakerlib test framework is installed to avoid problems
+  during integration tests
+- Better inspection of beakerlib test results to avoid false positive results
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+
+
+
 Kiwi TCMS 9.0.1 (14 Jan 2021)
 -----------------------------
 
