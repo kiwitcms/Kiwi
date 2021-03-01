@@ -84,6 +84,30 @@
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
+                {% with dummy_setup_duration=3000 %}
+                <span class="fa fa-clock-o"></span>{% trans 'Setup duration' %}:
+                {{ dummy_setup_duration }}
+                {% endwith %}
+               <!-- TODO: filter for duration readability -->
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                {% with dummy_testing_duration=2000 %}
+                <span class="fa fa-clock-o"></span>{% trans 'Testing duration' %}:
+                {{ dummy_testing_duration }}
+                {% endwith %}
+                <!-- TODO: filter for duration readability -->
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                {% with dummy_expected_duration=5000 %}
+                <span class="fa fa-clock-o"></span>{% trans 'Expected duration' %}:
+                {{ dummy_expected_duration }}
+                {% endwith %}
+                <!-- TODO: filter for duration readability -->
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa
                     {% if object.is_automated %}
                         fa-cog

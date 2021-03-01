@@ -101,6 +101,18 @@
             </div>
 
             <div class="form-group">
+                <label class="col-md-1 col-lg-1">{% trans "Setup duration" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <!-- Todo: https://github.com/koss-lebedev/bootstrap-duration-picker -->
+                </div>
+
+                <label class="col-md-1 col-lg-1">{% trans "Testing duration" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <!-- Todo: https://github.com/koss-lebedev/bootstrap-duration-picker -->
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-12 col-lg-12">
                     <label class="{% if form.text.errors %}has-error{% endif %}">{% trans "Text" %}:</label>
                     <div>{{ form.text }}</div>
@@ -196,6 +208,7 @@
                     <label> {% trans "TestCase is updated" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-notify_on_case_update" type="checkbox" {% if notify_form.notify_on_case_update.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                     <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-notify_on_case_update" type="checkbox" {% if notify_form.notify_on_case_update.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
                 </div>
 
