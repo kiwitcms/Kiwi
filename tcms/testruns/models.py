@@ -5,7 +5,6 @@ import vinaigrette
 from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
-from django.db.models import Count
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import override
@@ -17,8 +16,6 @@ from tcms.core.models.base import UrlMixin
 TestExecutionStatusSubtotal = namedtuple(
     "TestExecutionStatusSubtotal",
     [
-        "StatusSubtotal",
-        "CaseRunsTotalCount",
         "CompletedPercentage",
         "FailurePercentage",
         "SuccessPercentage",
@@ -146,61 +143,29 @@ class TestRun(models.Model, UrlMixin):
         TestRunCC.objects.filter(run=self, user=user).delete()
 
     @override("en")
-    def stats_executions_status(self, statuses=None):
+    def stats_executions_status(self):
         """
         Get statistics based on executions' status
 
-        :param statuses: iterable object containing TestExecutionStatus
-                         objects representing PASS, FAIL, WAIVED, etc.
-        :type statuses: iterable
         :return: the statistics including the number of each status mapping,
                  total number of executions, complete percent, and failure percent.
         :rtype: namedtuple
         """
-        if statuses is None:
-            statuses = TestExecutionStatus.objects.only("pk", "name").order_by("pk")
+        total_count = self.executions.count()
+        if total_count:
+            complete_count = self.executions.exclude(status__weight=0).count()
+            complete_percent = complete_count * 100.0 / total_count
 
-        rows = (
-            TestExecution.objects.filter(run=self.pk)
-            .values("status")
-            .annotate(status_count=Count("status"))
-        )
-
-        caserun_statuses_subtotal = dict(
-            (status.pk, [0, status]) for status in statuses
-        )
-
-        for row in rows:
-            caserun_statuses_subtotal[row["status"]][0] = row["status_count"]
-
-        complete_count = 0
-        failure_count = 0
-        caseruns_total_count = 0
-
-        for _status_pk, total_info in caserun_statuses_subtotal.items():
-            status_caseruns_count, caserun_status = total_info
-
-            caseruns_total_count += status_caseruns_count
-
-            if caserun_status.weight != 0:
-                complete_count += status_caseruns_count
-            if caserun_status.weight < 0:
-                failure_count += status_caseruns_count
-
-        # Final calculation
-        complete_percent = 0.0
-        if caseruns_total_count:
-            complete_percent = complete_count * 100.0 / caseruns_total_count
-        failure_percent = 0.0
-        if complete_count:
-            failure_percent = failure_count * 100.0 / caseruns_total_count
+            failing_count = self.executions.filter(status__weight__lt=0).count()
+            failing_percent = failing_count * 100.0 / total_count
+        else:
+            complete_percent = 0.0
+            failing_percent = 0.0
 
         return TestExecutionStatusSubtotal(
-            caserun_statuses_subtotal,
-            caseruns_total_count,
             complete_percent,
-            failure_percent,
-            complete_percent - failure_percent,
+            failing_percent,
+            complete_percent - failing_percent,
         )
 
 
