@@ -82,7 +82,8 @@ class TestPlan(TreeNode, UrlMixin):
 
     def _get_email_conf(self):
         try:
-            return self.email_settings
+            # note: this is the reverse_name of a 1-to-1 field
+            return self.email_settings  # pylint: disable=no-member
         except ObjectDoesNotExist:
             return TestPlanEmailSettings.objects.create(plan=self)
 

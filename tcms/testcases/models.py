@@ -108,7 +108,9 @@ class TestCase(models.Model, UrlMixin):
     def get_text_with_version(self, case_text_version=None):
         if case_text_version:
             try:
-                return self.history.get(history_id=case_text_version).text
+                return self.history.get(  # pylint: disable=no-member
+                    history_id=case_text_version
+                ).text
             except ObjectDoesNotExist:
                 return self.text
 
@@ -137,7 +139,8 @@ class TestCase(models.Model, UrlMixin):
 
     def _get_email_conf(self):
         try:
-            return self.email_settings
+            # note: this is the reverse_name of a 1-to-1 field
+            return self.email_settings  # pylint: disable=no-member
         except ObjectDoesNotExist:
             return TestCaseEmailSettings.objects.create(case=self)
 
