@@ -57,24 +57,21 @@ class NewRunForm(forms.ModelForm):
         ).all()
 
 
-class SearchRunForm(forms.Form):
-    """
-    Includes *only* fields used in search.html b/c
-    the actual search is now done via JSON RPC.
-    """
+class SearchRunForm(forms.ModelForm):
+    class Meta:
+        model = TestRun
+        fields = "__all__"
 
-    plan = forms.CharField(required=False)
+    # overriden widget
+    manager = UserField()
+    default_tester = UserField()
+
+    # extra fields
     product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
-    product_version = forms.ModelChoiceField(
-        queryset=Version.objects.none(), required=False
-    )
-    build = forms.ModelChoiceField(
-        queryset=Build.objects.none(),
-        required=False,
-    )
-    default_tester = UserField(required=False)
-    tag__name__in = forms.CharField(required=False)
     running = forms.IntegerField(required=False)
+
+    # todo: all models have `tag` field and this can be replaced
+    tag__name__in = forms.CharField(required=False)
 
     def clean_tag__name__in(self):
         return string_to_list(self.cleaned_data["tag__name__in"])
