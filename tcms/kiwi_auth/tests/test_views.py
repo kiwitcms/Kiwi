@@ -272,9 +272,9 @@ To activate your account, click this link:
         self.assertEqual(user.count(), 0)
 
     def test_first_user_is_superuser(self):
-        response, _user = self.assert_user_registration("tester_1")
+        _response, user = self.assert_user_registration("tester_1")
 
-        self.assertTrue(_user.is_superuser)
+        self.assertTrue(user.is_superuser)
 
     def test_only_one_superuser(self):
         user1 = User.objects.create_user(
@@ -285,7 +285,7 @@ To activate your account, click this link:
 
         self.assertTrue(user1.is_superuser)
 
-        response, user2 = self.assert_user_registration("plan-tester")
+        _response, user2 = self.assert_user_registration("plan-tester")
         self.assertFalse(user2.is_superuser)
 
 
