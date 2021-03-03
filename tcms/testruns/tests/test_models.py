@@ -5,7 +5,6 @@ from django import test
 from django.utils.translation import gettext_lazy as _
 from mock import patch
 
-from tcms.testruns.models import TestExecutionStatus
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import TestCaseFactory, TestRunFactory
 
@@ -53,10 +52,3 @@ class TestRunMethods(test.TestCase):
 
         self.assertEqual(execution.status.weight, 0)
         self.assertEqual(execution.status.name, _("IDLE"))
-
-    def test_create_execution_with_status(self):
-        status = TestExecutionStatus.objects.filter(weight__gt=0).last()
-        execution = self.test_run.create_execution(self.test_case, status=status)
-
-        self.assertGreater(execution.status.weight, 0)
-        self.assertEqual(execution.status.pk, status.pk)

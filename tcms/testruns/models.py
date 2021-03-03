@@ -107,31 +107,23 @@ class TestRun(models.Model, UrlMixin):
     def create_execution(
         self,
         case,
-        status=None,
         assignee=None,
-        case_text_version=None,
         build=None,
         sortkey=0,
     ):
-        if not case_text_version:
-            case_text_version = case.history.latest().history_id
-
         assignee = (
             assignee
             or (case.default_tester_id and case.default_tester)
             or (self.default_tester_id and self.default_tester)
         )
 
-        if not status:
-            # usually IDLE but users can customize statuses
-            status = TestExecutionStatus.objects.filter(weight=0).first()
-
         return self.executions.create(
             case=case,
             assignee=assignee,
             tested_by=None,
-            status=status,
-            case_text_version=case_text_version,
+            # usually IDLE but users can customize statuses
+            status=TestExecutionStatus.objects.filter(weight=0).first(),
+            case_text_version=case.history.latest().history_id,
             build=build or self.build,
             sortkey=sortkey,
             stop_date=None,
