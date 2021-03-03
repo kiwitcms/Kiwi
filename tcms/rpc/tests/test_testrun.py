@@ -401,26 +401,20 @@ class TestCreatePermission(APIPermissionsTestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.product = ProductFactory()
-        self.version = VersionFactory(product=self.product)
-        self.build = BuildFactory(version=self.version)
-        self.plan = TestPlanFactory(product=self.product, product_version=self.version)
-        self.start_date = datetime.strptime("2020-05-05", "%Y-%m-%d")
-        self.stop_date = datetime.strptime("2020-05-05 00:00:00", "%Y-%m-%d %H:%M:%S")
-        self.planned_start = datetime.strptime(
-            "2020-05-05 09:00:00", "%Y-%m-%d %H:%M:%S"
-        )
-        self.planned_stop = datetime.strptime("2020-05-06", "%Y-%m-%d")
+        self.plan = TestPlanFactory()
+        self.build = BuildFactory(version=self.plan.product_version)
 
         self.test_run_fields = {
             "plan": self.plan.pk,
             "build": self.build.pk,
             "summary": "TR created",
             "manager": UserFactory().pk,
-            "start_date": self.start_date,
-            "stop_date": self.stop_date,
-            "planned_start": self.planned_start,
-            "planned_stop": self.planned_stop,
+            "start_date": datetime.strptime("2020-05-05", "%Y-%m-%d"),
+            "stop_date": datetime.strptime("2020-05-05 00:00:00", "%Y-%m-%d %H:%M:%S"),
+            "planned_start": datetime.strptime(
+                "2020-05-05 09:00:00", "%Y-%m-%d %H:%M:%S"
+            ),
+            "planned_stop": datetime.strptime("2020-05-06", "%Y-%m-%d"),
         }
 
     def verify_api_with_permission(self):
