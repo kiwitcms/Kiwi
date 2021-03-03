@@ -23,9 +23,23 @@
                         </div>
 
                         <div class="list-view-pf-body">
-                            <div class="list-view-pf-description">
+                            <div class="list-view-pf-description" style="display: flex; justify-content: space-between;">
                                 <div class="list-group-item-text">
                                     <a href="{% url 'test_plan_url_short' execution.run.plan.pk %}">TP-{{ execution.run.plan.pk }}: {{ execution.run.plan.name }}</a>
+                                </div>
+                                <div class="list-group-item-text">
+                                    <div class="completion-rate-container">{% trans 'Completion rate' %}: <span class="completion-rate"></span> 
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar"></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar"></div>
+                                    </div>
+                                </div>
+                                    <div class="failure-rate-container">{% trans 'Failure rate' %}:<span class="failure-rate"></span>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar"></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar"></div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

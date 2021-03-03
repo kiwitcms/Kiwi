@@ -210,6 +210,44 @@ $(document).ready(function () {
     })
   })
 
+  jsonRPC('Testing.individual_test_case_health', { case_id: case_id }, ress => {
+    const res = {}
+    let planId = 0
+    ress.forEach(r => {
+      let positive = 0
+      let negative = 0
+      let allCount = 0
+      if (r.status__weight > 0) {
+        positive++
+      } else if (r.status__weight < 0) {
+        negative++
+      }
+      allCount++
+
+      if (r.run__plan !== planId) {
+        planId = r.run__plan
+        res[planId] = {
+          completion_rate: allCount > 0 ? ((positive + negative) / allCount) : 0,
+          failure_rate: allCount > 0 ? (negative / allCount) : 0
+        }
+        positive = 0
+        negative = 0
+        allCount = 0
+      }
+    })
+
+    Object.entries(res).forEach(([runId, data]) => {
+      const executionRow = $(`#execution-for-plan-${runId}`)
+      executionRow.find('.completion-rate').html(data.completion_rate)
+      executionRow.find('.completion-rate-container .progress-bar-danger').css('width', `${(1 - data.completion_rate) * 100}%`)
+      executionRow.find('.completion-rate-container .progress-bar-success').css('width', `${(data.completion_rate) * 100}%`)
+
+      executionRow.find('.failure-rate').html(data.failure_rate)
+      executionRow.find('.failure-rate-container .progress-bar-danger').css('width', `${(data.failure_rate) * 100}%`)
+      executionRow.find('.failure-rate-container .progress-bar-success').css('width', `${(1 - data.failure_rate) * 100}%`)
+    })
+  })
+
   // bind add TP to TC widget
   initAddPlan(case_id, plans_table)
 
