@@ -12,7 +12,9 @@
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_summary" type="text" class="form-control" placeholder="{% trans 'Test run summary' %}">
+                <input id="id_summary" type="text" class="form-control"
+                    placeholder="{% trans 'Test run summary' %}"
+                    value="{{ form.summary.value|default:'' }}">
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_plan">{% trans "Plan ID" %}</label>
@@ -57,13 +59,14 @@
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_manager">{% trans "Manager" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_manager" type="text" class="form-control" placeholder="{% trans 'Username' %}">
+                <input id="id_manager" type="text" class="form-control" placeholder="{% trans 'Username' %}"
+                    value="{{ form.manager.value|default:'' }}">
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_default_tester" type="text" class="form-control" placeholder="{% trans 'Username' %}"
-                        value="{{ form.default_tester.value|default:'' }}">
+                    value="{{ form.default_tester.value|default:'' }}">
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_running">{% trans "Running" %}</label>
