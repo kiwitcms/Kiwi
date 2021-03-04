@@ -203,10 +203,6 @@ class TestExecution(models.Model, UrlMixin):
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     sortkey = models.IntegerField(null=True, blank=True)
 
-    @property
-    def actual_duration(self):
-        return self.stop_date - self.start_date
-
     run = models.ForeignKey(
         TestRun, related_name="executions", on_delete=models.CASCADE
     )
@@ -231,6 +227,12 @@ class TestExecution(models.Model, UrlMixin):
     def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestExecution!
         return reverse("testruns-get", args=[self.run_id])
+
+    @property
+    def actual_duration(self):
+        if self.stop_date is None or self.start_date is None:
+            return None
+        return self.stop_date - self.start_date
 
 
 class TestRunTag(models.Model):

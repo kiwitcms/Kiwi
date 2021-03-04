@@ -443,7 +443,7 @@ class TestExecutionUpdate(APITestCase):
         self.execution_2 = TestExecutionFactory()
         self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
 
-    def test_update_with_single_caserun(self):
+    def test_update_with_single_test_execution(self):
         execution = TestExecutionFactory(tested_by=None)
 
         result = self.rpc_client.TestExecution.update(
