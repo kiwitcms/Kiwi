@@ -4,7 +4,7 @@ bleach==3.3.0
 bleach-allowlist==1.0.3
 Django==3.1.7
 django-attachments==1.8
-django-contrib-comments==2.0.0
+django-contrib-comments==2.1.0
 django-extensions==3.1.1
 django-guardian==2.3.0
 django-modern-rpc==0.12.1
