@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from tcms.core.utils import string_to_list
+from tcms.core.forms.fields import UserField
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Product, Version
 from tcms.testplans.models import TestPlan, TestPlanEmailSettings
@@ -40,27 +40,27 @@ PlanNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
 )
 
 
-class SearchPlanForm(forms.Form):
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all().order_by("name"), required=False
-    )
-    version = forms.ModelChoiceField(queryset=Version.objects.none(), required=False)
-    author__username__startswith = forms.CharField(required=False)
-    tag__name__in = forms.CharField(required=False)
+class SearchPlanForm(forms.ModelForm):
+    class Meta:
+        model = TestPlan
+        fields = "__all__"
 
-    def clean_tag__name__in(self):
-        return string_to_list(self.cleaned_data["tag__name__in"])
+    # overriden widget
+    author = UserField()
+
+    # extra fields
+    default_tester = UserField()
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields["version"].queryset = Version.objects.filter(
+            self.fields["product_version"].queryset = Version.objects.filter(
                 product_id=product_id
             )
         else:
-            self.fields["version"].queryset = Version.objects.none()
+            self.fields["product_version"].queryset = Version.objects.none()
 
 
-class ClonePlanForm(forms.Form):
+class ClonePlanForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     name = forms.CharField(required=True)
 
     product = forms.ModelChoiceField(
