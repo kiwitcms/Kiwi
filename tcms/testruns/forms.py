@@ -3,7 +3,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from tcms.core.forms.fields import UserField
-from tcms.core.utils import string_to_list
 from tcms.management.models import Build, Product, Version
 from tcms.rpc.api.forms import DateTimeField
 from tcms.testcases.models import TestCase
@@ -69,12 +68,6 @@ class SearchRunForm(forms.ModelForm):
     # extra fields
     product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
     running = forms.IntegerField(required=False)
-
-    # todo: all models have `tag` field and this can be replaced
-    tag__name__in = forms.CharField(required=False)
-
-    def clean_tag__name__in(self):
-        return string_to_list(self.cleaned_data["tag__name__in"])
 
     def populate(self, product_id=None):
         if product_id:

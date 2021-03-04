@@ -4,7 +4,6 @@ from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.forms.fields import UserField
-from tcms.core.utils import string_to_list
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Component, Priority, Product
 from tcms.testcases.fields import MultipleEmailField
@@ -15,8 +14,6 @@ from tcms.testcases.models import (
     TestCaseStatus,
 )
 from tcms.testplans.models import TestPlan
-
-ITEMS_PER_PAGE_CHOICES = (("20", "20"), ("50", "50"), ("100", "100"))
 
 
 class TestCaseForm(forms.ModelForm):
@@ -96,15 +93,19 @@ CaseNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
 )
 
 
-# TODO: search page can search via text field which is not defined here
-# this will become important once we switch to ModelForm and make
-# the search page remember it's URL params to it can be bookmarked
-class BaseCaseSearchForm(forms.Form):
-    summary = forms.CharField(required=False)
-    author = forms.CharField(required=False)
-    default_tester = forms.CharField(required=False)
-    tag__name__in = forms.CharField(required=False)
+class SearchCaseForm(forms.ModelForm):
+    class Meta:
+        model = TestCase
+        fields = "__all__"
+
+    # overriden initial values
+    product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
     category = forms.ModelChoiceField(queryset=Category.objects.none(), required=False)
+    component = forms.ModelChoiceField(
+        queryset=Component.objects.none(), required=False
+    )
+
+    # overriden widgets
     priority = forms.ModelMultipleChoiceField(
         queryset=Priority.objects.filter(is_active=True),
         widget=forms.CheckboxSelectMultiple(),
@@ -115,17 +116,8 @@ class BaseCaseSearchForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
-    component = forms.ModelChoiceField(
-        queryset=Component.objects.none(), required=False
-    )
-    is_automated = forms.BooleanField(required=False)
-    items_per_page = forms.ChoiceField(required=False, choices=ITEMS_PER_PAGE_CHOICES)
-
-    def clean_tag__name__in(self):
-        return string_to_list(self.cleaned_data["tag__name__in"])
 
     def populate(self, product_id=None):
-        """Limit the query to fit the plan"""
         if product_id:
             self.fields["category"].queryset = Category.objects.filter(
                 product_id=product_id
@@ -135,22 +127,7 @@ class BaseCaseSearchForm(forms.Form):
             )
 
 
-# todo BaseCaseSearchForm is never used stand-alone and nothing else
-# inherits from it so this class can be merged above
-class SearchCaseForm(BaseCaseSearchForm):
-    search = forms.CharField(required=False)
-    # todo: is the plan field used ?
-    plan = forms.CharField(required=False)
-    product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
-
-    def clean_case_status(self):
-        return list(self.cleaned_data["case_status"])
-
-    def clean_priority(self):
-        return list(self.cleaned_data["priority"])
-
-
-class CloneCaseForm(forms.Form):
+class CloneCaseForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     case = forms.ModelMultipleChoiceField(
         queryset=TestCase.objects.all(),
     )

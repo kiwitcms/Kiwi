@@ -12,7 +12,8 @@
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_name" type="text" class="form-control" placeholder="{% trans 'Test plan name' %}">
+                <input id="id_name" type="text" class="form-control" placeholder="{% trans 'Test plan name' %}"
+                    value="{{ form.name.value|default:'' }}">
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_after">{% trans "After" %}</label>
@@ -55,8 +56,8 @@
             <div class="col-md-3 col-lg-3">
                 <select class="form-control selectpicker" id="id_version">
                     <option value="">----------</option>
-                {% for option in form.version.field.queryset %}
-                    <option value="{{ option.pk }}" {% if form.version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
+                {% for option in form.product_version.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.product_version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
                 {% endfor %}
                 </select>
             </div>
@@ -65,8 +66,8 @@
             <div class="col-md-3 col-lg-3">
                 <select class="form-control selectpicker" id="id_type">
                     <option value="">----------</option>
-                {% for option in plan_types %}
-                    <option value="{{ option.pk }}">{{ option.name }}</option>
+                {% for option in form.type.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.type.value|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
                 {% endfor %}
                 </select>
             </div>
@@ -76,25 +77,28 @@
             <label class="col-md-1 col-lg-1" for="id_author">{% trans "Author" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_author" type="text" class="form-control" placeholder="{% trans 'Username' %}"
-                        value="{{ form.author__username__startswith.value|default:'' }}">
+                    value="{{ form.author.value|default:'' }}">
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_default_tester" type="text" class="form-control" placeholder="{% trans 'Username' %}">
+                <input id="id_default_tester" type="text" class="form-control" placeholder="{% trans 'Username' %}"
+                    value="{{ form.default_tester.value|default:'' }}">
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_tag">{% trans "Tag" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_tag" type="text" class="form-control" value="{{ form.tag__name__in.value|default:'' }}">
+                <input id="id_tag" type="text" class="form-control" value="{{ form.tag.value|default:'' }}">
                 <p class="help-block">{% trans "Separate multiple values with comma (,)" %}</p>
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_active">{% trans "Active" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_active" type="checkbox" checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+                <input class="bootstrap-switch" id="id_active" type="checkbox"
+                    checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}"
+                    value="{{ form.is_active.value }}">
             </div>
         </div>
 

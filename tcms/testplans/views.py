@@ -20,7 +20,7 @@ from tcms.testplans.forms import (
     PlanNotifyFormSet,
     SearchPlanForm,
 )
-from tcms.testplans.models import PlanType, TestPlan
+from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
 
@@ -114,7 +114,6 @@ class SearchTestPlanView(TemplateView):
 
         context_data = {
             "form": form,
-            "plan_types": PlanType.objects.all().only("pk", "name").order_by("name"),
         }
 
         return context_data
