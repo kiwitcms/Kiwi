@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import vinaigrette
+from datetime import timedelta
 from django.conf import settings
 from django.db import models
 from django.db.models import ObjectDoesNotExist
@@ -57,14 +58,17 @@ class TestCase(TCMSActionModel):
     requirement = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     text = models.TextField(blank=True)
-    setup_duration = models.DurationField(db_index=True, null=True, blank=True) or 0
-    testing_duration = models.DurationField(db_index=True, null=True, blank=True) or 0
+    setup_duration = models.DurationField(db_index=True, null=True, blank=True)
+    testing_duration = models.DurationField(db_index=True, null=True, blank=True)
 
     @property
     def expected_duration(self):
         if not self.setup_duration and not self.testing_duration:
-            return 0
-        return self.setup_duration + self.testing_duration
+            return None
+        result = timedelta(0)
+        result += self.setup_duration or timedelta(0)
+        result += self.testing_duration or timedelta(0)
+        return result
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
     category = models.ForeignKey(
