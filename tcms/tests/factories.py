@@ -2,6 +2,8 @@
 # pylint: disable=too-few-public-methods, unused-argument
 
 import factory
+from random import randrange
+from datetime import timedelta
 from django.conf import settings
 from django.db.models import signals
 from django.utils import timezone
@@ -165,6 +167,8 @@ class TestCaseFactory(DjangoModelFactory):
     default_tester = factory.SubFactory(UserFactory)
     reviewer = factory.SubFactory(UserFactory)
     text = factory.Sequence(lambda n: "Given-When-Then %d" % n)
+    setup_duration = timedelta(randrange(0, 10000000))
+    testing_duration = timedelta(randrange(0, 10000000))
 
     @factory.post_generation
     def plan(self, create, extracted, **kwargs):

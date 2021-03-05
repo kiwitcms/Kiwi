@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.test import TestCase
 from django.utils.translation import gettext_lazy as _
 from mock import patch
+from datetime import timedelta
 
 from tcms.core.history import history_email_for
 from tcms.testcases.helpers.email import get_case_notification_recipients
@@ -27,6 +28,43 @@ class SupportsCyrillic(TestCase):
 
         case.refresh_from_db()
         self.assertTrue(case.summary.endswith("кирилица"))
+
+class TestCaseCalculateExpectedDuration(TestCase):
+    """Test TestCase.expected_duration"""
+
+    def test_duration_is_calculated_correctly(self):
+        case_random_duration = TestCaseFactory()
+        setup_duration = case_random_duration.setup_duration
+        testing_duration = case_random_duration.testing_duration
+        expected = setup_duration + testing_duration
+
+        case_random_duration.save()
+
+        case_random_duration.refresh_from_db()
+        self.assertEqual(case_random_duration.expected_duration, expected)
+
+    def test_empty_setup_duration_is_calculated_correctly(self):
+        case_empty_setup_duration = TestCaseFactory(setup_duration = None)
+        testing_duration = case_empty_setup_duration.testing_duration
+        case_empty_setup_duration.save()
+
+        case_empty_setup_duration.refresh_from_db()
+        self.assertEqual(case_empty_setup_duration.expected_duration, testing_duration)
+
+    def test_empty_testing_duration_is_calculated_correctly(self):
+        case_empty_testing_duration = TestCaseFactory(testing_duration = None)
+        setup_duration = case_empty_testing_duration.setup_duration
+        case_empty_testing_duration.save()
+
+        case_empty_testing_duration.refresh_from_db()
+        self.assertEqual(case_empty_testing_duration.expected_duration, setup_duration)
+
+    def test_empty_durations_are_calculated_correctly(self):
+        case_no_durations = TestCaseFactory(setup_duration = None, testing_duration = None)
+        case_no_durations.save()
+
+        case_no_durations.refresh_from_db()
+        self.assertEqual(case_no_durations.expected_duration, None)
 
 
 class TestCaseRemoveComponent(BasePlanCase):
