@@ -124,6 +124,22 @@ class TestUserAdmin(LoggedInTestCase):
             get_user_model().objects.filter(username="added-by-admin").exists()
         )
 
+    def test_admin_can_delete_itself(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+        response = self.client.get(
+            reverse("admin:auth_user_delete", args=[self.admin.pk])
+        )
+        self.assertContains(response, _("Yes, I'm sure"))
+        response = self.client.post(
+            reverse("admin:auth_user_delete", args=[self.admin.pk]),
+            {"post": "yes"},
+            follow=True,
+        )
+
+        self.assertRedirects(response, "/accounts/login/?next=/")
+
 
 class TestGroupAdmin(LoggedInTestCase):
     @classmethod
