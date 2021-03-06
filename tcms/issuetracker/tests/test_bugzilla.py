@@ -104,7 +104,7 @@ class TestBugzillaIntegration(APITestCase):
         test_case = TestCaseFactory(component=[component], plan=[test_plan])
         test_case.save()  # will generate history object
 
-        test_run = TestRunFactory(plan=test_plan, product_version=version)
+        test_run = TestRunFactory(plan=test_plan)
         execution2 = TestExecutionFactory(
             run=test_run, case=test_case, build=test_run.build
         )
@@ -143,7 +143,7 @@ class TestBugzillaIntegration(APITestCase):
         test_case = TestCaseFactory(component=[component], plan=[test_plan])
         test_case.save()  # will generate history object
 
-        test_run = TestRunFactory(plan=test_plan, product_version=version)
+        test_run = TestRunFactory(plan=test_plan)
         execution2 = TestExecutionFactory(
             run=test_run, case=test_case, build=test_run.build
         )

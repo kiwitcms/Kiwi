@@ -11,8 +11,6 @@ from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testruns.models import TestExecutionStatus
 
-# ### Factories for app management ###
-
 
 class UserFactory(DjangoModelFactory):
     class Meta:
@@ -229,7 +227,6 @@ class TestRunFactory(DjangoModelFactory):
         model = "testruns.TestRun"
 
     summary = factory.Sequence(lambda n: "Test run summary %d" % n)
-    product_version = factory.SubFactory(VersionFactory)
     stop_date = None
     notes = ""
     plan = factory.SubFactory(TestPlanFactory)

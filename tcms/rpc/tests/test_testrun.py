@@ -208,20 +208,16 @@ class TestAddTag(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.product = ProductFactory()
-        self.version = VersionFactory(product=self.product)
-        self.build = BuildFactory(version=self.version)
-        self.plan = TestPlanFactory(author=self.api_user, product=self.product)
+        self.plan = TestPlanFactory(author=self.api_user)
+        self.build = BuildFactory(version=self.plan.product_version)
 
         self.test_runs = [
             TestRunFactory(
-                product_version=self.version,
                 build=self.build,
                 default_tester=None,
                 plan=self.plan,
             ),
             TestRunFactory(
-                product_version=self.version,
                 build=self.build,
                 default_tester=None,
                 plan=self.plan,
@@ -277,13 +273,11 @@ class TestRemoveTag(APITestCase):
 
         self.test_runs = [
             TestRunFactory(
-                product_version=self.version,
                 build=self.build,
                 default_tester=None,
                 plan=self.plan,
             ),
             TestRunFactory(
-                product_version=self.version,
                 build=self.build,
                 default_tester=None,
                 plan=self.plan,
@@ -344,54 +338,22 @@ class TestRemoveTag(APITestCase):
         self.assertTrue(tag_exists)
 
 
-class TestProductVersionWhenCreating(APITestCase):
+class TestRunCreate(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.product = ProductFactory()
-        self.version = VersionFactory(product=self.product)
-        self.build = BuildFactory(version=self.version)
-        self.plan = TestPlanFactory(
-            author=self.api_user, product=self.product, product_version=self.version
-        )
-
-    def test_create_without_product_version(self):
-        test_run_fields = {
-            "plan": self.plan.pk,
-            "build": self.build.pk,
-            "summary": "TR without product_version",
-            "manager": self.api_user.username,
-        }
-
-        result = self.rpc_client.TestRun.create(test_run_fields)
-        self.assertEqual(result["product_version"], self.plan.product_version.pk)
-
-    def test_create_with_product_version(self):
-        version2 = VersionFactory()
-
-        test_run_fields = {
-            "plan": self.plan.pk,
-            "build": self.build.pk,
-            "summary": "TR with product_version",
-            "manager": self.api_user.pk,
-            "product_version": version2.pk,
-        }
-
-        result = self.rpc_client.TestRun.create(test_run_fields)
-        # the result is still using product_version from TR.plan.product_version
-        # not the one we specified above
-        self.assertEqual(result["product_version"], self.plan.product_version.pk)
+        self.plan = TestPlanFactory(author=self.api_user)
+        self.build = BuildFactory(version=self.plan.product_version)
 
     def test_create_with_invalid_value(self):
         test_run_fields = {
             "plan": self.plan.pk,
             "build": self.build.pk,
-            "summary": "TR without product_version",
+            "summary": "TR without version",
             "manager": "manager",
         }
 
-        err_msg = 'Unknown user: "manager"'
-        with self.assertRaisesRegex(XmlRPCFault, err_msg):
+        with self.assertRaisesRegex(XmlRPCFault, 'Unknown user: "manager"'):
             self.rpc_client.TestRun.create(test_run_fields)
 
 
@@ -424,7 +386,6 @@ class TestCreatePermission(APIPermissionsTestCase):
         test_run = TestRun.objects.get(pk=run_id)
 
         self.assertIn("id", result)
-        self.assertIn("product_version", result)
         self.assertEqual(result["summary"], self.test_run_fields["summary"])
         self.assertIn("notes", result)
         self.assertEqual(result["stop_date"], test_run.stop_date)
@@ -467,7 +428,13 @@ class TestFilter(APITestCase):
         result = result[0]
 
         self.assertEqual(result["id"], self.test_run.pk)
-        self.assertEqual(result["product_version"], self.test_run.product_version.pk)
+        self.assertEqual(
+            result["plan__product_version"], self.test_run.plan.product_version.pk
+        )
+        self.assertEqual(
+            result["plan__product_version__value"],
+            self.test_run.plan.product_version.value,
+        )
         self.assertEqual(result["start_date"], self.test_run.start_date)
         self.assertEqual(result["stop_date"], self.test_run.stop_date)
         self.assertEqual(result["planned_start"], self.test_run.planned_start)
@@ -530,7 +497,6 @@ class TestUpdateTestRun(APITestCase):
 
         # compare result, returned from API call with test run from DB
         self.assertEqual(result["id"], self.test_run.pk)
-        self.assertEqual(result["product_version"], self.test_run.product_version.pk)
         self.assertEqual(result["start_date"], self.test_run.start_date)
         self.assertEqual(result["stop_date"], self.test_run.stop_date)
         self.assertEqual(result["planned_start"], self.test_run.planned_start)

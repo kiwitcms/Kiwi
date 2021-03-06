@@ -84,7 +84,6 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
             "plan": cls.plan.pk,
             "build": cls.build_fast.pk,
             "notes": "Create new test run",
-            "product_version": cls.plan.product_version.pk,
         }
 
         super().setUpTestData()
@@ -132,7 +131,6 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
 
         self.assertEqual(self.plan.name, last_run.summary)
         self.assertEqual(self.plan, last_run.plan)
-        self.assertEqual(self.plan.product_version, last_run.product_version)
         self.assertEqual(None, last_run.stop_date)
         self.assertEqual("Create new test run", last_run.notes)
         self.assertEqual(self.build_fast, last_run.build)

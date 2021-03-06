@@ -32,21 +32,6 @@ class NewRunForm(forms.ModelForm):
         # plan is ModelChoiceField which contains all the plans
         # as we need only the plan for current run we filter the queryset
         self.fields["plan"].queryset = self.fields["plan"].queryset.filter(pk=plan_id)
-
-        # reusing version from plan b/c TestRun.product_version is scheduled for removal
-        # vvv allow modifying an immutable QueryDict.
-        if hasattr(self.data, "_mutable"):
-            self.data._mutable = True  # pylint: disable=protected-access
-        self.data["product_version"] = (
-            self.fields["plan"].queryset.first().product_version_id
-        )
-        if hasattr(self.data, "_mutable"):
-            self.data._mutable = False  # pylint: disable=protected-access
-
-        self.fields["product_version"].queryset = Version.objects.filter(
-            pk=self.fields["plan"].queryset.first().product_version_id
-        )
-
         self.fields["build"].queryset = Build.objects.filter(
             version_id=self.fields["plan"].queryset.first().product_version_id,
             is_active=True,
@@ -67,11 +52,12 @@ class SearchRunForm(forms.ModelForm):
 
     # extra fields
     product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    version = forms.ModelChoiceField(queryset=Version.objects.none(), required=False)
     running = forms.IntegerField(required=False)
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields["product_version"].queryset = Version.objects.filter(
+            self.fields["version"].queryset = Version.objects.filter(
                 product__pk=product_id
             )
             self.fields["build"].queryset = Build.objects.filter(

@@ -43,12 +43,12 @@
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-random"></span>{% trans 'Version' %}:
-                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&product_version={{ object.plan.product_version_id }}" title="Search test runs of {{ object.plan.product_version.value }}">{{ object.plan.product_version.value }}</a>
+                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&version={{ object.plan.product_version_id }}" title="Search test runs of {{ object.plan.product_version.value }}">{{ object.plan.product_version.value }}</a>
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-wrench"></span>{% trans 'Build' %}:
-                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&product_version={{ object.plan.product_version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build }}">{{ object.build }}</a>
+                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&version={{ object.plan.product_version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build }}">{{ object.build }}</a>
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">

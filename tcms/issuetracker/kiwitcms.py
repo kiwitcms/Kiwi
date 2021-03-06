@@ -82,7 +82,7 @@ class KiwiTCMS(IssueTrackerType):
             "reporter": user,
             "summary": "Failed test: %s" % execution.case.summary,
             "product": execution.run.plan.product,
-            "version": execution.run.product_version,
+            "version": execution.run.plan.product_version,
             "build": execution.build,
             "text": self._report_comment(execution),
             "_execution": execution,

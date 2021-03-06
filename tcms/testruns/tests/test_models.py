@@ -15,7 +15,6 @@ class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
         super().setUpTestData()
 
         cls.empty_test_run = TestRunFactory(
-            product_version=cls.version,
             plan=cls.plan,
             manager=cls.tester,
             default_tester=cls.tester,
