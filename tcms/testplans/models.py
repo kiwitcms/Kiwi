@@ -93,7 +93,7 @@ class TestPlan(TreeNode, UrlMixin):
         """Make default name of cloned plan"""
         return "Copy of {}".format(self.name)
 
-    def clone(
+    def clone(  # pylint: disable=too-many-arguments
         self,
         name=None,
         product=None,
