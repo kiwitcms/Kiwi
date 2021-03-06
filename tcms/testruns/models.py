@@ -26,12 +26,6 @@ TestExecutionStatusSubtotal = namedtuple(
 class TestRun(models.Model, UrlMixin):
     history = KiwiHistoricalRecords()
 
-    # todo: this field should be removed in favor of plan.product_version
-    # no longer shown in edit forms
-    product_version = models.ForeignKey(
-        "management.Version", related_name="version_run", on_delete=models.CASCADE
-    )
-
     start_date = models.DateTimeField(auto_now_add=True, db_index=True)
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     planned_start = models.DateTimeField(db_index=True, null=True, blank=True)

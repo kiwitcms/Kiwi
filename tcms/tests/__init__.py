@@ -220,7 +220,6 @@ class BaseCaseRun(BasePlanCase):
         cls.build = BuildFactory(version=cls.version)
 
         cls.test_run = TestRunFactory(
-            product_version=cls.version,
             plan=cls.plan,
             build=cls.build,
             manager=cls.tester,
@@ -246,7 +245,6 @@ class BaseCaseRun(BasePlanCase):
         cls.execution_3 = executions[2]
 
         cls.test_run_1 = TestRunFactory(
-            product_version=cls.version,
             plan=cls.plan,
             build=cls.build,
             manager=cls.tester,

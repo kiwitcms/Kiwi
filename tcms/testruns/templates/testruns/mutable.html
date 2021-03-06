@@ -22,7 +22,6 @@
             <div class="col-md-11 col-lg-11">
                 <input type="text" id="id_summary" name="summary" value="{{ form.summary.value }}" class="form-control" required>
                 <input type="hidden" name="plan" value="{{ form.plan.value }}"> <!-- used in new() -->
-                <input type="hidden" name="product_version" value="{{ form.plan.field.queryset.0.product_version.pk }}"> <!-- used in new() -->
                 <p class="help-block"><a href="{% url 'test_plan_url_short' form.plan.value %}">TP-{{ form.plan.value }}: {{  form.plan.field.queryset.0.name }}</a></p>
             </div>
         </div>

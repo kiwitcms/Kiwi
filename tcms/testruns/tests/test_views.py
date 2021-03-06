@@ -135,7 +135,6 @@ class TestCreateNewRun(BasePlanCase):
             "plan": self.plan.pk,
             "product_id": self.plan.product_id,
             "product": self.plan.product_id,
-            "product_version": self.plan.product_version.pk,
             "build": self.build.pk,
             "manager": self.tester.email,
             "default_tester": self.tester.email,

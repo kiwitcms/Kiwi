@@ -59,7 +59,7 @@ $(document).ready(function() {
             };
 
             if ($('#id_version').val()) {
-                params['product_version'] = $('#id_version').val();
+                params['plan__product_version'] = $('#id_version').val();
             };
 
             if ($('#id_build').val()) {
@@ -99,7 +99,7 @@ $(document).ready(function() {
                 }
             },
             { data: "product_name" },
-            { data: "product_version__value"},
+            { data: "plan__product_version__value"},
             { data: "build__name"},
             { data: "manager__username" },
             { data: "default_tester__username" },
