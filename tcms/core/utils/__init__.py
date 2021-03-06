@@ -4,22 +4,6 @@
 import sys
 
 
-def string_to_list(strs, spliter=","):
-    """Convert the string to list"""
-    if isinstance(strs, list):
-        str_list = (str(item).strip() for item in strs)
-    elif isinstance(strs, str) and strs.find(spliter):
-        str_list = (str(item).strip() for item in strs.split(spliter))
-    else:
-        str_list = (strs,)
-
-    lst = []
-    for string in str_list:
-        if string:
-            lst.append(string)
-    return lst
-
-
 def form_errors_to_list(form):
     """
     Convert errors of form to list
