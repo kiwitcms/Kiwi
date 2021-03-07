@@ -161,7 +161,8 @@ $(document).ready(function() {
         },
         source: function(query, processSync, processAsync) {
             jsonRPC('Component.filter', {name__icontains: query, product: product_id}, function(data) {
-                return processAsync(data);
+                data = arrayToDict(data)
+                return processAsync(Object.values(data));
             });
         }
     });
