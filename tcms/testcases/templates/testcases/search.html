@@ -15,27 +15,36 @@
                     value="{{ form.summary.value|default:'' }}">
             </div>
 
-            <label for="id_after" class="col-md-1 col-lg-1">{% trans "After" %}</label>
+            <label class="col-md-1 col-lg-1">{% trans "Created" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
-                    <input type="text" class="form-control" id="id_after">
-                    <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
-                    </span>
-                </div>
-            </div>
-            {% include "include/datetimepicker_script.html" with selector="#id_after" %}
-
-            <label for="id_before" class="col-md-1 col-lg-1">{% trans "Before" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
                     <input type="text" class="form-control" id="id_before">
                     <span class="input-group-addon">
                         <span class="fa fa-calendar"></span>
                     </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before" %}
+
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <input type="text" class="form-control" id="id_after">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after" %}
                 </div>
             </div>
-            {% include "include/datetimepicker_script.html" with selector="#id_before" %}
+
+            <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input type="radio" name="is_automated" value="true">
+                <label>{% trans "Yes" %}</label>
+
+                <input type="radio" name="is_automated" value="false">
+                <label>{% trans "No" %}</label>
+
+                <input type="radio" name="is_automated" checked value="both">
+                <label class="active">{% trans "Both" %}</label>
+            </div>
 
         </div>
 
@@ -69,6 +78,8 @@
                 {% endfor %}
                 </select>
             </div>
+
+
         </div>
 
         <div class="form-group">
@@ -90,19 +101,12 @@
                 </select>
             </div>
 
-            <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_text">{% trans "Text" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input type="radio" name="is_automated" value="true">
-                <label>{% trans "Yes" %}</label>
-
-                <input type="radio" name="is_automated" value="false">
-                <label>{% trans "No" %}</label>
-
-                <input type="radio" name="is_automated" checked value="both">
-                <label class="active">{% trans "Both" %}</label>
+                <input id="id_text" type="text" class="form-control"
+                    value="{{ form.text.value|default:'' }}">
             </div>
         </div>
-
 
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_author">{% trans "Author" %}</label>
@@ -117,11 +121,6 @@
                 <p class="help-block">{% trans "Separate multiple values with comma (,)" %}</p>
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_text">{% trans "Text" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input id="id_text" type="text" class="form-control"
-                    value="{{ form.text.value|default:'' }}">
-            </div>
         </div>
 
         <div class="form-group">

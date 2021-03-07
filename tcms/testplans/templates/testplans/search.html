@@ -16,28 +16,30 @@
                     value="{{ form.name.value|default:'' }}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_after">{% trans "After" %}</label>
+            <label class="col-md-1 col-lg-1">{% trans "Created" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
-                    <input type="text" class="form-control" id="id_after">
-                    <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
-                    </span>
-                </div>
-
-                {% include "include/datetimepicker_script.html" with selector="#id_after" %}
-            </div>
-
-            <label class="col-md-1 col-lg-1" for="id_before">{% trans "Before" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
                     <input type="text" class="form-control" id="id_before">
                     <span class="input-group-addon">
                         <span class="fa fa-calendar"></span>
                     </span>
-                </div>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before" %}
 
-                {% include "include/datetimepicker_script.html" with selector="#id_before" %}
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <input type="text" class="form-control" id="id_after">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after" %}
+                </div>
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_active">{% trans "Active" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="bootstrap-switch" id="id_active" type="checkbox"
+                    checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}"
+                    value="{{ form.is_active.value }}">
             </div>
         </div>
 
@@ -85,20 +87,11 @@
                 <input id="id_default_tester" type="text" class="form-control" placeholder="{% trans 'Username' %}"
                     value="{{ form.default_tester.value|default:'' }}">
             </div>
-        </div>
 
-        <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_tag">{% trans "Tag" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_tag" type="text" class="form-control" value="{{ form.tag.value|default:'' }}">
                 <p class="help-block">{% trans "Separate multiple values with comma (,)" %}</p>
-            </div>
-
-            <label class="col-md-1 col-lg-1" for="id_active">{% trans "Active" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_active" type="checkbox"
-                    checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}"
-                    value="{{ form.is_active.value }}">
             </div>
         </div>
 

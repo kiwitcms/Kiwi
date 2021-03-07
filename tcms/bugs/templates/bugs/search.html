@@ -14,27 +14,29 @@
                 <input id="id_summary" type="text" class="form-control">
             </div>
 
-            <label for="id_after" class="col-md-1 col-lg-1">{% trans "After" %}</label>
+            <label for="id_before" class="col-md-1 col-lg-1">{% trans "Created" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
-                    <input type="text" class="form-control" id="id_after">
-                    <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
-                    </span>
-                </div>
-            </div>
-            {% include "include/datetimepicker_script.html" with selector="#id_after" %}
-
-            <label for="id_before" class="col-md-1 col-lg-1">{% trans "Before" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <div class="input-group date-time-picker-pf">
+                    <span class="input-group-addon">{% trans "Before" %}</span>
                     <input type="text" class="form-control" id="id_before">
                     <span class="input-group-addon">
                         <span class="fa fa-calendar"></span>
                     </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_before" %}
+
+                    <span class="input-group-addon">{% trans "After" %}</span>
+                    <input type="text" class="form-control" id="id_after">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    {% include "include/datetimepicker_script.html" with selector="#id_after" %}
                 </div>
             </div>
-            {% include "include/datetimepicker_script.html" with selector="#id_before" %}
+
+            <label class="col-md-1 col-lg-1" for="id_status">{% trans "Open" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="bootstrap-switch" id="id_status" type="checkbox" checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+            </div>
 
         </div>
 
@@ -81,10 +83,6 @@
                 <input id="id_assignee" type="text" class="form-control" placeholder="{% trans 'Username' %}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_status">{% trans "Open" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_status" type="checkbox" checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-            </div>
         </div>
 
         <div class="form-group">
