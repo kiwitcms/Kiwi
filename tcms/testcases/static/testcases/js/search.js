@@ -200,23 +200,8 @@ $(document).ready(function() {
     });
 
     $('#id_product').change(function() {
-        // todo: this is duplicate with update_category_from_product()
-        var updateCategory = function(data) {
-            updateSelect(data, '#id_category', 'id', 'name');
-        }
-        // todo: this is duplicate with update_component_from_product()
-        var updateComponent = function(data) {
-            updateSelect(data, '#id_component', 'id', 'name');
-        }
-
-        var product_id = $(this).val();
-        if (product_id) {
-            jsonRPC('Category.filter', {product: product_id}, updateCategory);
-            jsonRPC('Component.filter', {product: product_id}, updateComponent);
-        } else {
-            updateCategory([]);
-            updateComponent([]);
-        }
+        update_component_select_from_product()
+        update_category_select_from_product()
     });
 
     $('.selectpicker').selectpicker();
