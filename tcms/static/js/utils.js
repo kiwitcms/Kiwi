@@ -87,7 +87,8 @@ function update_category_select_from_product() {
 */
 function update_component_select_from_product() {
     var updateCallback = function(data) {
-        updateSelect(data, '#id_component', 'id', 'name')
+        data = arrayToDict(data)
+        updateSelect(Object.values(data), '#id_component', 'id', 'name')
     }
 
     var product_id = $('#id_product').val();
