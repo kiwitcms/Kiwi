@@ -175,7 +175,7 @@ $(document).ready(function() {
     table.on('deselect', function (e, dt, type, indexes) {
         if (type === 'row') {
             selectAllButton.prop("checked", false)
-        } 
+        }
     });
 
     $('#select-btn').click(function(event){
@@ -187,8 +187,7 @@ $(document).ready(function() {
         });
 
         if (testCaseIDs && window.opener) {
-            window.opener.$('#popup-selection').val(testCaseIDs);
-            window.close();
+            window.opener.addTestCases(testCaseIDs, window);
         }
 
         return false;

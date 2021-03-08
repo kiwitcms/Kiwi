@@ -254,20 +254,11 @@ function showPopup(href) {
 // href - URL of the search page
 // errorMessage - message to display in case of RPC errors
 function advancedSearchAndAddTestCases(objId, rpcMethod, href, errorMessage) {
-    $('#popup-selection').val('');
+    window.addTestCases = function(testCaseIDs, sender){
+        let rpcErrors = 0
 
-    if (href.indexOf('?') === -1) {
-        href += '?allow_select=1';
-    } else {
-        href += '&allow_select=1';
-    }
-
-    let rpcErrors = 0,
-        testCaseIDs = [];
-    popupWindow = showPopup(href);
-
-    $(popupWindow).on('beforeunload', function(){
-        testCaseIDs = $('#popup-selection').val();
+        // close the popup
+        sender.close()
 
         if (testCaseIDs) {
             // monkey-patch the alert() function
@@ -277,28 +268,33 @@ function advancedSearchAndAddTestCases(objId, rpcMethod, href, errorMessage) {
             }
 
             // add the selected test cases
-            testCaseIDs.split(",").forEach(function(testCase) {
+            testCaseIDs.forEach(function(testCase) {
                 jsonRPC(rpcMethod, [objId, testCase], function(result) {}, true)
             })
 
             // revert monkey-patch
             alert = window.alert = oldAlert;
         }
-    });
-
-    $(popupWindow).on('unload', function(){
-        let message;
 
         if (rpcErrors) {
             alert(errorMessage);
         }
 
         // something was added so reload the page
-        if (testCaseIDs.length > rpcErrors) {
+        if (rpcErrors < testCaseIDs.length) {
             window.location.reload(true);
             // TODO: figure out how to reload above and add the new value to the page
         }
-    });
+    };
+
+
+    if (href.indexOf('?') === -1) {
+        href += '?allow_select=1';
+    } else {
+        href += '&allow_select=1';
+    }
+
+    showPopup(href);
 
     return false;
 }
