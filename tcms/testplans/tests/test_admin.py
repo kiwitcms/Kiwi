@@ -14,9 +14,9 @@ class TestTestPlanAdmin(LoggedInTestCase):
         initiate_user_with_default_setups(cls.tester)
         cls.test_plan = TestPlanFactory()
 
-    def test_users_can_not_add_testplan(self):
+    def test_users_can_add_testplan_via_customized_page(self):
         response = self.client.get(reverse("admin:testplans_testplan_add"))
-        self.assertRedirects(response, reverse("admin:testplans_testplan_changelist"))
+        self.assertRedirects(response, reverse("plans-new"))
 
     def test_users_can_not_change_testplan(self):
         response = self.client.get(
