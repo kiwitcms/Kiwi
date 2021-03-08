@@ -14,12 +14,8 @@ class PlanTypeAdmin(admin.ModelAdmin):
 
 
 class TestPlanAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
-    """
-    Does not allow adding new or changing plans.
-    """
-
     def add_view(self, request, form_url="", extra_context=None):
-        return HttpResponseRedirect(reverse("admin:testplans_testplan_changelist"))
+        return HttpResponseRedirect(reverse("plans-new"))
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         return HttpResponseRedirect(reverse("test_plan_url_short", args=[object_id]))
