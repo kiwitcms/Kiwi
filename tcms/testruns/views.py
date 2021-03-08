@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
@@ -33,43 +32,30 @@ class NewTestRunView(View):
 
     def get(self, request, form_initial=None, is_cloning=False):
         plan_id = request.GET.get("p")
-        if not plan_id:
-            messages.add_message(
-                request,
-                messages.ERROR,
-                _("Creating a TestRun requires a TestPlan, select one"),
-            )
-            return HttpResponseRedirect(reverse("plans-search"))
-
-        if not request.GET.get("c"):
-            messages.add_message(
-                request,
-                messages.ERROR,
-                _("Creating a TestRun requires at least one TestCase"),
-            )
-            return HttpResponseRedirect(reverse("test_plan_url_short", args=[plan_id]))
-
-        test_cases = TestCase.objects.filter(pk__in=request.GET.getlist("c"))
 
         # note: ordered by pk for test_show_create_new_run_page()
-        tcs_values = test_cases.select_related(
-            "author", "case_status", "category", "priority"
-        ).order_by("pk")
+        test_cases = (
+            TestCase.objects.filter(pk__in=request.GET.getlist("c"))
+            .select_related("author", "case_status", "category", "priority")
+            .order_by("pk")
+        )
 
-        test_plan = TestPlan.objects.get(pk=plan_id)
+        test_plan = TestPlan.objects.filter(pk=plan_id).first()
         if not form_initial:
             form_initial = {
-                "summary": "Test run for %s" % test_plan.name,
-                "manager": test_plan.author.email,
+                "summary": "Test run for %s" % test_plan.name if test_plan else "",
+                "manager": test_plan.author.email if test_plan else "",
                 "default_tester": request.user.email,
                 "notes": "",
                 "plan": plan_id,
             }
+
         form = NewRunForm(initial=form_initial)
         form.populate(plan_id)
 
         context_data = {
-            "test_cases": tcs_values,
+            "plan_id": plan_id,  # used for UI conditionals
+            "test_cases": test_cases,
             "form": form,
             "disabled_cases": get_disabled_test_cases_count(test_cases),
             "is_cloning": is_cloning,
@@ -109,13 +95,15 @@ class NewTestRunView(View):
                 )
             )
 
-        test_cases = TestCase.objects.filter(pk__in=request.POST.getlist("case"))
+        test_cases = (
+            TestCase.objects.filter(pk__in=request.POST.getlist("case"))
+            .select_related("author", "case_status", "category", "priority")
+            .order_by("pk")
+        )
 
-        tcs_values = test_cases.select_related(
-            "author", "case_status", "category", "priority"
-        ).order_by("pk")
         context_data = {
-            "test_cases": tcs_values,
+            "plan_id": request.POST.get("plan"),
+            "test_cases": test_cases,
             "form": form,
             "disabled_cases": get_disabled_test_cases_count(test_cases),
         }

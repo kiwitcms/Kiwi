@@ -90,24 +90,6 @@ class TestCreateNewRun(BasePlanCase):
         user_should_have_perm(cls.tester, "testruns.view_testrun")
         cls.url = reverse("testruns-new")
 
-    def test_refuse_if_missing_plan_pk(self):
-        user_should_have_perm(self.tester, "testplans.view_testplan")
-
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username, password="password"
-        )
-        response = self.client.get(self.url, {})
-        self.assertRedirects(response, reverse("plans-search"))
-
-    def test_refuse_if_missing_cases_pks(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username, password="password"
-        )
-        response = self.client.get(self.url, {"p": self.plan.pk}, follow=True)
-        self.assertContains(
-            response, _("Creating a TestRun requires at least one TestCase")
-        )
-
     def test_get_shows_selected_cases(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username, password="password"
