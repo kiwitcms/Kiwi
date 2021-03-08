@@ -291,6 +291,8 @@ MENU_ITEMS = [
             (_("New Test Plan"), reverse_lazy("plans-new")),
             ("-", "-"),
             (_("New Test Case"), reverse_lazy("testcases-new")),
+            ("-", "-"),
+            (_("New Test Run"), reverse_lazy("testruns-new")),
             ("-", "-") if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS else (),
             (_("New Bug"), reverse_lazy("bugs-new"))
             if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS
