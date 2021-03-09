@@ -2,7 +2,6 @@ $(document).ready(() => {
     $('[data-toggle="tooltip"]').tooltip()
 
     loadInitialProduct();
-    loadInitialTestPlans();
 
     document.getElementById('id_product').onchange = () => {
         update_version_select_from_product();
