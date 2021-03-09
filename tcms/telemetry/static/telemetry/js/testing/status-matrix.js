@@ -99,12 +99,12 @@ function drawTable() {
 
     const dateBefore = $('#id_before');
     if (dateBefore.val()) {
-        query['close_date__lte'] = dateBefore.data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+        query['stop_date__lte'] = dateBefore.data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
     }
 
     const dateAfter = $('#id_after');
     if (dateAfter.val()) {
-        query['close_date__gte'] = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+        query['stop_date__gte'] = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
     }
 
     jsonRPC('Testing.status_matrix', query, data => {
