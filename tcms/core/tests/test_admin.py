@@ -32,7 +32,7 @@ class TestAdminView(LoggedInTestCase):
         self.assertNotContains(response, "You don't have permission to edit anything")
 
         # for tcms.management
-        self.assertContains(response, "Builds")
+        self.assertContains(response, _("Builds"))
         self.assertContains(response, "Classifications")
         self.assertContains(response, "Components")
         self.assertContains(response, "Priorities")
