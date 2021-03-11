@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-11 09:25\n"
+"PO-Revision-Date: 2021-03-11 09:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1009,7 +1009,7 @@ msgstr "登录"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr "欢迎来到 Kiwi 测试用例管理系统"
+msgstr "欢迎使用 Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
