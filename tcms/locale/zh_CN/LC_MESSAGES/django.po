@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-11 06:23\n"
+"PO-Revision-Date: 2021-03-11 09:14\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -61,7 +61,7 @@ msgstr "报告人"
 #: tcms/testruns/templates/testruns/get.html:220
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Assignee"
-msgstr "被分配的执行人"
+msgstr "经办人"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:27
