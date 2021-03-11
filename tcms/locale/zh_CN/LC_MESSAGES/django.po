@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-09 16:09\n"
+"PO-Revision-Date: 2021-03-11 06:23\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -433,7 +433,7 @@ msgstr "该电子邮件地址已被使用。"
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
-msgstr ""
+msgstr "用户"
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
@@ -506,7 +506,7 @@ msgstr "新建测试用例"
 
 #: tcms/settings/common.py:295
 msgid "New Test Run"
-msgstr ""
+msgstr "新的测试执行"
 
 #: tcms/settings/common.py:297
 msgid "New Bug"
@@ -1563,7 +1563,7 @@ msgstr "运行中"
 
 #: tcms/testruns/templates/testruns/get.html:71
 msgid "Finished"
-msgstr ""
+msgstr "已完成"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Finished at"
