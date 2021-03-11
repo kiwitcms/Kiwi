@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-11 09:14\n"
+"PO-Revision-Date: 2021-03-11 09:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -583,7 +583,7 @@ msgstr "反馈问题"
 
 #: tcms/settings/common.py:353
 msgid "Ask for help on StackOverflow"
-msgstr "在StackOflow上寻求帮助"
+msgstr "在StackOverflow上寻求帮助"
 
 #: tcms/settings/common.py:357
 msgid "Donate €5 via Open Collective"
@@ -628,7 +628,7 @@ msgstr "其他"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:112
 msgid "TOTAL"
-msgstr "总共"
+msgstr "总计"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 msgid "Detailed information about test execution status"
@@ -744,7 +744,7 @@ msgstr "内部服务器错误"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr "是否确实要删除附件？"
+msgstr "确定删除这个附件？"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
