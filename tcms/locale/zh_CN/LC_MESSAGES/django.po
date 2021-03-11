@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-11 06:23\n"
+"PO-Revision-Date: 2021-03-11 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -61,7 +61,7 @@ msgstr "报告人"
 #: tcms/testruns/templates/testruns/get.html:220
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Assignee"
-msgstr "被分配的执行人"
+msgstr "经办人"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:27
@@ -583,7 +583,7 @@ msgstr "反馈问题"
 
 #: tcms/settings/common.py:353
 msgid "Ask for help on StackOverflow"
-msgstr "在StackOflow上寻求帮助"
+msgstr "在StackOverflow上寻求帮助"
 
 #: tcms/settings/common.py:357
 msgid "Donate €5 via Open Collective"
@@ -628,7 +628,7 @@ msgstr "其他"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:112
 msgid "TOTAL"
-msgstr "总共"
+msgstr "总计"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 msgid "Detailed information about test execution status"
@@ -744,7 +744,7 @@ msgstr "内部服务器错误"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr "是否确实要删除附件？"
+msgstr "确定删除这个附件？"
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
@@ -1009,7 +1009,7 @@ msgstr "登录"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr "欢迎来到 Kiwi 测试用例管理系统"
+msgstr "欢迎使用 Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
@@ -1059,7 +1059,7 @@ msgstr "电子邮箱"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr "密码重置"
+msgstr "重置密码"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
