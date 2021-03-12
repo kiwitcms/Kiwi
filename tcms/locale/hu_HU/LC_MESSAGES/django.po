@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-09 16:09\n"
+"PO-Revision-Date: 2021-03-12 14:29\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -193,7 +193,7 @@ msgstr "Hibajegyek keresése"
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
-msgstr ""
+msgstr "Létrehozva"
 
 #: tcms/bugs/templates/bugs/search.html:20
 #: tcms/telemetry/templates/telemetry/include/filters.html:63
@@ -433,7 +433,7 @@ msgstr "Ez az email cím már használatban van"
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
-msgstr ""
+msgstr "felhasználók"
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
@@ -478,7 +478,7 @@ msgstr "A fiók sikeresen aktiválva"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "Buildek"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -506,7 +506,7 @@ msgstr "Új Teszteset"
 
 #: tcms/settings/common.py:295
 msgid "New Test Run"
-msgstr ""
+msgstr "Új Tesztfuttatás"
 
 #: tcms/settings/common.py:297
 msgid "New Bug"
@@ -1562,7 +1562,7 @@ msgstr "Folyamatban"
 
 #: tcms/testruns/templates/testruns/get.html:71
 msgid "Finished"
-msgstr ""
+msgstr "Befejezve"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Finished at"
@@ -1827,7 +1827,7 @@ msgstr "Nem rendelkezel bérlőkkel"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Előfizetés FastSpringen keresztül"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
