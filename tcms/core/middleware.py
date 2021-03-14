@@ -5,15 +5,31 @@ from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.db import DEFAULT_DB_ALIAS, connections
 from django.db.migrations.executor import MigrationExecutor
+from django.db.utils import OperationalError, ProgrammingError
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 
+class CheckDBStructureExistsMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if request.path == "/init-db/":
+            return None
+        try:
+            Site.objects.get(pk=settings.SITE_ID)
+        except (OperationalError, ProgrammingError):
+            # Redirect to Setup view
+            return HttpResponseRedirect(reverse("init-db"))
+        return None
+
+
 class CheckSettingsMiddleware(MiddlewareMixin):
     def process_request(self, request):
         doc_url = "https://kiwitcms.readthedocs.io/en/latest/admin.html#configure-kiwi-s-base-url"
+        if request.path == "/init-db/":
+            return
         site = Site.objects.get(pk=settings.SITE_ID)
 
         if site.domain == "127.0.0.1:8000":
@@ -36,6 +52,8 @@ class CheckSettingsMiddleware(MiddlewareMixin):
 
 class CheckUnappliedMigrationsMiddleware(MiddlewareMixin):
     def process_request(self, request):
+        if request.path == "/init-db/":
+            return
         doc_url = (
             "https://kiwitcms.readthedocs.io/en/latest/"
             "installing_docker.html#initial-configuration-of-running-container"

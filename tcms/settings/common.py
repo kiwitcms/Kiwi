@@ -128,6 +128,7 @@ AUTHENTICATION_BACKENDS = [
 
 # WARNING: Do not change this unless you know what you are doing !!!
 MIDDLEWARE = [
+    "tcms.core.middleware.CheckDBStructureExistsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",

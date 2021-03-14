@@ -25,6 +25,7 @@ urlpatterns = [
     re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
     re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
     re_path(r"^json-rpc/$", RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
+    re_path(r"^init-db/$", core_views.InitDBView.as_view(), name="init-db"),
     re_path(
         r"^translation-mode/",
         core_views.TranslationMode.as_view(),

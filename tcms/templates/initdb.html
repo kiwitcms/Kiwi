@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Initialize database" %}{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block contents %}
+    <div class="container-fluid container-cards-pf">
+        <div class="row row-cards-pf">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini">
+                    <h2 class="card-pf-title">
+                        <span class="fa fa-database"></span>
+                        <span class="card-pf-aggregate-status-count">
+                            {% trans "Initialize database" %}
+                        </span>
+                        <br>
+                        {% blocktrans %}
+                        Your database has not been initialized yet.
+                        Click the button below to initialize it!
+                        <br><br>
+                        WARNING: this operation will take a while! This page will redirect when done.
+                        {% endblocktrans %}
+                    <form action="{% url 'init-db' %}" method="post">
+                        {% csrf_token %}
+                        <br>
+                        <button type="submit" name="init_db" class="btn btn-info btn-lg"
+            data-loading-text=" {% trans "Please wait" %}...
+                        <span class='spinner spinner-xs spinner-inline'></span>" value="yes">
+            {% trans "Initialize database" %}</button>
+                        <script>
+                        $(document).ready(function(){
+                            $(".btn").click(function(){
+                                $(this).button('loading');
+                            });
+                        });
+                        </script>
+                    </form>
+                    </h2>
+                    <div class="card-pf-body">
+                        <p class="card-pf-aggregate-status-notifications">
+                            <span class="card-pf-aggregate-status-notification">
+                                <span class="pficon pficon-warning-triangle-o"></span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /row -->
+
+      </div><!-- /container -->
+{% endblock %}
