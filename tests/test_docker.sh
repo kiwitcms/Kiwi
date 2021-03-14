@@ -10,11 +10,23 @@ assert_up_and_running() {
     rlRun -t -c "curl -k -L -o- https://$IP_ADDRESS:8443/ | grep 'Welcome to Kiwi TCMS'"
 }
 
+assert_perform_initdb() {
+    sleep 10
+    IP_ADDRESS=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web`
+    # HTTPS displays the init-db page
+    rm -f /tmp/testcookies.txt
+    rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt https://$IP_ADDRESS:8443/ | grep 'Initialize database'"
+    # init-db page applies database migrations
+    CSRF_TOKEN=`grep csrftoken /tmp/testcookies.txt | cut -f 7`
+    rlRun -t -c "curl -e https://$IP_ADDRESS:8443/init-db/ \
+                -d init_db=yes -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -o- \
+                -b /tmp/testcookies.txt https://$IP_ADDRESS:8443/init-db/"
+}
+
 rlJournalStart
     rlPhaseStartTest "[PostgreSQL] Container up"
         rlRun -t -c "docker-compose -f docker-compose.postgres up -d"
-        sleep 10
-        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
+        assert_perform_initdb
         assert_up_and_running
     rlPhaseEnd
 
@@ -38,8 +50,7 @@ rlJournalStart
     # the rest of the scenarios use MariaDB by default
     rlPhaseStartTest "Container up"
         rlRun -t -c "docker-compose up -d"
-        sleep 10
-        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
+        assert_perform_initdb
         assert_up_and_running
     rlPhaseEnd
 

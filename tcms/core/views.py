@@ -2,8 +2,11 @@
 from django import http
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.management import call_command
 from django.db.models import Count, Q
+from django.http import HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 from django.utils import translation
 from django.utils.decorators import method_decorator
 from django.utils.translation import trans_real
@@ -60,6 +63,17 @@ def server_error(request):  # pylint: disable=missing-permission-required
     """
     template = loader.get_template("500.html")
     return http.HttpResponseServerError(template.render({}, request))
+
+
+class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
+
+    template_name = "initdb.html"
+
+    def post(self, request):
+        if "init_db" in request.POST:
+            # Perform migrations
+            call_command("migrate")
+        return HttpResponseRedirect(reverse("core-views-index"))
 
 
 class TranslationMode(View):  # pylint: disable=missing-permission-required
