@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-15 18:28\n"
+"PO-Revision-Date: 2021-03-15 18:37\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -433,7 +433,7 @@ msgstr "Esse endereço de e-mail já está sendo usado"
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
-msgstr ""
+msgstr "usuários"
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
@@ -478,7 +478,7 @@ msgstr "Sua conta foi ativada com sucesso"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "Versão"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -486,7 +486,7 @@ msgstr "Ativar relatórios para este issue tracker configurando seu base_url!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Formato de data inválido. Esperado AAAA-MM-DD [HH:MM:SS]."
 
 #: tcms/settings/common.py:287
 msgid "DASHBOARD"
@@ -506,7 +506,7 @@ msgstr "Novo Caso de Teste"
 
 #: tcms/settings/common.py:295
 msgid "New Test Run"
-msgstr ""
+msgstr "Nova Execução de Teste"
 
 #: tcms/settings/common.py:297
 msgid "New Bug"
@@ -587,7 +587,7 @@ msgstr "Pedir ajuda no StackOverflow"
 
 #: tcms/settings/common.py:357
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Doe €5 através da Open Collective"
 
 #: tcms/settings/common.py:359
 msgid "Administration Guide"
@@ -695,7 +695,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:20
 msgid "Order"
-msgstr ""
+msgstr "Ordem"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Ascending"
@@ -875,7 +875,7 @@ msgstr "URL"
 
 #: tcms/templates/include/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Selecione"
 
 #: tcms/templates/include/pagination.html:13
 msgid "First page"
@@ -1072,7 +1072,9 @@ msgstr "Cadastrar Nova Conta"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Para obter mais informações sobre a personalização do status de caso de teste, consulte\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        a documentação</a>!"
 
 #: tcms/testcases/admin.py:46
 msgid "1 confirmed & 1 uncomfirmed status required!"
