@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-09 16:09\n"
+"PO-Revision-Date: 2021-03-15 18:28\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -193,7 +193,7 @@ msgstr "Pesquisar bugs"
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
-msgstr ""
+msgstr "Criado"
 
 #: tcms/bugs/templates/bugs/search.html:20
 #: tcms/telemetry/templates/telemetry/include/filters.html:63
@@ -307,7 +307,7 @@ msgstr "Editar"
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:143
 #: tcms/testplans/views.py:154 tcms/testruns/views.py:167
 msgid "Object permissions"
-msgstr ""
+msgstr "Permissões do objeto"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
