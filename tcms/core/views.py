@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
+import os
+import subprocess
+import time
+
 from django import http
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.management import call_command
 from django.db.models import Count, Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, StreamingHttpResponse
 from django.template import loader
 from django.urls import reverse
-from django.utils import translation
+from django.utils import timezone, translation
 from django.utils.decorators import method_decorator
 from django.utils.translation import trans_real
 from django.views import i18n
@@ -65,6 +68,42 @@ def server_error(request):  # pylint: disable=missing-permission-required
     return http.HttpResponseServerError(template.render({}, request))
 
 
+class IterOpen(subprocess.Popen):  # pylint: disable=missing-permission-required
+    """
+        Popen which allows us to iterate over the output so we can
+        stream it back to the browser with some extra eye candy!
+    """
+
+    still_waiting = True
+    has_completed = False
+
+    @property
+    def timestamp(self):
+        return timezone.now().isoformat().replace("T", " ") + " init-db: "
+
+    def __iter__(self):
+        os.set_blocking(self.stdout.fileno(), False)
+        return self
+
+    def __next__(self):
+        line = self.stdout.readline()
+
+        if not line:
+            if self.still_waiting:
+                time.sleep(3)
+                return self.timestamp + "waiting for migrations to start\n"
+
+            if not self.has_completed:
+                self.has_completed = True
+                return self.timestamp + "Complete!\n"
+
+            # instruct the streaming response to stop streaming
+            raise StopIteration
+
+        self.still_waiting = False
+        return self.timestamp + line.lstrip()
+
+
 class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
 
     template_name = "initdb.html"
@@ -72,8 +111,20 @@ class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
     def post(self, request):
         if "init_db" in request.POST:
             # Perform migrations
-            call_command("migrate")
-        return HttpResponseRedirect(reverse("core-views-index"))
+            proc = IterOpen(
+                [os.path.join(settings.TCMS_ROOT_PATH, "..", "manage.py"), "migrate"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                bufsize=1,  # line buffered
+                universal_newlines=True,
+            )
+            response = StreamingHttpResponse(
+                proc, content_type="text/plain; charset=utf-8"
+            )
+            response["Cache-Control"] = "no-cache"
+            return response
+
+        return HttpResponseRedirect(reverse("init-db"))
 
 
 class TranslationMode(View):  # pylint: disable=missing-permission-required
