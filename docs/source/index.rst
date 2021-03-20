@@ -14,6 +14,7 @@ Kiwi TCMS documentation
    Running Kiwi TCMS locally for development <set_dev_env.rst>
    configuration.rst
    admin.rst
+   hardware_performance.rst
    tutorial.rst
    plugins/index.rst
    plugins/automation-frameworks.rst
