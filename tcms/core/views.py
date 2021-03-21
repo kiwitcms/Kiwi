@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-import subprocess
+import subprocess  # nosec:B404:import_subprocess
 import time
 
 from django import http
@@ -70,8 +70,8 @@ def server_error(request):  # pylint: disable=missing-permission-required
 
 class IterOpen(subprocess.Popen):  # pylint: disable=missing-permission-required
     """
-        Popen which allows us to iterate over the output so we can
-        stream it back to the browser with some extra eye candy!
+    Popen which allows us to iterate over the output so we can
+    stream it back to the browser with some extra eye candy!
     """
 
     still_waiting = True
@@ -109,10 +109,16 @@ class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
     template_name = "initdb.html"
 
     def post(self, request):
+        # Default production installation
+        manage_path = "/Kiwi/manage.py"
+        if not os.path.exists(manage_path):
+            # Development installation
+            manage_path = os.path.join(settings.TCMS_ROOT_PATH, "..", "manage.py")
+
         if "init_db" in request.POST:
             # Perform migrations
             proc = IterOpen(
-                [os.path.join(settings.TCMS_ROOT_PATH, "..", "manage.py"), "migrate"],
+                [manage_path, "migrate"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 bufsize=1,  # line buffered

@@ -19,8 +19,8 @@ assert_perform_initdb() {
     # init-db page applies database migrations
     CSRF_TOKEN=`grep csrftoken /tmp/testcookies.txt | cut -f 7`
     rlRun -t -c "curl -e https://$IP_ADDRESS:8443/init-db/ \
-                -d init_db=yes -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -o- \
-                -b /tmp/testcookies.txt https://$IP_ADDRESS:8443/init-db/"
+        -d init_db=yes -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -o- \
+        -b /tmp/testcookies.txt https://$IP_ADDRESS:8443/init-db/"
 }
 
 rlJournalStart
