@@ -6,39 +6,25 @@ In order to run Kiwi TCMS as a production instance you will need
 `docker-compose <https://docs.docker.com/compose/install/>`_. Refer to
 their documentation about download and installation options.
 
-Pull or Build Docker image
---------------------------
 
-We recommend downloading the official Kiwi TCMS Docker image by running::
+Start with Docker compose
+-------------------------
 
-    docker pull kiwitcms/kiwi
+Clone the git repository::
 
-Alternatively you can build an image from source by executing::
-
-    make docker-image
-
-within a git checkout directory. This will create a Docker image with the
-latest Kiwi TCMS version. By default the image tag will be
-``kiwitcms/kiwi:latest``.
+    git clone --depth 1 https://github.com/kiwitcms/Kiwi.git path/to/kiwi-tcms/
 
 .. important::
 
-    While Kiwi TCMS uses git tags when releasing new versions we do not
-    provide versioned docker images via Docker Hub!
-
-
-Start Docker compose
---------------------
-
-Copy our
-`docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
-and place it in a new directory!
+    The above command clones the entire source directory but you don't need most files.
+    Make sure that
+    `docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
+    and all files referenced inside of it are available on the local filesystem!
 
 Then you can start Kiwi TCMS by executing::
 
-    cd path/containing/docker-compose/
+    cd path/to/kiwi-tcms/
     docker-compose up -d
-
 
 Your Kiwi TCMS instance will be accessible at https://localhost.
 
@@ -64,6 +50,12 @@ The above command will create two containers:
     We recommend using our ``docker-compose.yml`` file only as an example to
     create your own. This is what controls your Kiwi TCMS installation. It is
     best to keep your own copy under version control too!
+
+.. important::
+
+    Kiwi TCMS does not provide versioned docker images via Docker Hub!
+    When a new version is released the image ``kiwitcms/kiwi:latest`` is
+    updated accordingly!
 
 
 Initial configuration of running container
