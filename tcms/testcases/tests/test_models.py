@@ -7,10 +7,10 @@ from django.test import TestCase
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from mock import patch
+from parameterized import parameterized
 
 from tcms.core.history import history_email_for
 from tcms.testcases.helpers.email import get_case_notification_recipients
-from tcms.testruns.models import TestExecution
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import (
     ComponentFactory,
@@ -18,6 +18,7 @@ from tcms.tests.factories import (
     TestCaseComponentFactory,
     TestCaseFactory,
     TestCaseTagFactory,
+    TestExecutionFactory,
 )
 
 
@@ -162,27 +163,19 @@ class TestSendMailOnCaseIsDeleted(BasePlanCase):
 
 
 class TestActualDurationProperty(TestCase):
-    """Test TestExecution.actual_duration"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
-
-        cls.test_execution = TestExecution()
-        cls.test_execution.start_date = timezone.now()
-        cls.test_execution.stop_date = (
-            cls.test_execution.start_date + timezone.timedelta(days=1)
-        )
-
-    def test_calculation_of_actual_duration(self):
-        self.assertEqual(
-            self.test_execution.actual_duration, timezone.timedelta(days=1)
-        )
-
-    def test_actual_duration_empty_start_date(self):
-        empty_start_date_actual_duration = TestExecution(start_date=None)
-        self.assertEqual(empty_start_date_actual_duration.actual_duration, None)
-
-    def test_actual_duration_empty_stop_date(self):
-        empty_stop_date_actual_duration = TestExecution(stop_date=None)
-        self.assertEqual(empty_stop_date_actual_duration.actual_duration, None)
+    @parameterized.expand(
+        [
+            (
+                "both_values_are_set",
+                timezone.datetime(2021, 3, 22),
+                timezone.datetime(2021, 3, 23),
+                timezone.timedelta(days=1),
+            ),
+            ("both_values_are_none", None, None, None),
+            ("start_date_is_none", None, timezone.datetime(2021, 3, 23), None),
+            ("stop_date_is_none", timezone.datetime(2021, 3, 22), None, None),
+        ]
+    )
+    def test_actual_duration_when(self, _name, start, stop, expected):
+        execution = TestExecutionFactory(start_date=start, stop_date=stop)
+        self.assertEqual(execution.actual_duration, expected)
