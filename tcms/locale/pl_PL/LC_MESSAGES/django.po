@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-23 14:16\n"
+"PO-Revision-Date: 2021-03-23 14:30\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -351,12 +351,12 @@ msgstr ""
 
 #: tcms/core/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Pulpit"
 
 #: tcms/core/templates/dashboard.html:8
 #: tcms/testruns/templates/testruns/get.html:176
 msgid "Test executions"
-msgstr "Uruchomienia testów"
+msgstr "Wykonania testów"
 
 #: tcms/core/templates/dashboard.html:15
 #, python-format
@@ -537,11 +537,11 @@ msgstr "Matryca statusu"
 #: tcms/settings/common.py:321
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Trendy wykonania"
 
 #: tcms/settings/common.py:322
 msgid "TestCase health"
-msgstr ""
+msgstr "Kondycja przypadku testowego"
 
 #: tcms/settings/common.py:332
 msgid "ADMIN"
@@ -1441,7 +1441,7 @@ msgstr "Powiadom:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
-msgstr "Autora Przypadku Testowego"
+msgstr "Autora przypadku testowego"
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
@@ -1744,7 +1744,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr ""
+msgstr "Tenant"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
