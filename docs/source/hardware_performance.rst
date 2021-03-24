@@ -86,5 +86,30 @@ The average results are:
       instance types. We think it could be due to a database re-indexing operation
       but haven't pinned the root cause yet!
 
+.. important::
+
+    We've experimented with an *i3.large* storage optimized instance which has a
+    Non-Volatile Memory Express (NVMe) SSD-backed storage optimized for low latency and
+    very high random I/O performance. We've had to
+    ``mkfs.xfs /dev/nvme0n1 && mount /dev/nvme0n1 /var/lib/docker`` before starting the
+    containers.
+
+    While you can see that ``nvme`` disk latency is an
+    order of magnitude faster (< 0.1 ms) with the occasional peak from the root filesystem
+    the overall application performance didn't change a lot. The times for ``R=30`` improved
+    but the times for ``R=100`` worsened a bit.
+
+    |i3.large metrics|
+
+    This means few things:
+
+    1) The presented metrics above are generally representative and you can use them
+       to plan your deployment
+    2) Going overboard on hardware, especially disk performance isn't necessary
+    3) Somewhere else in Kiwi TCMS there is a bottleneck which we're
+       still to investigate and improve! Pull requests and profiling information are
+       welcome.
+
 
 .. |t3.medium metrics| image:: ./_static/t3.medium_gp2_r100.png
+.. |i3.large metrics| image:: ./_static/i3.large_nvme_r100.png
