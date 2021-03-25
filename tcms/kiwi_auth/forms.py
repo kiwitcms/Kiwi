@@ -8,6 +8,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import override
 
 from tcms.core.utils import request_host_link
 from tcms.core.utils.mailto import mailto
@@ -56,6 +57,7 @@ class RegistrationForm(UserCreationForm):
     def set_activation_key(self):
         return UserActivationKey.set_random_key_for_user(user=self.instance)
 
+    @override(settings.LANGUAGE_CODE)
     def send_confirm_mail(self, request, activation_key):
         current_site = Site.objects.get(pk=settings.SITE_ID)
         confirm_url = "%s%s" % (

@@ -4,8 +4,10 @@ import threading
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.utils.translation import override
 
 
+@override(settings.LANGUAGE_CODE)
 def mailto(  # pylint: disable=invalid-name
     template_name,
     subject,
