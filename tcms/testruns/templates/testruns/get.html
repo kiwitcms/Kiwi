@@ -72,8 +72,18 @@
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa fa fa-calendar-o"></span>{% trans 'Planned start' %}:
+                    {{ object.planned_start|default:'-'}}
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-calendar"></span>{% trans 'Started at' %}:
                     {{ object.start_date }}
+                </h2>
+
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span class="fa fa fa-calendar-o"></span>{% trans 'Planned stop' %}:
+                    {{ object.planned_stop|default:'-' }}
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
