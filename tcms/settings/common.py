@@ -469,7 +469,10 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
 
-TEMP_DIR = pathlib.Path(tempfile.gettempdir())
+if os.path.isdir("/var/tmp"):  # nosec: B108
+    TEMP_DIR = pathlib.Path("/var/tmp")  # nosec: B108
+else:
+    TEMP_DIR = pathlib.Path(tempfile.gettempdir())
 
 # See https://github.com/django-guardian/django-guardian/issues/726
 ANONYMOUS_USER_NAME = "AnonymousUser"
