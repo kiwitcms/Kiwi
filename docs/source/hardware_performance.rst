@@ -107,9 +107,42 @@ The average results are:
        to plan your deployment
     2) Going overboard on hardware, especially disk performance isn't necessary
     3) Somewhere else in Kiwi TCMS there is a bottleneck which we're
-       still to investigate and improve! Pull requests and profiling information are
+       still to investigate and improve! Pull requests and more profiling information are
        welcome.
 
+    Upon further investigation we devised two additional scripts to aid in discovering possible
+    bottlenecks:
+
+    - `perf-script-orm <https://github.com/kiwitcms/api-scripts/blob/master/perf-script-org>`_
+      which talks directly to the ORM layer simulating comparable number of DB operations
+    - `perf-script-static <https://github.com/kiwitcms/api-scripts/blob/master/perf-script-static>`_
+      which simulates the same number of API requests without touching the database.
+      This can be used as a rough estimate of how much time is spent during web/API handling
+    - During experiments with these two scripts CPU, Network and Disk metrics remained
+      similar to previous executions which supports the theory of bottleneck in the application
+      instead of hardware or operating system.
+
+    Results against the same server with ``R=100`` yielded the following:
+
+    1) 1120 sec for ``perf-script-ng``
+    2) 234 sec for ``perf-script-orm``
+    3) 333 sec for ``perf-script-static``
+
+    Which translates as:
+
+    1) 20% of the time is spent in ORM/DB operations
+    2) 30% of the time is spent in the web/API stack
+    3) 50% of the time is spent in additional computation for each API function, e.g.
+
+       - permissions check
+       - input validation
+       - fetching objects by id
+       - calculating sortkey and/or test run completion status
+       - serialization
+
+    Each API function has its own individuality but the biggest contenders in this case seem to be
+    ``TestRun.add_case`` and ``TestExecution.update``. However more profiling information for every API
+    function is needed in order to make a final verdict.
 
 .. |t3.medium metrics| image:: ./_static/t3.medium_gp2_r100.png
 .. |i3.large metrics| image:: ./_static/i3.large_nvme_r100.png
