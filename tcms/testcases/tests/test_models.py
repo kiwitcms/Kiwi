@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, no-member
+from datetime import timedelta
 
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.test import TestCase
 from django.utils.translation import gettext_lazy as _
 from mock import patch
+from parameterized import parameterized
 
 from tcms.core.history import history_email_for
 from tcms.testcases.helpers.email import get_case_notification_recipients
@@ -157,3 +159,30 @@ class TestSendMailOnCaseIsDeleted(BasePlanCase):
             recipients,
             fail_silently=False,
         )
+
+
+class TestCaseCalculateExpectedDuration(TestCase):
+    """Test TestCase.expected_duration"""
+
+    default = timedelta(0)
+
+    @parameterized.expand(
+        [
+            (
+                "both_values_are_set",
+                timedelta(days=1),
+                timedelta(days=1),
+                timedelta(days=2),
+            ),
+            ("both_values_are_none", default, default, default),
+            ("setup_duration_is_none", default, timedelta(days=1), timedelta(days=1)),
+            ("testing_duration_is_none", timedelta(days=1), default, timedelta(days=1)),
+        ]
+    )
+    def test_test_case_expected_duration_property_when(
+        self, _name, setup_duration, testing_duration, expected
+    ):
+        test_case = TestCaseFactory(
+            setup_duration=setup_duration, testing_duration=testing_duration
+        )
+        self.assertEqual(test_case.expected_duration, expected)
