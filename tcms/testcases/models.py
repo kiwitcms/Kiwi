@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+
 import vinaigrette
-from datetime import timedelta
 from django.conf import settings
 from django.db import models
 from django.db.models import ObjectDoesNotExist
@@ -63,12 +63,9 @@ class TestCase(TCMSActionModel):
 
     @property
     def expected_duration(self):
-        if not self.setup_duration and not self.testing_duration:
+        if self.setup_duration is None or self.testing_duration is None:
             return None
-        result = timedelta(0)
-        result += self.setup_duration or timedelta(0)
-        result += self.testing_duration or timedelta(0)
-        return result
+        return self.setup_duration + self.testing_duration
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
     category = models.ForeignKey(
