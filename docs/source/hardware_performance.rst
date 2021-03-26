@@ -144,5 +144,50 @@ The average results are:
     ``TestRun.add_case`` and ``TestExecution.update``. However more profiling information for every API
     function is needed in order to make a final verdict.
 
+Read APIs execution speed
+-------------------------
+
+To establish a baseline for read APIs we've chosen the ``TestCase.filter`` and
+``TestRun.filter`` methods which are used in the search pages. The experiment
+is performed inside the following environment:
+
+- Client is *t3.small* AWS instance
+- Server is *t3.medium* AWS instance
+- Both client and server are located in the *us-east-1a* region in AWS
+- Result size for both methods is 10000 records serialized as JSON
+- Search page was loaded and then the *Search* button was pressed additional
+  times for a total of 5 executions
+
+The results are as follow:
+
+- ``TestCase.filter``: min 648 ms, max 1500 ms for 5 MB data
+
+  |TestCase.filter metrics|
+
+  |TestCase.filter slowest info|
+
+- ``TestRun.filter``: min 547 ms, max 1023 ms for 5.10 MB data
+
+  |TestRun.filter metrics|
+
+  |TestRun.filter slowest info|
+
+In the case where the client is across the world reaching the server through
+the Internet the timings are quite different with most of the time being taken
+to transfer the actual information:
+
+|TestCase.filter metrics via Internet|
+
+.. important::
+
+    Firefox timing metrics are explained in
+    `Mozilla's documentation <https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor/request_details#timings_tab>`_
+
 .. |t3.medium metrics| image:: ./_static/t3.medium_gp2_r100.png
 .. |i3.large metrics| image:: ./_static/i3.large_nvme_r100.png
+.. |TestCase.filter metrics| image:: ./_static/TestCase.filter_metrics.png
+.. |TestCase.filter slowest info| image:: ./_static/TestCase.filter_slowest_info.png
+.. |TestCase.filter metrics via Internet| image:: ./_static/TestCase.filter_metrics_via_internet.png
+.. |TestRun.filter metrics| image:: ./_static/TestRun.filter_metrics.png
+.. |TestRun.filter slowest info| image:: ./_static/TestRun.filter_slowest_info.png
+
