@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-import vinaigrette
 from datetime import timedelta
+
+import vinaigrette
 from django.conf import settings
 from django.db import models
 from django.db.models import ObjectDoesNotExist
@@ -59,15 +60,6 @@ class TestCase(models.Model, UrlMixin):
     setup_duration = models.DurationField(db_index=True, null=True, blank=True)
     testing_duration = models.DurationField(db_index=True, null=True, blank=True)
 
-    @property
-    def expected_duration(self):
-        if not self.setup_duration and not self.testing_duration:
-            return None
-        result = timedelta(0)
-        result += self.setup_duration or timedelta(0)
-        result += self.testing_duration or timedelta(0)
-        return result
-
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category, related_name="category_case", on_delete=models.CASCADE
@@ -107,6 +99,13 @@ class TestCase(models.Model, UrlMixin):
     tag = models.ManyToManyField(
         "management.Tag", related_name="case", through="testcases.TestCaseTag"
     )
+
+    @property
+    def expected_duration(self):
+        result = timedelta(0)
+        result += self.setup_duration or timedelta(0)
+        result += self.testing_duration or timedelta(0)
+        return result
 
     def __str__(self):
         return self.summary
