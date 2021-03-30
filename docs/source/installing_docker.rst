@@ -68,22 +68,19 @@ configuration of a new Kiwi TCMS installation::
 
 .. versionadded:: 8.9
 
-Alternatively you can use more automation-friendly setup described below:
+If you prefer web-based tool you can use
+``https://<your_domain_or_ip>/init-db/``
+.. versionadded:: 10.1
 
-You need to create the database schema by executing::
+.. note::
+
+    The first registered user becomes superuser and is active
+    without mail verification!
+
+Alternatively you can use more automation-friendly setup::
 
     docker exec -it kiwi_web /Kiwi/manage.py migrate
-
-Then you need to create the first user account::
-
     docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
-
-
-A special group called Tester is created during the installation. This
-is the default group for testers and we do not recommend to alter or
-delete it. It needs certain permissions which can be assigned by the
-command::
-
     docker exec -it kiwi_web /Kiwi/manage.py refresh_permissions
 
 
