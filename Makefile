@@ -50,7 +50,11 @@ check: flake8 test
 pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
 	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django.checkers.migrations -d missing-docstring -d duplicate-code -d new-db-field-with-default --module-naming-style=any  tcms/*/migrations/*
-	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django --load-plugins=kiwi_lint --load-plugins=pylint.extensions.docparams -d missing-docstring -d duplicate-code -d one-to-one-field tcms/ tcms_settings_dir/
+	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=pylint_django --load-plugins=kiwi_lint --load-plugins=pylint.extensions.docparams -d missing-docstring -d duplicate-code -d one-to-one-field -d similar-string tcms/ tcms_settings_dir/
+
+.PHONY: pylint_similar_string
+similar_strings:
+	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=kiwi_lint -d all -e similar-string tcms/ tcms_settings_dir/
 
 .PHONY: pylint_site_packages
 pylint_site_packages:

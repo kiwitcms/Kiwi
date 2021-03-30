@@ -4,3 +4,4 @@ doc8
 isort==5.8.0
 black
 parameterized
+textdistance
