@@ -48,6 +48,7 @@ class RegistrationForm(UserCreationForm):
 
         if User.objects.filter(is_superuser=True).count() == 0:
             user.is_superuser = True
+            user.is_active = True
 
         if commit:
             user.save()
