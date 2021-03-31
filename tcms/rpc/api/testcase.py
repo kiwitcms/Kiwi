@@ -241,6 +241,9 @@ def create(values, **kwargs):
                 'product': 61,
             'summary': 'Testing XML-RPC',
             'priority': 1,
+            'setup_duration': timezone.ti medelta(hours=1),
+            'testing_duration': timezone.timedelta(hours=1),
+            'expected_duration': timezone.timedelta(hours=2),
             }
             >>> TestCase.create(values)
     """

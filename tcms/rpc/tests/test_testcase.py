@@ -531,7 +531,24 @@ class TestCreate(APITestCase):
                     "summary": "TC via API without mandatory FK fields",
                 }
             )
-
+    # def test_setup_duration_allows_storing_duration(self):
+    # new_setup_duration = TestCase.setup_duration
+    # new_testing_duration = TestCase.testing_duration
+    # new_expected_duration = TestCase.expected_duration
+    # result = self.rpc_client.TestCase.create(
+    #     {
+    #         "testing_duration": new_testing_duration.pk,
+    #         "setup_duration": new_setup_duration.pk,
+    #         "expected_duration": new_expected_duration,
+    #     }
+    # )
+    # tc_from_db = TestCase.objects.get(result["setup_duration"], setup_duraiton=new_setup_duration)
+    # tc_from_db2 = TestCase.objects.get(result["testing_duration"], testing_duraiton=new_testing_duration)
+    # tc_from_db3 = TestCase.objects.get(result["expected_duration"], expected_duraiton=new_expected_duration)
+    #
+    # self.assertEqual(new_setup_duration, tc_from_db.setup_duration)
+    # self.assertEqual(new_testing_duration, tc_from_db2.testing_duration)
+    # self.assertEqual(new_expected_duration, tc_from_db3.expected_duration)
 
 class TestRemovePermissions(APIPermissionsTestCase):
     permission_label = "testcases.delete_testcase"
