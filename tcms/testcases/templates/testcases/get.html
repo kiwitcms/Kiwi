@@ -85,12 +85,12 @@
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-clock-o"></span>{% trans 'Setup duration' %}:
-                {{ object.setup_duration }}
+                {{ object.setup_duration|default:"-" }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
                 <span class="fa fa-clock-o"></span>{% trans 'Testing duration' %}:
-                {{ object.testing_duration }}
+                {{ object.testing_duration|default:"-" }}
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
