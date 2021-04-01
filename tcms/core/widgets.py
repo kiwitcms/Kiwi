@@ -40,3 +40,33 @@ $(document).ready(function() {
             "prismjs/plugins/autoloader/prism-autoloader.min.js",
             "js/simplemde_security_override.js",
         ]
+
+
+class DurationWidget(forms.Textarea):
+    def render(self, name, value, attrs=None, renderer=None):
+        rendered_duration = super().render(name, value, attrs, renderer)
+        rendered_duration += """
+<input id="%s" type="text" style="display: none">
+<script>
+$(function () {
+    $('#%s').durationPicker({
+      showDays: true,
+      showHours: true,
+      showMinutes: true,
+      showSeconds: true,
+    });
+});
+</script>
+""" % (
+            attrs["id"],
+            attrs["id"],
+        )
+
+        return rendered_duration
+
+    class Media:
+        css = {"all": ["bootstrap-duration-picker/dist/bootstrap-duration-picker.css"]}
+        js = [
+            "bootstrap-duration-picker/dist/bootstrap-duration-picker.js",
+            "bootstrap-duration-picker/dist/bootstrap-duration-picker-debug.js",
+        ]

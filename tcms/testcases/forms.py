@@ -4,7 +4,7 @@ from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.forms.fields import UserField
-from tcms.core.widgets import SimpleMDE
+from tcms.core.widgets import DurationWidget, SimpleMDE
 from tcms.management.models import Component, Priority, Product
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import (
@@ -34,6 +34,14 @@ class TestCaseForm(forms.ModelForm):
     product = forms.ModelChoiceField(
         queryset=Product.objects.all(),
         empty_label=None,
+    )
+    setup_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
+    testing_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
     )
     text = forms.CharField(
         widget=SimpleMDE(),
@@ -80,7 +88,6 @@ class CaseNotifyForm(forms.ModelForm):
 _email_settings_fields = []  # pylint: disable=invalid-name
 for field in TestCaseEmailSettings._meta.fields:
     _email_settings_fields.append(field.name)
-
 
 # for usage in CreateView, UpdateView
 CaseNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
