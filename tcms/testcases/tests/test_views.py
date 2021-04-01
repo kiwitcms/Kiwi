@@ -88,6 +88,7 @@ class TestNewCase(BasePlanCase):
         cls.summary = "summary"
         cls.text = "some text description"
         cls.script = "some script"
+        cls.duration = "2:20:10:00"
         cls.arguments = "args1, args2, args3"
         cls.requirement = "requirement"
         cls.link = "http://somelink.net"
@@ -100,6 +101,8 @@ class TestNewCase(BasePlanCase):
             "category": cls.case.category.pk,
             "case_status": cls.case_status_confirmed.pk,
             "priority": cls.case.priority.pk,
+            "setup_duration": cls.duration,
+            "testing_duration": "00:00:00:00",
             "text": cls.text,
             "script": cls.script,
             "arguments": cls.arguments,
@@ -180,6 +183,8 @@ class TestNewCase(BasePlanCase):
         self.assertEqual(test_case.requirement, self.requirement)
         self.assertEqual(test_case.extra_link, self.link)
         self.assertEqual(test_case.notes, self.notes)
+        self.assertEqual(test_case.setup_duration, self.duration)
+        self.assertEqual(test_case.testing_duration, self.duration)
 
 
 class TestNewCasePermission(PermissionsTestCase):
@@ -282,6 +287,8 @@ class TestEditCaseView(BasePlanCase):
             "product": cls.case_1.category.product.pk,
             "category": cls.case_1.category.pk,
             "default_tester": "",
+            "testing_duration": "00:00:00:00",
+            "setup_duration": "01:02:00:00",
             "case_status": cls.case_status_confirmed.pk,
             "arguments": "",
             "extra_link": "",
