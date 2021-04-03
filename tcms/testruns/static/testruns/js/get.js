@@ -10,6 +10,10 @@ const allExecutionStatuses = {},
 
 $(document).ready(() => {
 
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'hover'
+    });
+
     permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True'
     permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
     permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'
@@ -19,23 +23,29 @@ $(document).ready(() => {
 
     const testRunId = $('#test_run_pk').data('pk')
 
-    $('#status_button').on('switchChange.bootstrapSwitch', (_event, state) => {
-        if (state) {
-            jsonRPC('TestRun.update', [testRunId, { 'stop_date': null }], () => {
-                $('.stop-date').html('-')
-                $('#test_run_pk').parent('h1').css({ 'text-decoration': 'none' })
-            })
-        } else {
-            const timeZone = $('#clock').data('time-zone')
-            const now = currentTimeWithTimezone(timeZone)
+    $('#start-button').on('click', function () {
+        const timeZone = $('#clock').data('time-zone')
+        const now = currentTimeWithTimezone(timeZone)
 
-            jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], testRun => {
-                const stopDate = moment(testRun.stop_date).format("DD MMM YYYY, HH:mm a")
-                $('.stop-date').html(stopDate)
-                $('#test_run_pk').parent('h1').css({ 'text-decoration': 'line-through' })
-            })
-        }
-    })
+        jsonRPC('TestRun.update', [testRunId, { 'start_date': now }], testRun => {
+            const startDate = moment(testRun.start_date).format("DD MMM YYYY, HH:mm a")
+            $('.start-date').html(startDate);
+            $(this).hide();
+        })
+    });
+
+    $('#stop-button').on('click', function () {
+        const timeZone = $('#clock').data('time-zone')
+        const now = currentTimeWithTimezone(timeZone)
+
+        jsonRPC('TestRun.update', [testRunId, { 'stop_date': now }], testRun => {
+            const stopDate = moment(testRun.stop_date).format("DD MMM YYYY, HH:mm a")
+            $('.stop-date').html(stopDate);
+            $(this).hide();
+            $('#test_run_pk').parent('h1').css({ 'text-decoration': 'line-through' })
+        })
+    });
+
 
     $('.add-comment-bulk').click(function () {
         $(this).parents('.dropdown').toggleClass('open')

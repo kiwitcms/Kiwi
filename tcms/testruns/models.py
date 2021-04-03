@@ -26,7 +26,7 @@ TestExecutionStatusSubtotal = namedtuple(
 class TestRun(models.Model, UrlMixin):
     history = KiwiHistoricalRecords()
 
-    start_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    start_date = models.DateTimeField(db_index=True, null=True, blank=True)
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     planned_start = models.DateTimeField(db_index=True, null=True, blank=True)
     planned_stop = models.DateTimeField(db_index=True, null=True, blank=True)
