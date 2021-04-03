@@ -63,13 +63,6 @@
                     </h2>
                 {% endif %}
 
-                <h2 class="card-pf-title" style="text-align: left">
-                    <span class="fa fa-spinner"></span>{% trans 'Status' %}:
-                    <input class="bootstrap-switch" id="status_button" type="checkbox"
-                        {% if not object.stop_date %}checked{% endif %}
-                        {% if not perms.testruns.change_testrun %}disabled{% endif %}
-                        data-on-text="{% trans 'Running' %}" data-off-text="{% trans 'Finished' %}">
-                </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa fa-calendar-o"></span>{% trans 'Planned start' %}:
@@ -79,6 +72,16 @@
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-calendar"></span>{% trans 'Started at' %}:
                     {{ object.start_date }}
+                    <span class="start-date">
+                            {{ object.start_date|default:'-' }}
+                        </span>
+                    {% if not object.start_date %}
+                        <button class="btn btn-success btn-xs" type="button"        id="start-button"
+                                data-toggle="tooltip"          data-placement="top" title="{% trans 'Start' %}"
+                        style="float:right;">
+                            <i class="fa fa-check" style="color: white; margin: auto; "></i>
+                        </button>
+                    {% endif %}
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
@@ -86,15 +89,17 @@
                     {{ object.planned_stop|default:'-' }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title" style="text-align: left; overflow: hidden;">
                     <span class="fa fa-calendar-check-o"></span>{% trans 'Finished at' %}:
                     <span class="stop-date">
-                        {% if object.stop_date %}
-                            {{ object.stop_date }}
-                        {% else %}
-                            -
-                        {% endif %}
+                        {{ object.stop_date|default:'-' }}
                     </span>
+                    {% if not object.stop_date %}
+                        <button class="btn btn-warning btn-xs pull-right" type="button"        id="stop-button"
+                                data-toggle="tooltip"                     data-placement="top" title="{% trans 'Stop' %}" style="margin-bottom: 1rem;">
+                            <i class="fa fa-check" style="color: white; margin: auto; "></i>
+                        </button>
+                    {% endif %}
                 </h2>
 
                 <div class="card-pf-body"></div>
