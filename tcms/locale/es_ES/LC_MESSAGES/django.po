@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-04 03:13\n"
+"PO-Revision-Date: 2021-04-04 03:23\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1403,7 +1403,7 @@ msgstr "Tipo de plan"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Casos de prueba"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1420,7 +1420,7 @@ msgstr "Revisor"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "Ordenamiento"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1429,24 +1429,24 @@ msgstr "Reordenar casos"
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:294
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Buscar y añadir casos de prueba"
 
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:304
 msgid "Advanced search"
-msgstr ""
+msgstr "Busqueda avanzada"
 
 #: tcms/testplans/templates/testplans/get.html:285
 msgid "Active test runs"
-msgstr ""
+msgstr "Ejecuciones de pruebas activas"
 
 #: tcms/testplans/templates/testplans/get.html:307
 msgid "More"
-msgstr ""
+msgstr "Más"
 
 #: tcms/testplans/templates/testplans/get.html:309
 msgid "Inactive"
-msgstr ""
+msgstr "Inactivas"
 
 #: tcms/testplans/templates/testplans/get.html:443
 #: tcms/testruns/templates/testruns/get.html:478
