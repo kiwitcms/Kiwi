@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-03-09 16:09\n"
+"PO-Revision-Date: 2021-04-04 03:13\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -490,7 +490,7 @@ msgstr "Formato de fecha inválido. Esperado AAAA-MM-DD [HH:MM:SS]."
 
 #: tcms/settings/common.py:287
 msgid "DASHBOARD"
-msgstr "DASHARD"
+msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:289
 msgid "TESTING"
