@@ -1,19 +1,37 @@
 /*
     Used to update a select when something else changes.
 */
-function updateSelect(data, selector, id_attr, value_attr) {
+function updateSelect(data, selector, id_attr, value_attr, group_attr) {
     var _select_tag = $(selector)[0];
     var new_options = '';
 
-    // in some cases, e.g. TestRun search, the 1st <option> element is ---
+	currentGroup = '';
+	// check if using multiple select
+	isMultiple = _select_tag.attributes.getNamedItem('multiple') !== null;
+    
+	// in some cases using single select, the 1st <option> element is ---
     // which must always be there to indicate nothing selected
-    if (_select_tag.options.length) {
+    if (!isMultiple && _select_tag.options.length) {
         new_options = _select_tag.options[0].outerHTML;
     }
+	
+	data.forEach(function(element) {
+		if(isMultiple && group_attr != null && currentGroup !== element[group_attr]) {
+			if (currentGroup !== '') {
+				// for all but the first time group changes, add a closing optgroup tag
+				new_options += '</optgroup>'
+			}
+			new_options += '<optgroup label="' + element[group_attr] + '">';
+			currentGroup = element[group_attr];
+		}
 
-    data.forEach(function(element) {
         new_options += '<option value="' + element[id_attr] + '">' + element[value_attr] + '</option>';
     });
+
+	// add a final closing optgroup tag if opening tag present
+	if(new_options.indexOf('optgroup') > -1) {
+		new_options += '</optgroup>'
+	}
 
     _select_tag.innerHTML = new_options;
 
@@ -400,14 +418,14 @@ function arrayToDict(arr) {
 
 function updateTestPlanSelectFromProduct(callback = () => {}) {
     const updateCallback = (data = []) => {
-        updateSelect(data, '#id_test_plan', 'id', 'name');
+        updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name');
         callback();
     };
 
-    const productId = $('#id_product').val();
-    if (!productId) {
+    const productIds = $('#id_product').val();
+    if (!productIds.length) {
         updateCallback();
     } else {
-        jsonRPC('TestPlan.filter', {product: productId}, updateCallback);
+        jsonRPC('TestPlan.filter', {product__in: productIds}, updateCallback);
     }
 }
