@@ -18,13 +18,13 @@ $(document).ready(() => {
 function reloadCharts() {
     const query = {};
 
-    const testPlanId = $('#id_test_plan').val();
-    const productId = $('#id_product').val();
+    const testPlanIds = $('#id_test_plan').val();
+    const productIds = $('#id_product').val();
 
-    if (testPlanId) {
-        query['plan'] = testPlanId;
-    } else if (productId) {
-        query['category__product_id'] = productId;
+    if (testPlanIds.length) {
+        query['plan__in'] = testPlanIds;
+    } else if (productIds.length) {
+        query['category__product_id__in'] = productIds;
     }
 
     const dateBefore = $('#id_before');
