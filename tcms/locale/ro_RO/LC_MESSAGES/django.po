@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 15:04\n"
+"PO-Revision-Date: 2021-04-15 15:54\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -311,11 +311,11 @@ msgstr "Șterge"
 
 #: tcms/bugs/views.py:68
 msgid "New bug"
-msgstr ""
+msgstr "Eroare nouă"
 
 #: tcms/bugs/views.py:190
 msgid "Edit bug"
-msgstr ""
+msgstr "Editare bug"
 
 #: tcms/bugs/views.py:225
 msgid "*bug closed*"
@@ -496,7 +496,7 @@ msgstr ""
 
 #: tcms/settings/common.py:297
 msgid "New Bug"
-msgstr ""
+msgstr "Eroare nouă"
 
 #: tcms/settings/common.py:303
 msgid "SEARCH"
@@ -516,7 +516,7 @@ msgstr "Caută Proces de Testare"
 
 #: tcms/settings/common.py:308
 msgid "Search Bugs"
-msgstr ""
+msgstr "Căutare erori"
 
 #: tcms/settings/common.py:314
 msgid "TELEMETRY"
@@ -614,7 +614,7 @@ msgstr "ALTELE"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:112
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTAL"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 msgid "Detailed information about test execution status"
@@ -649,7 +649,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:401
 #: tcms/testruns/templates/testruns/get.html:363
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
@@ -848,15 +848,15 @@ msgstr ""
 
 #: tcms/templates/include/pagination.html:20
 msgid "Current page"
-msgstr ""
+msgstr "Pagina Curentă"
 
 #: tcms/templates/include/pagination.html:28
 msgid "Next page"
-msgstr ""
+msgstr "Următoarea Pagină"
 
 #: tcms/templates/include/pagination.html:31
 msgid "Last page"
-msgstr ""
+msgstr "Ultima pagină"
 
 #: tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:148
@@ -865,7 +865,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:355
 #: tcms/testruns/templates/testruns/search.html:106
 msgid "Tags"
-msgstr ""
+msgstr "Tag-uri"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:147
@@ -885,7 +885,7 @@ msgstr "Nume"
 #: tcms/testruns/templates/testruns/get.html:159
 #: tcms/testruns/templates/testruns/get.html:298
 msgid "Add"
-msgstr ""
+msgstr "Adăugă"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -935,7 +935,7 @@ msgstr "Limbă"
 
 #: tcms/templates/navbar.html:87
 msgid "Supported languages"
-msgstr ""
+msgstr "Limbi suportate"
 
 #: tcms/templates/navbar.html:88
 msgid "Request new language"
@@ -981,19 +981,19 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "înregistrează un cont"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "dacă nu ai unul!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Parola dvs. a fost setată. Puteți merge mai departe și"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "acum"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
@@ -1160,39 +1160,39 @@ msgstr "Prioritate"
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:112
 msgid "Script"
-msgstr ""
+msgstr "Script-ul"
 
 #: tcms/testcases/templates/testcases/get.html:102
 #: tcms/testcases/templates/testcases/mutable.html:118
 msgid "Arguments"
-msgstr ""
+msgstr "Parametrii"
 
 #: tcms/testcases/templates/testcases/get.html:107
 #: tcms/testcases/templates/testcases/mutable.html:126
 msgid "Requirements"
-msgstr ""
+msgstr "Cerințe"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:131
 #: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr ""
+msgstr "Link de referință"
 
 #: tcms/testcases/templates/testcases/get.html:132
 #: tcms/testruns/templates/testruns/get.html:381
 msgid "Bugs"
-msgstr ""
+msgstr "Erori"
 
 #: tcms/testcases/templates/testcases/get.html:139
 msgid "Test plans"
-msgstr ""
+msgstr "Planul de testare"
 
 #: tcms/testcases/templates/testcases/get.html:188
 #: tcms/testplans/templates/testplans/get.html:446
 #: tcms/testruns/templates/testruns/get.html:351
 msgid "Components"
-msgstr ""
+msgstr "Componente"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1229,7 +1229,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:192
 msgid "Notify when"
-msgstr ""
+msgstr "Anunță-mă când"
 
 #: tcms/testcases/templates/testcases/mutable.html:196
 msgid "TestCase is updated"
@@ -1344,7 +1344,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
-msgstr ""
+msgstr "Arată mai mult"
 
 #: tcms/testplans/templates/testplans/get.html:74
 msgid "Plan Type"
@@ -1426,7 +1426,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:102
 #: tcms/testruns/templates/testruns/get.html:130
 msgid "Notify:"
-msgstr ""
+msgstr "Notifică:"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
@@ -1434,7 +1434,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:124
 msgid "Notify when:"
-msgstr ""
+msgstr "Anunță-mă când:"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "TestPlan is updated"
@@ -1504,7 +1504,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:71
 #: tcms/testruns/templates/testruns/search.html:72
 msgid "Running"
-msgstr ""
+msgstr "Rulează"
 
 #: tcms/testruns/templates/testruns/get.html:71
 msgid "Finished"
@@ -1570,7 +1570,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:530
 #: tcms/testruns/templates/testruns/get.html:561
 msgid "Cancel"
-msgstr ""
+msgstr "Anulează"
 
 #: tcms/testruns/templates/testruns/get.html:550
 msgid "Issue Tracker"
