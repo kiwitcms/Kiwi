@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 14:23\n"
+"PO-Revision-Date: 2021-04-15 14:34\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -431,7 +431,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/forms.py:40
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Un utilizator cu acest email există deja."
 
 #: tcms/kiwi_auth/forms.py:73
 #, python-format
@@ -444,7 +444,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:64
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Contul dvs. a fost creat, dar aveți nevoie de un administrator pentru a-l activa"
 
 #: tcms/kiwi_auth/views.py:69
 msgid "Following is the administrator list"
@@ -832,7 +832,7 @@ msgstr ""
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:511
 msgid "URL"
-msgstr ""
+msgstr "Adresa URL"
 
 #: tcms/templates/include/pagination.html:6
 msgid "Select"
@@ -1480,7 +1480,7 @@ msgstr ""
 
 #: tcms/testruns/models.py:169
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Statutul execuției testului"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
@@ -1616,27 +1616,27 @@ msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr ""
+msgstr "PROPUS"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr ""
+msgstr "DEZACTIVAT"
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "NECESITĂ_ACTUALIZARE"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr ""
+msgstr "INACTIV"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "RULEAZĂ"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "OPRIT"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
@@ -1648,7 +1648,7 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOCAT"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
