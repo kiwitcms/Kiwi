@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 16:34\n"
+"PO-Revision-Date: 2021-04-15 16:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1492,7 +1492,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
-msgstr ""
+msgstr "Comentează"
 
 #: tcms/testruns/templates/testruns/get.html:55
 #: tcms/testruns/templates/testruns/mutable.html:27
