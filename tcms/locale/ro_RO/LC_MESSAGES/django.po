@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-14 20:04\n"
+"PO-Revision-Date: 2021-04-15 14:23\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -384,7 +384,7 @@ msgstr ""
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
-msgstr ""
+msgstr "Planurile tale de testare"
 
 #: tcms/core/templates/dashboard.html:52
 msgid "TestPlan"
@@ -396,12 +396,12 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:67
 #: tcms/testplans/templates/testplans/search.html:115
 msgid "Type"
-msgstr ""
+msgstr "Tipul"
 
 #: tcms/core/templates/dashboard.html:55
 #: tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr ""
+msgstr "Execuții"
 
 #: tcms/core/templates/dashboard.html:76
 #, python-format
@@ -537,7 +537,7 @@ msgstr ""
 #: tcms/settings/common.py:321
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
-msgstr ""
+msgstr "Trenduri de execuții"
 
 #: tcms/settings/common.py:322
 msgid "TestCase health"
@@ -713,7 +713,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "Execuții eșuate"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
@@ -876,7 +876,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:13
 #: tcms/testruns/templates/testruns/get.html:517
 msgid "Name"
-msgstr ""
+msgstr "Nume"
 
 #: tcms/templates/include/tags_card.html:27
 #: tcms/testcases/templates/testcases/get.html:164
