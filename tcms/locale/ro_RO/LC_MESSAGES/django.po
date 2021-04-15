@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 14:44\n"
+"PO-Revision-Date: 2021-04-15 14:54\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -126,7 +126,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:531
 #: tcms/testruns/templates/testruns/mutable.html:108
 msgid "Save"
-msgstr ""
+msgstr "Salvează"
 
 #: tcms/bugs/templates/bugs/get.html:131
 msgid "Close"
@@ -149,7 +149,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:99
 msgid "Summary"
-msgstr ""
+msgstr "Rezumat"
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -175,7 +175,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/mutable.html:30
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "Username or email"
-msgstr ""
+msgstr "Nume de utilizator sau e-mail"
 
 #: tcms/bugs/templates/bugs/search.html:5
 msgid "Search bugs"
@@ -307,7 +307,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:383 tcms/testplans/views.py:162
 #: tcms/testruns/templates/testruns/get.html:251 tcms/testruns/views.py:175
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: tcms/bugs/views.py:68
 msgid "New bug"
@@ -423,11 +423,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
-msgstr ""
+msgstr "Informații personale"
 
 #: tcms/kiwi_auth/admin.py:140
 msgid "Permissions"
-msgstr ""
+msgstr "Permisiuni"
 
 #: tcms/kiwi_auth/forms.py:40
 msgid "A user with that email already exists."
@@ -456,7 +456,7 @@ msgstr "Această cheie de activare nu mai există în baza de date"
 
 #: tcms/kiwi_auth/views.py:118
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Această cheie de activare a expirat"
 
 #: tcms/kiwi_auth/views.py:130
 msgid "Your account has been activated successfully"
@@ -565,11 +565,11 @@ msgstr ""
 
 #: tcms/settings/common.py:350
 msgid "Report an Issue"
-msgstr ""
+msgstr "Raportează o problemă"
 
 #: tcms/settings/common.py:353
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Cereți ajutor pe StackOverflow"
 
 #: tcms/settings/common.py:357
 msgid "Donate €5 via Open Collective"
@@ -581,7 +581,7 @@ msgstr ""
 
 #: tcms/settings/common.py:360
 msgid "User Guide"
-msgstr ""
+msgstr "Ghidul utilizatorului"
 
 #: tcms/settings/common.py:361
 msgid "API Help"
@@ -827,7 +827,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:386
 #: tcms/testruns/templates/testruns/mutable.html:131
 msgid "Status"
-msgstr ""
+msgstr "Statutul"
 
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:511
@@ -1094,7 +1094,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:401
 #: tcms/testruns/templates/testruns/mutable.html:100
 msgid "Notes"
-msgstr ""
+msgstr "Notițe"
 
 #: tcms/testcases/templates/testcases/get.html:42
 #: tcms/testcases/templates/testcases/get.html:148
@@ -1140,7 +1140,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:369
 #: tcms/testruns/templates/testruns/mutable.html:132
 msgid "Category"
-msgstr ""
+msgstr "Categorie"
 
 #: tcms/testcases/templates/testcases/get.html:78
 #: tcms/testcases/templates/testcases/mutable.html:85
@@ -1155,7 +1155,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:365
 #: tcms/testruns/templates/testruns/mutable.html:133
 msgid "Priority"
-msgstr ""
+msgstr "Prioritate"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:112
@@ -1209,7 +1209,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:105
 #: tcms/testcases/templates/testcases/search.html:104
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: tcms/testcases/templates/testcases/mutable.html:149
 msgid "Notify"
@@ -1284,12 +1284,12 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/mutable.html:130
 msgid "Created on"
-msgstr ""
+msgstr "Creat pe"
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:442 tcms/testruns/views.py:162
 msgid "History"
-msgstr ""
+msgstr "Istorie"
 
 #: tcms/testcases/views.py:251
 msgid "TestCase cloning was successful"
@@ -1640,7 +1640,7 @@ msgstr "OPRIT"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "A TRECUT"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
