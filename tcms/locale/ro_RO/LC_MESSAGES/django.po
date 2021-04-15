@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 16:04\n"
+"PO-Revision-Date: 2021-04-15 16:13\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -573,7 +573,7 @@ msgstr "Cereți ajutor pe StackOverflow"
 
 #: tcms/settings/common.py:357
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Donează 5 Eur prin Open Collective"
 
 #: tcms/settings/common.py:359
 msgid "Administration Guide"
@@ -681,11 +681,11 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:20
 msgid "Order"
-msgstr ""
+msgstr "Comandă"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Ascending"
-msgstr ""
+msgstr "Crescător"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Descending"
@@ -1391,11 +1391,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:307
 msgid "More"
-msgstr ""
+msgstr "Mai mult"
 
 #: tcms/testplans/templates/testplans/get.html:309
 msgid "Inactive"
-msgstr ""
+msgstr "Inactiv"
 
 #: tcms/testplans/templates/testplans/get.html:443
 #: tcms/testruns/templates/testruns/get.html:478
@@ -1819,11 +1819,11 @@ msgstr ""
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "sau, continuă cu"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Informații de ordin juridic"
 
 #: tcms_tenants/admin.py:40 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
@@ -1888,11 +1888,11 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
-msgstr ""
+msgstr "Companie, echipă sau numele proiectului"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:29
 msgid "Schema"
-msgstr ""
+msgstr "Schema"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
