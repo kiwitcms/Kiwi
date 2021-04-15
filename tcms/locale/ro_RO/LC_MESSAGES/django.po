@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 16:13\n"
+"PO-Revision-Date: 2021-04-15 16:34\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -76,7 +76,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:28
 #: tcms/testruns/templates/testruns/search.html:101
 msgid "Product"
-msgstr ""
+msgstr "Produs"
 
 #: tcms/bugs/templates/bugs/get.html:62
 #: tcms/bugs/templates/bugs/mutable.html:42
@@ -93,7 +93,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:38
 #: tcms/testruns/templates/testruns/search.html:102
 msgid "Version"
-msgstr ""
+msgstr "Versiune"
 
 #: tcms/bugs/templates/bugs/get.html:67
 #: tcms/bugs/templates/bugs/mutable.html:60
@@ -199,7 +199,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:29
 msgid "After"
-msgstr ""
+msgstr "După"
 
 #: tcms/bugs/templates/bugs/search.html:38
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
@@ -226,7 +226,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:525
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: tcms/bugs/templates/bugs/search.html:38
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
@@ -253,7 +253,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:525
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "No"
-msgstr ""
+msgstr "Nu"
 
 #: tcms/bugs/templates/bugs/search.html:78
 #: tcms/bugs/templates/bugs/search.html:83
@@ -266,7 +266,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:62
 #: tcms/testruns/templates/testruns/search.html:68
 msgid "Username"
-msgstr ""
+msgstr "Nume utilizator"
 
 #: tcms/bugs/templates/bugs/search.html:90
 #: tcms/testcases/templates/testcases/search.html:128
@@ -376,7 +376,7 @@ msgstr ""
 
 #: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
 msgid "SEE ALL"
-msgstr ""
+msgstr "VEZI TOATE"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
@@ -803,7 +803,7 @@ msgstr "Proprietar"
 
 #: tcms/templates/include/attachments.html:16
 msgid "Date"
-msgstr ""
+msgstr "Dată"
 
 #: tcms/templates/include/attachments.html:31
 #: tcms/templates/include/bugs_table.html:4
@@ -844,7 +844,7 @@ msgstr ""
 
 #: tcms/templates/include/pagination.html:16
 msgid "Previous page"
-msgstr ""
+msgstr "Pagina anterioară"
 
 #: tcms/templates/include/pagination.html:20
 msgid "Current page"
@@ -905,25 +905,25 @@ msgstr ""
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
-msgstr ""
+msgstr "Profilul meu"
 
 #: tcms/templates/navbar.html:44
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Schimbă parola"
 
 #: tcms/templates/navbar.html:50
 msgid "Logout"
-msgstr ""
+msgstr "Deconectare"
 
 #: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
 msgid "Login"
-msgstr ""
+msgstr "Autentificare"
 
 #: tcms/templates/navbar.html:60
 #: tcms/templates/registration/registration_form.html:58
 msgid "Register"
-msgstr ""
+msgstr "Inregistrare"
 
 #: tcms/templates/navbar.html:68
 msgid "Help"
@@ -953,23 +953,23 @@ msgstr ""
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Parolă"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Uitat"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "parolă"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Logare"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Bun venit la Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
@@ -998,11 +998,11 @@ msgstr "acum"
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmă"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Te rugăm să introduci noua parolă de două ori pentru a putea verifica corect tastatura ta"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1010,24 +1010,24 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "E-mailul de resetare a parolei a fost trimis"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Resetează parola"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Resetare parolă Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Creează un cont nou"
 
 #: tcms/testcases/admin.py:26
 msgid "For more information about customizing test case statuses see\n"
@@ -1110,7 +1110,7 @@ msgstr "Notițe"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Author"
-msgstr ""
+msgstr "Autorul"
 
 #: tcms/testcases/templates/testcases/get.html:47
 #: tcms/testcases/templates/testcases/mutable.html:35
@@ -1400,12 +1400,12 @@ msgstr "Inactiv"
 #: tcms/testplans/templates/testplans/get.html:443
 #: tcms/testruns/templates/testruns/get.html:478
 msgid "No attachments"
-msgstr ""
+msgstr "Niciun atașament"
 
 #: tcms/testplans/templates/testplans/get.html:468
 #: tcms/testruns/templates/testruns/get.html:467
 msgid "Comments"
-msgstr ""
+msgstr "Comentarii"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
@@ -1447,7 +1447,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:146
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
-msgstr ""
+msgstr "Activ"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1612,7 +1612,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
-msgstr ""
+msgstr "Clona lui "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
