@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 15:54\n"
+"PO-Revision-Date: 2021-04-15 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -185,7 +185,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
-msgstr ""
+msgstr "Creat"
 
 #: tcms/bugs/templates/bugs/search.html:20
 #: tcms/telemetry/templates/telemetry/include/filters.html:63
@@ -419,7 +419,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
-msgstr ""
+msgstr "utilizatori"
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
@@ -665,7 +665,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutru"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
@@ -1383,7 +1383,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:304
 msgid "Advanced search"
-msgstr ""
+msgstr "Căutare avansată"
 
 #: tcms/testplans/templates/testplans/get.html:285
 msgid "Active test runs"
@@ -1508,7 +1508,7 @@ msgstr "Rulează"
 
 #: tcms/testruns/templates/testruns/get.html:71
 msgid "Finished"
-msgstr ""
+msgstr "Finalizat"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Finished at"
@@ -1565,7 +1565,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:523
 msgid "Is a defect"
-msgstr ""
+msgstr "Este un defect"
 
 #: tcms/testruns/templates/testruns/get.html:530
 #: tcms/testruns/templates/testruns/get.html:561
@@ -1771,7 +1771,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Abonează-te prin FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
@@ -1848,7 +1848,7 @@ msgstr ""
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Invita utilizatorii"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
@@ -1880,7 +1880,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -1908,7 +1908,7 @@ msgstr ""
 
 #: tcms_tenants/utils.py:190
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Invitație de a se alătura Kiwi TCMS"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
