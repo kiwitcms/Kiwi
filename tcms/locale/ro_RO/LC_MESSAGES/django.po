@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-15 16:53\n"
+"PO-Revision-Date: 2021-04-15 17:03\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -328,7 +328,7 @@ msgstr ""
 #: tcms/core/history.py:43
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "ACTUALIZARE: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:50
 #, python-format
@@ -337,7 +337,11 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Actualizat la %(history_date)s\n"
+"Actualizat de %(username)s\n\n"
+"%(diff)s\n\n"
+"Pentru mai multă informație:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
@@ -380,7 +384,7 @@ msgstr "VEZI TOATE"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Nu sunt sarcini in așteptare de aprobare asignate ție"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
@@ -388,7 +392,7 @@ msgstr "Planurile tale de testare"
 
 #: tcms/core/templates/dashboard.html:52
 msgid "TestPlan"
-msgstr ""
+msgstr "Plan de testare"
 
 #: tcms/core/templates/dashboard.html:54
 #: tcms/testcases/templates/testcases/get.html:149
@@ -411,11 +415,11 @@ msgstr ""
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Nu există niciun plan de testare care să vă aparţină"
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Această adresă de e-mail este deja folosită"
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
@@ -436,7 +440,7 @@ msgstr "Un utilizator cu acest email există deja."
 #: tcms/kiwi_auth/forms.py:73
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Noua ta confirmare a contului %s"
 
 #: tcms/kiwi_auth/views.py:59
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -476,15 +480,15 @@ msgstr ""
 
 #: tcms/settings/common.py:287
 msgid "DASHBOARD"
-msgstr ""
+msgstr "DASHBOARD"
 
 #: tcms/settings/common.py:289
 msgid "TESTING"
-msgstr ""
+msgstr "TESTARE"
 
 #: tcms/settings/common.py:291
 msgid "New Test Plan"
-msgstr ""
+msgstr "Plan de testare nou"
 
 #: tcms/settings/common.py:293 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
@@ -504,11 +508,11 @@ msgstr "CĂUTARE"
 
 #: tcms/settings/common.py:305
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Caută Test Plan-uri"
 
 #: tcms/settings/common.py:306
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Caută Test Run"
 
 #: tcms/settings/common.py:307
 msgid "Search Test Cases"
@@ -594,7 +598,7 @@ msgstr "Un utilizator nou în așteptarea aprobării"
 #: tcms/signals.py:161
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NOU: TestRun #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:222
 #, python-format
@@ -1293,11 +1297,11 @@ msgstr "Istorie"
 
 #: tcms/testcases/views.py:251
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Clonarea la TestCase a avut succes"
 
 #: tcms/testcases/views.py:278
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Este necesar cel puțin un TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1656,7 +1660,7 @@ msgstr "EROARE"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "RENUNȚAT"
 
 #: tcms_github_app/admin.py:122
 #, python-format
