@@ -1,17 +1,17 @@
 /*
     Used to update a select when something else changes.
 */
-function updateSelect(data, selector, id_attr, value_attr) {
+function updateSelect(data, selector, id_attr, value_attr, group_attr) {
+	console.log('data', data);
     var _select_tag = $(selector)[0];
     var new_options = '';
 
-    // in some cases, e.g. TestRun search, the 1st <option> element is ---
-    // which must always be there to indicate nothing selected
-    if (_select_tag.options.length) {
-        new_options = _select_tag.options[0].outerHTML;
-    }
-
+	currentGroup = '';
     data.forEach(function(element) {
+		if (currentGroup !== element[group_attr]) {
+			new_options += '<optgroup label="' + element[group_attr] + '">';
+			currentGroup = element[group_attr];
+		}
         new_options += '<option value="' + element[id_attr] + '">' + element[value_attr] + '</option>';
     });
 
@@ -400,7 +400,7 @@ function arrayToDict(arr) {
 
 function updateTestPlanSelectFromProduct(callback = () => {}) {
     const updateCallback = (data = []) => {
-        updateSelect(data, '#id_test_plan', 'id', 'name');
+        updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name');
         callback();
     };
 
