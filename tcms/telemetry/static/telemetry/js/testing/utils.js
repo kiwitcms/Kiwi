@@ -1,6 +1,6 @@
 function loadInitialProduct(callback = () => {}) {
     jsonRPC('Product.filter', {}, data => {
-        updateSelect(data, '#id_product', 'id', 'name');
+        updateSelect(data, '#id_product', 'id', 'name', null);
         callback();
     });
 }

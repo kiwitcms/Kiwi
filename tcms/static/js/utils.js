@@ -2,13 +2,12 @@
     Used to update a select when something else changes.
 */
 function updateSelect(data, selector, id_attr, value_attr, group_attr) {
-	console.log('data', data);
     var _select_tag = $(selector)[0];
     var new_options = '';
 
 	currentGroup = '';
     data.forEach(function(element) {
-		if (currentGroup !== element[group_attr]) {
+		if (currentGroup !== element[group_attr] && group_attr != null) {
 			new_options += '<optgroup label="' + element[group_attr] + '">';
 			currentGroup = element[group_attr];
 		}

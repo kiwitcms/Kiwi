@@ -41,7 +41,6 @@ function reloadCharts() {
         drawAutomatedBar(result.count);
         drawPrioritiesChart(result.priorities);
         drawCategoriesChart(result.categories);
-		console.log(result)
     }, true);
 }
 
