@@ -404,10 +404,10 @@ function updateTestPlanSelectFromProduct(callback = () => {}) {
         callback();
     };
 
-    const productId = $('#id_product').val();
-    if (!productId) {
+    const productIds = $('#id_product').val();
+    if (!productIds.length) {
         updateCallback();
     } else {
-        jsonRPC('TestPlan.filter', {product: productId}, updateCallback);
+        jsonRPC('TestPlan.filter', {product__in: productIds}, updateCallback);
     }
 }
