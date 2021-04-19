@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-19 10:53\n"
+"PO-Revision-Date: 2021-04-19 11:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -299,7 +299,7 @@ msgstr "Editează"
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:143
 #: tcms/testplans/views.py:154 tcms/testruns/views.py:167
 msgid "Object permissions"
-msgstr ""
+msgstr "Permisiuni obiect"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -351,7 +351,7 @@ msgstr "Adresa URL de bază nu este configurat! Vezi documentația <a href=\"%(d
 #: tcms/core/middleware.py:51
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "Aveți %(unapplied_migration_count)s migrări neaplicate. Consultați <a href=\"%(doc_url)s\">documentația</a>"
 
 #: tcms/core/templates/dashboard.html:3
 msgid "Dashboard"
@@ -681,7 +681,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Include child TPs"
-msgstr ""
+msgstr "Include TPs pentru copii"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:20
 msgid "Order"
@@ -693,7 +693,7 @@ msgstr "Crescător"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Descending"
-msgstr ""
+msgstr "Descrescător"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
@@ -840,7 +840,7 @@ msgstr "Adresa URL"
 
 #: tcms/templates/include/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Selectați"
 
 #: tcms/templates/include/pagination.html:13
 msgid "First page"
@@ -1037,11 +1037,13 @@ msgstr "Creează un cont nou"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Pentru mai multă informaţie despre personalizarea proceselor de testare vezi\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        documentaţia</a>!"
 
 #: tcms/testcases/admin.py:46
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "1 stare confirmată & 1 neconfirmată necesară!"
 
 #: tcms/testcases/forms.py:42
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1065,11 +1067,11 @@ msgstr ""
 
 #: tcms/testcases/models.py:20
 msgid "Test case status"
-msgstr ""
+msgstr "Statutul procesului de test"
 
 #: tcms/testcases/models.py:21
 msgid "Test case statuses"
-msgstr ""
+msgstr "Statutul procesului de test"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1326,25 +1328,25 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "Nume utilizator, e-mail sau ID:"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "Nici o linie selectată! Vă rugăm să selectaţi cel puţin unul!"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:23
 msgid "Are you sure?"
-msgstr ""
+msgstr "Sunteţi sigur(-ă)?"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "Nu se poate crea TestRun cu teste neconfirmate"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Eroare la adăugarea testelor"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1356,7 +1358,7 @@ msgstr "Tipul planului"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Procese de test"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1373,7 +1375,7 @@ msgstr "Evaluator"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "Sortează cheile"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1382,7 +1384,7 @@ msgstr "Re-ordonarea proceselor"
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:294
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Caută și adaugă cazuri de test"
 
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:304
@@ -1480,7 +1482,7 @@ msgstr ""
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "1 negativ, 1 status neutru & 1 pozitiv necesar!"
 
 #: tcms/testruns/models.py:169
 msgid "Test execution statuses"
@@ -1488,11 +1490,11 @@ msgstr "Statutul execuției testului"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "Testele neconfirmate nu au fost adăugate"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Tipul 0 sau 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1520,17 +1522,17 @@ msgstr "Finalizat la"
 
 #: tcms/testruns/templates/testruns/get.html:195
 msgid "Update text version"
-msgstr ""
+msgstr "Actualizare versiune text"
 
 #: tcms/testruns/templates/testruns/get.html:230
 msgid "Add comment"
-msgstr ""
+msgstr "Adăugare comentariu"
 
 #: tcms/testruns/templates/testruns/get.html:241
 #: tcms/testruns/templates/testruns/get.html:337
 #: tcms/testruns/templates/testruns/get.html:506
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Adaugă hiperlink"
 
 #: tcms/testruns/templates/testruns/get.html:281
 #: tcms/testruns/templates/testruns/get.html:377
@@ -1539,7 +1541,7 @@ msgstr "Testat de"
 
 #: tcms/testruns/templates/testruns/get.html:312
 msgid "records"
-msgstr ""
+msgstr "înregistrări"
 
 #: tcms/testruns/templates/testruns/get.html:338
 #: tcms/testruns/templates/testruns/get.html:545
@@ -1549,11 +1551,11 @@ msgstr "Raportează o eroarea"
 
 #: tcms/testruns/templates/testruns/get.html:345
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "Testul nu face parte din planul părinte de testare"
 
 #: tcms/testruns/templates/testruns/get.html:373
 msgid "Assigned to"
-msgstr ""
+msgstr "Asignat la"
 
 #: tcms/testruns/templates/testruns/get.html:406
 msgid "Run Date"
@@ -1561,7 +1563,7 @@ msgstr "Data Rulării"
 
 #: tcms/testruns/templates/testruns/get.html:418
 msgid "Text version"
-msgstr ""
+msgstr "Versiune text"
 
 #: tcms/testruns/templates/testruns/get.html:423
 msgid "Bugs and hyperlinks"
@@ -1578,7 +1580,7 @@ msgstr "Anulează"
 
 #: tcms/testruns/templates/testruns/get.html:550
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Monitor de probleme"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1666,7 +1668,8 @@ msgstr "RENUNȚAT"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr ""
+msgstr "Pentru configurare suplimentară, a se vedea\n"
+"<a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1674,7 +1677,7 @@ msgstr ""
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Resincronizare"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -1688,12 +1691,12 @@ msgstr ""
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s a fost importat din GitHub"
 
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s există deja"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -1717,11 +1720,11 @@ msgstr ""
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "Nu se poate găsi instalarea GitHub App pentru locatarul \"%s\""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Mai multe instalații GitHub App detectate!"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1771,7 +1774,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "Nu deții niciun chiriaș"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
@@ -1779,26 +1782,26 @@ msgstr "Abonează-te prin FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
-msgstr ""
+msgstr "Istoricul tranzacțiilor"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "Expeditor"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Vendor"
-msgstr ""
+msgstr "Distribuitor"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "Recepționat pe"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Avertizare chiriașă privat"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -1816,15 +1819,15 @@ msgstr "Sunteți pe cale să creați un chiriaș privat pentru TCMS Kiwi.\n"
 
 #: tcms_github_marketplace/views.py:330
 msgid "mo"
-msgstr ""
+msgstr "lună"
 
 #: tcms_github_marketplace/views.py:333
 msgid "yr"
-msgstr ""
+msgstr "yr"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "Adresa de e-mail este necesară"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
@@ -1836,7 +1839,7 @@ msgstr "Informații de ordin juridic"
 
 #: tcms_tenants/admin.py:40 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "Neautorizat"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
@@ -1844,7 +1847,7 @@ msgstr "Nume utilizator, e-mail sau ID utilizator existent"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
-msgstr ""
+msgstr "Nume complet"
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
@@ -1852,7 +1855,7 @@ msgstr "Text invalid"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Crează"
 
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
@@ -1861,15 +1864,15 @@ msgstr "Invita utilizatorii"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
-msgstr ""
+msgstr "Utilizatori autorizați"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Neplătit"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "Chiriașul expiră în mai puțin de 7 zile"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
