@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-19 11:53\n"
+"PO-Revision-Date: 2021-04-19 12:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -687,7 +687,7 @@ msgstr "Negativ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Starea de testare Matrice"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Include child TPs"
@@ -707,11 +707,11 @@ msgstr "Descrescător"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
-msgstr ""
+msgstr "Procese de test"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test run"
-msgstr ""
+msgstr "Test run"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase Health"
@@ -1358,19 +1358,19 @@ msgstr "Clonează Planul de Testare"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Clonează TC-urile"
 
 #: tcms/testplans/templates/testplans/clone.html:58
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Clonați sau conectați TC-urile existente la noul TP"
 
 #: tcms/testplans/templates/testplans/clone.html:62
 msgid "Parent TP"
-msgstr ""
+msgstr "Părinte TP"
 
 #: tcms/testplans/templates/testplans/clone.html:66
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Setează sursa TP ca părinte al noului TP"
 
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
