@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-19 11:23\n"
+"PO-Revision-Date: 2021-04-19 11:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -384,7 +384,8 @@ msgstr "Început la"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s TestRun(s) sau Testcase (cazuri) atribuite trebuie să fie executate.\n"
+"Aici sunt cele mai recente %(count)s."
 
 #: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
 msgid "SEE ALL"
@@ -419,7 +420,8 @@ msgstr "Execuții"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Gestionați %(total_count)s TestPlan(uri), %(disabled_count)s sunt dezactivate.\n"
+"Aici sunt ultimele %(count)s."
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
@@ -754,7 +756,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "Bine ați venit %(user)s,\n"
+"vă mulțumim că v-ați înscris pentru contul %(site_domain)s!\n\n"
+"Pentru a vă activa contul, faceți clic pe acest link:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -780,7 +785,7 @@ msgstr "Eroarea %(pk)s ți-a fost atribuită.\n\n"
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr ""
+msgstr "Cazul de test a fost șters de %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -797,7 +802,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "TestRun %(pk)s a fost creat sau actualizat pentru tine.\n\n"
+"### Link-uri ###\n"
+"Test run: %(run_url)s\n"
+"Plan de test: %(plan_url)s\n\n"
+"### Informații de bază rulate ###\n"
+"Sumar: %(summary)s\n\n"
+"Managed: %(manager)s.\n"
+"Testul implicit: %(default_tester)s.\n\n"
+"Produs: %(product)s\n"
+"Versiune produs: %(version)s\n"
+"Build: %(build)s\n\n"
+"Note:\n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -805,7 +822,10 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Stimate Administrator,\n"
+"cineva tocmai a înregistrat un cont cu numele de utilizator %(username)s la instanța dvs.\n"
+"Kiwi TCMS și așteaptă aprobarea dvs.!\n\n"
+"Mergi la %(user_url)s pentru a activa contul!"
 
 #: tcms/templates/include/attachments.html:7
 #: tcms/testplans/templates/testplans/get.html:436
@@ -1074,7 +1094,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item"
-msgstr ""
+msgstr "**Scenariu**: ... ce comportament va fi testat ...\n"
+"  **Oferit** ... condiții. .\n"
+"  **Când** ... actiuni ...\n"
+"  **După** ... rezultate asteptate. .\n\n"
+"*Acţiuni*:\n\n"
+"1. item\n"
+"2. item\n"
+"3. item\n\n"
+"*Rezultate preconizate*:\n\n"
+"1. item\n"
+"2. item\n"
+"3. item"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1091,15 +1122,15 @@ msgstr "Statutul procesului de test"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr ""
+msgstr "Clonează TestCase"
 
 #: tcms/testcases/templates/testcases/clone.html:14
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Adaugă un nou TC în TP"
 
 #: tcms/testcases/templates/testcases/clone.html:29
 msgid "Selected TC"
-msgstr ""
+msgstr "TC selectat"
 
 #: tcms/testcases/templates/testcases/clone.html:44 tcms/testcases/views.py:134
 #: tcms/testplans/templates/testplans/clone.html:72
@@ -1616,7 +1647,8 @@ msgstr "TestCase(uri) selectate:"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s din testele pre-selectate nu este CONFIRMATE și nu va fi clonat!\n"
+"Vezi planul de testare pentru mai multe detalii!"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
