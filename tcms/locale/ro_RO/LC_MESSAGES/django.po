@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-19 10:45\n"
+"PO-Revision-Date: 2021-04-19 10:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -468,7 +468,7 @@ msgstr "Contul dvs. a fost actualizat cu succes"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "Builds"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -496,7 +496,7 @@ msgstr "Proces de testare nou"
 
 #: tcms/settings/common.py:295
 msgid "New Test Run"
-msgstr ""
+msgstr "TestRun nou"
 
 #: tcms/settings/common.py:297
 msgid "New Bug"
@@ -1807,7 +1807,12 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Sunteți pe cale să creați un chiriaș privat pentru TCMS Kiwi.\n"
+"Va dura câteva minute până când schema ta DB va fi gata!\n"
+"După ce faceți clic pe butonul „Salvați” <strong>nu</strong> închideți sau reîmprospătați această pagină!<br>\n"
+"Vei fi redirecționat către noul tău locatar atunci când procesul de creare este finalizat!\n"
+"Dacă vedeți o pagină cu eroarea internă a serverului, vă rugăm să contactați\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> imediat!"
 
 #: tcms_github_marketplace/views.py:330
 msgid "mo"
@@ -1835,7 +1840,7 @@ msgstr ""
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Nume utilizator, e-mail sau ID utilizator existent"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -1843,7 +1848,7 @@ msgstr ""
 
 #: tcms_tenants/forms.py:25
 msgid "Invalid string"
-msgstr ""
+msgstr "Text invalid"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -1873,14 +1878,20 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "Stimate tester,\n"
+"%(invited_by)s te-a invitat să te alături locatarului la Kiwi TCMS la adresa\n"
+"%(tenant_url)s\n\n"
+"În cazul în care nu te-ai logat niciodată înainte de a crea un cont pentru tine\n"
+"în mod automat. Va trebui să îți resetezi parola înainte de a te autentifica!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Locatarul tău Kiwi TCMS a fost creat la:\n"
+"%(tenant_url)s\n\n"
+"Dacă ai probleme, te rugăm să contactezi serviciul de asistență!"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
@@ -1888,7 +1899,7 @@ msgstr "Email"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "Chiriaş nou"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:22
 msgid "Company, team or project name"
@@ -1900,15 +1911,15 @@ msgstr "Schema"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:41
 msgid "Validation pattern"
-msgstr ""
+msgstr "Model de validare"
 
 #: tcms_tenants/utils.py:45
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Acest nume este deja folosit"
 
 #: tcms_tenants/utils.py:105
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "A fost creat un nou chiriaş Kiwi TCMS"
 
 #: tcms_tenants/utils.py:190
 msgid "Invitation to join Kiwi TCMS"
@@ -1916,5 +1927,5 @@ msgstr "Invitație de a se alătura Kiwi TCMS"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Doar utilizatorii care sunt autorizați pentru această locatar pot invita alte persoane"
 
