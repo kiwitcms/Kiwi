@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-09 15:57+0000\n"
-"PO-Revision-Date: 2021-04-19 10:37\n"
+"PO-Revision-Date: 2021-04-19 10:45\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -53,7 +53,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:220
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Assignee"
-msgstr ""
+msgstr "Responsabil"
 
 #: tcms/bugs/templates/bugs/get.html:57
 #: tcms/bugs/templates/bugs/mutable.html:27
@@ -472,7 +472,7 @@ msgstr ""
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Activează raportarea la acest Detector de Probleme prin configurarea base_url!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -626,7 +626,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:43
 msgid "Test Plan"
-msgstr ""
+msgstr "Planul de testare"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -901,11 +901,11 @@ msgstr "Vizitator de Bun venit"
 
 #: tcms/templates/navbar.html:30
 msgid "My Test Runs"
-msgstr ""
+msgstr "Rulările mele de test"
 
 #: tcms/templates/navbar.html:34
 msgid "My Test Plans"
-msgstr ""
+msgstr "Planurile mele de testare"
 
 #: tcms/templates/navbar.html:40
 msgid "My profile"
@@ -977,11 +977,11 @@ msgstr "Bun venit la Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Vă rugăm să vă autentificați pentru a începe"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "sau"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
@@ -1010,7 +1010,7 @@ msgstr "Te rugăm să introduci noua parolă de două ori pentru a putea verific
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "solicită o nouă parolă"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1221,15 +1221,15 @@ msgstr "Notificare"
 
 #: tcms/testcases/templates/testcases/mutable.html:160
 msgid "Manager of runs"
-msgstr ""
+msgstr "Manager de execuții"
 
 #: tcms/testcases/templates/testcases/mutable.html:167
 msgid "Asignees"
-msgstr ""
+msgstr "Persoanele responsabile"
 
 #: tcms/testcases/templates/testcases/mutable.html:183
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Testerul implicit al rulărilor"
 
 #: tcms/testcases/templates/testcases/mutable.html:192
 msgid "Notify when"
@@ -1237,19 +1237,19 @@ msgstr "Anunță-mă când"
 
 #: tcms/testcases/templates/testcases/mutable.html:196
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Cazurile de testare sunt actualizate"
 
 #: tcms/testcases/templates/testcases/mutable.html:203
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Cazul de testare a fost șters"
 
 #: tcms/testcases/templates/testcases/mutable.html:212
 msgid "CC to"
-msgstr ""
+msgstr "CC la"
 
 #: tcms/testcases/templates/testcases/mutable.html:217
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Adrese de e-mail separate prin virgulă. Un e-mail de notificare va fi trimis la fiecare adresă de e-mail din lista CC."
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -1257,7 +1257,7 @@ msgstr "Caută Proces de Testare"
 
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
-msgstr ""
+msgstr "Rezumatul cazului de testare"
 
 #: tcms/testcases/templates/testcases/search.html:46
 msgid "Both"
@@ -1305,7 +1305,7 @@ msgstr "Este necesar cel puțin un TestCase"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Clonează Planul de Testare"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
@@ -1368,7 +1368,7 @@ msgstr "TestRun nou"
 #: tcms/testplans/templates/testplans/get.html:493
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:10
 msgid "Reviewer"
-msgstr ""
+msgstr "Evaluator"
 
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
@@ -1377,7 +1377,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
-msgstr ""
+msgstr "Re-ordonarea proceselor"
 
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:294
@@ -1391,7 +1391,7 @@ msgstr "Căutare avansată"
 
 #: tcms/testplans/templates/testplans/get.html:285
 msgid "Active test runs"
-msgstr ""
+msgstr "Testele active rulează"
 
 #: tcms/testplans/templates/testplans/get.html:307
 msgid "More"
@@ -1516,7 +1516,7 @@ msgstr "Finalizat"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Finished at"
-msgstr ""
+msgstr "Finalizat la"
 
 #: tcms/testruns/templates/testruns/get.html:195
 msgid "Update text version"
@@ -1535,7 +1535,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:281
 #: tcms/testruns/templates/testruns/get.html:377
 msgid "Tested by"
-msgstr ""
+msgstr "Testat de"
 
 #: tcms/testruns/templates/testruns/get.html:312
 msgid "records"
