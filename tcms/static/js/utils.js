@@ -7,7 +7,7 @@ function updateSelect(data, selector, id_attr, value_attr, group_attr) {
 
 	currentGroup = '';
     data.forEach(function(element) {
-		if (currentGroup !== element[group_attr] && group_attr != null) {
+		if (group_attr != null && currentGroup !== element[group_attr]) {
 			new_options += '<optgroup label="' + element[group_attr] + '">';
 			currentGroup = element[group_attr];
 		}
