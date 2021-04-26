@@ -23,7 +23,7 @@ from tcms.tests.factories import (
 
 
 class TestExecutionGetComments(APITestCase):
-    """ Test TestExecution.get_comments """
+    """Test TestExecution.get_comments"""
 
     def _fixture_setup(self):
         super()._fixture_setup()

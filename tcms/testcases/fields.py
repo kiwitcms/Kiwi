@@ -3,7 +3,7 @@ from django.forms import EmailField, ValidationError
 
 
 class MultipleEmailField(EmailField):
-    """ Holding mulitple email addresses """
+    """Holding mulitple email addresses"""
 
     delimiter = ","
 

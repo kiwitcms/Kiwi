@@ -341,7 +341,7 @@ class TestCaseEmailSettings(models.Model):
         self.save()
 
     def get_cc_list(self):
-        """ Return the whole CC list """
+        """Return the whole CC list"""
         if not self.cc_list:
             return []
         return self.cc_list.split(MultipleEmailField.delimiter)
