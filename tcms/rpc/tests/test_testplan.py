@@ -221,7 +221,7 @@ class TestUpdatePermission(APIPermissionsTestCase):
 
 
 class TestRemoveCase(APITestCase):
-    """ Test the XML-RPC method TestPlan.remove_case() """
+    """Test the XML-RPC method TestPlan.remove_case()"""
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -247,7 +247,7 @@ class TestRemoveCase(APITestCase):
 
 
 class TestAddCase(APITestCase):
-    """ Test the XML-RPC method TestPlan.add_case() """
+    """Test the XML-RPC method TestPlan.add_case()"""
 
     def _fixture_setup(self):
         super()._fixture_setup()

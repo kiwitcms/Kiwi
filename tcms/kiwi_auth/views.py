@@ -39,7 +39,7 @@ class Register(View):  # pylint: disable=missing-permission-required
     success_url = reverse_lazy("core-views-index")
 
     def post(self, request):
-        """ Post request handler. """
+        """Post request handler."""
         form = self.form_class(data=request.POST, files=request.FILES)
         if not form.is_valid():
             return render(request, self.template_name, {"form": form})
@@ -75,21 +75,21 @@ class Register(View):  # pylint: disable=missing-permission-required
 
     @staticmethod
     def show_messages_with_site_admins_emails_as_links(request):
-        """ Show messages with site admins emails as links. """
+        """Show messages with site admins emails as links."""
         for name, email in settings.ADMINS:
             mailto = '<a href="mailto:{}">{}</a>'.format(email, name)
             messages.add_message(request, messages.WARNING, mailto)
 
     @staticmethod
     def show_messages_with_super_user_emails_as_links(request):
-        """ Show messages with super users emails as links. """
+        """Show messages with super users emails as links."""
         for user in User.objects.filter(is_superuser=True):
             email_display_name = user.get_full_name() or user.username
             mailto = '<a href="mailto:{}">{}</a>'.format(user.email, email_display_name)
             messages.add_message(request, messages.INFO, mailto)
 
     def get(self, request):
-        """ Get request handler. """
+        """Get request handler."""
         return render(request, self.template_name, {"form": self.form_class()})
 
 
