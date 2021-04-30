@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-27 19:27+0000\n"
-"PO-Revision-Date: 2021-04-30 05:53\n"
+"POT-Creation-Date: 2021-04-30 07:41+0000\n"
+"PO-Revision-Date: 2021-04-30 07:44\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -934,20 +934,19 @@ msgid "Add"
 msgstr "Hozzáad"
 
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
-#: tcms/templates/initdb.html:31
+#: tcms/templates/initdb.html:28
 msgid "Initialize database"
 msgstr "Adatbázis inicializálása"
 
 #: tcms/templates/initdb.html:19
-msgid "\n"
-"                        Your database has not been initialized yet.\n"
-"                        Click the button below to initialize it!\n"
-"                        <br><br>\n"
-"                        WARNING: this operation will take a while! This page will redirect when done.\n"
-"                        "
+msgid "Your database has not been initialized yet. Click the button below to initialize it!"
 msgstr ""
 
-#: tcms/templates/initdb.html:29
+#: tcms/templates/initdb.html:21
+msgid "WARNING: this operation will take a while! This page will redirect when done."
+msgstr ""
+
+#: tcms/templates/initdb.html:26
 msgid "Please wait"
 msgstr ""
 
