@@ -16,12 +16,9 @@
                             {% trans "Initialize database" %}
                         </span>
                         <br>
-                        {% blocktrans %}
-                        Your database has not been initialized yet.
-                        Click the button below to initialize it!
+                        {% trans "Your database has not been initialized yet. Click the button below to initialize it!" %}
                         <br><br>
-                        WARNING: this operation will take a while! This page will redirect when done.
-                        {% endblocktrans %}
+                        {% trans "WARNING: this operation will take a while! This page will redirect when done." %}
                     <form action="{% url 'init-db' %}" method="post">
                         {% csrf_token %}
                         <br>
