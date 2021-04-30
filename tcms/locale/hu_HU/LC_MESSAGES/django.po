@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-27 19:27+0000\n"
-"PO-Revision-Date: 2021-04-27 20:03\n"
+"PO-Revision-Date: 2021-04-30 05:53\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -936,7 +936,7 @@ msgstr "Hozzáad"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:31
 msgid "Initialize database"
-msgstr ""
+msgstr "Adatbázis inicializálása"
 
 #: tcms/templates/initdb.html:19
 msgid "\n"
