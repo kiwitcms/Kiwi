@@ -47,6 +47,11 @@ if DATABASES["default"]["ENGINE"].find("mysql") > -1:
     )
 
 
+# New setting since Django 3.2, used internally
+# DO NOT CHANGE
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+
 # Administrators error report email settings
 ADMINS = [
     # ('Your Name', 'your_email@example.com'),
