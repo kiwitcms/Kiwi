@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-04-30 07:44\n"
+"PO-Revision-Date: 2021-05-01 05:12\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -937,19 +937,19 @@ msgstr "Ajouter"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "Initialiser la base de données"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Votre base de données n'a pas encore été initialisée. Cliquez sur le bouton ci-dessous pour l'initialiser !"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "ATTENTION : cette opération prendra un certain temps ! Cette page sera redirigée une fois terminée."
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Veuillez patienter"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1236,15 +1236,15 @@ msgstr "Priorité"
 
 #: tcms/testcases/templates/testcases/get.html:87
 msgid "Setup duration"
-msgstr ""
+msgstr "Durée de la configuration"
 
 #: tcms/testcases/templates/testcases/get.html:92
 msgid "Testing duration"
-msgstr ""
+msgstr "Durée du test"
 
 #: tcms/testcases/templates/testcases/get.html:97
 msgid "Expected duration"
-msgstr ""
+msgstr "Durée attendue"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:112
@@ -1596,17 +1596,17 @@ msgstr "Responsable"
 #: tcms/testruns/templates/testruns/mutable.html:100
 #: tcms/testruns/templates/testruns/search.html:130
 msgid "Planned start"
-msgstr ""
+msgstr "Début prévu"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Start"
-msgstr ""
+msgstr "Début"
 
 #: tcms/testruns/templates/testruns/get.html:88
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "Arrêt prévu"
 
 #: tcms/testruns/templates/testruns/get.html:93
 msgid "Finished at"
@@ -1614,7 +1614,7 @@ msgstr "Fini à"
 
 #: tcms/testruns/templates/testruns/get.html:99
 msgid "Stop"
-msgstr ""
+msgstr "Arrêt"
 
 #: tcms/testruns/templates/testruns/get.html:210
 msgid "Update text version"
@@ -1719,11 +1719,11 @@ msgstr "En cours"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "Date de début "
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "Date de fin"
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
