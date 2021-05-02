@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-05-02 23:02\n"
+"PO-Revision-Date: 2021-05-02 23:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1596,17 +1596,17 @@ msgstr "マネージャー"
 #: tcms/testruns/templates/testruns/mutable.html:100
 #: tcms/testruns/templates/testruns/search.html:130
 msgid "Planned start"
-msgstr ""
+msgstr "計画開始日"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Start"
-msgstr ""
+msgstr "開始"
 
 #: tcms/testruns/templates/testruns/get.html:88
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "計画終了日"
 
 #: tcms/testruns/templates/testruns/get.html:93
 msgid "Finished at"
@@ -1614,7 +1614,7 @@ msgstr "完了"
 
 #: tcms/testruns/templates/testruns/get.html:99
 msgid "Stop"
-msgstr ""
+msgstr "終了"
 
 #: tcms/testruns/templates/testruns/get.html:210
 msgid "Update text version"
@@ -1719,11 +1719,11 @@ msgstr "実行中"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "開始日"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "終了日"
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
@@ -1887,7 +1887,7 @@ msgstr "テナントを所有していません"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "FastSpring 経由で購読"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
@@ -1952,7 +1952,7 @@ msgstr "未認証"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "既存のユーザー名、メールアドレス、またはユーザーID"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -1969,7 +1969,7 @@ msgstr "作成する"
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "ユーザーを招待"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
@@ -1990,7 +1990,10 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "%(invited_by)s が\n"
+"%(tenant_url)sの Kiwi TCMS テナントに招待しました。\n\n"
+"アカウントが自動的に作成される前にログインしたことがない場合は、\n"
+"ログインする前にパスワードをリセットする必要があります！"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2003,7 +2006,7 @@ msgstr "Kiwi TCMS テナントが作成されました:\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "メールアドレス"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2035,5 +2038,5 @@ msgstr "Kiwi TCMS への招待"
 
 #: tcms_tenants/views.py:92
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "このテナントの許可を得たユーザーのみが他のユーザーを招待できます"
 
