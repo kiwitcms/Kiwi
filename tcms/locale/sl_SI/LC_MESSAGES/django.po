@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-04-30 07:44\n"
+"PO-Revision-Date: 2021-05-03 09:44\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -936,15 +936,15 @@ msgstr "Dodaj"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "Inicializacija baze podatkov"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Baza podatkov še ni bila inicializirana. Postopek lahko pričnete s klikom na spodnji gumb!"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "OPOZORILO: izvajanje lahko traja dalj časa! Po koncu izvajanja vas bo stran samodejno preusmerila."
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
