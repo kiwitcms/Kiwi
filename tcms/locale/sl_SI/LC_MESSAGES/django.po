@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-05-03 09:44\n"
+"PO-Revision-Date: 2021-05-03 09:59\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -948,7 +948,7 @@ msgstr "OPOZORILO: izvajanje lahko traja dalj časa! Po koncu izvajanja vas bo s
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Prosimo, počakajte"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1235,15 +1235,15 @@ msgstr "Prioriteta"
 
 #: tcms/testcases/templates/testcases/get.html:87
 msgid "Setup duration"
-msgstr ""
+msgstr "Trajanje priprave"
 
 #: tcms/testcases/templates/testcases/get.html:92
 msgid "Testing duration"
-msgstr ""
+msgstr "Trajanje testiranja"
 
 #: tcms/testcases/templates/testcases/get.html:97
 msgid "Expected duration"
-msgstr ""
+msgstr "Pričakovano trajanje"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:112
@@ -1595,17 +1595,17 @@ msgstr "Vodja"
 #: tcms/testruns/templates/testruns/mutable.html:100
 #: tcms/testruns/templates/testruns/search.html:130
 msgid "Planned start"
-msgstr ""
+msgstr "Pričakovan pričetek"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Start"
-msgstr ""
+msgstr "Začni"
 
 #: tcms/testruns/templates/testruns/get.html:88
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "Pričakovan konec"
 
 #: tcms/testruns/templates/testruns/get.html:93
 msgid "Finished at"
@@ -1613,7 +1613,7 @@ msgstr "Končano ob"
 
 #: tcms/testruns/templates/testruns/get.html:99
 msgid "Stop"
-msgstr ""
+msgstr "Ustavi"
 
 #: tcms/testruns/templates/testruns/get.html:210
 msgid "Update text version"
@@ -1718,11 +1718,11 @@ msgstr "V teku"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "Datum začetka"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "Datum konca"
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
