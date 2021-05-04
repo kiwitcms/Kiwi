@@ -38,7 +38,7 @@ rlJournalStart
     rlPhaseStartCleanup "[PostgreSQL] Cleanup"
         rlRun -t -c "docker-compose -f docker-compose.postgres down"
 
-        if [ -n "$TRAVIS" ]; then
+        if [ -n "$ImageOS" ]; then
             rlRun -t -c "docker volume rm kiwi_db_data"
         fi
     rlPhaseEnd
@@ -75,6 +75,9 @@ rlJournalStart
 
     rlPhaseStartCleanup
         rlRun -t -c "docker-compose down"
+        if [ -n "$ImageOS" ]; then
+            rlRun -t -c "docker volume rm kiwi_db_data"
+        fi
     rlPhaseEnd
 rlJournalEnd
 
