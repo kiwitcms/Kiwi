@@ -40,7 +40,7 @@ $(which python) setup.py bdist_wheel >/dev/null
 set +e
 
 # we avoid installing twine inside buildroot b/c we're building
-# for release then. However twine is available locally and inside Travis CI
+# for release then. However twine is available locally and inside CI
 if [ -n "$(which twine)" ]; then
     # check rst formatting of README before building the package
     echo "..... Check rst formatting for PyPI"

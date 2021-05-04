@@ -12,7 +12,7 @@ assert_up_and_running() {
 rlJournalStart
     rlPhaseStartSetup
         # wait for tear-down from previous script b/c
-        # in Travis CI subsequent tests can't find the db host
+        # in CI subsequent tests can't find the db host
         sleep 5
         rlRun -t -c "docker-compose up -d"
         sleep 10
@@ -30,6 +30,9 @@ rlJournalStart
 
     rlPhaseStartCleanup
         rlRun -t -c "docker-compose down"
+        if [ -n "$ImageOS" ]; then
+            rlRun -t -c "docker volume rm kiwi_db_data"
+        fi
     rlPhaseEnd
 rlJournalEnd
 
