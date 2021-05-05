@@ -15,7 +15,7 @@ class SimilarStringChecker(BaseChecker):
     msgs = {
         "R5011": (
             '"%s" is %.2f%% similar to "%s". Try keeping them the same '
-            'to reduce work for translators!',
+            "to reduce work for translators!",
             "similar-string",
             "Similar strings should be avoided for single translation",
         )
