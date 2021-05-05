@@ -36,14 +36,8 @@ class SimilarStringChecker(BaseChecker):
 
     def open(self):
         for rootpath, _dirs, files in os.walk(self.project_root, topdown=False):
-            if rootpath.find("templates/email") > -1:
-                for file_name in files:
-                    if file_name.endswith((".txt")):
-                        self.all_template_files.add(
-                            os.path.join(self.project_root, rootpath, file_name)
-                        )
             for file_name in files:
-                if file_name.endswith((".html")):
+                if file_name.endswith((".html", ".txt")):
                     self.all_template_files.add(
                         os.path.join(self.project_root, rootpath, file_name)
                     )
