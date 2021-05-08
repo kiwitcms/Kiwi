@@ -6,11 +6,27 @@ function updateSelect(data, selector, id_attr, value_attr, group_attr) {
     var new_options = '';
 
 	currentGroup = '';
-    data.forEach(function(element) {
-		if (group_attr != null && currentGroup !== element[group_attr]) {
-			new_options += '<optgroup label="' + element[group_attr] + '">';
-			currentGroup = element[group_attr];
+	// check if using multiple select
+	isMultiple = _select_tag.attributes.getNamedItem('multiple') !== null;
+    
+	// in some cases using single select, the 1st <option> element is ---
+    // which must always be there to indicate nothing selected
+    if (!isMultiple && _select_tag.options.length) {
+        new_options = _select_tag.options[0].outerHTML;
+    }
+	
+	data.forEach(function(element) {
+		if(isMultiple) {
+			if (group_attr != null && currentGroup !== element[group_attr]) {
+				if (currentGroup !== '') {
+					// for all but the first time group changes, add a closing optgroup tag
+					new_options += '</optgroup>'
+				}
+				new_options += '<optgroup label="' + element[group_attr] + '">';
+				currentGroup = element[group_attr];
+			}
 		}
+
         new_options += '<option value="' + element[id_attr] + '">' + element[value_attr] + '</option>';
     });
 
