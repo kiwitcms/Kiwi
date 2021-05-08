@@ -1,7 +1,7 @@
 FROM centos:centos8
 
-RUN dnf -y --setopt=tsflags=nodocs install python3 mariadb mariadb-connector-c postgresql \
-    httpd python3-mod_wsgi mod_ssl sscg && \
+RUN dnf -y --setopt=tsflags=nodocs install python38 mariadb mariadb-connector-c postgresql \
+    httpd python38-mod_wsgi mod_ssl sscg && \
     dnf -y --setopt=tsflags=nodocs -y update && \
     dnf clean all
 

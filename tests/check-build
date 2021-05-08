@@ -79,7 +79,7 @@ tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testruns/static"
 tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testruns/templates"
 
 echo "..... Trying to install the new tarballs inside a virtualenv"
-virtualenv -q -p $(which python) .venv/test-tarball
+$(which python) -m venv .venv/test-tarball
 source .venv/test-tarball/bin/activate
 pip install --upgrade setuptools pip
 # https://github.com/praekelt/django-recaptcha/issues/222
@@ -90,7 +90,7 @@ deactivate
 rm -rf .venv/
 
 echo "..... Trying to install the new wheels inside a virtualenv"
-virtualenv -q -p $(which python) .venv/test-wheel
+$(which python) -m venv .venv/test-wheel
 source .venv/test-wheel/bin/activate
 pip install --upgrade setuptools pip
 pip install -r requirements/tarballs.txt
