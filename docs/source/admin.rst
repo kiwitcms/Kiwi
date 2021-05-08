@@ -356,7 +356,7 @@ They are generally executed in the form::
 Here are a few useful commands:
 
 - ``initial_setup`` - initial configuration of Kiwi TCMS
-- ``set_domain`` - configure Kiwi TCMS public domain
+- ``set_domain`` - configure Kiwi TCMS domain name for use in links & emails
 - ``createsuperuser`` - create a superuser in the database
 - ``migrate`` - apply DB migrations if necessary
 - ``showmigrations`` - show the list of applied/pending DB migrations

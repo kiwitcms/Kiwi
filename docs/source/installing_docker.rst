@@ -98,7 +98,8 @@ Configuration of Kiwi TCMS domain
 ---------------------------------
 
 The first step you need to do is to configure the domain of your Kiwi TCMS
-installation. This is used to construct links to test plans, test cases, etc.
+installation. This is used to construct links to test plans, test cases, etc,
+usually in emails.
 The default value is ``127.0.0.1:8000`` which is suitable if you are running
 in devel mode.
 
