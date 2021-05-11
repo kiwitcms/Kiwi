@@ -28,6 +28,11 @@ function updateSelect(data, selector, id_attr, value_attr, group_attr) {
         new_options += '<option value="' + element[id_attr] + '">' + element[value_attr] + '</option>';
     });
 
+	// add a final closing optgroup tag if using multipleselect
+	if(isMultiple) {
+		new_options += '</optgroup>'
+	}
+
     _select_tag.innerHTML = new_options;
 
     try {
