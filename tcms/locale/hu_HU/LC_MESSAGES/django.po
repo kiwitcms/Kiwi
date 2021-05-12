@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-05-12 06:23\n"
+"PO-Revision-Date: 2021-05-12 06:33\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -940,15 +940,15 @@ msgstr "Adatbázis inicializálása"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Az adatbázis még nem lett inicializálva. Kattintson az alábbi gombra az inicializáláshoz!"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "FIGYELEM: ez a művelet eltart egy darabig! Ez az oldal átirányít, ha elkészült."
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Kérem várjon"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1235,15 +1235,15 @@ msgstr "Prioritás"
 
 #: tcms/testcases/templates/testcases/get.html:87
 msgid "Setup duration"
-msgstr ""
+msgstr "Beállítás időtartama"
 
 #: tcms/testcases/templates/testcases/get.html:92
 msgid "Testing duration"
-msgstr ""
+msgstr "Tesztelés időtartama"
 
 #: tcms/testcases/templates/testcases/get.html:97
 msgid "Expected duration"
-msgstr ""
+msgstr "Várható időtartam"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:112
@@ -1595,17 +1595,17 @@ msgstr "Menedzser"
 #: tcms/testruns/templates/testruns/mutable.html:100
 #: tcms/testruns/templates/testruns/search.html:130
 msgid "Planned start"
-msgstr ""
+msgstr "Tervezett indítás"
 
 #: tcms/testruns/templates/testruns/get.html:80
 msgid "Start"
-msgstr ""
+msgstr "Indítás"
 
 #: tcms/testruns/templates/testruns/get.html:88
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "Tervezett befejezés"
 
 #: tcms/testruns/templates/testruns/get.html:93
 msgid "Finished at"
@@ -1613,7 +1613,7 @@ msgstr "Befejezve"
 
 #: tcms/testruns/templates/testruns/get.html:99
 msgid "Stop"
-msgstr ""
+msgstr "Befejezés"
 
 #: tcms/testruns/templates/testruns/get.html:210
 msgid "Update text version"
@@ -1718,11 +1718,11 @@ msgstr "Folyamatban"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "Indítás dátuma"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr "Befejezés dátuma"
+msgstr "Indítás dátuma"
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
