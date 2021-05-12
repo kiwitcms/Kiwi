@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-04-30 07:44\n"
+"PO-Revision-Date: 2021-05-12 06:23\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1722,7 +1722,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "Befejezés dátuma"
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
