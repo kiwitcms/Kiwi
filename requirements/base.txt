@@ -10,7 +10,7 @@ django-guardian==2.3.0
 django-modern-rpc==0.12.1
 django-recaptcha==2.0.6
 django-simple-history==3.0.0
-django-tree-queries==0.4.3
+django-tree-queries==0.5.0
 jira==2.0.0
 Markdown==3.3.4
 Pygments==2.9.0
