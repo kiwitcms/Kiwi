@@ -1,6 +1,161 @@
 Change Log
 ==========
 
+Kiwi TCMS 10.1 (18 May 2021)
+----------------------------
+
+.. important::
+
+    This release includes many improvements & security updates, database changes, 
+    new and updated API methods, bug fixes, translation updates, new tests and
+    internal refactoring.
+    
+    It is the tenth release to include contributions via our
+    `open source bounty program`_ and collaboration with Major League Hacking!
+
+    This is the second release after Kiwi TCMS reached 400K pulls
+    on Docker Hub!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements & security updates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Upgrade from Python 3.6 to Python 3.8 inside the container
+- Upgrade Django from 3.1.7 to 3.2.3
+- Upgrade django-attachments from 1.8 to 1.9.1
+- Upgrade django-contrib-comments from 2.0.0 to 2.1.0
+- Upgrade django-extensions from 3.1.1 to 3.1.3
+- Upgrade django-grappelli from 2.14.3 to 2.15.1
+- Upgrade django-simple-history from 2.12.0 to 3.0.0
+- Upgrade django-tree-queries from 0.4.3 to 0.5.1
+- Upgrade jira from 2.0.0 to 3.0.1
+- Upgrade pygments from 2.8.0 to 2.9.0
+- Upgrade python-gitlab from 2.6.0 to 2.7.1
+- Upgrade node_modules/html5sortable from 0.10.0 to 0.11.1
+- Upgrade node_modules/marked from 2.0.1 to 2.0.3
+- Timestamp fields added to all TestRun pages. Closes 
+  `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
+- Don't set ``TestRun.start_date`` automatically. Fixes
+  `Issue #2323 <https://github.com/kiwitcms/Kiwi/issues/2323>`_ (Andreea Moraru)
+- Web based database initialization for new installations. Closes 
+  `Issue #1698 <https://github.com/kiwitcms/Kiwi/issues/1698>`_ (Ivajlo Karabojkov)
+- Automatically active the first registered user via web UI
+- Rearrange layout of before and after fields on search pages
+- Allow TestRun creation from navigation menu. Fixes
+  `Issue #2281 <https://github.com/kiwitcms/Kiwi/issues/2281>`_
+- Document hardware specs & performance baseline results. Refs
+  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
+- Document performance for ``TestCase.filter``/``TestRun.filter`` methods. Closes
+  `Issue #1173 <https://github.com/kiwitcms/Kiwi/issues/1173>`_
+- Update documentation around ``docker-compose.yml`` and the extra script files that it needs
+- Document some useful management commands
+- Clarify ``set_domain`` command. Closes
+  `Issue #2375 <https://github.com/kiwitcms/Kiwi/issues/2375>`_
+
+
+Settings
+~~~~~~~~
+
+- Change ``TEMP_DIR`` to ``/var/tmp`` which affects the location in which
+  intermadiate files coming from migrations are saved. If ``/var/tmp`` doesn't
+  exist the fallback is ``/tmp`` which on modern Linux distributions is ephemeral
+- Add ``DEFAULT_AUTO_FIELD`` to hard-code expected behavior and prevent unwanted
+  changes introduced by future versions of Django
+
+
+Database
+~~~~~~~~
+
+- Add new fields to ``TestCase`` - ``setup_duration``, ``testing_duration`` and
+  a calculatable ``expected_duration`` attribute (Angelina)
+- Remove unused ``TestRun.product_version`` field
+
+
+API
+~~~
+
+- Method ``TestRun.filter()`` return value changes field names:
+
+  - ``product_version`` -> ``plan__product_version``
+  - ``product_version__value`` -> ``plan__product_version__value``
+  
+  .. warning::
+  
+      You will need to adjust your API scripts if using these fields!
+
+- Method ``Component.filter()`` will return only distinct results
+- New method ``KiwiTCMS.version()``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Remove links and icons from TestRun print styling. Fixes
+  `Issue #2263 <https://github.com/kiwitcms/Kiwi/issues/2263>`_ and
+  `Issue #2264 <https://github.com/kiwitcms/Kiwi/issues/2264>`_ (Gagan Deep)
+- Emails notifications are now sent into server language. Fixes
+  `Issue #1589 <https://github.com/kiwitcms/Kiwi/issues/1589>`_ (Kapil Bansal)
+- Fix compatibility bug for "advanced search & add" popup windows and latest Chrome
+  browsers. Fixes `Issue #2100 <https://github.com/kiwitcms/Kiwi/issues/2100>`_
+- Redirect TestPlan Admin "Add" to the correct URL
+- Fix wrong TestExecution field names in queryset & HTML template. Refs
+  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_
+- Add default display for ``None`` fields in Test Case page
+
+
+Refactoring & testing
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add test automation for ``TestExecution.actual_duration``. Refs
+  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_ (@APiligrim)
+- Add test automation for ``TestCase.expected_duration``. Refs
+  `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (@APiligrim)
+- Add test automation for ``ReadOnlyHistoryAdmin``. Fixes
+  `Issue #1604 <https://github.com/kiwitcms/Kiwi/issues/1604>`_ (Kapil Bansal)
+- Add ``similar-string`` checker to ``kiwi_lint``. Fixes
+  `Issue #1126 <https://github.com/kiwitcms/Kiwi/issues/1126>`_ (@17sushmita)
+- Resolve or silence the remaining outstanding pylint issues. Closes
+  `Issue #171 <https://github.com/kiwitcms/Kiwi/issues/171>`_
+- Update isort from 5.7.0 to 5.8.0
+- Convert forms to ``ModelForm``
+- Remove unused method parameters
+- Remove unused ``string_to_list()``. Closes
+  `Issue #340 <https://github.com/kiwitcms/Kiwi/issues/340>`_
+- Simplify method used for progressbar in dashboard which also
+  reduces the total number of SQL queries
+- Use existing functions, remove duplication
+- Remove unnecessary calls & definition of ``loadInitialTestPlans()`` in Telemetry pages
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Italian translation <https://crowdin.com/project/kiwitcms/it#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Romanian translation <https://crowdin.com/project/kiwitcms/ro#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Spanish translation <https://crowdin.com/project/kiwitcms/es-ES#>`_
+
+
+
 Kiwi TCMS 10.0 (02 March 2021)
 ------------------------------
 
