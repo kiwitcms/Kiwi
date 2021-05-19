@@ -71,15 +71,13 @@
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-calendar"></span>{% trans 'Started at' %}:
-                    {{ object.start_date }}
                     <span class="start-date">
-                            {{ object.start_date|default:'-' }}
-                        </span>
+                        {{ object.start_date|default:'-' }}
+                    </span>
                     {% if not object.start_date %}
-                        <button class="btn btn-success btn-xs" type="button"        id="start-button"
-                                data-toggle="tooltip"          data-placement="top" title="{% trans 'Start' %}"
-                        style="float:right;">
-                            <i class="fa fa-check" style="color: white; margin: auto; "></i>
+                        <button class="btn btn-success btn-xs pull-right"
+                                type="button" id="start-button" title="{% trans 'Start' %}">
+                            <i class="fa fa-check" style="color: white; margin: auto"></i>
                         </button>
                     {% endif %}
                 </h2>
@@ -95,9 +93,9 @@
                         {{ object.stop_date|default:'-' }}
                     </span>
                     {% if not object.stop_date %}
-                        <button class="btn btn-warning btn-xs pull-right" type="button"        id="stop-button"
-                                data-toggle="tooltip"                     data-placement="top" title="{% trans 'Stop' %}" style="margin-bottom: 1rem;">
-                            <i class="fa fa-check" style="color: white; margin: auto; "></i>
+                        <button class="btn btn-warning btn-xs pull-right"
+                                type="button" id="stop-button" title="{% trans 'Stop' %}">
+                            <i class="fa fa-check" style="color: white; margin: auto"></i>
                         </button>
                     {% endif %}
                 </h2>
