@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-04-30 07:44\n"
+"PO-Revision-Date: 2021-05-27 15:49\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -157,7 +157,7 @@ msgstr "Закрыть"
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:188
 msgid "Summary"
-msgstr "Итоги"
+msgstr "Название"
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -514,7 +514,7 @@ msgstr "Новый тест-кейс"
 
 #: tcms/settings/common.py:296
 msgid "New Test Run"
-msgstr ""
+msgstr "Новый тестовый прогон"
 
 #: tcms/settings/common.py:298
 msgid "New Bug"
@@ -1783,7 +1783,7 @@ msgstr "Интеграция GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Синхронизировать заново"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -1936,7 +1936,7 @@ msgstr "или нажмите ниже, чтобы войти в аккаунт 
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Правовая информация"
 
 #: tcms_tenants/admin.py:40 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
@@ -1961,7 +1961,7 @@ msgstr "Создать"
 #: tcms_tenants/menu.py:14
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Пригласить пользователей"
 
 #: tcms_tenants/menu.py:15
 msgid "Authorized users"
