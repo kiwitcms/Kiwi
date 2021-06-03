@@ -141,8 +141,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
-    "tcms.core.middleware.CheckSettingsMiddleware",
-    "tcms.core.middleware.CheckUnappliedMigrationsMiddleware",
 ]
 
 

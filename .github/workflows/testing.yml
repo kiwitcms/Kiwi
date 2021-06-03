@@ -35,8 +35,8 @@ jobs:
           coverage report -m
           bash <(curl -s https://codecov.io/bash)
 
-  test_check_unapplied_migrations_middleware:
-    name: middleware for unapplied migrations
+  check_for_unapplied_migrations:
+    name: check for unapplied migrations
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -59,8 +59,8 @@ jobs:
     - name: Run test
       run: |
         export LANG=en-us
-        export TEST_CHECK_UNAPPLIED_MIGRATIONS_MIDDLEWARE=1
-        coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.core.tests.test_middleware.TestCheckUnappliedMigrationsMiddleware
+        export TEST_DASHBOARD_CHECK_UNAPPLIED_MIGRATIONS=1
+        coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.core.tests.test_views.TestDashboardCheckMigrations
 
     - name: Send coverage to codecov.io
       run: |
