@@ -6,7 +6,7 @@ Contribute
 
 Kiwi TCMS team welcomes and appreciates any kind of contribution from you in
 order to make Kiwi TCMS better and better. Anyone who is interested in
-Kiwi TCMS is able to contribute in various areas, whatever you are a good
+Kiwi TCMS is able to contribute in various areas, whether you are a good
 and experienced developer, documentation writer or even a regular user.
 
 .. include:: set_dev_env.rst
