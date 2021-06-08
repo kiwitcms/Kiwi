@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-06-08 15:04\n"
+"PO-Revision-Date: 2021-06-08 15:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -315,7 +315,7 @@ msgstr "Bearbeiten"
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:143
 #: tcms/testplans/views.py:154 tcms/testruns/views.py:167
 msgid "Object permissions"
-msgstr ""
+msgstr "Objektberechtigungen"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -514,7 +514,7 @@ msgstr "Neuer Testfall"
 
 #: tcms/settings/common.py:296
 msgid "New Test Run"
-msgstr ""
+msgstr "Neuer Testlauf"
 
 #: tcms/settings/common.py:298
 msgid "New Bug"
@@ -1187,7 +1187,7 @@ msgstr "Notizen"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:156
 msgid "Author"
-msgstr "Ersteller"
+msgstr "Verfasser"
 
 #: tcms/testcases/templates/testcases/get.html:47
 #: tcms/testcases/templates/testcases/mutable.html:35
@@ -1266,7 +1266,7 @@ msgstr "Anforderungen"
 #: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr "Referenzlink"
+msgstr "Verweis-Link"
 
 #: tcms/testcases/templates/testcases/get.html:147
 #: tcms/testruns/templates/testruns/get.html:396
@@ -1411,12 +1411,12 @@ msgstr "Setze den Quelltext TP als Elternteil des neuen TP"
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "Benutzername, E-Mail oder Benutzer-ID eingeben:"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "Keine Zeilen ausgewählt! Bitte wählen Sie mindestens eine Zeile aus!"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1429,7 +1429,7 @@ msgstr "Der Testlauf kann nicht mit unbestätigten Testfällen erstellt werden"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Fehler beim Hinzufügen von Testfällen"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1437,11 +1437,11 @@ msgstr "Mehr anzeigen"
 
 #: tcms/testplans/templates/testplans/get.html:74
 msgid "Plan Type"
-msgstr "Plantyp"
+msgstr "Plan-Typ"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Testfälle"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1458,7 +1458,7 @@ msgstr "Prüfer"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "Sortierschlüssel"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1472,19 +1472,19 @@ msgstr "Testfälle suchen und hinzufügen"
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:319
 msgid "Advanced search"
-msgstr ""
+msgstr "Erweiterte Suche"
 
 #: tcms/testplans/templates/testplans/get.html:285
 msgid "Active test runs"
-msgstr ""
+msgstr "Aktive Testläufe"
 
 #: tcms/testplans/templates/testplans/get.html:307
 msgid "More"
-msgstr ""
+msgstr "Mehr"
 
 #: tcms/testplans/templates/testplans/get.html:309
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktiv"
 
 #: tcms/testplans/templates/testplans/get.html:443
 #: tcms/testruns/templates/testruns/get.html:493
