@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-06-08 15:46\n"
+"PO-Revision-Date: 2021-06-08 15:53\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1162,7 +1162,7 @@ msgstr "Ausgewählte TC"
 #: tcms/testplans/templates/testplans/get.html:357 tcms/testplans/views.py:147
 #: tcms/testruns/views.py:158
 msgid "Clone"
-msgstr "Duplizieren"
+msgstr "Vervielfältigen"
 
 #: tcms/testcases/templates/testcases/get.html:32
 #: tcms/testcases/templates/testcases/mutable.html:139
