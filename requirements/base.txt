@@ -14,6 +14,6 @@ django-tree-queries==0.5.1
 jira==3.0.1
 Markdown==3.3.4
 Pygments==2.9.0
-python-gitlab==2.7.1
+python-gitlab==2.8.0
 python-redmine==2.3.0
 topicaxis-opengraph==0.5
