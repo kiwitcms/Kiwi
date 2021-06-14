@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-06-08 15:53\n"
+"PO-Revision-Date: 2021-06-14 14:35\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -204,7 +204,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:134
 #: tcms/testruns/templates/testruns/search.html:156
 msgid "Before"
-msgstr "Davor"
+msgstr "vor"
 
 #: tcms/bugs/templates/bugs/search.html:27
 #: tcms/telemetry/templates/telemetry/include/filters.html:51
@@ -215,7 +215,7 @@ msgstr "Davor"
 #: tcms/testruns/templates/testruns/search.html:142
 #: tcms/testruns/templates/testruns/search.html:164
 msgid "After"
-msgstr "Danach"
+msgstr "nach"
 
 #: tcms/bugs/templates/bugs/search.html:38
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
@@ -542,7 +542,7 @@ msgstr "Fehler durchsuchen"
 
 #: tcms/settings/common.py:315
 msgid "TELEMETRY"
-msgstr "TELEMETRIE"
+msgstr "STATISTIKEN"
 
 #: tcms/settings/common.py:318
 msgid "Testing"
