@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-06-14 14:35\n"
+"PO-Revision-Date: 2021-06-22 10:07\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -193,7 +193,7 @@ msgstr "Fehler durchsuchen"
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
-msgstr ""
+msgstr "Erstellt"
 
 #: tcms/bugs/templates/bugs/search.html:20
 #: tcms/telemetry/templates/telemetry/include/filters.html:63
@@ -949,7 +949,7 @@ msgstr ""
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Bitte warten"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1138,7 +1138,7 @@ msgstr "LÖSCHEN: Testfall #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:22
 msgid "Test case status"
-msgstr ""
+msgstr "Testfallstatus"
 
 #: tcms/testcases/models.py:23
 msgid "Test case statuses"
@@ -1240,11 +1240,11 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:92
 msgid "Testing duration"
-msgstr ""
+msgstr "Testdauer"
 
 #: tcms/testcases/templates/testcases/get.html:97
 msgid "Expected duration"
-msgstr ""
+msgstr "Erwartete Dauer"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:112
@@ -1622,7 +1622,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:245
 msgid "Add comment"
-msgstr ""
+msgstr "Kommentar hinzufügen"
 
 #: tcms/testruns/templates/testruns/get.html:256
 #: tcms/testruns/templates/testruns/get.html:352
