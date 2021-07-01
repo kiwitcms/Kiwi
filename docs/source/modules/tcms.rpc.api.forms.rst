@@ -14,5 +14,6 @@ Submodules
 
    tcms.rpc.api.forms.management
    tcms.rpc.api.forms.testcase
+   tcms.rpc.api.forms.testexecution
    tcms.rpc.api.forms.testplan
    tcms.rpc.api.forms.testrun

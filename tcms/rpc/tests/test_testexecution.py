@@ -13,8 +13,6 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testruns.models import TestExecutionStatus
-
-from tcms.tests import user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
@@ -167,7 +165,7 @@ class TestExecutionAddLink(APITestCase):
 
     def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(
-            XmlRPCFault, "constraint fail|violates foreign key"
+            XmlRPCFault, ".*execution.*Select a valid choice.*"
         ):
             self.rpc_client.TestExecution.add_link(
                 {"execution_id": -5, "name": "A test log", "url": "http://example.com"}
@@ -181,14 +179,13 @@ class TestExecutionAddLink(APITestCase):
         self.assertGreater(result["id"], 0)
         self.assertEqual(result["url"], url)
 
-    def test_attach_log_with_too_long_name(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'has at most 64 characters'):
-            name = 'a' * 65
+    def test_add_link_with_name_longer_than_64_should_fail(self):
+        with self.assertRaisesRegex(XmlRPCFault, "has at most 64 characters"):
+            name = "a" * 65
             url = "http://127.0.0.1/test/test-log.log"
-            self.rpc_client.TestExecution.add_link({
-                'execution_id': self.execution.pk,
-                'name': name,
-                'url': url})
+            self.rpc_client.TestExecution.add_link(
+                {"execution_id": self.execution.pk, "name": name, "url": url}
+            )
 
 
 class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
@@ -198,6 +195,7 @@ class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
 
     def _fixture_setup(self):
         super()._fixture_setup()
+
         self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):

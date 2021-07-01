@@ -8,7 +8,8 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.core.utils import form_errors_to_list
-from tcms.rpc.api.forms.testexecution import UpdateExecutionForm, AddExecutionLinkForm
+from tcms.rpc.api.forms.testexecution import LinkReferenceForm
+from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import TestExecution
@@ -257,13 +258,18 @@ def add_link(values, update_tracker=False, **kwargs):
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :rtype: dict
         :raises RuntimeError: if operation not successfull
+        :raises ValueError: if input validation fails
 
         .. note::
 
             Always 'link' with IT instance if URL is from Kiwi TCMS own bug tracker!
     """
-    form = AddExecutionLinkForm(values)
-    form.populate(execution_id=values['execution_id'])
+    # for backwards compatibility
+    if "execution_id" in values:
+        values["execution"] = values["execution_id"]
+        del values["execution_id"]
+
+    form = LinkReferenceForm(values)
 
     if form.is_valid():
         link = form.save()
@@ -281,7 +287,7 @@ def add_link(values, update_tracker=False, **kwargs):
     ) or isinstance(tracker, KiwiTCMS):
         tracker.add_testexecution_to_issue([link.execution], link.url)
 
-    return link.serialize()
+    return model_to_dict(link)
 
 
 @permissions_required("linkreference.delete_linkreference")
