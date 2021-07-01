@@ -25,6 +25,7 @@ def import_local_settings(scan_dir, **kwargs):
         # Similar to what Transifex does
         # https://code.djangoproject.com/wiki/SplitSettings#Usingexectoincorporatelocalsettings
         # https://code.djangoproject.com/wiki/SplitSettings#UsingalistofconffilesTransifex
-        exec(  # nosec:B102:exec_used pylint: disable=exec-used
-            open(fname, "rb").read(), scope
-        )
+        with open(fname, "rb") as file_handle:
+            exec(  # nosec:B102:exec_used pylint: disable=exec-used
+                file_handle.read(), scope
+            )
