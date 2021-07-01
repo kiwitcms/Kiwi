@@ -91,7 +91,8 @@ Brief history
 * Feb 2020 - Start co-hosting the `Testing and Automation devroom at FOSDEM <https://fosdem-testingautomation.github.io/>`_
 * Mar 2020 - `Mozilla Open Source Award winner <https://kiwitcms.org/blog/kiwi-tcms-team/2020/03/27/kiwi-tcms-is-open-source-seed-award-winner/>`_
 * May 2020 - Reached 100K+ pulls on Docker Hub
-* Oct 2020 - Reached 200K+ pulls on Docker Hub
+* Mar 2021 - Became **Verified Publisher** on `GitHub Marketplace <https://github.com/marketplace/kiwi-tcms/>`_
+* Jul 2021 - Reached 1M+ pulls on Docker Hub
 
 
 Check it out
