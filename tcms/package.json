@@ -4,7 +4,7 @@
     "html5sortable": "0.13.2",
     "marked": "2.1.3",
     "patternfly": "3.59.5",
-    "prismjs": "1.24.0",
+    "prismjs": "1.24.1",
     "simplemde": "1.11.2",
     "typeahead.js": "0.11.1"
   },
