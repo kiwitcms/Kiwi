@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-06 07:16+0000\n"
-"PO-Revision-Date: 2021-07-06 08:25\n"
+"PO-Revision-Date: 2021-07-06 08:56\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2018,7 +2018,7 @@ msgstr "Validierungsmuster"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"
-msgstr ""
+msgstr "Öffentlich lesbar"
 
 #: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
