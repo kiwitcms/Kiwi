@@ -44,8 +44,7 @@ $(document).ready(function() {
 
 class DurationWidget(forms.Textarea):
     def render(self, name, value, attrs=None, renderer=None):
-        rendered_duration = super().render(name, value, attrs, renderer)
-        rendered_duration += """
+        rendered_duration = """
 <input id="%s" type="text" style="display: none">
 <script>
 $(function () {
@@ -68,5 +67,4 @@ $(function () {
         css = {"all": ["bootstrap-duration-picker/dist/bootstrap-duration-picker.css"]}
         js = [
             "bootstrap-duration-picker/dist/bootstrap-duration-picker.js",
-            "bootstrap-duration-picker/dist/bootstrap-duration-picker-debug.js",
         ]
