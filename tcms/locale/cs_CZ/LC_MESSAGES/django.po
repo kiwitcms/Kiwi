@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-30 07:41+0000\n"
-"PO-Revision-Date: 2021-06-21 12:05\n"
+"POT-Creation-Date: 2021-07-06 07:16+0000\n"
+"PO-Revision-Date: 2021-07-06 08:26\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -58,8 +58,8 @@ msgstr "Nahlásil"
 #: tcms/bugs/templates/bugs/search.html:81
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/templates/include/bug_details.html:10
-#: tcms/testruns/templates/testruns/get.html:235
-#: tcms/testruns/templates/testruns/get.html:295
+#: tcms/testruns/templates/testruns/get.html:233
+#: tcms/testruns/templates/testruns/get.html:293
 msgid "Assignee"
 msgstr "Přiřazeno"
 
@@ -110,7 +110,7 @@ msgstr "Verze"
 #: tcms/telemetry/templates/telemetry/include/filters.html:31
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:50
-#: tcms/testruns/templates/testruns/get.html:427
+#: tcms/testruns/templates/testruns/get.html:425
 #: tcms/testruns/templates/testruns/mutable.html:75
 #: tcms/testruns/templates/testruns/search.html:54
 #: tcms/testruns/templates/testruns/search.html:192
@@ -130,8 +130,8 @@ msgstr "Znovu otevřít"
 #: tcms/testcases/templates/testcases/mutable.html:230
 #: tcms/testplans/templates/testplans/get.html:476
 #: tcms/testplans/templates/testplans/mutable.html:154
-#: tcms/testruns/templates/testruns/get.html:479
-#: tcms/testruns/templates/testruns/get.html:546
+#: tcms/testruns/templates/testruns/get.html:477
+#: tcms/testruns/templates/testruns/get.html:544
 #: tcms/testruns/templates/testruns/mutable.html:135
 msgid "Save"
 msgstr "Uložit"
@@ -149,9 +149,9 @@ msgstr "Zavřít"
 #: tcms/testplans/templates/testplans/get.html:211
 #: tcms/testplans/templates/testplans/get.html:486
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:3
-#: tcms/testruns/templates/testruns/get.html:279
-#: tcms/testruns/templates/testruns/get.html:286
-#: tcms/testruns/templates/testruns/get.html:289
+#: tcms/testruns/templates/testruns/get.html:277
+#: tcms/testruns/templates/testruns/get.html:284
+#: tcms/testruns/templates/testruns/get.html:287
 #: tcms/testruns/templates/testruns/mutable.html:21
 #: tcms/testruns/templates/testruns/mutable.html:155
 #: tcms/testruns/templates/testruns/search.html:13
@@ -239,7 +239,7 @@ msgstr "Po"
 #: tcms/testplans/templates/testplans/mutable.html:135
 #: tcms/testplans/templates/testplans/mutable.html:148
 #: tcms/testplans/templates/testplans/search.html:41
-#: tcms/testruns/templates/testruns/get.html:540
+#: tcms/testruns/templates/testruns/get.html:538
 #: tcms/testruns/templates/testruns/search.html:80
 msgid "Yes"
 msgstr "Ano"
@@ -266,7 +266,7 @@ msgstr "Ano"
 #: tcms/testplans/templates/testplans/mutable.html:135
 #: tcms/testplans/templates/testplans/mutable.html:148
 #: tcms/testplans/templates/testplans/search.html:41
-#: tcms/testruns/templates/testruns/get.html:540
+#: tcms/testruns/templates/testruns/get.html:538
 #: tcms/testruns/templates/testruns/search.html:80
 msgid "No"
 msgstr "Ne"
@@ -278,7 +278,7 @@ msgstr "Ne"
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testplans/templates/testplans/search.html:81
 #: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/get.html:152
+#: tcms/testruns/templates/testruns/get.html:150
 #: tcms/testruns/templates/testruns/search.html:68
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Username"
@@ -288,7 +288,7 @@ msgstr "Uživatelské jméno"
 #: tcms/testcases/templates/testcases/search.html:128
 #: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:100
-#: tcms/testruns/templates/testruns/get.html:301
+#: tcms/testruns/templates/testruns/get.html:299
 #: tcms/testruns/templates/testruns/search.html:177
 msgid "Search"
 msgstr "Hledat"
@@ -321,7 +321,7 @@ msgstr "Oprávnění objektu"
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/testcases/views.py:151 tcms/testplans/templates/testplans/get.html:192
 #: tcms/testplans/templates/testplans/get.html:383 tcms/testplans/views.py:162
-#: tcms/testruns/templates/testruns/get.html:266 tcms/testruns/views.py:175
+#: tcms/testruns/templates/testruns/get.html:264 tcms/testruns/views.py:175
 msgid "Delete"
 msgstr "Smazat"
 
@@ -355,22 +355,12 @@ msgid "Updated on %(history_date)s\n"
 "%(instance_url)s"
 msgstr ""
 
-#: tcms/core/middleware.py:41
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Základní URL není nakonfigurována! Viz <a href=\"%(doc_url)s\">dokumentace</a> a <a href=\"%(admin_url)s\">změnit ji</a>"
-
-#: tcms/core/middleware.py:69
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
-
 #: tcms/core/templates/dashboard.html:3
 msgid "Dashboard"
 msgstr "Dashboard"
 
 #: tcms/core/templates/dashboard.html:8
-#: tcms/testruns/templates/testruns/get.html:191
+#: tcms/testruns/templates/testruns/get.html:189
 msgid "Test executions"
 msgstr ""
 
@@ -428,6 +418,16 @@ msgstr "Spravujete %(total_count)s testovací plán(y), %(disabled_count)s jsou 
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
+msgstr ""
+
+#: tcms/core/views.py:47
+#, python-format
+msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
+msgstr "Základní URL není nakonfigurována! Viz <a href=\"%(doc_url)s\">dokumentace</a> a <a href=\"%(admin_url)s\">změnit ji</a>"
+
+#: tcms/core/views.py:71
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr ""
 
 #: tcms/kiwi_auth/admin.py:32
@@ -491,116 +491,112 @@ msgstr ""
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr ""
 
-#: tcms/settings/common.py:288
+#: tcms/settings/common.py:291
 msgid "DASHBOARD"
 msgstr "DASHBOARD"
 
-#: tcms/settings/common.py:290
+#: tcms/settings/common.py:293
 msgid "TESTING"
 msgstr "TESTOVÁNÍ"
 
-#: tcms/settings/common.py:292
+#: tcms/settings/common.py:295
 msgid "New Test Plan"
 msgstr "Nový testovací plán"
 
-#: tcms/settings/common.py:294 tcms/testplans/templates/testplans/get.html:130
+#: tcms/settings/common.py:297 tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "Nový testovací případ"
 
-#: tcms/settings/common.py:296
+#: tcms/settings/common.py:299
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:298
+#: tcms/settings/common.py:301
 msgid "New Bug"
 msgstr "Nový bug"
 
-#: tcms/settings/common.py:304
+#: tcms/settings/common.py:307
 msgid "SEARCH"
 msgstr "VYHLEDÁVÁNÍ"
 
-#: tcms/settings/common.py:306
+#: tcms/settings/common.py:309
 msgid "Search Test Plans"
 msgstr "Vyhledat testovací plány"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:310
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:308
+#: tcms/settings/common.py:311
 msgid "Search Test Cases"
 msgstr "Vyhledat testovací případy"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:312
 msgid "Search Bugs"
 msgstr "Hledat chyby"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:318
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:321
 msgid "Testing"
 msgstr "Testování"
 
-#: tcms/settings/common.py:320
+#: tcms/settings/common.py:323
 msgid "Breakdown"
 msgstr ""
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:324
 msgid "Status matrix"
 msgstr ""
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:325
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr ""
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:326
 msgid "TestCase health"
 msgstr ""
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:336
 msgid "ADMIN"
 msgstr "ADMINISTRACE"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:338
 msgid "Users and groups"
 msgstr "Uživatelé a skupiny"
 
-#: tcms/settings/common.py:337
+#: tcms/settings/common.py:340
 msgid "Everything else"
 msgstr "Všechno ostatní"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:343
 msgid "PLUGINS"
 msgstr "DOPLŇKY"
 
-#: tcms/settings/common.py:350
-msgid "Forum"
-msgstr "Forum"
-
-#: tcms/settings/common.py:351
+#: tcms/settings/common.py:353
 msgid "Report an Issue"
 msgstr "Nahlásit problém"
 
-#: tcms/settings/common.py:354
+#: tcms/settings/common.py:356
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:358
+#: tcms/settings/common.py:360
 msgid "Donate €5 via Open Collective"
 msgstr ""
 
-#: tcms/settings/common.py:360
+#: tcms/settings/common.py:362
 msgid "Administration Guide"
 msgstr "Administrátorská příručka"
 
-#: tcms/settings/common.py:361
+#: tcms/settings/common.py:363
 msgid "User Guide"
 msgstr "Uživatelská příručka"
 
-#: tcms/settings/common.py:362
+#: tcms/settings/common.py:364
 msgid "API Help"
 msgstr ""
 
@@ -629,7 +625,7 @@ msgstr ""
 #: tcms/telemetry/api.py:136 tcms/telemetry/api.py:190
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
-#: tcms/testruns/templates/testruns/get.html:127
+#: tcms/testruns/templates/testruns/get.html:125
 msgid "TOTAL"
 msgstr ""
 
@@ -657,14 +653,14 @@ msgstr "Celkem"
 #: tcms/testplans/templates/testplans/get.html:401
 #: tcms/testplans/templates/testplans/get.html:488
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
-#: tcms/testruns/templates/testruns/get.html:292
-#: tcms/testruns/templates/testruns/get.html:378
+#: tcms/testruns/templates/testruns/get.html:290
+#: tcms/testruns/templates/testruns/get.html:376
 msgid "Automated"
 msgstr "Automaticky"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/testplans/templates/testplans/get.html:401
-#: tcms/testruns/templates/testruns/get.html:378
+#: tcms/testruns/templates/testruns/get.html:376
 msgid "Manual"
 msgstr "Manuální"
 
@@ -806,7 +802,7 @@ msgstr ""
 
 #: tcms/templates/include/attachments.html:7
 #: tcms/testplans/templates/testplans/get.html:436
-#: tcms/testruns/templates/testruns/get.html:486
+#: tcms/testruns/templates/testruns/get.html:484
 msgid "Attachments"
 msgstr "Přílohy"
 
@@ -838,15 +834,15 @@ msgstr "Nebyly nalezeny žádné záznamy"
 #: tcms/testplans/templates/testplans/get.html:395
 #: tcms/testplans/templates/testplans/get.html:487
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:4
-#: tcms/testruns/templates/testruns/get.html:217
-#: tcms/testruns/templates/testruns/get.html:297
-#: tcms/testruns/templates/testruns/get.html:401
+#: tcms/testruns/templates/testruns/get.html:215
+#: tcms/testruns/templates/testruns/get.html:295
+#: tcms/testruns/templates/testruns/get.html:399
 #: tcms/testruns/templates/testruns/mutable.html:158
 msgid "Status"
 msgstr "Status"
 
 #: tcms/templates/include/bugs_table.html:15
-#: tcms/testruns/templates/testruns/get.html:526
+#: tcms/testruns/templates/testruns/get.html:524
 msgid "URL"
 msgstr "URL"
 
@@ -878,7 +874,7 @@ msgstr "Poslední stránka"
 #: tcms/testcases/templates/testcases/search.html:148
 #: tcms/testplans/templates/testplans/get.html:455
 #: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/get.html:370
+#: tcms/testruns/templates/testruns/get.html:368
 #: tcms/testruns/templates/testruns/search.html:195
 msgid "Tags"
 msgstr "Tagy"
@@ -890,7 +886,7 @@ msgstr "Tagy"
 #: tcms/testplans/templates/testplans/get.html:204
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:13
-#: tcms/testruns/templates/testruns/get.html:532
+#: tcms/testruns/templates/testruns/get.html:530
 msgid "Name"
 msgstr "Název"
 
@@ -898,8 +894,8 @@ msgstr "Název"
 #: tcms/testcases/templates/testcases/get.html:179
 #: tcms/testcases/templates/testcases/get.html:224
 #: tcms/testplans/templates/testplans/get.html:257
-#: tcms/testruns/templates/testruns/get.html:174
-#: tcms/testruns/templates/testruns/get.html:313
+#: tcms/testruns/templates/testruns/get.html:172
+#: tcms/testruns/templates/testruns/get.html:311
 msgid "Add"
 msgstr "Přidat"
 
@@ -1124,7 +1120,7 @@ msgstr "Klonovat"
 #: tcms/testcases/templates/testcases/mutable.html:139
 #: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
-#: tcms/testruns/templates/testruns/get.html:416
+#: tcms/testruns/templates/testruns/get.html:414
 #: tcms/testruns/templates/testruns/mutable.html:127
 msgid "Notes"
 msgstr "Poznámky"
@@ -1169,8 +1165,8 @@ msgstr "Výchozí tester"
 #: tcms/testplans/templates/testplans/get.html:407
 #: tcms/testplans/templates/testplans/get.html:490
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
-#: tcms/testruns/templates/testruns/get.html:294
-#: tcms/testruns/templates/testruns/get.html:384
+#: tcms/testruns/templates/testruns/get.html:292
+#: tcms/testruns/templates/testruns/get.html:382
 #: tcms/testruns/templates/testruns/mutable.html:159
 msgid "Category"
 msgstr "Kategorie"
@@ -1184,8 +1180,8 @@ msgstr "Kategorie"
 #: tcms/testplans/templates/testplans/get.html:403
 #: tcms/testplans/templates/testplans/get.html:489
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
-#: tcms/testruns/templates/testruns/get.html:293
-#: tcms/testruns/templates/testruns/get.html:380
+#: tcms/testruns/templates/testruns/get.html:291
+#: tcms/testruns/templates/testruns/get.html:378
 #: tcms/testruns/templates/testruns/mutable.html:160
 msgid "Priority"
 msgstr "Priorita"
@@ -1225,7 +1221,7 @@ msgid "Reference link"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:147
-#: tcms/testruns/templates/testruns/get.html:396
+#: tcms/testruns/templates/testruns/get.html:394
 msgid "Bugs"
 msgstr "Bugy"
 
@@ -1235,7 +1231,7 @@ msgstr "Testovací plány"
 
 #: tcms/testcases/templates/testcases/get.html:203
 #: tcms/testplans/templates/testplans/get.html:446
-#: tcms/testruns/templates/testruns/get.html:366
+#: tcms/testruns/templates/testruns/get.html:364
 msgid "Components"
 msgstr "Komponenty"
 
@@ -1307,14 +1303,14 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:72
 #: tcms/testcases/templates/testcases/search.html:143
 #: tcms/testplans/templates/testplans/get.html:215
-#: tcms/testruns/templates/testruns/get.html:290
+#: tcms/testruns/templates/testruns/get.html:288
 msgid "Component"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:118
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testplans/templates/testplans/search.html:91
-#: tcms/testruns/templates/testruns/get.html:291
+#: tcms/testruns/templates/testruns/get.html:289
 #: tcms/testruns/templates/testruns/search.html:26
 msgid "Tag"
 msgstr "Tag"
@@ -1332,7 +1328,7 @@ msgid "Created on"
 msgstr "Vytvořeno"
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:149
-#: tcms/testruns/templates/testruns/get.html:457 tcms/testruns/views.py:162
+#: tcms/testruns/templates/testruns/get.html:455 tcms/testruns/views.py:162
 msgid "History"
 msgstr "Historie"
 
@@ -1421,12 +1417,12 @@ msgid "Re-order cases"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:253
-#: tcms/testruns/templates/testruns/get.html:309
+#: tcms/testruns/templates/testruns/get.html:307
 msgid "Search and add test cases"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:262
-#: tcms/testruns/templates/testruns/get.html:319
+#: tcms/testruns/templates/testruns/get.html:317
 msgid "Advanced search"
 msgstr ""
 
@@ -1443,12 +1439,12 @@ msgid "Inactive"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:443
-#: tcms/testruns/templates/testruns/get.html:493
+#: tcms/testruns/templates/testruns/get.html:491
 msgid "No attachments"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:468
-#: tcms/testruns/templates/testruns/get.html:482
+#: tcms/testruns/templates/testruns/get.html:480
 msgid "Comments"
 msgstr "Komentáře"
 
@@ -1469,7 +1465,7 @@ msgid "Test plan document:"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:102
-#: tcms/testruns/templates/testruns/get.html:145
+#: tcms/testruns/templates/testruns/get.html:143
 msgid "Notify:"
 msgstr "Upozornění:"
 
@@ -1552,83 +1548,83 @@ msgstr ""
 msgid "Planned start"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:80
+#: tcms/testruns/templates/testruns/get.html:79
 msgid "Start"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:88
+#: tcms/testruns/templates/testruns/get.html:86
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:93
+#: tcms/testruns/templates/testruns/get.html:91
 msgid "Finished at"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:99
+#: tcms/testruns/templates/testruns/get.html:97
 msgid "Stop"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:210
+#: tcms/testruns/templates/testruns/get.html:208
 msgid "Update text version"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:245
+#: tcms/testruns/templates/testruns/get.html:243
 msgid "Add comment"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:256
-#: tcms/testruns/templates/testruns/get.html:352
-#: tcms/testruns/templates/testruns/get.html:521
+#: tcms/testruns/templates/testruns/get.html:254
+#: tcms/testruns/templates/testruns/get.html:350
+#: tcms/testruns/templates/testruns/get.html:519
 msgid "Add hyperlink"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:296
-#: tcms/testruns/templates/testruns/get.html:392
+#: tcms/testruns/templates/testruns/get.html:294
+#: tcms/testruns/templates/testruns/get.html:390
 msgid "Tested by"
 msgstr "Testováno"
 
-#: tcms/testruns/templates/testruns/get.html:327
+#: tcms/testruns/templates/testruns/get.html:325
 msgid "records"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:353
-#: tcms/testruns/templates/testruns/get.html:560
-#: tcms/testruns/templates/testruns/get.html:577
+#: tcms/testruns/templates/testruns/get.html:351
+#: tcms/testruns/templates/testruns/get.html:558
+#: tcms/testruns/templates/testruns/get.html:575
 msgid "Report bug"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:360
+#: tcms/testruns/templates/testruns/get.html:358
 msgid "Test case is not part of parent test plan"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:388
+#: tcms/testruns/templates/testruns/get.html:386
 msgid "Assigned to"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:421
+#: tcms/testruns/templates/testruns/get.html:419
 msgid "Run Date"
 msgstr "Datum spuštění"
 
-#: tcms/testruns/templates/testruns/get.html:433
+#: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:438
+#: tcms/testruns/templates/testruns/get.html:436
 msgid "Bugs and hyperlinks"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:538
+#: tcms/testruns/templates/testruns/get.html:536
 msgid "Is a defect"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:545
-#: tcms/testruns/templates/testruns/get.html:576
+#: tcms/testruns/templates/testruns/get.html:543
+#: tcms/testruns/templates/testruns/get.html:574
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: tcms/testruns/templates/testruns/get.html:565
+#: tcms/testruns/templates/testruns/get.html:563
 msgid "Issue Tracker"
 msgstr ""
 
@@ -1905,7 +1901,7 @@ msgstr ""
 msgid "Full name"
 msgstr "Celé jméno"
 
-#: tcms_tenants/forms.py:25
+#: tcms_tenants/forms.py:27
 msgid "Invalid string"
 msgstr ""
 
@@ -1913,12 +1909,12 @@ msgstr ""
 msgid "Create"
 msgstr "Vytvořit"
 
-#: tcms_tenants/menu.py:14
+#: tcms_tenants/menu.py:15
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
 msgstr ""
 
-#: tcms_tenants/menu.py:15
+#: tcms_tenants/menu.py:16
 msgid "Authorized users"
 msgstr ""
 
@@ -1954,31 +1950,43 @@ msgstr ""
 msgid "New tenant"
 msgstr "Nový tenant"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:22
+#: tcms_tenants/templates/tcms_tenants/new.html:26
 msgid "Company, team or project name"
 msgstr ""
 
-#: tcms_tenants/templates/tcms_tenants/new.html:29
+#: tcms_tenants/templates/tcms_tenants/new.html:34
 msgid "Schema"
 msgstr "Schéma"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:41
+#: tcms_tenants/templates/tcms_tenants/new.html:47
 msgid "Validation pattern"
 msgstr ""
 
-#: tcms_tenants/utils.py:45
+#: tcms_tenants/templates/tcms_tenants/new.html:52
+msgid "Publicly readable"
+msgstr ""
+
+#: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
 msgstr "Název schéma už je použitý"
 
-#: tcms_tenants/utils.py:105
+#: tcms_tenants/utils.py:107
 msgid "New Kiwi TCMS tenant created"
 msgstr "Nový Kiwi TCMS tenant vytvořen"
 
-#: tcms_tenants/utils.py:190
+#: tcms_tenants/utils.py:198
 msgid "Invitation to join Kiwi TCMS"
 msgstr ""
 
-#: tcms_tenants/views.py:92
+#: tcms_tenants/views.py:80
+msgid "Only super-user and tenant owner are allowed to edit tenant properties"
+msgstr ""
+
+#: tcms_tenants/views.py:98
+msgid "Edit tenant"
+msgstr ""
+
+#: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
 
