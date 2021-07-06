@@ -89,6 +89,7 @@ _email_settings_fields = []  # pylint: disable=invalid-name
 for field in TestCaseEmailSettings._meta.fields:
     _email_settings_fields.append(field.name)
 
+
 # for usage in CreateView, UpdateView
 CaseNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name
     TestCase,
