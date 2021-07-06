@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-06 07:16+0000\n"
-"PO-Revision-Date: 2021-07-06 08:26\n"
+"PO-Revision-Date: 2021-07-06 09:16\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2019,7 +2019,7 @@ msgstr "Érvényesítési minta"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"
-msgstr ""
+msgstr "Nyilvánosan olvasható"
 
 #: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
@@ -2035,11 +2035,11 @@ msgstr "Kiwi TCMS meghívó küldése"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "Csak a szuper-felhasználó és a bérlő tulajdonosa szerkesztheti a bérlő tulajdonságait"
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
-msgstr ""
+msgstr "Bérlő szerkesztése"
 
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
