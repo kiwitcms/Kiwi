@@ -1,10 +1,11 @@
-#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#   Copyright (c) 2018,2021 Kiwi TCMS project. All rights reserved.
 #   Author: Alexander Todorov <info@kiwitcms.org>
 
 """
 Custom widgets for Django
 """
 from django import forms
+from django.utils.dateparse import parse_duration
 
 
 class SimpleMDE(forms.Textarea):
@@ -44,6 +45,13 @@ $(document).ready(function() {
 
 class DurationWidget(forms.Widget):
     template_name = "widgets/duration.html"
+
+    def format_value(self, value):
+        if not value:
+            return 0
+
+        duration = parse_duration(value)
+        return int(duration.total_seconds())
 
     class Media:
         css = {"all": ["bootstrap-duration-picker/dist/bootstrap-duration-picker.css"]}
