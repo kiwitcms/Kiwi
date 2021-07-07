@@ -101,6 +101,7 @@ class TestNewCase(BasePlanCase):
             "category": cls.case.category.pk,
             "case_status": cls.case_status_confirmed.pk,
             "priority": cls.case.priority.pk,
+            # specify in human readable format
             "setup_duration": "2 20:10:00",
             "testing_duration": "00:00:00",
             "text": cls.text,
@@ -287,8 +288,9 @@ class TestEditCaseView(BasePlanCase):
             "product": cls.case_1.category.product.pk,
             "category": cls.case_1.category.pk,
             "default_tester": "",
-            "testing_duration": "00:00:00",
-            "setup_duration": "1 02:00:00",
+            # specify in seconds
+            "testing_duration": "0",
+            "setup_duration": "3600",
             "case_status": cls.case_status_confirmed.pk,
             "arguments": "",
             "extra_link": "",
@@ -337,6 +339,8 @@ class TestEditCaseView(BasePlanCase):
 
         self.case_1.refresh_from_db()
         self.assertEqual(new_summary, self.case_1.summary)
+        self.assertEqual(self.case_1.testing_duration, timedelta(0))
+        self.assertEqual(str(self.case_1.setup_duration), "1:00:00")
 
     def test_invalid_notify_formset(self):
         # Note: Boolean fields are always valid - either False or True
