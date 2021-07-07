@@ -42,26 +42,8 @@ $(document).ready(function() {
         ]
 
 
-class DurationWidget(forms.Textarea):
-    def render(self, name, value, attrs=None, renderer=None):
-        rendered_duration = """
-<input id="%s" type="text" style="display: none">
-<script>
-$(function () {
-    $('#%s').durationPicker({
-      showDays: true,
-      showHours: true,
-      showMinutes: true,
-      showSeconds: true,
-    });
-});
-</script>
-""" % (
-            attrs["id"],
-            attrs["id"],
-        )
-
-        return rendered_duration
+class DurationWidget(forms.Widget):
+    template_name = "widgets/duration.html"
 
     class Media:
         css = {"all": ["bootstrap-duration-picker/dist/bootstrap-duration-picker.css"]}

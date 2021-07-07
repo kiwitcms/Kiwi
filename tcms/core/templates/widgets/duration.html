@@ -1,0 +1,11 @@
+<input id="{{ widget.attrs.id }}" type="hidden" value="{{ widget.value|add:'0' }}" name="{{ widget.name }}">
+<script>
+$(function () {
+    $("#{{ widget.attrs.id }}").durationPicker({
+      showDays: true,
+      showHours: true,
+      showMinutes: true,
+      showSeconds: true,
+    });
+});
+</script>
