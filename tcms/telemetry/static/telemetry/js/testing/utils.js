@@ -11,9 +11,8 @@ function showOnlyRoundNumbers(number) {
 
 // Close multiselect list when selecting an item
 // Iterate over all dropdown lists
-$("select:not([size])").each(function() {
-	$(this).on("change", function() {
-		// Clicking on the document closes the widget
-		$(document).click(); 
-	});
+$("select[multiple]").each(function() {
+    $(this).on("change", function() {
+        $(this).parent('.bootstrap-select').removeClass('open')
+    });
 });
