@@ -46,15 +46,15 @@ function updateSelect(data, selector, id_attr, value_attr, group_attr) {
 */
 function update_version_select_from_product() {
     var updateVersionSelectCallback = function(data) {
-        updateSelect(data, '#id_version', 'id', 'value')
+        updateSelect(data, '#id_version', 'id', 'value', 'product__name')
 
         // trigger on-change handler, possibly updating build
         $('#id_version').change()
     };
 
-    var product_id = $('#id_product').val();
-    if (product_id) {
-        jsonRPC('Version.filter', {product: product_id}, updateVersionSelectCallback);
+    var productIds = $('#id_product').val();
+    if (productIds.length) {
+        jsonRPC('Version.filter', {product__in: productIds}, updateVersionSelectCallback);
     } else {
         updateVersionSelectCallback([]);
     }
@@ -65,7 +65,7 @@ function update_version_select_from_product() {
 */
 function update_build_select_from_version(keep_first) {
     var updateCallback = function(data) {
-        updateSelect(data, '#id_build', 'id', 'name')
+        updateSelect(data, '#id_build', 'id', 'name', 'version__value')
     }
 
     if (keep_first === true) {
@@ -74,9 +74,9 @@ function update_build_select_from_version(keep_first) {
         $('#id_build').find('option').remove();
     }
 
-    const version_id = $('#id_version').val();
-    if (version_id) {
-        jsonRPC('Build.filter', {version: version_id}, updateCallback);
+    const versionIds = $('#id_version').val();
+    if (versionIds.length) {
+        jsonRPC('Build.filter', {version__in: versionIds}, updateCallback);
     } else {
         updateCallback([]);
     }

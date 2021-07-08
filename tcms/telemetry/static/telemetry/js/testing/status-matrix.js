@@ -65,31 +65,30 @@ function drawTable() {
 
     const query = {};
 
-    const productId = $('#id_product').val();
-    if (productId) {
-        query['run__plan__product'] = productId;
+    const productIds = $('#id_product').val();
+    if (productIds.length) {
+        query['run__plan__product__in'] = productIds;
     }
 
-    const versionId = $('#id_version').val();
-    if (versionId) {
-        query['run__plan__product_version'] = versionId;
+    const versionIds = $('#id_version').val();
+    if (versionIds.length) {
+        query['run__plan__product_version__in'] = versionIds;
     }
 
-    const buildId = $('#id_build').val();
-    if (buildId) {
-        query['build_id'] = buildId;
+    const buildIds = $('#id_build').val();
+    if (buildIds.length) {
+        query['build_id__in'] = buildIds;
     }
 
-    var testPlanId = $('#id_test_plan').val();
+    var testPlanIds = $('#id_test_plan').val();
     const includeChildTPs = $('#id_include_child_tps').is(':checked')
-    if (testPlanId) {
-        testPlanId = parseInt(testPlanId)
-        query['run__plan__pk__in'] = [testPlanId];
+    if (testPlanIds.length) {
+        query['run__plan__in'] = testPlanIds;
 
         // note: executed synchronously to avoid race condition between
         // collecting the list of child TPs and drawing the table below
         if (includeChildTPs) {
-            jsonRPC('TestPlan.filter', {'parent': testPlanId}, function(result) {
+            jsonRPC('TestPlan.filter', {'parent__in': testPlanIds}, function(result) {
                 result.forEach(function(element) {
                     query['run__plan__pk__in'].push(element.id);
                 });
@@ -127,7 +126,7 @@ function drawTable() {
             table_columns.push({
                 data: null,
                 sortable: false,
-                render: renderData(testRunId, testPlanId, includeChildTPs)
+                render: renderData(testRunId, testPlanIds, includeChildTPs)
             });
         });
 
@@ -165,18 +164,18 @@ function applyStyleToCell(cell) {
     }
 }
 
-function renderData(testRunId, testPlanId, includeChildTPs) {
+function renderData(testRunId, testPlanIds, includeChildTPs) {
     return (data, type, full, meta) => {
         const execution = full.executions.find(e => e.run_id === Number(testRunId));
         if (execution) {
-            const fromParentTP = includeChildTPs && (execution.plan_id === testPlanId);
+            const fromParentTP = includeChildTPs && testPlanIds.includes(execution.plan_id);
             var iconClass = '';
 
             if (fromParentTP) {
                 iconClass = "fa fa-arrow-circle-o-up";
             }
 
-            return `<span class="execution-status ${iconClass}" color="${execution.color}" from-parent="${fromParentTP}">` +
+            return `<span class="execution-status ${iconClass}" color="${execution.color}" from-parent="${fromParentTP}"> ` +
                 `<a href="/runs/${execution.run_id}/#caserun_${execution.pk}">TE-${execution.pk}</a>` +
                 `</span>`;
         }
