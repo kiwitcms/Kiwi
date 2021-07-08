@@ -37,6 +37,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "id",
             "name",
             "version",
+            "version__value",
             "is_active",
         )
         .distinct()
