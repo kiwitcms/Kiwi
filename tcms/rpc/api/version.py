@@ -28,7 +28,9 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: list(dict)
     """
     return list(
-        Version.objects.filter(**query).values("id", "value", "product").distinct()
+        Version.objects.filter(**query)
+        .values("id", "value", "product", "product__name")
+        .distinct()
     )
 
 
