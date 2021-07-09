@@ -26,24 +26,24 @@ $(document).ready(() => {
 function drawChart() {
     const query = {};
 
-    const productId = $('#id_product').val();
-    if (productId) {
-        query['run__plan__product'] = productId;
+    const productIds = $('#id_product').val();
+    if (productIds.length) {
+        query['run__plan__product__in'] = productIds;
     }
 
-    const versionId = $('#id_version').val();
-    if (versionId) {
-        query['run__plan__product_version'] = versionId;
+    const versionIds = $('#id_version').val();
+    if (versionIds.length) {
+        query['run__plan__product_version__in'] = versionIds;
     }
 
-    const buildId = $('#id_build').val();
-    if (buildId) {
-        query['build_id'] = buildId;
+    const buildIds = $('#id_build').val();
+    if (buildIds.length) {
+        query['build_id__in'] = buildIds;
     }
 
-    const testPlanId = $('#id_test_plan').val();
-    if (testPlanId) {
-        query['run__plan__pk'] = testPlanId;
+    const testPlanIds = $('#id_test_plan').val();
+    if (testPlanIds.length) {
+        query['run__plan__in'] = testPlanIds;
     }
 
     const dateBefore = $('#id_before');
