@@ -4,9 +4,8 @@
 function updateSelect(data, selector, id_attr, value_attr, group_attr) {
     var _select_tag = $(selector)[0];
     var new_options = '';
-
-    currentGroup = '';
-    isMultiple = _select_tag.attributes.getNamedItem('multiple') !== null;
+    var currentGroup = '';
+    const isMultiple = _select_tag.attributes.getNamedItem('multiple') !== null;
 
     // in some cases using single select, the 1st <option> element is ---
     // which must always be there to indicate nothing selected
