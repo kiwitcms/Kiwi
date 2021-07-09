@@ -24,7 +24,7 @@ def breakdown(query=None):
     if query is None:
         query = {}
 
-    test_cases = TestCase.objects.filter(**query).filter()
+    test_cases = TestCase.objects.filter(**query).distinct()
 
     manual_count = test_cases.filter(is_automated=False).count()
     automated_count = test_cases.filter(is_automated=True).count()
@@ -48,12 +48,12 @@ def _get_field_count_map(test_cases, expression, field):
     query_set_confirmed = (
         test_cases.filter(case_status__is_confirmed=True)
         .values(field)
-        .annotate(count=Count(expression))
+        .annotate(count=Count(expression, distinct=True))
     )
     query_set_not_confirmed = (
         test_cases.exclude(case_status__is_confirmed=True)
         .values(field)
-        .annotate(count=Count(expression))
+        .annotate(count=Count(expression, distinct=True))
     )
     return {
         str(_("CONFIRMED")): _map_query_set(query_set_confirmed, field),
