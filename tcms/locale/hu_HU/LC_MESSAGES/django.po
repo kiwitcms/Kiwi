@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-08 21:09+0000\n"
-"PO-Revision-Date: 2021-07-09 09:56\n"
+"PO-Revision-Date: 2021-07-09 10:25\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -427,35 +427,35 @@ msgstr "Nem tartozik hozzád Tesztterv"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "nap"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "napok"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "óra"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "órák"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "perc"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "percek"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "másodperc"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "másodpercek"
 
 #: tcms/core/views.py:47
 #, python-format
