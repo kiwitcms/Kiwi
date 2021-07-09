@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-08 21:09+0000\n"
-"PO-Revision-Date: 2021-07-09 09:56\n"
+"PO-Revision-Date: 2021-07-09 10:48\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -427,35 +427,35 @@ msgstr "Il n’y a aucun plan(s) de test qui vous est assigné"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "jour"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "jours"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "heure"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "heures"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "minute"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "minutes"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "seconde"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "secondes"
 
 #: tcms/core/views.py:47
 #, python-format
@@ -2057,7 +2057,7 @@ msgstr "Modèle de validation"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"
-msgstr ""
+msgstr "Accessible publiquement"
 
 #: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
@@ -2073,11 +2073,11 @@ msgstr "Invitation à rejoindre Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "Seuls les super-utilisateurs et le propriétaire du locataire sont autorisés à modifier les propriétés de l'instance"
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
-msgstr ""
+msgstr "Modifier l'instance"
 
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
