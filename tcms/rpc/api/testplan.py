@@ -114,6 +114,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "type__name",
             "parent",
         )
+        .order_by("product", "id")
         .distinct()
     )
 

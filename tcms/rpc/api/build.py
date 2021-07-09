@@ -40,6 +40,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "version__value",
             "is_active",
         )
+        .order_by("version", "id")
         .distinct()
     )
 

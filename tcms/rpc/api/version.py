@@ -30,6 +30,7 @@ def filter(query):  # pylint: disable=redefined-builtin
     return list(
         Version.objects.filter(**query)
         .values("id", "value", "product", "product__name")
+        .order_by("product", "id")
         .distinct()
     )
 
