@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-06 07:16+0000\n"
-"PO-Revision-Date: 2021-07-06 08:25\n"
+"POT-Creation-Date: 2021-07-08 21:09+0000\n"
+"PO-Revision-Date: 2021-07-09 09:56\n"
 "Last-Translator: \n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -127,7 +127,7 @@ msgstr "Fungua tena"
 
 #: tcms/bugs/templates/bugs/get.html:129
 #: tcms/bugs/templates/bugs/mutable.html:94
-#: tcms/testcases/templates/testcases/mutable.html:230
+#: tcms/testcases/templates/testcases/mutable.html:245
 #: tcms/testplans/templates/testplans/get.html:476
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/get.html:477
@@ -222,13 +222,13 @@ msgstr "Baada ya"
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
 #: tcms/testcases/templates/testcases/mutable.html:99
-#: tcms/testcases/templates/testcases/mutable.html:156
-#: tcms/testcases/templates/testcases/mutable.html:163
-#: tcms/testcases/templates/testcases/mutable.html:170
-#: tcms/testcases/templates/testcases/mutable.html:179
-#: tcms/testcases/templates/testcases/mutable.html:186
-#: tcms/testcases/templates/testcases/mutable.html:199
-#: tcms/testcases/templates/testcases/mutable.html:206
+#: tcms/testcases/templates/testcases/mutable.html:171
+#: tcms/testcases/templates/testcases/mutable.html:178
+#: tcms/testcases/templates/testcases/mutable.html:185
+#: tcms/testcases/templates/testcases/mutable.html:194
+#: tcms/testcases/templates/testcases/mutable.html:201
+#: tcms/testcases/templates/testcases/mutable.html:214
+#: tcms/testcases/templates/testcases/mutable.html:221
 #: tcms/testcases/templates/testcases/search.html:40
 #: tcms/testplans/templates/testplans/clone.html:57
 #: tcms/testplans/templates/testplans/clone.html:65
@@ -249,13 +249,13 @@ msgstr "Ndio"
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
 #: tcms/testcases/templates/testcases/mutable.html:99
-#: tcms/testcases/templates/testcases/mutable.html:156
-#: tcms/testcases/templates/testcases/mutable.html:163
-#: tcms/testcases/templates/testcases/mutable.html:170
-#: tcms/testcases/templates/testcases/mutable.html:179
-#: tcms/testcases/templates/testcases/mutable.html:186
-#: tcms/testcases/templates/testcases/mutable.html:199
-#: tcms/testcases/templates/testcases/mutable.html:206
+#: tcms/testcases/templates/testcases/mutable.html:171
+#: tcms/testcases/templates/testcases/mutable.html:178
+#: tcms/testcases/templates/testcases/mutable.html:185
+#: tcms/testcases/templates/testcases/mutable.html:194
+#: tcms/testcases/templates/testcases/mutable.html:201
+#: tcms/testcases/templates/testcases/mutable.html:214
+#: tcms/testcases/templates/testcases/mutable.html:221
 #: tcms/testcases/templates/testcases/search.html:43
 #: tcms/testplans/templates/testplans/clone.html:57
 #: tcms/testplans/templates/testplans/clone.html:65
@@ -418,6 +418,38 @@ msgstr "Wewe husimamia mpango wa upimaji %(total_count)s, %(disabled_count)s yam
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
 msgstr "Hakuna mipango ya upimaji yaliyoyako"
+
+#: tcms/core/templates/widgets/duration.html:8
+msgid "day"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:9
+msgid "days"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:11
+msgid "hour"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:12
+msgid "hours"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:14
+msgid "minute"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:15
+msgid "minutes"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:17
+msgid "second"
+msgstr ""
+
+#: tcms/core/templates/widgets/duration.html:18
+msgid "seconds"
+msgstr ""
 
 #: tcms/core/views.py:47
 #, python-format
@@ -1067,7 +1099,7 @@ msgstr ""
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr ""
 
-#: tcms/testcases/forms.py:42
+#: tcms/testcases/forms.py:50
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1127,7 +1159,7 @@ msgid "Clone"
 msgstr "Kloni"
 
 #: tcms/testcases/templates/testcases/get.html:32
-#: tcms/testcases/templates/testcases/mutable.html:139
+#: tcms/testcases/templates/testcases/mutable.html:154
 #: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testruns/templates/testruns/get.html:414
@@ -1137,7 +1169,7 @@ msgstr "Vidokezo"
 
 #: tcms/testcases/templates/testcases/get.html:42
 #: tcms/testcases/templates/testcases/get.html:163
-#: tcms/testcases/templates/testcases/mutable.html:153
+#: tcms/testcases/templates/testcases/mutable.html:168
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testcases/templates/testcases/search.html:147
 #: tcms/testplans/templates/testplans/get.html:53
@@ -1153,7 +1185,7 @@ msgstr "Mwandishi"
 
 #: tcms/testcases/templates/testcases/get.html:47
 #: tcms/testcases/templates/testcases/mutable.html:35
-#: tcms/testcases/templates/testcases/mutable.html:176
+#: tcms/testcases/templates/testcases/mutable.html:191
 #: tcms/testplans/templates/testplans/get.html:174
 #: tcms/testplans/templates/testplans/get.html:377
 #: tcms/testplans/templates/testplans/get.html:415
@@ -1197,10 +1229,12 @@ msgid "Priority"
 msgstr "Kipaumbele"
 
 #: tcms/testcases/templates/testcases/get.html:87
+#: tcms/testcases/templates/testcases/mutable.html:104
 msgid "Setup duration"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:92
+#: tcms/testcases/templates/testcases/mutable.html:110
 msgid "Testing duration"
 msgstr ""
 
@@ -1209,22 +1243,22 @@ msgid "Expected duration"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:112
-#: tcms/testcases/templates/testcases/mutable.html:112
+#: tcms/testcases/templates/testcases/mutable.html:127
 msgid "Script"
 msgstr "Hati"
 
 #: tcms/testcases/templates/testcases/get.html:117
-#: tcms/testcases/templates/testcases/mutable.html:118
+#: tcms/testcases/templates/testcases/mutable.html:133
 msgid "Arguments"
 msgstr "Hoja"
 
 #: tcms/testcases/templates/testcases/get.html:122
-#: tcms/testcases/templates/testcases/mutable.html:126
+#: tcms/testcases/templates/testcases/mutable.html:141
 msgid "Requirements"
 msgstr "Mahitaji"
 
 #: tcms/testcases/templates/testcases/get.html:127
-#: tcms/testcases/templates/testcases/mutable.html:131
+#: tcms/testcases/templates/testcases/mutable.html:146
 #: tcms/testplans/templates/testplans/get.html:79
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
@@ -1257,44 +1291,44 @@ msgstr "Kesi Mpya Ya Upimaji"
 msgid "add new Category"
 msgstr "ongeza Aina mpya"
 
-#: tcms/testcases/templates/testcases/mutable.html:105
+#: tcms/testcases/templates/testcases/mutable.html:120
 #: tcms/testcases/templates/testcases/search.html:104
 msgid "Text"
 msgstr "Maandishi"
 
-#: tcms/testcases/templates/testcases/mutable.html:149
+#: tcms/testcases/templates/testcases/mutable.html:164
 msgid "Notify"
 msgstr "Arifu"
 
-#: tcms/testcases/templates/testcases/mutable.html:160
+#: tcms/testcases/templates/testcases/mutable.html:175
 msgid "Manager of runs"
 msgstr "Meneja wa majaribio"
 
-#: tcms/testcases/templates/testcases/mutable.html:167
+#: tcms/testcases/templates/testcases/mutable.html:182
 msgid "Asignees"
 msgstr "Waliyoteuiwa"
 
-#: tcms/testcases/templates/testcases/mutable.html:183
+#: tcms/testcases/templates/testcases/mutable.html:198
 msgid "Default tester of runs"
 msgstr "Mpimaji msingi"
 
-#: tcms/testcases/templates/testcases/mutable.html:192
+#: tcms/testcases/templates/testcases/mutable.html:207
 msgid "Notify when"
 msgstr "Arifu"
 
-#: tcms/testcases/templates/testcases/mutable.html:196
+#: tcms/testcases/templates/testcases/mutable.html:211
 msgid "TestCase is updated"
 msgstr "Kesi ya upimaji ikisasishwa"
 
-#: tcms/testcases/templates/testcases/mutable.html:203
+#: tcms/testcases/templates/testcases/mutable.html:218
 msgid "TestCase is deleted"
 msgstr "Kesi ya upimaji ikifutwa"
 
-#: tcms/testcases/templates/testcases/mutable.html:212
+#: tcms/testcases/templates/testcases/mutable.html:227
 msgid "CC to"
 msgstr "Andikia pia kwa"
 
-#: tcms/testcases/templates/testcases/mutable.html:217
+#: tcms/testcases/templates/testcases/mutable.html:232
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "Barua pepe zitinganishwe na comma. Barua pepe itatumwa kwa kila barua pepe iliyondani kwa orodha."
 
