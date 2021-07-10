@@ -12,8 +12,13 @@ nav.navbar-default { border-top-color: #3C8D2C; }
 
 /* continue with styles for Kiwi TCMS */
 
-/* todo: used in form error messages, can be improved */
-.errorlist { background: #AF2B2B; border:1px solid #6F1B1B; color:#FFF; font-weight:bold; }
+/* used in regular/admin form error messages */
+.errorlist, p.errornote + ul.errorlist {
+    background: #AF2B2B;
+    border:1px solid #6F1B1B;
+    color:#FFF;
+    font-weight:bold;
+}
 
 /* typeahead.js styling for autocomplete */
 .tt-menu {
