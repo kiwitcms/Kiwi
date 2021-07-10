@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-08 21:09+0000\n"
-"PO-Revision-Date: 2021-07-09 09:56\n"
+"POT-Creation-Date: 2021-07-10 15:23+0000\n"
+"PO-Revision-Date: 2021-07-10 15:32\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -90,7 +90,7 @@ msgstr "Produkt"
 #: tcms/bugs/templates/bugs/mutable.html:42
 #: tcms/bugs/templates/bugs/search.html:54
 #: tcms/bugs/templates/bugs/search.html:104
-#: tcms/telemetry/templates/telemetry/include/filters.html:22
+#: tcms/telemetry/templates/telemetry/include/filters.html:21
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:76
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/get.html:69
@@ -107,7 +107,7 @@ msgstr "Version"
 #: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/bugs/templates/bugs/search.html:64
 #: tcms/bugs/templates/bugs/search.html:105 tcms/management/models.py:120
-#: tcms/telemetry/templates/telemetry/include/filters.html:31
+#: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:50
 #: tcms/testruns/templates/testruns/get.html:425
@@ -196,7 +196,7 @@ msgid "Created"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:20
-#: tcms/telemetry/templates/telemetry/include/filters.html:63
+#: tcms/telemetry/templates/telemetry/include/filters.html:59
 #: tcms/testcases/templates/testcases/search.html:21
 #: tcms/testplans/templates/testplans/search.html:22
 #: tcms/testruns/templates/testruns/search.html:89
@@ -207,7 +207,7 @@ msgid "Before"
 msgstr "Më parë"
 
 #: tcms/bugs/templates/bugs/search.html:27
-#: tcms/telemetry/templates/telemetry/include/filters.html:51
+#: tcms/telemetry/templates/telemetry/include/filters.html:47
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:29
 #: tcms/testruns/templates/testruns/search.html:97
@@ -670,7 +670,7 @@ msgstr "TOTALI"
 msgid "Detailed information about test execution status"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/include/filters.html:43
+#: tcms/telemetry/templates/telemetry/include/filters.html:40
 msgid "Test Plan"
 msgstr "Plani i Testit"
 
@@ -1112,14 +1112,48 @@ msgstr "Rivendosja e fjalëkalimit TCMS të Kiwi"
 msgid "Register new account"
 msgstr "Regjistro nje llogari të re"
 
-#: tcms/testcases/admin.py:26
+#: tcms/testcases/admin.py:27
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
 msgstr ""
 
-#: tcms/testcases/admin.py:46
+#: tcms/testcases/admin.py:47
 msgid "1 confirmed & 1 uncomfirmed status required!"
+msgstr ""
+
+#: tcms/testcases/admin.py:122
+msgid "Bug URL"
+msgstr ""
+
+#: tcms/testcases/admin.py:124
+msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
+msgstr ""
+
+#: tcms/testcases/admin.py:150
+msgid "External Issue Tracker Integration"
+msgstr ""
+
+#: tcms/testcases/admin.py:160
+msgid "<h1>Warning: read the\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"Configure external bug trackers</a> section before editting the values below!</h1>"
+msgstr ""
+
+#: tcms/testcases/admin.py:167
+msgid "Configuration health check"
+msgstr ""
+
+#: tcms/testcases/admin.py:183
+msgid "Failed creating Issue Tracker"
+msgstr ""
+
+#: tcms/testcases/admin.py:189
+msgid "Issue Tracker configuration check passed"
+msgstr ""
+
+#: tcms/testcases/admin.py:200
+msgid "Issue Tracker configuration check failed"
 msgstr ""
 
 #: tcms/testcases/forms.py:50
