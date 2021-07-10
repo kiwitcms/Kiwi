@@ -12,6 +12,11 @@ nav.navbar-default { border-top-color: #3C8D2C; }
 
 /* continue with styles for Kiwi TCMS */
 
+img {
+    height: auto;
+    max-width: 100%;
+}
+
 /* used in regular/admin form error messages */
 .errorlist, p.errornote + ul.errorlist {
     background: #AF2B2B;
