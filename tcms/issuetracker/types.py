@@ -72,7 +72,8 @@ class JIRA(IssueTrackerType):
     def bug_id_from_url(cls, url):
         """
         Jira IDs are the last group of chars at the end of the URL.
-        For example https://issues.jenkins-ci.org/browse/JENKINS-31044
+        For example https://issues.jenkins-ci.org/browse/JENKINS-31044 will
+        return an ID of JENKINS-31044
         """
         return url.strip().split("/")[-1]
 
