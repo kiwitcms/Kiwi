@@ -38,6 +38,10 @@ class JIRA(IssueTrackerType):
     :api_username: - a username registered in JIRA
     :api_password: - the password for this username
 
+    .. important::
+
+        The field ``API URL`` is not used for Jira integration and can be left blank!
+
     Additional control can be applied via the ``JIRA_OPTIONS`` configuration
     setting (in ``product.py``). By default this setting is not provided and
     the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!

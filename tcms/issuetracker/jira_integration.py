@@ -10,6 +10,10 @@ class JiraThread(IntegrationThread):
     Execute JIRA RPC code in a thread!
 
     Executed from the IssueTracker interface methods.
+
+    .. important::
+
+        For configuration options see :class:`tcms.issuetracker.types.JIRA`!
     """
 
     def post_comment(self):
