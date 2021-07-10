@@ -108,6 +108,7 @@ class IssueTrackerType:
         You can override this method to provide different information.
         """
         result = OpenGraph(url, scrape=True)
+        result["from_open_graph"] = True
 
         # remove data which we don't need
         for key in ["_url", "url", "scrape", "type"]:
