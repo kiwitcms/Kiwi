@@ -104,7 +104,7 @@ master_doc = "index"
 
 # General information about the project.
 project = u"Kiwi TCMS"
-copyright = u"2013, Red Hat, Inc.; 2017-2020 Kiwi TCMS project and its contributors"
+copyright = u"2013, Red Hat, Inc.; 2017-2021 Kiwi TCMS project and its contributors"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -334,7 +334,7 @@ epub_title = u"kiwi"
 epub_author = u"hlin,weizhou,cqi,qduanmu,MrSenko"
 epub_publisher = u"hlin,weizhou,cqi,qduanmu,MrSenko"
 epub_copyright = (
-    u"2013, Red Hat, Inc.; 2017-2018, Kiwi TCMS project and its contributors"
+    u"2013, Red Hat, Inc.; 2017-2021, Kiwi TCMS project and its contributors"
 )
 
 # The basename for the epub file. It defaults to the project name.
