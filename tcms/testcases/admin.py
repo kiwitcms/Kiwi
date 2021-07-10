@@ -6,6 +6,7 @@ from django.contrib import admin, messages
 from django.forms.widgets import Select
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.admin import ObjectPermissionsAdminMixin
@@ -115,6 +116,21 @@ class BugSystemAdminForm(forms.ModelForm):
         help_text="This determines how Kiwi TCMS integrates with the IT system",
     )
 
+    hc_bug_url = forms.CharField(  # pylint: disable=form-field-label-used, form-field-help-text-used
+        required=False,
+        max_length=1024,
+        label=_("Bug URL"),
+        help_text=_(
+            "Kiwi TCMS will try fetching details for the given bug URL using the "
+            "integration defined above! Click the `Save and continue` button and "
+            "watch out for messages at the top of the screen. <strong>WARNING:</strong> "
+            "in case of failures some issue trackers will fall back to fetching details "
+            "via the OpenGraph protocol. In that case the result will include field named "
+            "`from_open_graph`."
+        ),
+        widget=admin.widgets.AdminTextInputWidget,
+    )
+
     class Meta:
         model = BugSystem
         fields = "__all__"
@@ -131,7 +147,7 @@ class BugSystemAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "External Issue Tracker Integration",
+            _("External Issue Tracker Integration"),
             {
                 "fields": (
                     "tracker_type",
@@ -140,13 +156,54 @@ class BugSystemAdmin(admin.ModelAdmin):
                     "api_username",
                     "api_password",
                 ),
-                "description": """<h1>Warning: read the
+                "description": _(
+                    """<h1>Warning: read the
 <a href="http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers">
-Configure external bug trackers</a> section before editting the values below!</h1>""",
+Configure external bug trackers</a> section before editting the values below!</h1>"""
+                ),
+            },
+        ),
+        (
+            _("Configuration health check"),
+            {
+                "fields": ("hc_bug_url",),
             },
         ),
     ]
     form = BugSystemAdminForm
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        # try health check
+        bug_url = form.cleaned_data["hc_bug_url"]
+        if bug_url:
+            try:
+                tracker = import_string(obj.tracker_type)(obj, request)
+                if not tracker:
+                    raise RuntimeError(_("Failed creating Issue Tracker"))
+
+                details = tracker.details(bug_url)
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    _("Issue Tracker configuration check passed"),
+                )
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    details,
+                )
+            except Exception as err:  # pylint: disable=broad-except
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    _("Issue Tracker configuration check failed"),
+                )
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    err,
+                )
 
 
 admin.site.register(BugSystem, BugSystemAdmin)
