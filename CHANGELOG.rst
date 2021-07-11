@@ -9,7 +9,7 @@ Kiwi TCMS 10.1 (18 May 2021)
     This release includes many improvements & security updates, database changes, 
     new and updated API methods, bug fixes, translation updates, new tests and
     internal refactoring.
-    
+
     It is the tenth release to include contributions via our
     `open source bounty program`_ and collaboration with Major League Hacking!
 
@@ -46,11 +46,11 @@ Improvements & security updates
 - Upgrade python-gitlab from 2.6.0 to 2.7.1
 - Upgrade node_modules/html5sortable from 0.10.0 to 0.11.1
 - Upgrade node_modules/marked from 2.0.1 to 2.0.3
-- Timestamp fields added to all TestRun pages. Closes 
+- Timestamp fields added to all TestRun pages. Closes
   `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
 - Don't set ``TestRun.start_date`` automatically. Fixes
   `Issue #2323 <https://github.com/kiwitcms/Kiwi/issues/2323>`_ (Andreea Moraru)
-- Web based database initialization for new installations. Closes 
+- Web based database initialization for new installations. Closes
   `Issue #1698 <https://github.com/kiwitcms/Kiwi/issues/1698>`_ (Ivajlo Karabojkov)
 - Automatically active the first registered user via web UI
 - Rearrange layout of before and after fields on search pages
@@ -58,9 +58,11 @@ Improvements & security updates
   `Issue #2281 <https://github.com/kiwitcms/Kiwi/issues/2281>`_
 - Document hardware specs & performance baseline results. Refs
   `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
-- Document performance for ``TestCase.filter``/``TestRun.filter`` methods. Closes
+- Document performance for ``TestCase.filter``/``TestRun.filter`` methods.
+  Closes
   `Issue #1173 <https://github.com/kiwitcms/Kiwi/issues/1173>`_
-- Update documentation around ``docker-compose.yml`` and the extra script files that it needs
+- Update documentation around ``docker-compose.yml`` and the extra script files
+  that it needs
 - Document some useful management commands
 - Clarify ``set_domain`` command. Closes
   `Issue #2375 <https://github.com/kiwitcms/Kiwi/issues/2375>`_
@@ -71,9 +73,10 @@ Settings
 
 - Change ``TEMP_DIR`` to ``/var/tmp`` which affects the location in which
   intermadiate files coming from migrations are saved. If ``/var/tmp`` doesn't
-  exist the fallback is ``/tmp`` which on modern Linux distributions is ephemeral
-- Add ``DEFAULT_AUTO_FIELD`` to hard-code expected behavior and prevent unwanted
-  changes introduced by future versions of Django
+  exist the fallback is ``/tmp`` which on modern Linux distributions is
+  ephemeral
+- Add ``DEFAULT_AUTO_FIELD`` to hard-code expected behavior and prevent
+  unwanted changes introduced by future versions of Django
 
 
 Database
@@ -91,9 +94,9 @@ API
 
   - ``product_version`` -> ``plan__product_version``
   - ``product_version__value`` -> ``plan__product_version__value``
-  
+
   .. warning::
-  
+
       You will need to adjust your API scripts if using these fields!
 
 - Method ``Component.filter()`` will return only distinct results
@@ -137,7 +140,8 @@ Refactoring & testing
 - Simplify method used for progressbar in dashboard which also
   reduces the total number of SQL queries
 - Use existing functions, remove duplication
-- Remove unnecessary calls & definition of ``loadInitialTestPlans()`` in Telemetry pages
+- Remove unnecessary calls & definition of ``loadInitialTestPlans()`` in
+  Telemetry pages
 
 
 Translations
@@ -217,7 +221,8 @@ Database
   `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
 - Add ``TestExecution.start_date`` field. Refs
   `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_ (Anastasiya Uraleva)
-- Rename field ``TestExecution.close_date`` to ``TestExecution.stop_date`` (Anastasiya Uraleva)
+- Rename field ``TestExecution.close_date`` to ``TestExecution.stop_date``
+  (Anastasiya Uraleva)
 
 
 API
@@ -238,39 +243,46 @@ API
   `Issue #2145 <https://github.com/kiwitcms/Kiwi/issues/2145>`_
 - Methods ``Product.filter()``, ``Product.create()`` and ``Product.update()``:
 
-  - change input parameter ``classification_id`` to ``classification`` - type int
+  - change input parameter ``classification_id`` to ``classification`` -
+    type int
   - change result field ``classification_id`` to ``classification`` - type int
 - Method ``Category.filter()`` changes result field
   ``product_id`` to ``product`` - type int
-- Methods ``Component.filter()``, ``Component.create()`` and ``Component.update()``:
+- Methods ``Component.filter()``, ``Component.create()`` and
+  ``Component.update()``:
 
   - change input parameter ``product_id`` to ``product`` - type int
   - change input parameter ``initial_owner_id`` to ``initial_owner`` - type int
-  - change input parameter ``initial_qa_contact_id`` to ``initial_qa_contact`` - type int
+  - change input parameter ``initial_qa_contact_id`` to
+    ``initial_qa_contact`` - type int
   - change result field ``product_id`` to ``product`` - type int
   - change result field ``initial_owner_id`` to ``initial_owner`` - type int
-  - change result field ``initial_qa_contact_id`` to ``initial_qa_contact`` - type int
+  - change result field ``initial_qa_contact_id`` to ``initial_qa_contact`` -
+    type int
   - adds result field ``cases`` - type int - a TestCase ID if this component is
     attached to a test case
 - Methods ``Version.filter()`` and ``Version.create()``:
 
   - change input parameter ``product_id`` to ``product`` - type int
   - change result field ``product_id`` to ``product`` - type int
-- Method ``Tag.filter()`` now returns additional fields: 
+- Method ``Tag.filter()`` now returns additional fields:
   ``bugs``, ``case``, ``plan`` and ``run`` which causes existing queries to
-  return similar records attached to different parent objects. Consumers of these
-  results should be updated
-- Methods ``TestPlan.filter()``, ``TestPlan.create()`` and ``TestPlan.update()``:
+  return similar records attached to different parent objects. Consumers of
+  these results should be updated
+- Methods ``TestPlan.filter()``, ``TestPlan.create()`` and
+  ``TestPlan.update()``:
 
   - change input parameter ``author_id`` to ``author`` - type int
   - change input parameter ``parent_id`` to ``parent`` - type int
   - change input parameter ``product_id`` to ``product`` - type int
-  - change input parameter ``product_version_id`` to ``product_version`` - type int
+  - change input parameter ``product_version_id`` to ``product_version`` -
+    type int
   - change input parameter ``type_id`` to ``type`` - type int
   - change result field ``author_id`` to ``author`` - type int
   - change result field ``parent_id`` to ``parent`` - type int
   - change result field ``product_id`` to ``product`` - type int
-  - change result field ``product_version_id`` to ``product_version`` - type int
+  - change result field ``product_version_id`` to ``product_version`` -
+    type int
   - change result field ``type_id`` to ``type`` - type int
   - remove result fields ``cases``, ``tag``, ``default_product_version``
 - Method ``TestPlan.filter()``
@@ -282,7 +294,8 @@ API
   - change result field ``default_tester_id`` to ``default_tester`` - type int
   - change result field ``manager_id`` to ``manager`` - type int
   - change result field ``plan_id`` to ``plan`` - type int
-  - change result field ``product_version_id`` to ``product_version`` - type int
+  - change result field ``product_version_id`` to ``product_version`` -
+    type int
   - remove result fields ``cc``, ``tag``
 - Method ``TestRun.filter()`` adds result fields ``product_version__value``,
   ``plan__product``, ``plan__name``, ``build__name``, ``manager__username`` and
@@ -302,17 +315,20 @@ API
   - change result field ``status_id`` to ``status`` - type int
   - change result field ``tested_by_id`` to ``tested_by`` - type int
 - Method ``TestExecution.filter()`` adds result fields ``assignee__username``,
-  ``tested_by__username``, ``case__summary``, ``build__name`` and ``status__name``
+  ``tested_by__username``, ``case__summary``, ``build__name`` and
+  ``status__name``
 - Method ``TestExecution.get_links()`` change result field
   ``execution_id`` to ``execution`` - type int
 - Method ``TestRun.add_case()`` changes result field names similarly to
   ``TestExecution.filter()`` method
-- Methods ``TestCase.filter()``, ``TestCase.create()`` and ``TestCase.update()``:
+- Methods ``TestCase.filter()``, ``TestCase.create()`` and
+  ``TestCase.update()``:
 
   - change input parameter ``author_id`` to ``author`` - type int
   - change input parameter ``case_status_id`` to ``case_status`` - type int
   - change input parameter ``category_id`` to ``category`` - type int
-  - change input parameter ``default_tester_id`` to ``default_tester`` - type int
+  - change input parameter ``default_tester_id`` to ``default_tester`` -
+    type int
   - change input parameter ``priority_id`` to ``priority`` - type int
   - change input parameter ``reviewer_id`` to ``reviewer`` - type int
   - change result field ``author_id`` to ``author`` - type int
@@ -322,7 +338,7 @@ API
   - change result field ``priority_id`` to ``priority`` - type int
   - change result field ``reviewer_id`` to ``reviewer`` - type int
   - remove result fields ``component``, ``plan``, ``tag``
-- Method ``TestCase.filter()`` adds result fields ``case_status__name``, 
+- Method ``TestCase.filter()`` adds result fields ``case_status__name``,
   ``category__name``, ``priority__value``, ``author__username``,
   ``default_tester__username`` and ``reviewer__username``
 - Methods ``TestRun.get_cases()`` and ``TestPlan.add_case()`` change
@@ -703,7 +719,8 @@ Improvements
   `Issue #1979 <https://github.com/kiwitcms/Kiwi/issues/1979>`_ (@cmbahadir)
 - Add autosave configuration to web editor. Closes
   `Issue #1958 <https://github.com/kiwitcms/Kiwi/issues/1958>`_ (Mfon Eti-mfon)
-- Change ON/OFF button messages to Yes/No for several buttons (Alexander Tsvetanov)
+- Change ON/OFF button messages to Yes/No for several buttons
+  (Alexander Tsvetanov)
 - Add support for object-level permissions for TestCase,
   TestPlan, TestRun and Bug objects via ``django-guardian``
 - Complete redesign of Test Plan page to match the rest of Kiwi TCMS:
@@ -731,7 +748,8 @@ Database
 ~~~~~~~~
 
 - Add index to ``TestCase.summary`` field
-- Additional migrations from ``django-guardian`` around object-level permissions
+- Additional migrations from ``django-guardian`` around object-level
+  permissions
 - New ``AnonymousUser`` record added by ``django-guardian``
 - Start using ``django-tree-queries`` which improves how tree based structures
   are stored in the database.
@@ -989,8 +1007,8 @@ Improvements
   `Issue #977 <https://github.com/kiwitcms/Kiwi/issues/977>`_
 - Require ``auth.view_user`` permission when trying to view user profiles.
   Fixes `Issue #1685 <https://github.com/kiwitcms/Kiwi/issues/1685>`_
-- Multiple pages now explicitly require view permissions before displaying read-only
-  information. This gives administrators a finer grained control:
+- Multiple pages now explicitly require view permissions before displaying
+  read-only information. This gives administrators a finer grained control:
 
   - ``/bugs/<id>/``    -> ``bugs.view_bug``
   - ``/bugs/search/``  -> ``bugs.view_bug``
@@ -1026,7 +1044,8 @@ API
 - Remove method ``TestExecution.create()`` in favor of ``TestRun.add_case()``
 - Add method ``User.add_attachment()``
 - Multiple API methods now explicitly require view permissions before returning
-  read-only information. This is in-sync with the per-page changes listed above:
+  read-only information. This is in-sync with the per-page changes
+  listed above:
 
   - ``Bug.filter()``                   -> ``bugs.view_bug``
   - ``Bug.report()``                   -> ``testruns.view_testexecution``
@@ -1141,9 +1160,12 @@ Improvements
   `Issue #1531 <https://github.com/kiwitcms/Kiwi/issues/1531>`_ (Bryan Mutai)
 - Implement
   `kiwitcms-django-plugin <https://kiwitcms.org/blog/kiwi-tcms-team/2020/06/30/django-plugin-for-kiwi-tcms/>`_.
-  Resolves `Issue #693 <https://github.com/kiwitcms/Kiwi/issues/693>`_ (Bryan Mutai)
-- Add missing permission check for ``TestExecution.add_link()`` API method (Rosen Sasov)
-- Add missing permission check for ``TestExecution.remove_link()`` API method (Rosen Sasov)
+  Resolves `Issue #693 <https://github.com/kiwitcms/Kiwi/issues/693>`_
+  (Bryan Mutai)
+- Add missing permission check for ``TestExecution.add_link()`` API method
+  (Rosen Sasov)
+- Add missing permission check for ``TestExecution.remove_link()`` API method
+  (Rosen Sasov)
 - Admin interface will now appear translated
 - Propagate server side API errors to the browser. Closes
   `Issue #625 <https://github.com/kiwitcms/Kiwi/issues/625>`_,
@@ -1280,7 +1302,8 @@ Improvements
 Database
 ~~~~~~~~
 
-- Force creation of missing permissions for m2m fields from the `tcms.bugs` app:
+- Force creation of missing permissions for m2m fields from the
+  ``tcms.bugs`` app:
 
   - ``bugs.add_bug_tags``
   - ``bugs.change_bug_tags``
@@ -1359,7 +1382,8 @@ Refactoring & testing
   `Issue #1079 <https://github.com/kiwitcms/Kiwi/issues/1079>`_
 - Start Codecov for coverage reports
 - Add tests for presense of mysql/psql binaries in container
-- Add ``APIPermissionsTestCase`` with example in ``TestVersionCreatePermissions``
+- Add ``APIPermissionsTestCase`` with example in
+  ``TestVersionCreatePermissions``
 - Move most test jobs away from Travis CI to GitHub workflows
 
 
@@ -1569,18 +1593,19 @@ Security
 
 - JSON-RPC handler will now HTML escape all strings. This prevents XSS attacks
   via tags, components or anything else which is loaded on the web page via RPC
-  and then shown as string. Even if someone saves ``<script>alert(123);</script>``
-  in the database the returned result will be HTML escaped and will not be executed
-  as JavaScript!
+  and then shown as string. Even if someone saves
+  ``<script>alert(123);</script>`` in the database the returned result will be
+  HTML escaped and will not be executed as JavaScript!
 
   .. note::
 
         This is easy to exploit but people able to do so should have accounts in
         your Kiwi TCMS installation and write privileges on their accounts. If they
         do this means they can cause a lot more damage much more easily!
+
 - Update Django from 3.0.3 to 3.0.4 - fixes security issue CVE-2020-9402:
-  Potential SQL injection via ``tolerance`` parameter in GIS functions and aggregates
-  on Oracle which we believe does not affect Kiwi TCMS
+  Potential SQL injection via ``tolerance`` parameter in GIS functions and
+  aggregates on Oracle which we believe does not affect Kiwi TCMS
 
 
 Improvements
@@ -1611,10 +1636,10 @@ API
 
 - ``TestCase.create()`` method no longer accepts ``product`` or ``product_id``
   fields which have previously been deprecated
-- API methods which receive True/False values will no longer parse yes,no,1,0 values.
-  The only accepted values are boolean constants defined in the calling programming
-  language which are then transmitted via XML-RPC or JSON-RPC and converted to
-  native boolean on the backend
+- API methods which receive True/False values will no longer parse yes,no,1,0
+  values. The only accepted values are boolean constants defined in the calling
+  programming language which are then transmitted via XML-RPC or JSON-RPC and
+  converted to native boolean on the backend
 
 
 Bug fixes
@@ -1817,7 +1842,8 @@ Refactoring
 - Remove unused ``json_success_refresh_page()``
 - Remove unused fields from ``SearchPlanForm``
 - Use JSON-RPC in ``previewPlan()``
-- Remove ``toggleTestCaseContents()``, duplicate of ``toggleTestExecutionPane()``
+- Remove ``toggleTestCaseContents()``, duplicate of
+  ``toggleTestExecutionPane()``
 - Refactor a few more views to class-based
 
 
@@ -1986,10 +2012,10 @@ API
 Bug fixes
 ~~~~~~~~~
 
-- ``testplans.views.DeleteCasesView`` now requires ``testplans.change_testplan``
-  permission (Svetlomir Balevski)
-- ``testplans.views.ReorderCasesView`` now requires ``testplans.change_testplan``
-  permission (Svetlomir Balevski)
+- ``testplans.views.DeleteCasesView`` now requires
+  ``testplans.change_testplan`` permission (Svetlomir Balevski)
+- ``testplans.views.ReorderCasesView`` now requires
+  ``testplans.change_testplan`` permission (Svetlomir Balevski)
 - Fix counting bug in execution trends telemetry
 - Fix several telemetry queries to still show data in the corner case
   where test cases have been deleted from a TestPlan but test runs
@@ -2107,8 +2133,8 @@ Refactoring
 - Remove labels from form fields, Refs
   `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_ (Azmi YÜKSEL)
 - New base class for tests around permissions (Svetlomir Balevski)
-- New "blueprint" test case around permissions to make testing in this area more
-  robust
+- New "blueprint" test case around permissions to make testing in this area
+  more robust
 - Refactor many views from function based to class based
 - Update stale tests in ``tcms/core/tests/`` and make sure they aren't ignored
   by the test runner
@@ -2319,8 +2345,8 @@ Settings
 
 - Respect the ``CACHES`` setting, see
   `Django docs <https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-CACHES>`_
-  for more info. Initially this setting is used to cache defect details received
-  via Issue Tracker integration. See
+  for more info. Initially this setting is used to cache defect details
+  received via Issue Tracker integration. See
   `Issue #117 <https://github.com/kiwitcms/Kiwi/issues/117>`_
 
 
@@ -2344,9 +2370,10 @@ Bug fixes
 Refactoring
 ~~~~~~~~~~~
 
-- Lots of refactoring from function based views to class based views (Rady Madjev)
-- Use JavaScript and the API to remove case execution instead of dedicated
-  backend function (Rady Madjev)
+- Lots of refactoring from function based views to class based views
+  (Rady Madjev)
+- Use JavaScript and the API to remove case execution instead of
+  dedicated backend function (Rady Madjev)
 - Update pylint directives around missing permissions (Svetlomir Balevski)
 - Fix typo in identifier. Fixes
   `CID 344186 <https://scan4.coverity.com/reports.htm#v38579/p14953/fileInstanceId=65904319&defectInstanceId=11526612&mergedDefectId=344186&eventId=1>`_
@@ -2642,7 +2669,8 @@ Improvements
 - Remove npm, libxml2-devel and libxslt-devel from Docker image
 - Database engine configuration now respects the ``KIWI_DB_ENGINE`` environment
   variable which defaults to ``django.db.backends.mysql``. This will make it
-  easier for admins to change DB engine by updating their ``docker-compose.yml``
+  easier for admins to change DB engine by updating their
+  ``docker-compose.yml``
 
 
 Bug fixes
@@ -2760,8 +2788,8 @@ After upgrade don't forget to::
 Security
 ~~~~~~~~
 
-- Explicitly require marked v0.6.1 to fix medium severity ReDoS vulnerability. See
-  `SNYK-JS-MARKED-73637 <https://snyk.io/vuln/SNYK-JS-MARKED-73637>`_
+- Explicitly require marked v0.6.1 to fix medium severity ReDoS vulnerability.
+  See `SNYK-JS-MARKED-73637 <https://snyk.io/vuln/SNYK-JS-MARKED-73637>`_
 
 
 Improvements
@@ -2776,8 +2804,10 @@ Improvements
   `Issue #795 <https://github.com/kiwitcms/Kiwi/issues/795>`_
 - Document available test automation plugins
 - Improve documentation around Docker customization and SSL termination
-- Add documentation example of reverse rroxy configuration for HAProxy (Nicolas Auvray)
-- ``TestPlan.add_case()`` will now set the sortkey to highest in plan + 10 (Rik)
+- Add documentation example of reverse rroxy configuration for HAProxy
+  (Nicolas Auvray)
+- ``TestPlan.add_case()`` will now set the sortkey to highest in plan + 10
+  (Rik)
 - Add ``LinkOnly`` issue tracker. Fixes
   `Issue #289 <https://github.com/kiwitcms/Kiwi/issues/289>`_
 - Use the same HTML template for both TestCase new & edit
@@ -2868,7 +2898,8 @@ Translations
 - Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
 - Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
 - Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
-- Changed misspelled source string ``Requirments`` -> ``Requirements`` (@Prome88)
+- Changed misspelled source string
+  ``Requirments`` -> ``Requirements`` (@Prome88)
 
 
 
@@ -2882,8 +2913,9 @@ tcms-api 5.3 (24 Feb 2019)
 Kiwi TCMS 6.5.3 (11 Feb 2019)
 -----------------------------
 
-**IMPORTANT:** this is a security, improvement and bug-fix update that includes new
-versions of Django, includes several database migrations and fixes several bugs.
+**IMPORTANT:** this is a security, improvement and bug-fix update that includes
+new versions of Django, includes several database migrations and fixes
+several bugs.
 
 
 Security
@@ -2954,9 +2986,10 @@ Kiwi TCMS 6.5 (1 Feb 2019)
 
 We are celebrating 10 years of open source history at FOSDEM, Brussels!
 
-**IMPORTANT:** this is a minor security, improvement and bug-fix update that includes new
-versions of Django and other dependencies, removes some database fields,
-includes backend API updates and fixes several bugs.
+**IMPORTANT:** this is a minor security, improvement and bug-fix update that
+includes new versions of Django and other dependencies,
+removes some database fields, includes backend API updates and
+fixes several bugs.
 
 Together with this release we announce:
 
@@ -2993,8 +3026,8 @@ After upgrade don't forget to::
 Security
 ~~~~~~~~
 
-- Better override of SimpleMDE markdown rendering to prevent XSS vulnerabilities
-  in SimpleMDE
+- Better override of SimpleMDE markdown rendering to prevent XSS
+  vulnerabilities in SimpleMDE
 
 
 Improvements
@@ -3039,15 +3072,16 @@ Database migrations
 
 **Known issues:** on our demo installation we have observed that permission
 labels were skewed after applying migrations. The symptom is that labels for
-removed models are still available, labels for some models may have been removed
+removed models are still available, labels for some models may have been
+removed
 from groups/users or there could be permission labels appearing twice in the
 database.
 
 This may affect only existing installations, new installations do not have
 this problem!
 
-We are not certain what caused this but a quick fix is to remove all permissions
-from the default *Tester* group and re-add them again!
+We are not certain what caused this but a quick fix is to remove all
+permissions from the default *Tester* group and re-add them again!
 
 - Remove ``TestCase.alias``
 - Remove ``TestCaseRun.running_date``
@@ -3121,8 +3155,8 @@ tcms-api 5.2 (30 Jan 2019)
 Kiwi TCMS 6.4 (7 Jan 2019)
 --------------------------
 
-**IMPORTANT:** this is a security, improvement and bug-fix update that includes new
-versions of Django, Patternfly and other dependencies.
+**IMPORTANT:** this is a security, improvement and bug-fix update that
+includes new versions of Django, Patternfly and other dependencies.
 
 Supported upgrade paths::
 
@@ -3224,9 +3258,9 @@ Refactoring
 Kiwi TCMS 6.3 (4 Dec 2018) - Heisenbug Edition
 ----------------------------------------------
 
-**IMPORTANT:** this is a medium severity security update that includes new versions
-of Django and Patternfly, new database migrations, lots of improvements, bug fixes
-and internal refactoring.
+**IMPORTANT:** this is a medium severity security update that includes new
+versions of Django and Patternfly, new database migrations,
+lots of improvements, bug fixes and internal refactoring.
 
 Supported upgrade paths::
 
@@ -3248,8 +3282,8 @@ Security
   previewing malicious text in Simple MDE editor. See
   `CVE-2018-19057 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19057>`_,
   `SNYK-JS-SIMPLEMDE-72570 <https://snyk.io/vuln/SNYK-JS-SIMPLEMDE-72570>`_
-- Use ``mozilla/bleach`` before rendering Markdown to the user as a second layer
-  of protection against the previously mentioned XSS vulnerability.
+- Use ``mozilla/bleach`` before rendering Markdown to the user as a second
+  layer of protection against the previously mentioned XSS vulnerability.
 
 
 Improvements
@@ -3456,8 +3490,8 @@ Improvements
 - Dashboard will now show TestRuns which have test cases assigned to current
   user. Fixes
   `Issue #520 <https://github.com/kiwitcms/Kiwi/issues/520>`_
-- API method ``TestRun.add_case()`` now returns a serialized TestCaseRun object.
-  Previously this method returned None
+- API method ``TestRun.add_case()`` now returns a serialized TestCaseRun
+  object. Previously this method returned None
 
 
 Bug fixes
@@ -3522,7 +3556,8 @@ Bug fixes
   initially reported on
   `StackOverflow <https://stackoverflow.com/questions/52865463/>`_.
   This patch makes it possible to use the API without crashing however the
-  ``TestRun.update`` method doesn't handle the ``stop_date`` field at the moment!
+  ``TestRun.update`` method doesn't handle the ``stop_date`` field at the
+  moment!
 
 
 Translations
@@ -3588,8 +3623,8 @@ Database
 ~~~~~~~~
 
 - Rename ``tcms.core.contrib.auth`` to ``tcms.kiwi_auth``
-- Remove field ``user`` from ``TestCaseTag``, ``TestRunTag`` and ``TestPlanTag``
-  models
+- Remove field ``user`` from ``TestCaseTag``, ``TestRunTag`` and
+  ``TestPlanTag`` models
 
 
 
@@ -3619,12 +3654,14 @@ Removed functionality
 - TestCase new and edit views no longer allow editing of tags. Tags can be
   added/removed from the Tags tab which also makes sure to properly account
   for permissions
-- Remove ``EnvGroup``, ``EnvProperty`` and ``EnvValue`` models in favor of tags.
-  Existing values and properties are converted into tags and automatically added
-  to test runs!
-- Convert squashed database migrations to regular ones and remove older migrations.
-  **WARNING:** upgrade from versions <= 5.3.1 to 6.0 will break without an intermediate
-  upgrade to ``kiwitcms/kiwi:5.3.1 a420465852be``.
+- Remove ``EnvGroup``, ``EnvProperty`` and ``EnvValue`` models in favor of
+  tags.
+  Existing values and properties are converted into tags and automatically
+  added to test runs!
+- Convert squashed database migrations to regular ones and remove older
+  migrations.
+  **WARNING:** upgrade from versions <= 5.3.1 to 6.0 will break without an
+  intermediate upgrade to ``kiwitcms/kiwi:5.3.1 a420465852be``.
 - Remove deprecated ``TestCase.estimated_time`` and ``TestRun.estimated_time``. Fixes
   `Issue #514 <https://github.com/kiwitcms/Kiwi/issues/514>`_
 
@@ -3658,9 +3695,9 @@ Refactoring
 ~~~~~~~~~~~
 
 - Fix pylint errors (Ivaylo Ivanov, Anton Sankov)
-- Use existing JSON-RPC methods to add/remove tags via webUI and remove specialized
-  backend methods that handled these requests. Also make sure to obey respective
-  permissions
+- Use existing JSON-RPC methods to add/remove tags via webUI and remove
+  specialized backend methods that handled these requests. Also make sure to
+  obey respective permissions
 
 
 Translations
@@ -3684,8 +3721,8 @@ Kiwi TCMS 5.3 (04 Sept 2018)
 ----------------------------
 
 **IMPORTANT:** this release brings lots of UI updates and removal of unused
-and/or duplicated functionality and source code. Many pages have been redesigned
-with the Patternfly library to have a modern look and feel.
+and/or duplicated functionality and source code. Many pages have been
+redesigned with the Patternfly library to have a modern look and feel.
 
 Kiwi TCMS is now using the
 `'kiwi-tcms' <https://stackoverflow.com/questions/tagged/kiwi-tcms>`_
@@ -3708,8 +3745,8 @@ Improvements
 - Update to `Django 2.1.1 <https://docs.djangoproject.com/en/2.1/releases/2.1.1/>`_
 - Update Patternfly version. Fixes
   `Issue #381 <https://github.com/kiwitcms/Kiwi/issues/381>`_
-- Replace TinyMCE with SimpleMDE markdown editor. You may need to strip existing
-  texts from HTML tags that were generated by TinyMCE
+- Replace TinyMCE with SimpleMDE markdown editor. You may need to strip
+  existing texts from HTML tags that were generated by TinyMCE
 - Allow downstream builds to customize the login templates by
   providing ``registration/custom_login.html`` template. It can either
   override the entire login page or provide additional information inside
@@ -3796,9 +3833,9 @@ Refactoring
   communicate with the existing JSON-RPC API on the back-end. This
   replaces many 'ajax' views which are only used to render the UI and were
   duplicating functionality with existing API
-- Non ``dist/`` files are no longer removed from ``node_modules/`` when building
-  a docker image because packages like ``moment.js`` and ``bootstrap-datetimepicker.js``
-  don't ship their files in ``dist/``
+- Non ``dist/`` files are no longer removed from ``node_modules/`` when
+  building a docker image because packages like ``moment.js`` and
+  ``bootstrap-datetimepicker.js`` don't ship their files in ``dist/``
 - Convert TestPlans.TreeView to JSON RPC
 
 
@@ -3808,8 +3845,8 @@ Kiwi TCMS 5.2 (07 August 2018)
 
 **IMPORTANT:** this release introduces new database migrations and converts
 the Docker image to a non-root user with uid 1001. You may have to adjust
-ownership/permissions on the ``kiwi_uploads`` Docker volume! After upgrade don't
-forget to::
+ownership/permissions on the ``kiwi_uploads`` Docker volume! After upgrade
+don't forget to::
 
     ./manage.py migrate
 
@@ -3824,7 +3861,8 @@ Enhancements
   - image based on ``centos7`` image instead of ``centos/httpd``
   - image now exposes ports 8080 and 8443
   - Apache logs now printed on Docker console
-  - SSL certificates copied to ``/Kiwi/ssl`` inside Docker image instead of being bind-mounted
+  - SSL certificates copied to ``/Kiwi/ssl`` inside Docker image instead of
+    being bind-mounted
   - uploads dir changed to ``/Kiwi/uploads``
   - static dir changed to ``/Kiwi/static``
   - ``/Kiwi`` is now owned by uid 1001
@@ -3891,7 +3929,8 @@ Enhancements
 - Integrate with Django Report Builder as tech-preview. This makes it possible
   for power users and administrators to generate
   `tabular reports <http://django-report-builder.readthedocs.io/en/latest/howto/>`_.
-  You will have to know the existing DB schema if you want to create your own reports.
+  You will have to know the existing DB schema if you want to create your own
+  reports.
   See http://kiwitcms.readthedocs.io/en/latest/db.html. This feature is in
   tech-preview and it may be removed if it doesn't work out. Please comment at:
   `Issue #452 <https://github.com/kiwitcms/Kiwi/issues/452>`_.
@@ -3918,7 +3957,8 @@ Bug fixes
   `Sentry KIWI-TCMS-2C <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/618688608/>`_
 - Default to ``https://`` links if not running locally. Fixes
   `Issue #450 <https://github.com/kiwitcms/Kiwi/issues/450>`_
-- Apply missing CSS class for object history table so it can be displayed nicely
+- Apply missing CSS class for object history table so it can be displayed
+  nicely
 
 
 Refactoring
@@ -3959,12 +3999,15 @@ Enhancements
 - Don't include username in dashboard URL
 - Copy latest TestPlan text when cloning
 - Always require users to be logged in. Anonymous users will not be allowed
-  access by default. Read-only access to some views (e.g. get TestPlan or TestRun)
+  access by default. Read-only access to some views
+  (e.g. get TestPlan or TestRun)
   can be enabled by disabling ``GlobalLoginRequiredMiddleware``! Fixes
   `Issue #230 <https://github.com/kiwitcms/Kiwi/issues/230>`_
-- Start tracking change history for TestPlan, TestCase, TestRun and TestCaseRun.
+- Start tracking change history for TestPlan, TestCase, TestRun and
+  TestCaseRun.
   Fixes `Issue #294 <https://github.com/kiwitcms/Kiwi/issues/294>`_
-- History changes are recorded as unified diff which is a universally recognized format
+- History changes are recorded as unified diff which is a universally
+  recognized format
 - Show the actual changes in email notifications. Fixes
   `Issue #199 <https://github.com/kiwitcms/Kiwi/issues/199>`_
 
@@ -4068,7 +4111,8 @@ Translations
 ~~~~~~~~~~~~
 
 - More source strings marked as translatable
-- New translations for Chinese Simplified, Chinese Traditional, German and Slovenian
+- New translations for Chinese Simplified, Chinese Traditional,
+  German and Slovenian
 - Stop keeping compiled translations under git. Fixes
   `Issue #387 <https://github.com/kiwitcms/Kiwi/issues/387>`_
 
@@ -4092,9 +4136,9 @@ tcms-api 5.0 (24 July 2018)
 Kiwi TCMS 4.2 (23 June 2018)
 ----------------------------
 
-**IMPORTANT:** this release introduces new database migrations, security updates
-and GDPR related changes! It is also the first release after a great deal of
-travelling for various conferences.
+**IMPORTANT:** this release introduces new database migrations,
+security updates and GDPR related changes! It is also the first release after
+a great deal of travelling for various conferences.
 
 Security
 ~~~~~~~~
@@ -4198,8 +4242,8 @@ Enhancements
   `Issue #296 <https://github.com/kiwitcms/Kiwi/issues/296>`_
 - Add pylint plugin to check for list comprehensions. Fixes
   `Issue #270 <https://github.com/kiwitcms/Kiwi/issues/270>`_
-- Add pylint plugin to check for class attributes enclosed with double underscores.
-  These are dunders and are reserved for Python!
+- Add pylint plugin to check for class attributes enclosed with double
+  underscores. These are dunders and are reserved for Python!
 
 
 Signals
@@ -4277,8 +4321,8 @@ Bug fixes
   `Sentry KIWI-TCMS-V <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/473996504/>`_
 - Validate form field as integer, not char. Fixes
   `Sentry KIWI-TCMS-W <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/474058623/>`_
-- [docs] Remove information about importing test cases via XML. This functionality
-  was removed in version 3.49
+- [docs] Remove information about importing test cases via XML.
+  This functionality was removed in version 3.49
 
 
 
@@ -4294,9 +4338,9 @@ Refactoring
 - Remove ``mail/delete_plan.txt`` template
 - Remove ``handle_emails_pre_plan_delete`` signal handler
 - Remove the ``Export`` button from TestPlan view, use Case->Export sub-menu
-  item in the Cases tab. Also remove the export buttons from search and advanced
-  search result templates. If you'd like to export the cases from a given
-  plan you have to open it in a new browser window and use the menu
+  item in the Cases tab. Also remove the export buttons from search and
+  advanced search result templates. If you'd like to export the cases from
+  a given plan you have to open it in a new browser window and use the menu
 - Remove the ``Print`` button from plan search form
 - Remove TestRun cloning from search results and plan details, use sub-menu
 - Remove unnecessary JavaScript handling for EnvGroup edit view
@@ -4438,7 +4482,7 @@ RPC methods refactoring
 - Remove ``TestCase.check_case_status``, use ``TestCaseStatus.filter``
 - Remove ``TestCase.check_priority``, use ``Priority.filter``
 - Update signature for ``TestCase.create``, no longer accepts ``plan``,
-  ``component`` and ``bug`` dict attributes. Instead use 
+  ``component`` and ``bug`` dict attributes. Instead use
   ``TestPlan.add_case``, ``TestCase.add_component`` and ``Bug.create``
 - Remove ``TestCase.detach_bug``, use ``Bug.remove``
 - Remove ``TestCase.filter_count``
@@ -4454,14 +4498,17 @@ RPC methods refactoring
 - Remove ``TestCase.link_plan``, use ``TestPlan.add_case``
 - Rename ``TestCase.notification_add_cc`` to ``TestCase.add_notification_cc``
   and update signature
-- Rename ``TestCase.notification_get_cc_list`` to ``TestCase.get_notification_cc``
+- Rename ``TestCase.notification_get_cc_list`` to
+  ``TestCase.get_notification_cc``
   and update signature
-- Rename ``TestCase.notification_remove_cc`` to ``TestCase.remove_notification_cc``
+- Rename ``TestCase.notification_remove_cc`` to
+  ``TestCase.remove_notification_cc``
   and update signature
 - Update signature for ``TestCase.remove_component``
 - Update signature for ``TestCase.remove_tag``
 - Remove ``TestCase.store_text``, use ``TestCase.update`` with
-  ``setup``, ``breakdown``, ``action`` and ``effect`` attributes in the parameter dict
+  ``setup``, ``breakdown``, ``action`` and ``effect`` attributes in the
+  parameter dict
 - Remove ``TestCase.unlink_plan``, use ``TestPlan.remove_case``
 
 - Remove ``TestCasePlan.get``
@@ -4499,7 +4546,6 @@ RPC methods refactoring
   a ``text`` attribute in the parameter values
 - Rename ``TestPlan.unlink_env_value`` to ``TestPlan.remove_env_value``
   and update signature
-
 - Rename ``TestRun.add_cases`` to ``TestRun.add_case`` and update signature
 - Update signature for ``TestRun.add_tag``
 - Update signature for ``TestRun.create``, no longer accepts ``case``
@@ -4512,7 +4558,8 @@ RPC methods refactoring
 - Rename ``TestRun.get_test_cases`` to ``TestRun.get_cases``
 - Remove ``TestRun.get_test_case_runs``, use ``TestCaseRun.filter({'run': ?})``
 - Remove ``TestRun.get_test_plan``, use ``TestPlan.filter({'run': ?})[0]``
-- Rename ``TestRun.remove_cases`` to ``TestRun.remove_case`` and update signature
+- Rename ``TestRun.remove_cases`` to ``TestRun.remove_case`` and update
+  signature
 - Update signature for ``TestRun.remove_tag``
 - Update signature for ``TestRun.update``
 
@@ -4621,8 +4668,8 @@ Enhancements and bug fixes
   NOTE: Since django-attachments introduces new permission objects
   you will have to adjust default permissions for existing users!
   In order for them to be able to upload/delete their own files they
-  need to have ``attachments.add_attachment`` and ``atachments.delete_attachment``
-  permissions.
+  need to have ``attachments.add_attachment`` and
+  ``atachments.delete_attachment`` permissions.
 
   These same permissions are added by default to the 'Tester' group.
   If you are running an existing installation registering a new user
@@ -4654,15 +4701,16 @@ Server side API
 ~~~~~~~~~~~~~~~
 
 - Migrate to ``django-modern-rpc`` and remove home-grown XML-RPC handling code.
-  As part of this change the XML-RPC endpoint has been changed to ``/xml-rpc/``.
-  There's also a new JSON-RPC endpoint at ``/json-rpc/``!
-- ``Auth.login`` method now accepts positional parameters ``username, password``
-  instead of dict
+  As part of this change the XML-RPC endpoint has been changed to
+  ``/xml-rpc/``. There's also a new JSON-RPC endpoint at ``/json-rpc/``!
+- ``Auth.login`` method now accepts positional parameters
+  ``username, password`` instead of dict
 - ``TestCaseRun.get`` method now accepts a query dict as parameter
 - ``TestCaseRun.get_bugs`` method now accepts a query dict as parameter
 
 - Remove ``Build.lookup_id_by_name``, ``Build.lookup_name_by_id`` RPC methods
-- Remove ``Product.lookup_name_by_id``, ``Product.lookup_id_by_name`` RPC methods
+- Remove ``Product.lookup_name_by_id``, ``Product.lookup_id_by_name``
+  RPC methods
 - Remove ``Product.get_components``, use ``Product.filter_components`` instead
 - Remove ``Product.get_plans``, use ``TestPlan.filter`` instead
 - Remove ``Product.get_runs``, use ``TestRun.filter`` instead
@@ -4673,15 +4721,18 @@ Server side API
 - Remove ``TestCaseRun.get_bugs_s``, use ``TestCaseRun.get_bugs`` instead
 - Remove ``TestCaseRun.get_case_run_status``, use
   ``TestCaseRun.get_case_run_status_by_name`` instead
-- Remove ``TestCaseRun.get_completion_time``, ``TestCaseRun.get_completion_time_s``
+- Remove ``TestCaseRun.get_completion_time``,
+  ``TestCaseRun.get_completion_time_s``
   RPC methods. Instead calculate them on the client side
-- Rename ``TestCaseRun.check_case_run_status`` to ``TestCaseRun.get_case_run_status_by_name``
+- Rename ``TestCaseRun.check_case_run_status`` to
+  ``TestCaseRun.get_case_run_status_by_name``
 - ``TestCaseRun.detach_log`` will not raise exceptions when deleting logs from
   non-existing TestCaseRun objects.
 - Remove ``User.get_me``, instead use ``User.get`` without parameters
 - Remove ``Version.`` and ``Testopia.`` RPC modules
-- Update documentation for RPC methods in ``Auth``, ``Build`` and ``Env`` namespaces.
-  Unformatted documentation is also available for the rest of the RPC methods
+- Update documentation for RPC methods in ``Auth``, ``Build`` and ``Env``
+  namespaces. Unformatted documentation is also available for the rest of the
+  RPC methods
 
 **IMPORTANT:** this release introduces new database migrations!
 
@@ -4723,7 +4774,8 @@ tcms-api 1.5.0 (Jan 02 2018)
   Fixes `Issue #100 <https://github.com/MrSenko/Kiwi/issues/100>`_. (Mr. Senko)
 - Pin patternfly version to 3.30 and update templates.
   Fixes `Issue #120 <https://github.com/MrSenko/Kiwi/issues/120>`_. (Mr. Senko)
-- Show status name rather than status id in TestCaseRun change log. (Chenxiong Qi)
+- Show status name rather than status id in TestCaseRun change log.
+  (Chenxiong Qi)
 - [api] Adds a Python API client with changes that make it possible to
   execute on both Python 2 and Python 3. For now take a look at
   ``tcms_api/script_examples/`` for examples how to use it.
@@ -4731,7 +4783,8 @@ tcms-api 1.5.0 (Jan 02 2018)
   project by Petr Splichal and other contributors.
 - [api] Remove experimental support for Teiid. (Mr. Senko)
 - [api] Cache level defaults to ``CACHE_NONE`` if not set. (Mr. Senko)
-- [api] Remove persistent cache, in-memory caching is still available. (Mr. Senko)
+- [api] Remove persistent cache, in-memory caching is still available.
+  (Mr. Senko)
 - [api] Remove multicall support. (Mr. Senko)
 
 
@@ -4778,25 +4831,27 @@ IMPORTANT: this release introduces new database migrations!
 
 WARNING:
 
-    MariaDB defaults are to use ``latin1`` as the default character set and collation.
+    MariaDB defaults are to use ``latin1`` as the default character set and
+    collation.
     This will lead to 500 internal server errors when trying to save data which
-    does not use ASCII characters. This is a limitation with the underlying CentOS/MariaDB
-    docker image and a `solution <https://github.com/CentOS/CentOS-Dockerfiles/pull/146>`_
+    does not use ASCII characters. This is a limitation with the underlying
+    CentOS/MariaDB docker image and a
+    `solution <https://github.com/CentOS/CentOS-Dockerfiles/pull/146>`_
     has been proposed upstream.
 
     You can manually update your existing databases by using the following instructions::
 
         bash-4.2$ mysql -u root -p
-        Enter password: 
-        
+        Enter password:
+
         MariaDB [(none)]> ALTER DATABASE kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;
         Query OK, 1 row affected (0.00 sec)
-        
+
         bash-4.2$ mysql -D kiwi -u root -p -B -N -e "SHOW TABLES" | awk '{print "ALTER TABLE", $1, "CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;"}' > /tmp/alter_charset.txt
-        Enter password: 
-        
+        Enter password:
+
         bash-4.2$ cat /tmp/alter_charset.txt | mysql -D kiwi -u root -p
-        Enter password: 
+        Enter password:
 
     You can use the ``SHOW TABLE STATUS;`` query to see the current settings for your tables!
 
@@ -4816,9 +4871,10 @@ IMPORTANT: this release introduces new database migrations!
 - Piwik integration has been removed together with the following settings
   ``ENABLE_PIWIK_TRACKING``, ``PIWIK_SITE_ID``, ``PIWIK_SITE_API_URL``,
   ``PIWIK_SITE_JS_URL`` (Mr. Senko)
-- ``USER_GUIDE_URL`` setting has been removed. You can specify this configuration
-  directly in ``FOOTER_LINKS`` (Mr. Senko)
-- Added missing templates and views for password reset functionality (Mr. Senko)
+- ``USER_GUIDE_URL`` setting has been removed. You can specify this
+  configuration directly in ``FOOTER_LINKS`` (Mr. Senko)
+- Added missing templates and views for password reset functionality
+  (Mr. Senko)
 - Makefile updates and flake8 fixes (Mr. Senko)
 
 
@@ -4828,7 +4884,8 @@ IMPORTANT: this release introduces new database migrations!
 - Bug fix: Test Case EDIT and CLONE buttons are now working again (Mr. Senko)
 - More tests and better handling of input parameters when loading builds
   (Mr. Senko)
-- Load more of the required JavaScript and CSS files for admin forms (Mr. Senko)
+- Load more of the required JavaScript and CSS files for admin forms
+  (Mr. Senko)
 
 
 3.37 (Sep 12 2017, released on MrSenko.com)
@@ -4874,7 +4931,8 @@ IMPORTANT: this release introduces new database migrations!
   keys. Previously this was not checked (Mr. Senko)
 - Fix a traceback when showing Plan -> Tree View (Mr. Senko)
 - Fixed an issue where `Prompt.render` was wrapped within `HttpResponse`
-  causing DB connections to be closed after view functions have returned (Mr. Senko)
+  causing DB connections to be closed after view functions have returned
+  (Mr. Senko)
 - Refactored responses for AJAX calls (Chenxiong Qi)
 
 IMPORTANT: this release introduces new database migrations!
@@ -4940,10 +4998,9 @@ IMPORTANT: this release introduces new database migrations!
   (Mr. Senko)
 - Removed integration with *Errata System* and ``ERRATA_URL_PREFIX`` setting.
   Fixes `Issue #15 <https://github.com/MrSenko/Kiwi/issues/15>`_ (Mr. Senko)
-- Removed dependency on qpid-python and QPID integration which has been disabled
-  for a long time and most likely not working. This removes the ``ENABLE_QPID``
-  setting as well. Fixes
-
+- Removed dependency on qpid-python and QPID integration which has been
+  disabled for a long time and most likely not working. This removes the
+  ``ENABLE_QPID`` setting as well.
 - Removed dependency on kerberos with instructions how to add it back and
   enabled it if required (Mr. Senko)
 - Removed dependency on Kobo. Fixes
@@ -5056,8 +5113,10 @@ NOTE: this release introduces new database migrations!
 - Refactor SQL in testcases to ORM. PR #177 (Mr. Senko)
 - Improve tags search and fix hints while adding tags to selected test cases
   inside of a test plan. PR #178 (Mr. Senko)
-- Update documentation about installation steps for RHEL6. PR #179 (Mr. Senko)
-- Make it possible to build and run Nitrate as docker image. PR #180 (Mr. Senko)
+- Update documentation about installation steps for RHEL6.
+  PR #179 (Mr. Senko)
+- Make it possible to build and run Nitrate as docker image.
+  PR #180 (Mr. Senko)
 
 
 3.8.18.15 (Apr 12 2017, released on MrSenko.com)
@@ -5167,7 +5226,8 @@ NOTE: this release introduces new database migrations!
 - fix search_fields in management admin (Chenxiong Qi)
 - fix flake8 errors (Chenxiong Qi)
 - use Makefile to run flake8 (Chenxiong Qi)
-- Prevent from scrolling page up when show and close tip of environment group (Chenxiong Qi)
+- Prevent from scrolling page up when show and close tip of environment group
+  (Chenxiong Qi)
 - change file format from dos to unix (Chenxiong Qi)
 - change TCMS to Nitrate in templates (Chenxiong Qi)
 - support travis-ci (Chenxiong Qi)
@@ -5208,20 +5268,30 @@ NOTE: this release introduces new database migrations!
 
 - TCMS-689 Write unittest for testcaserun, filters, tag, version
 - TCMS-647 [Refine modulization] move app-specific code to each app-
-- TCMS-541 move javascript code of template files into js files as many as possible
-- TCMS-545 with the help of template engine(Handlebars.js), get rid of html snippets in js files
-- TCMS-663 [RFE][test run] User must click 'show all' link to confirm whether there are comments to a caserun in run detail page.
-- TCMS-666 [RFE][test run]When add issue_id to caserun, checked the option 'check to add Test Cases to BZ', system does not sync case_id to bugzilla.
+- TCMS-541 move javascript code of template files into js files as
+  many as possible
+- TCMS-545 with the help of template engine(Handlebars.js),
+  get rid of html snippets in js files
+- TCMS-663 [RFE][test run] User must click 'show all' link to confirm whether
+  there are comments to a caserun in run detail page.
+- TCMS-666 [RFE][test run]When add issue_id to caserun,
+  checked the option 'check to add Test Cases to BZ',
+  system does not sync case_id to bugzilla.
 - TCMS-688 Write unit test for xmlrpc.api.testplan and QuerySetBasedSerializer
 - TCMS-704 Replace data grid with data table on search plan/run/cases page
-- TCMS-714 [TestPlan] The plan name is invisible when the name contains java script contents.
+- TCMS-714 [TestPlan] The plan name is invisible when the name contains
+  java script contents.
 - TCMS-702 Unit test for XMLRPC serializer method
 - TCMS-659 Remove code that has already no effective in current TCMS feature
-- TCMS-542 rewrite the js code for dom manipulation with jquery and jquery ui, remove prototype.js
-- TCMS-549 rewrite the js code for event binding with jquery, remove contorls or effects based on prototype.js
+- TCMS-542 rewrite the js code for dom manipulation with jquery and jquery ui,
+  remove prototype.js
+- TCMS-549 rewrite the js code for event binding with jquery,
+  remove contorls or effects based on prototype.js
 - TCMS-184 Remove the outdate install section
-- TCMS-716 [Add cases to run]There are js errors when expanding the case details in the assign case page.
-- TCMS-717 [Search Cases]There is a js error in the console when clicking the Search Cases in the Testing tab.
+- TCMS-716 [Add cases to run]There are js errors when expanding the case
+  details in the assign case page.
+- TCMS-717 [Search Cases]There is a js error in the console when clicking
+  the Search Cases in the Testing tab.
 - TCMS-748 Security check via Revok test
 
 3.8.10-2 (Aug 27 2014)
@@ -5229,66 +5299,119 @@ NOTE: this release introduces new database migrations!
 
 - Bug 1133483 - Unable to clone runs in TCMS
 - Bug 1133912 - Script injection in notes field
-- Bug 1134166 - [test plan] when user remove tag at reviewing case tag in test plan detail page, system returns 500 error
+- Bug 1134166 - [test plan] when user remove tag at reviewing case tag in
+  test plan detail page, system returns 500 error
 
 3.8.10-1 (Aug 18 2014)
 ----------------------
 
-- Bug 1039495 - [test run][export to xml]If a case related many bugs in a run, when export the run to xml, the file only show the latest bug for this case.
-- Bug 1129058 - [TestPlan|Add cases] The browser has no response and is in dead after selecting all the selected cases
-- Bug 1130903 - [xmlrpc]User can not filter case via estimated_time when invoke TestCase.filter_count method.
-- Bug 1130933 - [xmlrpc] User can not update estimated_time to 0s when invoke TestRun.update method.
-- Bug 1130961 - [TestPlan|Components] Can't remove all the default components of one test plan at one time
-- Bug 1130966 - [xmlrpc][document] The format of estimated_time for related methods should be consistent.
-- Bug 1131885 - [XML-RPC] The Texts don't trim the spaces and record them as new versions when invoking the TestCase.store_text() and TestPlan.store_text()
-- TCMS-284 [Performance] Production Apache ssl_access_log report some resources(such as css,js,pic etc) can not found(HTTP 404) (RHBZ:1035958)
-- TCMS-371 [Performance Test][Reporting Custom] The First Slow Query on the Top Slow Queries found on prod evn (2014-06-05 to 2014-06-12)
+- Bug 1039495 - [test run][export to xml]If a case related many bugs in a run,
+  when export the run to xml, the file only show the latest bug for this case.
+- Bug 1129058 - [TestPlan|Add cases] The browser has no response and is in dead
+  after selecting all the selected cases
+- Bug 1130903 - [xmlrpc]User can not filter case via estimated_time when invoke
+  TestCase.filter_count method.
+- Bug 1130933 - [xmlrpc] User can not update estimated_time to 0s when invoke
+  TestRun.update method.
+- Bug 1130961 - [TestPlan|Components] Can't remove all the default components
+  of one test plan at one time
+- Bug 1130966 - [xmlrpc][document] The format of estimated_time for related
+  methods should be consistent.
+- Bug 1131885 - [XML-RPC] The Texts don't trim the spaces and record them
+  as new versions when invoking the TestCase.store_text() and
+  TestPlan.store_text()
+- TCMS-284 [Performance] Production Apache ssl_access_log report some
+  resources(such as css,js,pic etc) can not found(HTTP 404) (RHBZ:1035958)
+- TCMS-371 [Performance Test][Reporting Custom] The First Slow Query on the
+  Top Slow Queries found on prod evn (2014-06-05 to 2014-06-12)
 - TCMS-425 TestRun & TestCase estimated_time modify
 - TCMS-463 [Performance]Reporting Custom Section Optimize
 - TCMS-464 [Performance]Reporting Testing Report Section Optimize
-- TCMS-478 [xmlrpc]Invoke TestCase.calculate_total_estimated_time with a invalid input, system returns total_estimated_time 00:00:00 not 400 error. (RHBZ:1102459)
-- TCMS-480 Enable system-wide cache mechanism to support caching (RHBZ:1027589)
-- TCMS-481 [xmlrpc]The result for xmlrpc method TestCase.calculate_average_estimated_time is wrong. (RHBZ:1099312)
+- TCMS-478 [xmlrpc]Invoke TestCase.calculate_total_estimated_time with a
+  invalid input, system returns total_estimated_time 00:00:00 not 400 error.
+  (RHBZ:1102459)
+- TCMS-480 Enable system-wide cache mechanism to support caching
+  (RHBZ:1027589)
+- TCMS-481 [xmlrpc]The result for xmlrpc method
+  TestCase.calculate_average_estimated_time is wrong. (RHBZ:1099312)
 - TCMS-482 TestPlan.update does not support 'owner' update (RHBZ:1023679)
-- TCMS-484 [test run] If a run has multiple Environments, clone this run, the new run only clone the latest Environment. (RHBZ:1112561)
-- TCMS-485 [xmlrpc]when invoke TestCase.link_plan method, the 404 error message lack description. (RHBZ:1112967)
-- TCMS-486 [RFE] Suggest improve "Testing Report" generating for large data query (RHBZ:870384)
+- TCMS-484 [test run] If a run has multiple Environments,
+  clone this run, the new run only clone the latest Environment. (RHBZ:1112561)
+- TCMS-485 [xmlrpc]when invoke TestCase.link_plan method,
+  the 404 error message lack description. (RHBZ:1112967)
+- TCMS-486 [RFE] Suggest improve "Testing Report" generating for large
+  data query (RHBZ:870384)
 - TCMS-487 [RFE]: Add test case to the plan by ID (number) (RHBZ:869952)
-- TCMS-488 [XMLRPC] List all the methods related to "is_active"field which all needed to be fixed (RHBZ:1108009)
-- TCMS-489 [test case]A bug belongs to Run A and Run B for the same case, remove this bug from Run A in case detail page, the bug for Run B is removed as well. (RHBZ:1094603)
-- TCMS-492 replace TestRun.is_current with front-end control, and remove operation code against TestRun.is_current in view
+- TCMS-488 [XMLRPC] List all the methods related to "is_active"
+  field which all needed to be fixed (RHBZ:1108009)
+- TCMS-489 [test case]A bug belongs to Run A and Run B for the same case,
+  remove this bug from Run A in case detail page, the bug for Run B is
+  removed as well. (RHBZ:1094603)
+- TCMS-492 replace TestRun.is_current with front-end control, and remove
+  operation code against TestRun.is_current in view
 - TCMS-493 fix that two requests are emit after change a case run's status
 - TCMS-494 Build base infrastructure of unit test
 - TCMS-495 Optimize operations on test_case_texts
 - TCMS-496 rewrite the ajax style code snippets with jquery
-- TCMS-498 [TestCaseRun | Add bug] The added jira bugs don't display in the case run but actually they are added in the xml file. (RHBZ:1119666)
+- TCMS-498 [TestCaseRun | Add bug] The added jira bugs don't display in the
+  case run but actually they are added in the xml file. (RHBZ:1119666)
 - TCMS-499 [DB] Fix errors when syncdb
 - TCMS-500 [Cache] Cache part sections of pages
-- TCMS-512 [XML-RPC] TestCase.calculate_total_estimated_time() doesn't work (RHBZ:857831)
-- TCMS-513 [Performance] TCMS Reporting respond slowly and cause MySQL server high CPU usage (RHBZ:1029267)
-- TCMS-514 [XML-RPC] TestCase.calculate_average_estimated_time() doesn't work (RHBZ:857830)
-- TCMS-515 [TestRun][RemoveCase]Remove case into creating test run,the test run's estimated time didn't sync with its cases totally estimate time (RHBZ:849066)
-- TCMS-516 [xmlrpc] Can not add cases to the runs with calling the TestRun.add_cases() method (RHBZ:1119224)
-- TCMS-551 [test run] After updating the Environment value in test run detail page, user can not remove the changed environment. (RHBZ:1124210)
-- TCMS-552 [xmlrpc][document] The example for TestRun.get_test_case_runs method still support is_current parameter. (RHBZ:1126398)
-- TCMS-553 [Testing report] Generate testing report By Case Priority, the Priority order for different builds were different. (RHBZ:1125828)
-- TCMS-554 [testing report] If all plans belongs to a product have plan tag, system display 'untagged' in tag list in testing report by Plan's Tag (RHBZ:1125815)
-- TCMS-555 [Testing report] Generate testing report by Plan's Tag Per Tag View, the caserun's count for idle status was wrong. (RHBZ:1125214)
-- TCMS-556 [Testing report] Generate testing report By Plan's Tag Per Tag View, the total caserun's count statistic the duplicate caseruns. (RHBZ:1125821)
-- TCMS-557 [TCMS-495 | Texts]Texts of test case and test plan don't support Chinese characters (RHBZ:1126790)
-- TCMS-559 [testing report] the link on Paused status in testing report generated by Case-Run Tester was wrong. (RHBZ:1126353)
-- TCMS-560 [testing report] Generate testing report by Case-Run Tester, the run's count was wrong. (RHBZ:1126359)
-- TCMS-569 [testing report]Generate testing report By Plan's Tag Per Tag View, click link on caserun status to access caserun list, system returns 500 error. (RHBZ:1127621)
-- TCMS-570 [TCMS-487| Add cases] Make sure the cases which had been added to the plan can't be searched by case id (RHBZ:1127522)
-- TCMS-571 [test case]when create case without estimated_time, system can not save the case. (RHBZ:1126322)
-- TCMS-572 [xmlrpc] Do not change the content of plan's text, invoke TestPlan.store_text twice, system will save the content twice with same checksum (RHBZ:1127194)
-- TCMS-573 [test plan] If clone case with Create a Copy Settings, system will go to 500 error page. (RHBZ:1126304)
-- TCMS-574 [xmlrpc] Invoke TestCase.get_text to get a nonexistent version, system returns 500 error. (RHBZ:1127198)
-- TCMS-575 [clone test run] The estimated time format is different with input by manual (RHBZ:1126300)
+- TCMS-512 [XML-RPC] TestCase.calculate_total_estimated_time() doesn't work
+  (RHBZ:857831)
+- TCMS-513 [Performance] TCMS Reporting respond slowly and cause MySQL server
+  high CPU usage (RHBZ:1029267)
+- TCMS-514 [XML-RPC] TestCase.calculate_average_estimated_time()
+  doesn't work (RHBZ:857830)
+- TCMS-515 [TestRun][RemoveCase]Remove case into creating test run,
+  the test run's estimated time didn't sync with its cases totally
+  estimate time (RHBZ:849066)
+- TCMS-516 [xmlrpc] Can not add cases to the runs with calling the
+  TestRun.add_cases() method (RHBZ:1119224)
+- TCMS-551 [test run] After updating the Environment value in test run detail
+  page, user can not remove the changed environment. (RHBZ:1124210)
+- TCMS-552 [xmlrpc][document] The example for TestRun.get_test_case_runs method
+  still support is_current parameter. (RHBZ:1126398)
+- TCMS-553 [Testing report] Generate testing report By Case Priority,
+  the Priority order for different builds were different. (RHBZ:1125828)
+- TCMS-554 [testing report] If all plans belongs to a product have plan tag,
+  system display 'untagged' in tag list in testing report by Plan's Tag
+  (RHBZ:1125815)
+- TCMS-555 [Testing report] Generate testing report by Plan's Tag Per Tag
+  View, the caserun's count for idle status was wrong. (RHBZ:1125214)
+- TCMS-556 [Testing report] Generate testing report
+  By Plan's Tag Per Tag View, the total caserun's count statistic the
+  duplicate caseruns. (RHBZ:1125821)
+- TCMS-557 [TCMS-495 | Texts]Texts of test case and test plan don't support
+  Chinese characters (RHBZ:1126790)
+- TCMS-559 [testing report] the link on Paused status in testing report
+  generated by Case-Run Tester was wrong. (RHBZ:1126353)
+- TCMS-560 [testing report] Generate testing report by Case-Run Tester,
+  the run's count was wrong. (RHBZ:1126359)
+- TCMS-569 [testing report]Generate testing report By Plan's Tag Per Tag View,
+  click link on caserun status to access caserun list,
+  system returns 500 error. (RHBZ:1127621)
+- TCMS-570 [TCMS-487| Add cases] Make sure the cases which had been added to
+  the plan can't be searched by case id (RHBZ:1127522)
+- TCMS-571 [test case]when create case without estimated_time,
+  system can not save the case. (RHBZ:1126322)
+- TCMS-572 [xmlrpc] Do not change the content of plan's text,
+  invoke TestPlan.store_text twice, system will save the content twice with
+  same checksum (RHBZ:1127194)
+- TCMS-573 [test plan] If clone case with Create a Copy Settings,
+  system will go to 500 error page. (RHBZ:1126304)
+- TCMS-574 [xmlrpc] Invoke TestCase.get_text to get a nonexistent version,
+  system returns 500 error. (RHBZ:1127198)
+- TCMS-575 [clone test run] The estimated time format is different with input
+  by manual (RHBZ:1126300)
 - TCMS-585 Search cases lead memory leak in production server
-- TCMS-619 [XMLRPC] default_product_version is missed in the response from TestPlan
-- TCMS-96 [test plan][add child node]When add child note to plan with a nonexistent plan id, the submit btn in the warning form has no effect. (RHBZ:1038950)
-- TCMS-98 [test run][add bug]Add reduplicative bug to case in the run page, the content of the warning is incorrect. (RHBZ:1039408)
+- TCMS-619 [XMLRPC] default_product_version is missed in the response
+  from TestPlan
+- TCMS-96 [test plan][add child node]When add child note to plan with a
+  nonexistent plan id, the submit btn in the warning form has no effect.
+  (RHBZ:1038950)
+- TCMS-98 [test run][add bug]Add reduplicative bug to case in the run page,
+  the content of the warning is incorrect. (RHBZ:1039408)
 
 3.8.9-3 (Aug 11 2014)
 ---------------------
@@ -5298,7 +5421,8 @@ NOTE: this release introduces new database migrations!
 3.8.9-2 (Aug 01 2014)
 ---------------------
 
-- TCMS-538 Solve inconsistent data of product_version field in production database.
+- TCMS-538 Solve inconsistent data of product_version field in
+  production database.
 
 3.8.7-5 (May 22 2014)
 ---------------------
@@ -5325,14 +5449,19 @@ NOTE: this release introduces new database migrations!
 3.8.7-1 (Apr 03 2014)
 ----------------------
 
-- Bug 1034100 - [Performance] opening plan/id/chooseruns page causes Python interpreter consumes very hight, around 100%, CPU usage
+- Bug 1034100 - [Performance] opening plan/id/chooseruns page causes
+  Python interpreter consumes very hight, around 100%, CPU usage
 - TCMS-171 [BZ 866974] Provide TestPlan.{add,get,remove}_component
 - TCMS-177 It takes over one min to mark one case to pass in test case run.
 - TCMS-186 Too slow when create test run
-- TCMS-187 [Performance] Loading test case when expand a test case pane in Cases and Reviewing Cases tabs in a test plan page is too slow.
-- TCMS-188 [Performance] Loading test case when expand a test case pane in test run page is too slow
-- TCMS-194 [Performance] Expand a plan to display case run list in Case Runs tab in a case page
-- TCMS-195 [Performance] Expand a case run from case run list in Case Runs tab in a case page
+- TCMS-187 [Performance] Loading test case when expand a test case pane in
+  Cases and Reviewing Cases tabs in a test plan page is too slow.
+- TCMS-188 [Performance] Loading test case when expand a test case pane in
+  test run page is too slow
+- TCMS-194 [Performance] Expand a plan to display case run list in Case Runs
+  tab in a case page
+- TCMS-195 [Performance] Expand a case run from case run list in Case Runs
+  tab in a case page
 - Using VERSION.txt file instead of writing version into tcms module directly
 
 3.8.6-5 (Apr 01 2014)
@@ -5342,66 +5471,102 @@ NOTE: this release introduces new database migrations!
 
 v3.8.4 (Sep 17 2013)
 --------------------
-- Fixed bug # 1005797 - [RFE] Add a column with number of comments into Case Runs table
+- Fixed bug # 1005797 - [RFE] Add a column with number of comments into
+  Case Runs table
 - Fixed bug # 921930 - Date format of attached log links is incorrect
 
 v3.8.2 (Jul 25 2013)
 --------------------
-- Fixed bug # 988332 - Added one permission protected XMLRPC API to add group for a user.
+- Fixed bug # 988332 - Added one permission protected XMLRPC API to add group
+  for a user.
 
 v3.5 (Jul 11 2011)
 ------------------
-- Fixed bug # 545082 - Test case sort order is shared across plans for cloned cases
+- Fixed bug # 545082 - Test case sort order is shared across plans for
+  cloned cases
 - Fixed bug # 589633 - Not able to change author of plan
 - Fixed bug # 646325 - [FEAT]cases link doesn't link to the special cases
-- Fixed bug # 657160 - [TCMS3.2-2][RFE]Add tips after saving the basic information in the home page (Nitrate 3.2-2)
-- Fixed bug # 658339 - [TCMS3.2-2]The "Upload" button is stealing the function of "Create test plan" button when create new test plan
-- Fixed bug # 661613 - [Test Plan]Click "Upload" button without browse the attachment will report 404 error
-- Fixed bug # 664700 - [FEAT] TCMS - NitrateXmlrpc: add method for new Product version creation
-- Fixed bug # 665937 - cancel all the runs you want to clone will turn to the err page
-- Fixed bug # 667584 - There is a Error when exporting Test Plan without choose a plan
-- Fixed bug # 668323 - add build with non-English name succeeds but warning appears
-- Fixed bug # 670996 - Sorting on test plan results page only sorts that page instead of all the results
-- Fixed bug # 671457 - [RFE] removal confirmation dialogs should contain number of removed items
-- Fixed bug # 672415 - Add a child node to a plan, input non-numbers, causing a dead loop
+- Fixed bug # 657160 - [TCMS3.2-2][RFE]Add tips after saving the basic
+  information in the home page (Nitrate 3.2-2)
+- Fixed bug # 658339 - [TCMS3.2-2]The "Upload" button is stealing the function
+  of "Create test plan" button when create new test plan
+- Fixed bug # 661613 - [Test Plan]Click "Upload" button without browse the
+  attachment will report 404 error
+- Fixed bug # 664700 - [FEAT] TCMS - NitrateXmlrpc: add method for new Product
+  version creation
+- Fixed bug # 665937 - cancel all the runs you want to clone will turn to
+  the err page
+- Fixed bug # 667584 - There is a Error when exporting Test Plan without
+  choose a plan
+- Fixed bug # 668323 - add build with non-English name succeeds but warning
+  appears
+- Fixed bug # 670996 - Sorting on test plan results page only sorts that page
+  instead of all the results
+- Fixed bug # 671457 - [RFE] removal confirmation dialogs should contain number
+  of removed items
+- Fixed bug # 672415 - Add a child node to a plan, input non-numbers, causing a
+  dead loop
 - Fixed bug # 673421 - Sometimes "file a bug on bugzilla" function doesn't work
 - Fixed bug # 675096 - [RFE] chart showing success rate of test-plan-runs
 - Fixed bug # 678052 - Tag link causes some nonsense text issues
-- Fixed bug # 678203 - [test plan]The product version is not inconsistency in test plan
-- Fixed bug # 678220 - [Basic Information]Can not save chinese name in basic information
+- Fixed bug # 678203 - [test plan]The product version is not inconsistency in
+  test plan
+- Fixed bug # 678220 - [Basic Information]Can not save chinese name in
+  basic information
 - Fixed bug # 678465 - [Bookmarks]The box also be checked after delete
-- Fixed bug # 678468 - [Bookmarks]There is no warning UI when delete bookmark without any choice
-- Fixed bug # 678513 - [Search Plan]there is UnicodeEncodeError when searching plan via chinese tag
-- Fixed bug # 678962 - [Component]Suggest pop-up the confirm UI when remove component
-- Fixed bug # 678975 - [tag]The link of tag list cause the filter is not correctly
-- Fixed bug # 679242 - [Test Case]Click "Upload" button without browse the attachment will report 404 error
-- Fixed bug # 679243 - [Test Plan][RFE]Suggest to add the back button when add attachment in test plan
-- Fixed bug # 679662 - [Clone Case]The "Autoproposed" can not be clone to the new case
-- Fixed bug # 679663 - [Clone case]Can not select "Use the same Plan" after save the clone case without any plan
-- Fixed bug # 679675 - [Test Run]There is a UnicodeEncodeError when add a chinese tag
-- Fixed bug # 680379 - [Reporting]Click the plan number the result is not correct
+- Fixed bug # 678468 - [Bookmarks]There is no warning UI when delete bookmark
+  without any choice
+- Fixed bug # 678513 - [Search Plan]there is UnicodeEncodeError when searching
+  plan via chinese tag
+- Fixed bug # 678962 - [Component]Suggest pop-up the confirm UI when remove
+  component
+- Fixed bug # 678975 - [tag]The link of tag list cause the filter is not
+  correctly
+- Fixed bug # 679242 - [Test Case]Click "Upload" button without browse the
+  attachment will report 404 error
+- Fixed bug # 679243 - [Test Plan][RFE]Suggest to add the back button when
+  add attachment in test plan
+- Fixed bug # 679662 - [Clone Case]The "Autoproposed" can not be clone to
+  the new case
+- Fixed bug # 679663 - [Clone case]Can not select "Use the same Plan" after
+  save the clone case without any plan
+- Fixed bug # 679675 - [Test Run]There is a UnicodeEncodeError when add a
+  chinese tag
+- Fixed bug # 680379 - [Reporting]Click the plan number the result is not
+  correct
 - Fixed bug # 681328 - Filters are reset when cases are reordered
 - Fixed bug # 682077 - [Quick search]quick search run,it goes to a error page.
-- Fixed bug # 690057 - [test run]the test case detail will be auto updated without click update
-- Fixed bug # 691413 - Reporting -> Custom page starts with 'No builds found with search condition.'
-- Fixed bug # 693281 - Web UI: drop down / list fields' values should be sorted alphabetically
-- Fixed bug # 697252 - TCMS - nitrate xmlrpc: failed to attach bug info to TestCaseRun
-- Fixed bug # 701591 - [Test case]Suggest "update component"should be "Add component" in test case and del the "remove" button
-- Fixed bug # 701697 - Email notification has syntactical error (EN version) - new test run created
+- Fixed bug # 690057 - [test run]the test case detail will be auto updated
+  without click update
+- Fixed bug # 691413 - Reporting -> Custom page starts with
+  'No builds found with search condition.'
+- Fixed bug # 693281 - Web UI: drop down / list fields' values should be
+  sorted alphabetically
+- Fixed bug # 697252 - TCMS - nitrate xmlrpc: failed to attach bug info to
+  TestCaseRun
+- Fixed bug # 701591 - [Test case] Suggest "update component" should be
+  "Add component" in test case and del the "remove" button
+- Fixed bug # 701697 - Email notification has syntactical error (EN version) -
+  new test run created
 - Fixed bug # 703718 - [Usability] improve the layout the test case-run in run
-- Fixed bug # 704101 - [Test Case] export test case without select any one will generate an error XML
-- Fixed bug # 705983 - [report] product overview tab title can't be seen because the font is white.
+- Fixed bug # 704101 - [Test Case] export test case without select any one
+  will generate an error XML
+- Fixed bug # 705983 - [report] product overview tab title can't be seen
+  because the font is white.
 - Fixed bug # 706062 - bugs shown in testcase detail
 - Fixed bug # 707455 - [Test run]Can not re-order test cases in test run
 - Fixed bug # 708883 - Click Bug Id could not link to bugzilla
 - Fixed bug # 709764 - caserun link doesn't focus case in run
-- Fixed bug # 710104 - Ordered list function of WYSIWYG: Numbers are not displayed.
+- Fixed bug # 710104 - Ordered list function of WYSIWYG: Numbers are not
+  displayed.
 - Fixed bug # 711005 - Return all relevant information in xml-rpc call
 - Fixed bug # 711657 - The printable GUI can't show correctly
 - Fixed bug # 712772 - [Test case]Export testcase without select any one
 - Fixed bug # 712789 - Cannot open attachments
-- Fixed bug # 713662 - [Extremely Urgent] Some test plans lost all|most|some test cases this afternoon.
-- Fixed bug # 715209 - 100% Completion graphical progress bar does not look 100%, it has still a gap to be filled.
+- Fixed bug # 713662 - [Extremely Urgent] Some test plans lost all|most|some
+  test cases this afternoon.
+- Fixed bug # 715209 - 100% Completion graphical progress bar does not look
+  100%, it has still a gap to be filled.
 - Fixed bug # 716499 - TestPlan.update() unable to update product version
 - Fixed bug # 717521 - [test plan]spelling mistake on mouse over show
 - Fixed bug # 717683 - XMLRPC: Unable to remove tag from plan
@@ -5413,63 +5578,91 @@ v3.4.1 (Jun 10 2011)
 - Fixed bug # 590817 - Build reports include incorrect values
 - Fixed bug # 642246 - Custom build report is incomplete
 - Fixed bug # 653919 - [FEAT] filtering case-runs according to test-plan
-- Fixed bug # 691412 - [TCMS] [Reporting] : no way to search according to case priority or plan tags
+- Fixed bug # 691412 - [TCMS] [Reporting] : no way to search according to
+  case priority or plan tags
 - Fixed bug # 691695 - [TCMS] [Reporting] : generate reports per user
-- Fixed bug # 691696 - [TCMS] [Reporting] : generate reports for few build [multi selection]
-- Fixed bug # 706839 - [Advanced search]When click link "Return to homepage", come out warning "Bad Request"
+- Fixed bug # 691696 - [TCMS] [Reporting] : generate reports for few build
+  [multi selection]
+- Fixed bug # 706839 - [Advanced search]When click link "Return to homepage",
+  come out warning "Bad Request"
 - Fixed bug # 707243 - bug links don't work
 
 v3.4 (May 24 2011)
 ------------------
-- Fixed bug #690423 - [xmlrpc] - xmlrpc loses connection to the server after a short timeout
+- Fixed bug #690423 - [xmlrpc] - xmlrpc loses connection to the server after
+  a short timeout
 - Fixed bug #593760 - xmlrpc doc doesn't match actual behavior: TestRun.update
 - Fixed bug #593805 - xmlrpc Testcase.update fails when using certain arguments
 - Fixed bug #662885 - Product version update failed for run 15325.
 - Fixed bug #656098 - [FEAT] Relationship query
-- Fixed bug #699311 - [New Plan]There aren't permissions to add "classification", "products", "versions"
-- Fixed bug #705975 - [Printable copy]Can not printable copy one/more/all plan(s) in search list
-- Fixed bug #705974 - [Export plan]Can not export one/more/all plan(s) in search list
+- Fixed bug #699311 - [New Plan]There aren't permissions to add
+  "classification", "products", "versions"
+- Fixed bug #705975 - [Printable copy]Can not printable copy one/more/all
+  plan(s) in search list
+- Fixed bug #705974 - [Export plan]Can not export one/more/all plan(s) in
+  search list
 - Fixed bug #697577 - pattern ID pointing to wrong place
 - Fixed bug #682081 - [Test Case]Create a case with all fields,The UI is mess.
-- Fixed bug #603622 - TestCase.add_component: adding already attached component results in traceback
-- Fixed bug #637715 - TestCaseRun.update() should set tester to authenticated user
+- Fixed bug #603622 - TestCase.add_component: adding already attached
+  component results in traceback
+- Fixed bug #637715 - TestCaseRun.update() should set tester to
+  authenticated user
 - Fixed bug #634295 - [FEAT]Bulk status change.
 - Fixed bug #683844 - Update TinyMCE editor to recent version
 - Fixed bug #683074 - One bug listed many times
 - Fixed bug #669049 - [RFE] Editing a testrun - add a build.
-- Fixed bug #644748 - Nitrate XML-RPC Service: failed to create new TestRun using the 'TestRun.create' verb.
-- Fixed bug #587716 - FEAT - Need a new API call - to return a user object based on user ID's - such as tested_by_id
-- Fixed bug #593091 - Programmatic access to TCMS via API requires user's Kerberos username/password
-- Fixed bug #583136 - testplan.filter() returns plan objects that lack complete information
+- Fixed bug #644748 - Nitrate XML-RPC Service: failed to create new TestRun
+  using the 'TestRun.create' verb.
+- Fixed bug #587716 - FEAT - Need a new API call - to return a user object
+  based on user ID's - such as tested_by_id
+- Fixed bug #593091 - Programmatic access to TCMS via API requires user's
+  Kerberos username/password
+- Fixed bug #583136 - testplan.filter() returns plan objects that lack
+  complete information
 - Fixed bug #696047 - Default font size is too small in editor.
-- Fixed bug #672124 - Default tester does not have permission to execute test run.
-- Fixed bug #678184 - [Test Run]There are error info sorting test case in test run
-- Fixed bug #680064 - [Test Run]The product version will be added to build list when Create New Test Run
+- Fixed bug #672124 - Default tester does not have permission to execute
+  test run.
+- Fixed bug #678184 - [Test Run]There are error info sorting test case in
+  test run
+- Fixed bug #680064 - [Test Run]The product version will be added to build list
+  when Create New Test Run
 - Fixed bug #690741 - [test run]Suggest can not remove the bug from other run
-- Fixed bug #680032 - [Clone case][RFE]Add "cancel" button in mulitple clone page
+- Fixed bug #680032 - [Clone case][RFE]Add "cancel" button in
+  mulitple clone page
 - Fixed bug #680317 - [Test Run]The update function is invalid in test case run
-- Fixed bug #680318 - [Create run]There is Warning about Data truncated when create run with more than 255 in summary
-- Fixed bug #680380 - [Reporting]The warning UI is jumbled after select without choose product
-- Fixed bug #679638 - [Test case]Print test case without choose any one is the same to choose all
-- Fixed bug #698035 - [Sentmail]the reviewer received the TCMS mail rather than stage
-- Fixed bug #593818 - Setting status=1 in TestRun.update should leave it in STOPPED state, but UI shows RUNNING
-- Fixed bug #598882 - Changing status icon to 'start' or 'in progress' ("play" icon) jumps to next test case
+- Fixed bug #680318 - [Create run]There is Warning about Data truncated when
+  create run with more than 255 in summary
+- Fixed bug #680380 - [Reporting]The warning UI is jumbled after select without
+  choose product
+- Fixed bug #679638 - [Test case]Print test case without choose any one is
+  the same to choose all
+- Fixed bug #698035 - [Sentmail]the reviewer received the TCMS mail rather
+  than stage
+- Fixed bug #593818 - Setting status=1 in TestRun.update should leave it
+  in STOPPED state, but UI shows RUNNING
+- Fixed bug #598882 - Changing status icon to 'start' or 'in progress'
+  ("play" icon) jumps to next test case
 - Fixed bug #663364 - [FEAT]Unable to search for multiple authors.
-- Fixed bug #665052 - [FEAT] add test-case/test-run creation/completion date search criteria
+- Fixed bug #665052 - [FEAT] add test-case/test-run creation/completion date
+  search criteria
 - Fixed bug #671454 - [FEAT] search test-case by script
-- Fixed bug #684804 - service error when accessing test-case from plan it is not a member of
+- Fixed bug #684804 - service error when accessing test-case from plan
+  it is not a member of
 - Fixed bug #615914 - [FEAT] searches with multiple products selected
 - Fixed bug #670759 - [FEAT]Add a search item "Case Id"
 - Fixed bug #680430 - [FEAT] search for test-cases from different products
 - Fixed bug #653919 - [FEAT] filtering case-runs according to test-plan
-- Fixed bug #542968 - [FEAT]Nitrate doesn't allow group operations on test case runs
-- Fixed bug #564316 - [FEAT] tag searching - bugzilla-like categories or negative searching & regexps
+- Fixed bug #542968 - [FEAT]Nitrate doesn't allow group operations on
+  test case runs
+- Fixed bug #564316 - [FEAT] tag searching - bugzilla-like categories or
+  negative searching & regexps
 
 v3.3-4 (Mar 3 2011)
 -------------------
 - Fixed bug 681156 - [Test Plan]Can not expand all the test case in test plan.
 - Fixed Bug 679677 - [Test Run]The button should be "cancel" in Property page.
-- Fixed Bug 672495 - Old test run shows updated case information but its text version is unchanged.
+- Fixed Bug 672495 - Old test run shows updated case information but its
+  text version is unchanged.
 
 v3.3-3 (Feb 25 2011)
 --------------------
@@ -5479,19 +5672,23 @@ v3.3-3 (Feb 25 2011)
 - Fixed bug 680322 - New: [spelling mistake]"Highligt" should be "Highlight"
 - Fixed Bug 680059 - [Test Run]The total number of test case run is NULL
 - remove "running date" add "run date"
-- Fixed bug 676259 - [FEAT] Need to get a break out of manual vs auto in the tcms reporting section
+- Fixed bug 676259 - [FEAT] Need to get a break out of manual vs auto in the
+  tcms reporting section
 - Fixed bug 678643 - TestPlan.get_text - multiple failures
 - Fixed bug 674754 - [xmlrpc] TestRun.create() fails when list of tags provided
-- Fixed bug 676590 - In run execute page, 'expand all' generates tons of http requests
+- Fixed bug 676590 - In run execute page, 'expand all' generates tons of http
+  requests
 
 v3.3-2 (Feb 15 2011)
 --------------------
 - Fixed bug 664025 - TCMS main check box to control test cases doesn't work
-- Fixed bug 658372 - Cannot select "Product Version" when clone multiple test plans
+- Fixed bug 658372 - Cannot select "Product Version" when clone multiple
+  test plans
 - Fixed bug 667304 - Click "Build" label, it won't be sorted by build
 - Fixed bug 654533 - [TCMS]Document Version in test plan on opera browser
 - Fixed bug 672873 - xml export can't be parsed
-- Fixed bug 664743 - [RFE] supply existing bugs when marking test-case-run as failed
+- Fixed bug 664743 - [RFE] supply existing bugs when marking test-case-run as
+  failed
 - Fixed bug 672857 - Typo in error message when a test plan hasn't been
 - Fixed bug 657474 [TCMS3.2-2]List the runs which have not environment
 - Fixed bug 649293 - Make the case run "notes" field visible in the run
@@ -5502,18 +5699,22 @@ v3.3-2 (Feb 15 2011)
 
 v3.3-1 (Jan 24 2011)
 --------------------
-- Fixed bug 661951 - Messed-up warning message pop up when clicking Add without entering Bug ID
+- Fixed bug 661951 - Messed-up warning message pop up when clicking Add
+  without entering Bug ID
 - Fixed bug 665945 - run export button dosn't work
 - Fixed bug 667293 - The first product is the default product.
 - Fixed bug 665934 - choose no plan to "Printalbe Copy"
 - Fixed Bug 654953 - [RFE] Report an expanded list of Test Cases by Tag
-- Fixed bug 664467 - TCMS: cells overlapping when using long name for test case summary
+- Fixed bug 664467 - TCMS: cells overlapping when using long name for
+  test case summary
 - Fixed bug 662944 - Resort case run is broken in Firefox
 - Fixed bug 642644 - update nitrate.py to work with the latest xmlrpclib
 - Fixed bug 578717 - [REF] Provide filter in test run
 - Fixed bug 653812 - Filtering test case runs
-- Fixed bug 534063 - [RFE] Allow sorting / filtering test cases while executing the test run
-- Fixed bug 660234 - Add links to IDLE, PASSED, WAIVED items in report table again
+- Fixed bug 534063 - [RFE] Allow sorting / filtering test cases while executing
+  the test run
+- Fixed bug 660234 - Add links to IDLE, PASSED, WAIVED items in report
+  table again
 - Fixed bug 661579 - Incorrect bug counting method - Ugly code, Ugly bug
 - Completed feature #662679 - Attachments get lost when cloning test case
 - Completed feature #663520 QPID support for TCMS
@@ -5534,7 +5735,8 @@ v3.2-3 (Nov 30 2010)
 - Fixed #646912 - editing TC, leaving all automated/manual/autoproposed …
 - Remove the JSCal2 DateTime? widget(no longer in use).
 - Added grappelli skin for tinyMCE
-- Fixed UI Bug #657452 - [TCMS3.2-2]put mouse on the status buttons and no tips …
+- Fixed UI Bug #657452 - [TCMS3.2-2]put mouse on the status buttons and no
+  tips …
 - Fixed #658385 - TCMS is spamming with "Assignee of run X has ben …
 - Fixed #658181 - TCMS xmlrpc: 403 FORBIDDEN
 
@@ -5564,16 +5766,19 @@ v3.2-1 (Nov 9 2010)
 -------------------
 - Fixed UI Bug #635329 - [TCMS]a small spelling mistake
 - Fixed #635369 - Add a test case with tags will fail via tcms xmlrpc
-- Fixed #635931 - [TCMS]The blank row in Status' drop-down box of Search test Runs
+- Fixed #635931 - [TCMS]The blank row in Status' drop-down box of
+  Search test Runs
 - Fixed UI Bug #637471 - [TCMS][REF]The style in the home page
-- Completed Feature #637271 - Provide an XMLRPC function for adding a test case run comment
+- Completed Feature #637271 - Provide an XMLRPC function for adding a
+  test case run comment
 - Makes Django 1.2 compatible
 - Add csrf to templates/admin pages for Django 1.2
 - Fixed #638639 Test run report "Finished at" field shows "Notes" content
 - Fixed UI Bug #638019 -[REF]Test Runs in the home page
 - Bug UI Bug #641252 - [TCMS][REF]"Testing Cases" to "Cases" in REPORTING
 - Refined the js, split the case to confirmed cases and reviewing cases
-- Fixed #637474 - [TCMS][REF]The sort of "Plan Type" data and the sort of "Environment Group" data in Search Plan page.
+- Fixed #637474 - [TCMS][REF]The sort of "Plan Type" data and the sort of
+  "Environment Group" data in Search Plan page.
 - Fixed new admin URL
 - Fixed #634218 - Text box "Comment" is erased when timestamp expires
 - Fixed #634218 - clean_timestampe-->clean_timestamp
@@ -5588,13 +5793,17 @@ v3.2-1 (Nov 9 2010)
 - Fixed #644252 - error when modify the product name
 - Fixed UI Bug #644356 - Allow to sort test case runs
 - Fixed UI Bug #644354 - Displaying test case run details breaks layout
-- Fixed #644748 - Nitrate XML-RPC Service: failed to create new TestRun using the 'TestRun.create' verb
+- Fixed #644748 - Nitrate XML-RPC Service: failed to create new TestRun
+  using the 'TestRun.create' verb
 - Completed basic info editing/viewing in profile
 - Add the title/nav/footer to 404 & 500 error page
 - Add NEED_UPDATE status to test case status
-- Fixed UI Bug #629122 - [REF] Display test case notes when expanding a test case
-- Fixed UI Bug #641790 - [TCMS]No warning after inputting "1.1" in the sort of case
-- Fixed UI Bug #643303 - [RFE] test-run report - show bugs near corresponding test-cases
+- Fixed UI Bug #629122 - [REF] Display test case notes when expanding a
+  test case
+- Fixed UI Bug #641790 - [TCMS] No warning after inputting "1.1" in the sort of
+  case
+- Fixed UI Bug #643303 - [RFE] test-run report - show bugs near corresponding
+  test-cases
 - Initial completed bookmark feature
 - Completed reviewer for case and the mail notification when update reviewer
 - Fixed #640756 - can't remove bugs from a test-case
@@ -5613,12 +5822,14 @@ v3.2-1 (Nov 9 2010)
 - Fixed UI Bug #646340 - no warning is displayed when test plan is not selected
 - Changed commit style, added order to comment
 - Fixed #636813 - No direct link to comment of run
-- Fixed #646399 - In case permission are not granted, you are asked for login credentials that are never accepted.
+- Fixed #646399 - In case permission are not granted,
+  you are asked for login credentials that are never accepted.
 - Fixed redirect to review cases after case creation
 - Refined the delete comment feature
 - Fixed log display in details page
 - Fixed auto case expanding in run page
-- Fixed #637870 - The sum of the percentage of the test status categories on the overall report for a given build do not sum to 100%
+- Fixed #637870 - The sum of the percentage of the test status categories on
+  the overall report for a given build do not sum to 100%
 - Fixed toolbar style on Chrome and safari
 - Fixed update assignee feature
 - Completed password change feature
@@ -5659,11 +5870,13 @@ v3.1.1-1 (Sep 8 2010)
 - Added highcharts for future reporting
 - Add pagination feature for TCMS test plans, test cases and test runs using …
 - Fixed #628421 - Cannot remove test run tags.
-- Fixed UI Bug #625797 - test case run history should display test run summaries
+- Fixed UI Bug #625797 - test case run history should display test run
+  summaries
 - Fixed #626638 - Product version is not copied from the original when …
 - Fixed #627235 - Adding a build requires reloading page.
 - Fixed UI Bug #629977 - test-run report does not contain test-run name
-- Completed feature #542660 - TCMS: [FEAT] - allow to add sub test suite for test plan
+- Completed feature #542660 - TCMS: [FEAT] - allow to add sub test suite for
+  test plan
 - Refined add plan to case feature
 - Completed add multiple plan to a case feature
 - Fixed UI Bug #629508 - [TCMS]Create button and Test Plan box are overlapping
@@ -5714,7 +5927,8 @@ v3.0.4-1 (Jul 21 2010)
 - Fixed #609776 - Tag autocomplete is case sensitive.
 - Fixed #612881 - The filter for 'Automated' 'Manual' 'Autoproposed' is …
 - Fixed #613480 - No way is provided to go back to the plan after cloning a …
-- Fixed UI Bug #610127 - show/highlight test-case-runs assigned to me when executing …
+- Fixed UI Bug #610127 - show/highlight test-case-runs assigned to me when
+  executing …
 - Fixed UI Bug #612880 - Need total number for filter out result
 - Completed feature #607844 - (RFE) Flag tests which require the IEEE Test …
 - Completed Feature #587143 - [FEAT] Have a default component when creating …
@@ -5723,7 +5937,8 @@ v3.0.4-1 (Jul 21 2010)
 
 v3.0.3-2.svn2859 (Jun 28 2010)
 ------------------------------
-- Fixed bug #604860. Modify ComponentAdmin?'s search_fields from (('name',)) …
+- Fixed bug #604860. Modify ComponentAdmin?'s search_fields from
+  (('name',)) …
 - Update the plan list & case list & run list
 - Update the case run list
 - Change from_config()'s return value from Nitrate to NitrateXmlrpc?
@@ -5732,7 +5947,8 @@ v3.0.3-2.svn2859 (Jun 28 2010)
 - Completed edit environment in run page
 - Use updateObject() function to modify the sortkey for caserun
 - Fixed create case failed issue
-- Completed feature #604860 - further improvement Add 'pk' for each item under …
+- Completed feature #604860 - further improvement Add 'pk' for each item
+  under …
 - Fixed #608545 - [REF] Simplify the estimation time choosing
 - Fixed TestCase?.link_plan function returns
 - Fixed #603752 - Cannot reassign tests in this test run: …
@@ -5761,7 +5977,8 @@ v3.0.2-2.svn2819 (Jun 8 2010)
 - Fixed #598935 - strip whitespace when adding bug numbers
 - Fixed #598909 - Bugs filed from tcms contains HTML
 - Fixed UI Bug #599465 - Filtering test plans based on the author broken
-- Fixed #593091 - Programmatic access to TCMS via API requires user's Kerberos username/password
+- Fixed #593091 - Programmatic access to TCMS via API requires user's
+  Kerberos username/password
 - Fixed tags lacked after search issue.
 - Optimized batch automated operation form
 - Fixed some UI issues.
@@ -5781,10 +5998,13 @@ v3.0.2-1.svn2805 (Jun 3 2010)
 - Completed FEAT Bug #583118 - RFE: Attachments for test-runs.
 - Fixed #594432 - tags are not imported from xml.
 - Completed FEAT #586085 - Don't select ALL test case after changing status
-- Completed FEAT UI Bug #539077 - Provide an overall status on main test run page
-- Completed FEAT BUg #574172 - If you sort a column in a plan, the filter options …
+- Completed FEAT UI Bug #539077 - Provide an overall status on main
+  test run page
+- Completed FEAT BUg #574172 - If you sort a column in a plan,
+  the filter options …
 - Fixed Bug #567495 - Sort by category for 898 test cases results in 'Request …
-- Completed FEAT #597705 - TCMS: Unknown user: when user name have space before or …
+- Completed FEAT #597705 - TCMS: Unknown user: when user name have space
+  before or …
 - Fixed Bug #597132 - Cannot add environment properties to test run
 - Completed FEAT #578731 - Ability to view/manage all tags of case/plan.
 - Fixed Bug #595680 - TCMS: cannot disable a test plan
@@ -5814,7 +6034,8 @@ v3.0.1-1.svn2728 (May 11 2010)
 - Optimized query count for performance.
 - Add examples to XML-RPC docs.
 - Completed following methods for XML-RPC: Product.filter(),
-- Product.filter_categories(), Product.filter_components(), Product.filter_versions(),
+- Product.filter_categories(), Product.filter_components(),
+  Product.filter_versions(),
 - Product.get_component(), Product.get_tag(), Product.get_versions(),
 - Product.lookup_id_by_name(), TestCase.calculate_average_estimated_time(),
 - TestCase.calculate_total_estimated_time(), User.filter(), User.get(),
@@ -5822,8 +6043,8 @@ v3.0.1-1.svn2728 (May 11 2010)
 - Fixed UI bugs: #590647, #583908, #570351, #588970, #588565, #578828, #562110,
 - #582958, #542664.
 - Fixed app bugs: #582517, #582910, #584838, #586684, #584342, #578828
-- #577820, #583917, #562110, #580494, #570351, #589124, #577130, #561406, #586085,
-- #588595, #560791, #584459.
+- #577820, #583917, #562110, #580494, #570351, #589124, #577130, #561406,
+  #586085, #588595, #560791, #584459.
 
 v3.0-1b2.svn2665 (Apr 16 2010)
 ------------------------------
@@ -5992,10 +6213,12 @@ v1.2-3.svn2167 (Nov 25 2009)
 
 v1.2-2.svn2167 (Nov 25 2009)
 ----------------------------
-- [2152] Fixed bug #530478 - Case run case_text_version is 0 cause to file bug crash
+- [2152] Fixed bug #530478 - Case run case_text_version is 0 cause to file bug
+  crash
 - [2154] Fixed bug #538747
 - [2156] Use QuerySet update function to batch modify the database
-- [2158] Fixed bug #540794 - [FEAT]It should stay in the same tab/page after refreshing
+- [2158] Fixed bug #540794 - [FEAT]It should stay in the same tab/page after
+  refreshing
 - [2162] Restore search detect in plan all page
 - [2163] Fixed bug #538849 - Test case execute comment garbled
 - [2165] Fixed bug #540371 - Where are Cloned Tests
@@ -6050,7 +6273,8 @@ v2.0-4.svn2006.RC (Oct 16 2009)
 v2.0-3.svn1971 (Oct 14 2009)
 ----------------------------
 - Fixed most of bugs and get ready to GA.
-- KNOWN ISSUE: Search case to add to plan just complete the page design, is waiting for logic function.
+- KNOWN ISSUE: Search case to add to plan just complete the page design,
+  is waiting for logic function.
 
 v2.0-2.svn1938 (Sep 30 2009)
 ----------------------------
@@ -6059,32 +6283,45 @@ v2.0-2.svn1938 (Sep 30 2009)
 - Search with environment is available
 - Fixed app bugs:
 - Fixed #524578 - The Product version will display after finish searching plans
-- Fixed #524568 - Cannot reset the status of test cases when the status is "Passed" or "Failed"
+- Fixed #524568 - Cannot reset the status of test cases when the status is
+  "Passed" or "Failed"
 - Fixed #524534 - Can't add a new test case
 - UI Bugs:
-- Fixed #524530 - Please adjust the Next button in create new plan page0
-- Fixed #525044 - The buttons are not aligned and missing some checkboxes when searching cases
-- Fixed #524568 - Cannot reset the status of test cases when the status is "Passed" or "Failed"
-- Fixed #524140 - Cannot create test plan when the uploaded plan document's type is HTML
-- Fixed #525614 - The label that counts the number should at the same place on every ADMIN's sub-tab
-- Fixed #524777 - [FEAT]It should have breadcrumbs on Admin tab have added breadcrumb to admin page
-- Fixed #525630 - The calendar and clock icon should be kept on the same line with date and time
-- Fixed #525830 - The same buttons aligned in different tabs should keep consistent
-- Fixed #525606 - "Is active" should be kept on the same line with its check-box
+- Fixed #524530 - Please adjust the Next button in create new plan page
+- Fixed #525044 - The buttons are not aligned and missing some checkboxes
+  when searching cases
+- Fixed #524568 - Cannot reset the status of test cases when the status is
+  "Passed" or "Failed"
+- Fixed #524140 - Cannot create test plan when the uploaded plan document's
+  type is HTML
+- Fixed #525614 - The label that counts the number should at the same place on
+  every ADMIN's sub-tab
+- Fixed #524777 - [FEAT]It should have breadcrumbs on Admin tab have added
+  breadcrumb to admin page
+- Fixed #525630 - The calendar and clock icon should be kept on the same line
+  with date and time
+- Fixed #525830 - The same buttons aligned in different tabs should keep
+  consistent
+- Fixed #525606 - "Is active" should be kept on the same line with its
+  check-box
 
 v2.0-2.svn1898 (Sep 23 2009)
 ----------------------------
 - Feature:
 - Completed environment element modfiy/delete feature in admin
-- Fixed #525039 - [FEAT]It should let users add notes and set status of test cases even when the status of the test run is "Finished"
+- Fixed #525039 - [FEAT]It should let users add notes and set status of
+  test cases even when the status of the test run is "Finished"
 - UI Bugs:
 - Fixed #521327 - Test Plan Document translation not quite right
 - Fixed #524230 - can't change the "automated" field of a test case
-- Fixed #524536 - Suggest to adjust the add new test case page width and the button "Add case"
+- Fixed #524536 - Suggest to adjust the add new test case page width and
+  the button "Add case"
 - Fixed #524530 - Please adjust the Next button in create new plan page
 - Fixed #518652 - can't remove test case from a plan
-- Fixed #524774 - [FEAT]It should have a title on each of the add "Admin=>Management" webpage
-- Fixed #525044 - The buttons are not aligned and missing some checkboxes when searching cases
+- Fixed #524774 - [FEAT]It should have a title on each of the add
+  "Admin=>Management" webpage
+- Fixed #525044 - The buttons are not aligned and missing some checkboxes when
+  searching cases
 - Fixed #524778 - [Admin]The add icons should be after the fields
 
 v2.0-1.svn1863 (Sep 15 2009)
@@ -6116,7 +6353,8 @@ v0.16-5.svn1525 (Mar 17 2009)
 
 v0.16-4.svn1525 (Mar 17 2009)
 -----------------------------
-- substitute RPM metadata into the page footer so that it always shows the exact revision of the code
+- substitute RPM metadata into the page footer so that it always shows
+  the exact revision of the code
 - bump to svn revision 1525
 
 v0.16-3.svn1487 (Mar 12 2009)
@@ -6125,7 +6363,8 @@ v0.16-3.svn1487 (Mar 12 2009)
 
 v0.16-2.svn1487 (Mar 12 2009)
 -----------------------------
-- add build-requires on Django to try to get pylint to work (otherwise: tcms/urls.py:11: [E0602] Undefined variable 'patterns')
+- add build-requires on Django to try to get pylint to work
+  (otherwise: tcms/urls.py:11: [E0602] Undefined variable 'patterns')
 
 v0.16-1.svn1487 (Mar 12 2009)
 -----------------------------

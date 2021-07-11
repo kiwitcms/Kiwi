@@ -60,8 +60,8 @@ Brief history
 * Feb 2009 - Project created by Red Hat, Inc. under the name Nitrate
 * Nov 2014 - Source code published on GitHub without previous history
 * Mar 2016 - Mr. Senko starts contributing to upstream
-* Jan 2017 - First private release on MrSenko.com including updates to Django 1.8.x
-  and a working automated test suite
+* Jan 2017 - First private release on MrSenko.com including updates to
+  Django 1.8.x and a working automated test suite
 * May 2017 - Upstream appears to be unresponsive, so
   `fork <http://mrsenko.com/blog/mr-senko/2017/05/26/nitrate-is-now-kiwitestpad/>`_;
   first release which removes hard-coded bug-tracker specifications and
@@ -74,8 +74,8 @@ Brief history
   first bug report from external contributor
 * Nov 2017 - Pushed ``kiwitcms/kiwi`` to Docker Hub; merged upstream API client
   sources and modified them to work with the current code base
-* Jan 2018 - External contributions are now a fact: German translation by @xbln;
-  new team member Anton Sankov
+* Jan 2018 - External contributions are now a fact: German translation by
+  @xbln; new team member Anton Sankov
 * Mar 2018 - First pull request from non-team member
 * Apr 2018 - Enabled pylint and fixed 700 issues in the same release; commit to
   eradicate all of the remaining 3000+ issues and improve code quality
@@ -84,7 +84,8 @@ Brief history
 * Nov 2018 - Project info booth at OpenFest Sofia
 * Dec 2018 - GitLab integration support - first big code contribution by
   non-team member; more than 5 different external contributors in 2018 alone
-* Feb 2019 - Celebrating 10th anniversary with Kiwi TCMS info booth at FOSDEM Brussels
+* Feb 2019 - Celebrating 10th anniversary with Kiwi TCMS info booth at
+  FOSDEM Brussels
 * May 2019 - became the first open source TCMS system on `GitHub Marketplace <https://github.com/marketplace/kiwi-tcms/>`_
 * Jun 2019 - `OpenAwards winner <http://kiwitcms.org/blog/atodorov/2019/06/24/kiwi-tcms-is-openawards-2019-best-tech-community-winner/>`_
   in 'Best Tech Community' category
