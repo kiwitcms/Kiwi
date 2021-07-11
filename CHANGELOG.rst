@@ -1,12 +1,117 @@
 Change Log
 ==========
 
+Kiwi TCMS 10.2 (11 Jul 2021)
+----------------------------
+
+.. important::
+
+    This is a small release including upgrades to 3rd party libraries
+    (including security related updates), several improvements and bug fixes.
+
+    It is the eleventh release to include contributions via our
+    `open source bounty program`_!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements & security updates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update django from 3.2.3 to 3.2.5
+- Update django-guardian from 2.3.0 to 2.4.0
+- Update django-tree-queries from 0.5.1 to 0.5.2
+- Update psycopg2 from 2.8.6 to 2.9.1
+- Update python-gitlab from 2.7.1 to 2.9.0
+- Update node_modules/marked from 2.0.3 to 2.1.3
+- Update node_modules/html5sortable from 0.11.1 to 0.13.2
+- Update node_modules/prismjs from 1.23.0 to 1.24.1
+- Multiple select for filters on Telemetry pages. Fixes
+  `Issue #1940 <https://github.com/kiwitcms/Kiwi/issues/1940>`_
+  (Shantanu Verma + Alex Todorov)
+- Allow editting TestCase ``setup_duration`` & ``testing_duration`` fields.
+  References
+  `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (@APiligrim + Alex Todorov)
+- Move several checks to Dashboard page instead of performing them on
+  every request (Ivajlo Karabojkov)
+- Fix grammatical error in documentation (Kushal Beniwal)
+- Add health check for Issue Tracker configuration. Fixes
+  `Issue #97 <https://github.com/kiwitcms/Kiwi/issues/97>`_
+- Document API URL field for Jira integration. Closes
+  `Issue #2443 <https://github.com/kiwitcms/Kiwi/issues/2443>`_
+
+
+Settings
+~~~~~~~~
+
+- ``tcms.core.middleware.CheckSettingsMiddleware`` has been removed
+- ``tcms.core.middleware.CheckUnappliedMigrationsMiddleware`` has been removed
+
+
+API
+~~~
+
+- Method ``Version.filter()`` now returns new field called ``product__name``
+- Method ``Build.filter()`` now returns new field called ``version__value``
+- Methods ``Build.filter()``, ``Version.filter()`` and ``TestPlan.filter()``
+  will now order their results by ``product``/``version`` and then ``id``.
+- Method ``Telemetry.breakdown()`` now returns only distinct results
+
+
+Bug fixes
+~~~~~~~~~
+
+- Make error messages in admin forms more legible. Fixes
+  `Issue #2404 <https://github.com/kiwitcms/Kiwi/issues/2404>`_
+- Large images will now fit into the available space on the screen,
+  e.g. inside test case description cards. Fixes
+  `Issue #2220 <https://github.com/kiwitcms/Kiwi/issues/2220>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add automated tests for missing coverage in ``kiwi_auth.admin`` References
+  `Issue #1607 <https://github.com/kiwitcms/Kiwi/issues/1607>`_ (Mariyan Garvanski)
+- Apply eslint fixes (@sonyagennova + Alex Todorov)
+- Refactor ``TestExecution.add_link`` method to use ModelForm and extend tests. Closes
+  `Issue #1327 <https://github.com/kiwitcms/Kiwi/issues/1327>`_ (Rosen Sasov + Alex Todorov)
+- Use context manager when opening files to make pylint happier
+- Simplify 2 UI buttons on TestRun page
+- Enable ``doc8`` for README and CHANGELOG and fix formatting errors
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Czech translation <https://crowdin.com/project/kiwitcms/cs#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 10.1 (18 May 2021)
 ----------------------------
 
 .. important::
 
-    This release includes many improvements & security updates, database changes, 
+    This release includes many improvements & security updates, database changes,
     new and updated API methods, bug fixes, translation updates, new tests and
     internal refactoring.
 
