@@ -115,7 +115,7 @@ check-docs-source-in-git: docs
 
 .PHONY: doc8
 doc8:
-	doc8 docs/source
+	doc8 docs/source *.rst
 
 .PHONY: help
 help:
