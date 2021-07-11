@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"PO-Revision-Date: 2021-07-11 13:03\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1135,7 +1135,7 @@ msgstr "確認済みと未確認のステータスが１つずつは必要です
 
 #: tcms/testcases/admin.py:122
 msgid "Bug URL"
-msgstr ""
+msgstr "バグのURL"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
