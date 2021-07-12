@@ -168,7 +168,7 @@ function getTestCaseRowContent(rowContent, testCase, permissions) {
     }
 
     if (permissions['perm-add-testcase']) {
-        row.find('.js-test-case-menu-clone')[0].href = `/cases/clone/?case=${testCase.id}`;
+        row.find('.js-test-case-menu-clone')[0].href = `/cases/clone/?c=${testCase.id}`;
     }
 
     // apply visual separation between confirmed and not confirmed
@@ -612,7 +612,7 @@ function toolbarEvents(testPlanId, permissions) {
             return false;
         }
 
-         window.location.assign(`/cases/clone?case=${selectedCases.join('&case=')}`);
+        window.location.assign(`/cases/clone?c=${selectedCases.join('&c=')}`);
     });
 
     $('#testplan-toolbar-newrun').click(function() {

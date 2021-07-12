@@ -463,7 +463,7 @@ class TestCloneCase(BasePlanCase):
 
     def test_show_clone_page_with_selected_cases(self):
         response = self.client.get(
-            self.clone_url, {"case": [self.case_1.pk, self.case_2.pk]}
+            self.clone_url, {"c": [self.case_1.pk, self.case_2.pk]}
         )
 
         self.assertContains(response, "TP-%s: %s" % (self.plan.pk, self.plan.name))
@@ -474,11 +474,11 @@ class TestCloneCase(BasePlanCase):
     def test_user_without_permission_should_not_be_able_to_clone_a_case(self):
         remove_perm_from_user(self.tester, "testcases.add_testcase")
         base_url = reverse("tcms-login") + "?next="
-        expected = base_url + reverse("testcases-clone") + "?case=%d" % self.case_1.pk
+        expected = base_url + reverse("testcases-clone") + "?c=%d" % self.case_1.pk
         response = self.client.get(
             self.clone_url,
             {
-                "case": [
+                "c": [
                     self.case_1.pk,
                 ]
             },
