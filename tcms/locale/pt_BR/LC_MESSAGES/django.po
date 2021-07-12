@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-12 09:06\n"
+"PO-Revision-Date: 2021-07-12 09:14\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1138,17 +1138,19 @@ msgstr "URL do Bug"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "Kiwi TCMS tentará obter detalhes para a URL de bug fornecida usando a integração definida acima! Clique no botão `Salvar e continuar` e fique atento às mensagens no topo da tela. <strong>ATENÇÃO:</strong> em caso de falhas, alguns rastreadores de problemas voltarão a obter detalhes através do protocolo OpenGraph. Neste caso, o resultado incluirá o campo chamado `from_open_graph`."
 
 #: tcms/testcases/admin.py:150
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "Integração do rastreador de problemas externos"
 
 #: tcms/testcases/admin.py:160
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>Aviso: leia a seção\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"Configure o rastreador de bugs externos</a> antes de editar os valores abaixo!</h1>"
 
 #: tcms/testcases/admin.py:167
 msgid "Configuration health check"
