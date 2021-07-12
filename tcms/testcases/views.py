@@ -257,12 +257,16 @@ class CloneTestCaseView(View):
         return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
     def get(self, request):
-        if not self._is_request_data_valid(request):
+        if not self._is_request_data_valid(request, "c"):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
-        # Initialize the clone case form
-        clone_form = CloneCaseForm(request.GET)
-        clone_form.populate(case_ids=request.GET.getlist("case"))
+        # account for short param names in URI
+        get_params = request.GET.copy()
+        get_params.setlist("case", request.GET.getlist("c"))
+        del get_params["c"]
+
+        clone_form = CloneCaseForm(get_params)
+        clone_form.populate(case_ids=get_params.getlist("case"))
 
         context = {
             "form": clone_form,
@@ -270,10 +274,10 @@ class CloneTestCaseView(View):
         return render(request, self.template_name, context)
 
     @staticmethod
-    def _is_request_data_valid(request):
+    def _is_request_data_valid(request, field_name="case"):
         request_data = getattr(request, request.method)
 
-        if "case" not in request_data:
+        if field_name not in request_data:
             messages.add_message(
                 request, messages.ERROR, _("At least one TestCase is required")
             )
