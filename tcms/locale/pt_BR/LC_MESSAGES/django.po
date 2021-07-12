@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"PO-Revision-Date: 2021-07-12 09:06\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -427,35 +427,35 @@ msgstr "Não existem planos de teste que pertençam a você"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "dia"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "dias"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "hora"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "horas"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "minuto"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "minutos"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "segundo"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "segundos"
 
 #: tcms/core/views.py:47
 #, python-format
@@ -964,19 +964,19 @@ msgstr "Adicionar"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "Iniciar a base de dados"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Sua base de dados ainda não foi iniciada. Clique no botão abaixo para iniciá-la!"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "AVISO: esta operação levará um tempo! Esta página irá redirecionar quando finalizar."
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Por favor, aguarde"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1130,11 +1130,11 @@ msgstr "Para obter mais informações sobre a personalização do status de caso
 
 #: tcms/testcases/admin.py:47
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "É obrigatório 1 status confirmado e 1 não confirmado!"
 
 #: tcms/testcases/admin.py:122
 msgid "Bug URL"
-msgstr ""
+msgstr "URL do Bug"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
