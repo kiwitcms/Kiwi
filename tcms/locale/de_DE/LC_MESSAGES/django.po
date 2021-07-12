@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-12 09:29\n"
+"PO-Revision-Date: 2021-07-12 09:35\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1163,11 +1163,11 @@ msgstr "Fehler beim Erstellen eines externen Ticketsystems"
 
 #: tcms/testcases/admin.py:189
 msgid "Issue Tracker configuration check passed"
-msgstr "Prüfung der Konfiguration für ein externes Ticketsystems erfolgreich"
+msgstr "Prüfung der Konfiguration für die Anbindung eines externen Ticketsystems erfolgreich"
 
 #: tcms/testcases/admin.py:200
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Prüfung der Konfiguration für die Anbindung eines externen Ticketsystems fehlgeschlagen"
 
 #: tcms/testcases/forms.py:50
 msgid "**Scenario**: ... what behavior will be tested ...\n"
