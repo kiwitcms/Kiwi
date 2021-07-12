@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"PO-Revision-Date: 2021-07-12 06:22\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1134,37 +1134,39 @@ msgstr "Zahtevana sta 1 potrjen in 1 nepotrjen status!"
 
 #: tcms/testcases/admin.py:122
 msgid "Bug URL"
-msgstr ""
+msgstr "URL napake"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "Kiwi TCMS bo pridobil podatke glede na zgoraj vnesene podatke! Kliknite na gumb `Shrani in nadaljuj` ter spremljajte sporočila na vrhu strani. <strong>OPOZORILO:</strong> v primeru težav se nekateri sistemi za beleženje napak povežejo preko OpenGraph protokola. V tem primeru bodo rezultati vidni v polju `from_open_graph`."
 
 #: tcms/testcases/admin.py:150
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "Povezovanje z zunanjimi sistemi za beleženje napak"
 
 #: tcms/testcases/admin.py:160
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>Opozorilo: preberite si\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"Navodila za dodajanje povezav na zunanje sisteme za beleženje napak</a> preden spreminjate spodnje nastavitve!</h1>"
 
 #: tcms/testcases/admin.py:167
 msgid "Configuration health check"
-msgstr ""
+msgstr "Preveri stanje povezav"
 
 #: tcms/testcases/admin.py:183
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "Napaka pri dodajanju povezave na zunanji sistem beleženja napak"
 
 #: tcms/testcases/admin.py:189
 msgid "Issue Tracker configuration check passed"
-msgstr ""
+msgstr "Preverjanje povezav z zunanjimi sistemi beleženja napak je uspelo"
 
 #: tcms/testcases/admin.py:200
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Preverjanje povezav z zunanjimi sistemi beleženja napak ni uspelo"
 
 #: tcms/testcases/forms.py:50
 msgid "**Scenario**: ... what behavior will be tested ...\n"
