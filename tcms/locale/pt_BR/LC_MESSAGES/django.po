@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-12 09:29\n"
+"PO-Revision-Date: 2021-07-12 09:35\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2092,17 +2092,17 @@ msgstr "Novo inquilino do Kiwi TCMS criado"
 
 #: tcms_tenants/utils.py:198
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Convite para se juntar ao Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "Somente o super-usuário e proprietário de inquilinos podem editar as propriedades do inquilino"
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
-msgstr ""
+msgstr "Editar inquilino"
 
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Apenas usuários autorizados para este inquilino podem convidar outros"
 
