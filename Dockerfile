@@ -1,9 +1,9 @@
-FROM centos:centos8
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 
-RUN dnf -y --setopt=tsflags=nodocs install python38 mariadb mariadb-connector-c postgresql \
-    httpd python38-mod_wsgi mod_ssl sscg && \
-    dnf -y --setopt=tsflags=nodocs -y update && \
-    dnf clean all
+RUN microdnf --nodocs install python38 mariadb-connector-c libpq \
+    httpd python38-mod_wsgi mod_ssl sscg tar && \
+    microdnf --nodocs update && \
+    microdnf clean all
 
 # Apache configuration for non-root users
 EXPOSE 8080
