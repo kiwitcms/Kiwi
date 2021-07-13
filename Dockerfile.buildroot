@@ -1,9 +1,9 @@
-FROM centos:centos8
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 
-RUN dnf -y --setopt=tsflags=nodocs install python38-devel python38-wheel mariadb-connector-c-devel \
-    postgresql-devel libffi-devel gcc gettext npm unzip which rust cargo && \
-    dnf -y --setopt=tsflags=nodocs -y update && \
-    dnf clean all
+RUN microdnf --nodocs install python38-devel mariadb-connector-c-devel tar gzip \
+    postgresql-devel libffi-devel gcc gettext npm unzip which rust cargo findutils && \
+    microdnf --nodocs update && \
+    microdnf clean all
 
 
 ENV PATH /venv/bin:${PATH} \
@@ -13,16 +13,15 @@ ENV PATH /venv/bin:${PATH} \
 RUN python3 -m venv /venv
 
 # because we get some errors from other packages which need newer versions
-RUN pip3 install --no-cache-dir --upgrade pip setuptools twine
+RUN pip3 install --no-cache-dir --upgrade pip setuptools twine wheel
 
 # build and install the application
 COPY . /Kiwi/
 WORKDIR /Kiwi
 
 # install app dependencies so we can build the app later
-RUN pip3 install --no-cache-dir -r requirements/mariadb.txt
-RUN pip3 install --no-cache-dir -r requirements/postgres.txt
+RUN pip3 install --no-cache-dir -r requirements/mariadb.txt -r requirements/postgres.txt
 
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" manage.py
-RUN pip3 install wheel && ./tests/check-build
+RUN ./tests/check-build
 RUN pip3 install --no-cache-dir dist/kiwitcms-*.tar.gz
