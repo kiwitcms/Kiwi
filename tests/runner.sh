@@ -18,7 +18,6 @@ fi
 # execute test scripts
 ./tests/test_docker.sh
 ./tests/test_http.sh
-./tests/test_mysql_psql.sh
 
 
 # look for failures
