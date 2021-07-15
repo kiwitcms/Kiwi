@@ -159,8 +159,6 @@ jobs:
           pip install -r requirements/postgres.txt
           pushd tcms/ && npm install && popd
 
-          docker exec -i kiwi_db psql -c "ALTER USER kiwi CREATEDB;"
-
           export LANG=fr-fr
           TEST_DB=Postgres make test
 

@@ -87,8 +87,6 @@ jobs:
         pip install -r requirements/postgres.txt
         pushd tcms/ && npm install && popd
 
-        docker exec -i kiwi_db psql -c "ALTER USER kiwi CREATEDB;"
-
         export LANG=en-us
         # Postgres b/c it has best support for schema altering operations
         export DJANGO_SETTINGS_MODULE=tcms.settings.test.postgresql

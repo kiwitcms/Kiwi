@@ -3,14 +3,14 @@ version: '2'
 services:
     db:
         container_name: kiwi_db
-        image: centos/postgresql-12-centos7
+        image: postgres:latest
         volumes:
-            - db_data:/var/lib/pgsql/data
+            - db_data:/var/lib/postgresql/data
         restart: always
         environment:
-            POSTGRESQL_DATABASE: kiwi
-            POSTGRESQL_USER: kiwi
-            POSTGRESQL_PASSWORD: kiwi
+            POSTGRES_DB: kiwi
+            POSTGRES_USER: kiwi
+            POSTGRES_PASSWORD: kiwi
 
     web:
         container_name: kiwi_web
