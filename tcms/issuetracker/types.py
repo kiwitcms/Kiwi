@@ -36,7 +36,8 @@ class JIRA(IssueTrackerType):
 
     :base_url: - the URL of this JIRA instance
     :api_username: - a username registered in JIRA
-    :api_password: - the password for this username
+    :api_password: - API token for this username, see
+                     https://id.atlassian.com/manage-profile/security/api-tokens
 
     .. important::
 
