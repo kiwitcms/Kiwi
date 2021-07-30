@@ -140,6 +140,22 @@ class TestUserAdmin(LoggedInTestCase):
 
         self.assertRedirects(response, "/accounts/login/?next=/")
 
+    def test_admin_can_delete_other_user(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+        response = self.client.get(
+            reverse("admin:auth_user_delete", args=[self.tester.pk])
+        )
+        self.assertContains(response, _("Yes, I'm sure"))
+        response = self.client.post(
+            reverse("admin:auth_user_delete", args=[self.tester.pk]),
+            {"post": "yes"},
+            follow=True,
+        )
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertRedirects(response, "/admin/auth/user/")
+
 
 class TestGroupAdmin(LoggedInTestCase):
     @classmethod
