@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-11 17:18\n"
+"PO-Revision-Date: 2021-08-03 08:07\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1138,33 +1138,35 @@ msgstr "Hiba URL"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "A Kiwi TCMS megpróbálja lekérni a megadott hiba URL címének részleteit a fent meghatározott integráció segítségével! Kattintson a \"Mentés és folytatás\" gombra, és figyeljen a képernyő tetején megjelenő üzenetekre. <strong>FIGYELMEZTETÉS:</strong> hiba esetén egyes problémakövetők visszalépnek az OpenGraph protokollon keresztül történő adatlekérdezéshez. Ebben az esetben az eredmény tartalmazza a \"from_open_graph\" nevű mezőt."
 
 #: tcms/testcases/admin.py:150
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "Külső Issue Tracker integráció"
 
 #: tcms/testcases/admin.py:160
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>Figyelmeztetés: olvassa el\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"Külső hibakövetők konfigurálása</a> fejezetet mielőtt szerkesztené az alábbi paramétereket!</h1>"
 
 #: tcms/testcases/admin.py:167
 msgid "Configuration health check"
-msgstr ""
+msgstr "Konfiguráció állapotellenőrzés"
 
 #: tcms/testcases/admin.py:183
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "Nem sikerült létrehozni Issue Trackert"
 
 #: tcms/testcases/admin.py:189
 msgid "Issue Tracker configuration check passed"
-msgstr ""
+msgstr "Issue Tracker konfiguráció ellenőrzése sikeres"
 
 #: tcms/testcases/admin.py:200
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Az Issue Tracker konfiguráció ellenőrzése sikertelen"
 
 #: tcms/testcases/forms.py:50
 msgid "**Scenario**: ... what behavior will be tested ...\n"
