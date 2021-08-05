@@ -420,7 +420,10 @@ function updateTestPlanSelectFromProduct(callback = () => {}) {
         callback();
     };
 
-    const productIds = $('#id_product').val();
+    let productIds = $('#id_product').val();
+    if (!Array.isArray(productIds)) {
+        productIds = [productIds]
+    }
     if (!productIds.length) {
         updateCallback();
     } else {
