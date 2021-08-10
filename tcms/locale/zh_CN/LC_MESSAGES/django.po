@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"PO-Revision-Date: 2021-08-10 08:49\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -193,7 +193,7 @@ msgstr "搜索缺陷"
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
-msgstr ""
+msgstr "创建时间："
 
 #: tcms/bugs/templates/bugs/search.html:20
 #: tcms/telemetry/templates/telemetry/include/filters.html:59
@@ -435,7 +435,7 @@ msgstr ""
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "时"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
