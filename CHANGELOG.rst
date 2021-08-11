@@ -1,6 +1,93 @@
 Change Log
 ==========
 
+Kiwi TCMS 10.3 (11 Aug 2021)
+----------------------------
+
+.. important::
+
+    This is a small release which includes several improvements, bug fixes,
+    internal refactoring and updated translations.
+
+    It is the twelveth release to include contributions via our
+    `open source bounty program`_!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 3.3.0 to 4.0.0
+- Update django from 3.2.5 to 3.2.6
+- Update django-colorfield from 0.4.1 to 0.4.2
+- Update django-tree-queries from 0.5.2 to 0.6.0
+- Update python-bugzilla from 3.0.2 to 3.1.0
+- Update python-gitlab from 2.9.0 to 2.10.0
+- Update node_modules/html5sortable from 0.13.2 to 0.13.3
+- Docker image is now based on Red Hat's Universal Base Image instead of
+  CentOS 8. See https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image and
+  https://catalog.redhat.com/software/containers/ubi8/ubi-minimal/5c359a62bed8bd75a2c3fba8.
+
+  .. important::
+
+      The ``mysql`` and ``psql`` binaries in the container image are not available anymore!
+      Backup and restore instructions have been updated accordingly, see
+      https://kiwitcms.org/blog/atodorov/2018/07/30/how-to-backup-docker-volumes-for-kiwi-tcms/.
+
+- Use ``initial_setup`` command to create public tenant in case we're running a multi-tenant
+  instance. References
+  `Enterprise #88 <https://github.com/kiwitcms/enterprise/issues/88>`_ (Ivajlo Karabojkov)
+- Document that for Jira integration we use API tokens
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix a bug where drop-down selectors for test plans would not show any values when
+  product is changed. Fixes
+  `Issue #2467 <https://github.com/kiwitcms/Kiwi/issues/2467>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add tests for missing coverage in ``kiwi_auth.admin``. References
+  `Issue #1607 <https://github.com/kiwitcms/Kiwi/issues/1607>`_
+  (Mariyan Garvanski)
+- Fix some eslint issues and formatting in ``testcases/js/get.js``
+- Use shorter URL when cloning test cases from TP page. References
+  `Issue #1054 <https://github.com/kiwitcms/Kiwi/issues/1054>`_
+- Limit URI size to 10KiB. This alone should allow for more than 1000 PKs
+  specified for cloning. In addition Django itself limits the maximum number of
+  GET/POST fields to 1000 via the ``DATA_UPLOAD_MAX_NUMBER_FIELDS`` setting,
+  see https://docs.djangoproject.com/en/3.2/ref/settings/#data-upload-max-number-fields.
+  Closes
+  `Issue #1054 <https://github.com/kiwitcms/Kiwi/issues/1054>`_
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 10.2 (11 Jul 2021)
 ----------------------------
 
