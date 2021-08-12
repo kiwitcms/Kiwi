@@ -23,6 +23,8 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
+    {% include "js_includes.html" %}
+    
     {% if not REQUEST_CONTENTS.nonav %}
         {% include 'navbar.html' %}
     {% endif %}
@@ -38,5 +40,7 @@
     {% endfor %}
 
     {% block contents %}{% endblock %}
+
+    {% block page_js %}{% endblock %}
 </body>
 </html>
