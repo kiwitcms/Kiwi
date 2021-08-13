@@ -239,10 +239,11 @@
 
     </div><!-- /row -->
 </div>
-<script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 
-<script src="{% static 'js/utils.js' %}"></script>
-<script src="{% static 'js/jsonrpc.js' %}"></script>
+{% endblock %}
+
+
+{% block page_js %}
 <script src="{% static 'js/tags.js' %}"></script>
 <script src="{% static 'js/bugs.js' %}"></script>
 <script src="{% static 'testcases/js/get.js' %}"></script>
