@@ -32,7 +32,7 @@ class Command(BaseCommand):
             call_command(
                 "create_tenant",
                 "--verbosity=%i" % kwargs["verbosity"],
-                "-schema_name public",
+                "--schema_name public",
                 "--name 'Public tenant'",
                 "--paid_until %s" % paid_until.isoformat(),
                 "--publicly_readable False",
