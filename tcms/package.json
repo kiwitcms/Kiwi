@@ -15,5 +15,15 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1"
+  },
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": ["*.js"],
+        "rules": {
+          "no-undef": "off"
+        }
+      }
+    ]
   }
 }
