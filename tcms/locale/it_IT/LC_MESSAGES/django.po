@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"PO-Revision-Date: 2021-08-19 15:27\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -371,7 +371,7 @@ msgstr "Esecuzioni test"
 #: tcms/core/templates/dashboard.html:15
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% completo"
 
 #: tcms/core/templates/dashboard.html:24
 #: tcms/testruns/templates/testruns/get.html:73
@@ -426,35 +426,35 @@ msgstr "Nessun TestPlan che ti appartiene"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "giorno"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "giorni"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "ora"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "ore"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "minuto"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "minuti"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "secondo"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "secondi"
 
 #: tcms/core/views.py:47
 #, python-format
@@ -464,7 +464,7 @@ msgstr "L'URL di base non è configurato! Vedi <a href=\"%(doc_url)s\">documenta
 #: tcms/core/views.py:71
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "Hai %(unapplied_migration_count)s migrazioni non applicate. Vedi <a href=\"%(doc_url)s\">la documentazione</a>"
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -472,7 +472,7 @@ msgstr "Questo indirizzo e-mail è già in uso"
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
-msgstr ""
+msgstr "utenti"
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
@@ -517,7 +517,7 @@ msgstr "Il tuo profilo è stato attivato con successo"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "Build"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -525,7 +525,7 @@ msgstr "Abilita la segnalazione a questo Tracciatore Problemi configurando il su
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Formato della data non valida. Prevista AAAA-MM-GG [HH:MM:SS]."
 
 #: tcms/settings/common.py:291
 msgid "DASHBOARD"
@@ -545,7 +545,7 @@ msgstr "Nuovo Caso Test"
 
 #: tcms/settings/common.py:299
 msgid "New Test Run"
-msgstr ""
+msgstr "Nuova Esecuzione di Prova"
 
 #: tcms/settings/common.py:301
 msgid "New Bug"
@@ -610,7 +610,7 @@ msgstr "Tutto il resto"
 
 #: tcms/settings/common.py:343
 msgid "PLUGINS"
-msgstr ""
+msgstr "PLUGIN"
 
 #: tcms/settings/common.py:353
 msgid "Report an Issue"
@@ -622,7 +622,7 @@ msgstr "Chiedi aiuto su StackOverflow"
 
 #: tcms/settings/common.py:360
 msgid "Donate €5 via Open Collective"
-msgstr ""
+msgstr "Dona €5 tramite Open Collective"
 
 #: tcms/settings/common.py:362
 msgid "Administration Guide"
@@ -648,7 +648,7 @@ msgstr "NUOVO: TestRun #%(pk)d - %(summary)s"
 #: tcms/signals.py:222
 #, python-format
 msgid "NEW: Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NUOVO: Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -667,7 +667,7 @@ msgstr "TOTALE"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 msgid "Detailed information about test execution status"
-msgstr ""
+msgstr "Informazioni dettagliate sullo stato d'esecuzione della prova"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:40
 msgid "Test Plan"
@@ -710,15 +710,15 @@ msgstr "Categorie"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Positivo"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutrale"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negativo"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
@@ -726,19 +726,19 @@ msgstr "Matrice Stato Test"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:14
 msgid "Include child TPs"
-msgstr ""
+msgstr "Includi TP figli"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:20
 msgid "Order"
-msgstr ""
+msgstr "Ordine"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Ascending"
-msgstr ""
+msgstr "Crescente"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Descending"
-msgstr ""
+msgstr "Decrescente"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
@@ -807,7 +807,15 @@ msgid "Bug %(pk)s has been assigned to you.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s"
-msgstr ""
+msgstr "Il bug %(pk)s ti è stato assegnato.\n\n"
+"Link: %(bug_url)s\n\n"
+"Sommario: %(summary)s\n"
+"Creato alle: %(creation_date)s\n"
+"Segnalatore: %(reporter)s\n"
+"Assegnatario: %(assignee)s\n"
+"Prodotto: %(product)s\n"
+"Versione: %(version)s\n"
+"Build: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -955,19 +963,19 @@ msgstr "Aggiungi"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "Inizializza il database"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Il tuo database non è ancora stato inizializzato. Clicca il pulsante seguente per inizializzarlo!"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "ATTENZIONE: Quest'operazione impiegherà un po' di tempo! Questa pagina reindirizzerà quando fatto."
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Sei pregato d'attendere"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1115,15 +1123,17 @@ msgstr "Registra nuovo profilo"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Per ulteriori informazioni sulla personalizzazione degli stati del caso di prova vedi\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        la documentazione</a>!"
 
 #: tcms/testcases/admin.py:47
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "1 stato confermato e 1 non confermato richiesto!"
 
 #: tcms/testcases/admin.py:122
 msgid "Bug URL"
-msgstr ""
+msgstr "URL del Bug"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
