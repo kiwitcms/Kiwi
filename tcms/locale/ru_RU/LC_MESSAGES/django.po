@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"PO-Revision-Date: 2021-08-19 12:39\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1198,7 +1198,7 @@ msgstr "УДАЛЕНО: тест-кейс #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:22
 msgid "Test case status"
-msgstr ""
+msgstr "Статус тестового кейса"
 
 #: tcms/testcases/models.py:23
 msgid "Test case statuses"
@@ -1297,16 +1297,16 @@ msgstr "Приоритет"
 #: tcms/testcases/templates/testcases/get.html:87
 #: tcms/testcases/templates/testcases/mutable.html:104
 msgid "Setup duration"
-msgstr ""
+msgstr "Длительность установки"
 
 #: tcms/testcases/templates/testcases/get.html:92
 #: tcms/testcases/templates/testcases/mutable.html:110
 msgid "Testing duration"
-msgstr ""
+msgstr "Длительность тестирования"
 
 #: tcms/testcases/templates/testcases/get.html:97
 msgid "Expected duration"
-msgstr ""
+msgstr "Ожидаемая длительность"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:127
@@ -1473,7 +1473,7 @@ msgstr "Установить исходный TP как родитель нов�
 #: tcms/testplans/templates/testplans/get.html:24
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "Введите имя пользователя, email или ID пользователя:"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
@@ -1483,7 +1483,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:23
 msgid "Are you sure?"
-msgstr ""
+msgstr "Уверены?"
 
 #: tcms/testplans/templates/testplans/get.html:27
 msgid "Cannot create TestRun with unconfirmed test cases"
@@ -1491,7 +1491,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Ошибка при добавлении теста"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1503,7 +1503,7 @@ msgstr "Тип плана"
 
 #: tcms/testplans/templates/testplans/get.html:99
 msgid "Test cases"
-msgstr ""
+msgstr "Тест-кейс"
 
 #: tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/mutable.html:11
@@ -1529,12 +1529,12 @@ msgstr "Переупорядочить кейсы"
 #: tcms/testplans/templates/testplans/get.html:253
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Поиск и добавление тестовых кейсов"
 
 #: tcms/testplans/templates/testplans/get.html:262
 #: tcms/testruns/templates/testruns/get.html:317
 msgid "Advanced search"
-msgstr ""
+msgstr "Расширенный поиск"
 
 #: tcms/testplans/templates/testplans/get.html:285
 msgid "Active test runs"
@@ -1542,11 +1542,11 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:307
 msgid "More"
-msgstr ""
+msgstr "Еще"
 
 #: tcms/testplans/templates/testplans/get.html:309
 msgid "Inactive"
-msgstr ""
+msgstr "Неактивный"
 
 #: tcms/testplans/templates/testplans/get.html:443
 #: tcms/testruns/templates/testruns/get.html:491
@@ -1629,7 +1629,7 @@ msgstr "Для получения дополнительной информац�
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "Требуется 1 отрицательный, 1 нейтральный и 1 положительный статус!"
 
 #: tcms/testruns/models.py:169
 msgid "Test execution statuses"
@@ -1637,11 +1637,11 @@ msgstr "Статусы выполнения тестов"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "Неподтвержденные тесты не были добавлены"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Тип 0 или 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1721,7 +1721,7 @@ msgstr "Дата прогона"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
-msgstr ""
+msgstr "Версия текста"
 
 #: tcms/testruns/templates/testruns/get.html:436
 msgid "Bugs and hyperlinks"
@@ -2016,7 +2016,7 @@ msgstr "Полное имя"
 
 #: tcms_tenants/forms.py:27
 msgid "Invalid string"
-msgstr ""
+msgstr "Неправильная строка"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -2057,7 +2057,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "Адрес почты"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
