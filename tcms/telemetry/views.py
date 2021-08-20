@@ -33,3 +33,10 @@ class TestingExecutionTrendsView(TemplateView):
 class TestingTestCaseHealth(TemplateView):
 
     template_name = "telemetry/testing/test-case-health.html"
+
+@method_decorator(
+    login_required, name="dispatch"
+)  # pylint: disable=missing-permission-required
+class ManagementPerformance(TemplateView):
+
+    template_name = "telemetry/management/performance.html"

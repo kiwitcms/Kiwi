@@ -114,6 +114,9 @@ function drawChart(data, type, selector) {
         chartData.push(dataEntry);
     });
 
+    console.log('data', data)
+    console.log('groups', groups)
+    console.log('chartData', chartData)
     let chartConfig = $().c3ChartDefaults().getDefaultStackedBarConfig();
     chartConfig.bindto = selector;
     chartConfig.axis = {

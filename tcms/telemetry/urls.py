@@ -23,4 +23,9 @@ urlpatterns = [
         views.TestingTestCaseHealth.as_view(),
         name="test-case-health",
     ),
+    re_path(
+        r"^management/performance/$",
+        views.ManagementPerformance.as_view(),
+        name="management-performance",
+    ),
 ]
