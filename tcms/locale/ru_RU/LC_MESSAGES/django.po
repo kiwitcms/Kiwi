@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-08-19 12:39\n"
+"POT-Creation-Date: 2021-08-26 15:34+0000\n"
+"PO-Revision-Date: 2021-08-26 17:44\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -516,9 +516,32 @@ msgstr "Срок действия ключа активации истек"
 msgid "Your account has been activated successfully"
 msgstr "Ваша учетная запись успешно активирована"
 
+#: tcms/management/models.py:52
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
+msgid "Priorities"
+msgstr "Приоритеты"
+
 #: tcms/management/models.py:121
 msgid "Builds"
 msgstr ""
+
+#: tcms/management/models.py:132
+#: tcms/testcases/templates/testcases/search.html:118
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:91
+#: tcms/testruns/templates/testruns/get.html:289
+#: tcms/testruns/templates/testruns/search.html:26
+msgid "Tag"
+msgstr "Тег"
+
+#: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
+#: tcms/testcases/templates/testcases/search.html:148
+#: tcms/testplans/templates/testplans/get.html:455
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/get.html:368
+#: tcms/testruns/templates/testruns/search.html:195
+msgid "Tags"
+msgstr "Теги"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -701,11 +724,8 @@ msgstr "Автоматизирован"
 msgid "Manual"
 msgstr "Ручной"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
-msgid "Priorities"
-msgstr "Приоритеты"
-
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
+#: tcms/testcases/models.py:41
 msgid "Categories"
 msgstr "Категории"
 
@@ -932,15 +952,6 @@ msgstr "Следующая страница"
 #: tcms/templates/include/pagination.html:31
 msgid "Last page"
 msgstr "Последняя страница"
-
-#: tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:148
-#: tcms/testplans/templates/testplans/get.html:455
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/search.html:195
-msgid "Tags"
-msgstr "Теги"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:162
@@ -1417,14 +1428,6 @@ msgstr "Оба"
 msgid "Component"
 msgstr "Компонент"
 
-#: tcms/testcases/templates/testcases/search.html:118
-#: tcms/testplans/templates/testplans/get.html:216
-#: tcms/testplans/templates/testplans/search.html:91
-#: tcms/testruns/templates/testruns/get.html:289
-#: tcms/testruns/templates/testruns/search.html:26
-msgid "Tag"
-msgstr "Тег"
-
 #: tcms/testcases/templates/testcases/search.html:121
 #: tcms/testplans/templates/testplans/search.html:94
 #: tcms/testruns/templates/testruns/search.html:29
@@ -1446,7 +1449,7 @@ msgstr "История"
 msgid "TestCase cloning was successful"
 msgstr "Клонирование тест-кейса прошло успешно"
 
-#: tcms/testcases/views.py:278
+#: tcms/testcases/views.py:282
 msgid "At least one TestCase is required"
 msgstr "Требуется хотя бы один тест-кейс"
 
