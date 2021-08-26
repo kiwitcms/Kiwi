@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:32\n"
+"POT-Creation-Date: 2021-08-26 15:34+0000\n"
+"PO-Revision-Date: 2021-08-26 17:43\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -516,9 +516,32 @@ msgstr "此啟用金鑰已過期"
 msgid "Your account has been activated successfully"
 msgstr "您的帳戶已成功啟用"
 
+#: tcms/management/models.py:52
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
+msgid "Priorities"
+msgstr "優先程度"
+
 #: tcms/management/models.py:121
 msgid "Builds"
 msgstr ""
+
+#: tcms/management/models.py:132
+#: tcms/testcases/templates/testcases/search.html:118
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:91
+#: tcms/testruns/templates/testruns/get.html:289
+#: tcms/testruns/templates/testruns/search.html:26
+msgid "Tag"
+msgstr "標籤"
+
+#: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
+#: tcms/testcases/templates/testcases/search.html:148
+#: tcms/testplans/templates/testplans/get.html:455
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/get.html:368
+#: tcms/testruns/templates/testruns/search.html:195
+msgid "Tags"
+msgstr "標籤"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -701,11 +724,8 @@ msgstr "自動化"
 msgid "Manual"
 msgstr "手動"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
-msgid "Priorities"
-msgstr "優先程度"
-
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
+#: tcms/testcases/models.py:41
 msgid "Categories"
 msgstr "分類"
 
@@ -932,15 +952,6 @@ msgstr "下一頁"
 #: tcms/templates/include/pagination.html:31
 msgid "Last page"
 msgstr "最後一頁"
-
-#: tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:148
-#: tcms/testplans/templates/testplans/get.html:455
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/search.html:195
-msgid "Tags"
-msgstr "標籤"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:162
@@ -1417,14 +1428,6 @@ msgstr "都"
 msgid "Component"
 msgstr "元件/組件"
 
-#: tcms/testcases/templates/testcases/search.html:118
-#: tcms/testplans/templates/testplans/get.html:216
-#: tcms/testplans/templates/testplans/search.html:91
-#: tcms/testruns/templates/testruns/get.html:289
-#: tcms/testruns/templates/testruns/search.html:26
-msgid "Tag"
-msgstr "標籤"
-
 #: tcms/testcases/templates/testcases/search.html:121
 #: tcms/testplans/templates/testplans/search.html:94
 #: tcms/testruns/templates/testruns/search.html:29
@@ -1446,7 +1449,7 @@ msgstr "歷史紀錄"
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
-#: tcms/testcases/views.py:278
+#: tcms/testcases/views.py:282
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
