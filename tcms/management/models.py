@@ -49,7 +49,7 @@ class Priority(models.Model, UrlMixin):
 
     class Meta:
         ordering = ["value"]
-        verbose_name_plural = u"priorities"
+        verbose_name_plural = _("Priorities")
 
     def __str__(self):
         return self.value
@@ -129,8 +129,8 @@ class Tag(models.Model, UrlMixin):
 
     class Meta:
         ordering = ["name"]
-        verbose_name = u"tag"
-        verbose_name_plural = u"tags"
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
     def __str__(self):
         return self.name

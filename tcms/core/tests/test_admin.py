@@ -35,9 +35,9 @@ class TestAdminView(LoggedInTestCase):
         self.assertContains(response, _("Builds"))
         self.assertContains(response, "Classifications")
         self.assertContains(response, "Components")
-        self.assertContains(response, "Priorities")
+        self.assertContains(response, _("Priorities"))
         self.assertContains(response, "Products")
-        self.assertContains(response, "Tags")
+        self.assertContains(response, _("Tags"))
         self.assertContains(response, "Versions")
 
         if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
@@ -50,7 +50,7 @@ class TestAdminView(LoggedInTestCase):
 
         # for tcms.testcases
         self.assertContains(response, "Bug trackers")
-        self.assertContains(response, "Test case categories")
+        self.assertContains(response, _("Categories"))
 
         self.assertContains(response, _("Test case statuses"))
         self.assertContains(response, "Testcases")

@@ -8,7 +8,7 @@ class MultipleEmailField(EmailField):
     delimiter = ","
 
     default_error_messages = {
-        "invalid": u"%(value)s is/are not valid email addresse(s).",
+        "invalid": "%(value)s is/are not valid email addresse(s).",
     }
 
     def to_python(self, value):
