@@ -152,7 +152,7 @@ class SimilarStringChecker(BaseChecker):
 
     def close(self):
         for filepath in self.all_template_files:
-            with open(filepath, "r") as file:
+            with open(filepath, "r", encoding="utf-8") as file:
                 self.parse_translation_string(filepath, file.readlines())
 
         for error_message in self.error_messages:
