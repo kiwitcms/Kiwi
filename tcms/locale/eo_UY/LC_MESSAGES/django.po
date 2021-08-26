@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-07-10 15:33\n"
+"POT-Creation-Date: 2021-08-26 15:34+0000\n"
+"PO-Revision-Date: 2021-08-26 17:44\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -502,9 +502,32 @@ msgstr "crwdns297:0crwdne297:0"
 msgid "Your account has been activated successfully"
 msgstr "crwdns298:0crwdne298:0"
 
+#: tcms/management/models.py:52
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
+msgid "Priorities"
+msgstr "crwdns960:0crwdne960:0"
+
 #: tcms/management/models.py:121
 msgid "Builds"
 msgstr "crwdns1320:0crwdne1320:0"
+
+#: tcms/management/models.py:132
+#: tcms/testcases/templates/testcases/search.html:118
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:91
+#: tcms/testruns/templates/testruns/get.html:289
+#: tcms/testruns/templates/testruns/search.html:26
+msgid "Tag"
+msgstr "crwdns388:0crwdne388:0"
+
+#: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
+#: tcms/testcases/templates/testcases/search.html:148
+#: tcms/testplans/templates/testplans/get.html:455
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/get.html:368
+#: tcms/testruns/templates/testruns/search.html:195
+msgid "Tags"
+msgstr "crwdns494:0crwdne494:0"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -687,11 +710,8 @@ msgstr "crwdns424:0crwdne424:0"
 msgid "Manual"
 msgstr "crwdns792:0crwdne792:0"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
-msgid "Priorities"
-msgstr "crwdns960:0crwdne960:0"
-
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
+#: tcms/testcases/models.py:41
 msgid "Categories"
 msgstr "crwdns962:0crwdne962:0"
 
@@ -892,15 +912,6 @@ msgstr "crwdns440:0crwdne440:0"
 #: tcms/templates/include/pagination.html:31
 msgid "Last page"
 msgstr "crwdns441:0crwdne441:0"
-
-#: tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:148
-#: tcms/testplans/templates/testplans/get.html:455
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/search.html:195
-msgid "Tags"
-msgstr "crwdns494:0crwdne494:0"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:162
@@ -1366,14 +1377,6 @@ msgstr "crwdns532:0crwdne532:0"
 msgid "Component"
 msgstr "crwdns427:0crwdne427:0"
 
-#: tcms/testcases/templates/testcases/search.html:118
-#: tcms/testplans/templates/testplans/get.html:216
-#: tcms/testplans/templates/testplans/search.html:91
-#: tcms/testruns/templates/testruns/get.html:289
-#: tcms/testruns/templates/testruns/search.html:26
-msgid "Tag"
-msgstr "crwdns388:0crwdne388:0"
-
 #: tcms/testcases/templates/testcases/search.html:121
 #: tcms/testplans/templates/testplans/search.html:94
 #: tcms/testruns/templates/testruns/search.html:29
@@ -1395,7 +1398,7 @@ msgstr "crwdns514:0crwdne514:0"
 msgid "TestCase cloning was successful"
 msgstr "crwdns304:0crwdne304:0"
 
-#: tcms/testcases/views.py:278
+#: tcms/testcases/views.py:282
 msgid "At least one TestCase is required"
 msgstr "crwdns303:0crwdne303:0"
 
