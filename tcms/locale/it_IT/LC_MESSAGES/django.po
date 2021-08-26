@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-10 15:23+0000\n"
-"PO-Revision-Date: 2021-08-19 15:27\n"
+"POT-Creation-Date: 2021-08-26 15:34+0000\n"
+"PO-Revision-Date: 2021-08-26 17:44\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -515,9 +515,32 @@ msgstr "Questa chiave di attivazione è scaduta"
 msgid "Your account has been activated successfully"
 msgstr "Il tuo profilo è stato attivato con successo"
 
+#: tcms/management/models.py:52
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
+msgid "Priorities"
+msgstr "Priorità"
+
 #: tcms/management/models.py:121
 msgid "Builds"
 msgstr "Build"
+
+#: tcms/management/models.py:132
+#: tcms/testcases/templates/testcases/search.html:118
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/search.html:91
+#: tcms/testruns/templates/testruns/get.html:289
+#: tcms/testruns/templates/testruns/search.html:26
+msgid "Tag"
+msgstr "Tag"
+
+#: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
+#: tcms/testcases/templates/testcases/search.html:148
+#: tcms/testplans/templates/testplans/get.html:455
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/get.html:368
+#: tcms/testruns/templates/testruns/search.html:195
+msgid "Tags"
+msgstr "Etichette"
 
 #: tcms/rpc/api/bug.py:74
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
@@ -700,11 +723,8 @@ msgstr "Automatizzato"
 msgid "Manual"
 msgstr "Manuale"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
-msgid "Priorities"
-msgstr "Priorità"
-
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
+#: tcms/testcases/models.py:41
 msgid "Categories"
 msgstr "Categorie"
 
@@ -930,15 +950,6 @@ msgstr "Prossima pagina"
 #: tcms/templates/include/pagination.html:31
 msgid "Last page"
 msgstr "Ultima pagina"
-
-#: tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:148
-#: tcms/testplans/templates/testplans/get.html:455
-#: tcms/testplans/templates/testplans/search.html:117
-#: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/search.html:195
-msgid "Tags"
-msgstr "Etichette"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:162
@@ -1417,14 +1428,6 @@ msgstr "Entrambi"
 msgid "Component"
 msgstr "Componente"
 
-#: tcms/testcases/templates/testcases/search.html:118
-#: tcms/testplans/templates/testplans/get.html:216
-#: tcms/testplans/templates/testplans/search.html:91
-#: tcms/testruns/templates/testruns/get.html:289
-#: tcms/testruns/templates/testruns/search.html:26
-msgid "Tag"
-msgstr "Tag"
-
 #: tcms/testcases/templates/testcases/search.html:121
 #: tcms/testplans/templates/testplans/search.html:94
 #: tcms/testruns/templates/testruns/search.html:29
@@ -1446,7 +1449,7 @@ msgstr "Cronologia"
 msgid "TestCase cloning was successful"
 msgstr "Clonazione TestCase avvenuta con successo"
 
-#: tcms/testcases/views.py:278
+#: tcms/testcases/views.py:282
 msgid "At least one TestCase is required"
 msgstr "Almeno un TestCase richiesto"
 
