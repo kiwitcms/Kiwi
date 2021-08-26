@@ -9,7 +9,7 @@ def get_install_requires(path):
     requires = []
     links = []
 
-    with open(path, "r") as file:
+    with open(path, "r", encoding="utf-8") as file:
         for line in file:
             if line.startswith("-r "):
                 continue
@@ -33,7 +33,7 @@ DEPENDENCY_LINKS = DEPENDENCY_TARBALLS + DEPENDENCY_BASE
 
 
 def get_long_description():
-    with open("README.rst", "r") as file:
+    with open("README.rst", "r", encoding="utf-8") as file:
         return file.read()
 
 
