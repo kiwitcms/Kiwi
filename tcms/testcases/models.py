@@ -38,7 +38,7 @@ class Category(models.Model, UrlMixin):
     description = models.TextField(blank=True)
 
     class Meta:
-        verbose_name_plural = u"test case categories"
+        verbose_name_plural = _("Categories")
         unique_together = ("product", "name")
 
     def __str__(self):
