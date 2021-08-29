@@ -28,8 +28,10 @@ class TestDashboard(LoggedInTestCase):
         # used to reproduce Sentry #KIWI-TCMS-38 where rendering fails
         # with that particular value
         cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求", author=cls.tester)
-        doc_url_base = "https://kiwitcms.readthedocs.io/en/latest/admin.html"\
-                       "#configure-kiwi-s-base-url"
+        doc_url_base = (
+            "https://kiwitcms.readthedocs.io/en/latest/admin.html"
+            "#configure-kiwi-s-base-url"
+        )
         cls.base_url_error_message = _(
             "Base URL is not configured! "
             'See <a href="%(doc_url)s">documentation</a> and '
@@ -38,14 +40,14 @@ class TestDashboard(LoggedInTestCase):
             "doc_url": doc_url_base,
             "admin_url": reverse("admin:sites_site_change", args=[settings.SITE_ID]),
         }
-        doc_url_ssl = "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"\
-                      "#ssl-configuration"
+        doc_url_ssl = (
+            "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
+            "#ssl-configuration"
+        )
         cls.ssl_error_message = _(
             "You are not using secure connection (SSL). "
             'See <a href="%(doc_url)s">documentation</a>'
-        ) % {
-            "doc_url": doc_url_ssl
-        }
+        ) % {"doc_url": doc_url_ssl}
 
     def test_when_not_logged_in_redirects_to_login(self):
         self.client.logout()

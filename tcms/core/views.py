@@ -83,7 +83,7 @@ class DashboardView(TemplateView):
             "https://kiwitcms.readthedocs.io/en/latest/"
             "installing_docker.html#ssl-configuration"
         )
-        if not (self.request.is_secure()):
+        if not self.request.is_secure():
             messages.add_message(
                 self.request,
                 messages.ERROR,
