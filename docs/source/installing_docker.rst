@@ -70,6 +70,7 @@ configuration of a new Kiwi TCMS installation::
 
 If you prefer web-based tool you can use
 ``https://<your_domain_or_ip>/init-db/``
+
 .. versionadded:: 10.1
 
 .. note::
@@ -183,6 +184,12 @@ bind-mount your own SSL directory to ``/Kiwi/ssl`` inside the docker container!
 
 More information about generating your own self-signed certificates can be
 found at https://github.com/sgallagher/sscg#full-usage.
+
+.. warning::
+
+    The system will issue a warning if the connection is not secured by SSL!!!
+
+.. versionadded:: 10.4
 
 
 Reverse proxy SSL

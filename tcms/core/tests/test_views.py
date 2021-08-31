@@ -40,14 +40,6 @@ class TestDashboard(LoggedInTestCase):
             "doc_url": doc_url_base,
             "admin_url": reverse("admin:sites_site_change", args=[settings.SITE_ID]),
         }
-        doc_url_ssl = (
-            "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
-            "#ssl-configuration"
-        )
-        cls.ssl_error_message = _(
-            "You are not using secure connection (SSL). "
-            'See <a href="%(doc_url)s">documentation</a>'
-        ) % {"doc_url": doc_url_ssl}
 
     def test_when_not_logged_in_redirects_to_login(self):
         self.client.logout()
@@ -93,21 +85,17 @@ class TestDashboard(LoggedInTestCase):
             response = self.client.get("/", follow=True)
             self.assertNotContains(response, self.base_url_error_message)
 
-    @unittest.skipUnless(
-        os.getenv("TEST_DASHBOARD_CHECK_SSL"),
-        "Checking SSL is not enabled",
-    )
-    def test_check_connection_uses_ssl(self):
-        response = self.client.get("/", follow=True)
-        self.assertNotContains(response, self.ssl_error_message)
-
-    @unittest.skipUnless(
-        not os.getenv("TEST_DASHBOARD_CHECK_SSL"),
-        "Check not using SSL is not enabled",
-    )
     def test_check_connection_not_using_ssl(self):
         response = self.client.get("/", follow=True)
-        self.assertContains(response, self.ssl_error_message)
+        doc_url = (
+            "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
+            "#ssl-configuration"
+        )
+        ssl_error_message = _(
+            "You are not using a secure connection. "
+            'See <a href="%(doc_url)s">documentation</a> and enable SSL.'
+        ) % {"doc_url": doc_url}
+        self.assertContains(response, ssl_error_message)
 
 
 @unittest.skipUnless(
