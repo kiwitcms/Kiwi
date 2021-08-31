@@ -187,7 +187,7 @@ found at https://github.com/sgallagher/sscg#full-usage.
 
 .. warning::
 
-    The system will issue a warning if the connection is not secured by SSL!!!
+    KiwiTCMS will issue a warning if the connection is not secured by SSL!!!
 
 .. versionadded:: 10.4
 

@@ -28,7 +28,7 @@ class TestDashboard(LoggedInTestCase):
         # used to reproduce Sentry #KIWI-TCMS-38 where rendering fails
         # with that particular value
         cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求", author=cls.tester)
-        doc_url_base = (
+        doc_url = (
             "https://kiwitcms.readthedocs.io/en/latest/admin.html"
             "#configure-kiwi-s-base-url"
         )
@@ -37,7 +37,7 @@ class TestDashboard(LoggedInTestCase):
             'See <a href="%(doc_url)s">documentation</a> and '
             '<a href="%(admin_url)s">change it</a>'
         ) % {
-            "doc_url": doc_url_base,
+            "doc_url": doc_url,
             "admin_url": reverse("admin:sites_site_change", args=[settings.SITE_ID]),
         }
 
