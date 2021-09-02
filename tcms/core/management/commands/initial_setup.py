@@ -26,7 +26,7 @@ class Command(BaseCommand):
         call_command("refresh_permissions", "--verbosity=%i" % kwargs["verbosity"])
 
         if "tcms_tenants" in settings.INSTALLED_APPS:
-            self.stdout.write("\n5. Creating the public tenant:")
+            self.stdout.write("\n5. Creating public & empty tenants:")
             superuser = get_user_model().objects.filter(is_superuser=True).first()
             paid_until = timezone.now() + datetime.timedelta(days=100 * 365)
             call_command(
@@ -46,6 +46,28 @@ class Command(BaseCommand):
                 "Testing department",
                 "--domain-domain",
                 domain,
+                "--domain-is_primary",
+                True,
+            )
+
+            # a special tenant for cloning
+            call_command(
+                "create_tenant",
+                "--verbosity=%i" % kwargs["verbosity"],
+                "--schema_name",
+                "empty",
+                "--name",
+                "Cloning Template",
+                "--paid_until",
+                paid_until.isoformat(),
+                "--publicly_readable",
+                False,
+                "--owner_id",
+                superuser.pk,
+                "--organization",
+                "Kiwi TCMS",
+                "--domain-domain",
+                "empty.example.org",
                 "--domain-is_primary",
                 True,
             )
