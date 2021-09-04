@@ -3,10 +3,12 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, views
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import RedirectView, View
 
@@ -16,6 +18,14 @@ from tcms.kiwi_auth.models import UserActivationKey
 from tcms.signals import USER_REGISTERED_SIGNAL
 
 User = get_user_model()  # pylint: disable=invalid-name
+
+
+try:
+    from django_tenants.utils import get_public_schema_name
+except ImportError:
+
+    def get_public_schema_name():  # pylint: disable=nested-function-found
+        return "public"
 
 
 class LoginViewWithCustomTemplate(
@@ -140,3 +150,22 @@ class Profile(View):  # pylint: disable=missing-permission-required
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
         return HttpResponseRedirect(reverse("admin:auth_user_change", args=[user.pk]))
+
+
+@method_decorator(
+    login_required, name="dispatch"
+)  # pylint: disable=missing-permission-required
+class UsersAndGroupsRouter(View):
+    http_method_names = ["get"]
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return HttpResponseRedirect("/admin/auth/")
+
+        if (
+            hasattr(request, "tenant")
+            and request.tenant.schema_name != get_public_schema_name()
+        ):
+            return HttpResponseRedirect("/admin/tcms_tenants/tenant_authorized_users/")
+
+        return HttpResponseRedirect("/admin/auth/")
