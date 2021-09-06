@@ -187,9 +187,9 @@ found at https://github.com/sgallagher/sscg#full-usage.
 
 .. warning::
 
-    KiwiTCMS will issue a warning if the connection is not secured by SSL!!!
+    Kiwi TCMS will issue a warning if the connection is not secured by SSL!!!
 
-.. versionadded:: 10.4
+    .. versionadded:: 10.4
 
 
 Reverse proxy SSL
