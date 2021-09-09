@@ -201,6 +201,16 @@
                                         </button>
 
                                         <ul class="dropdown-menu" aria-labelledby="toolbarActions">
+                                        {% if perms.testruns.add_testrun %}
+                                            <li>
+                                                <a class="js-bulk-create-testrun" href="#">
+                                                    <span class="fa fa-file-text-o"></span>
+                                                    {% trans 'New TestRun' %}
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+                                        {% endif %}
+
                                         {% if perms.testruns.change_testexecution %}
                                             <li>
                                                 <a href="#" class="update-case-text-bulk">

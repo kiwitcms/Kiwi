@@ -41,6 +41,20 @@ $(document).ready(() => {
     })
   })
 
+  $('.js-bulk-create-testrun').click(function () {
+    $(this).parents('.dropdown').toggleClass('open')
+
+    const selected = selectedCheckboxes()
+    if ($.isEmptyObject(selected)) {
+      return false
+    }
+
+    const planId = Number($('#test_run_pk').data('plan-pk'))
+    window.location.assign(`/runs/new?p=${planId}&c=${selected.caseIds.join('&c=')}`)
+
+    return false
+  })
+
   $('.add-comment-bulk').click(function () {
     $(this).parents('.dropdown').toggleClass('open')
 
