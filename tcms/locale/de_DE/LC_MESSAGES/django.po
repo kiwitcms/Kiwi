@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 15:34+0000\n"
-"PO-Revision-Date: 2021-08-26 17:44\n"
+"PO-Revision-Date: 2021-09-10 09:29\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -391,7 +391,7 @@ msgstr "ALLE ANZEIGEN"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "Ihnen wurde kein TestRun(e) zugewiesen"
+msgstr "Ihnen wurde kein(e) TestRun(s) zugewiesen"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
