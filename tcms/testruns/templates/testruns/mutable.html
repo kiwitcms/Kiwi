@@ -49,7 +49,7 @@
                     {% endif %}
 
                     {% for option in form.product.field.queryset %}
-                        <option value="{{ option.pk }}" {% if option.pk|escape == form.product.value|escape %}selected{% endif %}>{{ option.name }}</option>
+                        <option value="{{ option.pk }}" {% if option.pk|escape == form.plan.field.queryset.0.product_id|escape %}selected{% endif %}>{{ option.name }}</option>
                     {% endfor %}
                 </select>
 
