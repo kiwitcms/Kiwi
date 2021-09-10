@@ -202,6 +202,11 @@ class EditTestRunView(UpdateView):
 
         return form
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["plan_id"] = self.object.plan
+        return context
+
     def get_initial(self):
         return {
             "manager": self.object.manager,
