@@ -24,6 +24,7 @@
             data-trans-error-adding-cases="{% trans 'Unconfirmed test cases were not added' %}"
             data-trans-bool-value-required="{% trans 'Type 0 or 1' %}"
             data-trans-comment="{% trans 'Comment' %}:"
+            data-current-user="{{ user }}"
         {% for status in execution_statuses %}
             data-trans-execution-status-{{ status.pk }}="{{ status.name }}"
         {% endfor %}
@@ -272,9 +273,6 @@
                                         <input type="text" class="form-control" id="toolbar-filter"
                                                placeholder="{% trans 'Search' %}">
                                     </div><!-- /input-group -->
-                                    <div>
-                                        <a href="#" id="assigned-to-me-filter" style="display: none;">{{ user }}</a>
-                                    </div>
                                 </div>
 
                             {% if perms.testruns.add_testexecution %}
@@ -294,6 +292,12 @@
                                         id="btn-search-cases" title="{% trans 'Advanced search' %}">
                                         <span class="fa fa-search"></span>
                                     </button>
+                                </div>
+                                <div class="form-group">
+                                    <div class="list-view-pf-checkbox hidden-print" style="margin-top: 0; margin-bottom: 0">
+                                        <input type="checkbox" class="assigned-to-me-checkbox">
+                                        <span>{% trans 'Assigned to me' %}</span>
+                                    </div>
                                 </div>
                             {% endif %}
                             </form>

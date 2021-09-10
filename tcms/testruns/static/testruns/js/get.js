@@ -1,5 +1,8 @@
 const allExecutionStatuses = {}
 const allExecutions = {}
+// displayedExecutions keeps tracks of the executions that we are currently displaying
+// it is needed to support multiple filters
+let displayedExecutions = {}
 const expandedExecutionIds = []
 const permissions = {
   removeTag: false,
@@ -133,19 +136,6 @@ $(document).ready(() => {
     return false
   })
 
-  const assignedToMeFilter = $('#assigned-to-me-filter')
-  assignedToMeFilter.click(({ target }) => {
-    const currentUser = $(target).text()
-    assignedToMeFilter.css('display', 'none')
-
-    const toolbarFilter = $('#toolbar-filter')
-    toolbarFilter.val(currentUser)
-    toolbarFilter.trigger('keyup')
-
-    // so that we don't follow the link
-    return false
-  })
-
   // bind everything in tags table
   tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag)
 
@@ -177,6 +167,19 @@ $(document).ready(() => {
     testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
   })
 
+  $('.assigned-to-me-checkbox').click(({ target }) => {
+    const isChecked = target.checked
+    const currentUser = $('#test_run_pk').data('current-user')
+
+    const filterValue = isChecked ? currentUser : ""
+    filterTestExecutionsByProperty(
+      testRunId,
+      Object.values(displayedExecutions),
+      "assignee__username",
+      filterValue
+    )
+  })
+
   quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocompleteCache, { case_status__is_confirmed: true })
   $('#btn-search-cases').click(function () {
     return advancedSearchAndAddTestCases(
@@ -186,12 +189,6 @@ $(document).ready(() => {
   })
 
   $('.js-toolbar-filter-options li').click(function (ev) {
-    if ($(ev.currentTarget).data('filter-type') === 'assignee__username') {
-      $('#assigned-to-me-filter').css('display', 'block')
-    } else {
-      $('#assigned-to-me-filter').css('display', 'none')
-    }
-
     return changeDropdownSelectedItem(
       '.js-toolbar-filter-options',
       '#input-filter-button',
@@ -206,7 +203,7 @@ $(document).ready(() => {
 
     filterTestExecutionsByProperty(
       testRunId,
-      Object.values(allExecutions),
+      Object.values(displayedExecutions),
       filterBy,
       filterValue
     )
@@ -259,15 +256,16 @@ function filterTestExecutionsByProperty (runId, executions, filterBy, filterValu
       query.category__name__icontains = filterValue
     }
 
-    jsonRPC('TestCase.filter', query, function (filtered) {
+    jsonRPC('TestCase.filter', query, (filtered) => {
       // hide again if a previous async request showed something else
       $('.test-execution-element').hide()
       filtered.forEach(tc => $(`.test-execution-case-${tc.id}`).show())
+      displayedExecutions = filtered
     })
   } else {
-    executions.filter(function (te) {
-      return (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
-    }).forEach(te => $(`.test-execution-${te.id}`).show())
+    const filtered = executions.filter((te) => (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1))
+    filtered.forEach(te => $(`.test-execution-${te.id}`).show())
+    displayedExecutions = filtered
   }
 }
 
@@ -684,6 +682,7 @@ function renderTestExecutionRow (testExecution) {
   // to render the expand area and may have changed via bulk-update meanwhile
   testExecution.status__name = $('#test_run_pk').data(`trans-execution-status-${testExecution.status}`)
   allExecutions[testExecution.id] = testExecution
+  displayedExecutions[testExecution.id] = testExecution
 
   const testExecutionRowTemplate = $('#test-execution-row')[0].content
   const template = $(testExecutionRowTemplate.cloneNode(true))
