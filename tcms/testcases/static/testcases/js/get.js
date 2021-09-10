@@ -213,10 +213,14 @@ $(document).ready(function () {
   jsonRPC('Testing.individual_test_case_health', { case_id: case_id }, ress => {
     const res = {}
     let planId = 0
+    let positive = 0
+    let negative = 0
+    let allCount = 0
     ress.forEach(r => {
-      let positive = 0
-      let negative = 0
-      let allCount = 0
+      if (planId === 0) {
+        planId = r.run__plan
+      }
+
       if (r.status__weight > 0) {
         positive++
       } else if (r.status__weight < 0) {
@@ -226,25 +230,34 @@ $(document).ready(function () {
 
       if (r.run__plan !== planId) {
         planId = r.run__plan
+        const completionRate = allCount > 0 ? ((positive + negative) / allCount) : 0
+        const failureRate =  allCount > 0 ? (negative / allCount) : 0
         res[planId] = {
-          completion_rate: allCount > 0 ? ((positive + negative) / allCount) : 0,
-          failure_rate: allCount > 0 ? (negative / allCount) : 0
+          completionRate: completionRate.toFixed(2),
+          failureRate: failureRate.toFixed(2)
         }
         positive = 0
         negative = 0
         allCount = 0
       }
     })
+    // add the last entry
+    const completionRate = allCount > 0 ? ((positive + negative) / allCount) : 0
+    const failureRate =  allCount > 0 ? (negative / allCount) : 0
+    res[planId] = {
+      completionRate: completionRate.toFixed(2),
+      failureRate: failureRate.toFixed(2)
+    }
 
     Object.entries(res).forEach(([runId, data]) => {
       const executionRow = $(`#execution-for-plan-${runId}`)
-      executionRow.find('.completion-rate').html(data.completion_rate)
-      executionRow.find('.completion-rate-container .progress-bar-danger').css('width', `${(1 - data.completion_rate) * 100}%`)
-      executionRow.find('.completion-rate-container .progress-bar-success').css('width', `${(data.completion_rate) * 100}%`)
+      executionRow.find('.completion-rate').html(data.completionRate)
+      executionRow.find('.completion-rate-container .progress-bar-danger').css('width', `${(1 - data.completionRate) * 100}%`)
+      executionRow.find('.completion-rate-container .progress-bar-success').css('width', `${(data.completionRate) * 100}%`)
 
-      executionRow.find('.failure-rate').html(data.failure_rate)
-      executionRow.find('.failure-rate-container .progress-bar-danger').css('width', `${(data.failure_rate) * 100}%`)
-      executionRow.find('.failure-rate-container .progress-bar-success').css('width', `${(1 - data.failure_rate) * 100}%`)
+      executionRow.find('.failure-rate').html(data.failureRate)
+      executionRow.find('.failure-rate-container .progress-bar-danger').css('width', `${(data.failureRate) * 100}%`)
+      executionRow.find('.failure-rate-container .progress-bar-success').css('width', `${(1 - data.failureRate) * 100}%`)
     })
   })
 
