@@ -24,6 +24,9 @@
             data-trans-error-adding-cases="{% trans 'Unconfirmed test cases were not added' %}"
             data-trans-bool-value-required="{% trans 'Type 0 or 1' %}"
             data-trans-comment="{% trans 'Comment' %}:"
+        {% for status in execution_statuses %}
+            data-trans-execution-status-{{ status.pk }}="{{ status.name }}"
+        {% endfor %}
         >TR-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 

@@ -632,6 +632,7 @@ function renderHistoryEntry (historyEntry) {
 function renderTestExecutionRow (testExecution) {
   // refresh the internal data structure b/c some fields are used
   // to render the expand area and may have changed via bulk-update meanwhile
+  testExecution.status__name = $('#test_run_pk').data(`trans-execution-status-${testExecution.status}`)
   allExecutions[testExecution.id] = testExecution
 
   const testExecutionRowTemplate = $('#test-execution-row')[0].content
@@ -649,7 +650,7 @@ function renderTestExecutionRow (testExecution) {
 
   const testExecutionStatus = allExecutionStatuses[testExecution.status]
   template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
-  template.find('.test-execution-status-name').html(testExecutionStatus.name).css('color', testExecutionStatus.color)
+  template.find('.test-execution-status-name').html(testExecution.status__name).css('color', testExecutionStatus.color)
 
   template.find('.add-link-button').click(() => addLinkToExecutions([testExecution.id]))
   template.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
