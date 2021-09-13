@@ -108,3 +108,48 @@ def hello():
             """<p><em>hello</em> &lt;object&gt;&lt;link&gt;&lt;iframe&gt;<br>
 &lt;frame&gt;&lt;frameset&gt;&lt;embed&gt;</p>""",
         )
+
+    def test_markdown2html_convert_double_space_indented_lists(self):
+        self.assertEqual(
+            markdown2html(
+                """1. Indentation chars
+
+  * double space indented 1
+  * double space indented 2"""
+            ),
+            """<ol>
+<li>
+<p>Indentation chars</p>
+<ul>
+<li>double space indented 1</li>
+<li>double space indented 2</li>
+</ul>
+</li>
+</ol>""",
+        )
+
+    def test_markdown2html_convert_adjacent_lists(self):
+        self.assertEqual(
+            markdown2html(
+                """1. A numbered item
+2. Another numbered item
+
+* A bullet item
+* Another bullet item
+
++ A cross item
++ Another cross item"""
+            ),
+            """<ol>
+<li>A numbered item</li>
+<li>Another numbered item</li>
+</ol>
+<ul>
+<li>A bullet item</li>
+<li>Another bullet item</li>
+</ul>
+<ul>
+<li>A cross item</li>
+<li>Another cross item</li>
+</ul>""",
+        )

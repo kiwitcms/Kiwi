@@ -33,6 +33,7 @@ def markdown2html(md_str):
             "markdown.extensions.nl2br",
             "markdown.extensions.tables",
             "tcms.utils.markdown",
+            "mdx_truly_sane_lists",
         ],
     )
 

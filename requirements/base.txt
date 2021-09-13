@@ -13,6 +13,7 @@ django-simple-history==3.0.0
 django-tree-queries==0.6.0
 jira==3.0.1
 Markdown==3.3.4
+mdx_truly_sane_lists==1.2
 Pygments==2.10.0
 python-gitlab==2.10.1
 python-redmine==2.3.0
