@@ -255,6 +255,8 @@ def create(values, **kwargs):
         result = model_to_dict(test_case, exclude=["component", "plan", "tag"])
         # b/c date is added in the DB layer and model_to_dict() doesn't return it
         result["create_date"] = test_case.create_date
+        result["setup_duration"] = str(result["setup_duration"])
+        result["testing_duration"] = str(result["testing_duration"])
         return result
 
     raise ValueError(form_errors_to_list(form))
