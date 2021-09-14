@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 15:34+0000\n"
-"PO-Revision-Date: 2021-09-14 19:26\n"
+"PO-Revision-Date: 2021-09-14 19:35\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1715,11 +1715,11 @@ msgstr "Reportar bug"
 
 #: tcms/testruns/templates/testruns/get.html:358
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "Caso de teste não faz parte do plano de teste pai"
 
 #: tcms/testruns/templates/testruns/get.html:386
 msgid "Assigned to"
-msgstr ""
+msgstr "Atribuído para"
 
 #: tcms/testruns/templates/testruns/get.html:419
 msgid "Run Date"
@@ -1727,7 +1727,7 @@ msgstr "Data de Execução"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
-msgstr ""
+msgstr "Versão do texto"
 
 #: tcms/testruns/templates/testruns/get.html:436
 msgid "Bugs and hyperlinks"
@@ -1735,7 +1735,7 @@ msgstr "Bugs e hiperlinks"
 
 #: tcms/testruns/templates/testruns/get.html:536
 msgid "Is a defect"
-msgstr ""
+msgstr "É um defeito"
 
 #: tcms/testruns/templates/testruns/get.html:543
 #: tcms/testruns/templates/testruns/get.html:574
@@ -1787,11 +1787,11 @@ msgstr "Em execução"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "Data de início"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "Data de término"
 
 #: tcms/testruns/views.py:228
 msgid "Clone of "
@@ -1845,7 +1845,7 @@ msgstr "ABANDONAR"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr ""
+msgstr "Para configurações adicionais veja <a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1867,12 +1867,12 @@ msgstr "Aplicativo GitHub %d desconfigurado"
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s foi importado do GitHub"
 
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s já existe"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -1900,7 +1900,7 @@ msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Múltiplas instalações do aplicativo GitHub detectadas!"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1936,17 +1936,17 @@ msgstr "Preço"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "Subscription type"
-msgstr ""
+msgstr "Tipo de Assinatura"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
-msgstr ""
+msgstr "Pago até"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 msgid "Cancel subscription"
-msgstr ""
+msgstr "Cancelar assinatura"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "You don't own any tenants"
@@ -1954,7 +1954,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Inscreva-se via FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
@@ -1973,7 +1973,7 @@ msgstr "Fornecedor"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
 msgid "Received on"
-msgstr ""
+msgstr "Recebido em"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -1990,23 +1990,23 @@ msgstr ""
 
 #: tcms_github_marketplace/views.py:330
 msgid "mo"
-msgstr ""
+msgstr "mês"
 
 #: tcms_github_marketplace/views.py:333
 msgid "yr"
-msgstr ""
+msgstr "ano"
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr ""
+msgstr "O endereço de e-mail é obrigatório"
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr ""
+msgstr "ou continuar com"
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr ""
+msgstr "Informações legais"
 
 #: tcms_tenants/admin.py:40 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
@@ -2014,7 +2014,7 @@ msgstr "Não autorizado"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Nome de usuário, e-mail ou ID de usuário existente"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -2022,7 +2022,7 @@ msgstr "Nome completo"
 
 #: tcms_tenants/forms.py:27
 msgid "Invalid string"
-msgstr ""
+msgstr "String inválida"
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
@@ -2031,7 +2031,7 @@ msgstr "Criar"
 #: tcms_tenants/menu.py:15
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Convidar usuários"
 
 #: tcms_tenants/menu.py:16
 msgid "Authorized users"
@@ -2052,7 +2052,11 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "Prezado testador,\n"
+"%(invited_by)s convidou você para participar do seu inquilino de Kiwi TCMS em\n"
+"%(tenant_url)s\n\n"
+"Caso você nunca tenha logado antes de uma conta ser criada para você\n"
+"automaticamente. Você terá que redefinir sua senha antes de poder fazer login!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2063,7 +2067,7 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2071,19 +2075,19 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:26
 msgid "Company, team or project name"
-msgstr ""
+msgstr "Empresa, equipe ou nome do projeto"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:34
 msgid "Schema"
-msgstr ""
+msgstr "Schema"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:47
 msgid "Validation pattern"
-msgstr ""
+msgstr "Padrão de validação"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"
-msgstr ""
+msgstr "Publicamente visível"
 
 #: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
