@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 15:34+0000\n"
-"PO-Revision-Date: 2021-09-14 19:35\n"
+"PO-Revision-Date: 2021-09-14 20:15\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1811,7 +1811,7 @@ msgstr "PRECISA ATUALIZAR"
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr "OSCIOSO"
+msgstr "OCIOSO"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
