@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-26 15:34+0000\n"
-"PO-Revision-Date: 2021-08-26 17:44\n"
+"PO-Revision-Date: 2021-09-14 19:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1958,12 +1958,12 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
 msgid "Transaction history"
-msgstr ""
+msgstr "Histórico de transações"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
 msgid "Sender"
-msgstr ""
+msgstr "Remetente"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
@@ -2010,7 +2010,7 @@ msgstr ""
 
 #: tcms_tenants/admin.py:40 tcms_tenants/middleware.py:32
 msgid "Unauthorized"
-msgstr ""
+msgstr "Não autorizado"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
@@ -2018,7 +2018,7 @@ msgstr ""
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
-msgstr ""
+msgstr "Nome completo"
 
 #: tcms_tenants/forms.py:27
 msgid "Invalid string"
@@ -2026,7 +2026,7 @@ msgstr ""
 
 #: tcms_tenants/menu.py:12
 msgid "Create"
-msgstr ""
+msgstr "Criar"
 
 #: tcms_tenants/menu.py:15
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
@@ -2035,11 +2035,11 @@ msgstr ""
 
 #: tcms_tenants/menu.py:16
 msgid "Authorized users"
-msgstr ""
+msgstr "Usuários autorizados"
 
 #: tcms_tenants/middleware.py:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Não pago"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
