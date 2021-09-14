@@ -2,6 +2,7 @@
 # pylint: disable=attribute-defined-outside-init
 
 import unittest
+from datetime import timedelta
 from xmlrpc.client import Fault, ProtocolError
 
 from attachments.models import Attachment
@@ -527,6 +528,8 @@ class TestCreate(APITestCase):
                 "case_status": TestCaseStatus.objects.first().pk,
                 "priority": Priority.objects.first().pk,
                 "category": Category.objects.first().pk,
+                "setup_duration": "2 20:10:00",
+                "testing_duration": "00:00:30",
             }
         )
 
@@ -553,6 +556,10 @@ class TestCreate(APITestCase):
         self.assertEqual(result["priority"], tc_from_db.priority.pk)
         self.assertIn("default_tester", result)
         self.assertIn("reviewer", result)
+        self.assertIn("setup_duration", result)
+        self.assertIn("testing_duration", result)
+        self.assertEqual(str(tc_from_db.setup_duration), "2 days, 20:10:00")
+        self.assertEqual(tc_from_db.testing_duration, timedelta(seconds=30))
 
     def test_author_can_be_specified(self):
         new_author = UserFactory()
