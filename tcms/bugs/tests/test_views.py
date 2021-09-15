@@ -101,7 +101,7 @@ class TestNewBug(LoggedInTestCase):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["page_title"], _("New bug"))
+        self.assertEqual(response.context["page_title"], _("New Bug"))
         self.assertEqual(response.context["form_post_url"], reverse("bugs-new"))
         self.assertTemplateUsed(response, "bugs/mutable.html")
 

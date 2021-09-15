@@ -139,7 +139,7 @@ class TestNewCase(BasePlanCase):
 
         response = self.client.post(self.new_case_url, data)
 
-        self.assertContains(response, _("New TestCase"))
+        self.assertContains(response, _("New Test Case"))
         self.assertContains(
             response,
             '<input class="bootstrap-switch" name="email_settings-0-auto_to_case_tester" '
@@ -244,7 +244,7 @@ class TestNewCasePermission(PermissionsTestCase):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, _("New TestCase"))
+        self.assertContains(response, _("New Test Case"))
 
     def verify_post_with_permission(self):
         response = self.client.post(self.url, self.post_data, follow=True)
