@@ -156,6 +156,13 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertRedirects(response, "/admin/auth/user/")
 
+    def test_admin_can_see_list_of_all_users(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+        response = self.client.get("/admin/auth/user/")
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+
 
 class TestGroupAdmin(LoggedInTestCase):
     @classmethod
