@@ -95,6 +95,10 @@ $(document).ready(function() {
                 params['author__username__startswith'] = $('#id_author').val();
             };
 
+            if ($('#id_run').val()) {
+                params['executions__run__in'] = $('#id_run').val();
+            };
+
             if ($('input[name=is_automated]:checked').val() === 'true') {
                 params['is_automated'] = true;
             };
