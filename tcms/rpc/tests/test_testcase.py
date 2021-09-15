@@ -202,7 +202,9 @@ class TestUpdate(APITestCase):
         result = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
+                "setup_duration": "1 10:00:00",
                 "summary": "This was updated",
+                "testing_duration": "00:01:00",
                 "text": "new TC text",
             },
         )
@@ -224,10 +226,14 @@ class TestUpdate(APITestCase):
         self.assertIn("summary", result)
         self.assertIn("requirement", result)
         self.assertIn("notes", result)
+        self.assertIn("setup_duration", result)
+        self.assertIn("testing_duration", result)
         self.assertEqual(result["text"], self.testcase.text)
         self.assertEqual(result["case_status"], self.testcase.case_status.pk)
         self.assertEqual(result["category"], self.testcase.category.pk)
         self.assertEqual(result["priority"], self.testcase.priority.pk)
+        self.assertEqual(str(self.testcase.setup_duration), "1 day, 10:00:00")
+        self.assertEqual(self.testcase.testing_duration, timedelta(minutes=1))
         self.assertIn("default_tester", result)
         self.assertIn("reviewer", result)
 

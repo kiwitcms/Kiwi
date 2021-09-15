@@ -397,6 +397,8 @@ def update(case_id, values):
         result["reviewer__username"] = (
             test_case.reviewer.username if test_case.reviewer else None
         )
+        result["setup_duration"] = str(result["setup_duration"])
+        result["testing_duration"] = str(result["testing_duration"])
 
         return result
 
