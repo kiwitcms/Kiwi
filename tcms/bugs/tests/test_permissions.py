@@ -45,7 +45,7 @@ class TestNew(tests.PermissionsTestCase):
     def verify_get_with_permission(self):
         response = self.client.get(self.url)
 
-        self.assertContains(response, _("New bug"))
+        self.assertContains(response, _("New Bug"))
         self.assertContains(response, "bugs/js/mutable.js")
 
     def verify_post_with_permission(self):
