@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
+from django.db.models import DurationField
+from django.db.models.functions import Cast, Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
+from django.utils.dateparse import parse_duration
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
@@ -279,8 +284,25 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return list(
-        TestCase.objects.filter(**query)
+    for key, val in query.items():
+        if key.startswith(("setup_duration", "testing_duration", "expected_duration")):
+            try:
+                duration = parse_duration(val)
+                if duration is not None:
+                    query[key] = duration
+            except TypeError:
+                # val isn't a string or byte-like object
+                # item is probably something like 'setup_duration__isnull=True'
+                pass
+
+    qs = (
+        TestCase.objects.annotate(
+            expected_duration=Coalesce(
+                "setup_duration", Cast(timedelta(0), DurationField())
+            )
+            + Coalesce("testing_duration", Cast(timedelta(0), DurationField())),
+        )
+        .filter(**query)
         .values(
             "id",
             "create_date",
@@ -304,9 +326,20 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester__username",
             "reviewer",
             "reviewer__username",
+            "setup_duration",
+            "testing_duration",
+            "expected_duration",
         )
         .distinct()
     )
+    result = [testcase_dict for testcase_dict in qs.iterator()]
+
+    for testcase_dict in result:
+        for duration_key in ["setup_duration", "testing_duration", "expected_duration"]:
+            if testcase_dict[duration_key] is not None:
+                testcase_dict[duration_key] = str(testcase_dict[duration_key])
+
+    return result
 
 
 @permissions_required("testcases.view_testcase")
