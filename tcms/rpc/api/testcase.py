@@ -6,7 +6,6 @@ from django.db.models import DurationField
 from django.db.models.functions import Cast, Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
-from django.utils.dateparse import parse_duration
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
@@ -283,17 +282,6 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     """
     if query is None:
         query = {}
-
-    for key, val in query.items():
-        if key.startswith(("setup_duration", "testing_duration", "expected_duration")):
-            try:
-                duration = parse_duration(val)
-                if duration is not None:
-                    query[key] = duration
-            except TypeError:
-                # val isn't a string or byte-like object
-                # item is probably something like 'setup_duration__isnull=True'
-                pass
 
     qs = (
         TestCase.objects.annotate(
