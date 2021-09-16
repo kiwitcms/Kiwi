@@ -3,6 +3,6 @@
 """
 from django.contrib.auth.models import User
 
-testadmin = User.objects.get(username='testadmin')
-testadmin.set_password('password')
+testadmin = User.objects.get(username="testadmin")
+testadmin.set_password("password")
 testadmin.save()
