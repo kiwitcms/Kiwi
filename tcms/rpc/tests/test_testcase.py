@@ -173,9 +173,9 @@ class TestCaseFilter(APITestCase):
         self.assertIn("author", result[0])
         self.assertIn("default_tester", result[0])
         self.assertIn("reviewer", result[0])
-        self.assertIn("setup_duration", result[0])
-        self.assertIn("testing_duration", result[0])
-        self.assertIn("expected_duration", result[0])
+        self.assertIn("setup_duration_ms", result[0])
+        self.assertIn("testing_duration_ms", result[0])
+        self.assertIn("expected_duration_ms", result[0])
 
     def test_filter_by_product_id(self):
         cases = self.rpc_client.TestCase.filter({"category__product": self.product.pk})

@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 
-from django.db.models import DurationField
+from django.db.models import DurationField, FloatField
 from django.db.models.functions import Cast, Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
@@ -283,12 +283,22 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
+    # Cannot use `setup_duration` and `testing_duration` as aliases because Django
+    # doesn't allow annotating querysets with aliases which match existing fieldnames.
+    # https://code.djangoproject.com/ticket/11256
+    # https://github.com/django/django/blob/main/django/db/models/query.py#L1154-L1157
+
+    # we're adding the suffix `_ms` to the aliases because they are
+    # `Cast`ed to their millisecond values
     qs = (
         TestCase.objects.annotate(
-            expected_duration=Coalesce(
-                "setup_duration", Cast(timedelta(0), DurationField())
-            )
-            + Coalesce("testing_duration", Cast(timedelta(0), DurationField())),
+            expected_duration_ms=Cast(
+                Coalesce("setup_duration", Cast(timedelta(0), DurationField()))
+                + Coalesce("testing_duration", Cast(timedelta(0), DurationField())),
+                FloatField(),
+            ),
+            setup_duration_ms=Cast("setup_duration", FloatField()),
+            testing_duration_ms=Cast("setup_duration", FloatField()),
         )
         .filter(**query)
         .values(
@@ -314,20 +324,14 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester__username",
             "reviewer",
             "reviewer__username",
-            "setup_duration",
-            "testing_duration",
-            "expected_duration",
+            "setup_duration_ms",
+            "testing_duration_ms",
+            "expected_duration_ms",
         )
         .distinct()
     )
-    result = [testcase_dict for testcase_dict in qs.iterator()]
 
-    for testcase_dict in result:
-        for duration_key in ["setup_duration", "testing_duration", "expected_duration"]:
-            if testcase_dict[duration_key] is not None:
-                testcase_dict[duration_key] = str(testcase_dict[duration_key])
-
-    return result
+    return list(qs)
 
 
 @permissions_required("testcases.view_testcase")
