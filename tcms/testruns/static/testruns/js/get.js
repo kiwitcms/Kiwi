@@ -6,7 +6,7 @@ const permissions = {
   addComment: false,
   removeComment: false
 }
-const autocomplete_cache = {}
+const autocompleteCache = {}
 
 $(document).ready(() => {
   permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True'
@@ -162,7 +162,7 @@ $(document).ready(() => {
     testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
   })
 
-  quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocomplete_cache, { case_status__is_confirmed: true })
+  quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocompleteCache, { case_status__is_confirmed: true })
   $('#btn-search-cases').click(function () {
     return advancedSearchAndAddTestCases(
       testRunId, 'TestRun.add_case', $(this).attr('href'),
@@ -252,7 +252,7 @@ function filterTestExecutionsByProperty (runId, executions, filterBy, filterValu
 
 function addTestCaseToRun (runId) {
   const caseName = $('#search-testcase')[0].value
-  const testCase = autocomplete_cache[caseName]
+  const testCase = autocompleteCache[caseName]
 
   // test case is already present so don't add it
   const allCaseIds = Object.values(allExecutions).map(te => te.case)
@@ -303,7 +303,7 @@ function drawPercentBar (testExecutions) {
   let negativeCount = 0
   const allCount = testExecutions.length
   const statusCount = {}
-  Object.values(allExecutionStatuses).forEach(s => statusCount[s.name] = { count: 0, id: s.id })
+  Object.values(allExecutionStatuses).forEach(s => (statusCount[s.name] = { count: 0, id: s.id }))
 
   testExecutions.forEach(testExecution => {
     const executionStatus = allExecutionStatuses[testExecution.status]
@@ -713,7 +713,6 @@ function changeAssigneeBulk () {
   }
   selected.executionIds.forEach(executionId => {
     jsonRPC('TestExecution.update', [executionId, { assignee: assignee }], execution => {
-      const testExecutionRow = $(`div.list-group-item.test-execution-${executionId}`)
       reloadRowFor(execution)
     })
   })
