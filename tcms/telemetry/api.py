@@ -261,7 +261,7 @@ def performance_telemetry(query=None):
         # count only execution which are finished
         .exclude(status__weight=0)
         .order_by("run_id")
-        .values("assignee_id", "run_id")
+        .values("assignee_id", "run_id", "assignee__username")
     )
 
     result = {}
@@ -271,7 +271,7 @@ def performance_telemetry(query=None):
             run_id = execution["run_id"]
 
         assignee_count = {}
-        assignee = execution["assignee_id"]
+        assignee = execution["assignee__username"] or ""
         if assignee in assignee_count:
             assignee_count[assignee] = assignee_count[assignee] + 1
         else:

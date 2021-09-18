@@ -1,17 +1,3 @@
-// TODO: account for more users
-const colors = [
-  'blue',
-  'red',
-  'gold',
-  'orange',
-  'green',
-  'cyan',
-  'purple',
-  'black',
-  'lightBlue',
-  'lightGreen'
-]
-
 $(document).ready(() => {
   $('.selectpicker').selectpicker()
   $('[data-toggle="tooltip"]').tooltip()
@@ -35,7 +21,7 @@ function reloadCharts () {
   if (testPlanIds.length) {
     query.plan__in = testPlanIds
   } else if (productIds.length) {
-    query.category__product_id__in = productIds
+    query.case__category__product_id__in = productIds
   }
 
   const dateBefore = $('#id_before')
@@ -53,58 +39,64 @@ function reloadCharts () {
 
     // the actual result is in the same format, only it can be much bigger
     // and the chart may break
-    const r = {
-      1: {
-        1: 1,
-        3: 2
-      },
-      2: {
-        1: 1,
-        4: 2
-      },
-      3: {
-        1: 1,
-        3: 1,
-        5: 1
-      },
-      4: {
-        3: 1,
-        2: 1
-      },
-      5: {
-        1: 5,
-        3: 2,
-        4: 1
-      }
-    }
+    // const r = {
+    //   1: {
+    //     "asankov": 1,
+    //     "atodorov": 2
+    //   },
+    //   2: {
+    //     "asankov": 1,
+    //     "atodorov": 2
+    //   },
+    //   3: {
+    //     "asankov": 1,
+    //     "atodorov": 1,
+    //     "": 1
+    //   },
+    //   4: {
+    //     "asankov": 1,
+    //     "atodorov": 1
+    //   },
+    //   5: {
+    //     "asankov": 5,
+    //     "atodorov": 2,
+    //     "bot": 1
+    //   }
+    // }
 
-    drawChart(r)
+    drawChart(result)
   }, true)
 }
 
 function drawChart (data) {
   // the X axis of the chart - run IDs
   const groupedCategories = []
-  // map of user ID -> table column. we use map here for faster lookup by user ID.
+  // map of username -> table column. we use map here for faster lookup by username.
   const groupedColumnsDataMap = {}
-  const userIds = new Set()
+  const usernames = new Set()
 
   // collect all the testers so that we know how much columns we will have
   Object.entries(data).forEach(([_testRunId, asigneeCount]) => {
-    Object.entries(asigneeCount).forEach(([userId, _executionCount]) => userIds.add(userId))
+    Object.entries(asigneeCount).forEach(([username, _executionCount]) => {
+      // filter empty users
+      // TODO: maybe we can do that on the API level
+      if (username) {
+        usernames.add(username)
+      }
+    })
   })
 
-  userIds.forEach(userId => (groupedColumnsDataMap[userId] = [`User ${userId}`]))
+  usernames.forEach(username => (groupedColumnsDataMap[username] = [username]))
 
   Object.entries(data).forEach(([testRunId, _asigneeCount]) => {
-    groupedCategories.push(testRunId)
+    groupedCategories.push(`TR-${testRunId}`)
 
     const asigneesCount = data[testRunId]
 
     // for each user in the groupedColumnsDataMap check if that user
     // is assigned any executions for this run.
-    Object.entries(groupedColumnsDataMap).forEach(([userId, data]) => {
-      const count = asigneesCount[userId]
+    Object.entries(groupedColumnsDataMap).forEach(([username, data]) => {
+      const count = asigneesCount[username]
       if (count) {
         data.push(count)
       } else {
@@ -135,8 +127,8 @@ function drawChart (data) {
     type: 'bar',
     columns: groupedColumnsData
   }
-  chartConfig.color = {
-    pattern: colors
+  chartConfig.zoom = {
+    enabled: true
   }
   c3.generate(chartConfig)
 }
