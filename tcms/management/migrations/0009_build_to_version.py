@@ -11,7 +11,7 @@ def forwards(apps, schema_editor):
 
     for build in build_model.objects.all():
         # backup current values
-        file_name = "kiwitcms-management-migration-0009-build_to_version-%d" % build.pk
+        file_name = f"kiwitcms-management-migration-0009-build_to_version-{build.pk}"
         file_name = settings.TEMP_DIR / file_name
 
         with file_name.open("w") as outfile:
@@ -35,7 +35,7 @@ def backwards(apps, schema_editor):
 
     for build in build_model.objects.all():
         # restore product field value
-        file_name = "kiwitcms-management-migration-0009-build_to_version-%d" % build.pk
+        file_name = f"kiwitcms-management-migration-0009-build_to_version-{build.pk}"
         file_name = settings.TEMP_DIR / file_name
 
         with file_name.open("r") as infile:

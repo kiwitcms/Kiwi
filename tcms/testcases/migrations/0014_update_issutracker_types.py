@@ -6,7 +6,7 @@ def forwards(apps, schema_editor):
 
     for record in bug_system_model.objects.all():
         if record.tracker_type:
-            record.tracker_type = "tcms.issuetracker.types.%s" % record.tracker_type
+            record.tracker_type = f"tcms.issuetracker.types.{record.tracker_type}"
             record.save()
 
 
