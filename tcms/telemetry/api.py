@@ -226,6 +226,22 @@ def test_case_health(query=None):
     return data
 
 
+@http_basic_auth_login_required
+@rpc_method(name="Testing.individual_test_case_health")
+def individual_test_case_health_simple(query=None):
+
+    if query is None:
+        query = {}
+
+    res = (
+        TestExecution.objects.filter(**query)
+        .values("run__plan", "case_id", "status__name", "status__weight")
+        .order_by("case", "run__plan", "status__weight")
+    )
+
+    return list(res)
+
+
 def _remove_all_excellent_executions(data):
     for key in dict.fromkeys(data):
         if data[key]["count"]["fail"] == 0:
