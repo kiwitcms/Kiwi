@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from datetime import timedelta
-
-from django.db.models import DurationField, FloatField
-from django.db.models.functions import Cast, Coalesce
+from django.db.models import F, FloatField
+from django.db.models.functions import Cast
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
@@ -292,13 +290,9 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     # `Cast`ed to their millisecond values
     qs = (
         TestCase.objects.annotate(
-            expected_duration_ms=Cast(
-                Coalesce("setup_duration", Cast(timedelta(0), DurationField()))
-                + Coalesce("testing_duration", Cast(timedelta(0), DurationField())),
-                FloatField(),
-            ),
-            setup_duration_ms=Cast("setup_duration", FloatField()),
-            testing_duration_ms=Cast("setup_duration", FloatField()),
+            setup_duration_sec=Cast("setup_duration", FloatField()) / 10 ** 6,
+            testing_duration_sec=Cast("testing_duration", FloatField()) / 10 ** 6,
+            expected_duration_sec=F("setup_duration_sec") + F("testing_duration_sec"),
         )
         .filter(**query)
         .values(
@@ -324,9 +318,9 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester__username",
             "reviewer",
             "reviewer__username",
-            "setup_duration_ms",
-            "testing_duration_ms",
-            "expected_duration_ms",
+            "setup_duration_sec",
+            "testing_duration_sec",
+            "expected_duration_sec",
         )
         .distinct()
     )
