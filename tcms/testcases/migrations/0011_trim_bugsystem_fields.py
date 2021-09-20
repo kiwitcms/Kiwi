@@ -9,7 +9,7 @@ def forwards_store_data(apps, schema_editor):
     bug_system_model = apps.get_model("testcases", "BugSystem")
 
     for bug_system in bug_system_model.objects.all():
-        file_name = "kiwitcms-testcases-migration-0011-BugSystem-%d" % bug_system.pk
+        file_name = f"kiwitcms-testcases-migration-0011-BugSystem-{bug_system.pk}"
         bug_file = settings.TEMP_DIR / file_name
 
         with bug_file.open("w") as outfile:

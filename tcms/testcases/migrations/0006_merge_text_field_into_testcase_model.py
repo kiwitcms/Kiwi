@@ -6,23 +6,18 @@ from django.forms.models import model_to_dict
 
 
 def convert_test_case_text(test_case_text):
-    return """**Setup:**
-%s
+    return f"""**Setup:**
+{test_case_text.setup}
 
 **Actions:**
-%s
+{test_case_text.actions}
 
 **Expected result:**
-%s
+{test_case_text.effect}
 
 **Breakdown:**
-%s
-""" % (
-        test_case_text.setup,
-        test_case_text.action,
-        test_case_text.effect,
-        test_case_text.breakdown,
-    )
+{test_case_text.breakdown}
+"""
 
 
 def forward_copy_data(apps, schema_editor):
@@ -38,7 +33,7 @@ def forward_copy_data(apps, schema_editor):
         )
         if latest_text:
             file_name = (
-                "kiwitcms-testcases-migrations-0006-TestCaseText-%d" % latest_text.pk
+                f"kiwitcms-testcases-migrations-0006-TestCaseText-{latest_text.pk}"
             )
             test_case_file = settings.TEMP_DIR / file_name
             with test_case_file.open("w") as outfile:

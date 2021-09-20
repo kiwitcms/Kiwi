@@ -11,7 +11,7 @@ def forward_copy_data(apps, schema_editor):
     link_reference_ids = []
 
     for bug in bug_model.objects.all():
-        bug_file_name = "kiwitcms-testcases-migrations-0010-Bug-%d" % bug.pk
+        bug_file_name = f"kiwitcms-testcases-migrations-0010-Bug-{bug.pk}"
         bug_file = settings.TEMP_DIR / bug_file_name
         with bug_file.open("w") as outfile:
             json.dump(model_to_dict(bug), outfile)
@@ -21,7 +21,7 @@ def forward_copy_data(apps, schema_editor):
 
         link_reference = link_reference_model.objects.create(
             execution_id=bug.case_run_id,
-            name="%s %s" % (bug.bug_system.name, bug.bug_id),
+            name=f"{bug.bug_system.name} {bug.bug_id}",
             url=bug.bug_system.url_reg_exp % bug.bug_id,
             is_defect=True,
         )
