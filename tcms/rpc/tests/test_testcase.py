@@ -185,9 +185,9 @@ class TestCaseFilter(APITestCase):
 
     @parameterized.expand(
         [
-            ("both_values_are_not_set", {}, None, None, None),
-            ("setup_duration_is_not_set", {"testing_duration": timedelta(minutes=5)}, None, 300, 300),
-            ("testing_duration_is_not_set", {"setup_duration": timedelta(seconds=45)}, 45, None, 45),
+            ("both_values_are_not_set", {}, 0, 0, 0),
+            ("setup_duration_is_not_set", {"testing_duration": timedelta(minutes=5)}, 0, 300, 300),
+            ("testing_duration_is_not_set", {"setup_duration": timedelta(seconds=45)}, 45, 0, 45),
             (
                 "both_values_are_set",
                 {"setup_duration": timedelta(seconds=45), "testing_duration": timedelta(minutes=5)}, 45,

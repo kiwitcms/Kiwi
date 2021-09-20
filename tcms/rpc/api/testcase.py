@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db.models import F, FloatField
-from django.db.models.functions import Cast
+from django.db.models.functions import Cast, Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
@@ -290,8 +290,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     # `Cast`ed to their millisecond values
     qs = (
         TestCase.objects.annotate(
-            setup_duration_sec=Cast("setup_duration", FloatField()) / 10 ** 6,
-            testing_duration_sec=Cast("testing_duration", FloatField()) / 10 ** 6,
+            setup_duration_sec=Coalesce(Cast("setup_duration", FloatField()), 0.0) / 10 ** 6,
+            testing_duration_sec=Coalesce(Cast("testing_duration", FloatField()), 0.0) / 10 ** 6,
             expected_duration_sec=F("setup_duration_sec") + F("testing_duration_sec"),
         )
         .filter(**query)
