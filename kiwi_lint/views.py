@@ -71,9 +71,7 @@ class DjangoViewsChecker(checkers.BaseChecker):
         return flatten(root_urlpatterns)
 
     def visit_module(self, node):
-        if node.name in self.views_by_module.keys() and not node.name.endswith(
-            ".admin"
-        ):
+        if node.name in self.views_by_module and not node.name.endswith(".admin"):
             self.view_module = node.name
 
     def leave_module(self, node):  # pylint: disable=unused-argument
