@@ -164,8 +164,6 @@ class TestSendMailOnCaseIsDeleted(BasePlanCase):
 class TestCaseCalculateExpectedDuration(TestCase):
     """Test TestCase.expected_duration"""
 
-    default = timedelta(0)
-
     @parameterized.expand(
         [
             (
@@ -174,9 +172,9 @@ class TestCaseCalculateExpectedDuration(TestCase):
                 timedelta(days=1),
                 timedelta(days=2),
             ),
-            ("both_values_are_none", default, default, default),
-            ("setup_duration_is_none", default, timedelta(days=1), timedelta(days=1)),
-            ("testing_duration_is_none", timedelta(days=1), default, timedelta(days=1)),
+            ("both_values_are_none", None, None, timedelta(0)),
+            ("setup_duration_is_none", None, timedelta(days=1), timedelta(days=1)),
+            ("testing_duration_is_none", timedelta(days=1), None, timedelta(days=1)),
         ]
     )
     def test_test_case_expected_duration_property_when(
