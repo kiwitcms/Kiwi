@@ -158,21 +158,15 @@ class TestCase(models.Model, UrlMixin):
     emailing = property(_get_email_conf)
 
     def clone(self, new_author, test_plans):
-        new_tc = self.__class__.objects.create(
-            is_automated=self.is_automated,
-            script=self.script,
-            arguments=self.arguments,
-            extra_link=self.extra_link,
-            summary=self.summary,
-            requirement=self.requirement,
-            case_status=TestCaseStatus.objects.filter(is_confirmed=False).first(),
-            category=self.category,
-            priority=self.priority,
-            notes=self.notes,
-            text=self.text,
-            author=new_author,
-            default_tester=self.default_tester,
+        values = self.__dict__.copy()
+        del values["_state"]
+        del values["id"]
+        values["case_status_id"] = (
+            TestCaseStatus.objects.filter(is_confirmed=False).first().pk
         )
+        values["author_id"] = new_author.pk
+
+        new_tc = self.__class__.objects.create(**values)
 
         # apply tags as well
         for tag in self.tag.all():
