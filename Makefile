@@ -32,7 +32,7 @@ test:
 			TEST_DB=$$DB make test; \
 		done; \
 	else \
-		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test -v2 --noinput --settings=$(DJANGO_SETTINGS_MODULE); \
+		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test -v2 --noinput --settings=$(DJANGO_SETTINGS_MODULE) tcms.rpc.tests.test_testcase.TestCaseFilter; \
 	fi
 
 

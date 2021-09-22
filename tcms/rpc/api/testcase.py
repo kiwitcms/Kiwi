@@ -325,6 +325,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         .distinct()
     )
 
+    print("******* DEBUG, SQL=", qs.query)
+
     return list(qs)
 
 
