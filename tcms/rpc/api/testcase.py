@@ -291,8 +291,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     qs = (
         TestCase.objects.annotate(
             setup_duration_sec=Cast("setup_duration", FloatField()) / 10 ** 6,
-            testing_duration_sec=Cast("testing_duration", FloatField()) / 10 ** 6,
-            expected_duration_sec=Coalesce("setup_duration_sec", 0.0) + Coalesce("testing_duration_sec", 0.0),
+#            testing_duration_sec=Cast("testing_duration", FloatField()) / 10 ** 6,
+#            expected_duration_sec=Coalesce("setup_duration_sec", 0.0) + Coalesce("testing_duration_sec", 0.0),
         )
         .filter(**query)
         .values(
@@ -319,8 +319,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "reviewer",
             "reviewer__username",
             "setup_duration_sec",
-            "testing_duration_sec",
-            "expected_duration_sec",
+#            "testing_duration_sec",
+#            "expected_duration_sec",
         )
         .distinct()
     )
