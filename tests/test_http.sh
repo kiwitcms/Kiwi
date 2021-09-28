@@ -5,17 +5,16 @@
 assert_up_and_running() {
     sleep 10
     # both HTTP and HTTPS display the login page
-    rlRun -t -c "curl    -L -o- http://$IP_ADDRESS:8080/  | grep 'Welcome to Kiwi TCMS'"
-    rlRun -t -c "curl -k -L -o- https://$IP_ADDRESS:8443/ | grep 'Welcome to Kiwi TCMS'"
+    rlRun -t -c "curl    -L -o- http://$1:8080/  | grep 'Welcome to Kiwi TCMS'"
+    rlRun -t -c "curl -k -L -o- https://$1:8443/ | grep 'Welcome to Kiwi TCMS'"
 }
 
 get_dashboard() {
-    rm -f /tmp/testcookies.txt
-    rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt $URL/"
+    rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt $1/"
     CSRF_TOKEN=`grep csrftoken /tmp/testcookies.txt | cut -f 7`
-    rlRun -t -c "curl -e \";auto\" -d username=testadmin -d password=password \
+    rlRun -t -c "curl -e $1/accounts/login/ -d username=testadmin -d password=password \
         -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -i -o /tmp/testdata.txt \
-        -b /tmp/testcookies.txt $URL/accounts/login/"
+        -b /tmp/testcookies.txt $1/accounts/login/"
     rlAssertGrep "<title>Kiwi TCMS - Dashboard</title>" /tmp/testdata.txt
 }
 
@@ -31,7 +30,7 @@ rlJournalStart
         sleep 10
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         IP_ADDRESS=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web`
-        assert_up_and_running
+        assert_up_and_running "$IP_ADDRESS"
     rlPhaseEnd
 
     rlPhaseStartTest "Should not display SSL warning for HTTPS connection"
@@ -39,13 +38,13 @@ rlJournalStart
             --username testadmin --email testadmin@domain.com --noinput"
         rlRun -t -c "cat tests/set_testadmin_pass.py | docker exec -i kiwi_web /Kiwi/manage.py shell"
         URL="https://$IP_ADDRESS:8443"
-        get_dashboard
+        get_dashboard "$URL"
         rlAssertNotGrep "You are not using a secure connection." /tmp/testdata.txt
     rlPhaseEnd
 
     rlPhaseStartTest "Should display SSL warning for HTTP connection"
         URL="http://$IP_ADDRESS:8080"
-        get_dashboard
+        get_dashboard "$URL"
         rlAssertGrep "You are not using a secure connection." /tmp/testdata.txt
 
     rlPhaseStartCleanup
