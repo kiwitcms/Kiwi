@@ -78,6 +78,26 @@ class DashboardView(TemplateView):
                 ),
             )
 
+        # Check for SSL usage
+        doc_url = (
+            "https://kiwitcms.readthedocs.io/en/latest/"
+            "installing_docker.html#ssl-configuration"
+        )
+        if not self.request.is_secure():
+            messages.add_message(
+                self.request,
+                messages.WARNING,
+                mark_safe(  # nosec:B308:B703
+                    _(
+                        "You are not using a secure connection. "
+                        'See <a href="%(doc_url)s">documentation</a> and enable SSL.'
+                    )
+                    % {
+                        "doc_url": doc_url,
+                    }
+                ),
+            )
+
         # List all recent TestPlans and TestRuns
         test_plans = (
             TestPlan.objects.filter(author=self.request.user)

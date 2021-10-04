@@ -28,7 +28,10 @@ class TestDashboard(LoggedInTestCase):
         # used to reproduce Sentry #KIWI-TCMS-38 where rendering fails
         # with that particular value
         cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求", author=cls.tester)
-        doc_url = "https://kiwitcms.readthedocs.io/en/latest/admin.html#configure-kiwi-s-base-url"
+        doc_url = (
+            "https://kiwitcms.readthedocs.io/en/latest/admin.html"
+            "#configure-kiwi-s-base-url"
+        )
         cls.base_url_error_message = _(
             "Base URL is not configured! "
             'See <a href="%(doc_url)s">documentation</a> and '
@@ -81,6 +84,18 @@ class TestDashboard(LoggedInTestCase):
         with test.override_settings(SITE_ID=site.pk):
             response = self.client.get("/", follow=True)
             self.assertNotContains(response, self.base_url_error_message)
+
+    def test_check_connection_not_using_ssl(self):
+        response = self.client.get("/", follow=True)
+        doc_url = (
+            "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
+            "#ssl-configuration"
+        )
+        ssl_error_message = _(
+            "You are not using a secure connection. "
+            'See <a href="%(doc_url)s">documentation</a> and enable SSL.'
+        ) % {"doc_url": doc_url}
+        self.assertContains(response, ssl_error_message)
 
 
 @unittest.skipUnless(
