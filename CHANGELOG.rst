@@ -1,6 +1,123 @@
 Change Log
 ==========
 
+Kiwi TCMS 10.4 (04 Oct 2021)
+----------------------------
+
+.. important::
+
+   This is a small release which includes several improvements, bug fixes,
+   internal refactoring and updated translations.
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Update prismjs from 1.24.1 to 1.25.0. Includes patches against a
+  Regular Expression Denial of Service vulnerability.
+  See https://snyk.io/vuln/SNYK-JS-PRISMJS-1585202
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 4.0.0 to 4.1.0
+- Update django from 3.2.6 to 3.2.7
+- Update django-colorfield from 0.4.2 to 0.4.3
+- Update pygithub from 1.54.1 to 1.55
+- Update pygments from 2.9.0 to 2.10.0
+- Update python-gitlab from 2.10.0 to 2.10.1
+- Allow filtering by TestRun ID in Test Case Search page
+- Update test execution prefix in list of executions on TestRun page.
+  Now includes both TE and TC numbers before the summary link
+- Allow search by translated names on Test Run page
+- Redirect "ADMIN -> Users and groups" menu item according to tenancy
+- Allow creation of new test run from selected test cases inside existing test
+  run. For example only select cases which are currently failing and re-test
+  against a different build!
+- The ``initial_setup`` command will create a schema called "empty" when executed
+  inside a multi-tenant setup. Refs
+  `Issue #127 <https://github.com/kiwitcms/tenants/issues/127>`_
+
+
+Settings
+~~~~~~~~
+
+- Update values for ``MODERNRPC_HANDLERS`` setting
+- Rename ``SafeJSONRPCHandler`` to ``KiwiTCMSJsonRpcHandler``
+- New RPC handler class ``KiwiTCMSXmlRpcHandler``
+
+.. warning::
+
+    If you had manipulated the value of MODERNRPC_HANDLERS make sure that
+    you update to the new class names!
+
+
+Database
+~~~~~~~~
+
+- New migrations for altered meta options
+
+
+API
+~~~
+
+- ``TestCase.create`` method accepts ``setup_duration`` and ``testing_duration`` fields.
+  Refs `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (Mfon Eti-mfon)
+- ``TestCase.update`` method acepts  ``setup_duration`` and ``testing_duration`` fields.
+  Refs `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (Mfon Eti-mfon)
+- New method ``Testing.individual_test_case_health``
+- Timedelta values are serialized to float, representing seconds
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix wrong URL parameter passed to test cases clone page
+- Show translated execution statuses for TestRun page. Closes
+  `Issue #1966 <https://github.com/kiwitcms/Kiwi/issues/1966>`_
+- Properly initialize Product value on TestRun Edit page. Closes
+  `Issue #2514 <https://github.com/kiwitcms/Kiwi/issues/2514>`_
+- Clone duration fields when cloning a test case
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+- New automated test scenario for ``kiwi_auth.admin`` (Mariyan Garvanski)
+- Unify similar strings to reduce transaltions burden
+- Inside buildroot ``PyNaCl`` needs ``make`` in order to build a wheel package
+- Adjust values for parametrized test to match existing scenarios
+- Fix code smells from newer pylint
+- eslint fixes for the JavaScript files
+
+
+Translations
+~~~~~~~~~~~~
+
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Italian translation <https://crowdin.com/project/kiwitcms/it#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+
+
+
 Kiwi TCMS 10.3 (11 Aug 2021)
 ----------------------------
 
