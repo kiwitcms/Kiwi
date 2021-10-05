@@ -172,11 +172,9 @@ class Edit(UpdateView):
                 field in new_data
                 and self._values_before_update[field] != new_data[field]
             ):
-                result += "%s: %s -> %s\n" % (
-                    field.title(),
-                    self._values_before_update[field],
-                    new_data[field],
-                )
+                _before_update = self._values_before_update[field]
+                _after_update = new_data[field]
+                result += f"{field.title()}: {_before_update} -> {_after_update}\n"
         if result:
             add_comment([self.object], result, self.request.user)
 

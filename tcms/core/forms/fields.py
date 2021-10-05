@@ -27,16 +27,16 @@ class UserField(forms.CharField):
             try:
                 return User.objects.get(pk=value)
             except User.DoesNotExist:
-                raise ValidationError('Unknown user_id: "%s"' % value) from None
+                raise ValidationError(f'Unknown user_id: "{value}"') from None
         else:
             value = value.strip()
             if value.isdigit():
                 try:
                     return User.objects.get(pk=value)
                 except User.DoesNotExist:
-                    raise ValidationError('Unknown user_id: "%s"' % value) from None
+                    raise ValidationError(f'Unknown user_id: "{value}"') from None
             else:
                 try:
                     return User.objects.get((Q(email=value) | Q(username=value)))
                 except User.DoesNotExist:
-                    raise ValidationError('Unknown user: "%s"' % value) from None
+                    raise ValidationError(f'Unknown user: "{value}"') from None

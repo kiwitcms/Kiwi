@@ -147,7 +147,7 @@ class TestPlanGetView(DetailView):
                     (_("Clone"), reverse("plans-clone", args=[self.object.pk])),
                     (
                         _("History"),
-                        "/admin/testplans/testplan/%d/history/" % self.object.pk,
+                        f"/admin/testplans/testplan/{self.object.pk}/history/",
                     ),
                     ("-", "-"),
                     (

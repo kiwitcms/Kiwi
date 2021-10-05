@@ -15,6 +15,11 @@ from tcms.testcases.models import BugSystem, Category, TestCase, TestCaseStatus
 
 
 class TestCaseStatusAdmin(admin.ModelAdmin):
+    _for_more_info = _(
+        """For more information about customizing test case statuses see
+        <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses">
+        the documentation</a>!"""
+    )
     list_display = ("id", "name", "is_confirmed")
     ordering = ["-is_confirmed", "id"]
     fieldsets = [
@@ -22,12 +27,7 @@ class TestCaseStatusAdmin(admin.ModelAdmin):
             "",
             {
                 "fields": ("name", "description", "is_confirmed"),
-                "description": "<h1>%s</h1>"
-                % _(
-                    """For more information about customizing test case statuses see
-        <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses">
-        the documentation</a>!"""
-                ),
+                "description": f"<h1>{_for_more_info}</h1>",
             },
         ),
     ]

@@ -254,10 +254,8 @@ class TranslationMode(View):  # pylint: disable=missing-permission-required
         translation mode by switching back to browser preferred language.
         """
         browser_lang = self.get_browser_language(request)
-        post_body = "%s=%s" % (
-            i18n.LANGUAGE_QUERY_PARAMETER,
-            request.GET.get(i18n.LANGUAGE_QUERY_PARAMETER, browser_lang),
-        )
+        _request_lang = request.GET.get(i18n.LANGUAGE_QUERY_PARAMETER, browser_lang)
+        post_body = f"{i18n.LANGUAGE_QUERY_PARAMETER}={_request_lang}"
         request.META["REQUEST_METHOD"] = "POST"
         request.META["CONTENT_LENGTH"] = len(post_body)
         request.META["CONTENT_TYPE"] = "application/x-www-form-urlencoded"

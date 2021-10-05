@@ -197,7 +197,7 @@ class TestEditBug(LoggedInTestCase):
 
         self.assertEqual(comments.count(), old_comment_count + 1)
         self.assertEqual(
-            comments.last().comment, "Summary: %s -> %s\n" % (old_summary, new_summary)
+            comments.last().comment, f"Summary: {old_summary} -> {new_summary}\n"
         )
 
 

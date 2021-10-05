@@ -35,6 +35,11 @@ class TestRunAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
 
 
 class TestExecutionStatusAdmin(admin.ModelAdmin):
+    _for_more_info = _(
+        """For more information about customizing test execution statuses see
+        <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses">
+        the documentation</a>!"""
+    )
     list_display = ("id", "visual_icon", "name", "colored_color", "weight")
     ordering = ["-weight"]
     fieldsets = [
@@ -42,12 +47,7 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
             "",
             {
                 "fields": ("name", "weight", "icon", "color"),
-                "description": "<h1>%s</h1>"
-                % _(
-                    """For more information about customizing test execution statuses see
-        <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses">
-        the documentation</a>!"""
-                ),
+                "description": f"<h1>{_for_more_info}</h1>",
             },
         ),
     ]

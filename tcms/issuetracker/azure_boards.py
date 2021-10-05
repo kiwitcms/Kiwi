@@ -22,61 +22,36 @@ class AzureBoardsAPI:
         self.base_url = base_url + "/_apis/"
 
     def get_issue(self, issue_id):
-        url = "{0}{1}{2}{3}".format(
-            self.base_url, "wit/workitems/", issue_id, self.api_version
-        )
+        url = f"{self.base_url}wit/workItems/{issue_id}{self.api_version}"
         return self._request("GET", url, headers=self.headers, auth=self.auth)
 
     def create_issue(self, body):
-        url = "{0}{1}{2}".format(
-            self.base_url, "wit/workitems/$Issue", self.api_version
-        )
+        url = f"{self.base_url}wit/workItems/$Issue{self.api_version}"
         return self._request(
             "POST", url, headers=self.headers, auth=self.auth, json=body
         )
 
     def update_issue(self, issue_id, body):
-        url = "{0}{1}{2}{3}".format(
-            self.base_url, "wit/workitems/", issue_id, self.api_version
-        )
+        url = f"{self.base_url}wit/workItems/{issue_id}{self.api_version}"
         return self._request(
             "PATCH", url, headers=self.headers, auth=self.auth, json=body
         )
 
     def get_comments(self, issue_id):
         headers = {"Content-type": "application/json"}
-        url = "{0}{1}{2}{3}{4}{5}".format(
-            self.base_url,
-            "wit/workItems/",
-            issue_id,
-            "/comments",
-            self.api_version,
-            "-preview.3",
-        )
+        url = f"{self.base_url}wit/workItems/{issue_id}/comments{self.api_version}-preview.3"
         return self._request("GET", url, headers=headers, auth=self.auth)
 
     def add_comment(self, issue_id, body):
         headers = {"Content-type": "application/json"}
-        url = "{0}{1}{2}{3}{4}{5}".format(
-            self.base_url,
-            "wit/workitems/",
-            issue_id,
-            "/comments",
-            self.api_version,
-            "-preview.3",
-        )
+        url = f"{self.base_url}wit/workItems/{issue_id}/comments{self.api_version}-preview.3"
         return self._request("POST", url, headers=headers, auth=self.auth, json=body)
 
     def delete_comment(self, issue_id, comment_id):
         headers = {"Content-type": "application/json"}
-        url = "{0}{1}{2}{3}{4}{5}{6}".format(
-            self.base_url,
-            "wit/workItems/",
-            issue_id,
-            "/comments/",
-            comment_id,
-            self.api_version,
-            "-preview.3",
+        url = (
+            f"{self.base_url}wit/workItems/{issue_id}/"
+            f"comments/{comment_id}{self.api_version}-preview.3"
         )
         return requests.request("DELETE", url, headers=headers, auth=self.auth)
 
@@ -129,7 +104,7 @@ class AzureBoards(IssueTrackerType):
                 "op": "add",
                 "path": "/fields/System.Title",
                 "from": "null",
-                "value": "Failed test: %s" % execution.case.summary,
+                "value": f"Failed test: {execution.case.summary}",
             }
         ]
 

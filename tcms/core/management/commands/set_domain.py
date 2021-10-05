@@ -20,7 +20,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         site = Site.objects.get(id=settings.SITE_ID)
         if not kwargs["domain"]:
-            self.stdout.write("%s" % (site.domain))
+            self.stdout.write(site.domain)
             return
         site.domain = kwargs["domain"]
         site.name = "Kiwi TCMS"

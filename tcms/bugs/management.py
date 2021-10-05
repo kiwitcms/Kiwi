@@ -27,7 +27,7 @@ def _get_builtin_permissions(opts):
         perms.append(
             (
                 get_permission_codename(action, opts),
-                "Can %s %s" % (action, opts.verbose_name_raw),
+                f"Can {action} {opts.verbose_name_raw}",
             )
         )
     return perms
@@ -39,7 +39,7 @@ def create_permissions(
     interactive=True,
     using=DEFAULT_DB_ALIAS,
     apps=global_apps,
-    **kwargs
+    **kwargs,
 ):
     """
     Create the missing permissions for the Bug<->Tag m2m model, see
@@ -62,7 +62,7 @@ def create_permissions(
         interactive=interactive,
         using=using,
         apps=apps,
-        **kwargs
+        **kwargs,
     )
 
     app_label = app_config.label
@@ -112,4 +112,4 @@ def create_permissions(
     Permission.objects.using(using).bulk_create(perms)
     if verbosity >= 2:
         for perm in perms:
-            print("Adding permission '%s'" % perm)
+            print(f"Adding permission '{perm}'")

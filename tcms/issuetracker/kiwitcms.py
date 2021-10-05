@@ -1,4 +1,4 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -80,7 +80,7 @@ class KiwiTCMS(IssueTrackerType):
         """
         data = {
             "reporter": user,
-            "summary": "Failed test: %s" % execution.case.summary,
+            "summary": f"Failed test: {execution.case.summary}",
             "product": execution.run.plan.product,
             "version": execution.run.plan.product_version,
             "build": execution.build,

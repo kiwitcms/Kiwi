@@ -54,11 +54,10 @@ class TestGetRun(BaseCaseRun):
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
+        _tags = _("Tags")
         self.assertContains(
             response,
-            '<h2 class="card-pf-title"><span class="fa fa-tags"></span>{0}</h2>'.format(
-                _("Tags")
-            ),
+            f'<h2 class="card-pf-title"><span class="fa fa-tags"></span>{_tags}</h2>',
             html=True,
         )
 
@@ -105,7 +104,7 @@ class TestCreateNewRun(BasePlanCase):
             case_url = reverse("testcases-get", args=[case.pk])
             self.assertContains(
                 response,
-                '<a href="%s">TC-%d: %s</a>' % (case_url, case.pk, case.summary),
+                f'<a href="{case_url}">TC-{case.pk}: {case.summary}</a>',
                 html=True,
             )
 
@@ -163,11 +162,11 @@ class TestCloneRunView(PermissionsTestCase):
 
         self.assertContains(response, _("Clone TestRun"))
 
+        _clone_of = _("Clone of ")
         self.assertContains(
             response,
             '<input id="id_summary" class="form-control" name="summary" '
-            'type="text" value="%s%s" required>'
-            % (_("Clone of "), self.test_run.summary),
+            f'type="text" value="{_clone_of}{self.test_run.summary}" required>',
             html=True,
         )
 
@@ -176,8 +175,7 @@ class TestCloneRunView(PermissionsTestCase):
 
             self.assertContains(
                 response,
-                '<a href="%s">TC-%d: %s</a>'
-                % (case_url, execution.case.pk, execution.case.summary),
+                f'<a href="{case_url}">TC-{execution.case.pk}: {execution.case.summary}</a>',
                 html=True,
             )
 
@@ -198,8 +196,7 @@ class TestSearchRuns(BaseCaseRun):
         response = self.client.get(self.search_runs_url, {"product": self.product.pk})
         self.assertContains(
             response,
-            '<option value="%d" selected>%s</option>'
-            % (self.product.pk, self.product.name),
+            f'<option value="{self.product.pk}" selected>{self.product.name}</option>',
             html=True,
         )
 
@@ -212,31 +209,28 @@ class TestRunCasesMenu(BaseCaseRun):
 
         cls.url = reverse("testruns-get", args=[cls.test_run.pk])
 
-        cls.update_text_version_html = """
+        _update_text_version = _("Update text version")
+        cls.update_text_version_html = f"""
             <a href="#" class="update-case-text-bulk">
-                <span class="fa fa-refresh"></span>{0}
+                <span class="fa fa-refresh"></span>{_update_text_version}
             </a>
-        """.format(
-            _("Update text version")
-        )
+        """
 
-        cls.change_assignee_html = """
+        _assignee = _("Assignee")
+        cls.change_assignee_html = f"""
             <a class="change-assignee-bulk" href="#">
                 <span class="fa pficon-user"></span>
-                {0}
+                {_assignee}
             </a>
-        """.format(
-            _("Assignee")
-        )
+        """
 
-        cls.remove_executions_html = """
+        _delete = _("Delete")
+        cls.remove_executions_html = f"""
             <a class="bg-danger remove-execution-bulk" href="#">
                 <span class="fa fa-trash-o"></span>
-                {0}
+                {_delete}
             </a>
-        """.format(
-            _("Delete")
-        )
+        """
 
     def test_add_cases_to_run_with_permission(self):
         user_should_have_perm(self.tester, "testruns.add_testexecution")
@@ -297,9 +291,7 @@ class TestRunStatusMenu(BaseCaseRun):
         for execution_status in TestExecutionStatus.objects.all():
             self.assertContains(
                 response,
-                '<span class="{0}"></span>{1}'.format(
-                    execution_status.icon, execution_status.name
-                ),
+                f'<span class="{execution_status.icon}"></span>{execution_status.name}',
                 html=True,
             )
 
@@ -311,8 +303,6 @@ class TestRunStatusMenu(BaseCaseRun):
         for execution_status in TestExecutionStatus.objects.all():
             self.assertNotContains(
                 response,
-                '<span class="{0}"></span>{1}'.format(
-                    execution_status.icon, execution_status.name
-                ),
+                f'<span class="{execution_status.icon}"></span>{execution_status.name}',
                 html=True,
             )

@@ -113,9 +113,9 @@ class TestGitlabIntegration(APITestCase):
         # and also verify its text
         for expected_string in [
             "Confirmed via test execution",
-            "TR-%d: %s" % (self.execution_1.run_id, self.execution_1.run.summary),
+            f"TR-{self.execution_1.run_id}: {self.execution_1.run.summary}",
             self.execution_1.run.get_full_url(),
-            "TE-%d: %s" % (self.execution_1.pk, self.execution_1.case.summary),
+            f"TE-{self.execution_1.pk}: {self.execution_1.case.summary}",
         ]:
             self.assertIn(expected_string, last_comment.body)
 
@@ -134,9 +134,9 @@ class TestGitlabIntegration(APITestCase):
         gl_project = self.integration.rpc.projects.get(repo_id)
         issue = gl_project.issues.get(new_issue_id)
 
-        self.assertEqual("Failed test: %s" % self.execution_1.case.summary, issue.title)
+        self.assertEqual(f"Failed test: {self.execution_1.case.summary}", issue.title)
         for expected_string in [
-            "Filed from execution %s" % self.execution_1.get_full_url(),
+            f"Filed from execution {self.execution_1.get_full_url()}",
             self.execution_1.run.plan.product.name,
             self.component.name,
             "Steps to reproduce",

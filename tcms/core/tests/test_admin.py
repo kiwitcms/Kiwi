@@ -40,10 +40,11 @@ class TestAdminView(LoggedInTestCase):
         self.assertContains(response, _("Tags"))
         self.assertContains(response, "Versions")
 
+        _bugs = _("Bugs")
         if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
             self.assertContains(
                 response,
-                '<a href="/admin/bugs/" class="grp-section">%s</a>' % _("Bugs"),
+                f'<a href="/admin/bugs/" class="grp-section">{_bugs}</a>',
                 html=True,
             )
             self.assertContains(response, "<strong>Bugs</strong>", html=True)
@@ -157,7 +158,7 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertNotContains(
             response,
-            '<a href="/admin/auth/user/%d/change/">%s</a>'
-            % (self.regular_user.pk, self.regular_user.username),
+            f'<a href="/admin/auth/user/{self.regular_user.pk}/change/">'
+            f"{self.regular_user.username}</a>",
             html=True,
         )

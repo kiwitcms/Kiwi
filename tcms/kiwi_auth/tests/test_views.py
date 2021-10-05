@@ -99,7 +99,8 @@ class TestRegistration(TestCase):
 
     def test_open_registration_page(self):
         response = self.client.get(self.register_url)
-        self.assertContains(response, ">%s</button>" % _("Register"))
+        _register = _("Register")
+        self.assertContains(response, f">{_register}</button>")
 
     def assert_user_registration(self, username, follow=False):
 
@@ -157,7 +158,7 @@ class TestRegistration(TestCase):
             )
             values = {
                 "username": "signal-handler",
-                "user_url": "http://testserver/admin/auth/user/%d/change/" % user.pk,
+                "user_url": f"http://testserver/admin/auth/user/{user.pk}/change/",
             }
             expected = (
                 _(
@@ -187,10 +188,8 @@ Go to %(user_url)s to activate the account!"""
         )
 
         site = Site.objects.get(pk=settings.SITE_ID)
-        confirm_url = "http://%s%s" % (
-            site.domain,
-            reverse("tcms-confirm", args=[self.fake_activate_key]),
-        )
+        _confirm_url = reverse("tcms-confirm", args=[self.fake_activate_key])
+        confirm_url = f"http://{site.domain}{_confirm_url}"
 
         # Verify notification mail
         values = {
@@ -237,7 +236,7 @@ To activate your account, click this link:
 
         for (name, email) in settings.ADMINS:
             self.assertContains(
-                response, '<a href="mailto:{}">{}</a>'.format(email, name), html=True
+                response, f'<a href="mailto:{email}">{name}</a>', html=True
             )
 
     def test_invalid_form(self):
@@ -381,7 +380,8 @@ class TestPasswordResetView(TestCase):
     def test_open_password_reset_page(self):
         response = self.client.get(self.password_reset_url)
 
-        self.assertContains(response, ">%s</button>" % _("Password reset"))
+        _password_reset = _("Password reset")
+        self.assertContains(response, f">{_password_reset}</button>")
 
     @patch("tcms.kiwi_auth.forms.DjangoPasswordResetForm.send_mail")
     def test_send_mail_for_password_reset(self, mail_sent):

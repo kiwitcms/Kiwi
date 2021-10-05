@@ -329,7 +329,7 @@ class TestEditCaseView(BasePlanCase):
 
     def test_edit_a_case(self):
         edit_data = self.edit_data.copy()
-        new_summary = "Edited: {0}".format(self.case_1.summary)
+        new_summary = f"Edited: {self.case_1.summary}"
         edit_data["summary"] = new_summary
 
         response = self.client.post(self.case_edit_url, edit_data)
@@ -466,15 +466,15 @@ class TestCloneCase(BasePlanCase):
             self.clone_url, {"c": [self.case_1.pk, self.case_2.pk]}
         )
 
-        self.assertContains(response, "TP-%s: %s" % (self.plan.pk, self.plan.name))
+        self.assertContains(response, f"TP-{self.plan.pk}: {self.plan.name}")
 
         for case in [self.case_1, self.case_2]:
-            self.assertContains(response, "TC-%d: %s" % (case.pk, case.summary))
+            self.assertContains(response, f"TC-{case.pk}: {case.summary}")
 
     def test_user_without_permission_should_not_be_able_to_clone_a_case(self):
         remove_perm_from_user(self.tester, "testcases.add_testcase")
         base_url = reverse("tcms-login") + "?next="
-        expected = base_url + reverse("testcases-clone") + "?c=%d" % self.case_1.pk
+        expected = base_url + reverse("testcases-clone") + f"?c={self.case_1.pk}"
         response = self.client.get(
             self.clone_url,
             {
@@ -505,7 +505,6 @@ class TestSearchCases(BasePlanCase):
         response = self.client.get(self.search_url, {"product": self.product.pk})
         self.assertContains(
             response,
-            '<option value="%d" selected>%s</option>'
-            % (self.product.pk, self.product.name),
+            f'<option value="{self.product.pk}" selected>{self.product.name}</option>',
             html=True,
         )

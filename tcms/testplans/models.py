@@ -91,7 +91,7 @@ class TestPlan(TreeNode, UrlMixin):
 
     def make_cloned_name(self):
         """Make default name of cloned plan"""
-        return "Copy of {}".format(self.name)
+        return f"Copy of {self.name}"
 
     def clone(  # pylint: disable=too-many-arguments
         self,
@@ -101,7 +101,7 @@ class TestPlan(TreeNode, UrlMixin):
         new_author=None,
         set_parent=False,
         copy_testcases=False,
-        **_kwargs
+        **_kwargs,
     ):
         """Clone this plan
 
@@ -212,9 +212,9 @@ class TestPlan(TreeNode, UrlMixin):
             if test_plan.pk == self.pk:
                 active_class = "active"
 
-            result += """
+            result += f"""
                 <!-- begin-node -->
-                <div class="list-group-item %s" style="border: none">
+                <div class="list-group-item {active_class}" style="border: none">
                     <div class="list-group-item-header" style="padding:0">
                         <div class="list-view-pf-main-info"
                              style="padding-top:0; padding-bottom:0">
@@ -226,7 +226,9 @@ class TestPlan(TreeNode, UrlMixin):
                             <div class="list-view-pf-body">
                                 <div class="list-view-pf-description">
                                     <div class="list-group-item-text">
-                                        <a href="%s">TP-%d: %s</a>
+                                        <a href="{test_plan.get_absolute_url()}">
+                                            TP-{test_plan.pk}: {test_plan.name}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -235,12 +237,7 @@ class TestPlan(TreeNode, UrlMixin):
 
                     <!-- begin-subtree -->
                     <div class="list-group-item-container container-fluid" style="border: none">
-            """ % (
-                active_class,
-                test_plan.get_absolute_url(),
-                test_plan.pk,
-                test_plan.name,
-            )
+            """
 
         # close after the last elements in the for loop
         while previous_depth >= 0:
@@ -263,16 +260,13 @@ class TestPlan(TreeNode, UrlMixin):
         if begin_subtree != end_subtree:
             raise RuntimeError("Begin/End count for tree-view subtrees don't match")
 
-        return (
-            """
+        return f"""
             <div id="test-plan-family-tree"
                  class="list-group tree-list-view-pf"
                  style="margin-top:0">
-                %s
+                {result}
             </div>
         """
-            % result
-        )
 
 
 class TestPlanTag(models.Model):

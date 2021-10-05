@@ -59,20 +59,20 @@ class ObjectPermissionsAdminMixin(GuardedModelAdminMixin):
         opts = self.opts
         codename = get_permission_codename("change", opts)
         return (
-            request.user.has_perm("%s.%s" % (opts.app_label, codename))
+            request.user.has_perm(f"{opts.app_label}.{codename}")
             or
             # vvv this is the added bit
-            request.user.has_perm("%s.%s" % (opts.app_label, codename), obj=obj)
+            request.user.has_perm(f"{opts.app_label}.{codename}", obj=obj)
         )
 
     def has_delete_permission(self, request, obj=None):
         opts = self.opts
         codename = get_permission_codename("delete", opts)
         return (
-            request.user.has_perm("%s.%s" % (opts.app_label, codename))
+            request.user.has_perm(f"{opts.app_label}.{codename}")
             or
             # vvv this is the added bit
-            request.user.has_perm("%s.%s" % (opts.app_label, codename), obj=obj)
+            request.user.has_perm(f"{opts.app_label}.{codename}", obj=obj)
         )
 
     def has_view_permission(self, request, obj=None):
@@ -80,12 +80,10 @@ class ObjectPermissionsAdminMixin(GuardedModelAdminMixin):
         codename_view = get_permission_codename("view", opts)
         codename_change = get_permission_codename("change", opts)
         return (
-            request.user.has_perm("%s.%s" % (opts.app_label, codename_view))
-            or request.user.has_perm("%s.%s" % (opts.app_label, codename_change))
+            request.user.has_perm(f"{opts.app_label}.{codename_view}")
+            or request.user.has_perm(f"{opts.app_label}.{codename_change}")
             or
             # vvv these are the added bits
-            request.user.has_perm("%s.%s" % (opts.app_label, codename_view), obj=obj)
-            or request.user.has_perm(
-                "%s.%s" % (opts.app_label, codename_change), obj=obj
-            )
+            request.user.has_perm(f"{opts.app_label}.{codename_view}", obj=obj)
+            or request.user.has_perm(f"{opts.app_label}.{codename_change}", obj=obj)
         )

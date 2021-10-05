@@ -22,39 +22,33 @@ class BitBucketAPI:
         self.auth = HTTPBasicAuth(api_username, api_password)
 
     def create_issue(self, data):
-        url = "{0}{1}".format(self.endpoint_url, "/issues")
+        url = f"{self.endpoint_url}/issues"
         return self._request(
             "POST", url, headers=self.headers, auth=self.auth, json=data
         )
 
     def get_issue(self, issue_id):
-        url = "{0}{1}{2}".format(self.endpoint_url, "/issues/", issue_id)
+        url = f"{self.endpoint_url}/issues/{issue_id}"
         return self._request("GET", url, headers=self.headers, auth=self.auth)
 
     def update_issue(self, issue_id, data):
-        url = "{0}{1}{2}{3}".format(self.endpoint_url, "/issues/", issue_id, "/changes")
+        url = f"{self.endpoint_url}/issues/{issue_id}/changes"
         return self._request(
             "POST", url, headers=self.headers, auth=self.auth, json=data
         )
 
     def add_comment(self, issue_id, comment):
-        url = "{0}{1}{2}{3}".format(
-            self.endpoint_url, "/issues/", issue_id, "/comments/"
-        )
+        url = f"{self.endpoint_url}/issues/{issue_id}/comments/"
         return self._request(
             "POST", url, headers=self.headers, auth=self.auth, json=comment
         )
 
     def get_comments(self, issue_id):
-        url = "{0}{1}{2}{3}".format(
-            self.endpoint_url, "/issues/", issue_id, "/comments?sort=-updated_on"
-        )
+        url = f"{self.endpoint_url}/issues/{issue_id}/comments?sort=-updated_on"
         return self._request("GET", url, headers=self.headers, auth=self.auth)
 
     def delete_comment(self, issue_id, comment_id):
-        url = "{0}{1}{2}{3}{4}".format(
-            self.endpoint_url, "/issues/", issue_id, "/comments/", comment_id
-        )
+        url = f"{self.endpoint_url}/issues/{issue_id}/comments/{comment_id}"
         return self._request("DELETE", url, headers=self.headers, auth=self.auth)
 
     @staticmethod
@@ -69,9 +63,7 @@ class BitBucketAPI:
         base_url = "https://api.bitbucket.org"
         workspace = splitted_url[1]
         repository = splitted_url[2]
-        endpoint_url = "{0}/{1}/{2}/{3}/{4}".format(
-            base_url, api_version, "repositories", workspace, repository
-        )
+        endpoint_url = f"{base_url}/{api_version}/repositories/{workspace}/{repository}"
         return endpoint_url
 
 
@@ -133,7 +125,7 @@ class BitBucket(IssueTrackerType):
         """
 
         data = {
-            "title": "Failed test: %s" % execution.case.summary,
+            "title": f"Failed test: {execution.case.summary}",
             "kind": "bug",
             "priority": "major",
             "content": {"raw": self._report_comment(execution).replace("\n", "\r\n")},
@@ -142,7 +134,7 @@ class BitBucket(IssueTrackerType):
         try:
             issue = self.rpc.create_issue(data)
 
-            issue_url = self.bug_system.base_url + "/issues/" + str(issue["id"])
+            issue_url = f"{self.bug_system.base_url}/issues/{issue['id']}"
             # add a link reference that will be shown in the UI
             LinkReference.objects.get_or_create(
                 execution=execution,

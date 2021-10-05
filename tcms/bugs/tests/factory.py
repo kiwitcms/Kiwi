@@ -16,7 +16,7 @@ class BugFactory(DjangoModelFactory):
     class Meta:
         model = "bugs.Bug"
 
-    summary = factory.Sequence(lambda n: "Bug %d" % n)
+    summary = factory.Sequence(lambda n: f"Bug {n}")
     reporter = factory.SubFactory(UserFactory)
     assignee = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)

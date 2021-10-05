@@ -17,6 +17,7 @@ class SimpleMDE(forms.Textarea):
 
     def render(self, name, value, attrs=None, renderer=None):
         rendered_string = super().render(name, value, attrs, renderer)
+        # pylint: disable=consider-using-f-string
         rendered_string += """
 <input id="%s" type="file" style="display: none">
 <script>

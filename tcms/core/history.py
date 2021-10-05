@@ -118,7 +118,7 @@ class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
     history_list_display = ["Diff"]
 
     def Diff(self, obj):  # pylint: disable=invalid-name
-        return safe("<pre>%s</pre>" % obj.history_change_reason)
+        return safe(f"<pre>{obj.history_change_reason}</pre>")
 
     def get_readonly_fields(self, request, obj=None):
         # make all fields readonly

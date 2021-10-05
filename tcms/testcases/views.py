@@ -132,11 +132,11 @@ class TestCaseGetView(DetailView):
                     ),
                     (
                         _("Clone"),
-                        reverse("testcases-clone") + "?c=%d" % self.object.pk,
+                        reverse("testcases-clone") + f"?c={self.object.pk}",
                     ),
                     (
                         _("History"),
-                        "/admin/testcases/testcase/%d/history/" % self.object.pk,
+                        f"/admin/testcases/testcase/{self.object.pk}/history/",
                     ),
                     ("-", "-"),
                     (

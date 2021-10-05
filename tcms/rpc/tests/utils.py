@@ -28,7 +28,7 @@ class APITestCase(test.LiveServerTestCase):
         self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
             self.api_user.username,
             "api-testing",
-            "%s/xml-rpc/" % self.live_server_url,
+            f"{self.live_server_url}/xml-rpc/",
         ).server
 
 
@@ -53,7 +53,7 @@ class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
         self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
             self.tester.username,
             "password",
-            "%s/xml-rpc/" % self.live_server_url,
+            f"{self.live_server_url}/xml-rpc/",
         ).server
 
     def verify_api_with_permission(self):

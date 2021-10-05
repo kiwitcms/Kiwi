@@ -58,8 +58,8 @@ if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
 
 
 for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
-    plugin_urls = import_module("%s.urls" % plugin.module_name)
-    urlpatterns.append(re_path(r"^%s/" % plugin.name, include(plugin_urls)))
+    plugin_urls = import_module(f"{plugin.module_name}.urls")
+    urlpatterns.append(re_path(f"^{plugin.name}/", include(plugin_urls)))
 
 
 if settings.DEBUG:

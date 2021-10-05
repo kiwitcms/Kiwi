@@ -216,7 +216,7 @@ class TestExecution(models.Model, UrlMixin):
         unique_together = ("case", "run", "case_text_version")
 
     def __str__(self):
-        return "%s: %s" % (self.pk, self.case_id)
+        return f"{self.pk}: {self.case_id}"
 
     def links(self):
         return LinkReference.objects.filter(execution=self.pk)

@@ -65,9 +65,9 @@ class ProductTests(TestCase):
         TestPlanEmailSettings.objects.all().delete()
 
         # now delete the product
-        admin_delete_url = "admin:%s_%s_delete" % (
-            product._meta.app_label,  # pylint: disable=no-member
-            product._meta.model_name,  # pylint: disable=no-member
+        # pylint: disable=no-member
+        admin_delete_url = (
+            f"admin:{product._meta.app_label}_{product._meta.model_name}_delete"
         )
         location = reverse(admin_delete_url, args=[product.pk])
         response = self.c.get(location)
@@ -77,13 +77,9 @@ class ProductTests(TestCase):
         # confirm that we're sure we want to delete it
         response = self.c.post(location, {"post": "yes"})
         self.assertEqual(302, response.status_code)
-        self.assertTrue(
-            "/admin/%s/%s/"
-            % (
-                product._meta.app_label,
-                product._meta.model_name,
-            )  # pylint: disable=no-member
-            in response["Location"]
+        self.assertIn(
+            f"/admin/{product._meta.app_label}/{product._meta.model_name}/",
+            response["Location"],
         )
 
         # verify everything has been deleted

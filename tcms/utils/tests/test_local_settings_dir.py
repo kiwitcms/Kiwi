@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2020-2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -26,6 +26,6 @@ class ImportLocalSettingsTestCase(TestCase):
         )
 
         # assert settings values have changed
-        self.assertEqual(settings.KIWI_VERSION, "%s-Under-Test" % __version__)
+        self.assertEqual(settings.KIWI_VERSION, f"{__version__}-Under-Test")
         self.assertEqual(settings.KIWI_MARKETPLACE, "newly-added-setting")
         self.assertIn("test_me", settings.INSTALLED_APPS)
