@@ -10,8 +10,7 @@ def generate_output(output, permissions, group):
     if output:
         for perm in permissions:
             output.write(
-                "%s.%s added to %s group"
-                % (perm.content_type.app_label, perm.codename, group.name)
+                f"{perm.content_type.app_label}.{perm.codename} added to {group.name} group"
             )
 
 

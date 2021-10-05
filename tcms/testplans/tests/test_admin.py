@@ -44,7 +44,7 @@ class TestTestPlanAdmin(LoggedInTestCase):
     def test_history_display_testplan(self):
         with self.subTest("Test History before Changes"):
             response = self.client.get(
-                "/admin/testplans/testplan/%d/history/" % self.test_plan.pk
+                f"/admin/testplans/testplan/{self.test_plan.pk}/history/"
             )
             self.assertContains(response, "<pre></pre>")
             self.assertContains(response, _("Created"))
@@ -56,7 +56,7 @@ class TestTestPlanAdmin(LoggedInTestCase):
             self.test_plan.name = "Test Demo"
             self.test_plan.save()
             response = self.client.get(
-                "/admin/testplans/testplan/%d/history/" % self.test_plan.pk
+                f"/admin/testplans/testplan/{self.test_plan.pk}/history/"
             )
             self.assertContains(
                 response,
@@ -65,8 +65,8 @@ class TestTestPlanAdmin(LoggedInTestCase):
 
         with self.subTest("Test fields are read-only"):
             response = self.client.get(
-                "/admin/testplans/testplan/%d/history/%d/"
-                % (self.test_plan.pk, self.test_plan.history.last().pk),
+                f"/admin/testplans/testplan/{self.test_plan.pk}/"
+                f"history/{self.test_plan.history.last().pk}/"
             )
             self.assertNotContains(
                 response,
@@ -75,8 +75,8 @@ class TestTestPlanAdmin(LoggedInTestCase):
 
         with self.subTest("Test Reverting Redirect to Object"):
             response = self.client.post(
-                "/admin/testplans/testplan/%d/history/%d/"
-                % (self.test_plan.pk, self.test_plan.history.last().pk),
+                f"/admin/testplans/testplan/{self.test_plan.pk}/"
+                f"history/{self.test_plan.history.last().pk}/",
                 follow=True,
             )
             self.assertRedirects(

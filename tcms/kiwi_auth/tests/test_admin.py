@@ -30,13 +30,13 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
     def test_non_admin_cant_view_single_profile_without_permission(self):
-        response = self.client.get("/admin/auth/user/%d/change/" % self.admin.pk)
+        response = self.client.get(f"/admin/auth/user/{self.admin.pk}/change/")
         self.assertIsInstance(response, HttpResponseForbidden)
 
     def test_non_admin_can_view_single_profile_as_readonly_if_permission(self):
         user_should_have_perm(self.tester, "auth.view_user")
 
-        response = self.client.get("/admin/auth/user/%d/change/" % self.admin.pk)
+        response = self.client.get(f"/admin/auth/user/{self.admin.pk}/change/")
         response_str = str(response.content, encoding=settings.DEFAULT_CHARSET)
 
         # only 1 hidden field for csrf
@@ -47,7 +47,7 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertEqual(response_str.count("grp-readonly"), 6)
 
         # no delete button
-        self.assertNotContains(response, "/admin/auth/user/%d/delete/" % self.admin.pk)
+        self.assertNotContains(response, f"/admin/auth/user/{self.admin.pk}/delete/")
 
         # no save buttons
         self.assertNotContains(response, 'name="_save"')
@@ -55,22 +55,19 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertNotContains(response, 'name="_continue"')
 
     def test_non_admin_cant_delete_others(self):
-        response = self.client.get("/admin/auth/user/%d/delete/" % self.admin.pk)
+        response = self.client.get(f"/admin/auth/user/{self.admin.pk}/delete/")
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
     def test_non_admin_cant_change_password_for_others(self):
-        response = self.client.get("/admin/auth/user/%d/password/" % self.admin.pk)
+        response = self.client.get(f"/admin/auth/user/{self.admin.pk}/password/")
         # redirects to change password for themselves
         self.assertRedirects(response, "/admin/password_change/")
 
     def test_non_admin_can_delete_myself(self):
-        response = self.client.get("/admin/auth/user/%d/delete/" % self.tester.pk)
+        response = self.client.get(f"/admin/auth/user/{self.tester.pk}/delete/")
 
         self.assertContains(response, _("Yes, I'm sure"))
-        expected = '<a href="/admin/auth/user/%d/change/">%s</a>' % (
-            self.tester.pk,
-            self.tester.username,
-        )
+        expected = f'<a href="/admin/auth/user/{self.tester.pk}/change/">{self.tester.username}</a>'
         # 2 b/c of breadcrumbs links
         self.assertContains(response, expected, count=2)
 
@@ -79,7 +76,7 @@ class TestUserAdmin(LoggedInTestCase):
             username=self.admin.username, password="admin-password"
         )
         response = self.client.post(
-            "/admin/auth/user/%d/change/" % self.tester.pk,
+            f"/admin/auth/user/{self.tester.pk}/change/",
             {
                 "first_name": "Changed by admin",
                 # required fields below
@@ -183,11 +180,11 @@ class TestGroupAdmin(LoggedInTestCase):
             )
             self.assertNotContains(
                 response,
-                '<input type="text" name="name" value="%s" class="vTextField"'
-                ' maxlength="150" required="" id="id_name">' % group.name,
+                f'<input type="text" name="name" value="{group.name}" class="vTextField"'
+                ' maxlength="150" required="" id="id_name">',
             )
             self.assertContains(
-                response, '<div class="grp-readonly">%s</div>' % group.name
+                response, f'<div class="grp-readonly">{group.name}</div>'
             )
 
     def test_should_not_be_allowed_to_delete_default_groups(self):
@@ -195,18 +192,17 @@ class TestGroupAdmin(LoggedInTestCase):
             response = self.client.get(
                 reverse("admin:auth_group_change", args=[group.id])
             )
+            _expected_url = reverse("admin:auth_group_delete", args=[self.group.id])
+            _delete = _("Delete")
             self.assertNotContains(
                 response,
-                '<a href="%s" class="grp-button grp-delete-link">%s</a>'
-                % (
-                    reverse("admin:auth_group_delete", args=[self.group.id]),
-                    _("Delete"),
-                ),
+                f'<a href="{_expected_url}" class="grp-button grp-delete-link">{_delete}</a>',
             )
 
     def test_should_be_allowed_to_create_new_group(self):
         response = self.client.get(reverse("admin:auth_group_add"))
-        self.assertContains(response, "<h1>%s</h1>" % (_("Add %s") % _("group")))
+        _add_group = _("Add %s") % _("group")
+        self.assertContains(response, f"<h1>{_add_group}</h1>")
         self.assertContains(
             response,
             '<input type="text" name="name" class="vTextField" '
@@ -219,13 +215,15 @@ class TestGroupAdmin(LoggedInTestCase):
             '<select name="users" id="id_users" multiple '
             'class="selectfilter" data-field-name="users" data-is-stacked="0">',
         )
-        self.assertContains(response, '<label for="id_users">%s' % capfirst(_("users")))
+        _capfirst = capfirst(_("users"))
+        self.assertContains(response, f'<label for="id_users">{_capfirst}')
 
     def test_should_be_able_to_delete_a_non_default_group(self):
         response = self.client.get(
             reverse("admin:auth_group_delete", args=[self.group.id]), follow=True
         )
-        self.assertContains(response, "<h1>%s</h1>" % _("Are you sure?"))
+        _are_you_sure = _("Are you sure?")
+        self.assertContains(response, f"<h1>{_are_you_sure}</h1>")
 
     def test_should_be_able_to_edit_a_non_default_group(self):
         response = self.client.get(
@@ -233,8 +231,8 @@ class TestGroupAdmin(LoggedInTestCase):
         )
         self.assertContains(
             response,
-            '<input type="text" name="name" value="%s" class="vTextField"'
-            ' maxlength="150" required id="id_name">' % self.group.name,
+            f'<input type="text" name="name" value="{self.group.name}" class="vTextField"'
+            ' maxlength="150" required id="id_name">',
         )
 
     def test_should_be_allowed_to_create_new_group_with_added_user(self):
@@ -251,10 +249,10 @@ class TestGroupAdmin(LoggedInTestCase):
 
         self.assertIsNotNone(group)
         self.assertContains(response, group_name)
+        group_url = reverse("admin:auth_group_change", args=[group.pk])
         self.assertContains(
             response,
-            '<a href="%s">%s</a>'
-            % (reverse("admin:auth_group_change", args=[group.pk]), group_name),
+            f'<a href="{group_url}">{group_name}</a>',
         )
 
     def test_should_be_able_to_add_user_while_editing_a_group(self):
@@ -267,7 +265,6 @@ class TestGroupAdmin(LoggedInTestCase):
 
         self.assertContains(
             response,
-            '<option value="%s" selected>%s</option>'
-            % (self.tester.pk, self.tester.username),
+            f'<option value="{self.tester.pk}" selected>{self.tester.username}</option>',
         )
         self.assertTrue(self.tester.groups.filter(name=self.group.name).exists())

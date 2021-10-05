@@ -113,7 +113,7 @@ class JIRA(IssueTrackerType):
             new_issue = self.rpc.create_issue(
                 project=project.id,
                 issuetype={"name": issue_type.name},
-                summary="Failed test: %s" % execution.case.summary,
+                summary=f"Failed test: {execution.case.summary}",
                 description=self._report_comment(execution),
             )
             new_url = self.bug_system.base_url + "/browse/" + new_issue.key
@@ -132,7 +132,7 @@ class JIRA(IssueTrackerType):
         args = {
             "pid": project.id,
             "issuetype": issue_type.id,
-            "summary": "Failed test: %s" % execution.case.summary,
+            "summary": f"Failed test: {execution.case.summary}",
             "description": self._report_comment(execution),
         }
 
@@ -171,7 +171,7 @@ class GitHub(IssueTrackerType):
         GitHub only supports title and body parameters
         """
         args = {
-            "title": "Failed test: %s" % execution.case.summary,
+            "title": f"Failed test: {execution.case.summary}",
             "body": self._report_comment(execution),
         }
 
@@ -241,7 +241,7 @@ class Gitlab(IssueTrackerType):
         project = self.rpc.projects.get(repo_id)
         new_issue = project.issues.create(
             {
-                "title": "Failed test: %s" % execution.case.summary,
+                "title": f"Failed test: {execution.case.summary}",
                 "description": self._report_comment(execution),
             }
         )
@@ -349,14 +349,14 @@ class Redmine(IssueTrackerType):
         priority = self.redmine_priority_by_name(execution.case.priority.value)
 
         new_issue = self.rpc.issue.create(
-            subject="Failed test: %s" % execution.case.summary,
+            subject=f"Failed test: {execution.case.summary}",
             description=self._report_comment(execution),
             project_id=project.id,
             tracker_id=tracker.id,
             status_id=status.id,
             priority_id=priority.id,
         )
-        new_url = self.bug_system.base_url + "/issues/%d" % new_issue.id
+        new_url = f"{self.bug_system.base_url}/issues/{new_issue.id}"
 
         # and also add a link reference that will be shown in the UI
         LinkReference.objects.get_or_create(

@@ -24,7 +24,7 @@ class Command(BaseCommand):
         if kwargs["verbosity"]:
             output = self.stdout
 
-        call_command("update_permissions", "--verbosity=%i" % kwargs["verbosity"])
+        call_command("update_permissions", f"--verbosity={kwargs['verbosity']}")
 
         # Assign permissions to Tester group
         if output:
@@ -39,9 +39,9 @@ class Command(BaseCommand):
         call_command(
             "remove_stale_contenttypes",
             "--include-stale-apps",
-            "--verbosity=%i" % kwargs["verbosity"],
+            f"--verbosity={kwargs['verbosity']}",
             interactive=kwargs["interactive"],
         )
-        call_command("clean_orphan_obj_perms", "--verbosity=%i" % kwargs["verbosity"])
+        call_command("clean_orphan_obj_perms", f"--verbosity={kwargs['verbosity']}")
         if output:
             self.stdout.write("Done.")

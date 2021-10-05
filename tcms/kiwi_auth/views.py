@@ -87,7 +87,7 @@ class Register(View):  # pylint: disable=missing-permission-required
     def show_messages_with_site_admins_emails_as_links(request):
         """Show messages with site admins emails as links."""
         for name, email in settings.ADMINS:
-            mailto = '<a href="mailto:{}">{}</a>'.format(email, name)
+            mailto = f'<a href="mailto:{email}">{name}</a>'
             messages.add_message(request, messages.WARNING, mailto)
 
     @staticmethod
@@ -95,7 +95,7 @@ class Register(View):  # pylint: disable=missing-permission-required
         """Show messages with super users emails as links."""
         for user in User.objects.filter(is_superuser=True):
             email_display_name = user.get_full_name() or user.username
-            mailto = '<a href="mailto:{}">{}</a>'.format(user.email, email_display_name)
+            mailto = f'<a href="mailto:{user.email}">{email_display_name}</a>'
             messages.add_message(request, messages.INFO, mailto)
 
     def get(self, request):

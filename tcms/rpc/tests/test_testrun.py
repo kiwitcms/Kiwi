@@ -71,7 +71,7 @@ class TestAddCase(APITestCase):
         rpc_client = xmlrpc.TCMSXmlrpc(
             unauthorized_user.username,
             "api-testing",
-            "%s/xml-rpc/" % self.live_server_url,
+            f"{self.live_server_url}/xml-rpc/",
         ).server
 
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
@@ -126,7 +126,7 @@ class TestRemovesCase(APITestCase):
         rpc_client = xmlrpc.TCMSXmlrpc(
             unauthorized_user.username,
             "api-testing",
-            "%s/xml-rpc/" % self.live_server_url,
+            f"{self.live_server_url}/xml-rpc/",
         ).server
 
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
@@ -249,7 +249,7 @@ class TestAddTag(APITestCase):
         rpc_client = xmlrpc.TCMSXmlrpc(
             unauthorized_user.username,
             "api-testing",
-            "%s/xml-rpc/" % self.live_server_url,
+            f"{self.live_server_url}/xml-rpc/",
         ).server
 
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
@@ -320,7 +320,7 @@ class TestRemoveTag(APITestCase):
         rpc_client = xmlrpc.TCMSXmlrpc(
             unauthorized_user.username,
             "api-testing",
-            "%s/xml-rpc/" % self.live_server_url,
+            f"{self.live_server_url}/xml-rpc/",
         ).server
 
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):

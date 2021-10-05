@@ -1,4 +1,4 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -34,7 +34,7 @@ class Bug(models.Model, UrlMixin):
     tags = models.ManyToManyField("management.Tag", related_name="bugs")
 
     def __str__(self):
-        return "BUG-%d: %s " % (self.pk, self.summary)
+        return f"BUG-{self.pk}: {self.summary} "
 
     def _get_absolute_url(self):
         return reverse(

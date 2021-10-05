@@ -16,8 +16,8 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = settings.AUTH_USER_MODEL
 
-    username = factory.Sequence(lambda n: "User%d" % n)
-    email = factory.LazyAttribute(lambda user: "%s@example.com" % user.username)
+    username = factory.Sequence(lambda n: f"User{n}")
+    email = factory.LazyAttribute(lambda user: f"{user.username}@example.com")
     is_staff = True
 
     @factory.post_generation
@@ -33,7 +33,7 @@ class GroupFactory(DjangoModelFactory):
     class Meta:
         model = "auth.Group"
 
-    name = factory.Sequence(lambda n: "Group %d" % n)
+    name = factory.Sequence(lambda n: f"Group {n}")
 
 
 # ### Factories for app management ###
@@ -43,14 +43,14 @@ class ClassificationFactory(DjangoModelFactory):
     class Meta:
         model = "management.Classification"
 
-    name = factory.Sequence(lambda n: "Classification %d" % n)
+    name = factory.Sequence(lambda n: f"Classification {n}")
 
 
 class ProductFactory(DjangoModelFactory):
     class Meta:
         model = "management.Product"
 
-    name = factory.Sequence(lambda n: "Product %d" % n)
+    name = factory.Sequence(lambda n: f"Product {n}")
     classification = factory.SubFactory(ClassificationFactory)
 
 
@@ -58,7 +58,7 @@ class PriorityFactory(DjangoModelFactory):
     class Meta:
         model = "management.Priority"
 
-    value = factory.Sequence(lambda n: "P%d" % n)
+    value = factory.Sequence(lambda n: f"P{n}")
     is_active = True
 
 
@@ -66,7 +66,7 @@ class ComponentFactory(DjangoModelFactory):
     class Meta:
         model = "management.Component"
 
-    name = factory.Sequence(lambda n: "Component %d" % n)
+    name = factory.Sequence(lambda n: f"Component {n}")
     product = factory.SubFactory(ProductFactory)
     initial_owner = factory.SubFactory(UserFactory)
     initial_qa_contact = factory.SubFactory(UserFactory)
@@ -76,7 +76,7 @@ class VersionFactory(DjangoModelFactory):
     class Meta:
         model = "management.Version"
 
-    value = factory.Sequence(lambda n: "0.%d" % n)
+    value = factory.Sequence(lambda n: f"0.{n}")
     product = factory.SubFactory(ProductFactory)
 
 
@@ -84,7 +84,7 @@ class BuildFactory(DjangoModelFactory):
     class Meta:
         model = "management.Build"
 
-    name = factory.Sequence(lambda n: "Build %d" % n)
+    name = factory.Sequence(lambda n: f"Build {n}")
     version = factory.SubFactory(VersionFactory)
 
 
@@ -92,22 +92,22 @@ class TagFactory(DjangoModelFactory):
     class Meta:
         model = "management.Tag"
 
-    name = factory.Sequence(lambda n: "Tag %d" % n)
+    name = factory.Sequence(lambda n: f"Tag {n}")
 
 
 class PlanTypeFactory(DjangoModelFactory):
     class Meta:
         model = "testplans.PlanType"
 
-    name = factory.Sequence(lambda n: "Plan type %d" % n)
+    name = factory.Sequence(lambda n: f"Plan type {n}")
 
 
 class TestPlanFactory(DjangoModelFactory):
     class Meta:
         model = "testplans.TestPlan"
 
-    name = factory.Sequence(lambda n: "Plan name %d" % n)
-    text = factory.Sequence(lambda n: "Plan document %d" % n)
+    name = factory.Sequence(lambda n: f"Plan name {n}")
+    text = factory.Sequence(lambda n: f"Plan document {n}")
     create_date = factory.LazyFunction(timezone.now)
     product_version = factory.SubFactory(VersionFactory)
     author = factory.SubFactory(UserFactory)
@@ -145,7 +145,7 @@ class CategoryFactory(DjangoModelFactory):
     class Meta:
         model = "testcases.Category"
 
-    name = factory.Sequence(lambda n: "category %d" % n)
+    name = factory.Sequence(lambda n: f"category {n}")
     product = factory.SubFactory(ProductFactory)
     description = ""
 
@@ -155,14 +155,14 @@ class TestCaseFactory(DjangoModelFactory):
     class Meta:
         model = "testcases.TestCase"
 
-    summary = factory.Sequence(lambda n: "Test case summary %d" % n)
+    summary = factory.Sequence(lambda n: f"Test case summary {n}")
     case_status = factory.LazyFunction(lambda: TestCaseStatus.objects.all()[0:1][0])
     priority = factory.LazyFunction(lambda: Priority.objects.all()[0:1][0])
     category = factory.SubFactory(CategoryFactory)
     author = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
     reviewer = factory.SubFactory(UserFactory)
-    text = factory.Sequence(lambda n: "Given-When-Then %d" % n)
+    text = factory.Sequence(lambda n: f"Given-When-Then {n}")
 
     @factory.post_generation
     def plan(self, create, extracted, **kwargs):
@@ -226,7 +226,7 @@ class TestRunFactory(DjangoModelFactory):
     class Meta:
         model = "testruns.TestRun"
 
-    summary = factory.Sequence(lambda n: "Test run summary %d" % n)
+    summary = factory.Sequence(lambda n: f"Test run summary {n}")
     stop_date = None
     notes = ""
     plan = factory.SubFactory(TestPlanFactory)
@@ -276,8 +276,8 @@ class LinkReferenceFactory(DjangoModelFactory):
         model = "linkreference.LinkReference"
 
     execution = factory.SubFactory(TestExecutionFactory)
-    name = factory.Sequence(lambda n: "Bug %d" % n)
-    url = factory.Sequence(lambda n: "https://example.com/link/%d/" % n)
+    name = factory.Sequence(lambda n: f"Bug {n}")
+    url = factory.Sequence(lambda n: f"https://example.com/link/{n}/")
     is_defect = True
 
 

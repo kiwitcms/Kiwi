@@ -34,7 +34,7 @@ class UrlDiscoveryTestCase(TestCase):
             for url_resolver in urlpatterns:
                 if isinstance(url_resolver, URLResolver):
                     if (
-                        str(url_resolver.pattern) == "^%s/" % plugin.name
+                        str(url_resolver.pattern) == f"^{plugin.name}/"
                         and url_resolver.urlconf_module.__name__
                         == plugin.module_name + ".urls"
                     ):

@@ -57,7 +57,7 @@ class TestNew(tests.PermissionsTestCase):
         self.assertEqual(initial_count + 1, Bug.objects.count())
         self.assertEqual(self.tester, last_bug.reporter)
         self.assertContains(response, "Bug created by test suite")
-        self.assertContains(response, "BUG-%d" % last_bug.pk)
+        self.assertContains(response, f"BUG-{last_bug.pk}")
 
 
 class TestEdit(tests.PermissionsTestCase):
@@ -100,7 +100,7 @@ class TestEdit(tests.PermissionsTestCase):
         )
 
         self.bug.refresh_from_db()
-        self.assertContains(response, "BUG-%d: %s" % (self.bug.pk, _(self.bug.summary)))
+        self.assertContains(response, f"BUG-{self.bug.pk}: {self.bug.summary}")
         self.assertTemplateUsed(response, "bugs/get.html")
 
 

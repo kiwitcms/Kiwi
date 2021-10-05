@@ -57,7 +57,7 @@ class EditPlanViewTest(LoggedInTestCase):
 
     def test_edit_testplan_text_field(self):
         edit_data = self.testplan_edit_data.copy()
-        new_text = "Edited: {0}".format(self.test_plan_1.text)
+        new_text = f"Edited: {self.test_plan_1.text}"
         edit_data["text"] = new_text
 
         response = self.client.post(self.testplan_edit_url, data=edit_data, follow=True)

@@ -83,9 +83,9 @@ class TestBugzillaIntegration(APITestCase):
         last_comment = bug.getcomments()[-1]
         for expected_string in [
             "Confirmed via test execution",
-            "TR-%d: %s" % (self.execution_1.run_id, self.execution_1.run.summary),
+            f"TR-{self.execution_1.run_id}: {self.execution_1.run.summary}",
             self.execution_1.run.get_full_url(),
-            "TE-%d: %s" % (self.execution_1.pk, self.execution_1.case.summary),
+            f"TE-{self.execution_1.pk}: {self.execution_1.case.summary}",
         ]:
             self.assertIn(expected_string, last_comment["text"])
 
@@ -124,7 +124,7 @@ class TestBugzillaIntegration(APITestCase):
         self.assertIn("version=unspecified", result["response"])
         expected_description = urlencode(
             {
-                "short_desc": "Test case failure: %s" % execution2.case.summary,
+                "short_desc": f"Test case failure: {execution2.case.summary}",
             }
         )
         self.assertIn(expected_description, result["response"])
@@ -169,7 +169,7 @@ class TestBugzillaIntegration(APITestCase):
 
         last_comment = bug.getcomments()[-1]
         for expected_string in [
-            "Filed from execution %s" % execution2.get_full_url(),
+            f"Filed from execution {execution2.get_full_url()}",
             product.name,
             component.name,
             test_case.text,

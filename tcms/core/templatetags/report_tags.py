@@ -7,6 +7,7 @@ register = template.Library()
 @register.filter(name="percentage")
 def percentage(fraction, population):
     try:
-        return "%.1f%%" % ((float(fraction) / float(population)) * 100)
+        value = (float(fraction) / float(population)) * 100
+        return f"{value:.1f}%"
     except ZeroDivisionError:
         return "0%"

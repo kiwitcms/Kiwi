@@ -43,7 +43,7 @@ class NewTestRunView(View):
         test_plan = TestPlan.objects.filter(pk=plan_id).first()
         if not form_initial:
             form_initial = {
-                "summary": "Test run for %s" % test_plan.name if test_plan else "",
+                "summary": f"Test run for {test_plan.name}" if test_plan else "",
                 "manager": test_plan.author.email if test_plan else "",
                 "default_tester": request.user.email,
                 "notes": "",
@@ -160,7 +160,7 @@ class GetTestRunView(DetailView):
                     ),
                     (
                         _("History"),
-                        "/admin/testruns/testrun/%d/history/" % self.object.pk,
+                        f"/admin/testruns/testrun/{self.object.pk}/history/",
                     ),
                     ("-", "-"),
                     (

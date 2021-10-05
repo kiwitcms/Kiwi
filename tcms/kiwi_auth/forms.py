@@ -61,15 +61,13 @@ class RegistrationForm(UserCreationForm):
     @override(settings.LANGUAGE_CODE)
     def send_confirm_mail(self, request, activation_key):
         current_site = Site.objects.get(pk=settings.SITE_ID)
-        confirm_url = "%s%s" % (
-            request_host_link(request, current_site.domain),
-            reverse(
-                "tcms-confirm",
-                args=[
-                    activation_key.activation_key,
-                ],
-            ),
+        confirm_url = request_host_link(request, current_site.domain) + reverse(
+            "tcms-confirm",
+            args=[
+                activation_key.activation_key,
+            ],
         )
+
         mailto(
             template_name="email/confirm_registration.txt",
             recipients=self.cleaned_data["email"],

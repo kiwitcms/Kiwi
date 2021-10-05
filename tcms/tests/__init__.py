@@ -26,7 +26,7 @@ def user_should_have_perm(user, perm):
         try:
             app_label, codename = perm.split(".")
         except ValueError:
-            raise ValueError('"%s" should be: app_label.perm_codename' % perm) from None
+            raise ValueError(f'"{perm}" should be: app_label.perm_codename') from None
         else:
             if not app_label or not codename:
                 raise ValueError("Invalid app_label or codename")
@@ -48,7 +48,7 @@ def remove_perm_from_user(user, perm):
         try:
             app_label, codename = perm.split(".")
         except ValueError:
-            raise ValueError('"%s" should be: app_label.perm_codename' % perm) from None
+            raise ValueError(f'"{perm}" should be: app_label.perm_codename') from None
         else:
             if not app_label or not codename:
                 raise ValueError("Invalid app_label or codename")
@@ -346,7 +346,7 @@ class PermissionsTestMixin:
         )
 
         for method in self.http_method_names:
-            function = getattr(self, "verify_%s_with_permission" % method)
+            function = getattr(self, f"verify_{method}_with_permission")
             function()
 
     def no_permissions_but(self, tested_permission):
@@ -369,7 +369,7 @@ class PermissionsTestMixin:
         )
 
         for method in self.http_method_names:
-            function = getattr(self, "verify_%s_without_permission" % method)
+            function = getattr(self, f"verify_{method}_without_permission")
             function()
 
     def all_permissions_except(self, tested_permission):

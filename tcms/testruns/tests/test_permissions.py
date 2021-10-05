@@ -39,15 +39,16 @@ class EditTestRunViewTestCase(PermissionsTestCase):
         response = self.client.get(self.url)
         self.assertContains(
             response,
-            '<input type="text" id="id_summary" name="summary" value="%s" class="form-control"'
-            " required>" % self.test_run.summary,
+            f'<input type="text" id="id_summary" name="summary" value="{self.test_run.summary}"'
+            ' class="form-control" required>',
             html=True,
         )
+        _username_or_email = _("Username or email")
         self.assertContains(
             response,
-            '<input id="id_manager" name="manager" value="%s"'
+            f'<input id="id_manager" name="manager" value="{self.test_run.manager}"'
             ' type="text" class="form-control" placeholder='
-            '"%s" required>' % (self.test_run.manager, _("Username or email")),
+            f'"{_username_or_email}" required>',
             html=True,
         )
         self.assertContains(response, _("Edit TestRun"))

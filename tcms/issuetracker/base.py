@@ -35,16 +35,10 @@ class IntegrationThread(threading.Thread):
         Returns the text that will be posted as a comment to
         the reported bug!
         """
-        return """---- Confirmed via test execution ----
-TR-%d: %s
-%s
-TE-%d: %s""" % (
-            self.execution.run.pk,
-            self.execution.run.summary,
-            self.execution.run.get_full_url(),
-            self.execution.pk,
-            self.execution.case.summary,
-        )
+        return f"""---- Confirmed via test execution ----
+TR-{self.execution.run.pk}: {self.execution.run.summary}
+{self.execution.run.get_full_url()}
+TE-{self.execution.pk}: {self.execution.case.summary}"""
 
     def post_comment(self):
         raise NotImplementedError()
@@ -58,8 +52,7 @@ TE-%d: %s""" % (
         try:
             self.post_comment()
         except Exception as err:  # pylint: disable=broad-except
-            message = "%s: %s" % (err.__class__.__name__, err)
-            warnings.warn(message)
+            warnings.warn(f"{err.__class__.__name__}: {err}")
 
 
 class IssueTrackerType:
@@ -123,16 +116,25 @@ class IssueTrackerType:
         """
         txt = execution.case.get_text_with_version(execution.case_text_version)
 
-        comment = "Filed from execution %s\n\n" % execution.get_full_url()
-        comment += "**Product:**\n%s\n\n" % execution.run.plan.product.name
-        comment += "**Component(s):**\n%s\n\n" % self.get_case_components(
-            execution.case
-        )
-        comment += "**Version-Release number** (if applicable):\n"
-        comment += "%s\n\n" % execution.build.name
-        comment += "**Steps to reproduce**: \n%s\n\n" % txt
-        comment += "**Actual results**: \n<describe what happened>\n\n"
+        comment = f"""Filed from execution {execution.get_full_url()}
 
+**Product:**
+{execution.run.plan.product.name}
+
+**Component(s):**
+{self.get_case_components(execution.case)}
+
+**Version-Release number** (if applicable):
+{execution.build.name}
+
+**Steps to reproduce**:
+{txt}
+
+**Actual results**:
+<describe what happened>
+
+
+"""
         return comment
 
     def report_issue_from_testexecution(self, execution, user):

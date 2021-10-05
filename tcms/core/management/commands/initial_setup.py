@@ -13,17 +13,17 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 
         self.stdout.write("\n1. Applying migrations:")
-        call_command("migrate", "--verbosity=%i" % kwargs["verbosity"])
+        call_command("migrate", f"--verbosity={kwargs['verbosity']}")
 
         self.stdout.write("\n2. Creating superuser:")
-        call_command("createsuperuser", "--verbosity=%i" % kwargs["verbosity"])
+        call_command("createsuperuser", f"--verbosity={kwargs['verbosity']}")
 
         self.stdout.write("\n3. Setting the domain name:")
         domain = input("Enter Kiwi TCMS domain: ")  # nosec
         call_command("set_domain", domain=domain)
 
         self.stdout.write("\n4. Setting permissions:")
-        call_command("refresh_permissions", "--verbosity=%i" % kwargs["verbosity"])
+        call_command("refresh_permissions", f"--verbosity={kwargs['verbosity']}")
 
         if "tcms_tenants" in settings.INSTALLED_APPS:
             self.stdout.write("\n5. Creating public & empty tenants:")
@@ -31,7 +31,7 @@ class Command(BaseCommand):
             paid_until = timezone.now() + datetime.timedelta(days=100 * 365)
             call_command(
                 "create_tenant",
-                "--verbosity=%i" % kwargs["verbosity"],
+                f"--verbosity={kwargs['verbosity']}",
                 "--schema_name",
                 "public",
                 "--name",
@@ -53,7 +53,7 @@ class Command(BaseCommand):
             # a special tenant for cloning
             call_command(
                 "create_tenant",
-                "--verbosity=%i" % kwargs["verbosity"],
+                f"--verbosity={kwargs['verbosity']}",
                 "--schema_name",
                 "empty",
                 "--name",

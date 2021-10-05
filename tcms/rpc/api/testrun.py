@@ -49,7 +49,7 @@ def add_case(run_id, case_id):
         return model_to_dict(run.executions.filter(case=case).first())
 
     if not case.case_status.is_confirmed:
-        raise RuntimeError("TC-%d status is not confirmed" % case.pk)
+        raise RuntimeError(f"TC-{case.pk} status is not confirmed")
 
     # always add new TEs at the end of TR
     sortkey = 10

@@ -40,7 +40,8 @@ class TestKiwiTCMSIntegration(APITestCase):
         )
         self.execution_1.case.add_component(self.component)
 
-        self.base_url = "https://%s" % Site.objects.get(id=settings.SITE_ID).domain
+        site = Site.objects.get(id=settings.SITE_ID)
+        self.base_url = f"https://{site.domain}"
         # note: ^^^ this is https just because .get_full_url() default to that !
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="KiwiTCMS internal bug tracker",
@@ -100,10 +101,10 @@ class TestKiwiTCMSIntegration(APITestCase):
         new_bug_id = self.integration.bug_id_from_url(result["response"])
         bug = Bug.objects.get(pk=new_bug_id)
 
-        self.assertEqual("Failed test: %s" % self.execution_1.case.summary, bug.summary)
+        self.assertEqual(f"Failed test: {self.execution_1.case.summary}", bug.summary)
         first_comment = get_comments(bug).first()
         for expected_string in [
-            "Filed from execution %s" % self.execution_1.get_full_url(),
+            f"Filed from execution {self.execution_1.get_full_url()}",
             self.execution_1.run.plan.product.name,
             self.component.name,
             "Steps to reproduce",
@@ -124,7 +125,5 @@ class TestKiwiTCMSIntegration(APITestCase):
         non_existing_bug_id = -1
         self.assertFalse(Bug.objects.filter(pk=non_existing_bug_id).exists())
 
-        result = self.integration.details(
-            "{}/{}".format(self.base_url, non_existing_bug_id)
-        )
+        result = self.integration.details(f"{self.base_url}/{non_existing_bug_id}")
         self.assertEqual(result, {})

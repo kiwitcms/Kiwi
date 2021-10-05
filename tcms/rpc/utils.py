@@ -38,23 +38,22 @@ def encode_multipart(csrf_token, filename, b64content):
 
         ``\\r\\n`` are expected! Do not change!
     """
-    boundary = "----------%s" % int(time.time() * 1000)
-    data = ["--%s" % boundary]
+    boundary = f"----------{int(time.time() * 1000)}"
+    data = [f"--{boundary}"]
 
     data.append('Content-Disposition: form-data; name="csrfmiddlewaretoken"\r\n')
     data.append(csrf_token)
-    data.append("--%s" % boundary)
+    data.append(f"--{boundary}")
 
     data.append(
-        'Content-Disposition: form-data; name="attachment_file"; filename="%s"'
-        % filename
+        f'Content-Disposition: form-data; name="attachment_file"; filename="{filename}"'
     )
     data.append("Content-Type: application/octet-stream")
     data.append("Content-Transfer-Encoding: base64")
-    data.append("Content-Length: %d\r\n" % len(b64content))
+    data.append(f"Content-Length: {len(b64content)}\r\n")
     data.append(b64content)
 
-    data.append("--%s--\r\n" % boundary)
+    data.append(f"--{boundary}--\r\n")
     return "\r\n".join(data), boundary
 
 
@@ -72,7 +71,7 @@ def request_for_upload(user, filename, b64content):
 
     data, boundary = encode_multipart(get_token(request), filename, b64content)
 
-    request.META["CONTENT_TYPE"] = "multipart/form-data; boundary=%s" % boundary
+    request.META["CONTENT_TYPE"] = f"multipart/form-data; boundary={boundary}"
     request.META["CONTENT_LENGTH"] = len(data)
     request._stream = io.BytesIO(data.encode())  # pylint: disable=protected-access
 
@@ -95,4 +94,4 @@ def add_attachment(obj_id, app_model, user, filename, b64content):
     app, model = app_model.split(".")
     response = attachment_views.add_attachment(request, app, model, obj_id)
     if response.status_code == 404:
-        raise Exception("Adding attachment to %s(%d) failed" % (app_model, obj_id))
+        raise Exception(f"Adding attachment to {app_model}({obj_id}) failed")

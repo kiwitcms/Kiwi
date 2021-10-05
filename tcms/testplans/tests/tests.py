@@ -77,8 +77,7 @@ class PlanTests(BasePlanTest):
         )
         self.assertContains(
             response,
-            '<option value="%d" selected>%s</option>'
-            % (self.product.pk, self.product.name),
+            f'<option value="{self.product.pk}" selected>{self.product.name}</option>',
             html=True,
         )
 
@@ -96,9 +95,8 @@ class PlanTests(BasePlanTest):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_history(self):
-        # note: the history URL is generated on the fly and not accessible via
-        # name
-        location = "/admin/testplans/testplan/%d/history/" % self.plan_id
+        # note: history URL is generated on the fly and not accessible via name
+        location = f"/admin/testplans/testplan/{self.plan_id}/history/"
         response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
@@ -236,21 +234,22 @@ class TestCloneView(BasePlanCase):
 
         response = self.client.get(reverse("plans-clone", args=[self.plan.pk]))
 
+        _name = _("Name")
         self.assertContains(
             response,
-            '<label class="col-md-1 col-lg-1" for="id_name">%s</label>' % _("Name"),
+            f'<label class="col-md-1 col-lg-1" for="id_name">{_name}</label>',
             html=True,
         )
 
         self.assertContains(
             response,
-            '<input type="text" id="id_name" name="name" value="{}" '
-            'class="form-control" required>'.format(self.plan.make_cloned_name()),
+            f'<input type="text" id="id_name" name="name" value="{self.plan.make_cloned_name()}"'
+            ' class="form-control" required>',
             html=True,
         )
 
     def verify_cloned_plan(self, original_plan, cloned_plan, copy_cases=None):
-        self.assertEqual("Copy of {}".format(original_plan.name), cloned_plan.name)
+        self.assertEqual(f"Copy of {original_plan.name}", cloned_plan.name)
         self.assertEqual(cloned_plan.text, original_plan.text)
         self.assertEqual(Product.objects.get(pk=self.product.pk), cloned_plan.product)
         self.assertEqual(

@@ -95,7 +95,7 @@ class Bugzilla(base.IssueTrackerType):
         args["component"] = self.get_case_components(execution.case)
         args["version"] = execution.run.plan.product_version.value
 
-        args["short_desc"] = "Test case failure: %s" % execution.case.summary
+        args["short_desc"] = f"Test case failure: {execution.case.summary}"
         args["comment"] = self._report_comment(execution)
 
         try:

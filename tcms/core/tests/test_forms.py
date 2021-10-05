@@ -48,9 +48,7 @@ class TestUserField(TestCase):
 
     def test_not_existing_int_instance_username_throws_error(self):
         user_id = -1
-        with self.assertRaisesRegex(
-            ValidationError, ('Unknown user_id: "%d"' % user_id)
-        ):
+        with self.assertRaisesRegex(ValidationError, f'Unknown user_id: "{user_id}"'):
             self.user_field.clean(user_id)
 
     def test_digit_username_accepted(self):
@@ -60,9 +58,7 @@ class TestUserField(TestCase):
 
     def test_not_existing_digit_username_throws_error(self):
         user_id = "999999"
-        with self.assertRaisesRegex(
-            ValidationError, ('Unknown user_id: "%s"' % user_id)
-        ):
+        with self.assertRaisesRegex(ValidationError, f'Unknown user_id: "{user_id}"'):
             self.user_field.clean(user_id)
 
     def test_not_existing_string_username_throws_error(self):
