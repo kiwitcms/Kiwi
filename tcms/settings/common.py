@@ -327,6 +327,12 @@ MENU_ITEMS = [
                 ],
             ),
             (
+                _("Management"),
+                [
+                    (_("Performance"), reverse_lazy("management-performance")),
+                ],
+            ),
+            (
                 "More coming soon",
                 "http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/",
             ),

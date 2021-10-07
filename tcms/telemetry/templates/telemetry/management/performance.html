@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Performance" %}{% endblock %}
+
+{% block contents %}
+
+    <div class="container-fluid container-cards-pf">
+        {% include "telemetry/include/filters.html" %}
+
+        <div class="col-md-12" style="text-align: center">
+            <div style="text-align: center; font-weight: bold">{% trans "Performance" %}</div>
+            <div id="performance-chart"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'c3/c3.min.js' %}"></script>
+    <script src="{% static 'd3/d3.min.js' %}"></script>
+
+    <script src="{% static 'js/utils.js' %}"></script>
+    <script src="{% static 'js/jsonrpc.js' %}"></script>
+
+    <script src="{% static 'telemetry/js/testing/utils.js' %}"></script>
+    <script src="{% static 'telemetry/js/management/performance.js' %}"></script>
+
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/test-case-health.css' %}"/> -->
+{% endblock %}

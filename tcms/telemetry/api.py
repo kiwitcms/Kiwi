@@ -263,3 +263,40 @@ def _get_count_for(test_executions):
         .annotate(count=Count("case_id"))
         .order_by("case_id")
     )
+
+
+@http_basic_auth_login_required
+@rpc_method(name="Management.performance")
+def performance_telemetry(query=None):
+
+    if query is None:
+        query = {}
+
+    executions = (
+        TestExecution.objects.filter(**query)
+        # count only execution which are finished
+        .exclude(status__weight=0)
+        .order_by("run_id")
+        .values("assignee_id", "run_id", "assignee__username")
+    )
+
+    result = {}
+    run_id = 0
+    for execution in executions:
+        if run_id == 0:
+            run_id = execution["run_id"]
+
+        assignee_count = {}
+        assignee = execution["assignee__username"] or ""
+        if assignee in assignee_count:
+            assignee_count[assignee] = assignee_count[assignee] + 1
+        else:
+            assignee_count[assignee] = 1
+
+        if execution["run_id"] != run_id:
+            result[run_id] = assignee_count
+
+            assignee_count = {}
+            run_id = execution["run_id"]
+
+    return result
