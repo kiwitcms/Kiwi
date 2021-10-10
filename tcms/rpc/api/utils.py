@@ -18,3 +18,11 @@ def tracker_from_url(url, request):
             return import_string(bug_system.tracker_type)(bug_system, request)
 
     return None
+
+
+def stringify_values(d, keys=None):
+    keys = keys or []
+    return {
+        key: (str(val) if (key in keys and val is not None) else val)
+        for (key, val) in d.items()
+    }

@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
+from django.db.models import Case, F, Q, When
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
+from django.utils.dateparse import parse_duration
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
@@ -9,6 +13,7 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
+from tcms.rpc.api.utils import stringify_values
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase, TestCasePlan
 
@@ -279,8 +284,37 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return list(
-        TestCase.objects.filter(**query)
+    for key, val in query.items():
+        if not key.startswith(
+            ("setup_duration", "testing_duration", "expected_duration")
+        ):
+            continue
+
+        try:
+            duration = parse_duration(val)
+        except TypeError:
+            # val isn't a string or byte-like object
+            # item is probably something like 'setup_duration__isnull=True'
+            continue
+
+        if duration is None:
+            continue
+
+        query[key] = duration
+
+    qs = (
+        TestCase.objects.annotate(
+            expected_duration=Case(
+                When(
+                    Q(setup_duration__isnull=True) & Q(testing_duration__isnull=True),
+                    then=timedelta(0),
+                ),
+                When(Q(setup_duration__isnull=True), then="testing_duration"),
+                When(Q(testing_duration__isnull=True), then="setup_duration"),
+                default=F("setup_duration") + F("testing_duration"),
+            )
+        )
+        .filter(**query)
         .values(
             "id",
             "create_date",
@@ -304,9 +338,19 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester__username",
             "reviewer",
             "reviewer__username",
+            "setup_duration",
+            "testing_duration",
+            "expected_duration",
         )
         .distinct()
     )
+    return [
+        stringify_values(
+            testcase_dict,
+            keys=["setup_duration", "testing_duration", "expected_duration"],
+        )
+        for testcase_dict in qs.iterator()
+    ]
 
 
 @permissions_required("testcases.view_testcase")

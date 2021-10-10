@@ -173,9 +173,33 @@ class TestCaseFilter(APITestCase):
         self.assertIn("author", result[0])
         self.assertIn("default_tester", result[0])
         self.assertIn("reviewer", result[0])
+        self.assertIn("setup_duration", result[0])
+        self.assertIn("testing_duration", result[0])
+        self.assertIn("expected_duration", result[0])
 
     def test_filter_by_product_id(self):
         cases = self.rpc_client.TestCase.filter({"category__product": self.product.pk})
+        self.assertIsNotNone(cases)
+        self.assertEqual(len(cases), self.cases_count)
+
+    def test_filter_by_setup_duration(self):
+        TestCaseFactory(setup_duration=timedelta(seconds=30))
+        cases = self.rpc_client.TestCase.filter({"setup_duration": "00:00:30"})
+        self.assertIsNotNone(cases)
+        self.assertEqual(len(cases), 1)
+
+    def test_filter_by_testing_duration(self):
+        TestCaseFactory(testing_duration=timedelta(minutes=5, seconds=1))
+        cases = self.rpc_client.TestCase.filter({"testing_duration__gt": "00:05:00"})
+        self.assertIsNotNone(cases)
+        self.assertEqual(len(cases), 1)
+
+    def test_filter_by_expected_duration(self):
+        TestCaseFactory(
+            setup_duration=timedelta(seconds=30),
+            testing_duration=timedelta(minutes=5, seconds=1),
+        )
+        cases = self.rpc_client.TestCase.filter({"expected_duration__lt": "00:5:31"})
         self.assertIsNotNone(cases)
         self.assertEqual(len(cases), self.cases_count)
 
