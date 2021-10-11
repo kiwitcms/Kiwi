@@ -8,6 +8,7 @@ from xmlrpc.client import Fault, ProtocolError
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
+from parameterized import parameterized
 from tcms_api import xmlrpc
 
 from tcms.core.helpers import comments
@@ -173,11 +174,54 @@ class TestCaseFilter(APITestCase):
         self.assertIn("author", result[0])
         self.assertIn("default_tester", result[0])
         self.assertIn("reviewer", result[0])
+        self.assertIn("setup_duration", result[0])
+        self.assertIn("testing_duration", result[0])
+        self.assertIn("expected_duration", result[0])
 
     def test_filter_by_product_id(self):
         cases = self.rpc_client.TestCase.filter({"category__product": self.product.pk})
         self.assertIsNotNone(cases)
         self.assertEqual(len(cases), self.cases_count)
+
+    @parameterized.expand(
+        [
+            ("both_values_are_not_set", {}, None, None, 0),
+            (
+                "setup_duration_is_not_set",
+                {"testing_duration": timedelta(minutes=5)},
+                None,
+                300,
+                300,
+            ),
+            (
+                "testing_duration_is_not_set",
+                {"setup_duration": timedelta(seconds=45)},
+                45,
+                None,
+                45,
+            ),
+            (
+                "both_values_are_set",
+                {
+                    "setup_duration": timedelta(seconds=45),
+                    "testing_duration": timedelta(minutes=5),
+                },
+                45,
+                300,
+                345,
+            ),
+        ]
+    )
+    def test_duration_properties_in_result(
+        self, _name, init_dict, setup_duration, testing_duration, expected_duration
+    ):
+        testcase = TestCaseFactory(**init_dict)
+        result = self.rpc_client.TestCase.filter({"pk": testcase.pk})
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result[0]["setup_duration"], setup_duration)
+        self.assertEqual(result[0]["testing_duration"], testing_duration)
+        self.assertEqual(result[0]["expected_duration"], expected_duration)
 
 
 class TestUpdate(APITestCase):

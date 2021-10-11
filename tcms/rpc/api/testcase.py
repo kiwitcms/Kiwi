@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
+from django.db.models.functions import Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
@@ -279,8 +282,12 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return list(
-        TestCase.objects.filter(**query)
+    qs = (
+        TestCase.objects.annotate(
+            expected_duration=Coalesce("setup_duration", timedelta(0))
+            + Coalesce("testing_duration", timedelta(0))
+        )
+        .filter(**query)
         .values(
             "id",
             "create_date",
@@ -304,9 +311,14 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester__username",
             "reviewer",
             "reviewer__username",
+            "setup_duration",
+            "testing_duration",
+            "expected_duration",
         )
         .distinct()
     )
+
+    return list(qs)
 
 
 @permissions_required("testcases.view_testcase")
