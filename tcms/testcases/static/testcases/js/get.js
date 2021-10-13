@@ -89,7 +89,6 @@ $(document).ready(function () {
   const permRemoveTag = $('#test_case_pk').data('perm-remove-tag') === 'True'
   const permRemoveComponent = $('#test_case_pk').data('perm-remove-component') === 'True'
   const permRemovePlan = $('#test_case_pk').data('perm-remove-plan') === 'True'
-  const permRemoveBug = $('#test_case_pk').data('perm-remove-bug') === 'True'
 
   // bind everything in tags table
   tagsCard('TestCase', caseId, { case: caseId }, permRemoveTag)
