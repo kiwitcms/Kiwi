@@ -117,5 +117,5 @@ function renderVisualPercent (data) {
     }
   }
 
-  return colors.reduce((prev, color) => prev += `<span class='visual-percent-box' style='background-color: ${color}'></span>\n`, '')
+  return colors.reduce((prev, color) => prev + `<span class='visual-percent-box' style='background-color: ${color}'></span>\n`, '')
 }
