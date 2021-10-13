@@ -21,7 +21,8 @@
       {
         "files": ["*.js"],
         "rules": {
-          "no-undef": "off"
+          "no-undef": "off",
+          "node/no-callback-literal": "off"
         }
       }
     ]
