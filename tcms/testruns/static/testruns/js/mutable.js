@@ -11,9 +11,9 @@ $(document).ready(function () {
       updateSelect(data, '#id_build', 'id', 'name')
     }
 
-    const plan_id = $('#id_test_plan').val()
-    if (plan_id) {
-      jsonRPC('Build.filter', { version__plans: plan_id, is_active: true }, updateCallback)
+    const planId = $('#id_test_plan').val()
+    if (planId) {
+      jsonRPC('Build.filter', { version__plans: planId, is_active: true }, updateCallback)
     } else {
       updateCallback([])
     }

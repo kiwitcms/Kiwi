@@ -1,12 +1,12 @@
-const plan_cache = {}
+const planCache = {}
 
-function addComponent (object_id, _input, to_table) {
+function addComponent (objectId, _input, toTable) {
   const _name = _input.value
 
   if (_name.length > 0) {
-    jsonRPC('TestCase.add_component', [object_id, _name], function (data) {
+    jsonRPC('TestCase.add_component', [objectId, _name], function (data) {
       if (data !== undefined) {
-        to_table.row.add({ name: data.name, id: data.id }).draw()
+        toTable.row.add({ name: data.name, id: data.id }).draw()
         $(_input).val('')
       } else {
         $(_input).parents('div.input-group').addClass('has-error')
@@ -15,12 +15,12 @@ function addComponent (object_id, _input, to_table) {
   }
 }
 
-function addTestPlanToTestCase (case_id, plans_table) {
-  const plan_name = $('#input-add-plan')[0].value
-  const plan = plan_cache[plan_name]
+function addTestPlanToTestCase (caseId, plansTable) {
+  const planName = $('#input-add-plan')[0].value
+  const plan = planCache[planName]
 
-  jsonRPC('TestPlan.add_case', [plan.id, case_id], function (data) {
-    plans_table.row.add({
+  jsonRPC('TestPlan.add_case', [plan.id, caseId], function (data) {
+    plansTable.row.add({
       id: plan.id,
       name: plan.name,
       author__username: plan.author__username,
@@ -31,16 +31,16 @@ function addTestPlanToTestCase (case_id, plans_table) {
   })
 }
 
-function initAddPlan (case_id, plans_table) {
+function initAddPlan (caseId, plansTable) {
   // + button
   $('#btn-add-plan').click(function () {
-    addTestPlanToTestCase(case_id, plans_table)
+    addTestPlanToTestCase(caseId, plansTable)
   })
 
   // Enter key
   $('#input-add-plan').keyup(function (event) {
     if (event.keyCode === 13) {
-      addTestPlanToTestCase(case_id, plans_table)
+      addTestPlanToTestCase(caseId, plansTable)
     };
   })
 
@@ -54,9 +54,9 @@ function initAddPlan (case_id, plans_table) {
     limit: 100,
     async: true,
     display: function (element) {
-      const display_name = 'TP-' + element.id + ': ' + element.name
-      plan_cache[display_name] = element
-      return display_name
+      const displayName = 'TP-' + element.id + ': ' + element.name
+      planCache[displayName] = element
+      return displayName
     },
     source: function (query, processSync, processAsync) {
       // accepts "TP-1234" or "tp-1234" or "1234"
@@ -65,18 +65,18 @@ function initAddPlan (case_id, plans_table) {
         return
       }
 
-      let rpc_query = { pk: query }
+      let rpcQuery = { pk: query }
 
       // or arbitrary string
       if (isNaN(query)) {
         if (query.length >= 3) {
-          rpc_query = { name__icontains: query }
+          rpcQuery = { name__icontains: query }
         } else {
           return
         }
       }
 
-      jsonRPC('TestPlan.filter', rpc_query, function (data) {
+      jsonRPC('TestPlan.filter', rpcQuery, function (data) {
         return processAsync(data)
       })
     }
@@ -84,20 +84,20 @@ function initAddPlan (case_id, plans_table) {
 }
 
 $(document).ready(function () {
-  const case_id = $('#test_case_pk').data('pk')
-  const product_id = $('#product_pk').data('pk')
-  const perm_remove_tag = $('#test_case_pk').data('perm-remove-tag') === 'True'
-  const perm_remove_component = $('#test_case_pk').data('perm-remove-component') === 'True'
-  const perm_remove_plan = $('#test_case_pk').data('perm-remove-plan') === 'True'
-  const perm_remove_bug = $('#test_case_pk').data('perm-remove-bug') === 'True'
+  const caseId = $('#test_case_pk').data('pk')
+  const productId = $('#product_pk').data('pk')
+  const permRemoveTag = $('#test_case_pk').data('perm-remove-tag') === 'True'
+  const permRemoveComponent = $('#test_case_pk').data('perm-remove-component') === 'True'
+  const permRemovePlan = $('#test_case_pk').data('perm-remove-plan') === 'True'
+  const permRemoveBug = $('#test_case_pk').data('perm-remove-bug') === 'True'
 
   // bind everything in tags table
-  tagsCard('TestCase', case_id, { case: case_id }, perm_remove_tag)
+  tagsCard('TestCase', caseId, { case: caseId }, permRemoveTag)
 
   // components table
-  const components_table = $('#components').DataTable({
+  const componentsTable = $('#components').DataTable({
     ajax: function (data, callback, settings) {
-      dataTableJsonRPC('Component.filter', [{ cases: case_id }], callback)
+      dataTableJsonRPC('Component.filter', [{ cases: caseId }], callback)
     },
     columns: [
       { data: 'name' },
@@ -105,7 +105,7 @@ $(document).ready(function () {
         data: 'id',
         sortable: false,
         render: function (data, type, full, meta) {
-          if (perm_remove_component) {
+          if (permRemoveComponent) {
             return '<a href="#components" class="remove-component" data-pk="' + data + '"><span class="pficon-error-circle-o"></span></a>'
           }
           return ''
@@ -122,24 +122,24 @@ $(document).ready(function () {
   })
 
   // remove component button
-  components_table.on('draw', function () {
+  componentsTable.on('draw', function () {
     $('.remove-component').click(function () {
       const tr = $(this).parents('tr')
 
-      jsonRPC('TestCase.remove_component', [case_id, $(this).data('pk')], function (data) {
-        components_table.row($(tr)).remove().draw()
+      jsonRPC('TestCase.remove_component', [caseId, $(this).data('pk')], function (data) {
+        componentsTable.row($(tr)).remove().draw()
       })
     })
   })
 
   // add component button and Enter key
   $('#add-component').click(function () {
-    addComponent(case_id, $('#id_components')[0], components_table)
+    addComponent(caseId, $('#id_components')[0], componentsTable)
   })
 
   $('#id_components').keyup(function (event) {
     if (event.keyCode === 13) {
-      addComponent(case_id, $('#id_components')[0], components_table)
+      addComponent(caseId, $('#id_components')[0], componentsTable)
     };
   })
 
@@ -156,7 +156,7 @@ $(document).ready(function () {
       return element.name
     },
     source: function (query, processSync, processAsync) {
-      jsonRPC('Component.filter', { name__icontains: query, product: product_id }, function (data) {
+      jsonRPC('Component.filter', { name__icontains: query, product: productId }, function (data) {
         data = arrayToDict(data)
         return processAsync(Object.values(data))
       })
@@ -164,9 +164,9 @@ $(document).ready(function () {
   })
 
   // testplans table
-  const plans_table = $('#plans').DataTable({
+  const plansTable = $('#plans').DataTable({
     ajax: function (data, callback, settings) {
-      dataTableJsonRPC('TestPlan.filter', { cases: case_id }, callback)
+      dataTableJsonRPC('TestPlan.filter', { cases: caseId }, callback)
     },
     columns: [
       { data: 'id' },
@@ -183,7 +183,7 @@ $(document).ready(function () {
         data: null,
         sortable: false,
         render: function (data, type, full, meta) {
-          if (perm_remove_plan) {
+          if (permRemovePlan) {
             return '<a href="#plans" class="remove-plan" data-pk="' + data.id + '"><span class="pficon-error-circle-o"></span></a>'
           }
           return ''
@@ -200,22 +200,22 @@ $(document).ready(function () {
   })
 
   // remove plan button
-  plans_table.on('draw', function () {
+  plansTable.on('draw', function () {
     $('.remove-plan').click(function () {
       const tr = $(this).parents('tr')
 
-      jsonRPC('TestPlan.remove_case', [$(this).data('pk'), case_id], function (data) {
-        plans_table.row($(tr)).remove().draw()
+      jsonRPC('TestPlan.remove_case', [$(this).data('pk'), caseId], function (data) {
+        plansTable.row($(tr)).remove().draw()
       })
     })
   })
 
   // bind add TP to TC widget
-  initAddPlan(case_id, plans_table)
+  initAddPlan(caseId, plansTable)
 
   // bugs table
   loadBugs('.bugs', {
-    execution__case: case_id,
+    execution__case: caseId,
     is_defect: true
   })
 

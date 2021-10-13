@@ -1,4 +1,4 @@
-function do_highlight (code, lang) {
+function doHighlight (code, lang) {
   const grammar = window.Prism.languages[lang]
   if (grammar === undefined) {
     // if this is a text with a newly added language the first time we try
@@ -10,7 +10,7 @@ function do_highlight (code, lang) {
   return window.Prism.highlight(code, grammar, lang)
 };
 
-function parse_and_load_language (textarea) {
+function parseAndLoadLanguage (textarea) {
   $(textarea).val().split('\n').forEach(function (line) {
     if (line.indexOf('```') === 0) {
       lang = line.trim().split('```')[1]
@@ -29,13 +29,13 @@ $(document).ready(function () {
     // parse all textarea's on the page and try to figure out
     // what possible languages are there and load their grammars in advance!
     $.find('textarea').forEach(function (textarea) {
-      parse_and_load_language(textarea)
+      parseAndLoadLanguage(textarea)
     })
 
     // keep parsing & trying to load languages as the user types b/c
     // they may be entering new text from scratch
     $('textarea').keyup(function (event) {
-      parse_and_load_language($(this))
+      parseAndLoadLanguage($(this))
     })
   }
 })
@@ -59,7 +59,7 @@ SimpleMDE.prototype.markdown = function (text) {
   }
 
   if (this.options && this.options.renderingConfig && this.options.renderingConfig.codeSyntaxHighlighting === true && window.Prism) {
-    markedOptions.highlight = do_highlight
+    markedOptions.highlight = doHighlight
   }
 
   marked.setOptions(markedOptions)

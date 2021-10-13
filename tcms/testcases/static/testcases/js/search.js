@@ -1,4 +1,4 @@
-function pre_process_data (data, callback) {
+function preProcessData (data, callback) {
   const caseIds = []
   data.forEach(function (element) {
     caseIds.push(element.id)
@@ -113,7 +113,7 @@ $(document).ready(function () {
 
       updateParamsToSearchTags('#id_tag', params)
 
-      dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data)
+      dataTableJsonRPC('TestCase.filter', params, callback, preProcessData)
     },
     select: {
       className: 'success',
@@ -202,8 +202,8 @@ $(document).ready(function () {
   })
 
   $('#id_product').change(function () {
-    update_component_select_from_product()
-    update_category_select_from_product()
+    updateComponentSelectFromProduct()
+    updateCategorySelectFromProduct()
   })
 
   $('.selectpicker').selectpicker()

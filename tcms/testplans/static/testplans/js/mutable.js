@@ -35,5 +35,5 @@ function populateProductVersion () {
 
   $('#id_version').find('option').remove()
 
-  update_version_select_from_product()
+  updateVersionSelectFromProduct()
 }

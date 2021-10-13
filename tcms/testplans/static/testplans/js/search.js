@@ -1,4 +1,4 @@
-function pre_process_data (data, callback) {
+function preProcessData (data, callback) {
   const planIds = []
   data.forEach(function (element) {
     planIds.push(element.id)
@@ -73,7 +73,7 @@ $(document).ready(function () {
 
       params.is_active = $('#id_active').is(':checked')
 
-      dataTableJsonRPC('TestPlan.filter', params, callback, pre_process_data)
+      dataTableJsonRPC('TestPlan.filter', params, callback, preProcessData)
     },
     columns: [
       { data: 'id' },
@@ -110,7 +110,7 @@ $(document).ready(function () {
     return false // so we don't actually send the form
   })
 
-  $('#id_product').change(update_version_select_from_product)
+  $('#id_product').change(updateVersionSelectFromProduct)
 
   $('.bootstrap-switch').bootstrapSwitch()
 

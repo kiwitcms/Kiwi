@@ -2,7 +2,7 @@ const expandedTestCaseIds = []
 const fadeAnimationTime = 500
 
 const allTestCases = {}
-const autocomplete_cache = {}
+const autocompleteCache = {}
 
 const confirmedStatuses = []
 
@@ -19,8 +19,8 @@ $(document).ready(function () {
   }
 
   // bind everything in tags table
-  const perm_remove_tag = testPlanDataElement.data('perm-remove-tag') === 'True'
-  tagsCard('TestPlan', testPlanId, { plan: testPlanId }, perm_remove_tag)
+  const permRemoveTag = testPlanDataElement.data('perm-remove-tag') === 'True'
+  tagsCard('TestPlan', testPlanId, { plan: testPlanId }, permRemoveTag)
 
   jsonRPC('TestCaseStatus.filter', { is_confirmed: true }, function (statuses) {
     // save for later use
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
   adjustTestPlanFamilyTree()
   collapseDocumentText()
-  quickSearchAndAddTestCase(testPlanId, addTestCaseToPlan, autocomplete_cache)
+  quickSearchAndAddTestCase(testPlanId, addTestCaseToPlan, autocompleteCache)
   $('#btn-search-cases').click(function () {
     return advancedSearchAndAddTestCases(
       testPlanId, 'TestPlan.add_case', $(this).attr('href'),
@@ -58,7 +58,7 @@ $(document).ready(function () {
 
 function addTestCaseToPlan (planId) {
   const caseName = $('#search-testcase')[0].value
-  const testCase = autocomplete_cache[caseName]
+  const testCase = autocompleteCache[caseName]
 
   // test case is already present so don't add it
   if (allTestCases[testCase.id]) {
@@ -185,18 +185,18 @@ function getTestCaseRowContent (rowContent, testCase, permissions) {
   }
 
   // handle automated icon
-  const automation_indication_element = row.find('.js-test-case-automated')
-  let automated_class_to_remove = 'fa-cog'
+  const automationIndicationElement = row.find('.js-test-case-automated')
+  let automatedClassToRemove = 'fa-cog'
 
   if (testCase.is_automated) {
-    automated_class_to_remove = 'fa-thumbs-up'
+    automatedClassToRemove = 'fa-thumbs-up'
   }
 
-  automation_indication_element.parent().attr(
+  automationIndicationElement.parent().attr(
     'title',
-    automation_indication_element.data(testCase.is_automated.toString())
+    automationIndicationElement.data(testCase.is_automated.toString())
   )
-  automation_indication_element.removeClass(automated_class_to_remove)
+  automationIndicationElement.removeClass(automatedClassToRemove)
 
   // produce unique IDs for comments textarea and file upload fields
   row.find('textarea')[0].id = `comment-for-testcase-${testCase.id}`
@@ -493,8 +493,8 @@ function toolbarEvents (testPlanId, permissions) {
 
     // rows have been rearranged and the results must be committed to the DB
     if (currentOrder.join() !== initialOrder.join()) {
-      currentOrder.forEach(function (tc_pk, index) {
-        jsonRPC('TestPlan.update_case_order', [testPlanId, tc_pk, index * 10], function (result) {})
+      currentOrder.forEach(function (tcPk, index) {
+        jsonRPC('TestPlan.update_case_order', [testPlanId, tcPk, index * 10], function (result) {})
       })
     }
   })
