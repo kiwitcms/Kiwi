@@ -31,5 +31,5 @@ function populateProductCategory () {
 
   $('#id_category').find('option').remove()
 
-  update_category_select_from_product()
+  updateCategorySelectFromProduct()
 }

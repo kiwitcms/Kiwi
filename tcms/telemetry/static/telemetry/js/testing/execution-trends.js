@@ -4,7 +4,7 @@ $(document).ready(() => {
   loadInitialProduct()
 
   document.getElementById('id_product').onchange = () => {
-    update_version_select_from_product()
+    updateVersionSelectFromProduct()
     // note: don't pass drawChart as callback to avoid calling it twice
     // b/c update_version_select... triggers .onchange()
     updateTestPlanSelectFromProduct()
@@ -12,7 +12,7 @@ $(document).ready(() => {
 
   document.getElementById('id_version').onchange = () => {
     drawChart()
-    update_build_select_from_version(true)
+    updateBuildSelectFromVersion(true)
   }
   document.getElementById('id_build').onchange = drawChart
   document.getElementById('id_test_plan').onchange = drawChart
@@ -112,30 +112,30 @@ function drawChart () {
   })
 }
 
-function drawPassingRateSummary (status_count) {
-  const allCount = status_count.positive + status_count.negative + status_count.neutral
+function drawPassingRateSummary (statusCount) {
+  const allCount = statusCount.positive + statusCount.negative + statusCount.neutral
   $('.passing-rate-summary .total').text(allCount)
 
-  const positivePercent = status_count.positive ? roundDown(status_count.positive / allCount * 100) : 0
+  const positivePercent = statusCount.positive ? roundDown(statusCount.positive / allCount * 100) : 0
   const positiveBar = $('.progress > .progress-bar-success')
   const positiveRateText = `${positivePercent}%`
   positiveBar.css('width', positiveRateText)
   positiveBar.text(positiveRateText)
-  $('.passing-rate-summary .positive').text(status_count.positive)
+  $('.passing-rate-summary .positive').text(statusCount.positive)
 
-  const neutralPercent = status_count.neutral ? roundDown(status_count.neutral / allCount * 100) : 0
+  const neutralPercent = statusCount.neutral ? roundDown(statusCount.neutral / allCount * 100) : 0
   const neutralRateText = `${neutralPercent}%`
   const neutralBar = $('.progress > .progress-bar-remaining')
   neutralBar.css('width', neutralRateText)
   neutralBar.text(neutralRateText)
-  $('.passing-rate-summary .neutral').text(status_count.neutral)
+  $('.passing-rate-summary .neutral').text(statusCount.neutral)
 
-  const negativePercent = status_count.negative ? roundDown(status_count.negative / allCount * 100) : 0
+  const negativePercent = statusCount.negative ? roundDown(statusCount.negative / allCount * 100) : 0
   const negativeRateText = `${negativePercent}%`
   const negativeBar = $('.progress > .progress-bar-danger')
   negativeBar.css('width', negativeRateText)
   negativeBar.text(negativeRateText)
-  $('.passing-rate-summary .negative').text(status_count.negative)
+  $('.passing-rate-summary .negative').text(statusCount.negative)
 }
 
 // we need this function, because the standard library does not have

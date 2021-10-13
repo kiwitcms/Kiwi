@@ -1,4 +1,4 @@
-function pre_process_data (data, callback) {
+function preProcessData (data, callback) {
   const runIds = []
   const planIds = []
   data.forEach(function (element) {
@@ -109,7 +109,7 @@ $(document).ready(function () {
 
       params.stop_date__isnull = $('#id_running').is(':checked')
 
-      dataTableJsonRPC('TestRun.filter', params, callback, pre_process_data)
+      dataTableJsonRPC('TestRun.filter', params, callback, preProcessData)
     },
     columns: [
       { data: 'id' },
@@ -153,11 +153,11 @@ $(document).ready(function () {
   })
 
   $('#id_product').change(function () {
-    update_version_select_from_product()
+    updateVersionSelectFromProduct()
   })
 
   $('#id_version').change(function () {
-    update_build_select_from_version(true)
+    updateBuildSelectFromVersion(true)
   })
 
   $('.bootstrap-switch').bootstrapSwitch()

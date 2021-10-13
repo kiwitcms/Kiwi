@@ -33,20 +33,20 @@ $(document).ready(function () {
 
 // TODO: this entire file is mostly duplicate with testplans/js/mutable.js
 function populateVersion () {
-  const product_id = $('#id_product').val()
+  const productId = $('#id_product').val()
 
   const href = $('#add_id_version')[0].href
   $('#add_id_version')[0].href = href.slice(0, href.indexOf('&product'))
-  $('#add_id_version')[0].href += `&product=${product_id}`
+  $('#add_id_version')[0].href += `&product=${productId}`
   $('#id_version').find('option').remove()
-  update_version_select_from_product()
+  updateVersionSelectFromProduct()
 }
 
 function populateBuild () {
-  const product_id = $('#id_version').val()
+  const productId = $('#id_version').val()
 
   const href = $('#add_id_build')[0].href
   $('#add_id_build')[0].href = href.slice(0, href.indexOf('&version'))
-  $('#add_id_build')[0].href += `&version=${product_id}`
-  update_build_select_from_version()
+  $('#add_id_build')[0].href += `&version=${productId}`
+  updateBuildSelectFromVersion()
 }

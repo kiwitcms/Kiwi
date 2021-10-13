@@ -3,18 +3,18 @@
 
     @model - string - model name which accepts tags. There must
         be a 'MM.add_tag' RPC function for this to work!
-    @object_id - int - PK of the object that will be tagged
-    @tag_input - jQuery object - usually an <input> element which
+    @objectId - int - PK of the object that will be tagged
+    @tagInput - jQuery object - usually an <input> element which
         provides the value used for tagging
-    @to_table - DataTable object - the table which displays the results
+    @toTable - DataTable object - the table which displays the results
 */
-function addTag (model, object_id, tag_input, to_table) {
-  const tag_name = tag_input.value
+function addTag (model, objectId, tagInput, toTable) {
+  const tagName = tagInput.value
 
-  if (tag_name.length > 0) {
-    jsonRPC(model + '.add_tag', [object_id, tag_name], function (data) {
-      to_table.row.add({ name: tag_name }).draw()
-      $(tag_input).val('')
+  if (tagName.length > 0) {
+    jsonRPC(model + '.add_tag', [objectId, tagName], function (data) {
+      toTable.row.add({ name: tagName }).draw()
+      $(tagInput).val('')
     })
   }
 }
@@ -25,17 +25,17 @@ function addTag (model, object_id, tag_input, to_table) {
 
     @model - string - model name which accepts tags. There must
         be a 'MM.add_tag' RPC function for this to work!
-    @object_id - int - PK of the object that will be tagged
-    @display_filter - dict - passed directly to `Tag.filter` to display
-        tags for @object_id
-    @perm_remove - bool - if we have permission to remove tags
+    @objectId - int - PK of the object that will be tagged
+    @displayFilter - dict - passed directly to `Tag.filter` to display
+        tags for @objectId
+    @permRemove - bool - if we have permission to remove tags
 
 */
-function tagsCard (model, object_id, display_filter, perm_remove) {
+function tagsCard (model, objectId, displayFilter, permRemove) {
   // load the tags table
-  const tags_table = $('#tags').DataTable({
+  const tagsTable = $('#tags').DataTable({
     ajax: function (data, callback, settings) {
-      dataTableJsonRPC('Tag.filter', display_filter, callback, function (data, callback) {
+      dataTableJsonRPC('Tag.filter', displayFilter, callback, function (data, callback) {
         // b/c tags are now annotated with case, run, plan IDs there are duplicate names.
         // Filter them out by only looking at Tag.id uniqueness!
         data = arrayToDict(data)
@@ -48,7 +48,7 @@ function tagsCard (model, object_id, display_filter, perm_remove) {
         data: null,
         sortable: false,
         render: function (data, type, full, meta) {
-          if (perm_remove) {
+          if (permRemove) {
             return '<a href="#tags" class="remove-tag" data-name="' + data.name + '"><span class="pficon-error-circle-o hidden-print"></span></a>'
           }
           return ''
@@ -65,24 +65,24 @@ function tagsCard (model, object_id, display_filter, perm_remove) {
   })
 
   // remove tags button
-  tags_table.on('draw', function () {
+  tagsTable.on('draw', function () {
     $('.remove-tag').click(function () {
       const tr = $(this).parents('tr')
 
-      jsonRPC(model + '.remove_tag', [object_id, $(this).data('name')], function (data) {
-        tags_table.row($(tr)).remove().draw()
+      jsonRPC(model + '.remove_tag', [objectId, $(this).data('name')], function (data) {
+        tagsTable.row($(tr)).remove().draw()
       })
     })
   })
 
   // add tag button and Enter key
   $('#add-tag').click(function () {
-    addTag(model, object_id, $('#id_tags')[0], tags_table)
+    addTag(model, objectId, $('#id_tags')[0], tagsTable)
   })
 
   $('#id_tags').keyup(function (event) {
     if (event.keyCode === 13) {
-      addTag(model, object_id, $('#id_tags')[0], tags_table)
+      addTag(model, objectId, $('#id_tags')[0], tagsTable)
     };
   })
 

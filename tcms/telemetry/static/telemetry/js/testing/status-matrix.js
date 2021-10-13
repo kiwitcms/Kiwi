@@ -1,5 +1,5 @@
 let table
-const initial_column = {
+const initialColumn = {
   data: null,
   className: 'table-view-pf-actions',
   render: function (data, type, full, meta) {
@@ -17,7 +17,7 @@ $(document).ready(() => {
   loadInitialProduct()
 
   document.getElementById('id_product').onchange = () => {
-    update_version_select_from_product()
+    updateVersionSelectFromProduct()
     // note: don't pass drawTable as callback to avoid calling it twice
     // b/c update_version_select... triggers .onchange()
     updateTestPlanSelectFromProduct()
@@ -25,7 +25,7 @@ $(document).ready(() => {
 
   document.getElementById('id_version').onchange = () => {
     drawTable()
-    update_build_select_from_version(true)
+    updateBuildSelectFromVersion(true)
   }
 
   document.getElementById('id_build').onchange = drawTable
@@ -106,7 +106,7 @@ function drawTable () {
   }
 
   jsonRPC('Testing.status_matrix', query, data => {
-    const table_columns = [initial_column]
+    const tableColumns = [initialColumn]
     const testRunIds = Object.keys(data.columns)
 
     // reverse the TR-xy order to show newest ones first
@@ -122,7 +122,7 @@ function drawTable () {
                 <span class="fa pficon-help" data-toggle="tooltip" data-placement="bottom" title="${testRunSummary}"></span>
             </th>`)
 
-      table_columns.push({
+      tableColumns.push({
         data: null,
         sortable: false,
         render: renderData(testRunId, testPlanIds, includeChildTPs)
@@ -130,7 +130,7 @@ function drawTable () {
     })
 
     table = $('#table').DataTable({
-      columns: table_columns,
+      columns: tableColumns,
       data: data.data,
       paging: false,
       ordering: false,

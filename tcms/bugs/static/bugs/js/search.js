@@ -73,11 +73,11 @@ $(document).ready(function () {
   })
 
   $('#id_product').change(function () {
-    update_version_select_from_product()
+    updateVersionSelectFromProduct()
   })
 
   $('#id_version').change(function () {
-    update_build_select_from_version(true)
+    updateBuildSelectFromVersion(true)
   })
 
   $('.bootstrap-switch').bootstrapSwitch()
