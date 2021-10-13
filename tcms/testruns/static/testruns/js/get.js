@@ -157,7 +157,7 @@ $(document).ready(() => {
 
   $('.bulk-select-checkbox').click(event => {
     const isChecked = event.target.checked
-    const testExecutionSelectors = $('#test-executions-container').find('.test-execution-checkbox')
+    const testExecutionSelectors = $('#test-executions-container').find('.test-execution-checkbox:visible')
 
     testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
   })
