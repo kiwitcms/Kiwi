@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 19:10+0000\n"
-"PO-Revision-Date: 2021-09-15 19:36\n"
+"PO-Revision-Date: 2021-10-14 13:14\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1149,7 +1149,7 @@ msgstr "1 confirmation & 1 statut non confirmé requis !"
 
 #: tcms/testcases/admin.py:122
 msgid "Bug URL"
-msgstr ""
+msgstr "URL de remonter d'anomalie"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
@@ -1167,15 +1167,15 @@ msgstr ""
 
 #: tcms/testcases/admin.py:167
 msgid "Configuration health check"
-msgstr ""
+msgstr "Vérification de configuration"
 
 #: tcms/testcases/admin.py:183
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "Impossible de créer un ticket d'anomalie"
 
 #: tcms/testcases/admin.py:189
 msgid "Issue Tracker configuration check passed"
-msgstr ""
+msgstr "La vérification de la configuration du système de suivi des problèmes est terminée"
 
 #: tcms/testcases/admin.py:200
 msgid "Issue Tracker configuration check failed"
