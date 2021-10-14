@@ -90,6 +90,8 @@ $(document).ready(function () {
   const perm_remove_component = $('#test_case_pk').data('perm-remove-component') === 'True'
   const perm_remove_plan = $('#test_case_pk').data('perm-remove-plan') === 'True'
   const perm_remove_bug = $('#test_case_pk').data('perm-remove-bug') === 'True'
+  const testCaseHealthMessageTemplate = $('#test_case_pk').data('individual-test-case-health-msg')
+
 
   // bind everything in tags table
   tagsCard('TestCase', case_id, { case: case_id }, perm_remove_tag)
@@ -207,6 +209,54 @@ $(document).ready(function () {
       jsonRPC('TestPlan.remove_case', [$(this).data('pk'), case_id], function (data) {
         plans_table.row($(tr)).remove().draw()
       })
+    })
+  })
+
+  jsonRPC('Testing.individual_test_case_health', { case_id: case_id }, ress => {
+    const res = {}
+    let planId = 0
+    let negative = 0
+    let allCount = 0
+    ress.forEach(r => {
+      if (planId === 0) {
+        planId = r.run__plan
+      }
+
+      if (r.status__weight < 0) {
+        negative++
+      }
+      allCount++
+
+      if (r.run__plan !== planId) {
+        planId = r.run__plan
+        const failureRate =  allCount > 0 ? (negative / allCount) : 0
+        res[planId] = {
+          negativeCount: negative,
+          allCount: allCount,
+          failureRate: failureRate
+        }
+        negative = 0
+        allCount = 0
+      }
+    })
+    // add the last entry
+    const failureRate =  allCount > 0 ? (negative / allCount) : 0
+    res[planId] = {
+      negativeCount: negative,
+      allCount: allCount,
+      failureRate: failureRate
+    }
+
+    Object.entries(res).forEach(([runId, data]) => {
+      const stabilityPercent = (1-data.failureRate)*100
+      const msg = testCaseHealthMessageTemplate.replace("%s", data.negativeCount)
+        .replace("%s", data.allCount)
+        .replace("%s", stabilityPercent.toFixed(2))
+
+      const executionRow = $(`#execution-for-plan-${runId}`)
+      executionRow.find('.failure-rate').html(msg)
+      executionRow.find('.failure-rate-container .progress-bar-danger').css('width', `${(data.failureRate) * 100}%`)
+      executionRow.find('.failure-rate-container .progress-bar-success').css('width', `${(1 - data.failureRate) * 100}%`)
     })
   })
 

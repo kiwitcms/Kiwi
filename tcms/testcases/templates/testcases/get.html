@@ -17,6 +17,7 @@
             data-perm-remove-component="{{ perms.testcases.delete_testcasecomponent }}"
             data-perm-remove-plan="{{ perms.testcases.delete_testcaseplan }}"
             data-perm-remove-bug="{{ perms.testcases.delete_bug }}"
+            data-individual-test-case-health-msg="{% trans 'Failed %s times in the last %s run. Stability: %s %' %}"
         >TC-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
 
