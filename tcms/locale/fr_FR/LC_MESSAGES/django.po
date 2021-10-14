@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 19:10+0000\n"
-"PO-Revision-Date: 2021-10-14 13:14\n"
+"PO-Revision-Date: 2021-10-14 13:27\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1153,17 +1153,19 @@ msgstr "URL de remonter d'anomalie"
 
 #: tcms/testcases/admin.py:124
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "Kiwi TCMS essaiera de récupérer les détails de l'URL de suivi d'anomalie donné en utilisant l'intégration définie ci-dessus ! Cliquez sur le bouton `Enregistrer et continuer` et faites attention aux messages en haut de l'écran. <strong>AVERTISSEMENT :</strong> en cas d'échecs, certains logiciel de suivi d'anomalie vont revenir à la récupération des détails via le protocole OpenGraph. Dans ce cas, le résultat inclura le champ nommé `from_open_graph`."
 
 #: tcms/testcases/admin.py:150
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "Intégration du suivi d'anomalie externe"
 
 #: tcms/testcases/admin.py:160
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>Attention: lire la section \n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"pour la configuration du suivi d'anomalie externe</a> avant d'éditer les valeurs ci-dessous!</h1>"
 
 #: tcms/testcases/admin.py:167
 msgid "Configuration health check"
@@ -1179,7 +1181,7 @@ msgstr "La vérification de la configuration du système de suivi des problèmes
 
 #: tcms/testcases/admin.py:200
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Échec de la vérification de la configuration du système de suivi des problèmes"
 
 #: tcms/testcases/forms.py:50
 msgid "**Scenario**: ... what behavior will be tested ...\n"
