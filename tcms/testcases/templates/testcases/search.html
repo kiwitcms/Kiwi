@@ -3,9 +3,10 @@
 {% load static %}
 
 {% block head %}
-{{ form.media }}
-{% block title %}{% trans "Search test cases" %}{% endblock %}
+    {{ form.media }}
 {% endblock %}
+
+{% block title %}{% trans "Search test cases" %}{% endblock %}
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
@@ -177,6 +178,9 @@
                     <th>{% trans "Automated" %}</th>
                     <th>{% trans "Author" %}</th>
                     <th>{% trans "Tags" %}</th>
+                    <th>{% trans "Setup duration" %}</th>
+                    <th>{% trans "Testing duration" %}</th>
+                    <th>{% trans "Expected duration" %}</th>
                 </tr>
             </thead>
         </table>

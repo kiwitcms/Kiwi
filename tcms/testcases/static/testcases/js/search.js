@@ -61,10 +61,12 @@ function formatDuration(seconds) {
   date.setSeconds(rest);
   let timeString = date.toISOString().substr(11, 8);
 
-  if (days) {
-    return `${days} ${timeString}`;
+  if (days === 0) {
+    return timeString;
   }
-  return `${timeString}`;
+
+  let dayOrDays = days === 1 ? 'day' : 'days';
+  return `${days} ${dayOrDays}, ${timeString}`;
 }
 
 $(document).ready(function () {
@@ -121,15 +123,15 @@ $(document).ready(function () {
         params.is_automated = false
       };
 
-      if (!['', '0'].includes($('#id_setup_duration').val())) {
+      if ($('#id_setup_duration').val() !== '0') {
         params.setup_duration = $('#id_setup_duration').val()
       };
 
-      if (!['', '0'].includes($('#id_testing_duration').val())) {
+      if (($('#id_testing_duration').val() !== '0')) {
         params.testing_duration = $('#id_testing_duration').val()
       };
 
-      if (!['', '0'].includes($('#id_expected_duration').val())) {
+      if (($('#id_expected_duration').val() !== '0')) {
         params.expected_duration = $('#id_expected_duration').val()
       };
 
