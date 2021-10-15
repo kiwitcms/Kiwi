@@ -115,6 +115,8 @@ jobs:
         run: |
           docker-compose pull db
           docker-compose run -d -p 3306:3306 --name kiwi_db db
+          sleep 20  # wait to initialize
+          docker exec -i kiwi_db mariadb -u root -pkiwi-1s-aw3s0m3 -e 'GRANT ALL PRIVILEGES ON test_kiwi.* TO kiwi;'
 
       - name: Execute tests
         run: |

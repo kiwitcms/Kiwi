@@ -32,7 +32,7 @@ The above command will create two containers:
 
 1) A web container based on the latest Kiwi TCMS image
 2) A DB container based on the
-   `centos/mariadb-103-centos7 <https://hub.docker.com/r/centos/mariadb-103-centos7>`_
+   `official MariaDB <https://hub.docker.com/_/mariadb>`_
    image
 
 
@@ -126,8 +126,7 @@ To upgrade running Kiwi TCMS containers execute the following commands::
     cd path/containing/docker-compose/
     docker-compose down
     # !!! docker tag to keep older image version on the machine
-    docker pull kiwitcms/kiwi  # to fetch latest version from Docker Hub
-    docker pull centos/mariadb-103-centos7 # to fetch the latest MariaDB
+    docker-compose pull # to fetch latest versions from Docker Hub
     docker-compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
