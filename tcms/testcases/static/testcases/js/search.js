@@ -52,21 +52,21 @@ function pre_process_data (data, callback) {
   })
 }
 
-function formatDuration(seconds) {
-  let numSecondsInDay = 24 * 60 * 60;
-  let days = Math.floor(seconds / numSecondsInDay);
-  let rest = seconds % numSecondsInDay;
+function formatDuration (seconds) {
+  const numSecondsInDay = 24 * 60 * 60
+  const days = Math.floor(seconds / numSecondsInDay)
+  const rest = seconds % numSecondsInDay
 
-  let date = new Date(0);
-  date.setSeconds(rest);
-  let timeString = date.toISOString().substr(11, 8);
+  const date = new Date(0)
+  date.setSeconds(rest)
+  const timeString = date.toISOString().substr(11, 8)
 
   if (days === 0) {
-    return timeString;
+    return timeString
   }
 
-  let dayOrDays = days === 1 ? 'day' : 'days';
-  return `${days} ${dayOrDays}, ${timeString}`;
+  const dayOrDays = days === 1 ? 'day' : 'days'
+  return `${days} ${dayOrDays}, ${timeString}`
 }
 
 $(document).ready(function () {
@@ -177,20 +177,20 @@ $(document).ready(function () {
       { data: 'tag_names' },
       {
         data: 'setup_duration',
-        render: function(data, type, full, meta) {
-          return formatDuration(data);
+        render: function (data, type, full, meta) {
+          return formatDuration(data)
         }
       },
       {
         data: 'testing_duration',
-        render: function(data, type, full, meta) {
-          return formatDuration(data);
+        render: function (data, type, full, meta) {
+          return formatDuration(data)
         }
       },
       {
         data: 'expected_duration',
-        render: function(data, type, full, meta) {
-          return formatDuration(data);
+        render: function (data, type, full, meta) {
+          return formatDuration(data)
         }
       }
     ],
