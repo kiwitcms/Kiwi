@@ -37,7 +37,10 @@ class DashboardView(TemplateView):
     def get_context_data(self, **kwargs):
         # Check if domain is configured
         site = Site.objects.get(pk=settings.SITE_ID)
-        doc_url = "https://kiwitcms.readthedocs.io/en/latest/admin.html#configure-kiwi-s-base-url"
+        doc_url = (
+            "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
+            "#configuration-of-kiwi-tcms-domain"
+        )
         if site.domain == "127.0.0.1:8000":
             messages.add_message(
                 self.request,
