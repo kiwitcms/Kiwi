@@ -29,8 +29,8 @@ class TestDashboard(LoggedInTestCase):
         # with that particular value
         cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求", author=cls.tester)
         doc_url = (
-            "https://kiwitcms.readthedocs.io/en/latest/admin.html"
-            "#configure-kiwi-s-base-url"
+            "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
+            "#configuration-of-kiwi-tcms-domain"
         )
         cls.base_url_error_message = _(
             "Base URL is not configured! "
