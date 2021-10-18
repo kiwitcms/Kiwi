@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    # just because the CI config needs this.
+    # not using it in actual tests
+    bugtracker_kiwitcms_org:
+        container_name: bugtracker_kiwitcms_org
+        image: httpd
+        restart: always
+        hostname: 'bugtracker.kiwitcms.org'
