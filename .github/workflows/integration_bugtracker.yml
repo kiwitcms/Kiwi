@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.8]
-        tracker: [azureboards, bitbucket, bugzilla, github, gitlab_ce, gitlab_ee, jira, kiwitcms, redmine]
+        tracker: [azureboards, bitbucket, bugzilla, github, gitlab_ce, gitlab_ee, gitlab_com, jira, kiwitcms, redmine]
 
     steps:
     - uses: actions/checkout@v2
@@ -47,6 +47,7 @@ jobs:
     - name: Execute tests
       run: |
         export GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN="${{ secrets.GH_BUGTRACKER_INTEGRATION_TEST_API_TOKEN }}"
+        export GITLAB_INTEGRATION_API_TOKEN="${{ secrets.GITLAB_INTEGRATION_API_TOKEN }}"
         export JIRA_BUGTRACKER_INTEGRATION_API_USERNAME="${{ secrets.JIRA_BUGTRACKER_INTEGRATION_API_USERNAME }}"
         export JIRA_BUGTRACKER_INTEGRATION_API_TOKEN="${{ secrets.JIRA_BUGTRACKER_INTEGRATION_API_TOKEN }}"
         export BITBUCKET_INTEGRATION_API_USERNAME="${{ secrets.BITBUCKET_INTEGRATION_API_USERNAME }}"
