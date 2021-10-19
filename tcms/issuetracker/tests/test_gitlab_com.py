@@ -17,6 +17,9 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 )
 class TestGitlabIntegration(APITestCase):
     existing_bug_id = 1
+    # NOTE: repository has been made private to workaround problems with automatically
+    # created issues marked as SPAM, see:
+    # https://gitlab.com/gitlab-org/gitlab/-/issues/337246
     existing_bug_url = "https://gitlab.com/kiwitcms/integration-testing/-/issues/1"
 
     def _fixture_setup(self):
