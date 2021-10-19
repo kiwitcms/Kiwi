@@ -28,10 +28,11 @@ class Bugzilla(base.IssueTrackerType):
     """
     Support for Bugzilla. Requires:
 
-    :base_url: - e.g. http://example.com/bugzilla
-    :api_url: - the XML-RPC URL for your Bugzilla instance
-    :api_username: - a username registered in Bugzilla
-    :api_password: - the password for this username
+    :base_url: For example http://example.com/bugzilla
+    :api_url: the XML-RPC URL for your Bugzilla instance.
+              For example http://example.com/bugzilla/xmlrpc.cgi
+    :api_username: a username registered in Bugzilla
+    :api_password: the password for this username
 
     You can also provide the ``BUGZILLA_AUTH_CACHE_DIR`` setting (in ``product.py``)
     to control where authentication cookies for Bugzilla will be saved. If this

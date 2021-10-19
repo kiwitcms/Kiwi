@@ -34,10 +34,10 @@ class JIRA(IssueTrackerType):
     """
     Support for JIRA. Requires:
 
-    :base_url: - the URL of this JIRA instance
-    :api_username: - a username registered in JIRA
-    :api_password: - API token for this username, see
-                     https://id.atlassian.com/manage-profile/security/api-tokens
+    :base_url: the URL of this JIRA instance. For example https://kiwitcms.atlassian.net
+    :api_username: a username registered in JIRA
+    :api_password: API token for this username, see
+                   https://id.atlassian.com/manage-profile/security/api-tokens
 
     .. important::
 
@@ -147,9 +147,8 @@ class GitHub(IssueTrackerType):
     """
     Support for GitHub. Requires:
 
-    :base_url: - URL to a GitHub repository for which we're going to report issues
-    :api_password: - GitHub API token - needs ``repo`` or ``public_repo``
-                     permissions.
+    :base_url: URL to a GitHub repository for which we're going to report issues
+    :api_password: GitHub API token - needs ``repo`` or ``public_repo`` permissions
 
     .. note::
 
@@ -217,7 +216,7 @@ class Gitlab(IssueTrackerType):
 
     :base_url: URL to a GitLab repository for which we're going to report issues.
                For example https://gitlab.com/kiwitcms/integration-testing
-    :api_url: URL to a GitLab instance. For example https://gitlab.com!
+    :api_url: URL to a GitLab instance. For example https://gitlab.com
     :api_password: GitLab API token with the ``api`` scope. See
                    https://gitlab.com/-/profile/personal_access_tokens
 
@@ -274,9 +273,9 @@ class Redmine(IssueTrackerType):
     """
     Support for Redmine. Requires:
 
-    :base_url: - the URL for this Redmine instance
-    :api_username: - a username registered in Redmine
-    :api_password: - the password for this username
+    :base_url: the URL for this Redmine instance. For example http://redmine.example.org:3000
+    :api_username: a username registered in Redmine
+    :api_password: the password for this username
     """
 
     it_class = redmine_integration.RedmineThread
