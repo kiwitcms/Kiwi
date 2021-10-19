@@ -213,11 +213,13 @@ class GitHub(IssueTrackerType):
 
 class Gitlab(IssueTrackerType):
     """
-    Support for Gitlab. Requires:
+    Support for GitLab. Requires:
 
-    :base_url: URL to a GitLab repository for which we're going to report issues
-    :api_url: URL to GitLab instance. Usually gitlab.com!
-    :api_password: GitLab API token.
+    :base_url: URL to a GitLab repository for which we're going to report issues.
+               For example https://gitlab.com/kiwitcms/integration-testing
+    :api_url: URL to a GitLab instance. For example https://gitlab.com!
+    :api_password: GitLab API token with the ``api`` scope. See
+                   https://gitlab.com/-/profile/personal_access_tokens
 
     .. note::
 
