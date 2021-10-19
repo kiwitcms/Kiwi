@@ -60,9 +60,7 @@ class TestGitlabIntegration(APITestCase):
         )
         integration = Gitlab(bug_system, None)
 
-        result = integration.details(
-            "https://gitlab.com/kiwitcms/katinar/-/issues/1"
-        )
+        result = integration.details("https://gitlab.com/kiwitcms/katinar/-/issues/1")
 
         self.assertEqual("Hello Private GitLab", result["title"])
         self.assertEqual("Hello World", result["description"])
@@ -113,6 +111,9 @@ class TestGitlabIntegration(APITestCase):
         ]:
             self.assertIn(expected_string, last_comment.body)
 
+        # remove comment at the end to satisfy AssertNotIn above
+        last_comment.delete()
+
     def test_report_issue_from_test_execution_1click_works(self):
         # simulate user clicking the 'Report bug' button in TE widget, TR page
         result = self.rpc_client.Bug.report(
@@ -146,3 +147,7 @@ class TestGitlabIntegration(APITestCase):
                 is_defect=True,
             ).exists()
         )
+
+        # close issue
+        issue.state_event = "close"
+        issue.save()
