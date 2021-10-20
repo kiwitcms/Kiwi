@@ -24,8 +24,17 @@ __all__ = (
 
 def _get_user_dict(user):
     user_dict = model_to_dict(user)
-    if "password" in user_dict:
-        del user_dict["password"]
+
+    for field in (
+        "password",
+        "groups",
+        "user_permissions",
+        "date_joined",
+        "last_login",
+    ):
+        if field in user_dict:
+            del user_dict[field]
+
     return user_dict
 
 
@@ -52,13 +61,20 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     if not query:
         query = {"pk": kwargs.get(REQUEST_KEY).user.pk}
 
-    users = User.objects.filter(**query).distinct()
-
-    filtered_users = []
-    for user in users:
-        filtered_users.append(_get_user_dict(user))
-
-    return filtered_users
+    return list(
+        User.objects.filter(**query)
+        .values(
+            "email",
+            "first_name",
+            "id",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "last_name",
+            "username",
+        )
+        .distinct()
+    )
 
 
 @rpc_method(name="User.update")
