@@ -414,9 +414,14 @@ function updateTestPlanSelectFromProduct (callback = () => {}) {
   }
 
   let productIds = $('#id_product').val()
-  if (!Array.isArray(productIds)) {
+
+  if (productIds === '') {
+    updateCallback()
+    return
+  } else if (!Array.isArray(productIds)) {
     productIds = [productIds]
   }
+
   if (!productIds.length) {
     updateCallback()
   } else {

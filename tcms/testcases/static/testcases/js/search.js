@@ -98,6 +98,11 @@ $(document).ready(function () {
         params.executions__run__in = $('#id_run').val()
       };
 
+      const testPlanIds = $('#id_test_plan').val()
+      if (testPlanIds.length) {
+        params.plan__in = testPlanIds
+      }
+
       if ($('input[name=is_automated]:checked').val() === 'true') {
         params.is_automated = true
       };
@@ -204,6 +209,11 @@ $(document).ready(function () {
   $('#id_product').change(function () {
     updateComponentSelectFromProduct()
     updateCategorySelectFromProduct()
+    updateTestPlanSelectFromProduct()
+  })
+
+  $('#id_test_plan').change(function () {
+    $(this).parents('.bootstrap-select').toggleClass('open')
   })
 
   $('.selectpicker').selectpicker()
