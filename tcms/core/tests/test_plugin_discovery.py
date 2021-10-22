@@ -32,13 +32,10 @@ class UrlDiscoveryTestCase(TestCase):
         """
         for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
             for url_resolver in urlpatterns:
-                if (
-                    isinstance(url_resolver, URLResolver)
-                    and (
+                if isinstance(url_resolver, URLResolver) and (
                     str(url_resolver.pattern) == f"^{plugin.name}/"
                     and url_resolver.urlconf_module.__name__
                     == plugin.module_name + ".urls"
-                )
                 ):
                     return
 
