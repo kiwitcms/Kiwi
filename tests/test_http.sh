@@ -48,6 +48,14 @@ rlJournalStart
         rlAssertGrep "You are not using a secure connection." /tmp/testdata.txt
     rlPhaseEnd
 
+    rlPhaseStartTest "Should send ETag header"
+        rlRun -t -c "curl -k -D- https://$IP_ADDRESS:8443/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
+    rlPhaseEnd
+
+    rlPhaseStartTest "Should NOT send Cache-Control header"
+        rlRun -t -c "curl -k -D- https://$IP_ADDRESS:8443/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
+    rlPhaseEnd
+
     rlPhaseStartCleanup
         rlRun -t -c "docker-compose down"
         rm -f /tmp/testcookies.txt
