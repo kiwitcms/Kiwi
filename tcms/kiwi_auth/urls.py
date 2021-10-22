@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.conf import settings
 from django.contrib.auth import views as contrib_auth_views
 from django.urls import re_path, reverse_lazy
 
@@ -11,7 +11,6 @@ urlpatterns = [
         views.Profile.as_view(),
         name="tcms-profile",
     ),
-    re_path(r"^register/$", views.Register.as_view(), name="tcms-register"),
     re_path(
         r"^confirm/(?P<activation_key>[A-Za-z0-9\-]+)/$",
         views.Confirm.as_view(),
@@ -51,3 +50,8 @@ urlpatterns = [
         name="users-and-groups-router",
     ),
 ]
+
+if settings.REGISTRATION_ENABLED:
+    urlpatterns.append(
+        re_path(r"^register/$", views.Register.as_view(), name="tcms-register")
+    )

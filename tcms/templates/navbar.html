@@ -54,11 +54,13 @@
                             <a href="{% url "tcms-login" %}" target="_parent">{% trans "Login" %}</a>
                         </li>
 
+                        {% if SETTINGS.REGISTRATION_ENABLED %}
                         <li class="divider"></li>
 
                         <li>
                             <a href="{% url "tcms-register" %}" target="_parent">{% trans "Register" %}</a>
                         </li>
+                        {% endif %}
                     {% endif %}
                     </ul>
                 </li>

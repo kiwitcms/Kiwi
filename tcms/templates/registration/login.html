@@ -48,8 +48,11 @@
       </p>
       <p>
       {% trans "Please login to get started" %}
-      {% trans "or" %} <a href="{% url "tcms-register" %}" style="color:white;text-decoration:underline">{% trans "register an account" %}</a>
-      {% trans "if you don't have one!" %}
+      {% if SETTINGS.REGISTRATION_ENABLED %}
+        {% trans "or" %}
+        <a href="{% url "tcms-register" %}" style="color:white;text-decoration:underline">{% trans "register an account" %}</a>
+        {% trans "if you don't have one!" %}
+      {% endif %}
       </p>
     </div><!--/.col-*-->
   </div><!--/.row-->
