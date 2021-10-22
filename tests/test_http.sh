@@ -46,6 +46,7 @@ rlJournalStart
         URL="http://$IP_ADDRESS:8080"
         get_dashboard "$URL"
         rlAssertGrep "You are not using a secure connection." /tmp/testdata.txt
+    rlPhaseEnd
 
     rlPhaseStartCleanup
         rlRun -t -c "docker-compose down"
