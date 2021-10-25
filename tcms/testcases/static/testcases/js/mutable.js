@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $('#text_templates').change(function () {
+    markdownEditor.codemirror.setValue($(this).val())
+  })
+
   if ($('#id_category').find('option').length === 0) {
     populateProductCategory()
   }

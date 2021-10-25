@@ -1,3 +1,5 @@
+let markdownEditor = undefined
+
 function doHighlight (code, lang) {
   const grammar = window.Prism.languages[lang]
   if (grammar === undefined) {
