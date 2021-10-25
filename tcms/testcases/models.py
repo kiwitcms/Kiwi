@@ -357,3 +357,17 @@ class TestCaseEmailSettings(models.Model):
 
         self.cc_list = MultipleEmailField.delimiter.join(emailaddr_list)
         self.save()
+
+
+class Template(models.Model):
+    history = KiwiHistoricalRecords()
+
+    name = models.CharField(max_length=255)
+    text = models.TextField(blank=False)
+
+    class Meta:
+        verbose_name = _("Template")
+        verbose_name_plural = _("Templates")
+
+    def __str__(self):
+        return self.name

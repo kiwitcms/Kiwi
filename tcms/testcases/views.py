@@ -18,7 +18,7 @@ from tcms.testcases.forms import (
     SearchCaseForm,
     TestCaseForm,
 )
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import Template, TestCase
 from tcms.testplans.models import TestPlan
 
 
@@ -63,6 +63,7 @@ class NewCaseView(CreateView):
         context = super().get_context_data(**kwargs)
         context["test_plan"] = plan_from_request_or_none(self.request)
         context["notify_formset"] = kwargs.get("notify_formset") or CaseNotifyFormSet()
+        context["templates"] = Template.objects.all()
         return context
 
     def form_valid(self, form):

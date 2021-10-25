@@ -102,22 +102,34 @@
 
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" >{% trans "Setup duration" %}</label>
-                    <div class="col-md-3 col-lg-3">
-                            <div id="setup_duration">
-                                {{ form.setup_duration }}
-                            </div>
-                    </div>
+                <div class="col-md-3 col-lg-3">
+                        <div id="setup_duration">
+                            {{ form.setup_duration }}
+                        </div>
+                </div>
+
                 <label class="col-md-1 col-lg-1" >{% trans "Testing duration" %}</label>
-                    <div class="col-md-3 col-lg-3">
-                            <div id="testing-duration">
-                                {{ form.testing_duration }}
-                            </div>
-                    </div>
+                <div class="col-md-3 col-lg-3">
+                        <div id="testing-duration">
+                            {{ form.testing_duration }}
+                        </div>
+                </div>
             </div>
 
             <div class="form-group">
+                <label class="col-md-1 col-lg-1 {% if form.text.errors %}has-error{% endif %}">{% trans "Text" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    {% if not object and templates %}
+                    <select id="text_templates" class="form-control selectpicker">
+                        <option value="">----------</option>
+                        {% for template in templates %}
+                        <option value="{{ template.text }}">{{ template.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                </div>
+
                 <div class="col-md-12 col-lg-12">
-                    <label class="{% if form.text.errors %}has-error{% endif %}">{% trans "Text" %}:</label>
                     <div>{{ form.text }}</div>
                     {{ form.text.errors }}
                 </div>

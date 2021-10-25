@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import inlineformset_factory
-from django.utils.translation import gettext_lazy as _
 
 from tcms.core.forms.fields import UserField
 from tcms.core.widgets import DurationWidget, SimpleMDE
@@ -46,24 +45,6 @@ class TestCaseForm(forms.ModelForm):
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,
-        initial=_(
-            """**Scenario**: ... what behavior will be tested ...
-  **Given** ... conditions ...
-  **When** ... actions ...
-  **Then** ... expected results ...
-
-*Actions*:
-
-1. item
-2. item
-3. item
-
-*Expected results*:
-
-1. item
-2. item
-3. item"""
-        ),
     )
 
     def populate(self, product_id=None):

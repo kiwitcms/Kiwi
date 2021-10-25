@@ -11,7 +11,14 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
-from tcms.testcases.models import BugSystem, Category, TestCase, TestCaseStatus
+from tcms.core.widgets import SimpleMDE
+from tcms.testcases.models import (
+    BugSystem,
+    Category,
+    Template,
+    TestCase,
+    TestCaseStatus,
+)
 
 
 class TestCaseStatusAdmin(admin.ModelAdmin):
@@ -206,7 +213,28 @@ Configure external bug trackers</a> section before editting the values below!</h
                 )
 
 
+class TemplateAdminForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=SimpleMDE(),
+        required=True,
+    )
+
+    class Meta:
+        model = Template
+        fields = "__all__"
+
+    class Media:
+        js = [
+            "js/jsonrpc.js",
+        ]
+
+
+class TemplateAdmin(admin.ModelAdmin):
+    form = TemplateAdminForm
+
+
 admin.site.register(BugSystem, BugSystemAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(TestCase, TestCaseAdmin)
 admin.site.register(TestCaseStatus, TestCaseStatusAdmin)
+admin.site.register(Template, TemplateAdmin)
