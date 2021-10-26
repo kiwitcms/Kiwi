@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-25 18:02+0000\n"
-"PO-Revision-Date: 2021-10-25 19:45\n"
+"PO-Revision-Date: 2021-10-26 07:03\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -471,7 +471,7 @@ msgstr "%(unapplied_migration_count)s nem alkalmazott migrációd van. Lásd a <
 #: tcms/core/views.py:95
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "Nem biztonságos kapcsolatot használsz. Tekintsd meg a <a href=\"%(doc_url)s\">dokumentációt</a> és engedélyezd az SSL-t."
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -1203,11 +1203,11 @@ msgstr "Teszteset státuszok"
 
 #: tcms/testcases/models.py:369
 msgid "Template"
-msgstr ""
+msgstr "Sablon"
 
 #: tcms/testcases/models.py:370
 msgid "Templates"
-msgstr ""
+msgstr "Sablonok"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
