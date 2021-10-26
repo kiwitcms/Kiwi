@@ -178,3 +178,33 @@ class MenuAddCommentItemTestCase(PermissionsTestCase):
         response = self.client.get(self.url)
         self.assert_on_testrun_page(response)
         self.assertNotContains(response, self.add_comment_html, html=False)
+
+
+class MenuAddHyperlinkBulkTestCase(PermissionsTestCase):
+    permission_label = "linkreference.add_linkreference"
+    http_method_names = ["get"]
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_run = factories.TestRunFactory()
+
+        cls.url = reverse("testruns-get", args=[cls.test_run.pk])
+        super().setUpTestData()
+
+        cls.expected_html = '<a href="#" class="add-hyperlink-bulk"'
+        user_should_have_perm(cls.tester, "testruns.view_testrun")
+
+    def assert_on_testrun_page(self, response):
+        self.assertContains(response, self.test_run.summary)
+        self.assertContains(response, self.test_run.plan)
+        self.assertContains(response, self.test_run.build)
+
+    def verify_get_with_permission(self):
+        response = self.client.get(self.url)
+        self.assert_on_testrun_page(response)
+        self.assertContains(response, self.expected_html, html=False)
+
+    def verify_get_without_permission(self):
+        response = self.client.get(self.url)
+        self.assert_on_testrun_page(response)
+        self.assertNotContains(response, self.expected_html, html=False)
