@@ -113,7 +113,9 @@ function initSimpleMDE (textArea, fileUploadElement, autoSaveId = window.locatio
       enabled: true,
       uniqueId: autoSaveId,
       delay: 5000
-    }
+    },
+    tabSize: 4,
+    indentWithTabs: false
   })
 
   fileUploadElement.change(function () {
