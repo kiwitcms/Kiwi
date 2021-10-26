@@ -31,6 +31,7 @@ def markdown2html(md_str):
             "markdown.extensions.codehilite",
             "markdown.extensions.fenced_code",
             "markdown.extensions.nl2br",
+            "markdown.extensions.sane_lists",
             "markdown.extensions.tables",
             "tcms.utils.markdown",
         ],
