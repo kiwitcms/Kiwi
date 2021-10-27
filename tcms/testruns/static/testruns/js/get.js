@@ -520,6 +520,7 @@ function renderAdditionalInformation (testRunId, execution) {
   let casesQuery = { executions__run: testRunId }
   let componentQ = { cases__executions__run: testRunId }
   let tagsQ = { case__executions__run: testRunId }
+  let propertiesQ = { execution__run: testRunId }
   const planId = Number($('#test_run_pk').data('plan-pk'))
 
   // if called from reloadRowFor(execution) then filter only for
@@ -529,6 +530,7 @@ function renderAdditionalInformation (testRunId, execution) {
     casesQuery = { executions: execution.id }
     componentQ = { cases__executions: execution.id }
     tagsQ = { case__executions: execution.id }
+    propertiesQ = { execution: execution.id }
   }
 
   // update bug icons for all executions
@@ -542,6 +544,33 @@ function renderAdditionalInformation (testRunId, execution) {
     withDefects.forEach((te) => {
       $(`.test-execution-${te}`).find('.js-bugs').removeClass('hidden')
     })
+  })
+
+  // update properties display
+  jsonRPC('TestExecution.properties', propertiesQ, (props) => {
+    const propsPerTe = props.reduce(function (map, obj) {
+      if (!(obj.execution in map)) {
+        map[obj.execution] = {}
+      }
+      map[obj.execution][obj.name] = obj.value
+      return map
+    }, {})
+
+    for (const teId of Object.keys(propsPerTe)) {
+      const row = $(`.test-execution-${teId}`)
+
+      // when loading this page filtered by status some TCs do not exist
+      // but we don't know about it b/c the above queries are overzealous
+      if (!row.length) { continue }
+
+      let propString = ''
+      for (const name of Object.keys(propsPerTe[teId])) {
+        propString += `${name}: ${propsPerTe[teId][name]}; `
+      }
+
+      row.find('.js-row-properties').toggleClass('hidden')
+      row.find('.js-row-properties').append(propString + '<br>')
+    }
   })
 
   // update priority, category & automation status for all executions
