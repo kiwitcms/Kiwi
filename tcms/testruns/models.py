@@ -212,9 +212,6 @@ class TestExecution(models.Model, UrlMixin):
     status = models.ForeignKey(TestExecutionStatus, on_delete=models.CASCADE)
     build = models.ForeignKey("management.Build", on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ("case", "run", "case_text_version")
-
     def __str__(self):
         return f"{self.pk}: {self.case_id}"
 
