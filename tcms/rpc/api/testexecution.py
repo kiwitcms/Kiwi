@@ -12,7 +12,7 @@ from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.models import TestExecution
+from tcms.testruns.models import TestExecution, TestExecutionProperty
 
 # conditional import b/c this App can be disabled
 if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
@@ -32,6 +32,7 @@ __all__ = (
     "add_link",
     "get_links",
     "remove_link",
+    "properties",
 )
 
 
@@ -328,5 +329,30 @@ def get_links(query):
             "execution",
             "created_on",
             "is_defect",
+        )
+    )
+
+
+@permissions_required("testruns.view_testexecutionproperty")
+@rpc_method(name="TestExecution.properties")
+def properties(query):
+    """
+    .. function:: RPC TestExecution.properties(query)
+
+        Return properties for a TestExecution
+
+        :param query: Field lookups for
+                      :class:`tcms.testruns.models.TestExecutionProperty`
+        :type query: dict
+        :return: Serialized list of :class:`tcms.testruns.models.TestExecutionProperty`
+                 objects
+        :rtype: dict
+    """
+    return list(
+        TestExecutionProperty.objects.filter(**query).values(
+            "id",
+            "name",
+            "value",
+            "execution",
         )
     )
