@@ -11,6 +11,7 @@ from django.utils.translation import override
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.models import abstract
 from tcms.core.models.base import UrlMixin
 
 TestExecutionStatusSubtotal = namedtuple(
@@ -230,6 +231,13 @@ class TestExecution(models.Model, UrlMixin):
         if self.stop_date is None or self.start_date is None:
             return None
         return self.stop_date - self.start_date
+
+    def properties(self):
+        return TestExecutionProperty.objects.filter(execution=self.pk)
+
+
+class TestExecutionProperty(abstract.Property):
+    execution = models.ForeignKey(TestExecution, on_delete=models.CASCADE)
 
 
 class TestRunTag(models.Model):
