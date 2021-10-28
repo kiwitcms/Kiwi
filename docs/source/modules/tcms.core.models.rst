@@ -12,4 +12,5 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   tcms.core.models.abstract
    tcms.core.models.base
