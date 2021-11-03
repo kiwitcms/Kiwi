@@ -1,7 +1,7 @@
 -r readthedocs.txt
 tcms-api
 doc8
-isort==5.9.3
+isort==5.10.0
 black
 parameterized
 textdistance
