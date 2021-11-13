@@ -57,3 +57,17 @@ img {
         display: none !important;
     }
 }
+
+.panel-group .panel-title > a.no-before::before {
+    content: none !important;
+}
+
+#properties-accordion .panel-heading,
+#properties-accordion .panel-body {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.property-value a {
+    color: #c00; inherit !important;
+}
