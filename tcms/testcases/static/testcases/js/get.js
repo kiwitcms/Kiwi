@@ -83,12 +83,54 @@ function initAddPlan (caseId, plansTable) {
   })
 }
 
+// https://gist.github.com/iperelivskiy/4110988#gistcomment-2697447
+// used only to hash strings to get unique IDs for href targets
+function funhash (s) {
+  let h = 0xdeadbeef
+  for (let i = 0; i < s.length; i++) {
+    h = Math.imul(h ^ s.charCodeAt(i), 2654435761)
+  }
+  return (h ^ h >>> 16) >>> 0
+}
+
+function displayProperties (selector) {
+  const caseId = $('#test_case_pk').data('pk')
+  const container = $(selector)
+  const propertyTemplate = $('#property-fragment')[0].content
+  const valueTemplate = $(propertyTemplate).find('template')[0].content
+  const shownProperties = []
+  let property = null
+
+  jsonRPC('TestCase.properties', { case: caseId }, data => {
+    data.forEach(element => {
+      if (!shownProperties.includes(element.name)) {
+        property = $(propertyTemplate.cloneNode(true))
+        property.find('.js-property-name').html(element.name)
+
+        const collapseId = 'collapse' + funhash(element.name)
+        property.find('.js-property-name').attr('href', `#${collapseId}`)
+        property.find('.js-panel-collapse').attr('id', collapseId)
+        property.find('template').remove()
+
+        container.find('.js-insert-here').append(property)
+        shownProperties.push(element.name)
+      }
+
+      const value = $(valueTemplate.cloneNode(true))
+      value.find('.js-property-value').text(element.value)
+      container.find('.js-panel-body').last().append(value)
+    })
+  })
+}
+
 $(document).ready(function () {
   const caseId = $('#test_case_pk').data('pk')
   const productId = $('#product_pk').data('pk')
   const permRemoveTag = $('#test_case_pk').data('perm-remove-tag') === 'True'
   const permRemoveComponent = $('#test_case_pk').data('perm-remove-component') === 'True'
   const permRemovePlan = $('#test_case_pk').data('perm-remove-plan') === 'True'
+
+  displayProperties('#properties-accordion')
 
   // bind everything in tags table
   tagsCard('TestCase', caseId, { case: caseId }, permRemoveTag)
