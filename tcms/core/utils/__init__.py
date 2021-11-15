@@ -21,8 +21,6 @@ def request_host_link(request, domain_name=None):
         if not domain_name:
             domain_name = request.get_host()
         # default to https if in production and we don't know
-        protocol = "https://"
-        if not request.is_secure():
-            protocol = "http://"
+        protocol = "http://" if not request.is_secure() else "https://"
 
     return protocol + domain_name
