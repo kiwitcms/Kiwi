@@ -20,10 +20,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
-        output = None
-        if kwargs["verbosity"]:
-            output = self.stdout
-
+        output = self.stdout if kwargs["verbosity"] else None
         call_command("update_permissions", f"--verbosity={kwargs['verbosity']}")
 
         # Assign permissions to Tester group
