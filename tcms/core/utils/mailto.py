@@ -32,10 +32,7 @@ def mailto(  # pylint: disable=invalid-name
             recipients.append(admin_email)
 
     # this is a workaround to allow passing body text directly
-    if template_name:
-        body = render_to_string(template_name, context)
-    else:
-        body = context
+    body = render_to_string(template_name, context) if template_name else context
 
     sender = settings.DEFAULT_FROM_EMAIL
     email_thread = threading.Thread(
