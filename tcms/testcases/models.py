@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.models import abstract
 from tcms.core.models.base import UrlMixin
 from tcms.testcases.fields import MultipleEmailField
 
@@ -203,6 +204,10 @@ class TestCase(models.Model, UrlMixin):
                 new_tc.add_component(new_component)
 
         return new_tc
+
+
+class Property(abstract.Property):
+    case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
 
 
 class TestCasePlan(models.Model):
