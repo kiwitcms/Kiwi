@@ -13,7 +13,7 @@ from tcms.management.models import Component, Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testcases.models import Property, TestCase, TestCasePlan
 
 __all__ = (
     "create",
@@ -34,6 +34,7 @@ __all__ = (
     "remove_tag",
     "add_attachment",
     "list_attachments",
+    "properties",
 )
 
 
@@ -563,3 +564,33 @@ def comments(case_id):
         result.append(model_to_dict(comment))
 
     return result
+
+
+@permissions_required("testcases.view_property")
+@rpc_method(name="TestCase.properties")
+def properties(query=None):
+    """
+    .. function:: TestCase.properties(query)
+
+        Return all properties(s) for the specified test case(s).
+
+        :param query: Field lookups for :class:`tcms.testcases.models.Property`
+        :type query: dict
+        :return: Serialized list of :class:`tcms.testcases.models.Property` objects.
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing *testcases.view_property* permission
+    """
+    if query is None:
+        query = {}
+
+    return list(
+        Property.objects.filter(**query)
+        .values(
+            "id",
+            "case",
+            "name",
+            "value",
+        )
+        .order_by("case", "name", "value")
+        .distinct()
+    )
