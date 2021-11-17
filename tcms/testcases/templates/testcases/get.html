@@ -81,10 +81,11 @@
 
                     <div class="panel panel-no-border hidden-print">
                         <div class="panel-heading">
-                            <input type="text" class="form-control typeahead" id="id_property"
+                            <input type="text" class="form-control typeahead" id="property-value-input"
                                 style="width: 80%; display: inline"
-                                maxlength="255">
-                            <a href="#" id="js-add-property" title="{% trans 'Add' %}" style="float:right">
+                                maxlength="255"
+                                placeholder="{% trans 'name=value' %}">
+                            <a href="#" class="js-add-property-value" title="{% trans 'Add' %}" style="float:right">
                                 <span class="fa fa-plus hidden-print"></span>
                             </a>
                         </div>

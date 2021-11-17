@@ -146,6 +146,23 @@ function displayProperties (selector) {
   })
 }
 
+function addPropertyValue () {
+  const caseId = $('#test_case_pk').data('pk')
+  const nameValue = $('#property-value-input').val().split('=')
+
+  jsonRPC(
+    'TestCase.add_property',
+    [caseId, nameValue[0], nameValue[1]],
+    function (data) {
+      animate($('.js-insert-here'), function () {
+        $('#property-value-input').val('')
+        $('.js-insert-here').empty()
+        displayProperties('#properties-accordion')
+      })
+    }
+  )
+}
+
 $(document).ready(function () {
   const caseId = $('#test_case_pk').data('pk')
   const productId = $('#product_pk').data('pk')
@@ -154,6 +171,16 @@ $(document).ready(function () {
   const permRemovePlan = $('#test_case_pk').data('perm-remove-plan') === 'True'
 
   displayProperties('#properties-accordion')
+  $('.js-add-property-value').click(function () {
+    addPropertyValue()
+    return false
+  })
+
+  $('#property-value-input').keyup(function (event) {
+    if (event.keyCode === 13) {
+      addPropertyValue()
+    }
+  })
 
   // bind everything in tags table
   tagsCard('TestCase', caseId, { case: caseId }, permRemoveTag)
