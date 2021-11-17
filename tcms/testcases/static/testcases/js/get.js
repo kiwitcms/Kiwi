@@ -110,6 +110,8 @@ function displayProperties (selector) {
         const collapseId = 'collapse' + funhash(element.name)
         property.find('.js-property-name').attr('href', `#${collapseId}`)
         property.find('.js-panel-collapse').attr('id', collapseId)
+        property.find('.js-remove-property').attr('data-case_id', element.case)
+        property.find('.js-remove-property').attr('data-property-name', element.name)
         property.find('template').remove()
 
         container.find('.js-insert-here').append(property)
@@ -118,7 +120,28 @@ function displayProperties (selector) {
 
       const value = $(valueTemplate.cloneNode(true))
       value.find('.js-property-value').text(element.value)
+      value.find('.js-remove-value').attr('data-id', element.id)
       container.find('.js-panel-body').last().append(value)
+    })
+
+    $('.js-remove-property').click(function () {
+      const sender = $(this)
+      jsonRPC(
+        'TestCase.remove_property',
+        { case: sender.data('case_id'), name: sender.data('property-name') },
+        function (data) {
+          sender.parents('.panel').first().fadeOut(500)
+        }
+      )
+      return false
+    })
+
+    $('.js-remove-value').click(function () {
+      const sender = $(this)
+      jsonRPC('TestCase.remove_property', { pk: sender.data('id') }, function (data) {
+        sender.parent().fadeOut(500)
+      })
+      return false
     })
   })
 }
