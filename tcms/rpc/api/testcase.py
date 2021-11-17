@@ -35,6 +35,7 @@ __all__ = (
     "add_attachment",
     "list_attachments",
     "properties",
+    "remove_property",
 )
 
 
@@ -572,7 +573,7 @@ def properties(query=None):
     """
     .. function:: TestCase.properties(query)
 
-        Return all properties(s) for the specified test case(s).
+        Return all properties for the specified test case(s).
 
         :param query: Field lookups for :class:`tcms.testcases.models.Property`
         :type query: dict
@@ -594,3 +595,18 @@ def properties(query=None):
         .order_by("case", "name", "value")
         .distinct()
     )
+
+
+@permissions_required("testcases.delete_property")
+@rpc_method(name="TestCase.remove_property")
+def remove_property(query):
+    """
+    .. function:: TestCase.remove_property(query)
+
+        Remove selected properties.
+
+        :param query: Field lookups for :class:`tcms.testcases.models.Property`
+        :type query: dict
+        :raises PermissionDenied: if missing *testcases.delete_property* permission
+    """
+    Property.objects.filter(**query).delete()
