@@ -36,6 +36,7 @@ __all__ = (
     "list_attachments",
     "properties",
     "remove_property",
+    "add_property",
 )
 
 
@@ -610,3 +611,25 @@ def remove_property(query):
         :raises PermissionDenied: if missing *testcases.delete_property* permission
     """
     Property.objects.filter(**query).delete()
+
+
+@permissions_required("testcases.add_property")
+@rpc_method(name="TestCase.add_property")
+def add_property(case_id, name, value):
+    """
+    .. function:: TestCase.add_property(case_id, name, value)
+
+        Add property to test case! Duplicates are skipped without errors.
+
+        :param case_id: Primary key for :class:`tcms.testcases.models.TestCase`
+        :type case_id: int
+        :param name: Name of the property
+        :type name: str
+        :param value: Value of the property
+        :type value: str
+        :return: Serialized :class:`tcms.testcases.models.Property` object.
+        :rtype: dict
+        :raises PermissionDenied: if missing *testcases.add_property* permission
+    """
+    prop, _ = Property.objects.get_or_create(case_id=case_id, name=name, value=value)
+    return model_to_dict(prop)
