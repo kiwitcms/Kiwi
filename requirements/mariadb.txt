@@ -1,2 +1,2 @@
 -r base.txt
-mysqlclient==2.0.3
+mysqlclient==2.1.0
