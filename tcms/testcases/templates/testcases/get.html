@@ -21,81 +21,6 @@
     </h1>
 
 <div class="row row-cards-pf">
-    <div class="col-xs-12 col-sm-12 col-md-6">
-        <div class="card-pf card-pf-accented">
-            <div class="card-pf-body">
-                <div class="markdown-text">
-                    {{ object.text|markdown2html }}
-                </div>
-
-                <p>
-                    <strong>{% trans 'Notes' %}:</strong>
-                    {{ object.notes }}
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-3">
-        <div class="card-pf card-pf-accented">
-            <h2 class="card-pf-title">
-                <span class="fa fa-cubes"></span>
-                {% trans "Properties" %}
-            </h2>
-
-            <div class="card-pf-body">
-                <div class="panel-group" id="properties-accordion">
-
-                <template id="property-fragment">
-                    <div class="panel panel-no-border">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#properties-accordion" href="#collapseOne"  class="collapsed js-property-name">
-                                    ---
-                                </a>
-
-                                <a href="#" class="js-remove-property no-before" title="{% trans 'Delete' %}"
-                                    style="float:right" data-case_id="" data-property-name="">
-                                    <span class="pficon-error-circle-o hidden-print"></span>
-                                </a>
-                            </h4>
-                        </div>
-
-                        <div id="collapseOne" class="js-panel-collapse panel-collapse collapse">
-                            <div class="panel-body js-panel-body">
-                                <template>
-                                    <span class="badge property-value">
-                                        <span class="js-property-value">---</span>
-                                        <a href="#" title="{% trans 'Delete' %}" class="js-remove-value" data-id="">
-                                            <span class="fa fa-times hidden-print"></span>
-                                        </a>
-                                    </span>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-
-                    <!-- dynamic content needs to be first otherwise expanding doesn't expand the card -->
-                    <div class="js-insert-here"></div>
-
-                    <div class="panel panel-no-border hidden-print">
-                        <div class="panel-heading">
-                            <input type="text" class="form-control typeahead" id="property-value-input"
-                                style="width: 80%; display: inline"
-                                maxlength="255"
-                                placeholder="{% trans 'name=value' %}">
-                            <a href="#" class="js-add-property-value" title="{% trans 'Add' %}" style="float:right">
-                                <span class="fa fa-plus hidden-print"></span>
-                            </a>
-                        </div>
-                    </div>
-
-                </div> <!-- panel-group -->
-            </div>
-        </div>
-    </div>
-
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="card-pf card-pf-accented card-pf-aggregate-status">
             <h2 class="card-pf-title" style="text-align: left">
@@ -195,6 +120,82 @@
             <div class="card-pf-body"></div>
         </div>
     </div>
+    
+    <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="card-pf card-pf-accented">
+            <div class="card-pf-body">
+                <div class="markdown-text">
+                    {{ object.text|markdown2html }}
+                </div>
+
+                <p>
+                    <strong>{% trans 'Notes' %}:</strong>
+                    {{ object.notes }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="card-pf card-pf-accented">
+            <h2 class="card-pf-title">
+                <span class="fa fa-cubes"></span>
+                {% trans "Properties" %}
+            </h2>
+
+            <div class="card-pf-body">
+                <div class="panel-group" id="properties-accordion">
+
+                <template id="property-fragment">
+                    <div class="panel panel-no-border">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#properties-accordion" href="#collapseOne"  class="collapsed js-property-name">
+                                    ---
+                                </a>
+
+                                <a href="#" class="js-remove-property no-before" title="{% trans 'Delete' %}"
+                                    style="float:right" data-case_id="" data-property-name="">
+                                    <span class="pficon-error-circle-o hidden-print"></span>
+                                </a>
+                            </h4>
+                        </div>
+
+                        <div id="collapseOne" class="js-panel-collapse panel-collapse collapse">
+                            <div class="panel-body js-panel-body">
+                                <template>
+                                    <span class="badge property-value">
+                                        <span class="js-property-value">---</span>
+                                        <a href="#" title="{% trans 'Delete' %}" class="js-remove-value" data-id="">
+                                            <span class="fa fa-times hidden-print"></span>
+                                        </a>
+                                    </span>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                    <!-- dynamic content needs to be first otherwise expanding doesn't expand the card -->
+                    <div class="js-insert-here"></div>
+
+                    <div class="panel panel-no-border hidden-print">
+                        <div class="panel-heading">
+                            <input type="text" class="form-control typeahead" id="property-value-input"
+                                style="width: 80%; display: inline"
+                                maxlength="255"
+                                placeholder="{% trans 'name=value' %}">
+                            <a href="#" class="js-add-property-value" title="{% trans 'Add' %}" style="float:right">
+                                <span class="fa fa-plus hidden-print"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div> <!-- panel-group -->
+            </div>
+        </div>
+    </div>
+
 </div>
 
     <div class="row row-cards-pf">
