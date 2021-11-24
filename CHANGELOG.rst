@@ -1,6 +1,175 @@
 Change Log
 ==========
 
+Kiwi TCMS 10.5 (25 Nov 2021)
+----------------------------
+
+.. important::
+
+    This is a medium sized release which contains various improvements and new features,
+    database changes, new settings and API methods, bug-fixes, internal refactoring and
+    updated translations.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+    ./manage.py refresh_permissions
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 3.2.7 to 3.2.9
+- Update django-colorfield from 0.4.3 to 0.4.5
+- Update django-extensions from 3.1.3 to 3.1.5
+- Update django-grappelli from 2.15.1 to 2.15.3
+- Update django-tree-queries from 0.6.0 to 0.7.0
+- Update jira from 3.0.1 to 3.1.1
+- Update markdown from 3.3.4 to 3.3.6
+- Update mysqlclient from 2.0.3 to 2.1.0
+- Update psycopg2 from 2.9.1 to 2.9.2
+- Display a warning if connection doesn't use HTTPS (Ivajlo Karabojkov)
+- Account registration page can be turned on/off via settings. Fixes
+  `Issue #2500 <https://github.com/kiwitcms/Kiwi/issues/2500>`_
+- TestCase Search page can now filter by TestPlan. Fixes
+  `Issue #2283 <https://github.com/kiwitcms/Kiwi/issues/2283>`_
+- Allow template selection when creating new test case. Fixes
+  `Issue #957 <https://github.com/kiwitcms/Kiwi/issues/957>`_
+- TestCase page now allows specification of properties, e.g. mobile devices
+  on which the test should be executed. This feature serves as a building
+  block for
+  `Issue #1843 <https://github.com/kiwitcms/Kiwi/issues/1843>`_,
+  `Issue #1931 <https://github.com/kiwitcms/Kiwi/issues/1931>`_ and
+  `Issue #1344 <https://github.com/kiwitcms/Kiwi/issues/1344>`_ but isn't active anywhere else inside
+  Kiwi TCMS at the moment
+- TestExecution properties will be displayed inside TestRun page if they
+  have been specified
+- Rearrange help-text in admin page for better visibility
+- Switch to official Postgres image from Docker Hub
+- Switch to official MariaDB image from Docker Hub
+
+.. warning::
+
+    For Postgres data dir changed from ``/var/lib/pgsql/data`` to ``/var/lib/postgres/data``.
+    Environment variables inside docker-compose file changed as well,
+    see ``docker-compose.postgres``.
+
+    For MariaDB data dir changed from ``/var/lib/mysql/data`` to ``/var/lib/mysql``.
+    ``MYSQL_CHARSET`` & ``MYSQL_COLLATION`` environment variables are no longer
+    recognized. Instead they are present as command line options passed to the container,
+    see ``docker-compose.yml``. Previous workaround for these variables was also removed.
+
+    If you want to migrate from the previous ``centos/mariadb-103-centos7`` or
+    ``centos/postgresql-12-centos7`` containers to ``mariadb:latest`` and ``postgres:latest``
+    make sure to update your container control files!
+
+
+Settings
+~~~~~~~~
+
+- New setting ``REGISTRATION_ENABLED``, default ``True``, Can be controlled via
+  environment variable ``KIWI_REGISTRATION_ENABLED``. When set to ``False``
+  will disable account registration page
+
+
+Database
+~~~~~~~~
+
+- New model ``testcases.Property``
+- New model ``testcases.Template``
+- New model ``testruns.TestExecutionProperty``
+- Remove ``unique_together`` constraint for ``testruns.TestExecution`` model.
+  This makes it possible to add multiple executions for the same test case in
+  the same test run
+
+.. warning::
+
+    These newly added models create additional permission labels with names
+    *testcases | template | Can .... template*,
+    *testcases | property | Can .... property*,
+    *testruns | test execution property | Can .... test execution property*
+
+    Execute ``manage.py refresh_permissions`` and/or assign them manually to
+    users and groups if they should be able to interact with the new objects!
+
+
+API
+~~~
+
+- Method ``TestCase.filter()`` now returns additional fields
+  ``setup_duration``, ``testing_duration``, ``expected_duration`` - all
+  serialized in seconds. Refs
+  `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (Mfon Eti-mfon)
+- Method ``User.filter()`` will no longer return fields
+  ``groups``, ``user_permissions``, ``date_joined`` and ``last_login``
+- New method ``TestExecution.properties()``
+- New method ``TestCase.properties()``
+- New method ``TestCase.add_property()``
+- New method ``TestCase.remove_property()``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Unify tab size & tab indentation b/w Python & SimpleMDE. Fixes
+  `Issue #1802 <https://github.com/kiwitcms/Kiwi/issues/1802>`_
+- Use ``sane_list extension`` for rendering consecutive lists in markdown. Closes
+  `Issue #2511 <https://github.com/kiwitcms/Kiwi/issues/2511>`_
+
+.. warning::
+    The visual markdown editor explicitly didn't follow markdown syntax rules
+    by allowing indentation with 2 spaces and treating tabs as 2 spaces as well.
+    See "Indentation/Tab Length" at https://python-markdown.github.io/#differences
+
+    The backend markdown rendering engine explicitly followed an undefined behavior
+    which happens to be different from what the visual markdown editor does.
+    See "Consecutive Lists" at https://python-markdown.github.io/#differences
+
+    The previous 2 changes make sure the visual editor and backend rendering engine
+    follow the same rules. This may result is "broken" display of existing text which
+    doesn't follow the markdown syntax rules. If you spot such text just edit to make
+    it render the way you wish.
+
+- Fix broken URL and minor updates to documentation
+- Update GitLab tracker integration documentation to avoid confusion. Closes
+  `Issue #2559 <https://github.com/kiwitcms/Kiwi/issues/2559>`_
+- Limit tag input length to 255 characters. Closes
+  `Issue #2176 <https://github.com/kiwitcms/Kiwi/issues/2176>`_
+- Make error notifications in Admin to display with red color
+- Select only visible rows for bulk-update in TestRun page. Fixes
+  `Issue #2222 <https://github.com/kiwitcms/Kiwi/issues/2222>`_
+- Remove ``Cache-Control`` header from httpd. Closes
+  `Issue #443 <https://github.com/kiwitcms/Kiwi/issues/443>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add permissions test for add-hyperlink-bulk menu. Closes
+  `Issue #716 <https://github.com/kiwitcms/Kiwi/issues/716>`_
+- Add explicit tests for issue tracker integration with GitLab.com
+- Tests teardown - remove comments & close issues on GitLab.com
+- Add missing ``rlPhaseEnd`` for docker tests
+- Multiple pylint and eslint fixes
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 10.4 (04 Oct 2021)
 ----------------------------
 
