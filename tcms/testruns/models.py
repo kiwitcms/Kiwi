@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from collections import namedtuple
+import itertools
+from collections import OrderedDict, namedtuple
 
 import vinaigrette
+from allpairspy import AllPairs
 from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
@@ -96,19 +98,7 @@ class TestRun(models.Model, UrlMixin):
         )
         return list(send_to)
 
-    def create_execution(
-        self,
-        case,
-        assignee=None,
-        build=None,
-        sortkey=0,
-    ):
-        assignee = (
-            assignee
-            or (case.default_tester_id and case.default_tester)
-            or (self.default_tester_id and self.default_tester)
-        )
-
+    def _create_single_execution(self, case, assignee, build, sortkey):
         return self.executions.create(
             case=case,
             assignee=assignee,
@@ -121,6 +111,70 @@ class TestRun(models.Model, UrlMixin):
             stop_date=None,
             start_date=None,
         )
+
+    def create_execution(
+        self,
+        case,
+        assignee=None,
+        build=None,
+        sortkey=0,
+    ):
+        from tcms.testcases.models import (  # pylint: disable=import-outside-toplevel
+            Property,
+        )
+
+        assignee = (
+            assignee
+            or (case.default_tester_id and case.default_tester)
+            or (self.default_tester_id and self.default_tester)
+        )
+
+        executions = []
+        properties = Property.objects.filter(case=case)
+
+        if properties.count():
+            for prop_tuple in self.property_matrix(properties):
+                execution = self._create_single_execution(
+                    case, assignee, build, sortkey
+                )
+                executions.append(execution)
+
+                for prop in prop_tuple:
+                    TestExecutionProperty.objects.create(
+                        execution=execution, name=prop.name, value=prop.value
+                    )
+        else:
+            executions.append(
+                self._create_single_execution(case, assignee, build, sortkey)
+            )
+
+        return executions
+
+    @staticmethod
+    def property_matrix(properties, _type="full"):
+        """
+        Return a sequence of tuples representing the property matrix!
+        """
+        property_groups = OrderedDict()
+        for prop in properties.order_by("name", "value"):
+            if prop.name in property_groups:
+                property_groups[prop.name].append(prop)
+            else:
+                property_groups[prop.name] = [prop]
+
+        if _type == "full":
+            return itertools.product(*property_groups.values())
+
+        if _type == "pairwise":
+            # AllPairs returns named tuples which require valid identifiers.
+            # Rename all keys b/c we don't use them for storing data in DB anyway
+            for _i, key in enumerate(property_groups.copy()):
+                property_groups[f"key_{_i}"] = property_groups.pop(key)
+
+            # Note: in Python 3.10 there is itertools.pairwise() function
+            return AllPairs(property_groups)
+
+        raise RuntimeError(f"Unknown matrix type '{_type}'")
 
     def add_tag(self, tag):
         return TestRunTag.objects.get_or_create(run=self, tag=tag)

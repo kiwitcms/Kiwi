@@ -44,7 +44,7 @@ def add_case(run_id, case_id):
     """
     run = TestRun.objects.get(pk=run_id)
     case = TestCase.objects.get(pk=case_id)
-
+    # TODO: fix this to account for properties
     if run.executions.filter(case=case).exists():
         return model_to_dict(run.executions.filter(case=case).first())
 
