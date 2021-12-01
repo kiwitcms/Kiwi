@@ -50,10 +50,9 @@ class TestRunMethods(test.TestCase):
         cls.test_case.save()
 
     def test_create_execution_without_status(self):
-        execution = self.test_run.create_execution(self.test_case)
-
-        self.assertEqual(execution.status.weight, 0)
-        self.assertEqual(execution.status.name, _("IDLE"))
+        for execution in self.test_run.create_execution(self.test_case):
+            self.assertEqual(execution.status.weight, 0)
+            self.assertEqual(execution.status.name, _("IDLE"))
 
 
 class TestExecutionActualDuration(TestCase):
