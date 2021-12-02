@@ -138,7 +138,7 @@ def add_tag(run_id, tag_name, **kwargs):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: dict

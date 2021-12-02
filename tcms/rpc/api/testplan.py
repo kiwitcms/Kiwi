@@ -36,7 +36,7 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testplans.models.TestPlan`
         :type values: dict
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testplans.models.TestPlan` object
         :rtype: dict
@@ -131,7 +131,7 @@ def add_tag(plan_id, tag_name, **kwargs):
         :type plan_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :raises PermissionDenied: if missing *testplans.add_testplantag* permission
         :raises TestPlan.DoesNotExist: if object specified by PK doesn't exist
@@ -272,7 +272,7 @@ def list_attachments(plan_id, **kwargs):
 
         :param plan_id: PK of TestPlan to inspect
         :type plan_id: int
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: A list containing information and download URLs for attachements
         :rtype: list
@@ -297,7 +297,7 @@ def add_attachment(plan_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
     """
     utils.add_attachment(

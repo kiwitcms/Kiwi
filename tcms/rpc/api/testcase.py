@@ -192,7 +192,7 @@ def add_tag(case_id, tag, **kwargs):
         :type case_id: int
         :param tag: Tag name to add
         :type tag: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :raises PermissionDenied: if missing *testcases.add_testcasetag* permission
         :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
@@ -232,7 +232,7 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testcases.models.TestCase`
         :type values: dict
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
@@ -454,7 +454,7 @@ def list_attachments(case_id, **kwargs):
 
         :param case_id: PK of TestCase to inspect
         :type case_id: int
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: A list containing information and download URLs for attachements
         :rtype: list
@@ -479,7 +479,7 @@ def add_attachment(case_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
     """
     utils.add_attachment(
@@ -503,7 +503,7 @@ def add_comment(case_id, comment, **kwargs):
         :type case_id: int
         :param comment: The text to add as a comment
         :type comment: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django_comments.models.Comment` object
         :rtype: dict
