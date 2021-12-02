@@ -36,17 +36,33 @@ def add_case(run_id, case_id):
         :type run_id: int
         :param case_id: PK of TestCase to be added
         :type case_id: int
-        :return: Serialized :class:`tcms.testruns.models.TestExecution` object
-        :rtype: dict
+        :return: A list of serialized :class:`tcms.testruns.models.TestExecution` objects
+        :rtype: list(dict)
         :raises DoesNotExist: if objects specified by the PKs don't exist
         :raises PermissionDenied: if missing *testruns.add_testexecution* permission
         :raises RuntimeError: if test case status is not CONFIRMED
     """
     run = TestRun.objects.get(pk=run_id)
     case = TestCase.objects.get(pk=case_id)
-    # TODO: fix this to account for properties
+
     if run.executions.filter(case=case).exists():
-        return model_to_dict(run.executions.filter(case=case).first())
+        # TODO: need to annotate with properties
+        # otherwise all of the results will be the same
+        return list(
+            run.executions.filter(case=case).values(
+                "id",
+                "assignee",
+                "tested_by",
+                "case_text_version",
+                "start_date",
+                "stop_date",
+                "sortkey",
+                "run",
+                "case",
+                "build",
+                "status",
+            )
+        )
 
     if not case.case_status.is_confirmed:
         raise RuntimeError(f"TC-{case.pk} status is not confirmed")
@@ -57,8 +73,10 @@ def add_case(run_id, case_id):
     if last_te:  # in case there are no other TEs
         sortkey += last_te.sortkey
 
-    execution = run.create_execution(case=case, sortkey=sortkey)
-    return model_to_dict(execution)
+    result = []
+    for execution in run.create_execution(case=case, sortkey=sortkey):
+        result.append(model_to_dict(execution))
+    return result
 
 
 @permissions_required("testruns.delete_testexecution")
