@@ -41,24 +41,23 @@ class TestAddCase(APITestCase):
         self.test_run = TestRunFactory(plan=self.plan)
 
     def test_add_case(self):
-        result = self.rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
-        self.assertTrue(isinstance(result, dict))
-
-        execution = TestExecution.objects.get(
-            run=self.test_run.pk, case=self.test_case.pk
+        executions = self.rpc_client.TestRun.add_case(
+            self.test_run.pk, self.test_case.pk
         )
+        self.assertTrue(isinstance(executions, list))
 
-        self.assertEqual(result["id"], execution.pk)
-        self.assertIn("assignee", result)
-        self.assertEqual(result["tested_by"], None)
-        self.assertIn("case_text_version", result)
-        self.assertIn("start_date", result)
-        self.assertIn("stop_date", result)
-        self.assertIn("sortkey", result)
-        self.assertEqual(result["run"], execution.run.pk)
-        self.assertEqual(result["case"], execution.case.pk)
-        self.assertIn("build", result)
-        self.assertIn("status", result)
+        for result in executions:
+            self.assertIn("id", result)
+            self.assertIn("assignee", result)
+            self.assertEqual(result["tested_by"], None)
+            self.assertIn("case_text_version", result)
+            self.assertIn("start_date", result)
+            self.assertIn("stop_date", result)
+            self.assertIn("sortkey", result)
+            self.assertEqual(result["run"], self.test_run.pk)
+            self.assertEqual(result["case"], self.test_case.pk)
+            self.assertIn("build", result)
+            self.assertIn("status", result)
 
     def test_add_case_without_permissions(self):
         unauthorized_user = UserFactory()
