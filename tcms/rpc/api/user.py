@@ -48,7 +48,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 
         :param query: Field lookups for :class:`django.contrib.auth.models.User`
         :type query: dict
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django.contrib.auth.models.User` object without
                  the password field!
@@ -91,7 +91,7 @@ def update(
         :type user_id: int
         :param values: Field values for :class:`django.contrib.auth.models.User`
         :type values: dict
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django.contrib.auth.models.User` object
         :rtype: dict
@@ -184,7 +184,7 @@ def add_attachment(filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Information about the attachment
         :rtype: dict

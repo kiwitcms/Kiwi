@@ -48,7 +48,7 @@ def add_comment(execution_id, comment, **kwargs):
         :type execution_id: int
         :param comment: The text to add as a comment
         :type comment: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django_comments.models.Comment` object
         :rtype: dict
@@ -178,7 +178,7 @@ def update(execution_id, values, **kwargs):
         :type execution_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :rtype: dict
@@ -253,7 +253,7 @@ def add_link(values, update_tracker=False, **kwargs):
         :param update_tracker: Automatically update Issue Tracker by placing a comment
                                linking back to the failed TestExecution.
         :type update_tracker: bool, default=False
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object

@@ -57,7 +57,7 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.management.models.Component`
         :type values: dict
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict

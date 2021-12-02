@@ -26,7 +26,7 @@ def add_tag(bug_id, tag, **kwargs):
         :type bug_id: int
         :param tag: Tag name to add
         :type tag: str
-        :param kwargs: Dict providing access to the current request, protocol
+        :param **kwargs: Dict providing access to the current request, protocol
                 entry point name and handler instance from the rpc method
         :raises PermissionDenied: if missing *bugs.add_bug_tags* permission
         :raises Bug.DoesNotExist: if object specified by PK doesn't exist
