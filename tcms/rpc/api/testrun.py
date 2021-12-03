@@ -46,23 +46,7 @@ def add_case(run_id, case_id):
     case = TestCase.objects.get(pk=case_id)
 
     if run.executions.filter(case=case).exists():
-        # TODO: need to annotate with properties
-        # otherwise all of the results will be the same
-        return list(
-            run.executions.filter(case=case).values(
-                "id",
-                "assignee",
-                "tested_by",
-                "case_text_version",
-                "start_date",
-                "stop_date",
-                "sortkey",
-                "run",
-                "case",
-                "build",
-                "status",
-            )
-        )
+        return annotate_executions_with_properties(run.executions.filter(case=case))
 
     if not case.case_status.is_confirmed:
         raise RuntimeError(f"TC-{case.pk} status is not confirmed")
@@ -73,9 +57,21 @@ def add_case(run_id, case_id):
     if last_te:  # in case there are no other TEs
         sortkey += last_te.sortkey
 
+    return annotate_executions_with_properties(
+        run.create_execution(case=case, sortkey=sortkey)
+    )
+
+
+def annotate_executions_with_properties(executions_iterable):
     result = []
-    for execution in run.create_execution(case=case, sortkey=sortkey):
-        result.append(model_to_dict(execution))
+
+    for execution in executions_iterable:
+        serialized_execution = model_to_dict(execution)
+        serialized_execution["properties"] = list(
+            execution.properties().values("name", "value")
+        )
+        result.append(serialized_execution)
+
     return result
 
 
