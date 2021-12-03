@@ -44,7 +44,7 @@ class TestAddCase(APITestCase):
         executions = self.rpc_client.TestRun.add_case(
             self.test_run.pk, self.test_case.pk
         )
-        self.assertTrue(isinstance(executions, list))
+        self.assertIsInstance(executions, list)
 
         for result in executions:
             self.assertIn("id", result)
@@ -58,6 +58,8 @@ class TestAddCase(APITestCase):
             self.assertEqual(result["case"], self.test_case.pk)
             self.assertIn("build", result)
             self.assertIn("status", result)
+            self.assertIn("properties", result)
+            self.assertIsInstance(result["properties"], list)
 
     def test_add_case_without_permissions(self):
         unauthorized_user = UserFactory()
