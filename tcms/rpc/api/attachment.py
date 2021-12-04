@@ -18,7 +18,7 @@ def remove_attachment(attachment_id, **kwargs):
 
         :param attachment_id: PK of attachment to remove
         :type attachment_id: int
-        :param **kwargs: Dict providing access to the current request, protocol
+        :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
         :raises Exception: if attachment doesn't exist,
                  InternalError or removal fails

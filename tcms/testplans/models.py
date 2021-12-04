@@ -121,7 +121,7 @@ class TestPlan(TreeNode, UrlMixin):
         :param copy_testcases: Whether to copy cases to cloned plan instead of just
             linking them. Default is False.
         :type copy_testcases: bool
-        :param **_kwargs: Unused catch-all variable container for any extra input
+        :param \\**_kwargs: Unused catch-all variable container for any extra input
             which may be present
         :return: cloned plan
         :rtype: :class:`tcms.testplans.models.TestPlan`

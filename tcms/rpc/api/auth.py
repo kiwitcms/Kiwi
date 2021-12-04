@@ -23,7 +23,7 @@ def login(
         :type username: str
         :param password: The password
         :type password: str
-        :param **kwargs: Dict providing access to the current request, protocol
+        :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
         :return: Session ID
         :rtype: str
