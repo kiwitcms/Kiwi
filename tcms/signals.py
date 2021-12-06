@@ -207,21 +207,29 @@ def handle_comments_pre_delete(sender, **kwargs):
 
 
 def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
-    """
-    Send email updates to assignee after they've been
-    assigned a bug on bug creation.
-    """
-    if not created or instance.assignee is None:
-        return
-
+    from tcms.core.helpers.comments import get_comments
     from tcms.core.utils.mailto import mailto
+
+    comments = get_comments(instance)
+
+    recipients = set(comments.values_list("user_email", flat=True))
+    recipients.add(instance.reporter.email)
+
+    if instance.assignee:
+        recipients.add(instance.assignee.email)
+
+    if not recipients:
+        return
 
     mailto(
         template_name="email/post_bug_save/email.txt",
-        recipients=[instance.assignee.email],
-        subject=_("NEW: Bug #%(pk)d - %(summary)s")
+        recipients=list(recipients),
+        subject=_("Bug #%(pk)d - %(summary)s")
         % {"pk": instance.pk, "summary": instance.summary},
-        context={"bug": instance},
+        context={
+            "bug": instance,
+            "comment": comments.last(),
+        },
     )
 
 
