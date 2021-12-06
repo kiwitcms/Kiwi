@@ -1,5 +1,5 @@
 {% load i18n %}
-{% blocktrans with pk=bug.pk bug_url=bug.get_full_url summary=bug.summary creation_date=bug.created_at reporter=bug.reporter assignee=bug.assignee product=bug.product version=bug.version build=bug.build %}Bug {{ pk }} has been assigned to you.
+{% blocktrans with pk=bug.pk bug_url=bug.get_full_url summary=bug.summary creation_date=bug.created_at reporter=bug.reporter assignee=bug.assignee product=bug.product version=bug.version build=bug.build last_comment=comment.comment %}Bug {{ pk }} has been updated.
 
 Link: {{ bug_url }}
 
@@ -9,4 +9,6 @@ Reporter: {{ reporter }}
 Assignee: {{ assignee }}
 Product: {{ product }}
 Version: {{ version }}
-Build: {{ build }}{% endblocktrans %}
+Build: {{ build }}
+Last comment: 
+{{ last_comment }}{% endblocktrans %}
