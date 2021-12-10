@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-17 13:04+0000\n"
-"PO-Revision-Date: 2021-12-10 11:23\n"
+"PO-Revision-Date: 2021-12-10 11:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1243,7 +1243,7 @@ msgstr "备注"
 #: tcms/testcases/templates/testcases/get.html:43
 #: tcms/testruns/templates/testruns/get.html:377
 msgid "Properties"
-msgstr ""
+msgstr "特性"
 
 #: tcms/testcases/templates/testcases/get.html:87
 msgid "name=value"
@@ -1668,15 +1668,15 @@ msgstr "完成于"
 
 #: tcms/testruns/templates/testruns/get.html:100
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: tcms/testruns/templates/testruns/get.html:221
 msgid "Update text version"
-msgstr ""
+msgstr "更新文本版本"
 
 #: tcms/testruns/templates/testruns/get.html:256
 msgid "Add comment"
-msgstr ""
+msgstr "添加注释"
 
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:363
@@ -1721,7 +1721,7 @@ msgstr "错误链接和超链接"
 
 #: tcms/testruns/templates/testruns/get.html:553
 msgid "Is a defect"
-msgstr ""
+msgstr "是缺陷"
 
 #: tcms/testruns/templates/testruns/get.html:560
 #: tcms/testruns/templates/testruns/get.html:591
@@ -1730,7 +1730,7 @@ msgstr "取消"
 
 #: tcms/testruns/templates/testruns/get.html:580
 msgid "Issue Tracker"
-msgstr ""
+msgstr "问题跟踪"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
