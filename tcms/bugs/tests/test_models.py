@@ -42,16 +42,13 @@ class TestSendMailOnAssigneeChange(TestCase):
         )
         expected_recipients = [assignee.email, bug.reporter.email]
 
-        self.assertTrue(send_mail.called)
-        self.assertEqual(
+        send_mail.assert_called_once_with(
             settings.EMAIL_SUBJECT_PREFIX + expected_subject,
-            send_mail.call_args.args[0],
+            expected_body,
+            settings.DEFAULT_FROM_EMAIL,
+            expected_recipients,
+            fail_silently=False,
         )
-        self.assertEqual(expected_body, send_mail.call_args.args[1])
-        self.assertEqual(settings.DEFAULT_FROM_EMAIL, send_mail.call_args.args[2])
-        self.assertTrue(len(send_mail.call_args.args[3]) == len(expected_recipients))
-        self.assertIn(expected_recipients[0], send_mail.call_args.args[3])
-        self.assertIn(expected_recipients[1], send_mail.call_args.args[3])
 
     @patch("tcms.core.utils.mailto.send_mail")
     def test_notification_even_there_is_no_assignee(self, send_mail):
