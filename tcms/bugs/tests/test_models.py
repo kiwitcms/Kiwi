@@ -28,7 +28,9 @@ class TestSendMailOnAssigneeChange(TestCase):
     """
 
     @patch("tcms.core.utils.mailto.send_mail")
-    def test_notify_assignee_on_bug_creation(self, send_mail):
+    def test_notify_assignee_on_bug_creation(
+        self, send_mail
+    ):  # pylint: disable=no-self-use
         assignee = UserFactory()
         bug = BugFactory(assignee=assignee)
 
