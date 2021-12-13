@@ -21,6 +21,7 @@ def mailto(  # pylint: disable=invalid-name
         recipients = list(set(recipients))
     else:
         recipients = [recipients]
+    recipients.sort()
 
     # extend with the CC list
     if cc:

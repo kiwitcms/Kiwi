@@ -43,6 +43,7 @@ class TestSendMailOnAssigneeChange(TestCase):
             {"bug": bug, "comment": get_comments(bug).last()},
         )
         expected_recipients = [assignee.email, bug.reporter.email]
+        expected_recipients.sort()
 
         send_mail.assert_called_once_with(
             settings.EMAIL_SUBJECT_PREFIX + expected_subject,
@@ -91,6 +92,8 @@ class TestSendMailOnNewComment(BaseCaseRun):
             {"bug": bug, "comment": get_comments(bug).last()},
         )
         expected_recipients = [self.assignee.email, self.tester.email]
+        expected_recipients.sort()
+
         expected_subject = _("Bug #%(pk)d - %(summary)s") % {
             "pk": bug.pk,
             "summary": bug.summary,
@@ -121,6 +124,8 @@ class TestSendMailOnNewComment(BaseCaseRun):
             {"bug": bug, "comment": get_comments(bug).last()},
         )
         expected_recipients = [self.assignee.email, self.tester.email]
+        expected_recipients.sort()
+
         expected_subject = _("Bug #%(pk)d - %(summary)s") % {
             "pk": bug.pk,
             "summary": bug.summary,
@@ -155,6 +160,8 @@ class TestSendMailOnNewComment(BaseCaseRun):
             commenter.email,
             tracker.email,
         ]
+        expected_recipients.sort()
+
         expected_subject = _("Bug #%(pk)d - %(summary)s") % {
             "pk": bug.pk,
             "summary": bug.summary,
