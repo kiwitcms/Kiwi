@@ -29,11 +29,17 @@ $(document).ready(function () {
 })
 
 function populateProductVersion () {
+  const productId = $('#id_product').val()
+
+  if (productId === null) {
+    $('#add_id_version').addClass('disabled')
+  } else {
+    $('#add_id_version').removeClass('disabled')
+  }
+
   const href = $('#add_id_version')[0].href
   $('#add_id_version')[0].href = href.slice(0, href.indexOf('&product'))
-  $('#add_id_version')[0].href += `&product=${$('#id_product').val()}`
-
+  $('#add_id_version')[0].href += `&product=${productId}`
   $('#id_version').find('option').remove()
-
   updateVersionSelectFromProduct()
 }
