@@ -29,11 +29,17 @@ $(document).ready(function () {
 })
 
 function populateProductCategory () {
+  const productId = $('#id_product').val()
+
+  if (productId === null) {
+    $('#add_id_category').addClass('disabled')
+  } else {
+    $('#add_id_category').removeClass('disabled')
+  }
+
   const href = $('#add_id_category')[0].href
   $('#add_id_category')[0].href = href.slice(0, href.indexOf('&product'))
-  $('#add_id_category')[0].href += `&product=${$('#id_product').val()}`
-
+  $('#add_id_category')[0].href += `&product=${productId}`
   $('#id_category').find('option').remove()
-
   updateCategorySelectFromProduct()
 }

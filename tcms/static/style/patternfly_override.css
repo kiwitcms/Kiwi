@@ -71,3 +71,10 @@ img {
 .property-value a {
     color: #c00; inherit !important;
 }
+
+a.disabled {
+    color: gray;
+    cursor: default;
+    pointer-events: none;
+    text-decoration: none;
+}
