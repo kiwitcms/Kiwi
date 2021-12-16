@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2021-12-16 08:25\n"
+"PO-Revision-Date: 2021-12-16 08:34\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1349,7 +1349,7 @@ msgstr "Lastnosti"
 
 #: tcms/testcases/templates/testcases/get.html:149
 msgid "This is a tech-preview feature. It will be extended in future versions! See issues #1843, #1931 and #1344."
-msgstr ""
+msgstr "To je predogled nove funkcionalnosti. V prihodnjih verzijah bo razširjena z dodatnimi možnostmi! Več informacij v prijavah #1843, #1931 ter #1344."
 
 #: tcms/testcases/templates/testcases/get.html:194
 msgid "name=value"
