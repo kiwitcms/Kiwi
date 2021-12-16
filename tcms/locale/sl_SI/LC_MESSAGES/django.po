@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2021-12-13 20:03\n"
+"PO-Revision-Date: 2021-12-16 08:25\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -681,7 +681,7 @@ msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 #: tcms/signals.py:227
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Napaka #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -841,7 +841,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment: \n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Vsebina napake %(pk)s je bila posodobljena\n\n"
+"Povezava: %(bug_url)s\n\n"
+"Povzetek: %(summary)s\n"
+"Ustvarjeno: %(creation_date)s\n"
+"Prijavil: %(reporter)s\n"
+"Zadolžena oseba: %(assignee)s\n"
+"Produkt: %(product)s\n"
+"Verzija: %(version)s\n"
+"Različica: %(build)s\n"
+"Zadnji komentar: \n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
