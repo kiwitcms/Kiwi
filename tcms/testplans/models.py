@@ -144,14 +144,15 @@ class TestPlan(TreeNode, UrlMixin):
             tp_dest.add_tag(tag=tp_tag_src)
 
         # include TCs inside cloned TP
-        for tc_src in self.cases.all():
+        qs = self.cases.all().annotate(sortkey=models.F("testcaseplan__sortkey"))
+        for tc_src in qs:
             # this parameter should really be named clone_testcases b/c if set
             # it clones the source TC and then adds it to the new TP
             if copy_testcases:
                 tc_src.clone(new_author, [tp_dest])
             else:
                 # otherwise just link the existing TC to the new TP
-                tp_dest.add_case(tc_src)
+                tp_dest.add_case(tc_src, sortkey=tc_src.sortkey)
 
         return tp_dest
 
