@@ -4,6 +4,7 @@
 from http import HTTPStatus
 
 from django import test
+from django.db.models import F
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -280,13 +281,20 @@ class TestCloneView(BasePlanCase):
             else:
                 self.assertTrue(is_case_linked)
 
+            cases_from_original_plan = original_plan.cases.all().annotate(
+                sortkey=F("testcaseplan__sortkey")
+            )
+            cases_from_cloned_plan = cloned_plan.cases.all().annotate(
+                sortkey=F("testcaseplan__sortkey")
+            )
             for original_case, copied_case in zip(
-                original_plan.cases.all(), cloned_plan.cases.all()
+                cases_from_original_plan, cases_from_cloned_plan
             ):
                 # default tester is always kept
                 self.assertEqual(
                     original_case.default_tester, copied_case.default_tester
                 )
+                self.assertEqual(original_case.sortkey, copied_case.sortkey)
 
                 if not copy_cases:
                     # when linking TCs author doesn't change
