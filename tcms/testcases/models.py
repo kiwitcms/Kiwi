@@ -162,6 +162,7 @@ class TestCase(models.Model, UrlMixin):
         values = self.__dict__.copy()
         del values["_state"]
         del values["id"]
+        sortkey = values.pop("sortkey") if "sortkey" in values else None
         values["case_status_id"] = (
             TestCaseStatus.objects.filter(is_confirmed=False).first().pk
         )
@@ -174,7 +175,7 @@ class TestCase(models.Model, UrlMixin):
             new_tc.add_tag(tag)
 
         for plan in test_plans:
-            plan.add_case(new_tc)
+            plan.add_case(new_tc, sortkey)
 
             # clone TC category b/c we may be cloning a 'linked'
             # TC which has a different Product that doesn't have the
