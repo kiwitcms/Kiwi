@@ -81,7 +81,8 @@ tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testruns/templates"
 echo "..... Trying to install the new tarballs inside a virtualenv"
 $(which python) -m venv .venv/test-tarball
 source .venv/test-tarball/bin/activate
-pip install --upgrade setuptools pip
+# workaround https://github.com/django-extensions/django-extensions/issues/1694
+pip install --upgrade setuptools==59.6.0 pip
 # https://github.com/praekelt/django-recaptcha/issues/222
 pip install django-recaptcha  # workaround missing tar.gz
 pip install --no-binary :all: dist/kiwitcms*.tar.gz
