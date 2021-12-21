@@ -344,23 +344,3 @@ class TestCloneView(BasePlanCase):
             name=self.totally_new_plan.make_cloned_name()
         )
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
-
-    def test_clone_a_plan_by_setting_me_to_copied_cases_author_default_tester(self):
-        post_data = {
-            "name": self.totally_new_plan.make_cloned_name(),
-            "product": self.product.pk,
-            "version": self.version.pk,
-            "set_parent": "on",
-            "submit": "Clone",
-            "copy_testcases": "on",
-        }
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username, password="password"
-        )
-        self.client.post(
-            reverse("plans-clone", args=[self.totally_new_plan.pk]), post_data
-        )
-        cloned_plan = TestPlan.objects.get(
-            name=self.totally_new_plan.make_cloned_name()
-        )
-        self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
