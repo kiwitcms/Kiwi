@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2021-12-21 13:14\n"
+"PO-Revision-Date: 2021-12-21 13:24\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1195,11 +1195,11 @@ msgstr ""
 
 #: tcms/testcases/models.py:374
 msgid "Template"
-msgstr ""
+msgstr "Шаблон"
 
 #: tcms/testcases/models.py:375
 msgid "Templates"
-msgstr ""
+msgstr "Шаблони"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1514,7 +1514,7 @@ msgstr "Рецензент"
 #: tcms/testplans/templates/testplans/get.html:230
 #: tcms/testplans/templates/testplans/get.html:233
 msgid "Sort key"
-msgstr ""
+msgstr "Ключ за сортиране"
 
 #: tcms/testplans/templates/testplans/get.html:243
 msgid "Re-order cases"
@@ -1648,7 +1648,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:82
 msgid "Start"
-msgstr ""
+msgstr "Старт"
 
 #: tcms/testruns/templates/testruns/get.html:89
 #: tcms/testruns/templates/testruns/mutable.html:112
@@ -1676,7 +1676,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:363
 #: tcms/testruns/templates/testruns/get.html:536
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Добави хиперлинк"
 
 #: tcms/testruns/templates/testruns/get.html:307
 #: tcms/testruns/templates/testruns/get.html:407
@@ -1685,7 +1685,7 @@ msgstr "Тествано от"
 
 #: tcms/testruns/templates/testruns/get.html:338
 msgid "records"
-msgstr ""
+msgstr "записи"
 
 #: tcms/testruns/templates/testruns/get.html:364
 #: tcms/testruns/templates/testruns/get.html:575
@@ -2084,9 +2084,9 @@ msgstr ""
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
-msgstr ""
+msgstr " Редактирай инстанция"
 
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Само оторизирани за тази инстанция потребители могат да канят други"
 
