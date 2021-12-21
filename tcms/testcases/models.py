@@ -162,7 +162,11 @@ class TestCase(models.Model, UrlMixin):
         values = self.__dict__.copy()
         del values["_state"]
         del values["id"]
-        sortkey = values.pop("sortkey") if "sortkey" in values else None
+        if "sortkey" in values:
+            sortkey = values.pop("sortkey")
+        else:
+            sortkey = None
+
         values["case_status_id"] = (
             TestCaseStatus.objects.filter(is_confirmed=False).first().pk
         )
