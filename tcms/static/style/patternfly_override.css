@@ -73,7 +73,7 @@ img {
 }
 
 a.disabled {
-    color: gray;
+    color: #bbb;
     cursor: default;
     pointer-events: none;
     text-decoration: none;
