@@ -53,7 +53,7 @@ function updateVersionSelectFromProduct () {
 
   let productIds = $('#id_product').val()
 
-  if (productIds.length) {
+  if (productIds !== null) {
     if (!Array.isArray(productIds)) {
       productIds = [productIds]
     }
@@ -79,7 +79,7 @@ function updateBuildSelectFromVersion (keepFirst) {
   }
 
   let versionIds = $('#id_version').val()
-  if (versionIds.length) {
+  if (versionIds !== null) {
     if (!Array.isArray(versionIds)) {
       versionIds = [versionIds]
     }
