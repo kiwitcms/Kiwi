@@ -14,7 +14,7 @@ django-simple-history==3.0.0
 django-tree-queries==0.7.0
 jira==3.1.1
 Markdown==3.3.6
-Pygments==2.10.0
+Pygments==2.11.0
 python-gitlab==2.10.1
 python-redmine==2.3.0
 topicaxis-opengraph==0.5
