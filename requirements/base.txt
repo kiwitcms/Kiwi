@@ -3,7 +3,7 @@
 allpairspy==2.5.0
 bleach==4.1.0
 bleach-allowlist==1.0.3
-Django==3.2.10
+Django==4.0
 django-attachments==1.9.1
 django-contrib-comments==2.1.0
 django-extensions==3.1.5
