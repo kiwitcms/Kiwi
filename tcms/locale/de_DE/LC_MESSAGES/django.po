@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2021-12-13 20:03\n"
+"PO-Revision-Date: 2022-01-04 10:13\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1271,7 +1271,7 @@ msgstr "Standardtester"
 #: tcms/testruns/templates/testruns/get.html:399
 #: tcms/testruns/templates/testruns/mutable.html:159
 msgid "Category"
-msgstr "Kategorie"
+msgstr "Testobjekt"
 
 #: tcms/testcases/templates/testcases/get.html:63
 #: tcms/testcases/templates/testcases/mutable.html:85
