@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2021-12-13 20:03\n"
+"PO-Revision-Date: 2022-01-05 13:17\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -741,7 +741,7 @@ msgstr "Manuell"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 #: tcms/testcases/models.py:42
 msgid "Categories"
-msgstr "Kategorien"
+msgstr "Testobjekte"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -1271,7 +1271,7 @@ msgstr "Standardtester"
 #: tcms/testruns/templates/testruns/get.html:399
 #: tcms/testruns/templates/testruns/mutable.html:159
 msgid "Category"
-msgstr "Kategorie"
+msgstr "Testobjekt"
 
 #: tcms/testcases/templates/testcases/get.html:63
 #: tcms/testcases/templates/testcases/mutable.html:85
@@ -1367,7 +1367,7 @@ msgstr "Testfall bearbeiten"
 
 #: tcms/testcases/templates/testcases/mutable.html:58
 msgid "add new Category"
-msgstr "neue Kategorie hinzufügen"
+msgstr "neues Testobjekt hinzufügen"
 
 #: tcms/testcases/templates/testcases/mutable.html:120
 #: tcms/testcases/templates/testcases/search.html:117
