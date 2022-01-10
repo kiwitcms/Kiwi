@@ -24,6 +24,9 @@ jobs:
         run: |
           sudo apt-get install gettext
 
+          sudo mkdir /Kiwi
+          sudo chmod a+w /Kiwi
+
           pip install -r requirements/devel.txt
           pushd tcms/ && npm install && popd
 
@@ -85,6 +88,9 @@ jobs:
         run: |
           sudo apt-get install gettext
 
+          sudo mkdir /Kiwi
+          sudo chmod a+w /Kiwi
+
           pip install -r requirements/devel.txt
           pushd tcms/ && npm install && popd
 
@@ -122,6 +128,9 @@ jobs:
         run: |
           sudo apt-get install gettext
 
+          sudo mkdir /Kiwi
+          sudo chmod a+w /Kiwi
+
           pip install -r requirements/devel.txt
           pip install -r requirements/mariadb.txt
           pushd tcms/ && npm install && popd
@@ -156,6 +165,9 @@ jobs:
       - name: Execute tests
         run: |
           sudo apt-get install gettext
+
+          sudo mkdir /Kiwi
+          sudo chmod a+w /Kiwi
 
           pip install -r requirements/devel.txt
           pip install -r requirements/postgres.txt
