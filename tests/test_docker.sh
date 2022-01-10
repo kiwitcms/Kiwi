@@ -30,6 +30,10 @@ rlJournalStart
         assert_up_and_running
     rlPhaseEnd
 
+    rlPhaseStartTest "/Kiwi/uploads/installation-id was created"
+        rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/uploads/installation-id"
+    rlPhaseEnd
+
     rlPhaseStartTest "[PostgreSQL] Container restart"
         rlRun -t -c "docker-compose -f docker-compose.postgres restart"
         assert_up_and_running
