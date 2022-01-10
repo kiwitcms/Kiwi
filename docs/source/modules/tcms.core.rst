@@ -27,6 +27,7 @@ Submodules
    :maxdepth: 4
 
    tcms.core.admin
+   tcms.core.checks
    tcms.core.context_processors
    tcms.core.history
    tcms.core.middleware
