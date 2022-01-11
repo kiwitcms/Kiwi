@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2022-01-11 08:15\n"
+"PO-Revision-Date: 2022-01-11 08:24\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -629,7 +629,7 @@ msgstr ""
 
 #: tcms/settings/common.py:342
 msgid "ADMIN"
-msgstr ""
+msgstr "מנהל"
 
 #: tcms/settings/common.py:344
 msgid "Users and groups"
@@ -694,7 +694,7 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:128
 msgid "TOTAL"
-msgstr ""
+msgstr "סה\"כ"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 msgid "Detailed information about test execution status"
@@ -707,7 +707,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/mutable.html:59
 #: tcms/testruns/templates/testruns/search.html:189
 msgid "Test plan"
-msgstr ""
+msgstr "פרויקט בדיקות"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -715,7 +715,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "סה\"כ"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/testcases/templates/testcases/get.html:92
@@ -775,7 +775,7 @@ msgstr "בסדר יורד"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
-msgstr "תרחיש בדיקה"
+msgstr "מקרה בדיקה"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 #: tcms/testcases/templates/testcases/search.html:125
@@ -788,7 +788,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr ""
+msgstr "מקרה בדיקה"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
@@ -801,11 +801,11 @@ msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "עמוד לא נמצא"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "שגיאת צד שרת"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -813,7 +813,7 @@ msgstr ""
 
 #: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "המערכת המובילה בקוד פתוח לניהול מקרי בדיקה"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -821,7 +821,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s"
-msgstr ""
+msgstr "שלום %(user)s,\n"
+"תודה רבה שנרשמת ל- %(site_domain)s!\n\n"
+"ע\"מ להפעיל את חשבונך לחץ כאן:\n"
+"%(confirm_url)s"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
