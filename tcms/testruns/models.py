@@ -112,12 +112,13 @@ class TestRun(models.Model, UrlMixin):
             start_date=None,
         )
 
-    def create_execution(
+    def create_execution(  # pylint: disable=too-many-arguments
         self,
         case,
         assignee=None,
         build=None,
         sortkey=0,
+        matrix_type="full",
     ):
         from tcms.testcases.models import (  # pylint: disable=import-outside-toplevel
             Property,
@@ -133,7 +134,7 @@ class TestRun(models.Model, UrlMixin):
         properties = Property.objects.filter(case=case)
 
         if properties.count():
-            for prop_tuple in self.property_matrix(properties):
+            for prop_tuple in self.property_matrix(properties, matrix_type):
                 execution = self._create_single_execution(
                     case, assignee, build, sortkey
                 )
