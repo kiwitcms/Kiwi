@@ -81,8 +81,9 @@ class NewTestRunView(View):
 
                 test_run.create_execution(
                     case=case,
-                    sortkey=sortkey,
                     assignee=form.cleaned_data["default_tester"],
+                    sortkey=sortkey,
+                    matrix_type=form.cleaned_data["matrix_type"],
                 )
                 loop += 1
 

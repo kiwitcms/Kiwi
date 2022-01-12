@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from tcms.core.forms.fields import UserField
 from tcms.management.models import Build, Product, Version
@@ -30,6 +31,14 @@ class NewRunForm(forms.ModelForm):
 
     product = forms.ModelChoiceField(
         queryset=Product.objects.all(),
+        required=False,
+    )
+
+    matrix_type = forms.ChoiceField(
+        choices=(
+            ("full", _("Full")),
+            ("pairwise", _("Pairwise")),
+        ),
         required=False,
     )
 

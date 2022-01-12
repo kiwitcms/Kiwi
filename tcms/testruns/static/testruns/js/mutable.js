@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+
   document.getElementById('id_product').onchange = () => {
     $('#id_product').selectpicker('refresh')
     updateTestPlanSelectFromProduct(() => {})
