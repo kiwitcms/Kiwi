@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-13 18:56+0000\n"
-"PO-Revision-Date: 2021-12-13 20:03\n"
+"POT-Creation-Date: 2022-01-12 12:28+0000\n"
+"PO-Revision-Date: 2022-01-12 13:35\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -132,7 +132,7 @@ msgstr "Wieder öffnen"
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/get.html:494
 #: tcms/testruns/templates/testruns/get.html:561
-#: tcms/testruns/templates/testruns/mutable.html:135
+#: tcms/testruns/templates/testruns/mutable.html:153
 msgid "Save"
 msgstr "Speichern"
 
@@ -153,7 +153,7 @@ msgstr "Schließen"
 #: tcms/testruns/templates/testruns/get.html:297
 #: tcms/testruns/templates/testruns/get.html:300
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:155
+#: tcms/testruns/templates/testruns/mutable.html:173
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:188
 msgid "Summary"
@@ -309,12 +309,12 @@ msgstr "Erstellt am"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
 #: tcms/testplans/templates/testplans/get.html:379 tcms/testplans/views.py:146
-#: tcms/testruns/views.py:154
+#: tcms/testruns/views.py:155
 msgid "Edit"
 msgstr "Bearbeiten"
 
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:144
-#: tcms/testplans/views.py:154 tcms/testruns/views.py:167
+#: tcms/testplans/views.py:154 tcms/testruns/views.py:168
 msgid "Object permissions"
 msgstr "Objektberechtigungen"
 
@@ -324,7 +324,7 @@ msgstr "Objektberechtigungen"
 #: tcms/testcases/templates/testcases/get.html:176 tcms/testcases/views.py:152
 #: tcms/testplans/templates/testplans/get.html:192
 #: tcms/testplans/templates/testplans/get.html:383 tcms/testplans/views.py:162
-#: tcms/testruns/templates/testruns/get.html:277 tcms/testruns/views.py:175
+#: tcms/testruns/templates/testruns/get.html:277 tcms/testruns/views.py:176
 msgid "Delete"
 msgstr "Löschen"
 
@@ -741,7 +741,7 @@ msgstr "Manuell"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 #: tcms/testcases/models.py:42
 msgid "Categories"
-msgstr "Kategorien"
+msgstr "Testobjekte"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -925,7 +925,7 @@ msgstr "Keine Belege gefunden"
 #: tcms/testruns/templates/testruns/get.html:228
 #: tcms/testruns/templates/testruns/get.html:308
 #: tcms/testruns/templates/testruns/get.html:416
-#: tcms/testruns/templates/testruns/mutable.html:158
+#: tcms/testruns/templates/testruns/mutable.html:176
 msgid "Status"
 msgstr "Status"
 
@@ -1199,11 +1199,11 @@ msgstr "Testfallstatus"
 msgid "Test case statuses"
 msgstr ""
 
-#: tcms/testcases/models.py:374
+#: tcms/testcases/models.py:379
 msgid "Template"
 msgstr ""
 
-#: tcms/testcases/models.py:375
+#: tcms/testcases/models.py:380
 msgid "Templates"
 msgstr ""
 
@@ -1223,7 +1223,7 @@ msgstr "Ausgewählte TC"
 #: tcms/testplans/templates/testplans/clone.html:72
 #: tcms/testplans/templates/testplans/get.html:137
 #: tcms/testplans/templates/testplans/get.html:357 tcms/testplans/views.py:147
-#: tcms/testruns/views.py:158
+#: tcms/testruns/views.py:159
 msgid "Clone"
 msgstr "Vervielfältigen"
 
@@ -1239,7 +1239,7 @@ msgstr "Vervielfältigen"
 #: tcms/testplans/templates/testplans/search.html:79
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
-#: tcms/testruns/templates/testruns/mutable.html:156
+#: tcms/testruns/templates/testruns/mutable.html:174
 msgid "Author"
 msgstr "Verfasser"
 
@@ -1269,9 +1269,9 @@ msgstr "Standardtester"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:305
 #: tcms/testruns/templates/testruns/get.html:399
-#: tcms/testruns/templates/testruns/mutable.html:159
+#: tcms/testruns/templates/testruns/mutable.html:177
 msgid "Category"
-msgstr "Kategorie"
+msgstr "Testobjekt"
 
 #: tcms/testcases/templates/testcases/get.html:63
 #: tcms/testcases/templates/testcases/mutable.html:85
@@ -1284,7 +1284,7 @@ msgstr "Kategorie"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:304
 #: tcms/testruns/templates/testruns/get.html:395
-#: tcms/testruns/templates/testruns/mutable.html:160
+#: tcms/testruns/templates/testruns/mutable.html:178
 msgid "Priority"
 msgstr "Priorität"
 
@@ -1329,7 +1329,7 @@ msgstr "Verweis-Link"
 #: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testruns/templates/testruns/get.html:431
-#: tcms/testruns/templates/testruns/mutable.html:127
+#: tcms/testruns/templates/testruns/mutable.html:145
 msgid "Notes"
 msgstr "Notizen"
 
@@ -1367,7 +1367,7 @@ msgstr "Testfall bearbeiten"
 
 #: tcms/testcases/templates/testcases/mutable.html:58
 msgid "add new Category"
-msgstr "neue Kategorie hinzufügen"
+msgstr "neues Testobjekt hinzufügen"
 
 #: tcms/testcases/templates/testcases/mutable.html:120
 #: tcms/testcases/templates/testcases/search.html:117
@@ -1438,12 +1438,12 @@ msgstr "Trenne mehrere Werte mit Komma (,)"
 
 #: tcms/testcases/templates/testcases/search.html:152
 #: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:157
+#: tcms/testruns/templates/testruns/mutable.html:175
 msgid "Created on"
 msgstr "Erstellt am"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
-#: tcms/testruns/templates/testruns/get.html:472 tcms/testruns/views.py:162
+#: tcms/testruns/templates/testruns/get.html:472 tcms/testruns/views.py:163
 msgid "History"
 msgstr "Verlauf"
 
@@ -1623,7 +1623,15 @@ msgstr "Weitere Informationen zum Anpassen des Test-Ausführungsstatus finden Si
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr ""
 
-#: tcms/testruns/models.py:224
+#: tcms/testruns/forms.py:39
+msgid "Full"
+msgstr ""
+
+#: tcms/testruns/forms.py:40
+msgid "Pairwise"
+msgstr ""
+
+#: tcms/testruns/models.py:225
 msgid "Test execution statuses"
 msgstr "Test-Ausführungsstatus"
 
@@ -1740,11 +1748,19 @@ msgstr "TestRun bearbeiten"
 msgid "Clone TestRun"
 msgstr "TestRun klonen"
 
-#: tcms/testruns/templates/testruns/mutable.html:144
+#: tcms/testruns/templates/testruns/mutable.html:127
+msgid "Matrix"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:130
+msgid "Affects only test cases with properties"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:162
 msgid "Selected TestCase(s):"
 msgstr "Ausgewählte/r Testfall/-fälle:"
 
-#: tcms/testruns/templates/testruns/mutable.html:147
+#: tcms/testruns/templates/testruns/mutable.html:165
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -1779,7 +1795,7 @@ msgstr ""
 msgid "Stop date"
 msgstr ""
 
-#: tcms/testruns/views.py:233
+#: tcms/testruns/views.py:234
 msgid "Clone of "
 msgstr "Klon von "
 
