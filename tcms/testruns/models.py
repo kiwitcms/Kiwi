@@ -312,6 +312,9 @@ class Environment(models.Model):
     name = models.CharField(unique=True, max_length=255)
     description = models.TextField(blank=True)
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class EnvironmentProperty(abstract.Property):
     environment = models.ForeignKey(Environment, on_delete=models.CASCADE)

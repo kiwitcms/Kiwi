@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.core.admin import ObjectPermissionsAdminMixin
 from tcms.core.history import ReadOnlyHistoryAdmin
-from tcms.testruns.models import TestExecutionStatus, TestRun
+from tcms.testruns.models import Environment, TestExecutionStatus, TestRun
 
 
 class TestRunAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
@@ -102,5 +102,21 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
         return super().delete_view(request, object_id, extra_context)
 
 
+class EnvironmentAdmin(ObjectPermissionsAdminMixin, admin.ModelAdmin):
+    _edit_properties_text = _("Edit properties")
+
+    list_display = ("id", "name", "properties_link")
+    search_fields = ("name",)
+
+    def properties_link(self, obj):
+        url = reverse("testruns-environment", args=[obj.id])
+        return format_html(
+            f"<a href='{url}'>{self._edit_properties_text}</a>",
+        )
+
+    properties_link.short_description = _("Properties")
+
+
 admin.site.register(TestRun, TestRunAdmin)
 admin.site.register(TestExecutionStatus, TestExecutionStatusAdmin)
+admin.site.register(Environment, EnvironmentAdmin)

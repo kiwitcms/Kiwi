@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load extra_filters %}
+
+{% block title %}ENV-{{ object.pk }}: {{ object.name }}{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block contents %}
+
+<div class="container-cards-pf">
+    <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
+    <h1 class="col-md-12" style="margin-top: 0">
+        <span id="test_run_pk"
+            data-pk="{{ object.pk }}"
+        >ENV-{{ object.pk }}:</span> {{ object.name }}
+    </h1>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <div class="card-pf card-pf-accented">
+                <div class="card-pf-body">
+                    <div class="markdown-text">
+                        {{ object.description|markdown2html }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /row -->
+
+</div>
+
+{% endblock %}
