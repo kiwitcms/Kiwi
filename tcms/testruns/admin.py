@@ -116,6 +116,13 @@ class EnvironmentAdmin(ObjectPermissionsAdminMixin, admin.ModelAdmin):
 
     properties_link.short_description = _("Properties")
 
+    def response_change(self, request, obj):
+        result = super().response_change(request, obj)
+
+        if "_save" in request.POST:
+            return HttpResponseRedirect(obj.get_absolute_url())
+        return result
+
 
 admin.site.register(TestRun, TestRunAdmin)
 admin.site.register(TestExecutionStatus, TestExecutionStatusAdmin)
