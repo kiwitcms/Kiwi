@@ -18,7 +18,7 @@ from tcms.core.forms import SimpleCommentForm
 from tcms.testcases.models import BugSystem, TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import NewRunForm, SearchRunForm
-from tcms.testruns.models import TestExecutionStatus, TestRun
+from tcms.testruns.models import TestExecutionStatus, TestRun, Environment
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -244,3 +244,50 @@ class CloneTestRunView(NewTestRunView):
 
 def get_disabled_test_cases_count(test_cases):
     return test_cases.filter(case_status__is_confirmed=False).count()
+
+
+@method_decorator(
+    object_permission_required(
+        "testruns.view_environment", (Environment, "pk", "pk"), accept_global_perms=True
+    ),
+    name="dispatch",
+)
+class GetEnvironment(DetailView):
+    template_name = "testruns/environment.html"
+    http_method_names = ["get"]
+    model = Environment
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["OBJECT_MENU_ITEMS"] = [
+            (
+                "...",
+                [
+                    (
+                        _("Edit"),
+                        reverse(
+                            "admin:testruns_environment_change",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Object permissions"),
+                        reverse(
+                            "admin:testruns_environment_permissions",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                    ("-", "-"),
+                    (
+                        _("Delete"),
+                        reverse(
+                            "admin:testruns_environment_delete",
+                            args=[self.object.pk],
+                        ),
+                    ),
+                ],
+            )
+        ]
+
+        return context

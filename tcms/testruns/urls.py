@@ -12,4 +12,9 @@ urlpatterns = [
         r"^(?P<pk>\d+)/edit/$", views.EditTestRunView.as_view(), name="testruns-edit"
     ),
     re_path(r"^search/$", views.SearchTestRunView.as_view(), name="testruns-search"),
+    re_path(
+        r"^environment/(?P<pk>\d+)/$",
+        views.GetEnvironment.as_view(),
+        name="testruns-environment",
+    ),
 ]
