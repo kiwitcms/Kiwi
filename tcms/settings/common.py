@@ -391,6 +391,7 @@ MODERNRPC_METHODS_MODULES = [
     "tcms.rpc.api.category",
     "tcms.rpc.api.classification",
     "tcms.rpc.api.component",
+    "tcms.rpc.api.environment",
     "tcms.rpc.api.markdown",
     "tcms.rpc.api.kiwitcms",
     "tcms.rpc.api.plantype",
