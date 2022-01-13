@@ -121,7 +121,7 @@ class TestRun(models.Model, UrlMixin):
         matrix_type="full",
     ):
         from tcms.testcases.models import (  # pylint: disable=import-outside-toplevel
-            Property,
+            Property as TestCaseProperty,
         )
 
         assignee = (
@@ -131,7 +131,7 @@ class TestRun(models.Model, UrlMixin):
         )
 
         executions = []
-        properties = Property.objects.filter(case=case)
+        properties = TestCaseProperty.objects.filter(case=case)
 
         if properties.count():
             for prop_tuple in self.property_matrix(properties, matrix_type):
@@ -306,3 +306,16 @@ class TestRunCC(models.Model):
 
     class Meta:
         unique_together = ("run", "user")
+
+
+class Environment(models.Model):
+    name = models.CharField(unique=True, max_length=255)
+    description = models.TextField(blank=True)
+
+
+class EnvironmentProperty(abstract.Property):
+    environment = models.ForeignKey(Environment, on_delete=models.CASCADE)
+
+
+class Property(abstract.Property):
+    run = models.ForeignKey(TestRun, on_delete=models.CASCADE)
