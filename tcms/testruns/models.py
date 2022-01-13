@@ -312,6 +312,17 @@ class Environment(models.Model):
     name = models.CharField(unique=True, max_length=255)
     description = models.TextField(blank=True)
 
+    def _get_absolute_url(self):
+        return reverse(
+            "testruns-environment",
+            args=[
+                self.pk,
+            ],
+        )
+
+    def get_absolute_url(self):
+        return self._get_absolute_url()
+
     def __str__(self):
         return f"{self.name}"
 
