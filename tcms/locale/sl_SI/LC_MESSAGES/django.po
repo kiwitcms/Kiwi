@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-12 12:28+0000\n"
-"PO-Revision-Date: 2022-01-12 13:35\n"
+"PO-Revision-Date: 2022-01-14 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1634,11 +1634,11 @@ msgstr "Zahtevan je 1 negativen, 1 nevtralen ter 1 pozitiven status!"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Polno"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Parno"
 
 #: tcms/testruns/models.py:225
 msgid "Test execution statuses"
@@ -1759,11 +1759,11 @@ msgstr "Kloniraj testiranje"
 
 #: tcms/testruns/templates/testruns/mutable.html:127
 msgid "Matrix"
-msgstr ""
+msgstr "Matrika"
 
 #: tcms/testruns/templates/testruns/mutable.html:130
 msgid "Affects only test cases with properties"
-msgstr ""
+msgstr "Se nanaša zgolj na testne scenarije ki imajo izpolnjene določene lastnosti"
 
 #: tcms/testruns/templates/testruns/mutable.html:162
 msgid "Selected TestCase(s):"
