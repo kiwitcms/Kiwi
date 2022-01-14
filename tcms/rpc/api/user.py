@@ -193,7 +193,7 @@ def add_attachment(filename, b64content, **kwargs):
     utils.add_attachment(
         user.pk,
         settings.AUTH_USER_MODEL,
-        kwargs.get(REQUEST_KEY).user,
+        user,
         filename,
         b64content,
     )
