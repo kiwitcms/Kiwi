@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-12 12:28+0000\n"
-"PO-Revision-Date: 2022-01-14 07:54\n"
+"PO-Revision-Date: 2022-01-14 08:03\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1638,7 +1638,7 @@ msgstr "Polno"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr "Parno"
+msgstr "Parne kombinacije"
 
 #: tcms/testruns/models.py:225
 msgid "Test execution statuses"
