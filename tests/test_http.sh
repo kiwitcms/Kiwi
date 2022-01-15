@@ -11,7 +11,7 @@ assert_up_and_running() {
 
 get_dashboard() {
     rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt $1/"
-    CSRF_TOKEN=`grep csrftoken /tmp/testcookies.txt | cut -f 7`
+    CSRF_TOKEN=$(grep csrftoken /tmp/testcookies.txt | cut -f 7)
     rlRun -t -c "curl -e $1/accounts/login/ -d username=testadmin -d password=password \
         -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -i -o /tmp/testdata.txt \
         -b /tmp/testcookies.txt $1/accounts/login/"
@@ -29,7 +29,7 @@ rlJournalStart
         rlRun -t -c "docker-compose run -d -e KIWI_DONT_ENFORCE_HTTPS=true --name kiwi_web web /httpd-foreground"
         sleep 10
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
-        IP_ADDRESS=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web`
+        IP_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web)
         assert_up_and_running "$IP_ADDRESS"
     rlPhaseEnd
 
