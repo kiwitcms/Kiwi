@@ -48,6 +48,17 @@ rlJournalStart
         rlAssertGrep "You are not using a secure connection." /tmp/testdata.txt
     rlPhaseEnd
 
+    rlPhaseStartTest "Should allow file upload with UTF-8 filenames"
+        cat > ~/.tcms.conf << _EOF_
+[tcms]
+url = https://$IP_ADDRESS:8443/xml-rpc/
+username = testadmin
+password = password
+_EOF_
+
+        rlRun -t -c "./tests/test_utf8_uploads.py -v"
+    rlPhaseEnd
+
     rlPhaseStartTest "Should send ETag header"
         rlRun -t -c "curl -k -D- https://$IP_ADDRESS:8443/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
     rlPhaseEnd

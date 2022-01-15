@@ -196,4 +196,5 @@ jobs:
 
       - name: Execute tests
         run: |
+          pip install tcms-api
           make test-docker-image
