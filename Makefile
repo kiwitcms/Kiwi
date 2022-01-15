@@ -93,7 +93,7 @@ docker-image:
 
 .PHONY: test-docker-image
 test-docker-image: docker-image
-	sudo ./tests/runner.sh
+	sudo --preserve-env env PATH=$$PATH ./tests/runner.sh
 
 .PHONY: docs
 docs:
