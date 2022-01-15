@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 
 RUN microdnf --nodocs install python38 mariadb-connector-c libpq \
-    httpd python38-mod_wsgi mod_ssl sscg tar && \
+    httpd python38-mod_wsgi mod_ssl sscg tar glibc-langpack-en && \
     microdnf --nodocs update && \
     microdnf clean all
 
@@ -20,8 +20,11 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf && \
     chmod -R a+rwx /run/httpd
 COPY ./etc/kiwi-httpd.conf /etc/httpd/conf.d/
 
-ENV PATH /venv/bin:${PATH} \
-    VIRTUAL_ENV /venv
+ENV PATH=/venv/bin:${PATH} \
+    VIRTUAL_ENV=/venv      \
+    LC_ALL=en_US.UTF-8     \
+    LANG=en_US.UTF-8       \
+    LANGUAGE=en_US.UTF-8
 
 # copy virtualenv dir which has been built inside the kiwitcms/buildroot container
 # this helps keep -devel dependencies outside of this image
