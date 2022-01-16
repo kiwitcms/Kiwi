@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-12 12:28+0000\n"
-"PO-Revision-Date: 2022-01-12 13:36\n"
+"PO-Revision-Date: 2022-01-16 14:14\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -473,7 +473,7 @@ msgstr "Vous avez %(unapplied_migration_count)s migration(s) non appliquée(s). 
 #: tcms/core/views.py:95
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "Vous n'utilisez pas de connexion sécurisée. Consultez <a href=\"%(doc_url)s\">la documentation</a> et activez le SSL."
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -681,7 +681,7 @@ msgstr "NOUVEAU: Essai #%(pk)d - %(summary)s"
 #: tcms/signals.py:227
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Anomalie #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -841,7 +841,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment: \n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Bug %(pk)s has been updated.\n\n"
+"Lien: %(bug_url)s\n\n"
+"Sommaire: %(summary)s\n"
+"Créé le: %(creation_date)s\n"
+"Raporteur: %(reporter)s\n"
+"Assigné à: %(assignee)s\n"
+"Produit: %(product)s\n"
+"Version: %(version)s\n"
+"Construction: %(build)s\n"
+"Dernier commentaire: \n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1201,11 +1211,11 @@ msgstr "États du cas de test"
 
 #: tcms/testcases/models.py:379
 msgid "Template"
-msgstr ""
+msgstr "Modèle"
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr ""
+msgstr "Modèles"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1336,15 +1346,15 @@ msgstr "Remarques"
 #: tcms/testcases/templates/testcases/get.html:143
 #: tcms/testruns/templates/testruns/get.html:377
 msgid "Properties"
-msgstr ""
+msgstr "Propriétés"
 
 #: tcms/testcases/templates/testcases/get.html:149
 msgid "This is a tech-preview feature. It will be extended in future versions! See issues #1843, #1931 and #1344."
-msgstr ""
+msgstr "Ceci est une fonctionnalité en avant première. Elle sera étendue dans les versions futures! Voir les tickets #1843, #1931 et #1344."
 
 #: tcms/testcases/templates/testcases/get.html:194
 msgid "name=value"
-msgstr ""
+msgstr "nom=valeur"
 
 #: tcms/testcases/templates/testcases/get.html:214
 #: tcms/testruns/templates/testruns/get.html:411
@@ -1625,11 +1635,11 @@ msgstr "1 négatif, 1 neutre et 1 statut positif requis !"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Complet"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Par paire"
 
 #: tcms/testruns/models.py:225
 msgid "Test execution statuses"
@@ -1750,11 +1760,11 @@ msgstr "Cloner un essai"
 
 #: tcms/testruns/templates/testruns/mutable.html:127
 msgid "Matrix"
-msgstr ""
+msgstr "Matrice"
 
 #: tcms/testruns/templates/testruns/mutable.html:130
 msgid "Affects only test cases with properties"
-msgstr ""
+msgstr "Affecte uniquement les cas de test avec des propriétés"
 
 #: tcms/testruns/templates/testruns/mutable.html:162
 msgid "Selected TestCase(s):"
