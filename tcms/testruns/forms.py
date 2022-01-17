@@ -7,7 +7,7 @@ from tcms.core.forms.fields import UserField
 from tcms.management.models import Build, Product, Version
 from tcms.rpc.api.forms import DateTimeField
 from tcms.testcases.models import TestCase
-from tcms.testruns.models import TestRun
+from tcms.testruns.models import Environment, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -39,6 +39,11 @@ class NewRunForm(forms.ModelForm):
             ("full", _("Full")),
             ("pairwise", _("Pairwise")),
         ),
+        required=False,
+    )
+
+    environment = forms.ModelMultipleChoiceField(
+        queryset=Environment.objects.all(),
         required=False,
     )
 

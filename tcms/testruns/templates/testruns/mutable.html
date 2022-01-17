@@ -122,9 +122,23 @@
                 {% include "include/datetimepicker_script.html" with selector="#id_planned_stop" %}
             </div>
 
-            {% if test_cases %}
+        </div>
+
+        {% if test_cases %}
+        <div class="form-group">
+            <label for="id_environment" class="col-md-1 col-lg-1">{% trans "Environment" %}</label>
+            <div class="col-md-7 {% if form.environment.errors %}has-error{% endif %}">
+                <select name="environment" id="id_environment" class="form-control selectpicker" multiple title="----------">
+                    {% for option in form.environment.field.queryset %}
+                        <option value="{{ option.pk }}" {% if option.pk|escape == form.environment.field.queryset.0.product_id|escape %}selected{% endif %}>{{ option.name }}</option>
+                    {% endfor %}
+                </select>
+
+                {{ form.environment.errors }}
+            </div>
+
             <div class="col-md-1 col-lg-1">
-                <label for="id_build">{% trans "Matrix" %}</label>
+                <label for="id_matrix_type">{% trans "Matrix" %}</label>
                 <span class="fa pficon-help help-tooltip"
                     data-toggle="tooltip" data-placement="bottom"
                     title="{% trans 'Affects only test cases with properties' %}">
@@ -138,8 +152,8 @@
                     {% endfor %}
                 </select>
             </div>
-            {% endif %}
         </div>
+        {% endif %}
 
         <div class="form-group">
             <label class="col-lg-12" for="id_notes">{% trans "Notes" %}</label>
