@@ -18,6 +18,8 @@ $(document).ready(() => {
 
   const testRunId = $('#test_run_pk').data('pk')
 
+  propertiesCard(testRunId, 'run', 'TestRun.properties', undefined, undefined)
+
   $('#start-button').on('click', function () {
     const timeZone = $('#clock').data('time-zone')
     const now = currentTimeWithTimezone(timeZone)
