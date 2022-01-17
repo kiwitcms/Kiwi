@@ -3,7 +3,11 @@
 <div class="card-pf card-pf-accented">
     <h2 class="card-pf-title">
         <span class="fa fa-cubes"></span>
-        {% trans "Properties" %}
+        {% if card_title %}
+            {{ card_title }}
+        {% else %}
+            {% trans "Properties" %}
+        {% endif %}
     </h2>
 
     <div class="card-pf-body">
@@ -17,10 +21,13 @@
                             ---
                         </a>
 
+                        {% if hide_delete_button %}
+                        {% else %}
                         <a href="#" class="js-remove-property no-before" title="{% trans 'Delete' %}"
                             style="float:right" data-property-name="">
                             <span class="pficon-error-circle-o hidden-print"></span>
                         </a>
+                        {% endif %}
                     </h4>
                 </div>
 
@@ -29,9 +36,12 @@
                         <template>
                             <span class="badge property-value">
                                 <span class="js-property-value">---</span>
+                                {% if hide_delete_button %}
+                                {% else %}
                                 <a href="#" title="{% trans 'Delete' %}" class="js-remove-value" data-id="">
                                     <span class="fa fa-times hidden-print"></span>
                                 </a>
+                                {% endif %}
                             </span>
                         </template>
                     </div>
@@ -42,6 +52,8 @@
             <!-- dynamic content needs to be first otherwise expanding doesn't expand the card -->
             <div class="js-insert-here"></div>
 
+            {% if hide_add_button %}
+            {% else%}
             <div class="panel panel-no-border hidden-print">
                 <div class="panel-heading">
                     <input type="text" class="form-control typeahead" id="property-value-input"
@@ -53,7 +65,7 @@
                     </a>
                 </div>
             </div>
-
+            {% endif %}
         </div> <!-- panel-group -->
     </div>
 </div>
