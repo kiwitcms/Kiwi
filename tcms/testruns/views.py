@@ -18,7 +18,12 @@ from tcms.core.forms import SimpleCommentForm
 from tcms.testcases.models import BugSystem, TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import NewRunForm, SearchRunForm
-from tcms.testruns.models import TestExecutionStatus, TestRun, Environment
+from tcms.testruns.models import (
+    Environment,
+    EnvironmentProperty,
+    TestExecutionStatus,
+    TestRun,
+)
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -68,6 +73,13 @@ class NewTestRunView(View):
 
         if form.is_valid():
             test_run = form.save()
+
+            # copy all of the selected properties into the test run
+            for prop in EnvironmentProperty.objects.filter(
+                environment__in=form.cleaned_data["environment"]
+            ):
+                test_run.property_set.create(name=prop.name, value=prop.value)
+
             loop = 1
 
             for case in form.cleaned_data["case"]:
