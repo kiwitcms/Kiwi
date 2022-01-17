@@ -8,7 +8,7 @@ from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
-from tcms.testruns.models import TestExecution, TestRun
+from tcms.testruns.models import Property, TestExecution, TestRun
 
 __all__ = (
     "create",
@@ -21,6 +21,7 @@ __all__ = (
     "remove_tag",
     "add_cc",
     "remove_cc",
+    "properties",
 )
 
 
@@ -358,3 +359,33 @@ def remove_cc(run_id, username):
         raise ValueError(form_errors_to_list(form))
 
     test_run.remove_cc(form.cleaned_data["user"])
+
+
+@permissions_required("testruns.view_property")
+@rpc_method(name="TestRun.properties")
+def properties(query=None):
+    """
+    .. function:: TestRun.properties(query)
+
+        Return all properties for the specified test run(s).
+
+        :param query: Field lookups for :class:`tcms.testruns.models.Property`
+        :type query: dict
+        :return: Serialized list of :class:`tcms.testruns.models.Property` objects.
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing *testruns.view_property* permission
+    """
+    if query is None:
+        query = {}
+
+    return list(
+        Property.objects.filter(**query)
+        .values(
+            "id",
+            "run",
+            "name",
+            "value",
+        )
+        .order_by("run", "name", "value")
+        .distinct()
+    )
