@@ -136,7 +136,8 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-3">
-            {% include "include/properties_card.html" %}
+            {% trans "Environment" as environment_title %}
+            {% include "include/properties_card.html" with card_title=environment_title hide_add_button=True hide_delete_button=True %}
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-3">
