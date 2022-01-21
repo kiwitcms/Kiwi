@@ -120,9 +120,8 @@ class TestRun(models.Model, UrlMixin):
         sortkey=0,
         matrix_type="full",
     ):
-        from tcms.testcases.models import (  # pylint: disable=import-outside-toplevel
-            Property as TestCaseProperty,
-        )
+        # pylint: disable=import-outside-toplevel
+        from tcms.testcases.models import Property as TestCaseProperty
 
         assignee = (
             assignee
