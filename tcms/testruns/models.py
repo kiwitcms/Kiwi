@@ -131,9 +131,7 @@ class TestRun(models.Model, UrlMixin):
         )
 
         executions = []
-        properties = self.property_set.union(
-            TestCaseProperty.objects.filter(case=case)
-        )
+        properties = self.property_set.union(TestCaseProperty.objects.filter(case=case))
 
         if properties.count():
             for prop_tuple in self.property_matrix(properties, matrix_type):
