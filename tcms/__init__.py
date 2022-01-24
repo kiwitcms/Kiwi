@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-__version__ = "10.5"
-__release_date__ = datetime(2021, 11, 25, 13, 0)
+__version__ = "11.0"
+__release_date__ = datetime(2022, 1, 24, 16, 0)
