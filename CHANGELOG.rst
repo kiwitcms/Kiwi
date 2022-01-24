@@ -1,6 +1,124 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.0 (24 Jan 2022)
+----------------------------
+
+.. important::
+
+  This is a new major release which contains security related updates, several improvements,
+  API changes, bug fixes and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+    ./manage.py refresh_permissions
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django to 3.2.11
+- Update django-colorfield from 0.4.5 to 0.6.3
+- Update django-grappelli from 2.15.3 to 3.0.2
+- Update psycopg2 from 2.9.2 to 2.9.3
+- Update pygments from 2.10.0 to 2.11.2
+- Update python-gitlab from 2.10.1 to 3.1.0
+- Update node_modules/prismjs from 1.25.0 to 1.26.0
+- Update node_modules/marked from 2.1.3 to 4.0.10
+- Admin panel now allows to view, add, edit and delete Environment records
+- Allow selection of environment when creating new TestRun and display the chosen
+  values inside the TestRun page. Closes
+  `Issue #1344 <https://github.com/kiwitcms/Kiwi/issues/1344>`_
+- Creating a TestRun will now generate test execution matrix based on the available
+  environment and test case properties. Closes
+  `Issue #1843 <https://github.com/kiwitcms/Kiwi/issues/1843>`_
+- When generating a test execution matrix the supported algorithms are
+  "full" and "pairwise". Closes
+  `Issue #1931 <https://github.com/kiwitcms/Kiwi/issues/1931>`_
+
+  - Feature is enabled for test runs which contain test cases. This
+    feature is not shown when creating an empty test run
+  - This feature isn't supported when subsequently adding new test cases
+    to test run
+- Record a random hex number under ``/Kiwi/uploads/installation-id``
+
+
+Database
+~~~~~~~~
+
+- New model ``testrun.Environment``
+- New model ``testrun.EnvironmentProperty``
+- New model ``testrun.Property``
+
+
+Settings
+~~~~~~~~
+
+- Update the value of ``MODERNRPC_METHODS_MODULES`` setting to include
+  modules with the new API methods
+
+
+API
+~~~
+
+- Method ``TestRun.add_case`` will now return a list.
+
+  .. warning::
+
+    This breaks API compatibility with older versions and will break
+    all plugins which rely on this method. Use plugins v11 or greater!
+- Method ``TestRun.add_case`` return value will now include a field named
+  ``properties``
+- New methods ``Environment.properties``, ``Environment.add_property`` and
+  ``Environment.remove_property``
+- New method ``TestRun.properties``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Send e-mail notification when adding comments to bugs. Fixes
+  `Issue #2232 <https://github.com/kiwitcms/Kiwi/issues/2232>`_ (@cmbahadir)
+- Disable the "+" button when there is no related element selected. Fixes
+  `Issue #2561 <https://github.com/kiwitcms/Kiwi/issues/2561>`_ (@cmbahadir)
+- When cloning test plans keep the existing test case sort order inside
+  the resulting test plan. Fixes
+  `Issue #2218 <https://github.com/kiwitcms/Kiwi/issues/2218>`_ (Nicolas Gelot)
+- Configure en_US.UTF-8 locale inside container. Allows upload of files with
+  unicode names. Fixes
+  `Issue #2600 <https://github.com/kiwitcms/Kiwi/issues/2600>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Refresh logo design
+- Pylint fixes
+- Pin setuptools b/c of problem with django-extensions
+- Remove redundant test scenario
+- Shell script refactoring
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Hebrew translation <https://crowdin.com/project/kiwitcms/he#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 10.5 (25 Nov 2021)
 ----------------------------
 
