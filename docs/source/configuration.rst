@@ -125,28 +125,6 @@ Also modify ``Dockerfile`` to include the following lines::
     RUN pip install django_ses
 
 
-Use reCAPTCHA during registration
----------------------------------
-
-.. versionadded:: 8.7
-
-If you want to use `Google reCAPTCHA <https://www.google.com/recaptcha/admin/>`_
-on the registration page then add the following to your settings::
-
-    if 'captcha' not in INSTALLED_APPS:
-        INSTALLED_APPS.append('captcha')
-
-        RECAPTCHA_PUBLIC_KEY = '......'
-        RECAPTCHA_PRIVATE_KEY = '.....'
-        RECAPTCHA_USE_SSL = True
-
-.. important::
-
-    This is not enabled by default because the ``django-recaptcha`` library
-    will cause Kiwi TCMS to stop working if the appropriate keys are not
-    provided!
-
-
 Kerberos authentication
 -----------------------
 

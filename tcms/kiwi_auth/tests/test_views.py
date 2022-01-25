@@ -103,20 +103,30 @@ class TestRegistration(TestCase):
         self.assertContains(response, f">{_register}</button>")
 
     def assert_user_registration(self, username, follow=False):
-
         with patch("tcms.kiwi_auth.models.secrets") as _secrets:
             _secrets.token_hex.return_value = self.fake_activate_key
 
-            response = self.client.post(
-                self.register_url,
-                {
-                    "username": username,
-                    "password1": "password",
-                    "password2": "password",
-                    "email": "new-tester@example.com",
-                },
-                follow=follow,
-            )
+            try:
+                # https://github.com/mbi/django-simple-captcha/issues/84
+                # pylint: disable=import-outside-toplevel
+                from captcha.conf import settings as captcha_settings
+
+                captcha_settings.CAPTCHA_TEST_MODE = True
+
+                response = self.client.post(
+                    self.register_url,
+                    {
+                        "username": username,
+                        "password1": "password",
+                        "password2": "password",
+                        "email": "new-tester@example.com",
+                        "captcha_0": "PASSED",
+                        "captcha_1": "PASSED",
+                    },
+                    follow=follow,
+                )
+            finally:
+                captcha_settings.CAPTCHA_TEST_MODE = False
 
         user = User.objects.get(username=username)
         self.assertEqual("new-tester@example.com", user.email)

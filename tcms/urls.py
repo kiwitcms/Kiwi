@@ -3,6 +3,7 @@ from importlib import import_module
 
 import pkg_resources
 from attachments import urls as attachments_urls
+from captcha import urls as captcha_urls
 from django.conf import settings
 from django.conf.urls import include
 from django.conf.urls.static import static
@@ -23,6 +24,7 @@ from tcms.testruns import urls as testruns_urls
 
 urlpatterns = [
     re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
+    re_path(r"^captcha/", include(captcha_urls)),
     re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
     re_path(r"^json-rpc/$", RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
     re_path(r"^init-db/$", core_views.InitDBView.as_view(), name="init-db"),
