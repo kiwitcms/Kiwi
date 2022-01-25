@@ -83,8 +83,6 @@ $(which python) -m venv .venv/test-tarball
 source .venv/test-tarball/bin/activate
 # workaround https://github.com/django-extensions/django-extensions/issues/1694
 pip install --upgrade setuptools==59.6.0 pip
-# https://github.com/praekelt/django-recaptcha/issues/222
-pip install django-recaptcha  # workaround missing tar.gz
 pip install --no-binary :all: dist/kiwitcms*.tar.gz
 pip freeze | grep kiwitcms
 deactivate
@@ -96,6 +94,8 @@ source .venv/test-wheel/bin/activate
 pip install --upgrade setuptools pip
 pip install -r requirements/tarballs.txt
 pip install pycparser
+# https://github.com/mbi/django-simple-captcha/issues/207
+pip install django-simple-captcha # workaround missing wheel
 pip install --only-binary :all: dist/kiwitcms*.whl
 pip freeze | grep kiwitcms
 deactivate

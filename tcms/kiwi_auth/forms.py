@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from captcha import fields
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -17,16 +18,20 @@ from tcms.utils.permissions import initiate_user_with_default_setups
 
 User = get_user_model()  # pylint: disable=invalid-name
 
-# actually enable only if app is configured
-if "captcha" in settings.INSTALLED_APPS:
-    from captcha.fields import ReCaptchaField
-else:
-    ReCaptchaField = None.__class__  # pylint: disable=invalid-name
+
+class CustomCaptchaTextInput(fields.CaptchaTextInput):
+    template_name = "captcha_field.html"
 
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField()
-    captcha = ReCaptchaField()
+    captcha = (
+        fields.CaptchaField(
+            widget=CustomCaptchaTextInput(attrs={"class": "form-control"})
+        )
+        if settings.USE_CAPTCHA
+        else None
+    )
 
     class Meta:
         model = User

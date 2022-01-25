@@ -98,6 +98,10 @@ REGISTRATION_ENABLED = (
 )
 
 
+# By default a simple CAPTCHA challenge is enabled in registration page
+USE_CAPTCHA = True
+
+
 # How often will session cookies expire? We set this to 24hrs by default.
 # You may override based on your security policies
 # https://docs.djangoproject.com/en/2.1/ref/settings/#session-cookie-age
@@ -279,6 +283,8 @@ INSTALLED_APPS = TENANT_APPS + [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "django.forms",
+    "captcha",
     "colorfield",
     "django_extensions",
     "tree_queries",
