@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-01-21 10:35\n"
+"PO-Revision-Date: 2022-01-26 07:01\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -977,7 +977,7 @@ msgstr "Lastnosti"
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "To je zgolj predogled nove funkcionalnosti!"
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
@@ -1637,7 +1637,7 @@ msgstr "Zahtevan je 1 negativen, 1 nevtralen ter 1 pozitiven status!"
 
 #: tcms/testruns/admin.py:107
 msgid "Edit properties"
-msgstr ""
+msgstr "Uredi lastnosti"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1697,7 +1697,7 @@ msgstr "Ustavi"
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Environment"
-msgstr ""
+msgstr "Okolje"
 
 #: tcms/testruns/templates/testruns/get.html:182
 msgid "Update text version"
