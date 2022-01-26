@@ -38,7 +38,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: build-for-pypi
         run: |
-          sudo apt install gettext
+          sudo apt-get update
+          sudo apt-get install gettext
           pip install wheel virtualenv
           pip install -r requirements/readthedocs.txt
           make build-for-pypi
