@@ -103,8 +103,8 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"Kiwi TCMS"
-copyright = u"2013, Red Hat, Inc.; 2017-2021 Kiwi TCMS project and its contributors"
+project = "Kiwi TCMS"
+copyright = "2013, Red Hat, Inc.; 2017-2021 Kiwi TCMS project and its contributors"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -258,8 +258,8 @@ latex_documents = [
     (
         "index",
         "kiwi.tex",
-        u"Kiwi TCMS Documentation",
-        u"hlin,weizhou,cqi,qduanmu",
+        "Kiwi TCMS Documentation",
+        "hlin,weizhou,cqi,qduanmu",
         "manual",
     ),
 ]
@@ -290,7 +290,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ("index", "kiwi", u"Kiwi TCMS Documentation", [u"hlin,weizhou,cqi,qduanmu"], 1)
+    ("index", "kiwi", "Kiwi TCMS Documentation", ["hlin,weizhou,cqi,qduanmu"], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -306,8 +306,8 @@ texinfo_documents = [
     (
         "index",
         "kiwi",
-        u"Kiwi TCMS Documentation",
-        u"hlin,weizhou,cqi,qduanmu",
+        "Kiwi TCMS Documentation",
+        "hlin,weizhou,cqi,qduanmu",
         "kiwi",
         "One line description of project.",
         "Miscellaneous",
@@ -330,11 +330,11 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u"kiwi"
-epub_author = u"hlin,weizhou,cqi,qduanmu,MrSenko"
-epub_publisher = u"hlin,weizhou,cqi,qduanmu,MrSenko"
+epub_title = "kiwi"
+epub_author = "hlin,weizhou,cqi,qduanmu,MrSenko"
+epub_publisher = "hlin,weizhou,cqi,qduanmu,MrSenko"
 epub_copyright = (
-    u"2013, Red Hat, Inc.; 2017-2021, Kiwi TCMS project and its contributors"
+    "2013, Red Hat, Inc.; 2017-2021, Kiwi TCMS project and its contributors"
 )
 
 # The basename for the epub file. It defaults to the project name.
