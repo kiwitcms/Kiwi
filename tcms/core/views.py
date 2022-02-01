@@ -161,19 +161,19 @@ class IterOpen(subprocess.Popen):  # pylint: disable=missing-permission-required
         line = self.stdout.readline()
 
         if not line:
+            time.sleep(3)
             if self.still_waiting:
-                time.sleep(3)
                 return self.timestamp + "waiting for migrations to start\n"
 
-            if not self.has_completed:
-                self.has_completed = True
-                return self.timestamp + "Complete!\n"
+        if "init-db is done" in line:
+            self.has_completed = True
+            return self.timestamp + "Complete!\n"
 
-            # instruct the streaming response to stop streaming
+        if self.has_completed:
             raise StopIteration
 
         self.still_waiting = False
-        return self.timestamp + line.lstrip()
+        return self.timestamp + line
 
 
 class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
@@ -190,7 +190,7 @@ class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
         if "init_db" in request.POST:
             # Perform migrations
             proc = IterOpen(
-                [manage_path, "migrate"],
+                [manage_path, "init_db"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 bufsize=1,  # line buffered
