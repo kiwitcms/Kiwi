@@ -4,5 +4,5 @@ django-grappelli==3.0.2
 django-uuslug==2.0.0
 django-vinaigrette==2.0.1
 django-colorfield==0.6.3
-python-bugzilla==3.1.0
+python-bugzilla==3.2.0
 PyGithub==1.55
