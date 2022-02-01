@@ -12,6 +12,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   tcms.core.management.commands.init_db
    tcms.core.management.commands.initial_setup
    tcms.core.management.commands.migrations_order
    tcms.core.management.commands.refresh_permissions
