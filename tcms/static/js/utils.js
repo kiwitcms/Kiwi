@@ -51,8 +51,13 @@ function updateVersionSelectFromProduct () {
     $('#id_version').change()
   }
 
-  const productIds = $('#id_product').val()
+  let productIds = $('#id_product').val()
+
   if (productIds.length) {
+    if (!Array.isArray(productIds)) {
+      productIds = [productIds]
+    }
+
     jsonRPC('Version.filter', { product__in: productIds }, updateVersionSelectCallback)
   } else {
     updateVersionSelectCallback([])
@@ -73,8 +78,12 @@ function updateBuildSelectFromVersion (keepFirst) {
     $('#id_build').find('option').remove()
   }
 
-  const versionIds = $('#id_version').val()
+  let versionIds = $('#id_version').val()
   if (versionIds.length) {
+    if (!Array.isArray(versionIds)) {
+      versionIds = [versionIds]
+    }
+
     jsonRPC('Build.filter', { version__in: versionIds }, updateCallback)
   } else {
     updateCallback([])
