@@ -1,6 +1,86 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.1 (02 Feb 2022)
+----------------------------
+
+.. important::
+
+  This is a small release which contains security related updates, several improvements,
+  bug fixes and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+    ./manage.py refresh_permissions
+
+
+Security
+~~~~~~~~
+
+- Update Django from 3.2.10 to 4.0.2 to fix several fulnerabilities:
+  CVE-2022-22818, CVE-2022-23833, CVE-2021-45115, CVE-2021-45116,
+  CVE-2021-45452. Of those we believe that only
+  *CVE-2022-23833: Denial-of-service possibility in file uploads* may directly
+  impact Kiwi TCMS
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-contrib-comments from 2.1.0 to 2.2.0
+- Update django-uuslug from 1.2.0 to 2.0.0
+- Update python-gitlab from 3.1.0 to 3.1.1
+- Update node_modules/marked from 4.0.10 to 4.0.12
+
+
+Database
+~~~~~~~~
+
+- New migration for django-simple-captcha
+
+
+Settings
+~~~~~~~~
+
+- ``RECAPTCHA_PUBLIC_KEY``, ``RECAPTCHA_PRIVATE_KEY`` and ``RECAPTCHA_USE_SSL``
+  are no longer in use
+- New setting ``USE_CAPTCHA``, defaults to True
+- The string "captcha" is added to ``INSTALLED_APPS``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix inappropriate RPC calls causing Version and Build dropdown widgets to
+  display no values. Fixes
+  `Issue #2704 <https://github.com/kiwitcms/Kiwi/issues/2704>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add ``tzdata`` to requirements
+- Replace django-recaptcha with django-simple-captcha
+- Adjust /init-db view to reliably detect when applying database migrations
+  is complete and not exit prematurely
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 11.0 (24 Jan 2022)
 ----------------------------
 
