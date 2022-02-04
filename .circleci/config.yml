@@ -1,0 +1,31 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  aarch64-test-docker-image:
+    machine:
+      # https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-2004:202111-02
+    resource_class: arm.medium
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run: uname -a
+      - run: python3 --version
+      # fail if not using Python 3
+      - run: python3 --version | grep "3\."
+      - run: pip3 install tcms-api
+      - run: make test-docker-image
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  aarch64-docker:
+    when:
+      matches: { pattern: "^prepare/v.+$", value: << pipeline.git.branch >> }
+    jobs:
+      - aarch64-test-docker-image

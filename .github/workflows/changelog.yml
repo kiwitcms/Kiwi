@@ -1,0 +1,32 @@
+name: changelog
+
+on:
+  pull_request:
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: check-source-branch-and-modified-files
+      run: |
+        # fail if curl fails
+        set -e
+
+        echo "INFO: source branch is: ${{ github.head_ref }}"
+        echo "INFO: modified files"
+        curl -o- -L "${{ github.event.pull_request.diff_url }}" 2>/dev/null | grep "^diff --git"
+
+        set +e
+
+        # if this PR modifies the CHANGELOG file it needs to come from a branch
+        # that follows the pattern 'prepare/vX.Y' b/c we want to run some extra jobs for such branches!
+        if curl -o- -L "${{ github.event.pull_request.diff_url }}" 2>/dev/null | grep "^diff --git" | grep "CHANGELOG"; then
+            if [[ ! "${{ github.head_ref }}" =~ "^prepare/v.+$" ]]; then
+                echo "FAIL: Modifications to CHANGELOG are only accepted from 'prepate/vX.Y' branches!"
+                echo "INFO: Otherwise aarch64 jobs in Circle CI will not be executed."
+                exit 1
+            fi
+        fi
