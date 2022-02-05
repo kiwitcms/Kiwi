@@ -1,6 +1,8 @@
 Change Log
 ==========
 
+This should cause a failure!
+
 Kiwi TCMS 11.1 (02 Feb 2022)
 ----------------------------
 
