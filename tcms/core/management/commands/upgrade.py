@@ -72,3 +72,4 @@ clean_orphan_obj_perms
 
         if output:
             self.stdout.write("Done.")
+        return ()
