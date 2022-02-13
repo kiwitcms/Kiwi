@@ -16,3 +16,4 @@ Submodules
    tcms.core.management.commands.migrations_order
    tcms.core.management.commands.refresh_permissions
    tcms.core.management.commands.set_domain
+   tcms.core.management.commands.upgrade
