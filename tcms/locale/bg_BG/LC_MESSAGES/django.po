@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-02-15 12:25\n"
+"PO-Revision-Date: 2022-02-15 12:35\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -682,7 +682,7 @@ msgstr "НОВО: Тест Изпълнение #%(pk)d - %(summary)s"
 #: tcms/signals.py:227
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Бъг #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -1306,11 +1306,11 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:77
 #: tcms/testcases/templates/testcases/mutable.html:111
 msgid "Testing duration"
-msgstr ""
+msgstr "Продължителност на теста"
 
 #: tcms/testcases/templates/testcases/get.html:82
 msgid "Expected duration"
-msgstr ""
+msgstr "Очаквана продължителност"
 
 #: tcms/testcases/templates/testcases/get.html:97
 #: tcms/testcases/templates/testcases/mutable.html:139
@@ -1480,7 +1480,7 @@ msgstr "Въведи потребителско име или ID или мейл
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "Няма избрани редове. Моля изберете поне един!"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1493,7 +1493,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Грешка при добавяне на тест кейс"
 
 #: tcms/testplans/templates/testplans/get.html:42
 msgid "Show more"
@@ -1642,7 +1642,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Тип 0 или 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1659,7 +1659,7 @@ msgstr "Мениджър"
 #: tcms/testruns/templates/testruns/mutable.html:100
 #: tcms/testruns/templates/testruns/search.html:130
 msgid "Planned start"
-msgstr ""
+msgstr "Планирано начало"
 
 #: tcms/testruns/templates/testruns/get.html:82
 msgid "Start"
@@ -1669,7 +1669,7 @@ msgstr "Старт"
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "Планиран край"
 
 #: tcms/testruns/templates/testruns/get.html:94
 msgid "Finished at"
@@ -1686,11 +1686,11 @@ msgstr "Среда"
 
 #: tcms/testruns/templates/testruns/get.html:182
 msgid "Update text version"
-msgstr ""
+msgstr "Актуализирай версия"
 
 #: tcms/testruns/templates/testruns/get.html:217
 msgid "Add comment"
-msgstr ""
+msgstr "Добави коментар"
 
 #: tcms/testruns/templates/testruns/get.html:228
 #: tcms/testruns/templates/testruns/get.html:324
@@ -1727,7 +1727,7 @@ msgstr "Дата на изпълнение"
 
 #: tcms/testruns/templates/testruns/get.html:409
 msgid "Text version"
-msgstr ""
+msgstr "Версия на текста"
 
 #: tcms/testruns/templates/testruns/get.html:414
 msgid "Bugs and hyperlinks"
