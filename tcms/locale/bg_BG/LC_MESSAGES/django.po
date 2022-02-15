@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-01-21 10:35\n"
+"PO-Revision-Date: 2022-02-15 12:25\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -1682,7 +1682,7 @@ msgstr "Спиране"
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Environment"
-msgstr ""
+msgstr "Среда"
 
 #: tcms/testruns/templates/testruns/get.html:182
 msgid "Update text version"
@@ -1719,7 +1719,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:364
 msgid "Assigned to"
-msgstr ""
+msgstr "Възложено на"
 
 #: tcms/testruns/templates/testruns/get.html:397
 msgid "Run Date"
@@ -1756,7 +1756,7 @@ msgstr "Клониране на Изпълнение"
 
 #: tcms/testruns/templates/testruns/mutable.html:146
 msgid "Matrix"
-msgstr ""
+msgstr "Матрица"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
 msgid "Affects only test cases with properties"
@@ -2104,7 +2104,7 @@ msgstr "Нова Kiwi TCMS инстанция е създадена"
 
 #: tcms_tenants/utils.py:198
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Покана за присъединяване към Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
