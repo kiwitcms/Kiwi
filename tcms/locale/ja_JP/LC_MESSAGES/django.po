@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-01-21 10:35\n"
+"PO-Revision-Date: 2022-02-16 06:24\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -1441,7 +1441,7 @@ msgstr "複数の値をカンマで区切ってください (,)"
 #: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "Created on"
-msgstr "に作成"
+msgstr "作成日時"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:433 tcms/testruns/views.py:175
