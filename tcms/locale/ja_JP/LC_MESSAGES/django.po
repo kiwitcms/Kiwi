@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-02-16 06:24\n"
+"POT-Creation-Date: 2022-02-16 15:23+0000\n"
+"PO-Revision-Date: 2022-02-16 15:36\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -330,7 +330,7 @@ msgstr "オブジェクトの権限"
 msgid "Delete"
 msgstr "削除"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:307
+#: tcms/bugs/views.py:68 tcms/settings/common.py:313
 msgid "New Bug"
 msgstr "新しいバグ"
 
@@ -351,7 +351,7 @@ msgstr "*バグが再オープンされました。*"
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "更新: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:50
+#: tcms/core/history.py:51
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -493,11 +493,11 @@ msgstr "個人情報"
 msgid "Permissions"
 msgstr "権限"
 
-#: tcms/kiwi_auth/forms.py:41
+#: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
 msgstr "このメールのユーザーはすでに存在しています。"
 
-#: tcms/kiwi_auth/forms.py:74
+#: tcms/kiwi_auth/forms.py:79
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "新しい %s アカウントの確認"
@@ -561,113 +561,113 @@ msgstr "base_urlを設定することで、この課題トラッカーへの報�
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS]。"
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:303
 msgid "DASHBOARD"
 msgstr "ダッシュボード"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:305
 msgid "TESTING"
 msgstr "テスト中"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:307
 msgid "New Test Plan"
 msgstr "新しいテスト計画"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:309
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "新しいテストケース"
 
-#: tcms/settings/common.py:305 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:311 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "新しいテスト実行"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:319
 msgid "SEARCH"
 msgstr "検索"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:321
 msgid "Search Test Plans"
 msgstr "テスト計画の検索"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:322
 msgid "Search Test Runs"
 msgstr "テスト実行を検索"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:323
 msgid "Search Test Cases"
 msgstr "テストケースを検索"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:324
 msgid "Search Bugs"
 msgstr "バグを検索"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:330
 msgid "TELEMETRY"
 msgstr "テレメトリー"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:333
 msgid "Testing"
 msgstr "テスト中"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:335
 msgid "Breakdown"
 msgstr "ブレイクダウン"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:336
 msgid "Status matrix"
 msgstr "状態マトリクス"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:337
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "実行のトレンド"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:338
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "テストケースの状況"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:348
 msgid "ADMIN"
 msgstr "管理者"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:350
 msgid "Users and groups"
 msgstr "ユーザとグループ"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:352
 msgid "Everything else"
 msgstr "他のすべて"
 
-#: tcms/settings/common.py:349
+#: tcms/settings/common.py:355
 msgid "PLUGINS"
 msgstr "プラグイン"
 
-#: tcms/settings/common.py:359
+#: tcms/settings/common.py:365
 msgid "Report an Issue"
 msgstr "問題を報告する"
 
-#: tcms/settings/common.py:362
+#: tcms/settings/common.py:368
 msgid "Ask for help on StackOverflow"
 msgstr "StackOverflowで助けを求める"
 
-#: tcms/settings/common.py:366
+#: tcms/settings/common.py:372
 msgid "Donate €5 via Open Collective"
 msgstr "Open Collective経由で€5を寄付する"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:374
 msgid "Administration Guide"
 msgstr "管理ガイド"
 
-#: tcms/settings/common.py:369
+#: tcms/settings/common.py:375
 msgid "User Guide"
 msgstr "ユーザーガイド"
 
-#: tcms/settings/common.py:370
+#: tcms/settings/common.py:376
 msgid "API Help"
 msgstr "API ヘルプ"
 
@@ -841,7 +841,7 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s\n"
-"Last comment: \n"
+"Last comment:\n"
 "%(last_comment)s"
 msgstr ""
 
@@ -960,7 +960,7 @@ msgstr "次のページ"
 msgid "Last page"
 msgstr "最後のページ"
 
-#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:118
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:338
 msgid "Properties"
 msgstr ""
@@ -1046,7 +1046,7 @@ msgid "Login"
 msgstr "ログイン"
 
 #: tcms/templates/navbar.html:61
-#: tcms/templates/registration/registration_form.html:58
+#: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr "登録"
 
@@ -1608,11 +1608,11 @@ msgstr "テスト計画の検索"
 msgid "Test plan name"
 msgstr "テスト計画名"
 
-#: tcms/testruns/admin.py:33
+#: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "アクセスが拒否されました: テストランはあなたに属していません"
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
@@ -1620,11 +1620,11 @@ msgstr "テスト実行ステータスのカスタマイズの詳細について
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        ドキュメント</a> を参照してください。"
 
-#: tcms/testruns/admin.py:96
+#: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "1つのネガティブ、1つの ニュートラル 、1つのポジティブなステータスが必要です!"
 
-#: tcms/testruns/admin.py:107
+#: tcms/testruns/admin.py:106
 msgid "Edit properties"
 msgstr ""
 
@@ -1636,7 +1636,7 @@ msgstr ""
 msgid "Pairwise"
 msgstr ""
 
-#: tcms/testruns/models.py:227
+#: tcms/testruns/models.py:224
 msgid "Test execution statuses"
 msgstr "テスト実行の状態"
 
@@ -1932,67 +1932,71 @@ msgid "Tenant"
 msgstr "テナント"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "組織"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
+msgid "Docker credentials"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
 msgid "You own the following tenants"
 msgstr "以下のテナントを所有しています"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
 msgid "Price"
 msgstr "価格"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
 msgid "Subscription type"
 msgstr "購読の種類"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "支払完了まで"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Cancel subscription"
 msgstr "定期購入を解約"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
 msgid "You don't own any tenants"
 msgstr "テナントを所有していません"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
 msgid "Subscribe via FastSpring"
 msgstr "FastSpring 経由で購読"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
 msgid "Transaction history"
 msgstr "トランザクション履歴"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
 msgid "Sender"
 msgstr "送信元"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
 msgid "Vendor"
 msgstr "ベンダー"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
 msgid "Received on"
 msgstr "受信"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:42
 msgid "Private Tenant Warning"
 msgstr "プライベートテナント警告"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:47
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
@@ -2006,11 +2010,11 @@ msgstr "Kiwi TCMSのプライベートテナントを作成しようとしてい
 "500内部サーバーエラーページが表示された場合は、お問い合わせください\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a>すぐに！"
 
-#: tcms_github_marketplace/views.py:330
+#: tcms_github_marketplace/views.py:367
 msgid "mo"
 msgstr "月"
 
-#: tcms_github_marketplace/views.py:333
+#: tcms_github_marketplace/views.py:370
 msgid "yr"
 msgstr "年"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-01-21 10:35\n"
+"POT-Creation-Date: 2022-02-16 15:23+0000\n"
+"PO-Revision-Date: 2022-02-16 15:36\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -330,7 +330,7 @@ msgstr ""
 msgid "Delete"
 msgstr "মুছুন"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:307
+#: tcms/bugs/views.py:68 tcms/settings/common.py:313
 msgid "New Bug"
 msgstr "নতুন বাগ"
 
@@ -351,7 +351,7 @@ msgstr "*বাগ আবার খোলা*"
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "হালনাগাদ: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:50
+#: tcms/core/history.py:51
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -493,11 +493,11 @@ msgstr "ব্যক্তিগত তথ্য"
 msgid "Permissions"
 msgstr "অনুমতি"
 
-#: tcms/kiwi_auth/forms.py:41
+#: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
 msgstr "এই ইমেল সহ একজন ব্যবহারকারী ইতিমধ্যে বিদ্যমান."
 
-#: tcms/kiwi_auth/forms.py:74
+#: tcms/kiwi_auth/forms.py:79
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "আপনার %s অ্যাকাউন্টের নিশ্চয়তা"
@@ -561,113 +561,113 @@ msgstr "এর base_url কনফিগার করে এই ইস্যু �
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "অবৈধ তারিখ বিন্যাস. প্রত্যাশিত YYYY-MM-DD [HH:MM:SS]."
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:303
 msgid "DASHBOARD"
 msgstr "ড্যাশবোর্ড"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:305
 msgid "TESTING"
 msgstr "পরীক্ষামূলক"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:307
 msgid "New Test Plan"
 msgstr "নতুন পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:309
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "নতুন পরীক্ষার কেস"
 
-#: tcms/settings/common.py:305 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:311 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:319
 msgid "SEARCH"
 msgstr "অনুসন্ধান"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:321
 msgid "Search Test Plans"
 msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:322
 msgid "Search Test Runs"
 msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:323
 msgid "Search Test Cases"
 msgstr "অনুসন্ধান পরীক্ষার কেস"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:324
 msgid "Search Bugs"
 msgstr "বাগ অনুসন্ধান করুন"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:330
 msgid "TELEMETRY"
 msgstr "টেলিমেট্রি"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:333
 msgid "Testing"
 msgstr "পরীক্ষা করা হচ্ছে"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:335
 msgid "Breakdown"
 msgstr "ভাঙনের"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:336
 msgid "Status matrix"
 msgstr "স্থিতি ম্যাট্রিক্স"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:337
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "এক্সিকিউশন ট্রেন্ড"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:338
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "TestCase স্বাস্থ্য"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:348
 msgid "ADMIN"
 msgstr "অ্যাডমিন"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:350
 msgid "Users and groups"
 msgstr "ব্যবহারকারী এবং গোষ্ঠী"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:352
 msgid "Everything else"
 msgstr "অন্য সব কিছুর"
 
-#: tcms/settings/common.py:349
+#: tcms/settings/common.py:355
 msgid "PLUGINS"
 msgstr "প্লাগিন"
 
-#: tcms/settings/common.py:359
+#: tcms/settings/common.py:365
 msgid "Report an Issue"
 msgstr "সমস্যার প্রতিবেদন করুন"
 
-#: tcms/settings/common.py:362
+#: tcms/settings/common.py:368
 msgid "Ask for help on StackOverflow"
 msgstr "সাহায্য চাইতে StackOverflow"
 
-#: tcms/settings/common.py:366
+#: tcms/settings/common.py:372
 msgid "Donate €5 via Open Collective"
 msgstr "ওপেন কালেক্টিভের মাধ্যমে 5 ডলার দান করুন"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:374
 msgid "Administration Guide"
 msgstr "প্রশাসন গাইড"
 
-#: tcms/settings/common.py:369
+#: tcms/settings/common.py:375
 msgid "User Guide"
 msgstr "ব্যবহারকারীর নির্দেশিকা"
 
-#: tcms/settings/common.py:370
+#: tcms/settings/common.py:376
 msgid "API Help"
 msgstr "API সহায়তা"
 
@@ -840,7 +840,7 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s\n"
-"Last comment: \n"
+"Last comment:\n"
 "%(last_comment)s"
 msgstr ""
 
@@ -958,7 +958,7 @@ msgstr "পরবর্তী পৃষ্ঠা"
 msgid "Last page"
 msgstr "শেষ পৃষ্ঠা"
 
-#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:118
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:338
 msgid "Properties"
 msgstr ""
@@ -1044,7 +1044,7 @@ msgid "Login"
 msgstr "লগইন"
 
 #: tcms/templates/navbar.html:61
-#: tcms/templates/registration/registration_form.html:58
+#: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr "নিবন্ধন"
 
@@ -1604,21 +1604,21 @@ msgstr "অনুসন্ধানের পরীক্ষা পরিকল�
 msgid "Test plan name"
 msgstr "টেস্ট প্ল্যানের নাম"
 
-#: tcms/testruns/admin.py:33
+#: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "অনুমতি অস্বীকার করা হয়েছে: TestRun আপনার নিজস্ব নয়"
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
 msgstr "পরীক্ষা এক্সিকিউশন স্টেটাস কাস্টমাইজ সম্পর্কে আরও তথ্যের জন্য দেখুন<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">ডকুমেন্টেশন</a>!"
 
-#: tcms/testruns/admin.py:96
+#: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr ""
 
-#: tcms/testruns/admin.py:107
+#: tcms/testruns/admin.py:106
 msgid "Edit properties"
 msgstr ""
 
@@ -1630,7 +1630,7 @@ msgstr ""
 msgid "Pairwise"
 msgstr ""
 
-#: tcms/testruns/models.py:227
+#: tcms/testruns/models.py:224
 msgid "Test execution statuses"
 msgstr "পরীক্ষা কার্যকর করার স্ট্যাটাসগুলি"
 
@@ -1925,67 +1925,71 @@ msgid "Tenant"
 msgstr "ভাড়াটে"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "সংগঠন"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
+msgid "Docker credentials"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
 msgid "You own the following tenants"
 msgstr "আপনি নিম্নলিখিত ভাড়াটেদের মালিক"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
 msgid "Price"
 msgstr "দাম"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
 msgid "Subscription type"
 msgstr "গ্রাহকত্ব প্রকার"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "অবধি প্রদান"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Cancel subscription"
 msgstr "সাবস্ক্রিপশন বাতিল করুন"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
 msgid "You don't own any tenants"
 msgstr "আপনার কোনও ভাড়াটে নেই"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
 msgid "Subscribe via FastSpring"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
 msgid "Transaction history"
 msgstr "স্থানান্তর ইতিহাস"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
 msgid "Sender"
 msgstr "প্রেরক"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
 msgid "Vendor"
 msgstr "বিক্রেতা"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
 msgid "Received on"
 msgstr "গ্রহণ করা হয়েছে"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:42
 msgid "Private Tenant Warning"
 msgstr "বেসরকারি ভাড়াটের সতর্কবার্তা"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:47
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
@@ -1998,11 +2002,11 @@ msgstr "আপনি Kiwi TCMS এর জন্য একটি ব্যক্�
 "তৈরির প্রক্রিয়াটি শেষ হয়ে গেলে আপনার নতুন ভাড়াটে আপনাকে পুনঃনির্দেশিত করা হবে!\n"
 "যদি আপনি একটি 500 অভ্যন্তরীণ সার্ভারের ত্রুটির পৃষ্ঠা দেখতে পান তাহলে যোগাযোগ করুন<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> অবিলম্বে!"
 
-#: tcms_github_marketplace/views.py:330
+#: tcms_github_marketplace/views.py:367
 msgid "mo"
 msgstr "মাস"
 
-#: tcms_github_marketplace/views.py:333
+#: tcms_github_marketplace/views.py:370
 msgid "yr"
 msgstr "বছর"
 

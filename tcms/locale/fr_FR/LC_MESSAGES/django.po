@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-19 22:08+0000\n"
-"PO-Revision-Date: 2022-01-21 10:35\n"
+"POT-Creation-Date: 2022-02-16 15:23+0000\n"
+"PO-Revision-Date: 2022-02-16 15:36\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -330,7 +330,7 @@ msgstr "Permissions de l'objet"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:307
+#: tcms/bugs/views.py:68 tcms/settings/common.py:313
 msgid "New Bug"
 msgstr "Nouvelle anomalie"
 
@@ -351,7 +351,7 @@ msgstr "*Anomalie réouverte*"
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "MAJ: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:50
+#: tcms/core/history.py:51
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -493,11 +493,11 @@ msgstr "Information personnelle"
 msgid "Permissions"
 msgstr "Droits"
 
-#: tcms/kiwi_auth/forms.py:41
+#: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
 msgstr "Un utilisateur avec cette adresse mail existe déjà."
 
-#: tcms/kiwi_auth/forms.py:74
+#: tcms/kiwi_auth/forms.py:79
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "Votre confirmation du nouveau compte %s"
@@ -561,113 +561,113 @@ msgstr "Activer le suivi au gestionnaire d'anomalie en configurant le paramètre
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "Format de date non valide. YYYY-MM-JJ attendu [HH:MM:SS]."
 
-#: tcms/settings/common.py:297
+#: tcms/settings/common.py:303
 msgid "DASHBOARD"
 msgstr "TABLEAU DE BORD"
 
-#: tcms/settings/common.py:299
+#: tcms/settings/common.py:305
 msgid "TESTING"
 msgstr "EN_TEST"
 
-#: tcms/settings/common.py:301
+#: tcms/settings/common.py:307
 msgid "New Test Plan"
 msgstr "Nouveau plan de test"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:309
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "Nouveau scénario de test"
 
-#: tcms/settings/common.py:305 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:311 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "Nouvel essai"
 
-#: tcms/settings/common.py:313
+#: tcms/settings/common.py:319
 msgid "SEARCH"
 msgstr "RECHERCHER"
 
-#: tcms/settings/common.py:315
+#: tcms/settings/common.py:321
 msgid "Search Test Plans"
 msgstr "Rechercher des plans de test"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:322
 msgid "Search Test Runs"
 msgstr "Rechercher des essais réalisés"
 
-#: tcms/settings/common.py:317
+#: tcms/settings/common.py:323
 msgid "Search Test Cases"
 msgstr "Rechercher des scénarios de tests"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:324
 msgid "Search Bugs"
 msgstr "Recherche dans les anomalies"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:330
 msgid "TELEMETRY"
 msgstr "TÉLÉMÉTRIE"
 
-#: tcms/settings/common.py:327
+#: tcms/settings/common.py:333
 msgid "Testing"
 msgstr "En Test"
 
-#: tcms/settings/common.py:329
+#: tcms/settings/common.py:335
 msgid "Breakdown"
 msgstr "Panne"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:336
 msgid "Status matrix"
 msgstr "Matrice d'état"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:337
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Tendances des exécutions"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:338
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "Santé du scénario de test"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:348
 msgid "ADMIN"
 msgstr "ADMINISTRATEUR"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:350
 msgid "Users and groups"
 msgstr "Utilisateurs et groupes"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:352
 msgid "Everything else"
 msgstr "Tout le reste"
 
-#: tcms/settings/common.py:349
+#: tcms/settings/common.py:355
 msgid "PLUGINS"
 msgstr "GREFFONS"
 
-#: tcms/settings/common.py:359
+#: tcms/settings/common.py:365
 msgid "Report an Issue"
 msgstr "Signaler un problème"
 
-#: tcms/settings/common.py:362
+#: tcms/settings/common.py:368
 msgid "Ask for help on StackOverflow"
 msgstr "Demander de l’aide sur StackOverflow"
 
-#: tcms/settings/common.py:366
+#: tcms/settings/common.py:372
 msgid "Donate €5 via Open Collective"
 msgstr "Faire un don de 5 € via Open Collective"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:374
 msgid "Administration Guide"
 msgstr "Guide de l'administrateur"
 
-#: tcms/settings/common.py:369
+#: tcms/settings/common.py:375
 msgid "User Guide"
 msgstr "Guide de l'utilisateur"
 
-#: tcms/settings/common.py:370
+#: tcms/settings/common.py:376
 msgid "API Help"
 msgstr "Aide sur l’API"
 
@@ -841,19 +841,9 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Product: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s\n"
-"Last comment: \n"
+"Last comment:\n"
 "%(last_comment)s"
-msgstr "Bug %(pk)s has been updated.\n\n"
-"Lien: %(bug_url)s\n\n"
-"Sommaire: %(summary)s\n"
-"Créé le: %(creation_date)s\n"
-"Raporteur: %(reporter)s\n"
-"Assigné à: %(assignee)s\n"
-"Produit: %(product)s\n"
-"Version: %(version)s\n"
-"Construction: %(build)s\n"
-"Dernier commentaire: \n"
-"%(last_comment)s"
+msgstr ""
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -970,7 +960,7 @@ msgstr "Page suivante"
 msgid "Last page"
 msgstr "Dernière page"
 
-#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:118
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:338
 msgid "Properties"
 msgstr "Propriétés"
@@ -1056,7 +1046,7 @@ msgid "Login"
 msgstr "Se connecter"
 
 #: tcms/templates/navbar.html:61
-#: tcms/templates/registration/registration_form.html:58
+#: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr "Inscription"
 
@@ -1620,11 +1610,11 @@ msgstr "Rechercher des plan de test"
 msgid "Test plan name"
 msgstr "Nom du plan de test"
 
-#: tcms/testruns/admin.py:33
+#: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "Permission refusé: L'essai de test ne vous est plus assigné"
 
-#: tcms/testruns/admin.py:40
+#: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
@@ -1632,11 +1622,11 @@ msgstr "Pour plus d'information à propos des états de configuration des tests 
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        la documentation</a>!"
 
-#: tcms/testruns/admin.py:96
+#: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "1 négatif, 1 neutre et 1 statut positif requis !"
 
-#: tcms/testruns/admin.py:107
+#: tcms/testruns/admin.py:106
 msgid "Edit properties"
 msgstr ""
 
@@ -1648,7 +1638,7 @@ msgstr "Complet"
 msgid "Pairwise"
 msgstr "Par paire"
 
-#: tcms/testruns/models.py:227
+#: tcms/testruns/models.py:224
 msgid "Test execution statuses"
 msgstr "États des tests d'exécutions"
 
@@ -1944,67 +1934,71 @@ msgid "Tenant"
 msgstr "Locataire"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:66
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "Organisation"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:51
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
+msgid "Docker credentials"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
 msgid "You own the following tenants"
 msgstr "Vous possédez les locataires suivants"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:73
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:74
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
 msgid "Price"
 msgstr "Prix"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:78
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
 msgid "Subscription type"
 msgstr "Type d'abonnement"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:84
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "Payé jusqu'au"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
 msgid "Cancel subscription"
 msgstr "Annuler l'abonnement"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
 msgid "You don't own any tenants"
 msgstr "Vous ne possédez aucun locataire"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
 msgid "Subscribe via FastSpring"
 msgstr "S'abonner via FastSpring"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:123
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
 msgid "Transaction history"
 msgstr "Historique des opérations"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:145
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:146
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
 msgid "Sender"
 msgstr "Expéditeur"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:150
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
 msgid "Vendor"
 msgstr "Vendeur"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:155
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:156
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
 msgid "Received on"
 msgstr "Reçu le"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:42
 msgid "Private Tenant Warning"
 msgstr "Avertissement du locataire privé"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:47
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
@@ -2018,11 +2012,11 @@ msgstr "Vous êtes sur le point de créer un locataire privé pour Kiwi TCMS.\n"
 "Si vous voyez une page d'erreur de serveur interne de 500, veuillez contacter\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.</a> immédiatement !"
 
-#: tcms_github_marketplace/views.py:330
+#: tcms_github_marketplace/views.py:367
 msgid "mo"
 msgstr "mo"
 
-#: tcms_github_marketplace/views.py:333
+#: tcms_github_marketplace/views.py:370
 msgid "yr"
 msgstr "an"
 
