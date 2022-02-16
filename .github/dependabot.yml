@@ -8,7 +8,7 @@ updates:
     open-pull-requests-limit: 10
 
   - package-ecosystem: npm
-    directory: "/"
+    directory: "/tcms"
     schedule:
       interval: daily
       time: "03:00"
