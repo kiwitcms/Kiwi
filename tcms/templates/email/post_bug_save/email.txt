@@ -10,5 +10,5 @@ Assignee: {{ assignee }}
 Product: {{ product }}
 Version: {{ version }}
 Build: {{ build }}
-Last comment: 
+Last comment:
 {{ last_comment }}{% endblocktrans %}
