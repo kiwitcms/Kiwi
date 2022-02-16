@@ -190,4 +190,3 @@ to transfer the actual information:
 .. |TestCase.filter metrics via Internet| image:: ./_static/TestCase.filter_metrics_via_internet.png
 .. |TestRun.filter metrics| image:: ./_static/TestRun.filter_metrics.png
 .. |TestRun.filter slowest info| image:: ./_static/TestRun.filter_slowest_info.png
-

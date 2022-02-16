@@ -13,4 +13,3 @@ services:
             - 3000:3000
         volumes:
           - ./seeds.rb:/usr/src/redmine/db/seeds.rb
-
