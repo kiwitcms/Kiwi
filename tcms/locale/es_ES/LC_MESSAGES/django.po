@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-17 17:35\n"
+"PO-Revision-Date: 2022-02-17 17:45\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -452,15 +452,15 @@ msgstr "minuto"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "minutos"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "segundo"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "segundos"
 
 #: tcms/core/views.py:50
 #, python-format
@@ -475,7 +475,7 @@ msgstr ""
 #: tcms/core/views.py:95
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "No está utilizando una conexión segura. Vea <a href=\"%(doc_url)s\">documentación</a> y habilite SSL."
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -2122,3 +2122,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
