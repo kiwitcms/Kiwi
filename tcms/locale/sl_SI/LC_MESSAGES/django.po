@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-16 15:36\n"
+"PO-Revision-Date: 2022-02-17 12:26\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -843,7 +843,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Vsebina napake %(pk)s je bila posodobljena\n\n"
+"Povezava: %(bug_url)s\n\n"
+"Povzetek: %(summary)s\n"
+"Ustvarjeno: %(creation_date)s\n"
+"Prijavil: %(reporter)s\n"
+"Zadolžena oseba: %(assignee)s\n"
+"Produkt: %(product)s\n"
+"Verzija: %(version)s\n"
+"Različica: %(build)s\n"
+"Zadnji komentar: \n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1940,7 +1950,7 @@ msgstr "Organizacija"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
 msgid "Docker credentials"
-msgstr ""
+msgstr "Docker poverilnice"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
 msgid "You own the following tenants"
