@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-16 15:36\n"
+"PO-Revision-Date: 2022-02-17 02:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -432,35 +432,35 @@ msgstr "沒有屬於你的測試計畫"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "天"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "天"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "小時"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "小時"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "分鐘"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "分鐘"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "秒"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "秒"
 
 #: tcms/core/views.py:50
 #, python-format
@@ -483,7 +483,7 @@ msgstr "此電子信箱已被使用"
 
 #: tcms/kiwi_auth/admin.py:54
 msgid "users"
-msgstr ""
+msgstr "使用者"
 
 #: tcms/kiwi_auth/admin.py:139
 msgid "Personal info"
@@ -938,7 +938,7 @@ msgstr "網址"
 
 #: tcms/templates/include/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "選擇"
 
 #: tcms/templates/include/pagination.html:13
 msgid "First page"
@@ -1010,7 +1010,7 @@ msgstr ""
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "請稍候"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1213,11 +1213,11 @@ msgstr ""
 
 #: tcms/testcases/models.py:379
 msgid "Template"
-msgstr ""
+msgstr "範本"
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr ""
+msgstr "範本"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1679,12 +1679,12 @@ msgstr "完成於："
 
 #: tcms/testruns/templates/testruns/get.html:100
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Environment"
-msgstr ""
+msgstr "環境"
 
 #: tcms/testruns/templates/testruns/get.html:182
 msgid "Update text version"
@@ -1797,11 +1797,11 @@ msgstr "運行中"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "開始日期"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "結束日期"
 
 #: tcms/testruns/views.py:246
 msgid "Clone of "
@@ -2130,3 +2130,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
