@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-16 15:36\n"
+"POT-Creation-Date: 2022-02-23 21:45+0000\n"
+"PO-Revision-Date: 2022-02-23 22:03\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1932,7 +1932,7 @@ msgid "Tenant"
 msgstr "租户"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "组织"
@@ -1941,54 +1941,58 @@ msgstr "组织"
 msgid "Docker credentials"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
+msgid "Private containers instructions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
 msgstr "你拥有下列租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
 msgid "Price"
 msgstr "价格"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:106
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscription type"
 msgstr "訂閱類型"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "支付至"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:118
 msgid "Cancel subscription"
 msgstr "停止订购"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "You don't own any tenants"
 msgstr "您不拥有任何租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
 msgstr "交易记录"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:173
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 msgid "Sender"
 msgstr "发送者"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:178
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 msgid "Vendor"
 msgstr "供应商"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:183
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:184
 msgid "Received on"
 msgstr "收到的时间"
 
@@ -2010,11 +2014,11 @@ msgstr "您将为Kiwi TCMS创建一个私人租户。\n"
 "如果看到500 Internal Server Error页面，请联系\n"
 "立即<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a>！"
 
-#: tcms_github_marketplace/views.py:367
+#: tcms_github_marketplace/views.py:423
 msgid "mo"
 msgstr "月"
 
-#: tcms_github_marketplace/views.py:370
+#: tcms_github_marketplace/views.py:426
 msgid "yr"
 msgstr "年"
 
@@ -2132,3 +2136,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
