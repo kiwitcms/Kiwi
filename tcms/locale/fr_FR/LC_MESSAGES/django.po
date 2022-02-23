@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-16 15:36\n"
+"POT-Creation-Date: 2022-02-23 21:45+0000\n"
+"PO-Revision-Date: 2022-02-23 22:04\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1934,7 +1934,7 @@ msgid "Tenant"
 msgstr "Locataire"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "Organisation"
@@ -1943,54 +1943,58 @@ msgstr "Organisation"
 msgid "Docker credentials"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
+msgid "Private containers instructions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
 msgstr "Vous possédez les locataires suivants"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
 msgid "Price"
 msgstr "Prix"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:106
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscription type"
 msgstr "Type d'abonnement"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "Payé jusqu'au"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:118
 msgid "Cancel subscription"
 msgstr "Annuler l'abonnement"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "You don't own any tenants"
 msgstr "Vous ne possédez aucun locataire"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
 msgstr "S'abonner via FastSpring"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
 msgstr "Historique des opérations"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:173
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 msgid "Sender"
 msgstr "Expéditeur"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:178
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 msgid "Vendor"
 msgstr "Vendeur"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:183
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:184
 msgid "Received on"
 msgstr "Reçu le"
 
@@ -2012,11 +2016,11 @@ msgstr "Vous êtes sur le point de créer un locataire privé pour Kiwi TCMS.\n"
 "Si vous voyez une page d'erreur de serveur interne de 500, veuillez contacter\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.</a> immédiatement !"
 
-#: tcms_github_marketplace/views.py:367
+#: tcms_github_marketplace/views.py:423
 msgid "mo"
 msgstr "mo"
 
-#: tcms_github_marketplace/views.py:370
+#: tcms_github_marketplace/views.py:426
 msgid "yr"
 msgstr "an"
 
@@ -2138,3 +2142,4 @@ msgstr "Modifier l'instance"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'autres utilisateurs"
+
