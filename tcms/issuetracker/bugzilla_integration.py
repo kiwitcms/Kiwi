@@ -35,7 +35,7 @@ class Bugzilla(base.IssueTrackerType):
     :api_password: the password for this username
 
     You can also provide the ``BUGZILLA_AUTH_CACHE_DIR`` setting (in ``product.py``)
-    to control where authentication cookies for Bugzilla will be saved. If this
+    to control where authentication token for Bugzilla will be saved. If this
     is not provided a temporary directory will be used each time we try to login
     into Bugzilla!
     """
@@ -58,7 +58,6 @@ class Bugzilla(base.IssueTrackerType):
             self.bug_system.api_url,
             user=self.bug_system.api_username,
             password=self.bug_system.api_password,
-            cookiefile=self._bugzilla_cache_dir + "cookie",
             tokenfile=self._bugzilla_cache_dir + "token",
         )
 
