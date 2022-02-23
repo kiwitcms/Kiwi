@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-16 15:36\n"
+"POT-Creation-Date: 2022-02-23 21:45+0000\n"
+"PO-Revision-Date: 2022-02-23 22:03\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -1926,7 +1926,7 @@ msgid "Tenant"
 msgstr "ठेकेदार"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "संगठन"
@@ -1935,54 +1935,58 @@ msgstr "संगठन"
 msgid "Docker credentials"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
+msgid "Private containers instructions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
 msgstr "आप निम्नलिखित किरायेदारों के मालिक हैं"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
 msgid "Price"
 msgstr "मूल्य"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:106
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscription type"
 msgstr "सब्स्क्रिप्शन का प्रकार"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "तक चुका दिया"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:118
 msgid "Cancel subscription"
 msgstr "सदस्यता रद्द करें"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "You don't own any tenants"
 msgstr "आपका कोई किराएदार नहीं है"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
 msgstr "लेनदेन का इतिहास"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:173
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 msgid "Sender"
 msgstr "भेजनेवाला"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:178
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 msgid "Vendor"
 msgstr "वेंडर"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:183
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:184
 msgid "Received on"
 msgstr "प्राप्त हुआ"
 
@@ -2004,11 +2008,11 @@ msgstr "आप Kiwi TCMS के लिए एक निजी किराये
 "यदि आप 500 आंतरिक सर्वर त्रुटि पेज देखते हैं तो कृपया संपर्क करें\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a> तुरंत!"
 
-#: tcms_github_marketplace/views.py:367
+#: tcms_github_marketplace/views.py:423
 msgid "mo"
 msgstr "माह"
 
-#: tcms_github_marketplace/views.py:370
+#: tcms_github_marketplace/views.py:426
 msgid "yr"
 msgstr "साल"
 
