@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 15:23+0000\n"
-"PO-Revision-Date: 2022-02-16 15:36\n"
+"POT-Creation-Date: 2022-02-23 21:45+0000\n"
+"PO-Revision-Date: 2022-02-23 22:04\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1894,7 +1894,7 @@ msgid "Tenant"
 msgstr "crwdns1136:0crwdne1136:0"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:87
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
 msgid "Organization"
 msgstr "crwdns1138:0crwdne1138:0"
@@ -1903,54 +1903,58 @@ msgstr "crwdns1138:0crwdne1138:0"
 msgid "Docker credentials"
 msgstr "crwdns1424:0crwdne1424:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:72
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
+msgid "Private containers instructions"
+msgstr "crwdns1426:0crwdne1426:0"
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
 msgstr "crwdns1140:0crwdne1140:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:95
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
 msgid "Price"
 msgstr "crwdns1142:0crwdne1142:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:99
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:100
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:106
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 msgid "Subscription type"
 msgstr "crwdns1144:0crwdne1144:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:104
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:105
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
 msgid "Paid until"
 msgstr "crwdns1146:0crwdne1146:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:118
 msgid "Cancel subscription"
 msgstr "crwdns1148:0crwdne1148:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "You don't own any tenants"
 msgstr "crwdns1150:0crwdne1150:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:128
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
 msgstr "crwdns1326:0crwdne1326:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:144
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
 msgstr "crwdns1154:0crwdne1154:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:166
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:167
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:173
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 msgid "Sender"
 msgstr "crwdns1156:0crwdne1156:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:171
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:172
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:178
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 msgid "Vendor"
 msgstr "crwdns1158:0crwdne1158:0"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:176
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:183
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:184
 msgid "Received on"
 msgstr "crwdns1160:0crwdne1160:0"
 
@@ -1967,11 +1971,11 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
 msgstr "crwdns1196:0crwdne1196:0"
 
-#: tcms_github_marketplace/views.py:367
+#: tcms_github_marketplace/views.py:423
 msgid "mo"
 msgstr "crwdns1166:0crwdne1166:0"
 
-#: tcms_github_marketplace/views.py:370
+#: tcms_github_marketplace/views.py:426
 msgid "yr"
 msgstr "crwdns1168:0crwdne1168:0"
 
@@ -2087,3 +2091,4 @@ msgstr "crwdns1360:0crwdne1360:0"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "crwdns1312:0crwdne1312:0"
+
