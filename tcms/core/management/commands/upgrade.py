@@ -20,7 +20,7 @@ class Command(BaseCommand):
             answer = "x"
 
         self.stdout.write(
-                """To finish the upgrade process, the following
+            """To finish the upgrade process, the following
 management commands will be executed:
 
 migrate
@@ -29,8 +29,8 @@ clean_orphan_obj_perms
 remove_stale_contenttypes
 delete_stale_attachments
 delete_stale_comments
-                """
-            )
+            """
+        )
 
         self.stdout.write("\n1. Applying migrations:")
         call_command("migrate", verbosity=kwargs["verbosity"])
@@ -42,9 +42,7 @@ delete_stale_comments
             interactive=kwargs["interactive"],
         )
 
-        self.stdout.write(
-                "\n3. Removes object permissions with not existing targets:"
-            )
+        self.stdout.write("\n3. Removes object permissions with not existing targets:")
         call_command("clean_orphan_obj_perms", verbosity=kwargs["verbosity"])
 
         self.stdout.write("\n4. Deleting stale content types:")
