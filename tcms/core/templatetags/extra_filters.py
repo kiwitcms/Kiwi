@@ -42,7 +42,7 @@ def markdown2html(md_str):
         markdown_tags + print_tags + ["del", "s"],
         {**markdown_attrs, **print_attrs},
     )
-    return mark_safe(html)  # nosec:B308:blacklist
+    return mark_safe(html)  # nosec:B703:B308:blacklist
 
 
 @register.filter(name="message_icon")
