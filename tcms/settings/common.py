@@ -338,10 +338,6 @@ MENU_ITEMS = [
                     (_("TestCase health"), reverse_lazy("test-case-health")),
                 ],
             ),
-            (
-                "More coming soon",
-                "http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/",
-            ),
         ],
     ),
     (
