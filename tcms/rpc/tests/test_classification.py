@@ -3,6 +3,8 @@
 
 from xmlrpc.client import ProtocolError
 
+from tcms.management.models import Classification
+
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.tests.factories import ClassificationFactory
 
@@ -45,3 +47,20 @@ class TestClassificationFilterPermissions(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.Classification.filter({})
+
+
+class TestClassificationCreate(APIPermissionsTestCase):
+    permission_label = "management.add_classification"
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Classification.create({"name": "API-CLASSIFICATION"})
+        self.assertEqual(result["name"], "API-CLASSIFICATION")
+        self.assertIn("name", result)
+        self.assertIn("id", result)
+
+        obj_from_db = Classification.objects.get(pk=result["id"])
+        self.assertEqual(result["name"], obj_from_db.name)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+            self.rpc_client.Classification.create({"name": "API-CLASSIFICATION"})

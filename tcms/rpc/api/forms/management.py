@@ -1,6 +1,6 @@
 from django import forms
 
-from tcms.management.models import Build, Component, Product
+from tcms.management.models import Build, Component, Product, Classification
 from tcms.rpc.api.forms import UpdateModelFormMixin
 
 
@@ -31,4 +31,10 @@ class ComponentUpdateForm(  # pylint: disable=remove-empty-class
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
+        fields = "__all__"
+
+
+class ClassificationForm(forms.ModelForm):
+    class Meta:
+        model = Classification
         fields = "__all__"
