@@ -1,0 +1,39 @@
+name: docker
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2.3.2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build & push docker images for ${{ github.event.ref }}
+        run: |
+            VERSION=$(python -m tcms)
+
+            make docker-image
+            docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/version:$VERSION-$(uname -m)
+
+            echo "+++++ Docker images +++++"
+            docker images
+
+            echo "${{ secrets.DOCKER_PUSH_TOKEN }}" | docker login -u="${{ secrets.DOCKER_PUSH_USERNAME }}" --password-stdin
+            docker push kiwitcms/kiwi:latest
+            docker logout
+
+            echo "${{ secrets.QUAY_PUSH_TOKEN }}" | docker login -u="${{ secrets.QUAY_PUSH_USERNAME }}" --password-stdin quay.io
+            docker push quay.io/kiwitcms/kiwi:latest
+            docker push quay.io/kiwitcms/version:$VERSION-$(uname -m)
+            docker logout quay.io

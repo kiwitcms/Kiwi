@@ -1,7 +1,7 @@
 default: help
 
 PATH_TO_SITE_PACKAGES = $(shell python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')
-
+VERSION = $(shell python -m tcms)
 FLAKE8_EXCLUDE=.git
 
 .PHONY: flake8
@@ -91,6 +91,15 @@ docker-image:
 	docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/kiwi:latest
 
 
+.PHONY: docker-manifest
+docker-manifest:
+	docker manifest create \
+	    quay.io/kiwitcms/version:$(VERSION) \
+	    quay.io/kiwitcms/version:$(VERSION)-x86_64 \
+	    quay.io/kiwitcms/version:$(VERSION)-aarch64
+	docker manifest push quay.io/kiwitcms/version:$(VERSION)
+
+
 .PHONY: test-docker-image
 test-docker-image: docker-image
 	sudo --preserve-env env PATH=$$PATH ./tests/runner.sh
@@ -128,6 +137,7 @@ help:
 	@echo '  check            - Run all tests.'
 	@echo '  build-for-pypi   - Build tarballs and wheels for PyPI'
 	@echo '  docker-image     - Build Docker image'
+	@echo '  docker-manifest  - Build Docker manifest for multi-arch images'
 	@echo '  help             - Show this help message and exit. Default if no command is given'
 
 
