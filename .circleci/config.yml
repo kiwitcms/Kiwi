@@ -21,11 +21,50 @@ jobs:
       - run: pip3 install tcms-api
       - run: make test-docker-image
 
+  aarch64-build-and-push-docker-image:
+    machine:
+      # https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+      image: ubuntu-2004:202111-02
+    resource_class: arm.medium
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run: |
+            uname -a
+            python3 --version
+            # fail if not using Python 3
+            python3 --version | grep "3\."
+
+            VERSION=$(python3 -m tcms)
+
+            make docker-image
+            docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/version:$VERSION-$(uname -m)
+
+            echo "+++++ Docker images +++++"
+            docker images
+
+            echo "$QUAY_PUSH_TOKEN" | docker login -u="$QUAY_PUSH_USERNAME" --password-stdin quay.io
+            docker push quay.io/kiwitcms/version:$VERSION-$(uname -m)
+            docker logout quay.io
+
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  aarch64-docker:
+  aarch64-docker-test:
     when:
       matches: { pattern: "^prepare/v.+$", value: << pipeline.git.branch >> }
     jobs:
       - aarch64-test-docker-image
+
+  aarch64-docker-release:
+    jobs:
+      - aarch64-build-and-push-docker-image:
+          context:
+            - docker-repository-secrets
+          filters:
+            tags:
+              only: /^v.+$/
+            branches:
+              ignore: /.*/
