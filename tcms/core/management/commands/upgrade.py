@@ -17,7 +17,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         answer = "y"
         if kwargs["interactive"]:
-            answer = "x"
+            answer = "n"
 
         self.stdout.write(
             """To finish the upgrade process, the following
@@ -25,15 +25,17 @@ management commands will be executed:
 
 migrate
 refresh_permissions
-clean_orphan_obj_perms
-remove_stale_contenttypes
 delete_stale_attachments
 delete_stale_comments
             """
         )
 
         self.stdout.write("\n1. Applying migrations:")
-        call_command("migrate", verbosity=kwargs["verbosity"])
+        call_command(
+            "migrate",
+            verbosity=kwargs["verbosity"],
+            interactive=kwargs["interactive"],
+        )
 
         self.stdout.write("\n2. Refreshing permissions:")
         call_command(
@@ -42,23 +44,12 @@ delete_stale_comments
             interactive=kwargs["interactive"],
         )
 
-        self.stdout.write("\n3. Removes object permissions with not existing targets:")
-        call_command("clean_orphan_obj_perms", verbosity=kwargs["verbosity"])
-
-        self.stdout.write("\n4. Deleting stale content types:")
-        call_command(
-            "remove_stale_contenttypes",
-            verbosity=kwargs["verbosity"],
-            include_stale_apps=True,
-            interactive=kwargs["interactive"],
-        )
-
-        self.stdout.write("\n5. Deleting stale attachments:")
+        self.stdout.write("\n3. Deleting stale attachments:")
         call_command(
             "delete_stale_attachments", verbosity=kwargs["verbosity"], answer=answer
         )
 
-        self.stdout.write("\n6. Deleting stale comments:")
+        self.stdout.write("\n4. Deleting stale comments:")
         call_command(
             "delete_stale_comments", verbosity=kwargs["verbosity"], answer=answer
         )
