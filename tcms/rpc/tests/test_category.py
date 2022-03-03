@@ -4,9 +4,8 @@
 from xmlrpc.client import ProtocolError
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
-from tcms.tests.factories import CategoryFactory, ProductFactory
-
 from tcms.testcases.models import Category
+from tcms.tests.factories import CategoryFactory, ProductFactory
 
 
 class TestCategory(APITestCase):

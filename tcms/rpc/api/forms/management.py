@@ -1,6 +1,6 @@
 from django import forms
 
-from tcms.management.models import Build, Component, Product, Classification
+from tcms.management.models import Build, Classification, Component, Product
 from tcms.rpc.api.forms import UpdateModelFormMixin
 
 

@@ -2,7 +2,7 @@ from django import forms
 
 from tcms.core.forms.fields import UserField
 from tcms.rpc.api.forms import UpdateModelFormMixin
-from tcms.testcases.models import TestCase, Category
+from tcms.testcases.models import Category, TestCase
 
 
 class NewForm(forms.ModelForm):

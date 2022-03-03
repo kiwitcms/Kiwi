@@ -4,7 +4,6 @@
 from xmlrpc.client import ProtocolError
 
 from tcms.management.models import Classification
-
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.tests.factories import ClassificationFactory
 
