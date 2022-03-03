@@ -40,7 +40,7 @@ def create(values):
         :return: Serialized :class:`tcms.management.models.Classification` object
         :rtype: dict
         :raises ValueError: if input values don't validate
-        :raises PermissionDenied: if missing *management.add_product* permission
+        :raises PermissionDenied: if missing *management.add_classification* permission
     """
     form = ClassificationForm(values)
 
