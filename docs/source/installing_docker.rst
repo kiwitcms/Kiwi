@@ -128,14 +128,14 @@ To upgrade running Kiwi TCMS containers execute the following commands::
     # !!! docker tag to keep older image version on the machine
     docker-compose pull # to fetch latest versions from Docker Hub
     docker-compose up -d
-    docker exec -it kiwi_web /Kiwi/manage.py migrate
+    docker exec -it kiwi_web /Kiwi/manage.py upgrade
 
 .. warning::
 
-    Always make sure that you execute ``migrate`` and that it doesn't report
-    any errors. Migrations ensure that your database schema has been altered
+    Always make sure that you execute ``upgrade`` and that it doesn't report
+    any errors. This ensures that your database schema has been altered
     to match the structure which is expected by the latest version of Kiwi TCMS!
-    After an upgrade+migrate is performed
+    After an upgrade is performed
     ``docker exec -it kiwi_web /Kiwi/manage.py showmigrations`` should always
     report that all migrations have been applied!
 

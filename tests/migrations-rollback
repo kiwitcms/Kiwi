@@ -8,7 +8,7 @@ MIGRATIONS_ORDER=`mktemp /tmp/migrations.order.XXXXXX`
 cat $MIGRATIONS_ORDER
 
 echo "..... Apply all migrations"
-./manage.py migrate
+./manage.py upgrade --no-input
 
 
 echo "..... Rollback migrations one by one"
@@ -23,6 +23,6 @@ for LINE in `tac $MIGRATIONS_ORDER`; do
 done
 
 echo "..... Apply all migrations again"
-./manage.py migrate
+./manage.py upgrade --no-input
 
 echo "... END"
