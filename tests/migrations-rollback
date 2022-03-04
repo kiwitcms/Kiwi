@@ -7,8 +7,8 @@ MIGRATIONS_ORDER=`mktemp /tmp/migrations.order.XXXXXX`
 ./manage.py migrations_order > $MIGRATIONS_ORDER
 cat $MIGRATIONS_ORDER
 
-echo "..... Perform Kiwi TCMS upgrade"
-./manage.py upgrade
+echo "..... Apply all migrations"
+./manage.py upgrade --no-input
 
 
 echo "..... Rollback migrations one by one"
@@ -22,7 +22,7 @@ for LINE in `tac $MIGRATIONS_ORDER`; do
     echo ">>>> Done rolling back to $LINE"
 done
 
-echo "..... Perform Kiwi TCMS upgrade again"
-./manage.py upgrade
+echo "..... Apply all migrations again"
+./manage.py upgrade --no-input
 
 echo "... END"
