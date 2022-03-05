@@ -201,5 +201,8 @@ jobs:
 
       - name: Execute tests
         run: |
+          docker --version
+          docker-compose --version
+
           pip install tcms-api
           make test-docker-image
