@@ -1,4 +1,4 @@
-# Copyright (c) 2019,2021 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019,2021-2022 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -64,6 +64,7 @@ class MenuDiscoveryTestCase(TestCase):
             with several levels of sub menus.
         """
         response = self.client.get("/", follow=True)
+        self.assertContains(response, _("PLUGINS"))
         self.assertContains(response, "Fake Telemetry plugin")
         self.assertContains(
             response,
