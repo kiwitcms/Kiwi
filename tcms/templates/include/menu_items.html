@@ -1,4 +1,5 @@
 {% load extra_filters %}
+{% load i18n %}
 {% for item in menu_items %}
     {% if not item.1|is_list %}
         {% if item.0 == '-' %}
@@ -22,7 +23,11 @@
             {% endif %}
         </a>
         <ul class="dropdown-menu">
-            {% include "include/menu_items.html" with menu_items=item.1 dropdown_class="-submenu" %}
+            {% if item.1|length == 0 %}
+                <li>{% trans "No items" %}</li>
+            {% else %}
+                {% include "include/menu_items.html" with menu_items=item.1 dropdown_class="-submenu" %}
+            {% endif %}
         </ul>
     </li>
     {% endif %}
