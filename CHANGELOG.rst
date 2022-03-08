@@ -1,6 +1,75 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.2 (09 Mar 2022)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements, new API methods,
+    internal refactoring and new translations!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 4.0.2 to 4.0.3
+- Update django-grappelli from 3.0.2 to 3.0.3
+- Update django-simple-captcha from 0.5.14 to 0.5.17
+- Update python-bugzilla from 3.1.0 to 3.2.0
+- Update python-gitlab from 3.1.1 to 3.2.0
+- Update node_modules/prismjs from 1.26.0 to 1.27.0
+- Add new command to perform a collection of post-upgrade tasks.
+  Kiwi TCMS admins are advised to replace
+  ``manage.py migrate`` with ``manage.py upgrade`` (Ivajlo Karabojkov)
+
+
+API
+~~~
+
+- New API method ``Category.create()``. Fixes
+  `Issue #2705 <https://github.com/kiwitcms/Kiwi/issues/2705>`_ (Erik Heeren)
+- New API method ``Classification.create()``. Fixes
+  `Issue #2705 <https://github.com/kiwitcms/Kiwi/issues/2705>`_ (Erik Heeren)
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add docker build & push automation
+- Fix Bandit exclusion rule
+- Test and build on aarch64
+- Apply auto fixes fro pre-commit.ci
+- Apply auto fixes from Deepsource
+- Update versions of several GitHub Actions
+- Use the appropriate path to package.json for Dependabot
+- Remove old Telemetry link in menu to avoid confusion
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Spanish translation <https://crowdin.com/project/kiwitcms/es-ES#>`_
+
+
+
 Kiwi TCMS 11.1 (02 Feb 2022)
 ----------------------------
 
