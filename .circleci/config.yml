@@ -61,8 +61,6 @@ workflows:
   aarch64-docker-release:
     jobs:
       - aarch64-build-and-push-docker-image:
-          context:
-            - docker-repository-secrets
           filters:
             tags:
               only: /^v.+$/
