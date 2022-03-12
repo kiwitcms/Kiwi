@@ -45,9 +45,14 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     re_path(
-        r"^users-and-groups/$",
-        views.UsersAndGroupsRouter.as_view(),
-        name="users-and-groups-router",
+        r"^admin-users/$",
+        views.UsersRouter.as_view(),
+        name="admin-users-router",
+    ),
+    re_path(
+        r"^admin-groups/$",
+        views.GroupsRouter.as_view(),
+        name="admin-groups-router",
     ),
 ]
 

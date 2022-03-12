@@ -343,7 +343,8 @@ MENU_ITEMS = [
     (
         _("ADMIN"),
         [
-            (_("Users and groups"), reverse_lazy("users-and-groups-router")),
+            (_("Users"), reverse_lazy("admin-users-router")),
+            (_("Groups"), reverse_lazy("admin-groups-router")),
             ("-", "-"),
             (_("Everything else"), "/admin/"),
         ],
