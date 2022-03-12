@@ -155,12 +155,12 @@ class Profile(View):  # pylint: disable=missing-permission-required
 @method_decorator(
     login_required, name="dispatch"
 )  # pylint: disable=missing-permission-required
-class UsersAndGroupsRouter(View):
+class UsersRouter(View):
     http_method_names = ["get"]
 
     def get(self, request, *args, **kwargs):
         if request.user.is_superuser:
-            return HttpResponseRedirect("/admin/auth/")
+            return HttpResponseRedirect("/admin/auth/user/")
 
         if (
             hasattr(request, "tenant")
@@ -168,4 +168,23 @@ class UsersAndGroupsRouter(View):
         ):
             return HttpResponseRedirect("/admin/tcms_tenants/tenant_authorized_users/")
 
-        return HttpResponseRedirect("/admin/auth/")
+        return HttpResponseRedirect("/admin/auth/user/")
+
+
+@method_decorator(
+    login_required, name="dispatch"
+)  # pylint: disable=missing-permission-required
+class GroupsRouter(View):
+    http_method_names = ["get"]
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return HttpResponseRedirect("/admin/auth/group/")
+
+        if (
+            hasattr(request, "tenant")
+            and request.tenant.schema_name != get_public_schema_name()
+        ):
+            return HttpResponseRedirect("/admin/tenant_groups/group/")
+
+        return HttpResponseRedirect("/admin/auth/group/")
