@@ -18,6 +18,9 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 class TestGitlabIntegration(APITestCase):
     existing_bug_id = 1
     existing_bug_url = "http://bugtracker.kiwitcms.org/root/kiwitcms/issues/1"
+    existing_bug_url_in_group = (
+        "http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/issues/1"
+    )
 
     def _fixture_setup(self):
         super()._fixture_setup()
@@ -50,10 +53,44 @@ class TestGitlabIntegration(APITestCase):
         )
         self.assertEqual(self.existing_bug_id, result)
 
+    def test_bug_id_from_url_in_group(self):
+        bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            name="GitLab-EE for group/sub_group/kiwitcms_in_group",
+            tracker_type="tcms.issuetracker.types.Gitlab",
+            base_url="http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/",
+            api_url="http://bugtracker.kiwitcms.org",
+            api_password="ypCa3Dzb23o5nvsixwPA",
+        )
+        integration = Gitlab(bug_system, None)
+
+        result = integration.bug_id_from_url(self.existing_bug_url_in_group)
+        self.assertEqual(self.existing_bug_id, result)
+
+        # this is an alternative URL, with a dash
+        result = integration.bug_id_from_url(
+            "http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/-/issues/1"
+        )
+        self.assertEqual(self.existing_bug_id, result)
+
     def test_details_for_public_url(self):
         result = self.integration.details(self.existing_bug_url)
 
         self.assertEqual("Hello GitLab", result["title"])
+        self.assertEqual("Created via CLI", result["description"])
+
+    def test_details_for_public_url_in_group(self):
+        bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            name="GitLab-EE for group/sub_group/kiwitcms_in_group",
+            tracker_type="tcms.issuetracker.types.Gitlab",
+            base_url="http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/",
+            api_url="http://bugtracker.kiwitcms.org",
+            api_password="ypCa3Dzb23o5nvsixwPA",
+        )
+        integration = Gitlab(bug_system, None)
+
+        result = integration.details(self.existing_bug_url_in_group)
+
+        self.assertEqual("Hello GitLab Group", result["title"])
         self.assertEqual("Created via CLI", result["description"])
 
     def test_details_for_private_url(self):
