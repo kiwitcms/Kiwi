@@ -2,6 +2,8 @@
 """
     Helper which facilitates actual communications with GitLab.
 """
+from urllib.parse import urlparse
+
 from tcms.issuetracker.base import IntegrationThread
 
 
@@ -14,7 +16,7 @@ class GitlabThread(IntegrationThread):
 
     @staticmethod
     def repo_id(bug_system):
-        return "/".join(bug_system.base_url.strip().strip("/").split("/")[-2:])
+        return urlparse(bug_system.base_url).path.strip("/")
 
     def __init__(self, rpc, bug_system, execution, bug_id):
         repo_id = self.repo_id(bug_system)
