@@ -121,12 +121,19 @@ class DashboardView(TemplateView):
             .distinct()
         )
 
+        tenant_name = ""
+        if hasattr(self.request, "tenant"):
+            tenant_name = self.request.tenant.schema_name
+            if self.request.tenant.organization:
+                tenant_name = self.request.tenant.organization
+
         return {
             "test_plans_count": test_plans.count(),
             "test_plans_disable_count": test_plans_disable_count,
             "last_15_test_plans": test_plans.filter(is_active=True)[:15],
             "last_15_test_runs": test_runs[:15],
             "test_runs_count": test_runs.count(),
+            "tenant_name": tenant_name,
         }
 
 

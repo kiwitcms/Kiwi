@@ -18,6 +18,13 @@
         <div class="collapse navbar-collapse navbar-collapse-1">
             <ul class="nav navbar-nav navbar-utility">
 
+                <li style="float:left">
+                    <a>
+                        <span id="tenant">
+                            {% block tenant %}{{ tenant_name }}{% endblock %}
+                        </span>
+                    </a>
+                </li>
                 <li class="dropdown" style="float:right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="pficon pficon-user"></span>
