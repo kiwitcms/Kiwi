@@ -154,8 +154,8 @@ class Profile(View):  # pylint: disable=missing-permission-required
 
 @method_decorator(
     login_required, name="dispatch"
-)  # pylint: disable=missing-permission-required
-class UsersRouter(View):
+)
+class UsersRouter(View):  # pylint: disable=missing-permission-required
     http_method_names = ["get"]
 
     def get(self, request, *args, **kwargs):
@@ -173,8 +173,8 @@ class UsersRouter(View):
 
 @method_decorator(
     login_required, name="dispatch"
-)  # pylint: disable=missing-permission-required
-class GroupsRouter(View):
+)
+class GroupsRouter(View):  # pylint: disable=missing-permission-required
     http_method_names = ["get"]
 
     def get(self, request, *args, **kwargs):
