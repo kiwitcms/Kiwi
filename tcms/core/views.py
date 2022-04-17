@@ -27,9 +27,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
 
-@method_decorator(
-    login_required, name="dispatch"
-)
+@method_decorator(login_required, name="dispatch")
 class DashboardView(TemplateView):  # pylint: disable=missing-permission-required
 
     template_name = "dashboard.html"
