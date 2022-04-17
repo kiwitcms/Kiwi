@@ -152,9 +152,7 @@ class Profile(View):  # pylint: disable=missing-permission-required
         return HttpResponseRedirect(reverse("admin:auth_user_change", args=[user.pk]))
 
 
-@method_decorator(
-    login_required, name="dispatch"
-)
+@method_decorator(login_required, name="dispatch")
 class UsersRouter(View):  # pylint: disable=missing-permission-required
     http_method_names = ["get"]
 
@@ -171,9 +169,7 @@ class UsersRouter(View):  # pylint: disable=missing-permission-required
         return HttpResponseRedirect("/admin/auth/user/")
 
 
-@method_decorator(
-    login_required, name="dispatch"
-)
+@method_decorator(login_required, name="dispatch")
 class GroupsRouter(View):  # pylint: disable=missing-permission-required
     http_method_names = ["get"]
 
