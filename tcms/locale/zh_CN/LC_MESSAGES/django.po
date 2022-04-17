@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-02-23 22:03\n"
+"PO-Revision-Date: 2022-04-17 10:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -432,11 +432,11 @@ msgstr "没有属于你的测试计划"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "天"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "天"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
@@ -444,23 +444,23 @@ msgstr "时"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "时"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "分"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "分"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "秒"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "秒"
 
 #: tcms/core/views.py:50
 #, python-format
@@ -475,7 +475,7 @@ msgstr "您有 %(unapplied_migration_count)s 个未应用的迁移(s)。请参�
 #: tcms/core/views.py:95
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "您使用的是非安全连接。查看 <a href=\"%(doc_url)s\">文档</a> 并启用 SSL。"
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -533,7 +533,7 @@ msgstr "优先级"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "构建"
 
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:130
@@ -683,7 +683,7 @@ msgstr "NEW: 测试执行 #%(pk)d - - %(summary)s"
 #: tcms/signals.py:227
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "缺陷 #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -843,7 +843,16 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "缺陷 %(pk)s has been updated.\n\n"
+"链接: %(bug_url)s\n\n"
+"摘要: %(summary)s\n"
+"创建于: %(creation_date)s\n"
+"报告人: %(reporter)s\n"
+"创建人: %(assignee)s\n"
+"产品: %(product)s\n"
+"版本: %(version)s\n"
+"构建: %(build)s\n"
+"最后注解: %(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -968,11 +977,11 @@ msgstr "特性"
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "这是一个技术预览功能！"
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
-msgstr ""
+msgstr "名称=值"
 
 #: tcms/templates/include/properties_card.html:70
 #: tcms/templates/include/tags_card.html:28
@@ -998,7 +1007,7 @@ msgstr "名称"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "初始化数据库"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
@@ -1006,11 +1015,11 @@ msgstr "您的数据库尚未初始化。点击下面的按钮初始化它！"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "警告：此操作将花费一段时间！完成后将重定向此页面。"
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "请稍等"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1168,17 +1177,19 @@ msgstr "1 已确认 & 1 个未确认的状态！"
 
 #: tcms/testcases/admin.py:129
 msgid "Bug URL"
-msgstr ""
+msgstr "缺陷链接"
 
 #: tcms/testcases/admin.py:149
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "集成第三方缺陷跟踪系统"
 
 #: tcms/testcases/admin.py:159
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>警告：在编辑值前阅读\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"配置第三方缺陷跟踪系统</a> 版块！</h1>"
 
 #: tcms/testcases/admin.py:166
 msgid "Configuration health check"
@@ -1799,11 +1810,11 @@ msgstr "运行中"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "开始日期"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "截至日期"
 
 #: tcms/testruns/views.py:246
 msgid "Clone of "
@@ -1939,7 +1950,7 @@ msgstr "组织"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
 msgid "Docker credentials"
-msgstr ""
+msgstr "Docker凭据"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
@@ -2040,7 +2051,7 @@ msgstr "未授权"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "用户名、电子邮件或用户 ID已存在"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -2057,7 +2068,7 @@ msgstr "新建"
 #: tcms_tenants/menu.py:15
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "邀请用户"
 
 #: tcms_tenants/menu.py:16
 msgid "Authorized users"
@@ -2091,7 +2102,7 @@ msgstr "您的 Kiwi TCMS 租户创建于：\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "邮箱"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2136,3 +2147,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
