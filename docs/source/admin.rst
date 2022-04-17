@@ -69,7 +69,8 @@ permissions.
 
     Permissions are usually assigned on groups but they can be granted on
     individual users too! It is recommended to use groups for permissions
-    management.
+    management. Any permissions granted directly to a user will supersede
+    group-level permissions!
 
 .. important::
 
@@ -85,7 +86,7 @@ permissions.
     not granted by default because the profile page contains personal
     information like names and email address.
 
-    Administrators can grant this
+    Administrators may grant this
     on individual or group level if access to such information is considered
     acceptable.
 
@@ -156,6 +157,36 @@ To edit a group:
 #. Select the permission required. Click **Add** or **Remove** as
    required.
 #. Click **Save**.
+
+
+Tenant groups
+~~~~~~~~~~~~~
+
+.. versionadded:: 11.3
+
+*Kiwi TCMS Enterprise* and other versions where the *kiwitcms-tenant* plugin is
+installed also support groups & group permissions which are valid **only** in
+the context of the current tenant!
+
+.. important::
+
+    In a multi-tenant instance of Kiwi TCMS Tenant Groups replace the regular
+    Group model described above! Regular groups control only what's known as
+    the *public tenant*.
+
+By default there are two tenant groups created - *Administrator* and *Tester*.
+Their behavior is the same as described above! You can't delete them but you
+can change the permission sets for these groups. Tenant groups will allow
+**only** authorized users to be assigned to the group!
+
+When a new tenant is created the tenant owner is added to both groups.
+Authorized users are added only to the *Tester* group.
+
+Tenant groups allow more flexible access control for the same user account
+across different tenants. For example *John* can have ``view`` and ``change``
+permissions on mobile.tenant.example.com but ``add`` and ``delete``
+permissions on backend.tenant.example.com!
+
 
 Users
 ~~~~~
