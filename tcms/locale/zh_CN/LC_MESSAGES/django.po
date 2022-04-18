@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-04-18 11:13\n"
+"PO-Revision-Date: 2022-04-18 11:24\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -520,11 +520,11 @@ msgstr "此激活密钥不再存于数据库中"
 
 #: tcms/kiwi_auth/views.py:128
 msgid "This activation key has expired"
-msgstr "此激活密钥已过期"
+msgstr "激活密钥已过期"
 
 #: tcms/kiwi_auth/views.py:140
 msgid "Your account has been activated successfully"
-msgstr "您的账户已被成功激活"
+msgstr "您的账户已成功激活"
 
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -1461,11 +1461,11 @@ msgstr "历史"
 
 #: tcms/testcases/views.py:252
 msgid "TestCase cloning was successful"
-msgstr "测试实例克隆成功"
+msgstr "测试用例复制成功"
 
 #: tcms/testcases/views.py:283
 msgid "At least one TestCase is required"
-msgstr "需要至少一个测试实例"
+msgstr "需要至少一个测试用例"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -2151,3 +2151,4 @@ msgstr "编辑租户"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "只有获得此租户授权的用户才能邀请其他"
+
