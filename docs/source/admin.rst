@@ -175,7 +175,10 @@ the context of the current tenant!
     the *public tenant*.
 
 By default there are two tenant groups created - *Administrator* and *Tester*.
-Their behavior is the same as described above! You can't delete them but you
+Their behavior is similar as described above, however their permission scope
+has been restricted to labels relevant to tenant operations.
+
+You can't delete them but you
 can change the permission sets for these groups. Tenant groups will allow
 **only** authorized users to be assigned to the group!
 
