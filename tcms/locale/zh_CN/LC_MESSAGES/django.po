@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-04-17 10:34\n"
+"PO-Revision-Date: 2022-04-18 11:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -495,7 +495,7 @@ msgstr "权限"
 
 #: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
-msgstr "已存在使用相同电子邮件的地址的用户。"
+msgstr "Email已存在，请直接登录或更换Email."
 
 #: tcms/kiwi_auth/forms.py:79
 #, python-format
@@ -2151,3 +2151,4 @@ msgstr "编辑租户"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "只有获得此租户授权的用户才能邀请其他"
+
