@@ -20,6 +20,15 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
+        """
+        This is the command entry-point!
+        """
+        self.execute_commands(*args, **kwargs)
+
+    def execute_commands(self, *args, **kwargs):
+        """
+        This is the actual implementation. Can be overriden by inherited classes.
+        """
         output = None
         if kwargs["verbosity"]:
             output = self.stdout
