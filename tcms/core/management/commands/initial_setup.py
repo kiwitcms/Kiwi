@@ -22,11 +22,8 @@ class Command(BaseCommand):
         domain = input("Enter Kiwi TCMS domain: ")  # nosec
         call_command("set_domain", domain=domain)
 
-        self.stdout.write("\n4. Setting permissions:")
-        call_command("refresh_permissions", f"--verbosity={kwargs['verbosity']}")
-
         if "tcms_tenants" in settings.INSTALLED_APPS:
-            self.stdout.write("\n5. Creating public & empty tenants:")
+            self.stdout.write("\n4. Creating public & empty tenants:")
             superuser = get_user_model().objects.filter(is_superuser=True).first()
             paid_until = timezone.now() + datetime.timedelta(days=100 * 365)
             call_command(
@@ -71,5 +68,8 @@ class Command(BaseCommand):
                 "--domain-is_primary",
                 True,
             )
+
+        self.stdout.write("\n5. Setting permissions:")
+        call_command("refresh_permissions", f"--verbosity={kwargs['verbosity']}")
 
         self.stdout.write("\nInitial setup finished.")
