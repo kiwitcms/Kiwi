@@ -154,6 +154,11 @@ MIDDLEWARE = [
 ]
 
 
+# See https://github.com/kiwitcms/Kiwi/issues/2717
+# and tcms/issuetracker/azure_boards.py
+AZURE_BOARDS_API_VERSION = os.environ.get("AZURE_BOARDS_API_VERSION", "6.0")
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ DANGER: Don't change the settings below!
 

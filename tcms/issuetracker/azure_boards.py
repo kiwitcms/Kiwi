@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
+from django.conf import settings
 from requests.auth import HTTPBasicAuth
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -13,7 +14,7 @@ class AzureBoardsAPI:
     """
 
     def __init__(self, base_url=None, password=None):
-        self.api_version = "?api-version=6.0"
+        self.api_version = f"?api-version={settings.AZURE_BOARDS_API_VERSION}"
         self.headers = {
             "Accept": "application/json-patch+json",
             "Content-type": "application/json-patch+json",
