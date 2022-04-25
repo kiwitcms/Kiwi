@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
@@ -9,6 +10,10 @@ class Command(BaseCommand):
         "Refresh permissions for Tester group "
         "(set by DEFAULT_GROUPS setting) and remove stale ones."
     )
+
+    group_model = Group
+    admin_permissions_filter = {}
+    tester_permissions_filter = {}
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -38,7 +43,13 @@ class Command(BaseCommand):
         # Assign permissions to Tester group
         if output:
             self.stdout.write("\nSetting up missing permissions")
-        assign_default_group_permissions(output=output, refresh_all=True)
+        assign_default_group_permissions(
+            output=output,
+            refresh_all=True,
+            group_model=self.group_model,
+            admin_permissions_filter=self.admin_permissions_filter,
+            tester_permissions_filter=self.tester_permissions_filter,
+        )
         if output:
             self.stdout.write("Done.")
 
