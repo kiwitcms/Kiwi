@@ -14,22 +14,39 @@ def generate_output(output, permissions, group):
             )
 
 
-def assign_default_group_permissions(output=None, refresh_all=False):
+def assign_default_group_permissions(
+    output=None,
+    refresh_all=False,
+    group_model=Group,
+    admin_permissions_filter=None,
+    tester_permissions_filter=None,
+):
     """
     Adds the default permissions for Administrator and Tester
     groups!
     """
-    admin = Group.objects.get(name="Administrator")
+    # arguments default to None due to security issues
+    # with having an empty dict as the default value
+    if admin_permissions_filter is None:
+        admin_permissions_filter = {}
+
+    if tester_permissions_filter is None:
+        tester_permissions_filter = {}
+
+    admin = group_model.objects.get(name="Administrator")
     if admin.permissions.count() == 0 or refresh_all:
-        perms_to_add = Permission.objects.exclude(pk__in=admin.permissions.all())
+        perms_to_add = Permission.objects.exclude(
+            pk__in=admin.permissions.all()
+        ).filter(**admin_permissions_filter)
         admin.permissions.add(*perms_to_add)
         generate_output(output, perms_to_add, admin)
 
-    tester = Group.objects.get(name="Tester")
+    tester = group_model.objects.get(name="Tester")
     tester_perms = tester.permissions.all()
     if tester_perms.count() == 0 or refresh_all:
         # apply all permissions for test case & product management
         for app_name in [
+            "attachments",
             "bugs",
             "django_comments",
             "linkreference",
@@ -37,11 +54,10 @@ def assign_default_group_permissions(output=None, refresh_all=False):
             "testcases",
             "testplans",
             "testruns",
-            "attachments",
         ]:
             app_perms = Permission.objects.filter(
-                content_type__app_label__contains=app_name
-            )
+                content_type__app_label=app_name
+            ).filter(**tester_permissions_filter)
             app_perms = app_perms.exclude(pk__in=tester_perms).exclude(
                 content_type__app_label="attachments",
                 codename="delete_foreign_attachments",
