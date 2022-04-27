@@ -1,6 +1,83 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.3 (27 Apr 2022)
+----------------------------
+
+.. important::
+
+    This is a small release which contains security related updates, several improvements,
+    bug fixes and new translations!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+Security
+~~~~~~~~
+
+- Update django from 4.0.3 to 4.0.4, see
+  https://docs.djangoproject.com/en/4.0/releases/4.0.4/
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 4.1.0 to 5.0.0
+- Update django-tree-queries from 0.7.0 to 0.9.0
+- Update jira from 3.1.1 to 3.2.0
+- Update pygments from 2.11.2 to 2.12.0
+- Update python-gitlab from 3.2.0 to 3.3.0
+- Update tzdata from 2021.5 to 2022.1
+- Update node_modules/marked from 4.0.12 to 4.0.14
+- Update node_modules/prismjs from 1.27.0 to 1.28.0
+- Allow overriding of Azure Boards API version. Closes
+  `Issue #2717 <https://github.com/kiwitcms/Kiwi/issues/2717>`_
+- If ``tenant_groups`` is enabled then ``refresh_permissions`` command will
+  update default tenant groups too
+- Document tenant-group permissions
+
+
+Settings
+~~~~~~~~
+
+- New setting ``AZURE_BOARDS_API_VERSION``, defaults to 6.0. Can be overriden
+  directly in settings or via environment variable with the same name
+
+
+Bug fixes
+~~~~~~~~~
+
+- Patch for repositories under GitLab subgroups. Fixes
+  `Issue #2643 <https://github.com/kiwitcms/Kiwi/issues/2643>`_ (@cmeissl)
+- Don't crash if a comment user has been removed. Fixes
+  `KIWI-TCMS-HZ <https://sentry.io/organizations/kiwitcms/issues/3086416250/>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Split Users & Groups menu items under ADMIN entry in navigation
+- [pre-commit.ci] updates
+- pylint adjustments
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+
+
+
 Kiwi TCMS 11.2 (09 Mar 2022)
 ----------------------------
 
