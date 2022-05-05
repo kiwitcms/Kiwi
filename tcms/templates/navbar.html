@@ -15,12 +15,9 @@
                 <img src="{% static 'images/kiwi_h20.png' %}" alt="Kiwi TCMS" />
             </a>
 
-            <b class="caret"></b>
-             <a>
-                <span id="tenant">
-                    {% block tenant %}{% endblock %}
-                </span>
-             </a>
+            {% block tenant %}
+                {{ customized_logo }}
+            {% endblock %}
 
         </div>
 
