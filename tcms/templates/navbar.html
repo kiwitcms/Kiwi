@@ -14,7 +14,13 @@
             <a class="navbar-brand" href="/" target="_parent">
                 <img src="{% static 'images/kiwi_h20.png' %}" alt="Kiwi TCMS" />
             </a>
+
+            {% block customized_logo %}
+                {{ customized_logo_contents }}
+            {% endblock %}
+
         </div>
+
         <div class="collapse navbar-collapse navbar-collapse-1">
             <ul class="nav navbar-nav navbar-utility">
 
