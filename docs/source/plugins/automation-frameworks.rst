@@ -62,7 +62,13 @@ The second is controlled via environment variables and behavior is described
 <http://kiwitcms.org/blog/atodorov/2018/11/05/test-runner-plugin-specification/>`_.
 Important variables are:
 
+* ``TCMS_PREFIX`` - a text prefix for new TestPlan and TestRun records. Plugins
+  provide their own default prefix if not specified
+* ``TCMS_DEFAULT_TESTER_ID`` - user ID to use for new records where needed.
+  Defaults to the user making the API request
 * ``TCMS_PLAN_ID`` - if defined will create test runs under this TestPlan
+* ``TCMS_PARENT_PLAN`` - if defined newly created TestPlan will be a child of
+  this one
 * ``TCMS_RUN_ID`` - if defined will report results to this TestRun
 * ``TCMS_PRODUCT`` or ``TRAVIS_REPO_SLUG`` or ``JOB_NAME`` - defines the
   product under test if we have to create new objects in the database
