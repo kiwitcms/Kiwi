@@ -194,7 +194,7 @@ def remove_tag(run_id, tag_name):
 
 @permissions_required("testruns.add_testrun")
 @rpc_method(name="TestRun.create")
-def create(values):
+def create(values, **kwargs):
     """
     .. function:: RPC TestRun.create(values)
 
@@ -202,6 +202,8 @@ def create(values):
 
         :param values: Field values for :class:`tcms.testruns.models.TestRun`
         :type values: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testruns.models.TestRun` object
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.add_testrun* permission
@@ -216,6 +218,9 @@ def create(values):
             }
             >>> TestRun.create(values)
     """
+    if not values.get("default_tester"):
+        values["default_tester"] = kwargs.get(REQUEST_KEY).user.pk
+
     form = NewRunForm(values)
     form.populate(values.get("plan"))
 
