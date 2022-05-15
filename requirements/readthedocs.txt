@@ -2,8 +2,7 @@
 
 django-debug-toolbar
 Sphinx
-# workaround for https://github.com/readthedocs/readthedocs.org/issues/8616
-docutils<0.19
+docutils
 
 flake8
 epydoc
