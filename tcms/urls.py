@@ -12,7 +12,7 @@ from django.urls import re_path
 from django.views.generic import TemplateView
 from django.views.i18n import JavaScriptCatalog
 from grappelli import urls as grappelli_urls
-from modernrpc.core import JSONRPC_PROTOCOL, XMLRPC_PROTOCOL
+from modernrpc.core import Protocol
 from modernrpc.views import RPCEntryPoint
 
 from tcms.core import views as core_views
@@ -25,8 +25,8 @@ from tcms.testruns import urls as testruns_urls
 urlpatterns = [
     re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
     re_path(r"^captcha/", include(captcha_urls)),
-    re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
-    re_path(r"^json-rpc/$", RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
+    re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=Protocol.XML_RPC)),
+    re_path(r"^json-rpc/$", RPCEntryPoint.as_view(protocol=Protocol.JSON_RPC)),
     re_path(r"^init-db/$", core_views.InitDBView.as_view(), name="init-db"),
     re_path(
         r"^translation-mode/",
