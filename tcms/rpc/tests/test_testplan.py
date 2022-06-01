@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
+
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
@@ -102,7 +102,9 @@ class TestAddTag(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.add_tag"'
+        ):
             rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
 
         # tags were not modified
@@ -149,7 +151,9 @@ class TestRemoveTag(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.remove_tag"'
+        ):
             rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
 
         # tags were not modified
@@ -215,7 +219,9 @@ class TestUpdatePermission(APIPermissionsTestCase):
         self.assertEqual("This has been updated", self.plan.text)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.update"'
+        ):
             self.rpc_client.TestPlan.update(
                 self.plan.pk, {"text": "This has been updated"}
             )
@@ -389,7 +395,9 @@ class TestCreatePermission(APIPermissionsTestCase):
         self.assertEqual(testplan.pk, result["id"])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.create"'
+        ):
             self.rpc_client.TestPlan.create(self.params)
 
 
@@ -426,7 +434,10 @@ class TestListAttachmentsPermissions(APIPermissionsTestCase):
         self.assertEqual(0, len(attachments))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestPlan.list_attachments"',
+        ):
             self.rpc_client.TestPlan.list_attachments(self.plan.pk)
 
 
@@ -450,7 +461,9 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         self.assertTrue(file_url.endswith(file_name))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.add_attachment"'
+        ):
             self.rpc_client.TestPlan.add_attachment(
                 self.plan.pk, "attachment.txt", "a2l3aXRjbXM="
             )
@@ -475,7 +488,9 @@ class TestTreePermission(APIPermissionsTestCase):
         self.assertIn("url", result[0])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.tree"'
+        ):
             self.rpc_client.TestPlan.tree(self.plan.pk)
 
 

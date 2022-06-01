@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.management.models import Classification
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
@@ -44,7 +44,9 @@ class TestClassificationFilterPermissions(APIPermissionsTestCase):
         self.assertGreater(len(classifications), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Classification.filter"'
+        ):
             self.rpc_client.Classification.filter({})
 
 
@@ -61,5 +63,7 @@ class TestClassificationCreate(APIPermissionsTestCase):
         self.assertEqual(result["name"], obj_from_db.name)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Classification.create"'
+        ):
             self.rpc_client.Classification.create({"name": "API-CLASSIFICATION"})

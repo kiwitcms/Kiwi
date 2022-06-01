@@ -2,7 +2,6 @@
 # pylint: disable=attribute-defined-outside-init, invalid-name, avoid-list-comprehension
 
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
@@ -106,7 +105,9 @@ class TestVersionCreatePermissions(APIPermissionsTestCase):
         self.assertEqual(version.product_id, self.product.pk)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Version.create"'
+        ):
             self.rpc_client.Version.create(
                 {"product": self.product.pk, "value": "Version without Permissions"}
             )

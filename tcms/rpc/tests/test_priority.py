@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 
@@ -29,5 +29,7 @@ class TestPriorityFilterPermissions(APIPermissionsTestCase):
         self.assertGreater(len(priorities), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Priority.filter"'
+        ):
             self.rpc_client.Priority.filter({})

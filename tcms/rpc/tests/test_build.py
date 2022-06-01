@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
@@ -19,7 +18,9 @@ class BuildCreate(APITestCase):
 
     def test_build_create_with_no_perms(self):
         self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Build.create"'
+        ):
             self.rpc_client.Build.create({})
 
     def test_build_create_with_no_required_fields(self):
@@ -83,7 +84,9 @@ class BuildUpdate(APITestCase):
 
     def test_build_update_with_no_perms(self):
         self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Build.update"'
+        ):
             self.rpc_client.Build.update(self.build_1.pk, {})
 
     def test_build_update_with_multi_id(self):

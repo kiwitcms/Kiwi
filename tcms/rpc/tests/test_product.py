@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.management.models import Product
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
@@ -52,7 +52,9 @@ class TestProductCreatePermissions(APIPermissionsTestCase):
         self.assertEqual(product.name, "Product with Permissions")
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Product.create"'
+        ):
             self.rpc_client.Product.create(
                 {
                     "name": "Product with Permissions",

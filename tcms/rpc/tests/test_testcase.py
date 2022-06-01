@@ -3,7 +3,7 @@
 
 import unittest
 from datetime import timedelta
-from xmlrpc.client import Fault, ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
@@ -59,7 +59,10 @@ class TestAddNotificationCCPermission(APIPermissionsTestCase):
         self.assertEqual(self.testcase.emailing.get_cc_list(), [self.default_cc])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestCase.add_notification_cc"',
+        ):
             self.rpc_client.TestCase.add_notification_cc(
                 self.testcase.pk, [self.default_cc]
             )
@@ -67,7 +70,9 @@ class TestAddNotificationCCPermission(APIPermissionsTestCase):
 
 class TestAddNotificationCC(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.add_notification_cc(-1, ["example@example.com"])
 
 
@@ -86,13 +91,18 @@ class TestGetNotificationCCPermission(APIPermissionsTestCase):
         self.assertListEqual(result, [self.default_cc])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestCase.get_notification_cc"',
+        ):
             self.rpc_client.TestCase.get_notification_cc(self.testcase.pk)
 
 
 class TestGetNotificationCC(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.get_notification_cc(-1)
 
 
@@ -114,7 +124,10 @@ class TestRemoveNotificationCCPermission(APIPermissionsTestCase):
         self.assertEqual([], self.testcase.emailing.get_cc_list())
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestCase.remove_notification_cc"',
+        ):
             self.rpc_client.TestCase.remove_notification_cc(
                 self.testcase.pk, [self.default_cc]
             )
@@ -122,7 +135,9 @@ class TestRemoveNotificationCCPermission(APIPermissionsTestCase):
 
 class TestRemoveNotificationCC(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.remove_notification_cc(-1, ["example@example.com"])
 
 
@@ -300,7 +315,7 @@ class TestUpdate(APITestCase):
 
     def test_update_author_should_fail_for_non_existing_user_id(self):
         initial_author_id = self.testcase.author.pk
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -330,7 +345,7 @@ class TestUpdate(APITestCase):
 
     def test_update_author_should_fail_for_non_existing_username(self):
         initial_author_username = self.testcase.author.username
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -360,7 +375,7 @@ class TestUpdate(APITestCase):
 
     def test_update_author_should_fail_for_non_existing_email(self):
         initial_author_email = self.testcase.author.email
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -414,7 +429,7 @@ class TestUpdate(APITestCase):
     def test_update_default_tester_should_fail_with_non_existing_user_id(self):
         self.assertIsNone(self.testcase.default_tester)
 
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -443,7 +458,7 @@ class TestUpdate(APITestCase):
     def test_update_default_tester_should_fail_with_non_existing_username(self):
         self.assertIsNone(self.testcase.default_tester)
 
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -471,7 +486,7 @@ class TestUpdate(APITestCase):
     def test_update_default_tester_should_fail_with_non_existing_email(self):
         self.assertIsNone(self.testcase.default_tester)
 
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -499,7 +514,7 @@ class TestUpdate(APITestCase):
 
     def test_update_reviewer_should_fail_with_non_existing_user_id(self):
         initial_reviewer_id = self.testcase.reviewer.pk
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -525,7 +540,7 @@ class TestUpdate(APITestCase):
 
     def test_update_reviewer_should_fail_for_non_existing_username(self):
         initial_reviewer_username = self.testcase.reviewer.username
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -551,7 +566,7 @@ class TestUpdate(APITestCase):
 
     def test_update_reviewer_should_fail_for_non_existing_email(self):
         initial_reviewer_email = self.testcase.reviewer.email
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
                 self.testcase.pk,
                 {
@@ -629,7 +644,7 @@ class TestCreate(APITestCase):
         self.assertEqual(new_author, tc_from_db.author)
 
     def test_fails_when_mandatory_fields_not_specified(self):
-        with self.assertRaises(Fault):
+        with self.assertRaises(XmlRPCFault):
             self.rpc_client.TestCase.create(
                 {
                     "summary": "TC via API without mandatory FK fields",
@@ -654,7 +669,9 @@ class TestRemovePermissions(APIPermissionsTestCase):
         self.assertEqual(num_deleted, 3)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.remove"'
+        ):
             self.rpc_client.TestCase.remove(self.query)
 
 
@@ -688,7 +705,9 @@ class TestAddTag(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.add_tag"'
+        ):
             rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
 
         # tags were not modified
@@ -729,7 +748,9 @@ class TestRemoveTag(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.remove_tag"'
+        ):
             rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
 
         # tags were not modified
@@ -759,7 +780,9 @@ class TestAddComponent(APITestCase):
         self.assertEqual(result["name"], self.good_component.name)
 
     def test_add_component_from_another_product_is_not_allowed(self):
-        with self.assertRaisesRegex(Fault, "Component matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Component matching query does not exist"
+        ):
             self.rpc_client.TestCase.add_component(
                 self.test_case.pk, self.bad_component.name
             )
@@ -785,7 +808,10 @@ class TestRemoveComponentPermission(APIPermissionsTestCase):
         self.assertEqual(result.first(), self.good_component)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestCase.remove_component"',
+        ):
             self.rpc_client.TestCase.remove_component(
                 self.test_case.pk, self.good_component.pk
             )
@@ -793,7 +819,9 @@ class TestRemoveComponentPermission(APIPermissionsTestCase):
 
 class TestRemoveComponent(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.remove_component(-1, -1)
 
 
@@ -818,13 +846,17 @@ class TestAddCommentPermissions(APIPermissionsTestCase):
         self.assertEqual("Hello World!", created_comment["comment"])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.add_comment"'
+        ):
             self.rpc_client.TestCase.add_comment(self.case.pk, "Hello World!")
 
 
 class TestAddComment(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.add_comment(-1, "Hello World!")
 
 
@@ -849,13 +881,17 @@ class TestRemoveCommentPermissions(APIPermissionsTestCase):
         self.assertEqual(len(comments.get_comments(self.case)), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.remove_comment"'
+        ):
             self.rpc_client.TestCase.remove_comment(self.case.pk)
 
 
 class TestRemoveComment(APITestCase):
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.remove_comment(-1)
 
 
@@ -895,7 +931,9 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
         self.assertGreater(len(result), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.sortkeys"'
+        ):
             self.rpc_client.TestCase.sortkeys(
                 {
                     "plan": self.plan.pk,
@@ -928,7 +966,9 @@ class TestCaseCommentPermissions(APIPermissionsTestCase):
             self.assertEqual(entry["user_name"], self.tester.username)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.comments"'
+        ):
             self.rpc_client.TestCase.comments(self.case.pk)
 
 
@@ -949,7 +989,9 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         self.assertEqual(attachments[0].object_id, str(self.case.pk))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestCase.add_attachment"'
+        ):
             self.rpc_client.TestCase.add_attachment(
                 self.case.pk, "test.txt", "a2l3aXRjbXM="
             )
@@ -969,7 +1011,9 @@ class TestListAttachments(APITestCase):
         self.assertEqual(len(attachments), 1)
 
     def test_invalid_testcase_id(self):
-        with self.assertRaisesRegex(Fault, "TestCase matching query does not exist"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestCase matching query does not exist"
+        ):
             self.rpc_client.TestCase.list_attachments(-1)
 
 
@@ -986,5 +1030,8 @@ class TestListAttachmentPermissions(APIPermissionsTestCase):
         self.assertEqual(len(attachments), 0)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestCase.list_attachments"',
+        ):
             self.rpc_client.TestCase.list_attachments(self.case.pk)

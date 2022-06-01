@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.tests import user_should_have_perm
@@ -57,5 +57,8 @@ class TestRemoveAttachmentPermissions(APIPermissionsTestCase):
 
         self.assertEqual(1, len(attachments))
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "Attachment.remove_attachment"',
+        ):
             self.rpc_client.Attachment.remove_attachment(attachments[0]["pk"])

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase
 from tcms.testplans.models import PlanType
@@ -22,7 +22,9 @@ class TestPlanTypeFilter(APIPermissionsTestCase):
         self.assertEqual(self.plan_type.pk, result["id"])
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "PlanType.filter"'
+        ):
             self.rpc_client.PlanType.filter({"name": self.plan_type.name})
 
 
@@ -39,5 +41,7 @@ class TestPlanTypeCreate(APIPermissionsTestCase):
         self.assertEqual(result["name"], obj_from_db.name)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "PlanType.create"'
+        ):
             self.rpc_client.PlanType.create({"name": "API-TP"})

@@ -2,7 +2,6 @@
 # pylint: disable=wrong-import-position
 import unittest
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from django.conf import settings
 
@@ -32,7 +31,9 @@ class TestAddTagPermissions(APIPermissionsTestCase):
         self.assertIn(self.tag, self.bug.tags.all())
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.add_tag"'
+        ):
             self.rpc_client.Bug.add_tag(self.bug.pk, self.tag.name)
 
 
@@ -67,7 +68,9 @@ class TestRemoveTagPermissions(APIPermissionsTestCase):
         self.assertNotIn(self.tag, self.bug.tags.all())
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.remove_tag"'
+        ):
             self.rpc_client.Bug.remove_tag(self.bug.pk, self.tag.name)
 
 
@@ -92,7 +95,9 @@ class TestRemovePermissions(APIPermissionsTestCase):
         self.assertIn(self.yet_another_bug, bugs)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.remove"'
+        ):
             self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
 
 

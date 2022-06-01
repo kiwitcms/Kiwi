@@ -2,7 +2,6 @@
 # pylint: disable=attribute-defined-outside-init
 
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from tcms.rpc.tests.utils import APITestCase
 
@@ -33,6 +32,8 @@ class TestAuthLogout(APITestCase):
 
     def test_logout(self):
         self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.details"'
+        ):
             # this method requires a logged-in user
             self.rpc_client.Bug.details("http://some.url")
