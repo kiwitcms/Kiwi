@@ -3,6 +3,8 @@ import html
 from datetime import timedelta
 
 from modernrpc.handlers import JSONRPCHandler, XMLRPCHandler
+from modernrpc.handlers.base import BaseResult, SuccessResult
+from modernrpc.handlers.jsonhandler import JsonResult, JsonSuccessResult
 
 
 class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
@@ -24,25 +26,19 @@ class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
             elif isinstance(item, dict):
                 __class__.escape_dict(item)
 
-    def execute_procedure(self, name, args=None, kwargs=None):
-        """
-        HTML escape every string before returning it to
-        the client, which may as well be the webUI. This will
-        prevent XSS attacks for pages which display whatever
-        is in the DB (e.g. tags, components)
-        """
-        result = super().execute_procedure(name, args, kwargs)
+    def dumps_result(self, result: JsonResult) -> str:
 
-        if isinstance(result, str):
-            result = html.escape(result)
-        elif isinstance(result, timedelta):
-            result = result.total_seconds()
-        elif isinstance(result, dict):
-            self.escape_dict(result)
-        elif isinstance(result, list):
-            self.escape_list(result)
+        if isinstance(result, JsonSuccessResult):
+            if isinstance(result.data, str):
+                result.data = html.escape(result.data)
+            elif isinstance(result.data, timedelta):
+                result.data = result.data.total_seconds()
+            elif isinstance(result.data, dict):
+                self.escape_dict(result.data)
+            elif isinstance(result.data, list):
+                self.escape_list(result.data)
 
-        return result
+        return super().dumps_result(result)
 
 
 class KiwiTCMSXmlRpcHandler(XMLRPCHandler):
@@ -60,14 +56,14 @@ class KiwiTCMSXmlRpcHandler(XMLRPCHandler):
             elif isinstance(item, dict):
                 __class__.escape_dict(item)
 
-    def execute_procedure(self, name, args=None, kwargs=None):
-        result = super().execute_procedure(name, args, kwargs)
+    def dumps_result(self, result: BaseResult) -> str:
 
-        if isinstance(result, timedelta):
-            result = result.total_seconds()
-        elif isinstance(result, dict):
-            self.escape_dict(result)
-        elif isinstance(result, list):
-            self.escape_list(result)
+        if isinstance(result, SuccessResult):
+            if isinstance(result.data, timedelta):
+                result.data = result.data.total_seconds()
+            elif isinstance(result.data, dict):
+                self.escape_dict(result.data)
+            elif isinstance(result.data, list):
+                self.escape_list(result.data)
 
-        return result
+        return super().dumps_result(result)
