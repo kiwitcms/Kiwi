@@ -2,7 +2,6 @@
 # pylint: disable=attribute-defined-outside-init, invalid-name
 
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import ComponentFactory, ProductFactory
@@ -65,7 +64,9 @@ class TestCreateComponent(APITestCase):
 
     def test_add_component_with_no_perms(self):
         self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Component.create"'
+        ):
             self.rpc_client.Component.create(self.product.pk, "MyComponent")
 
 
@@ -95,5 +96,7 @@ class TestUpdateComponent(APITestCase):
 
     def test_update_component_with_no_perms(self):
         self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Component.update"'
+        ):
             self.rpc_client.Component.update(self.component.pk, {})

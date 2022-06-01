@@ -3,7 +3,6 @@
 
 import time
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from django.forms.models import model_to_dict
 from django.test import override_settings
@@ -73,7 +72,10 @@ class TestExecutionGetCommentsPermissions(APIPermissionsTestCase):
             self.assertIn(comment["comment"], self.comments)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.get_comments"',
+        ):
             self.rpc_client.TestExecution.get_comments(self.execution.pk)
 
 
@@ -149,7 +151,10 @@ class TestExecutionRemoveCommentPermissions(APIPermissionsTestCase):
     def verify_api_without_permission(self):
         comments.add_comment([self.execution], "Hello World!", self.user)
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.remove_comment"',
+        ):
             self.rpc_client.TestExecution.remove_comment(self.execution.pk)
 
 
@@ -214,7 +219,9 @@ class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
 
     def verify_api_without_permission(self):
         url = "http://127.0.0.1/test/test-log.log"
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestExecution.add_link"'
+        ):
             self.rpc_client.TestExecution.add_link(
                 {"execution_id": self.execution.pk, "name": "UT test logs", "url": url}
             )
@@ -287,7 +294,10 @@ class TestExecutionRemoveLinkPermissions(APIPermissionsTestCase):
         self.assertNotIn(self.link, links)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.remove_link"',
+        ):
             self.rpc_client.TestExecution.remove_link({"pk": self.another_link.pk})
 
 
@@ -474,7 +484,9 @@ class TestExecutionHistoryPermissions(APIPermissionsTestCase):
         self.assertEqual(1, len(history))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestExecution.history"'
+        ):
             self.rpc_client.TestExecution.history(self.execution.pk)
 
 
@@ -663,7 +675,9 @@ class TestExecutionUpdate(APITestCase):
 
     def test_update_with_no_perm(self):
         self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestExecution.update"'
+        ):
             self.rpc_client.TestExecution.update(
                 self.execution_1.pk, {"stop_date": timezone.now()}
             )

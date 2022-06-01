@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, objects-update-used
+
 from datetime import datetime
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
@@ -76,7 +76,9 @@ class TestAddCase(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.add_case"'
+        ):
             rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
 
         exists = TestExecution.objects.filter(
@@ -131,7 +133,9 @@ class TestRemovesCase(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.remove_case"'
+        ):
             rpc_client.TestRun.remove_case(self.test_run.pk, self.test_case.pk)
 
         exists = TestExecution.objects.filter(
@@ -202,7 +206,9 @@ class TestGetCasesPermission(APIPermissionsTestCase):
         self.assertTrue(isinstance(result, list))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.get_cases"'
+        ):
             self.rpc_client.TestRun.get_cases(self.test_run.pk)
 
 
@@ -254,7 +260,9 @@ class TestAddTag(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.add_tag"'
+        ):
             rpc_client.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
 
         # tags were not modified
@@ -325,7 +333,9 @@ class TestRemoveTag(APITestCase):
             f"{self.live_server_url}/xml-rpc/",
         ).server
 
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.remove_tag"'
+        ):
             rpc_client.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
 
         # tags were not modified
@@ -400,7 +410,9 @@ class TestCreatePermission(APIPermissionsTestCase):
         self.assertIn("default_tester", result)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.create"'
+        ):
             self.rpc_client.TestRun.create(self.test_run_fields)
 
 
@@ -457,7 +469,9 @@ class TestFilterPermission(APIPermissionsTestCase):
         self.assertTrue(isinstance(result, list))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.filter"'
+        ):
             self.rpc_client.TestRun.filter(None)
 
 
@@ -590,7 +604,9 @@ class TestUpdatePermission(APIPermissionsTestCase):
         self.assertEqual(updated_test_run["stop_date"], self.test_run.stop_date)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.update"'
+        ):
             self.rpc_client.TestRun.update(self.test_run.pk, self.update_fields)
 
 
