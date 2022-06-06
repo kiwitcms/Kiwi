@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-02-23 22:03\n"
+"PO-Revision-Date: 2022-06-06 07:44\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1746,7 +1746,7 @@ msgstr "取消"
 
 #: tcms/testruns/templates/testruns/get.html:587
 msgid "Issue Tracker"
-msgstr ""
+msgstr "問題追蹤"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -2055,7 +2055,7 @@ msgstr "建立"
 #: tcms_tenants/menu.py:15
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "邀請使用者"
 
 #: tcms_tenants/menu.py:16
 msgid "Authorized users"
@@ -2134,3 +2134,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
