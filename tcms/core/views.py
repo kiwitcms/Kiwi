@@ -178,7 +178,7 @@ class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
 
     template_name = "initdb.html"
 
-    def post(self, request):
+    def post(self, request):  # pylint: disable=no-self-use
         # Default production installation
         manage_path = "/Kiwi/manage.py"
         if not os.path.exists(manage_path):

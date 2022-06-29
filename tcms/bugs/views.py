@@ -209,7 +209,7 @@ class Edit(UpdateView):
 class AddComment(View):
     http_methods = ["post"]
 
-    def post(self, request):
+    def post(self, request):  # pylint: disable=no-self-use
         form = BugCommentForm(request.POST)
         request_action = request.POST.get("action")
 
