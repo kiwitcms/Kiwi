@@ -82,6 +82,8 @@ echo "..... Trying to install the new tarballs inside a virtualenv"
 $(which python) -m venv .venv/test-tarball
 source .venv/test-tarball/bin/activate
 pip install --upgrade setuptools pip
+# workaround for https://github.com/pypa/setuptools/issues/3424
+pip install setuptools-scm-git-archive
 pip install --no-binary :all: dist/kiwitcms*.tar.gz
 pip freeze | grep kiwitcms
 deactivate
