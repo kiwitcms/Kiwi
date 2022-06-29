@@ -62,7 +62,8 @@ pylint:
 	        --load-plugins=kiwi_lint                                      \
 	        --load-plugins=pylint.extensions.docparams                    \
 	        --load-plugins=pylint.extensions.no_self_use                  \
-	    -d missing-docstring -d duplicate-code -d one-to-one-field -d similar-string tcms/ tcms_settings_dir/
+	    -d missing-docstring -d duplicate-code -d one-to-one-field -d similar-string \
+	    --ignore migrations tcms/ tcms_settings_dir/
 
 .PHONY: similar_strings
 similar_strings:
