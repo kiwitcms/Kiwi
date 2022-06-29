@@ -11,7 +11,6 @@ django-extensions==3.1.5
 django-grappelli==3.0.3
 django-guardian==2.4.0
 django-modern-rpc==0.12.1
-django-simple-captcha==0.5.17
 django-simple-history==3.0.0
 django-tree-queries==0.11.0
 django-uuslug==2.0.0
