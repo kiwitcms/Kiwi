@@ -95,7 +95,7 @@ class Bugzilla(base.IssueTrackerType):
             "component": self.get_case_components(execution.case),
             "version": execution.run.plan.product_version.value,
             "short_desc": f"Test case failure: {execution.case.summary}",
-            "comment": self._report_comment(execution),
+            "comment": self._report_comment(execution, user),
         }
 
         try:

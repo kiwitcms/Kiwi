@@ -105,6 +105,7 @@ class TestKiwiTCMSIntegration(APITestCase):
         first_comment = get_comments(bug).first()
         for expected_string in [
             f"Filed from execution {self.execution_1.get_full_url()}",
+            "Reporter",
             self.execution_1.run.plan.product.name,
             self.component.name,
             "Steps to reproduce",
