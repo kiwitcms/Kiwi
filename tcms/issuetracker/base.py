@@ -110,13 +110,20 @@ class IssueTrackerType:
 
         return result
 
-    def _report_comment(self, execution):  # pylint: disable=no-self-use
+    def _report_comment(self, execution, user=None):  # pylint: disable=no-self-use
         """
         Returns the comment which is used in the original defect report.
         """
         txt = execution.case.get_text_with_version(execution.case_text_version)
 
+        reporter = "Unknown"
+        if user:
+            reporter = user.get_full_name() or user.username
+
         comment = f"""Filed from execution {execution.get_full_url()}
+
+**Reporter:**
+{reporter}
 
 **Product:**
 {execution.run.plan.product.name}

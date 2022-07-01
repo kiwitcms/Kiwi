@@ -114,7 +114,7 @@ class AzureBoards(IssueTrackerType):
                 "op": "replace",
                 "path": "/fields/System.Description",
                 "from": "null",
-                "value": markdown2html(self._report_comment(execution)),
+                "value": markdown2html(self._report_comment(execution, user)),
             }
         ]
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2022 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -84,7 +84,7 @@ class KiwiTCMS(IssueTrackerType):
             "product": execution.run.plan.product,
             "version": execution.run.plan.product_version,
             "build": execution.build,
-            "text": self._report_comment(execution),
+            "text": self._report_comment(execution, user),
             "_execution": execution,
         }
 

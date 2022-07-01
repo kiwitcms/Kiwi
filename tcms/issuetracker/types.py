@@ -114,7 +114,7 @@ class JIRA(IssueTrackerType):
                 project=project.id,
                 issuetype={"name": issue_type.name},
                 summary=f"Failed test: {execution.case.summary}",
-                description=self._report_comment(execution),
+                description=self._report_comment(execution, user),
             )
             new_url = self.bug_system.base_url + "/browse/" + new_issue.key
 
@@ -133,7 +133,7 @@ class JIRA(IssueTrackerType):
             "pid": project.id,
             "issuetype": issue_type.id,
             "summary": f"Failed test: {execution.case.summary}",
-            "description": self._report_comment(execution),
+            "description": self._report_comment(execution, user),
         }
 
         url = self.bug_system.base_url
@@ -171,7 +171,7 @@ class GitHub(IssueTrackerType):
         """
         args = {
             "title": f"Failed test: {execution.case.summary}",
-            "body": self._report_comment(execution),
+            "body": self._report_comment(execution, user),
         }
 
         try:
@@ -243,7 +243,7 @@ class Gitlab(IssueTrackerType):
         new_issue = project.issues.create(
             {
                 "title": f"Failed test: {execution.case.summary}",
-                "description": self._report_comment(execution),
+                "description": self._report_comment(execution, user),
             }
         )
 
@@ -351,7 +351,7 @@ class Redmine(IssueTrackerType):
 
         new_issue = self.rpc.issue.create(
             subject=f"Failed test: {execution.case.summary}",
-            description=self._report_comment(execution),
+            description=self._report_comment(execution, user),
             project_id=project.id,
             tracker_id=tracker.id,
             status_id=status.id,
