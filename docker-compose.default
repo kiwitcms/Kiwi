@@ -15,7 +15,7 @@ services:
             MYSQL_USER: kiwi
             MYSQL_PASSWORD: kiwi
 
-    web:
+    beat-kiwi-tcm:
         container_name: kiwi_web
         depends_on:
             - db
