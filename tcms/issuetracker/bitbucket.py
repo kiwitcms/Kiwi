@@ -128,7 +128,9 @@ class BitBucket(IssueTrackerType):
             "title": f"Failed test: {execution.case.summary}",
             "kind": "bug",
             "priority": "major",
-            "content": {"raw": self._report_comment(execution).replace("\n", "\r\n")},
+            "content": {
+                "raw": self._report_comment(execution, user).replace("\n", "\r\n")
+            },
         }
 
         try:

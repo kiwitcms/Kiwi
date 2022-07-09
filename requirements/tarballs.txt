@@ -1,8 +1,5 @@
 # these do not provide wheel packages
 
-django-grappelli==3.0.3
-django-uuslug==2.0.0
+django-simple-captcha==0.5.17
 django-vinaigrette==2.0.1
-django-colorfield==0.7.1
 python-bugzilla==3.2.0
-PyGithub==1.55

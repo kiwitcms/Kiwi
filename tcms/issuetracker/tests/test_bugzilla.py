@@ -170,6 +170,7 @@ class TestBugzillaIntegration(APITestCase):
         last_comment = bug.getcomments()[-1]
         for expected_string in [
             f"Filed from execution {execution2.get_full_url()}",
+            "Reporter",
             product.name,
             component.name,
             test_case.text,
