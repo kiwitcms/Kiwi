@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: beat-kiwi-tcm
+  name: beat-kiwi-tcm
+spec:
+  type: NodePort
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 8080
+    - name: "443"
+      port: 443
+      targetPort: 8443
+  selector:
+    io.kompose.service: beat-kiwi-tcm
+status:
+  loadBalancer: {}

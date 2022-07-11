@@ -4,6 +4,8 @@ services:
     db:
         container_name: kiwi_db
         image: postgres:latest
+        ports:
+            - 5432:5432
         volumes:
             - db_data:/var/lib/postgresql/data
         restart: always
@@ -12,7 +14,7 @@ services:
             POSTGRES_USER: kiwi
             POSTGRES_PASSWORD: kiwi
 
-    web:
+    beat-kiwi-tcm:
         container_name: kiwi_web
         depends_on:
             - db
