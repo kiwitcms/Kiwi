@@ -33,3 +33,6 @@ DATABASES = {
 # for running localized tests, see f74c3c1
 # See https://code.djangoproject.com/ticket/29713
 LANGUAGE_CODE = os.environ.get("LANG", "en-us").lower().replace("_", "-").split(".")[0]
+
+# Allows us to hook-up kiwitcms-django-plugin at will
+TEST_RUNNER = os.environ.get("DJANGO_TEST_RUNNER", "django.test.runner.DiscoverRunner")
