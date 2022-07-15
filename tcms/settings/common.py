@@ -179,10 +179,6 @@ TCMS_ROOT_PATH = os.path.abspath(
 # to load the internationalization machinery.
 USE_I18N = True
 
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale.
-USE_L10N = True
-
 # Language code for this installation. All choices can be found here:
 # See https://code.djangoproject.com/ticket/29713
 LANGUAGE_CODE = "en-us"
