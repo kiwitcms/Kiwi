@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
+        kiwitcms-url: [tcms.kiwitcms.org, public.tenant.kiwitcms.org]
 
     steps:
       - uses: actions/checkout@v3
@@ -19,6 +20,13 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Configure ~/.tcms.conf for ${{ matrix.kiwitcms-url }}
+        run: |
+          echo "[tcms]" > ~/.tcms.conf
+          echo "url = https://${{ matrix.kiwitcms-url }}/xml-rpc/" >> ~/.tcms.conf
+          echo "username = kiwitcms-bot" >> ~/.tcms.conf
+          echo "password = ${{ secrets.TCMS_PASSWORD }}" >> ~/.tcms.conf
 
       - name: Execute tests
         run: |
@@ -32,6 +40,22 @@ jobs:
           pushd tcms/ && npm install && popd
 
           export LANG=en-us
+
+          # report to Kiwi TCMS only if we have access to secrets
+          if [ -n "${{ secrets.TCMS_PASSWORD }}" ]; then
+            pip install kiwitcms-django-plugin
+
+            export DJANGO_TEST_RUNNER="tcms_django_plugin.TestRunner"
+
+            export TCMS_PRODUCT=$GITHUB_REPOSITORY
+
+            # branch name or pull/123
+            export TCMS_PRODUCT_VERSION=$(echo $GITHUB_REF | sed "s|refs/heads/||" | sed "s|refs/||" | sed "s|/merge||")
+
+            # short commit number
+            export TCMS_BUILD=$(echo $GITHUB_SHA | cut -c1-7)
+          fi
+
           make test
 
       - name: Send coverage to codecov.io
