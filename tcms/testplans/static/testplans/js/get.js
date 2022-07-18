@@ -189,7 +189,7 @@ function getTestCaseRowContent (rowContent, testCase, permissions) {
   let automatedClassToRemove = 'fa-cog'
 
   if (testCase.is_automated) {
-    automatedClassToRemove = 'fa-thumbs-up'
+    automatedClassToRemove = 'fa-hand-paper-o'
   }
 
   automationIndicationElement.parent().attr(

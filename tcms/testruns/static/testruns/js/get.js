@@ -595,7 +595,7 @@ function renderAdditionalInformation (testRunId, execution) {
             row.find('.test-execution-category').html(testCase.category__name)
 
             const isAutomatedElement = row.find('.test-execution-automated')
-            const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-thumbs-up'
+            const isAutomatedIcon = testCase.is_automated ? 'fa-cog' : 'fa-hand-paper-o'
             const isAutomatedAttr = testCase.is_automated ? isAutomatedElement.data('automated') : isAutomatedElement.data('manual')
             isAutomatedElement.addClass(isAutomatedIcon)
             isAutomatedElement.attr('title', isAutomatedAttr)
