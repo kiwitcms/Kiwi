@@ -78,57 +78,77 @@ class KiwiUserAdmin(UserAdmin):
     # even when adding users via admin panel
     form = MyUserChangeForm
 
-    def has_change_permission(self, request, obj=None):
-        return request.user.is_superuser or obj is not None
-
     def has_view_permission(self, request, obj=None):
-        if _modifying_myself(request, getattr(obj, "pk", 0)):
-            return True
+        return _modifying_myself(
+            request, getattr(obj, "pk", 0)
+        ) or super().has_view_permission(request, obj)
 
-        return super().has_view_permission(request, obj)
+    def has_change_permission(self, request, obj=None):
+        return _modifying_myself(
+            request, getattr(obj, "pk", 0)
+        ) or super().has_change_permission(request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        return _modifying_myself(
+            request, getattr(obj, "pk", 0)
+        ) or super().has_delete_permission(request, obj)
 
     # pylint: disable=too-many-arguments
     def render_change_form(
         self, request, context, add=False, change=False, form_url="", obj=None
     ):
-        if not self.has_view_permission(request, obj):
-            return HttpResponseForbidden()
-
-        if obj and not (
-            _modifying_myself(request, obj.pk) or request.user.is_superuser
-        ):
+        if not self.has_change_permission(request, obj):
             context.update(
                 {
                     "show_save": False,
                     "show_save_and_continue": False,
                 }
             )
+        context.update(
+            {
+                "show_save_and_add_another": self.has_add_permission(request),
+            }
+        )
         return super().render_change_form(
             request, context, add=add, change=change, form_url=form_url, obj=obj
         )
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.is_superuser:
+        # adding new user
+        if not obj:
             return super().get_readonly_fields(request, obj)
 
         readonly_fields = [
             "username",
-            "is_staff",
-            "is_active",
-            "is_superuser",
             "last_login",
             "date_joined",
-            "groups",
-            "user_permissions",
         ]
-        if obj and not _modifying_myself(request, obj.pk):
-            readonly_fields.extend(["first_name", "last_name", "email"])
+
+        # only other superusers can set the is_superuser flag
+        if not request.user.is_superuser:
+            readonly_fields.append("is_superuser")
+
+        # if you have explicit change_user permission you can modify these fields
+        # however users are not able to give themselves elevated permissions
+        if not self.has_change_permission(request, None):
+            readonly_fields.extend(
+                [
+                    "is_staff",
+                    "is_active",
+                    "groups",
+                    "user_permissions",
+                ]
+            )
+
+            # lastly users can't modify others unless they have the expolicit permission
+            if not _modifying_myself(request, obj.pk):
+                readonly_fields.extend(["first_name", "last_name", "email"])
 
         return readonly_fields
 
     def get_fieldsets(self, request, obj=None):
-        # super-user adding new account
-        if not obj and request.user.is_superuser:
+        # adding new account b/c we have permissions
+        if not obj and self.has_add_permission(request):
             return super().get_fieldsets(request, obj)
 
         first_fieldset_fields = ("username",)
@@ -137,7 +157,18 @@ class KiwiUserAdmin(UserAdmin):
 
         remaining_fieldsets = (
             (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
-            (_("Permissions"), {"fields": ("is_active", "groups")}),
+            (
+                _("Permissions"),
+                {
+                    "fields": (
+                        "is_active",
+                        "is_staff",
+                        "is_superuser",
+                        "groups",
+                        "user_permissions",
+                    )
+                },
+            ),
         )
 
         if request.user.is_superuser:
@@ -174,17 +205,8 @@ class KiwiUserAdmin(UserAdmin):
         if not _modifying_myself(request, obj_id):
             return result
 
-        # user doesn't exist anymore so go to the index page
-        # instead of returning to the user admin page
-        return HttpResponseRedirect(reverse("core-views-index"))
-
-    def has_delete_permission(self, request, obj=None):
-        # allow to delete yourself without having 'delete' permission
-        # explicitly assigned
-        if _modifying_myself(request, getattr(obj, "pk", 0)):
-            return True
-
-        return super().has_delete_permission(request, obj)
+        # user doesn't exist anymore so go to the login page
+        return HttpResponseRedirect(reverse("tcms-login"))
 
     def delete_model(self, request, obj):
         delete_user(obj)

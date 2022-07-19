@@ -80,6 +80,23 @@ class TestUserAdmin(LoggedInTestCase):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.admin.username, password="admin-password"
         )
+
+        response = self.client.get(f"/admin/auth/user/{self.tester.pk}/change/")
+        response_str = str(response.content, encoding=settings.DEFAULT_CHARSET)
+
+        # 3 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 3)
+
+        # these fields can be edited
+        self.assertContains(response, "id_first_name")
+        self.assertContains(response, "id_last_name")
+        self.assertContains(response, "id_email")
+        self.assertContains(response, "id_is_active")
+        self.assertContains(response, "id_is_staff")
+        self.assertContains(response, "id_is_superuser")
+        self.assertContains(response, "id_groups")
+        self.assertContains(response, "id_user_permissions")
+
         response = self.client.post(
             f"/admin/auth/user/{self.tester.pk}/change/",
             {
@@ -112,7 +129,7 @@ class TestUserAdmin(LoggedInTestCase):
             {"post": "yes"},
             follow=True,
         )
-        self.assertRedirects(response, "/accounts/login/?next=/")
+        self.assertRedirects(response, "/accounts/login/")
         self.assertFalse(get_user_model().objects.filter(pk=self.admin.pk).exists())
 
     def test_superuser_can_delete_other_user(self):
@@ -161,20 +178,20 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertEqual(response_str.count("<input"), 1)
         self.assertContains(response, '<input type="hidden" name="csrfmiddlewaretoken"')
 
-        # 6 readonly fields: username, first_name, last_name, email, is_active, groups
-        self.assertEqual(response_str.count("grp-readonly"), 6)
+        # 9 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 9)
 
         # no delete button
         self.assertNotContains(response, f"/admin/auth/user/{self.tester.pk}/delete/")
 
         # no save buttons
-        self.assertNotContains(response, 'name="_save"', html=True)
-        self.assertNotContains(response, 'name="_addanother"', html=True)
-        self.assertNotContains(response, 'name="_continue"', html=True)
+        self.assertNotContains(response, "_save")
+        self.assertNotContains(response, "_addanother")
+        self.assertNotContains(response, "_continue")
 
     def test_moderator_can_add_users(self):
-        user_should_have_perm(self.moderator, "auth.view_user")
         user_should_have_perm(self.moderator, "auth.add_user")
+        user_should_have_perm(self.moderator, "auth.change_user")
 
         # test for https://github.com/kiwitcms/Kiwi/issues/642
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -182,6 +199,11 @@ class TestUserAdmin(LoggedInTestCase):
         )
         response = self.client.get("/admin/auth/user/add/")
         self.assertEqual(HTTPStatus.OK, response.status_code)
+
+        # only these fields can be edited
+        self.assertContains(response, "id_username")
+        self.assertContains(response, "id_password1")
+        self.assertContains(response, "id_password2")
 
         response = self.client.post(
             "/admin/auth/user/add/",
@@ -204,6 +226,22 @@ class TestUserAdmin(LoggedInTestCase):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.moderator.username, password="admin-password"
         )
+
+        response = self.client.get(f"/admin/auth/user/{self.tester.pk}/change/")
+        response_str = str(response.content, encoding=settings.DEFAULT_CHARSET)
+
+        # 2 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 2)
+
+        # these fields can be edited
+        self.assertContains(response, "id_first_name")
+        self.assertContains(response, "id_last_name")
+        self.assertContains(response, "id_email")
+        self.assertContains(response, "id_is_active")
+        self.assertContains(response, "id_is_staff")
+        self.assertContains(response, "id_groups")
+        self.assertContains(response, "id_user_permissions")
+
         response = self.client.post(
             f"/admin/auth/user/{self.tester.pk}/change/",
             {
@@ -238,10 +276,11 @@ class TestUserAdmin(LoggedInTestCase):
             {"post": "yes"},
             follow=True,
         )
-        self.assertRedirects(response, "/accounts/login/?next=/")
+        self.assertRedirects(response, "/accounts/login/")
         self.assertFalse(get_user_model().objects.filter(pk=self.moderator.pk).exists())
 
     def test_moderator_can_delete_other_user(self):
+        user_should_have_perm(self.moderator, "auth.view_user")
         user_should_have_perm(self.moderator, "auth.delete_user")
 
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -258,7 +297,8 @@ class TestUserAdmin(LoggedInTestCase):
             follow=True,
         )
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertRedirects(response, "/admin/auth/user/")
+        # b/c our test has only view & delete perms
+        self.assertRedirects(response, "/admin/")
         self.assertFalse(get_user_model().objects.filter(pk=self.tester.pk).exists())
 
     def test_regular_user_cant_view_list_of_all_users(self):
@@ -276,8 +316,8 @@ class TestUserAdmin(LoggedInTestCase):
         # only 1 hidden field for csrf
         self.assertContains(response, '<input type="hidden" name="csrfmiddlewaretoken"')
 
-        # 3 readonly fields: username, is_active, groups
-        self.assertEqual(response_str.count("grp-readonly"), 3)
+        # 6 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 6)
 
         # only these fields can be edited
         self.assertContains(response, "id_first_name")
@@ -288,9 +328,9 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertContains(response, f"/admin/auth/user/{self.tester.pk}/delete/")
 
         # Has Save buttons
-        self.assertContains(response, 'name="_save"', html=True)
-        self.assertContains(response, 'name="_addanother"', html=True)
-        self.assertContains(response, 'name="_continue"', html=True)
+        self.assertContains(response, "_save")
+        self.assertContains(response, "_continue")
+        self.assertNotContains(response, "_addanother")
 
     def test_regular_user_cant_add_users(self):
         response = self.client.get("/admin/auth/user/add/")
@@ -326,8 +366,7 @@ class TestUserAdmin(LoggedInTestCase):
             },
             follow=True,
         )
-        print("***** DEBUG ", response.content)
-        #        self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
+        self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
         self.admin.refresh_from_db()
         self.assertNotEqual(self.admin.first_name, "Changed by regular user")
@@ -365,7 +404,7 @@ class TestUserAdmin(LoggedInTestCase):
             {"post": "yes"},
             follow=True,
         )
-        self.assertRedirects(response, "/accounts/login/?next=/")
+        self.assertRedirects(response, "/accounts/login/")
         self.assertFalse(get_user_model().objects.filter(pk=self.tester.pk).exists())
 
     def test_non_admin_cant_change_password_for_others(self):
