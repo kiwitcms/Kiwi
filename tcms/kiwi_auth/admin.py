@@ -7,7 +7,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import GroupAdmin, UserAdmin, sensitive_post_parameters_m
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Group, Permission
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
@@ -182,7 +183,10 @@ class KiwiUserAdmin(UserAdmin):
     def user_change_password(
         self, request, id, form_url=""
     ):  # pylint: disable=redefined-builtin
-        return HttpResponseRedirect(reverse("admin:password_change"))
+        if _modifying_myself(request, id):
+            return HttpResponseRedirect(reverse("admin:password_change"))
+
+        raise PermissionDenied
 
     @admin.options.csrf_protect_m
     def delete_view(self, request, object_id, extra_context=None):
