@@ -13,7 +13,7 @@ from tcms.tests import LoggedInTestCase, user_should_have_perm
 from tcms.tests.factories import GroupFactory, UserFactory
 
 
-class TestUserAdmin(LoggedInTestCase):
+class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-methods
     @classmethod
     def setUpTestData(cls):
         # Note: by default the logged-in user is self.tester
@@ -149,6 +149,23 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertRedirects(response, "/admin/auth/user/")
         self.assertFalse(get_user_model().objects.filter(pk=self.tester.pk).exists())
+
+    def test_superuser_can_change_their_password(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+
+        response = self.client.get(f"/admin/auth/user/{self.admin.pk}/password/")
+        # redirects to change password for themselves
+        self.assertRedirects(response, "/admin/password_change/")
+
+    def test_superuser_cant_change_password_for_others(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+
+        response = self.client.get(f"/admin/auth/user/{self.tester.pk}/password/")
+        self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
     def test_moderator_can_view_list_of_all_users(self):
         user_should_have_perm(self.moderator, "auth.view_user")
@@ -301,6 +318,23 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertRedirects(response, "/admin/")
         self.assertFalse(get_user_model().objects.filter(pk=self.tester.pk).exists())
 
+    def test_moderator_can_change_their_password(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.moderator.username, password="admin-password"
+        )
+
+        response = self.client.get(f"/admin/auth/user/{self.moderator.pk}/password/")
+        # redirects to change password for themselves
+        self.assertRedirects(response, "/admin/password_change/")
+
+    def test_moderator_cant_change_password_for_others(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.moderator.username, password="admin-password"
+        )
+
+        response = self.client.get(f"/admin/auth/user/{self.tester.pk}/password/")
+        self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
+
     def test_regular_user_cant_view_list_of_all_users(self):
         response = self.client.get("/admin/auth/user/")
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
@@ -407,10 +441,14 @@ class TestUserAdmin(LoggedInTestCase):
         self.assertRedirects(response, "/accounts/login/")
         self.assertFalse(get_user_model().objects.filter(pk=self.tester.pk).exists())
 
-    def test_non_admin_cant_change_password_for_others(self):
-        response = self.client.get(f"/admin/auth/user/{self.admin.pk}/password/")
+    def test_regular_user_can_change_their_password(self):
+        response = self.client.get(f"/admin/auth/user/{self.tester.pk}/password/")
         # redirects to change password for themselves
         self.assertRedirects(response, "/admin/password_change/")
+
+    def test_regular_user_cant_change_password_for_others(self):
+        response = self.client.get(f"/admin/auth/user/{self.moderator.pk}/password/")
+        self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
 
 
 class TestGroupAdmin(LoggedInTestCase):
