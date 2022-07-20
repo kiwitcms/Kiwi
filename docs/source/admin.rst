@@ -194,6 +194,13 @@ permissions on backend.tenant.example.com!
 Users
 ~~~~~
 
+.. important::
+
+    In order for non-superuser accounts to be able to add new users they
+    need the ``auth.add_user`` and ``auth.change_user`` permissions together!
+
+    .. versionadded:: 11.4
+
 Staff status
 ^^^^^^^^^^^^
 
