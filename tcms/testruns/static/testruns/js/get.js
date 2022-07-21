@@ -402,7 +402,7 @@ function bindEvents (selector) {
 function getExpandArea (testExecution) {
   const container = $(`.test-execution-${testExecution.id}`)
 
-  container.find('.test-execution-information .run-date').html(testExecution.close_date || '-')
+  container.find('.test-execution-information .run-date').html(testExecution.stop_date || '-')
   container.find('.test-execution-information .build').html(testExecution.build__name)
   container.find('.test-execution-information .text-version').html(testExecution.case_text_version)
 
