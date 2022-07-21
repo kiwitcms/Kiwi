@@ -88,7 +88,7 @@ class JIRA(IssueTrackerType):
         except jira.exceptions.JIRAError:
             return super().details(url)
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         """
         JIRA Project == Kiwi TCMS Product, otherwise defaults to the first found
         Issue Type == Bug or the first one found
@@ -125,7 +125,7 @@ class JIRA(IssueTrackerType):
                 is_defect=True,
             )
 
-            return new_url
+            return (new_issue, new_url)
         except jira.exceptions.JIRAError:
             pass
 
@@ -140,7 +140,10 @@ class JIRA(IssueTrackerType):
         if not url.endswith("/"):
             url += "/"
 
-        return url + "/secure/CreateIssueDetails!init.jspa?" + urlencode(args, True)
+        return (
+            None,
+            url + "/secure/CreateIssueDetails!init.jspa?" + urlencode(args, True),
+        )
 
 
 class GitHub(IssueTrackerType):
@@ -165,7 +168,7 @@ class GitHub(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         """
         GitHub only supports title and body parameters
         """
@@ -186,7 +189,7 @@ class GitHub(IssueTrackerType):
                 is_defect=True,
             )
 
-            return issue.html_url
+            return (issue, issue.html_url)
         except Exception:  # pylint: disable=broad-except
             # something above didn't work so return a link for manually
             # entering issue details with info pre-filled
@@ -194,7 +197,7 @@ class GitHub(IssueTrackerType):
             if not url.endswith("/"):
                 url += "/"
 
-            return url + "/issues/new?" + urlencode(args, True)
+            return (None, url + "/issues/new?" + urlencode(args, True))
 
     def details(self, url):
         """
@@ -237,7 +240,7 @@ class Gitlab(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.api_url and self.bug_system.api_password)
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         repo_id = self.it_class.repo_id(self.bug_system)
         project = self.rpc.projects.get(repo_id)
         new_issue = project.issues.create(
@@ -253,7 +256,7 @@ class Gitlab(IssueTrackerType):
             url=new_issue.attributes["web_url"],
             is_defect=True,
         )
-        return new_issue.attributes["web_url"]
+        return (new_issue, new_issue.attributes["web_url"])
 
     def details(self, url):
         """
@@ -339,7 +342,7 @@ class Redmine(IssueTrackerType):
 
         return all_priorities[0]
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         project = self.redmine_project_by_name(execution.run.plan.product.name)
         tracker = self.redmine_tracker_by_name(project, "Bugs")
 
@@ -366,4 +369,4 @@ class Redmine(IssueTrackerType):
             is_defect=True,
         )
 
-        return new_url
+        return (new_issue, new_url)

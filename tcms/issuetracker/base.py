@@ -144,6 +144,17 @@ class IssueTrackerType:
 """
         return comment
 
+    def _report_issue(self, execution, user):
+        """
+        Used internally to perform the actual report! If you want to override behavior
+        this is the appropriate method!
+
+        :return: (object, str) - returns the newly created issue represented as
+                 an object that is understood by the internal RPC integration code
+                 and the URL to the newly created issue.
+        """
+        raise NotImplementedError()
+
     def report_issue_from_testexecution(self, execution, user):
         """
         When marking TestExecution results inside a Test Run there is a
@@ -158,7 +169,8 @@ class IssueTrackerType:
         :user: User object
         :return: - string - URL
         """
-        raise NotImplementedError()
+        (new_issue, url) = self._report_issue(execution, user)
+        return url
 
     def add_testexecution_to_issue(self, executions, issue_url):
         """

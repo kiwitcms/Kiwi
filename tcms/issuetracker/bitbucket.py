@@ -119,7 +119,7 @@ class BitBucket(IssueTrackerType):
             and self.bug_system.api_password
         )
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         """
         BitBucket creates the Issue with Title and Description
         """
@@ -144,7 +144,7 @@ class BitBucket(IssueTrackerType):
                 is_defect=True,
             )
 
-            return issue_url
+            return (issue, issue_url)
         except Exception:  # pylint: disable=broad-except
             # something above didn't work so return a link for manually
             # entering issue details with info pre-filled
@@ -152,7 +152,7 @@ class BitBucket(IssueTrackerType):
             if not url.endswith("/"):
                 url += "/"
 
-            return url + "issues/new"
+            return (None, url + "issues/new")
 
     def details(self, url):
         """
