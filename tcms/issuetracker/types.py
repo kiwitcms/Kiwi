@@ -88,6 +88,20 @@ class JIRA(IssueTrackerType):
         except jira.exceptions.JIRAError:
             return super().details(url)
 
+    def get_issue_type_from_jira(self):
+        """
+        Returns the issue type from the actual Jira instance.
+        Will try to return type "Bug" if it exists, otherwise will
+        return the first found!
+
+        You may override this method if you want more control and customization,
+        see https://kiwitcms.org/blog/tags/customization/
+        """
+        try:
+            return self.rpc.issue_type_by_name("Bug")
+        except KeyError:
+            return self.rpc.issue_types()[0]
+
     def _report_issue(self, execution, user):
         """
         JIRA Project == Kiwi TCMS Product, otherwise defaults to the first found
@@ -104,10 +118,7 @@ class JIRA(IssueTrackerType):
         except jira.exceptions.JIRAError:
             project = self.rpc.projects()[0]
 
-        try:
-            issue_type = self.rpc.issue_type_by_name("Bug")
-        except KeyError:
-            issue_type = self.rpc.issue_types()[0]
+        issue_type = self.get_issue_type_from_jira()
 
         try:
             new_issue = self.rpc.create_issue(
