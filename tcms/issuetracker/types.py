@@ -96,11 +96,29 @@ class JIRA(IssueTrackerType):
 
         You may override this method if you want more control and customization,
         see https://kiwitcms.org/blog/tags/customization/
+
+        .. versionadded:: 11.4
         """
         try:
             return self.rpc.issue_type_by_name("Bug")
         except KeyError:
             return self.rpc.issue_types()[0]
+
+    def get_project_from_jira(self, execution):
+        """
+        Returns the project from the actual Jira instance.
+        Will try to match execution.run.plan.product.name, otherwise will
+        return the first found!
+
+        You may override this method if you want more control and customization,
+        see https://kiwitcms.org/blog/tags/customization/
+
+        .. versionadded:: 11.4
+        """
+        try:
+            return self.rpc.project(execution.run.plan.product.name)
+        except jira.exceptions.JIRAError:
+            return self.rpc.projects()[0]
 
     def _report_issue(self, execution, user):
         """
@@ -113,11 +131,8 @@ class JIRA(IssueTrackerType):
         For the HTML API description see:
         https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
         """
-        try:
-            project = self.rpc.project(execution.run.plan.product.name)
-        except jira.exceptions.JIRAError:
-            project = self.rpc.projects()[0]
 
+        project = self.get_project_from_jira(execution)
         issue_type = self.get_issue_type_from_jira()
 
         try:
