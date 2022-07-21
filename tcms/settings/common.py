@@ -158,6 +158,13 @@ MIDDLEWARE = [
 # and tcms/issuetracker/azure_boards.py
 AZURE_BOARDS_API_VERSION = os.environ.get("AZURE_BOARDS_API_VERSION", "6.0")
 
+# A list of fully qualified dotted paths to functions which will be executed after
+# a new issue has been automatically opened in an external bug tracker via the
+# 1-click bug report integration!
+# See tcms.issuetracker.base.IssueTrackerType.post_process_new_issue() and
+# tcms.issuetracker.tests.redmine_post_processing for hints!
+EXTERNAL_ISSUE_POST_PROCESSORS = []
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ DANGER: Don't change the settings below!
