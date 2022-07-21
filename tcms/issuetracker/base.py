@@ -183,6 +183,8 @@ class IssueTrackerType:
         :new_issue: An object specific to the actual RPC implementation
         :execution: TestExecution object
         :user: User object
+
+        .. versionadded:: 11.4
         """
         for fully_qualified_dotted_path in settings.EXTERNAL_ISSUE_POST_PROCESSORS:
             function_name = fully_qualified_dotted_path.split(".")[-1]
