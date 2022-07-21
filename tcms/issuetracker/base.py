@@ -1,7 +1,9 @@
 import re
 import threading
 import warnings
+from importlib import import_module
 
+from django.conf import settings
 from opengraph.opengraph import OpenGraph
 
 RE_ENDS_IN_INT = re.compile(r"[\d]+$")
@@ -170,7 +172,25 @@ class IssueTrackerType:
         :return: - string - URL
         """
         (new_issue, url) = self._report_issue(execution, user)
+        if new_issue:
+            self.post_process_new_issue(new_issue, execution, user)
         return url
+
+    def post_process_new_issue(self, new_issue, execution, user):
+        """
+        Perform any post-processing for newly created issues.
+
+        :new_issue: An object specific to the actual RPC implementation
+        :execution: TestExecution object
+        :user: User object
+        """
+        for fully_qualified_dotted_path in settings.EXTERNAL_ISSUE_POST_PROCESSORS:
+            function_name = fully_qualified_dotted_path.split(".")[-1]
+            module_name = fully_qualified_dotted_path.replace(f".{function_name}", "")
+
+            processor_module = import_module(module_name)
+            processor_function = getattr(processor_module, function_name)
+            processor_function(self.rpc, new_issue, execution, user)
 
     def add_testexecution_to_issue(self, executions, issue_url):
         """

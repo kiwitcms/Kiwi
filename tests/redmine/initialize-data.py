@@ -11,6 +11,14 @@ rpc = redminelib.Redmine(
 )
 
 
+atodorov = rpc.user.create(
+    login="atodorov",
+    password="very-big-secret",
+    firstname="Alex",
+    lastname="Todorov",
+    mail="atodorov@example.org",
+)
+
 # tracker & issue statuses must be configured before hand b/c
 # Redmine API doesn't support creating them!
 tracker = rpc.tracker.all()[0]
@@ -25,6 +33,18 @@ project = rpc.project.create(
     name="Integration with Kiwi TCMS",
     identifier="kiwitcms",
     tracker_ids=[tracker.id],
+)
+
+# b/c rpc.role doesn't have a .filter() method
+for tester_role in rpc.role.all():
+    if tester_role.name == "Tester":
+        break
+
+# make atodorov a member of the project so that we can assign issues to him
+membership = rpc.project_membership.create(
+    project_id=project.id,
+    user_id=atodorov.id,
+    role_ids=[tester_role.id],
 )
 
 # http://bugtracker.kiwitcms.org:3000/issues/1

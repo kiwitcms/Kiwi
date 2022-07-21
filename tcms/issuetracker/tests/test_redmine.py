@@ -4,6 +4,8 @@ import os
 import time
 import unittest
 
+from django.test import override_settings
+
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker.types import Redmine
 from tcms.rpc.tests.utils import APITestCase
@@ -14,6 +16,11 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 @unittest.skipUnless(
     os.getenv("TEST_BUGTRACKER_INTEGRATION"),
     "Bug tracker integration testing not enabled",
+)
+@override_settings(
+    EXTERNAL_ISSUE_POST_PROCESSORS=[
+        "tcms.issuetracker.tests.redmine_post_processing.change_assignee"
+    ]
 )
 class TestRedmineIntegration(APITestCase):
     existing_bug_id = 1
@@ -113,6 +120,10 @@ class TestRedmineIntegration(APITestCase):
 
         new_issue_id = self.integration.bug_id_from_url(result["response"])
         issue = self.integration.rpc.issue.get(new_issue_id)
+
+        # this is coming from post-processing
+        assignee = self.integration.rpc.user.get(issue.assigned_to.id)
+        self.assertEqual(assignee.login, "atodorov")
 
         self.assertEqual(f"Failed test: {self.execution_1.case.summary}", issue.subject)
         for expected_string in [
