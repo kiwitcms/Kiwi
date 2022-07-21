@@ -154,7 +154,7 @@ class KiwiUserAdmin(UserAdmin):
 
         first_fieldset_fields = ("username",)
         if obj and _modifying_myself(request, obj.pk):
-            first_fieldset_fields = first_fieldset_fields + ("password",)
+            first_fieldset_fields += ("password",)
 
         remaining_fieldsets = (
             (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
@@ -239,7 +239,7 @@ class KiwiGroupAdmin(GroupAdmin):
         readonly_fields = super().get_readonly_fields(request, obj)
 
         if obj and obj.name in ["Tester", "Administrator"]:
-            readonly_fields = readonly_fields + ("name",)
+            readonly_fields += ("name",)
 
         return readonly_fields
 
