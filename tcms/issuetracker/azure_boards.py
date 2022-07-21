@@ -95,7 +95,7 @@ class AzureBoards(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         return not (self.bug_system.base_url and self.bug_system.api_password)
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         """
         AzureBoards creates the Work Item with Title
         """
@@ -132,7 +132,7 @@ class AzureBoards(IssueTrackerType):
                 is_defect=True,
             )
 
-            return issue_url
+            return (issue, issue_url)
         except Exception:  # pylint: disable=broad-except
             # something above didn't work so return a link for manually
             # entering issue details with info pre-filled
@@ -140,7 +140,7 @@ class AzureBoards(IssueTrackerType):
             if not url.endswith("/"):
                 url += "/"
 
-            return url + "_workitems/create/Issue"
+            return (None, url + "_workitems/create/Issue")
 
     def details(self, url):
         """

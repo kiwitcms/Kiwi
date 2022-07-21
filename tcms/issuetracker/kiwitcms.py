@@ -73,7 +73,7 @@ class KiwiTCMS(IssueTrackerType):
         for execution in executions:
             bug.executions.add(execution)
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         """
         Create the new bug using internal API instead of
         going through the RPC layer and return its URL
@@ -100,7 +100,7 @@ class KiwiTCMS(IssueTrackerType):
             is_defect=True,
         )
 
-        return bug.get_full_url()
+        return (bug, bug.get_full_url())
 
     @classmethod
     def bug_id_from_url(cls, url):

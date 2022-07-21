@@ -83,9 +83,9 @@ class Bugzilla(base.IssueTrackerType):
         buginfo = args.copy()
         buginfo["op_sys"] = "All"
         buginfo["rep_platform"] = "All"
-        return self.rpc.createbug(**buginfo).weburl
+        return self.rpc.createbug(**buginfo)
 
-    def report_issue_from_testexecution(self, execution, user):
+    def _report_issue(self, execution, user):
         """
         First attempt *1-click bug report* and if that fails fall back
         to a URL with some of the values pre-defined as query parameters!
@@ -99,14 +99,14 @@ class Bugzilla(base.IssueTrackerType):
         }
 
         try:
-            new_bug_url = self.one_click_report(execution, user, args)
+            new_bug = self.one_click_report(execution, user, args)
             # and also add a link reference that will be shown in the UI
             LinkReference.objects.get_or_create(
                 execution=execution,
-                url=new_bug_url,
+                url=new_bug.weburl,
                 is_defect=True,
             )
-            return new_bug_url
+            return (new_bug, new_bug.weburl)
         except Fault:
             pass
 
@@ -114,4 +114,4 @@ class Bugzilla(base.IssueTrackerType):
         if not url.endswith("/"):
             url += "/"
 
-        return url + "enter_bug.cgi?" + urlencode(args, True)
+        return (None, url + "enter_bug.cgi?" + urlencode(args, True))
