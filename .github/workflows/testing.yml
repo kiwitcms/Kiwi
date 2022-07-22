@@ -223,10 +223,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Execute tests
+      - name: Docker version info
         run: |
           docker --version
-          docker-compose --version
+          docker --help
 
+          docker-compose --version
+          docker-compose --help
+
+      - name: Execute tests
+        run: |
           pip install tcms-api
           make test-docker-image

@@ -116,6 +116,24 @@ rlJournalStart
             rlRun -t -c "docker volume rm kiwi_db_data"
         fi
     rlPhaseEnd
+
+    sleep 5
+
+    rlPhaseStartTest "Start Kiwi TCMS with Docker Secrets"
+        rlRun -t -c "docker-compose -f docker-compose.with-secrets up -d"
+        sleep 10
+
+        rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
+        assert_up_and_running
+    rlPhaseEnd
+
+    rlPhaseStartCleanup
+        rlRun -t -c "docker-compose -f docker-compose.with-secrets down"
+        if [ -n "$ImageOS" ]; then
+            rlRun -t -c "docker volume rm kiwi_db_data"
+        fi
+    rlPhaseEnd
+
 rlJournalEnd
 
 rlJournalPrintText
