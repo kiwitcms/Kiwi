@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import tcms
+from tcms.utils.secrets import get_secret
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ You have to override the following settings in product.py
@@ -27,12 +28,12 @@ SECRET_KEY = "^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv"  # nosec:B105
 # Database settings
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("KIWI_DB_ENGINE", "django.db.backends.mysql"),
-        "NAME": os.environ.get("KIWI_DB_NAME", "kiwi"),
-        "USER": os.environ.get("KIWI_DB_USER", "kiwi"),
-        "PASSWORD": os.environ.get("KIWI_DB_PASSWORD", "kiwi"),
-        "HOST": os.environ.get("KIWI_DB_HOST", ""),
-        "PORT": os.environ.get("KIWI_DB_PORT", ""),
+        "ENGINE": get_secret("KIWI_DB_ENGINE", "django.db.backends.mysql"),
+        "NAME": get_secret("KIWI_DB_NAME", "kiwi"),
+        "USER": get_secret("KIWI_DB_USER", "kiwi"),
+        "PASSWORD": get_secret("KIWI_DB_PASSWORD", "kiwi"),
+        "HOST": get_secret("KIWI_DB_HOST", ""),
+        "PORT": get_secret("KIWI_DB_PORT", ""),
         "OPTIONS": {},
     },
 }

@@ -53,6 +53,32 @@ The above command will create two containers:
 
 .. important::
 
+    Database connection credentials can also be configured via Docker Secrets.
+    Alternatively you may commit or mount arbitrary text files inside the container. In both
+    cases you have to configure the absolute path to the file containing the actual value
+    as an environment variable inside the running container. See
+    `docker-compose.with-secrets <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.with-secrets>`_
+    for reference!
+
+    For example:
+
+    - ``KIWI_DB_PASSWORD: kiwi`` - Password will be "kiwi", specified as plain text
+    - ``KIWI_DB_PASSWORD: /run/secret/db_password`` - Password will be read from
+      the file ``/run/secret/db_password``. Docker Secrets must be configured accordingly
+    - ``KIWI_DB_PASSWORD: /Kiwi/config/db_password.txt`` - Password will be read
+      from the file ``/Kiwi/config/db_password.txt``. This file needs to be present
+      inside the container: either burned into the container image or mounted via
+      external volume
+
+    .. warning::
+
+        When an absolute path has been specified the file will be opened in text mode;
+        UTF-8 encoding; Trailing newlines and/or white space will be stripped!
+
+    .. versionadded:: 11.4
+
+.. important::
+
     Kiwi TCMS does not provide versioned docker images via Docker Hub!
     When a new version is released the image ``kiwitcms/kiwi:latest`` is
     updated accordingly!
