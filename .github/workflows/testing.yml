@@ -226,7 +226,18 @@ jobs:
       - name: Execute tests
         run: |
           docker --version
+          docker --help
+
           docker-compose --version
+          docker-compose --help
+
+          sudo apt-get update && sudo apt-get upgrade
+
+          docker --version
+          docker --help
+
+          docker-compose --version
+          docker-compose --help
 
           pip install tcms-api
           make test-docker-image
