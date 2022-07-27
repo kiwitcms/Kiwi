@@ -1074,7 +1074,7 @@ msgstr "alebo"
 
 #: tcms/templates/registration/login.html:53
 msgid "register an account"
-msgstr ""
+msgstr "registrovať účet"
 
 #: tcms/templates/registration/login.html:54
 msgid "if you don't have one!"
@@ -2091,3 +2091,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
