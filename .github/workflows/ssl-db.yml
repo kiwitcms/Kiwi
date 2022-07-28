@@ -1,0 +1,68 @@
+name: database-connection-via-ssl
+
+on:
+  push:
+    branches: master
+  pull_request:
+
+jobs:
+  mariadb:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Generate DB certificates
+        run: |
+          # docker run -v $(pwd)/tests/db-certs/:/Kiwi/db-certs/:Z --rm -i kiwitcms/kiwi \
+          #        /usr/bin/sscg \
+          #            -v -f \
+          #            --country BG --locality Sofia \
+          #            --organization "Kiwi TCMS" \
+          #            --organizational-unit "DevOps" \
+          #            --ca-file /Kiwi/db-certs/ca.crt \
+          #            --ca-key-file /Kiwi/db-certs/ca.key \
+          #            --cert-file /Kiwi/db-certs/server.crt \
+          #            --cert-key-file /Kiwi/db-certs/server.key
+          # re-enable & add client cert when https://github.com/sgallagher/sscg/issues/3 is fixed
+          pushd ./tests/ && ./gen-db-certs.sh && popd
+
+      - name: Create database
+        run: |
+          docker-compose -f docker-compose.mariadb-ssl pull db
+          docker-compose -f docker-compose.mariadb-ssl run -d -p 3306:3306 --name kiwi_db db
+          sleep 20  # wait to initialize
+
+          set -e
+          docker exec -i kiwi_db mariadb -u root -pkiwi-1s-aw3s0m3 \
+                --ssl-ca=/etc/certs/ca.pem \
+                --ssl-cert=/etc/certs/client-cert.pem \
+                --ssl-key=/etc/certs/client-key.pem -e 'status' | grep "Cipher in use is"
+
+      - name: Initialize DB tables & records
+        run: |
+          sudo apt-get update
+          sudo apt-get install gettext
+
+          sudo mkdir /Kiwi
+          sudo chmod a+w /Kiwi
+
+          pip install -r requirements/devel.txt
+          pip install -r requirements/mariadb.txt
+          pushd tcms/ && npm install && popd
+
+          export LANG=bg-bg
+          set -e
+          coverage run --source='.' ./manage.py migrate -v2 --noinput --settings tcms.settings.test.mariadb
+
+      - name: Send coverage to codecov.io
+        run: |
+          coverage report -m
+          bash <(curl -s https://codecov.io/bash)
