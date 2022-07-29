@@ -175,11 +175,14 @@ function escapeHTML (unsafe) {
 
 function unescapeHTML (html) {
   return html
-    .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, '\'')
+    // always keep the ampersand escape last
+    // to avoid chain unescape of nested values, see
+    // https://github.com/kiwitcms/Kiwi/issues/2800
+    .replace(/&amp;/g, '&')
 }
 
 function treeViewBind (selector = '.tree-list-view-pf') {
