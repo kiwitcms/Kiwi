@@ -69,13 +69,15 @@ class TestEdit(tests.PermissionsTestCase):
         cls.bug = BugFactory()
 
         cls.url = reverse("bugs-edit", args=(cls.bug.pk,))
+
+        build = factories.BuildFactory()
         cls.post_data = {
             "summary": "An edited summary",
             "reporter": cls.bug.reporter.pk,
             "assignee": cls.bug.assignee.pk,
-            "product": cls.bug.product.pk,
-            "version": cls.bug.version.pk,
-            "build": cls.bug.build.pk,
+            "product": build.version.product.pk,
+            "version": build.version.pk,
+            "build": build.pk,
         }
 
         super().setUpTestData()

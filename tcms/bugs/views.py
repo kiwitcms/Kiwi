@@ -204,6 +204,14 @@ class Edit(UpdateView):
         self._record_changes(form.cleaned_data)
         return super().form_valid(form)
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if self.request.POST.get("product"):
+            form.populate(product_id=self.request.POST["product"])
+        else:
+            form.populate(product_id=self.object.product_id)
+        return form
+
 
 @method_decorator(permission_required("django_comments.add_comment"), name="dispatch")
 class AddComment(View):
