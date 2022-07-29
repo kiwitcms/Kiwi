@@ -58,6 +58,7 @@ jobs:
         coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.issuetracker.tests.test_${{ matrix.tracker }}
 
     - name: Send coverage to codecov.io
-      run: |
-        coverage report -m
-        bash <(curl -s https://codecov.io/bash)
+      uses: codecov/codecov-action@v3
+      with:
+        fail_ci_if_error: true
+        verbose: true
