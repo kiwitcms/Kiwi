@@ -9,6 +9,10 @@ $(document).ready(function () {
         params.summary__icontains = $('#id_summary').val()
       }
 
+      if ($('#id_severity').val()) {
+        params.severity = $('#id_severity').val()
+      };
+
       if ($('#id_product').val()) {
         params.product = $('#id_product').val()
       };
@@ -43,6 +47,16 @@ $(document).ready(function () {
     },
     columns: [
       { data: 'pk' },
+      {
+        data: null,
+        render: function (data, type, full, meta) {
+          if (data.severity__name) {
+              return `<span class="${data.severity__icon}" style="color: ${data.severity__color}"></span> ${data.severity__name}`
+          }
+
+          return ''
+        }
+      },
       {
         data: null,
         render: function (data, type, full, meta) {
