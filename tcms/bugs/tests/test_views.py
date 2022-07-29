@@ -150,8 +150,8 @@ class TestEditBug(LoggedInTestCase):
 
     def test_edit_bug(self):
         summary_edit = "An edited summary"
-        version_edit = VersionFactory()
-        build_edit = BuildFactory()
+        version_edit = VersionFactory(product=self.bug.product)
+        build_edit = BuildFactory(version=version_edit)
 
         edit_data = {
             "summary": summary_edit,
@@ -179,16 +179,18 @@ class TestEditBug(LoggedInTestCase):
 
     def test_record_changes(self):
         old_summary = self.bug.summary
+        old_product = self.bug.product.name
+        old_version = self.bug.version.value
         new_summary = "An edited summary"
         old_comment_count = get_comments(self.bug).count()
 
         edit_data = {
             "summary": new_summary,
-            "version": self.bug.version.pk,
+            "version": self.bug.build.version.pk,
             "build": self.bug.build.pk,
             "reporter": self.bug.reporter.pk,
             "assignee": self.bug.assignee.pk,
-            "product": self.bug.product.pk,
+            "product": self.bug.build.version.product.pk,
         }
 
         self.client.post(self.url, edit_data, follow=True)
@@ -197,7 +199,10 @@ class TestEditBug(LoggedInTestCase):
 
         self.assertEqual(comments.count(), old_comment_count + 1)
         self.assertEqual(
-            comments.last().comment, f"Summary: {old_summary} -> {new_summary}\n"
+            comments.last().comment,
+            f"""Summary: {old_summary} -> {new_summary}
+Product: {old_product} -> {self.bug.product.name}
+Version: {old_version} -> {self.bug.version.value}\n""",
         )
 
 
