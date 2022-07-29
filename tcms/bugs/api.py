@@ -95,6 +95,9 @@ def filter(query):  # pylint: disable=redefined-builtin
             "build__name",
             "reporter__username",
             "assignee__username",
+            "severity__name",
+            "severity__color",
+            "severity__icon",
         )
         .distinct()
     )
