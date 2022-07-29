@@ -18,6 +18,15 @@
 <div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12" style="margin-top: 0">
+        {% if bug.severity %}
+            <span
+                class="{{ bug.severity.icon }}"
+                title="{{ bug.severity.name }}"
+                style="color: {{ bug.severity.color }}"
+            >
+            </span>
+        {% endif %}
+
         <span id="object_pk"
             data-pk="{{ object.pk }}"
             data-perm-remove-tag="{{ perms.bugs.delete_bugtag }}"
@@ -33,6 +42,14 @@
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                <h2 class="card-pf-title" style="text-align: left">
+                    <span
+                        class="{{ bug.severity.icon|default:'fa fa-fire-extinguisher' }}"
+                        {% if bug.severity %}style="color: {{ bug.severity.color }}"{% endif %}
+                    ></span>{% trans 'Severity' %}:
+                    {{ bug.severity.name|default:'-' }}
+                </h2>
+
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-calendar"></span>{{ object.created_at }}
                 </h2>
