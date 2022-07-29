@@ -16,9 +16,25 @@
             <input type="hidden" name="reporter" value="{{ form.reporter.value }}">
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
-                <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
+                <div class="col-md-8 col-lg-8 {% if form.summary.errors %}has-error{% endif %}">
                     <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
                     {{ form.summary.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_severity">{% trans "Severity" %}</label>
+                    <a href="{% url 'admin:bugs_severity_add' %}?_popup" id="add_id_severity" alt="{% trans 'add new Severity' %}" title="{% trans 'add new Severity' %}">+</a>
+                </div>
+                <div class="col-md-2 col-lg-2 {% if form.severity.errors %}has-error{% endif %}">
+                    <select id="id_severity" name="severity" class="form-control selectpicker">
+                        <option value="">----------</option>
+                    {% for severity in form.severity.field.queryset %}
+                        <option value="{{ severity.pk }}" {% if severity.pk|escape == form.severity.value|escape %}selected{% endif %}>
+                            {{ severity.name }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                    {{ form.severity.errors }}
                 </div>
             </div>
 
