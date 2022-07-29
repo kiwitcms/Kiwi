@@ -34,12 +34,9 @@ $(document).ready(function() {
         return rendered_string
 
     class Media:
-        css = {"all": ["simplemde/dist/simplemde.min.css", "prismjs/themes/prism.css"]}
+        css = {"all": ["simplemde/dist/simplemde.min.css"]}
         js = [
             "simplemde/dist/simplemde.min.js",
-            "marked/marked.min.js",
-            "prismjs/prism.js",
-            "prismjs/plugins/autoloader/prism-autoloader.min.js",
             "js/simplemde_security_override.js",
         ]
 
