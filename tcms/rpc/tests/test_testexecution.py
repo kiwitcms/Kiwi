@@ -323,6 +323,7 @@ class TestExecutionFilter(APITestCase):
         self.assertEqual(execution["case"], self.execution.case.pk)
         self.assertEqual(execution["build"], self.execution.build.pk)
         self.assertEqual(execution["status"], self.status_idle.pk)
+        self.assertIn("expected_duration", execution)
 
 
 class TestExecutionGetLinks(APITestCase):
