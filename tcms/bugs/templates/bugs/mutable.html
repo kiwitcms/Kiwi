@@ -82,12 +82,14 @@
                 </div>
             </div>
 
+        {% if not object %}
             <div class="form-group">
                 <div class="col-lg-12 col-md-12">
                     <div>{{ form.text }}</div>
                     {{ form.text.errors }}
                 </div>
             </div>
+        {% endif %}
 
             <div class="form-group">
                 <div class="col-md-1 col-lg-1">
