@@ -326,6 +326,44 @@ class TestExecutionFilter(APITestCase):
         self.assertIn("expected_duration", execution)
 
 
+class ActualDurationProperty(APITestCase):
+    def test_calculation_of_actual_duration(self):
+        execution = TestExecutionFactory(
+            start_date=timezone.now(),
+            stop_date=timezone.now() + timezone.timedelta(days=1),
+        )
+
+        result = self.rpc_client.TestExecution.filter({"pk": execution.pk})[0]
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result["id"], execution.pk)
+        self.assertEqual(
+            result["actual_duration"], execution.actual_duration.total_seconds()
+        )
+
+    def test_actual_duration_empty_start_date(self):
+        execution = TestExecutionFactory(
+            start_date=None,
+        )
+
+        result = self.rpc_client.TestExecution.filter({"pk": execution.pk})[0]
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result["id"], execution.pk)
+        self.assertIsNone(result["actual_duration"])
+
+    def test_actual_duration_empty_stop_date(self):
+        execution = TestExecutionFactory(
+            start_date=timezone.now(),
+        )
+
+        result = self.rpc_client.TestExecution.filter({"pk": execution.pk})[0]
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result["id"], execution.pk)
+        self.assertIsNone(result["actual_duration"])
+
+
 class TestExecutionGetLinks(APITestCase):
     def _fixture_setup(self):
         super()._fixture_setup()

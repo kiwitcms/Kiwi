@@ -3,6 +3,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.db.models import F
 from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
 from django.utils import timezone
@@ -119,8 +120,11 @@ def filter(query):  # pylint: disable=redefined-builtin
     """
     return list(
         TestExecution.objects.annotate(
-            expected_duration=Coalesce("case__setup_duration", timedelta(0))
-            + Coalesce("case__testing_duration", timedelta(0))
+            expected_duration=(
+                Coalesce("case__setup_duration", timedelta(0))
+                + Coalesce("case__testing_duration", timedelta(0))
+            ),
+            actual_duration=F("stop_date") - F("start_date"),
         )
         .filter(**query)
         .values(
@@ -141,6 +145,7 @@ def filter(query):  # pylint: disable=redefined-builtin
             "status",
             "status__name",
             "expected_duration",
+            "actual_duration",
         )
         .distinct()
     )
