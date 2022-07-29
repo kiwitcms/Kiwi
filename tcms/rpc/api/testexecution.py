@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
 from django.conf import settings
+from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from modernrpc.core import REQUEST_KEY, rpc_method
@@ -115,7 +118,11 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: list(dict)
     """
     return list(
-        TestExecution.objects.filter(**query)
+        TestExecution.objects.annotate(
+            expected_duration=Coalesce("case__setup_duration", timedelta(0))
+            + Coalesce("case__testing_duration", timedelta(0))
+        )
+        .filter(**query)
         .values(
             "id",
             "assignee",
@@ -133,6 +140,7 @@ def filter(query):  # pylint: disable=redefined-builtin
             "build__name",
             "status",
             "status__name",
+            "expected_duration",
         )
         .distinct()
     )
