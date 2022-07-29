@@ -14,6 +14,16 @@
                 <input id="id_summary" type="text" class="form-control">
             </div>
 
+            <label class="col-md-1 col-lg-1" for="id_product">{% trans "Severity" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <select class="form-control selectpicker" id="id_severity">
+                    <option value="">----------</option>
+                {% for option in form.severity.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.severity.value|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
             <label for="id_before" class="col-md-1 col-lg-1">{% trans "Created" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
@@ -32,12 +42,6 @@
                     {% include "include/datetimepicker_script.html" with selector="#id_after" %}
                 </div>
             </div>
-
-            <label class="col-md-1 col-lg-1" for="id_status">{% trans "Open" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_status" type="checkbox" checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-            </div>
-
         </div>
 
         <div class="form-group">
@@ -83,6 +87,10 @@
                 <input id="id_assignee" type="text" class="form-control" placeholder="{% trans 'Username' %}">
             </div>
 
+            <label class="col-md-1 col-lg-1" for="id_status">{% trans "Open" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="bootstrap-switch" id="id_status" type="checkbox" checked data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+            </div>
         </div>
 
         <div class="form-group">
@@ -98,6 +106,7 @@
             <thead>
                 <tr>
                     <th>{% trans "ID" %}</th>
+                    <th>{% trans "Severity" %}</th>
                     <th>{% trans "Summary" %}</th>
                     <th>{% trans "Created at" %}</th>
                     <th>{% trans "Product" %}</th>
