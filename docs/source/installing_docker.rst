@@ -75,6 +75,14 @@ The above command will create two containers:
         When an absolute path has been specified the file will be opened in text mode;
         UTF-8 encoding; Trailing newlines and/or white space will be stripped!
 
+    .. warning::
+
+        *Kiwi TCMS Enterprise* additionally supports database configuration via the
+        ``DATABASE_URL`` environment variable, see
+        `dj-database-url <https://github.com/jazzband/dj-database-url>`_. If specified this
+        configuration is applied **after** parsing of ``KIWI_DB_*`` variables and will override them!
+        Don't use ``DATABASE_URL`` and ``KIWI_DB_*`` environment variables together!
+
     .. versionadded:: 11.4
 
 .. important::
