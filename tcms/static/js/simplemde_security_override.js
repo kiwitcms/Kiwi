@@ -115,7 +115,16 @@ function initSimpleMDE (textArea, fileUploadElement, autoSaveId = window.locatio
       delay: 5000
     },
     tabSize: 4,
-    indentWithTabs: false
+    indentWithTabs: false,
+    previewRender: function (plainText) {
+      let renderedText
+
+      jsonRPC('Markdown.render', plainText, function (result) {
+        renderedText = unescapeHTML(result)
+      }, true)
+
+      return renderedText
+    }
   })
 
   fileUploadElement.change(function () {
