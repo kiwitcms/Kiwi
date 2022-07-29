@@ -1,4 +1,4 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019,2022 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -14,7 +14,15 @@ from tcms.management.models import Build, Version
 class NewBugForm(forms.ModelForm):
     class Meta:
         model = Bug
-        fields = ["summary", "assignee", "reporter", "product", "version", "build"]
+        fields = [
+            "summary",
+            "assignee",
+            "reporter",
+            "product",
+            "version",
+            "build",
+            "severity",
+        ]
 
     assignee = UserField(required=False)
 

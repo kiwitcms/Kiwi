@@ -11,6 +11,10 @@ $(document).ready(function () {
     return showRelatedObjectPopup(this)
   })
 
+  $('#add_id_severity').click(function () {
+    return showRelatedObjectPopup(this)
+  })
+
   document.getElementById('id_product').onchange = function () {
     $('#id_product').selectpicker('refresh')
     populateVersion()
@@ -23,6 +27,10 @@ $(document).ready(function () {
 
   document.getElementById('id_build').onchange = function () {
     $('#id_build').selectpicker('refresh')
+  }
+
+  document.getElementById('id_severity').onchange = function () {
+    $('#id_severity').selectpicker('refresh')
   }
 
   // initialize at the end b/c we rely on .change() event to initialize builds
