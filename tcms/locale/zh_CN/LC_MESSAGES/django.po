@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-04-18 11:55\n"
+"POT-Creation-Date: 2022-07-29 20:11+0000\n"
+"PO-Revision-Date: 2022-07-30 12:20\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 "X-Crowdin-File-ID: 19\n"
 
-#: tcms/bugs/forms.py:25
+#: tcms/bugs/forms.py:33
 msgid "Description of problem:\n\n\n"
 "How often reproducible:\n\n\n"
 "Steps to Reproduce:\n"
@@ -37,36 +37,43 @@ msgstr "问题描述：\n\n\n"
 "预期结果：\n\n\n"
 "附加信息："
 
-#: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:36
+#: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:49
+#: tcms/bugs/templates/bugs/mutable.html:25
+#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:109
+msgid "Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
 msgstr "打开"
 
-#: tcms/bugs/templates/bugs/get.html:29
+#: tcms/bugs/templates/bugs/get.html:38
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
 msgstr "已关闭"
 
-#: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:76
-#: tcms/bugs/templates/bugs/search.html:106
+#: tcms/bugs/templates/bugs/get.html:58 tcms/bugs/templates/bugs/search.html:80
+#: tcms/bugs/templates/bugs/search.html:115
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
 msgstr "报告人"
 
-#: tcms/bugs/templates/bugs/get.html:46
-#: tcms/bugs/templates/bugs/mutable.html:76
-#: tcms/bugs/templates/bugs/search.html:81
-#: tcms/bugs/templates/bugs/search.html:107
+#: tcms/bugs/templates/bugs/get.html:63
+#: tcms/bugs/templates/bugs/mutable.html:92
+#: tcms/bugs/templates/bugs/search.html:85
+#: tcms/bugs/templates/bugs/search.html:116
 #: tcms/templates/include/bug_details.html:10
 #: tcms/testruns/templates/testruns/get.html:207
 #: tcms/testruns/templates/testruns/get.html:267
 msgid "Assignee"
 msgstr "经办人"
 
-#: tcms/bugs/templates/bugs/get.html:57
-#: tcms/bugs/templates/bugs/mutable.html:27
-#: tcms/bugs/templates/bugs/search.html:44
-#: tcms/bugs/templates/bugs/search.html:103
+#: tcms/bugs/templates/bugs/get.html:74
+#: tcms/bugs/templates/bugs/mutable.html:43
+#: tcms/bugs/templates/bugs/search.html:48
+#: tcms/bugs/templates/bugs/search.html:112
 #: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:57
 #: tcms/telemetry/templates/telemetry/include/filters.html:12
 #: tcms/templates/include/bug_details.html:13
@@ -86,12 +93,12 @@ msgstr "经办人"
 msgid "Product"
 msgstr "产品"
 
-#: tcms/bugs/templates/bugs/get.html:62
-#: tcms/bugs/templates/bugs/mutable.html:42
-#: tcms/bugs/templates/bugs/search.html:54
-#: tcms/bugs/templates/bugs/search.html:104
+#: tcms/bugs/templates/bugs/get.html:79
+#: tcms/bugs/templates/bugs/mutable.html:58
+#: tcms/bugs/templates/bugs/search.html:58
+#: tcms/bugs/templates/bugs/search.html:113
 #: tcms/telemetry/templates/telemetry/include/filters.html:21
-#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:78
+#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:84
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -103,10 +110,10 @@ msgstr "产品"
 msgid "Version"
 msgstr "版本"
 
-#: tcms/bugs/templates/bugs/get.html:67
-#: tcms/bugs/templates/bugs/mutable.html:60
-#: tcms/bugs/templates/bugs/search.html:64
-#: tcms/bugs/templates/bugs/search.html:105 tcms/management/models.py:120
+#: tcms/bugs/templates/bugs/get.html:84
+#: tcms/bugs/templates/bugs/mutable.html:76
+#: tcms/bugs/templates/bugs/search.html:68
+#: tcms/bugs/templates/bugs/search.html:114 tcms/management/models.py:120
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:53
@@ -117,16 +124,16 @@ msgstr "版本"
 msgid "Build"
 msgstr "构建"
 
-#: tcms/bugs/templates/bugs/get.html:97
+#: tcms/bugs/templates/bugs/get.html:118
 msgid "commented on"
 msgstr "评论于"
 
-#: tcms/bugs/templates/bugs/get.html:127
+#: tcms/bugs/templates/bugs/get.html:148
 msgid "Reopen"
 msgstr "重新打开"
 
-#: tcms/bugs/templates/bugs/get.html:129
-#: tcms/bugs/templates/bugs/mutable.html:94
+#: tcms/bugs/templates/bugs/get.html:150
+#: tcms/bugs/templates/bugs/mutable.html:112
 #: tcms/testcases/templates/testcases/mutable.html:257
 #: tcms/testplans/templates/testplans/get.html:476
 #: tcms/testplans/templates/testplans/mutable.html:154
@@ -136,13 +143,13 @@ msgstr "重新打开"
 msgid "Save"
 msgstr "保存"
 
-#: tcms/bugs/templates/bugs/get.html:131
+#: tcms/bugs/templates/bugs/get.html:152
 msgid "Close"
 msgstr "关闭"
 
 #: tcms/bugs/templates/bugs/mutable.html:18
 #: tcms/bugs/templates/bugs/search.html:12
-#: tcms/bugs/templates/bugs/search.html:101
+#: tcms/bugs/templates/bugs/search.html:110
 #: tcms/testcases/templates/testcases/mutable.html:23
 #: tcms/testcases/templates/testcases/search.html:12
 #: tcms/testcases/templates/testcases/search.html:151
@@ -159,27 +166,31 @@ msgstr "关闭"
 msgid "Summary"
 msgstr "总结"
 
-#: tcms/bugs/templates/bugs/mutable.html:28
+#: tcms/bugs/templates/bugs/mutable.html:26
+msgid "add new Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "添加新产品"
 
-#: tcms/bugs/templates/bugs/mutable.html:44
+#: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
 msgstr "添加新版本"
 
-#: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/bugs/templates/bugs/mutable.html:64
+#: tcms/bugs/templates/bugs/mutable.html:79
+#: tcms/bugs/templates/bugs/mutable.html:80
 #: tcms/testruns/templates/testruns/mutable.html:81
 #: tcms/testruns/templates/testruns/mutable.html:82
 msgid "add new Build"
 msgstr "添加新的构建"
 
-#: tcms/bugs/templates/bugs/mutable.html:80
+#: tcms/bugs/templates/bugs/mutable.html:96
 #: tcms/testruns/templates/testruns/mutable.html:30
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "Username or email"
@@ -189,13 +200,13 @@ msgstr "用户名或邮箱"
 msgid "Search bugs"
 msgstr "搜索缺陷"
 
-#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:27
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
 msgstr "创建时间："
 
-#: tcms/bugs/templates/bugs/search.html:20
+#: tcms/bugs/templates/bugs/search.html:30
 #: tcms/telemetry/templates/telemetry/include/filters.html:59
 #: tcms/testcases/templates/testcases/search.html:21
 #: tcms/testplans/templates/testplans/search.html:22
@@ -206,7 +217,7 @@ msgstr "创建时间："
 msgid "Before"
 msgstr "在之前"
 
-#: tcms/bugs/templates/bugs/search.html:27
+#: tcms/bugs/templates/bugs/search.html:37
 #: tcms/telemetry/templates/telemetry/include/filters.html:47
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:29
@@ -217,7 +228,20 @@ msgstr "在之前"
 msgid "After"
 msgstr "在之后"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:82
+#: tcms/bugs/templates/bugs/search.html:87
+#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/registration_form.html:15
+#: tcms/testcases/templates/testcases/search.html:113
+#: tcms/testplans/templates/testplans/search.html:81
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/get.html:499
+#: tcms/testruns/templates/testruns/search.html:68
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Username"
+msgstr "用户名"
+
+#: tcms/bugs/templates/bugs/search.html:92
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
@@ -244,7 +268,7 @@ msgstr "在之后"
 msgid "Yes"
 msgstr "是的"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:92
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
@@ -271,20 +295,7 @@ msgstr "是的"
 msgid "No"
 msgstr "不"
 
-#: tcms/bugs/templates/bugs/search.html:78
-#: tcms/bugs/templates/bugs/search.html:83
-#: tcms/templates/registration/login.html:17
-#: tcms/templates/registration/registration_form.html:15
-#: tcms/testcases/templates/testcases/search.html:113
-#: tcms/testplans/templates/testplans/search.html:81
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/get.html:499
-#: tcms/testruns/templates/testruns/search.html:68
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Username"
-msgstr "用户名"
-
-#: tcms/bugs/templates/bugs/search.html:90
+#: tcms/bugs/templates/bugs/search.html:98
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:100
@@ -293,7 +304,7 @@ msgstr "用户名"
 msgid "Search"
 msgstr "搜索"
 
-#: tcms/bugs/templates/bugs/search.html:100
+#: tcms/bugs/templates/bugs/search.html:108
 #: tcms/testcases/templates/testcases/get.html:165
 #: tcms/testcases/templates/testcases/search.html:127
 #: tcms/testcases/templates/testcases/search.html:150
@@ -302,7 +313,7 @@ msgstr "搜索"
 msgid "ID"
 msgstr "ID"
 
-#: tcms/bugs/templates/bugs/search.html:102
+#: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
 msgstr "创建于"
@@ -330,7 +341,7 @@ msgstr "对象权限"
 msgid "Delete"
 msgstr "删除"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:313
+#: tcms/bugs/views.py:68 tcms/settings/common.py:322
 msgid "New Bug"
 msgstr "新建缺陷"
 
@@ -338,11 +349,11 @@ msgstr "新建缺陷"
 msgid "Edit bug"
 msgstr "编辑缺陷"
 
-#: tcms/bugs/views.py:223
+#: tcms/bugs/views.py:231
 msgid "*bug closed*"
 msgstr "*缺陷已关闭*"
 
-#: tcms/bugs/views.py:227
+#: tcms/bugs/views.py:235
 msgid "*bug reopened*"
 msgstr "*缺陷重新打开*"
 
@@ -462,34 +473,34 @@ msgstr "秒"
 msgid "seconds"
 msgstr "秒"
 
-#: tcms/core/views.py:50
+#: tcms/core/views.py:48
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "基本URL未配置！参见 <a href=\"%(doc_url)s\">documentation</a>  和  <a href=\"%(admin_url)s\">change it</a>"
 
-#: tcms/core/views.py:74
+#: tcms/core/views.py:72
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr "您有 %(unapplied_migration_count)s 个未应用的迁移(s)。请参阅 <a href=\"%(doc_url)s\">文档</a>"
 
-#: tcms/core/views.py:95
+#: tcms/core/views.py:93
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr "您使用的是非安全连接。查看 <a href=\"%(doc_url)s\">文档</a> 并启用 SSL。"
 
-#: tcms/kiwi_auth/admin.py:32
+#: tcms/kiwi_auth/admin.py:33
 msgid "This email address is already in use"
 msgstr "该电子邮件地址已被使用。"
 
-#: tcms/kiwi_auth/admin.py:54
+#: tcms/kiwi_auth/admin.py:55
 msgid "users"
 msgstr "用户"
 
-#: tcms/kiwi_auth/admin.py:139
+#: tcms/kiwi_auth/admin.py:160
 msgid "Personal info"
 msgstr "个人信息"
 
-#: tcms/kiwi_auth/admin.py:140
+#: tcms/kiwi_auth/admin.py:162
 msgid "Permissions"
 msgstr "权限"
 
@@ -561,113 +572,117 @@ msgstr "通过配置 base_url 来使能 [ 报告给这个问题追踪器 ]"
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "日期格式无效。预期为 YYYY-MM-DD [HH:MM:SS]。"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:312
 msgid "DASHBOARD"
 msgstr "仪表盘"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:314
 msgid "TESTING"
 msgstr "测试"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:316
 msgid "New Test Plan"
 msgstr "新建测试计划"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:318
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "新建测试用例"
 
-#: tcms/settings/common.py:311 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:320 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "新的测试执行"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:328
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:330
 msgid "Search Test Plans"
 msgstr "搜索测试计划"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:331
 msgid "Search Test Runs"
 msgstr "搜索测试执行"
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:332
 msgid "Search Test Cases"
 msgstr "搜索测试用例"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:333
 msgid "Search Bugs"
 msgstr "搜索缺陷"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:339
 msgid "TELEMETRY"
 msgstr "度量"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:342
 msgid "Testing"
 msgstr "测试中"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:344
 msgid "Breakdown"
 msgstr "分解"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:345
 msgid "Status matrix"
 msgstr "状态表"
 
-#: tcms/settings/common.py:337
+#: tcms/settings/common.py:346
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "执行趋势"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:347
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "测试案例健康"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:353
 msgid "ADMIN"
 msgstr "管理员"
 
-#: tcms/settings/common.py:350
-msgid "Users and groups"
-msgstr "用户和用户组"
+#: tcms/settings/common.py:355
+msgid "Users"
+msgstr ""
 
-#: tcms/settings/common.py:352
+#: tcms/settings/common.py:356
+msgid "Groups"
+msgstr ""
+
+#: tcms/settings/common.py:358
 msgid "Everything else"
 msgstr "管理其他事项"
 
-#: tcms/settings/common.py:355
+#: tcms/settings/common.py:361
 msgid "PLUGINS"
 msgstr "插件"
 
-#: tcms/settings/common.py:365
+#: tcms/settings/common.py:371
 msgid "Report an Issue"
 msgstr "反馈问题"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:374
 msgid "Ask for help on StackOverflow"
 msgstr "在StackOverflow上寻求帮助"
 
-#: tcms/settings/common.py:372
+#: tcms/settings/common.py:378
 msgid "Donate €5 via Open Collective"
 msgstr "通过开放集体捐赠5欧元"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:380
 msgid "Administration Guide"
 msgstr "管理员指南"
 
-#: tcms/settings/common.py:375
+#: tcms/settings/common.py:381
 msgid "User Guide"
 msgstr "用户指南"
 
-#: tcms/settings/common.py:376
+#: tcms/settings/common.py:382
 msgid "API Help"
 msgstr "API 参考"
 
@@ -1025,61 +1040,61 @@ msgstr "请稍等"
 msgid "Toggle navigation"
 msgstr "切换导航"
 
-#: tcms/templates/navbar.html:24
+#: tcms/templates/navbar.html:30
 msgid "Welcome Guest"
 msgstr "欢迎游客"
 
-#: tcms/templates/navbar.html:30
+#: tcms/templates/navbar.html:36
 msgid "My Test Runs"
 msgstr "我的测试执行"
 
-#: tcms/templates/navbar.html:34
+#: tcms/templates/navbar.html:40
 msgid "My Test Plans"
 msgstr "我的测试计划"
 
-#: tcms/templates/navbar.html:40
+#: tcms/templates/navbar.html:46
 msgid "My profile"
 msgstr "我的资料"
 
-#: tcms/templates/navbar.html:44
+#: tcms/templates/navbar.html:50
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
 msgstr "更改密码"
 
-#: tcms/templates/navbar.html:50
+#: tcms/templates/navbar.html:56
 msgid "Logout"
 msgstr "登出"
 
-#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
+#: tcms/templates/navbar.html:60 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "登录"
 
-#: tcms/templates/navbar.html:61
+#: tcms/templates/navbar.html:67
 #: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr "注册"
 
-#: tcms/templates/navbar.html:70
+#: tcms/templates/navbar.html:76
 msgid "Help"
 msgstr "帮助"
 
-#: tcms/templates/navbar.html:85
+#: tcms/templates/navbar.html:91
 msgid "Language"
 msgstr "语言"
 
-#: tcms/templates/navbar.html:89
+#: tcms/templates/navbar.html:95
 msgid "Supported languages"
 msgstr "支持的语言"
 
-#: tcms/templates/navbar.html:90
+#: tcms/templates/navbar.html:96
 msgid "Request new language"
 msgstr "请求新语言"
 
-#: tcms/templates/navbar.html:96
+#: tcms/templates/navbar.html:102
 msgid "Translation mode"
 msgstr "翻译模式"
 
-#: tcms/templates/navbar.html:100
+#: tcms/templates/navbar.html:106
 msgid "Translation guide"
 msgstr "翻译指南"
 
@@ -2151,3 +2166,4 @@ msgstr "编辑租户"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "只有获得此租户授权的用户才能邀请其他"
+
