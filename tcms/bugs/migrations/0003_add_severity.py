@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("bugs", "0002_add_permissions"),
+        ("management", "0009_build_to_version"),
     ]
 
     operations = [
