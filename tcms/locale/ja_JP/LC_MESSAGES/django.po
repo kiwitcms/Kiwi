@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-02-23 22:03\n"
+"POT-Creation-Date: 2022-07-29 20:11+0000\n"
+"PO-Revision-Date: 2022-07-30 12:20\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 "X-Crowdin-File-ID: 19\n"
 
-#: tcms/bugs/forms.py:25
+#: tcms/bugs/forms.py:33
 msgid "Description of problem:\n\n\n"
 "How often reproducible:\n\n\n"
 "Steps to Reproduce:\n"
@@ -37,36 +37,43 @@ msgstr "問題の説明：\n\n\n"
 "期待する結果：\n\n\n"
 "追加情報："
 
-#: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:36
+#: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:49
+#: tcms/bugs/templates/bugs/mutable.html:25
+#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:109
+msgid "Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
 msgstr "オープン"
 
-#: tcms/bugs/templates/bugs/get.html:29
+#: tcms/bugs/templates/bugs/get.html:38
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
 msgstr "クローズ"
 
-#: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:76
-#: tcms/bugs/templates/bugs/search.html:106
+#: tcms/bugs/templates/bugs/get.html:58 tcms/bugs/templates/bugs/search.html:80
+#: tcms/bugs/templates/bugs/search.html:115
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
 msgstr "報告者"
 
-#: tcms/bugs/templates/bugs/get.html:46
-#: tcms/bugs/templates/bugs/mutable.html:76
-#: tcms/bugs/templates/bugs/search.html:81
-#: tcms/bugs/templates/bugs/search.html:107
+#: tcms/bugs/templates/bugs/get.html:63
+#: tcms/bugs/templates/bugs/mutable.html:92
+#: tcms/bugs/templates/bugs/search.html:85
+#: tcms/bugs/templates/bugs/search.html:116
 #: tcms/templates/include/bug_details.html:10
 #: tcms/testruns/templates/testruns/get.html:207
 #: tcms/testruns/templates/testruns/get.html:267
 msgid "Assignee"
 msgstr "担当者"
 
-#: tcms/bugs/templates/bugs/get.html:57
-#: tcms/bugs/templates/bugs/mutable.html:27
-#: tcms/bugs/templates/bugs/search.html:44
-#: tcms/bugs/templates/bugs/search.html:103
+#: tcms/bugs/templates/bugs/get.html:74
+#: tcms/bugs/templates/bugs/mutable.html:43
+#: tcms/bugs/templates/bugs/search.html:48
+#: tcms/bugs/templates/bugs/search.html:112
 #: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:57
 #: tcms/telemetry/templates/telemetry/include/filters.html:12
 #: tcms/templates/include/bug_details.html:13
@@ -86,12 +93,12 @@ msgstr "担当者"
 msgid "Product"
 msgstr "プロダクト"
 
-#: tcms/bugs/templates/bugs/get.html:62
-#: tcms/bugs/templates/bugs/mutable.html:42
-#: tcms/bugs/templates/bugs/search.html:54
-#: tcms/bugs/templates/bugs/search.html:104
+#: tcms/bugs/templates/bugs/get.html:79
+#: tcms/bugs/templates/bugs/mutable.html:58
+#: tcms/bugs/templates/bugs/search.html:58
+#: tcms/bugs/templates/bugs/search.html:113
 #: tcms/telemetry/templates/telemetry/include/filters.html:21
-#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:78
+#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:84
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -103,10 +110,10 @@ msgstr "プロダクト"
 msgid "Version"
 msgstr "バージョン"
 
-#: tcms/bugs/templates/bugs/get.html:67
-#: tcms/bugs/templates/bugs/mutable.html:60
-#: tcms/bugs/templates/bugs/search.html:64
-#: tcms/bugs/templates/bugs/search.html:105 tcms/management/models.py:120
+#: tcms/bugs/templates/bugs/get.html:84
+#: tcms/bugs/templates/bugs/mutable.html:76
+#: tcms/bugs/templates/bugs/search.html:68
+#: tcms/bugs/templates/bugs/search.html:114 tcms/management/models.py:120
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:53
@@ -117,16 +124,16 @@ msgstr "バージョン"
 msgid "Build"
 msgstr "ビルド"
 
-#: tcms/bugs/templates/bugs/get.html:97
+#: tcms/bugs/templates/bugs/get.html:118
 msgid "commented on"
 msgstr "コメント"
 
-#: tcms/bugs/templates/bugs/get.html:127
+#: tcms/bugs/templates/bugs/get.html:148
 msgid "Reopen"
 msgstr "再オープン"
 
-#: tcms/bugs/templates/bugs/get.html:129
-#: tcms/bugs/templates/bugs/mutable.html:94
+#: tcms/bugs/templates/bugs/get.html:150
+#: tcms/bugs/templates/bugs/mutable.html:112
 #: tcms/testcases/templates/testcases/mutable.html:257
 #: tcms/testplans/templates/testplans/get.html:476
 #: tcms/testplans/templates/testplans/mutable.html:154
@@ -136,13 +143,13 @@ msgstr "再オープン"
 msgid "Save"
 msgstr "保存"
 
-#: tcms/bugs/templates/bugs/get.html:131
+#: tcms/bugs/templates/bugs/get.html:152
 msgid "Close"
 msgstr "クローズ"
 
 #: tcms/bugs/templates/bugs/mutable.html:18
 #: tcms/bugs/templates/bugs/search.html:12
-#: tcms/bugs/templates/bugs/search.html:101
+#: tcms/bugs/templates/bugs/search.html:110
 #: tcms/testcases/templates/testcases/mutable.html:23
 #: tcms/testcases/templates/testcases/search.html:12
 #: tcms/testcases/templates/testcases/search.html:151
@@ -159,27 +166,31 @@ msgstr "クローズ"
 msgid "Summary"
 msgstr "概要"
 
-#: tcms/bugs/templates/bugs/mutable.html:28
+#: tcms/bugs/templates/bugs/mutable.html:26
+msgid "add new Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "新しいプロダクトを追加"
 
-#: tcms/bugs/templates/bugs/mutable.html:44
+#: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
 msgstr "新しいバージョンを追加"
 
-#: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/bugs/templates/bugs/mutable.html:64
+#: tcms/bugs/templates/bugs/mutable.html:79
+#: tcms/bugs/templates/bugs/mutable.html:80
 #: tcms/testruns/templates/testruns/mutable.html:81
 #: tcms/testruns/templates/testruns/mutable.html:82
 msgid "add new Build"
 msgstr "新しいビルドを追加"
 
-#: tcms/bugs/templates/bugs/mutable.html:80
+#: tcms/bugs/templates/bugs/mutable.html:96
 #: tcms/testruns/templates/testruns/mutable.html:30
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "Username or email"
@@ -189,13 +200,13 @@ msgstr "ユーザー名またはメール"
 msgid "Search bugs"
 msgstr "バグを検索"
 
-#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:27
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
 msgstr "作成日"
 
-#: tcms/bugs/templates/bugs/search.html:20
+#: tcms/bugs/templates/bugs/search.html:30
 #: tcms/telemetry/templates/telemetry/include/filters.html:59
 #: tcms/testcases/templates/testcases/search.html:21
 #: tcms/testplans/templates/testplans/search.html:22
@@ -206,7 +217,7 @@ msgstr "作成日"
 msgid "Before"
 msgstr "以前"
 
-#: tcms/bugs/templates/bugs/search.html:27
+#: tcms/bugs/templates/bugs/search.html:37
 #: tcms/telemetry/templates/telemetry/include/filters.html:47
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:29
@@ -217,7 +228,20 @@ msgstr "以前"
 msgid "After"
 msgstr "以後"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:82
+#: tcms/bugs/templates/bugs/search.html:87
+#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/registration_form.html:15
+#: tcms/testcases/templates/testcases/search.html:113
+#: tcms/testplans/templates/testplans/search.html:81
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/get.html:499
+#: tcms/testruns/templates/testruns/search.html:68
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Username"
+msgstr "ユーザー名"
+
+#: tcms/bugs/templates/bugs/search.html:92
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
@@ -244,7 +268,7 @@ msgstr "以後"
 msgid "Yes"
 msgstr "はい"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:92
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
@@ -271,20 +295,7 @@ msgstr "はい"
 msgid "No"
 msgstr "いいえ"
 
-#: tcms/bugs/templates/bugs/search.html:78
-#: tcms/bugs/templates/bugs/search.html:83
-#: tcms/templates/registration/login.html:17
-#: tcms/templates/registration/registration_form.html:15
-#: tcms/testcases/templates/testcases/search.html:113
-#: tcms/testplans/templates/testplans/search.html:81
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/get.html:499
-#: tcms/testruns/templates/testruns/search.html:68
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Username"
-msgstr "ユーザー名"
-
-#: tcms/bugs/templates/bugs/search.html:90
+#: tcms/bugs/templates/bugs/search.html:98
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:100
@@ -293,7 +304,7 @@ msgstr "ユーザー名"
 msgid "Search"
 msgstr "検索"
 
-#: tcms/bugs/templates/bugs/search.html:100
+#: tcms/bugs/templates/bugs/search.html:108
 #: tcms/testcases/templates/testcases/get.html:165
 #: tcms/testcases/templates/testcases/search.html:127
 #: tcms/testcases/templates/testcases/search.html:150
@@ -302,7 +313,7 @@ msgstr "検索"
 msgid "ID"
 msgstr "ID"
 
-#: tcms/bugs/templates/bugs/search.html:102
+#: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
 msgstr "作成日時"
@@ -330,7 +341,7 @@ msgstr "オブジェクトの権限"
 msgid "Delete"
 msgstr "削除"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:313
+#: tcms/bugs/views.py:68 tcms/settings/common.py:322
 msgid "New Bug"
 msgstr "新しいバグ"
 
@@ -338,11 +349,11 @@ msgstr "新しいバグ"
 msgid "Edit bug"
 msgstr "バグを編集"
 
-#: tcms/bugs/views.py:223
+#: tcms/bugs/views.py:231
 msgid "*bug closed*"
 msgstr "*バグはクローズされました。*"
 
-#: tcms/bugs/views.py:227
+#: tcms/bugs/views.py:235
 msgid "*bug reopened*"
 msgstr "*バグが再オープンされました。*"
 
@@ -462,34 +473,34 @@ msgstr "秒"
 msgid "seconds"
 msgstr "秒間"
 
-#: tcms/core/views.py:50
+#: tcms/core/views.py:48
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">ドキュメント</a> を参照し、 <a href=\"%(admin_url)s\">変更してください。</a>"
 
-#: tcms/core/views.py:74
+#: tcms/core/views.py:72
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr "%(unapplied_migration_count)s 件の未適用の移行があります。 <a href=\"%(doc_url)s\">ドキュメント</a> を参照してください。"
 
-#: tcms/core/views.py:95
+#: tcms/core/views.py:93
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:32
+#: tcms/kiwi_auth/admin.py:33
 msgid "This email address is already in use"
 msgstr "このメール アドレスは既に使用されています。"
 
-#: tcms/kiwi_auth/admin.py:54
+#: tcms/kiwi_auth/admin.py:55
 msgid "users"
 msgstr "ユーザー"
 
-#: tcms/kiwi_auth/admin.py:139
+#: tcms/kiwi_auth/admin.py:160
 msgid "Personal info"
 msgstr "個人情報"
 
-#: tcms/kiwi_auth/admin.py:140
+#: tcms/kiwi_auth/admin.py:162
 msgid "Permissions"
 msgstr "権限"
 
@@ -561,113 +572,117 @@ msgstr "base_urlを設定することで、この課題トラッカーへの報�
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS]。"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:312
 msgid "DASHBOARD"
 msgstr "ダッシュボード"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:314
 msgid "TESTING"
 msgstr "テスト中"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:316
 msgid "New Test Plan"
 msgstr "新しいテスト計画"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:318
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "新しいテストケース"
 
-#: tcms/settings/common.py:311 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:320 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "新しいテスト実行"
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:328
 msgid "SEARCH"
 msgstr "検索"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:330
 msgid "Search Test Plans"
 msgstr "テスト計画の検索"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:331
 msgid "Search Test Runs"
 msgstr "テスト実行を検索"
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:332
 msgid "Search Test Cases"
 msgstr "テストケースを検索"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:333
 msgid "Search Bugs"
 msgstr "バグを検索"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:339
 msgid "TELEMETRY"
 msgstr "テレメトリー"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:342
 msgid "Testing"
 msgstr "テスト中"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:344
 msgid "Breakdown"
 msgstr "ブレイクダウン"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:345
 msgid "Status matrix"
 msgstr "状態マトリクス"
 
-#: tcms/settings/common.py:337
+#: tcms/settings/common.py:346
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "実行のトレンド"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:347
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "テストケースの状況"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:353
 msgid "ADMIN"
 msgstr "管理者"
 
-#: tcms/settings/common.py:350
-msgid "Users and groups"
-msgstr "ユーザとグループ"
+#: tcms/settings/common.py:355
+msgid "Users"
+msgstr ""
 
-#: tcms/settings/common.py:352
+#: tcms/settings/common.py:356
+msgid "Groups"
+msgstr ""
+
+#: tcms/settings/common.py:358
 msgid "Everything else"
 msgstr "他のすべて"
 
-#: tcms/settings/common.py:355
+#: tcms/settings/common.py:361
 msgid "PLUGINS"
 msgstr "プラグイン"
 
-#: tcms/settings/common.py:365
+#: tcms/settings/common.py:371
 msgid "Report an Issue"
 msgstr "問題を報告する"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:374
 msgid "Ask for help on StackOverflow"
 msgstr "StackOverflowで助けを求める"
 
-#: tcms/settings/common.py:372
+#: tcms/settings/common.py:378
 msgid "Donate €5 via Open Collective"
 msgstr "Open Collective経由で€5を寄付する"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:380
 msgid "Administration Guide"
 msgstr "管理ガイド"
 
-#: tcms/settings/common.py:375
+#: tcms/settings/common.py:381
 msgid "User Guide"
 msgstr "ユーザーガイド"
 
-#: tcms/settings/common.py:376
+#: tcms/settings/common.py:382
 msgid "API Help"
 msgstr "API ヘルプ"
 
@@ -1016,61 +1031,61 @@ msgstr "しばらくお待ちください。"
 msgid "Toggle navigation"
 msgstr "ナビゲーションの切り替え"
 
-#: tcms/templates/navbar.html:24
+#: tcms/templates/navbar.html:30
 msgid "Welcome Guest"
 msgstr "ようこそ ゲストさん"
 
-#: tcms/templates/navbar.html:30
+#: tcms/templates/navbar.html:36
 msgid "My Test Runs"
 msgstr "テスト実行"
 
-#: tcms/templates/navbar.html:34
+#: tcms/templates/navbar.html:40
 msgid "My Test Plans"
 msgstr "テスト計画"
 
-#: tcms/templates/navbar.html:40
+#: tcms/templates/navbar.html:46
 msgid "My profile"
 msgstr "自分のプロフィール"
 
-#: tcms/templates/navbar.html:44
+#: tcms/templates/navbar.html:50
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
 msgstr "パスワードの変更"
 
-#: tcms/templates/navbar.html:50
+#: tcms/templates/navbar.html:56
 msgid "Logout"
 msgstr "ログアウト"
 
-#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
+#: tcms/templates/navbar.html:60 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "ログイン"
 
-#: tcms/templates/navbar.html:61
+#: tcms/templates/navbar.html:67
 #: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr "登録"
 
-#: tcms/templates/navbar.html:70
+#: tcms/templates/navbar.html:76
 msgid "Help"
 msgstr "ヘルプ"
 
-#: tcms/templates/navbar.html:85
+#: tcms/templates/navbar.html:91
 msgid "Language"
 msgstr "言語"
 
-#: tcms/templates/navbar.html:89
+#: tcms/templates/navbar.html:95
 msgid "Supported languages"
 msgstr "サポートされる言語"
 
-#: tcms/templates/navbar.html:90
+#: tcms/templates/navbar.html:96
 msgid "Request new language"
 msgstr "新しい言語をリクエスト"
 
-#: tcms/templates/navbar.html:96
+#: tcms/templates/navbar.html:102
 msgid "Translation mode"
 msgstr "翻訳モード"
 
-#: tcms/templates/navbar.html:100
+#: tcms/templates/navbar.html:106
 msgid "Translation guide"
 msgstr "翻訳者ガイド"
 
@@ -2139,3 +2154,4 @@ msgstr "テナントを編集"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "このテナントの許可を得たユーザーのみが他のユーザーを招待できます"
+
