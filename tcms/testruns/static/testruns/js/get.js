@@ -166,15 +166,17 @@ $(document).ready(() => {
 
   document.getElementById('id_assigned_to_me').onchange = () => {
     const isChecked = $('#id_assigned_to_me').is(':checked')
-    const currentUser = $('#test_run_pk').data('current-user')
-    const filterValue = isChecked ? currentUser : ''
+    const filterValue = isChecked ? $('#test_run_pk').data('current-user') : ''
 
-    filterTestExecutionsByProperty(
-      testRunId,
-      Object.values(allExecutions),
-      'assignee__username',
-      filterValue
+    // update the filter widget which will do the actual filtering
+    changeDropdownSelectedItem(
+      '.js-toolbar-filter-options',
+      '#input-filter-button',
+      $('.js-toolbar-filter-options [data-filter-type="assignee__username"]').find('a')[0],
+      $('#toolbar-filter')
     )
+    $('#toolbar-filter').val(filterValue)
+    $('#toolbar-filter').keyup()
   }
 
   quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocompleteCache, { case_status__is_confirmed: true })
