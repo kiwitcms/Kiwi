@@ -1,8 +1,5 @@
 const allExecutionStatuses = {}
 const allExecutions = {}
-// displayedExecutions keeps tracks of the executions that we are currently displaying
-// it is needed to support multiple filters
-let displayedExecutions = {}
 const expandedExecutionIds = []
 const permissions = {
   removeTag: false,
@@ -174,7 +171,7 @@ $(document).ready(() => {
 
     filterTestExecutionsByProperty(
       testRunId,
-      Object.values(displayedExecutions),
+      Object.values(allExecutions),
       "assignee__username",
       filterValue
     )
@@ -203,7 +200,7 @@ $(document).ready(() => {
 
     filterTestExecutionsByProperty(
       testRunId,
-      Object.values(displayedExecutions),
+      Object.values(allExecutions),
       filterBy,
       filterValue
     )
@@ -256,16 +253,15 @@ function filterTestExecutionsByProperty (runId, executions, filterBy, filterValu
       query.category__name__icontains = filterValue
     }
 
-    jsonRPC('TestCase.filter', query, (filtered) => {
+    jsonRPC('TestCase.filter', query, function (filtered) {
       // hide again if a previous async request showed something else
       $('.test-execution-element').hide()
       filtered.forEach(tc => $(`.test-execution-case-${tc.id}`).show())
-      displayedExecutions = filtered
     })
   } else {
-    const filtered = executions.filter((te) => (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1))
-    filtered.forEach(te => $(`.test-execution-${te.id}`).show())
-    displayedExecutions = filtered
+    executions.filter(function (te) {
+      return (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
+    }).forEach(te => $(`.test-execution-${te.id}`).show())
   }
 }
 
@@ -682,7 +678,6 @@ function renderTestExecutionRow (testExecution) {
   // to render the expand area and may have changed via bulk-update meanwhile
   testExecution.status__name = $('#test_run_pk').data(`trans-execution-status-${testExecution.status}`)
   allExecutions[testExecution.id] = testExecution
-  displayedExecutions[testExecution.id] = testExecution
 
   const testExecutionRowTemplate = $('#test-execution-row')[0].content
   const template = $(testExecutionRowTemplate.cloneNode(true))
