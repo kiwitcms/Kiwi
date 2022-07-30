@@ -51,7 +51,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, full, meta) {
           if (data.severity__name) {
-              return `<span class="${data.severity__icon}" style="color: ${data.severity__color}"></span> ${data.severity__name}`
+            return `<span class="${data.severity__icon}" style="color: ${data.severity__color}"></span> ${data.severity__name}`
           }
 
           return ''
