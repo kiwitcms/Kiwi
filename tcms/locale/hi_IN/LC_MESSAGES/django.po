@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 21:45+0000\n"
-"PO-Revision-Date: 2022-02-23 22:03\n"
+"POT-Creation-Date: 2022-07-29 20:11+0000\n"
+"PO-Revision-Date: 2022-07-30 12:19\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 "X-Crowdin-File-ID: 19\n"
 
-#: tcms/bugs/forms.py:25
+#: tcms/bugs/forms.py:33
 msgid "Description of problem:\n\n\n"
 "How often reproducible:\n\n\n"
 "Steps to Reproduce:\n"
@@ -37,36 +37,43 @@ msgstr "समस्या का विवरण:\n\n"
 "अपेक्षित परिणाम:\n\n"
 "अतिरिक्त जानकारी:"
 
-#: tcms/bugs/templates/bugs/get.html:27 tcms/bugs/templates/bugs/search.html:36
+#: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:49
+#: tcms/bugs/templates/bugs/mutable.html:25
+#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:109
+msgid "Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
 msgstr "खुला"
 
-#: tcms/bugs/templates/bugs/get.html:29
+#: tcms/bugs/templates/bugs/get.html:38
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
 msgstr "सामाप्ति"
 
-#: tcms/bugs/templates/bugs/get.html:41 tcms/bugs/templates/bugs/search.html:76
-#: tcms/bugs/templates/bugs/search.html:106
+#: tcms/bugs/templates/bugs/get.html:58 tcms/bugs/templates/bugs/search.html:80
+#: tcms/bugs/templates/bugs/search.html:115
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
 msgstr "रिपोर्टर"
 
-#: tcms/bugs/templates/bugs/get.html:46
-#: tcms/bugs/templates/bugs/mutable.html:76
-#: tcms/bugs/templates/bugs/search.html:81
-#: tcms/bugs/templates/bugs/search.html:107
+#: tcms/bugs/templates/bugs/get.html:63
+#: tcms/bugs/templates/bugs/mutable.html:92
+#: tcms/bugs/templates/bugs/search.html:85
+#: tcms/bugs/templates/bugs/search.html:116
 #: tcms/templates/include/bug_details.html:10
 #: tcms/testruns/templates/testruns/get.html:207
 #: tcms/testruns/templates/testruns/get.html:267
 msgid "Assignee"
 msgstr "अनुदिष्ट (assignee)"
 
-#: tcms/bugs/templates/bugs/get.html:57
-#: tcms/bugs/templates/bugs/mutable.html:27
-#: tcms/bugs/templates/bugs/search.html:44
-#: tcms/bugs/templates/bugs/search.html:103
+#: tcms/bugs/templates/bugs/get.html:74
+#: tcms/bugs/templates/bugs/mutable.html:43
+#: tcms/bugs/templates/bugs/search.html:48
+#: tcms/bugs/templates/bugs/search.html:112
 #: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:57
 #: tcms/telemetry/templates/telemetry/include/filters.html:12
 #: tcms/templates/include/bug_details.html:13
@@ -86,12 +93,12 @@ msgstr "अनुदिष्ट (assignee)"
 msgid "Product"
 msgstr "प्रॉडक्ट"
 
-#: tcms/bugs/templates/bugs/get.html:62
-#: tcms/bugs/templates/bugs/mutable.html:42
-#: tcms/bugs/templates/bugs/search.html:54
-#: tcms/bugs/templates/bugs/search.html:104
+#: tcms/bugs/templates/bugs/get.html:79
+#: tcms/bugs/templates/bugs/mutable.html:58
+#: tcms/bugs/templates/bugs/search.html:58
+#: tcms/bugs/templates/bugs/search.html:113
 #: tcms/telemetry/templates/telemetry/include/filters.html:21
-#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:78
+#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:84
 #: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/get.html:69
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -103,10 +110,10 @@ msgstr "प्रॉडक्ट"
 msgid "Version"
 msgstr "संस्करण"
 
-#: tcms/bugs/templates/bugs/get.html:67
-#: tcms/bugs/templates/bugs/mutable.html:60
-#: tcms/bugs/templates/bugs/search.html:64
-#: tcms/bugs/templates/bugs/search.html:105 tcms/management/models.py:120
+#: tcms/bugs/templates/bugs/get.html:84
+#: tcms/bugs/templates/bugs/mutable.html:76
+#: tcms/bugs/templates/bugs/search.html:68
+#: tcms/bugs/templates/bugs/search.html:114 tcms/management/models.py:120
 #: tcms/telemetry/templates/telemetry/include/filters.html:29
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:53
@@ -117,16 +124,16 @@ msgstr "संस्करण"
 msgid "Build"
 msgstr "निर्माण"
 
-#: tcms/bugs/templates/bugs/get.html:97
+#: tcms/bugs/templates/bugs/get.html:118
 msgid "commented on"
 msgstr "टिप्पणी की है"
 
-#: tcms/bugs/templates/bugs/get.html:127
+#: tcms/bugs/templates/bugs/get.html:148
 msgid "Reopen"
 msgstr "फिर से खोलें"
 
-#: tcms/bugs/templates/bugs/get.html:129
-#: tcms/bugs/templates/bugs/mutable.html:94
+#: tcms/bugs/templates/bugs/get.html:150
+#: tcms/bugs/templates/bugs/mutable.html:112
 #: tcms/testcases/templates/testcases/mutable.html:257
 #: tcms/testplans/templates/testplans/get.html:476
 #: tcms/testplans/templates/testplans/mutable.html:154
@@ -136,13 +143,13 @@ msgstr "फिर से खोलें"
 msgid "Save"
 msgstr "सेव करें"
 
-#: tcms/bugs/templates/bugs/get.html:131
+#: tcms/bugs/templates/bugs/get.html:152
 msgid "Close"
 msgstr "बंद करें"
 
 #: tcms/bugs/templates/bugs/mutable.html:18
 #: tcms/bugs/templates/bugs/search.html:12
-#: tcms/bugs/templates/bugs/search.html:101
+#: tcms/bugs/templates/bugs/search.html:110
 #: tcms/testcases/templates/testcases/mutable.html:23
 #: tcms/testcases/templates/testcases/search.html:12
 #: tcms/testcases/templates/testcases/search.html:151
@@ -159,27 +166,31 @@ msgstr "बंद करें"
 msgid "Summary"
 msgstr "सारांश"
 
-#: tcms/bugs/templates/bugs/mutable.html:28
+#: tcms/bugs/templates/bugs/mutable.html:26
+msgid "add new Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "नया उत्पाद जोड़ें"
 
-#: tcms/bugs/templates/bugs/mutable.html:44
+#: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/testplans/templates/testplans/clone.html:37
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
 msgstr "नया संस्करण जोड़ें"
 
-#: tcms/bugs/templates/bugs/mutable.html:63
-#: tcms/bugs/templates/bugs/mutable.html:64
+#: tcms/bugs/templates/bugs/mutable.html:79
+#: tcms/bugs/templates/bugs/mutable.html:80
 #: tcms/testruns/templates/testruns/mutable.html:81
 #: tcms/testruns/templates/testruns/mutable.html:82
 msgid "add new Build"
 msgstr "नया निर्माण जोड़ें"
 
-#: tcms/bugs/templates/bugs/mutable.html:80
+#: tcms/bugs/templates/bugs/mutable.html:96
 #: tcms/testruns/templates/testruns/mutable.html:30
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "Username or email"
@@ -189,13 +200,13 @@ msgstr "उपयोगकर्ता नाम या ईमेल"
 msgid "Search bugs"
 msgstr "खोजें बग"
 
-#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:27
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:20
+#: tcms/bugs/templates/bugs/search.html:30
 #: tcms/telemetry/templates/telemetry/include/filters.html:59
 #: tcms/testcases/templates/testcases/search.html:21
 #: tcms/testplans/templates/testplans/search.html:22
@@ -206,7 +217,7 @@ msgstr ""
 msgid "Before"
 msgstr "पूर्व"
 
-#: tcms/bugs/templates/bugs/search.html:27
+#: tcms/bugs/templates/bugs/search.html:37
 #: tcms/telemetry/templates/telemetry/include/filters.html:47
 #: tcms/testcases/templates/testcases/search.html:28
 #: tcms/testplans/templates/testplans/search.html:29
@@ -217,7 +228,20 @@ msgstr "पूर्व"
 msgid "After"
 msgstr "बाद में"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:82
+#: tcms/bugs/templates/bugs/search.html:87
+#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/registration_form.html:15
+#: tcms/testcases/templates/testcases/search.html:113
+#: tcms/testplans/templates/testplans/search.html:81
+#: tcms/testplans/templates/testplans/search.html:87
+#: tcms/testruns/templates/testruns/get.html:499
+#: tcms/testruns/templates/testruns/search.html:68
+#: tcms/testruns/templates/testruns/search.html:74
+msgid "Username"
+msgstr "उपयोगकर्ता नाम"
+
+#: tcms/bugs/templates/bugs/search.html:92
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
@@ -244,7 +268,7 @@ msgstr "बाद में"
 msgid "Yes"
 msgstr "हाँ"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:92
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:17
 #: tcms/testcases/templates/testcases/clone.html:21
 #: tcms/testcases/templates/testcases/clone.html:35
@@ -271,20 +295,7 @@ msgstr "हाँ"
 msgid "No"
 msgstr "नहीं"
 
-#: tcms/bugs/templates/bugs/search.html:78
-#: tcms/bugs/templates/bugs/search.html:83
-#: tcms/templates/registration/login.html:17
-#: tcms/templates/registration/registration_form.html:15
-#: tcms/testcases/templates/testcases/search.html:113
-#: tcms/testplans/templates/testplans/search.html:81
-#: tcms/testplans/templates/testplans/search.html:87
-#: tcms/testruns/templates/testruns/get.html:499
-#: tcms/testruns/templates/testruns/search.html:68
-#: tcms/testruns/templates/testruns/search.html:74
-msgid "Username"
-msgstr "उपयोगकर्ता नाम"
-
-#: tcms/bugs/templates/bugs/search.html:90
+#: tcms/bugs/templates/bugs/search.html:98
 #: tcms/testcases/templates/testcases/search.html:139
 #: tcms/testplans/templates/testplans/get.html:220
 #: tcms/testplans/templates/testplans/search.html:100
@@ -293,7 +304,7 @@ msgstr "उपयोगकर्ता नाम"
 msgid "Search"
 msgstr "खोजें"
 
-#: tcms/bugs/templates/bugs/search.html:100
+#: tcms/bugs/templates/bugs/search.html:108
 #: tcms/testcases/templates/testcases/get.html:165
 #: tcms/testcases/templates/testcases/search.html:127
 #: tcms/testcases/templates/testcases/search.html:150
@@ -302,7 +313,7 @@ msgstr "खोजें"
 msgid "ID"
 msgstr "आईडी"
 
-#: tcms/bugs/templates/bugs/search.html:102
+#: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
 msgid "Created at"
 msgstr "बनाने की तिथि"
@@ -330,7 +341,7 @@ msgstr ""
 msgid "Delete"
 msgstr "मिटाए"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:313
+#: tcms/bugs/views.py:68 tcms/settings/common.py:322
 msgid "New Bug"
 msgstr "नई बग"
 
@@ -338,11 +349,11 @@ msgstr "नई बग"
 msgid "Edit bug"
 msgstr "बग संपादित करें"
 
-#: tcms/bugs/views.py:223
+#: tcms/bugs/views.py:231
 msgid "*bug closed*"
 msgstr "* बग बंद *"
 
-#: tcms/bugs/views.py:227
+#: tcms/bugs/views.py:235
 msgid "*bug reopened*"
 msgstr "* बग फिर से खोला *"
 
@@ -462,34 +473,34 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: tcms/core/views.py:50
+#: tcms/core/views.py:48
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "आधार URL कॉन्फ़िगर नहीं है! <a href=\"%(doc_url)s\"> दस्तावेज़ीकरण </a> देखें और <a href=\"%(admin_url)s\"> इसे बदलें </a>"
 
-#: tcms/core/views.py:74
+#: tcms/core/views.py:72
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr ""
 
-#: tcms/core/views.py:95
+#: tcms/core/views.py:93
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:32
+#: tcms/kiwi_auth/admin.py:33
 msgid "This email address is already in use"
 msgstr "यह ईमेल पता पहले से प्रयोग में है"
 
-#: tcms/kiwi_auth/admin.py:54
+#: tcms/kiwi_auth/admin.py:55
 msgid "users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:139
+#: tcms/kiwi_auth/admin.py:160
 msgid "Personal info"
 msgstr "व्यक्तिगत जानकारी"
 
-#: tcms/kiwi_auth/admin.py:140
+#: tcms/kiwi_auth/admin.py:162
 msgid "Permissions"
 msgstr "अनुमतियाँ"
 
@@ -561,113 +572,117 @@ msgstr "इसके base_url को कॉन्फ़िगर करके �
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "अमान्य तिथि प्रारूप। अपेक्षित YYYY-MM-DD [HH: MM: SS]।"
 
-#: tcms/settings/common.py:303
+#: tcms/settings/common.py:312
 msgid "DASHBOARD"
 msgstr "डैशबोर्ड"
 
-#: tcms/settings/common.py:305
+#: tcms/settings/common.py:314
 msgid "TESTING"
 msgstr "परिक्षण"
 
-#: tcms/settings/common.py:307
+#: tcms/settings/common.py:316
 msgid "New Test Plan"
 msgstr "नई परीक्षण योजना"
 
-#: tcms/settings/common.py:309
+#: tcms/settings/common.py:318
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "नया टेस्ट केस"
 
-#: tcms/settings/common.py:311 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:320 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:319
+#: tcms/settings/common.py:328
 msgid "SEARCH"
 msgstr "खोज"
 
-#: tcms/settings/common.py:321
+#: tcms/settings/common.py:330
 msgid "Search Test Plans"
 msgstr "खोज परीक्षण योजनाएँ"
 
-#: tcms/settings/common.py:322
+#: tcms/settings/common.py:331
 msgid "Search Test Runs"
 msgstr "खोज टेस्ट रन"
 
-#: tcms/settings/common.py:323
+#: tcms/settings/common.py:332
 msgid "Search Test Cases"
 msgstr "खोज टेस्ट मामले"
 
-#: tcms/settings/common.py:324
+#: tcms/settings/common.py:333
 msgid "Search Bugs"
 msgstr "खोजें बग"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:339
 msgid "TELEMETRY"
 msgstr "टेलीमेट्री"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:342
 msgid "Testing"
 msgstr "परिक्षण"
 
-#: tcms/settings/common.py:335
+#: tcms/settings/common.py:344
 msgid "Breakdown"
 msgstr "विश्लेषण"
 
-#: tcms/settings/common.py:336
+#: tcms/settings/common.py:345
 msgid "Status matrix"
 msgstr "स्थिति संदेश"
 
-#: tcms/settings/common.py:337
+#: tcms/settings/common.py:346
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "निष्पादन प्रवृत्ति"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:347
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "टेस्ट कैस स्वास्थ्य"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:353
 msgid "ADMIN"
 msgstr "प्रशासन"
 
-#: tcms/settings/common.py:350
-msgid "Users and groups"
-msgstr "उपयोगकर्ता और समूह"
+#: tcms/settings/common.py:355
+msgid "Users"
+msgstr ""
 
-#: tcms/settings/common.py:352
+#: tcms/settings/common.py:356
+msgid "Groups"
+msgstr ""
+
+#: tcms/settings/common.py:358
 msgid "Everything else"
 msgstr "बाकि सब"
 
-#: tcms/settings/common.py:355
+#: tcms/settings/common.py:361
 msgid "PLUGINS"
 msgstr "प्लगइन्स"
 
-#: tcms/settings/common.py:365
+#: tcms/settings/common.py:371
 msgid "Report an Issue"
 msgstr "समस्या की रिपोर्ट करें…"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:374
 msgid "Ask for help on StackOverflow"
 msgstr "StackOverflow पर मदद के लिए पूछें"
 
-#: tcms/settings/common.py:372
+#: tcms/settings/common.py:378
 msgid "Donate €5 via Open Collective"
 msgstr "ओपन कलेक्टिव के माध्यम से € 5 दान करें"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:380
 msgid "Administration Guide"
 msgstr "प्रशासन गाइड"
 
-#: tcms/settings/common.py:375
+#: tcms/settings/common.py:381
 msgid "User Guide"
 msgstr "उपयोगकर्ता गाइड"
 
-#: tcms/settings/common.py:376
+#: tcms/settings/common.py:382
 msgid "API Help"
 msgstr "API सहायता"
 
@@ -1015,61 +1030,61 @@ msgstr ""
 msgid "Toggle navigation"
 msgstr "नेविगेशन टॉगल करें"
 
-#: tcms/templates/navbar.html:24
+#: tcms/templates/navbar.html:30
 msgid "Welcome Guest"
 msgstr "स्वागत अतिथि"
 
-#: tcms/templates/navbar.html:30
+#: tcms/templates/navbar.html:36
 msgid "My Test Runs"
 msgstr "मेरा टेस्ट रन"
 
-#: tcms/templates/navbar.html:34
+#: tcms/templates/navbar.html:40
 msgid "My Test Plans"
 msgstr "मेरी टेस्ट योजनाएं"
 
-#: tcms/templates/navbar.html:40
+#: tcms/templates/navbar.html:46
 msgid "My profile"
 msgstr "मेरी प्रोफ़ाइल"
 
-#: tcms/templates/navbar.html:44
+#: tcms/templates/navbar.html:50
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
 msgstr "पासवर्ड परिवर्तित करें"
 
-#: tcms/templates/navbar.html:50
+#: tcms/templates/navbar.html:56
 msgid "Logout"
 msgstr "लॉगआउट"
 
-#: tcms/templates/navbar.html:54 tcms/templates/registration/login.html:4
+#: tcms/templates/navbar.html:60 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "लॉग इन"
 
-#: tcms/templates/navbar.html:61
+#: tcms/templates/navbar.html:67
 #: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr "रजिस्टर"
 
-#: tcms/templates/navbar.html:70
+#: tcms/templates/navbar.html:76
 msgid "Help"
 msgstr "मदद"
 
-#: tcms/templates/navbar.html:85
+#: tcms/templates/navbar.html:91
 msgid "Language"
 msgstr "भाषा "
 
-#: tcms/templates/navbar.html:89
+#: tcms/templates/navbar.html:95
 msgid "Supported languages"
 msgstr "समर्थित भाषाएँ"
 
-#: tcms/templates/navbar.html:90
+#: tcms/templates/navbar.html:96
 msgid "Request new language"
 msgstr "नई भाषा का अनुरोध करें"
 
-#: tcms/templates/navbar.html:96
+#: tcms/templates/navbar.html:102
 msgid "Translation mode"
 msgstr "अनुवाद मोड"
 
-#: tcms/templates/navbar.html:100
+#: tcms/templates/navbar.html:106
 msgid "Translation guide"
 msgstr "अनुवाद गाइड"
 
@@ -2130,3 +2145,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
