@@ -164,21 +164,6 @@ $(document).ready(() => {
     testExecutionSelectors.each((_index, te) => { te.checked = isChecked })
   })
 
-  document.getElementById('id_assigned_to_me').onchange = () => {
-    const isChecked = $('#id_assigned_to_me').is(':checked')
-    const filterValue = isChecked ? $('#test_run_pk').data('current-user') : ''
-
-    // update the filter widget which will do the actual filtering
-    changeDropdownSelectedItem(
-      '.js-toolbar-filter-options',
-      '#input-filter-button',
-      $('.js-toolbar-filter-options [data-filter-type="assignee__username"]').find('a')[0],
-      $('#toolbar-filter')
-    )
-    $('#toolbar-filter').val(filterValue)
-    $('#toolbar-filter').keyup()
-  }
-
   quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocompleteCache, { case_status__is_confirmed: true })
   $('#btn-search-cases').click(function () {
     return advancedSearchAndAddTestCases(
@@ -207,6 +192,22 @@ $(document).ready(() => {
       filterValue
     )
   })
+
+  // assigned-to-me button
+  document.getElementById('id_assigned_to_me').onchange = () => {
+    const isChecked = $('#id_assigned_to_me').is(':checked')
+    const filterValue = isChecked ? $('#test_run_pk').data('current-user') : ''
+
+    // update the filter widget which will do the actual filtering
+    changeDropdownSelectedItem(
+      '.js-toolbar-filter-options',
+      '#input-filter-button',
+      $('.js-toolbar-filter-options [data-filter-type="assignee__username"]').find('a')[0],
+      $('#toolbar-filter')
+    )
+    $('#toolbar-filter').val(filterValue)
+    $('#toolbar-filter').keyup()
+  }
 
   // email notifications card
   $('#add-cc').click(() => {
