@@ -275,6 +275,13 @@
                                     </div><!-- /input-group -->
                                 </div>
 
+                                <div class="form-group">
+                                    <input class="bootstrap-switch" id="id_assigned_to_me" type="checkbox"
+                                        data-on-text="{% trans 'Mine' %}"
+                                        data-off-text="{% trans 'All' %}"
+                                    >
+                                </div>
+
                             {% if perms.testruns.add_testexecution %}
                                 <div class="form-group">
                                     <input id="search-testcase"
@@ -292,12 +299,6 @@
                                         id="btn-search-cases" title="{% trans 'Advanced search' %}">
                                         <span class="fa fa-search"></span>
                                     </button>
-                                </div>
-                                <div class="form-group">
-                                    <div class="list-view-pf-checkbox hidden-print" style="margin-top: 0; margin-bottom: 0">
-                                        <span>{% trans 'Assigned to me' %}</span>
-                                        <input class="bootstrap-switch" id="id_assigned_to_me" type="checkbox" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-                                    </div>
                                 </div>
                             {% endif %}
                             </form>
