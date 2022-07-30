@@ -167,15 +167,15 @@ $(document).ready(() => {
   document.getElementById('id_assigned_to_me').onchange = () => {
     const isChecked = $('#id_assigned_to_me').is(':checked')
     const currentUser = $('#test_run_pk').data('current-user')
-    const filterValue = isChecked ? currentUser : ""
+    const filterValue = isChecked ? currentUser : ''
 
     filterTestExecutionsByProperty(
       testRunId,
       Object.values(allExecutions),
-      "assignee__username",
+      'assignee__username',
       filterValue
     )
-  };
+  }
 
   quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocompleteCache, { case_status__is_confirmed: true })
   $('#btn-search-cases').click(function () {
