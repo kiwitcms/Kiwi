@@ -207,6 +207,9 @@ def handle_comments_pre_delete(sender, **kwargs):
 
 
 def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
+    if not kwargs.get("called_from_add_comment"):
+        return
+
     from tcms.core.helpers.comments import get_comments
     from tcms.core.utils.mailto import mailto
 

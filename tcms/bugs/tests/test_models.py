@@ -7,7 +7,6 @@ if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")
 
 from django.template.loader import render_to_string  # noqa: E402
-from django.test import TestCase  # noqa: E402
 from django.urls import reverse  # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
 from mock import patch  # noqa: E402
@@ -17,47 +16,6 @@ from tcms.core.helpers.comments import add_comment, get_comments  # noqa: E402
 from tcms.tests import BaseCaseRun, user_should_have_perm  # noqa: E402
 from tcms.tests.factories import UserFactory  # noqa: E402
 from tcms.utils.permissions import initiate_user_with_default_setups  # noqa: E402
-
-
-class TestSendMailOnAssigneeChange(TestCase):
-    """Test that assignee is notified by mail each time they are assigned a bug.
-
-    Ideally, notifications are sent out when:
-    * Assignee is assigned bug on bug creation
-    * Assignee is assigned bug which was previously assigned to someone other assignee
-    """
-
-    @patch("tcms.core.utils.mailto.send_mail")
-    def test_notify_assignee_on_bug_creation(
-        self, send_mail
-    ):  # pylint: disable=no-self-use
-        assignee = UserFactory()
-        bug = BugFactory(assignee=assignee)
-
-        expected_subject = _("Bug #%(pk)d - %(summary)s") % {
-            "pk": bug.pk,
-            "summary": bug.summary,
-        }
-        expected_body = render_to_string(
-            "email/post_bug_save/email.txt",
-            {"bug": bug, "comment": get_comments(bug).last()},
-        )
-        expected_recipients = [assignee.email, bug.reporter.email]
-        expected_recipients.sort()
-
-        send_mail.assert_called_once_with(
-            settings.EMAIL_SUBJECT_PREFIX + expected_subject,
-            expected_body,
-            settings.DEFAULT_FROM_EMAIL,
-            expected_recipients,
-            fail_silently=False,
-        )
-
-    @patch("tcms.core.utils.mailto.send_mail")
-    def test_notification_even_there_is_no_assignee(self, send_mail):
-        BugFactory(assignee=None)
-
-        self.assertTrue(send_mail.called)
 
 
 class TestSendMailOnNewComment(BaseCaseRun):

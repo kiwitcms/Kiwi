@@ -51,7 +51,12 @@ def add_comment(objs, comments, user, submit_date=None):
             user_name=user.username,
         )
         created.append(comment)
-        post_save.send(created=False, instance=obj, sender=obj.__class__)
+        post_save.send(
+            created=False,
+            instance=obj,
+            sender=obj.__class__,
+            called_from_add_comment=True,
+        )
 
     return created
 

@@ -7,8 +7,10 @@ from django.conf import settings
 if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")
 
+from django.template.loader import render_to_string  # noqa: E402
 from django.urls import reverse  # noqa: E402
 from django.utils.translation import gettext_lazy as _  # noqa: E402
+from mock import patch  # noqa: E402
 
 from tcms.bugs.models import Bug  # noqa: E402
 from tcms.bugs.tests.factory import BugFactory  # noqa: E402
@@ -110,7 +112,8 @@ class TestNewBug(LoggedInTestCase):
         self.assertEqual(form.fields["version"].queryset.count(), 0)
         self.assertEqual(form.fields["build"].queryset.count(), 0)
 
-    def test_create_new_bug(self):
+    @patch("tcms.core.utils.mailto.send_mail")
+    def test_create_new_bug(self, send_mail):
         initial_bug_count = Bug.objects.count()
 
         response = self.client.post(self.url, self.post_data)
@@ -124,15 +127,36 @@ class TestNewBug(LoggedInTestCase):
         )
         self.assertEqual(Bug.objects.count(), initial_bug_count + 1)
         self.assertEqual(bug_created.summary, self.summary)
+        self.assertTrue(send_mail.called)
 
-    def test_new_bug_assignee_inferred_from_components(self):
+    @patch("tcms.core.utils.mailto.send_mail")
+    def test_new_bug_assignee_inferred_from_components(self, send_mail):
         comp = ComponentFactory(initial_owner=UserFactory(), product=self.product)
 
         self.client.post(self.url, self.post_data, follow=True)
 
-        bug_created = Bug.objects.last()
-        self.assertEqual(bug_created.summary, self.summary)
-        self.assertEqual(bug_created.assignee, comp.initial_owner)
+        bug = Bug.objects.last()
+        self.assertEqual(bug.summary, self.summary)
+        self.assertEqual(bug.assignee, comp.initial_owner)
+
+        expected_subject = _("Bug #%(pk)d - %(summary)s") % {
+            "pk": bug.pk,
+            "summary": bug.summary,
+        }
+        expected_body = render_to_string(
+            "email/post_bug_save/email.txt",
+            {"bug": bug, "comment": get_comments(bug).last()},
+        )
+        expected_recipients = [bug.assignee.email, bug.reporter.email]
+        expected_recipients.sort()
+
+        send_mail.assert_called_once_with(
+            settings.EMAIL_SUBJECT_PREFIX + expected_subject,
+            expected_body,
+            settings.DEFAULT_FROM_EMAIL,
+            expected_recipients,
+            fail_silently=False,
+        )
 
 
 class TestEditBug(LoggedInTestCase):
