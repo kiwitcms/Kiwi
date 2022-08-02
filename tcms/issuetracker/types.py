@@ -370,7 +370,7 @@ class Redmine(IssueTrackerType):
 
     def _report_issue(self, execution, user):
         project = self.redmine_project_by_name(execution.run.plan.product.name)
-        tracker = self.redmine_tracker_by_name(project, "Bugs")
+        tracker = self.redmine_tracker_by_name(project, settings.REDMINE_TRACKER_NAME)
 
         # the first Issue Status in Redmine
         status = self.rpc.issue_status.all()[0]
