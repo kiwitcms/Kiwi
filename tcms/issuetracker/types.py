@@ -91,7 +91,7 @@ class JIRA(IssueTrackerType):
     def get_issue_type_from_jira(self):
         """
         Returns the issue type from the actual Jira instance.
-        Will try to return type "Bug" if it exists, otherwise will
+        Will try to return ``settings.JIRA_ISSUE_TYPE`` if it exists, otherwise will
         return the first found!
 
         You may override this method if you want more control and customization,
@@ -100,7 +100,7 @@ class JIRA(IssueTrackerType):
         .. versionadded:: 11.4
         """
         try:
-            return self.rpc.issue_type_by_name("Bug")
+            return self.rpc.issue_type_by_name(settings.JIRA_ISSUE_TYPE)
         except KeyError:
             return self.rpc.issue_types()[0]
 
