@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-30 13:54+0000\n"
-"PO-Revision-Date: 2022-07-30 15:08\n"
+"PO-Revision-Date: 2022-08-02 20:01\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2123,3 +2123,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
