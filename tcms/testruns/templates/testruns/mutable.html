@@ -156,6 +156,13 @@
                         <option value="{{ option.0 }}" {% if option.0 == form.matrix_type.value %}selected{% endif %}>{{ option.1 }}</option>
                     {% endfor %}
                 </select>
+
+                <p class="help-block">
+                    <span class="fa fa-external-link"></span>
+                    <a href="https://kiwitcms.org/blog/atodorov/2022/01/24/properties-environments-and-test-matrix-generation/">
+                        {% trans 'more information' %}
+                    </a>
+                </p>
             </div>
         </div>
         {% endif %}
