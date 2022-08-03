@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 13:54+0000\n"
-"PO-Revision-Date: 2022-07-30 15:08\n"
+"POT-Creation-Date: 2022-08-03 12:10+0000\n"
+"PO-Revision-Date: 2022-08-03 12:47\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -139,7 +139,7 @@ msgstr "Mở lại"
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
-#: tcms/testruns/templates/testruns/mutable.html:172
+#: tcms/testruns/templates/testruns/mutable.html:179
 msgid "Save"
 msgstr "Lưu"
 
@@ -160,7 +160,7 @@ msgstr "Đóng lại"
 #: tcms/testruns/templates/testruns/get.html:259
 #: tcms/testruns/templates/testruns/get.html:262
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:192
+#: tcms/testruns/templates/testruns/mutable.html:199
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:188
 msgid "Summary"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Delete"
 msgstr "Xóa"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:322
+#: tcms/bugs/views.py:68 tcms/settings/common.py:330
 msgid "New Bug"
 msgstr "Lỗi mới"
 
@@ -568,117 +568,117 @@ msgstr ""
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr ""
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:320
 msgid "DASHBOARD"
 msgstr "DASHBOARD"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:322
 msgid "TESTING"
 msgstr "KIỂM THỬ"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:324
 msgid "New Test Plan"
 msgstr "Test Plan mới"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:326
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "Test Case mới"
 
-#: tcms/settings/common.py:320 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:328 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:336
 msgid "SEARCH"
 msgstr "TÌM KIẾM"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:338
 msgid "Search Test Plans"
 msgstr "Tìm theo Test Plan"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:339
 msgid "Search Test Runs"
 msgstr "Tìm theo Test Run"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:340
 msgid "Search Test Cases"
 msgstr "Tìm theo Test Case"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:341
 msgid "Search Bugs"
 msgstr "Tìm theo lỗi"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:347
 msgid "TELEMETRY"
 msgstr "QUẢN LÝ TEST CASE"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:350
 msgid "Testing"
 msgstr "Test Case"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:352
 msgid "Breakdown"
 msgstr "Thống kê"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:353
 msgid "Status matrix"
 msgstr "Biểu đồ"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:354
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Tình trạng thực thi"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:355
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "Sức khỏe TestCase"
 
-#: tcms/settings/common.py:353
+#: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "QUẢN TRỊ"
 
-#: tcms/settings/common.py:355
+#: tcms/settings/common.py:363
 msgid "Users"
 msgstr ""
 
-#: tcms/settings/common.py:356
+#: tcms/settings/common.py:364
 msgid "Groups"
 msgstr ""
 
-#: tcms/settings/common.py:358
+#: tcms/settings/common.py:366
 msgid "Everything else"
 msgstr "Khác"
 
-#: tcms/settings/common.py:361
+#: tcms/settings/common.py:369
 msgid "PLUGINS"
 msgstr "PHẦN MỞ RỘNG"
 
-#: tcms/settings/common.py:371
+#: tcms/settings/common.py:379
 msgid "Report an Issue"
 msgstr "Báo cáo vấn đề"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:382
 msgid "Ask for help on StackOverflow"
 msgstr "Yêu cầu trợ giúp trên StackOverflow"
 
-#: tcms/settings/common.py:378
+#: tcms/settings/common.py:386
 msgid "Donate €5 via Open Collective"
 msgstr ""
 
-#: tcms/settings/common.py:380
+#: tcms/settings/common.py:388
 msgid "Administration Guide"
 msgstr "Hướng dẫn quản trị"
 
-#: tcms/settings/common.py:381
+#: tcms/settings/common.py:389
 msgid "User Guide"
 msgstr "Hướng dẫn người dùng"
 
-#: tcms/settings/common.py:382
+#: tcms/settings/common.py:390
 msgid "API Help"
 msgstr "Trợ giúp API"
 
@@ -691,7 +691,7 @@ msgstr ""
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr ""
 
-#: tcms/signals.py:227
+#: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr ""
@@ -920,7 +920,7 @@ msgstr "Không có bản ghi nào được tìm thấy"
 #: tcms/testruns/templates/testruns/get.html:190
 #: tcms/testruns/templates/testruns/get.html:270
 #: tcms/testruns/templates/testruns/get.html:385
-#: tcms/testruns/templates/testruns/mutable.html:195
+#: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Status"
 msgstr "Trạng thái"
 
@@ -1244,7 +1244,7 @@ msgstr "Clone"
 #: tcms/testplans/templates/testplans/search.html:79
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
-#: tcms/testruns/templates/testruns/mutable.html:193
+#: tcms/testruns/templates/testruns/mutable.html:200
 msgid "Author"
 msgstr "Tác giả"
 
@@ -1274,7 +1274,7 @@ msgstr "Người kiểm thử mặc định"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/mutable.html:196
+#: tcms/testruns/templates/testruns/mutable.html:203
 msgid "Category"
 msgstr "Phân loại"
 
@@ -1289,7 +1289,7 @@ msgstr "Phân loại"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:266
 #: tcms/testruns/templates/testruns/get.html:364
-#: tcms/testruns/templates/testruns/mutable.html:197
+#: tcms/testruns/templates/testruns/mutable.html:204
 msgid "Priority"
 msgstr "Ưu tiên"
 
@@ -1334,7 +1334,7 @@ msgstr "Đường dẫn tham khảo"
 #: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testruns/templates/testruns/get.html:400
-#: tcms/testruns/templates/testruns/mutable.html:164
+#: tcms/testruns/templates/testruns/mutable.html:171
 msgid "Notes"
 msgstr "Ghi chú"
 
@@ -1430,7 +1430,7 @@ msgstr "Các gíá trị được tách biệt bởi dấu phẩy (,)"
 
 #: tcms/testcases/templates/testcases/search.html:152
 #: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:194
+#: tcms/testruns/templates/testruns/mutable.html:201
 msgid "Created on"
 msgstr "Thời gian được tạo"
 
@@ -1763,11 +1763,15 @@ msgstr ""
 msgid "Affects only test cases with properties"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:181
+#: tcms/testruns/templates/testruns/mutable.html:163
+msgid "more information"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
 msgstr "Các TestCase được chọn:"
 
-#: tcms/testruns/templates/testruns/mutable.html:184
+#: tcms/testruns/templates/testruns/mutable.html:191
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"

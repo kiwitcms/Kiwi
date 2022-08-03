@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 13:54+0000\n"
-"PO-Revision-Date: 2022-07-30 15:07\n"
+"POT-Creation-Date: 2022-08-03 12:10+0000\n"
+"PO-Revision-Date: 2022-08-03 12:47\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -139,7 +139,7 @@ msgstr "পুনরায় খোলা"
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
-#: tcms/testruns/templates/testruns/mutable.html:172
+#: tcms/testruns/templates/testruns/mutable.html:179
 msgid "Save"
 msgstr "সংরক্ষণ করুন"
 
@@ -160,7 +160,7 @@ msgstr "বন্ধ"
 #: tcms/testruns/templates/testruns/get.html:259
 #: tcms/testruns/templates/testruns/get.html:262
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:192
+#: tcms/testruns/templates/testruns/mutable.html:199
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:188
 msgid "Summary"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Delete"
 msgstr "মুছুন"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:322
+#: tcms/bugs/views.py:68 tcms/settings/common.py:330
 msgid "New Bug"
 msgstr "নতুন বাগ"
 
@@ -572,117 +572,117 @@ msgstr "এর base_url কনফিগার করে এই ইস্যু �
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "অবৈধ তারিখ বিন্যাস. প্রত্যাশিত YYYY-MM-DD [HH:MM:SS]."
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:320
 msgid "DASHBOARD"
 msgstr "ড্যাশবোর্ড"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:322
 msgid "TESTING"
 msgstr "পরীক্ষামূলক"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:324
 msgid "New Test Plan"
 msgstr "নতুন পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:326
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "নতুন পরীক্ষার কেস"
 
-#: tcms/settings/common.py:320 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:328 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:336
 msgid "SEARCH"
 msgstr "অনুসন্ধান"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:338
 msgid "Search Test Plans"
 msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:339
 msgid "Search Test Runs"
 msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:340
 msgid "Search Test Cases"
 msgstr "অনুসন্ধান পরীক্ষার কেস"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:341
 msgid "Search Bugs"
 msgstr "বাগ অনুসন্ধান করুন"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:347
 msgid "TELEMETRY"
 msgstr "টেলিমেট্রি"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:350
 msgid "Testing"
 msgstr "পরীক্ষা করা হচ্ছে"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:352
 msgid "Breakdown"
 msgstr "ভাঙনের"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:353
 msgid "Status matrix"
 msgstr "স্থিতি ম্যাট্রিক্স"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:354
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "এক্সিকিউশন ট্রেন্ড"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:355
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "TestCase স্বাস্থ্য"
 
-#: tcms/settings/common.py:353
+#: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "অ্যাডমিন"
 
-#: tcms/settings/common.py:355
+#: tcms/settings/common.py:363
 msgid "Users"
 msgstr ""
 
-#: tcms/settings/common.py:356
+#: tcms/settings/common.py:364
 msgid "Groups"
 msgstr ""
 
-#: tcms/settings/common.py:358
+#: tcms/settings/common.py:366
 msgid "Everything else"
 msgstr "অন্য সব কিছুর"
 
-#: tcms/settings/common.py:361
+#: tcms/settings/common.py:369
 msgid "PLUGINS"
 msgstr "প্লাগিন"
 
-#: tcms/settings/common.py:371
+#: tcms/settings/common.py:379
 msgid "Report an Issue"
 msgstr "সমস্যার প্রতিবেদন করুন"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:382
 msgid "Ask for help on StackOverflow"
 msgstr "সাহায্য চাইতে StackOverflow"
 
-#: tcms/settings/common.py:378
+#: tcms/settings/common.py:386
 msgid "Donate €5 via Open Collective"
 msgstr "ওপেন কালেক্টিভের মাধ্যমে 5 ডলার দান করুন"
 
-#: tcms/settings/common.py:380
+#: tcms/settings/common.py:388
 msgid "Administration Guide"
 msgstr "প্রশাসন গাইড"
 
-#: tcms/settings/common.py:381
+#: tcms/settings/common.py:389
 msgid "User Guide"
 msgstr "ব্যবহারকারীর নির্দেশিকা"
 
-#: tcms/settings/common.py:382
+#: tcms/settings/common.py:390
 msgid "API Help"
 msgstr "API সহায়তা"
 
@@ -695,7 +695,7 @@ msgstr "নতুন ব্যবহারকারী অনুমোদনে�
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "নতুন: TestRun #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:227
+#: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr ""
@@ -940,7 +940,7 @@ msgstr "কোন রেকর্ড পাওয়া যায় নি"
 #: tcms/testruns/templates/testruns/get.html:190
 #: tcms/testruns/templates/testruns/get.html:270
 #: tcms/testruns/templates/testruns/get.html:385
-#: tcms/testruns/templates/testruns/mutable.html:195
+#: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Status"
 msgstr "অবস্থা"
 
@@ -1264,7 +1264,7 @@ msgstr "ক্লোন"
 #: tcms/testplans/templates/testplans/search.html:79
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
-#: tcms/testruns/templates/testruns/mutable.html:193
+#: tcms/testruns/templates/testruns/mutable.html:200
 msgid "Author"
 msgstr "লেখক"
 
@@ -1294,7 +1294,7 @@ msgstr "ডিফল্ট পরীক্ষক"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/mutable.html:196
+#: tcms/testruns/templates/testruns/mutable.html:203
 msgid "Category"
 msgstr "বিভাগ"
 
@@ -1309,7 +1309,7 @@ msgstr "বিভাগ"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:266
 #: tcms/testruns/templates/testruns/get.html:364
-#: tcms/testruns/templates/testruns/mutable.html:197
+#: tcms/testruns/templates/testruns/mutable.html:204
 msgid "Priority"
 msgstr "অগ্রাধিকার"
 
@@ -1354,7 +1354,7 @@ msgstr "রেফারেন্স লিংক"
 #: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testruns/templates/testruns/get.html:400
-#: tcms/testruns/templates/testruns/mutable.html:164
+#: tcms/testruns/templates/testruns/mutable.html:171
 msgid "Notes"
 msgstr "নোট"
 
@@ -1450,7 +1450,7 @@ msgstr "কমা সঙ্গে পৃথক একাধিক মান (,)"
 
 #: tcms/testcases/templates/testcases/search.html:152
 #: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:194
+#: tcms/testruns/templates/testruns/mutable.html:201
 msgid "Created on"
 msgstr "তৈরির তারিখ"
 
@@ -1783,11 +1783,15 @@ msgstr ""
 msgid "Affects only test cases with properties"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:181
+#: tcms/testruns/templates/testruns/mutable.html:163
+msgid "more information"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
 msgstr "নির্বাচিত টেস্টকেস:"
 
-#: tcms/testruns/templates/testruns/mutable.html:184
+#: tcms/testruns/templates/testruns/mutable.html:191
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
