@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-30 13:54+0000\n"
-"PO-Revision-Date: 2022-08-02 20:01\n"
+"POT-Creation-Date: 2022-08-03 12:10+0000\n"
+"PO-Revision-Date: 2022-08-03 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -139,7 +139,7 @@ msgstr "Переоткрыть"
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
-#: tcms/testruns/templates/testruns/mutable.html:172
+#: tcms/testruns/templates/testruns/mutable.html:179
 msgid "Save"
 msgstr "Сохранить"
 
@@ -160,7 +160,7 @@ msgstr "Закрыть"
 #: tcms/testruns/templates/testruns/get.html:259
 #: tcms/testruns/templates/testruns/get.html:262
 #: tcms/testruns/templates/testruns/mutable.html:21
-#: tcms/testruns/templates/testruns/mutable.html:192
+#: tcms/testruns/templates/testruns/mutable.html:199
 #: tcms/testruns/templates/testruns/search.html:13
 #: tcms/testruns/templates/testruns/search.html:188
 msgid "Summary"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Delete"
 msgstr "Удалить"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:322
+#: tcms/bugs/views.py:68 tcms/settings/common.py:330
 msgid "New Bug"
 msgstr "Новый Баг"
 
@@ -572,117 +572,117 @@ msgstr "Включить отчетность к трекеру задач, на
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "Неверный формат даты. Используйте YYYY-MM-DD [HH:MM:SS]."
 
-#: tcms/settings/common.py:312
+#: tcms/settings/common.py:320
 msgid "DASHBOARD"
 msgstr "ДАШБОРД"
 
-#: tcms/settings/common.py:314
+#: tcms/settings/common.py:322
 msgid "TESTING"
 msgstr "ТЕСТИРОВАНИЕ"
 
-#: tcms/settings/common.py:316
+#: tcms/settings/common.py:324
 msgid "New Test Plan"
 msgstr "Новый тест-план"
 
-#: tcms/settings/common.py:318
+#: tcms/settings/common.py:326
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:130
 msgid "New Test Case"
 msgstr "Новый тест-кейс"
 
-#: tcms/settings/common.py:320 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:328 tcms/testplans/templates/testplans/get.html:120
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "Новый тестовый прогон"
 
-#: tcms/settings/common.py:328
+#: tcms/settings/common.py:336
 msgid "SEARCH"
 msgstr "ПОИСК"
 
-#: tcms/settings/common.py:330
+#: tcms/settings/common.py:338
 msgid "Search Test Plans"
 msgstr "Поиск тест-планов"
 
-#: tcms/settings/common.py:331
+#: tcms/settings/common.py:339
 msgid "Search Test Runs"
 msgstr "Поиск тест-прогонов"
 
-#: tcms/settings/common.py:332
+#: tcms/settings/common.py:340
 msgid "Search Test Cases"
 msgstr "Поиск тест-кейсов"
 
-#: tcms/settings/common.py:333
+#: tcms/settings/common.py:341
 msgid "Search Bugs"
 msgstr "Поиск Багов"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:347
 msgid "TELEMETRY"
 msgstr "ТЕЛЕМЕТРИЯ"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:350
 msgid "Testing"
 msgstr "Тестирование"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:352
 msgid "Breakdown"
 msgstr "Разбивка"
 
-#: tcms/settings/common.py:345
+#: tcms/settings/common.py:353
 msgid "Status matrix"
 msgstr "Матрица состояния"
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:354
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution trends"
 msgstr "Тренды выполнения"
 
-#: tcms/settings/common.py:347
+#: tcms/settings/common.py:355
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "Состояние тест-кейсов"
 
-#: tcms/settings/common.py:353
+#: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "АДМИН"
 
-#: tcms/settings/common.py:355
+#: tcms/settings/common.py:363
 msgid "Users"
 msgstr ""
 
-#: tcms/settings/common.py:356
+#: tcms/settings/common.py:364
 msgid "Groups"
 msgstr ""
 
-#: tcms/settings/common.py:358
+#: tcms/settings/common.py:366
 msgid "Everything else"
 msgstr "Прочее"
 
-#: tcms/settings/common.py:361
+#: tcms/settings/common.py:369
 msgid "PLUGINS"
 msgstr "Подключаемые модули"
 
-#: tcms/settings/common.py:371
+#: tcms/settings/common.py:379
 msgid "Report an Issue"
 msgstr "Сообщение о проблеме"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:382
 msgid "Ask for help on StackOverflow"
 msgstr "Запросить помощь в StackOverflow"
 
-#: tcms/settings/common.py:378
+#: tcms/settings/common.py:386
 msgid "Donate €5 via Open Collective"
 msgstr "Пожертвовать €5 через Open Collective"
 
-#: tcms/settings/common.py:380
+#: tcms/settings/common.py:388
 msgid "Administration Guide"
 msgstr "Руководство администратора"
 
-#: tcms/settings/common.py:381
+#: tcms/settings/common.py:389
 msgid "User Guide"
 msgstr "Руководство пользователя"
 
-#: tcms/settings/common.py:382
+#: tcms/settings/common.py:390
 msgid "API Help"
 msgstr "Справка по API"
 
@@ -695,7 +695,7 @@ msgstr "Новый пользователь в ожидании подтверж
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:227
+#: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr ""
@@ -942,7 +942,7 @@ msgstr "Записи не найдены"
 #: tcms/testruns/templates/testruns/get.html:190
 #: tcms/testruns/templates/testruns/get.html:270
 #: tcms/testruns/templates/testruns/get.html:385
-#: tcms/testruns/templates/testruns/mutable.html:195
+#: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Status"
 msgstr "Состояние"
 
@@ -1266,7 +1266,7 @@ msgstr "Клонировать"
 #: tcms/testplans/templates/testplans/search.html:79
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
-#: tcms/testruns/templates/testruns/mutable.html:193
+#: tcms/testruns/templates/testruns/mutable.html:200
 msgid "Author"
 msgstr "Автор"
 
@@ -1296,7 +1296,7 @@ msgstr "Тестер по умолчанию"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/mutable.html:196
+#: tcms/testruns/templates/testruns/mutable.html:203
 msgid "Category"
 msgstr "Категория"
 
@@ -1311,7 +1311,7 @@ msgstr "Категория"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:266
 #: tcms/testruns/templates/testruns/get.html:364
-#: tcms/testruns/templates/testruns/mutable.html:197
+#: tcms/testruns/templates/testruns/mutable.html:204
 msgid "Priority"
 msgstr "Приоритет"
 
@@ -1356,7 +1356,7 @@ msgstr "Ссылка"
 #: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testruns/templates/testruns/get.html:400
-#: tcms/testruns/templates/testruns/mutable.html:164
+#: tcms/testruns/templates/testruns/mutable.html:171
 msgid "Notes"
 msgstr "Примечания"
 
@@ -1452,7 +1452,7 @@ msgstr "Разделяйте значения через запятые (,)"
 
 #: tcms/testcases/templates/testcases/search.html:152
 #: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:194
+#: tcms/testruns/templates/testruns/mutable.html:201
 msgid "Created on"
 msgstr "Создано"
 
@@ -1787,11 +1787,15 @@ msgstr ""
 msgid "Affects only test cases with properties"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:181
+#: tcms/testruns/templates/testruns/mutable.html:163
+msgid "more information"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
 msgstr "Выбранные тест-кейс(ы):"
 
-#: tcms/testruns/templates/testruns/mutable.html:184
+#: tcms/testruns/templates/testruns/mutable.html:191
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -2149,3 +2153,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
