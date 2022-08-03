@@ -626,7 +626,8 @@ function toolbarEvents (testPlanId, permissions) {
       }
     }
 
-    window.location.assign(`/runs/new?p=${testPlanId}&c=${selectedTestCases.join('&c=')}`)
+    const newTestRunUrl = $('#test_plan_pk').data('new-testrun-url')
+    window.location.assign(`${newTestRunUrl}?c=${selectedTestCases.join('&c=')}`)
     return false
   })
 }

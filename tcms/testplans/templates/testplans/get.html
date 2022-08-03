@@ -15,6 +15,7 @@
         {% if not object.is_active %}<s>{% endif %}
         <span id="test_plan_pk"
               data-testplan-pk="{{ object.pk }}"
+              data-new-testrun-url="{% url 'testruns-from-plan' object.pk %}"
               data-perm-remove-tag="{{ perms.testplans.delete_testplantag }}"
               data-perm-change-testcase="{{ perms.testcases.change_testcase }}"
               data-perm-remove-testcase="{{ perms.testcases.delete_testcaseplan }}"
