@@ -124,6 +124,35 @@ class NewTestRunView(View):
         return render(request, self.template_name, context_data)
 
 
+@method_decorator(permission_required("testruns.add_testrun"), name="dispatch")
+class NewFromPlan(NewTestRunView):
+    """
+    Handles the permalink /runs/from-plan/123/
+    """
+
+    # note: post is handled directly by NewTestRunView
+    # b/c <form action> points to testruns-new URL
+    http_method_names = ["get"]
+
+    def get(self, request, plan_id):  # pylint: disable=arguments-differ
+        test_plan = get_object_or_404(TestPlan, pk=plan_id)
+
+        request.GET._mutable = True  # pylint: disable=protected-access
+        request.GET["p"] = test_plan.pk
+
+        # if cases aren't selected, e.g. user entered the URL directly in the browser
+        # then preselect all confirmed test cases
+        if not request.GET.getlist("c"):
+            request.GET.setlist(
+                "c",
+                test_plan.cases.filter(case_status__is_confirmed=True).values_list(
+                    "pk", flat=True
+                ),
+            )
+
+        return super().get(request)
+
+
 @method_decorator(permission_required("testruns.view_testrun"), name="dispatch")
 class SearchTestRunView(TemplateView):
 

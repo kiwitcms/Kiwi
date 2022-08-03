@@ -11,6 +11,11 @@ urlpatterns = [
     re_path(
         r"^(?P<pk>\d+)/edit/$", views.EditTestRunView.as_view(), name="testruns-edit"
     ),
+    re_path(
+        r"^from-plan/(?P<plan_id>\d+)/$",
+        views.NewFromPlan.as_view(),
+        name="testruns-from-plan",
+    ),
     re_path(r"^search/$", views.SearchTestRunView.as_view(), name="testruns-search"),
     re_path(
         r"^environment/(?P<pk>\d+)/$",
