@@ -1,6 +1,176 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.4 (03 Aug 2022)
+----------------------------
+
+.. important::
+
+    This is a medium sized release which contains security related updates,
+    multiple improvements, database and API changes, new settings, bug fixes
+    and new translations!
+
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+Security
+~~~~~~~~
+
+- Update django from 4.0.3 to 4.0.7, see
+  https://docs.djangoproject.com/en/4.0/releases/4.0.7/,
+  https://docs.djangoproject.com/en/4.0/releases/4.0.6/,
+  https://docs.djangoproject.com/en/4.0/releases/4.0.5/ and
+  https://docs.djangoproject.com/en/4.0/releases/4.0.4/
+  We don't think Kiwi TCMS has been affected by the security vulnerabilities
+  fixed in Django.
+- Use TLSv1.2 and 1.3 by default and disable older protocols
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 5.0.0 to 5.0.1
+- Update django-colorfield from 0.6.3 to 0.7.2
+- Update django-extensions from 3.1.5 to 3.2.0
+- Update django-tree-queries from 0.9.0 to 0.11.0
+- Update jira from 3.2.0 to 3.3.1
+- Update markdown from 3.3.6 to 3.4.1
+- Update mysqlclient from 2.1.0 to 2.1.1
+- Update python-gitlab from 3.3.0 to 3.7.0
+- Update node_modules/marked from 4.0.14 to 4.0.18
+- Relax docutils requirement. Use latest version
+- Add template block which will allow logo customizations (Ivajlo Karabojkov)
+- Don't show ``PLUGINS`` menu when no plugins are installed. References
+  `Issue #2729 <https://github.com/kiwitcms/Kiwi/issues/2729>`_
+- Add information about Kiwi TCMS user to 1-click bug reports. Closes
+  `Issue #2591 <https://github.com/kiwitcms/Kiwi/issues/2591>`_
+- Use a better icon to signify a manual test inside the user interface
+- Change ``UserAdmin`` to be permission based instead of being role-based.
+  Fixes `Issue #2496 <https://github.com/kiwitcms/Kiwi/issues/2496>`_
+- Allow post-processing of automatically created issues. Closes
+  `Issue #2383 <https://github.com/kiwitcms/Kiwi/issues/2383>`_
+- Allow more customization over issue type discovery for Jira. Closes
+  `Issue #2833 <https://github.com/kiwitcms/Kiwi/issues/2833>`_
+- Allow more customization over project discovery for Jira
+- Allow more customization over Redmine tracker. Closes
+  `Issue #2382 <https://github.com/kiwitcms/Kiwi/issues/2382>`_
+- Allow DB settings to be read from Docker Secret files. Fixes
+  `Issue #2606 <https://github.com/kiwitcms/Kiwi/issues/2606>`_
+- Add filter on TestRun page to show test executions assigned to the
+  current user. Closes
+  `Issue #333 <https://github.com/kiwitcms/Kiwi/issues/333>`_
+- Add URL for creating new TestRun from a TestPlan. The format is
+  ``/runs/from-plan/<plan-id>/``. Closes
+  `Issue #274 <https://github.com/kiwitcms/Kiwi/issues/274>`_
+- Add ``bug.Severity`` attribute which is fully customizeable. Closes
+  `Issue #2703 <https://github.com/kiwitcms/Kiwi/issues/2703>`_
+- Update documentation around ``TCMS_`` environment variables
+  used by automation plugins
+- Update documentation to denote that pytest plugin is now generally available
+- Document necessary permissions for adding new users. References
+  `Issue #2496 <https://github.com/kiwitcms/Kiwi/issues/2496>`_
+
+
+Database
+~~~~~~~~
+
+- New migration for ``bug.Severity`` model
+
+
+Settings
+~~~~~~~~
+
+- Remove deprecated setting ``USE_L10N``. See
+  https://docs.djangoproject.com/en/4.0/ref/settings/#use-l10n
+- New setting ``EXTERNAL_ISSUE_POST_PROCESSORS``
+- New setting ``JIRA_ISSUE_TYPE``
+- New setting ``REDMINE_TRACKER_NAME``
+- New setting ``EXTERNAL_ISSUE_POST_PROCESSORS``
+
+
+API
+~~~
+
+- If ``default_tester`` field is not specified for ``TestRun.create()`` method
+  then use the currently logged-in user.
+- Return value for method ``TestExecution.filter()`` now contains fields
+  ``expected_duration`` and ``actual_duration``. Closes
+  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_
+- Return value for method ``Bug.filter()`` now contains fields
+  ``severity__name``, ``severity__icon`` and ``severity__color``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Adjust field name when rendering test execution on TestRun page. Fixes
+  `Issue #2794 <https://github.com/kiwitcms/Kiwi/issues/2794>`_
+- Render rich text editor preview via backend API:
+
+  - Makes display on HTML pages and editor preview the same. Fixes
+    `Issue #2659 <https://github.com/kiwitcms/Kiwi/issues/2659>`_
+  - Fixes a bug with markdown rendered in JavaScript. Fixes
+    `Issue #2711 <https://github.com/kiwitcms/Kiwi/issues/2711>`_
+- Stop propagation of HTML unescape which causes display issues with
+  code snippets that contain XML values. Fixes
+  `Issue #2800 <https://github.com/kiwitcms/Kiwi/issues/2800>`_
+- Show bug text only when creating new records, not when editing
+- Properly display & validate related form fields when editing bugs
+- Don't send duplicate emails when editting bugs. Fixes
+  `Issue #2782 <https://github.com/kiwitcms/Kiwi/issues/2782>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Convert two assignment statements to augmented source code. Closes
+  `Issue #2610 <https://github.com/kiwitcms/Kiwi/issues/2610>`_ (Markus Elfring)
+- Rename method ``IssueTrackerType.report_issue_from_testexecution()``:
+
+  - Rename to ``_report_issue()`` which returns tuple of (object, str)
+  - In case new issue was not created automatically and the method falls
+    back to manual creation the return value will be (None, str)
+  - ``report_issue_from_testexecution()`` will call ``_report_issue()``
+    internally and handle the change in return type
+
+  .. note::
+
+    - This change is backwards compatible!
+    - For customized issue tracker integration you will have to apply
+      the same changes to your custmized code if you wish new functionality,
+      like post-processing of automatically created issues to work.
+
+- Add tests for backup & restore commands. Closes
+  `Issue #2695 <https://github.com/kiwitcms/Kiwi/issues/2695>`_
+- Update versions of several CI tools
+- Updates around new version of pylint
+- Use codecov-action to upload coverage results
+- Remove setuptools and other workarounds in tests
+- Don't special case dependencies which already provide wheel packages
+- Workaround an issue with ``setuptools_git_archive`` introduced by jira==3.2.0
+- Workaround the fact that ``django-ranged-response`` doesn't provide wheels
+- Report test results via kiwitcms-django-plugin. Closes
+  `Issue #1757 <https://github.com/kiwitcms/Kiwi/issues/1757>`_
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `Slovak translation <https://crowdin.com/project/kiwitcms/sk#>`_
+
+
+
 Kiwi TCMS 11.3 (27 Apr 2022)
 ----------------------------
 
