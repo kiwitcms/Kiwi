@@ -687,6 +687,7 @@ function renderTestExecutionRow (testExecution) {
 
   template.find('.test-execution-checkbox').data('test-execution-id', testExecution.id)
   template.find('.test-execution-checkbox').data('test-execution-case-id', testExecution.case)
+  template.find('.test-execution-element').attr('id', `test-execution-${testExecution.id}`)
   template.find('.test-execution-element').addClass(`test-execution-${testExecution.id}`)
   template.find('.test-execution-element').addClass(`test-execution-case-${testExecution.case}`)
   template.find('.test-execution-info').html(`TE-${testExecution.id}/TC-${testExecution.case}:`)
