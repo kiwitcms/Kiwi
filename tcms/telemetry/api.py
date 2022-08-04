@@ -83,20 +83,19 @@ def status_matrix(query=None):
         query = {}
 
     data_set = []
-    columns = {}
     row = {"tc_id": 0}
-    for test_execution in (
-        TestExecution.objects.filter(**query)
-        .only("case_id", "run_id", "case__summary", "status")
-        .order_by("case_id", "run_id")
-    ):
 
-        columns[test_execution.run_id] = test_execution.run.summary
+    status_colors = dict(TestExecutionStatus.objects.values_list("pk", "color"))
+    base_query = TestExecution.objects.filter(**query).order_by("case_id", "run_id")
+    test_plan_ids = dict(base_query.values_list("run_id", "run__plan"))
+    for test_execution in base_query.only(
+        "case_id", "run_id", "case__summary", "status_id"
+    ):
         test_execution_response = {
             "pk": test_execution.pk,
-            "color": test_execution.status.color,
+            "color": status_colors[test_execution.status_id],
             "run_id": test_execution.run_id,
-            "plan_id": test_execution.run.plan_id,
+            "plan_id": test_plan_ids[test_execution.run_id],
         }
 
         if test_execution.case_id == row["tc_id"]:
@@ -114,6 +113,9 @@ def status_matrix(query=None):
     data_set.append(row)
 
     del data_set[0]
+
+    # test run summaries for column hints
+    columns = dict(base_query.values_list("run_id", "run__summary"))
 
     return {"data": data_set, "columns": columns}
 
