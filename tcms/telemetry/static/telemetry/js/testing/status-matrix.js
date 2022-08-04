@@ -164,8 +164,8 @@ function applyStyleToCell (cell) {
 }
 
 function renderData (testRunId, testPlanIds, includeChildTPs) {
-  return (data, type, full, meta) => {
-    const execution = full.executions.find(e => e.run_id === Number(testRunId))
+  return (data, type, row, meta) => {
+    const execution = row.executions.find(e => e.run_id === Number(testRunId))
     if (execution) {
       const fromParentTP = includeChildTPs && testPlanIds.includes(execution.plan_id)
       let iconClass = ''
