@@ -3,10 +3,10 @@ const initialColumn = {
   data: null,
   className: 'table-view-pf-actions',
   render: function (data, type, full, meta) {
-    const caseId = data.tc_id
+    const caseId = data.case_id
 
     return '<span style="padding: 5px;">' +
-            `<a href="/case/${caseId}/">TC-${caseId}: ${data.tc_summary}</a>` +
+            `<a href="/case/${caseId}/">TC-${caseId}: ${data.case__summary}</a>` +
             '</span>'
   }
 }
@@ -89,7 +89,7 @@ function drawTable () {
     if (includeChildTPs) {
       jsonRPC('TestPlan.filter', { parent__in: testPlanIds }, function (result) {
         result.forEach(function (element) {
-          query.run__plan__pk__in.push(element.id)
+          query.run__plan__in.push(element.id)
         })
       }, true)
     }
@@ -107,7 +107,7 @@ function drawTable () {
 
   jsonRPC('Testing.status_matrix', query, data => {
     const tableColumns = [initialColumn]
-    const testRunIds = Object.keys(data.columns)
+    const testRunIds = Object.keys(data.runs)
 
     // reverse the TR-xy order to show newest ones first
     if (!$('#id_order').is(':checked')) {
@@ -115,7 +115,7 @@ function drawTable () {
     }
 
     testRunIds.forEach(testRunId => {
-      const testRunSummary = data.columns[testRunId]
+      const testRunSummary = data.runs[testRunId]
       $('.table > thead > tr').append(`
             <th class="header-test-run">
                 <a href="/runs/${testRunId}/">TR-${testRunId}</a>
@@ -125,13 +125,13 @@ function drawTable () {
       tableColumns.push({
         data: null,
         sortable: false,
-        render: renderData(testRunId, testPlanIds, includeChildTPs)
+        render: renderData(testRunId, testPlanIds, includeChildTPs, data)
       })
     })
 
     table = $('#table').DataTable({
       columns: tableColumns,
-      data: data.data,
+      data: data.cases,
       paging: false,
       ordering: false,
       dom: 't'
@@ -163,18 +163,21 @@ function applyStyleToCell (cell) {
   }
 }
 
-function renderData (testRunId, testPlanIds, includeChildTPs) {
+function renderData (testRunId, testPlanIds, includeChildTPs, apiData) {
   return (data, type, row, meta) => {
-    const execution = row.executions.find(e => e.run_id === Number(testRunId))
+    const execution = apiData.executions[`${data.case_id}-${testRunId}`]
+
     if (execution) {
-      const fromParentTP = includeChildTPs && testPlanIds.includes(execution.plan_id)
+      const statusColor = apiData.statusColors[execution.pk]
+      const planId = apiData.plans[testRunId]
+      const fromParentTP = includeChildTPs && testPlanIds.includes(planId)
       let iconClass = ''
 
       if (fromParentTP) {
         iconClass = 'fa fa-arrow-circle-o-up'
       }
 
-      return `<span class="execution-status ${iconClass}" color="${execution.color}" from-parent="${fromParentTP}"> ` +
+      return `<span class="execution-status ${iconClass}" color="${statusColor}" from-parent="${fromParentTP}"> ` +
                 `<a href="/runs/${execution.run_id}/#test-execution-${execution.pk}">TE-${execution.pk}</a>` +
                 '</span>'
     }

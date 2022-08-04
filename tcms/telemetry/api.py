@@ -1,4 +1,5 @@
-from django.db.models import Count
+from django.db.models import CharField, Count, Value
+from django.db.models.functions import Concat
 from django.utils.translation import gettext_lazy as _
 from modernrpc.auth.basic import http_basic_auth_login_required
 from modernrpc.core import rpc_method
@@ -76,48 +77,43 @@ def status_matrix(query=None):
 
         :param query: Field lookups for :class:`tcms.testcases.models.TestPlan`
         :type query: dict
-        :return: List, containing the information about the test executions
-        :rtype: list
+        :return: A dictionary, containing the information about test executions
+        :rtype: dict
     """
     if query is None:
         query = {}
 
-    data_set = []
-    row = {"tc_id": 0}
+    base_query = TestExecution.objects.filter(**query)
+
+    test_cases = list(
+        base_query.values("case_id", "case__summary").order_by("case_id").distinct()
+    )
+    test_executions = {}
+    for execution in base_query.values(
+        "pk",
+        "case_id",
+        "run_id",
+        "status_id",
+        key=Concat("case_id", Value("-"), "run_id", output_field=CharField()),
+    ):
+        test_executions[execution["key"]] = execution
+
+    # test run summaries for column hints, keyed by TR.pk
+    test_runs = dict(
+        base_query.values_list("run_id", "run__summary").order_by("run_id").distinct()
+    )
+    # test plan IDs, keyed by TR.pk
+    test_plans = dict(base_query.values_list("run_id", "run__plan").distinct())
 
     status_colors = dict(TestExecutionStatus.objects.values_list("pk", "color"))
-    base_query = TestExecution.objects.filter(**query).order_by("case_id", "run_id")
-    test_plan_ids = dict(base_query.values_list("run_id", "run__plan"))
-    for test_execution in base_query.only(
-        "case_id", "run_id", "case__summary", "status_id"
-    ):
-        test_execution_response = {
-            "pk": test_execution.pk,
-            "color": status_colors[test_execution.status_id],
-            "run_id": test_execution.run_id,
-            "plan_id": test_plan_ids[test_execution.run_id],
-        }
 
-        if test_execution.case_id == row["tc_id"]:
-            row["executions"].append(test_execution_response)
-        else:
-            data_set.append(row)
-
-            row = {
-                "tc_id": test_execution.case_id,
-                "tc_summary": test_execution.case.summary,
-                "executions": [test_execution_response],
-            }
-
-    # append the last row
-    data_set.append(row)
-
-    del data_set[0]
-
-    # test run summaries for column hints
-    columns = dict(base_query.values_list("run_id", "run__summary"))
-
-    return {"data": data_set, "columns": columns}
+    return {
+        "cases": test_cases,
+        "executions": test_executions,
+        "plans": test_plans,
+        "runs": test_runs,
+        "statusColors": status_colors,
+    }
 
 
 @http_basic_auth_login_required
