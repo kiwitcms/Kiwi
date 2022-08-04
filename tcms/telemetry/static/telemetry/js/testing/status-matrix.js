@@ -175,7 +175,7 @@ function renderData (testRunId, testPlanIds, includeChildTPs) {
       }
 
       return `<span class="execution-status ${iconClass}" color="${execution.color}" from-parent="${fromParentTP}"> ` +
-                `<a href="/runs/${execution.run_id}/#caserun_${execution.pk}">TE-${execution.pk}</a>` +
+                `<a href="/runs/${execution.run_id}/#test-execution-${execution.pk}">TE-${execution.pk}</a>` +
                 '</span>'
     }
     return ''
