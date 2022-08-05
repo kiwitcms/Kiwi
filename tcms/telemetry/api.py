@@ -126,7 +126,7 @@ def execution_trends(query=None):
     data_set = {}
     categories = []
     colors = []
-    count = {}
+    counts = {}
 
     for status in TestExecutionStatus.objects.all():
         data_set[status.name] = []
@@ -155,20 +155,20 @@ def execution_trends(query=None):
             status_count["neutral"] += 1
 
         if test_execution.run_id == run_id:
-            if status.name in count:
-                count[status.name] += 1
+            if status.name in counts:
+                counts[status.name] += 1
             else:
-                count[status.name] = 1
+                counts[status.name] = 1
 
         else:
-            _append_status_counts_to_result(count, data_set)
+            _append_status_counts_to_result(counts, data_set)
 
-            count = {status.name: 1}
+            counts = {status.name: 1}
             run_id = test_execution.run_id
             categories.append(run_id)
 
     # append the last result
-    _append_status_counts_to_result(count, data_set)
+    _append_status_counts_to_result(counts, data_set)
 
     for _key, value in data_set.items():
         del value[0]
@@ -181,10 +181,10 @@ def execution_trends(query=None):
     }
 
 
-def _append_status_counts_to_result(count, result):
+def _append_status_counts_to_result(counts, result):
     total = 0
     for status in TestExecutionStatus.objects.all():
-        status_count = count.get(status.name, 0)
+        status_count = counts.get(status.name, 0)
         result.get(status.name).append(status_count)
 
         total += status_count
