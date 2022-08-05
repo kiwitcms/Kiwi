@@ -3,70 +3,42 @@ $(document).ready(() => {
 
   loadInitialProduct()
 
-  document.getElementById('id_product').onchange = () => {
-    updateVersionSelectFromProduct()
-    // note: don't pass drawPage as callback to avoid calling it twice
-    // b/c update_version_select... triggers .onchange()
-    updateTestPlanSelectFromProduct()
-  }
+  const table = $('#test-case-health-table').DataTable({
+    ajax: function (data, callback, settings) {
+      const query = {}
 
-  document.getElementById('id_version').onchange = () => {
-    drawPage()
-    updateBuildSelectFromVersion(true)
-  }
+      const productIds = $('#id_product').val()
+      if (productIds.length) {
+        query.run__plan__product__in = productIds
+      }
 
-  document.getElementById('id_build').onchange = drawPage
-  document.getElementById('id_test_plan').onchange = drawPage
+      const versionIds = $('#id_version').val()
+      if (versionIds.length) {
+        query.run__plan__product_version__in = versionIds
+      }
 
-  $('#id_after').on('dp.change', drawPage)
-  $('#id_before').on('dp.change', drawPage)
+      const buildIds = $('#id_build').val()
+      if (buildIds.length) {
+        query.build_id__in = buildIds
+      }
 
-  drawPage()
-})
+      const testPlanIds = $('#id_test_plan').val()
+      if (testPlanIds.length) {
+        query.run__plan__in = testPlanIds
+      }
 
-function drawPage () {
-  const query = {}
+      const dateBefore = $('#id_before')
+      if (dateBefore.val()) {
+        query.stop_date__lte = dateBefore.data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59')
+      }
 
-  const productIds = $('#id_product').val()
-  if (productIds.length) {
-    query.run__plan__product__in = productIds
-  }
+      const dateAfter = $('#id_after')
+      if (dateAfter.val()) {
+        query.stop_date__gte = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
+      }
 
-  const versionIds = $('#id_version').val()
-  if (versionIds.length) {
-    query.run__plan__product_version__in = versionIds
-  }
-
-  const buildIds = $('#id_build').val()
-  if (buildIds.length) {
-    query.build_id__in = buildIds
-  }
-
-  const testPlanIds = $('#id_test_plan').val()
-  if (testPlanIds.length) {
-    query.run__plan__in = testPlanIds
-  }
-
-  const dateBefore = $('#id_before')
-  if (dateBefore.val()) {
-    query.stop_date__lte = dateBefore.data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59')
-  }
-
-  const dateAfter = $('#id_after')
-  if (dateAfter.val()) {
-    query.stop_date__gte = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
-  }
-
-  jsonRPC('Testing.test_case_health', query, data => {
-    drawTable('#test-case-health-table', data)
-  })
-}
-
-function drawTable (selector, data) {
-  $(`${selector} > tbody`).remove()
-
-  $(selector).DataTable({
-    data: data,
+      dataTableJsonRPC('Testing.test_case_health', query, callback)
+    },
     columns: [
       {
         data: null,
@@ -94,7 +66,33 @@ function drawTable (selector, data) {
       zeroRecords: 'No records found'
     }
   })
-}
+
+  document.getElementById('id_product').onchange = () => {
+    updateVersionSelectFromProduct()
+    // note: don't call table.ajax.reload() here to avoid calling it twice
+    // b/c update_version_select... triggers .onchange()
+    updateTestPlanSelectFromProduct()
+  }
+
+  document.getElementById('id_version').onchange = () => {
+    updateBuildSelectFromVersion(true)
+    table.ajax.reload()
+  }
+
+  document.getElementById('id_build').onchange = () => {
+    table.ajax.reload()
+  }
+  document.getElementById('id_test_plan').onchange = () => {
+    table.ajax.reload()
+  }
+
+  $('#id_after').on('dp.change', () => {
+    table.ajax.reload()
+  })
+  $('#id_before').on('dp.change', () => {
+    table.ajax.reload()
+  })
+})
 
 function renderTestCaseColumn (data) {
   return `<a href="/case/${data.case_id}">TC-${data.case_id}</a>: ${data.case_summary}`
@@ -104,7 +102,6 @@ function renderFailedExecutionsColumn (data) {
   return `${data.count.fail} / ${data.count.all}`
 }
 
-// TODO: this can be moved to the back-end and provide the percentage there
 function renderPercentColumn (data) {
   return Number.parseFloat(data.count.fail / data.count.all * 100).toFixed(1)
 }
