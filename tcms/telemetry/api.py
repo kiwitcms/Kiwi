@@ -183,9 +183,9 @@ def execution_trends(query=None):
 
 def _append_status_counts_to_result(counts, result):
     total = 0
-    for status in TestExecutionStatus.objects.all():
-        status_count = counts.get(status.name, 0)
-        result.get(status.name).append(status_count)
+    for status_name in filter(lambda x: x != _("TOTAL"), result.keys()):
+        status_count = counts.get(status_name, 0)
+        result.get(status_name).append(status_count)
 
         total += status_count
 
