@@ -140,7 +140,11 @@ def execution_trends(query=None):
         "neutral": 0,
     }
     run_id = 0
-    for test_execution in TestExecution.objects.filter(**query).order_by("run_id"):
+    for test_execution in (
+        TestExecution.objects.filter(**query)
+        .select_related("status")
+        .order_by("run_id")
+    ):
         status = test_execution.status
 
         if status.weight > 0:
