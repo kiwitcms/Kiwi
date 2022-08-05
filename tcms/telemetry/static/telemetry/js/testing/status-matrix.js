@@ -176,7 +176,7 @@ function renderData (testRunId, testPlanIds, includeChildTPs, apiData) {
     const execution = apiData.executions[`${data.case_id}-${testRunId}`]
 
     if (execution) {
-      const statusColor = apiData.statusColors[execution.pk]
+      const statusColor = apiData.statusColors[execution.status_id]
       const planId = apiData.plans[testRunId]
       const fromParentTP = includeChildTPs && testPlanIds.includes(planId)
       let iconClass = ''
