@@ -55,6 +55,7 @@ function setMaxHeight (t) {
 }
 
 function drawTable () {
+  $('.js-spinner').show()
   if (table) {
     table.destroy()
 
@@ -148,6 +149,8 @@ function drawTable () {
     // initialize the tooltips by hand, because they are dinamically inserted
     // and not handled by Bootstrap itself
     $('span[data-toggle=tooltip]').tooltip()
+
+    $('.js-spinner').hide()
   })
 }
 
