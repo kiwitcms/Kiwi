@@ -134,7 +134,12 @@ function drawTable () {
       data: data.cases,
       paging: false,
       ordering: false,
-      dom: 't'
+      dom: 't',
+      language: {
+        loadingRecords: '<div class="spinner spinner-lg"></div>',
+        processing: '<div class="spinner spinner-lg"></div>',
+        zeroRecords: 'No records found'
+      }
     })
 
     const cells = $('.table > tbody > tr > td:has(.execution-status)')
