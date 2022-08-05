@@ -87,7 +87,12 @@ function drawTable (selector, data) {
     ],
     paging: false,
     ordering: false,
-    dom: 't'
+    dom: 't',
+    language: {
+      loadingRecords: '<div class="spinner spinner-lg"></div>',
+      processing: '<div class="spinner spinner-lg"></div>',
+      zeroRecords: 'No records found'
+    }
   })
 }
 
