@@ -44,4 +44,5 @@ class Command(migrate.Command):
             verbosity=1,
             skip_checks=True,
             check_unapplied=False,
+            prune=False,
         )
