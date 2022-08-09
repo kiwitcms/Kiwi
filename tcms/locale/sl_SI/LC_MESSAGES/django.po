@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-03 12:47\n"
+"PO-Revision-Date: 2022-08-09 08:37\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -42,7 +42,7 @@ msgstr "Opis napake:\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:17
 #: tcms/bugs/templates/bugs/search.html:109
 msgid "Severity"
-msgstr ""
+msgstr "Resnost težave"
 
 #: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
@@ -168,7 +168,7 @@ msgstr "Povzetek"
 
 #: tcms/bugs/templates/bugs/mutable.html:26
 msgid "add new Severity"
-msgstr ""
+msgstr "dodaj novo stopnjo resnosti težave"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -648,11 +648,11 @@ msgstr "ADMINISTRACIJA"
 
 #: tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "Uporabniki"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "Skupine"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -1735,11 +1735,11 @@ msgstr "Testiral"
 
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Mine"
-msgstr ""
+msgstr "Moji"
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
-msgstr ""
+msgstr "Vse"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
@@ -1802,7 +1802,7 @@ msgstr "Se nanaša zgolj na testne scenarije ki imajo izpolnjene določene lastn
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
-msgstr ""
+msgstr "več informacij"
 
 #: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
@@ -1981,7 +1981,7 @@ msgstr "Docker poverilnice"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Navodila za zasebne vsebnike"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
@@ -2174,3 +2174,4 @@ msgstr "Uredi instanco"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Samo uporabniki z ustreznimi pravicami za to instanco lahko povabijo druge uporabnike"
+
