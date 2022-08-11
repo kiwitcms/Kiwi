@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-03 12:48\n"
+"PO-Revision-Date: 2022-08-11 11:18\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -467,7 +467,7 @@ msgstr ""
 #: tcms/core/views.py:72
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "Masz %(unapplied_migration_count)s niezaaplikowanych migracji. Zobacz <a href=\"%(doc_url)s\">dokumentację</a>"
 
 #: tcms/core/views.py:93
 #, python-format
@@ -634,11 +634,11 @@ msgstr "ADMINISTRACJA"
 
 #: tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "Użytkownicy"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "Grupy"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
