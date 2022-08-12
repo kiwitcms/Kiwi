@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-12 09:48\n"
+"PO-Revision-Date: 2022-08-12 14:35\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1017,7 +1017,7 @@ msgstr "Инициализация базы данных"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Ваша база данных еще не инициализирована. Нажмите кнопку ниже, чтобы инициализировать ее!"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
@@ -1025,7 +1025,7 @@ msgstr ""
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
-msgstr ""
+msgstr "Пожалуйста, ожидайте"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1185,7 +1185,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:149
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "Интеграция внешней системы ведения задач"
 
 #: tcms/testcases/admin.py:159
 msgid "<h1>Warning: read the\n"
@@ -1228,11 +1228,11 @@ msgstr ""
 
 #: tcms/testcases/models.py:379
 msgid "Template"
-msgstr ""
+msgstr "Шаблон"
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr ""
+msgstr "Шаблоны"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1497,7 +1497,7 @@ msgstr "Введите имя пользователя, email или ID поль
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "Не выбрано ни одной строчки. Выберите по крайней мере одну строчку!"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1699,7 +1699,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:140
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Environment"
-msgstr ""
+msgstr "Окружение"
 
 #: tcms/testruns/templates/testruns/get.html:183
 msgid "Update text version"
@@ -2153,3 +2153,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
