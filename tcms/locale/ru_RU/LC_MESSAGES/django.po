@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-03 12:48\n"
+"PO-Revision-Date: 2022-08-12 09:32\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -204,7 +204,7 @@ msgstr "Поиск багов"
 #: tcms/testcases/templates/testcases/search.html:18
 #: tcms/testplans/templates/testplans/search.html:19
 msgid "Created"
-msgstr ""
+msgstr "Создан"
 
 #: tcms/bugs/templates/bugs/search.html:30
 #: tcms/telemetry/templates/telemetry/include/filters.html:59
@@ -328,7 +328,7 @@ msgstr "Правка"
 #: tcms/testplans/views.py:154 tcms/testruns/views.py:180
 #: tcms/testruns/views.py:287
 msgid "Object permissions"
-msgstr ""
+msgstr "Права доступа к объекту"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -443,35 +443,35 @@ msgstr "Нет тест-планов, принадлежащих вам"
 
 #: tcms/core/templates/widgets/duration.html:8
 msgid "day"
-msgstr ""
+msgstr "день"
 
 #: tcms/core/templates/widgets/duration.html:9
 msgid "days"
-msgstr ""
+msgstr "дни"
 
 #: tcms/core/templates/widgets/duration.html:11
 msgid "hour"
-msgstr ""
+msgstr "час"
 
 #: tcms/core/templates/widgets/duration.html:12
 msgid "hours"
-msgstr ""
+msgstr "часы"
 
 #: tcms/core/templates/widgets/duration.html:14
 msgid "minute"
-msgstr ""
+msgstr "минута"
 
 #: tcms/core/templates/widgets/duration.html:15
 msgid "minutes"
-msgstr ""
+msgstr "минуты"
 
 #: tcms/core/templates/widgets/duration.html:17
 msgid "second"
-msgstr ""
+msgstr "секунда"
 
 #: tcms/core/templates/widgets/duration.html:18
 msgid "seconds"
-msgstr ""
+msgstr "секунды"
 
 #: tcms/core/views.py:48
 #, python-format
@@ -648,11 +648,11 @@ msgstr "АДМИН"
 
 #: tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -698,7 +698,7 @@ msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 #: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Ошибка #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -978,7 +978,7 @@ msgstr "Последняя страница"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1013,7 +1013,7 @@ msgstr "Наименование"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "Инициализация базы данных"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
@@ -2153,3 +2153,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
