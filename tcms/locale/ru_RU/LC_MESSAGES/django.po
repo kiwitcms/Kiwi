@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-12 09:32\n"
+"PO-Revision-Date: 2022-08-12 09:48\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1639,7 +1639,7 @@ msgstr "Требуется 1 отрицательный, 1 нейтральны�
 
 #: tcms/testruns/admin.py:106
 msgid "Edit properties"
-msgstr ""
+msgstr "Редактировать свойства"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1769,7 +1769,7 @@ msgstr "Отменить"
 
 #: tcms/testruns/templates/testruns/get.html:595
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Система ведения задач"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -2153,3 +2153,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
