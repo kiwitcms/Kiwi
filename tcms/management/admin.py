@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
@@ -46,10 +47,61 @@ class VersionAdmin(admin.ModelAdmin):
     list_filter = ("product",)
 
 
+class BuildAdminForm(forms.ModelForm):
+    class Meta:
+        model = Build
+        fields = "__all__"
+
+    class Media:
+        js = [
+            "js/jsonrpc.js",
+            "js/utils.js",
+            "management/js/build_admin.js",
+        ]
+
+    product = forms.ModelChoiceField(
+        queryset=Product.objects.all(),
+        empty_label="---------",
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # POST request for add|change view
+        if args:
+            post = args[0]
+            self.populate(post.get("product", -1))
+        # GET request for change view
+        elif self.instance.pk:
+            self.fields["product"].initial = self.instance.version.product_id
+            self.populate(self.instance.version.product_id)
+        # GET request for add view
+        else:
+            self.populate(-1)
+
+    def populate(self, product_id):
+        if product_id:
+            self.fields["version"].queryset = Version.objects.filter(
+                product_id=product_id
+            )
+        else:
+            self.fields["version"].queryset = Version.objects.all()
+
+
 class BuildAdmin(admin.ModelAdmin):
     search_fields = ("name", "id")
     list_display = ("id", "name", "version", "product_name", "is_active")
     list_filter = ("version__product", "version", "is_active")
+
+    form = BuildAdminForm
+    fieldsets = [
+        (
+            "",
+            {
+                "fields": ("product", "version", "name", "is_active"),
+            },
+        ),
+    ]
 
     def product_name(self, obj):  # pylint: disable=no-self-use
         return obj.version.product
