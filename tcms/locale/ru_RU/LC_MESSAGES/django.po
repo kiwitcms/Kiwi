@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-17 06:45\n"
+"PO-Revision-Date: 2022-08-17 08:33\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2022,7 +2022,7 @@ msgstr "Получено"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:42
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Предупреждение частного владельца"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:47
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2031,7 +2031,12 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Вы собираетесь создать частного арендатора для Kiwi TCMS.\n"
+"Это займет несколько минут, пока ваша схема БД не будет готова!\n"
+"После нажатия на кнопку 'Сохранить' <strong>не</strong> закрыть или обновить эту страницу!<br>\n"
+"Вы будете перенаправлены на нового арендатора после завершения процесса создания!\n"
+"Если вы видите страницу 500 Внутренняя Ошибка сервера свяжитесь с\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko. om</a> немедленно!"
 
 #: tcms_github_marketplace/views.py:423
 msgid "mo"
@@ -2059,7 +2064,7 @@ msgstr "Неавторизовано"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Введите имя пользователя, email или ID пользователя"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -2088,7 +2093,7 @@ msgstr "Не оплачено"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr ""
+msgstr "Срок действия аренды истекает через 7 дней"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2112,7 +2117,7 @@ msgstr "Адрес почты"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr ""
+msgstr "Новый владелец"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:26
 msgid "Company, team or project name"
@@ -2124,11 +2129,11 @@ msgstr "Схема"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:47
 msgid "Validation pattern"
-msgstr ""
+msgstr "Шаблон валидации"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"
-msgstr ""
+msgstr "Общедоступный для чтения"
 
 #: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
@@ -2140,7 +2145,7 @@ msgstr ""
 
 #: tcms_tenants/utils.py:198
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Приглашение присоединиться к Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
@@ -2148,8 +2153,9 @@ msgstr ""
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
-msgstr ""
+msgstr "Изменить владельца"
 
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Только авторизованные пользователи могут приглашать других"
+
