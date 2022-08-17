@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-12 14:35\n"
+"PO-Revision-Date: 2022-08-17 06:31\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -494,7 +494,7 @@ msgstr "Этот адрес электронной почты уже испол�
 
 #: tcms/kiwi_auth/admin.py:55
 msgid "users"
-msgstr ""
+msgstr "Пользователи"
 
 #: tcms/kiwi_auth/admin.py:160
 msgid "Personal info"
@@ -1694,7 +1694,7 @@ msgstr "Завершено"
 
 #: tcms/testruns/templates/testruns/get.html:101
 msgid "Stop"
-msgstr ""
+msgstr "Остановить"
 
 #: tcms/testruns/templates/testruns/get.html:140
 #: tcms/testruns/templates/testruns/mutable.html:129
@@ -1707,7 +1707,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:218
 msgid "Add comment"
-msgstr ""
+msgstr "Добавить комментарий"
 
 #: tcms/testruns/templates/testruns/get.html:229
 #: tcms/testruns/templates/testruns/get.html:332
@@ -2153,3 +2153,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
