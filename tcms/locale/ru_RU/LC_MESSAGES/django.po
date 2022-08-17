@@ -2158,4 +2158,3 @@ msgstr "Изменить владельца"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Только авторизованные пользователи могут приглашать других"
-
