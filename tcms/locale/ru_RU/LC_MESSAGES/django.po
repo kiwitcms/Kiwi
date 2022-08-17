@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-17 06:31\n"
+"PO-Revision-Date: 2022-08-17 06:45\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1726,7 +1726,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
@@ -1824,11 +1824,11 @@ msgstr "Запущено"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "Дата запуска"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "Дата остановки"
 
 #: tcms/testruns/views.py:246
 msgid "Clone of "
@@ -1882,7 +1882,7 @@ msgstr "ОТЛОЖЕНО"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr ""
+msgstr "Дополнительную конфигурацию см. в <a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1904,7 +1904,7 @@ msgstr "Не настроенное приложение GitHub %d"
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s импортирован из GitHub"
 
 #: tcms_github_app/utils.py:278
 #, python-format
@@ -2013,7 +2013,7 @@ msgstr "Отправитель"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:178
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 msgid "Vendor"
-msgstr ""
+msgstr "Разработчик"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:183
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:184
@@ -2153,3 +2153,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
