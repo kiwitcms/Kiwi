@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-03 12:47\n"
+"PO-Revision-Date: 2022-09-02 13:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -648,11 +648,11 @@ msgstr "管理员"
 
 #: tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "用户"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "组"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -1849,7 +1849,7 @@ msgstr "克隆来自 "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr "已建议"
+msgstr "已创建"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"

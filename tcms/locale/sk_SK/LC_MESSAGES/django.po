@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-03 12:47\n"
+"PO-Revision-Date: 2022-08-22 08:43\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -634,11 +634,11 @@ msgstr "ADMIN"
 
 #: tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "Uživatelia"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "Skupiny"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -1755,7 +1755,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
-msgstr ""
+msgstr "viac informácií"
 
 #: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
