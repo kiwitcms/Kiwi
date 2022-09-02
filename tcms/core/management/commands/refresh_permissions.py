@@ -8,8 +8,7 @@ from tcms.utils.permissions import assign_default_group_permissions
 
 class Command(BaseCommand):
     help = (
-        "Refresh permissions for Tester group "
-        "(set by DEFAULT_GROUPS setting) and remove stale ones."
+        "Refresh permissions for the special 'Administrator' & 'Tester' groups."
     )
 
     group_model = Group
