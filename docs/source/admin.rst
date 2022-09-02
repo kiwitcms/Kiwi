@@ -119,13 +119,18 @@ command::
     This can be controlled with the ``DEFAULT_GROUPS``,
     see :ref:`configuration`.
 
+.. warning::
 
-Adding a group
-^^^^^^^^^^^^^^
+    You can't delete the *Administrator* and *Tester* groups.
+    While you can change their permission sets that's not recommended because
+    they will be reset by the ``upgrade`` and ``refresh_permissions``
+    management commands! It is better to create new default group(s) instead!
 
-A group requires a name and a set of permissions. To add a group:
 
-#. From the **ADMIN** menu, click **Users and groups**.
+Changing the default group
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. From the **ADMIN** menu, click **Groups**.
 
    |The Admin menu 1|
 
@@ -145,28 +150,22 @@ A group requires a name and a set of permissions. To add a group:
    The **Chosen permissions** list is updated.
 #. Click **Save**.
 
-Editing a group
-^^^^^^^^^^^^^^^
-
-The group name can be changed. Permissions can be added or removed.
-To edit a group:
-
-#. From the **ADMIN** menu, click **Users and groups**.
-#. Click **Groups**.
-#. From the Group list, click the group to edit.
-#. Select the permission required. Click **Add** or **Remove** as
-   required.
-#. Click **Save**.
+Then change the ``DEFAULT_GROUPS`` setting, see :ref:`configuration`.
 
 
 Tenant groups
 ~~~~~~~~~~~~~
 
-.. versionadded:: 11.3
+.. versionadded:: 11.3-Enterprise
 
 *Kiwi TCMS Enterprise* and other versions where the *kiwitcms-tenant* plugin is
 installed also support groups & group permissions which are valid **only** in
 the context of the current tenant!
+
+Tenant groups allow more flexible access control for the same user account
+across different tenants. For example *John* may have ``view`` and ``change``
+permissions on ``mobile.tenant.example.com`` but ``add`` and ``delete``
+permissions on ``backend.tenant.example.com``!
 
 .. important::
 
@@ -175,20 +174,31 @@ the context of the current tenant!
     the *public tenant*.
 
 By default there are two tenant groups created - *Administrator* and *Tester*.
-Their behavior is similar as described above, however their permission scope
-has been restricted to labels relevant to tenant operations.
+Their behavior and constraints are similar as described above, however the
+available permission scope has been restricted to labels relevant to tenant
+operations.
 
-You can't delete them but you
-can change the permission sets for these groups. Tenant groups will allow
-**only** authorized users to be assigned to the group!
+.. important ::
 
-When a new tenant is created the tenant owner is added to both groups.
-Authorized users are added only to the *Tester* group.
+    When a new tenant is created the tenant owner is added to both
+    *Administrator* and *Tester* groups because they need a certain set of
+    permissions to be able to configure the tenant further.
 
-Tenant groups allow more flexible access control for the same user account
-across different tenants. For example *John* can have ``view`` and ``change``
-permissions on mobile.tenant.example.com but ``add`` and ``delete``
-permissions on backend.tenant.example.com!
+.. warning::
+
+    Authorized users will be added to tenant groups which match
+    the ``DEFAULT_GROUPS`` setting if such tenant groups exist.
+
+    When there are no tenant groups matching the configuration then
+    authorized users will be left without group associations.
+    In this case a Kiwi TCMS administrator should manually assign
+    permissions and tenant groups for each user.
+
+    If you want to keep the ``DEFAULT_GROUPS`` behavior consistent across
+    Kiwi TCMS you should define tenant groups with the same names on each
+    tenant!
+
+    .. versionchanged:: 11.5-Enterprise
 
 
 Users
