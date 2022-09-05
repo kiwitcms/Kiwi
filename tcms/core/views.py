@@ -108,6 +108,7 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
         )
         test_plans_disable_count = test_plans.filter(is_active=False).count()
 
+        # pylint: disable=unsupported-binary-operation
         test_runs = (
             TestRun.objects.filter(
                 Q(manager=self.request.user)
