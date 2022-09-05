@@ -54,11 +54,13 @@ class AzureBoardsAPI:
             f"{self.base_url}wit/workItems/{issue_id}/"
             f"comments/{comment_id}{self.api_version}-preview.3"
         )
-        return requests.request("DELETE", url, headers=headers, auth=self.auth)
+        return requests.request(
+            "DELETE", url, headers=headers, auth=self.auth, timeout=30
+        )
 
     @staticmethod
     def _request(method, url, **kwargs):
-        return requests.request(method, url, **kwargs).json()
+        return requests.request(method, url, timeout=30, **kwargs).json()
 
 
 class AzureThread(IntegrationThread):
