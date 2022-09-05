@@ -2171,4 +2171,3 @@ msgstr "テナントを編集"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "このテナントの許可を得たユーザーのみが他のユーザーを招待できます"
-
