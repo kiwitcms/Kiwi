@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:19\n"
+"PO-Revision-Date: 2022-09-05 12:08\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -42,7 +42,7 @@ msgstr "Descriptif du problème:\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:17
 #: tcms/bugs/templates/bugs/search.html:109
 msgid "Severity"
-msgstr ""
+msgstr "Gravité"
 
 #: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
@@ -168,7 +168,7 @@ msgstr "Récapitulatif"
 
 #: tcms/bugs/templates/bugs/mutable.html:26
 msgid "add new Severity"
-msgstr ""
+msgstr "ajouter une nouvelle gravité"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -648,11 +648,11 @@ msgstr "ADMINISTRATEUR"
 
 #: tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "Utilisateurs"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "Groupes"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -859,7 +859,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Incident %(pk)s a été mis à jour.\n\n"
+"Lien : %(bug_url)s\n\n"
+"Sommaire : %(summary)s\n"
+"Créer le : %(creation_date)s\n"
+"Rapporteur : %(reporter)s\n"
+"Assigné à : %(assignee)s\n"
+"Produit : %(product)s\n"
+"Version : %(version)s\n"
+"Construction : %(build)s\n"
+"Dernier commentaire :\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -984,7 +994,7 @@ msgstr "Propriétés"
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "Ceci est une fonctionnalité d'avant-première !"
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
@@ -1076,7 +1086,7 @@ msgstr "Langue"
 
 #: tcms/templates/navbar.html:95
 msgid "Change language"
-msgstr ""
+msgstr "Changer de Langue"
 
 #: tcms/templates/navbar.html:96
 msgid "Supported languages"
@@ -1648,7 +1658,7 @@ msgstr "1 négatif, 1 neutre et 1 statut positif requis !"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit properties"
-msgstr ""
+msgstr "Modifier les propriétés"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1708,7 +1718,7 @@ msgstr "Arrêt"
 #: tcms/testruns/templates/testruns/get.html:140
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Environment"
-msgstr ""
+msgstr "Environnement"
 
 #: tcms/testruns/templates/testruns/get.html:183
 msgid "Update text version"
@@ -1731,11 +1741,11 @@ msgstr "Testé par"
 
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Mine"
-msgstr ""
+msgstr "Les miens"
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
@@ -1798,7 +1808,7 @@ msgstr "Affecte uniquement les cas de test avec des propriétés"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
-msgstr ""
+msgstr "plus d'informations"
 
 #: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
@@ -1973,11 +1983,11 @@ msgstr "Organisation"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
 msgid "Docker credentials"
-msgstr ""
+msgstr "Identifiants Docker"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Instructions pour les conteneurs privés"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
@@ -2174,3 +2184,4 @@ msgstr "Modifier l'instance"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'autres utilisateurs"
+
