@@ -54,8 +54,8 @@ class BitBucketAPI:
     @staticmethod
     def _request(method, url, **kwargs):
         if method == "DELETE":
-            return requests.request(method, url, **kwargs)
-        return requests.request(method, url, **kwargs).json()
+            return requests.request(method, url, timeout=30, **kwargs)
+        return requests.request(method, url, timeout=30, **kwargs).json()
 
     @staticmethod
     def _construct_endpoint_url(api_version, url):

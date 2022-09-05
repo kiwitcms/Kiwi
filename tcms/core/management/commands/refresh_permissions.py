@@ -7,9 +7,7 @@ from tcms.utils.permissions import assign_default_group_permissions
 
 
 class Command(BaseCommand):
-    help = (
-        "Refresh permissions for the special 'Administrator' & 'Tester' groups."
-    )
+    help = "Refresh permissions for the special 'Administrator' & 'Tester' groups."
 
     group_model = Group
     admin_permissions_filter = {}
