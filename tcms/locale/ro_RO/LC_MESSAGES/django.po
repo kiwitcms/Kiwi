@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 12:10+0000\n"
-"PO-Revision-Date: 2022-08-03 12:48\n"
+"POT-Creation-Date: 2022-09-02 20:32+0000\n"
+"PO-Revision-Date: 2022-09-05 11:19\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -74,7 +74,7 @@ msgstr "Responsabil"
 #: tcms/bugs/templates/bugs/mutable.html:43
 #: tcms/bugs/templates/bugs/search.html:48
 #: tcms/bugs/templates/bugs/search.html:112
-#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:57
+#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:109
 #: tcms/telemetry/templates/telemetry/include/filters.html:12
 #: tcms/templates/include/bug_details.html:13
 #: tcms/testcases/templates/testcases/get.html:43
@@ -82,7 +82,7 @@ msgstr "Responsabil"
 #: tcms/testcases/templates/testcases/mutable.html:42
 #: tcms/testcases/templates/testcases/search.html:52
 #: tcms/testplans/templates/testplans/clone.html:20
-#: tcms/testplans/templates/testplans/get.html:63
+#: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:47
 #: tcms/testplans/templates/testplans/search.html:113
@@ -100,7 +100,7 @@ msgstr "Produs"
 #: tcms/telemetry/templates/telemetry/include/filters.html:21
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:84
 #: tcms/testplans/templates/testplans/clone.html:35
-#: tcms/testplans/templates/testplans/get.html:69
+#: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:57
 #: tcms/testplans/templates/testplans/search.html:114
@@ -135,7 +135,7 @@ msgstr "Redeschide"
 #: tcms/bugs/templates/bugs/get.html:150
 #: tcms/bugs/templates/bugs/mutable.html:112
 #: tcms/testcases/templates/testcases/mutable.html:257
-#: tcms/testplans/templates/testplans/get.html:476
+#: tcms/testplans/templates/testplans/get.html:477
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
@@ -153,8 +153,8 @@ msgstr "Închide"
 #: tcms/testcases/templates/testcases/mutable.html:23
 #: tcms/testcases/templates/testcases/search.html:12
 #: tcms/testcases/templates/testcases/search.html:151
-#: tcms/testplans/templates/testplans/get.html:211
-#: tcms/testplans/templates/testplans/get.html:486
+#: tcms/testplans/templates/testplans/get.html:212
+#: tcms/testplans/templates/testplans/get.html:487
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:3
 #: tcms/testruns/templates/testruns/get.html:252
 #: tcms/testruns/templates/testruns/get.html:259
@@ -297,7 +297,7 @@ msgstr "Nu"
 
 #: tcms/bugs/templates/bugs/search.html:98
 #: tcms/testcases/templates/testcases/search.html:139
-#: tcms/testplans/templates/testplans/get.html:220
+#: tcms/testplans/templates/testplans/get.html:221
 #: tcms/testplans/templates/testplans/search.html:100
 #: tcms/testruns/templates/testruns/get.html:274
 #: tcms/testruns/templates/testruns/search.html:177
@@ -319,14 +319,14 @@ msgid "Created at"
 msgstr "Creat la"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
-#: tcms/testplans/templates/testplans/get.html:379 tcms/testplans/views.py:146
-#: tcms/testruns/views.py:167 tcms/testruns/views.py:279
+#: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:146
+#: tcms/testruns/views.py:196 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "Editează"
 
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:144
-#: tcms/testplans/views.py:154 tcms/testruns/views.py:180
-#: tcms/testruns/views.py:287
+#: tcms/testplans/views.py:154 tcms/testruns/views.py:209
+#: tcms/testruns/views.py:316
 msgid "Object permissions"
 msgstr "Permisiuni obiect"
 
@@ -334,10 +334,10 @@ msgstr "Permisiuni obiect"
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/templates/include/properties_card.html:33
 #: tcms/templates/include/properties_card.html:48 tcms/testcases/views.py:152
-#: tcms/testplans/templates/testplans/get.html:192
-#: tcms/testplans/templates/testplans/get.html:383 tcms/testplans/views.py:162
-#: tcms/testruns/templates/testruns/get.html:239 tcms/testruns/views.py:188
-#: tcms/testruns/views.py:295
+#: tcms/testplans/templates/testplans/get.html:193
+#: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:162
+#: tcms/testruns/templates/testruns/get.html:239 tcms/testruns/views.py:217
+#: tcms/testruns/views.py:324
 msgid "Delete"
 msgstr "Șterge"
 
@@ -548,7 +548,7 @@ msgstr "Builds"
 
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:130
-#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:91
 #: tcms/testruns/templates/testruns/get.html:264
 #: tcms/testruns/templates/testruns/search.html:26
@@ -557,7 +557,7 @@ msgstr "Tag-ul"
 
 #: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:159
-#: tcms/testplans/templates/testplans/get.html:455
+#: tcms/testplans/templates/testplans/get.html:456
 #: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/get.html:354
 #: tcms/testruns/templates/testruns/search.html:195
@@ -586,11 +586,11 @@ msgstr "Plan de testare nou"
 
 #: tcms/settings/common.py:326
 #: tcms/testcases/templates/testcases/mutable.html:12
-#: tcms/testplans/templates/testplans/get.html:130
+#: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
 msgstr "Proces de testare nou"
 
-#: tcms/settings/common.py:328 tcms/testplans/templates/testplans/get.html:120
+#: tcms/settings/common.py:328 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
@@ -700,15 +700,16 @@ msgstr "NOU: TestRun #%(pk)d - %(summary)s"
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr ""
 
-#: tcms/telemetry/api.py:59 testcases.TestCaseStatus/name:2
+#: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
 msgstr "CONFIRMAT"
 
-#: tcms/telemetry/api.py:60
+#: tcms/telemetry/api.py:61
 msgid "OTHER"
 msgstr "ALTELE"
 
-#: tcms/telemetry/api.py:136 tcms/telemetry/api.py:190
+#: tcms/telemetry/api.py:134 tcms/telemetry/api.py:186
+#: tcms/telemetry/api.py:192
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:129
@@ -741,8 +742,8 @@ msgstr "Total"
 #: tcms/testcases/templates/testcases/mutable.html:97
 #: tcms/testcases/templates/testcases/search.html:37
 #: tcms/testcases/templates/testcases/search.html:157
-#: tcms/testplans/templates/testplans/get.html:401
-#: tcms/testplans/templates/testplans/get.html:488
+#: tcms/testplans/templates/testplans/get.html:402
+#: tcms/testplans/templates/testplans/get.html:489
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
 #: tcms/testruns/templates/testruns/get.html:265
 #: tcms/testruns/templates/testruns/get.html:362
@@ -750,7 +751,7 @@ msgid "Automated"
 msgstr "Automatizat"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
-#: tcms/testplans/templates/testplans/get.html:401
+#: tcms/testplans/templates/testplans/get.html:402
 #: tcms/testruns/templates/testruns/get.html:362
 msgid "Manual"
 msgstr "Manual"
@@ -906,7 +907,7 @@ msgstr "Stimate Administrator,\n"
 "Mergi la %(user_url)s pentru a activa contul!"
 
 #: tcms/templates/include/attachments.html:7
-#: tcms/testplans/templates/testplans/get.html:436
+#: tcms/testplans/templates/testplans/get.html:437
 #: tcms/testruns/templates/testruns/get.html:470
 msgid "Attachments"
 msgstr "Ataşamente"
@@ -925,7 +926,7 @@ msgstr "Dată"
 
 #: tcms/templates/include/attachments.html:31
 #: tcms/templates/include/bugs_table.html:4
-#: tcms/testplans/templates/testplans/get.html:331
+#: tcms/testplans/templates/testplans/get.html:332
 msgid "No records found"
 msgstr "Nici o înregistrare nu a fost găsită"
 
@@ -934,10 +935,10 @@ msgstr "Nici o înregistrare nu a fost găsită"
 #: tcms/testcases/templates/testcases/mutable.html:73
 #: tcms/testcases/templates/testcases/search.html:99
 #: tcms/testcases/templates/testcases/search.html:156
-#: tcms/testplans/templates/testplans/get.html:148
-#: tcms/testplans/templates/testplans/get.html:362
-#: tcms/testplans/templates/testplans/get.html:395
-#: tcms/testplans/templates/testplans/get.html:487
+#: tcms/testplans/templates/testplans/get.html:149
+#: tcms/testplans/templates/testplans/get.html:363
+#: tcms/testplans/templates/testplans/get.html:396
+#: tcms/testplans/templates/testplans/get.html:488
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:4
 #: tcms/testruns/templates/testruns/get.html:190
 #: tcms/testruns/templates/testruns/get.html:270
@@ -993,7 +994,7 @@ msgstr ""
 #: tcms/templates/include/tags_card.html:28
 #: tcms/testcases/templates/testcases/get.html:183
 #: tcms/testcases/templates/testcases/get.html:228
-#: tcms/testplans/templates/testplans/get.html:257
+#: tcms/testplans/templates/testplans/get.html:258
 #: tcms/testruns/templates/testruns/get.html:293
 #: tcms/testruns/templates/testruns/get.html:529
 msgid "Add"
@@ -1003,7 +1004,7 @@ msgstr "Adăugă"
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/get.html:214
 #: tcms/testplans/templates/testplans/clone.html:13
-#: tcms/testplans/templates/testplans/get.html:204
+#: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:13
 #: tcms/testruns/templates/testruns/get.html:562
@@ -1074,18 +1075,22 @@ msgid "Language"
 msgstr "Limbă"
 
 #: tcms/templates/navbar.html:95
+msgid "Change language"
+msgstr ""
+
+#: tcms/templates/navbar.html:96
 msgid "Supported languages"
 msgstr "Limbi suportate"
 
-#: tcms/templates/navbar.html:96
+#: tcms/templates/navbar.html:97
 msgid "Request new language"
 msgstr "Solicită o limbă nouă"
 
-#: tcms/templates/navbar.html:102
+#: tcms/templates/navbar.html:103
 msgid "Translation mode"
 msgstr "Mod traducere"
 
-#: tcms/templates/navbar.html:106
+#: tcms/templates/navbar.html:107
 msgid "Translation guide"
 msgstr "Ghid de traducere"
 
@@ -1250,9 +1255,9 @@ msgstr "TC selectat"
 
 #: tcms/testcases/templates/testcases/clone.html:44 tcms/testcases/views.py:135
 #: tcms/testplans/templates/testplans/clone.html:72
-#: tcms/testplans/templates/testplans/get.html:137
-#: tcms/testplans/templates/testplans/get.html:357 tcms/testplans/views.py:147
-#: tcms/testruns/views.py:171
+#: tcms/testplans/templates/testplans/get.html:138
+#: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:147
+#: tcms/testruns/views.py:200
 msgid "Clone"
 msgstr "Clonează"
 
@@ -1261,9 +1266,9 @@ msgstr "Clonează"
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testcases/templates/testcases/search.html:111
 #: tcms/testcases/templates/testcases/search.html:158
-#: tcms/testplans/templates/testplans/get.html:53
-#: tcms/testplans/templates/testplans/get.html:411
-#: tcms/testplans/templates/testplans/get.html:491
+#: tcms/testplans/templates/testplans/get.html:54
+#: tcms/testplans/templates/testplans/get.html:412
+#: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/mutable.html:104
 #: tcms/testplans/templates/testplans/search.html:79
 #: tcms/testplans/templates/testplans/search.html:116
@@ -1275,10 +1280,10 @@ msgstr "Autorul"
 #: tcms/testcases/templates/testcases/get.html:32
 #: tcms/testcases/templates/testcases/mutable.html:35
 #: tcms/testcases/templates/testcases/mutable.html:203
-#: tcms/testplans/templates/testplans/get.html:174
-#: tcms/testplans/templates/testplans/get.html:377
-#: tcms/testplans/templates/testplans/get.html:415
-#: tcms/testplans/templates/testplans/get.html:492
+#: tcms/testplans/templates/testplans/get.html:175
+#: tcms/testplans/templates/testplans/get.html:378
+#: tcms/testplans/templates/testplans/get.html:416
+#: tcms/testplans/templates/testplans/get.html:493
 #: tcms/testplans/templates/testplans/mutable.html:116
 #: tcms/testplans/templates/testplans/search.html:85
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
@@ -1293,8 +1298,8 @@ msgstr "Tester implicit"
 #: tcms/testcases/templates/testcases/mutable.html:57
 #: tcms/testcases/templates/testcases/search.html:62
 #: tcms/testcases/templates/testcases/search.html:153
-#: tcms/testplans/templates/testplans/get.html:407
-#: tcms/testplans/templates/testplans/get.html:490
+#: tcms/testplans/templates/testplans/get.html:408
+#: tcms/testplans/templates/testplans/get.html:491
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:368
@@ -1306,10 +1311,10 @@ msgstr "Categorie"
 #: tcms/testcases/templates/testcases/mutable.html:85
 #: tcms/testcases/templates/testcases/search.html:90
 #: tcms/testcases/templates/testcases/search.html:155
-#: tcms/testplans/templates/testplans/get.html:161
-#: tcms/testplans/templates/testplans/get.html:370
-#: tcms/testplans/templates/testplans/get.html:403
-#: tcms/testplans/templates/testplans/get.html:489
+#: tcms/testplans/templates/testplans/get.html:162
+#: tcms/testplans/templates/testplans/get.html:371
+#: tcms/testplans/templates/testplans/get.html:404
+#: tcms/testplans/templates/testplans/get.html:490
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:266
 #: tcms/testruns/templates/testruns/get.html:364
@@ -1348,15 +1353,15 @@ msgstr "Cerințe"
 
 #: tcms/testcases/templates/testcases/get.html:112
 #: tcms/testcases/templates/testcases/mutable.html:158
-#: tcms/testplans/templates/testplans/get.html:79
+#: tcms/testplans/templates/testplans/get.html:80
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
 msgstr "Link de referință"
 
 #: tcms/testcases/templates/testcases/get.html:132
 #: tcms/testcases/templates/testcases/mutable.html:166
-#: tcms/testplans/templates/testplans/get.html:432
 #: tcms/testplans/templates/testplans/get.html:433
+#: tcms/testplans/templates/testplans/get.html:434
 #: tcms/testruns/templates/testruns/get.html:400
 #: tcms/testruns/templates/testruns/mutable.html:171
 msgid "Notes"
@@ -1372,7 +1377,7 @@ msgid "Test plans"
 msgstr "Planul de testare"
 
 #: tcms/testcases/templates/testcases/get.html:207
-#: tcms/testplans/templates/testplans/get.html:446
+#: tcms/testplans/templates/testplans/get.html:447
 #: tcms/testruns/templates/testruns/get.html:350
 msgid "Components"
 msgstr "Componente"
@@ -1441,7 +1446,7 @@ msgstr "Ambele"
 
 #: tcms/testcases/templates/testcases/search.html:72
 #: tcms/testcases/templates/testcases/search.html:154
-#: tcms/testplans/templates/testplans/get.html:215
+#: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:263
 msgid "Component"
 msgstr "Component"
@@ -1459,7 +1464,7 @@ msgid "Created on"
 msgstr "Creat pe"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
-#: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:175
+#: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
 msgid "History"
 msgstr "Istorie"
 
@@ -1491,85 +1496,85 @@ msgstr "Părinte TP"
 msgid "Set the source TP as parent of new TP"
 msgstr "Setează sursa TP ca părinte al noului TP"
 
-#: tcms/testplans/templates/testplans/get.html:24
+#: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
 msgstr "Nume utilizator, e-mail sau ID:"
 
-#: tcms/testplans/templates/testplans/get.html:25
+#: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
 msgstr "Nici o linie selectată! Vă rugăm să selectaţi cel puţin unul!"
 
-#: tcms/testplans/templates/testplans/get.html:26
+#: tcms/testplans/templates/testplans/get.html:27
 #: tcms/testruns/templates/testruns/get.html:23
 msgid "Are you sure?"
 msgstr "Sunteţi sigur(-ă)?"
 
-#: tcms/testplans/templates/testplans/get.html:27
+#: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
 msgstr "Nu se poate crea TestRun cu teste neconfirmate"
 
-#: tcms/testplans/templates/testplans/get.html:28
+#: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
 msgstr "Eroare la adăugarea testelor"
 
-#: tcms/testplans/templates/testplans/get.html:42
+#: tcms/testplans/templates/testplans/get.html:43
 msgid "Show more"
 msgstr "Arată mai mult"
 
-#: tcms/testplans/templates/testplans/get.html:74
+#: tcms/testplans/templates/testplans/get.html:75
 msgid "Plan Type"
 msgstr "Tipul planului"
 
-#: tcms/testplans/templates/testplans/get.html:99
+#: tcms/testplans/templates/testplans/get.html:100
 msgid "Test cases"
 msgstr "Procese de test"
 
-#: tcms/testplans/templates/testplans/get.html:181
-#: tcms/testplans/templates/testplans/get.html:420
-#: tcms/testplans/templates/testplans/get.html:493
+#: tcms/testplans/templates/testplans/get.html:182
+#: tcms/testplans/templates/testplans/get.html:421
+#: tcms/testplans/templates/testplans/get.html:494
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:10
 msgid "Reviewer"
 msgstr "Evaluator"
 
-#: tcms/testplans/templates/testplans/get.html:230
-#: tcms/testplans/templates/testplans/get.html:233
+#: tcms/testplans/templates/testplans/get.html:231
+#: tcms/testplans/templates/testplans/get.html:234
 msgid "Sort key"
 msgstr "Sortează cheile"
 
-#: tcms/testplans/templates/testplans/get.html:243
+#: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
 msgstr "Re-ordonarea proceselor"
 
-#: tcms/testplans/templates/testplans/get.html:253
+#: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:289
 msgid "Search and add test cases"
 msgstr "Caută și adaugă cazuri de test"
 
-#: tcms/testplans/templates/testplans/get.html:262
+#: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:299
 msgid "Advanced search"
 msgstr "Căutare avansată"
 
-#: tcms/testplans/templates/testplans/get.html:285
+#: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
 msgstr "Testele active rulează"
 
-#: tcms/testplans/templates/testplans/get.html:307
+#: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
 msgstr "Mai mult"
 
-#: tcms/testplans/templates/testplans/get.html:309
+#: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
 msgstr "Inactiv"
 
-#: tcms/testplans/templates/testplans/get.html:443
+#: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:477
 msgid "No attachments"
 msgstr "Niciun atașament"
 
-#: tcms/testplans/templates/testplans/get.html:468
+#: tcms/testplans/templates/testplans/get.html:469
 #: tcms/testruns/templates/testruns/get.html:466
 msgid "Comments"
 msgstr "Comentarii"
@@ -1832,7 +1837,7 @@ msgstr ""
 msgid "Stop date"
 msgstr ""
 
-#: tcms/testruns/views.py:246
+#: tcms/testruns/views.py:275
 msgid "Clone of "
 msgstr "Clona lui "
 
