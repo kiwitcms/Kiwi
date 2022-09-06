@@ -1,6 +1,73 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.5 (06 Sep 2022)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements, bug fixes
+    and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update jira from 3.3.1 to 3.4.0
+- Update pygments from 2.12.0 to 2.13.0
+- Update python-gitlab from 3.7.0 to 3.9.0
+- Update tzdata from 2022.1 to 2022.2
+- Add Product drop down field in Build admin page. Closes
+  `Issue #2818 <https://github.com/kiwitcms/Kiwi/issues/2818>`_
+- Add 'prune' argument required for Django 4.1 compatibility
+- Improve documentation around ``DEFAULT_GROUPS``
+- Update docs about language preferences and add a Change language menu item. Closes
+  `Issue #2901 <https://github.com/kiwitcms/Kiwi/issues/2901>`_,
+  `Issue #2902 <https://github.com/kiwitcms/Kiwi/issues/2902>`_,
+  `Issue #2903 <https://github.com/kiwitcms/Kiwi/issues/2903>`_
+- Performance improvement for Status matrix telemetry
+- Performance improvement for Execution trends telemetry
+- Display a spinner widget while telemetry data is still loading. Closes
+  `Issue #1801 <https://github.com/kiwitcms/Kiwi/issues/1801>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix error ``Jquery deferred: No length property of null object`` (@cmbahadir)
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add test for ``AnonymousViewBackend`` & ``auth.`` permissions
+- Exclude ``auth.view_`` permissions from ``AnonymousViewBackend``
+- Specify 30 seconds timeout for internal requests via the requests library
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 11.4 (03 Aug 2022)
 ----------------------------
 
