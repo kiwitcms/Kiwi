@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"PO-Revision-Date: 2022-09-08 14:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -42,7 +42,7 @@ msgstr "问题描述：\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:17
 #: tcms/bugs/templates/bugs/search.html:109
 msgid "Severity"
-msgstr ""
+msgstr "严重程度"
 
 #: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
@@ -168,7 +168,7 @@ msgstr "总结"
 
 #: tcms/bugs/templates/bugs/mutable.html:26
 msgid "add new Severity"
-msgstr ""
+msgstr "添加新的严重程度"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -1085,7 +1085,7 @@ msgstr "语言"
 
 #: tcms/templates/navbar.html:95
 msgid "Change language"
-msgstr ""
+msgstr "更改语言"
 
 #: tcms/templates/navbar.html:96
 msgid "Supported languages"
@@ -1740,11 +1740,11 @@ msgstr "测试由"
 
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Mine"
-msgstr ""
+msgstr "我的"
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
@@ -1807,7 +1807,7 @@ msgstr "仅影响具有属性的测试"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
-msgstr ""
+msgstr "更多信息"
 
 #: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
@@ -2183,3 +2183,4 @@ msgstr "编辑租户"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "只有获得此租户授权的用户才能邀请其他"
+
