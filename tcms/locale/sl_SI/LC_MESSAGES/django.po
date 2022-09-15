@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"PO-Revision-Date: 2022-09-15 07:57\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1085,7 +1085,7 @@ msgstr "Jezik"
 
 #: tcms/templates/navbar.html:95
 msgid "Change language"
-msgstr ""
+msgstr "Spremeni jezik"
 
 #: tcms/templates/navbar.html:96
 msgid "Supported languages"
@@ -2179,3 +2179,4 @@ msgstr "Uredi instanco"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Samo uporabniki z ustreznimi pravicami za to instanco lahko povabijo druge uporabnike"
+
