@@ -7,6 +7,7 @@ const permissions = {
   removeComment: false
 }
 const autocompleteCache = {}
+const testCaseIds = []
 
 $(document).ready(() => {
   permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True'
@@ -151,9 +152,45 @@ $(document).ready(() => {
     }
 
     jsonRPC('TestExecution.filter', rpcQuery, testExecutions => {
+      testExecutions.forEach(te => testCaseIds.push(te.case))
+
       drawPercentBar(testExecutions)
-      renderTestExecutions(testExecutions)
       renderAdditionalInformation(testRunId)
+
+      console.log(testCaseIds)
+
+      jsonRPC('Testing.individual_test_case_health', { case_id__in: testCaseIds }, result => {
+        console.log(result)
+
+        const testCaseHealth = {}
+        let caseId = 0
+        result.forEach(r => {
+          let positive = 0
+          let negative = 0
+          let allCount = 0
+          if (r.status__weight > 0) {
+            positive++
+          } else if (r.status__weight < 0) {
+            negative++
+          }
+          allCount++
+
+          if (r.case_id !== caseId) {
+            caseId = r.case_id
+            testCaseHealth[caseId] = {
+              completion_rate: allCount > 0 ? ((positive + negative) / allCount) : 0,
+              failure_rate: allCount > 0 ? (negative / allCount) : 0
+            }
+            positive = 0
+            negative = 0
+            allCount = 0
+          }
+        })
+
+        console.log(testCaseHealth)
+        renderTestExecutions(testExecutions, testCaseHealth)
+      })
+
     })
   })
 
@@ -375,7 +412,7 @@ function renderCountPerStatusList (statusCount) {
   }
 }
 
-function renderTestExecutions (testExecutions) {
+function renderTestExecutions (testExecutions, testCaseHealth) {
   // sort executions by sortkey
   testExecutions.sort(function (te1, te2) {
     return te1.sortkey - te2.sortkey
@@ -383,7 +420,7 @@ function renderTestExecutions (testExecutions) {
   const container = $('#test-executions-container')
 
   testExecutions.forEach(testExecution => {
-    container.append(renderTestExecutionRow(testExecution))
+    container.append(renderTestExecutionRow(testExecution, testCaseHealth))
   })
 
   bindEvents()
@@ -676,7 +713,7 @@ function renderHistoryEntry (historyEntry) {
   return template
 }
 
-function renderTestExecutionRow (testExecution) {
+function renderTestExecutionRow (testExecution, testCaseHealth={}) {
   // refresh the internal data structure b/c some fields are used
   // to render the expand area and may have changed via bulk-update meanwhile
   testExecution.status__name = $('#test_run_pk').data(`trans-execution-status-${testExecution.status}`)
@@ -695,6 +732,15 @@ function renderTestExecutionRow (testExecution) {
   template.find('.test-execution-info-link').attr('href', `/case/${testExecution.case}/`)
   template.find('.test-execution-tester').html(testExecution.tested_by__username || '-')
   template.find('.test-execution-asignee').html(testExecution.assignee__username || '-')
+  // TODO: this is just for visualization of how we will be using the API
+  // this will probably be replaced by a visual icon
+  const testExecutionCaseHealth = testCaseHealth[testExecution.case]
+  // this may be empty if we are reloading the execution after an update
+  // in this case it's unlikely that the health of the test case has changed
+  if (testExecutionCaseHealth) {
+    template.find('.test-case-completion-rate').html(testExecutionCaseHealth.completion_rate)
+    template.find('.test-case-failure-rate').html(testExecutionCaseHealth.failure_rate)
+  }
 
   const testExecutionStatus = allExecutionStatuses[testExecution.status]
   template.find('.test-execution-status-icon').addClass(testExecutionStatus.icon).css('color', testExecutionStatus.color)
