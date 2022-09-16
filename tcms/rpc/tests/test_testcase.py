@@ -223,6 +223,35 @@ class TestCaseFilter(APITestCase):
         self.assertEqual(result[0]["testing_duration"], testing_duration)
         self.assertEqual(result[0]["expected_duration"], expected_duration)
 
+    def test_filter_by_setup_duration(self):
+        case = TestCaseFactory(setup_duration=timedelta(seconds=45))
+
+        result = self.rpc_client.TestCase.filter({"setup_duration": "0:00:45"})
+
+        self.assertIsNotNone(result)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["id"], case.pk)
+
+    def test_filter_by_testing_duration(self):
+        case = TestCaseFactory(testing_duration=timedelta(minutes=2))
+
+        result = self.rpc_client.TestCase.filter({"testing_duration": "0:02:00"})
+
+        self.assertIsNotNone(result)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["id"], case.pk)
+
+    def test_filter_by_expected_duration(self):
+        case = TestCaseFactory(
+            setup_duration=timedelta(seconds=45), testing_duration=timedelta(minutes=2)
+        )
+
+        result = self.rpc_client.TestCase.filter({"expected_duration": "0:02:45"})
+
+        self.assertIsNotNone(result)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["id"], case.pk)
+
 
 class TestUpdate(APITestCase):
     non_existing_username = "FakeUsername"

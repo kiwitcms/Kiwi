@@ -105,6 +105,18 @@ class SearchCaseForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
+    setup_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
+    testing_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
+    expected_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
 
     def populate(self, product_id=None):
         if product_id:

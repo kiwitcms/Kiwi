@@ -52,6 +52,23 @@ function preProcessData (data, callback) {
   })
 }
 
+function formatDuration (seconds) {
+  const numSecondsInDay = 24 * 60 * 60
+  const days = Math.floor(seconds / numSecondsInDay)
+  const rest = seconds % numSecondsInDay
+
+  const date = new Date(0)
+  date.setSeconds(rest)
+  const timeString = date.toISOString().substr(11, 8)
+
+  if (days === 0) {
+    return timeString
+  }
+
+  const dayOrDays = days === 1 ? 'day' : 'days'
+  return `${days} ${dayOrDays}, ${timeString}`
+}
+
 $(document).ready(function () {
   const table = $('#resultsTable').DataTable({
     pageLength: $('#navbar').data('defaultpagesize'),
@@ -111,6 +128,18 @@ $(document).ready(function () {
         params.is_automated = false
       };
 
+      if ($('#id_setup_duration').val() !== '0') {
+        params.setup_duration = $('#id_setup_duration').val()
+      };
+
+      if (($('#id_testing_duration').val() !== '0')) {
+        params.testing_duration = $('#id_testing_duration').val()
+      };
+
+      if (($('#id_expected_duration').val() !== '0')) {
+        params.expected_duration = $('#id_expected_duration').val()
+      };
+
       const text = $('#id_text').val()
       if (text) {
         params.text__icontains = text
@@ -150,7 +179,25 @@ $(document).ready(function () {
       { data: 'case_status__name' },
       { data: 'is_automated' },
       { data: 'author__username' },
-      { data: 'tag_names' }
+      { data: 'tag_names' },
+      {
+        data: 'setup_duration',
+        render: function (data, type, full, meta) {
+          return formatDuration(data)
+        }
+      },
+      {
+        data: 'testing_duration',
+        render: function (data, type, full, meta) {
+          return formatDuration(data)
+        }
+      },
+      {
+        data: 'expected_duration',
+        render: function (data, type, full, meta) {
+          return formatDuration(data)
+        }
+      }
     ],
     dom: 't',
     language: {

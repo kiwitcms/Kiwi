@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.db.models.functions import Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
+from django.utils.dateparse import parse_duration
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
@@ -282,8 +283,18 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects.
         :rtype: list(dict)
     """
+
     if query is None:
         query = {}
+
+    if "setup_duration" in query:
+        query["setup_duration"] = parse_duration(query["setup_duration"])
+
+    if "testing_duration" in query:
+        query["testing_duration"] = parse_duration(query["testing_duration"])
+
+    if "expected_duration" in query:
+        query["expected_duration"] = parse_duration(query["expected_duration"])
 
     qs = (
         TestCase.objects.annotate(
