@@ -11,6 +11,8 @@ from tcms.issuetracker.base import IntegrationThread, IssueTrackerType
 class AzureBoardsAPI:
     """
     Azure Boards API interaction class.
+
+    :meta private:
     """
 
     def __init__(self, base_url=None, password=None):
@@ -68,6 +70,8 @@ class AzureThread(IntegrationThread):
     Execute AzureBoards code in a thread!
 
     Executed from the IssueTracker interface methods.
+
+    :meta private:
     """
 
     def post_comment(self):

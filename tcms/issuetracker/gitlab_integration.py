@@ -12,6 +12,8 @@ class GitlabThread(IntegrationThread):
     Execute Gitlab RPC code in a thread!
 
     Executed from the IssueTracker interface methods.
+
+    :meta private:
     """
 
     @staticmethod

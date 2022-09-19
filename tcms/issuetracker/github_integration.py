@@ -10,6 +10,8 @@ class GitHubThread(IntegrationThread):
     Execute GitHub RPC code in a thread!
 
     Executed from the IssueTracker interface methods.
+
+    :meta private:
     """
 
     @staticmethod
