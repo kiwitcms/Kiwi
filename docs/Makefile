@@ -52,10 +52,11 @@ clean:
 	rm -rf $(BUILDDIR)/*
 
 apidoc:
-	$(SPHINXAPIDOC) -o source/modules/ -f -e -M -T ../ ../manage.py ../setup.py \
-	                ../*/tests.py ../tcms/*/tests/* ../*/test_*.py ../*/tests/*.py ../*/apps.py \
-	                ../*/settings/test/*.py ../*/settings/* ../*/migrations/*.py \
-	                ../*urls.py ../*/urls/*.py ../kiwi_lint/*.py
+	$(SPHINXAPIDOC) -o source/modules/ --force --separate --module-first --no-toc \
+	        ../ ../manage.py ../setup.py \
+	        ../*/tests.py ../tcms/*/tests/* ../*/test_*.py ../*/tests/*.py ../*/apps.py \
+	        ../*/settings/test/*.py ../*/settings/* ../*/migrations/*.py \
+	        ../*urls.py ../*/urls/*.py ../kiwi_lint/*.py
 
 html: clean apidoc
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
