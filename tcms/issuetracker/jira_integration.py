@@ -14,6 +14,8 @@ class JiraThread(IntegrationThread):
     .. important::
 
         For configuration options see :class:`tcms.issuetracker.types.JIRA`!
+
+    :meta private:
     """
 
     def post_comment(self):

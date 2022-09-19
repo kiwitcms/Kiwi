@@ -16,6 +16,8 @@ class BugzillaThread(base.IntegrationThread):
     Execute Bugzilla RPC code in a thread!
 
     Executed from the IssueTracker interface methods.
+
+    :meta private:
     """
 
     def post_comment(self):

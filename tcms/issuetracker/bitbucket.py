@@ -10,6 +10,7 @@ class BitBucketAPI:
     """
     BitBucket API interaction class.
 
+    :meta private:
     """
 
     def __init__(self, base_url=None, api_username=None, api_password=None):
@@ -72,6 +73,8 @@ class BitBucketThread(IntegrationThread):
     Execute BitBucket code in a thread!
 
     Executed from the IssueTracker interface methods.
+
+    :meta private:
     """
 
     def post_comment(self):

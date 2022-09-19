@@ -11,7 +11,8 @@ RE_ENDS_IN_INT = re.compile(r"[\d]+$")
 
 class IntegrationThread(threading.Thread):
     """
-    Used as a base class for everything else.
+    Internal class used by the tracker integration code. Usually you will only
+    need to implement the ``post_comment()`` method!
     """
 
     def __init__(self, rpc, bug_system, execution, bug_id):
