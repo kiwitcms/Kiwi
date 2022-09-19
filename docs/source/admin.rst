@@ -36,24 +36,6 @@ in :mod:`tcms.issuetracker`.
 
     .. versionadded:: 8.5
 
-.. important::
-
-    Details on what each field means can be found at
-    :class:`tcms.testcases.models.BugSystem`. Integration details for supported
-    bug trackers can be found at :mod:`tcms.issuetracker.types`! Please read
-    these sections carefully before configuring integration with external bug tracking
-    systems!
-
-.. important::
-
-    Kiwi TCMS comes with its own internal bug tracker. This is designed as
-    a light-weight solution for small teams. In case you are already using an
-    external defect tracking system like Bugzilla you may disable the internal
-    one by defining ``KIWI_DISABLE_BUGTRACKER=yes`` in your environment
-    variables!
-
-    .. versionadded:: 8.4
-
 
 .. _managing-permissions:
 
