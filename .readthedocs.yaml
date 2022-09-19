@@ -8,10 +8,18 @@ sphinx:
    configuration: docs/source/conf.py
 
 build:
-  image: latest
+  apt_packages:
+    - python3-pydot
+    - graphviz
+  os: "ubuntu-22.04"
+  tools:
+    python: "3.8"
+  jobs:
+    pre_build:
+     - GIT_DIR=$(mktemp -d) && git clone --depth 1 https://github.com/kiwitcms/trackers-integration $GIT_DIR && ln -s $GIT_DIR/trackers_integration trackers_integration
+     - make -C docs/ apidoc
 
 # Optionally set the version of Python and requirements required to build your docs
 python:
-   version: 3.8
    install:
    - requirements: requirements/readthedocs.txt

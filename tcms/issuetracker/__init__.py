@@ -31,4 +31,6 @@
 
         Integration details for supported bug trackers can be found at
         :mod:`tcms.issuetracker.types`!
+        Additional integrations are provided via add-ons. For more information
+        see :mod:`trackers_integration.issuetracker`!
 """
