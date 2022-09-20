@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"PO-Revision-Date: 2022-09-20 11:01\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -484,7 +484,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:160
 msgid "Personal info"
-msgstr ""
+msgstr "Osobné informácie"
 
 #: tcms/kiwi_auth/admin.py:162
 msgid "Permissions"
@@ -492,7 +492,7 @@ msgstr "Oprávnenia"
 
 #: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Používateľ s rovnakým emailom už existuje."
 
 #: tcms/kiwi_auth/forms.py:79
 #, python-format
@@ -513,7 +513,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:122
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Aktivačný kód už neexistuje v databáze"
 
 #: tcms/kiwi_auth/views.py:128
 msgid "This activation key has expired"
@@ -521,7 +521,7 @@ msgstr "Aktivačný kľúč expiroval"
 
 #: tcms/kiwi_auth/views.py:140
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Váš účet bol úspešne aktivovaný"
 
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -688,7 +688,7 @@ msgstr ""
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr ""
+msgstr "POTVRDENÝ"
 
 #: tcms/telemetry/api.py:61
 msgid "OTHER"
@@ -1822,27 +1822,27 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr ""
+msgstr "BEŽIACI"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr ""
+msgstr "POZASTAVENÝ"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "PREŠIEL"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr ""
+msgstr "NEPREŠIEL"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOKOVANÝ"
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr ""
+msgstr "CHYBA"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
@@ -2123,3 +2123,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
