@@ -13,6 +13,8 @@ from django.urls import reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
+from tabular_permissions.admin import UserTabularPermissionsMixin, GroupTabularPermissionsMixin
+
 from tcms.utils.user import delete_user
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -66,7 +68,7 @@ class GroupAdminForm(forms.ModelForm):
         return instance
 
 
-class KiwiUserAdmin(UserAdmin):
+class KiwiUserAdmin(UserTabularPermissionsMixin, UserAdmin):
     list_display = UserAdmin.list_display + (
         "is_active",
         "is_superuser",
@@ -216,7 +218,7 @@ class KiwiUserAdmin(UserAdmin):
         delete_user(obj)
 
 
-class KiwiGroupAdmin(GroupAdmin):
+class KiwiGroupAdmin(GroupTabularPermissionsMixin, GroupAdmin):
     form = GroupAdminForm
 
     def has_delete_permission(self, request, obj=None):

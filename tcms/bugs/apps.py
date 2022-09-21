@@ -4,7 +4,10 @@ from django.db.models.signals import post_migrate, post_save, pre_delete
 
 
 class AppConfig(DjangoAppConfig):
+    " a doc-string on the AppConfig class"
+
     name = "tcms.bugs"
+    admin_docs = "a custom defined attribute"
 
     def ready(self):
         from tcms import signals
