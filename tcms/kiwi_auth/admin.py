@@ -10,7 +10,6 @@ from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from tcms.utils.user import delete_user
@@ -52,7 +51,7 @@ class GroupAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["users"].label = capfirst(_("users"))
+        self.fields["users"].label = _("Users")
         if self.instance.pk:
             self.fields["users"].initial = self.instance.user_set.all()
 

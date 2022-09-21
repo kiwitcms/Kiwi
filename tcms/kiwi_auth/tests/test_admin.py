@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
 from django.urls import reverse
-from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from tcms.kiwi_auth.admin import Group
@@ -505,8 +504,8 @@ class TestGroupAdmin(LoggedInTestCase):
             '<select name="users" id="id_users" multiple '
             'class="selectfilter" data-field-name="users" data-is-stacked="0">',
         )
-        _capfirst = capfirst(_("users"))
-        self.assertContains(response, f'<label for="id_users">{_capfirst}')
+        _label = _("Users")
+        self.assertContains(response, f'<label for="id_users">{_label}')
 
     def test_should_be_able_to_delete_a_non_default_group(self):
         response = self.client.get(
