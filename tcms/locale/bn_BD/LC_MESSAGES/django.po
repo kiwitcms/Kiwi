@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"PO-Revision-Date: 2022-09-21 15:20\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -196,8 +196,8 @@ msgstr "নতুন বিল্ড যোগ করুন"
 msgid "Username or email"
 msgstr "ব্যবহারকারীর নাম অথবা ইমেইল"
 
-#: tcms/bugs/templates/bugs/search.html:5
-msgid "Search bugs"
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:341
+msgid "Search Bugs"
 msgstr "বাগ অনুসন্ধান করুন"
 
 #: tcms/bugs/templates/bugs/search.html:27
@@ -315,8 +315,11 @@ msgstr "আইডি"
 
 #: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
-msgid "Created at"
-msgstr "তৈরি হয়েছে"
+#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/mutable.html:201
+msgid "Created on"
+msgstr "তৈরির তারিখ"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:146
@@ -488,19 +491,19 @@ msgstr ""
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:33
+#: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "এই ই-মেইল ঠিকানাটি ইতিমধ্যে ব্যবহার করা হয়েছে"
 
-#: tcms/kiwi_auth/admin.py:55
-msgid "users"
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
+msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
 msgstr "ব্যক্তিগত তথ্য"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:161
 msgid "Permissions"
 msgstr "অনুমতি"
 
@@ -600,21 +603,17 @@ msgstr ""
 msgid "SEARCH"
 msgstr "অনুসন্ধান"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:338 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:339 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:340 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "অনুসন্ধান পরীক্ষার কেস"
-
-#: tcms/settings/common.py:341
-msgid "Search Bugs"
-msgstr "বাগ অনুসন্ধান করুন"
 
 #: tcms/settings/common.py:347
 msgid "TELEMETRY"
@@ -645,10 +644,6 @@ msgstr "TestCase স্বাস্থ্য"
 #: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "অ্যাডমিন"
-
-#: tcms/settings/common.py:363
-msgid "Users"
-msgstr ""
 
 #: tcms/settings/common.py:364
 msgid "Groups"
@@ -1099,12 +1094,8 @@ msgid "Password"
 msgstr "সঙ্কেত শব্দ"
 
 #: tcms/templates/registration/login.html:31
-msgid "Forgot"
-msgstr "ভুলে গেছেন"
-
-#: tcms/templates/registration/login.html:31
-msgid "password"
-msgstr "গুপ্ত-সংকেত"
+msgid "Forgot password"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1428,10 +1419,6 @@ msgstr "CC থেকে"
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "ইমেল ঠিকানা কমা দ্বারা পৃথক. প্রতিটি ইমেল ঠিকানায় একটি নোটিফিকেশন ইমেল পাঠানো হবে CC তালিকার মধ্যে."
 
-#: tcms/testcases/templates/testcases/search.html:5
-msgid "Search test cases"
-msgstr "অনুসন্ধান পরীক্ষার কেস"
-
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
 msgstr "পরীক্ষার কেস সারসংক্ষেপ"
@@ -1452,12 +1439,6 @@ msgstr "উপকরণ"
 #: tcms/testruns/templates/testruns/search.html:29
 msgid "Separate multiple values with comma (,)"
 msgstr "কমা সঙ্গে পৃথক একাধিক মান (,)"
-
-#: tcms/testcases/templates/testcases/search.html:152
-#: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:201
-msgid "Created on"
-msgstr "তৈরির তারিখ"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
@@ -1615,10 +1596,6 @@ msgstr "পরীক্ষার ক্ষেত্রে হালনাগা�
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
 msgstr "সক্রিয়"
-
-#: tcms/testplans/templates/testplans/search.html:5
-msgid "Search test plans"
-msgstr "অনুসন্ধানের পরীক্ষা পরিকল্পনা"
 
 #: tcms/testplans/templates/testplans/search.html:15
 msgid "Test plan name"
@@ -1802,10 +1779,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "%(count)s প্রাক-নির্বাচিত পরীক্ষাটির ক্ষেত্রে নিশ্চিত নয় এবং ক্লোন করা হবে না!\n"
 "আরো বিস্তারিত জানার জন্য পরীক্ষা পরিকল্পনা দেখুন!"
-
-#: tcms/testruns/templates/testruns/search.html:5
-msgid "Search test runs"
-msgstr "অনুসন্ধান পরীক্ষা চালায়"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Test run summary"
@@ -2159,3 +2132,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
