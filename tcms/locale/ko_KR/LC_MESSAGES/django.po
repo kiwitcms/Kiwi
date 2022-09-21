@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"PO-Revision-Date: 2022-09-21 15:20\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -196,8 +196,8 @@ msgstr "새로운 빌드 추가"
 msgid "Username or email"
 msgstr "사용자 이름 또는 전자 메일"
 
-#: tcms/bugs/templates/bugs/search.html:5
-msgid "Search bugs"
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:341
+msgid "Search Bugs"
 msgstr "검색 버그"
 
 #: tcms/bugs/templates/bugs/search.html:27
@@ -315,8 +315,11 @@ msgstr "아이디"
 
 #: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
-msgid "Created at"
-msgstr "생성 위치"
+#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/mutable.html:201
+msgid "Created on"
+msgstr "작성일"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:146
@@ -488,19 +491,19 @@ msgstr ""
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:33
+#: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "이미 등록 되었거나 사용중인 이메일 주소입니다"
 
-#: tcms/kiwi_auth/admin.py:55
-msgid "users"
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
+msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
 msgstr "개인 정보"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:161
 msgid "Permissions"
 msgstr "권한"
 
@@ -600,21 +603,17 @@ msgstr ""
 msgid "SEARCH"
 msgstr "검색"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:338 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "검색 테스트 계획"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:339 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "검색 테스트 실행"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:340 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "검색 테스트 사례"
-
-#: tcms/settings/common.py:341
-msgid "Search Bugs"
-msgstr "검색 버그"
 
 #: tcms/settings/common.py:347
 msgid "TELEMETRY"
@@ -645,10 +644,6 @@ msgstr "TestCase 건강"
 #: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "관리자"
-
-#: tcms/settings/common.py:363
-msgid "Users"
-msgstr ""
 
 #: tcms/settings/common.py:364
 msgid "Groups"
@@ -1101,12 +1096,8 @@ msgid "Password"
 msgstr "비밀번호"
 
 #: tcms/templates/registration/login.html:31
-msgid "Forgot"
-msgstr "잊음"
-
-#: tcms/templates/registration/login.html:31
-msgid "password"
-msgstr "비밀번호"
+msgid "Forgot password"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1430,10 +1421,6 @@ msgstr "에 CC"
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "이메일 주소는 쉼표로 구분됩니다. CC 목록 내의 각 이메일 주소로 알림 이메일이 발송됩니다."
 
-#: tcms/testcases/templates/testcases/search.html:5
-msgid "Search test cases"
-msgstr "검색 테스트 사례"
-
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
 msgstr "테스트 사례 요약"
@@ -1454,12 +1441,6 @@ msgstr "구성요소"
 #: tcms/testruns/templates/testruns/search.html:29
 msgid "Separate multiple values with comma (,)"
 msgstr "여러 값을 쉼표 (,) 로 구분"
-
-#: tcms/testcases/templates/testcases/search.html:152
-#: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:201
-msgid "Created on"
-msgstr "작성일"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
@@ -1617,10 +1598,6 @@ msgstr "테스트 사례가 업데이트됩니다."
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
 msgstr "활성"
-
-#: tcms/testplans/templates/testplans/search.html:5
-msgid "Search test plans"
-msgstr "검색 테스트 계획"
 
 #: tcms/testplans/templates/testplans/search.html:15
 msgid "Test plan name"
@@ -1804,10 +1781,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "미리 선택된 테스트 사례의 %(count)s 확인되지 않으며 복제되지 않습니다!\n"
 "자세한 내용은 테스트 계획을 참조하십시오!"
-
-#: tcms/testruns/templates/testruns/search.html:5
-msgid "Search test runs"
-msgstr "검색 테스트 실행"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Test run summary"

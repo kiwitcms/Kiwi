@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"PO-Revision-Date: 2022-09-21 15:20\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -196,8 +196,8 @@ msgstr "neuen Build hinzufügen"
 msgid "Username or email"
 msgstr "Benutzername oder E-Mail"
 
-#: tcms/bugs/templates/bugs/search.html:5
-msgid "Search bugs"
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:341
+msgid "Search Bugs"
 msgstr "Fehler durchsuchen"
 
 #: tcms/bugs/templates/bugs/search.html:27
@@ -315,7 +315,10 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
-msgid "Created at"
+#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/mutable.html:201
+msgid "Created on"
 msgstr "Erstellt am"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
@@ -488,19 +491,19 @@ msgstr "Sie haben %(unapplied_migration_count)s nicht angewandte Migration(en). 
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:33
+#: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "Diese E-Mail-Adresse wird bereits verwendet"
 
-#: tcms/kiwi_auth/admin.py:55
-msgid "users"
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
+msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
 msgstr "Persönliche Daten"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:161
 msgid "Permissions"
 msgstr "Berechtigungen"
 
@@ -600,21 +603,17 @@ msgstr "Neuer Testlauf"
 msgid "SEARCH"
 msgstr "SUCHEN"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:338 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "Suche Testplan"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:339 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "Suche Testlauf"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:340 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "Suche Testfall"
-
-#: tcms/settings/common.py:341
-msgid "Search Bugs"
-msgstr "Fehler durchsuchen"
 
 #: tcms/settings/common.py:347
 msgid "TELEMETRY"
@@ -645,10 +644,6 @@ msgstr "TestCase Gesundheit"
 #: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "ADMIN"
-
-#: tcms/settings/common.py:363
-msgid "Users"
-msgstr ""
 
 #: tcms/settings/common.py:364
 msgid "Groups"
@@ -1101,12 +1096,8 @@ msgid "Password"
 msgstr "Passwort"
 
 #: tcms/templates/registration/login.html:31
-msgid "Forgot"
-msgstr "Vergessen"
-
-#: tcms/templates/registration/login.html:31
-msgid "password"
-msgstr "passwort"
+msgid "Forgot password"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1434,10 +1425,6 @@ msgstr "CC bis"
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "Durch Komma getrennte E-Mail-Adressen. Eine Benachrichtigungs-E-Mail wird an jede E-Mail-Adresse in der CC-Liste gesendet."
 
-#: tcms/testcases/templates/testcases/search.html:5
-msgid "Search test cases"
-msgstr "Suche Testfall"
-
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
 msgstr "Testfall-Zusammenfassung"
@@ -1458,12 +1445,6 @@ msgstr "Komponente"
 #: tcms/testruns/templates/testruns/search.html:29
 msgid "Separate multiple values with comma (,)"
 msgstr "Trenne mehrere Werte mit Komma (,)"
-
-#: tcms/testcases/templates/testcases/search.html:152
-#: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:201
-msgid "Created on"
-msgstr "Erstellt am"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
@@ -1621,10 +1602,6 @@ msgstr "Testfälle werden aktualisiert"
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
 msgstr "Aktiv"
-
-#: tcms/testplans/templates/testplans/search.html:5
-msgid "Search test plans"
-msgstr "Testpläne suchen"
 
 #: tcms/testplans/templates/testplans/search.html:15
 msgid "Test plan name"
@@ -1810,10 +1787,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "%(count)s der vorausgewählten Testfälle sind nicht KONFIRMED und werden nicht geklont!\n"
 "Siehe Testplan für weitere Details!"
-
-#: tcms/testruns/templates/testruns/search.html:5
-msgid "Search test runs"
-msgstr "Testläufe durchsuchen"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Test run summary"

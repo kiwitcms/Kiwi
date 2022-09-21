@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-08 14:28\n"
+"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"PO-Revision-Date: 2022-09-21 15:20\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -196,8 +196,8 @@ msgstr "添加新的构建"
 msgid "Username or email"
 msgstr "用户名或邮箱"
 
-#: tcms/bugs/templates/bugs/search.html:5
-msgid "Search bugs"
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:341
+msgid "Search Bugs"
 msgstr "搜索缺陷"
 
 #: tcms/bugs/templates/bugs/search.html:27
@@ -315,7 +315,10 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
-msgid "Created at"
+#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/mutable.html:201
+msgid "Created on"
 msgstr "创建于"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
@@ -488,19 +491,19 @@ msgstr "您有 %(unapplied_migration_count)s 个未应用的迁移(s)。请参�
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr "您使用的是非安全连接。查看 <a href=\"%(doc_url)s\">文档</a> 并启用 SSL。"
 
-#: tcms/kiwi_auth/admin.py:33
+#: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "该电子邮件地址已被使用。"
 
-#: tcms/kiwi_auth/admin.py:55
-msgid "users"
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
+msgid "Users"
 msgstr "用户"
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
 msgstr "个人信息"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:161
 msgid "Permissions"
 msgstr "权限"
 
@@ -600,21 +603,17 @@ msgstr "新的测试执行"
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:338 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "搜索测试计划"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:339 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "搜索测试执行"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:340 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "搜索测试用例"
-
-#: tcms/settings/common.py:341
-msgid "Search Bugs"
-msgstr "搜索缺陷"
 
 #: tcms/settings/common.py:347
 msgid "TELEMETRY"
@@ -645,10 +644,6 @@ msgstr "测试案例健康"
 #: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "管理员"
-
-#: tcms/settings/common.py:363
-msgid "Users"
-msgstr "用户"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
@@ -1110,12 +1105,8 @@ msgid "Password"
 msgstr "密码"
 
 #: tcms/templates/registration/login.html:31
-msgid "Forgot"
-msgstr "忘记"
-
-#: tcms/templates/registration/login.html:31
-msgid "password"
-msgstr "密码"
+msgid "Forgot password"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1443,10 +1434,6 @@ msgstr "抄送给"
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "用逗号分隔的电子邮件地址。通知电子邮件将在 CC 列表中发送给每个电子邮件地址。"
 
-#: tcms/testcases/templates/testcases/search.html:5
-msgid "Search test cases"
-msgstr "搜索测试用例"
-
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
 msgstr "测试用例总结"
@@ -1467,12 +1454,6 @@ msgstr "组件"
 #: tcms/testruns/templates/testruns/search.html:29
 msgid "Separate multiple values with comma (,)"
 msgstr "使用逗号隔开多个值"
-
-#: tcms/testcases/templates/testcases/search.html:152
-#: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:201
-msgid "Created on"
-msgstr "创建于"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
@@ -1630,10 +1611,6 @@ msgstr "测试用例已更新"
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
 msgstr "活动"
-
-#: tcms/testplans/templates/testplans/search.html:5
-msgid "Search test plans"
-msgstr "搜索测试用例"
 
 #: tcms/testplans/templates/testplans/search.html:15
 msgid "Test plan name"
@@ -1819,10 +1796,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "预选测试案例中的 %(count)s 不是 CONFIRMED ，将不会被克隆！\n"
 "查看测试计划以了解更多详情！"
-
-#: tcms/testruns/templates/testruns/search.html:5
-msgid "Search test runs"
-msgstr "搜索测试执行"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Test run summary"
