@@ -2,7 +2,7 @@
 
 {% trans 'Status' %}: {% if object.status %}{% trans 'Open' %}{% else %}{% trans 'Closed' %}{% endif %}
 
-{% trans 'Created at' %}: {{ object.created_at }}
+{% trans 'Created on' %}: {{ object.created_at }}
 
 {% trans 'Reporter' %}: {{ object.reporter.username }}
 
