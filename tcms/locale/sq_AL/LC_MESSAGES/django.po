@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:20\n"
+"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"PO-Revision-Date: 2022-09-21 15:20\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -196,9 +196,9 @@ msgstr "shtoni Ndërtimin e ri"
 msgid "Username or email"
 msgstr "Emrin e përdoruesit ose email"
 
-#: tcms/bugs/templates/bugs/search.html:5
-msgid "Search bugs"
-msgstr "Kërko për gabime"
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:341
+msgid "Search Bugs"
+msgstr "Kërko gabime"
 
 #: tcms/bugs/templates/bugs/search.html:27
 #: tcms/testcases/templates/testcases/search.html:18
@@ -315,7 +315,10 @@ msgstr "Indetifikim"
 
 #: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
-msgid "Created at"
+#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/mutable.html:201
+msgid "Created on"
 msgstr "Krijuar në"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
@@ -488,19 +491,19 @@ msgstr ""
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:33
+#: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "Kjo adresë e-mail është tashmë në përdorim"
 
-#: tcms/kiwi_auth/admin.py:55
-msgid "users"
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
+msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
 msgstr "Informacion personal"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:161
 msgid "Permissions"
 msgstr "Lejet"
 
@@ -600,21 +603,17 @@ msgstr ""
 msgid "SEARCH"
 msgstr "KERKIM"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:338 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "Planet e Testit të Kërkimit"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:339 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "Punimet e provave të kërkimit"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:340 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "Rastet e provave të kërkimit"
-
-#: tcms/settings/common.py:341
-msgid "Search Bugs"
-msgstr "Kërko gabime"
 
 #: tcms/settings/common.py:347
 msgid "TELEMETRY"
@@ -645,10 +644,6 @@ msgstr "Shëndeti i Rastit të Testimit"
 #: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "ADMINISTRATOR"
-
-#: tcms/settings/common.py:363
-msgid "Users"
-msgstr ""
 
 #: tcms/settings/common.py:364
 msgid "Groups"
@@ -1100,12 +1095,8 @@ msgid "Password"
 msgstr "Fjalëkalimi"
 
 #: tcms/templates/registration/login.html:31
-msgid "Forgot"
-msgstr "E harruar"
-
-#: tcms/templates/registration/login.html:31
-msgid "password"
-msgstr "fjalëkalimi"
+msgid "Forgot password"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1429,10 +1420,6 @@ msgstr "Dergo ne CC tek"
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "Adresat e postës elektronike të ndara me presje. Një email njoftimi do t'i dërgohet secilës adresë emaili brenda listës në CC."
 
-#: tcms/testcases/templates/testcases/search.html:5
-msgid "Search test cases"
-msgstr "Kërko raste testimi"
-
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
 msgstr "Përmbledhje skenari testimi"
@@ -1453,12 +1440,6 @@ msgstr "Komponent"
 #: tcms/testruns/templates/testruns/search.html:29
 msgid "Separate multiple values with comma (,)"
 msgstr "Ndaj vlera të shumta me presje (,)"
-
-#: tcms/testcases/templates/testcases/search.html:152
-#: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:201
-msgid "Created on"
-msgstr "Krijuar në"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
@@ -1616,10 +1597,6 @@ msgstr "Rastet e testimit janë përditësuar"
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
 msgstr "Aktiv"
-
-#: tcms/testplans/templates/testplans/search.html:5
-msgid "Search test plans"
-msgstr "Kërko plane testimi"
 
 #: tcms/testplans/templates/testplans/search.html:15
 msgid "Test plan name"
@@ -1803,10 +1780,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "%(count)s e skenarëve të para zgjedhur të testimit nuk është i konfirmuar dhe nuk do të klonohet!\n"
 "Shiko planin e testimit për më shumë detaje!"
-
-#: tcms/testruns/templates/testruns/search.html:5
-msgid "Search test runs"
-msgstr "Kërko ekzekutime testesh"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Test run summary"
@@ -2155,3 +2128,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
