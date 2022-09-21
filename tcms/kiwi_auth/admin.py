@@ -13,7 +13,10 @@ from django.urls import reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
-from tabular_permissions.admin import UserTabularPermissionsMixin, GroupTabularPermissionsMixin
+from tabular_permissions.admin import (
+    UserTabularPermissionsMixin,
+    GroupTabularPermissionsMixin,
+)
 
 from tcms.utils.user import delete_user
 

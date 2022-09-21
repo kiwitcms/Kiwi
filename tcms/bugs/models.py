@@ -22,7 +22,7 @@ class Severity(models.Model):
         return self.name
 
     class Meta:
-        " docstring on meta class"
+        "docstring on meta class"
         verbose_name_plural = _("Severity")
         _custom_defined = ""
 
