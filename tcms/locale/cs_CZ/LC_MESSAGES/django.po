@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-02 20:32+0000\n"
-"PO-Revision-Date: 2022-09-05 11:19\n"
+"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"PO-Revision-Date: 2022-09-21 15:20\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -196,8 +196,8 @@ msgstr ""
 msgid "Username or email"
 msgstr "Uživatelské jméno nebo e-mail"
 
-#: tcms/bugs/templates/bugs/search.html:5
-msgid "Search bugs"
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:341
+msgid "Search Bugs"
 msgstr "Hledat chyby"
 
 #: tcms/bugs/templates/bugs/search.html:27
@@ -315,7 +315,10 @@ msgstr "ID"
 
 #: tcms/bugs/templates/bugs/search.html:111
 #: tcms/templates/include/bug_details.html:5
-msgid "Created at"
+#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testruns/templates/testruns/mutable.html:201
+msgid "Created on"
 msgstr "Vytvořeno"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:131
@@ -483,19 +486,19 @@ msgstr ""
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:33
+#: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "Tato e-mailová adresa je již používána"
 
-#: tcms/kiwi_auth/admin.py:55
-msgid "users"
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
+msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
 msgstr "Osobní údaje"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:161
 msgid "Permissions"
 msgstr "Oprávnění"
 
@@ -595,21 +598,17 @@ msgstr ""
 msgid "SEARCH"
 msgstr "VYHLEDÁVÁNÍ"
 
-#: tcms/settings/common.py:338
+#: tcms/settings/common.py:338 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "Vyhledat testovací plány"
 
-#: tcms/settings/common.py:339
+#: tcms/settings/common.py:339 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:340 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "Vyhledat testovací případy"
-
-#: tcms/settings/common.py:341
-msgid "Search Bugs"
-msgstr "Hledat chyby"
 
 #: tcms/settings/common.py:347
 msgid "TELEMETRY"
@@ -640,10 +639,6 @@ msgstr ""
 #: tcms/settings/common.py:361
 msgid "ADMIN"
 msgstr "ADMINISTRACE"
-
-#: tcms/settings/common.py:363
-msgid "Users"
-msgstr ""
 
 #: tcms/settings/common.py:364
 msgid "Groups"
@@ -1078,12 +1073,8 @@ msgid "Password"
 msgstr "Heslo"
 
 #: tcms/templates/registration/login.html:31
-msgid "Forgot"
-msgstr "Zapomenuté"
-
-#: tcms/templates/registration/login.html:31
-msgid "password"
-msgstr "heslo"
+msgid "Forgot password"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1407,10 +1398,6 @@ msgstr "Kopie"
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "E-mailové adresy oddělené čárkou. Na každou e-mailovou adresu v seznamu příjemců kopie bude odeslán e-mail s oznámením."
 
-#: tcms/testcases/templates/testcases/search.html:5
-msgid "Search test cases"
-msgstr ""
-
 #: tcms/testcases/templates/testcases/search.html:14
 msgid "Test case summary"
 msgstr ""
@@ -1431,12 +1418,6 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:29
 msgid "Separate multiple values with comma (,)"
 msgstr "Více hodnot oddělit čárkou (,)"
-
-#: tcms/testcases/templates/testcases/search.html:152
-#: tcms/testplans/templates/testplans/search.html:112
-#: tcms/testruns/templates/testruns/mutable.html:201
-msgid "Created on"
-msgstr "Vytvořeno"
 
 #: tcms/testcases/views.py:139 tcms/testplans/views.py:149
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:204
@@ -1594,10 +1575,6 @@ msgstr "Testovací případy jsou aktualizovány"
 #: tcms/testplans/templates/testplans/search.html:38
 msgid "Active"
 msgstr "Aktivní"
-
-#: tcms/testplans/templates/testplans/search.html:5
-msgid "Search test plans"
-msgstr "Vyhledat testovací plány"
 
 #: tcms/testplans/templates/testplans/search.html:15
 msgid "Test plan name"
@@ -1779,10 +1756,6 @@ msgstr ""
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
-
-#: tcms/testruns/templates/testruns/search.html:5
-msgid "Search test runs"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16
@@ -2132,3 +2105,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
