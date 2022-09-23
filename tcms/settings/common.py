@@ -438,6 +438,7 @@ if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS:
 EXTERNAL_BUG_TRACKERS = [
     "tcms.issuetracker.azure_boards.AzureBoards",
     "tcms.issuetracker.bitbucket.BitBucket",
+    "tcms.issuetracker.mantis.Mantis",
     "tcms.issuetracker.types.Bugzilla",
     "tcms.issuetracker.types.JIRA",
     "tcms.issuetracker.types.GitHub",
