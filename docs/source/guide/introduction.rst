@@ -104,7 +104,7 @@ desired properties.If you want to filter runs from a particular Test Plan make
 sure to specify the plan name in the **Plan** field. You can also filter Test
 Runs by tags if necessary.
 
-**Question:** Is this the first time that Test Case is failing on envrionment
+**Question:** Is this the first time that Test Case is failing on environment
 X/Y/Z ?
 
 **Answer 1:** Open **Executions** card for that particular Test Case and
