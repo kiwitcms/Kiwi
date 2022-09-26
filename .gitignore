@@ -16,4 +16,5 @@ docs/target/
 .vscode/
 .cache/
 tcms/node_modules/
+tests/db-certs/*.pem
 package-lock.json
