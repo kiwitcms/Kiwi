@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-21 13:42+0000\n"
-"PO-Revision-Date: 2022-09-21 15:20\n"
+"PO-Revision-Date: 2022-10-03 11:21\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1106,7 +1106,7 @@ msgstr "Geslo"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "Pozabljeno geslo"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -2152,3 +2152,4 @@ msgstr "Uredi instanco"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Samo uporabniki z ustreznimi pravicami za to instanco lahko povabijo druge uporabnike"
+
