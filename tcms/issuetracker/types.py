@@ -88,7 +88,7 @@ class JIRA(IssueTrackerType):
         except jira.exceptions.JIRAError:
             return super().details(url)
 
-    def get_issue_type_from_jira(self):
+    def get_issue_type_from_jira(self, project_key):
         """
         Returns the issue type from the actual Jira instance.
         Will try to return ``settings.JIRA_ISSUE_TYPE`` if it exists, otherwise will
@@ -100,7 +100,7 @@ class JIRA(IssueTrackerType):
         .. versionadded:: 11.4
         """
         try:
-            return self.rpc.issue_type_by_name(settings.JIRA_ISSUE_TYPE)
+            return self.rpc.issue_type_by_name(settings.JIRA_ISSUE_TYPE, project_key)
         except KeyError:
             return self.rpc.issue_types()[0]
 
@@ -133,7 +133,7 @@ class JIRA(IssueTrackerType):
         """
 
         project = self.get_project_from_jira(execution)
-        issue_type = self.get_issue_type_from_jira()
+        issue_type = self.get_issue_type_from_jira(project.key)
 
         try:
             new_issue = self.rpc.create_issue(
