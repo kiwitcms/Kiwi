@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-21 13:42+0000\n"
-"PO-Revision-Date: 2022-09-21 15:20\n"
+"PO-Revision-Date: 2022-10-11 09:49\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -380,7 +380,7 @@ msgstr "更新于 %(history_date)s\n"
 
 #: tcms/core/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr "监控面板"
+msgstr "控制面板"
 
 #: tcms/core/templates/dashboard.html:8
 #: tcms/testruns/templates/testruns/get.html:154
