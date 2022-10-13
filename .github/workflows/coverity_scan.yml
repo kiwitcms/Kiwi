@@ -41,7 +41,7 @@ jobs:
           pushd /tmp && tar xzvf cov-analysis-linux64.tgz && popd
           mkdir bin
 
-          /tmp/cov-analysis-linux64-*/bin/cov-build --no-command --fs-capture-search ./ --fs-capture-search $(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')
+          /tmp/cov-analysis-linux64-*/bin/cov-build --dir cov-int --no-command --fs-capture-search ./ --fs-capture-search $(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')
           tar cfz cov-int.tar.gz cov-int
 
           echo "Uploading coverity scan result to http://scan.coverity.com"
