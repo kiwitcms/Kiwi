@@ -235,7 +235,9 @@ class AddComment(View):
                 add_comment([bug], _("*bug reopened*"), request.user)
             bug.save()
 
-        return HttpResponseRedirect(reverse("bugs-get", args=[bug.pk]))
+            return HttpResponseRedirect(reverse("bugs-get", args=[bug.pk]))
+
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @method_decorator(permission_required("bugs.view_bug"), name="dispatch")
