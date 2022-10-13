@@ -1,0 +1,53 @@
+name: Coverity Scan
+
+on:
+  # https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#scheduled-events
+  schedule:
+    - cron: '0 6 * * *' # Daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  scan:
+    name: "coverity scan"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+
+      - name: Install depenencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install gettext
+
+          pip install -r requirements/devel.txt
+          pushd tcms/ && npm install && popd
+
+      - name: Run Coverity Scan script
+        env:
+          COVERITY_SCAN_PROJECT_NAME: kiwitcms/Kiwi
+          COVERITY_SCAN_TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+          COVERITY_SCAN_EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
+        run: |
+          echo "Downloading coverity scan package."
+          curl -o /tmp/cov-analysis-linux64.tgz https://scan.coverity.com/download/linux64 \
+            --form project="$COVERITY_SCAN_PROJECT_NAME" \
+            --form token="$COVERITY_SCAN_TOKEN"
+
+          pushd /tmp && tar xzvf cov-analysis-linux64.tgz && popd
+          mkdir bin
+
+          /tmp/cov-analysis-linux64-*/bin/cov-build --no-command --fs-capture-search ./ --fs-capture-search $(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')
+          tar cfz cov-int.tar.gz cov-int
+
+          echo "Uploading coverity scan result to http://scan.coverity.com"
+          curl https://scan.coverity.com/builds?project="$COVERITY_SCAN_PROJECT_NAME" \
+            --form token="$COVERITY_SCAN_TOKEN" \
+            --form email="$COVERITY_SCAN_EMAIL" \
+            --form file=@cov-int.tar.gz \
+            --form version="$(git rev-parse HEAD)" \
+            --form description="$GITHUB_REF / $GITHUB_SHA"
