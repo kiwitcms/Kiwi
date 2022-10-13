@@ -24,7 +24,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install gettext
 
-          pip install -r requirements/devel.txt
+          pip install -r requirements/requirements.txt
           pushd tcms/ && npm install && popd
 
       - name: Run Coverity Scan script
