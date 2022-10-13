@@ -32,6 +32,8 @@ services:
             KIWI_DB_NAME: kiwi
             KIWI_DB_USER: kiwi
             KIWI_DB_PASSWORD: kiwi
+        cap_drop:
+          - ALL
 
 volumes:
     db_data:

@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM registry.access.redhat.com/ubi8-minimal:8.6-941
 
 RUN microdnf --nodocs install python38-devel mariadb-connector-c-devel tar gzip make \
     postgresql-devel libffi-devel gcc gettext npm unzip which rust cargo findutils \

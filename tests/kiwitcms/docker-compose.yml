@@ -8,3 +8,5 @@ services:
         image: httpd
         restart: always
         hostname: 'bugtracker.kiwitcms.org'
+        cap_drop:
+          - ALL

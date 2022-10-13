@@ -14,3 +14,10 @@ RUN /usr/share/bugzilla/checksetup.pl /root/checksetup_answers.txt
 
 EXPOSE 80
 CMD /usr/sbin/httpd -DFOREGROUND
+
+RUN sed -i 's!ErrorLog "logs/error_log"!ErrorLog "/dev/stderr"!' /etc/httpd/conf/httpd.conf && \
+    sed -i 's!CustomLog "logs/access_log"!CustomLog "/dev/stdout"!' /etc/httpd/conf/httpd.conf && \
+    chmod -R a+rwx /run/httpd
+
+# apache
+USER 48
