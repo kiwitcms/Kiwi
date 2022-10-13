@@ -10,3 +10,5 @@ services:
           dockerfile: Dockerfile
         image: kiwitcms/bugzilla
         restart: always
+        cap_drop:
+          - ALL

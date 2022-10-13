@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM registry.access.redhat.com/ubi8-minimal:8.6-941
 
 RUN microdnf --nodocs install python38 mariadb-connector-c libpq \
     httpd python38-mod_wsgi mod_ssl sscg tar glibc-langpack-en && \
