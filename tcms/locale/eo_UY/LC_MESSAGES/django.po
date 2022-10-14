@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-21 13:42+0000\n"
-"PO-Revision-Date: 2022-09-21 15:20\n"
+"POT-Creation-Date: 2022-10-14 19:33+0000\n"
+"PO-Revision-Date: 2022-10-14 23:10\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -941,8 +941,8 @@ msgstr "crwdns441:0crwdne441:0"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
-msgid "Properties"
-msgstr "crwdns1399:0crwdne1399:0"
+msgid "Parameters"
+msgstr "crwdns1446:0crwdne1446:0"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1586,8 +1586,8 @@ msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "crwdns1260:0crwdne1260:0"
 
 #: tcms/testruns/admin.py:106
-msgid "Edit properties"
-msgstr "crwdns1419:0crwdne1419:0"
+msgid "Edit parameters"
+msgstr "crwdns1448:0crwdne1448:0"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1732,8 +1732,8 @@ msgid "Matrix"
 msgstr "crwdns1413:0crwdne1413:0"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
-msgid "Affects only test cases with properties"
-msgstr "crwdns1415:0crwdne1415:0"
+msgid "Affects only test cases with parameters"
+msgstr "crwdns1450:0crwdne1450:0"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
@@ -2096,3 +2096,4 @@ msgstr "crwdns1360:0crwdne1360:0"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "crwdns1312:0crwdne1312:0"
+
