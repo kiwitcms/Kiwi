@@ -92,7 +92,7 @@ bandit_site_packages:
 .PHONY: docker-image
 docker-image:
 	sudo rm -rf dist/
-	docker pull registry.access.redhat.com/ubi8/ubi-minimal
+	docker pull registry.access.redhat.com/ubi9-minimal
 	docker build -t kiwitcms/buildroot -f Dockerfile.buildroot .
 	docker run --rm --security-opt label=disable \
 	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \

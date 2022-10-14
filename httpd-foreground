@@ -12,4 +12,4 @@ if [ -n "$KIWI_DONT_ENFORCE_HTTPS" ]; then
     APACHE_PARAMETERS+="-DKIWI_DONT_ENFORCE_HTTPS "
 fi
 
-exec /usr/sbin/apachectl ${APACHE_PARAMETERS}
+exec /usr/sbin/httpd ${APACHE_PARAMETERS}
