@@ -24,7 +24,9 @@ fi
 
 echo "..... Installing npm dependencies"
 pushd tcms/
+set -e
 ./npm-install
+set +e
 find ./node_modules -type d -empty -delete
 # workaround ValueError: ZIP does not support timestamps before 1980
 # for wheel packages because some NPM files have their timestamp
