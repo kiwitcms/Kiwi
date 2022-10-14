@@ -68,7 +68,7 @@ function addPropertyValue (objectId, objectAttrName, viewMethod, addMethod, remo
 
   jsonRPC(
     addMethod,
-    [objectId, nameValue[0], nameValue[1]],
+    [objectId, nameValue[0].trim(), nameValue[1].trim()],
     function (data) {
       animate($('.js-insert-here'), function () {
         $('#property-value-input').val('')
