@@ -1,8 +1,8 @@
-FROM registry.access.redhat.com/ubi8-minimal:8.6-941
+FROM registry.access.redhat.com/ubi9-minimal
 
-RUN microdnf --nodocs install python38 mariadb-connector-c libpq \
+RUN microdnf -y --nodocs install python38 mariadb-connector-c libpq \
     httpd python38-mod_wsgi mod_ssl sscg tar glibc-langpack-en && \
-    microdnf --nodocs update && \
+    microdnf -y --nodocs update && \
     microdnf clean all
 
 # Apache configuration for non-root users
