@@ -20,3 +20,24 @@ updates:
       interval: "weekly"
       time: "04:00"
     open-pull-requests-limit: 5
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "04:00"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "docker"
+    directory: "/tests/redmine/"
+    schedule:
+      interval: "weekly"
+      time: "04:00"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "docker"
+    directory: "/tests/bugzilla/"
+    schedule:
+      interval: "weekly"
+      time: "04:00"
+    open-pull-requests-limit: 5
