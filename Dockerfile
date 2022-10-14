@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi9-minimal
 
-RUN microdnf -y --nodocs install python38 mariadb-connector-c libpq \
-    httpd python38-mod_wsgi mod_ssl sscg tar glibc-langpack-en && \
+RUN microdnf -y --nodocs install python3 mariadb-connector-c libpq \
+    httpd python3-mod_wsgi mod_ssl sscg tar glibc-langpack-en && \
     microdnf -y --nodocs update && \
     microdnf clean all
 
