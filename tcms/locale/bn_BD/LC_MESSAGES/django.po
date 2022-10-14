@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-21 13:42+0000\n"
-"PO-Revision-Date: 2022-09-21 15:20\n"
+"POT-Creation-Date: 2022-10-14 19:33+0000\n"
+"PO-Revision-Date: 2022-10-14 23:09\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -971,7 +971,7 @@ msgstr "শেষ পৃষ্ঠা"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
-msgid "Properties"
+msgid "Parameters"
 msgstr ""
 
 #: tcms/templates/include/properties_card.html:16
@@ -1616,7 +1616,7 @@ msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr ""
 
 #: tcms/testruns/admin.py:106
-msgid "Edit properties"
+msgid "Edit parameters"
 msgstr ""
 
 #: tcms/testruns/forms.py:39
@@ -1762,7 +1762,7 @@ msgid "Matrix"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:149
-msgid "Affects only test cases with properties"
+msgid "Affects only test cases with parameters"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:163
@@ -2132,3 +2132,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
