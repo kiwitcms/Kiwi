@@ -325,7 +325,7 @@ by editing ``docker-compose.yml``:
 
         volumes:
             - uploads:/Kiwi/uploads
-            - ./local_settings.py:/venv/lib64/python3.8/site-packages/tcms/settings/local_settings.py
+            - ./local_settings.py:/venv/lib64/python3.9/site-packages/tcms/settings/local_settings.py
 
   If this file exists it is imported before any of the files under
   ``tcms_settings_dir/``!
@@ -338,8 +338,8 @@ by editing ``docker-compose.yml``:
 
         volumes:
             - uploads:/Kiwi/uploads
-            - ./my_settings_dir/email_config.py:/venv/lib64/python3.8/site-packages/tcms_settings_dir/email_config.py
-            - ./my_settings_dir/multi_tenant.py:/venv/lib64/python3.8/site-packages/tcms_settings_dir/multi_tenant.py
+            - ./my_settings_dir/email_config.py:/venv/lib64/python3.9/site-packages/tcms_settings_dir/email_config.py
+            - ./my_settings_dir/multi_tenant.py:/venv/lib64/python3.9/site-packages/tcms_settings_dir/multi_tenant.py
 
   .. important::
 

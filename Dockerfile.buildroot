@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi9-minimal
 
-RUN microdnf -y --nodocs install python38-devel mariadb-connector-c-devel tar gzip make \
+RUN microdnf -y --nodocs install python3-devel mariadb-connector-c-devel tar gzip make \
     postgresql-devel libffi-devel gcc gettext npm unzip which rust cargo findutils \
     libjpeg-turbo-devel && \
     microdnf -y --nodocs update && \
