@@ -141,6 +141,6 @@ jobs:
       - name: Run eslint
         run: |
           cd tcms/
-          npm install --dev
+          ./npm-install && npm install --dev
 
           ./node_modules/.bin/eslint . -c package.json

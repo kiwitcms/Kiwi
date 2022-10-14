@@ -66,7 +66,7 @@ The user interface needs several Node.js packages.
 `Download & install Node first <https://nodejs.org/en/download/>`_ and then::
 
     cd tcms/
-    npm install
+    ./npm-install
 
 inside the ``Kiwi/`` directory.
 
