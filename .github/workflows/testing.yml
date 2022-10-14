@@ -37,7 +37,7 @@ jobs:
           sudo chmod a+w /Kiwi
 
           pip install -r requirements/devel.txt
-          pushd tcms/ && npm install && popd
+          pushd tcms/ && ./npm-install && popd
 
           export LANG=en-us
 
@@ -85,7 +85,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install gettext
         pip install -r requirements/devel.txt
-        pushd tcms/ && npm install && popd
+        pushd tcms/ && ./npm-install && popd
 
     - name: Run test
       run: |
@@ -123,7 +123,7 @@ jobs:
           sudo chmod a+w /Kiwi
 
           pip install -r requirements/devel.txt
-          pushd tcms/ && npm install && popd
+          pushd tcms/ && ./npm-install && popd
 
           export LANG=en-us
           export KIWI_DISABLE_BUGTRACKER=yes
@@ -167,7 +167,7 @@ jobs:
 
           pip install -r requirements/devel.txt
           pip install -r requirements/mariadb.txt
-          pushd tcms/ && npm install && popd
+          pushd tcms/ && ./npm-install && popd
 
           export LANG=sl-si
           TEST_DB=MariaDB make test
@@ -208,7 +208,7 @@ jobs:
 
           pip install -r requirements/devel.txt
           pip install -r requirements/postgres.txt
-          pushd tcms/ && npm install && popd
+          pushd tcms/ && ./npm-install && popd
 
           export LANG=fr-fr
           TEST_DB=Postgres make test
