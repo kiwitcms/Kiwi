@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-21 13:42+0000\n"
+"POT-Creation-Date: 2022-10-14 19:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -978,7 +978,7 @@ msgstr ""
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
-msgid "Properties"
+msgid "Parameters"
 msgstr ""
 
 #: tcms/templates/include/properties_card.html:16
@@ -1643,7 +1643,7 @@ msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr ""
 
 #: tcms/testruns/admin.py:106
-msgid "Edit properties"
+msgid "Edit parameters"
 msgstr ""
 
 #: tcms/testruns/forms.py:39
@@ -1789,7 +1789,7 @@ msgid "Matrix"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:149
-msgid "Affects only test cases with properties"
+msgid "Affects only test cases with parameters"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:163

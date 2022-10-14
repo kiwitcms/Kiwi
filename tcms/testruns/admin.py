@@ -103,7 +103,7 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
 
 
 class EnvironmentAdmin(ObjectPermissionsAdminMixin, admin.ModelAdmin):
-    _edit_properties_text = _("Edit properties")
+    _edit_properties_text = _("Edit parameters")
 
     list_display = ("id", "name", "properties_link")
     search_fields = ("name",)
@@ -114,7 +114,7 @@ class EnvironmentAdmin(ObjectPermissionsAdminMixin, admin.ModelAdmin):
             f"<a href='{url}'>{self._edit_properties_text}</a>",
         )
 
-    properties_link.short_description = _("Properties")
+    properties_link.short_description = _("Parameters")
 
     def response_change(self, request, obj):
         result = super().response_change(request, obj)
