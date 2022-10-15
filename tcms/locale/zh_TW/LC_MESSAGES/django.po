@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-15 01:34\n"
+"PO-Revision-Date: 2022-10-15 02:09\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -693,7 +693,7 @@ msgstr "NEW: 測試執行 #%(pk)d - - %(summary)s"
 #: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "缺陷 #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -1173,7 +1173,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:54
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "需要一個已確認以及一個未確認的狀態！"
 
 #: tcms/testcases/admin.py:129
 msgid "Bug URL"
@@ -1203,11 +1203,11 @@ msgstr "建立問題管理系統失敗"
 
 #: tcms/testcases/admin.py:196
 msgid "Issue Tracker configuration check passed"
-msgstr ""
+msgstr "問題管理系統設定檢查通過"
 
 #: tcms/testcases/admin.py:207
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "問題管理系統設定檢查失敗"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1483,7 +1483,7 @@ msgstr "輸入使用者名稱、郵件或 ID:"
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "沒有選擇任何列！請至少選擇一列！"
 
 #: tcms/testplans/templates/testplans/get.html:27
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1529,7 +1529,7 @@ msgstr "重新排序案例"
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:289
 msgid "Search and add test cases"
-msgstr ""
+msgstr "搜尋並新增測試案例"
 
 #: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:299
@@ -2126,7 +2126,7 @@ msgstr "新的 Kiwi TCMS 訂閱用戶已建立"
 
 #: tcms_tenants/utils.py:198
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "邀請加入 Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
@@ -2139,3 +2139,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
