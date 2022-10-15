@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:10\n"
+"PO-Revision-Date: 2022-10-15 01:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -42,7 +42,7 @@ msgstr "問題描述：\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:17
 #: tcms/bugs/templates/bugs/search.html:109
 msgid "Severity"
-msgstr ""
+msgstr "嚴重性"
 
 #: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
@@ -168,7 +168,7 @@ msgstr "概要"
 
 #: tcms/bugs/templates/bugs/mutable.html:26
 msgid "add new Severity"
-msgstr ""
+msgstr "新增嚴重性"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -497,7 +497,7 @@ msgstr "此電子信箱已被使用"
 
 #: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "使用者"
 
 #: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
@@ -547,7 +547,7 @@ msgstr "優先程度"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "建置"
 
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:130
@@ -597,7 +597,7 @@ msgstr "新增測試案例"
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr ""
+msgstr "新增測試執行"
 
 #: tcms/settings/common.py:336
 msgid "SEARCH"
@@ -647,7 +647,7 @@ msgstr "管理者"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "群組"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -974,12 +974,12 @@ msgstr "最後一頁"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Parameters"
-msgstr ""
+msgstr "參數"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "這是技術預覽功能！"
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
@@ -1009,7 +1009,7 @@ msgstr "姓名"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "初始化資料庫"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
@@ -1071,7 +1071,7 @@ msgstr "語言"
 
 #: tcms/templates/navbar.html:95
 msgid "Change language"
-msgstr ""
+msgstr "變更語言"
 
 #: tcms/templates/navbar.html:96
 msgid "Supported languages"
@@ -1097,7 +1097,7 @@ msgstr "密碼"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "忘記密碼"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1177,11 +1177,11 @@ msgstr ""
 
 #: tcms/testcases/admin.py:129
 msgid "Bug URL"
-msgstr ""
+msgstr "缺陷 URL"
 
 #: tcms/testcases/admin.py:149
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "整合外部問題管理系統"
 
 #: tcms/testcases/admin.py:159
 msgid "<h1>Warning: read the\n"
@@ -1191,7 +1191,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:166
 msgid "Configuration health check"
-msgstr ""
+msgstr "檢查設定"
 
 #: tcms/testcases/admin.py:170
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
@@ -1199,7 +1199,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:190
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "建立問題管理系統失敗"
 
 #: tcms/testcases/admin.py:196
 msgid "Issue Tracker configuration check passed"
@@ -1216,11 +1216,11 @@ msgstr "已刪除: 測試案例 #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr ""
+msgstr "測試案例狀態"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "測試案例狀態"
 
 #: tcms/testcases/models.py:379
 msgid "Template"
@@ -1478,7 +1478,7 @@ msgstr "將原 TP 設置為新 TP 的根目錄"
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "輸入使用者名稱、郵件或 ID:"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:21
@@ -1496,7 +1496,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
-msgstr ""
+msgstr "新增測試案例時發生錯誤"
 
 #: tcms/testplans/templates/testplans/get.html:43
 msgid "Show more"
@@ -1520,7 +1520,7 @@ msgstr "審查員"
 #: tcms/testplans/templates/testplans/get.html:231
 #: tcms/testplans/templates/testplans/get.html:234
 msgid "Sort key"
-msgstr ""
+msgstr "排序關鍵字"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
@@ -1534,19 +1534,19 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:299
 msgid "Advanced search"
-msgstr ""
+msgstr "進階搜尋"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr ""
+msgstr "已啟用的測試執行"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
-msgstr ""
+msgstr "更多"
 
 #: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
-msgstr ""
+msgstr "未啟用"
 
 #: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:477
@@ -1621,7 +1621,7 @@ msgstr ""
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "編輯參數"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1629,7 +1629,7 @@ msgstr ""
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "成對的"
 
 #: tcms/testruns/models.py:224
 msgid "Test execution statuses"
@@ -1658,7 +1658,7 @@ msgstr "管理者"
 #: tcms/testruns/templates/testruns/mutable.html:100
 #: tcms/testruns/templates/testruns/search.html:130
 msgid "Planned start"
-msgstr ""
+msgstr "預計開始時間"
 
 #: tcms/testruns/templates/testruns/get.html:83
 msgid "Start"
@@ -1668,7 +1668,7 @@ msgstr "開始"
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "預計結束時間"
 
 #: tcms/testruns/templates/testruns/get.html:95
 msgid "Finished at"
@@ -1685,17 +1685,17 @@ msgstr "環境"
 
 #: tcms/testruns/templates/testruns/get.html:183
 msgid "Update text version"
-msgstr ""
+msgstr "更新文件版本"
 
 #: tcms/testruns/templates/testruns/get.html:218
 msgid "Add comment"
-msgstr ""
+msgstr "新增評論"
 
 #: tcms/testruns/templates/testruns/get.html:229
 #: tcms/testruns/templates/testruns/get.html:332
 #: tcms/testruns/templates/testruns/get.html:551
 msgid "Add hyperlink"
-msgstr ""
+msgstr "新增超連結"
 
 #: tcms/testruns/templates/testruns/get.html:269
 #: tcms/testruns/templates/testruns/get.html:376
@@ -1704,15 +1704,15 @@ msgstr "測試由"
 
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Mine"
-msgstr ""
+msgstr "我的"
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
-msgstr ""
+msgstr "紀錄"
 
 #: tcms/testruns/templates/testruns/get.html:333
 #: tcms/testruns/templates/testruns/get.html:590
@@ -1726,7 +1726,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:372
 msgid "Assigned to"
-msgstr ""
+msgstr "已指派給"
 
 #: tcms/testruns/templates/testruns/get.html:405
 msgid "Run Date"
@@ -1734,7 +1734,7 @@ msgstr "執行日期"
 
 #: tcms/testruns/templates/testruns/get.html:417
 msgid "Text version"
-msgstr ""
+msgstr "文件版本"
 
 #: tcms/testruns/templates/testruns/get.html:422
 msgid "Bugs and hyperlinks"
@@ -1763,15 +1763,15 @@ msgstr "複製測試執行"
 
 #: tcms/testruns/templates/testruns/mutable.html:146
 msgid "Matrix"
-msgstr ""
+msgstr "矩陣"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "只影響有參數的測試案例"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
-msgstr ""
+msgstr "更多資訊"
 
 #: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
@@ -1942,11 +1942,11 @@ msgstr "組織"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
 msgid "Docker credentials"
-msgstr ""
+msgstr "Docker 憑證"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
-msgstr ""
+msgstr "私有容器指令"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
@@ -1978,7 +1978,7 @@ msgstr "你沒擁有任何租用戶"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "透過 FastSpring 訂閱"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
@@ -2043,7 +2043,7 @@ msgstr "未授權"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "已存在的使用者名稱、郵件或 ID"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -2094,7 +2094,7 @@ msgstr "你的 Kiwi TCMS 訂閱用戶建立於：\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "郵件"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2114,7 +2114,7 @@ msgstr "驗證模式"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"
-msgstr ""
+msgstr "公開可讀"
 
 #: tcms_tenants/utils.py:60
 msgid "Schema name already in use"
@@ -2139,3 +2139,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
