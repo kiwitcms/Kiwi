@@ -20,7 +20,7 @@ All further instructions assume that you have Python 3 enabled.
 
 .. note::
 
-    At the moment Kiwi TCMS is developed and tested with Python 3.8.
+    At the moment Kiwi TCMS is developed and tested with Python 3.9.
     You can always consult ``Dockerfile`` to find out the exact version which we use!
 
 
