@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-21 13:42+0000\n"
-"PO-Revision-Date: 2022-10-03 11:21\n"
+"POT-Creation-Date: 2022-10-14 19:33+0000\n"
+"PO-Revision-Date: 2022-10-14 23:09\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -982,8 +982,8 @@ msgstr "Zadnja stran"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
-msgid "Properties"
-msgstr "Lastnosti"
+msgid "Parameters"
+msgstr ""
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1633,8 +1633,8 @@ msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "Zahtevan je 1 negativen, 1 nevtralen ter 1 pozitiven status!"
 
 #: tcms/testruns/admin.py:106
-msgid "Edit properties"
-msgstr "Uredi lastnosti"
+msgid "Edit parameters"
+msgstr ""
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1779,8 +1779,8 @@ msgid "Matrix"
 msgstr "Matrika"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
-msgid "Affects only test cases with properties"
-msgstr "Se nanaša zgolj na testne scenarije ki imajo izpolnjene določene lastnosti"
+msgid "Affects only test cases with parameters"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"

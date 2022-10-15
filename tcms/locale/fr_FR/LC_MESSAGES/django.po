@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-21 13:42+0000\n"
-"PO-Revision-Date: 2022-09-21 15:20\n"
+"POT-Creation-Date: 2022-10-14 19:33+0000\n"
+"PO-Revision-Date: 2022-10-14 23:10\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -983,8 +983,8 @@ msgstr "Dernière page"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
-msgid "Properties"
-msgstr "Propriétés"
+msgid "Parameters"
+msgstr ""
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1634,8 +1634,8 @@ msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "1 négatif, 1 neutre et 1 statut positif requis !"
 
 #: tcms/testruns/admin.py:106
-msgid "Edit properties"
-msgstr "Modifier les propriétés"
+msgid "Edit parameters"
+msgstr ""
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1780,8 +1780,8 @@ msgid "Matrix"
 msgstr "Matrice"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
-msgid "Affects only test cases with properties"
-msgstr "Affecte uniquement les cas de test avec des propriétés"
+msgid "Affects only test cases with parameters"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
