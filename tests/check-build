@@ -32,6 +32,14 @@ find ./node_modules -type d -empty -delete
 # for wheel packages because some NPM files have their timestamp
 # as 01-01-1970
 find ./node_modules -type f  -exec touch {} +
+
+# Remove these directories b/c setutools insists on including them
+# into the kiwitcms package, which in turn generates deprecation warning
+# and b/c I can't figure out how to tell find_namespace_packages() to
+# actually exclude them!
+rm -rf ./node_modules/@humanwhocodes/object-schema/tests
+rm -rf ./node_modules/patternfly-bootstrap-combobox/js/tests
+rm -rf ./node_modules/patternfly-bootstrap-treeview/tests
 popd
 
 # then build the packages
