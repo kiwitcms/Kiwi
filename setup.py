@@ -42,6 +42,7 @@ setup(
     version=tcms.__version__,
     description="Test Case Management System",
     long_description=get_long_description(),
+    long_description_content_type="text/x-rst",
     maintainer="Kiwi TCMS",
     maintainer_email="info@kiwitcms.org",
     url="https://github.com/kiwitcms/Kiwi/",
