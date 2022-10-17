@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-17 08:57\n"
+"PO-Revision-Date: 2022-10-17 11:34\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1629,7 +1629,7 @@ msgstr "Parameter bearbeiten"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Voll"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
@@ -1666,7 +1666,7 @@ msgstr "Geplante Startzeit"
 
 #: tcms/testruns/templates/testruns/get.html:83
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: tcms/testruns/templates/testruns/get.html:90
 #: tcms/testruns/templates/testruns/mutable.html:112
@@ -1680,12 +1680,12 @@ msgstr "Beendet am"
 
 #: tcms/testruns/templates/testruns/get.html:101
 msgid "Stop"
-msgstr ""
+msgstr "Stopp"
 
 #: tcms/testruns/templates/testruns/get.html:140
 #: tcms/testruns/templates/testruns/mutable.html:129
 msgid "Environment"
-msgstr ""
+msgstr "Umgebung"
 
 #: tcms/testruns/templates/testruns/get.html:183
 msgid "Update text version"
@@ -1699,7 +1699,7 @@ msgstr "Kommentar hinzufügen"
 #: tcms/testruns/templates/testruns/get.html:332
 #: tcms/testruns/templates/testruns/get.html:551
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Hyperlink hinzufügen"
 
 #: tcms/testruns/templates/testruns/get.html:269
 #: tcms/testruns/templates/testruns/get.html:376
@@ -1712,7 +1712,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
@@ -1730,7 +1730,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:372
 msgid "Assigned to"
-msgstr ""
+msgstr "Zugewiesen an"
 
 #: tcms/testruns/templates/testruns/get.html:405
 msgid "Run Date"
@@ -1738,7 +1738,7 @@ msgstr "Ausführungsdatum"
 
 #: tcms/testruns/templates/testruns/get.html:417
 msgid "Text version"
-msgstr ""
+msgstr "Textversion"
 
 #: tcms/testruns/templates/testruns/get.html:422
 msgid "Bugs and hyperlinks"
@@ -1746,7 +1746,7 @@ msgstr "Bugs und Hyperlinks"
 
 #: tcms/testruns/templates/testruns/get.html:568
 msgid "Is a defect"
-msgstr ""
+msgstr "Ist ein Fehler"
 
 #: tcms/testruns/templates/testruns/get.html:575
 #: tcms/testruns/templates/testruns/get.html:606
@@ -1775,7 +1775,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
-msgstr ""
+msgstr "weitere Informationen"
 
 #: tcms/testruns/templates/testruns/mutable.html:188
 msgid "Selected TestCase(s):"
@@ -1806,11 +1806,11 @@ msgstr "Wird durchgeführt"
 
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Start date"
-msgstr ""
+msgstr "Startdatum"
 
 #: tcms/testruns/templates/testruns/search.html:107
 msgid "Stop date"
-msgstr ""
+msgstr "Enddatum"
 
 #: tcms/testruns/views.py:275
 msgid "Clone of "
@@ -2142,3 +2142,4 @@ msgstr "Mandant bearbeiten"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
