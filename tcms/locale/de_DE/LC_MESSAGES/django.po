@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-17 08:46\n"
+"PO-Revision-Date: 2022-10-17 08:57\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -647,7 +647,7 @@ msgstr "ADMIN"
 
 #: tcms/settings/common.py:364
 msgid "Groups"
-msgstr ""
+msgstr "Gruppen"
 
 #: tcms/settings/common.py:366
 msgid "Everything else"
@@ -1009,7 +1009,7 @@ msgstr "Name"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:16
 #: tcms/templates/initdb.html:28
 msgid "Initialize database"
-msgstr ""
+msgstr "Datenbank initialisieren"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
@@ -1071,7 +1071,7 @@ msgstr "Sprache"
 
 #: tcms/templates/navbar.html:95
 msgid "Change language"
-msgstr ""
+msgstr "Sprache ändern"
 
 #: tcms/templates/navbar.html:96
 msgid "Supported languages"
@@ -1097,7 +1097,7 @@ msgstr "Passwort"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "Passwort vergessen"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1228,11 +1228,11 @@ msgstr ""
 
 #: tcms/testcases/models.py:379
 msgid "Template"
-msgstr ""
+msgstr "Vorlage"
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr ""
+msgstr "Vorlagen"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1318,7 +1318,7 @@ msgstr "Priorität"
 #: tcms/testcases/templates/testcases/get.html:72
 #: tcms/testcases/templates/testcases/mutable.html:104
 msgid "Setup duration"
-msgstr ""
+msgstr "Setup-Dauer"
 
 #: tcms/testcases/templates/testcases/get.html:77
 #: tcms/testcases/templates/testcases/mutable.html:111
@@ -1625,7 +1625,7 @@ msgstr ""
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Parameter bearbeiten"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -2142,3 +2142,4 @@ msgstr "Mandant bearbeiten"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
