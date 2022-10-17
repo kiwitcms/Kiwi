@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:10\n"
+"PO-Revision-Date: 2022-10-17 08:46\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -497,7 +497,7 @@ msgstr "Diese E-Mail-Adresse wird bereits verwendet"
 
 #: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:363
 msgid "Users"
-msgstr ""
+msgstr "Benutzer"
 
 #: tcms/kiwi_auth/admin.py:159
 msgid "Personal info"
@@ -974,7 +974,7 @@ msgstr "Letzte Seite"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Parameters"
-msgstr ""
+msgstr "Parameter"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -2142,3 +2142,4 @@ msgstr "Mandant bearbeiten"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
