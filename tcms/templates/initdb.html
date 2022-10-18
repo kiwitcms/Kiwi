@@ -27,7 +27,7 @@
                         <span class='spinner spinner-xs spinner-inline'></span>" value="yes">
             {% trans "Initialize database" %}</button>
                         <script>
-                        $(document).ready(function(){
+                        $(() => {
                             $(".btn").click(function(){
                                 $(this).button('loading');
                             });

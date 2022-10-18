@@ -21,7 +21,7 @@ class SimpleMDE(forms.Textarea):
         rendered_string += """
 <input id="%s" type="file" style="display: none">
 <script>
-$(document).ready(function() {
+$(() => {
     markdownEditor = initSimpleMDE(document.getElementById('%s'), $('#%s'));
 });
 </script>

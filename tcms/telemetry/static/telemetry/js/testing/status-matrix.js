@@ -11,7 +11,7 @@ const initialColumn = {
   }
 }
 
-$(document).ready(() => {
+$(() => {
   $('[data-toggle="tooltip"]').tooltip()
 
   loadInitialProduct()

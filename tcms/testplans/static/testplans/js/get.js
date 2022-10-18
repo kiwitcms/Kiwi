@@ -6,7 +6,7 @@ const autocompleteCache = {}
 
 const confirmedStatuses = []
 
-$(document).ready(function () {
+$(() => {
   const testPlanDataElement = $('#test_plan_pk')
   const testPlanId = testPlanDataElement.data('testplan-pk')
 

@@ -1,7 +1,7 @@
 /*
     Used in mutable.html and clone.html
 */
-$(document).ready(function () {
+$(() => {
   if ($('#id_version').find('option').length === 0) {
     populateProductVersion()
   }
