@@ -22,7 +22,7 @@
     {% include 'patternfly.html' %}
     {% block head %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body id="{% block page_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
     {% if not REQUEST_CONTENTS.nonav %}
         {% include 'navbar.html' %}
     {% endif %}
