@@ -5,6 +5,7 @@
 {% load extra_filters %}
 
 {% block title %}BUG-{{ object.pk }}: {{ object.summary }}{% endblock %}
+{% block page_id %}page-bugs-get{% endblock %}
 {% block body_class %}cards-pf{% endblock %}
 
 {% block head %}

@@ -3,9 +3,9 @@
 {% load static %}
 
 {% block title %}{% trans "Execution trends" %}{% endblock %}
+{% block page_id %}page-telemetry-execution-trends{% endblock %}
 
 {% block contents %}
-
     <div class="container-fluid container-cards-pf main" data-total-key="{% trans 'TOTAL' %}">
         {% include "telemetry/include/filters.html" %}
 
