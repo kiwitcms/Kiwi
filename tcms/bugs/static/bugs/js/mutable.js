@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(() => {
   $('#add_id_product').click(function () {
     return showRelatedObjectPopup(this)
   })

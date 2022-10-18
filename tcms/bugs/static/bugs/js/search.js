@@ -1,5 +1,4 @@
-
-$(document).ready(function () {
+$(() => {
   const table = $('#resultsTable').DataTable({
     pageLength: $('#navbar').data('defaultpagesize'),
     ajax: function (data, callback, settings) {

@@ -83,7 +83,7 @@ function initAddPlan (caseId, plansTable) {
   })
 }
 
-$(document).ready(function () {
+$(() => {
   const caseId = $('#test_case_pk').data('pk')
   const productId = $('#product_pk').data('pk')
   const permRemoveTag = $('#test_case_pk').data('perm-remove-tag') === 'True'

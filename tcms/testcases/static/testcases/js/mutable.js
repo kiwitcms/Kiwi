@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(() => {
   $('#text_templates').change(function () {
     markdownEditor.codemirror.setValue($(this).val())
   })
