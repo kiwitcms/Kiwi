@@ -84,6 +84,10 @@ function initAddPlan (caseId, plansTable) {
 }
 
 $(() => {
+  if ($('#page-testcases-get').length === 0) {
+    return
+  }
+
   const caseId = $('#test_case_pk').data('pk')
   const productId = $('#product_pk').data('pk')
   const permRemoveTag = $('#test_case_pk').data('perm-remove-tag') === 'True'

@@ -12,6 +12,10 @@ const initialColumn = {
 }
 
 $(() => {
+  if ($('#page-telemetry-status-matrix').length === 0) {
+    return
+  }
+
   $('[data-toggle="tooltip"]').tooltip()
 
   loadInitialProduct()

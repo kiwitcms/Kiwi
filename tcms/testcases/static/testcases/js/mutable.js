@@ -1,4 +1,8 @@
 $(() => {
+  if ($('#page-testcases-mutable').length === 0) {
+    return
+  }
+
   $('#text_templates').change(function () {
     markdownEditor.codemirror.setValue($(this).val())
   })

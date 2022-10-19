@@ -1,4 +1,8 @@
 $(() => {
+  if ($('#page-testruns-mutable').length === 0) {
+    return
+  }
+
   $('[data-toggle="tooltip"]').tooltip()
 
   document.getElementById('id_product').onchange = () => {
