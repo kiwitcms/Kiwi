@@ -1,4 +1,8 @@
 $(() => {
+  if ($('#page-bugs-get').length === 0) {
+    return
+  }
+
   const objectId = $('#object_pk').data('pk')
   const permRemoveTag = $('#object_pk').data('perm-remove-tag') === 'True'
 
