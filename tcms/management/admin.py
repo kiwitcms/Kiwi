@@ -54,8 +54,7 @@ class BuildAdminForm(forms.ModelForm):
 
     class Media:
         js = [
-            "js/jsonrpc.js",
-            "js/utils.js",
+            "js/index.js",
             "management/js/build_admin.js",
         ]
 

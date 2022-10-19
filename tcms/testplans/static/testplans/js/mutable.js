@@ -32,6 +32,7 @@ $(() => {
   }
 })
 
+// TODO: this is almost duplicate to populateVersion() in index.js
 function populateProductVersion () {
   const productId = $('#id_product').val()
 

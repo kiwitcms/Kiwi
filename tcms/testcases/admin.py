@@ -225,7 +225,7 @@ class TemplateAdminForm(forms.ModelForm):
 
     class Media:
         js = [
-            "js/jsonrpc.js",
+            "js/index.js",
         ]
 
 
