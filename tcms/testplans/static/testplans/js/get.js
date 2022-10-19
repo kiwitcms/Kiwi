@@ -7,6 +7,10 @@ const autocompleteCache = {}
 const confirmedStatuses = []
 
 $(() => {
+  if ($('#page-testplans-get').length === 0) {
+    return
+  }
+
   const testPlanDataElement = $('#test_plan_pk')
   const testPlanId = testPlanDataElement.data('testplan-pk')
 

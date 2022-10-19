@@ -1,4 +1,8 @@
 $(() => {
+  if ($('#page-telemetry-testing-breakdown').length === 0) {
+    return
+  }
+
   $('.selectpicker').selectpicker()
   $('[data-toggle="tooltip"]').tooltip()
 

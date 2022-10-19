@@ -9,6 +9,10 @@ const permissions = {
 const autocompleteCache = {}
 
 $(() => {
+  if ($('#page-testruns-get').length === 0) {
+    return
+  }
+
   permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True'
   permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
   permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'

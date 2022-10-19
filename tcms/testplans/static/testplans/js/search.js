@@ -32,6 +32,10 @@ function preProcessData (data, callback) {
 }
 
 $(() => {
+  if ($('#page-testplans-search').length === 0) {
+    return
+  }
+
   const table = $('#resultsTable').DataTable({
     pageLength: $('#navbar').data('defaultpagesize'),
     ajax: function (data, callback, settings) {

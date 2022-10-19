@@ -1,4 +1,8 @@
 $(() => {
+  if ($('#page-telemetry-test-case-health').length === 0) {
+    return
+  }
+
   $('[data-toggle="tooltip"]').tooltip()
 
   loadInitialProduct()

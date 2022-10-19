@@ -1,4 +1,8 @@
 $(() => {
+  if ($('#page-telemetry-execution-trends').length === 0) {
+    return
+  }
+
   $('[data-toggle="tooltip"]').tooltip()
 
   loadInitialProduct()
