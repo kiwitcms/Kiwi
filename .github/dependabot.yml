@@ -1,10 +1,5 @@
 version: 2
 
-registries:
-  redhat-catalog:
-    type: docker-registry
-    url: https://registry.access.redhat.com
-
 updates:
   - package-ecosystem: pip
     directory: "/"
@@ -29,8 +24,6 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/"
-    registries:
-      - redhat-catalog
     schedule:
       interval: "weekly"
       time: "04:00"
