@@ -1,4 +1,4 @@
-FROM fedora:32
+FROM fedora:36
 
 RUN dnf -y install bugzilla "perl(DBD::SQLite)" findutils
 # install optional modules, incl. XMLRPC
