@@ -7,7 +7,6 @@ RUN /usr/share/bugzilla/checksetup.pl --check-modules 2>/dev/null | grep "dnf in
 RUN /usr/share/bugzilla/checksetup.pl --check-modules
 
 COPY . /root/
-RUN patch -b /usr/share/bugzilla/Bugzilla/Util.pm /root/Util.pm.patch
 
 # generate /etc/bugzilla/localconfig
 RUN /usr/share/bugzilla/checksetup.pl /root/checksetup_answers.txt
