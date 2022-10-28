@@ -1,6 +1,7 @@
 FROM fedora:36
 
-RUN dnf -y install bugzilla "perl(DBD::SQLite)" findutils
+RUN dnf -y install httpd && \
+    dnf -y install bugzilla "perl(DBD::SQLite)" findutils
 # install optional modules, incl. XMLRPC
 RUN /usr/share/bugzilla/checksetup.pl --check-modules 2>/dev/null | grep "dnf install" | cut -f2-99 -d: | sed "s/dnf install//" | xargs dnf -y install
 RUN /usr/share/bugzilla/checksetup.pl --check-modules
