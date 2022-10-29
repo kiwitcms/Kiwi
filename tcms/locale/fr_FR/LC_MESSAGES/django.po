@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:10\n"
+"PO-Revision-Date: 2022-10-29 08:19\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -984,7 +984,7 @@ msgstr "Dernière page"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Parameters"
-msgstr ""
+msgstr "Paramètres"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1107,7 +1107,7 @@ msgstr "Mot de passe"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "Mot de passe oublié"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1635,7 +1635,7 @@ msgstr "1 négatif, 1 neutre et 1 statut positif requis !"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Édition des paramètres"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1781,7 +1781,7 @@ msgstr "Matrice"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Affecte uniquement les cas de test avec des paramètres"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
@@ -2157,3 +2157,4 @@ msgstr "Modifier l'instance"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'autres utilisateurs"
+
