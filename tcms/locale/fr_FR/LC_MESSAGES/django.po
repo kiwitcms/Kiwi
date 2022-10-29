@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-29 08:34\n"
+"PO-Revision-Date: 2022-10-29 08:46\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1135,7 +1135,7 @@ msgstr "Si vous n’en avez pas !"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr "Votre mot de passe a été défini.  Vous pouvez ouvrir une session"
+msgstr "Votre mot de passe a été défini. Vous pouvez ouvrir une session"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
@@ -1586,7 +1586,7 @@ msgstr "ID du parent"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "Document du plan de test"
+msgstr "Document du plan de test:"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
@@ -2157,3 +2157,4 @@ msgstr "Modifier l'instance"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'autres utilisateurs"
+
