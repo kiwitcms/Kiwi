@@ -17,6 +17,14 @@ def is_list(variable):
     return isinstance(variable, list)
 
 
+def bleach_input(input_html):
+    return bleach.clean(
+        input_html,
+        markdown_tags + print_tags + ["del", "s"],
+        {**markdown_attrs, **print_attrs},
+    )
+
+
 @register.filter(name="markdown2html")
 def markdown2html(md_str):
     """
@@ -37,11 +45,7 @@ def markdown2html(md_str):
         ],
     )
 
-    html = bleach.clean(
-        rendered_md,
-        markdown_tags + print_tags + ["del", "s"],
-        {**markdown_attrs, **print_attrs},
-    )
+    html = bleach_input(rendered_md)
     return mark_safe(html)  # nosec:B703:B308:blacklist
 
 
