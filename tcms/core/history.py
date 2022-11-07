@@ -8,6 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from simple_history.admin import SimpleHistoryAdmin
 from simple_history.models import HistoricalRecords
 
+from tcms.core.templatetags.extra_filters import bleach_input
+
 
 def diff_objects(old_instance, new_instance, fields):
     """
@@ -20,6 +22,13 @@ def diff_objects(old_instance, new_instance, fields):
         field_diff = []
         old_value = getattr(old_instance, field.attname)
         new_value = getattr(new_instance, field.attname)
+
+        # clean stored XSS
+        if isinstance(old_value, str):
+            old_value = bleach_input(old_value)
+        if isinstance(new_value, str):
+            new_value = bleach_input(new_value)
+
         for line in difflib.unified_diff(
             str(old_value).split("\n"),
             str(new_value).split("\n"),
