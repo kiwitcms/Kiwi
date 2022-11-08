@@ -1,6 +1,99 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.6 (09 Nov 2022)
+----------------------------
+
+.. important::
+
+    This is a small release which contains security updates, general improvements, bug fixes
+    and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 4.0.7 to 4.1.3 which contains multiple bug fixes and
+  security improvements. See https://docs.djangoproject.com/en/4.1/releases/4.1.3/
+- Sanitize HTML input when generating history diff to prevent XSS attacks
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-extensions from 3.2.0 to 3.2.1
+- Update jira from 3.4.0 to 3.4.1
+- Update psycopg2 from 2.9.3 to 2.9.5
+- Update pygithub from 1.55 to 1.57
+- Update python-gitlab from 3.9.0 to 3.11.0
+- Update tzdata from 2022.2 to 2022.6
+- Container is now built on top of Red Hat Enteroprise Linux 9 and Python 3.9
+
+  .. warning::
+
+    There is high risk of breaking downstream containers. Pay attention to
+    bind-mounted settings files. Inspect downstream Dockerfile & docker-compose.yml
+    files !!!
+
+- Unify some translation strings
+- Document add-on issue tracker integrations
+- Rename Properties to Parameters because "test case parameters" is
+  more widely used
+
+
+Bug fixes
+~~~~~~~~~
+
+- ``JIRA.get_issue_type_from_jira()`` now accepts a second argument. Fixes
+  `Issue #2929 <https://github.com/kiwitcms/Kiwi/issues/2929>`_ (@cmbahadir)
+- Fix typo in documentation (Christian Clauss)
+- Trim white-space after splitting parameter values. For example the inputs
+  'OS=Linux' and 'OS = Windows ' will result in
+  Key: 'OS', Values: ['Linux', 'Windows']
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update Fedora from 32 to 36 in /tests/bugzilla
+- Remove Travis CI config b/c we don't use it anymore
+- Add Coverity Scan as a GitHub action
+- Don't scan devel dependencies with Coverity Scan
+- Redirect to where we came from in case posting a comment results in invalid
+  form
+- Configure Dependabot to update Docker containers and try tightening security
+  around docker containers used during testing
+- Use npm audit fix to automatically update some Node.js dependecies
+- Execute ``npm audit signatures`` when installing Node.js packages
+- Start using ``find_namespace_packages()`` to resolve
+  'Package would be ignored' warnings from setuptools
+- Add missing field in ``setup()`` to avoid a warning
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Slovak translation <https://crowdin.com/project/kiwitcms/sk#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 11.5 (06 Sep 2022)
 ----------------------------
 
