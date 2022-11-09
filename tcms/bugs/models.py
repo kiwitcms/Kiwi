@@ -12,6 +12,7 @@ from tcms.core.models.base import UrlMixin
 
 
 class Severity(models.Model):
+    "doc-string on model class"
     name = models.CharField(max_length=64, unique=True)
     weight = models.IntegerField(default=0)
     icon = models.CharField(max_length=64)
@@ -21,7 +22,9 @@ class Severity(models.Model):
         return self.name
 
     class Meta:
+        "docstring on meta class"
         verbose_name_plural = _("Severity")
+        _custom_defined = ""
 
 
 class Bug(models.Model, UrlMixin):

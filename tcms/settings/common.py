@@ -304,6 +304,7 @@ INSTALLED_APPS = TENANT_APPS + [
     "captcha",
     "colorfield",
     "django_extensions",
+    "tabular_permissions",
     "tree_queries",
     "vinaigrette",
     "tcms.core",
