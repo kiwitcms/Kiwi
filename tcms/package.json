@@ -8,7 +8,11 @@
     "typeahead.js": "0.11.1"
   },
   "overrides": {
-    "bootstrap-switch": "3.4.0"
+    "bootstrap-switch": "3.4.0",
+    "bootstrap-select": "1.13.18",
+    "eonasdan-bootstrap-datetimepicker": "4.17.49",
+    "jquery": "3.6.1",
+    "moment-timezone": "0.5.38"
   },
   "devDependencies": {
     "eslint": "8.0.1",
