@@ -47,7 +47,7 @@ function preProcessData (data, callback) {
         }
       })
 
-      callback({ data: data }) // renders everything
+      callback({ data }) // renders everything
     })
   })
 }

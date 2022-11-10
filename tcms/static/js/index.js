@@ -41,7 +41,7 @@ function dataTableJsonRPC (rpcMethod, rpcParams, callback, preProcessData) {
     if (preProcessData !== undefined) {
       preProcessData(data, callback)
     } else {
-      callback({ data: data })
+      callback({ data })
     }
   }
 

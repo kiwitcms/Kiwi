@@ -133,7 +133,7 @@ function drawChart (data, type, selector) {
   }
   chartConfig.data = {
     columns: chartData,
-    groups: groups,
+    groups,
     type: 'bar',
     order: null
   }

@@ -34,7 +34,7 @@ function preProcessData (data, callback) {
         element.product_name = products[element.plan__product].name
       })
 
-      callback({ data: data }) // renders everything
+      callback({ data }) // renders everything
     })
   })
 }

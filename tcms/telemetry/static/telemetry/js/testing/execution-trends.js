@@ -74,7 +74,7 @@ function drawChart () {
     const config = c3ChartDefaults.getDefaultAreaConfig()
     config.axis = {
       x: {
-        categories: categories,
+        categories,
         type: 'category',
         tick: {
           fit: false,

@@ -764,7 +764,7 @@ function changeAssigneeBulk () {
     return false
   }
   selected.executionIds.forEach(executionId => {
-    jsonRPC('TestExecution.update', [executionId, { assignee: assignee }], execution => {
+    jsonRPC('TestExecution.update', [executionId, { assignee }], execution => {
       reloadRowFor(execution)
     })
   })
@@ -827,8 +827,8 @@ function addLinkToExecutions (testExecutionIDs) {
     testExecutionIDs.forEach(testExecutionId => {
       jsonRPC('TestExecution.add_link', [{
         execution_id: testExecutionId,
-        url: url,
-        name: name,
+        url,
+        name,
         is_defect: isDefect
       }, updateTracker], link => {
         const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`)
