@@ -16,4 +16,3 @@ docs/target/
 .vscode/
 .cache/
 tcms/node_modules/
-package-lock.json
