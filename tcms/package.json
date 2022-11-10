@@ -9,6 +9,7 @@
     "typeahead.js": "0.11.1"
   },
   "overrides": {
+    "bootstrap": "3.4.1",
     "bootstrap-switch": "3.4.0",
     "bootstrap-select": "1.13.18",
     "eonasdan-bootstrap-datetimepicker": "4.17.49",
