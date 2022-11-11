@@ -1,3 +1,3 @@
 $(() => {
-  $('#id_product').change(updateVersionSelectFromProduct)
+    $('#id_product').change(updateVersionSelectFromProduct)
 })
