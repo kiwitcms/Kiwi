@@ -1,9 +1,9 @@
 Kiwi TCMS - Open Source Test Case Management System
 ===================================================
 
-.. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
-    :target: https://travis-ci.org/kiwitcms/Kiwi
-    :alt: Travis CI
+.. image:: https://img.shields.io/docker/pulls/kiwitcms/kiwi
+    :target: https://kiwitcms.readthedocs.io/en/latest/installing_docker.html
+    :alt: Downloads from Docker Hub
 
 .. image:: https://readthedocs.org/projects/kiwitcms/badge/?version=latest
     :target: http://kiwitcms.readthedocs.io/en/latest/?badge=latest
