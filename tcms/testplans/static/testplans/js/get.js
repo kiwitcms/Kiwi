@@ -7,699 +7,699 @@ const autocompleteCache = {}
 const confirmedStatuses = []
 
 $(() => {
-  if ($('#page-testplans-get').length === 0) {
-    return
-  }
-
-  const testPlanDataElement = $('#test_plan_pk')
-  const testPlanId = testPlanDataElement.data('testplan-pk')
-
-  const permissions = {
-    'perm-change-testcase': testPlanDataElement.data('perm-change-testcase') === 'True',
-    'perm-remove-testcase': testPlanDataElement.data('perm-remove-testcase') === 'True',
-    'perm-add-testcase': testPlanDataElement.data('perm-add-testcase') === 'True',
-    'perm-add-comment': testPlanDataElement.data('perm-add-comment') === 'True',
-    'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True'
-  }
-
-  // bind everything in tags table
-  const permRemoveTag = testPlanDataElement.data('perm-remove-tag') === 'True'
-  tagsCard('TestPlan', testPlanId, { plan: testPlanId }, permRemoveTag)
-
-  jsonRPC('TestCaseStatus.filter', { is_confirmed: true }, function (statuses) {
-    // save for later use
-    for (let i = 0; i < statuses.length; i++) {
-      confirmedStatuses.push(statuses[i].id)
+    if ($('#page-testplans-get').length === 0) {
+        return
     }
 
-    jsonRPC('TestCase.sortkeys', { plan: testPlanId }, function (sortkeys) {
-      jsonRPC('TestCase.filter', { plan: testPlanId }, function (data) {
-        for (let i = 0; i < data.length; i++) {
-          const testCase = data[i]
+    const testPlanDataElement = $('#test_plan_pk')
+    const testPlanId = testPlanDataElement.data('testplan-pk')
 
-          testCase.sortkey = sortkeys[testCase.id]
-          allTestCases[testCase.id] = testCase
+    const permissions = {
+        'perm-change-testcase': testPlanDataElement.data('perm-change-testcase') === 'True',
+        'perm-remove-testcase': testPlanDataElement.data('perm-remove-testcase') === 'True',
+        'perm-add-testcase': testPlanDataElement.data('perm-add-testcase') === 'True',
+        'perm-add-comment': testPlanDataElement.data('perm-add-comment') === 'True',
+        'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True'
+    }
+
+    // bind everything in tags table
+    const permRemoveTag = testPlanDataElement.data('perm-remove-tag') === 'True'
+    tagsCard('TestPlan', testPlanId, { plan: testPlanId }, permRemoveTag)
+
+    jsonRPC('TestCaseStatus.filter', { is_confirmed: true }, function (statuses) {
+    // save for later use
+        for (let i = 0; i < statuses.length; i++) {
+            confirmedStatuses.push(statuses[i].id)
         }
-        sortTestCases(Object.values(allTestCases), testPlanId, permissions, 'sortkey')
 
-        // drag & reorder needs the initial order of test cases and
-        // they may not be fully loaded when sortable() is initialized!
-        toolbarEvents(testPlanId, permissions)
-      })
+        jsonRPC('TestCase.sortkeys', { plan: testPlanId }, function (sortkeys) {
+            jsonRPC('TestCase.filter', { plan: testPlanId }, function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    const testCase = data[i]
+
+                    testCase.sortkey = sortkeys[testCase.id]
+                    allTestCases[testCase.id] = testCase
+                }
+                sortTestCases(Object.values(allTestCases), testPlanId, permissions, 'sortkey')
+
+                // drag & reorder needs the initial order of test cases and
+                // they may not be fully loaded when sortable() is initialized!
+                toolbarEvents(testPlanId, permissions)
+            })
+        })
     })
-  })
 
-  adjustTestPlanFamilyTree()
-  collapseDocumentText()
-  quickSearchAndAddTestCase(testPlanId, addTestCaseToPlan, autocompleteCache)
-  $('#btn-search-cases').click(function () {
-    return advancedSearchAndAddTestCases(
-      testPlanId, 'TestPlan.add_case', $(this).attr('href'),
-      $('#test_plan_pk').data('trans-error-adding-cases')
-    )
-  })
+    adjustTestPlanFamilyTree()
+    collapseDocumentText()
+    quickSearchAndAddTestCase(testPlanId, addTestCaseToPlan, autocompleteCache)
+    $('#btn-search-cases').click(function () {
+        return advancedSearchAndAddTestCases(
+            testPlanId, 'TestPlan.add_case', $(this).attr('href'),
+            $('#test_plan_pk').data('trans-error-adding-cases')
+        )
+    })
 })
 
 function addTestCaseToPlan (planId) {
-  const caseName = $('#search-testcase')[0].value
-  const testCase = autocompleteCache[caseName]
+    const caseName = $('#search-testcase')[0].value
+    const testCase = autocompleteCache[caseName]
 
-  // test case is already present so don't add it
-  if (allTestCases[testCase.id]) {
-    $('#search-testcase').val('')
-    return false
-  }
+    // test case is already present so don't add it
+    if (allTestCases[testCase.id]) {
+        $('#search-testcase').val('')
+        return false
+    }
 
-  jsonRPC('TestPlan.add_case', [planId, testCase.id], function (result) {
+    jsonRPC('TestPlan.add_case', [planId, testCase.id], function (result) {
     // IMPORTANT: the API result includes a 'sortkey' field value!
-    window.location.reload(true)
+        window.location.reload(true)
 
-    // TODO: remove the page reload above and add the new case to the list
-    // NB: pay attention to drawTestCases() & treeViewBind()
-    // NB: also add to allTestCases !!!
+        // TODO: remove the page reload above and add the new case to the list
+        // NB: pay attention to drawTestCases() & treeViewBind()
+        // NB: also add to allTestCases !!!
 
-    $('#search-testcase').val('')
-  })
+        $('#search-testcase').val('')
+    })
 }
 
 function collapseDocumentText () {
-  // for some reason .height() reports a much higher value than
-  // reality and the 59% reduction seems to work nicely
-  const infoCardHeight = 0.59 * $('#testplan-info').height()
+    // for some reason .height() reports a much higher value than
+    // reality and the 59% reduction seems to work nicely
+    const infoCardHeight = 0.59 * $('#testplan-info').height()
 
-  if ($('#testplan-text').height() > infoCardHeight) {
-    $('#testplan-text-collapse-btn').removeClass('hidden')
+    if ($('#testplan-text').height() > infoCardHeight) {
+        $('#testplan-text-collapse-btn').removeClass('hidden')
 
-    $('#testplan-text').css('min-height', infoCardHeight)
-    $('#testplan-text').css('height', infoCardHeight)
-    $('#testplan-text').css('overflow', 'hidden')
+        $('#testplan-text').css('min-height', infoCardHeight)
+        $('#testplan-text').css('height', infoCardHeight)
+        $('#testplan-text').css('overflow', 'hidden')
 
-    $('#testplan-text').on('hidden.bs.collapse', function () {
-      $('#testplan-text').removeClass('collapse').css({
-        height: infoCardHeight
-      })
-    })
-  }
+        $('#testplan-text').on('hidden.bs.collapse', function () {
+            $('#testplan-text').removeClass('collapse').css({
+                height: infoCardHeight
+            })
+        })
+    }
 }
 
 function adjustTestPlanFamilyTree () {
-  treeViewBind('#test-plan-family-tree')
+    treeViewBind('#test-plan-family-tree')
 
-  // remove the > arrows from elements which don't have children
-  $('#test-plan-family-tree').find('.list-group-item-container').each(function (index, element) {
-    if (!element.innerHTML.trim()) {
-      const span = $(element).siblings('.list-group-item-header').find('.list-view-pf-left span')
+    // remove the > arrows from elements which don't have children
+    $('#test-plan-family-tree').find('.list-group-item-container').each(function (index, element) {
+        if (!element.innerHTML.trim()) {
+            const span = $(element).siblings('.list-group-item-header').find('.list-view-pf-left span')
 
-      span.removeClass('fa-angle-right')
-      // this is the exact same width so rows are still aligned
-      span.attr('style', 'width:9px')
-    }
-  })
-
-  // expand all parent elements so that the current one is visible
-  $('#test-plan-family-tree').find('.list-group-item.active').each(function (index, element) {
-    $(element).parents('.list-group-item-container').each(function (idx, container) {
-      $(container).toggleClass('hidden')
+            span.removeClass('fa-angle-right')
+            // this is the exact same width so rows are still aligned
+            span.attr('style', 'width:9px')
+        }
     })
-  })
+
+    // expand all parent elements so that the current one is visible
+    $('#test-plan-family-tree').find('.list-group-item.active').each(function (index, element) {
+        $(element).parents('.list-group-item-container').each(function (idx, container) {
+            $(container).toggleClass('hidden')
+        })
+    })
 }
 
 function drawTestCases (testCases, testPlanId, permissions) {
-  const container = $('#testcases-list')
-  const noCasesTemplate = $('#no_test_cases')
-  const testCaseRowDocumentFragment = $('#test_case_row')[0].content
+    const container = $('#testcases-list')
+    const noCasesTemplate = $('#no_test_cases')
+    const testCaseRowDocumentFragment = $('#test_case_row')[0].content
 
-  if (testCases.length > 0) {
-    testCases.forEach(function (element) {
-      container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions))
-    })
-    attachEvents(testPlanId, permissions)
-  } else {
-    container.append(noCasesTemplate[0].innerHTML)
-  }
+    if (testCases.length > 0) {
+        testCases.forEach(function (element) {
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions))
+        })
+        attachEvents(testPlanId, permissions)
+    } else {
+        container.append(noCasesTemplate[0].innerHTML)
+    }
 }
 
 function redrawSingleRow (testCaseId, testPlanId, permissions) {
-  const testCaseRowDocumentFragment = $('#test_case_row')[0].content
-  const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions)
+    const testCaseRowDocumentFragment = $('#test_case_row')[0].content
+    const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions)
 
-  // remove from expanded list b/c the comment section may have changed
-  delete expandedTestCaseIds[expandedTestCaseIds.indexOf(testCaseId)]
+    // remove from expanded list b/c the comment section may have changed
+    delete expandedTestCaseIds[expandedTestCaseIds.indexOf(testCaseId)]
 
-  // replace the element in the dom
-  $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow)
-  attachEvents(testPlanId, permissions)
+    // replace the element in the dom
+    $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow)
+    attachEvents(testPlanId, permissions)
 }
 
 function getTestCaseRowContent (rowContent, testCase, permissions) {
-  const row = $(rowContent)
+    const row = $(rowContent)
 
-  row[0].firstElementChild.dataset.testcasePk = testCase.id
-  row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/`)
-  // todo: TestCaseStatus here isn't translated b/c TestCase.filter uses a
-  // custom serializer which needs to be refactored as well
-  row.find('.js-test-case-status').html(`${testCase.case_status__name}`)
-  row.find('.js-test-case-priority').html(`${testCase.priority__value}`)
-  row.find('.js-test-case-category').html(`${testCase.category__name}`)
-  row.find('.js-test-case-author').html(`${testCase.author__username}`)
-  row.find('.js-test-case-tester').html(`${testCase.default_tester__username || '-'}`)
-  row.find('.js-test-case-reviewer').html(`${testCase.reviewer__username || '-'}`)
+    row[0].firstElementChild.dataset.testcasePk = testCase.id
+    row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/`)
+    // todo: TestCaseStatus here isn't translated b/c TestCase.filter uses a
+    // custom serializer which needs to be refactored as well
+    row.find('.js-test-case-status').html(`${testCase.case_status__name}`)
+    row.find('.js-test-case-priority').html(`${testCase.priority__value}`)
+    row.find('.js-test-case-category').html(`${testCase.category__name}`)
+    row.find('.js-test-case-author').html(`${testCase.author__username}`)
+    row.find('.js-test-case-tester').html(`${testCase.default_tester__username || '-'}`)
+    row.find('.js-test-case-reviewer').html(`${testCase.reviewer__username || '-'}`)
 
-  // set the links in the kebab menu
-  if (permissions['perm-change-testcase']) {
-    row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit/`
-  }
+    // set the links in the kebab menu
+    if (permissions['perm-change-testcase']) {
+        row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit/`
+    }
 
-  if (permissions['perm-add-testcase']) {
-    row.find('.js-test-case-menu-clone')[0].href = `/cases/clone/?c=${testCase.id}`
-  }
+    if (permissions['perm-add-testcase']) {
+        row.find('.js-test-case-menu-clone')[0].href = `/cases/clone/?c=${testCase.id}`
+    }
 
-  // apply visual separation between confirmed and not confirmed
+    // apply visual separation between confirmed and not confirmed
 
-  if (!isTestCaseConfirmed(testCase.case_status)) {
-    row.find('.list-group-item-header').addClass('bg-danger')
+    if (!isTestCaseConfirmed(testCase.case_status)) {
+        row.find('.list-group-item-header').addClass('bg-danger')
 
-    // add customizable icon as part of #1932
-    row.find('.js-test-case-status-icon').addClass('fa-times')
+        // add customizable icon as part of #1932
+        row.find('.js-test-case-status-icon').addClass('fa-times')
 
-    row.find('.js-test-case-tester-div').toggleClass('hidden')
-    row.find('.js-test-case-reviewer-div').toggleClass('hidden')
-  } else {
-    row.find('.js-test-case-status-icon').addClass('fa-check-square')
-  }
+        row.find('.js-test-case-tester-div').toggleClass('hidden')
+        row.find('.js-test-case-reviewer-div').toggleClass('hidden')
+    } else {
+        row.find('.js-test-case-status-icon').addClass('fa-check-square')
+    }
 
-  // handle automated icon
-  const automationIndicationElement = row.find('.js-test-case-automated')
-  let automatedClassToRemove = 'fa-cog'
+    // handle automated icon
+    const automationIndicationElement = row.find('.js-test-case-automated')
+    let automatedClassToRemove = 'fa-cog'
 
-  if (testCase.is_automated) {
-    automatedClassToRemove = 'fa-hand-paper-o'
-  }
+    if (testCase.is_automated) {
+        automatedClassToRemove = 'fa-hand-paper-o'
+    }
 
-  automationIndicationElement.parent().attr(
-    'title',
-    automationIndicationElement.data(testCase.is_automated.toString())
-  )
-  automationIndicationElement.removeClass(automatedClassToRemove)
+    automationIndicationElement.parent().attr(
+        'title',
+        automationIndicationElement.data(testCase.is_automated.toString())
+    )
+    automationIndicationElement.removeClass(automatedClassToRemove)
 
-  // produce unique IDs for comments textarea and file upload fields
-  row.find('textarea')[0].id = `comment-for-testcase-${testCase.id}`
-  row.find('input[type="file"]')[0].id = `file-upload-for-testcase-${testCase.id}`
+    // produce unique IDs for comments textarea and file upload fields
+    row.find('textarea')[0].id = `comment-for-testcase-${testCase.id}`
+    row.find('input[type="file"]')[0].id = `file-upload-for-testcase-${testCase.id}`
 
-  return row
+    return row
 }
 
 function getTestCaseExpandArea (row, testCase, permissions) {
-  markdown2HTML(testCase.text, row.find('.js-test-case-expand-text'))
-  if (testCase.notes.trim().length > 0) {
-    row.find('.js-test-case-expand-notes').html(testCase.notes)
-  }
+    markdown2HTML(testCase.text, row.find('.js-test-case-expand-text'))
+    if (testCase.notes.trim().length > 0) {
+        row.find('.js-test-case-expand-notes').html(testCase.notes)
+    }
 
-  // draw the attachments
-  const uniqueDivCustomId = `js-tc-id-${testCase.id}-attachments`
-  // set unique identifier so we know where to draw fetched data
-  row.find('.js-test-case-expand-attachments').parent()[0].id = uniqueDivCustomId
+    // draw the attachments
+    const uniqueDivCustomId = `js-tc-id-${testCase.id}-attachments`
+    // set unique identifier so we know where to draw fetched data
+    row.find('.js-test-case-expand-attachments').parent()[0].id = uniqueDivCustomId
 
-  jsonRPC('TestCase.list_attachments', [testCase.id], function (data) {
+    jsonRPC('TestCase.list_attachments', [testCase.id], function (data) {
     // cannot use instance of row in the callback
-    const ulElement = $(`#${uniqueDivCustomId} .js-test-case-expand-attachments`)
+        const ulElement = $(`#${uniqueDivCustomId} .js-test-case-expand-attachments`)
 
-    if (data.length === 0) {
-      ulElement.children().removeClass('hidden')
-      return
-    }
+        if (data.length === 0) {
+            ulElement.children().removeClass('hidden')
+            return
+        }
 
-    const liElementFragment = $('#attachments-list-item')[0].content
+        const liElementFragment = $('#attachments-list-item')[0].content
 
-    for (let i = 0; i < data.length; i++) {
-      // should create new element for every attachment
-      const liElement = liElementFragment.cloneNode(true)
-      const attachmentLink = $(liElement).find('a')[0]
+        for (let i = 0; i < data.length; i++) {
+            // should create new element for every attachment
+            const liElement = liElementFragment.cloneNode(true)
+            const attachmentLink = $(liElement).find('a')[0]
 
-      attachmentLink.href = data[i].url
-      attachmentLink.innerText = data[i].url.split('/').slice(-1)[0]
-      ulElement.append(liElement)
-    }
-  })
-
-  // load components
-  const componentTemplate = row.find('.js-testcase-expand-components').find('template')[0].content
-  jsonRPC('Component.filter', { cases: testCase.id }, function (result) {
-    result.forEach(function (element) {
-      const newComponent = componentTemplate.cloneNode(true)
-      $(newComponent).find('span').html(element.name)
-      row.find('.js-testcase-expand-components').append(newComponent)
+            attachmentLink.href = data[i].url
+            attachmentLink.innerText = data[i].url.split('/').slice(-1)[0]
+            ulElement.append(liElement)
+        }
     })
-  })
 
-  // load tags
-  const tagTemplate = row.find('.js-testcase-expand-tags').find('template')[0].content
-  jsonRPC('Tag.filter', { case: testCase.id }, function (result) {
-    const uniqueTags = []
-
-    result.forEach(function (element) {
-      if (uniqueTags.indexOf(element.name) === -1) {
-        uniqueTags.push(element.name)
-
-        const newTag = tagTemplate.cloneNode(true)
-        $(newTag).find('span').html(element.name)
-        row.find('.js-testcase-expand-tags').append(newTag)
-      }
-    })
-  })
-
-  // render previous comments
-  renderCommentsForObject(
-    testCase.id,
-    'TestCase.comments',
-    'TestCase.remove_comment',
-    !isTestCaseConfirmed(testCase.case_status) && permissions['perm-delete-comment'],
-    row.find('.comments')
-  )
-
-  // render comments form
-  const commentFormTextArea = row.find('.js-comment-form-textarea')
-  if (!isTestCaseConfirmed(testCase.case_status) && permissions['perm-add-comment']) {
-    const textArea = row.find('textarea')[0]
-    const fileUpload = row.find('input[type="file"]')
-    const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
-
-    row.find('.js-post-comment').click(function (event) {
-      event.preventDefault()
-      const input = editor.value().trim()
-
-      if (input) {
-        jsonRPC('TestCase.add_comment', [testCase.id, input], comment => {
-          editor.value('')
-
-          // show the newly added comment and bind its delete button
-          row.find('.comments').append(
-            renderCommentHTML(
-              1 + row.find('.js-comment-container').length,
-              comment,
-              $('template#comment-template')[0],
-              function (parentNode) {
-                bindDeleteCommentButton(
-                  testCase.id,
-                  'TestCase.remove_comment',
-                  permissions['perm-delete-comment'], // b/c we already know it's unconfirmed
-                  parentNode)
-              })
-          )
+    // load components
+    const componentTemplate = row.find('.js-testcase-expand-components').find('template')[0].content
+    jsonRPC('Component.filter', { cases: testCase.id }, function (result) {
+        result.forEach(function (element) {
+            const newComponent = componentTemplate.cloneNode(true)
+            $(newComponent).find('span').html(element.name)
+            row.find('.js-testcase-expand-components').append(newComponent)
         })
-      }
     })
-  } else {
-    commentFormTextArea.hide()
-  }
+
+    // load tags
+    const tagTemplate = row.find('.js-testcase-expand-tags').find('template')[0].content
+    jsonRPC('Tag.filter', { case: testCase.id }, function (result) {
+        const uniqueTags = []
+
+        result.forEach(function (element) {
+            if (uniqueTags.indexOf(element.name) === -1) {
+                uniqueTags.push(element.name)
+
+                const newTag = tagTemplate.cloneNode(true)
+                $(newTag).find('span').html(element.name)
+                row.find('.js-testcase-expand-tags').append(newTag)
+            }
+        })
+    })
+
+    // render previous comments
+    renderCommentsForObject(
+        testCase.id,
+        'TestCase.comments',
+        'TestCase.remove_comment',
+        !isTestCaseConfirmed(testCase.case_status) && permissions['perm-delete-comment'],
+        row.find('.comments')
+    )
+
+    // render comments form
+    const commentFormTextArea = row.find('.js-comment-form-textarea')
+    if (!isTestCaseConfirmed(testCase.case_status) && permissions['perm-add-comment']) {
+        const textArea = row.find('textarea')[0]
+        const fileUpload = row.find('input[type="file"]')
+        const editor = initSimpleMDE(textArea, $(fileUpload), textArea.id)
+
+        row.find('.js-post-comment').click(function (event) {
+            event.preventDefault()
+            const input = editor.value().trim()
+
+            if (input) {
+                jsonRPC('TestCase.add_comment', [testCase.id, input], comment => {
+                    editor.value('')
+
+                    // show the newly added comment and bind its delete button
+                    row.find('.comments').append(
+                        renderCommentHTML(
+                            1 + row.find('.js-comment-container').length,
+                            comment,
+                            $('template#comment-template')[0],
+                            function (parentNode) {
+                                bindDeleteCommentButton(
+                                    testCase.id,
+                                    'TestCase.remove_comment',
+                                    permissions['perm-delete-comment'], // b/c we already know it's unconfirmed
+                                    parentNode)
+                            })
+                    )
+                })
+            }
+        })
+    } else {
+        commentFormTextArea.hide()
+    }
 }
 
 function attachEvents (testPlanId, permissions) {
-  treeViewBind('#testcases-list')
+    treeViewBind('#testcases-list')
 
-  if (permissions['perm-change-testcase']) {
+    if (permissions['perm-change-testcase']) {
     // update default tester
-    $('.js-test-case-menu-tester').click(function (ev) {
-      $(this).parents('.dropdown').toggleClass('open')
+        $('.js-test-case-menu-tester').click(function (ev) {
+            $(this).parents('.dropdown').toggleClass('open')
 
-      const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
-      if (!emailOrUsername) {
-        return false
-      }
+            const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
+            if (!emailOrUsername) {
+                return false
+            }
 
-      updateTestCasesViaAPI([getCaseIdFromEvent(ev)], { default_tester: emailOrUsername },
-        testPlanId, permissions)
+            updateTestCasesViaAPI([getCaseIdFromEvent(ev)], { default_tester: emailOrUsername },
+                testPlanId, permissions)
 
-      return false
-    })
-
-    $('.js-test-case-menu-priority').click(function (ev) {
-      $(this).parents('.dropdown').toggleClass('open')
-
-      updateTestCasesViaAPI([getCaseIdFromEvent(ev)], { priority: ev.target.dataset.id },
-        testPlanId, permissions)
-      return false
-    })
-
-    $('.js-test-case-menu-status').click(function (ev) {
-      $(this).parents('.dropdown').toggleClass('open')
-      const testCaseId = getCaseIdFromEvent(ev)
-      updateTestCasesViaAPI([testCaseId], { case_status: ev.target.dataset.id },
-        testPlanId, permissions)
-      return false
-    })
-  }
-
-  if (permissions['perm-remove-testcase']) {
-    // delete testcase from the plan
-    $('.js-test-case-menu-delete').click(function (ev) {
-      $(this).parents('.dropdown').toggleClass('open')
-      const testCaseId = getCaseIdFromEvent(ev)
-
-      jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
-        delete allTestCases[testCaseId]
-
-        // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
-        $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
-          $(this).remove()
+            return false
         })
-      })
 
-      return false
-    })
-  }
+        $('.js-test-case-menu-priority').click(function (ev) {
+            $(this).parents('.dropdown').toggleClass('open')
 
-  // get details and draw expand area only on expand
-  $('.js-testcase-row').click(function (ev) {
+            updateTestCasesViaAPI([getCaseIdFromEvent(ev)], { priority: ev.target.dataset.id },
+                testPlanId, permissions)
+            return false
+        })
+
+        $('.js-test-case-menu-status').click(function (ev) {
+            $(this).parents('.dropdown').toggleClass('open')
+            const testCaseId = getCaseIdFromEvent(ev)
+            updateTestCasesViaAPI([testCaseId], { case_status: ev.target.dataset.id },
+                testPlanId, permissions)
+            return false
+        })
+    }
+
+    if (permissions['perm-remove-testcase']) {
+    // delete testcase from the plan
+        $('.js-test-case-menu-delete').click(function (ev) {
+            $(this).parents('.dropdown').toggleClass('open')
+            const testCaseId = getCaseIdFromEvent(ev)
+
+            jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
+                delete allTestCases[testCaseId]
+
+                // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
+                $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
+                    $(this).remove()
+                })
+            })
+
+            return false
+        })
+    }
+
+    // get details and draw expand area only on expand
+    $('.js-testcase-row').click(function (ev) {
     // don't trigger row expansion when kebab menu is clicked
-    if ($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
-      return
-    }
+        if ($(ev.target).is('button, a, input, .fa-ellipsis-v')) {
+            return
+        }
 
-    const testCaseId = getCaseIdFromEvent(ev)
+        const testCaseId = getCaseIdFromEvent(ev)
 
-    // tc was expanded once, dom is ready
-    if (expandedTestCaseIds.indexOf(testCaseId) > -1) {
-      return
-    }
+        // tc was expanded once, dom is ready
+        if (expandedTestCaseIds.indexOf(testCaseId) > -1) {
+            return
+        }
 
-    const tcRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`)
-    expandedTestCaseIds.push(testCaseId)
-    getTestCaseExpandArea(tcRow, allTestCases[testCaseId], permissions)
-  })
-
-  const inputs = $('.js-testcase-row').find('input')
-  inputs.click(function (ev) {
-    // stop trigerring row.click()
-    ev.stopPropagation()
-    const checkbox = $('.js-checkbox-toolbar')[0]
-
-    inputs.each(function (index, tc) {
-      checkbox.checked = tc.checked
-
-      if (!checkbox.checked) {
-        return false
-      }
+        const tcRow = $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`)
+        expandedTestCaseIds.push(testCaseId)
+        getTestCaseExpandArea(tcRow, allTestCases[testCaseId], permissions)
     })
-  })
 
-  function getCaseIdFromEvent (ev) {
-    return $(ev.target).closest('.js-testcase-row').data('testcase-pk')
-  }
+    const inputs = $('.js-testcase-row').find('input')
+    inputs.click(function (ev) {
+    // stop trigerring row.click()
+        ev.stopPropagation()
+        const checkbox = $('.js-checkbox-toolbar')[0]
+
+        inputs.each(function (index, tc) {
+            checkbox.checked = tc.checked
+
+            if (!checkbox.checked) {
+                return false
+            }
+        })
+    })
+
+    function getCaseIdFromEvent (ev) {
+        return $(ev.target).closest('.js-testcase-row').data('testcase-pk')
+    }
 }
 
 function updateTestCasesViaAPI (testCaseIds, updateQuery, testPlanId, permissions) {
-  testCaseIds.forEach(function (caseId) {
-    jsonRPC('TestCase.update', [caseId, updateQuery], function (updatedTC) {
-      const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`)
+    testCaseIds.forEach(function (caseId) {
+        jsonRPC('TestCase.update', [caseId, updateQuery], function (updatedTC) {
+            const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`)
 
-      // update internal data
-      sortkey = allTestCases[caseId].sortkey
-      allTestCases[caseId] = updatedTC
-      // note: updatedTC doesn't have sortkey information
-      allTestCases[caseId].sortkey = sortkey
+            // update internal data
+            sortkey = allTestCases[caseId].sortkey
+            allTestCases[caseId] = updatedTC
+            // note: updatedTC doesn't have sortkey information
+            allTestCases[caseId].sortkey = sortkey
 
-      animate(testCaseRow, function () {
-        redrawSingleRow(caseId, testPlanId, permissions)
-      })
+            animate(testCaseRow, function () {
+                redrawSingleRow(caseId, testPlanId, permissions)
+            })
+        })
     })
-  })
 }
 
 function toolbarEvents (testPlanId, permissions) {
-  $('.js-checkbox-toolbar').click(function (ev) {
-    const isChecked = ev.target.checked
-    const testCaseRows = $('.js-testcase-row').find('input')
+    $('.js-checkbox-toolbar').click(function (ev) {
+        const isChecked = ev.target.checked
+        const testCaseRows = $('.js-testcase-row').find('input')
 
-    testCaseRows.each(function (index, tc) {
-      tc.checked = isChecked
-    })
-  })
-
-  $('.js-toolbar-filter-options li').click(function (ev) {
-    return changeDropdownSelectedItem(
-      '.js-toolbar-filter-options',
-      '#input-filter-button',
-      ev.target,
-      $('#toolbar-filter')
-    )
-  })
-
-  $('#toolbar-filter').on('keyup', function () {
-    const filterValue = $(this).val().toLowerCase()
-    const filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType
-
-    filterTestCasesByProperty(
-      testPlanId,
-      Object.values(allTestCases),
-      filterBy,
-      filterValue
-    )
-  })
-
-  $('.js-toolbar-sort-options li').click(function (ev) {
-    changeDropdownSelectedItem('.js-toolbar-sort-options', '#sort-button', ev.target)
-
-    sortTestCases(Object.values(allTestCases), testPlanId, permissions)
-    return false
-  })
-
-  // handle asc desc icon
-  $('.js-toolbar-sorting-order > span').click(function (ev) {
-    const icon = $(this)
-
-    icon.siblings('.hidden').removeClass('hidden')
-    icon.addClass('hidden')
-
-    sortTestCases(Object.values(allTestCases), testPlanId, permissions)
-  })
-
-  // always initialize the sortable list however you can only
-  // move items using the handle icon on the left which becomes
-  // visible only when the manual sorting button is clicked
-  sortable('#testcases-list', {
-    handle: '.handle',
-    itemSerializer: (serializedItem, sortableContainer) => {
-      return parseInt(serializedItem.node.getAttribute('data-testcase-pk'))
-    }
-  })
-
-  // IMPORTANT: this is not empty b/c sortable() is initialized *after*
-  // all of the test cases have been rendered !!!
-  const initialOrder = sortable('#testcases-list', 'serialize')[0].items
-
-  $('.js-toolbar-manual-sort').click(function (event) {
-    $(this).blur()
-    $('.js-toolbar-manual-sort').find('span').toggleClass(['fa-sort', 'fa-check-square'])
-    $('.js-testcase-sort-handler, .js-testcase-expand-arrow, .js-testcase-checkbox').toggleClass('hidden')
-
-    const currentOrder = sortable('#testcases-list', 'serialize')[0].items
-
-    // rows have been rearranged and the results must be committed to the DB
-    if (currentOrder.join() !== initialOrder.join()) {
-      currentOrder.forEach(function (tcPk, index) {
-        jsonRPC('TestPlan.update_case_order', [testPlanId, tcPk, index * 10], function (result) {})
-      })
-    }
-  })
-
-  $('.js-toolbar-priority').click(function (ev) {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedCases = getSelectedTestCases()
-
-    if (!selectedCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
-
-    updateTestCasesViaAPI(selectedCases, { priority: ev.target.dataset.id },
-      testPlanId, permissions)
-
-    return false
-  })
-
-  $('.js-toolbar-status').click(function (ev) {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedCases = getSelectedTestCases()
-
-    if (!selectedCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
-
-    updateTestCasesViaAPI(selectedCases, { case_status: ev.target.dataset.id },
-      testPlanId, permissions)
-    return false
-  })
-
-  $('#default-tester-button').click(function (ev) {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedCases = getSelectedTestCases()
-
-    if (!selectedCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
-
-    const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
-
-    if (!emailOrUsername) {
-      return false
-    }
-
-    updateTestCasesViaAPI(selectedCases, { default_tester: emailOrUsername },
-      testPlanId, permissions)
-
-    return false
-  })
-
-  $('#bulk-reviewer-button').click(function (ev) {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedCases = getSelectedTestCases()
-
-    if (!selectedCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
-
-    const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
-
-    if (!emailOrUsername) {
-      return false
-    }
-
-    updateTestCasesViaAPI(selectedCases, { reviewer: emailOrUsername },
-      testPlanId, permissions)
-
-    return false
-  })
-
-  $('#delete_button').click(function (ev) {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedCases = getSelectedTestCases()
-
-    if (!selectedCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
-
-    const areYouSureText = $('#test_plan_pk').data('trans-are-you-sure')
-    if (confirm(areYouSureText)) {
-      for (let i = 0; i < selectedCases.length; i++) {
-        const testCaseId = selectedCases[i]
-        jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
-          delete allTestCases[testCaseId]
-
-          // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
-          $(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
-            $(this).remove()
-          })
+        testCaseRows.each(function (index, tc) {
+            tc.checked = isChecked
         })
-      }
-    }
+    })
 
-    return false
-  })
+    $('.js-toolbar-filter-options li').click(function (ev) {
+        return changeDropdownSelectedItem(
+            '.js-toolbar-filter-options',
+            '#input-filter-button',
+            ev.target,
+            $('#toolbar-filter')
+        )
+    })
 
-  $('#bulk-clone-button').click(function () {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedCases = getSelectedTestCases()
+    $('#toolbar-filter').on('keyup', function () {
+        const filterValue = $(this).val().toLowerCase()
+        const filterBy = $('.js-toolbar-filter-options .selected')[0].dataset.filterType
 
-    if (!selectedCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
+        filterTestCasesByProperty(
+            testPlanId,
+            Object.values(allTestCases),
+            filterBy,
+            filterValue
+        )
+    })
 
-    window.location.assign(`/cases/clone?c=${selectedCases.join('&c=')}`)
-  })
+    $('.js-toolbar-sort-options li').click(function (ev) {
+        changeDropdownSelectedItem('.js-toolbar-sort-options', '#sort-button', ev.target)
 
-  $('#testplan-toolbar-newrun').click(function () {
-    $(this).parents('.dropdown').toggleClass('open')
-    const selectedTestCases = getSelectedTestCases()
-
-    if (!selectedTestCases.length) {
-      alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-      return false
-    }
-
-    for (let i = 0; i < selectedTestCases.length; i++) {
-      const status = allTestCases[selectedTestCases[i]].case_status
-      if (!isTestCaseConfirmed(status)) {
-        alert($('#test_plan_pk').data('trans-cannot-create-testrun'))
+        sortTestCases(Object.values(allTestCases), testPlanId, permissions)
         return false
-      }
-    }
+    })
 
-    const newTestRunUrl = $('#test_plan_pk').data('new-testrun-url')
-    window.location.assign(`${newTestRunUrl}?c=${selectedTestCases.join('&c=')}`)
-    return false
-  })
+    // handle asc desc icon
+    $('.js-toolbar-sorting-order > span').click(function (ev) {
+        const icon = $(this)
+
+        icon.siblings('.hidden').removeClass('hidden')
+        icon.addClass('hidden')
+
+        sortTestCases(Object.values(allTestCases), testPlanId, permissions)
+    })
+
+    // always initialize the sortable list however you can only
+    // move items using the handle icon on the left which becomes
+    // visible only when the manual sorting button is clicked
+    sortable('#testcases-list', {
+        handle: '.handle',
+        itemSerializer: (serializedItem, sortableContainer) => {
+            return parseInt(serializedItem.node.getAttribute('data-testcase-pk'))
+        }
+    })
+
+    // IMPORTANT: this is not empty b/c sortable() is initialized *after*
+    // all of the test cases have been rendered !!!
+    const initialOrder = sortable('#testcases-list', 'serialize')[0].items
+
+    $('.js-toolbar-manual-sort').click(function (event) {
+        $(this).blur()
+        $('.js-toolbar-manual-sort').find('span').toggleClass(['fa-sort', 'fa-check-square'])
+        $('.js-testcase-sort-handler, .js-testcase-expand-arrow, .js-testcase-checkbox').toggleClass('hidden')
+
+        const currentOrder = sortable('#testcases-list', 'serialize')[0].items
+
+        // rows have been rearranged and the results must be committed to the DB
+        if (currentOrder.join() !== initialOrder.join()) {
+            currentOrder.forEach(function (tcPk, index) {
+                jsonRPC('TestPlan.update_case_order', [testPlanId, tcPk, index * 10], function (result) {})
+            })
+        }
+    })
+
+    $('.js-toolbar-priority').click(function (ev) {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedCases = getSelectedTestCases()
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        updateTestCasesViaAPI(selectedCases, { priority: ev.target.dataset.id },
+            testPlanId, permissions)
+
+        return false
+    })
+
+    $('.js-toolbar-status').click(function (ev) {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedCases = getSelectedTestCases()
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        updateTestCasesViaAPI(selectedCases, { case_status: ev.target.dataset.id },
+            testPlanId, permissions)
+        return false
+    })
+
+    $('#default-tester-button').click(function (ev) {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedCases = getSelectedTestCases()
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
+
+        if (!emailOrUsername) {
+            return false
+        }
+
+        updateTestCasesViaAPI(selectedCases, { default_tester: emailOrUsername },
+            testPlanId, permissions)
+
+        return false
+    })
+
+    $('#bulk-reviewer-button').click(function (ev) {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedCases = getSelectedTestCases()
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
+
+        if (!emailOrUsername) {
+            return false
+        }
+
+        updateTestCasesViaAPI(selectedCases, { reviewer: emailOrUsername },
+            testPlanId, permissions)
+
+        return false
+    })
+
+    $('#delete_button').click(function (ev) {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedCases = getSelectedTestCases()
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        const areYouSureText = $('#test_plan_pk').data('trans-are-you-sure')
+        if (confirm(areYouSureText)) {
+            for (let i = 0; i < selectedCases.length; i++) {
+                const testCaseId = selectedCases[i]
+                jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
+                    delete allTestCases[testCaseId]
+
+                    // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
+                    $(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
+                        $(this).remove()
+                    })
+                })
+            }
+        }
+
+        return false
+    })
+
+    $('#bulk-clone-button').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedCases = getSelectedTestCases()
+
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        window.location.assign(`/cases/clone?c=${selectedCases.join('&c=')}`)
+    })
+
+    $('#testplan-toolbar-newrun').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
+        const selectedTestCases = getSelectedTestCases()
+
+        if (!selectedTestCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        for (let i = 0; i < selectedTestCases.length; i++) {
+            const status = allTestCases[selectedTestCases[i]].case_status
+            if (!isTestCaseConfirmed(status)) {
+                alert($('#test_plan_pk').data('trans-cannot-create-testrun'))
+                return false
+            }
+        }
+
+        const newTestRunUrl = $('#test_plan_pk').data('new-testrun-url')
+        window.location.assign(`${newTestRunUrl}?c=${selectedTestCases.join('&c=')}`)
+        return false
+    })
 }
 
 function isTestCaseConfirmed (status) {
-  return confirmedStatuses.indexOf(Number(status)) > -1
+    return confirmedStatuses.indexOf(Number(status)) > -1
 }
 
 function sortTestCases (testCases, testPlanId, permissions, defaultSortBy = undefined) {
-  const sortBy = defaultSortBy || $('.js-toolbar-sort-options .selected')[0].dataset.filterType
-  const sortOrder = $('.js-toolbar-sorting-order > span:not(.hidden)').data('order')
+    const sortBy = defaultSortBy || $('.js-toolbar-sort-options .selected')[0].dataset.filterType
+    const sortOrder = $('.js-toolbar-sorting-order > span:not(.hidden)').data('order')
 
-  $('#testcases-list').html('')
+    $('#testcases-list').html('')
 
-  testCases.sort(function (tc1, tc2) {
-    const value1 = tc1[sortBy] || ''
-    const value2 = tc2[sortBy] || ''
+    testCases.sort(function (tc1, tc2) {
+        const value1 = tc1[sortBy] || ''
+        const value2 = tc2[sortBy] || ''
 
-    if (Number.isInteger(value1) && Number.isInteger(value2)) {
-      return (value1 - value2) * sortOrder
-    }
+        if (Number.isInteger(value1) && Number.isInteger(value2)) {
+            return (value1 - value2) * sortOrder
+        }
 
-    return value1.toString().localeCompare(value2.toString()) * sortOrder
-  })
+        return value1.toString().localeCompare(value2.toString()) * sortOrder
+    })
 
-  // put the new order in the DOM
-  drawTestCases(testCases, testPlanId, permissions)
+    // put the new order in the DOM
+    drawTestCases(testCases, testPlanId, permissions)
 }
 
 // todo check selectedCheckboxes function in testrun/get.js
 function getSelectedTestCases () {
-  const inputs = $('.js-testcase-row input:checked')
-  const tcIds = []
+    const inputs = $('.js-testcase-row input:checked')
+    const tcIds = []
 
-  inputs.each(function (index, el) {
-    const elJq = $(el)
+    inputs.each(function (index, el) {
+        const elJq = $(el)
 
-    if (elJq.is(':hidden')) {
-      return
-    }
+        if (elJq.is(':hidden')) {
+            return
+        }
 
-    const id = elJq.closest('.js-testcase-row').data('testcase-pk')
-    tcIds.push(id)
-  })
+        const id = elJq.closest('.js-testcase-row').data('testcase-pk')
+        tcIds.push(id)
+    })
 
-  return tcIds
+    return tcIds
 }
 
 function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
-  // no input => show all rows
-  if (filterValue.trim().length === 0) {
-    $('.js-testcase-row').show()
-    return
-  }
+    // no input => show all rows
+    if (filterValue.trim().length === 0) {
+        $('.js-testcase-row').show()
+        return
+    }
 
-  $('.js-testcase-row').hide()
-  if (filterBy === 'component' || filterBy === 'tag') {
-    const query = { plan: planId }
-    query[`${filterBy}__name__icontains`] = filterValue
+    $('.js-testcase-row').hide()
+    if (filterBy === 'component' || filterBy === 'tag') {
+        const query = { plan: planId }
+        query[`${filterBy}__name__icontains`] = filterValue
 
-    jsonRPC('TestCase.filter', query, function (filtered) {
-      // hide again if a previous async request showed something else
-      $('.js-testcase-row').hide()
-      filtered.forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
-    })
-  } else {
-    testCases.filter(function (tc) {
-      return (tc[filterBy] && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
-    }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
-  }
+        jsonRPC('TestCase.filter', query, function (filtered) {
+            // hide again if a previous async request showed something else
+            $('.js-testcase-row').hide()
+            filtered.forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
+        })
+    } else {
+        testCases.filter(function (tc) {
+            return (tc[filterBy] && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
+        }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
+    }
 }
