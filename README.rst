@@ -1,5 +1,5 @@
-Kiwi TCMS - Open Source Test Case Management System
-===================================================
+Kiwi TCMS - open source test management
+=======================================
 
 .. image:: https://img.shields.io/docker/pulls/kiwitcms/kiwi
     :target: https://kiwitcms.readthedocs.io/en/latest/installing_docker.html
