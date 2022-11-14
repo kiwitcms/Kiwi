@@ -4,7 +4,11 @@
 <div class="card-pf card-pf-accented">
     <h2 class="card-pf-title">
         <span class="fa fa-paperclip"></span>
-        {% trans 'Attachments' %}
+        {% if card_title %}
+            {{ card_title }}
+        {% else %}
+            {% trans 'Attachments' %}
+        {% endif %}
     </h2>
 
     <div class="card-pf-body">
