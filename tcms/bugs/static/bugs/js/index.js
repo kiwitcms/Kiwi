@@ -1,3 +1,6 @@
+import { bootstrapSwitch } from 'bootstrap-switch';
+import { populateVersion, tagsCard, treeViewBind } from 'js/index';
+
 const whenReady = {
     'page-bugs-get': () => {
         const objectId = $('#object_pk').data('pk')

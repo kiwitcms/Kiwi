@@ -12,6 +12,12 @@ module.exports = {
         './testplans/static/testplans/js/index.js',
         './testruns/static/testruns/js/index.js',
     ],
+    resolve: {
+        modules: [
+            path.join(__dirname, 'static'),
+            'node_modules',
+        ],
+    },
     output: {
         path: path.join(__dirname, 'static', 'js'),
         filename: 'bundle.js'
