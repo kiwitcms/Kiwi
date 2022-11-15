@@ -90,6 +90,7 @@ Let's run Kiwi TCMS
 
 You're now ready to start the server::
 
+    ./node_modules/.bin/webpack watch
     ./manage.py runserver
 
 Now, open http://127.0.0.1:8000/ and should be presented with your brand new Kiwi TCMS homepage!
