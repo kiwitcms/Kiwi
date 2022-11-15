@@ -1,6 +1,6 @@
 // JSON-RPC client inspired by
 // https://stackoverflow.com/questions/8147211/jquery-jsonrpc-2-0-call-via-ajax-gets-correct-response-but-does-not-work
-function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
+export function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
     // .filter() args are passed as dictionary but other args,
     // e.g. for .add_tag() are passed as a list of positional values
     if (!Array.isArray(rpcParams)) {
@@ -35,7 +35,7 @@ function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
 
 // used by DataTables to convert a list of objects to a dict
 // suitable for loading data into the table
-function dataTableJsonRPC (rpcMethod, rpcParams, callback, preProcessData) {
+export function dataTableJsonRPC (rpcMethod, rpcParams, callback, preProcessData) {
     const internalCallback = function (data) {
     // used to collect additional information about columns via ForeignKeys
         if (preProcessData !== undefined) {

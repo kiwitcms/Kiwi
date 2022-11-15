@@ -1,5 +1,5 @@
 // hooks events into DataTable pagination controls
-function hookIntoPagination (tableSelector, table) {
+export function hookIntoPagination (tableSelector, table) {
     const updateCurrentPage = function (table) {
         const info = table.page.info()
         $('.current-page').val(info.page + 1)

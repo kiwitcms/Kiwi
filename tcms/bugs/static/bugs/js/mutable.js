@@ -1,4 +1,6 @@
-$(() => {
+import { populateBuild, populateVersion } from '../../../../static/js/utils'
+
+export function pageBugsMutableReadyHandler () {
     if ($('#page-bugs-mutable').length === 0) {
         return
     }
@@ -41,4 +43,4 @@ $(() => {
     if ($('#id_version').find('option').length === 0) {
         populateVersion()
     }
-})
+}
