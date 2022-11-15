@@ -9,3 +9,5 @@ npm install
 # always exit with 0 here
 npm audit fix || echo
 npm audit signatures
+
+./node_modules/.bin/webpack
