@@ -1,7 +1,10 @@
+import { jsonRPC } from './jsonrpc'
+
+
 /*
     Used to update a select when something else changes.
 */
-function updateSelect (data, selector, idAttr, valueAttr, groupAttr) {
+export function updateSelect (data, selector, idAttr, valueAttr, groupAttr) {
     const _selectTag = $(selector)[0]
     let newOptions = ''
     let currentGroup = ''
@@ -43,7 +46,7 @@ function updateSelect (data, selector, idAttr, valueAttr, groupAttr) {
 /*
     Used for on-change event handlers
 */
-function updateVersionSelectFromProduct () {
+export function updateVersionSelectFromProduct () {
     const updateVersionSelectCallback = function (data) {
         updateSelect(data, '#id_version', 'id', 'value', 'product__name')
 
@@ -64,7 +67,7 @@ function updateVersionSelectFromProduct () {
     }
 }
 
-function populateVersion () {
+export function populateVersion () {
     const productId = $('#id_product').val()
 
     if (productId === null) {
@@ -85,7 +88,7 @@ function populateVersion () {
 /*
     Used for on-change event handlers
 */
-function updateBuildSelectFromVersion (keepFirst) {
+export function updateBuildSelectFromVersion (keepFirst) {
     const updateCallback = function (data) {
         updateSelect(data, '#id_build', 'id', 'name', 'version__value')
     }
@@ -108,7 +111,7 @@ function updateBuildSelectFromVersion (keepFirst) {
     }
 }
 
-function populateBuild () {
+export function populateBuild () {
     const productId = $('#id_product').val()
     const versionId = $('#id_version').val()
 
@@ -126,7 +129,7 @@ function populateBuild () {
 /*
     Used for on-change event handlers
 */
-function updateCategorySelectFromProduct () {
+export function updateCategorySelectFromProduct () {
     const updateCallback = function (data) {
         updateSelect(data, '#id_category', 'id', 'name')
     }
@@ -142,7 +145,7 @@ function updateCategorySelectFromProduct () {
 /*
     Used for on-change event handlers
 */
-function updateComponentSelectFromProduct () {
+export function updateComponentSelectFromProduct () {
     const updateCallback = function (data) {
         data = arrayToDict(data)
         updateSelect(Object.values(data), '#id_component', 'id', 'name')
@@ -160,7 +163,7 @@ function updateComponentSelectFromProduct () {
     Split the input string by comma and return
     a list of trimmed values
 */
-function splitByComma (input) {
+export function splitByComma (input) {
     const result = []
 
     input.split(',').forEach(function (element) {
@@ -177,7 +180,7 @@ function splitByComma (input) {
     the dictionary so we can search by tags!
     Used in search.js
 */
-function updateParamsToSearchTags (selector, params) {
+export function updateParamsToSearchTags (selector, params) {
     const tagList = splitByComma($(selector).val())
 
     if (tagList.length > 0) {
@@ -194,7 +197,7 @@ function updateParamsToSearchTags (selector, params) {
     angle brackets (<>)
     https://github.com/kiwitcms/Kiwi/issues/234
 */
-function escapeHTML (unsafe) {
+export function escapeHTML (unsafe) {
     return unsafe.replace(/[&<>"']/g, function (m) {
         return ({
             '&': '&amp;',
@@ -206,7 +209,7 @@ function escapeHTML (unsafe) {
     })
 }
 
-function unescapeHTML (html) {
+export function unescapeHTML (html) {
     return html
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
@@ -218,7 +221,7 @@ function unescapeHTML (html) {
         .replace(/&amp;/g, '&')
 }
 
-function treeViewBind (selector = '.tree-list-view-pf') {
+export function treeViewBind (selector = '.tree-list-view-pf') {
     // collapse all child rows
     $(selector).find('.list-group-item-container').addClass('hidden')
 
@@ -240,7 +243,7 @@ const animate = (target, handler, time = 500) => target.fadeOut(time, handler).f
 const currentTimeWithTimezone = timeZone => moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
 
 /* render Markdown & assign it to selector */
-function markdown2HTML (input, selector) {
+export function markdown2HTML (input, selector) {
     // first display raw input in case user is not logged in and
     // Markdown.render returns 403 forbidden
     $(selector).html(input)
@@ -250,7 +253,7 @@ function markdown2HTML (input, selector) {
     })
 }
 
-function renderCommentHTML (index, comment, template, bindDeleteFunc) {
+export function renderCommentHTML (index, comment, template, bindDeleteFunc) {
     const newNode = $(template.content.cloneNode(true))
 
     newNode.find('.js-comment-container').attr('data-comment-id', comment.id)
@@ -266,7 +269,7 @@ function renderCommentHTML (index, comment, template, bindDeleteFunc) {
     return newNode
 }
 
-function bindDeleteCommentButton (objId, deleteMethod, canDelete, parentNode) {
+export function bindDeleteCommentButton (objId, deleteMethod, canDelete, parentNode) {
     if (canDelete) {
         parentNode.find('.js-comment-delete-btn').click(function (event) {
             const commentId = $(event.target).parents('.js-comment-container').data('comment-id')
@@ -281,7 +284,7 @@ function bindDeleteCommentButton (objId, deleteMethod, canDelete, parentNode) {
     }
 }
 
-function renderCommentsForObject (objId, getMethod, deleteMethod, canDelete, parentNode) {
+export function renderCommentsForObject (objId, getMethod, deleteMethod, canDelete, parentNode) {
     const commentTemplate = $('template#comment-template')[0]
 
     jsonRPC(getMethod, [objId], comments => {
@@ -291,7 +294,7 @@ function renderCommentsForObject (objId, getMethod, deleteMethod, canDelete, par
     })
 }
 
-function showPopup (href) {
+export function showPopup (href) {
     if (href.indexOf('?') === -1) {
         href += '?nonav=1'
     } else {
@@ -309,7 +312,7 @@ function showPopup (href) {
 // rpcMethod - must accept [pk, case_id] - the method used to do the work
 // href - URL of the search page
 // errorMessage - message to display in case of RPC errors
-function advancedSearchAndAddTestCases (objId, rpcMethod, href, errorMessage) {
+export function advancedSearchAndAddTestCases (objId, rpcMethod, href, errorMessage) {
     window.addTestCases = function (testCaseIDs, sender) {
         let rpcErrors = 0
 
@@ -362,7 +365,7 @@ function advancedSearchAndAddTestCases (objId, rpcMethod, href, errorMessage) {
 // cache - cache of previous values fetched for typeahead
 // initialQuery - an initial RPC query that is AND'ed to the internal conditions
 //                for example: filter only CONFIRMED TCs.
-function quickSearchAndAddTestCase (objId, pageCallback, cache, initialQuery = {}) {
+export function quickSearchAndAddTestCase (objId, pageCallback, cache, initialQuery = {}) {
     // + button
     $('#btn-add-case').click(function () {
         pageCallback(objId)
@@ -422,7 +425,7 @@ function quickSearchAndAddTestCase (objId, pageCallback, cache, initialQuery = {
 }
 
 // on dropdown change update the label of the button and set new selected list item
-function changeDropdownSelectedItem (dropDownSelector, buttonSelector, target, focusTarget) {
+export function changeDropdownSelectedItem (dropDownSelector, buttonSelector, target, focusTarget) {
     $(`${buttonSelector}`)[0].innerHTML = target.innerText + '<span class="caret"></span>'
 
     // remove selected class
@@ -445,14 +448,14 @@ function changeDropdownSelectedItem (dropDownSelector, buttonSelector, target, f
     return false
 }
 
-function arrayToDict (arr) {
+export function arrayToDict (arr) {
     return arr.reduce(function (map, obj) {
         map[obj.id] = obj
         return map
     }, {})
 }
 
-function updateTestPlanSelectFromProduct (callback = () => {}) {
+export function updateTestPlanSelectFromProduct (callback = () => {}) {
     const updateCallback = (data = []) => {
         updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name')
         callback()

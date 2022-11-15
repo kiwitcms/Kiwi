@@ -1,4 +1,7 @@
-$(() => {
+import { tagsCard } from '../../../../static/js/tags'
+import { treeViewBind } from '../../../../static/js/utils'
+
+export function pageBugsGetReadyHandler () {
     if ($('#page-bugs-get').length === 0) {
         return
     }
@@ -11,4 +14,4 @@ $(() => {
 
     // executions tree view
     treeViewBind()
-})
+}

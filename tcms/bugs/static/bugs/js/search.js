@@ -1,4 +1,8 @@
-$(() => {
+import { dataTableJsonRPC } from '../../../../static/js/jsonrpc'
+import { hookIntoPagination } from '../../../../static/js/pagination'
+import { escapeHTML, updateBuildSelectFromVersion, updateVersionSelectFromProduct } from '../../../../static/js/utils'
+
+export function pageBugsSearchReadyHandler () {
     if ($('#page-bugs-search').length === 0) {
         return
     }
@@ -100,4 +104,4 @@ $(() => {
     $('.bootstrap-switch').bootstrapSwitch()
 
     $('.selectpicker').selectpicker()
-})
+}
