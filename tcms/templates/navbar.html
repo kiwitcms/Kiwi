@@ -11,8 +11,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/" target="_parent">
-                <img src="{% static 'images/kiwi_h20.png' %}" alt="Kiwi TCMS" />
+            <a class="navbar-brand" href="{% url 'core-views-index' %}" target="_parent">
+                <img src="{% static 'images/kiwi_h20.png' %}" alt="{% trans 'DASHBOARD' %}" title="{% trans 'DASHBOARD' %}"/>
             </a>
 
             {% block customized_logo %}

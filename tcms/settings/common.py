@@ -317,7 +317,6 @@ for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
 
 # this is the main navigation menu
 MENU_ITEMS = [
-    (_("DASHBOARD"), reverse_lazy("core-views-index")),
     (
         _("TESTING"),
         [
