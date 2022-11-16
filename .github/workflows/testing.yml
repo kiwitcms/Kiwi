@@ -60,8 +60,12 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
+        if: env.HAS_TOKEN
         uses: codecov/codecov-action@v3
+        env:
+          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           verbose: true
 
@@ -95,8 +99,12 @@ jobs:
         coverage report -m
 
     - name: Send coverage to codecov.io
+      if: env.HAS_TOKEN
       uses: codecov/codecov-action@v3
+      env:
+        HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         verbose: true
 
@@ -131,8 +139,12 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
+        if: env.HAS_TOKEN
         uses: codecov/codecov-action@v3
+        env:
+          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           verbose: true
 
@@ -174,8 +186,12 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
+        if: env.HAS_TOKEN
         uses: codecov/codecov-action@v3
+        env:
+          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           verbose: true
 
@@ -215,8 +231,12 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
+        if: env.HAS_TOKEN
         uses: codecov/codecov-action@v3
+        env:
+          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           verbose: true
 
