@@ -64,6 +64,24 @@ function updateVersionSelectFromProduct () {
     }
 }
 
+function populateVersion () {
+    const productId = $('#id_product').val()
+
+    if (productId === null) {
+        $('#add_id_version').addClass('disabled')
+        $('#add_id_build').addClass('disabled')
+    } else {
+        $('#add_id_version').removeClass('disabled')
+        $('#add_id_build').removeClass('disabled')
+    }
+
+    const href = $('#add_id_version')[0].href
+    $('#add_id_version')[0].href = href.slice(0, href.indexOf('&product'))
+    $('#add_id_version')[0].href += `&product=${productId}`
+    $('#id_version').find('option').remove()
+    updateVersionSelectFromProduct()
+}
+
 /*
     Used for on-change event handlers
 */
@@ -90,6 +108,20 @@ function updateBuildSelectFromVersion (keepFirst) {
     }
 }
 
+function populateBuild () {
+    const versionId = $('#id_version').val()
+
+    if (versionId === null) {
+        $('#add_id_build').addClass('disabled')
+    } else {
+        $('#add_id_build').removeClass('disabled')
+    }
+
+    const href = $('#add_id_build')[0].href
+    $('#add_id_build')[0].href = href.slice(0, href.indexOf('&version'))
+    $('#add_id_build')[0].href += `&version=${versionId}`
+    updateBuildSelectFromVersion()
+}
 /*
     Used for on-change event handlers
 */
