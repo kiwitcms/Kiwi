@@ -58,7 +58,11 @@ jobs:
         coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.issuetracker.tests.test_${{ matrix.tracker }}
 
     - name: Send coverage to codecov.io
+      if: env.HAS_TOKEN
       uses: codecov/codecov-action@v3
+      env:
+        HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         verbose: true
