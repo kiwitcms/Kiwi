@@ -10,6 +10,8 @@ module.exports = {
         ecmaVersion: 12
     },
     rules: {
-        indent: ['error', 4]
+        indent: ['error', 4],
+        'no-undef': 'off',
+        'node/no-callback-literal': 'off'
     }
 }

@@ -143,4 +143,4 @@ jobs:
           cd tcms/
           ./npm-install && npm install --dev
 
-          ./node_modules/.bin/eslint . -c package.json
+          ./node_modules/.bin/eslint .
