@@ -221,4 +221,8 @@ $(() => {
     })
 
     $('.selectpicker').selectpicker()
+
+    if (window.location.href.indexOf('product') > -1) {
+        $('#id_product').change()
+    }
 })
