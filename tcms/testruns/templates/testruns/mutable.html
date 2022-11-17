@@ -78,7 +78,7 @@
 
                 {% if plan_id %}
                 <!-- only visible when creating TR from an existing TP -->
-                <a href="{% url 'admin:management_build_add' %}?_popup&version={{ form.plan.field.queryset.0.product_version_id }}"
+                <a href="{% url 'admin:management_build_add' %}?_popup&version={{ form.plan.field.queryset.0.product_version_id }}&product={{ form.plan.field.queryset.0.product_id }}"
                     id="add_id_build"
                     alt="{% trans 'add new Build' %}"
                     title="{% trans 'add new Build' %}">+</a>

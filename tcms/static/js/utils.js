@@ -109,6 +109,7 @@ function updateBuildSelectFromVersion (keepFirst) {
 }
 
 function populateBuild () {
+    const productId = $('#id_product').val()
     const versionId = $('#id_version').val()
 
     if (versionId === null) {
@@ -119,7 +120,7 @@ function populateBuild () {
 
     const href = $('#add_id_build')[0].href
     $('#add_id_build')[0].href = href.slice(0, href.indexOf('&version'))
-    $('#add_id_build')[0].href += `&version=${versionId}`
+    $('#add_id_build')[0].href += `&version=${versionId}&product=${productId}`
     updateBuildSelectFromVersion()
 }
 /*
