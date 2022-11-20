@@ -1,4 +1,6 @@
-$(() => {
+import { updateCategorySelectFromProduct } from '../../../../static/js/utils'
+
+export function pageTestcasesMutableReadyHandler () {
     if ($('#page-testcases-mutable').length === 0) {
         return
     }
@@ -30,7 +32,7 @@ $(() => {
 
     $('.selectpicker').selectpicker()
     $('.bootstrap-switch').bootstrapSwitch()
-})
+}
 
 function populateProductCategory () {
     const productId = $('#id_product').val()

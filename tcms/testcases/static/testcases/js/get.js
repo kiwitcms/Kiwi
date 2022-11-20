@@ -1,3 +1,9 @@
+import { loadBugs } from '../../../../static/js/bugs'
+import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
+import { propertiesCard } from '../../../../static/js/properties'
+import { arrayToDict, escapeHTML, treeViewBind } from '../../../../static/js/utils'
+import { tagsCard } from '../../../../static/js/tags'
+
 const planCache = {}
 
 function addComponent (objectId, _input, toTable) {
@@ -83,7 +89,7 @@ function initAddPlan (caseId, plansTable) {
     })
 }
 
-$(() => {
+export function pageTestcasesGetReadyHandler () {
     if ($('#page-testcases-get').length === 0) {
         return
     }
@@ -226,4 +232,4 @@ $(() => {
 
     // executions treeview
     treeViewBind()
-})
+}

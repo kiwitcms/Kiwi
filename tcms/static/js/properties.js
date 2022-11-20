@@ -1,3 +1,6 @@
+import { jsonRPC } from './jsonrpc'
+import { animate } from './utils'
+
 // https://gist.github.com/iperelivskiy/4110988#gistcomment-2697447
 // used only to hash strings to get unique IDs for href targets
 function funhash (s) {
@@ -8,7 +11,7 @@ function funhash (s) {
     return (h ^ h >>> 16) >>> 0
 }
 
-function displayProperties (objectId, objectAttrName, viewMethod, removeMethod) {
+export function displayProperties (objectId, objectAttrName, viewMethod, removeMethod) {
     const container = $('#properties-accordion')
     const propertyTemplate = $('#property-fragment')[0].content
     const valueTemplate = $(propertyTemplate).find('template')[0].content
@@ -63,7 +66,7 @@ function displayProperties (objectId, objectAttrName, viewMethod, removeMethod) 
     })
 }
 
-function addPropertyValue (objectId, objectAttrName, viewMethod, addMethod, removeMethod) {
+export function addPropertyValue (objectId, objectAttrName, viewMethod, addMethod, removeMethod) {
     const nameValue = $('#property-value-input').val().split('=')
 
     jsonRPC(
@@ -81,7 +84,7 @@ function addPropertyValue (objectId, objectAttrName, viewMethod, addMethod, remo
 }
 
 // binds everything in this card
-function propertiesCard (objectId, objectAttrName, viewMethod, addMethod, removeMethod) {
+export function propertiesCard (objectId, objectAttrName, viewMethod, addMethod, removeMethod) {
     displayProperties(objectId, objectAttrName, viewMethod, removeMethod)
 
     $('.js-add-property-value').click(function () {

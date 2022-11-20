@@ -1,6 +1,5 @@
 import { jsonRPC } from './jsonrpc'
 
-
 /*
     Used to update a select when something else changes.
 */
@@ -239,8 +238,13 @@ export function treeViewBind (selector = '.tree-list-view-pf') {
     })
 }
 
-const animate = (target, handler, time = 500) => target.fadeOut(time, handler).fadeIn(time)
-const currentTimeWithTimezone = timeZone => moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
+export function animate (target, handler, time = 500) {
+    target.fadeOut(time, handler).fadeIn(time)
+}
+
+export function currentTimeWithTimezone (timeZone) {
+    moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
+}
 
 /* render Markdown & assign it to selector */
 export function markdown2HTML (input, selector) {

@@ -1,3 +1,10 @@
+import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
+import {
+    escapeHTML, updateComponentSelectFromProduct, updateCategorySelectFromProduct,
+    updateParamsToSearchTags, updateTestPlanSelectFromProduct
+} from '../../../../static/js/utils'
+import { hookIntoPagination } from '../../../../static/js/pagination'
+
 function preProcessData (data, callback) {
     const caseIds = []
     data.forEach(function (element) {
@@ -52,7 +59,7 @@ function preProcessData (data, callback) {
     })
 }
 
-$(() => {
+export function pageTestcasesSearchReadyHandler () {
     if ($('#page-testcases-search').length === 0) {
         return
     }
@@ -225,4 +232,4 @@ $(() => {
     if (window.location.href.indexOf('product') > -1) {
         $('#id_product').change()
     }
-})
+}
