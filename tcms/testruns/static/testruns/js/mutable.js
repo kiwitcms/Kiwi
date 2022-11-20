@@ -1,4 +1,7 @@
-$(() => {
+import { jsonRPC } from '../../../../static/js/jsonrpc'
+import { updateSelect, updateTestPlanSelectFromProduct } from '../../../../static/js/utils'
+
+export function pageTestrunsMutableReadyHandler () {
     if ($('#page-testruns-mutable').length === 0) {
         return
     }
@@ -34,4 +37,4 @@ $(() => {
     })
 
     $('.selectpicker').selectpicker()
-})
+}

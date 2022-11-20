@@ -1,3 +1,15 @@
+import { fetchBugDetails } from '../../../../static/js/bugs'
+import { jsonRPC } from '../../../../static/js/jsonrpc'
+import { propertiesCard } from '../../../../static/js/properties'
+import { tagsCard } from '../../../../static/js/tags'
+import {
+    advancedSearchAndAddTestCases, animate,
+    arrayToDict, bindDeleteCommentButton,
+    changeDropdownSelectedItem, currentTimeWithTimezone,
+    markdown2HTML, renderCommentsForObject, renderCommentHTML,
+    quickSearchAndAddTestCase, treeViewBind
+} from '../../../../static/js/utils'
+
 const allExecutionStatuses = {}
 const allExecutions = {}
 const expandedExecutionIds = []
@@ -8,7 +20,7 @@ const permissions = {
 }
 const autocompleteCache = {}
 
-$(() => {
+export function pageTestrunsGetReadyHandler () {
     if ($('#page-testruns-get').length === 0) {
         return
     }
@@ -234,7 +246,7 @@ $(() => {
             $(event.target).parents('tr').hide()
         })
     })
-})
+}
 
 function filterTestExecutionsByProperty (runId, executions, filterBy, filterValue) {
     // no input => show all rows

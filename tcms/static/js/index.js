@@ -11,6 +11,11 @@ import { pageTestplansGetReadyHandler } from '../../testplans/static/testplans/j
 import { pageTestplansMutableReadyHandler } from '../../testplans/static/testplans/js/mutable'
 import { pageTestplansSearchReadyHandler } from '../../testplans/static/testplans/js/search'
 
+import { pageTestrunsEnvironmentReadyHandler } from '../../testruns/static/testruns/js/environment'
+import { pageTestrunsGetReadyHandler } from '../../testruns/static/testruns/js/get'
+import { pageTestrunsMutableReadyHandler } from '../../testruns/static/testruns/js/mutable'
+import { pageTestrunsSearchReadyHandler } from '../../testruns/static/testruns/js/search'
+
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
     'page-bugs-mutable': pageBugsMutableReadyHandler,
@@ -23,7 +28,12 @@ const pageHandlers = {
 
     'page-testplans-get': pageTestplansGetReadyHandler,
     'page-testplans-mutable': pageTestplansMutableReadyHandler,
-    'page-testplans-search': pageTestplansSearchReadyHandler
+    'page-testplans-search': pageTestplansSearchReadyHandler,
+
+    'page-testruns-environment': pageTestrunsEnvironmentReadyHandler,
+    'page-testruns-get': pageTestrunsGetReadyHandler,
+    'page-testruns-mutable': pageTestrunsMutableReadyHandler,
+    'page-testruns-search': pageTestrunsSearchReadyHandler
 }
 
 $(() => {
