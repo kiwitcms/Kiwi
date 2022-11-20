@@ -1,4 +1,6 @@
-$(() => {
+import { updateVersionSelectFromProduct } from '../../../../static/js/utils'
+
+export function pageManagementBuildAdminReadyHandler () {
     const filterParams = new URLSearchParams(window.location.search)
 
     $('#id_product').change(updateVersionSelectFromProduct)
@@ -12,4 +14,4 @@ $(() => {
     if (filterParams.has('product')) {
         $('#id_product').change()
     }
-})
+}
