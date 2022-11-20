@@ -1,7 +1,6 @@
 import { jsonRPC, dataTableJsonRPC } from './jsonrpc'
 import { arrayToDict } from './utils'
 
-
 /*
     Applies tag to the chosen model
 

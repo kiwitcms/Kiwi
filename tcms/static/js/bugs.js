@@ -1,6 +1,8 @@
+import { dataTableJsonRPC, jsonRPC } from './jsonrpc'
+
 const bugDetailsCache = {}
 
-function loadBugs (selector, filter) {
+export function loadBugs (selector, filter) {
     const noRecordsFoundText = $('.bugs-table').data('no-records-found-text')
 
     $(selector).DataTable({
@@ -49,7 +51,7 @@ function loadBugs (selector, filter) {
         })
 }
 
-function fetchBugDetails (source, popover, cache = bugDetailsCache) {
+export function fetchBugDetails (source, popover, cache = bugDetailsCache) {
     if (source.href in cache) {
         assignPopoverData(source, popover, cache[source.href])
         return
@@ -61,7 +63,7 @@ function fetchBugDetails (source, popover, cache = bugDetailsCache) {
     }, true)
 }
 
-function assignPopoverData (source, popover, data) {
+export function assignPopoverData (source, popover, data) {
     source.title = data.title
     $(popover).attr('data-original-title', data.title)
     $(popover).attr('data-content', data.description)
