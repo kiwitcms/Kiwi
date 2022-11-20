@@ -35,10 +35,8 @@ export function updateSelect (data, selector, idAttr, valueAttr, groupAttr) {
 
     _selectTag.innerHTML = newOptions
 
-    try {
+    if ( $('body').selectpicker ) {
         $(selector).selectpicker('refresh')
-    } catch (e) {
-        console.warn(e)
     }
 }
 
