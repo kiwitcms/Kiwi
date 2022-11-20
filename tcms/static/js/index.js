@@ -16,6 +16,8 @@ import { pageTestrunsGetReadyHandler } from '../../testruns/static/testruns/js/g
 import { pageTestrunsMutableReadyHandler } from '../../testruns/static/testruns/js/mutable'
 import { pageTestrunsSearchReadyHandler } from '../../testruns/static/testruns/js/search'
 
+import { pageManagementBuildAdminReadyHandler } from '../../management/static/management/js/build_admin'
+
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
     'page-bugs-mutable': pageBugsMutableReadyHandler,
@@ -37,12 +39,17 @@ const pageHandlers = {
 }
 
 $(() => {
-    const pageId = $('body').attr('id')
+    const body = $('body')
+    const pageId = body.attr('id')
     const readyFunc = pageHandlers[pageId]
     if (readyFunc) {
         readyFunc()
     }
 
+    // this page doesn't have a page id
+    if ( body.hasClass('grp-change-form') && body.hasClass('management-build') ) {
+        pageManagementBuildAdminReadyHandler()
+    }
     // todo: add selectpicker() and bootstrapSwitch()
     // initialization here
 

@@ -54,9 +54,7 @@ class BuildAdminForm(forms.ModelForm):
 
     class Media:
         js = [
-            "js/jsonrpc.js",
-            "js/utils.js",
-            "management/js/build_admin.js",
+            "js/bundle.js",
         ]
 
     product = forms.ModelChoiceField(
