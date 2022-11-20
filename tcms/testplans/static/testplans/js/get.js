@@ -1,3 +1,12 @@
+import { jsonRPC } from '../../../../static/js/jsonrpc'
+import { tagsCard } from '../../../../static/js/tags'
+import {
+    advancedSearchAndAddTestCases,
+    bindDeleteCommentButton,
+    markdown2HTML, renderCommentsForObject, renderCommentHTML,
+    treeViewBind, quickSearchAndAddTestCase
+} from '../../../../static/js/utils'
+
 const expandedTestCaseIds = []
 const fadeAnimationTime = 500
 
@@ -6,7 +15,7 @@ const autocompleteCache = {}
 
 const confirmedStatuses = []
 
-$(() => {
+export function pageTestplansGetReadyHandler () {
     if ($('#page-testplans-get').length === 0) {
         return
     }
@@ -58,7 +67,7 @@ $(() => {
             $('#test_plan_pk').data('trans-error-adding-cases')
         )
     })
-})
+}
 
 function addTestCaseToPlan (planId) {
     const caseName = $('#search-testcase')[0].value
