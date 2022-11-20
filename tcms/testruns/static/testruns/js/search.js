@@ -1,3 +1,12 @@
+import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
+import {
+    arrayToDict, escapeHTML,
+    updateParamsToSearchTags,
+    updateVersionSelectFromProduct, updateBuildSelectFromVersion
+} from '../../../../static/js/utils'
+
+import { hookIntoPagination } from '../../../../static/js/pagination'
+
 function preProcessData (data, callback) {
     const runIds = []
     const planIds = []
@@ -39,7 +48,7 @@ function preProcessData (data, callback) {
     })
 }
 
-$(() => {
+export function pageTestrunsSearchReadyHandler () {
     if ($('#page-testruns-search').length === 0) {
         return
     }
@@ -120,7 +129,7 @@ $(() => {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    result = '<a href="/runs/' + data.id + '/">' + escapeHTML(data.summary) + '</a>'
+                    let result = '<a href="/runs/' + data.id + '/">' + escapeHTML(data.summary) + '</a>'
                     if (data.stop_date) {
                         result += '<p class="help-block">' + data.stop_date + '</p>'
                     }
@@ -167,4 +176,4 @@ $(() => {
     $('.bootstrap-switch').bootstrapSwitch()
 
     $('.selectpicker').selectpicker()
-})
+}
