@@ -1,4 +1,4 @@
-FROM fedora:36
+FROM fedora:37
 
 RUN dnf -y install httpd && \
     dnf -y install bugzilla "perl(DBD::SQLite)" findutils
