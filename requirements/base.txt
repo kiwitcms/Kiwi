@@ -8,7 +8,7 @@ django-attachments==1.9.1
 django-colorfield==0.7.2
 django-contrib-comments==2.2.0
 django-extensions==3.2.1
-django-grappelli==3.0.3
+django-grappelli==3.0.4
 django-guardian==2.4.0
 django-modern-rpc==0.12.1
 django-simple-history==3.2.0
