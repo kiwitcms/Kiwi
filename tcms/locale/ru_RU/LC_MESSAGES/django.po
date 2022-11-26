@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:09\n"
+"PO-Revision-Date: 2022-11-26 22:17\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -749,7 +749,7 @@ msgstr "Автоматизирован"
 #: tcms/testplans/templates/testplans/get.html:402
 #: tcms/testruns/templates/testruns/get.html:362
 msgid "Manual"
-msgstr "Ручной"
+msgstr "Руководство"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 #: tcms/testcases/models.py:42
@@ -2136,3 +2136,4 @@ msgstr "Изменить владельца"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Только авторизованные пользователи могут приглашать других"
+
