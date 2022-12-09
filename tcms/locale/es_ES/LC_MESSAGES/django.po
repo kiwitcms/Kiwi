@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:10\n"
+"PO-Revision-Date: 2022-12-08 18:40\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2094,15 +2094,15 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:26
 msgid "Company, team or project name"
-msgstr "Nombre de la empresa, equipo o proyecto"
+msgstr "Prueba Marcos"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:34
 msgid "Schema"
-msgstr "Esquema"
+msgstr "Esquema prueba Marcos"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:47
 msgid "Validation pattern"
-msgstr "Patrón de validación"
+msgstr "Patrón de validación prueba Marcos"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:52
 msgid "Publicly readable"

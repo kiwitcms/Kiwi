@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:09\n"
+"PO-Revision-Date: 2022-12-09 19:42\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -42,7 +42,7 @@ msgstr "Описание проблемы:\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:17
 #: tcms/bugs/templates/bugs/search.html:109
 msgid "Severity"
-msgstr ""
+msgstr "Важность"
 
 #: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
@@ -168,7 +168,7 @@ msgstr "Название"
 
 #: tcms/bugs/templates/bugs/mutable.html:26
 msgid "add new Severity"
-msgstr ""
+msgstr "добавить новую степень Важности"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -547,7 +547,7 @@ msgstr "Приоритеты"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "Сборки"
 
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:130
@@ -749,7 +749,7 @@ msgstr "Автоматизирован"
 #: tcms/testplans/templates/testplans/get.html:402
 #: tcms/testruns/templates/testruns/get.html:362
 msgid "Manual"
-msgstr "Ручной"
+msgstr "Руководство"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 #: tcms/testcases/models.py:42
@@ -782,11 +782,11 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Ascending"
-msgstr ""
+msgstr "По возрастанию"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:23
 msgid "Descending"
-msgstr ""
+msgstr "По убыванию"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 msgid "Test case"
@@ -949,7 +949,7 @@ msgstr "URL"
 
 #: tcms/templates/include/pagination.html:6
 msgid "Select"
-msgstr ""
+msgstr "Выбрать"
 
 #: tcms/templates/include/pagination.html:13
 msgid "First page"
@@ -974,12 +974,12 @@ msgstr "Последняя страница"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Parameters"
-msgstr ""
+msgstr "Параметры"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "Это функция предварительного просмотра!"
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
@@ -1508,7 +1508,7 @@ msgstr "Тип плана"
 
 #: tcms/testplans/templates/testplans/get.html:100
 msgid "Test cases"
-msgstr "Тест-кейс"
+msgstr "Тест-кейсы"
 
 #: tcms/testplans/templates/testplans/get.html:182
 #: tcms/testplans/templates/testplans/get.html:421
@@ -1662,13 +1662,13 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:83
 msgid "Start"
-msgstr ""
+msgstr "Начать"
 
 #: tcms/testruns/templates/testruns/get.html:90
 #: tcms/testruns/templates/testruns/mutable.html:112
 #: tcms/testruns/templates/testruns/search.html:152
 msgid "Planned stop"
-msgstr ""
+msgstr "Запланированная остановка"
 
 #: tcms/testruns/templates/testruns/get.html:95
 msgid "Finished at"
@@ -1695,7 +1695,7 @@ msgstr "Добавить комментарий"
 #: tcms/testruns/templates/testruns/get.html:332
 #: tcms/testruns/templates/testruns/get.html:551
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Добавить гиперссылку"
 
 #: tcms/testruns/templates/testruns/get.html:269
 #: tcms/testruns/templates/testruns/get.html:376
@@ -1712,7 +1712,7 @@ msgstr "Все"
 
 #: tcms/testruns/templates/testruns/get.html:307
 msgid "records"
-msgstr ""
+msgstr "записи"
 
 #: tcms/testruns/templates/testruns/get.html:333
 #: tcms/testruns/templates/testruns/get.html:590
