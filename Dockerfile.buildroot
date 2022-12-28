@@ -24,5 +24,9 @@ WORKDIR /Kiwi
 RUN pip3 install --no-cache-dir -r requirements/mariadb.txt -r requirements/postgres.txt
 
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" manage.py
+
+# compile tcms/static/js/bundle.js explicitly
+RUN pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
+
 RUN ./tests/check-build
 RUN pip3 install --no-cache-dir dist/kiwitcms-*.tar.gz
