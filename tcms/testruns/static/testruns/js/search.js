@@ -170,6 +170,4 @@ export function pageTestrunsSearchReadyHandler () {
     })
 
     $('.bootstrap-switch').bootstrapSwitch()
-
-    $('.selectpicker').selectpicker()
 }

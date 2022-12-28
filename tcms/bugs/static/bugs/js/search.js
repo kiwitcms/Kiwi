@@ -98,6 +98,4 @@ export function pageBugsSearchReadyHandler () {
     })
 
     $('.bootstrap-switch').bootstrapSwitch()
-
-    $('.selectpicker').selectpicker()
 }

@@ -16,8 +16,6 @@ export function pageTestplansMutableReadyHandler () {
         return showRelatedObjectPopup(this)
     })
 
-    $('.selectpicker').selectpicker()
-
     $('.bootstrap-switch').bootstrapSwitch()
 
     document.getElementById('id_product').onchange = function () {
