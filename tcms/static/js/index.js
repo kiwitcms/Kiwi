@@ -61,7 +61,7 @@ $(() => {
 
     $('.selectpicker').selectpicker()
     $('.bootstrap-switch').bootstrapSwitch()
-    // todo: add tooltip initialization here
+    $('[data-toggle="tooltip"]').tooltip()
 
     // todo: maybe initialize pagination here
 })

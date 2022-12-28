@@ -26,7 +26,6 @@ export function pageTelemetryExecutionTrendsReadyHandler () {
     drawChart()
 
     // TODO: duplicates
-    $('[data-toggle="tooltip"]').tooltip()
     // Close multiselect list when selecting an item
     // Iterate over all dropdown lists
     $('select[multiple]').each(function () {
