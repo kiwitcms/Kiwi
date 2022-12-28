@@ -25,8 +25,6 @@ export function pageTestrunsGetReadyHandler () {
     permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
     permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'
 
-    $('.bootstrap-switch').bootstrapSwitch()
-
     const testRunId = $('#test_run_pk').data('pk')
 
     propertiesCard(testRunId, 'run', 'TestRun.properties', undefined, undefined)

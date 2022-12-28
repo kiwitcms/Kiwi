@@ -118,6 +118,4 @@ export function pageTestplansSearchReadyHandler () {
     })
 
     $('#id_product').change(updateVersionSelectFromProduct)
-
-    $('.bootstrap-switch').bootstrapSwitch()
 }
