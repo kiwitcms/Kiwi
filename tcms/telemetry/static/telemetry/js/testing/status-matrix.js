@@ -1,3 +1,8 @@
+import { jsonRPC } from '../../../../../static/js/jsonrpc'
+import { updateBuildSelectFromVersion, updateVersionSelectFromProduct, updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
+
+import { loadInitialProduct } from './utils'
+
 let table
 const initialColumn = {
     data: null,
@@ -11,13 +16,7 @@ const initialColumn = {
     }
 }
 
-$(() => {
-    if ($('#page-telemetry-status-matrix').length === 0) {
-        return
-    }
-
-    $('[data-toggle="tooltip"]').tooltip()
-
+export function pageTelemetryStatusMatrixReadyHandler () {
     loadInitialProduct()
 
     document.getElementById('id_product').onchange = () => {
@@ -46,12 +45,21 @@ $(() => {
         setMaxHeight($(this))
     })
 
-    $('.bootstrap-switch').bootstrapSwitch()
-})
+    $(window).on('resize', function () {
+        setMaxHeight($('#table'))
+    })
 
-$(window).on('resize', function () {
-    setMaxHeight($('#table'))
-})
+    // TODO: duplicates
+    $('[data-toggle="tooltip"]').tooltip()
+    $('.bootstrap-switch').bootstrapSwitch()
+    // Close multiselect list when selecting an item
+    // Iterate over all dropdown lists
+    $('select[multiple]').each(function () {
+        $(this).on('change', function () {
+            $(this).parent('.bootstrap-select').removeClass('open')
+        })
+    })
+}
 
 function setMaxHeight (t) {
     const maxH = 0.99 * (window.innerHeight - t.position().top)
@@ -165,7 +173,7 @@ function applyStyleToCell (cell) {
         if (cellChildren) {
             const el = cellChildren[0]
             if (el && el.attributes.color) {
-                color = el.attributes.color.nodeValue
+                let color = el.attributes.color.nodeValue
                 $(cell[1]).attr('style', `border-left: 5px solid ${color}`)
                 if (el.attributes['from-parent'].nodeValue === 'true') {
                     $(cell[1]).addClass('danger')

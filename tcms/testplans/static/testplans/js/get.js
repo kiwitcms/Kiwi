@@ -1,6 +1,7 @@
 import { jsonRPC } from '../../../../static/js/jsonrpc'
 import { tagsCard } from '../../../../static/js/tags'
 import {
+    animate,
     advancedSearchAndAddTestCases,
     bindDeleteCommentButton,
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
@@ -423,7 +424,7 @@ function updateTestCasesViaAPI (testCaseIds, updateQuery, testPlanId, permission
             const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`)
 
             // update internal data
-            sortkey = allTestCases[caseId].sortkey
+            let sortkey = allTestCases[caseId].sortkey
             allTestCases[caseId] = updatedTC
             // note: updatedTC doesn't have sortkey information
             allTestCases[caseId].sortkey = sortkey
