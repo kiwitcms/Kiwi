@@ -4,10 +4,6 @@ import { populateVersion } from '../../../../static/js/utils'
     Used in mutable.html and clone.html
 */
 export function pageTestplansMutableReadyHandler () {
-    if ($('#page-testplans-mutable').length === 0) {
-        return
-    }
-
     if ($('#id_version').find('option').length === 0) {
         populateVersion()
     }

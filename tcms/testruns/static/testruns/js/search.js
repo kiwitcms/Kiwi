@@ -49,10 +49,6 @@ function preProcessData (data, callbackF) {
 }
 
 export function pageTestrunsSearchReadyHandler () {
-    if ($('#page-testruns-search').length === 0) {
-        return
-    }
-
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
         ajax: function (data, callbackF, settings) {

@@ -1,10 +1,6 @@
 import { updateCategorySelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestcasesMutableReadyHandler () {
-    if ($('#page-testcases-mutable').length === 0) {
-        return
-    }
-
     $('#text_templates').change(function () {
         markdownEditor.codemirror.setValue($(this).val())
     })
