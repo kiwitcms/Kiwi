@@ -2,8 +2,6 @@ import { jsonRPC } from '../../../../static/js/jsonrpc'
 import { updateSelect, updateTestPlanSelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestrunsMutableReadyHandler () {
-    $('[data-toggle="tooltip"]').tooltip()
-
     document.getElementById('id_product').onchange = () => {
         $('#id_product').selectpicker('refresh')
         updateTestPlanSelectFromProduct(() => {})

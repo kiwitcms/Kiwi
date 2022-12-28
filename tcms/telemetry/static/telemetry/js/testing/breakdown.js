@@ -17,8 +17,6 @@ export function pageTelemetryTestingBreakdownReadyHandler () {
     $('#version_and_build').hide()
 
     // TODO: the sections below are duplicate
-    $('[data-toggle="tooltip"]').tooltip()
-
     // Close multiselect list when selecting an item
     // Iterate over all dropdown lists
     $('select[multiple]').each(function () {
