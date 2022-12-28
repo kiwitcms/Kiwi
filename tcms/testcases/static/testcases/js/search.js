@@ -5,7 +5,7 @@ import {
 } from '../../../../static/js/utils'
 import { hookIntoPagination } from '../../../../static/js/pagination'
 
-function preProcessData (data, callback) {
+function preProcessData (data, callbackF) {
     const caseIds = []
     data.forEach(function (element) {
         caseIds.push(element.id)
@@ -54,7 +54,7 @@ function preProcessData (data, callback) {
                 }
             })
 
-            callback({ data }) // renders everything
+            callbackF({ data }) // renders everything
         })
     })
 }
@@ -66,7 +66,7 @@ export function pageTestcasesSearchReadyHandler () {
 
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
-        ajax: function (data, callback, settings) {
+        ajax: function (data, callbackF, settings) {
             const params = {}
 
             if ($('#id_summary').val()) {
@@ -129,7 +129,7 @@ export function pageTestcasesSearchReadyHandler () {
 
             updateParamsToSearchTags('#id_tag', params)
 
-            dataTableJsonRPC('TestCase.filter', params, callback, preProcessData)
+            dataTableJsonRPC('TestCase.filter', params, callbackF, preProcessData)
         },
         select: {
             className: 'success',

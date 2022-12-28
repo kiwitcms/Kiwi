@@ -7,7 +7,7 @@ import {
 
 import { hookIntoPagination } from '../../../../static/js/pagination'
 
-function preProcessData (data, callback) {
+function preProcessData (data, callbackF) {
     const runIds = []
     const planIds = []
     data.forEach(function (element) {
@@ -43,7 +43,7 @@ function preProcessData (data, callback) {
                 element.product_name = products[element.plan__product].name
             })
 
-            callback({ data }) // renders everything
+            callbackF({ data }) // renders everything
         })
     })
 }
@@ -55,7 +55,7 @@ export function pageTestrunsSearchReadyHandler () {
 
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
-        ajax: function (data, callback, settings) {
+        ajax: function (data, callbackF, settings) {
             const params = {}
 
             if ($('#id_summary').val()) {
@@ -122,7 +122,7 @@ export function pageTestrunsSearchReadyHandler () {
 
             params.stop_date__isnull = $('#id_running').is(':checked')
 
-            dataTableJsonRPC('TestRun.filter', params, callback, preProcessData)
+            dataTableJsonRPC('TestRun.filter', params, callbackF, preProcessData)
         },
         columns: [
             { data: 'id' },

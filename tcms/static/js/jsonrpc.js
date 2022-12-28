@@ -35,13 +35,13 @@ export function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
 
 // used by DataTables to convert a list of objects to a dict
 // suitable for loading data into the table
-export function dataTableJsonRPC (rpcMethod, rpcParams, callback, preProcessData) {
+export function dataTableJsonRPC (rpcMethod, rpcParams, callbackF, preProcessData) {
     const internalCallback = function (data) {
     // used to collect additional information about columns via ForeignKeys
         if (preProcessData !== undefined) {
-            preProcessData(data, callback)
+            preProcessData(data, callbackF)
         } else {
-            callback({ data })
+            callbackF({ data })
         }
     }
 
