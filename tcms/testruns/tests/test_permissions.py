@@ -52,7 +52,7 @@ class EditTestRunViewTestCase(PermissionsTestCase):
             html=True,
         )
         self.assertContains(response, _("Edit TestRun"))
-        self.assertContains(response, "testruns/js/mutable.js")
+        self.assertContains(response, "js/bundle.js")
 
     def verify_post_with_permission(self):
         user_should_have_perm(self.tester, "testruns.view_testrun")

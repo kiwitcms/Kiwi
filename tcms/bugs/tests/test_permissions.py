@@ -46,7 +46,7 @@ class TestNew(tests.PermissionsTestCase):
         response = self.client.get(self.url)
 
         self.assertContains(response, _("New Bug"))
-        self.assertContains(response, "bugs/js/mutable.js")
+        self.assertContains(response, "js/bundle.js")
 
     def verify_post_with_permission(self):
         initial_count = Bug.objects.count()
