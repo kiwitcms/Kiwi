@@ -77,6 +77,7 @@ set -e
 # test for missing templates and static files in sub-packages
 tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/locale"
 tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/static"
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/static/js/bundle.js"
 tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/templates"
 
 tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testcases/static"
