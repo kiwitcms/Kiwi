@@ -1,11 +1,9 @@
-$(() => {
-    if ($('#page-telemetry-testing-breakdown').length === 0) {
-        return
-    }
+import { jsonRPC } from '../../../../../static/js/jsonrpc'
+import { updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
 
-    $('.selectpicker').selectpicker()
-    $('[data-toggle="tooltip"]').tooltip()
+import { loadInitialProduct, showOnlyRoundNumbers } from './utils'
 
+export function pageTelemetryTestingBreakdownReadyHandler () {
     loadInitialProduct(reloadCharts)
 
     $('#id_after').on('dp.change', reloadCharts)
@@ -17,7 +15,19 @@ $(() => {
 
     // not relevant in this context
     $('#version_and_build').hide()
-})
+
+    // TODO: the sections below are duplicate
+    $('.selectpicker').selectpicker()
+    $('[data-toggle="tooltip"]').tooltip()
+
+    // Close multiselect list when selecting an item
+    // Iterate over all dropdown lists
+    $('select[multiple]').each(function () {
+        $(this).on('change', function () {
+            $(this).parent('.bootstrap-select').removeClass('open')
+        })
+    })
+}
 
 function reloadCharts () {
     const query = {}

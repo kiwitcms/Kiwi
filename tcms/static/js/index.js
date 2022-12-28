@@ -18,6 +18,8 @@ import { pageTestrunsSearchReadyHandler } from '../../testruns/static/testruns/j
 
 import { pageManagementBuildAdminReadyHandler } from '../../management/static/management/js/build_admin'
 
+import { pageTelemetryTestingBreakdownReadyHandler } from '../../telemetry/static/telemetry/js/testing/breakdown'
+
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
     'page-bugs-mutable': pageBugsMutableReadyHandler,
@@ -35,7 +37,12 @@ const pageHandlers = {
     'page-testruns-environment': pageTestrunsEnvironmentReadyHandler,
     'page-testruns-get': pageTestrunsGetReadyHandler,
     'page-testruns-mutable': pageTestrunsMutableReadyHandler,
-    'page-testruns-search': pageTestrunsSearchReadyHandler
+    'page-testruns-search': pageTestrunsSearchReadyHandler,
+
+    'page-telemetry-testing-breakdown': pageTelemetryTestingBreakdownReadyHandler,
+//    'page-telemetry-status-matrix': pageTelemetryReadyHandler,
+//    'page-telemetry-execution-trends': pageTelemetryReadyHandler,
+//    'page-telemetry-test-case-health': pageTelemetryReadyHandler
 }
 
 $(() => {
@@ -43,7 +50,7 @@ $(() => {
     const pageId = body.attr('id')
     const readyFunc = pageHandlers[pageId]
     if (readyFunc) {
-        readyFunc()
+        readyFunc(pageId)
     }
 
     // this page doesn't have a page id
@@ -51,7 +58,7 @@ $(() => {
         pageManagementBuildAdminReadyHandler()
     }
     // todo: add selectpicker() and bootstrapSwitch()
-    // initialization here
+    // and tooltip initialization here
 
     // todo: maybe initialize pagination here
 })
