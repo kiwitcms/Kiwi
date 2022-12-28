@@ -1,9 +1,18 @@
-$(() => {
-    if ($('#page-telemetry-test-case-health').length === 0) {
-        return
-    }
+import { dataTableJsonRPC } from '../../../../../static/js/jsonrpc'
+import { updateBuildSelectFromVersion, updateVersionSelectFromProduct, updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
 
+import { loadInitialProduct } from './utils'
+
+export function pageTelemetryTestCaseHealthReadyHandler () {
+    // TODO: duplicates
     $('[data-toggle="tooltip"]').tooltip()
+    // Close multiselect list when selecting an item
+    // Iterate over all dropdown lists
+    $('select[multiple]').each(function () {
+        $(this).on('change', function () {
+            $(this).parent('.bootstrap-select').removeClass('open')
+        })
+    })
 
     loadInitialProduct()
 
@@ -96,7 +105,7 @@ $(() => {
     $('#id_before').on('dp.change', () => {
         table.ajax.reload()
     })
-})
+}
 
 function renderTestCaseColumn (data) {
     return `<a href="/case/${data.case_id}">TC-${data.case_id}</a>: ${data.case_summary}`
@@ -115,7 +124,7 @@ function renderVisualPercent (data) {
 
     const colors = []
     const step = 20
-    for (i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
         if (failPercent > i * step) {
             colors.push('#cc0000') // pf-red-100
         } else {

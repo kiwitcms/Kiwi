@@ -21,6 +21,7 @@ import { pageManagementBuildAdminReadyHandler } from '../../management/static/ma
 import { pageTelemetryTestingBreakdownReadyHandler } from '../../telemetry/static/telemetry/js/testing/breakdown'
 import { pageTelemetryStatusMatrixReadyHandler } from '../../telemetry/static/telemetry/js/testing/status-matrix'
 import { pageTelemetryExecutionTrendsReadyHandler } from '../../telemetry/static/telemetry/js/testing/execution-trends'
+import { pageTelemetryTestCaseHealthReadyHandler } from '../../telemetry/static/telemetry/js/testing/test-case-health'
 
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
@@ -44,7 +45,7 @@ const pageHandlers = {
     'page-telemetry-testing-breakdown': pageTelemetryTestingBreakdownReadyHandler,
     'page-telemetry-status-matrix': pageTelemetryStatusMatrixReadyHandler,
     'page-telemetry-execution-trends': pageTelemetryExecutionTrendsReadyHandler,
-//    'page-telemetry-test-case-health': pageTelemetryReadyHandler
+    'page-telemetry-test-case-health': pageTelemetryTestCaseHealthReadyHandler
 }
 
 $(() => {
