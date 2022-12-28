@@ -1,10 +1,6 @@
 import { populateBuild, populateVersion } from '../../../../static/js/utils'
 
 export function pageBugsMutableReadyHandler () {
-    if ($('#page-bugs-mutable').length === 0) {
-        return
-    }
-
     $('#add_id_product').click(function () {
         return showRelatedObjectPopup(this)
     })
