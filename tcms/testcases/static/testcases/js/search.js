@@ -223,8 +223,6 @@ export function pageTestcasesSearchReadyHandler () {
         $(this).parents('.bootstrap-select').toggleClass('open')
     })
 
-    $('.selectpicker').selectpicker()
-
     if (window.location.href.indexOf('product') > -1) {
         $('#id_product').change()
     }

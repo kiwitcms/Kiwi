@@ -26,7 +26,6 @@ export function pageTestcasesMutableReadyHandler () {
         $('#id_category').selectpicker('refresh')
     }
 
-    $('.selectpicker').selectpicker()
     $('.bootstrap-switch').bootstrapSwitch()
 }
 

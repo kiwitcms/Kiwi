@@ -60,8 +60,9 @@ $(() => {
     if (body.hasClass('grp-change-form') && body.hasClass('management-build')) {
         pageManagementBuildAdminReadyHandler()
     }
-    // todo: add selectpicker() and bootstrapSwitch()
-    // and tooltip initialization here
+
+    $('.selectpicker').selectpicker()
+    // todo: add bootstrapSwitch() and tooltip initialization here
 
     // todo: maybe initialize pagination here
 })

@@ -26,7 +26,6 @@ export function pageTestrunsGetReadyHandler () {
     permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'
 
     $('.bootstrap-switch').bootstrapSwitch()
-    $('.selectpicker').selectpicker()
 
     const testRunId = $('#test_run_pk').data('pk')
 
