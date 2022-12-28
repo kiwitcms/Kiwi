@@ -1,10 +1,9 @@
-$(() => {
-    if ($('#page-telemetry-execution-trends').length === 0) {
-        return
-    }
+import { jsonRPC } from '../../../../../static/js/jsonrpc'
+import { updateBuildSelectFromVersion, updateVersionSelectFromProduct, updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
 
-    $('[data-toggle="tooltip"]').tooltip()
+import { loadInitialProduct, showOnlyRoundNumbers } from './utils'
 
+export function pageTelemetryExecutionTrendsReadyHandler () {
     loadInitialProduct()
 
     document.getElementById('id_product').onchange = () => {
@@ -25,7 +24,17 @@ $(() => {
     $('#id_before').on('dp.change', drawChart)
 
     drawChart()
-})
+
+    // TODO: duplicates
+    $('[data-toggle="tooltip"]').tooltip()
+    // Close multiselect list when selecting an item
+    // Iterate over all dropdown lists
+    $('select[multiple]').each(function () {
+        $(this).on('change', function () {
+            $(this).parent('.bootstrap-select').removeClass('open')
+        })
+    })
+}
 
 function drawChart () {
     const query = {}
