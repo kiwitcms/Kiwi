@@ -19,6 +19,7 @@ import { pageTestrunsSearchReadyHandler } from '../../testruns/static/testruns/j
 import { pageManagementBuildAdminReadyHandler } from '../../management/static/management/js/build_admin'
 
 import { pageTelemetryTestingBreakdownReadyHandler } from '../../telemetry/static/telemetry/js/testing/breakdown'
+import { pageTelemetryStatusMatrixReadyHandler } from '../../telemetry/static/telemetry/js/testing/status-matrix'
 
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
@@ -40,7 +41,7 @@ const pageHandlers = {
     'page-testruns-search': pageTestrunsSearchReadyHandler,
 
     'page-telemetry-testing-breakdown': pageTelemetryTestingBreakdownReadyHandler,
-//    'page-telemetry-status-matrix': pageTelemetryReadyHandler,
+    'page-telemetry-status-matrix': pageTelemetryStatusMatrixReadyHandler,
 //    'page-telemetry-execution-trends': pageTelemetryReadyHandler,
 //    'page-telemetry-test-case-health': pageTelemetryReadyHandler
 }
@@ -50,7 +51,7 @@ $(() => {
     const pageId = body.attr('id')
     const readyFunc = pageHandlers[pageId]
     if (readyFunc) {
-        readyFunc(pageId)
+        readyFunc()
     }
 
     // this page doesn't have a page id
