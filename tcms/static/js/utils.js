@@ -241,7 +241,7 @@ export function animate (target, handler, time = 500) {
 }
 
 export function currentTimeWithTimezone (timeZone) {
-    moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
+    return moment().tz(timeZone).format('YYYY-MM-DD HH:mm:ss')
 }
 
 /* render Markdown & assign it to selector */
