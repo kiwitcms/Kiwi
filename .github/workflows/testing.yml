@@ -37,6 +37,7 @@ jobs:
           sudo chmod a+w /Kiwi
 
           pip install -r requirements/devel.txt
+          pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
           pushd tcms/ && ./npm-install && popd
 
           export LANG=en-us
@@ -89,6 +90,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install gettext
         pip install -r requirements/devel.txt
+        pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
         pushd tcms/ && ./npm-install && popd
 
     - name: Run test
@@ -131,6 +133,7 @@ jobs:
           sudo chmod a+w /Kiwi
 
           pip install -r requirements/devel.txt
+          pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
           pushd tcms/ && ./npm-install && popd
 
           export LANG=en-us
@@ -179,6 +182,7 @@ jobs:
 
           pip install -r requirements/devel.txt
           pip install -r requirements/mariadb.txt
+          pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
           pushd tcms/ && ./npm-install && popd
 
           export LANG=sl-si
@@ -224,6 +228,7 @@ jobs:
 
           pip install -r requirements/devel.txt
           pip install -r requirements/postgres.txt
+          pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
           pushd tcms/ && ./npm-install && popd
 
           export LANG=fr-fr
