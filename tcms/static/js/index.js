@@ -57,7 +57,7 @@ $(() => {
     }
 
     // this page doesn't have a page id
-    if ( body.hasClass('grp-change-form') && body.hasClass('management-build') ) {
+    if (body.hasClass('grp-change-form') && body.hasClass('management-build')) {
         pageManagementBuildAdminReadyHandler()
     }
     // todo: add selectpicker() and bootstrapSwitch()

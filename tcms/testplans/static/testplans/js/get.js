@@ -424,7 +424,7 @@ function updateTestCasesViaAPI (testCaseIds, updateQuery, testPlanId, permission
             const testCaseRow = $(`.js-testcase-row[data-testcase-pk=${caseId}]`)
 
             // update internal data
-            let sortkey = allTestCases[caseId].sortkey
+            const sortkey = allTestCases[caseId].sortkey
             allTestCases[caseId] = updatedTC
             // note: updatedTC doesn't have sortkey information
             allTestCases[caseId].sortkey = sortkey

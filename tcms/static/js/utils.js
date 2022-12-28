@@ -35,7 +35,7 @@ export function updateSelect (data, selector, idAttr, valueAttr, groupAttr) {
 
     _selectTag.innerHTML = newOptions
 
-    if ( $('body').selectpicker ) {
+    if ($('body').selectpicker) {
         $(selector).selectpicker('refresh')
     }
 }

@@ -37,12 +37,12 @@ export function addTag (model, objectId, tagInput, toTable) {
 export function tagsCard (model, objectId, displayFilter, permRemove) {
     // load the tags table
     const tagsTable = $('#tags').DataTable({
-        ajax: function (data, callback, settings) {
-            dataTableJsonRPC('Tag.filter', displayFilter, callback, function (data, callback) {
+        ajax: function (data, callbackF, settings) {
+            dataTableJsonRPC('Tag.filter', displayFilter, callbackF, function (data, callback) {
                 // b/c tags are now annotated with case, run, plan IDs there are duplicate names.
                 // Filter them out by only looking at Tag.id uniqueness!
                 data = arrayToDict(data)
-                callback({ data: Object.values(data) })
+                callbackF({ data: Object.values(data) })
             })
         },
         columns: [
