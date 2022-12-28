@@ -96,6 +96,4 @@ export function pageBugsSearchReadyHandler () {
     $('#id_version').change(function () {
         updateBuildSelectFromVersion(true)
     })
-
-    $('.bootstrap-switch').bootstrapSwitch()
 }

@@ -168,6 +168,4 @@ export function pageTestrunsSearchReadyHandler () {
     $('#id_version').change(function () {
         updateBuildSelectFromVersion(true)
     })
-
-    $('.bootstrap-switch').bootstrapSwitch()
 }

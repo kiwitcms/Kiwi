@@ -25,8 +25,6 @@ export function pageTestcasesMutableReadyHandler () {
     document.getElementById('id_category').onchange = function () {
         $('#id_category').selectpicker('refresh')
     }
-
-    $('.bootstrap-switch').bootstrapSwitch()
 }
 
 function populateProductCategory () {

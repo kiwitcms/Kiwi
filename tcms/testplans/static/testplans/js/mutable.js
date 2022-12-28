@@ -16,8 +16,6 @@ export function pageTestplansMutableReadyHandler () {
         return showRelatedObjectPopup(this)
     })
 
-    $('.bootstrap-switch').bootstrapSwitch()
-
     document.getElementById('id_product').onchange = function () {
         $('#id_product').selectpicker('refresh')
         populateVersion()

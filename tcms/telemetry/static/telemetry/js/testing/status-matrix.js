@@ -51,7 +51,7 @@ export function pageTelemetryStatusMatrixReadyHandler () {
 
     // TODO: duplicates
     $('[data-toggle="tooltip"]').tooltip()
-    $('.bootstrap-switch').bootstrapSwitch()
+
     // Close multiselect list when selecting an item
     // Iterate over all dropdown lists
     $('select[multiple]').each(function () {
