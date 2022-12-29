@@ -278,6 +278,8 @@ class CloneTestRunView(NewTestRunView):
             "build": test_run.build_id,
             "default_tester": test_run.default_tester,
             "plan": test_run.plan_id,
+            "planned_start": test_run.planned_start,
+            "planned_stop": test_run.planned_stop,
         }
 
         return super().get(request, form_initial=form_initial, is_cloning=True)
