@@ -22,7 +22,7 @@ class SimpleMDE(forms.Textarea):
 <input id="%s" type="file" style="display: none">
 <script>
 $(() => {
-    markdownEditor = initSimpleMDE(document.getElementById('%s'), $('#%s'));
+    window.markdownEditor = initSimpleMDE(document.getElementById('%s'), $('#%s'));
 });
 </script>
 """ % (

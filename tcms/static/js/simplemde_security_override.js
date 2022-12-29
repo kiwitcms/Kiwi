@@ -1,8 +1,6 @@
 import { jsonRPC } from './jsonrpc'
 import { unescapeHTML } from './utils'
 
-let markdownEditor = undefined
-
 /*
     Override markdown rendering defaults for Simple MDE.
 
