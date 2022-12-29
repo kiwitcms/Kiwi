@@ -102,7 +102,9 @@
             <label class="col-md-1 col-lg-1" for="id_planned_start">{% trans "Planned start" %}</label>
             <div class="col-md-3 col-lg-3 {% if form.planned_start.errors %}has-error{% endif %}">
                 <div class="input-group date-time-picker-pf planned_start_date">
-                    <input type="text"  id="id_planned_start" name="planned_start" class="form-control" value="{{form.planned_start.value}}">
+                    <input
+                        type="text" id="id_planned_start" name="planned_start" class="form-control"
+                        value="{{ form.planned_start.value|date:'Y-m-d H:i:s' }}">
                     <span class="input-group-addon">
                         <span class="fa fa-calendar"></span>
                     </span>
@@ -114,7 +116,9 @@
             <label class="col-md-1 col-lg-1" for="id_planned_stop">{% trans "Planned stop" %}</label>
             <div class="col-md-3 col-lg-3 {% if form.planned_stop.errors %}has-error{% endif %}">
                 <div class="input-group date-time-picker-pf">
-                    <input type="text" class="form-control" id="id_planned_stop" name="planned_stop" value="{{ form.planned_stop.value }}">
+                    <input
+                        type="text" class="form-control" id="id_planned_stop" name="planned_stop"
+                        value="{{ form.planned_stop.value|date:'Y-m-d H:i:s' }}">
                     <span class="input-group-addon">
                         <span class="fa fa-calendar">
                         </span>
@@ -124,6 +128,8 @@
                 {% include "include/datetimepicker_script.html" with selector="#id_planned_stop" %}
             </div>
 
+            <input type="hidden" id="id_start_date" name="start_date" value="{{ form.start_date.value|date:'Y-m-d H:i:s' }}">
+            <input type="hidden" id="id_stop_date" name="stop_date" value="{{ form.stop_date.value|date:'Y-m-d H:i:s' }}">
         </div>
 
         {% if test_cases %}
