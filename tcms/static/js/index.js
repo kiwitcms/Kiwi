@@ -17,10 +17,7 @@ import { pageTestrunsSearchReadyHandler } from '../../testruns/static/testruns/j
 
 import { pageManagementBuildAdminReadyHandler } from '../../management/static/management/js/build_admin'
 
-import { pageTelemetryTestingBreakdownReadyHandler } from '../../telemetry/static/telemetry/js/testing/breakdown'
-import { pageTelemetryStatusMatrixReadyHandler } from '../../telemetry/static/telemetry/js/testing/status-matrix'
-import { pageTelemetryExecutionTrendsReadyHandler } from '../../telemetry/static/telemetry/js/testing/execution-trends'
-import { pageTelemetryTestCaseHealthReadyHandler } from '../../telemetry/static/telemetry/js/testing/test-case-health'
+import { pageTelemetryReadyHandler } from '../../telemetry/static/telemetry/js/index'
 
 import { jsonRPC } from './jsonrpc'
 import { initSimpleMDE } from './simplemde_security_override'
@@ -43,10 +40,10 @@ const pageHandlers = {
     'page-testruns-mutable': pageTestrunsMutableReadyHandler,
     'page-testruns-search': pageTestrunsSearchReadyHandler,
 
-    'page-telemetry-testing-breakdown': pageTelemetryTestingBreakdownReadyHandler,
-    'page-telemetry-status-matrix': pageTelemetryStatusMatrixReadyHandler,
-    'page-telemetry-execution-trends': pageTelemetryExecutionTrendsReadyHandler,
-    'page-telemetry-test-case-health': pageTelemetryTestCaseHealthReadyHandler
+    'page-telemetry-testing-breakdown': pageTelemetryReadyHandler,
+    'page-telemetry-status-matrix': pageTelemetryReadyHandler,
+    'page-telemetry-execution-trends': pageTelemetryReadyHandler,
+    'page-telemetry-test-case-health': pageTelemetryReadyHandler
 }
 
 $(() => {
@@ -54,7 +51,7 @@ $(() => {
     const pageId = body.attr('id')
     const readyFunc = pageHandlers[pageId]
     if (readyFunc) {
-        readyFunc()
+        readyFunc(pageId)
     }
 
     // this page doesn't have a page id
@@ -65,8 +62,6 @@ $(() => {
     $('.selectpicker').selectpicker()
     $('.bootstrap-switch').bootstrapSwitch()
     $('[data-toggle="tooltip"]').tooltip()
-
-    // todo: maybe initialize pagination here
 
     // used by automatically loaded editor widgets
     window.initSimpleMDE = initSimpleMDE
