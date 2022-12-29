@@ -37,8 +37,6 @@
         </div>
     {% endfor %}
 
-    {% block contents %}{% endblock %}
-
     <script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
     <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
 
@@ -48,6 +46,7 @@
     <script src="{% static 'moment-timezone/builds/moment-timezone-with-data.min.js' %}"></script>
     <script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
 
+    <script src="{% static 'simplemde/dist/simplemde.min.js' %}"></script>
     <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 
     <script src="{% static 'grappelli/jquery/jquery.min.js' %}"></script>
@@ -55,5 +54,9 @@
     <script src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
 
     <script src="{% static 'js/bundle.js' %}"></script>
+
+    {# rendered here b/c text editor(s) needs all the JS above #}
+    {# see SimpleMDE.render() in core/widgets.py #}
+    {% block contents %}{% endblock %}
 </body>
 </html>

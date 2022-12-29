@@ -1,3 +1,6 @@
+import { jsonRPC } from './jsonrpc'
+import { unescapeHTML } from './utils'
+
 let markdownEditor = undefined
 
 /*
@@ -18,7 +21,7 @@ SimpleMDE.prototype.markdown = function (text) {
     fileUpload - a jQuery element of a hidden file upload field
     autoSaveId - unique ID for autosave!
 */
-function initSimpleMDE (textArea, fileUploadElement, autoSaveId = window.location.toString()) {
+export function initSimpleMDE (textArea, fileUploadElement, autoSaveId = window.location.toString()) {
     if (!textArea || !fileUploadElement) {
         return null
     }

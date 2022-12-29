@@ -30,15 +30,12 @@ $(() => {
             attrs["id"],
             self.file_upload_id,
         )
+        # note: initSimpleMDE() should be available in templates through bundle.js
 
         return rendered_string
 
     class Media:
         css = {"all": ["simplemde/dist/simplemde.min.css"]}
-        js = [
-            "simplemde/dist/simplemde.min.js",
-            "js/simplemde_security_override.js",
-        ]
 
 
 class DurationWidget(forms.Widget):
