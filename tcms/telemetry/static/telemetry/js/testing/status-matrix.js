@@ -1,7 +1,4 @@
 import { jsonRPC } from '../../../../../static/js/jsonrpc'
-import { updateBuildSelectFromVersion, updateVersionSelectFromProduct, updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
-
-import { loadInitialProduct } from './utils'
 
 let table
 const initialColumn = {
@@ -16,30 +13,9 @@ const initialColumn = {
     }
 }
 
-export function pageTelemetryStatusMatrixReadyHandler () {
-    loadInitialProduct()
-
-    document.getElementById('id_product').onchange = () => {
-        updateVersionSelectFromProduct()
-        // note: don't pass drawTable as callback to avoid calling it twice
-        // b/c update_version_select... triggers .onchange()
-        updateTestPlanSelectFromProduct()
-    }
-
-    document.getElementById('id_version').onchange = () => {
-        drawTable()
-        updateBuildSelectFromVersion(true)
-    }
-
-    document.getElementById('id_build').onchange = drawTable
-    document.getElementById('id_test_plan').onchange = drawTable
+export function initializePage () {
     document.getElementById('id_order').onchange = drawTable
     document.getElementById('id_include_child_tps').onchange = drawTable
-
-    $('#id_after').on('dp.change', drawTable)
-    $('#id_before').on('dp.change', drawTable)
-
-    drawTable()
 
     $('#table').on('draw.dt', function () {
         setMaxHeight($(this))
@@ -48,15 +24,6 @@ export function pageTelemetryStatusMatrixReadyHandler () {
     $(window).on('resize', function () {
         setMaxHeight($('#table'))
     })
-
-    // TODO: duplicates
-    // Close multiselect list when selecting an item
-    // Iterate over all dropdown lists
-    $('select[multiple]').each(function () {
-        $(this).on('change', function () {
-            $(this).parent('.bootstrap-select').removeClass('open')
-        })
-    })
 }
 
 function setMaxHeight (t) {
@@ -64,7 +31,7 @@ function setMaxHeight (t) {
     t.css('max-height', maxH)
 }
 
-function drawTable () {
+export function drawTable () {
     $('.js-spinner').show()
     if (table) {
         table.destroy()

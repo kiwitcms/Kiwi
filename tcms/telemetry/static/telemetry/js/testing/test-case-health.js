@@ -1,21 +1,9 @@
 import { dataTableJsonRPC } from '../../../../../static/js/jsonrpc'
-import { updateBuildSelectFromVersion, updateVersionSelectFromProduct, updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
 
-import { loadInitialProduct } from './utils'
+let table
 
-export function pageTelemetryTestCaseHealthReadyHandler () {
-    // TODO: duplicates
-    // Close multiselect list when selecting an item
-    // Iterate over all dropdown lists
-    $('select[multiple]').each(function () {
-        $(this).on('change', function () {
-            $(this).parent('.bootstrap-select').removeClass('open')
-        })
-    })
-
-    loadInitialProduct()
-
-    const table = $('#test-case-health-table').DataTable({
+export function initializePage () {
+    table = $('#test-case-health-table').DataTable({
         ajax: function (data, callback, settings) {
             const query = {}
 
@@ -78,32 +66,10 @@ export function pageTelemetryTestCaseHealthReadyHandler () {
             zeroRecords: 'No records found'
         }
     })
+}
 
-    document.getElementById('id_product').onchange = () => {
-        updateVersionSelectFromProduct()
-        // note: don't call table.ajax.reload() here to avoid calling it twice
-        // b/c update_version_select... triggers .onchange()
-        updateTestPlanSelectFromProduct()
-    }
-
-    document.getElementById('id_version').onchange = () => {
-        updateBuildSelectFromVersion(true)
-        table.ajax.reload()
-    }
-
-    document.getElementById('id_build').onchange = () => {
-        table.ajax.reload()
-    }
-    document.getElementById('id_test_plan').onchange = () => {
-        table.ajax.reload()
-    }
-
-    $('#id_after').on('dp.change', () => {
-        table.ajax.reload()
-    })
-    $('#id_before').on('dp.change', () => {
-        table.ajax.reload()
-    })
+export function reloadTable () {
+    table.ajax.reload()
 }
 
 function renderTestCaseColumn (data) {

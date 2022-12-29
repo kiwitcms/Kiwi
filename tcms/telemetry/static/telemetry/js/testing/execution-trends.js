@@ -1,41 +1,7 @@
 import { jsonRPC } from '../../../../../static/js/jsonrpc'
-import { updateBuildSelectFromVersion, updateVersionSelectFromProduct, updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
+import { showOnlyRoundNumbers } from './utils'
 
-import { loadInitialProduct, showOnlyRoundNumbers } from './utils'
-
-export function pageTelemetryExecutionTrendsReadyHandler () {
-    loadInitialProduct()
-
-    document.getElementById('id_product').onchange = () => {
-        updateVersionSelectFromProduct()
-        // note: don't pass drawChart as callback to avoid calling it twice
-        // b/c update_version_select... triggers .onchange()
-        updateTestPlanSelectFromProduct()
-    }
-
-    document.getElementById('id_version').onchange = () => {
-        drawChart()
-        updateBuildSelectFromVersion(true)
-    }
-    document.getElementById('id_build').onchange = drawChart
-    document.getElementById('id_test_plan').onchange = drawChart
-
-    $('#id_after').on('dp.change', drawChart)
-    $('#id_before').on('dp.change', drawChart)
-
-    drawChart()
-
-    // TODO: duplicates
-    // Close multiselect list when selecting an item
-    // Iterate over all dropdown lists
-    $('select[multiple]').each(function () {
-        $(this).on('change', function () {
-            $(this).parent('.bootstrap-select').removeClass('open')
-        })
-    })
-}
-
-function drawChart () {
+export function drawChart () {
     const query = {}
 
     const productIds = $('#id_product').val()

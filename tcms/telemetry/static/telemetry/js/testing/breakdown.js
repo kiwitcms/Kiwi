@@ -1,32 +1,12 @@
 import { jsonRPC } from '../../../../../static/js/jsonrpc'
-import { updateTestPlanSelectFromProduct } from '../../../../../static/js/utils'
+import { showOnlyRoundNumbers } from './utils'
 
-import { loadInitialProduct, showOnlyRoundNumbers } from './utils'
-
-export function pageTelemetryTestingBreakdownReadyHandler () {
-    loadInitialProduct(reloadCharts)
-
-    $('#id_after').on('dp.change', reloadCharts)
-    $('#id_before').on('dp.change', reloadCharts)
-    document.getElementById('id_test_plan').onchange = reloadCharts
-    document.getElementById('id_product').onchange = () => {
-        updateTestPlanSelectFromProduct(reloadCharts)
-    }
-
-    // not relevant in this context
+export function initializePage () {
+    // widget not relevant in this context
     $('#version_and_build').hide()
-
-    // TODO: the sections below are duplicate
-    // Close multiselect list when selecting an item
-    // Iterate over all dropdown lists
-    $('select[multiple]').each(function () {
-        $(this).on('change', function () {
-            $(this).parent('.bootstrap-select').removeClass('open')
-        })
-    })
 }
 
-function reloadCharts () {
+export function reloadCharts () {
     const query = {}
 
     const testPlanIds = $('#id_test_plan').val()
