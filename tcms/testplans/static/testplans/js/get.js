@@ -7,6 +7,7 @@ import {
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
     treeViewBind, quickSearchAndAddTestCase
 } from '../../../../static/js/utils'
+import { initSimpleMDE } from '../../../../static/js/simplemde_security_override'
 
 const expandedTestCaseIds = []
 const fadeAnimationTime = 500

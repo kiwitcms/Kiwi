@@ -9,6 +9,7 @@ import {
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
     quickSearchAndAddTestCase, treeViewBind
 } from '../../../../static/js/utils'
+import { initSimpleMDE } from '../../../../static/js/simplemde_security_override'
 
 const allExecutionStatuses = {}
 const allExecutions = {}

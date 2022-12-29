@@ -22,6 +22,9 @@ import { pageTelemetryStatusMatrixReadyHandler } from '../../telemetry/static/te
 import { pageTelemetryExecutionTrendsReadyHandler } from '../../telemetry/static/telemetry/js/testing/execution-trends'
 import { pageTelemetryTestCaseHealthReadyHandler } from '../../telemetry/static/telemetry/js/testing/test-case-health'
 
+import { jsonRPC } from './jsonrpc'
+import { initSimpleMDE } from './simplemde_security_override'
+
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
     'page-bugs-mutable': pageBugsMutableReadyHandler,
@@ -64,4 +67,10 @@ $(() => {
     $('[data-toggle="tooltip"]').tooltip()
 
     // todo: maybe initialize pagination here
+
+    // used by automatically loaded editor widgets
+    window.initSimpleMDE = initSimpleMDE
+
+    // for debugging in browser
+    window.jsonRPC = jsonRPC
 })
