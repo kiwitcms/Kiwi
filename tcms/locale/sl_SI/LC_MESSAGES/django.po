@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:09\n"
+"PO-Revision-Date: 2022-12-30 07:33\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -983,7 +983,7 @@ msgstr "Zadnja stran"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Parameters"
-msgstr ""
+msgstr "Parametri"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1634,7 +1634,7 @@ msgstr "Zahtevan je 1 negativen, 1 nevtralen ter 1 pozitiven status!"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Uredi parametre"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1780,7 +1780,7 @@ msgstr "Matrika"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Se nanaša zgolj na testne scenarije s parametri"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
@@ -2152,3 +2152,4 @@ msgstr "Uredi instanco"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Samo uporabniki z ustreznimi pravicami za to instanco lahko povabijo druge uporabnike"
+
