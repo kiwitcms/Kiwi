@@ -17,7 +17,7 @@ django-uuslug==2.0.0
 jira==3.4.1
 Markdown==3.4.1
 PyGithub==1.57
-Pygments==2.13.0
+Pygments==2.14.0
 python-gitlab==3.12.0
 python-redmine==2.3.0
 topicaxis-opengraph==0.5
