@@ -1,7 +1,8 @@
 FROM registry.access.redhat.com/ubi9-minimal
 
 RUN microdnf -y --nodocs install python3 mariadb-connector-c libpq \
-    httpd python3-mod_wsgi mod_ssl sscg tar glibc-langpack-en && \
+    httpd python3-mod_wsgi mod_security mod_ssl \
+    sscg tar glibc-langpack-en && \
     microdnf -y --nodocs update && \
     microdnf clean all
 
@@ -17,6 +18,8 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf && \
     sed -i 's!ErrorLog logs/ssl_error_log!ErrorLog "/dev/stderr"!' /etc/httpd/conf.d/ssl.conf && \
     sed -i 's!TransferLog logs/ssl_access_log!TransferLog "/dev/stdout"!' /etc/httpd/conf.d/ssl.conf && \
     sed -i 's!CustomLog logs/ssl_request_log!CustomLog "/dev/stdout"!' /etc/httpd/conf.d/ssl.conf && \
+    sed -i 's!/var/log/httpd/modsec_debug.log!/dev/stderr!' /etc/httpd/conf.d/mod_security.conf && \
+    sed -i 's!/var/log/httpd/modsec_audit.log!/dev/stderr!' /etc/httpd/conf.d/mod_security.conf && \
     chmod -R a+rwx /run/httpd
 COPY ./etc/kiwi-httpd.conf /etc/httpd/conf.d/
 
