@@ -181,7 +181,7 @@ class TestUserUpdate(APITestCase):
             "old_password"  # nosec:B105:hardcoded_password_string
         ] = "api-testing"
         data = self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
-        self.assertTrue("password" not in data)
+        self.assertNotIn("password", data)
         self.assertEqual(data["first_name"], user_new_attrs["first_name"])
         self.assertEqual(data["last_name"], user_new_attrs["last_name"])
         self.assertEqual(data["email"], user_new_attrs["email"])
