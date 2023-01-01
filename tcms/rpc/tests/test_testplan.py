@@ -471,7 +471,7 @@ class TestTreePermission(APIPermissionsTestCase):
         self.assertEqual(result[0]["name"], self.plan.name)
         self.assertEqual(result[0]["parent_id"], self.plan.parent_id)
         self.assertEqual(result[0]["tree_depth"], 0)
-        self.assertTrue("url" in result[0])
+        self.assertIn("url", result[0])
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):

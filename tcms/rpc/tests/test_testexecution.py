@@ -41,7 +41,7 @@ class TestExecutionGetComments(APITestCase):
 
         self.assertEqual(len(self.comments), len(execution_comments))
         for comment in execution_comments:
-            self.assertTrue(comment["comment"] in self.comments)
+            self.assertIn(comment["comment"], self.comments)
 
     def test_get_comments_non_existing_execution(self):
         with self.assertRaisesRegex(
@@ -71,7 +71,7 @@ class TestExecutionGetCommentsPermissions(APIPermissionsTestCase):
 
         self.assertEqual(len(self.comments), len(execution_comments))
         for comment in execution_comments:
-            self.assertTrue(comment["comment"] in self.comments)
+            self.assertIn(comment["comment"], self.comments)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
@@ -456,7 +456,7 @@ class TestExecutionHistory(APITestCase):
         # assert entries are in the right order
         previous = timezone.now()
         for history_entry in history:
-            self.assertTrue(history_entry["history_date"] < previous)
+            self.assertLess(history_entry["history_date"], previous)
             previous = history_entry["history_date"]
 
 

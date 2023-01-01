@@ -64,7 +64,7 @@ class TestSendMailOnNewComment(BaseCaseRun):
         )
         self.assertEqual(expected_body, send_mail.call_args.args[1])
         self.assertEqual(settings.DEFAULT_FROM_EMAIL, send_mail.call_args.args[2])
-        self.assertTrue(len(send_mail.call_args.args[3]) == len(expected_recipients))
+        self.assertEqual(len(send_mail.call_args.args[3]), len(expected_recipients))
         self.assertIn(expected_recipients[0], send_mail.call_args.args[3])
         self.assertIn(expected_recipients[1], send_mail.call_args.args[3])
 
@@ -96,7 +96,7 @@ class TestSendMailOnNewComment(BaseCaseRun):
         )
         self.assertEqual(expected_body, send_mail.call_args.args[1])
         self.assertEqual(settings.DEFAULT_FROM_EMAIL, send_mail.call_args.args[2])
-        self.assertTrue(len(send_mail.call_args.args[3]) == len(expected_recipients))
+        self.assertEqual(len(send_mail.call_args.args[3]), len(expected_recipients))
         self.assertIn(expected_recipients[0], send_mail.call_args.args[3])
         self.assertIn(expected_recipients[1], send_mail.call_args.args[3])
 
@@ -132,6 +132,6 @@ class TestSendMailOnNewComment(BaseCaseRun):
         )
         self.assertEqual(expected_body, send_mail.call_args.args[1])
         self.assertEqual(settings.DEFAULT_FROM_EMAIL, send_mail.call_args.args[2])
-        self.assertTrue(len(send_mail.call_args.args[3]) == len(expected_recipients))
+        self.assertEqual(len(send_mail.call_args.args[3]), len(expected_recipients))
         self.assertIn(expected_recipients[0], send_mail.call_args.args[3])
         self.assertIn(expected_recipients[1], send_mail.call_args.args[3])
