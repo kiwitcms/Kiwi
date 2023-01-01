@@ -5,13 +5,15 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.kiwi_auth import forms
 
+from . import __FOR_TESTING__
+
 
 class TestCaptchaField(TestCase):
     def setUp(self):
         self.data = {
             "username": "test_user",
-            "password1": "password",
-            "password2": "password",
+            "password1": __FOR_TESTING__,
+            "password2": __FOR_TESTING__,
             "email": "new-tester@example.com",
         }
 
@@ -49,8 +51,8 @@ class TestRegistrationForm(TestCase):
     def setUp(self):
         self.data = {
             "username": "test_user",
-            "password1": "password",
-            "password2": "password",
+            "password1": __FOR_TESTING__,
+            "password2": __FOR_TESTING__,
             "email": "new-tester@example.com",
         }
 

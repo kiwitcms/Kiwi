@@ -17,6 +17,8 @@ from tcms.kiwi_auth import forms
 from tcms.kiwi_auth.models import UserActivationKey
 from tcms.tests.factories import UserFactory
 
+from . import __FOR_TESTING__
+
 User = get_user_model()  # pylint: disable=invalid-name
 
 
@@ -117,8 +119,8 @@ class TestRegistration(TestCase):
                     self.register_url,
                     {
                         "username": username,
-                        "password1": "password",
-                        "password2": "password",
+                        "password1": __FOR_TESTING__,
+                        "password2": __FOR_TESTING__,
                         "email": "new-tester@example.com",
                         "captcha_0": "PASSED",
                         "captcha_1": "PASSED",
@@ -254,8 +256,8 @@ To activate your account, click this link:
             self.register_url,
             {
                 "username": "kiwi-tester",
-                "password1": "password-1",
-                "password2": "password-2",
+                "password1": __FOR_TESTING__,
+                "password2": f"000-{__FOR_TESTING__}",
                 "email": "new-tester@example.com",
             },
             follow=False,
@@ -272,8 +274,8 @@ To activate your account, click this link:
             self.register_url,
             {
                 "username": "test_user",
-                "password1": "password",
-                "password2": "password",
+                "password1": __FOR_TESTING__,
+                "password2": __FOR_TESTING__,
                 "email": "new-tester@example.com",
             },
             follow=False,
