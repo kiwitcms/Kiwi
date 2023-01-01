@@ -11,6 +11,8 @@ from tcms.kiwi_auth.admin import Group
 from tcms.tests import LoggedInTestCase, user_should_have_perm
 from tcms.tests.factories import GroupFactory, UserFactory
 
+from . import __FOR_TESTING__
+
 
 class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-methods
     @classmethod
@@ -65,8 +67,8 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
             "/admin/auth/user/add/",
             {
                 "username": "added-by-admin",
-                "password1": "xo-xo-xo",
-                "password2": "xo-xo-xo",
+                "password1": __FOR_TESTING__,
+                "password2": __FOR_TESTING__,
             },
             follow=True,
         )
@@ -225,8 +227,8 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
             "/admin/auth/user/add/",
             {
                 "username": "added-by-moderator",
-                "password1": "xo-xo-xo",
-                "password2": "xo-xo-xo",
+                "password1": __FOR_TESTING__,
+                "password2": __FOR_TESTING__,
             },
             follow=True,
         )
@@ -373,8 +375,8 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
             "/admin/auth/user/add/",
             {
                 "username": "added-by-regular-user",
-                "password1": "xo-xo-xo",
-                "password2": "xo-xo-xo",
+                "password1": __FOR_TESTING__,
+                "password2": __FOR_TESTING__,
             },
             follow=True,
         )
