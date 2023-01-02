@@ -1,6 +1,109 @@
 Change Log
 ==========
 
+Kiwi TCMS 11.7 (03 Jan 2023)
+----------------------------
+
+.. important::
+
+    This is a small release which contains security updates,
+    general improvements, database migrations, bug fixes and
+    new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update ``bootstrap``, ``bootstrap-select``,
+  ``eonasdan-bootstrap-datetimepicker``, ``jquery`` and ``moment-timezone``
+  Node.js packages
+- Enable password validators to avoid users chosing weak passwords:
+
+  - password can’t be too similar to other personal information
+  - password must contain at least 10 characters
+  - password can’t be a commonly used password
+  - password can’t be entirely numeric
+
+  .. warning::
+
+    Existing users are advised to reset their passwords!
+    For more information see
+    `GHSA-496x-2jqf-hp7g <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-496x-2jqf-hp7g>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 4.1.3 to 4.1.5
+- Update django-colorfield from 0.7.2 to 0.8.0
+- Update django-grappelli from 3.0.3 to 3.0.4
+- Update django-simple-history from 3.0.0 to 3.2.0
+- Update django-tree-queries from 0.11.0 to 0.13.0
+- Update pygments from 2.13.0 to 2.14.0
+- Update python-gitlab from 3.11.0 to 3.12.0
+- Update tzdata from 2022.6 to 2022.7
+- Make navigation menu more compact by moving it into the header
+- Don't install development dependencies for Node.js packages when
+  building the container image
+
+
+Database
+~~~~~~~~
+
+- Add migrations to reflect indexing changes in django-simple-history 3.1.0
+
+
+Bug fixes
+~~~~~~~~~
+
+- Trigger on-change handler for Test Case Search popup. Fixes
+  `Issue #2679 <https://github.com/kiwitcms/Kiwi/issues/2679>`_
+- Fix the ``+ Build`` button on Bug and TestRun pages which didn't properly
+  select Product & Version
+- Editing TestRun page now properly saves all datetime fields instead of
+  reverting them to ``None``
+- Initialize ``planned_start`` and ``planned_stop`` fields when cloning a
+  TestRun
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Start using webpack for JavaScript assets. Closes
+  `Issue #1262 <https://github.com/kiwitcms/Kiwi/issues/1262>`_
+- Refactor duplicated setup in Telemetry pages. Closes
+  `Issue #1118 <https://github.com/kiwitcms/Kiwi/issues/1118>`_
+- Add CodeQL workflow for GitHub code scanning
+- Make it possible to override attachments card title
+- Remove useless tooltip from Telemetry pages
+- Define page ID for each page that has a ``.ready()`` function
+- Replace deprecated jQuery syntax for ``.ready()``
+- Remove duplicate ``populateProductVersion()`` function
+- Resolve all of the remaining eslint issues
+- Use more precise assert methods in tests
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Spanish translation <https://crowdin.com/project/kiwitcms/es-ES#>`_
+
+
+
 Kiwi TCMS 11.6 (09 Nov 2022)
 ----------------------------
 
