@@ -5,7 +5,7 @@
 assert_up_and_running() {
     sleep 10
     # HTTP redirects; HTTPS displays the login page
-    rlRun -t -c "curl       -o- http://localhost/  | grep 'The document has moved'"
+    rlRun -t -c "curl       -o- http://localhost/  | grep '301 Moved Permanently'"
     rlRun -t -c "curl -k -L -o- https://localhost/ | grep 'Welcome to Kiwi TCMS'"
 }
 

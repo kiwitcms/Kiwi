@@ -1,15 +1,25 @@
 #!/bin/bash
 
-# Make sure we're not confused by old, incompletely-shutdown httpd
-# context after restarting the container.  httpd won't start correctly
+set -u
+
+# Make sure we're not confused by old, incompletely-shutdown nginx
+# context after restarting the container. Nginx won't start correctly
 # if it thinks it is already running.
-rm -rf /run/httpd/* /tmp/httpd*
+rm -rf /tmp/nginx* /tmp/kiwitcms*
 
-APACHE_PARAMETERS="-DFOREGROUND "
+# will execute in background so that uwsgi executes in
+# the foreground and is able to log to stdout
+/usr/sbin/nginx -e /dev/stderr -c /Kiwi/etc/nginx.conf
 
-if [ -n "$KIWI_DONT_ENFORCE_HTTPS" ]; then
-    echo "Not enforcing HTTPS by rewriting HTTP requests"
-    APACHE_PARAMETERS+="-DKIWI_DONT_ENFORCE_HTTPS "
-fi
+# one worker process for each CPU core
+NUM_CPUS=$(grep processor /proc/cpuinfo | wc -l)
 
-exec /usr/sbin/httpd ${APACHE_PARAMETERS}
+/venv/bin/uwsgi --chdir=/Kiwi              \
+      --module=tcms.wsgi:application       \
+      --master --pidfile=/tmp/kiwitcms.pid \
+      --socket=/tmp/kiwitcms.sock          \
+      --processes="$NUM_CPUS"              \
+      --harakiri=30                        \
+      --max-requests=1000                  \
+      --vacuum                             \
+      --home=/venv
