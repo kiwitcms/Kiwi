@@ -294,24 +294,15 @@ Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
 Enable plain text HTTP access
 -----------------------------
 
-By default the Kiwi TCMS container enforces HTTPS connections, by redirecting
-HTTP (80) requests to the HTTPS port (443). This behavior may be deactivated
-via the ``KIWI_DONT_ENFORCE_HTTPS`` environment variable. If starting the
-application via ``docker compose`` then add::
-
-        environment:
-            KIWI_DONT_ENFORCE_HTTPS: "true"
-
-to ``docker-compose.yml``. If starting the container via ``docker run`` then
-add ``-e KIWI_DONT_ENFORCE_HTTPS=true`` to the command line.
+Kiwi TCMS container always enforces HTTPS connections, by redirecting
+HTTP (80) requests to HTTPS (443)!
 
 .. warning::
 
-    Disabling SSL means all data transmissions, including passwords will be
-    easily accessible to 3rd parties who have access to the same network.
+    This behavior may no longer be deactivated via the
+    ``KIWI_DONT_ENFORCE_HTTPS`` environment variable!
 
-    Running plain text HTTP over the public Internet is a serious security
-    flaw! You should purchase an SSL certificate instead!
+    .. versionremoved:: 12.0
 
 
 Customization

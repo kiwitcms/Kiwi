@@ -2,6 +2,7 @@
 
 django-debug-toolbar
 Sphinx
+sphinx-removed-in
 docutils
 
 flake8

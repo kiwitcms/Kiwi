@@ -5,7 +5,7 @@
 assert_up_and_running() {
     sleep 10
     # HTTP redirects; HTTPS display the login page
-    rlRun -t -c "curl    -L -o- http://localhost/  | grep 'Welcome to Kiwi TCMS'"
+    rlRun -t -c "curl       -o- http://localhost/  | grep '301 Moved Permanently'"
     rlRun -t -c "curl -k -L -o- https://localhost/ | grep 'Welcome to Kiwi TCMS'"
 }
 
@@ -44,10 +44,8 @@ rlJournalStart
 
         WRK_DIR=$(mktemp -d ./wrk-logs-XXXX)
         chmod go+rwx "$WRK_DIR"
-    rlPhaseEnd
 
-    rlPhaseStartTest "Plain HTTP works"
-        rlRun -t -c "docker-compose run -d --service-ports -e KIWI_DONT_ENFORCE_HTTPS=true --name kiwi_web web /httpd-foreground"
+        rlRun -t -c "docker-compose up -d"
         sleep 10
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         assert_up_and_running
@@ -60,11 +58,6 @@ rlJournalStart
 
         get_dashboard "https://localhost"
         rlAssertNotGrep "You are not using a secure connection." /tmp/testdata.txt
-    rlPhaseEnd
-
-    rlPhaseStartTest "Should display SSL warning for HTTP connection"
-        get_dashboard "http://localhost"
-        rlAssertGrep "You are not using a secure connection." /tmp/testdata.txt
     rlPhaseEnd
 
     rlPhaseStartTest "Should allow file upload with UTF-8 filenames"
