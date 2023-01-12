@@ -4,9 +4,9 @@
 
 assert_up_and_running() {
     sleep 10
-    # both HTTP and HTTPS display the login page
-    rlRun -t -c "curl    -L -o- http://$1:8080/  | grep 'Welcome to Kiwi TCMS'"
-    rlRun -t -c "curl -k -L -o- https://$1:8443/ | grep 'Welcome to Kiwi TCMS'"
+    # HTTP redirects; HTTPS display the login page
+    rlRun -t -c "curl    -L -o- http://localhost/  | grep 'Welcome to Kiwi TCMS'"
+    rlRun -t -c "curl -k -L -o- https://localhost/ | grep 'Welcome to Kiwi TCMS'"
 }
 
 get_dashboard() {
@@ -26,32 +26,30 @@ rlJournalStart
     rlPhaseEnd
 
     rlPhaseStartTest "Plain HTTP works"
-        rlRun -t -c "docker-compose run -d -e KIWI_DONT_ENFORCE_HTTPS=true --name kiwi_web web /httpd-foreground"
+        rlRun -t -c "docker-compose run -d --service-ports -e KIWI_DONT_ENFORCE_HTTPS=true --name kiwi_web web /httpd-foreground"
         sleep 10
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
-        IP_ADDRESS=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web)
-        assert_up_and_running "$IP_ADDRESS"
+        assert_up_and_running
     rlPhaseEnd
 
     rlPhaseStartTest "Should not display SSL warning for HTTPS connection"
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py createsuperuser \
             --username testadmin --email testadmin@domain.com --noinput"
         rlRun -t -c "cat tests/set_testadmin_pass.py | docker exec -i kiwi_web /Kiwi/manage.py shell"
-        URL="https://$IP_ADDRESS:8443"
-        get_dashboard "$URL"
+
+        get_dashboard "https://localhost"
         rlAssertNotGrep "You are not using a secure connection." /tmp/testdata.txt
     rlPhaseEnd
 
     rlPhaseStartTest "Should display SSL warning for HTTP connection"
-        URL="http://$IP_ADDRESS:8080"
-        get_dashboard "$URL"
+        get_dashboard "http://localhost"
         rlAssertGrep "You are not using a secure connection." /tmp/testdata.txt
     rlPhaseEnd
 
     rlPhaseStartTest "Should allow file upload with UTF-8 filenames"
         cat > ~/.tcms.conf << _EOF_
 [tcms]
-url = https://$IP_ADDRESS:8443/xml-rpc/
+url = https://localhost/xml-rpc/
 username = testadmin
 password = password
 _EOF_
@@ -60,11 +58,11 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Should send ETag header"
-        rlRun -t -c "curl -k -D- https://$IP_ADDRESS:8443/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
+        rlRun -t -c "curl -k -D- https://localhost/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
     rlPhaseEnd
 
     rlPhaseStartTest "Should NOT send Cache-Control header"
-        rlRun -t -c "curl -k -D- https://$IP_ADDRESS:8443/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
+        rlRun -t -c "curl -k -D- https://localhost/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
     rlPhaseEnd
 
     rlPhaseStartCleanup

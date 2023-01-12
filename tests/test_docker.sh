@@ -4,23 +4,21 @@
 
 assert_up_and_running() {
     sleep 10
-    IP_ADDRESS=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web`
     # HTTP redirects; HTTPS displays the login page
-    rlRun -t -c "curl       -o- http://$IP_ADDRESS:8080/  | grep 'The document has moved'"
-    rlRun -t -c "curl -k -L -o- https://$IP_ADDRESS:8443/ | grep 'Welcome to Kiwi TCMS'"
+    rlRun -t -c "curl       -o- http://localhost/  | grep 'The document has moved'"
+    rlRun -t -c "curl -k -L -o- https://localhost/ | grep 'Welcome to Kiwi TCMS'"
 }
 
 assert_perform_initdb() {
     sleep 10
-    IP_ADDRESS=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kiwi_web`
     # HTTPS displays the init-db page
     rm -f /tmp/testcookies.txt
-    rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt https://$IP_ADDRESS:8443/ | grep 'Initialize database'"
+    rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt https://localhost/ | grep 'Initialize database'"
     # init-db page applies database migrations
     CSRF_TOKEN=`grep csrftoken /tmp/testcookies.txt | cut -f 7`
-    rlRun -t -c "curl -e https://$IP_ADDRESS:8443/init-db/ \
+    rlRun -t -c "curl -e https://localhost/init-db/ \
         -d init_db=yes -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -o- \
-        -b /tmp/testcookies.txt https://$IP_ADDRESS:8443/init-db/"
+        -b /tmp/testcookies.txt https://localhost/init-db/"
 }
 
 rlJournalStart
