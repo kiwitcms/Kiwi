@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-14 23:10\n"
+"PO-Revision-Date: 2023-01-12 21:39\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1325,7 +1325,7 @@ msgstr "Wymagania"
 #: tcms/testplans/templates/testplans/get.html:80
 #: tcms/testplans/templates/testplans/mutable.html:85
 msgid "Reference link"
-msgstr "Odnośnik"
+msgstr "Odnośnik (link)"
 
 #: tcms/testcases/templates/testcases/get.html:132
 #: tcms/testcases/templates/testcases/mutable.html:166
@@ -1371,15 +1371,15 @@ msgstr "Powiadom"
 
 #: tcms/testcases/templates/testcases/mutable.html:187
 msgid "Manager of runs"
-msgstr "Menedżer uruchomień"
+msgstr "Menedżera przebiegów"
 
 #: tcms/testcases/templates/testcases/mutable.html:194
 msgid "Asignees"
-msgstr ""
+msgstr "Odbiorców"
 
 #: tcms/testcases/templates/testcases/mutable.html:210
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Domyślnego testera przebiegów"
 
 #: tcms/testcases/templates/testcases/mutable.html:219
 msgid "Notify when"
@@ -2109,3 +2109,4 @@ msgstr ""
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
