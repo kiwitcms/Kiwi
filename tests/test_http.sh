@@ -18,11 +18,31 @@ get_dashboard() {
     rlAssertGrep "<title>Kiwi TCMS - Dashboard</title>" /tmp/testdata.txt
 }
 
+exec_wrk() {
+    URL=$1
+    LOGS_DIR=$2
+    LOG_BASENAME=$3
+
+    WRK_FILE="$LOGS_DIR/$LOG_BASENAME.log"
+
+    wrk -d10s -t4 -c4 "$URL" > "$WRK_FILE"
+
+    TOTAL_REQUESTS=$(grep 'requests in ' "$WRK_FILE" | tr -s ' ' | cut -f2 -d' ')
+    FAILED_REQUESTS=$(grep 'Non-2xx or 3xx responses:' "$WRK_FILE" | tr -d ' ' | cut -f2 -d:)
+    test -z "$FAILED_REQUESTS" && FAILED_REQUESTS="0"
+    COMPLETED_REQUESTS=$((TOTAL_REQUESTS - FAILED_REQUESTS))
+
+    return "$COMPLETED_REQUESTS"
+}
+
 rlJournalStart
     rlPhaseStartSetup
         # wait for tear-down from previous script b/c
         # in CI subsequent tests can't find the db host
         sleep 5
+
+        WRK_DIR=$(mktemp -d ./wrk-logs-XXXX)
+        chmod go+rwx "$WRK_DIR"
     rlPhaseEnd
 
     rlPhaseStartTest "Plain HTTP works"
@@ -63,6 +83,14 @@ _EOF_
 
     rlPhaseStartTest "Should NOT send Cache-Control header"
         rlRun -t -c "curl -k -D- https://localhost/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
+    rlPhaseEnd
+
+    rlPhaseStartTest "Performance baseline for /accounts/login/"
+        exec_wrk "https://localhost/accounts/login" "$WRK_DIR" "login-page"
+    rlPhaseEnd
+
+    rlPhaseStartTest "Performance baseline for static file"
+        exec_wrk "https://localhost/static/images/kiwi_h20.png" "$WRK_DIR" "static-image"
     rlPhaseEnd
 
     rlPhaseStartCleanup
