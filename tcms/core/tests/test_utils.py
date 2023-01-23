@@ -26,6 +26,7 @@ class TestMailTo(unittest.TestCase):
                 self.expected_recipients,
             ),
             "kwargs": {"fail_silently": False},
+            "daemon": True,
         }
 
     @patch("threading.Thread")
