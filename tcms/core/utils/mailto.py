@@ -45,5 +45,4 @@ def mailto(  # pylint: disable=invalid-name
         kwargs={"fail_silently": False},
         daemon=True,
     )
-    # This is to tell Python not to wait for the thread to return
     email_thread.start()
