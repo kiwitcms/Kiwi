@@ -14,7 +14,7 @@ get_dashboard() {
     CSRF_TOKEN=$(grep csrftoken /tmp/testcookies.txt | cut -f 7)
     rlRun -t -c "curl -e $1/accounts/login/ -d username=testadmin -d password=password \
         -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -i -o /tmp/testdata.txt \
-        -b /tmp/testcookies.txt $1/accounts/login/"
+        -b /tmp/testcookies.txt -c /tmp/login-cookies.txt $1/accounts/login/"
     rlAssertGrep "<title>Kiwi TCMS - Dashboard</title>" /tmp/testdata.txt
 }
 
@@ -22,10 +22,11 @@ exec_wrk() {
     URL=$1
     LOGS_DIR=$2
     LOG_BASENAME=$3
+    EXTRA_HEADERS=${4:-"X-Dummy-Header: 1"}
 
     WRK_FILE="$LOGS_DIR/$LOG_BASENAME.log"
 
-    wrk -d10s -t4 -c4 "$URL" > "$WRK_FILE"
+    wrk -d10s -t4 -c4 -H "$EXTRA_HEADERS" "$URL" > "$WRK_FILE"
 
     TOTAL_REQUESTS=$(grep 'requests in ' "$WRK_FILE" | tr -s ' ' | cut -f2 -d' ')
     FAILED_REQUESTS=$(grep 'Non-2xx or 3xx responses:' "$WRK_FILE" | tr -d ' ' | cut -f2 -d:)
@@ -86,11 +87,17 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/login/"
-        exec_wrk "https://localhost/accounts/login" "$WRK_DIR" "login-page"
+        exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "login-page"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for static file"
         exec_wrk "https://localhost/static/images/kiwi_h20.png" "$WRK_DIR" "static-image"
+    rlPhaseEnd
+
+    rlPhaseStartTest "Performance baseline for / aka dashboard"
+        # Note: the cookies file is created in get_dashboard() above
+        SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
+        exec_wrk "https://localhost/" "$WRK_DIR" "dashboard" "Cookie: sessionid=$SESSION_ID"
     rlPhaseEnd
 
     rlPhaseStartCleanup
