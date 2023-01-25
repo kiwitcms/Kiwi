@@ -47,14 +47,14 @@ we often hear is *How many test execution results can Kiwi TCMS deal with?*
 
     The information below has been gathered by using the following environment:
 
-    - Client: t2.micro in us-east-1a (same availability zone as server)
-    - Server: t3.medium in use-east-1a, 30GB gp2 disk with 100/3000 IOPS
-    - Kiwi TCMS v10.0 via ``docker-compose up``
-    - Database is ``centos/mariadb-103-centos7`` with a persistent volume backed onto
+    - Client: t2.small in us-east-1a (same availability zone as server)
+    - Server: t3.medium in use-east-1a, 30GB gp2 disk with 100 IOPS
+    - Kiwi TCMS v11.7 via ``docker-compose up``
+    - Database is ``mariadb:10.10.2`` with a persistent volume backed onto
       the host filesystem
     - Host OS - Amazon Linux, freshly provisioned, no changes from defaults
     - ``perf-script-ng`` version
-      `13017d1 <https://github.com/kiwitcms/api-scripts/blob/13017d19263f7fc123776180f78336a59fd228f4/perf-script-ng>`_
+      `fd942d9 <https://github.com/kiwitcms/api-scripts/blob/fd942d9f805900473b69171d4dada6605ea37a97/perf-script-ng>`_
       with ``RANGE_SIZE=100`` (called ``R`` below)
     - For each invocation ``perf-script-ng`` creates new *Product*, *Version*
       *Build* and *TestPlan*. Test plan contains ``R x test cases`` then
@@ -71,20 +71,12 @@ we often hear is *How many test execution results can Kiwi TCMS deal with?*
 
 The average results are:
 
-- 35000 test execution results/hour
-- 71500 API calls/hour
-- 19 requests/second
-- 50 ms/request
+- 43000 test execution results/hour
+- 90000 API calls/hour
+- 25 requests/second
+- 40 ms/request
 
 |t3.medium metrics|
-
-.. note::
-
-    - The first 3 bars in the metrics are from 3 invocations with ``R=30``.
-      Best seen in the CPU usage chart. The rest are 3 invocations with ``R=100``.
-    - The spike seen during the last invocation has been consistent across
-      instance types. We think it could be due to a database re-indexing operation
-      but haven't pinned the root cause yet!
 
 .. important::
 
@@ -160,17 +152,15 @@ is performed inside the following environment:
 
 The results are as follow:
 
-- ``TestCase.filter``: min 648 ms, max 1500 ms for 5 MB data
+- ``TestCase.filter``: min 190 ms, max 738 ms for 5.71 MB data out of 3 retries
 
   |TestCase.filter metrics|
 
   |TestCase.filter slowest info|
 
-- ``TestRun.filter``: min 547 ms, max 1023 ms for 5.10 MB data
+- ``TestRun.filter``: min 611 ms, max 747 ms for 5.15 MB data out of 3 retries
 
   |TestRun.filter metrics|
-
-  |TestRun.filter slowest info|
 
 In the case where the client is across the world reaching the server through
 the Internet the timings are quite different with most of the time being taken
@@ -189,4 +179,3 @@ to transfer the actual information:
 .. |TestCase.filter slowest info| image:: ./_static/TestCase.filter_slowest_info.png
 .. |TestCase.filter metrics via Internet| image:: ./_static/TestCase.filter_metrics_via_internet.png
 .. |TestRun.filter metrics| image:: ./_static/TestRun.filter_metrics.png
-.. |TestRun.filter slowest info| image:: ./_static/TestRun.filter_slowest_info.png
