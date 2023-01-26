@@ -49,7 +49,7 @@ we often hear is *How many test execution results can Kiwi TCMS deal with?*
 
     - Client: t2.small in us-east-1a (same availability zone as server)
     - Server: t3.medium in use-east-1a, 30GB gp2 disk with 100 IOPS
-    - Kiwi TCMS v11.7 via ``docker-compose up``
+    - Kiwi TCMS v12.0 via ``docker-compose up``
     - Database is ``mariadb:10.10.2`` with a persistent volume backed onto
       the host filesystem
     - Host OS - Amazon Linux, freshly provisioned, no changes from defaults
@@ -152,15 +152,17 @@ is performed inside the following environment:
 
 The results are as follow:
 
-- ``TestCase.filter``: min 190 ms, max 738 ms for 5.71 MB data out of 3 retries
+- ``TestCase.filter``: min 725 ms, max 930 ms for 5.73 MB data
 
   |TestCase.filter metrics|
 
   |TestCase.filter slowest info|
 
-- ``TestRun.filter``: min 611 ms, max 747 ms for 5.15 MB data out of 3 retries
+- ``TestRun.filter``: min 560 ms, max 921 ms for 5.16 MB data
 
   |TestRun.filter metrics|
+
+  |TestRun.filter slowest info|
 
 In the case where the client is across the world reaching the server through
 the Internet the timings are quite different with most of the time being taken
@@ -179,3 +181,4 @@ to transfer the actual information:
 .. |TestCase.filter slowest info| image:: ./_static/TestCase.filter_slowest_info.png
 .. |TestCase.filter metrics via Internet| image:: ./_static/TestCase.filter_metrics_via_internet.png
 .. |TestRun.filter metrics| image:: ./_static/TestRun.filter_metrics.png
+.. |TestRun.filter slowest info| image:: ./_static/TestRun.filter_slowest_info.png
