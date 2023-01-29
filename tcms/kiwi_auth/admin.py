@@ -197,7 +197,9 @@ class KiwiUserAdmin(UserAdmin):
                 messages.ERROR,
                 _("This is the last superuser, it can not be deleted!"),
             )
-            return HttpResponseRedirect(reverse("admin:auth_user_change", args=[user.pk]))
+            return HttpResponseRedirect(
+                reverse("admin:auth_user_change", args=[user.pk])
+            )
 
         if not _modifying_myself(request, object_id):
             return super().delete_view(request, object_id, extra_context)
