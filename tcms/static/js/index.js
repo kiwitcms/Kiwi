@@ -59,9 +59,17 @@ $(() => {
         pageManagementBuildAdminReadyHandler()
     }
 
-    $('.selectpicker').selectpicker()
-    $('.bootstrap-switch').bootstrapSwitch()
-    $('[data-toggle="tooltip"]').tooltip()
+    if ($('body').selectpicker) {
+        $('.selectpicker').selectpicker()
+    }
+
+    if ($('body').bootstrapSwitch) {
+        $('.bootstrap-switch').bootstrapSwitch()
+    }
+
+    if ($('body').tooltip) {
+        $('[data-toggle="tooltip"]').tooltip()
+    }
 
     // used by automatically loaded editor widgets
     window.initSimpleMDE = initSimpleMDE
