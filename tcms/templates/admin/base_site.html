@@ -16,7 +16,7 @@
 
 {% block javascripts %}
     {{ block.super }}
-
+    <script src="{% static 'simplemde/dist/simplemde.min.js' %}"></script>
     <script type="text/javascript" charset="utf-8">
         grp.jQuery(() => {
             grp.jQuery("#change-history").addClass('grp-table');
