@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2023-01-31 02:04\n"
+"PO-Revision-Date: 2023-01-31 02:36\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1585,11 +1585,11 @@ msgstr "父ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr "测试计划文档："
+msgstr "测试计划文档随便写的啊"
 
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Notify:"
-msgstr "提醒:"
+msgstr "刘飞彪"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "TestCase author"
@@ -2156,3 +2156,4 @@ msgstr "编辑租户"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "只有获得此租户授权的用户才能邀请其他"
+
