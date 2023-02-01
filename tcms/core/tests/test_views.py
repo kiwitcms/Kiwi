@@ -124,7 +124,7 @@ class TestDashboardCheckMigrations(test.TransactionTestCase):
 
 
 def exception_view(request):
-    raise Exception
+    raise RuntimeError
 
 
 urlpatterns = [

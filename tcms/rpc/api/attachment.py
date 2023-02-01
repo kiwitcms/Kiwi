@@ -26,4 +26,4 @@ def remove_attachment(attachment_id, **kwargs):
     request = kwargs.get(REQUEST_KEY)
     response = delete_attachment(request, attachment_id)
     if response.status_code == 404:
-        raise Exception(f"Removing attachment {attachment_id} failed")
+        raise RuntimeError(f"Removing attachment {attachment_id} failed")

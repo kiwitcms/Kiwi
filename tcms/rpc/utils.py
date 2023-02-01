@@ -94,4 +94,4 @@ def add_attachment(obj_id, app_model, user, filename, b64content):
     app, model = app_model.split(".")
     response = attachment_views.add_attachment(request, app, model, obj_id)
     if response.status_code == 404:
-        raise Exception(f"Adding attachment to {app_model}({obj_id}) failed")
+        raise RuntimeError(f"Adding attachment to {app_model}({obj_id}) failed")
