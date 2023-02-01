@@ -9,7 +9,6 @@ if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("management", "0005_order_by_name"),
     ]

@@ -73,7 +73,6 @@ class TestNewRunViewTestCase(tests.PermissionsTestCase):
 
     @classmethod
     def setUpTestData(cls):
-
         cls.plan = factories.TestPlanFactory()
 
         cls.build_fast = factories.BuildFactory(

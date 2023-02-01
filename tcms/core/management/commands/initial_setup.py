@@ -11,7 +11,6 @@ class Command(BaseCommand):
     help = "Performs initial setup of *NEW* Kiwi TCMS installation."
 
     def handle(self, *args, **kwargs):
-
         self.stdout.write("\n1. Applying migrations:")
         call_command("migrate", f"--verbosity={kwargs['verbosity']}")
 

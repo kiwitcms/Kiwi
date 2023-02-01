@@ -27,7 +27,6 @@ def backwards_restore_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0010_remove_bug"),
     ]

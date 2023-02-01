@@ -51,7 +51,6 @@ def reverse_add_initial_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("management", "0003_squashed"),
         ("testplans", "0005_squashed"),

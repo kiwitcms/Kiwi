@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0007_convert_is_automated_to_boolean"),
     ]

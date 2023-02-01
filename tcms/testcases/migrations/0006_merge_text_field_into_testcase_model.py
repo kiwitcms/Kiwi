@@ -64,7 +64,6 @@ def backward_restore_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0005_remove_unused_fields"),
     ]

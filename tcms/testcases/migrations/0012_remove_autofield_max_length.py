@@ -9,7 +9,6 @@ if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0011_trim_bugsystem_fields"),
     ]

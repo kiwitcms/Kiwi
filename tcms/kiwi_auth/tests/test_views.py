@@ -246,7 +246,7 @@ To activate your account, click this link:
             ),
         )
 
-        for (name, email) in settings.ADMINS:
+        for name, email in settings.ADMINS:
             self.assertContains(
                 response, f'<a href="mailto:{email}">{name}</a>', html=True
             )

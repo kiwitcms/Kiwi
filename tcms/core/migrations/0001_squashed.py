@@ -60,7 +60,6 @@ def reverse_remove_default_perms(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [

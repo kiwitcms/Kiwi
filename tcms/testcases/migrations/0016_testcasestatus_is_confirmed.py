@@ -7,7 +7,6 @@ def forwards(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0015_add_summary_db_index"),
     ]

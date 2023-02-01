@@ -155,7 +155,6 @@ class NewFromPlan(NewTestRunView):
 
 @method_decorator(permission_required("testruns.view_testrun"), name="dispatch")
 class SearchTestRunView(TemplateView):
-
     template_name = "testruns/search.html"
 
     def get_context_data(self, **kwargs):
@@ -174,7 +173,6 @@ class SearchTestRunView(TemplateView):
     name="dispatch",
 )
 class GetTestRunView(DetailView):
-
     template_name = "testruns/get.html"
     http_method_names = ["get"]
     model = TestRun

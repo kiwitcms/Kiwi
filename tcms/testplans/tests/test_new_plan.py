@@ -158,7 +158,6 @@ class TestNewTestPlanView(LoggedInTestCase):
 class TestNewTestPlanViewPermissions(
     PermissionsTestCase
 ):  # pylint: disable=too-many-ancestors
-
     add_testplan_permission = "testplans.add_testplan"
     permission_label = add_testplan_permission
     http_method_names = ["get", "post"]

@@ -23,7 +23,6 @@ def forward_copy_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0008_notifications_default_true"),
     ]

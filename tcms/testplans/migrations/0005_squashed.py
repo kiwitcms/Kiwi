@@ -39,7 +39,6 @@ def reverse_add_initial_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [

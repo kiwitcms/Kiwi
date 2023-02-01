@@ -55,7 +55,6 @@ def backward_restore_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0009_populate_missing_text_history"),
         ("linkreference", "0002_update_fields"),
