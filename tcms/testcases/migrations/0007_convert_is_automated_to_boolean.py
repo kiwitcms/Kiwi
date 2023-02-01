@@ -30,7 +30,6 @@ def backward_restore_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0006_merge_text_field_into_testcase_model"),
     ]

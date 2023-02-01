@@ -22,7 +22,6 @@ def backwards(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testcases", "0013_remove_autofield"),
     ]

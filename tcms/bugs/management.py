@@ -82,7 +82,6 @@ def create_permissions(
     # The codenames and ctypes that should exist.
     ctypes = set()
     for klass in app_config.get_models(include_auto_created=True):
-
         # Force looking up the content types in the current database
         # before creating foreign keys to them.
         ctype = ContentType.objects.db_manager(using).get_for_model(

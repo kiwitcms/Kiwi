@@ -45,7 +45,6 @@ def backwards(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("management", "0008_increase_product_name_size"),
     ]

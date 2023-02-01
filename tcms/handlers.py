@@ -8,7 +8,7 @@ from modernrpc.handlers import JSONRPCHandler, XMLRPCHandler
 class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
     @staticmethod
     def escape_dict(result_dict):
-        for (key, value) in result_dict.items():
+        for key, value in result_dict.items():
             if isinstance(value, str):
                 result_dict[key] = html.escape(value)
             elif isinstance(value, timedelta):
@@ -16,7 +16,7 @@ class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
 
     @staticmethod
     def escape_list(result_list):
-        for (index, item) in enumerate(result_list):
+        for index, item in enumerate(result_list):
             if isinstance(item, str):
                 result_list[index] = html.escape(item)
             elif isinstance(item, timedelta):
@@ -48,13 +48,13 @@ class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
 class KiwiTCMSXmlRpcHandler(XMLRPCHandler):
     @staticmethod
     def escape_dict(result_dict):
-        for (key, value) in result_dict.items():
+        for key, value in result_dict.items():
             if isinstance(value, timedelta):
                 result_dict[key] = value.total_seconds()
 
     @staticmethod
     def escape_list(result_list):
-        for (index, item) in enumerate(result_list):
+        for index, item in enumerate(result_list):
             if isinstance(item, timedelta):
                 result_list[index] = item.total_seconds()
             elif isinstance(item, dict):

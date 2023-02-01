@@ -119,7 +119,6 @@ def status_matrix(query=None):
 @http_basic_auth_login_required
 @rpc_method(name="Testing.execution_trends")
 def execution_trends(query=None):
-
     if query is None:
         query = {}
 
@@ -195,7 +194,6 @@ def _append_status_counts_to_result(counts, result):
 @http_basic_auth_login_required
 @rpc_method(name="Testing.test_case_health")
 def test_case_health(query=None):
-
     if query is None:
         query = {}
 
@@ -231,7 +229,6 @@ def test_case_health(query=None):
 @http_basic_auth_login_required
 @rpc_method(name="Testing.individual_test_case_health")
 def individual_test_case_health_simple(query=None):
-
     if query is None:
         query = {}
 

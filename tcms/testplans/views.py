@@ -105,7 +105,6 @@ class Edit(UpdateView):
 
 @method_decorator(permission_required("testplans.view_testplan"), name="dispatch")
 class SearchTestPlanView(TemplateView):
-
     template_name = "testplans/search.html"
 
     def get_context_data(self, **kwargs):
@@ -126,7 +125,6 @@ class SearchTestPlanView(TemplateView):
     name="dispatch",
 )
 class TestPlanGetView(DetailView):
-
     template_name = "testplans/get.html"
     http_method_names = ["get"]
     model = TestPlan
@@ -179,7 +177,6 @@ class TestPlanGetView(DetailView):
     name="dispatch",
 )
 class GetTestPlanRedirectView(DetailView):
-
     http_method_names = ["get"]
     model = TestPlan
 

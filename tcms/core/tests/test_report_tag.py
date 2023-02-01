@@ -6,7 +6,6 @@ from tcms.core.templatetags.report_tags import percentage
 
 class TestReportTagPercentage(unittest.TestCase):
     def test_percentage_calculation(self):
-
         with self.assertRaises(ValueError):
             percentage("five", "ten")
         self.assertEqual("0.0%", percentage(0, 2.0))

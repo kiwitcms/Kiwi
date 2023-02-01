@@ -29,7 +29,6 @@ from tcms.testruns.models import TestRun
 
 @method_decorator(login_required, name="dispatch")
 class DashboardView(TemplateView):  # pylint: disable=missing-permission-required
-
     template_name = "dashboard.html"
 
     def get_context_data(self, **kwargs):
@@ -176,7 +175,6 @@ class IterOpen(subprocess.Popen):  # pylint: disable=missing-permission-required
 
 
 class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
-
     template_name = "initdb.html"
 
     def post(self, request):  # pylint: disable=no-self-use

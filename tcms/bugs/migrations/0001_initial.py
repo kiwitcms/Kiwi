@@ -7,7 +7,6 @@ import tcms.core.models.base
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [

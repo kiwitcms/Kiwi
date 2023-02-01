@@ -15,7 +15,6 @@ def mailto(  # pylint: disable=invalid-name
     context=None,
     cc=None,
 ):
-
     # make a list with recipients and filter out duplicates
     if isinstance(recipients, list):
         recipients = list(set(recipients))

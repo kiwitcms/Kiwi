@@ -56,7 +56,6 @@ def insert_default_values(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("testruns", "0006_rename_test_case_run_to_test_execution"),
     ]

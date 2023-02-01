@@ -113,7 +113,6 @@ class TestCaseSearchView(TemplateView):
     name="dispatch",
 )
 class TestCaseGetView(DetailView):
-
     model = TestCase
     template_name = "testcases/get.html"
     http_method_names = ["get"]
@@ -169,7 +168,6 @@ class TestCaseGetView(DetailView):
     name="dispatch",
 )
 class EditTestCaseView(UpdateView):
-
     model = TestCase
     template_name = "testcases/mutable.html"
     form_class = TestCaseForm
