@@ -27,14 +27,12 @@ def user_should_have_perm(user, perm):
             app_label, codename = perm.split(".")
         except ValueError:
             raise ValueError(f'"{perm}" should be: app_label.perm_codename') from None
-        else:
-            if not app_label or not codename:
-                raise ValueError("Invalid app_label or codename")
-            user.user_permissions.add(
-                Permission.objects.get(
-                    content_type__app_label=app_label, codename=codename
-                )
-            )
+
+        if not app_label or not codename:
+            raise ValueError("Invalid app_label or codename")
+        user.user_permissions.add(
+            Permission.objects.get(content_type__app_label=app_label, codename=codename)
+        )
     elif isinstance(perm, Permission):
         user.user_permissions.add(perm)
     else:
@@ -49,13 +47,13 @@ def remove_perm_from_user(user, perm):
             app_label, codename = perm.split(".")
         except ValueError:
             raise ValueError(f'"{perm}" should be: app_label.perm_codename') from None
-        else:
-            if not app_label or not codename:
-                raise ValueError("Invalid app_label or codename")
-            get_permission = Permission.objects.get
-            user.user_permissions.remove(
-                get_permission(content_type__app_label=app_label, codename=codename)
-            )
+
+        if not app_label or not codename:
+            raise ValueError("Invalid app_label or codename")
+        get_permission = Permission.objects.get
+        user.user_permissions.remove(
+            get_permission(content_type__app_label=app_label, codename=codename)
+        )
     elif isinstance(perm, Permission):
         user.user_permissions.remove(perm)
     else:
