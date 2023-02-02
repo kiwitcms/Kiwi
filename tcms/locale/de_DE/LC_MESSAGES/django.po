@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2023-02-02 12:16\n"
+"PO-Revision-Date: 2023-02-02 12:19\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1699,7 +1699,7 @@ msgstr "Umgebung"
 
 #: tcms/testruns/templates/testruns/get.html:183
 msgid "Update text version"
-msgstr ""
+msgstr "Textversion aktualisieren"
 
 #: tcms/testruns/templates/testruns/get.html:218
 msgid "Add comment"
@@ -1718,7 +1718,7 @@ msgstr "Getestet von"
 
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "Mine"
-msgstr ""
+msgstr "Meine"
 
 #: tcms/testruns/templates/testruns/get.html:281
 msgid "All"
@@ -1736,7 +1736,7 @@ msgstr "Fehler melden"
 
 #: tcms/testruns/templates/testruns/get.html:340
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "Testfall ist nicht Teil des übergeordneten Testplans"
 
 #: tcms/testruns/templates/testruns/get.html:372
 msgid "Assigned to"
@@ -1765,7 +1765,7 @@ msgstr "Abbrechen"
 
 #: tcms/testruns/templates/testruns/get.html:595
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Issue Tracker"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1777,11 +1777,11 @@ msgstr "TestRun klonen"
 
 #: tcms/testruns/templates/testruns/mutable.html:146
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Beeinflusst nur Testfälle mit Parametern"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
@@ -1874,7 +1874,8 @@ msgstr "ÜBERSPRUNGEN"
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr ""
+msgstr "Weitere Konfigurationen finden Sie unter\n"
+"<a href=\"%s\">GitHub</a>"
 
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
@@ -1882,7 +1883,7 @@ msgstr "GitHub integration"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Neu synchronisieren"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -1896,12 +1897,12 @@ msgstr "Nicht konfigurierte GitHub App %d"
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr ""
+msgstr "%s wurde von GitHub importiert"
 
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s existiert bereits"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -1925,11 +1926,11 @@ msgstr "Edit GitHub App <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "GitHub App-Installation für den Mandanten \"%s \" nicht gefunden"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Mehrere GitHub App-Installationen erkannt!"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1955,11 +1956,11 @@ msgstr "Organisation"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
 msgid "Docker credentials"
-msgstr ""
+msgstr "Docker Zugangsdaten"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Private Container-Anweisungen"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
@@ -1991,7 +1992,7 @@ msgstr "Sie besitzen keine Instanz"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Über FastSpring abonnieren"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
@@ -2056,7 +2057,7 @@ msgstr "Nicht autorisiert"
 
 #: tcms_tenants/admin.py:70
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Vorhandene Benutzername, E-Mail oder Benutzer-ID"
 
 #: tcms_tenants/admin.py:109
 msgid "Full name"
@@ -2073,7 +2074,7 @@ msgstr "Anlegen"
 #: tcms_tenants/menu.py:15
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:9
 msgid "Invite users"
-msgstr ""
+msgstr "Benutzer einladen"
 
 #: tcms_tenants/menu.py:16
 msgid "Authorized users"
@@ -2094,7 +2095,11 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "Lieber Test,\n"
+"%(invited_by)s hat Sie eingeladen, dem Kiwi TCMS Mieter unter\n"
+"%(tenant_url)s\n\n"
+"beizutreten.\n"
+"Wenn dies ihr erster Login ist, müssen Sie ihr Passwort ändern!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2107,7 +2112,7 @@ msgstr "Ihr Kiwi TCMS Mieter wurde erstellt unter:\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
@@ -2139,7 +2144,7 @@ msgstr "Neuer Kiwi TCMS Tenant erstellt"
 
 #: tcms_tenants/utils.py:198
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Einladung zum Kiwi TCMS beizutreten"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
@@ -2151,4 +2156,5 @@ msgstr "Mandant bearbeiten"
 
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Nur Benutzer, die für diesen Mandanten berechtigt sind, können andere einladen"
+
