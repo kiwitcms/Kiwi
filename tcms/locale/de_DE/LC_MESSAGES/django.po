@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2022-10-17 11:34\n"
+"PO-Revision-Date: 2023-02-02 12:16\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -42,7 +42,7 @@ msgstr "Beschreibung des Problems:\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:17
 #: tcms/bugs/templates/bugs/search.html:109
 msgid "Severity"
-msgstr ""
+msgstr "Schwere-Grad"
 
 #: tcms/bugs/templates/bugs/get.html:36 tcms/bugs/templates/bugs/search.html:90
 #: tcms/templates/include/bug_details.html:3
@@ -168,7 +168,7 @@ msgstr "Zusammenfassung"
 
 #: tcms/bugs/templates/bugs/mutable.html:26
 msgid "add new Severity"
-msgstr ""
+msgstr "neuen Schweregrad hinzufügen"
 
 #: tcms/bugs/templates/bugs/mutable.html:44
 #: tcms/testcases/templates/testcases/mutable.html:43
@@ -489,7 +489,7 @@ msgstr "Sie haben %(unapplied_migration_count)s nicht angewandte Migration(en). 
 #: tcms/core/views.py:93
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "Sie verwenden keine sichere Verbindung. Siehe <a href=\"%(doc_url)s\">-Dokumentation</a> und aktivieren Sie SSL."
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -547,7 +547,7 @@ msgstr "Prioritäten"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr ""
+msgstr "Builds"
 
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:130
@@ -693,7 +693,7 @@ msgstr "Neu: Testlauf #%(pk)d - %(summary)s"
 #: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Fehler #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -854,7 +854,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Fehler %(pk)s wurde Ihnen zugewiesen.\n\n"
+"Link: %(bug_url)s\n\n"
+"Zusammenfassung: %(summary)s\n"
+"Erstellt am: %(creation_date)s\n"
+"Reporter: %(reporter)s\n"
+"Zugewiesen an: %(assignee)s\n"
+"Produkt: %(product)s\n"
+"Version: %(version)s\n"
+"Build: %(build)s\n"
+"Letztes Kommentar:\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -979,11 +989,11 @@ msgstr "Parameter"
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "Dies ist eine technische Vorschau!"
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
-msgstr ""
+msgstr "Name=Wert"
 
 #: tcms/templates/include/properties_card.html:70
 #: tcms/templates/include/tags_card.html:28
@@ -1013,11 +1023,11 @@ msgstr "Datenbank initialisieren"
 
 #: tcms/templates/initdb.html:19
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Ihre Datenbank wurde noch nicht initialisiert. Klicken Sie auf die Schaltfläche unten, um sie zu initialisieren!"
 
 #: tcms/templates/initdb.html:21
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "WARNUNG: Dieser Vorgang wird eine Weile dauern! Diese Seite wird weitergeleitet, sobald der Vorgang abgeschlossen ist."
 
 #: tcms/templates/initdb.html:26
 msgid "Please wait"
@@ -1224,7 +1234,7 @@ msgstr "Testfallstatus"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "Testfall-Status"
 
 #: tcms/testcases/models.py:379
 msgid "Template"
@@ -1621,7 +1631,7 @@ msgstr "Weitere Informationen zum Anpassen des Test-Ausführungsstatus finden Si
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "1 negativer, 1 neutraler & 1 positiver Status erforderlich!"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
@@ -1633,7 +1643,7 @@ msgstr "Voll"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Paarweise"
 
 #: tcms/testruns/models.py:224
 msgid "Test execution statuses"
@@ -1641,11 +1651,11 @@ msgstr "Test-Ausführungsstatus"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "Unbestätigte Testfälle wurden nicht hinzugefügt"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Schreibe {0} oder {1}"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -2142,3 +2152,4 @@ msgstr "Mandant bearbeiten"
 #: tcms_tenants/views.py:146
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr ""
+
