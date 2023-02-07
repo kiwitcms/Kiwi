@@ -79,8 +79,16 @@ _EOF_
         rlRun -t -c "curl -k -D- https://localhost/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
     rlPhaseEnd
 
+    rlPhaseStartTest "Performance baseline for /accounts/register/"
+        exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "register-account-page"
+    rlPhaseEnd
+
     rlPhaseStartTest "Performance baseline for /accounts/login/"
         exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "login-page"
+    rlPhaseEnd
+
+    rlPhaseStartTest "Performance baseline for /accounts/passwordreset/"
+        exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "password-reset-page"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for static file"
