@@ -94,6 +94,14 @@ class PasswordResetForm(
     kiwitcms-tenants is installed.
     """
 
+    captcha = (
+        fields.CaptchaField(
+            widget=CustomCaptchaTextInput(attrs={"class": "form-control"})
+        )
+        if settings.USE_CAPTCHA
+        else None
+    )
+
     def save(  # pylint: disable=too-many-arguments
         self,
         domain_override=None,
