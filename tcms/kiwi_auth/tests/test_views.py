@@ -400,8 +400,25 @@ class TestPasswordResetView(TestCase):
         user = User.objects.create_user("kiwi-tester", "tester@example.com", "password")
         user.is_active = True
         user.save()
-        data = {"email": "tester@example.com"}
-        response = self.client.post(self.password_reset_url, data, follow=True)
+
+        try:
+            # https://github.com/mbi/django-simple-captcha/issues/84
+            # pylint: disable=import-outside-toplevel
+            from captcha.conf import settings as captcha_settings
+
+            captcha_settings.CAPTCHA_TEST_MODE = True
+
+            response = self.client.post(
+                self.password_reset_url,
+                {
+                    "email": "tester@example.com",
+                    "captcha_0": "PASSED",
+                    "captcha_1": "PASSED",
+                },
+                follow=True,
+            )
+        finally:
+            captcha_settings.CAPTCHA_TEST_MODE = False
 
         self.assertContains(response, _("Password reset email was sent"))
 
