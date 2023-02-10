@@ -159,7 +159,7 @@ class SearchTestRunView(TemplateView):
 
     def get_context_data(self, **kwargs):
         form = SearchRunForm(self.request.GET)
-        form.populate(product_id=self.request.GET.get("product"))
+        form.populate(product_id=self.request.GET.get("product", -1))
 
         return {
             "form": form,
