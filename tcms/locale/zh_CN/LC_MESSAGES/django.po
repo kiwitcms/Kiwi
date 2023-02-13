@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 19:33+0000\n"
-"PO-Revision-Date: 2023-02-01 15:44\n"
+"PO-Revision-Date: 2023-02-12 09:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -983,7 +983,7 @@ msgstr "最后一页"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
 msgid "Parameters"
-msgstr ""
+msgstr "参数"
 
 #: tcms/templates/include/properties_card.html:16
 #: tcms/testruns/templates/testruns/mutable.html:139
@@ -1106,7 +1106,7 @@ msgstr "密码"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "忘记了密码"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1634,7 +1634,7 @@ msgstr "1个消极, 1个中性和 1个正面状态必须填写！"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "编辑参数"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1780,7 +1780,7 @@ msgstr "网格视图"
 
 #: tcms/testruns/templates/testruns/mutable.html:149
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "仅影响带参数的测试用例"
 
 #: tcms/testruns/templates/testruns/mutable.html:163
 msgid "more information"
