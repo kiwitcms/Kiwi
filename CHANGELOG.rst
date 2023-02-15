@@ -1,6 +1,87 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.0 (15 Feb 2023)
+----------------------------
+
+.. important::
+
+    This is a new major release which contains security related updates,
+    general improvements, bug fixes and new translations! This release also
+    celebrates our 14th birthday!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 4.1.5 to 4.1.7 which includes fixes for
+  `CVE-2023-23969 <https://docs.djangoproject.com/en/4.1/releases/4.1.6/>`_ and
+  `CVE-2023-24580 <https://docs.djangoproject.com/en/4.1/releases/4.1.7/>`_
+- Rate limit everything under /accounts/. Fixes
+  `CVE-2023-25156 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7968-h4m4-ghm9>`_
+- Require a captcha challenge on password reset form. Fixes
+  `CVE-2023-25171 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7j9h-3jxf-3vrf>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 5.0.1 to 6.0.0
+- Update django-tree-queries from 0.13.0 to 0.14.0
+- Update python-gitlab from 3.12.0 to 3.13.0
+- Update python-redmine from 2.3.0 to 2.4.0
+- Update node_modules/json5 from 1.0.1 to 1.0.2
+- Switch from Apache to Nginx + uWSGI
+
+  - uWSGI will spawn worker processes for each available CPU core
+  - reduce container image by around 50 MB
+
+  .. warning::
+
+    No longer support ``KIWI_DONT_ENFORCE_HTTPS`` environment variable
+
+
+Bug fixes
+~~~~~~~~~
+
+- Load SimpleMDE for Admin pages. Fixes
+  `Issue #3057 <https://github.com/kiwitcms/Kiwi/issues/3057>`_
+- Don't show all builds on Search Test Runs page before Product and Version
+  fields are initialized when loading the page directly
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Remove deprecated ``setDaemon()`` method (Ivajlo Karabojkov)
+- Execute docker tests against ``localhost`` instead of container IP
+- Test performance baseline on certain pages with ``wrk``
+- Conditionally execute top-level UI functions
+- Raise ``RuntimeError`` instead of ``Exception`` to satisfy newer
+  pylint checks
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+
+
+
 Kiwi TCMS 11.7 (03 Jan 2023)
 ----------------------------
 
