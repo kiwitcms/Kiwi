@@ -161,12 +161,19 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.admin.username, password="admin-password"
         )
+        # Check that we have more than one superuser
+        self.assertTrue(get_user_model().objects.filter(is_superuser=True).count() > 1)
+
         self.client.get(reverse("admin:auth_user_delete", args=[self.admin2.pk]))
         self.client.post(
             reverse("admin:auth_user_delete", args=[self.admin2.pk]),
             {"post": "yes"},
             follow=True,
         )
+        # Check that admin2 is deleted, and we have only one superuser left
+        self.assertFalse(get_user_model().objects.filter(pk=self.admin2.pk).exists())
+        self.assertTrue(get_user_model().objects.filter(is_superuser=True).count() == 1)
+
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.admin.pk]),
             follow=True,

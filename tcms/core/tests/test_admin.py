@@ -130,7 +130,8 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
             username=self.regular_user.username, password="password"
         )
         response = self.client.get(
-            reverse("admin:auth_user_delete", args=[self.superuser.pk])
+            reverse("admin:auth_user_delete", args=[self.superuser.pk]),
+            follow=True,
         )
 
         # it is not possible to delete other user accounts
