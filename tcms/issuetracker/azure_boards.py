@@ -5,7 +5,7 @@ from requests.auth import HTTPBasicAuth
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.templatetags.extra_filters import markdown2html
-from tcms.issuetracker.base import IntegrationThread, IssueTrackerType
+from tcms.issuetracker.base import IssueTrackerType
 
 
 class AzureBoardsAPI:
@@ -65,21 +65,6 @@ class AzureBoardsAPI:
         return requests.request(method, url, timeout=30, **kwargs).json()
 
 
-class AzureThread(IntegrationThread):
-    """
-    Execute AzureBoards code in a thread!
-
-    Executed from the IssueTracker interface methods.
-
-    :meta private:
-    """
-
-    def post_comment(self):
-        # NOTE: Posting comment is in preview state in API v6.0.
-        comment_body = {"text": markdown2html(self.text())}
-        self.rpc.add_comment(self.bug_id, comment_body)
-
-
 class AzureBoards(IssueTrackerType):
     """
     Support for AzureBoards. Requires:
@@ -92,8 +77,6 @@ class AzureBoards(IssueTrackerType):
         You can leave the ``api_url`` and ``api_username`` fields blank because
         the integration code doesn't use them!
     """
-
-    it_class = AzureThread
 
     def _rpc_connection(self):
         return AzureBoardsAPI(self.bug_system.base_url, self.bug_system.api_password)
@@ -147,6 +130,11 @@ class AzureBoards(IssueTrackerType):
                 url += "/"
 
             return (None, url + "_workitems/create/Issue")
+
+    def post_comment(self, execution, bug_id):
+        # NOTE: Posting comment is in preview state in API v6.0.
+        comment_body = {"text": markdown2html(self.text(execution))}
+        self.rpc.add_comment(bug_id, comment_body)
 
     def details(self, url):
         """

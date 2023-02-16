@@ -69,7 +69,7 @@ class TestGitlabIntegration(APITestCase):
         self.assertEqual("Hello World", result["description"])
 
     def test_auto_update_bugtracker(self):
-        repo_id = self.integration.it_class.repo_id(self.integration.bug_system)
+        repo_id = self.integration.repo_id
         gl_project = self.integration.rpc.projects.get(repo_id)
         gl_issue = gl_project.issues.get(self.existing_bug_id)
 
@@ -128,7 +128,7 @@ class TestGitlabIntegration(APITestCase):
 
         # assert that the result looks like valid URL parameters
         new_issue_id = self.integration.bug_id_from_url(result["response"])
-        repo_id = self.integration.it_class.repo_id(self.integration.bug_system)
+        repo_id = self.integration.repo_id
         gl_project = self.integration.rpc.projects.get(repo_id)
         issue = gl_project.issues.get(new_issue_id)
 

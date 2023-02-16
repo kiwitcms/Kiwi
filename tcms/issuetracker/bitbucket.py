@@ -3,7 +3,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.issuetracker.base import IntegrationThread, IssueTrackerType
+from tcms.issuetracker.base import IssueTrackerType
 
 
 class BitBucketAPI:
@@ -68,20 +68,6 @@ class BitBucketAPI:
         return endpoint_url
 
 
-class BitBucketThread(IntegrationThread):
-    """
-    Execute BitBucket code in a thread!
-
-    Executed from the IssueTracker interface methods.
-
-    :meta private:
-    """
-
-    def post_comment(self):
-        comment_body = {"content": {"raw": self.text().replace("\n", "\n\n")}}
-        self.rpc.add_comment(self.bug_id, comment_body)
-
-
 class BitBucket(IssueTrackerType):
     """
     Support for BitBucket. Requires:
@@ -105,8 +91,6 @@ class BitBucket(IssueTrackerType):
         Here is a guide about creating and using an "App Password";
         https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/
     """
-
-    it_class = BitBucketThread
 
     def _rpc_connection(self):
         return BitBucketAPI(
@@ -156,6 +140,10 @@ class BitBucket(IssueTrackerType):
                 url += "/"
 
             return (None, url + "issues/new")
+
+    def post_comment(self, execution, bug_id):
+        comment_body = {"content": {"raw": self.text(execution).replace("\n", "\n\n")}}
+        self.rpc.add_comment(bug_id, comment_body)
 
     def details(self, url):
         """

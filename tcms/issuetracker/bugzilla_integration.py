@@ -11,21 +11,6 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker import base
 
 
-class BugzillaThread(base.IntegrationThread):
-    """
-    Execute Bugzilla RPC code in a thread!
-
-    Executed from the IssueTracker interface methods.
-
-    :meta private:
-    """
-
-    def post_comment(self):
-        self.rpc.update_bugs(
-            self.bug_id, {"comment": {"comment": self.text(), "is_private": False}}
-        )
-
-
 class Bugzilla(base.IssueTrackerType):
     """
     Support for Bugzilla. Requires:
@@ -41,8 +26,6 @@ class Bugzilla(base.IssueTrackerType):
     is not provided a temporary directory will be used each time we try to login
     into Bugzilla!
     """
-
-    it_class = BugzillaThread
 
     def __init__(self, bug_system, request):
         super().__init__(bug_system, request)
@@ -117,3 +100,8 @@ class Bugzilla(base.IssueTrackerType):
             url += "/"
 
         return (None, url + "enter_bug.cgi?" + urlencode(args, True))
+
+    def post_comment(self, execution, bug_id):
+        self.rpc.update_bugs(
+            bug_id, {"comment": {"comment": self.text(execution), "is_private": False}}
+        )
