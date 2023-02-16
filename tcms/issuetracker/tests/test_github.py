@@ -81,7 +81,7 @@ class TestGitHubIntegration(APITestCase):
         )
 
     def test_auto_update_bugtracker(self):
-        repo_id = self.integration.it_class.repo_id(self.integration.bug_system)
+        repo_id = self.integration.repo_id
         repo = self.integration.rpc.get_repo(repo_id)
         issue = repo.get_issue(self.existing_bug_id)
 
@@ -143,7 +143,7 @@ class TestGitHubIntegration(APITestCase):
         self.assertIn("/issues/", result["response"])
 
         new_issue_id = self.integration.bug_id_from_url(result["response"])
-        repo_id = self.integration.it_class.repo_id(self.integration.bug_system)
+        repo_id = self.integration.repo_id
         repo = self.integration.rpc.get_repo(repo_id)
         issue = repo.get_issue(new_issue_id)
 

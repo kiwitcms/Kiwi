@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2022 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2023 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -49,29 +49,17 @@ class KiwiTCMS(IssueTrackerType):
 
         return result
 
-    def add_testexecution_to_issue(self, executions, issue_url):
+    def post_comment(self, execution, bug_id):
         """
         Directly 'link' BUG and TE objects via their m2m
         relationship.
-
-        .. note::
-
-            This method takes extra steps to safeguard from
-            bogus input b/c it is called unconditionally from
-            API method ``TestCase.add_link()``!
         """
-        try:
-            bug_id = self.bug_id_from_url(issue_url)
-        except AttributeError:
-            return
-
         try:
             bug = Bug.objects.get(pk=bug_id)
         except Bug.DoesNotExist:
             return
 
-        for execution in executions:
-            bug.executions.add(execution)
+        bug.executions.add(execution)
 
     def _report_issue(self, execution, user):
         """

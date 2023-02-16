@@ -3,7 +3,7 @@
     Refer to each implementor class for integration specifics!
 """
 
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 
 import github
 import gitlab
@@ -12,12 +12,6 @@ import redminelib
 from django.conf import settings
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.issuetracker import (
-    github_integration,
-    gitlab_integration,
-    jira_integration,
-    redmine_integration,
-)
 from tcms.issuetracker.base import IssueTrackerType
 from tcms.issuetracker.bugzilla_integration import (  # noqa, pylint: disable=unused-import
     Bugzilla,
@@ -47,8 +41,6 @@ class JIRA(IssueTrackerType):
     setting (in ``product.py``). By default this setting is not provided and
     the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
     """
-
-    it_class = jira_integration.JiraThread
 
     def _rpc_connection(self):
         if hasattr(settings, "JIRA_OPTIONS"):
@@ -171,6 +163,9 @@ class JIRA(IssueTrackerType):
             url + "/secure/CreateIssueDetails!init.jspa?" + urlencode(args, True),
         )
 
+    def post_comment(self, execution, bug_id):
+        self.rpc.add_comment(bug_id, self.text(execution))
+
 
 class GitHub(IssueTrackerType):
     """
@@ -184,8 +179,6 @@ class GitHub(IssueTrackerType):
         You can leave the ``api_url`` and ``api_username`` fields blank because
         the integration code doesn't use them!
     """
-
-    it_class = github_integration.GitHubThread
 
     def _rpc_connection(self):
         # NOTE: we use an access token so only the password field is required
@@ -204,8 +197,7 @@ class GitHub(IssueTrackerType):
         }
 
         try:
-            repo_id = self.it_class.repo_id(self.bug_system)
-            repo = self.rpc.get_repo(repo_id)
+            repo = self.rpc.get_repo(self.repo_id)
             issue = repo.create_issue(**args)
 
             # add a link reference that will be shown in the UI
@@ -230,13 +222,27 @@ class GitHub(IssueTrackerType):
         Use GitHub's API instead of OpenGraph to return bug
         details b/c it will work for both public and private URLs.
         """
-        repo_id = self.it_class.repo_id(self.bug_system)
-        repo = self.rpc.get_repo(repo_id)
+        repo = self.rpc.get_repo(self.repo_id)
         issue = repo.get_issue(self.bug_id_from_url(url))
         return {
             "title": issue.title,
             "description": issue.body,
         }
+
+    @property
+    def repo_id(self):
+        repo_id = self.bug_system.base_url.strip().strip("/").lower()
+        repo_id = (
+            repo_id.replace("https://", "")
+            .replace("http://", "")
+            .replace("github.com/", "")
+        )
+        return repo_id
+
+    def post_comment(self, execution, bug_id):
+        repo = self.rpc.get_repo(self.repo_id)
+
+        repo.get_issue(bug_id).create_comment(self.text(execution))
 
 
 class Gitlab(IssueTrackerType):
@@ -255,8 +261,6 @@ class Gitlab(IssueTrackerType):
         the integration code doesn't use it!
     """
 
-    it_class = gitlab_integration.GitlabThread
-
     def _rpc_connection(self):
         # we use an access token so only the password field is required
         return gitlab.Gitlab(
@@ -267,8 +271,7 @@ class Gitlab(IssueTrackerType):
         return not (self.bug_system.api_url and self.bug_system.api_password)
 
     def _report_issue(self, execution, user):
-        repo_id = self.it_class.repo_id(self.bug_system)
-        project = self.rpc.projects.get(repo_id)
+        project = self.rpc.projects.get(self.repo_id)
         new_issue = project.issues.create(
             {
                 "title": f"Failed test: {execution.case.summary}",
@@ -289,13 +292,21 @@ class Gitlab(IssueTrackerType):
         Use Gitlab API instead of OpenGraph to return bug
         details b/c it will work for both public and private URLs.
         """
-        repo_id = self.it_class.repo_id(self.bug_system)
-        project = self.rpc.projects.get(repo_id)
+        project = self.rpc.projects.get(self.repo_id)
         issue = project.issues.get(self.bug_id_from_url(url))
         return {
             "title": issue.title,
             "description": issue.description,
         }
+
+    @property
+    def repo_id(self):
+        return urlparse(self.bug_system.base_url).path.strip("/")
+
+    def post_comment(self, execution, bug_id):
+        repo = self.rpc.projects.get(self.repo_id)
+
+        repo.issues.get(bug_id).notes.create({"body": self.text(execution)})
 
 
 class Redmine(IssueTrackerType):
@@ -306,8 +317,6 @@ class Redmine(IssueTrackerType):
     :api_username: a username registered in Redmine
     :api_password: the password for this username
     """
-
-    it_class = redmine_integration.RedmineThread
 
     def is_adding_testcase_to_issue_disabled(self):
         return not (
@@ -396,3 +405,6 @@ class Redmine(IssueTrackerType):
         )
 
         return (new_issue, new_url)
+
+    def post_comment(self, execution, bug_id):
+        self.rpc.issue.get(bug_id).save(notes=self.text(execution))

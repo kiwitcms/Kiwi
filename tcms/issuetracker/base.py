@@ -1,61 +1,10 @@
 import re
-import threading
-import warnings
 from importlib import import_module
 
 from django.conf import settings
 from opengraph.opengraph import OpenGraph
 
 RE_ENDS_IN_INT = re.compile(r"[\d]+$")
-
-
-class IntegrationThread(threading.Thread):
-    """
-    Internal class used by the tracker integration code. Usually you will only
-    need to implement the ``post_comment()`` method!
-    """
-
-    def __init__(self, rpc, bug_system, execution, bug_id):
-        """
-        :param rpc: Bug tracker RPC object
-        :type rpc: object
-        :param bug_system: BugSystem object
-        :type bug_system: :class:`tcms.testcases.models.BugSystem`
-        :param execution: TestExecution object
-        :type execution: :class:`tcms.testruns.models.TestExecution`
-        :param bug_id: Unique defect identifier in the system. Usually an int.
-        :type bug_id: int or str
-        """
-        self.rpc = rpc
-        self.bug_system = bug_system
-        self.execution = execution
-        self.bug_id = bug_id
-
-        super().__init__()
-
-    def text(self):
-        """
-        Returns the text that will be posted as a comment to
-        the reported bug!
-        """
-        return f"""---- Confirmed via test execution ----
-TR-{self.execution.run.pk}: {self.execution.run.summary}
-{self.execution.run.get_full_url()}
-TE-{self.execution.pk}: {self.execution.case.summary}"""
-
-    def post_comment(self):
-        raise NotImplementedError()
-
-    def run(self):
-        """
-        Using RPC try to link the test case with existing bug!
-        By default will post a comment!
-        """
-
-        try:
-            self.post_comment()
-        except Exception as err:  # pylint: disable=broad-except
-            warnings.warn(f"{err.__class__.__name__}: {err}")
 
 
 class IssueTrackerType:
@@ -65,7 +14,6 @@ class IssueTrackerType:
     supports!
     """
 
-    it_class = IntegrationThread
     rpc_cache = {}
 
     def __init__(self, bug_system, request):
@@ -210,7 +158,27 @@ class IssueTrackerType:
         """
         bug_id = self.bug_id_from_url(issue_url)
         for execution in executions:
-            self.it_class(self.rpc, self.bug_system, execution, bug_id).start()
+            self.post_comment(execution, bug_id)
+
+    @staticmethod
+    def text(execution):
+        """
+        Returns the text that will be posted as a comment to
+        the reported bug!
+        """
+        return f"""---- Confirmed via test execution ----
+TR-{execution.run.pk}: {execution.run.summary}
+{execution.run.get_full_url()}
+TE-{execution.pk}: {execution.case.summary}"""
+
+    def post_comment(self, execution, bug_id):
+        """
+        :param execution: TestExecution object
+        :type execution: :class:`tcms.testruns.models.TestExecution`
+        :param bug_id: Unique defect identifier in the system. Usually an int.
+        :type bug_id: int or str
+        """
+        raise NotImplementedError()
 
     def is_adding_testcase_to_issue_disabled(self):  # pylint: disable=invalid-name
         """
