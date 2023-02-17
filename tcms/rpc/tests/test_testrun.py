@@ -4,6 +4,7 @@ from datetime import datetime
 from xmlrpc.client import Fault as XmlRPCFault
 from xmlrpc.client import ProtocolError
 
+from attachments.models import Attachment
 from django.contrib.auth.models import Permission
 from django.utils.translation import gettext_lazy as _
 from tcms_api import xmlrpc
