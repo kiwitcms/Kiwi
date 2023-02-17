@@ -4,12 +4,12 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
+from tcms.rpc import utils
 from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import Property, TestExecution, TestRun
-from tcms.rpc import utils
 
 __all__ = (
     "create",
