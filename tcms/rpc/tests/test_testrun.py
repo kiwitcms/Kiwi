@@ -613,3 +613,4 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestRun.add_attachment(
                 self.run.pk, "test.txt", "a2l3aXRjbXM="
+        )
