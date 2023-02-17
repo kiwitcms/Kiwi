@@ -603,9 +603,7 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         self.run = TestRunFactory()
 
     def verify_api_with_permission(self):
-        self.rpc_client.TestRun.add_attachment(
-            self.run.pk, "test.txt", "a2l3aXRjbXM="
-        )
+        self.rpc_client.TestRun.add_attachment(self.run.pk, "test.txt", "a2l3aXRjbXM=")
         attachments = Attachment.objects.attachments_for_object(self.run)
         self.assertEqual(len(attachments), 1)
         self.assertEqual(attachments[0].object_id, str(self.run.pk))
@@ -614,4 +612,4 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
             self.rpc_client.TestRun.add_attachment(
                 self.run.pk, "test.txt", "a2l3aXRjbXM="
-        )
+            )

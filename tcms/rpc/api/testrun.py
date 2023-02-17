@@ -23,7 +23,7 @@ __all__ = (
     "add_cc",
     "remove_cc",
     "properties",
-    "add_attachment"
+    "add_attachment",
 )
 
 
