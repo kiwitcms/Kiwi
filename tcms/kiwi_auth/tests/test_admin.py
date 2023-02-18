@@ -162,7 +162,9 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
             username=self.admin.username, password="admin-password"
         )
         # Check that we have more than one superuser
-        self.assertTrue(get_user_model().objects.filter(is_superuser=True).count() > 1)
+        self.assertGreater(
+            get_user_model().objects.filter(is_superuser=True).count(), 1
+        )
 
         self.client.get(reverse("admin:auth_user_delete", args=[self.admin2.pk]))
         self.client.post(
@@ -172,7 +174,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         )
         # Check that admin2 is deleted, and we have only one superuser left
         self.assertFalse(get_user_model().objects.filter(pk=self.admin2.pk).exists())
-        self.assertTrue(get_user_model().objects.filter(is_superuser=True).count() == 1)
+        self.assertEqual(get_user_model().objects.filter(is_superuser=True).count(), 1)
 
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.admin.pk]),
