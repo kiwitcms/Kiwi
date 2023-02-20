@@ -124,9 +124,6 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
         cls.regular_user.save()
 
         cls.regular_user2 = UserFactory()
-        cls.regular_user2.is_staff = True
-        cls.regular_user2.set_password("password")
-        cls.regular_user2.save()
 
         cls.url = reverse("admin:auth_user_delete", args=[cls.regular_user.pk])
 
