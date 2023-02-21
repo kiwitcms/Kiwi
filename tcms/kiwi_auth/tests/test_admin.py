@@ -26,6 +26,11 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         cls.admin.set_password("admin-password")
         cls.admin.save()
 
+        cls.admin2 = UserFactory(username="admin2")
+        cls.admin2.is_superuser = True
+        cls.admin2.set_password("admin-password")
+        cls.admin2.save()
+
         # moderator is a non-superuser who is granted specific permissions
         cls.moderator = UserFactory(username="moderator")
         cls.moderator.is_superuser = False
@@ -44,6 +49,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get("/admin/auth/user/")
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, self.admin.username)
+        self.assertContains(response, self.admin2.username)
         self.assertContains(response, self.tester.username)
         self.assertContains(response, self.moderator.username)
 
@@ -150,6 +156,36 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertRedirects(response, "/admin/auth/user/")
         self.assertFalse(get_user_model().objects.filter(pk=self.tester.pk).exists())
+
+    def test_superuser_cannot_delete_the_last_superuser(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+        # Check that we have more than one superuser
+        self.assertGreater(
+            get_user_model().objects.filter(is_superuser=True).count(), 1
+        )
+
+        self.client.get(reverse("admin:auth_user_delete", args=[self.admin2.pk]))
+        self.client.post(
+            reverse("admin:auth_user_delete", args=[self.admin2.pk]),
+            {"post": "yes"},
+            follow=True,
+        )
+        # Check that admin2 is deleted, and we have only one superuser left
+        self.assertFalse(get_user_model().objects.filter(pk=self.admin2.pk).exists())
+        self.assertEqual(get_user_model().objects.filter(is_superuser=True).count(), 1)
+
+        response = self.client.get(
+            reverse("admin:auth_user_delete", args=[self.admin.pk]),
+            follow=True,
+        )
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertRedirects(response, f"/admin/auth/user/{self.admin.pk}/change/")
+        self.assertContains(
+            response, "This is the last superuser, it can not be deleted!"
+        )
+        self.assertTrue(get_user_model().objects.filter(pk=self.admin.pk).exists())
 
     def test_superuser_can_change_their_password(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg

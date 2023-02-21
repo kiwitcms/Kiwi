@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import GroupAdmin, UserAdmin, sensitive_post_parameters_m
@@ -189,6 +189,18 @@ class KiwiUserAdmin(UserAdmin):
 
     @admin.options.csrf_protect_m
     def delete_view(self, request, object_id, extra_context=None):
+        user = User.objects.get(pk=object_id)
+        # check whether the last superuser is being deleted
+        if user.is_superuser and User.objects.filter(is_superuser=True).count() == 1:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                _("This is the last superuser, it can not be deleted!"),
+            )
+            return HttpResponseRedirect(
+                reverse("admin:auth_user_change", args=[user.pk])
+            )
+
         if not _modifying_myself(request, object_id):
             return super().delete_view(request, object_id, extra_context)
 

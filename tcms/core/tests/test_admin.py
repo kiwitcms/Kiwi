@@ -123,6 +123,8 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
         cls.regular_user.set_password("password")
         cls.regular_user.save()
 
+        cls.regular_user2 = UserFactory()
+
         cls.url = reverse("admin:auth_user_delete", args=[cls.regular_user.pk])
 
     def test_regular_user_should_not_delete_another_user(self):
@@ -130,7 +132,7 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
             username=self.regular_user.username, password="password"
         )
         response = self.client.get(
-            reverse("admin:auth_user_delete", args=[self.superuser.pk])
+            reverse("admin:auth_user_delete", args=[self.regular_user2.pk])
         )
 
         # it is not possible to delete other user accounts
