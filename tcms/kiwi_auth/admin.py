@@ -195,7 +195,7 @@ class KiwiUserAdmin(UserAdmin):
             messages.add_message(
                 request,
                 messages.ERROR,
-                _("This is the last superuser, it can not be deleted!"),
+                _("This is the last superuser, it cannot be deleted!"),
             )
             return HttpResponseRedirect(
                 reverse("admin:auth_user_change", args=[user.pk])
