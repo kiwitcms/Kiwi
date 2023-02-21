@@ -183,7 +183,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertRedirects(response, f"/admin/auth/user/{self.admin.pk}/change/")
         self.assertContains(
-            response, "This is the last superuser, it can not be deleted!"
+            response, _("This is the last superuser, it cannot be deleted!")
         )
         self.assertTrue(get_user_model().objects.filter(pk=self.admin.pk).exists())
 
