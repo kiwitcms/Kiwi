@@ -596,9 +596,9 @@ function renderAdditionalInformation (testRunId, execution) {
                 propString += `${name}: ${propsPerTe[teId][name]}; `
             }
 
-            let properties = row.find('.js-row-properties')
-            properties.toggleClass('hidden')
-            properties.html(properties.html() + ' ' + propString + '<br>')
+            let propertiesRow = row.find('.js-row-properties')
+            propertiesRow.toggleClass('hidden')
+            propertiesRow.html(propertiesRow.html() + propString + '<br>')
         }
     })
 
@@ -642,8 +642,9 @@ function renderAdditionalInformation (testRunId, execution) {
                             }
                         }
                         if (testCase.tagNames.length) {
-                            row.find('.js-row-tags').toggleClass('hidden')
-                            row.find('.js-row-tags').append(testCase.tagNames.join(', '))
+                            let tagsRow = row.find('.js-row-tags')
+                            tagsRow.toggleClass('hidden')
+                            tagsRow.html(tagsRow.html() + testCase.tagNames.join(', '))
                         }
 
                         testCase.componentNames = []
@@ -655,8 +656,9 @@ function renderAdditionalInformation (testRunId, execution) {
                             }
                         }
                         if (testCase.componentNames.length) {
-                            row.find('.js-row-components').toggleClass('hidden')
-                            row.find('.js-row-components').append(testCase.componentNames.join(', '))
+                            let componentsRow = row.find('.js-row-components')
+                            componentsRow.toggleClass('hidden')
+                            componentsRow.html(componentsRow.html() + testCase.componentNames.join(', '))
                         }
 
                         // update internal data structure
