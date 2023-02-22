@@ -596,8 +596,9 @@ function renderAdditionalInformation (testRunId, execution) {
                 propString += `${name}: ${propsPerTe[teId][name]}; `
             }
 
-            row.find('.js-row-properties').toggleClass('hidden')
-            row.find('.js-row-properties').append(propString + '<br>')
+            let properties = row.find('.js-row-properties')
+            properties.toggleClass('hidden')
+            properties.html(properties.html() + ' ' + propString + '<br>')
         }
     })
 
