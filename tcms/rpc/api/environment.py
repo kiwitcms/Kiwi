@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.models import EnvironmentProperty, Environment
+from tcms.testruns.models import Environment, EnvironmentProperty
 
 __all__ = (
     "properties",
@@ -82,9 +82,10 @@ def add_property(environment_id, name, value):
     )
     return model_to_dict(prop)
 
+
 @permissions_required("testruns.view_environment")
 @rpc_method(name="Environment.filter")
-def filter(query=None):
+def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: Environment.filter(query)
 
