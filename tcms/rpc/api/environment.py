@@ -11,6 +11,7 @@ __all__ = (
     "remove_property",
     "add_property",
     "filter",
+    "add_environment",
 )
 
 
@@ -110,3 +111,27 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         .order_by("name", "description")
         .distinct()
     )
+
+
+@permissions_required("testruns.add_environment")
+@rpc_method(name="Environment.add_environment")
+def add_environment(name, description=None):
+    """
+    .. function:: Environment.add_environment(name, description)
+
+        Add new environment! Duplicates are skipped without errors.
+
+        :param name: Name of the environment
+        :type name: str
+        :param description: Description of the environment
+        :type value: str
+        :return: Serialized :class:`tcms.testruns.models.Environment` object.
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.add_environment* permission
+    """
+    if description is None:
+        description = ""
+    env, _ = Environment.objects.get_or_create(
+        name=name, description=description
+    )
+    return model_to_dict(env)
