@@ -4,12 +4,13 @@ from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.models import EnvironmentProperty
+from tcms.testruns.models import EnvironmentProperty, Environment
 
 __all__ = (
     "properties",
     "remove_property",
     "add_property",
+    "filter",
 )
 
 
@@ -80,3 +81,31 @@ def add_property(environment_id, name, value):
         environment_id=environment_id, name=name, value=value
     )
     return model_to_dict(prop)
+
+@permissions_required("testruns.view_environment")
+@rpc_method(name="Environment.filter")
+def filter(query=None):
+    """
+    .. function:: Environment.filter(query)
+
+        Return environment for the specified query.
+
+        :param query: Field lookups for :class:`tcms.testruns.models.Environment`
+        :type query: dict
+        :return: Serialized list of :class:`tcms.testruns.models.Environment` objects.
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing *testruns.view_environment* permission
+    """
+    if query is None:
+        query = {}
+
+    return list(
+        Environment.objects.filter(**query)
+        .values(
+            "id",
+            "name",
+            "description",
+        )
+        .order_by("name", "description")
+        .distinct()
+    )
