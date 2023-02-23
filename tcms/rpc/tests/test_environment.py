@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=attribute-defined-outside-init, objects-update-used
 from xmlrpc.client import ProtocolError
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase
