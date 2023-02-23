@@ -3,6 +3,8 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.core.utils import form_errors_to_list
+from tcms.rpc.api.forms.testrun import EnvironmentForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import Environment, EnvironmentProperty
 
@@ -11,7 +13,7 @@ __all__ = (
     "remove_property",
     "add_property",
     "filter",
-    "add_environment",
+    "create",
 )
 
 
@@ -114,24 +116,23 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 
 
 @permissions_required("testruns.add_environment")
-@rpc_method(name="Environment.add_environment")
-def add_environment(name, description=None):
+@rpc_method(name="Environment.create")
+def create(values):
     """
-    .. function:: Environment.add_environment(name, description)
+    .. function:: RPC Environment.create(values)
 
-        Add new environment! Duplicates are skipped without errors.
+        Create a new environment object and store it in the database.
 
-        :param name: Name of the environment
-        :type name: str
-        :param description: Description of the environment
-        :type value: str
-        :return: Serialized :class:`tcms.testruns.models.Environment` object.
+        :param values: Field values for :class:`tcms.testruns.models.Environment`
+        :type values: dict
+        :return: Serialized :class:`tcms.testruns.models.Environment` object
         :rtype: dict
+        :raises ValueError: if input values don't validate
         :raises PermissionDenied: if missing *testruns.add_environment* permission
     """
-    if description is None:
-        description = ""
-    env, _ = Environment.objects.get_or_create(
-        name=name, description=description
-    )
-    return model_to_dict(env)
+    form = EnvironmentForm(values)
+    if form.is_valid():
+        environment = form.save()
+        return model_to_dict(environment)
+
+    raise ValueError(form_errors_to_list(form))
