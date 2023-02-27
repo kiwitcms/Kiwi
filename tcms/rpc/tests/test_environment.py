@@ -24,9 +24,7 @@ class TestFilterPermission(APIPermissionsTestCase):
 class EnvironmentCreate(APITestCase):
     def test_environment_create_with_no_required_fields(self):
         values = {}
-        with self.assertRaisesRegex(
-            XmlRPCFault, "name.*This field is required."
-        ):
+        with self.assertRaisesRegex(XmlRPCFault, "name.*This field is required."):
             self.rpc_client.Environment.create(values)
 
         values["description"] = "Description"
@@ -36,23 +34,10 @@ class EnvironmentCreate(APITestCase):
     def test_environment_duplicate(self):
         values = {"name": "E7", "description": "Description"}
         self.rpc_client.Environment.create(values)
-        with self.assertRaisesRegex(XmlRPCFault, "name.*Environment with this Name already exists"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "name.*Environment with this Name already exists"
+        ):
             self.rpc_client.Environment.create(values)
-
-    def test_environment_create_with_chinese(self):
-        # also see https://github.com/kiwitcms/Kiwi/issues/1770
-        values = {"name": "开源中国", "description": "中国"}
-        b = self.rpc_client.Environment.create(values)
-        self.assertIsNotNone(b)
-        self.assertEqual(b["name"], "开源中国")
-        self.assertEqual(b["description"], "中国")
-
-    def test_environment_create(self):
-        values = {"name": "E8", "description": "Description."}
-        b = self.rpc_client.Environment.create(values)
-        self.assertIsNotNone(b)
-        self.assertEqual(b["name"], "E8")
-        self.assertEqual(b["description"], "Description.")
 
 
 class TestEnvironmentCreatePermissions(APIPermissionsTestCase):

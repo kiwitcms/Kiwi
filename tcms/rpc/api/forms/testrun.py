@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from tcms.core.forms.fields import UserField
 from tcms.management.models import Build
 from tcms.rpc.api.forms import DateTimeField, UpdateModelFormMixin
-from tcms.testruns.models import TestExecution, TestRun, Environment
+from tcms.testruns.models import Environment, TestExecution, TestRun
 
 User = get_user_model()  # pylint: disable=invalid-name
 
