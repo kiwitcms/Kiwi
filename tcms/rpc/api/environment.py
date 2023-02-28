@@ -3,6 +3,8 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.core.utils import form_errors_to_list
+from tcms.rpc.api.forms.testrun import EnvironmentForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import Environment, EnvironmentProperty
 
@@ -11,6 +13,7 @@ __all__ = (
     "remove_property",
     "add_property",
     "filter",
+    "create",
 )
 
 
@@ -110,3 +113,26 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         .order_by("name", "description")
         .distinct()
     )
+
+
+@permissions_required("testruns.add_environment")
+@rpc_method(name="Environment.create")
+def create(values):
+    """
+    .. function:: RPC Environment.create(values)
+
+        Create a new environment object and store it in the database.
+
+        :param values: Field values for :class:`tcms.testruns.models.Environment`
+        :type values: dict
+        :return: Serialized :class:`tcms.testruns.models.Environment` object
+        :rtype: dict
+        :raises ValueError: if input values don't validate
+        :raises PermissionDenied: if missing *testruns.add_environment* permission
+    """
+    form = EnvironmentForm(values)
+    if form.is_valid():
+        environment = form.save()
+        return model_to_dict(environment)
+
+    raise ValueError(form_errors_to_list(form))
