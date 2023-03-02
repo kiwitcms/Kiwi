@@ -83,6 +83,10 @@ _EOF_
         rlRun -t -c "curl -k -D- https://localhost 2>/dev/null | grep 'X-Frame-Options: DENY'"
     rlPhaseEnd
 
+    rlPhaseStartTest "Should send X-Content-Type-Options header"
+        rlRun -t -c "curl -k -D- https://localhost 2>/dev/null | grep 'X-Content-Type-Options: nosniff'"
+    rlPhaseEnd
+
     rlPhaseStartTest "Performance baseline for /accounts/register/"
         exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "register-account-page"
     rlPhaseEnd
