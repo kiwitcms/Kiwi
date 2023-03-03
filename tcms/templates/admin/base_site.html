@@ -17,11 +17,7 @@
 {% block javascripts %}
     {{ block.super }}
     <script src="{% static 'simplemde/dist/simplemde.min.js' %}"></script>
-    <script type="text/javascript" charset="utf-8">
-        $(() => {
-            $("#change-history").addClass('grp-table');
-        });
-    </script>
+    <script src="{% static 'js/admin_override.js' %}"></script>
 {% endblock %}
 
 {% block navigation %}

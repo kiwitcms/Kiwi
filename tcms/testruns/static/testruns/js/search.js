@@ -1,3 +1,4 @@
+import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
 import {
     arrayToDict, escapeHTML,
@@ -49,6 +50,15 @@ function preProcessData (data, callbackF) {
 }
 
 export function pageTestrunsSearchReadyHandler () {
+    initializeDateTimePicker('#id_before_start_date')
+    initializeDateTimePicker('#id_after_start_date')
+    initializeDateTimePicker('#id_before_stop_date')
+    initializeDateTimePicker('#id_after_stop_date')
+    initializeDateTimePicker('#id_before_planned_start')
+    initializeDateTimePicker('#id_after_planned_start')
+    initializeDateTimePicker('#id_before_planned_stop')
+    initializeDateTimePicker('#id_after_planned_stop')
+
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
         ajax: function (data, callbackF, settings) {

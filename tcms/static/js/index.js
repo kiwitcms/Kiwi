@@ -22,10 +22,18 @@ import { pageTelemetryReadyHandler } from '../../telemetry/static/telemetry/js/i
 import { jsonRPC } from './jsonrpc'
 import { initSimpleMDE } from './simplemde_security_override'
 
+function pageInitDBReadyHandler () {
+    $('.js-initialize-btn').click(function () {
+        $(this).button('loading')
+    })
+}
+
 const pageHandlers = {
     'page-bugs-get': pageBugsGetReadyHandler,
     'page-bugs-mutable': pageBugsMutableReadyHandler,
     'page-bugs-search': pageBugsSearchReadyHandler,
+
+    'page-init-db': pageInitDBReadyHandler,
 
     'page-testcases-get': pageTestcasesGetReadyHandler,
     'page-testcases-mutable': pageTestcasesMutableReadyHandler,

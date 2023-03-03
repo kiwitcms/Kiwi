@@ -1,3 +1,4 @@
+import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
 import {
     escapeHTML, updateComponentSelectFromProduct, updateCategorySelectFromProduct,
@@ -60,6 +61,9 @@ function preProcessData (data, callbackF) {
 }
 
 export function pageTestcasesSearchReadyHandler () {
+    initializeDateTimePicker('#id_before')
+    initializeDateTimePicker('#id_after')
+
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
         ajax: function (data, callbackF, settings) {

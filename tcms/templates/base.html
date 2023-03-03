@@ -4,7 +4,12 @@
 
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html class="{% block html_class%}{% endblock %}" lang="{{ LANGUAGE_CODE }}">
+<html class="{% block html_class%}{% endblock %}" lang="{{ LANGUAGE_CODE }}"
+    data-trans-day="{% trans 'day' %}" data-trans-days="{% trans 'days' %}"
+    data-trans-hour="{% trans 'hour' %}" data-trans-hours="{% trans 'hours' %}"
+    data-trans-minute="{% trans 'minute' %}" data-trans-minutes="{% trans 'minutes' %}"
+    data-trans-second="{% trans 'second' %}" data-trans-seconds="{% trans 'seconds' %}"
+>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type='image/x-icon'>
