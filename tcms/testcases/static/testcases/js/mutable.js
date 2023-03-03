@@ -25,6 +25,27 @@ export function pageTestcasesMutableReadyHandler () {
     document.getElementById('id_category').onchange = function () {
         $('#id_category').selectpicker('refresh')
     }
+
+    $('.duration-picker').durationPicker({
+        translations: {
+            day: $('html').data('trans-day'),
+            days: $('html').data('trans-days'),
+
+            hour: $('html').data('trans-hour'),
+            hours: $('html').data('trans-hours'),
+
+            minute: $('html').data('trans-minute'),
+            minutes: $('html').data('trans-minutes'),
+
+            second: $('html').data('trans-second'),
+            seconds: $('html').data('trans-seconds')
+        },
+
+        showDays: true,
+        showHours: true,
+        showMinutes: true,
+        showSeconds: true
+    })
 }
 
 function populateProductCategory () {

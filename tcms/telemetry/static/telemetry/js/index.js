@@ -1,3 +1,4 @@
+import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import {
     updateBuildSelectFromVersion,
     updateVersionSelectFromProduct,
@@ -20,6 +21,9 @@ import {
 } from './testing/test-case-health'
 
 export function pageTelemetryReadyHandler (pageId) {
+    initializeDateTimePicker('#id_before')
+    initializeDateTimePicker('#id_after')
+
     const drawChart = {
         'page-telemetry-testing-breakdown': testingBreakdownDrawChart,
         'page-telemetry-status-matrix': statusMatrixDrawChart,

@@ -110,7 +110,6 @@
                     </span>
                 </div>
                 {{ form.planned_start.errors }}
-                {% include "include/datetimepicker_script.html" with selector="#id_planned_start" %}
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_planned_stop">{% trans "Planned stop" %}</label>
@@ -125,7 +124,6 @@
                     </span>
                 </div>
                 {{  form.planned_stop.errors }}
-                {% include "include/datetimepicker_script.html" with selector="#id_planned_stop" %}
             </div>
 
             <input type="hidden" id="id_start_date" name="start_date" value="{{ form.start_date.value|date:'Y-m-d H:i:s' }}">

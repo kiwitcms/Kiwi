@@ -23,17 +23,10 @@
                     <form action="{% url 'init-db' %}" method="post">
                         {% csrf_token %}
                         <br>
-                        <button type="submit" name="init_db" class="btn btn-info btn-lg"
+                        <button type="submit" name="init_db" class="btn btn-info btn-lg js-initialize-btn"
             data-loading-text=" {% trans "Please wait" %}...
                         <span class='spinner spinner-xs spinner-inline'></span>" value="yes">
             {% trans "Initialize database" %}</button>
-                        <script>
-                        $(() => {
-                            $(".btn").click(function(){
-                                $(this).button('loading');
-                            });
-                        });
-                        </script>
                     </form>
                     </h2>
                     <div class="card-pf-body">

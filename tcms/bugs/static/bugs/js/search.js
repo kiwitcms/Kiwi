@@ -1,8 +1,12 @@
+import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC } from '../../../../static/js/jsonrpc'
 import { hookIntoPagination } from '../../../../static/js/pagination'
 import { escapeHTML, updateBuildSelectFromVersion, updateVersionSelectFromProduct } from '../../../../static/js/utils'
 
 export function pageBugsSearchReadyHandler () {
+    initializeDateTimePicker('#id_before')
+    initializeDateTimePicker('#id_after')
+
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
         ajax: function (data, callback, settings) {
