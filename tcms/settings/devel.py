@@ -30,7 +30,10 @@ CACHES = {
 }
 # django-debug-toolbar settings
 
-MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]  # noqa: F405
+MIDDLEWARE += [  # noqa: F405
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "tcms.core.middleware.ExtraHeadersMiddleware",
+]
 
 INSTALLED_APPS += ["debug_toolbar"]  # noqa: F405
 

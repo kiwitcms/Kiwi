@@ -18,3 +18,20 @@ class CheckDBStructureExistsMiddleware(MiddlewareMixin):
             # Redirect to Setup view
             return HttpResponseRedirect(reverse("init-db"))
         return None
+
+
+class ExtraHeadersMiddleware(MiddlewareMixin):
+    """
+    This is enabled only during testing and development. The actual headers
+    are configured in `etc/nginx.conf`!
+    """
+
+    def process_response(self, request, response):
+        if settings.DEBUG:
+            response.headers["X-Frame-Options"] = "DENY"
+            response.headers["X-Content-Type-Options"] = "nosniff"
+            response.headers[
+                "Content-Security-Policy"
+            ] = "script-src 'self' cdn.crowdin.com;"
+
+        return response
