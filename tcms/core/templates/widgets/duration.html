@@ -22,12 +22,6 @@ $(function () {
       showHours: true,
       showMinutes: true,
       showSeconds: true,
-
-      onChanged: function (value, isInitializing) {
-        if (!isInitializing) {
-            $("#{{ widget.id }}").val(value);
-        }
-      }
     });
 });
 </script>
