@@ -16,11 +16,7 @@
     <title>Kiwi TCMS - {% block title %}{% trans "the leading open source test case management system" %}{% endblock %}</title>
 
     {% if LANGUAGE_CODE == 'eo' %}
-    <script type="text/javascript">
-        var _jipt = [];
-        _jipt.push(['project', 'kiwitcms']);
-        _jipt.push(['preload_texts', true]);
-    </script>
+    <script type="text/javascript" src="{% static 'js/crowdin.js'  %}"></script>
     <script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
     {% endif %}
 
