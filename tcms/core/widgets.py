@@ -16,22 +16,17 @@ class SimpleMDE(forms.Textarea):
     file_upload_id = "simplemde-file-upload"
 
     def render(self, name, value, attrs=None, renderer=None):
-        rendered_string = super().render(name, value, attrs, renderer)
-        # pylint: disable=consider-using-f-string
-        rendered_string += """
-<input id="%s" type="file" style="display: none">
-<script>
-$(() => {
-    window.markdownEditor = initSimpleMDE(document.getElementById('%s'), $('#%s'));
-});
-</script>
-""" % (
-            self.file_upload_id,
-            attrs["id"],
-            self.file_upload_id,
+        # pylint: disable=objects-update-used
+        attrs.update(
+            {
+                "class": "js-simplemde-textarea",
+                "data-file-upload-id": self.file_upload_id,
+            }
         )
-        # note: initSimpleMDE() should be available in templates through bundle.js
-
+        rendered_string = super().render(name, value, attrs, renderer)
+        rendered_string += f"""
+<input id="{self.file_upload_id}" type="file" style="display: none">
+"""
         return rendered_string
 
     class Media:

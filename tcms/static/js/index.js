@@ -79,8 +79,13 @@ $(() => {
         $('[data-toggle="tooltip"]').tooltip()
     }
 
-    // used by automatically loaded editor widgets
-    window.initSimpleMDE = initSimpleMDE
+    $('.js-simplemde-textarea').each(function () {
+        const fileUploadId = $(this).data('file-upload-id')
+        const uploadField = $(`#${fileUploadId}`)
+
+        // this value is only used in testcases/js/mutable.js
+        window.markdownEditor = initSimpleMDE(this, uploadField)
+    })
 
     // for debugging in browser
     window.jsonRPC = jsonRPC
