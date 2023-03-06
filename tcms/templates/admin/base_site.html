@@ -1,6 +1,7 @@
 {% extends "admin/base.html" %}
 {% load static %}
 {% load i18n grp_tags %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}{{ title }} | {% get_site_title %}{% endblock %}
 
@@ -18,6 +19,10 @@
     {{ block.super }}
     <script src="{% static 'simplemde/dist/simplemde.min.js' %}"></script>
     <script src="{% static 'js/admin_override.js' %}"></script>
+    {% if LANGUAGE_CODE == 'eo' %}
+    <script type="text/javascript" src="{% static 'js/crowdin.js'  %}"></script>
+    <script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
+    {% endif %}
 {% endblock %}
 
 {% block navigation %}
