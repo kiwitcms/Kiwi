@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-21 16:46+0000\n"
-"PO-Revision-Date: 2023-03-07 20:10\n"
+"PO-Revision-Date: 2023-03-07 20:55\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -2132,7 +2132,7 @@ msgstr "Omogočen javni dostop"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:71
 msgid "Tenant logo"
-msgstr ""
+msgstr "Logotip instance"
 
 #: tcms_tenants/utils.py:62
 msgid "Schema name already in use"
@@ -2145,7 +2145,7 @@ msgstr "Nova instanca Kiwi TCMS je bila ustvarjena"
 #: tcms_tenants/utils.py:205
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "Uporabnik {user.username} je bil dodan v skupino {group.name}"
 
 #: tcms_tenants/utils.py:229
 msgid "Invitation to join Kiwi TCMS"
@@ -2165,20 +2165,20 @@ msgstr "Samo uporabniki z ustreznimi pravicami za to instanco lahko povabijo dru
 
 #: tenant_groups/admin.py:29
 msgid "users"
-msgstr ""
+msgstr "uporabniki"
 
 #: tenant_groups/models.py:31
 msgid "name"
-msgstr ""
+msgstr "ime"
 
 #: tenant_groups/models.py:34
 msgid "permissions"
-msgstr ""
+msgstr "dovoljenja"
 
 #: tenant_groups/models.py:42
 msgid "group"
-msgstr ""
+msgstr "skupina"
 
 #: tenant_groups/models.py:43
 msgid "groups"
-msgstr ""
+msgstr "skupine"
