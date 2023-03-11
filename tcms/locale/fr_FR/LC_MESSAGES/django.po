@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-21 16:46+0000\n"
-"PO-Revision-Date: 2023-03-07 20:10\n"
+"PO-Revision-Date: 2023-03-11 12:54\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -509,7 +509,7 @@ msgstr "Droits"
 
 #: tcms/kiwi_auth/admin.py:198
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "C'est le dernier super utilisateur, il ne peut pas être supprimé !"
 
 #: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
@@ -1938,15 +1938,15 @@ msgstr "Abonnements"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
 msgid "Tenant subscriptions"
-msgstr "Abonnement du locataire"
+msgstr "Abonnement de l'entité"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
 msgid "You can access the following tenants"
-msgstr "Vous pouvez accéder aux locataires suivants"
+msgstr "Vous pouvez accéder aux entités suivantes"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
 msgid "Tenant"
-msgstr "Locataire"
+msgstr "Entité"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
@@ -1964,7 +1964,7 @@ msgstr "Instructions pour les conteneurs privés"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
-msgstr "Vous possédez les locataires suivants"
+msgstr "Vous possédez les entités suivantes"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
@@ -1988,7 +1988,7 @@ msgstr "Annuler l'abonnement"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "You don't own any tenants"
-msgstr "Vous ne possédez aucun locataire"
+msgstr "Vous ne possédez aucun entité"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
@@ -2015,7 +2015,7 @@ msgstr "Reçu le"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:42
 msgid "Private Tenant Warning"
-msgstr "Avertissement du locataire privé"
+msgstr "Avertissement de l'entité privé"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:47
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2024,10 +2024,10 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr "Vous êtes sur le point de créer un locataire privé pour Kiwi TCMS.\n"
+msgstr "Vous êtes sur le point de créer une entité privé pour Kiwi TCMS.\n"
 "Cela prendra quelques minutes jusqu'à ce que votre schéma de base de données soit prêt !\n"
 "Après avoir cliqué sur le bouton 'Enregistrer' <strong>ne pas</strong> fermer ou actualiser cette page !<br>\n"
-"Vous serez redirigé vers votre nouveau locataire lorsque le processus de création sera terminé !\n"
+"Vous serez redirigé vers votre nouvelle entité lorsque le processus de création sera terminé !\n"
 "Si vous voyez une page d'erreur de serveur interne de 500, veuillez contacter\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.</a> immédiatement !"
 
@@ -2087,7 +2087,7 @@ msgstr "Dû"
 
 #: tcms_tenants/middleware.py:64
 msgid "Tenant expires in less than 7 days"
-msgstr "Le locataire expire dans moins de 7 jours"
+msgstr "L'entité expire dans moins de 7 jours"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2107,9 +2107,9 @@ msgstr "Cher testeur,\n"
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr "Votre locataire Kiwi TCMS a été créé sur:\n"
+msgstr "Votre entité Kiwi TCMS a été créé sur :\n"
 "%(tenant_url)s\n\n"
-"Si vous avez des problèmes, veuillez contacter le support!"
+"Si vous avez des problèmes, veuillez contacter le support !"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
@@ -2117,7 +2117,7 @@ msgstr "Courriel"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:9
 msgid "New tenant"
-msgstr "Nouveau locataire"
+msgstr "Nouvelle entité"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:26
 msgid "Company, team or project name"
@@ -2137,7 +2137,7 @@ msgstr "Accessible publiquement"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:71
 msgid "Tenant logo"
-msgstr ""
+msgstr "Logo de l'entité"
 
 #: tcms_tenants/utils.py:62
 msgid "Schema name already in use"
@@ -2145,12 +2145,12 @@ msgstr "Ce nom de schéma est déjà utilisé"
 
 #: tcms_tenants/utils.py:150
 msgid "New Kiwi TCMS tenant created"
-msgstr "Nouveau locataire Kiwi TCMS créé"
+msgstr "Nouvelle entité Kiwi TCMS créé"
 
 #: tcms_tenants/utils.py:205
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "L'utilisateur {user.username} a été ajouté au groupe {group.name} de l'entité"
 
 #: tcms_tenants/utils.py:229
 msgid "Invitation to join Kiwi TCMS"
@@ -2158,7 +2158,7 @@ msgstr "Invitation à rejoindre Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr "Seuls les super-utilisateurs et le propriétaire du locataire sont autorisés à modifier les propriétés de l'instance"
+msgstr "Seuls les super-utilisateurs et le propriétaire de l'entité sont autorisés à modifier les propriétés de l'instance"
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
@@ -2170,20 +2170,20 @@ msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'
 
 #: tenant_groups/admin.py:29
 msgid "users"
-msgstr ""
+msgstr "utilisateurs"
 
 #: tenant_groups/models.py:31
 msgid "name"
-msgstr ""
+msgstr "nom"
 
 #: tenant_groups/models.py:34
 msgid "permissions"
-msgstr ""
+msgstr "autorisations"
 
 #: tenant_groups/models.py:42
 msgid "group"
-msgstr ""
+msgstr "groupe"
 
 #: tenant_groups/models.py:43
 msgid "groups"
-msgstr ""
+msgstr "groupes"
