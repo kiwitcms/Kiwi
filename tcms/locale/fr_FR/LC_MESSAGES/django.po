@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-21 16:46+0000\n"
-"PO-Revision-Date: 2023-03-07 20:10\n"
+"PO-Revision-Date: 2023-03-11 12:26\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2170,20 +2170,21 @@ msgstr "Seuls les utilisateurs autorisés pour cette instance peuvent inviter d'
 
 #: tenant_groups/admin.py:29
 msgid "users"
-msgstr ""
+msgstr "utilisateurs"
 
 #: tenant_groups/models.py:31
 msgid "name"
-msgstr ""
+msgstr "nom"
 
 #: tenant_groups/models.py:34
 msgid "permissions"
-msgstr ""
+msgstr "autorisations"
 
 #: tenant_groups/models.py:42
 msgid "group"
-msgstr ""
+msgstr "groupe"
 
 #: tenant_groups/models.py:43
 msgid "groups"
-msgstr ""
+msgstr "groupes"
+
