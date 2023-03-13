@@ -261,7 +261,7 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get update
-          sudo apt-get install wrk
+          sudo apt-get install firefox wrk
 
       - name: Docker version info
         run: |
@@ -273,7 +273,7 @@ jobs:
 
       - name: Execute tests
         run: |
-          pip install tcms-api
+          pip install -r requirements/devel.txt
           make test-docker-image
 
       - name: Upload logs
