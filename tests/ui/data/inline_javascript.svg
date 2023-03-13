@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1121.8235"
+   height="1121.157"
+   viewBox="0 0 1121.8235 1121.1571"
+   id="svg3532"
+   version="1.1"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="inline_javascript.svg"
+   inkscape:export-filename="/home/senko/fosdem-2021-stand-static/logo.png"
+   inkscape:export-xdpi="17.040001"
+   inkscape:export-ydpi="17.040001"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs3534">
+    <linearGradient
+       id="linearGradient4255"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4257" />
+    </linearGradient>
+    <style
+       id="style242">.cls-1{fill:#3c8d2c;}.cls-2{fill:#ca2026;}.cls-3{fill:#1c3d32;}.cls-4{fill:none;stroke:#030303;stroke-linecap:round;stroke-linejoin:round;stroke-width:24.11px;}</style>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24"
+     inkscape:cx="997.91667"
+     inkscape:cy="308.33333"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1255"
+     inkscape:window-height="769"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:document-rotation="0"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata3537">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-17.432968,-1041.2518)">
+    <path
+       class="cls-2"
+       d="m 1138.9581,1943.3882 a 87.954689,87.954689 0 0 1 -26.386,64.2071 l -128.41397,128.4131 a 91.277416,91.277416 0 0 1 -128.41401,0 L 578.49143,1858.4631 300.94529,2136.0084 a 91.277416,91.277416 0 0 1 -128.41359,0 L 44.215595,2007.5953 a 91.277416,91.277416 0 0 1 0,-128.4141 L 321.27299,1601.7329 43.82474,1324.2845 a 91.179695,91.179695 0 0 1 0,-128.3162 l 128.31608,-128.3161 a 91.277416,91.277416 0 0 1 128.41402,0 l 277.5453,277.4483 277.25354,-277.4483 a 91.277416,91.277416 0 0 1 128.41315,0 l 129.09787,128.3161 a 91.179695,91.179695 0 0 1 0,128.3162 l -277.54525,277.4484 277.54525,277.4483 a 87.954689,87.954689 0 0 1 26.0934,64.207 z"
+       id="path250"
+       style="stroke-width:9.77273" />
+  </g>
+
+  <script type="text/javascript">
+    location.replace('https://kiwitcms.org');
+  </script>
+</svg>

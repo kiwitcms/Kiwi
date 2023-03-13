@@ -5,6 +5,7 @@
 # Author: Alexander Todorov <info@kiwitcms.org>
 #
 
+import base64
 import ssl
 import unittest
 from unittest.mock import patch
@@ -29,11 +30,19 @@ class DoNotVerifySSLSession(requests.sessions.Session):
 
 
 class Utf8UploadTestCase(unittest.TestCase):
+    @staticmethod
+    def upload_files_for_other_tests(rpc):
+        with open("tests/ui/data/inline_javascript.svg", "rb") as svg_file:
+            b64 = base64.b64encode(svg_file.read()).decode()
+            rpc.User.add_attachment("inline_javascript.svg", b64)
+
     @classmethod
     def setUpClass(cls):
         with patch("requests.sessions.Session") as session:
             session.return_value = DoNotVerifySSLSession()
             cls.rpc = TCMS().exec
+
+        cls.upload_files_for_other_tests(cls.rpc)
 
     def upload_and_assert(self, filename):
         result = self.rpc.User.add_attachment(filename, "a2l3aXRjbXM=")
