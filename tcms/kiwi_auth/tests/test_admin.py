@@ -1,4 +1,5 @@
 # pylint: disable=invalid-name
+import html
 from http import HTTPStatus
 
 from django.conf import settings
@@ -182,8 +183,12 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         )
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertRedirects(response, f"/admin/auth/user/{self.admin.pk}/change/")
-        self.assertContains(
-            response, _("This is the last superuser, it cannot be deleted!")
+
+        response_text = html.unescape(
+            str(response.content, encoding=settings.DEFAULT_CHARSET)
+        )
+        self.assertIn(
+            str(_("This is the last superuser, it cannot be deleted!")), response_text
         )
         self.assertTrue(get_user_model().objects.filter(pk=self.admin.pk).exists())
 
