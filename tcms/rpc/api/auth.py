@@ -4,11 +4,6 @@ import django.contrib.auth
 from django.core.exceptions import PermissionDenied
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-__all__ = (
-    "login",
-    "logout",
-)
-
 
 @rpc_method(name="Auth.login")
 def login(

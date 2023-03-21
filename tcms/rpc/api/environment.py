@@ -8,14 +8,6 @@ from tcms.rpc.api.forms.testrun import EnvironmentForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import Environment, EnvironmentProperty
 
-__all__ = (
-    "properties",
-    "remove_property",
-    "add_property",
-    "filter",
-    "create",
-)
-
 
 @permissions_required("testruns.view_environmentproperty")
 @rpc_method(name="Environment.properties")

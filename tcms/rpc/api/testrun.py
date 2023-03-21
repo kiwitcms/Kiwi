@@ -11,21 +11,6 @@ from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import Property, TestExecution, TestRun
 
-__all__ = (
-    "create",
-    "update",
-    "filter",
-    "add_case",
-    "get_cases",
-    "remove_case",
-    "add_tag",
-    "remove_tag",
-    "add_cc",
-    "remove_cc",
-    "properties",
-    "add_attachment",
-)
-
 
 @permissions_required("testruns.add_testexecution")
 @rpc_method(name="TestRun.add_case")

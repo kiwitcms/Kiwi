@@ -14,14 +14,6 @@ from tcms.rpc.decorators import permissions_required
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-__all__ = (
-    "update",
-    "filter",
-    "join_group",
-    "add_attachment",
-)
-
-
 def _get_user_dict(user):
     user_dict = model_to_dict(user)
 

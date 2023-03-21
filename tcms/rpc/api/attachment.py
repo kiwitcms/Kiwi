@@ -5,8 +5,6 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc.decorators import permissions_required
 
-__all__ = ("remove_attachment",)
-
 
 @permissions_required("attachments.delete_attachment")
 @rpc_method(name="Attachment.remove_attachment")

@@ -27,19 +27,6 @@ else:
         pass
 
 
-__all__ = (
-    "update",
-    "filter",
-    "history",
-    "add_comment",
-    "remove_comment",
-    "add_link",
-    "get_links",
-    "remove_link",
-    "properties",
-)
-
-
 @permissions_required("django_comments.add_comment")
 @rpc_method(name="TestExecution.add_comment")
 def add_comment(execution_id, comment, **kwargs):

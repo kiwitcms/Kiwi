@@ -5,8 +5,6 @@ from modernrpc.core import rpc_method
 
 from tcms import __version__
 
-__all__ = ("version",)
-
 
 @http_basic_auth_login_required
 @rpc_method(name="KiwiTCMS.version")

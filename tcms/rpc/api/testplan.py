@@ -11,20 +11,6 @@ from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.models import TestPlan
 
-__all__ = (
-    "create",
-    "update",
-    "filter",
-    "add_case",
-    "remove_case",
-    "update_case_order",
-    "add_tag",
-    "remove_tag",
-    "add_attachment",
-    "list_attachments",
-    "tree",
-)
-
 
 @permissions_required("testplans.add_testplan")
 @rpc_method(name="TestPlan.create")

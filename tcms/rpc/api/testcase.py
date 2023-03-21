@@ -15,30 +15,6 @@ from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import Property, TestCase, TestCasePlan
 
-__all__ = (
-    "create",
-    "update",
-    "filter",
-    "history",
-    "sortkeys",
-    "remove",
-    "add_comment",
-    "remove_comment",
-    "add_component",
-    "comments",
-    "remove_component",
-    "add_notification_cc",
-    "get_notification_cc",
-    "remove_notification_cc",
-    "add_tag",
-    "remove_tag",
-    "add_attachment",
-    "list_attachments",
-    "properties",
-    "remove_property",
-    "add_property",
-)
-
 
 @permissions_required("testcases.add_testcasecomponent")
 @rpc_method(name="TestCase.add_component")
