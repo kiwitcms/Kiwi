@@ -8,11 +8,6 @@ from tcms.management.forms import VersionForm
 from tcms.management.models import Version
 from tcms.rpc.decorators import permissions_required
 
-__all__ = (
-    "create",
-    "filter",
-)
-
 
 @permissions_required("management.view_version")
 @rpc_method(name="Version.filter")

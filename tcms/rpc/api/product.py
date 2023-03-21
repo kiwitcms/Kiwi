@@ -8,11 +8,6 @@ from tcms.management.models import Product
 from tcms.rpc.api.forms.management import ProductForm
 from tcms.rpc.decorators import permissions_required
 
-__all__ = (
-    "create",
-    "filter",
-)
-
 
 @rpc_method(name="Product.create")
 @permissions_required("management.add_product")

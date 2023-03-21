@@ -8,12 +8,6 @@ from tcms.management.models import Build
 from tcms.rpc.api.forms.management import BuildForm, BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
 
-__all__ = (
-    "create",
-    "update",
-    "filter",
-)
-
 
 @permissions_required("management.view_build")
 @rpc_method(name="Build.filter")

@@ -12,13 +12,6 @@ from tcms.rpc.decorators import permissions_required
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-__all__ = (
-    "create",
-    "update",
-    "filter",
-)
-
-
 @permissions_required("management.view_component")
 @rpc_method(name="Component.filter")
 def filter(query):  # pylint: disable=redefined-builtin

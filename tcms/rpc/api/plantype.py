@@ -8,11 +8,6 @@ from tcms.rpc.api.forms.testplan import PlanTypeForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testplans.models import PlanType
 
-__all__ = (
-    "create",
-    "filter",
-)
-
 
 @rpc_method(name="PlanType.create")
 @permissions_required("testplans.add_plantype")
