@@ -15,7 +15,7 @@ django-simple-history==3.3.0
 django-tree-queries==0.14.0
 django-uuslug==2.0.0
 jira==3.5.0
-Markdown==3.4.1
+Markdown==3.4.2
 PyGithub==1.58.1
 Pygments==2.14.0
 python-gitlab==3.13.0
