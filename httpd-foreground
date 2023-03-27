@@ -11,15 +11,4 @@ rm -rf /tmp/nginx* /tmp/kiwitcms*
 # the foreground and is able to log to stdout
 /usr/sbin/nginx -e /dev/stderr -c /Kiwi/etc/nginx.conf
 
-# one worker process for each CPU core
-NUM_CPUS=$(grep processor /proc/cpuinfo | wc -l)
-
-/venv/bin/uwsgi --chdir=/Kiwi              \
-      --module=tcms.wsgi:application       \
-      --master --pidfile=/tmp/kiwitcms.pid \
-      --socket=/tmp/kiwitcms.sock          \
-      --processes="$NUM_CPUS"              \
-      --harakiri=30                        \
-      --max-requests=1000                  \
-      --vacuum                             \
-      --home=/venv
+/venv/bin/uwsgi --ini /Kiwi/etc/uwsgi.conf
