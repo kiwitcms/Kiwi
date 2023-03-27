@@ -1,8 +1,13 @@
 import { updateCategorySelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestcasesMutableReadyHandler () {
-    $('#text_templates').change(function () {
+    $('#id_template').change(function () {
         window.markdownEditor.codemirror.setValue($(this).val())
+    })
+
+    $('#add_id_template').click(function () {
+        // note: will not refresh the selected value
+        return showRelatedObjectPopup(this)
     })
 
     if ($('#id_category').find('option').length === 0) {
