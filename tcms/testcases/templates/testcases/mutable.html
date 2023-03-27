@@ -102,6 +102,21 @@
             </div>
 
             <div class="form-group">
+                {% if not object %}
+                <div class="col-md-1 col-lg-1">
+                    <label class="{% if form.text.errors %}has-error{% endif %}">{% trans "Template" %}</label>
+                    <a href="{% url 'admin:testcases_template_add' %}?_popup" id="add_id_template" alt="{% trans 'add new Template' %}" title="{% trans 'add new Template' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <select id="id_template" class="form-control selectpicker">
+                        <option value="">----------</option>
+                        {% for template in templates %}
+                        <option value="{{ template.text }}">{{ template.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
                 <label class="col-md-1 col-lg-1" >{% trans "Setup duration" %}</label>
                 <div class="col-md-3 col-lg-3">
                         <div id="setup_duration">
@@ -118,21 +133,6 @@
             </div>
 
             <div class="form-group">
-                {% if not object %}
-                <div class="col-md-1 col-lg-1">
-                    <label class="{% if form.text.errors %}has-error{% endif %}">{% trans "Template" %}</label>
-                    <a href="{% url 'admin:testcases_template_add' %}?_popup" id="add_id_template" alt="{% trans 'add new Template' %}" title="{% trans 'add new Template' %}">+</a>
-                </div>
-                <div class="col-md-3 col-lg-3">
-                    <select id="id_template" class="form-control selectpicker">
-                        <option value="">----------</option>
-                        {% for template in templates %}
-                        <option value="{{ template.text }}">{{ template.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                {% endif %}
-
                 <div class="col-md-12 col-lg-12">
                     <div>{{ form.text }}</div>
                     {{ form.text.errors }}
