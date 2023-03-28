@@ -88,7 +88,7 @@ def hello():
 <body></body></html>"""
             ),
             """<p><em>hello</em> &lt;html&gt;&lt;head&gt;&lt;/head&gt;</p>
-&lt;body&gt;&lt;/body&gt;\n<p>&lt;/html&gt;</p>""",
+&lt;body&gt;&lt;/body&gt;\n&lt;/html&gt;""",
         )
 
         self.assertEqual(
