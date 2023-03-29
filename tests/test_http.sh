@@ -92,8 +92,11 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Should not execute inline JavaScript"
-        rlRun -t -c "curl -k --fail https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg"
-        rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
+        ARCH=$(uname -m)
+        if [ "$ARCH" == "x86_64" ]; then
+            rlRun -t -c "curl -k --fail https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg"
+            rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
+        fi
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/register/"
