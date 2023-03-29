@@ -109,19 +109,15 @@ The Edit function modifies fields in a Test Run.
 Changing the status of a Test Run
 ---------------------------------
 
-A Test Run's status can be changed from **Running** to **Finished** even
-if all Test Cases have not been completed.
+Since Kiwi TCMS v10.1 a Test Run status can be changed from
 
-To change the status of a Test Run:
+- **Undefined** to **Running** by clicking the button next to *Started at*
+  field
+- **Running** to **Finished** by clicking the button next to *Finished at*
+  field
 
-#. Open the Test Run.
-#. Toggle the **Status** button to OFF which also updates **Finished at** field
-
-   |The Set to finished button|
-
-#. To re-activate a Test Run, toggle the **Status** button again.
-
-   |The Set to running button|
+Once a Test Run is marked as finished its status can't be changed and timestamp
+fields can't be modified further!
 
 
 Deleting a Test Run
@@ -154,6 +150,4 @@ add comments to annotate test executions:
 .. |The Add cases to run button| image:: ../_static/Click_Add_Cases_to_Run.png
 .. |The Testing menu 2| image:: ../_static/Click_Runs.png
 .. |A Test Case| image:: ../_static/Enter_Test_Results.png
-.. |The Set to finished button| image:: ../_static/Set_To_Finished.png
-.. |The Set to running button| image:: ../_static/Set_To_Running.png
 .. |Stand alone TC| image:: ../_static/TC_not_part_of_TP.png
