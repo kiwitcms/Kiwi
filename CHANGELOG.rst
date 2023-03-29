@@ -1,6 +1,94 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.1 (29 Mar 2023)
+----------------------------
+
+.. important::
+
+    This is a minor release which contains security related updates,
+    general improvements, bug fixes and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Add the ``Content-Security-Policy`` header to block inline JavaScript. Fixes
+  `CVE-2023-27489 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-2wcr-87wf-cf9j>`_
+- Add the ``X-Frame-Options`` header to deny loading Kiwi TCMS into an iframe
+- Add the ``X-Content-Type-Options`` header
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-grappelli from 3.0.4 to 3.0.5
+- Update django-simple-history from 3.2.0 to 3.3.0
+- Update jira from 3.4.1 to 3.5.0
+- Update markdown from 3.4.1 to 3.4.3
+- Update pygithub from 1.57 to 1.58.1
+- Update tzdata from 2022.7 to 2023.3
+- Do not allow last super-user to be deleted (Ivajlo Karabojkov)
+- Improve loading time on test runs pages which have large number of
+  executions with components, parameters and/or tags (@somenewacc)
+- Expose all RPC methods in the documentation
+- Update documentation to describe transitions for TestRun statuses. Closes
+  `Issue #3124 <https://github.com/kiwitcms/Kiwi/issues/3124>`_
+
+
+Settings
+~~~~~~~~
+
+- Allow uWSGI configuration override via the file
+  ``/Kiwi/etc/uwsgi.override``
+
+
+API
+~~~
+
+- New API method ``TestRun.add_attachment`` (David M. Johnson)
+- New API method ``Environment.filter()`` method. Refs
+  `Issue #3034 <https://github.com/kiwitcms/Kiwi/issues/3034>`_ (@somenewacc)
+- New API method ``Environment.create()``. Closes
+  `Issue #3034 <https://github.com/kiwitcms/Kiwi/issues/3034>`_ (@somenewacc)
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix /admin/testcases/template/ page not being able to render the text editor
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Refactor bugtracker integration
+- Remove unnecessary onChanged function for DurationWidget
+- Refactoring to avoid inline ``<script>`` tags
+
+
+Translations
+~~~~~~~~~~~~
+
+- Enable translation integration on Admin pages
+- Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 12.0 (15 Feb 2023)
 ----------------------------
 
