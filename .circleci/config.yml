@@ -18,7 +18,8 @@ jobs:
       - run: python3 --version
       # fail if not using Python 3
       - run: python3 --version | grep "3\."
-      - run: pip3 install tcms-api
+      - run: sudo apt-get install firefox wrk
+      - run: pip3 install -r requirements/devel.txt
       - run: make test-docker-image
 
   aarch64-build-and-push-docker-image:
