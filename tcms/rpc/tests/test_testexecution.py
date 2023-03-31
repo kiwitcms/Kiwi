@@ -17,7 +17,6 @@ from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
     TestExecutionFactory,
-    TestRunFactory,
     UserFactory,
 )
 
@@ -747,74 +746,3 @@ class TestExecutionUpdateStatus(APITestCase):
         # these are different b/c the API call (e.g. from a plugin) has
         # passed an explicit build value
         self.assertNotEqual(self.execution_1.run.build, build03)
-
-    def test_non_zero_status_changes_stop_date(self):
-        """
-        Non-zero weight statuses will set stop_date
-        """
-        few_secs_ago = timezone.now()
-        self.execution_1.stop_date = None
-        self.execution_1.save()
-
-        self.rpc_client.TestExecution.update(
-            self.execution_1.pk,
-            {
-                "status": self.status_positive.pk,
-            },
-        )
-
-        self.execution_1.refresh_from_db()
-        self.assertGreater(self.execution_1.stop_date, few_secs_ago)
-
-    def test_zero_status_changes_stop_date(self):
-        """
-        Zero weight statuses will set stop_date to None,
-        e.g. re-test the TE!
-        """
-        self.execution_1.stop_date = timezone.now()
-        self.execution_1.save()
-
-        self.rpc_client.TestExecution.update(
-            self.execution_1.pk,
-            {
-                "status": TestExecutionStatus.objects.filter(weight=0).first().pk,
-            },
-        )
-
-        self.execution_1.refresh_from_db()
-        self.assertIsNone(self.execution_1.stop_date)
-
-    def test_update_status_changes_run_status_completed(self):
-        """
-        When updating the status of a TestExecution to a completed one (status.weigth != 0),
-        if all executions for a run are completed, set the run as completed
-        """
-        run = TestRunFactory(stop_date=None)
-
-        TestExecutionFactory(status=self.status_positive, run=run)
-        TestExecutionFactory(status=self.status_negative, run=run)
-        execution = TestExecutionFactory(status=self.status_in_progress, run=run)
-
-        self.rpc_client.TestExecution.update(
-            execution.pk, {"status": self.status_positive.pk}
-        )
-
-        run.refresh_from_db()
-        self.assertIsNotNone(run.stop_date)
-
-    def test_update_status_changes_run_neutral(self):
-        """
-        When updating the status of a TestExecution to a not completed one (status.weigth == 0),
-        set the run as not completed
-        """
-        run = TestRunFactory(stop_date=timezone.now())
-
-        execution = TestExecutionFactory(status=self.status_positive, run=run)
-        _ = TestExecutionFactory(status=self.status_negative, run=run)
-
-        self.rpc_client.TestExecution.update(
-            execution.pk, {"status": self.status_in_progress.pk}
-        )
-
-        run.refresh_from_db()
-        self.assertIsNone(run.stop_date)

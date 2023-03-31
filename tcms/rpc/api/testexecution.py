@@ -6,7 +6,6 @@ from django.conf import settings
 from django.db.models import F
 from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
-from django.utils import timezone
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -202,26 +201,6 @@ def update(execution_id, values, **kwargs):
         test_execution = form.save()
     else:
         raise ValueError(form_errors_to_list(form))
-
-    # if this call updated TE.status then adjust timestamps
-    if values.get("status"):
-        now = timezone.now()
-        if test_execution.status.weight != 0:
-            test_execution.stop_date = now
-        else:
-            test_execution.stop_date = None
-        test_execution.save()
-
-        all_executions = TestExecution.objects.filter(run=test_execution.run)
-        if (
-            test_execution.status.weight != 0
-            and not all_executions.filter(status__weight=0).exists()
-        ):
-            test_execution.run.stop_date = now
-            test_execution.run.save()
-        elif test_execution.status.weight == 0 and test_execution.run.stop_date:
-            test_execution.run.stop_date = None
-            test_execution.run.save()
 
     result = model_to_dict(test_execution)
 
