@@ -147,7 +147,7 @@ export function pageTestrunsGetReadyHandler () {
     tagsCard('TestRun', testRunId, { run: testRunId }, permissions.removeTag)
 
     jsonRPC('TestExecutionStatus.filter', {}, executionStatuses => {
-    // convert from list to a dict for easier indexing later
+        // convert from list to a dict for easier indexing later
         for (let i = 0; i < executionStatuses.length; i++) {
             allExecutionStatuses[executionStatuses[i].id] = executionStatuses[i]
         }
@@ -161,7 +161,7 @@ export function pageTestrunsGetReadyHandler () {
         }
 
         jsonRPC('TestExecution.filter', rpcQuery, testExecutions => {
-            drawPercentBar(testExecutions)
+            drawPercentBar(testExecutions, false)
             renderTestExecutions(testExecutions)
             renderAdditionalInformation(testRunId)
         })
@@ -326,7 +326,7 @@ function selectedCheckboxes () {
     }
 }
 
-function drawPercentBar (testExecutions) {
+function drawPercentBar (testExecutions, updateTestRun = false) {
     let positiveCount = 0
     let negativeCount = 0
     const allCount = testExecutions.length
@@ -347,6 +347,19 @@ function drawPercentBar (testExecutions) {
 
     renderProgressBars(positiveCount, negativeCount, allCount)
     renderCountPerStatusList(statusCount)
+
+    if (updateTestRun) {
+        // first non-zero status reported => TR is started
+        if (positiveCount + negativeCount === 1 && $('.start-date').html().trim().replace('-', '') === '') {
+            $('#start-button').click()
+            return
+        }
+
+        // there are no more neutral executions left => TR is finished; update timestamp
+        if (positiveCount + negativeCount === allCount && $('.stop-date').html().trim().replace('-', '') === '') {
+            $('#stop-button').click()
+        }
+    }
 }
 
 function renderProgressBars (positiveCount, negativeCount, allCount) {
@@ -482,7 +495,8 @@ function getExpandArea (testExecution) {
 
             const $this = $(this)
             jsonRPC('TestExecution.update', [testExecution.id, testExecutionUpdateArgs(statusId)], execution => {
-                reloadRowFor(execution)
+                // update TestRun if not filtered
+                reloadRowFor(execution, $('#toolbar-filter').val() === '')
 
                 $this.parents('.list-group-item-container').addClass('hidden')
                 // click the .list-group-item-header, not the .test-execution-element itself, because otherwise the handler will fail
@@ -736,21 +750,23 @@ function changeStatusBulk (statusId) {
     }
 
     const updateArgs = testExecutionUpdateArgs(statusId)
+    const notFiltered = $('#toolbar-filter').val() === ''
     selected.executionIds.forEach(executionId => {
         jsonRPC('TestExecution.update', [executionId, updateArgs], execution => {
-            reloadRowFor(execution)
+            // update TestRun if not filtered
+            reloadRowFor(execution, notFiltered)
         })
     })
 }
 
-function reloadRowFor (execution) {
+function reloadRowFor (execution, updateTestRun = false) {
     const testExecutionRow = $(`.test-execution-${execution.id}`)
     animate(testExecutionRow, () => {
         testExecutionRow.replaceWith(renderTestExecutionRow(execution))
         // note: this is here b/c animate() is async and we risk race conditions
         // b/c we use global variables for state. The drawback is that progress
         // will be updated even if statuses aren't changed !!!
-        drawPercentBar(Object.values(allExecutions))
+        drawPercentBar(Object.values(allExecutions), updateTestRun)
         renderAdditionalInformation(execution.run_id, execution)
 
         bindEvents(`.test-execution-${execution.id}`)
