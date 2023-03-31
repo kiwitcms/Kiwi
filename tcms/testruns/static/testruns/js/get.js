@@ -481,9 +481,7 @@ function getExpandArea (testExecution) {
             })
 
             const $this = $(this)
-            jsonRPC('TestExecution.update', [testExecution.id, {
-                status: statusId
-            }], execution => {
+            jsonRPC('TestExecution.update', [testExecution.id, testExecutionUpdateArgs(statusId)], execution => {
                 reloadRowFor(execution)
 
                 $this.parents('.list-group-item-container').addClass('hidden')
@@ -737,10 +735,9 @@ function changeStatusBulk (statusId) {
         return false
     }
 
+    const updateArgs = testExecutionUpdateArgs(statusId)
     selected.executionIds.forEach(executionId => {
-        jsonRPC('TestExecution.update', [executionId, {
-            status: statusId
-        }], execution => {
+        jsonRPC('TestExecution.update', [executionId, updateArgs], execution => {
             reloadRowFor(execution)
         })
     })
@@ -904,4 +901,16 @@ function removeCases (testRunId, testCaseIds) {
     }
 
     drawPercentBar(Object.values(allExecutions))
+}
+
+function testExecutionUpdateArgs (statusId) {
+    const statusWeight = allExecutionStatuses[statusId].weight
+
+    const updateArgs = { status: statusId, stop_date: '' }
+    if (statusWeight !== 0) {
+        const timeZone = $('#clock').data('time-zone')
+        updateArgs.stop_date = currentTimeWithTimezone(timeZone)
+    }
+
+    return updateArgs
 }
