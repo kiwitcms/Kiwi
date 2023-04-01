@@ -127,7 +127,24 @@
             </div>
 
             <input type="hidden" id="id_start_date" name="start_date" value="{{ form.start_date.value|date:'Y-m-d H:i:s' }}">
-            <input type="hidden" id="id_stop_date" name="stop_date" value="{{ form.stop_date.value|date:'Y-m-d H:i:s' }}">
+
+            {% if object and object.stop_date %}
+            <label class="col-md-1 col-lg-1" for="id_stop_date">{% trans "Finished at" %}</label>
+            <div class="col-md-3 col-lg-3 {% if form.stop_date.errors %}has-error{% endif %}">
+                <div class="input-group date-time-picker-pf">
+                    <input
+                        type="text" class="form-control" id="id_stop_date" name="stop_date"
+                        value="{{ form.stop_date.value|date:'Y-m-d H:i:s' }}">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar">
+                        </span>
+                    </span>
+                </div>
+                {{  form.stop_date.errors }}
+            </div>
+            {% else %}
+                <input type="hidden" id="id_stop_date" name="stop_date" value="{{ form.stop_date.value|date:'Y-m-d H:i:s' }}">
+            {% endif %}
         </div>
 
         {% if test_cases %}
