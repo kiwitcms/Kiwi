@@ -2192,4 +2192,3 @@ msgstr "groupe"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "groupes"
-
