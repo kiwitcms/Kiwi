@@ -457,10 +457,9 @@ export function arrayToDict (arr) {
     }, {})
 }
 
-export function updateTestPlanSelectFromProduct (callback = () => {}) {
+export function updateTestPlanSelectFromProduct () {
     const updateCallback = (data = []) => {
         updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name')
-        callback()
     }
 
     let productIds = $('#id_product').val()
