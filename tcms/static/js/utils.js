@@ -457,7 +457,7 @@ export function arrayToDict (arr) {
     }, {})
 }
 
-export function updateTestPlanSelectFromProduct () {
+export function updateTestPlanSelectFromProduct (extraQuery = {}) {
     const updateCallback = (data = []) => {
         updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name')
     }
@@ -474,6 +474,8 @@ export function updateTestPlanSelectFromProduct () {
     if (!productIds.length) {
         updateCallback()
     } else {
-        jsonRPC('TestPlan.filter', { product__in: productIds }, updateCallback)
+        const query = { product__in: productIds }
+        Object.assign(query, extraQuery)
+        jsonRPC('TestPlan.filter', query, updateCallback)
     }
 }
