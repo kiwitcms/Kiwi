@@ -109,7 +109,7 @@ export function pageTestcasesSearchReadyHandler () {
                 params.executions__run__in = $('#id_run').val()
             };
 
-            const testPlanIds = $('#id_test_plan').val()
+            const testPlanIds = selectedPlanIds()
             if (testPlanIds.length) {
                 params.plan__in = testPlanIds
             }
@@ -258,4 +258,30 @@ function discoverNestedTestPlans (inputData, callbackF) {
     })
 
     callbackF(result)
+}
+
+function selectedPlanIds () {
+    const selectedIds = $('#id_test_plan').val()
+    const childIds = []
+
+    // search for children of each selected TP
+    if ($('#id_include_child_tps').is(':checked')) {
+        for (const id of selectedIds) {
+            const option = $(`#id_test_plan option[value="${id}"]`)[0]
+
+            // scan all DOM elements after the selected one for child test plans
+            // b/c they are rendered as subsequent <options> with different
+            // leading space indentation
+            let sibling = option.nextElementSibling
+            const indentation = option.text.search(/\S|$/)
+
+            while (sibling !== null && sibling.text.search(/\S|$/) > indentation) {
+                // everything that starts with a space is considered a child TP
+                childIds.push(sibling.value)
+                sibling = sibling.nextElementSibling
+            }
+        }
+    }
+
+    return selectedIds.concat(childIds)
 }
