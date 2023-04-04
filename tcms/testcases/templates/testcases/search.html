@@ -118,6 +118,12 @@
                 <input id="id_text" type="text" class="form-control"
                     value="{{ form.text.value|default:'' }}">
             </div>
+
+            <label class="col-md-1 col-lg-1" for="id_include_child_tps">{% trans "Include child TPs" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="bootstrap-switch" id="id_include_child_tps" type="checkbox"
+                    data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+            </div>
         </div>
 
         <div class="form-group">
