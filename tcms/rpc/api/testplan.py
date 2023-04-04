@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.db.models import Count
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
@@ -100,6 +101,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "type__name",
             "parent",
         )
+        .annotate(Count("children"))
         .order_by("product", "id")
         .distinct()
     )
