@@ -60,6 +60,7 @@ class TestFilter(APITestCase):
         self.assertEqual(result["author"], self.plan_1.author.pk)
         self.assertIn("type", result)
         self.assertIn("parent", result)
+        self.assertIn("children__count", result)
 
     def test_filter_out_all_plans(self):
         plans_total = TestPlan.objects.all().count()
