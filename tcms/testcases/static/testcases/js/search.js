@@ -220,7 +220,7 @@ export function pageTestcasesSearchReadyHandler () {
     $('#id_product').change(function () {
         updateComponentSelectFromProduct()
         updateCategorySelectFromProduct()
-        updateTestPlanSelectFromProduct()
+        updateTestPlanSelectFromProduct({ parent: null }, discoverNestedTestPlans)
     })
 
     $('#id_test_plan').change(function () {
@@ -230,4 +230,32 @@ export function pageTestcasesSearchReadyHandler () {
     if (window.location.href.indexOf('product') > -1) {
         $('#id_product').change()
     }
+}
+
+function discoverNestedTestPlans (inputData, callbackF) {
+    const prefix = '&nbsp;&nbsp;&nbsp;&nbsp;'
+    const result = []
+
+    inputData.forEach((parent) => {
+        result.push(parent)
+
+        if (parent.children__count > 0) {
+            jsonRPC('TestPlan.tree', parent.id, (children) => {
+                children.forEach((child) => {
+                    if (child.tree_depth > 0) {
+                        child.name = prefix.repeat(child.tree_depth) + child.name
+                        // TestPlan.tree() method doesn't return product name!
+                        // Also note that entries in the Select are ordered by Product
+                        // and if the child has a different product than the parent
+                        // that would break the ordering scheme! That's why explicitly
+                        // set the value even if it can be a bit inaccurate sometimes.
+                        child.product__name = parent.product__name
+                        result.push(child)
+                    }
+                })
+            }, true)
+        }
+    })
+
+    callbackF(result)
 }
