@@ -457,25 +457,30 @@ export function arrayToDict (arr) {
     }, {})
 }
 
-export function updateTestPlanSelectFromProduct (extraQuery = {}) {
-    const updateCallback = (data = []) => {
-        updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name')
+export function updateTestPlanSelectFromProduct (
+    extraQuery = {},
+    preProcessData = (data, callbackF) => { callbackF(data) }
+) {
+    const internalCallback = function (data = []) {
+        preProcessData(data, (data) => {
+            updateSelect(data, '#id_test_plan', 'id', 'name', 'product__name')
+        })
     }
 
     let productIds = $('#id_product').val()
 
     if (productIds === '') {
-        updateCallback()
+        internalCallback()
         return
     } else if (!Array.isArray(productIds)) {
         productIds = [productIds]
     }
 
     if (!productIds.length) {
-        updateCallback()
+        internalCallback()
     } else {
         const query = { product__in: productIds }
         Object.assign(query, extraQuery)
-        jsonRPC('TestPlan.filter', query, updateCallback)
+        jsonRPC('TestPlan.filter', query, internalCallback)
     }
 }
