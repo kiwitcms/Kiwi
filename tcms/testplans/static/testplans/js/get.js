@@ -3,7 +3,7 @@ import { tagsCard } from '../../../../static/js/tags'
 import {
     animate,
     advancedSearchAndAddTestCases,
-    bindDeleteCommentButton,
+    bindDeleteCommentButton, changeDropdownSelectedItem,
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
     treeViewBind, quickSearchAndAddTestCase
 } from '../../../../static/js/utils'
