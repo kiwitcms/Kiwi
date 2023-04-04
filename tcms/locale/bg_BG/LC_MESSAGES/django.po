@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-21 16:46+0000\n"
-"PO-Revision-Date: 2023-03-07 20:10\n"
+"POT-Creation-Date: 2023-04-04 19:48+0000\n"
+"PO-Revision-Date: 2023-04-04 20:48\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -40,11 +40,11 @@ msgstr "Описание на проблема:\n\n"
 #: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:50
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/bugs/templates/bugs/search.html:18
-#: tcms/bugs/templates/bugs/search.html:110
+#: tcms/bugs/templates/bugs/search.html:108
 msgid "Severity"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:91
+#: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:89
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
 msgstr "Отворен"
@@ -54,16 +54,16 @@ msgstr "Отворен"
 msgid "Closed"
 msgstr "Затворен"
 
-#: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:81
-#: tcms/bugs/templates/bugs/search.html:116
+#: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:79
+#: tcms/bugs/templates/bugs/search.html:114
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
 msgstr "Откривател"
 
 #: tcms/bugs/templates/bugs/get.html:64
 #: tcms/bugs/templates/bugs/mutable.html:94
-#: tcms/bugs/templates/bugs/search.html:86
-#: tcms/bugs/templates/bugs/search.html:117
+#: tcms/bugs/templates/bugs/search.html:84
+#: tcms/bugs/templates/bugs/search.html:115
 #: tcms/templates/include/bug_details.html:10
 #: tcms/testruns/templates/testruns/get.html:208
 #: tcms/testruns/templates/testruns/get.html:268
@@ -72,55 +72,55 @@ msgstr "Изпълнител"
 
 #: tcms/bugs/templates/bugs/get.html:75
 #: tcms/bugs/templates/bugs/mutable.html:45
-#: tcms/bugs/templates/bugs/search.html:49
-#: tcms/bugs/templates/bugs/search.html:113
+#: tcms/bugs/templates/bugs/search.html:47
+#: tcms/bugs/templates/bugs/search.html:111
 #: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:107
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 #: tcms/templates/include/bug_details.html:13
 #: tcms/testcases/templates/testcases/get.html:44
 #: tcms/testcases/templates/testcases/get.html:170
 #: tcms/testcases/templates/testcases/mutable.html:43
-#: tcms/testcases/templates/testcases/search.html:53
+#: tcms/testcases/templates/testcases/search.html:51
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:33
-#: tcms/testplans/templates/testplans/search.html:48
-#: tcms/testplans/templates/testplans/search.html:114
+#: tcms/testplans/templates/testplans/search.html:46
+#: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/get.html:44
 #: tcms/testruns/templates/testruns/mutable.html:46
 #: tcms/testruns/templates/testruns/search.html:35
-#: tcms/testruns/templates/testruns/search.html:191
+#: tcms/testruns/templates/testruns/search.html:183
 msgid "Product"
 msgstr "Продукт"
 
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
-#: tcms/bugs/templates/bugs/search.html:59
-#: tcms/bugs/templates/bugs/search.html:114
+#: tcms/bugs/templates/bugs/search.html:57
+#: tcms/bugs/templates/bugs/search.html:112
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:87
 #: tcms/testplans/templates/testplans/clone.html:36
 #: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:48
-#: tcms/testplans/templates/testplans/search.html:58
-#: tcms/testplans/templates/testplans/search.html:115
+#: tcms/testplans/templates/testplans/search.html:56
+#: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/get.html:49
 #: tcms/testruns/templates/testruns/search.html:45
-#: tcms/testruns/templates/testruns/search.html:192
+#: tcms/testruns/templates/testruns/search.html:184
 msgid "Version"
 msgstr "Версия"
 
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
-#: tcms/bugs/templates/bugs/search.html:69
-#: tcms/bugs/templates/bugs/search.html:115 tcms/management/models.py:120
+#: tcms/bugs/templates/bugs/search.html:67
+#: tcms/bugs/templates/bugs/search.html:113 tcms/management/models.py:120
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:54
 #: tcms/testruns/templates/testruns/get.html:411
 #: tcms/testruns/templates/testruns/mutable.html:77
 #: tcms/testruns/templates/testruns/search.html:55
-#: tcms/testruns/templates/testruns/search.html:193
+#: tcms/testruns/templates/testruns/search.html:185
 msgid "Build"
 msgstr "Билд"
 
@@ -134,12 +134,12 @@ msgstr "Пре-отваряне"
 
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
-#: tcms/testcases/templates/testcases/mutable.html:258
+#: tcms/testcases/templates/testcases/mutable.html:261
 #: tcms/testplans/templates/testplans/get.html:477
 #: tcms/testplans/templates/testplans/mutable.html:155
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
-#: tcms/testruns/templates/testruns/mutable.html:187
+#: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Save"
 msgstr "Записване"
 
@@ -149,10 +149,10 @@ msgstr "Затваряне"
 
 #: tcms/bugs/templates/bugs/mutable.html:20
 #: tcms/bugs/templates/bugs/search.html:13
-#: tcms/bugs/templates/bugs/search.html:111
+#: tcms/bugs/templates/bugs/search.html:109
 #: tcms/testcases/templates/testcases/mutable.html:24
 #: tcms/testcases/templates/testcases/search.html:13
-#: tcms/testcases/templates/testcases/search.html:152
+#: tcms/testcases/templates/testcases/search.html:155
 #: tcms/testplans/templates/testplans/get.html:212
 #: tcms/testplans/templates/testplans/get.html:487
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:3
@@ -160,9 +160,9 @@ msgstr "Затваряне"
 #: tcms/testruns/templates/testruns/get.html:259
 #: tcms/testruns/templates/testruns/get.html:262
 #: tcms/testruns/templates/testruns/mutable.html:23
-#: tcms/testruns/templates/testruns/mutable.html:207
+#: tcms/testruns/templates/testruns/mutable.html:222
 #: tcms/testruns/templates/testruns/search.html:14
-#: tcms/testruns/templates/testruns/search.html:189
+#: tcms/testruns/templates/testruns/search.html:181
 msgid "Summary"
 msgstr "Резюме"
 
@@ -207,53 +207,54 @@ msgid "Created"
 msgstr "Създаден"
 
 #: tcms/bugs/templates/bugs/search.html:31
-#: tcms/telemetry/templates/telemetry/include/filters.html:55
+#: tcms/telemetry/templates/telemetry/include/filters.html:53
 #: tcms/testcases/templates/testcases/search.html:22
 #: tcms/testplans/templates/testplans/search.html:23
 #: tcms/testruns/templates/testruns/search.html:90
-#: tcms/testruns/templates/testruns/search.html:112
-#: tcms/testruns/templates/testruns/search.html:135
-#: tcms/testruns/templates/testruns/search.html:157
+#: tcms/testruns/templates/testruns/search.html:110
+#: tcms/testruns/templates/testruns/search.html:131
+#: tcms/testruns/templates/testruns/search.html:151
 msgid "Before"
 msgstr "Преди"
 
-#: tcms/bugs/templates/bugs/search.html:38
+#: tcms/bugs/templates/bugs/search.html:37
 #: tcms/telemetry/templates/telemetry/include/filters.html:43
-#: tcms/testcases/templates/testcases/search.html:29
-#: tcms/testplans/templates/testplans/search.html:30
-#: tcms/testruns/templates/testruns/search.html:98
-#: tcms/testruns/templates/testruns/search.html:120
-#: tcms/testruns/templates/testruns/search.html:143
-#: tcms/testruns/templates/testruns/search.html:165
+#: tcms/testcases/templates/testcases/search.html:28
+#: tcms/testplans/templates/testplans/search.html:29
+#: tcms/testruns/templates/testruns/search.html:97
+#: tcms/testruns/templates/testruns/search.html:117
+#: tcms/testruns/templates/testruns/search.html:138
+#: tcms/testruns/templates/testruns/search.html:158
 msgid "After"
 msgstr "След"
 
-#: tcms/bugs/templates/bugs/search.html:83
-#: tcms/bugs/templates/bugs/search.html:88
+#: tcms/bugs/templates/bugs/search.html:81
+#: tcms/bugs/templates/bugs/search.html:86
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
-#: tcms/testcases/templates/testcases/search.html:114
-#: tcms/testplans/templates/testplans/search.html:82
-#: tcms/testplans/templates/testplans/search.html:88
+#: tcms/testcases/templates/testcases/search.html:117
+#: tcms/testplans/templates/testplans/search.html:80
+#: tcms/testplans/templates/testplans/search.html:86
 #: tcms/testruns/templates/testruns/get.html:507
 #: tcms/testruns/templates/testruns/search.html:69
 #: tcms/testruns/templates/testruns/search.html:75
 msgid "Username"
 msgstr "Потребител"
 
-#: tcms/bugs/templates/bugs/search.html:93
+#: tcms/bugs/templates/bugs/search.html:91
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:18
 #: tcms/testcases/templates/testcases/clone.html:22
 #: tcms/testcases/templates/testcases/clone.html:36
 #: tcms/testcases/templates/testcases/mutable.html:100
-#: tcms/testcases/templates/testcases/mutable.html:184
-#: tcms/testcases/templates/testcases/mutable.html:191
-#: tcms/testcases/templates/testcases/mutable.html:198
-#: tcms/testcases/templates/testcases/mutable.html:207
-#: tcms/testcases/templates/testcases/mutable.html:214
-#: tcms/testcases/templates/testcases/mutable.html:227
-#: tcms/testcases/templates/testcases/mutable.html:234
-#: tcms/testcases/templates/testcases/search.html:41
+#: tcms/testcases/templates/testcases/mutable.html:187
+#: tcms/testcases/templates/testcases/mutable.html:194
+#: tcms/testcases/templates/testcases/mutable.html:201
+#: tcms/testcases/templates/testcases/mutable.html:210
+#: tcms/testcases/templates/testcases/mutable.html:217
+#: tcms/testcases/templates/testcases/mutable.html:230
+#: tcms/testcases/templates/testcases/mutable.html:237
+#: tcms/testcases/templates/testcases/search.html:39
+#: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
 #: tcms/testplans/templates/testplans/clone.html:66
 #: tcms/testplans/templates/testplans/mutable.html:108
@@ -262,25 +263,26 @@ msgstr "Потребител"
 #: tcms/testplans/templates/testplans/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:136
 #: tcms/testplans/templates/testplans/mutable.html:149
-#: tcms/testplans/templates/testplans/search.html:42
+#: tcms/testplans/templates/testplans/search.html:40
 #: tcms/testruns/templates/testruns/get.html:570
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "Yes"
 msgstr "Да"
 
-#: tcms/bugs/templates/bugs/search.html:93
+#: tcms/bugs/templates/bugs/search.html:91
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:18
 #: tcms/testcases/templates/testcases/clone.html:22
 #: tcms/testcases/templates/testcases/clone.html:36
 #: tcms/testcases/templates/testcases/mutable.html:100
-#: tcms/testcases/templates/testcases/mutable.html:184
-#: tcms/testcases/templates/testcases/mutable.html:191
-#: tcms/testcases/templates/testcases/mutable.html:198
-#: tcms/testcases/templates/testcases/mutable.html:207
-#: tcms/testcases/templates/testcases/mutable.html:214
-#: tcms/testcases/templates/testcases/mutable.html:227
-#: tcms/testcases/templates/testcases/mutable.html:234
-#: tcms/testcases/templates/testcases/search.html:44
+#: tcms/testcases/templates/testcases/mutable.html:187
+#: tcms/testcases/templates/testcases/mutable.html:194
+#: tcms/testcases/templates/testcases/mutable.html:201
+#: tcms/testcases/templates/testcases/mutable.html:210
+#: tcms/testcases/templates/testcases/mutable.html:217
+#: tcms/testcases/templates/testcases/mutable.html:230
+#: tcms/testcases/templates/testcases/mutable.html:237
+#: tcms/testcases/templates/testcases/search.html:42
+#: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
 #: tcms/testplans/templates/testplans/clone.html:66
 #: tcms/testplans/templates/testplans/mutable.html:108
@@ -289,35 +291,35 @@ msgstr "Да"
 #: tcms/testplans/templates/testplans/mutable.html:130
 #: tcms/testplans/templates/testplans/mutable.html:136
 #: tcms/testplans/templates/testplans/mutable.html:149
-#: tcms/testplans/templates/testplans/search.html:42
+#: tcms/testplans/templates/testplans/search.html:40
 #: tcms/testruns/templates/testruns/get.html:570
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "No"
 msgstr "Не"
 
-#: tcms/bugs/templates/bugs/search.html:99
-#: tcms/testcases/templates/testcases/search.html:140
+#: tcms/bugs/templates/bugs/search.html:97
+#: tcms/testcases/templates/testcases/search.html:143
 #: tcms/testplans/templates/testplans/get.html:221
-#: tcms/testplans/templates/testplans/search.html:101
+#: tcms/testplans/templates/testplans/search.html:99
 #: tcms/testruns/templates/testruns/get.html:274
-#: tcms/testruns/templates/testruns/search.html:178
+#: tcms/testruns/templates/testruns/search.html:170
 msgid "Search"
 msgstr "Търсене"
 
-#: tcms/bugs/templates/bugs/search.html:109
+#: tcms/bugs/templates/bugs/search.html:107
 #: tcms/testcases/templates/testcases/get.html:166
-#: tcms/testcases/templates/testcases/search.html:128
-#: tcms/testcases/templates/testcases/search.html:151
-#: tcms/testplans/templates/testplans/search.html:111
-#: tcms/testruns/templates/testruns/search.html:188
+#: tcms/testcases/templates/testcases/search.html:137
+#: tcms/testcases/templates/testcases/search.html:154
+#: tcms/testplans/templates/testplans/search.html:109
+#: tcms/testruns/templates/testruns/search.html:180
 msgid "ID"
 msgstr "ID"
 
-#: tcms/bugs/templates/bugs/search.html:112
+#: tcms/bugs/templates/bugs/search.html:110
 #: tcms/templates/include/bug_details.html:5
-#: tcms/testcases/templates/testcases/search.html:153
-#: tcms/testplans/templates/testplans/search.html:113
-#: tcms/testruns/templates/testruns/mutable.html:209
+#: tcms/testcases/templates/testcases/search.html:156
+#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testruns/templates/testruns/mutable.html:224
 msgid "Created on"
 msgstr "Създаден на"
 
@@ -423,8 +425,8 @@ msgstr "Тест план"
 #: tcms/core/templates/dashboard.html:54
 #: tcms/testcases/templates/testcases/get.html:169
 #: tcms/testplans/templates/testplans/mutable.html:66
-#: tcms/testplans/templates/testplans/search.html:68
-#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testplans/templates/testplans/search.html:66
+#: tcms/testplans/templates/testplans/search.html:114
 msgid "Type"
 msgstr "Тип"
 
@@ -442,38 +444,6 @@ msgstr "Управлявате %(total_count)s тест плана, %(disabled_c
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
 msgstr "Нямаш Тест(ови) план(ове)"
-
-#: tcms/core/templates/widgets/duration.html:8
-msgid "day"
-msgstr "ден"
-
-#: tcms/core/templates/widgets/duration.html:9
-msgid "days"
-msgstr "дни"
-
-#: tcms/core/templates/widgets/duration.html:11
-msgid "hour"
-msgstr "час"
-
-#: tcms/core/templates/widgets/duration.html:12
-msgid "hours"
-msgstr "часове"
-
-#: tcms/core/templates/widgets/duration.html:14
-msgid "minute"
-msgstr "минута"
-
-#: tcms/core/templates/widgets/duration.html:15
-msgid "minutes"
-msgstr "минути"
-
-#: tcms/core/templates/widgets/duration.html:17
-msgid "second"
-msgstr "секунда"
-
-#: tcms/core/templates/widgets/duration.html:18
-msgid "seconds"
-msgstr "секунди"
 
 #: tcms/core/views.py:47
 #, python-format
@@ -553,24 +523,24 @@ msgid "Builds"
 msgstr "Билд"
 
 #: tcms/management/models.py:132
-#: tcms/testcases/templates/testcases/search.html:131
+#: tcms/testcases/templates/testcases/search.html:129
 #: tcms/testplans/templates/testplans/get.html:217
-#: tcms/testplans/templates/testplans/search.html:92
+#: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/get.html:264
 #: tcms/testruns/templates/testruns/search.html:27
 msgid "Tag"
 msgstr "Таг"
 
 #: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:160
+#: tcms/testcases/templates/testcases/search.html:163
 #: tcms/testplans/templates/testplans/get.html:456
-#: tcms/testplans/templates/testplans/search.html:118
+#: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testruns/templates/testruns/get.html:354
-#: tcms/testruns/templates/testruns/search.html:196
+#: tcms/testruns/templates/testruns/search.html:188
 msgid "Tags"
 msgstr "Тагове"
 
-#: tcms/rpc/api/bug.py:74
+#: tcms/rpc/api/bug.py:69
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Настрой base_url, за да е разрешено репортването към този Тракер!"
 
@@ -711,11 +681,11 @@ msgid "TOTAL"
 msgstr "ОБЩО"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:36
-#: tcms/testcases/templates/testcases/search.html:85
-#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testcases/templates/testcases/search.html:61
+#: tcms/testplans/templates/testplans/search.html:110
 #: tcms/testruns/templates/testruns/get.html:39
 #: tcms/testruns/templates/testruns/mutable.html:61
-#: tcms/testruns/templates/testruns/search.html:190
+#: tcms/testruns/templates/testruns/search.html:182
 msgid "Test plan"
 msgstr "Тест план"
 
@@ -730,8 +700,8 @@ msgstr "Oбщо"
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:98
-#: tcms/testcases/templates/testcases/search.html:38
-#: tcms/testcases/templates/testcases/search.html:158
+#: tcms/testcases/templates/testcases/search.html:36
+#: tcms/testcases/templates/testcases/search.html:161
 #: tcms/testplans/templates/testplans/get.html:402
 #: tcms/testplans/templates/testplans/get.html:489
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
@@ -768,7 +738,8 @@ msgid "Testing Status Matrix"
 msgstr "Матрица на състоянието на тестове"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
-msgid "Include child TPs"
+#: tcms/testcases/templates/testcases/search.html:67
+msgid "Child TPs"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
@@ -788,7 +759,7 @@ msgid "Test case"
 msgstr "Тест кейс"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:126
+#: tcms/testcases/templates/testcases/search.html:135
 msgid "Test run"
 msgstr "Тест Изпълнение"
 
@@ -821,7 +792,39 @@ msgstr "Вътрешна грешка на сървъра"
 msgid "Are you sure you want to delete this attachment?"
 msgstr "Сигурни ли сте, че искате да изтриете прикачения файл?"
 
-#: tcms/templates/base.html:11 tcms/templates/registration/login.html:46
+#: tcms/templates/base.html:8
+msgid "day"
+msgstr "ден"
+
+#: tcms/templates/base.html:8
+msgid "days"
+msgstr "дни"
+
+#: tcms/templates/base.html:9
+msgid "hour"
+msgstr "час"
+
+#: tcms/templates/base.html:9
+msgid "hours"
+msgstr "часове"
+
+#: tcms/templates/base.html:10
+msgid "minute"
+msgstr "минута"
+
+#: tcms/templates/base.html:10
+msgid "minutes"
+msgstr "минути"
+
+#: tcms/templates/base.html:11
+msgid "second"
+msgstr "секунда"
+
+#: tcms/templates/base.html:11
+msgid "seconds"
+msgstr "секунди"
+
+#: tcms/templates/base.html:16 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
 msgstr "водещата система за управление на тестове с отворен код"
 
@@ -922,8 +925,8 @@ msgstr "Не са открити записи"
 #: tcms/templates/include/bug_details.html:3
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/mutable.html:74
-#: tcms/testcases/templates/testcases/search.html:100
-#: tcms/testcases/templates/testcases/search.html:157
+#: tcms/testcases/templates/testcases/search.html:84
+#: tcms/testcases/templates/testcases/search.html:160
 #: tcms/testplans/templates/testplans/get.html:149
 #: tcms/testplans/templates/testplans/get.html:363
 #: tcms/testplans/templates/testplans/get.html:396
@@ -932,7 +935,7 @@ msgstr "Не са открити записи"
 #: tcms/testruns/templates/testruns/get.html:190
 #: tcms/testruns/templates/testruns/get.html:270
 #: tcms/testruns/templates/testruns/get.html:385
-#: tcms/testruns/templates/testruns/mutable.html:210
+#: tcms/testruns/templates/testruns/mutable.html:225
 msgid "Status"
 msgstr "Статус"
 
@@ -971,7 +974,7 @@ msgid "Parameters"
 msgstr "Параметри"
 
 #: tcms/templates/include/properties_card.html:16
-#: tcms/testruns/templates/testruns/mutable.html:147
+#: tcms/testruns/templates/testruns/mutable.html:162
 msgid "This is a tech-preview feature!"
 msgstr ""
 
@@ -1221,6 +1224,7 @@ msgid "Test case statuses"
 msgstr ""
 
 #: tcms/testcases/models.py:379
+#: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
 msgstr "Шаблон"
 
@@ -1250,54 +1254,54 @@ msgstr "Клониране"
 
 #: tcms/testcases/templates/testcases/get.html:28
 #: tcms/testcases/templates/testcases/get.html:168
-#: tcms/testcases/templates/testcases/mutable.html:181
-#: tcms/testcases/templates/testcases/search.html:112
-#: tcms/testcases/templates/testcases/search.html:159
+#: tcms/testcases/templates/testcases/mutable.html:184
+#: tcms/testcases/templates/testcases/search.html:115
+#: tcms/testcases/templates/testcases/search.html:162
 #: tcms/testplans/templates/testplans/get.html:54
 #: tcms/testplans/templates/testplans/get.html:412
 #: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/mutable.html:105
-#: tcms/testplans/templates/testplans/search.html:80
-#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testplans/templates/testplans/search.html:78
+#: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
-#: tcms/testruns/templates/testruns/mutable.html:208
+#: tcms/testruns/templates/testruns/mutable.html:223
 msgid "Author"
 msgstr "Автор"
 
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:36
-#: tcms/testcases/templates/testcases/mutable.html:204
+#: tcms/testcases/templates/testcases/mutable.html:207
 #: tcms/testplans/templates/testplans/get.html:175
 #: tcms/testplans/templates/testplans/get.html:378
 #: tcms/testplans/templates/testplans/get.html:416
 #: tcms/testplans/templates/testplans/get.html:493
 #: tcms/testplans/templates/testplans/mutable.html:117
-#: tcms/testplans/templates/testplans/search.html:86
+#: tcms/testplans/templates/testplans/search.html:84
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
 #: tcms/testruns/templates/testruns/get.html:65
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/search.html:73
-#: tcms/testruns/templates/testruns/search.html:195
+#: tcms/testruns/templates/testruns/search.html:187
 msgid "Default tester"
 msgstr "Тестер по подразбиране"
 
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testcases/templates/testcases/mutable.html:58
-#: tcms/testcases/templates/testcases/search.html:63
-#: tcms/testcases/templates/testcases/search.html:154
+#: tcms/testcases/templates/testcases/search.html:93
+#: tcms/testcases/templates/testcases/search.html:157
 #: tcms/testplans/templates/testplans/get.html:408
 #: tcms/testplans/templates/testplans/get.html:491
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:368
-#: tcms/testruns/templates/testruns/mutable.html:211
+#: tcms/testruns/templates/testruns/mutable.html:226
 msgid "Category"
 msgstr "Категория"
 
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:86
-#: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:156
+#: tcms/testcases/templates/testcases/search.html:75
+#: tcms/testcases/templates/testcases/search.html:159
 #: tcms/testplans/templates/testplans/get.html:162
 #: tcms/testplans/templates/testplans/get.html:371
 #: tcms/testplans/templates/testplans/get.html:404
@@ -1305,17 +1309,17 @@ msgstr "Категория"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:266
 #: tcms/testruns/templates/testruns/get.html:364
-#: tcms/testruns/templates/testruns/mutable.html:212
+#: tcms/testruns/templates/testruns/mutable.html:227
 msgid "Priority"
 msgstr "Приоритет"
 
 #: tcms/testcases/templates/testcases/get.html:73
-#: tcms/testcases/templates/testcases/mutable.html:105
+#: tcms/testcases/templates/testcases/mutable.html:120
 msgid "Setup duration"
 msgstr "Време за подготовка"
 
 #: tcms/testcases/templates/testcases/get.html:78
-#: tcms/testcases/templates/testcases/mutable.html:112
+#: tcms/testcases/templates/testcases/mutable.html:127
 msgid "Testing duration"
 msgstr "Продължителност на теста"
 
@@ -1324,33 +1328,33 @@ msgid "Expected duration"
 msgstr "Очаквана продължителност"
 
 #: tcms/testcases/templates/testcases/get.html:98
-#: tcms/testcases/templates/testcases/mutable.html:140
+#: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Script"
 msgstr "Скрипт"
 
 #: tcms/testcases/templates/testcases/get.html:103
-#: tcms/testcases/templates/testcases/mutable.html:146
+#: tcms/testcases/templates/testcases/mutable.html:149
 msgid "Arguments"
 msgstr "Аргументи"
 
 #: tcms/testcases/templates/testcases/get.html:108
-#: tcms/testcases/templates/testcases/mutable.html:154
+#: tcms/testcases/templates/testcases/mutable.html:157
 msgid "Requirements"
 msgstr "Изисквания"
 
 #: tcms/testcases/templates/testcases/get.html:113
-#: tcms/testcases/templates/testcases/mutable.html:159
+#: tcms/testcases/templates/testcases/mutable.html:162
 #: tcms/testplans/templates/testplans/get.html:80
 #: tcms/testplans/templates/testplans/mutable.html:86
 msgid "Reference link"
 msgstr "Линк"
 
 #: tcms/testcases/templates/testcases/get.html:133
-#: tcms/testcases/templates/testcases/mutable.html:167
+#: tcms/testcases/templates/testcases/mutable.html:170
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testplans/templates/testplans/get.html:434
 #: tcms/testruns/templates/testruns/get.html:400
-#: tcms/testruns/templates/testruns/mutable.html:179
+#: tcms/testruns/templates/testruns/mutable.html:194
 msgid "Notes"
 msgstr "Бележки"
 
@@ -1377,45 +1381,44 @@ msgstr "Редакция на Тест Кейс"
 msgid "add new Category"
 msgstr "добави нова Категория"
 
-#: tcms/testcases/templates/testcases/mutable.html:121
-#: tcms/testcases/templates/testcases/search.html:118
-msgid "Text"
-msgstr "Текст"
+#: tcms/testcases/templates/testcases/mutable.html:108
+msgid "add new Template"
+msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:177
+#: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:500
 msgid "Notify"
 msgstr "Известяване"
 
-#: tcms/testcases/templates/testcases/mutable.html:188
+#: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Manager of runs"
 msgstr "Управление на Тест Изпълнения"
 
-#: tcms/testcases/templates/testcases/mutable.html:195
+#: tcms/testcases/templates/testcases/mutable.html:198
 msgid "Asignees"
 msgstr "Изпълнители"
 
-#: tcms/testcases/templates/testcases/mutable.html:211
+#: tcms/testcases/templates/testcases/mutable.html:214
 msgid "Default tester of runs"
 msgstr "Тестер по подразбиране на изпълненията"
 
-#: tcms/testcases/templates/testcases/mutable.html:220
+#: tcms/testcases/templates/testcases/mutable.html:223
 msgid "Notify when"
 msgstr "Известяване при"
 
-#: tcms/testcases/templates/testcases/mutable.html:224
+#: tcms/testcases/templates/testcases/mutable.html:227
 msgid "TestCase is updated"
 msgstr "Тест кейсът е актуализиран"
 
-#: tcms/testcases/templates/testcases/mutable.html:231
+#: tcms/testcases/templates/testcases/mutable.html:234
 msgid "TestCase is deleted"
 msgstr "Тест кейсът е изтрит"
 
-#: tcms/testcases/templates/testcases/mutable.html:240
+#: tcms/testcases/templates/testcases/mutable.html:243
 msgid "CC to"
 msgstr "Копие до"
 
-#: tcms/testcases/templates/testcases/mutable.html:245
+#: tcms/testcases/templates/testcases/mutable.html:248
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "E-mail адреси, разделни от запетая. Уведомителен e-mail ще бъде изпратен до всички адреси, посочени в Копие."
 
@@ -1423,19 +1426,23 @@ msgstr "E-mail адреси, разделни от запетая. Уведом�
 msgid "Test case summary"
 msgstr "Резюме на тест кейса"
 
-#: tcms/testcases/templates/testcases/search.html:47
+#: tcms/testcases/templates/testcases/search.html:45
 msgid "Both"
 msgstr "Всички"
 
-#: tcms/testcases/templates/testcases/search.html:73
-#: tcms/testcases/templates/testcases/search.html:155
+#: tcms/testcases/templates/testcases/search.html:105
+#: tcms/testcases/templates/testcases/search.html:158
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:263
 msgid "Component"
 msgstr "Компонент"
 
-#: tcms/testcases/templates/testcases/search.html:134
-#: tcms/testplans/templates/testplans/search.html:95
+#: tcms/testcases/templates/testcases/search.html:121
+msgid "Text"
+msgstr "Текст"
+
+#: tcms/testcases/templates/testcases/search.html:132
+#: tcms/testplans/templates/testplans/search.html:93
 #: tcms/testruns/templates/testruns/search.html:30
 msgid "Separate multiple values with comma (,)"
 msgstr "Раздели със запетая (,)"
@@ -1593,7 +1600,7 @@ msgid "Test cases are updated"
 msgstr "Тест кейсовете са актуализирани"
 
 #: tcms/testplans/templates/testplans/mutable.html:147
-#: tcms/testplans/templates/testplans/search.html:39
+#: tcms/testplans/templates/testplans/search.html:37
 msgid "Active"
 msgstr "Активен"
 
@@ -1648,13 +1655,13 @@ msgstr "Коментар"
 #: tcms/testruns/templates/testruns/get.html:59
 #: tcms/testruns/templates/testruns/mutable.html:29
 #: tcms/testruns/templates/testruns/search.html:67
-#: tcms/testruns/templates/testruns/search.html:194
+#: tcms/testruns/templates/testruns/search.html:186
 msgid "Manager"
 msgstr "Мениджър"
 
 #: tcms/testruns/templates/testruns/get.html:72
 #: tcms/testruns/templates/testruns/mutable.html:102
-#: tcms/testruns/templates/testruns/search.html:131
+#: tcms/testruns/templates/testruns/search.html:127
 msgid "Planned start"
 msgstr "Планирано начало"
 
@@ -1663,12 +1670,14 @@ msgid "Start"
 msgstr "Старт"
 
 #: tcms/testruns/templates/testruns/get.html:90
-#: tcms/testruns/templates/testruns/mutable.html:116
-#: tcms/testruns/templates/testruns/search.html:153
+#: tcms/testruns/templates/testruns/mutable.html:115
+#: tcms/testruns/templates/testruns/search.html:147
 msgid "Planned stop"
 msgstr "Планиран край"
 
 #: tcms/testruns/templates/testruns/get.html:95
+#: tcms/testruns/templates/testruns/get.html:405
+#: tcms/testruns/templates/testruns/mutable.html:132
 msgid "Finished at"
 msgstr "Завърши в"
 
@@ -1677,7 +1686,7 @@ msgid "Stop"
 msgstr "Спиране"
 
 #: tcms/testruns/templates/testruns/get.html:140
-#: tcms/testruns/templates/testruns/mutable.html:137
+#: tcms/testruns/templates/testruns/mutable.html:152
 msgid "Environment"
 msgstr "Среда"
 
@@ -1726,10 +1735,6 @@ msgstr ""
 msgid "Assigned to"
 msgstr "Възложено на"
 
-#: tcms/testruns/templates/testruns/get.html:405
-msgid "Run Date"
-msgstr "Дата на изпълнение"
-
 #: tcms/testruns/templates/testruns/get.html:417
 msgid "Text version"
 msgstr "Версия на текста"
@@ -1759,23 +1764,23 @@ msgstr "Редакция на Изпълнение"
 msgid "Clone TestRun"
 msgstr "Клониране на Изпълнение"
 
-#: tcms/testruns/templates/testruns/mutable.html:154
+#: tcms/testruns/templates/testruns/mutable.html:169
 msgid "Matrix"
 msgstr "Матрица"
 
-#: tcms/testruns/templates/testruns/mutable.html:157
+#: tcms/testruns/templates/testruns/mutable.html:172
 msgid "Affects only test cases with parameters"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:171
+#: tcms/testruns/templates/testruns/mutable.html:186
 msgid "more information"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:196
+#: tcms/testruns/templates/testruns/mutable.html:211
 msgid "Selected TestCase(s):"
 msgstr "Избран(и) тест кейс(ове):"
 
-#: tcms/testruns/templates/testruns/mutable.html:199
+#: tcms/testruns/templates/testruns/mutable.html:214
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -1801,7 +1806,7 @@ msgstr "Изпълнява се"
 msgid "Start date"
 msgstr "Начална дата"
 
-#: tcms/testruns/templates/testruns/search.html:108
+#: tcms/testruns/templates/testruns/search.html:106
 msgid "Stop date"
 msgstr "Крайна дата"
 
@@ -2160,3 +2165,4 @@ msgstr ""
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr ""
+
