@@ -6,15 +6,20 @@ import {
 } from '../../../../static/js/utils'
 import { hookIntoPagination } from '../../../../static/js/pagination'
 
+let testPlanIdsFromBackend = []
+let hiddenChildRows = {}
+
 function preProcessData (data, callbackF) {
-    const planIds = []
+    testPlanIdsFromBackend = []
+    hiddenChildRows = {}
+
     data.forEach(function (element) {
-        planIds.push(element.id)
+        testPlanIdsFromBackend.push(element.id)
     })
 
     // get tags for all objects
     const tagsPerPlan = {}
-    jsonRPC('Tag.filter', { plan__in: planIds }, function (tags) {
+    jsonRPC('Tag.filter', { plan__in: testPlanIdsFromBackend }, function (tags) {
         tags.forEach(function (element) {
             if (tagsPerPlan[element.plan] === undefined) {
                 tagsPerPlan[element.plan] = []
@@ -87,6 +92,17 @@ export function pageTestplansSearchReadyHandler () {
             dataTableJsonRPC('TestPlan.filter', params, callbackF, preProcessData)
         },
         columns: [
+            {
+                className: 'dt-control',
+                data: null,
+                defaultContent: '',
+                orderable: false,
+                render: function (data, type, full, meta) {
+                    if (data.children__count > 0) {
+                        return '<span class="fa fa-angle-right"></span>'
+                    }
+                }
+            },
             { data: 'id' },
             {
                 data: null,
@@ -105,16 +121,49 @@ export function pageTestplansSearchReadyHandler () {
             { data: 'author__username' },
             { data: 'tag' }
         ],
+        rowCallback: function (row, data, index) {
+            $(row).addClass(`test-plan-row-${data.id}`)
+
+            // is this is a child row and it's parent is also in the result set
+            // then hide it b/c it will be shown via expansion of the parent row
+            if (testPlanIdsFromBackend.indexOf(data.parent) > -1) {
+                if (!hiddenChildRows[data.parent]) {
+                    hiddenChildRows[data.parent] = []
+                }
+                hiddenChildRows[data.parent].push(row)
+                $(row).hide()
+                // WARNING: using .hide() may mess up pagination but makes it
+                // very easy to display child rows afterwards! Not a big issue for now.
+            }
+        },
         dom: 't',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: 'No records found'
         },
-        order: [[0, 'asc']]
+        order: [[1, 'asc']]
     })
 
     hookIntoPagination('#resultsTable', table)
+
+    // Add event listener for opening and closing nested test plans
+    $('#resultsTable').on('click', 'td.dt-control', function () {
+        const bracket = $(this).find('span')
+        const tr = $(this).closest('tr')
+        const row = table.row(tr)
+
+        if (row.child.isShown()) {
+            // TODO: hide all expanded children. When closing a top-level parent row
+            // its immediate children are removed, however their descendants aren't.
+            // This leads to dangling rows in situations of multi-tier parent-child TPs
+            row.child.hide()
+            bracket.removeClass('fa-angle-down')
+        } else {
+            row.child(renderChildrenOf(tr, row.data())).show()
+            bracket.addClass('fa-angle-down')
+        }
+    })
 
     $('#btn_search').click(function () {
         table.ajax.reload()
@@ -122,4 +171,14 @@ export function pageTestplansSearchReadyHandler () {
     })
 
     $('#id_product').change(updateVersionSelectFromProduct)
+}
+
+function renderChildrenOf (parentRow, data) {
+    const parentPadding = $(parentRow).find('td').css('padding-left').replace('px', '')
+    const childPadding = parseInt(parentPadding) + 5
+
+    // this is an array of previously hidden rows
+    const children = hiddenChildRows[data.id]
+    $(children).find('td').css('border', '0').css('padding-left', `${childPadding}px`)
+    return $(children).show()
 }
