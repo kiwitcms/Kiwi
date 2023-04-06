@@ -151,6 +151,8 @@ export function pageTestrunsSearchReadyHandler () {
             { data: 'product_name' },
             { data: 'plan__product_version__value' },
             { data: 'build__name' },
+            { data: 'start_date' },
+            { data: 'stop_date' },
             { data: 'manager__username' },
             { data: 'default_tester__username' },
             { data: 'tag' }
