@@ -157,13 +157,25 @@ class UsersRouter(View):  # pylint: disable=missing-permission-required
     http_method_names = ["get"]
 
     def get(self, request, *args, **kwargs):  # pylint: disable=no-self-use
+        is_multi_tenant = hasattr(request, "tenant")
+
         if request.user.is_superuser:
+            if is_multi_tenant:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _("You are viewing records from tenant '%s'") % "MAIN",
+                )
+
             return HttpResponseRedirect("/admin/auth/user/")
 
-        if (
-            hasattr(request, "tenant")
-            and request.tenant.schema_name != get_public_schema_name()
-        ):
+        if is_multi_tenant and request.tenant.schema_name != get_public_schema_name():
+            messages.add_message(
+                request,
+                messages.INFO,
+                _("You are viewing records from tenant '%s'")
+                % request.tenant.schema_name,
+            )
             return HttpResponseRedirect("/admin/tcms_tenants/tenant_authorized_users/")
 
         return HttpResponseRedirect("/admin/auth/user/")
@@ -174,13 +186,24 @@ class GroupsRouter(View):  # pylint: disable=missing-permission-required
     http_method_names = ["get"]
 
     def get(self, request, *args, **kwargs):  # pylint: disable=no-self-use
+        is_multi_tenant = hasattr(request, "tenant")
         if request.user.is_superuser:
+            if is_multi_tenant:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _("You are viewing records from tenant '%s'") % "MAIN",
+                )
+
             return HttpResponseRedirect("/admin/auth/group/")
 
-        if (
-            hasattr(request, "tenant")
-            and request.tenant.schema_name != get_public_schema_name()
-        ):
+        if is_multi_tenant and request.tenant.schema_name != get_public_schema_name():
+            messages.add_message(
+                request,
+                messages.INFO,
+                _("You are viewing records from tenant '%s'")
+                % request.tenant.schema_name,
+            )
             return HttpResponseRedirect("/admin/tenant_groups/group/")
 
         return HttpResponseRedirect("/admin/auth/group/")
