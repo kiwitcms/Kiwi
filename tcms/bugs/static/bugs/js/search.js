@@ -76,7 +76,7 @@ export function pageBugsSearchReadyHandler () {
             { data: 'reporter__username' },
             { data: 'assignee__username' }
         ],
-        dom: 'tp',
+        dom: 'ptp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',

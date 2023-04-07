@@ -162,7 +162,7 @@ export function pageTestcasesSearchReadyHandler () {
             { data: 'author__username' },
             { data: 'tag_names' }
         ],
-        dom: 'tp',
+        dom: 'ptp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',

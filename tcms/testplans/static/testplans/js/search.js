@@ -135,7 +135,7 @@ export function pageTestplansSearchReadyHandler () {
                 // very easy to display child rows afterwards! Not a big issue for now.
             }
         },
-        dom: 'tp',
+        dom: 'ptp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
