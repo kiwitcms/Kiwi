@@ -8,3 +8,10 @@ parameterized
 robotframework
 robotframework-seleniumlibrary
 textdistance
+# type checking
+mypy
+types-bleach
+types-Markdown
+types-mock
+types-requests
+types-setuptools
