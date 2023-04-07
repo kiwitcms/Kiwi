@@ -104,7 +104,7 @@ class BuildAdmin(admin.ModelAdmin):
     def product_name(self, obj):  # pylint: disable=no-self-use
         return obj.version.product
 
-    product_name.short_description = _("Product")
+    product_name.short_description = _("Product")  # type: ignore[attr-defined]
 
 
 class AttachmentAdmin(admin.ModelAdmin):

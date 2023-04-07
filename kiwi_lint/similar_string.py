@@ -21,9 +21,9 @@ class SimilarStringChecker(BaseChecker):
         )
     }
 
-    _dict_of_strings = {}
+    _dict_of_strings: dict[str, str] = {}
     threshold = 0.8
-    error_messages = []
+    error_messages: list[str] = []
 
     project_root = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "tcms")
@@ -32,7 +32,7 @@ class SimilarStringChecker(BaseChecker):
     # NOTE: this works against tcms/ directory and will not take into account
     # if we want to examine only a sub-dir or a few files
     # all files found by os.walk
-    all_template_files = set()
+    all_template_files: set[str] = set()
 
     def open(self):
         for rootpath, _dirs, files in os.walk(self.project_root, topdown=False):

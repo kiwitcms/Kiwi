@@ -54,7 +54,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 
 # Administrators error report email settings
-ADMINS = [
+ADMINS: list[tuple[str, str]] = [
     # ('Your Name', 'your_email@example.com'),
 ]
 
@@ -183,7 +183,7 @@ AZURE_BOARDS_API_VERSION = os.environ.get("AZURE_BOARDS_API_VERSION", "6.0")
 # 1-click bug report integration!
 # See tcms.issuetracker.base.IssueTrackerType.post_process_new_issue() and
 # tcms.issuetracker.tests.redmine_post_processing for hints!
-EXTERNAL_ISSUE_POST_PROCESSORS = []
+EXTERNAL_ISSUE_POST_PROCESSORS: list[str] = []
 
 # Controls the default issue type for newly created issues in Jira.
 # See JIRA.get_issue_from_jira() method

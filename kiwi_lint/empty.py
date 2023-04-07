@@ -52,10 +52,10 @@ class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
     # NOTE: this works against tcms/ directory and will not take into account
     # if we want to examine only a sub-dir or a few files
     # all files found by os.walk
-    all_python_files = set()
+    all_python_files: set[str] = set()
     # all modules found by pylint, which conveniently skips files/dirs
     # with missing __init__.py
-    discovered_python_files = set()
+    discovered_python_files: set[str] = set()
 
     def open(self):
         for root, _dirs, files in os.walk(self.project_root, topdown=False):
