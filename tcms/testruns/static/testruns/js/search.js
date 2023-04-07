@@ -155,7 +155,7 @@ export function pageTestrunsSearchReadyHandler () {
             { data: 'default_tester__username' },
             { data: 'tag' }
         ],
-        dom: 'tp',
+        dom: 'ptp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
