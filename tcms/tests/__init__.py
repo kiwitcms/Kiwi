@@ -384,7 +384,7 @@ class PermissionsTestMixin:
 class PermissionsTestCase(PermissionsTestMixin, LoggedInTestCase):
     """Base class for all tests around view permissions"""
 
-    url = None
+    url: str
     post_data = {}
 
     @classmethod
