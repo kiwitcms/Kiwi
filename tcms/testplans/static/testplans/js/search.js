@@ -1,5 +1,6 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
+import { exportButtons } from '../../../../static/js/datatables_common'
 import {
     escapeHTML,
     updateParamsToSearchTags, updateVersionSelectFromProduct
@@ -135,7 +136,8 @@ export function pageTestplansSearchReadyHandler () {
                 // very easy to display child rows afterwards! Not a big issue for now.
             }
         },
-        dom: 'ptp',
+        dom: 'Bptp',
+        buttons: exportButtons,
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',

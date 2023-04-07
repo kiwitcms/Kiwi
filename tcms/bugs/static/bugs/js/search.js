@@ -1,5 +1,6 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC } from '../../../../static/js/jsonrpc'
+import { exportButtons } from '../../../../static/js/datatables_common'
 import { escapeHTML, updateBuildSelectFromVersion, updateVersionSelectFromProduct } from '../../../../static/js/utils'
 
 export function pageBugsSearchReadyHandler () {
@@ -76,7 +77,8 @@ export function pageBugsSearchReadyHandler () {
             { data: 'reporter__username' },
             { data: 'assignee__username' }
         ],
-        dom: 'ptp',
+        dom: 'Bptp',
+        buttons: exportButtons,
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',

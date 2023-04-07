@@ -1,5 +1,6 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
+import { exportButtons } from '../../../../static/js/datatables_common'
 import {
     arrayToDict, escapeHTML,
     updateParamsToSearchTags,
@@ -155,7 +156,8 @@ export function pageTestrunsSearchReadyHandler () {
             { data: 'default_tester__username' },
             { data: 'tag' }
         ],
-        dom: 'ptp',
+        dom: 'Bptp',
+        buttons: exportButtons,
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
