@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-04 19:48+0000\n"
-"PO-Revision-Date: 2023-04-04 20:49\n"
+"POT-Creation-Date: 2023-04-06 17:15+0000\n"
+"PO-Revision-Date: 2023-04-06 19:07\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -499,6 +499,12 @@ msgstr "crwdns297:0crwdne297:0"
 #: tcms/kiwi_auth/views.py:140
 msgid "Your account has been activated successfully"
 msgstr "crwdns298:0crwdne298:0"
+
+#: tcms/kiwi_auth/views.py:167 tcms/kiwi_auth/views.py:176
+#: tcms/kiwi_auth/views.py:195 tcms/kiwi_auth/views.py:204
+#, python-format
+msgid "You are viewing records from tenant '%s'"
+msgstr "crwdns1471:0%scrwdne1471:0"
 
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
