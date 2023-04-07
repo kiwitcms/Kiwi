@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-06 17:15+0000\n"
-"PO-Revision-Date: 2023-04-06 19:07\n"
+"POT-Creation-Date: 2023-04-07 19:09+0000\n"
+"PO-Revision-Date: 2023-04-07 20:45\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -77,7 +77,7 @@ msgstr "crwdns790:0crwdne790:0"
 #: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:33
 #: tcms/testplans/templates/testplans/search.html:46
-#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/get.html:44
 #: tcms/testruns/templates/testruns/mutable.html:46
 #: tcms/testruns/templates/testruns/search.html:35
@@ -95,7 +95,7 @@ msgstr "crwdns361:0crwdne361:0"
 #: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:48
 #: tcms/testplans/templates/testplans/search.html:56
-#: tcms/testplans/templates/testplans/search.html:113
+#: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/get.html:49
 #: tcms/testruns/templates/testruns/search.html:45
 #: tcms/testruns/templates/testruns/search.html:184
@@ -302,7 +302,7 @@ msgstr "crwdns392:0crwdne392:0"
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testcases/templates/testcases/search.html:154
-#: tcms/testplans/templates/testplans/search.html:109
+#: tcms/testplans/templates/testplans/search.html:110
 #: tcms/testruns/templates/testruns/search.html:180
 msgid "ID"
 msgstr "crwdns393:0crwdne393:0"
@@ -310,7 +310,7 @@ msgstr "crwdns393:0crwdne393:0"
 #: tcms/bugs/templates/bugs/search.html:110
 #: tcms/templates/include/bug_details.html:5
 #: tcms/testcases/templates/testcases/search.html:156
-#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/mutable.html:224
 msgid "Created on"
 msgstr "crwdns410:0crwdne410:0"
@@ -413,7 +413,7 @@ msgstr "crwdns360:0crwdne360:0"
 #: tcms/testcases/templates/testcases/get.html:169
 #: tcms/testplans/templates/testplans/mutable.html:66
 #: tcms/testplans/templates/testplans/search.html:66
-#: tcms/testplans/templates/testplans/search.html:114
+#: tcms/testplans/templates/testplans/search.html:115
 msgid "Type"
 msgstr "crwdns362:0crwdne362:0"
 
@@ -527,9 +527,9 @@ msgstr "crwdns388:0crwdne388:0"
 #: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:163
 #: tcms/testplans/templates/testplans/get.html:456
-#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/get.html:354
-#: tcms/testruns/templates/testruns/search.html:188
+#: tcms/testruns/templates/testruns/search.html:190
 msgid "Tags"
 msgstr "crwdns494:0crwdne494:0"
 
@@ -675,7 +675,7 @@ msgstr "crwdns836:0crwdne836:0"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:36
 #: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testplans/templates/testplans/search.html:110
+#: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/get.html:39
 #: tcms/testruns/templates/testruns/mutable.html:61
 #: tcms/testruns/templates/testruns/search.html:182
@@ -919,30 +919,6 @@ msgstr "crwdns411:0crwdne411:0"
 #: tcms/testruns/templates/testruns/get.html:556
 msgid "URL"
 msgstr "crwdns228:0crwdne228:0"
-
-#: tcms/templates/include/pagination.html:6
-msgid "Select"
-msgstr "crwdns1242:0crwdne1242:0"
-
-#: tcms/templates/include/pagination.html:13
-msgid "First page"
-msgstr "crwdns437:0crwdne437:0"
-
-#: tcms/templates/include/pagination.html:16
-msgid "Previous page"
-msgstr "crwdns438:0crwdne438:0"
-
-#: tcms/templates/include/pagination.html:20
-msgid "Current page"
-msgstr "crwdns439:0crwdne439:0"
-
-#: tcms/templates/include/pagination.html:28
-msgid "Next page"
-msgstr "crwdns440:0crwdne440:0"
-
-#: tcms/templates/include/pagination.html:31
-msgid "Last page"
-msgstr "crwdns441:0crwdne441:0"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
@@ -1238,7 +1214,7 @@ msgstr "crwdns512:0crwdne512:0"
 #: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/mutable.html:105
 #: tcms/testplans/templates/testplans/search.html:78
-#: tcms/testplans/templates/testplans/search.html:115
+#: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:223
 msgid "Author"
@@ -1257,7 +1233,7 @@ msgstr "crwdns385:0crwdne385:0"
 #: tcms/testruns/templates/testruns/get.html:65
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/search.html:73
-#: tcms/testruns/templates/testruns/search.html:187
+#: tcms/testruns/templates/testruns/search.html:189
 msgid "Default tester"
 msgstr "crwdns429:0crwdne429:0"
 
@@ -1422,6 +1398,10 @@ msgstr "crwdns526:0crwdne526:0"
 #: tcms/testruns/templates/testruns/search.html:30
 msgid "Separate multiple values with comma (,)"
 msgstr "crwdns389:0crwdne389:0"
+
+#: tcms/testcases/templates/testcases/search.html:170
+msgid "Select"
+msgstr "crwdns1242:0crwdne1242:0"
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:202
@@ -1629,7 +1609,7 @@ msgstr "crwdns229:0crwdne229:0"
 #: tcms/testruns/templates/testruns/get.html:59
 #: tcms/testruns/templates/testruns/mutable.html:29
 #: tcms/testruns/templates/testruns/search.html:67
-#: tcms/testruns/templates/testruns/search.html:186
+#: tcms/testruns/templates/testruns/search.html:188
 msgid "Manager"
 msgstr "crwdns403:0crwdne403:0"
 
@@ -1777,10 +1757,12 @@ msgid "Running"
 msgstr "crwdns434:0crwdne434:0"
 
 #: tcms/testruns/templates/testruns/search.html:86
+#: tcms/testruns/templates/testruns/search.html:186
 msgid "Start date"
 msgstr "crwdns1348:0crwdne1348:0"
 
 #: tcms/testruns/templates/testruns/search.html:106
+#: tcms/testruns/templates/testruns/search.html:187
 msgid "Stop date"
 msgstr "crwdns1350:0crwdne1350:0"
 

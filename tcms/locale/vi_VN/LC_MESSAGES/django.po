@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-06 17:15+0000\n"
-"PO-Revision-Date: 2023-04-06 19:07\n"
+"POT-Creation-Date: 2023-04-07 19:09+0000\n"
+"PO-Revision-Date: 2023-04-07 20:45\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -85,7 +85,7 @@ msgstr "Người được giao"
 #: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:33
 #: tcms/testplans/templates/testplans/search.html:46
-#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testplans/templates/testplans/search.html:113
 #: tcms/testruns/templates/testruns/get.html:44
 #: tcms/testruns/templates/testruns/mutable.html:46
 #: tcms/testruns/templates/testruns/search.html:35
@@ -103,7 +103,7 @@ msgstr "Sản phẩm"
 #: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:48
 #: tcms/testplans/templates/testplans/search.html:56
-#: tcms/testplans/templates/testplans/search.html:113
+#: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/get.html:49
 #: tcms/testruns/templates/testruns/search.html:45
 #: tcms/testruns/templates/testruns/search.html:184
@@ -310,7 +310,7 @@ msgstr "Tìm kiếm"
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testcases/templates/testcases/search.html:154
-#: tcms/testplans/templates/testplans/search.html:109
+#: tcms/testplans/templates/testplans/search.html:110
 #: tcms/testruns/templates/testruns/search.html:180
 msgid "ID"
 msgstr "ID"
@@ -318,7 +318,7 @@ msgstr "ID"
 #: tcms/bugs/templates/bugs/search.html:110
 #: tcms/templates/include/bug_details.html:5
 #: tcms/testcases/templates/testcases/search.html:156
-#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testplans/templates/testplans/search.html:112
 #: tcms/testruns/templates/testruns/mutable.html:224
 msgid "Created on"
 msgstr "Thời gian được tạo"
@@ -422,7 +422,7 @@ msgstr "TestPlan"
 #: tcms/testcases/templates/testcases/get.html:169
 #: tcms/testplans/templates/testplans/mutable.html:66
 #: tcms/testplans/templates/testplans/search.html:66
-#: tcms/testplans/templates/testplans/search.html:114
+#: tcms/testplans/templates/testplans/search.html:115
 msgid "Type"
 msgstr "Kiểu"
 
@@ -537,9 +537,9 @@ msgstr "Tag"
 #: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:163
 #: tcms/testplans/templates/testplans/get.html:456
-#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/get.html:354
-#: tcms/testruns/templates/testruns/search.html:188
+#: tcms/testruns/templates/testruns/search.html:190
 msgid "Tags"
 msgstr "Các Tag"
 
@@ -685,7 +685,7 @@ msgstr "TỔNG CỘNG"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:36
 #: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testplans/templates/testplans/search.html:110
+#: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/get.html:39
 #: tcms/testruns/templates/testruns/mutable.html:61
 #: tcms/testruns/templates/testruns/search.html:182
@@ -929,30 +929,6 @@ msgstr "Trạng thái"
 #: tcms/testruns/templates/testruns/get.html:556
 msgid "URL"
 msgstr ""
-
-#: tcms/templates/include/pagination.html:6
-msgid "Select"
-msgstr ""
-
-#: tcms/templates/include/pagination.html:13
-msgid "First page"
-msgstr "Trang đầu"
-
-#: tcms/templates/include/pagination.html:16
-msgid "Previous page"
-msgstr "Trang trước"
-
-#: tcms/templates/include/pagination.html:20
-msgid "Current page"
-msgstr "Trang hiện tại"
-
-#: tcms/templates/include/pagination.html:28
-msgid "Next page"
-msgstr "Trang tiếp theo"
-
-#: tcms/templates/include/pagination.html:31
-msgid "Last page"
-msgstr "Trang cuối"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:346
@@ -1248,7 +1224,7 @@ msgstr "Clone"
 #: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/mutable.html:105
 #: tcms/testplans/templates/testplans/search.html:78
-#: tcms/testplans/templates/testplans/search.html:115
+#: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:223
 msgid "Author"
@@ -1267,7 +1243,7 @@ msgstr "Tác giả"
 #: tcms/testruns/templates/testruns/get.html:65
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/search.html:73
-#: tcms/testruns/templates/testruns/search.html:187
+#: tcms/testruns/templates/testruns/search.html:189
 msgid "Default tester"
 msgstr "Người kiểm thử mặc định"
 
@@ -1432,6 +1408,10 @@ msgstr "Văn bản"
 #: tcms/testruns/templates/testruns/search.html:30
 msgid "Separate multiple values with comma (,)"
 msgstr "Các gíá trị được tách biệt bởi dấu phẩy (,)"
+
+#: tcms/testcases/templates/testcases/search.html:170
+msgid "Select"
+msgstr ""
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
 #: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:202
@@ -1639,7 +1619,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:59
 #: tcms/testruns/templates/testruns/mutable.html:29
 #: tcms/testruns/templates/testruns/search.html:67
-#: tcms/testruns/templates/testruns/search.html:186
+#: tcms/testruns/templates/testruns/search.html:188
 msgid "Manager"
 msgstr "Quản lý"
 
@@ -1787,10 +1767,12 @@ msgid "Running"
 msgstr "Đang chạy"
 
 #: tcms/testruns/templates/testruns/search.html:86
+#: tcms/testruns/templates/testruns/search.html:186
 msgid "Start date"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:106
+#: tcms/testruns/templates/testruns/search.html:187
 msgid "Stop date"
 msgstr ""
 
