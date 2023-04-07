@@ -6,8 +6,6 @@ import {
     updateVersionSelectFromProduct, updateBuildSelectFromVersion
 } from '../../../../static/js/utils'
 
-import { hookIntoPagination } from '../../../../static/js/pagination'
-
 function preProcessData (data, callbackF) {
     const runIds = []
     const planIds = []
@@ -157,7 +155,7 @@ export function pageTestrunsSearchReadyHandler () {
             { data: 'default_tester__username' },
             { data: 'tag' }
         ],
-        dom: 't',
+        dom: 'tp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
@@ -165,8 +163,6 @@ export function pageTestrunsSearchReadyHandler () {
         },
         order: [[0, 'asc']]
     })
-
-    hookIntoPagination('#resultsTable', table)
 
     $('#btn_search').click(function () {
         table.ajax.reload()
