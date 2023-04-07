@@ -78,3 +78,8 @@ a.disabled {
     pointer-events: none;
     text-decoration: none;
 }
+
+/* DataTables buttons for CSV, PDF export */
+.dt-buttons {
+    display: inline;
+}
