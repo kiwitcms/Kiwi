@@ -4,7 +4,6 @@ import {
     escapeHTML, updateComponentSelectFromProduct, updateCategorySelectFromProduct,
     updateParamsToSearchTags, updateTestPlanSelectFromProduct
 } from '../../../../static/js/utils'
-import { hookIntoPagination } from '../../../../static/js/pagination'
 
 function preProcessData (data, callbackF) {
     const caseIds = []
@@ -163,7 +162,7 @@ export function pageTestcasesSearchReadyHandler () {
             { data: 'author__username' },
             { data: 'tag_names' }
         ],
-        dom: 't',
+        dom: 'tp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
@@ -172,7 +171,12 @@ export function pageTestcasesSearchReadyHandler () {
         order: [[1, 'asc']]
     })
 
-    hookIntoPagination('#resultsTable', table)
+    // hide the select checkboxes if not in use
+    if (window.location.href.indexOf('allow_select') === -1) {
+        table.on('draw.dt', function () {
+            $('.js-select-checkbox').hide()
+        })
+    }
 
     const selectAllButton = $('#check-all')
 

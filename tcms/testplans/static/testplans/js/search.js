@@ -4,7 +4,6 @@ import {
     escapeHTML,
     updateParamsToSearchTags, updateVersionSelectFromProduct
 } from '../../../../static/js/utils'
-import { hookIntoPagination } from '../../../../static/js/pagination'
 
 let testPlanIdsFromBackend = []
 let hiddenChildRows = {}
@@ -136,7 +135,7 @@ export function pageTestplansSearchReadyHandler () {
                 // very easy to display child rows afterwards! Not a big issue for now.
             }
         },
-        dom: 't',
+        dom: 'tp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
@@ -144,8 +143,6 @@ export function pageTestplansSearchReadyHandler () {
         },
         order: [[1, 'asc']]
     })
-
-    hookIntoPagination('#resultsTable', table)
 
     // Add event listener for opening and closing nested test plans
     $('#resultsTable').on('click', 'td.dt-control', function () {

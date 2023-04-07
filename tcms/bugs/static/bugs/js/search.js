@@ -1,6 +1,5 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC } from '../../../../static/js/jsonrpc'
-import { hookIntoPagination } from '../../../../static/js/pagination'
 import { escapeHTML, updateBuildSelectFromVersion, updateVersionSelectFromProduct } from '../../../../static/js/utils'
 
 export function pageBugsSearchReadyHandler () {
@@ -77,7 +76,7 @@ export function pageBugsSearchReadyHandler () {
             { data: 'reporter__username' },
             { data: 'assignee__username' }
         ],
-        dom: 't',
+        dom: 'tp',
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
@@ -85,8 +84,6 @@ export function pageBugsSearchReadyHandler () {
         },
         order: [[0, 'asc']]
     })
-
-    hookIntoPagination('#resultsTable', table)
 
     $('#btn_search').click(function () {
         table.ajax.reload()
