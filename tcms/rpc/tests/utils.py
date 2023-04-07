@@ -34,7 +34,7 @@ class APITestCase(test.LiveServerTestCase):
 
 class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
     http_method_names = ["api"]
-    permission_label = None
+    permission_label: str
     serialized_rollback = True
 
     # NOTE: see comment in APITestCase._fixture_setup()

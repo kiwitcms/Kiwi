@@ -270,8 +270,8 @@ class BaseCaseRun(BasePlanCase):
 
 class PermissionsTestMixin:
     base_classes = ["PermissionsTestCase", "APIPermissionsTestCase"]
-    http_method_names = []  # api, get or post
-    permission_label = None
+    http_method_names: list[str] = []  # api, get or post
+    permission_label: str
 
     # skip running if class called directly by test runner
     @classmethod
