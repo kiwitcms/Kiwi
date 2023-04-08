@@ -96,6 +96,7 @@ export function pageTestplansSearchReadyHandler () {
                 data: null,
                 defaultContent: '',
                 orderable: false,
+                className: 'noVis',
                 createdCell: function (td, cellData, rowData, rowIndex, colIndex) {
                     if (rowData.children__count > 0) {
                         $(td).addClass('dt-control')
