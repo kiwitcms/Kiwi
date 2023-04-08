@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kiwi.fullname" . }}-http
+  labels:
+    {{- include "kiwi.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.port.http }}
+      targetPort: http
+      protocol: TCP
+  selector:
+    {{- include "kiwi.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kiwi.fullname" . }}-https
+  labels:
+    {{- include "kiwi.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: https
+      port: {{ .Values.service.port.https }}
+      targetPort: https
+      protocol: TCP
+  selector:
+    {{- include "kiwi.selectorLabels" . | nindent 4 }}

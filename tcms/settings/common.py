@@ -163,6 +163,7 @@ AUTHENTICATION_BACKENDS = [
 
 # WARNING: Do not change this unless you know what you are doing !!!
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "tcms.core.middleware.CheckDBStructureExistsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -171,6 +172,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 
@@ -323,6 +325,7 @@ INSTALLED_APPS = TENANT_APPS + [
     "captcha",
     "colorfield",
     "django_extensions",
+    "django_prometheus",
     "tree_queries",
     "vinaigrette",
     "tcms.core",

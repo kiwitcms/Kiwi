@@ -4,6 +4,7 @@
 *egg*/
 *~
 .coverage
+charts
 log/
 dist/
 build/

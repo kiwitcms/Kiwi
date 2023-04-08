@@ -1,0 +1,117 @@
+{{- $secret_name := include "kiwi.credentials" . -}}
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "kiwi.fullname" . }}
+  labels:
+    {{- include "kiwi.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "kiwi.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "kiwi.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        fsGroup: 1001
+
+      volumes:
+        - name: media
+          {{- if .Values.storage.persistent }}
+          persistentVolumeClaim:
+            claimName: {{ include "kiwi.fullname" . }}
+          {{- else -}}
+          emptyDir: {}
+          {{- end }}
+
+      initContainers:
+        - name: migrations
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/Kiwi/manage.py", "migrate"]
+          env:
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ $secret_name }}
+                key: secret_key
+          - name: KIWI_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ $secret_name }}
+                key: mariadb-username
+          - name: KIWI_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $secret_name }}
+                key: mariadb-password
+          - name: KIWI_DB_HOST
+            value: {{ .Values.database.host }}
+          - name: KIWI_DB_PORT
+            value: {{ .Values.database.port | quote }}
+          - name: KIWI_DB_NAME
+            value: {{ .Values.database.db_name }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port.http }}
+              protocol: TCP
+            - name: https
+              containerPort: {{ .Values.service.port.https }}
+              protocol: TCP
+          # Can be enabled once code is merged and this URL is available
+          # livenessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /metrics
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ $secret_name }}
+                key: secret_key
+          - name: KIWI_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ $secret_name }}
+                key: mariadb-username
+          - name: KIWI_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $secret_name }}
+                key: mariadb-password
+          - name: KIWI_DB_HOST
+            value: {{ .Values.database.host }}
+          - name: KIWI_DB_PORT
+            value: {{ .Values.database.port | quote }}
+          - name: KIWI_DB_NAME
+            value: {{ .Values.database.db_name }}
+          - name: SERVER_EMAIL
+            value: {{ .Values.email.from }}
+          - name: EMAIL_SUBJECT_PREFIX
+            value: {{ .Values.email.subject | quote }}
+          - name: MEDIA_ROOT
+            value: {{ .Values.media.root }}
+          - name: MEDIA_URL
+            value: {{ .Values.media.url }}
+
+          volumeMounts:
+          - name: media
+            mountPath: {{ .Values.media.root }}
