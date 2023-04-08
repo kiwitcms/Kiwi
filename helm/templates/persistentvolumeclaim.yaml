@@ -1,0 +1,15 @@
+{{- if .Values.storage.persistent -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "kiwi.fullname" . }}
+  labels:
+    {{- include "kiwi.labels" . | nindent 4 }}
+spec:
+  storageClassName: {{ .Values.storage.class }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.storage.size }}
+{{- end }}

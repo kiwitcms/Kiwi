@@ -49,6 +49,7 @@ urlpatterns = [
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     re_path(r"^jsi18n/$", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    re_path("", include("django_prometheus.urls")),
 ]
 
 
