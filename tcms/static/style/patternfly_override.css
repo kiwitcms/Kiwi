@@ -83,3 +83,12 @@ a.disabled {
 .dt-buttons {
     display: inline;
 }
+
+.dt-button-collection {
+    padding-top: 20px;
+}
+
+.dt-button-collection .active {
+    color: green;
+    font-weight: bold;
+}

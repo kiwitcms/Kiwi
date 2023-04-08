@@ -142,7 +142,7 @@ export function pageTestcasesSearchReadyHandler () {
                 sortable: false,
                 orderable: false,
                 target: 1,
-                className: 'js-select-checkbox',
+                className: 'js-select-checkbox noVis',
                 render: function (data, type, full, meta) {
                     return `<input type="checkbox" value="${data.id}" name="row-check">`
                 }
