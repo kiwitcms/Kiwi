@@ -88,6 +88,10 @@ bandit_site_packages:
 	    bandit -a vuln -r $(PATH_TO_SITE_PACKAGES); \
 	fi
 
+.PHONY: mypy
+mypy:
+	mypy
+
 
 .PHONY: docker-image
 docker-image:

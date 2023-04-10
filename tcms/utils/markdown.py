@@ -5,7 +5,7 @@ import xml.etree.ElementTree as etree  # nosec: B405
 import markdown
 
 
-class StrikeThroughInlineProcessor(markdown.inlinepatterns.InlineProcessor):  # type: ignore[name-defined]  # noqa: E501
+class StrikeThroughInlineProcessor(markdown.inlinepatterns.InlineProcessor):  # type: ignore[name-defined]  # pylint: disable=line-too-long
     """
     See https://python-markdown.github.io/extensions/api/#example_3
     """
