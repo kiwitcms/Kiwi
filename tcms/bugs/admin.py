@@ -34,7 +34,7 @@ class SeverityAdmin(admin.ModelAdmin):
             record.color,
         )
 
-    colored_color.short_description = "color"
+    colored_color.short_description = "color"  # type: ignore[attr-defined]
 
     def visual_icon(self, record):
         return format_html(
@@ -45,7 +45,7 @@ class SeverityAdmin(admin.ModelAdmin):
             record.color,
         )
 
-    visual_icon.short_description = "icon"
+    visual_icon.short_description = "icon"  # type: ignore[attr-defined]
 
 
 admin.site.register(Bug, BugAdmin)

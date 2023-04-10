@@ -1,5 +1,6 @@
 import re
 from importlib import import_module
+from typing import Any
 
 from django.conf import settings
 from opengraph.opengraph import OpenGraph
@@ -14,7 +15,7 @@ class IssueTrackerType:
     supports!
     """
 
-    rpc_cache = {}
+    rpc_cache: dict[str, Any] = {}
 
     def __init__(self, bug_system, request):
         """

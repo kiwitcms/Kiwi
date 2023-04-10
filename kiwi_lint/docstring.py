@@ -24,7 +24,7 @@ class DocstringChecker(checkers.BaseTokenChecker):
         )
     }
 
-    _string_tokens = {}
+    _string_tokens: dict[str, str] = {}
 
     def process_tokens(self, tokens):
         """

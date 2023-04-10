@@ -22,7 +22,7 @@ if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
     from tcms.issuetracker.kiwitcms import KiwiTCMS
 else:
 
-    class KiwiTCMS:  # pylint: disable=remove-empty-class,nested-class-found,too-few-public-methods
+    class KiwiTCMS:  # type: ignore[no-redef]  # pylint: disable=remove-empty-class,nested-class-found,too-few-public-methods
         pass
 
 

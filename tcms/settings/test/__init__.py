@@ -11,7 +11,7 @@ dist = pkg_resources.Distribution(__file__)
 entry_point = pkg_resources.EntryPoint.parse(
     "a_fake_plugin = tcms.telemetry.tests.plugin", dist=dist
 )
-dist._ep_map = {"kiwitcms.plugins": {"a_fake_plugin": entry_point}}
+dist._ep_map = {"kiwitcms.plugins": {"a_fake_plugin": entry_point}}  # type: ignore[attr-defined]
 pkg_resources.working_set.add(dist)
 
 # this needs to be here so that  discovery tests can work

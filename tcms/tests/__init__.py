@@ -385,7 +385,7 @@ class PermissionsTestCase(PermissionsTestMixin, LoggedInTestCase):
     """Base class for all tests around view permissions"""
 
     url: str
-    post_data = {}
+    post_data: dict[str, str] = {}
 
     @classmethod
     def check_mandatory_attributes(cls):

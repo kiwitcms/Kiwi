@@ -64,7 +64,7 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
             test_execution.color,
         )
 
-    colored_color.short_description = "color"
+    colored_color.short_description = "color"  # type: ignore[attr-defined]
 
     def visual_icon(self, test_execution):
         return format_html(
@@ -75,7 +75,7 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
             test_execution.color,
         )
 
-    visual_icon.short_description = "icon"
+    visual_icon.short_description = "icon"  # type: ignore[attr-defined]
 
     @admin.options.csrf_protect_m
     def delete_view(self, request, object_id, extra_context=None):
@@ -114,7 +114,7 @@ class EnvironmentAdmin(ObjectPermissionsAdminMixin, admin.ModelAdmin):
             f"<a href='{url}'>{self._edit_properties_text}</a>",
         )
 
-    properties_link.short_description = _("Parameters")
+    properties_link.short_description = _("Parameters")  # type: ignore[attr-defined]
 
     def response_change(self, request, obj):
         result = super().response_change(request, obj)

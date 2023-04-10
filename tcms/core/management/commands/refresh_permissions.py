@@ -1,3 +1,4 @@
+from typing import Any
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.management import call_command
@@ -10,8 +11,8 @@ class Command(BaseCommand):
     help = "Refresh permissions for the special 'Administrator' & 'Tester' groups."
 
     group_model = Group
-    admin_permissions_filter = {}
-    tester_permissions_filter = {}
+    admin_permissions_filter: dict[str, Any] = {}
+    tester_permissions_filter: dict[str, Any] = {}
 
     def add_arguments(self, parser):
         parser.add_argument(

@@ -390,7 +390,7 @@ MENU_ITEMS = [
 # last element is always PLUGINS so we can easily extend & override it
 for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
     plugin_menu = import_module(f"{plugin.module_name}.menu")
-    MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)
+    MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)  # type: ignore[attr-defined]  # noqa: E501
 
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [

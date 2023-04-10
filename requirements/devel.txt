@@ -15,4 +15,3 @@ types-Markdown
 types-mock
 types-requests
 types-setuptools
-django-stubs[compatible-mypy]

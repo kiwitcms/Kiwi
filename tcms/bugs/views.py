@@ -162,7 +162,7 @@ class Edit(UpdateView):
     model = Bug
     form_class = NewBugForm
     template_name = "bugs/mutable.html"
-    _values_before_update = {}
+    _values_before_update: dict[str, str] = {}
 
     def _record_changes(self, new_data):
         result = ""
