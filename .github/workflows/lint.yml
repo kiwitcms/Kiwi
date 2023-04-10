@@ -99,6 +99,23 @@ jobs:
         export LANG=en-us
         make similar_strings
 
+  mypy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Lint with mypy
+      run: |
+        pip install -r requirements/devel.txt
+        make mypy
+
   isort:
     runs-on: ubuntu-latest
     strategy:
