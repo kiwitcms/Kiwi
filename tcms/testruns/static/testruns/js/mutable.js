@@ -8,7 +8,7 @@ export function pageTestrunsMutableReadyHandler () {
 
     document.getElementById('id_product').onchange = () => {
         $('#id_product').selectpicker('refresh')
-        updateTestPlanSelectFromProduct()
+        updateTestPlanSelectFromProduct({ is_active: true })
     }
 
     document.getElementById('id_test_plan').onchange = () => {
