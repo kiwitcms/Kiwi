@@ -93,13 +93,12 @@ export function pageTestplansSearchReadyHandler () {
         },
         columns: [
             {
-                className: 'dt-control',
                 data: null,
                 defaultContent: '',
                 orderable: false,
-                render: function (data, type, full, meta) {
-                    if (data.children__count > 0) {
-                        return '<span class="fa fa-angle-right"></span>'
+                createdCell: function (td, cellData, rowData, rowIndex, colIndex) {
+                    if (rowData.children__count > 0) {
+                        $(td).addClass('dt-control')
                     }
                 }
             },
