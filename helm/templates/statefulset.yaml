@@ -70,15 +70,14 @@ spec:
             - name: https
               containerPort: {{ .Values.service.port.https }}
               protocol: TCP
-          # Can be enabled once code is merged and this URL is available
-          # livenessProbe:
-          #   httpGet:
-          #     path: /metrics
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /metrics
-          #     port: http
+          livenessProbe:
+            httpGet:
+              path: /accounts/login/
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /accounts/login/
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
