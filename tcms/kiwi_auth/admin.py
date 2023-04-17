@@ -122,6 +122,7 @@ class KiwiUserAdmin(UserAdmin):
             "username",
             "last_login",
             "date_joined",
+            "email",
         ]
 
         # only other superusers can set the is_superuser flag

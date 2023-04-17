@@ -92,13 +92,12 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(f"/admin/auth/user/{self.tester.pk}/change/")
         response_str = str(response.content, encoding=settings.DEFAULT_CHARSET)
 
-        # 3 readonly fields
-        self.assertEqual(response_str.count("grp-readonly"), 3)
+        # 4 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 4)
 
         # these fields can be edited
         self.assertContains(response, "id_first_name")
         self.assertContains(response, "id_last_name")
-        self.assertContains(response, "id_email")
         self.assertContains(response, "id_is_active")
         self.assertContains(response, "id_is_staff")
         self.assertContains(response, "id_is_superuser")
@@ -111,7 +110,6 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
                 "first_name": "Changed by admin",
                 # required fields below
                 "username": self.tester.username,
-                "email": self.tester.email,
                 "date_joined_0": "2018-09-03",
                 "date_joined_1": "13:16:25",
             },
@@ -289,13 +287,12 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(f"/admin/auth/user/{self.tester.pk}/change/")
         response_str = str(response.content, encoding=settings.DEFAULT_CHARSET)
 
-        # 2 readonly fields
-        self.assertEqual(response_str.count("grp-readonly"), 2)
+        # 3 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 3)
 
         # these fields can be edited
         self.assertContains(response, "id_first_name")
         self.assertContains(response, "id_last_name")
-        self.assertContains(response, "id_email")
         self.assertContains(response, "id_is_active")
         self.assertContains(response, "id_is_staff")
         self.assertContains(response, "id_groups")
@@ -307,7 +304,6 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
                 "first_name": "Changed by moderator",
                 # required fields below
                 "username": self.tester.username,
-                "email": self.tester.email,
                 "date_joined_0": "2018-09-03",
                 "date_joined_1": "13:16:25",
             },
@@ -392,13 +388,12 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         # only 1 hidden field for csrf
         self.assertContains(response, '<input type="hidden" name="csrfmiddlewaretoken"')
 
-        # 6 readonly fields
-        self.assertEqual(response_str.count("grp-readonly"), 6)
+        # 7 readonly fields
+        self.assertEqual(response_str.count("grp-readonly"), 7)
 
         # only these fields can be edited
         self.assertContains(response, "id_first_name")
         self.assertContains(response, "id_last_name")
-        self.assertContains(response, "id_email")
 
         # Has Delete button
         self.assertContains(response, f"/admin/auth/user/{self.tester.pk}/delete/")
