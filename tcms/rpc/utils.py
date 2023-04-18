@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import io
+import json
 import time
+from http import HTTPStatus
 
 from attachments import views as attachment_views
 from attachments.models import Attachment
@@ -71,6 +73,7 @@ def request_for_upload(user, filename, b64content):
 
     data, boundary = encode_multipart(get_token(request), filename, b64content)
 
+    request.META["HTTP_X_RETURN_FORM_ERRORS"] = True
     request.META["CONTENT_TYPE"] = f"multipart/form-data; boundary={boundary}"
     request.META["CONTENT_LENGTH"] = len(data)
     request._stream = io.BytesIO(data.encode())  # pylint: disable=protected-access
@@ -93,5 +96,11 @@ def add_attachment(obj_id, app_model, user, filename, b64content):
     request = request_for_upload(user, filename, b64content)
     app, model = app_model.split(".")
     response = attachment_views.add_attachment(request, app, model, obj_id)
-    if response.status_code == 404:
+
+    if response.status_code == HTTPStatus.NOT_FOUND:
         raise RuntimeError(f"Adding attachment to {app_model}({obj_id}) failed")
+
+    if response.status_code == HTTPStatus.BAD_REQUEST:
+        # response is application/json and this should be a dict
+        errors = json.loads(response.content)
+        raise ValueError(errors)
