@@ -9,6 +9,13 @@ class TestingBreakdownView(TemplateView):  # pylint: disable=missing-permission-
 
 
 @method_decorator(login_required, name="dispatch")
+class TestingExecutionDashboard(
+    TemplateView
+):  # pylint: disable=missing-permission-required
+    template_name = "telemetry/testing/execution-dashboard.html"
+
+
+@method_decorator(login_required, name="dispatch")
 class TestingStatusMatrixView(
     TemplateView
 ):  # pylint: disable=missing-permission-required

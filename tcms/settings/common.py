@@ -371,6 +371,7 @@ MENU_ITEMS = [
                     (
                         _("Execution"),
                         [
+                            (_("Dashboard"), reverse_lazy("execution-dashboard")),
                             (_("Matrix"), reverse_lazy("testing-status-matrix")),
                             (_("Trends"), reverse_lazy("testing-execution-trends")),
                         ],

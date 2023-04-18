@@ -16,6 +16,10 @@ import {
     drawTable as statusMatrixDrawChart,
     initializePage as statusMatrixInitialize
 } from './testing/status-matrix'
+import {
+    drawTable as executionDashboardDrawTable,
+    initializePage as executionDashboardInitialize
+} from './testing/execution-dashboard'
 import { drawChart as executionTrendsDrawChart } from './testing/execution-trends'
 import {
     reloadTable as testCaseHealthDrawChart,
@@ -29,6 +33,7 @@ export function pageTelemetryReadyHandler (pageId) {
     const drawChart = {
         'page-telemetry-testing-breakdown': testingBreakdownDrawChart,
         'page-telemetry-status-matrix': statusMatrixDrawChart,
+        'page-telemetry-execution-dashboard': executionDashboardDrawTable,
         'page-telemetry-execution-trends': executionTrendsDrawChart,
         'page-telemetry-test-case-health': testCaseHealthDrawChart
     }[pageId]
@@ -36,6 +41,7 @@ export function pageTelemetryReadyHandler (pageId) {
     const initializePage = {
         'page-telemetry-testing-breakdown': testingBreakdownInitialize,
         'page-telemetry-status-matrix': statusMatrixInitialize,
+        'page-telemetry-execution-dashboard': executionDashboardInitialize,
         'page-telemetry-execution-trends': () => {},
         'page-telemetry-test-case-health': testCaseHealthInitialize
     }[pageId]

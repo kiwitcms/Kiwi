@@ -50,6 +50,7 @@ const pageHandlers = {
 
     'page-telemetry-testing-breakdown': pageTelemetryReadyHandler,
     'page-telemetry-status-matrix': pageTelemetryReadyHandler,
+    'page-telemetry-execution-dashboard': pageTelemetryReadyHandler,
     'page-telemetry-execution-trends': pageTelemetryReadyHandler,
     'page-telemetry-test-case-health': pageTelemetryReadyHandler
 }
