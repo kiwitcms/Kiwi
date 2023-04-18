@@ -84,24 +84,19 @@ export function drawTable () {
                 }
             },
             {
-                data: 'build__name',
-                visible: false
+                data: 'build__name'
             },
             {
-                data: 'assignee__username',
-                visible: false
+                data: 'assignee__username'
             },
             {
-                data: 'tested_by__username',
-                visible: false
+                data: 'tested_by__username'
             },
             {
-                data: 'start_date',
-                visible: false
+                data: 'start_date'
             },
             {
-                data: 'stop_date',
-                visible: false
+                data: 'stop_date'
             }
         ],
         dom: 'Bptp',
