@@ -294,10 +294,10 @@ WSGI_APPLICATION = "tcms.wsgi.application"
 TENANT_APPS = [
     "django.contrib.sites",
     "guardian",
-    "attachments",
     "django_comments",
     "modernrpc",
     "simple_history",
+    "tcms.kiwi_attachments.apps.AppConfig",
     "tcms.core.contrib.linkreference",
     "tcms.management",
     "tcms.testcases.apps.AppConfig",

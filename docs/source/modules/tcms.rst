@@ -15,6 +15,7 @@ Subpackages
    tcms.bugs
    tcms.core
    tcms.issuetracker
+   tcms.kiwi_attachments
    tcms.kiwi_auth
    tcms.management
    tcms.rpc
