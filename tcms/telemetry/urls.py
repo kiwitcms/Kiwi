@@ -9,6 +9,11 @@ urlpatterns = [
         name="testing-breakdown",
     ),
     re_path(
+        r"^testing/execution/dashboard/$",
+        views.TestingExecutionDashboard.as_view(),
+        name="execution-dashboard",
+    ),
+    re_path(
         r"^testing/execution/matrix/$",
         views.TestingStatusMatrixView.as_view(),
         name="testing-status-matrix",
