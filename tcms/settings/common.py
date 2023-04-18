@@ -368,8 +368,13 @@ MENU_ITEMS = [
                 _("Testing"),
                 [
                     (_("Breakdown"), reverse_lazy("testing-breakdown")),
-                    (_("Status matrix"), reverse_lazy("testing-status-matrix")),
-                    (_("Execution trends"), reverse_lazy("testing-execution-trends")),
+                    (
+                        _("Execution"),
+                        [
+                            (_("Matrix"), reverse_lazy("testing-status-matrix")),
+                            (_("Trends"), reverse_lazy("testing-execution-trends")),
+                        ],
+                    ),
                     (_("TestCase health"), reverse_lazy("test-case-health")),
                 ],
             ),
