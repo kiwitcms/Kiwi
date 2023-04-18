@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-07 19:09+0000\n"
+"POT-Creation-Date: 2023-04-18 09:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -473,19 +473,19 @@ msgstr ""
 msgid "This email address is already in use"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:381
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:386
 msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:159
+#: tcms/kiwi_auth/admin.py:160
 msgid "Personal info"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:161
+#: tcms/kiwi_auth/admin.py:162
 msgid "Permissions"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:198
+#: tcms/kiwi_auth/admin.py:199
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr ""
 
@@ -613,57 +613,61 @@ msgstr ""
 msgid "Breakdown"
 msgstr ""
 
-#: tcms/settings/common.py:371
-msgid "Status matrix"
-msgstr ""
-
 #: tcms/settings/common.py:372
-#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
-msgid "Execution trends"
+msgid "Execution"
 msgstr ""
 
-#: tcms/settings/common.py:373
+#: tcms/settings/common.py:374
+#: tcms/testruns/templates/testruns/mutable.html:169
+msgid "Matrix"
+msgstr ""
+
+#: tcms/settings/common.py:375
+msgid "Trends"
+msgstr ""
+
+#: tcms/settings/common.py:378
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr ""
 
-#: tcms/settings/common.py:379
+#: tcms/settings/common.py:384
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:382
+#: tcms/settings/common.py:387
 msgid "Groups"
 msgstr ""
 
-#: tcms/settings/common.py:384
+#: tcms/settings/common.py:389
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:387
+#: tcms/settings/common.py:392
 msgid "PLUGINS"
 msgstr ""
 
-#: tcms/settings/common.py:397
+#: tcms/settings/common.py:402
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:400
+#: tcms/settings/common.py:405
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:404
+#: tcms/settings/common.py:409
 msgid "Donate €5 via Open Collective"
 msgstr ""
 
-#: tcms/settings/common.py:406
+#: tcms/settings/common.py:411
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:407
+#: tcms/settings/common.py:412
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:408
+#: tcms/settings/common.py:413
 msgid "API Help"
 msgstr ""
 
@@ -738,6 +742,10 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
+msgid "Execution Trends"
+msgstr ""
+
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
 msgstr ""
@@ -751,7 +759,7 @@ msgid "Negative"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
-msgid "Testing Status Matrix"
+msgid "Execution Matrix"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
@@ -1773,10 +1781,6 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
-
-#: tcms/testruns/templates/testruns/mutable.html:169
-msgid "Matrix"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:172
