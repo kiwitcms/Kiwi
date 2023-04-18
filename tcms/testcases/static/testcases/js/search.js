@@ -238,7 +238,7 @@ export function pageTestcasesSearchReadyHandler () {
     }
 }
 
-function discoverNestedTestPlans (inputData, callbackF) {
+export function discoverNestedTestPlans (inputData, callbackF) {
     const prefix = '&nbsp;&nbsp;&nbsp;&nbsp;'
     const result = []
 
