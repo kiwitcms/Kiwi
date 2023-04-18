@@ -10,7 +10,6 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
-from tcms.core.utils import form_errors_to_list
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
@@ -202,7 +201,7 @@ def update(execution_id, values, **kwargs):
     if form.is_valid():
         test_execution = form.save()
     else:
-        raise ValueError(form_errors_to_list(form))
+        raise ValueError(list(form.errors.items()))
 
     result = model_to_dict(test_execution)
 
@@ -256,7 +255,7 @@ def add_link(values, update_tracker=False, **kwargs):
     if form.is_valid():
         link = form.save()
     else:
-        raise ValueError(form_errors_to_list(form))
+        raise ValueError(list(form.errors.items()))
 
     request = kwargs.get(REQUEST_KEY)
     tracker = tracker_from_url(link.url, request)

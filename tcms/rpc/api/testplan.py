@@ -4,7 +4,6 @@ from django.db.models import Count
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanForm
@@ -62,7 +61,7 @@ def create(values, **kwargs):
         result["create_date"] = test_plan.create_date
         return result
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testplans.view_testplan")
@@ -179,7 +178,7 @@ def update(plan_id, values):
         result["create_date"] = test_plan.create_date
         return result
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testcases.add_testcaseplan")
