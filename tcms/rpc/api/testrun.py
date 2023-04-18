@@ -2,7 +2,6 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
@@ -219,7 +218,7 @@ def create(values, **kwargs):
         result["start_date"] = test_run.start_date
         return result
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testruns.view_testrun")
@@ -300,7 +299,7 @@ def update(run_id, values):
         result["stop_date"] = test_run.stop_date
         return result
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testruns.change_testrun")
@@ -323,7 +322,7 @@ def add_cc(run_id, username):
     form = UserForm({"user": username})
 
     if not form.is_valid():
-        raise ValueError(form_errors_to_list(form))
+        raise ValueError(list(form.errors.items()))
 
     test_run.add_cc(form.cleaned_data["user"])
 
@@ -348,7 +347,7 @@ def remove_cc(run_id, username):
     form = UserForm({"user": username})
 
     if not form.is_valid():
-        raise ValueError(form_errors_to_list(form))
+        raise ValueError(list(form.errors.items()))
 
     test_run.remove_cc(form.cleaned_data["user"])
 

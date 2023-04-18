@@ -1,11 +1,10 @@
-# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2023 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Classification
 from tcms.rpc.api.forms.management import ClassificationForm
 from tcms.rpc.decorators import permissions_required
@@ -48,4 +47,4 @@ def create(values):
         classification = form.save()
         return model_to_dict(classification)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))

@@ -8,7 +8,6 @@ from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
-from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
@@ -241,7 +240,7 @@ def create(values, **kwargs):
         result["testing_duration"] = str(result["testing_duration"])
         return result
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testcases.view_testcase")
@@ -393,7 +392,7 @@ def update(case_id, values):
 
         return result
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testcases.delete_testcase")

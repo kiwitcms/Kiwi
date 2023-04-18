@@ -3,7 +3,6 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.rpc.api.forms.testplan import PlanTypeForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testplans.models import PlanType
@@ -29,7 +28,7 @@ def create(values):
         plan_type = form.save()
         return model_to_dict(plan_type)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("testplans.view_plantype")

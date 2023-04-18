@@ -3,7 +3,6 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.management.forms import VersionForm
 from tcms.management.models import Version
 from tcms.rpc.decorators import permissions_required
@@ -56,4 +55,4 @@ def create(values):
         version = form.save()
         return model_to_dict(version)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))

@@ -3,7 +3,6 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Build
 from tcms.rpc.api.forms.management import BuildForm, BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
@@ -62,7 +61,7 @@ def create(values):
         build = form.save()
         return model_to_dict(build)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("management.change_build")
@@ -90,4 +89,4 @@ def update(build_id, values):
         build = form.save()
         return model_to_dict(build)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))

@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Component
 from tcms.rpc.api.forms.management import ComponentForm, ComponentUpdateForm
 from tcms.rpc.decorators import permissions_required
@@ -79,7 +78,7 @@ def create(values, **kwargs):
         component = form.save()
         return model_to_dict(component)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("management.change_component")
@@ -106,4 +105,4 @@ def update(component_id, values):
         component = form.save()
         return model_to_dict(component)
 
-    raise ValueError(form_errors_to_list(form))
+    raise ValueError(list(form.errors.items()))
