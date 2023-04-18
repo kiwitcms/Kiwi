@@ -130,6 +130,8 @@ def filter(query):  # pylint: disable=redefined-builtin
             "build__name",
             "status",
             "status__name",
+            "status__icon",
+            "status__color",
             "expected_duration",
             "actual_duration",
         )
