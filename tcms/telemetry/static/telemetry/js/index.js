@@ -4,7 +4,9 @@ import {
     updateVersionSelectFromProduct,
     updateTestPlanSelectFromProduct
 } from '../../../../static/js/utils'
-
+import {
+    discoverNestedTestPlans
+} from '../../../../testcases/static/testcases/js/search'
 import { loadInitialProduct } from './testing/utils'
 import {
     reloadCharts as testingBreakdownDrawChart,
@@ -46,7 +48,7 @@ export function pageTelemetryReadyHandler (pageId) {
         updateVersionSelectFromProduct()
         // note: don't pass drawChart as callback to avoid calling it twice
         // b/c update_version_select... triggers .onchange()
-        updateTestPlanSelectFromProduct()
+        updateTestPlanSelectFromProduct({ parent: null }, discoverNestedTestPlans)
     }
 
     document.getElementById('id_version').onchange = () => {
