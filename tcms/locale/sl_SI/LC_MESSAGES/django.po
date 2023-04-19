@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-18 12:21+0000\n"
-"PO-Revision-Date: 2023-04-18 15:22\n"
+"PO-Revision-Date: 2023-04-18 19:56\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -612,7 +612,7 @@ msgstr "Razčlenitev"
 
 #: tcms/settings/common.py:372
 msgid "Execution"
-msgstr ""
+msgstr "Izvedbe"
 
 #: tcms/settings/common.py:375
 #: tcms/testruns/templates/testruns/mutable.html:169
@@ -621,7 +621,7 @@ msgstr "Matrika"
 
 #: tcms/settings/common.py:376
 msgid "Trends"
-msgstr ""
+msgstr "Trendi"
 
 #: tcms/settings/common.py:379
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -741,7 +741,7 @@ msgstr "Kategorije"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Pregled izvedenih testiranj"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
@@ -782,7 +782,7 @@ msgstr "Končano ob"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "Pregled zgodovine testiranj"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -798,7 +798,7 @@ msgstr "Negativno"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "Matrika izvajanja"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
