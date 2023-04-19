@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Attachment upload error" %}{% endblock %}
+
+{% block contents %}
+<div class="container-fluid container-cards-pf">
+    {% include "attachments/add_form.html" %}
+</div>
+{% endblock %}
