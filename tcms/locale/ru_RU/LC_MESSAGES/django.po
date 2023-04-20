@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-20 08:14+0000\n"
-"PO-Revision-Date: 2023-04-20 12:22\n"
+"PO-Revision-Date: 2023-04-20 20:48\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1911,7 +1911,7 @@ msgstr "%s импортирован из GitHub"
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr ""
+msgstr "%s уже существует"
 
 #: tcms_github_app/views.py:48
 #, python-format
@@ -2001,7 +2001,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Подписаться через FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
 msgid "Transaction history"
@@ -2173,20 +2173,21 @@ msgstr "Только авторизованные пользователи мо�
 
 #: tenant_groups/admin.py:29
 msgid "users"
-msgstr ""
+msgstr "пользователи"
 
 #: tenant_groups/models.py:31
 msgid "name"
-msgstr ""
+msgstr "название"
 
 #: tenant_groups/models.py:34
 msgid "permissions"
-msgstr ""
+msgstr "права доступа"
 
 #: tenant_groups/models.py:42
 msgid "group"
-msgstr ""
+msgstr "группа"
 
 #: tenant_groups/models.py:43
 msgid "groups"
-msgstr ""
+msgstr "группы"
+
