@@ -94,6 +94,10 @@ _EOF_
     rlPhaseStartTest "Should not execute inline JavaScript"
         ARCH=$(uname -m)
         if [ "$ARCH" == "x86_64" ]; then
+            # copy test file externally b/c Kiwi TCMS v12.2 will prevent its upload
+            rlRun -t -c "docker exec -i kiwi_web /bin/bash -c 'mkdir -p /Kiwi/uploads/attachments/auth_user/2/'"
+            rlRun -t -c "docker cp tests/ui/data/inline_javascript.svg kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
+
             rlRun -t -c "curl -k --fail https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg"
             rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
         fi
