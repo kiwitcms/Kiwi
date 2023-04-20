@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-18 12:21+0000\n"
-"PO-Revision-Date: 2023-04-18 15:22\n"
+"POT-Creation-Date: 2023-04-20 08:14+0000\n"
+"PO-Revision-Date: 2023-04-20 10:44\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -466,6 +466,14 @@ msgstr "Masz %(unapplied_migration_count)s niezaaplikowanych migracji. Zobacz <a
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr "Nie używasz bezpiecznego połączenia. Zobacz <a href=\"%(doc_url)s\">dokumentację</a> i włącz SSL."
 
+#: tcms/kiwi_attachments/validators.py:8
+msgid "File contains forbidden <script> tag"
+msgstr ""
+
+#: tcms/kiwi_attachments/validators.py:12
+msgid "Uploading executable files is forbidden"
+msgstr ""
+
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
 msgstr "Ten adres e-mail jest już w użyciu"
@@ -843,6 +851,10 @@ msgstr "Strona nie znaleziona"
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
 msgstr "Wewnętrzny błąd serwera"
+
+#: tcms/templates/attachments/add.html:3
+msgid "Attachment upload error"
+msgstr ""
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
