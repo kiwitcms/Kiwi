@@ -15,7 +15,7 @@ assert_perform_initdb() {
     rm -f /tmp/testcookies.txt
     rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt https://localhost/ | grep 'Initialize database'"
     # init-db page applies database migrations
-    CSRF_TOKEN=`grep csrftoken /tmp/testcookies.txt | cut -f 7`
+    CSRF_TOKEN=$(grep csrftoken /tmp/testcookies.txt | cut -f 7)
     rlRun -t -c "curl -e https://localhost/init-db/ \
         -d init_db=yes -d csrfmiddlewaretoken=$CSRF_TOKEN -k -L -o- \
         -b /tmp/testcookies.txt https://localhost/init-db/"
