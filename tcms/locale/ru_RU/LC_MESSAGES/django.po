@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-20 08:14+0000\n"
-"PO-Revision-Date: 2023-04-20 11:50\n"
+"PO-Revision-Date: 2023-04-20 12:22\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -470,11 +470,11 @@ msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:8
 msgid "File contains forbidden <script> tag"
-msgstr ""
+msgstr "Файл содержит запрещенный тэг <script>"
 
 #: tcms/kiwi_attachments/validators.py:12
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "Загрузка исполняемых файлов запрещена"
 
 #: tcms/kiwi_auth/admin.py:32
 msgid "This email address is already in use"
@@ -620,7 +620,7 @@ msgstr "Разбивка"
 
 #: tcms/settings/common.py:372
 msgid "Execution"
-msgstr ""
+msgstr "Выполнение"
 
 #: tcms/settings/common.py:375
 #: tcms/testruns/templates/testruns/mutable.html:169
@@ -629,7 +629,7 @@ msgstr ""
 
 #: tcms/settings/common.py:376
 msgid "Trends"
-msgstr ""
+msgstr "Тенденции"
 
 #: tcms/settings/common.py:379
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -790,7 +790,7 @@ msgstr "Завершено"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "Тенденции исполнения"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -856,7 +856,7 @@ msgstr "Внутренняя ошибка сервера"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "Ошибка загрузки вложения"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -1102,7 +1102,7 @@ msgstr "Язык"
 
 #: tcms/templates/navbar.html:98
 msgid "Change language"
-msgstr ""
+msgstr "Изменить язык"
 
 #: tcms/templates/navbar.html:99
 msgid "Supported languages"
@@ -1128,7 +1128,7 @@ msgstr "Пароль"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "Забыл пароль"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1413,7 +1413,7 @@ msgstr "добавить новую категорию"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr ""
+msgstr "добавить новый шаблон"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:500
@@ -1793,7 +1793,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:186
 msgid "more information"
-msgstr ""
+msgstr "больше информации"
 
 #: tcms/testruns/templates/testruns/mutable.html:211
 msgid "Selected TestCase(s):"
@@ -2190,3 +2190,4 @@ msgstr ""
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr ""
+
