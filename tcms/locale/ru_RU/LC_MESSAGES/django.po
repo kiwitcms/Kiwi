@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-20 08:14+0000\n"
-"PO-Revision-Date: 2023-04-20 10:44\n"
+"PO-Revision-Date: 2023-04-20 11:50\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -810,7 +810,7 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
-msgstr ""
+msgstr "Порядок"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
 msgid "Ascending"
@@ -1660,7 +1660,7 @@ msgstr "Требуется 1 отрицательный, 1 нейтральны�
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Редактировать параметры"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1965,7 +1965,7 @@ msgstr "Организация"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
 msgid "Docker credentials"
-msgstr ""
+msgstr "Учетные данные Docker"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
@@ -2190,3 +2190,4 @@ msgstr ""
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr ""
+
