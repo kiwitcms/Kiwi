@@ -1,6 +1,115 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.2 (23 Apr 2023)
+----------------------------
+
+.. important::
+
+    This release contains security related updates, general improvements,
+    bug fixes, some API changes and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- For security reasons updating email address is no longer allowed. Fixes
+  `CVE-2023-30544 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7x6q-3v3m-cwjg>`_
+- Block uploads of potentially harmful files. Fixes
+  `CVE-2023-30613 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-fwcf-753v-fgcj>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 4.1.7 to 4.1.8
+- Update django-attachments from 1.9.1 to 1.11
+- Update psycopg2 from 2.9.5 to 2.9.6
+- Update pygments from 2.14.0 to 2.15.1
+- Update python-gitlab from 3.13.0 to 3.14.0
+- Add INFO message for User/Group pages in Admin panel which indicates whether
+  the user is viewing records from the main tenant or from an individual tenant
+  to avoid confusion
+- Add new Execution Dashboard telemetry report. Closes
+  `Issue #2918 <https://github.com/kiwitcms/Kiwi/issues/2918>`_
+- Add column visibility button on search pages. Fixes
+  `Issue #3149 <https://github.com/kiwitcms/Kiwi/issues/3149>`_
+- Add CSV, Excel, PDF and Print buttons on search pages. Fixes
+  `Issue #3150 <https://github.com/kiwitcms/Kiwi/issues/3150>`_
+- Allow manually resetting ``TestRun.stop_date`` when editing page. Refs
+  `Issue #3124 <https://github.com/kiwitcms/Kiwi/issues/3124>`_
+- Display child test plans on Search Test Plans page. Fixes
+  `Issue #2917 <https://github.com/kiwitcms/Kiwi/issues/2917>`_
+- Display nested test plans in drop down select widget on Search Test Cases page.
+  Fixes `Issue #3134 <https://github.com/kiwitcms/Kiwi/issues/3134>`_
+- Display nested test plans in drop down select widget on Telemetry pages
+- Display pagination controls for search results both at the top and bottom
+- On Search Test Runs page display start/stop timestamp columns. Closes
+  `Issue #2306 <https://github.com/kiwitcms/Kiwi/issues/2306>`_
+- On Search Test Cases page display results from child test plans. Fixes
+  `Issue #3135 <https://github.com/kiwitcms/Kiwi/issues/3135>`_
+
+
+API
+~~~
+
+- ``TestExecution.update()`` method will no longer update ``self.stop_date``
+  and ``self.run.stop_date`` fields when status has been changed! The
+  appropriate behavior here should be specified by the client calling this API
+  method. Refs `Issue #3112 <https://github.com/kiwitcms/Kiwi/issues/3112>`_
+- ``TestPlan.filter()`` method now returns the ``children_count`` field.
+  Refs `Issue #3134 <https://github.com/kiwitcms/Kiwi/issues/3134>`_,
+  `Issue #2917 <https://github.com/kiwitcms/Kiwi/issues/2917>`_
+- ``TestExecution.filter()`` method now returns ``status__icon`` &
+  ``status__color`` fields
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix test case filter widget on Test Plan page. Fixes
+  `Issue #3137 <https://github.com/kiwitcms/Kiwi/issues/3137>`_
+- Disable selection of inactive test plans on New Test Run page. Fixes
+  `Issue #3152 <https://github.com/kiwitcms/Kiwi/issues/3152>`_
+- Add styled page for attachment upload errors. Fixes
+  `Issue #1156 <https://github.com/kiwitcms/Kiwi/issues/1156>`_
+- Fix include syntax for ``uwsgi.override`` in ``uwsgi.conf``
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Add additional query parameters for ``updateTestPlanSelectFromProduct()``
+- Add ``preProcessData`` callback to ``updateTestPlanSelectFromProduct()``
+- Remove unused ``telemetry.css`` file
+- Remove unused parameter from ``updateTestPlanSelectFromProduct()``
+- Replace hand-crafted pagination controls with the ones built into DataTables
+- Replace useless ``form_errors_to_list()`` function
+- Skip RobotFramework tests on aarch64 b/c of Selenium error, tested on x86_64
+- Update node_modules/webpack from 5.76.3 to 5.80.0
+- Update node_modules/eslint from 8.37.0 to 8.38.0
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 12.1 (29 Mar 2023)
 ----------------------------
 
