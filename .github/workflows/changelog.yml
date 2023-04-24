@@ -3,6 +3,8 @@ name: changelog
 on:
   pull_request:
 
+permissions: read-all
+
 jobs:
   acceptance:
     runs-on: ubuntu-latest
