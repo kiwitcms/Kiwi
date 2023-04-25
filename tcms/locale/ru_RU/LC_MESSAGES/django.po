@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-20 08:14+0000\n"
-"PO-Revision-Date: 2023-04-20 20:48\n"
+"PO-Revision-Date: 2023-04-25 09:46\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -47,18 +47,18 @@ msgstr "Важность"
 #: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:89
 #: tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr "Открыть"
+msgstr "Открыто"
 
 #: tcms/bugs/templates/bugs/get.html:39
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr "Закрыт"
+msgstr "Закрыто"
 
 #: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:79
 #: tcms/bugs/templates/bugs/search.html:114
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
-msgstr "Репортёр"
+msgstr "Отчёт"
 
 #: tcms/bugs/templates/bugs/get.html:64
 #: tcms/bugs/templates/bugs/mutable.html:94
@@ -69,7 +69,7 @@ msgstr "Репортёр"
 #: tcms/testruns/templates/testruns/get.html:208
 #: tcms/testruns/templates/testruns/get.html:268
 msgid "Assignee"
-msgstr "Назначено"
+msgstr "Исполнитель"
 
 #: tcms/bugs/templates/bugs/get.html:75
 #: tcms/bugs/templates/bugs/mutable.html:45
@@ -461,12 +461,12 @@ msgstr "Базовый URL-адрес не настроен! Смотрите <a
 #: tcms/core/views.py:71
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "У вас %(unapplied_migration_count)s непримененных миграции(ев). Смотрите <a href=\"%(doc_url)s\">документацию</a>"
 
 #: tcms/core/views.py:92
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "Вы не используете безопасное соединение. Смотрите <a href=\"%(doc_url)s\">документацию</a> и включите SSL."
 
 #: tcms/kiwi_attachments/validators.py:8
 msgid "File contains forbidden <script> tag"
@@ -494,7 +494,7 @@ msgstr "Права доступа"
 
 #: tcms/kiwi_auth/admin.py:199
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "Это последний суперпользователь, он не может быть удален!"
 
 #: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
@@ -533,7 +533,7 @@ msgstr "Ваша учетная запись успешно активирова
 #: tcms/kiwi_auth/views.py:195 tcms/kiwi_auth/views.py:204
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr ""
+msgstr "Вы просматриваете записи владельца '%s'"
 
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -625,7 +625,7 @@ msgstr "Выполнение"
 #: tcms/settings/common.py:375
 #: tcms/testruns/templates/testruns/mutable.html:169
 msgid "Matrix"
-msgstr ""
+msgstr "Матрица"
 
 #: tcms/settings/common.py:376
 msgid "Trends"
@@ -749,13 +749,13 @@ msgstr "Категории"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Панель исполнения"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 #: tcms/testcases/templates/testcases/search.html:67
 msgid "Child TPs"
-msgstr ""
+msgstr "Дочерние ТПП\\TPs"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -806,7 +806,7 @@ msgstr "Отрицательный"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "Матрица выполнения"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
@@ -922,7 +922,15 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Баг %(pk)s был назначен вам.\n\n"
+"Ссылка: %(bug_url)s\n\n"
+"Итоги: %(summary)s\n"
+"Создано: %(creation_date)s\n"
+"Репортер: %(reporter)s\n"
+"Назначен: %(assignee)s\n"
+"Продукт: %(product)s\n"
+"Версия: %(version)s\n"
+"Сборка: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1010,7 +1018,7 @@ msgstr "Это функция предварительного просмотр�
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
-msgstr ""
+msgstr "name=Название"
 
 #: tcms/templates/include/properties_card.html:70
 #: tcms/templates/include/tags_card.html:28
@@ -1044,7 +1052,7 @@ msgstr "Ваша база данных еще не инициализирова�
 
 #: tcms/templates/initdb.html:22
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "ПРЕДУПРЕЖДЕНИЕ: эта операция займет некоторое время! Эта страница будет перенаправлена после завершения."
 
 #: tcms/templates/initdb.html:27
 msgid "Please wait"
@@ -1200,15 +1208,17 @@ msgstr "Регистрация нового аккаунта"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Для получения дополнительной информации о настройках статусов выполнения тестов смотрите\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        документацию</a>!"
 
 #: tcms/testcases/admin.py:54
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "Требуется подтверждение и 1 неподтверждённый статус!"
 
 #: tcms/testcases/admin.py:129
 msgid "Bug URL"
-msgstr ""
+msgstr "Ссылка на ошибку"
 
 #: tcms/testcases/admin.py:149
 msgid "External Issue Tracker Integration"
@@ -1218,27 +1228,29 @@ msgstr "Интеграция внешней системы ведения зад
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>Предупреждение: прочитайте\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"Настройка внешних багтрекеров</a> перед редактированием значений ниже!</h1>"
 
 #: tcms/testcases/admin.py:166
 msgid "Configuration health check"
-msgstr ""
+msgstr "Проверка конфигурации"
 
 #: tcms/testcases/admin.py:170
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "Kiwi TCMS попытается получить подробную информацию по указанному адресу ошибки, используя интеграцию описанную выше! Нажмите кнопку «Сохранить и продолжить» и следите за сообщениями в верхней части экрана. <strong>ВНИМАНИЕ:</strong> в случае сбоев некоторые багтрекеры ошибок вернутся к выборке деталей по протоколу OpenGraph. В этом случае будет включено поле `from_open_graph`."
 
 #: tcms/testcases/admin.py:190
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "Не удалось создать трекер ошибок"
 
 #: tcms/testcases/admin.py:196
 msgid "Issue Tracker configuration check passed"
-msgstr ""
+msgstr "Проверка конфигурации трекера ошибок пройдена"
 
 #: tcms/testcases/admin.py:207
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Проверка конфигурации трекера ошибок пройдена"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1251,7 +1263,7 @@ msgstr "Статус тестового кейса"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "Статус тестового кейса"
 
 #: tcms/testcases/models.py:379
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1531,7 +1543,7 @@ msgstr "Уверены?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "Не удается создать TestRun с неподтвержденными тестами"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
@@ -1559,7 +1571,7 @@ msgstr "Рецензент"
 #: tcms/testplans/templates/testplans/get.html:231
 #: tcms/testplans/templates/testplans/get.html:234
 msgid "Sort key"
-msgstr ""
+msgstr "Ключи сортировки"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
@@ -1577,7 +1589,7 @@ msgstr "Расширенный поиск"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr ""
+msgstr "Активные тестовые запуски"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
@@ -1664,11 +1676,11 @@ msgstr "Редактировать параметры"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Все"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Pairwise"
 
 #: tcms/testruns/models.py:224
 msgid "Test execution statuses"
@@ -1697,7 +1709,7 @@ msgstr "Менеджер"
 #: tcms/testruns/templates/testruns/mutable.html:102
 #: tcms/testruns/templates/testruns/search.html:127
 msgid "Planned start"
-msgstr ""
+msgstr "Запланированный старт"
 
 #: tcms/testruns/templates/testruns/get.html:83
 msgid "Start"
@@ -1720,7 +1732,7 @@ msgstr "Окружение"
 
 #: tcms/testruns/templates/testruns/get.html:183
 msgid "Update text version"
-msgstr ""
+msgstr "Обновление версии текста"
 
 #: tcms/testruns/templates/testruns/get.html:218
 msgid "Add comment"
@@ -1752,11 +1764,11 @@ msgstr "Отчёт об ошибке"
 
 #: tcms/testruns/templates/testruns/get.html:340
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "Тестовый случай не является частью родительского тест плана"
 
 #: tcms/testruns/templates/testruns/get.html:372
 msgid "Assigned to"
-msgstr ""
+msgstr "Исполнитель"
 
 #: tcms/testruns/templates/testruns/get.html:417
 msgid "Text version"
@@ -1768,7 +1780,7 @@ msgstr "Ошибки и гиперссылки"
 
 #: tcms/testruns/templates/testruns/get.html:568
 msgid "Is a defect"
-msgstr ""
+msgstr "Неисправность"
 
 #: tcms/testruns/templates/testruns/get.html:575
 #: tcms/testruns/templates/testruns/get.html:606
@@ -1789,7 +1801,7 @@ msgstr "Клонировать тестовый прогон"
 
 #: tcms/testruns/templates/testruns/mutable.html:172
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Влияет на только тестовые случаи с параметрами"
 
 #: tcms/testruns/templates/testruns/mutable.html:186
 msgid "more information"
@@ -1935,11 +1947,11 @@ msgstr "Редактировать приложение GitHub <a href=\"%s\">%s
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "Не удается найти установку GitHub App для организации \"%s\""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr ""
+msgstr "Обнаружено несколько установок GitHub!"
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
@@ -1969,11 +1981,11 @@ msgstr "Учетные данные Docker"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Инструкции по закрытым контейнерам"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
 msgid "You own the following tenants"
-msgstr ""
+msgstr "Вы можете получить доступ к следующим владельцам"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
@@ -1997,7 +2009,7 @@ msgstr "Отменить подписку"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "У вас нет ни одной организации"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
 msgid "Subscribe via FastSpring"
@@ -2105,14 +2117,19 @@ msgid "Dear tester,\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
 "automatically. You will have to reset your password before you can login!"
-msgstr ""
+msgstr "Уважаемый тестер,\n"
+"%(invited_by)s пригласил вас присоединиться к TCMS Kiwi на\n"
+"%(tenant_url)s\n\n"
+"Если вы никогда не входили в систему до этого момента, то аккаунт был создан для вас автоматически. Вам необходимо будет сбросить ваш пароль, прежде чем вы сможете войти!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Ваша аренда TCMS Kiwi была начата:\n"
+"%(tenant_url)s\n\n"
+"Если у вас возникли проблемы, пожалуйста, свяжитесь с поддержкой!"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:20
 msgid "Email"
@@ -2140,7 +2157,7 @@ msgstr "Общедоступный для чтения"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:71
 msgid "Tenant logo"
-msgstr ""
+msgstr "Логотип организации"
 
 #: tcms_tenants/utils.py:62
 msgid "Schema name already in use"
@@ -2148,12 +2165,12 @@ msgstr "Такое название схемы уже используется"
 
 #: tcms_tenants/utils.py:150
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Новая организация создана в TCMS Kiwi"
 
 #: tcms_tenants/utils.py:205
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "Пользователь {user.username} добавлен в группу организации {group.name}"
 
 #: tcms_tenants/utils.py:229
 msgid "Invitation to join Kiwi TCMS"
@@ -2161,7 +2178,7 @@ msgstr "Приглашение присоединиться к Kiwi TCMS"
 
 #: tcms_tenants/views.py:80
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "Только суперпользователи и владельцы организации могут редактировать свойства организации"
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
