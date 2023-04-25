@@ -931,6 +931,7 @@ msgstr "Баг %(pk)s был назначен вам.\n\n"
 "Продукт: %(product)s\n"
 "Версия: %(version)s\n"
 "Сборка: %(build)s"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
