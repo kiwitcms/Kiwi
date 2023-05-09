@@ -16,7 +16,7 @@ django-tree-queries==0.14.0
 django-uuslug==2.0.0
 jira==3.5.0
 Markdown==3.4.3
-PyGithub==1.58.1
+PyGithub==1.58.2
 Pygments==2.15.1
 python-gitlab==3.14.0
 python-redmine==2.4.0
