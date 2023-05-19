@@ -23,7 +23,7 @@ class CustomCaptchaTextInput(fields.CaptchaTextInput):
     template_name = "captcha_field.html"
 
 
-class RegistrationForm(UserCreationForm):
+class RegistrationForm(UserCreationForm):  # pylint: disable=too-many-ancestors
     email = forms.EmailField()
     captcha = (
         fields.CaptchaField(

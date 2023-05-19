@@ -7,7 +7,7 @@ from tcms.testplans.models import PlanType
 
 class EditPlanForm(
     UpdateModelFormMixin, NewPlanForm
-):  # pylint: disable=remove-empty-class
+):  # pylint: disable=remove-empty-class,too-many-ancestors
     pass
 
 
