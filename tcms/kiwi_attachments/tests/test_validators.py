@@ -5,13 +5,20 @@ import base64
 from xmlrpc.client import Fault
 
 from django.utils.translation import gettext_lazy as _
+from parameterized import parameterized
 
 from tcms.rpc.tests.utils import APITestCase
 
 
 class TestValidators(APITestCase):
-    def test_uploading_svg_with_inline_script_should_fail(self):
-        with open("tests/ui/data/inline_javascript.svg", "rb") as svg_file:
+    @parameterized.expand(
+        [
+            "inline_javascript.svg",
+            "inline_javascript_mixed_case.svg",
+        ]
+    )
+    def test_uploading_svg_with_inline_script_should_fail(self, file_name):
+        with open(f"tests/ui/data/{file_name}", "rb") as svg_file:
             b64 = base64.b64encode(svg_file.read()).decode()
 
             message = str(_("File contains forbidden <script> tag"))

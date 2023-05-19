@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 def deny_uploads_containing_script_tag(uploaded_file):
     for chunk in uploaded_file.chunks(2048):
-        if chunk.find(b"<script") > -1:
+        if chunk.lower().find(b"<script") > -1:
             raise ValidationError(_("File contains forbidden <script> tag"))
 
 
