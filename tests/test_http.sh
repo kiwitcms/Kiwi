@@ -97,8 +97,13 @@ _EOF_
             # copy test file externally b/c Kiwi TCMS v12.2 will prevent its upload
             rlRun -t -c "docker exec -i kiwi_web /bin/bash -c 'mkdir -p /Kiwi/uploads/attachments/auth_user/2/'"
             rlRun -t -c "docker cp tests/ui/data/inline_javascript.svg kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
+            rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
 
-            rlRun -t -c "curl -k --fail https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg"
+            rlRun -t -c "docker cp tests/ui/data/redirect.js kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
+            rlRun -t -c "docker cp tests/ui/data/html_with_external_script.html kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
+            rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
+
             rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
         fi
     rlPhaseEnd
