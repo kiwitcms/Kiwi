@@ -10,7 +10,7 @@ class BuildForm(forms.ModelForm):
         fields = "__all__"
 
 
-class BuildUpdateForm(  # pylint: disable=remove-empty-class
+class BuildUpdateForm(  # pylint: disable=remove-empty-class,too-many-ancestors
     UpdateModelFormMixin, BuildForm
 ):
     pass
@@ -22,9 +22,9 @@ class ComponentForm(forms.ModelForm):
         fields = "__all__"
 
 
-class ComponentUpdateForm(  # pylint: disable=remove-empty-class
+class ComponentUpdateForm(
     UpdateModelFormMixin, ComponentForm
-):
+):  # pylint: disable=remove-empty-class,too-many-ancestors
     pass
 
 
