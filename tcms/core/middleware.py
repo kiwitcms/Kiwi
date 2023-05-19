@@ -34,4 +34,7 @@ class ExtraHeadersMiddleware(MiddlewareMixin):
                 "Content-Security-Policy"
             ] = "script-src 'self' cdn.crowdin.com;"
 
+            if request.path.find("/uploads/") > -1:
+                response.headers["Content-Type"] = "text/plain"
+
         return response
