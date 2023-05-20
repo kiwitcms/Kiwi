@@ -1,6 +1,66 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.3 (20 May 2023)
+----------------------------
+
+.. important::
+
+    This is a small release which contains security related updates,
+    general improvements and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 4.1.8 to 4.2.1 which contains a fix for
+  `CVE-2023-31047 <https://docs.djangoproject.com/en/4.2/releases/4.2.1/>`_.
+  We believe this does not affect Kiwi TCMS
+- Implement better scanning for embedded ``<script>`` tags in uploaded files
+- Force ``Content-Type: text/plain`` when serving uploaded files. See
+  `GHSA-x7c2-7wvg-jpx7 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-x7c2-7wvg-jpx7>`_
+- Explicitly configure top-level permissions for CI jobs as ``read-all``
+- Pass untrusted input via intermediate ENV variables in CI jobs
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update nginx from 1.20 to 1.22
+- Update django-grappelli from 3.0.5 to 3.0.6
+- Update pygithub from 1.58.1 to 1.58.2
+- Add Helm chart examples (Michael Abramovich)
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update node_modules/webpack-cli from 5.0.1 to 5.1.1
+- Update node_modules/webpack from 5.80.0 to 5.83.1
+- Update node_modules/eslint from 8.38.0 to 8.40.0
+- Update tests/bugzilla/fedora from 37 to 38
+- Enable the checkov static linter
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+
+
+
 Kiwi TCMS 12.2 (23 Apr 2023)
 ----------------------------
 
