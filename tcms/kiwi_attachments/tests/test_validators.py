@@ -25,6 +25,19 @@ class TestValidators(APITestCase):
             with self.assertRaisesRegex(Fault, message):
                 self.rpc_client.User.add_attachment("inline_javascript.svg", b64)
 
+    @parameterized.expand(
+        [
+            "svg_with_onload_attribute.svg",
+        ]
+    )
+    def test_uploading_svg_with_forbidden_attributes_should_fail(self, file_name):
+        with open(f"tests/ui/data/{file_name}", "rb") as svg_file:
+            b64 = base64.b64encode(svg_file.read()).decode()
+
+            message = str(_("File contains forbidden attribute:"))
+            with self.assertRaisesRegex(Fault, message):
+                self.rpc_client.User.add_attachment("image.svg", b64)
+
     def test_uploading_filename_ending_in_dot_exe_should_fail(self):
         message = str(_("Uploading executable files is forbidden"))
         with self.assertRaisesRegex(Fault, message):
