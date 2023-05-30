@@ -21,7 +21,8 @@ class TestValidators(APITestCase):
         with open(f"tests/ui/data/{file_name}", "rb") as svg_file:
             b64 = base64.b64encode(svg_file.read()).decode()
 
-            message = str(_("File contains forbidden <script> tag"))
+            tag_name = "script"
+            message = str(_(f"File contains forbidden tag: <{tag_name}>"))
             with self.assertRaisesRegex(Fault, message):
                 self.rpc_client.User.add_attachment("inline_javascript.svg", b64)
 
@@ -34,7 +35,8 @@ class TestValidators(APITestCase):
         with open(f"tests/ui/data/{file_name}", "rb") as svg_file:
             b64 = base64.b64encode(svg_file.read()).decode()
 
-            message = str(_("File contains forbidden attribute:"))
+            attr_name = "onload"
+            message = str(_(f"File contains forbidden attribute: `{attr_name}`"))
             with self.assertRaisesRegex(Fault, message):
                 self.rpc_client.User.add_attachment("image.svg", b64)
 
