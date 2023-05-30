@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:14+0000\n"
-"PO-Revision-Date: 2023-04-25 09:46\n"
+"POT-Creation-Date: 2023-05-25 20:33+0000\n"
+"PO-Revision-Date: 2023-05-30 11:40\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -136,9 +136,9 @@ msgstr "Переоткрыть"
 
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
-#: tcms/testcases/templates/testcases/mutable.html:261
+#: tcms/testcases/templates/testcases/mutable.html:263
 #: tcms/testplans/templates/testplans/get.html:477
-#: tcms/testplans/templates/testplans/mutable.html:155
+#: tcms/testplans/templates/testplans/mutable.html:157
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
 #: tcms/testruns/templates/testruns/mutable.html:202
@@ -255,8 +255,8 @@ msgstr "Имя пользователя"
 #: tcms/testcases/templates/testcases/mutable.html:201
 #: tcms/testcases/templates/testcases/mutable.html:210
 #: tcms/testcases/templates/testcases/mutable.html:217
-#: tcms/testcases/templates/testcases/mutable.html:230
-#: tcms/testcases/templates/testcases/mutable.html:237
+#: tcms/testcases/templates/testcases/mutable.html:232
+#: tcms/testcases/templates/testcases/mutable.html:239
 #: tcms/testcases/templates/testcases/search.html:39
 #: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
@@ -264,9 +264,9 @@ msgstr "Имя пользователя"
 #: tcms/testplans/templates/testplans/mutable.html:108
 #: tcms/testplans/templates/testplans/mutable.html:114
 #: tcms/testplans/templates/testplans/mutable.html:120
-#: tcms/testplans/templates/testplans/mutable.html:130
-#: tcms/testplans/templates/testplans/mutable.html:136
-#: tcms/testplans/templates/testplans/mutable.html:149
+#: tcms/testplans/templates/testplans/mutable.html:132
+#: tcms/testplans/templates/testplans/mutable.html:138
+#: tcms/testplans/templates/testplans/mutable.html:151
 #: tcms/testplans/templates/testplans/search.html:40
 #: tcms/testruns/templates/testruns/get.html:570
 #: tcms/testruns/templates/testruns/search.html:81
@@ -284,8 +284,8 @@ msgstr "Да"
 #: tcms/testcases/templates/testcases/mutable.html:201
 #: tcms/testcases/templates/testcases/mutable.html:210
 #: tcms/testcases/templates/testcases/mutable.html:217
-#: tcms/testcases/templates/testcases/mutable.html:230
-#: tcms/testcases/templates/testcases/mutable.html:237
+#: tcms/testcases/templates/testcases/mutable.html:232
+#: tcms/testcases/templates/testcases/mutable.html:239
 #: tcms/testcases/templates/testcases/search.html:42
 #: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
@@ -293,9 +293,9 @@ msgstr "Да"
 #: tcms/testplans/templates/testplans/mutable.html:108
 #: tcms/testplans/templates/testplans/mutable.html:114
 #: tcms/testplans/templates/testplans/mutable.html:120
-#: tcms/testplans/templates/testplans/mutable.html:130
-#: tcms/testplans/templates/testplans/mutable.html:136
-#: tcms/testplans/templates/testplans/mutable.html:149
+#: tcms/testplans/templates/testplans/mutable.html:132
+#: tcms/testplans/templates/testplans/mutable.html:138
+#: tcms/testplans/templates/testplans/mutable.html:151
 #: tcms/testplans/templates/testplans/search.html:40
 #: tcms/testruns/templates/testruns/get.html:570
 #: tcms/testruns/templates/testruns/search.html:81
@@ -538,7 +538,7 @@ msgstr "Вы просматриваете записи владельца '%s'"
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr "Приоритеты"
+msgstr "Приоритетность"
 
 #: tcms/management/models.py:121
 msgid "Builds"
@@ -931,7 +931,6 @@ msgstr "Баг %(pk)s был назначен вам.\n\n"
 "Продукт: %(product)s\n"
 "Версия: %(version)s\n"
 "Сборка: %(build)s"
-"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1449,19 +1448,24 @@ msgstr "Тестер по умолчанию для прогона"
 msgid "Notify when"
 msgstr "Уведомлять когда"
 
-#: tcms/testcases/templates/testcases/mutable.html:227
+#: tcms/testcases/templates/testcases/mutable.html:224
+#: tcms/testplans/templates/testplans/mutable.html:126
+msgid "applies only for changes made by somebody else"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
 msgstr "Тест-кейс обновлен"
 
-#: tcms/testcases/templates/testcases/mutable.html:234
+#: tcms/testcases/templates/testcases/mutable.html:236
 msgid "TestCase is deleted"
 msgstr "Тест-кейс удален"
 
-#: tcms/testcases/templates/testcases/mutable.html:243
+#: tcms/testcases/templates/testcases/mutable.html:245
 msgid "CC to"
 msgstr "Копия к"
 
-#: tcms/testcases/templates/testcases/mutable.html:248
+#: tcms/testcases/templates/testcases/mutable.html:250
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены на каждый адрес электронной почты из списка (копия)."
 
@@ -1638,15 +1642,15 @@ msgstr "Автор тест-кейса"
 msgid "Notify when:"
 msgstr "Уведомлять когда:"
 
-#: tcms/testplans/templates/testplans/mutable.html:127
+#: tcms/testplans/templates/testplans/mutable.html:129
 msgid "TestPlan is updated"
 msgstr "Тест-план обновлен"
 
-#: tcms/testplans/templates/testplans/mutable.html:133
+#: tcms/testplans/templates/testplans/mutable.html:135
 msgid "Test cases are updated"
 msgstr "Тест-кейсы обновлены"
 
-#: tcms/testplans/templates/testplans/mutable.html:147
+#: tcms/testplans/templates/testplans/mutable.html:149
 #: tcms/testplans/templates/testplans/search.html:37
 msgid "Active"
 msgstr "Активный"
@@ -2208,3 +2212,4 @@ msgstr "группа"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "группы"
+
