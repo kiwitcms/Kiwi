@@ -7,6 +7,9 @@ def deny_uploads_containing_script_tag(uploaded_file):
         if chunk.lower().find(b"<script") > -1:
             raise ValidationError(_("File contains forbidden <script> tag"))
 
+        if chunk.lower().find(b"onload=") > -1:
+            raise ValidationError(_("File contains forbidden attribute:") + "onload")
+
 
 def deny_uploads_ending_in_dot_exe(uploaded_file):
     message = _("Uploading executable files is forbidden")
