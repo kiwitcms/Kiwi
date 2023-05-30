@@ -1,6 +1,69 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.4 (06 Jun 2023)
+----------------------------
+
+.. important::
+
+    This is a small release which contains security related updates, few improvements
+    and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Improved checks when uploading potentially dangerous files. Fixes
+  `CVE-2023-33977 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-2fqm-m4r2-fh98>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 4.2.1 to 4.2.2
+- Update jira from 3.5.0 to 3.5.1
+- Add ``HEALTHCHECK`` command for Docker container
+- Add searching by TestRun summary in Telemetry pages. Fixes
+  `Issue #3190 <https://github.com/kiwitcms/Kiwi/issues/3190>`_
+- Make it more clear when email notifications trigger. Closes
+  `Issue #3212 <https://github.com/kiwitcms/Kiwi/issues/3212>`_
+- Improve messaging for Issue Tracker Configuration health check.
+  References `Issue #3141 <https://github.com/kiwitcms/Kiwi/issues/3141>`_,
+  closes `Issue #3191 <https://github.com/kiwitcms/Kiwi/issues/3191>`_,
+  closes `Issue #34 <https://github.com/kiwitcms/trackers-integration/issues/34>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Update node_modules/eslint from 8.40.0 to 8.42.0
+- Update node_modules/eslint-plugin-n from 15.7.0 to 16.0.0
+- Update node_modules/eslint-config-standard from 17.0.0 to 17.1.0
+- Update node_modules/webpack from 5.83.1 to 5.85.0
+- Update node_modules/webpack-cli from 5.1.1 to 5.1.3
+- Update GitLab test data initialization b/c the database inside the container
+  image has changed
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 12.3 (20 May 2023)
 ----------------------------
 
@@ -29,8 +92,8 @@ Security
   `CVE-2023-31047 <https://docs.djangoproject.com/en/4.2/releases/4.2.1/>`_.
   We believe this does not affect Kiwi TCMS
 - Implement better scanning for embedded ``<script>`` tags in uploaded files
-- Force ``Content-Type: text/plain`` when serving uploaded files. See
-  `GHSA-x7c2-7wvg-jpx7 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-x7c2-7wvg-jpx7>`_
+- Force ``Content-Type: text/plain`` when serving uploaded files. Fixes
+  `CVE-2023-32686 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-x7c2-7wvg-jpx7>`_
 - Explicitly configure top-level permissions for CI jobs as ``read-all``
 - Pass untrusted input via intermediate ENV variables in CI jobs
 
