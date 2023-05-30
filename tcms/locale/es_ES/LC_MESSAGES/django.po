@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:14+0000\n"
-"PO-Revision-Date: 2023-04-20 10:44\n"
+"POT-Creation-Date: 2023-05-25 20:33+0000\n"
+"PO-Revision-Date: 2023-05-30 11:40\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -136,9 +136,9 @@ msgstr "Reabrir"
 
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
-#: tcms/testcases/templates/testcases/mutable.html:261
+#: tcms/testcases/templates/testcases/mutable.html:263
 #: tcms/testplans/templates/testplans/get.html:477
-#: tcms/testplans/templates/testplans/mutable.html:155
+#: tcms/testplans/templates/testplans/mutable.html:157
 #: tcms/testruns/templates/testruns/get.html:463
 #: tcms/testruns/templates/testruns/get.html:576
 #: tcms/testruns/templates/testruns/mutable.html:202
@@ -255,8 +255,8 @@ msgstr "Nombre usuario"
 #: tcms/testcases/templates/testcases/mutable.html:201
 #: tcms/testcases/templates/testcases/mutable.html:210
 #: tcms/testcases/templates/testcases/mutable.html:217
-#: tcms/testcases/templates/testcases/mutable.html:230
-#: tcms/testcases/templates/testcases/mutable.html:237
+#: tcms/testcases/templates/testcases/mutable.html:232
+#: tcms/testcases/templates/testcases/mutable.html:239
 #: tcms/testcases/templates/testcases/search.html:39
 #: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
@@ -264,9 +264,9 @@ msgstr "Nombre usuario"
 #: tcms/testplans/templates/testplans/mutable.html:108
 #: tcms/testplans/templates/testplans/mutable.html:114
 #: tcms/testplans/templates/testplans/mutable.html:120
-#: tcms/testplans/templates/testplans/mutable.html:130
-#: tcms/testplans/templates/testplans/mutable.html:136
-#: tcms/testplans/templates/testplans/mutable.html:149
+#: tcms/testplans/templates/testplans/mutable.html:132
+#: tcms/testplans/templates/testplans/mutable.html:138
+#: tcms/testplans/templates/testplans/mutable.html:151
 #: tcms/testplans/templates/testplans/search.html:40
 #: tcms/testruns/templates/testruns/get.html:570
 #: tcms/testruns/templates/testruns/search.html:81
@@ -284,8 +284,8 @@ msgstr "Si"
 #: tcms/testcases/templates/testcases/mutable.html:201
 #: tcms/testcases/templates/testcases/mutable.html:210
 #: tcms/testcases/templates/testcases/mutable.html:217
-#: tcms/testcases/templates/testcases/mutable.html:230
-#: tcms/testcases/templates/testcases/mutable.html:237
+#: tcms/testcases/templates/testcases/mutable.html:232
+#: tcms/testcases/templates/testcases/mutable.html:239
 #: tcms/testcases/templates/testcases/search.html:42
 #: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
@@ -293,9 +293,9 @@ msgstr "Si"
 #: tcms/testplans/templates/testplans/mutable.html:108
 #: tcms/testplans/templates/testplans/mutable.html:114
 #: tcms/testplans/templates/testplans/mutable.html:120
-#: tcms/testplans/templates/testplans/mutable.html:130
-#: tcms/testplans/templates/testplans/mutable.html:136
-#: tcms/testplans/templates/testplans/mutable.html:149
+#: tcms/testplans/templates/testplans/mutable.html:132
+#: tcms/testplans/templates/testplans/mutable.html:138
+#: tcms/testplans/templates/testplans/mutable.html:151
 #: tcms/testplans/templates/testplans/search.html:40
 #: tcms/testruns/templates/testruns/get.html:570
 #: tcms/testruns/templates/testruns/search.html:81
@@ -1436,19 +1436,24 @@ msgstr "Probador por defecto de las ejecuciones"
 msgid "Notify when"
 msgstr "Notificar cuando"
 
-#: tcms/testcases/templates/testcases/mutable.html:227
+#: tcms/testcases/templates/testcases/mutable.html:224
+#: tcms/testplans/templates/testplans/mutable.html:126
+msgid "applies only for changes made by somebody else"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
 msgstr "El Caso de Prueba está actualizado"
 
-#: tcms/testcases/templates/testcases/mutable.html:234
+#: tcms/testcases/templates/testcases/mutable.html:236
 msgid "TestCase is deleted"
 msgstr "TestCase ha sido eliminado"
 
-#: tcms/testcases/templates/testcases/mutable.html:243
+#: tcms/testcases/templates/testcases/mutable.html:245
 msgid "CC to"
 msgstr "CC a"
 
-#: tcms/testcases/templates/testcases/mutable.html:248
+#: tcms/testcases/templates/testcases/mutable.html:250
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr "Direcciones de correo electrónico separadas por coma. Se enviará un correo de notificación a cada dirección de correo electrónico dentro de la lista CC."
 
@@ -1625,15 +1630,15 @@ msgstr "Autor de TestCase"
 msgid "Notify when:"
 msgstr "Notificar cuando:"
 
-#: tcms/testplans/templates/testplans/mutable.html:127
+#: tcms/testplans/templates/testplans/mutable.html:129
 msgid "TestPlan is updated"
 msgstr "El plan de pruebas está actualizado"
 
-#: tcms/testplans/templates/testplans/mutable.html:133
+#: tcms/testplans/templates/testplans/mutable.html:135
 msgid "Test cases are updated"
 msgstr "Los Casos de Prueba están actualizados"
 
-#: tcms/testplans/templates/testplans/mutable.html:147
+#: tcms/testplans/templates/testplans/mutable.html:149
 #: tcms/testplans/templates/testplans/search.html:37
 msgid "Active"
 msgstr "Activo"
