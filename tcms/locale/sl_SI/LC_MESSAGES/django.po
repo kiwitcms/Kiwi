@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"PO-Revision-Date: 2023-05-31 19:46\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1452,7 +1452,7 @@ msgstr "Obvesti me, ko"
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "applies only for changes made by somebody else"
-msgstr ""
+msgstr "velja zgolj za spremembe s strani drugih"
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
@@ -2211,3 +2211,4 @@ msgstr "skupina"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "skupine"
+
