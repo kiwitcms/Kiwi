@@ -77,7 +77,9 @@ mariadb:
   # If database is internal, the following config will be used
   auth:
     database: kiwi
+    # checkov:skip=CKV_SECRET_6:Base64 High Entropy String
     username: kiwi
+    # checkov:skip=CKV_SECRET_6:Base64 High Entropy String
     existingSecret: kiwi-credentials
 
   primary:
@@ -95,7 +97,7 @@ mariadb:
       [mysqld]
       max-connections=10
       character-set-server=UTF8
-      collation-server=utf8_general_ci
+      collation-server=utf8mb4_general_ci
 
   initdbScripts:
     prepare.sh: |
