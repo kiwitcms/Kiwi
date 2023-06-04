@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-04 18:57\n"
+"PO-Revision-Date: 2023-06-04 20:04\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -936,7 +936,9 @@ msgstr "Баг %(pk)s был назначен вам.\n\n"
 "Назначен: %(assignee)s\n"
 "Продукт: %(product)s\n"
 "Версия: %(version)s\n"
-"Сборка: %(build)s"
+"Сборка: %(build)s\n"
+"Последний комментарий:\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -2218,3 +2220,4 @@ msgstr "группа"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "группы"
+
