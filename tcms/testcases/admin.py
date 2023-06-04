@@ -190,14 +190,28 @@ Configure external bug trackers</a> section before editting the values below!</h
                     raise RuntimeError(_("Failed creating Issue Tracker"))
 
                 details = tracker.details(bug_url)
+
+                if details["from_open_graph"]:
+                    messages.add_message(
+                        request,
+                        messages.WARNING,
+                        _(
+                            "Details extracted via OpenGraph. "
+                            "Issue Tracker may still be configured incorrectly!"
+                        ),
+                    )
+                else:
+                    messages.add_message(
+                        request,
+                        messages.SUCCESS,
+                        _(
+                            "Details extracted via API. Issue Tracker configuration looks good!"
+                        ),
+                    )
+
                 messages.add_message(
                     request,
-                    messages.SUCCESS,
-                    _("Issue Tracker configuration check passed"),
-                )
-                messages.add_message(
-                    request,
-                    messages.SUCCESS,
+                    messages.INFO,
                     details,
                 )
             except Exception as err:  # pylint: disable=broad-except
