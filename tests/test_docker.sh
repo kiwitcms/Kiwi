@@ -32,6 +32,10 @@ rlJournalStart
         rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/uploads/installation-id"
     rlPhaseEnd
 
+    rlPhaseStartTest "Container specifies a health-check command"
+        rlRun -t -c "docker inspect -f '{{.State.Health.Status}}' kiwi_web"
+    rlPhaseEnd
+
     rlPhaseStartTest "Use pg_dump for backup"
         rlRun -t -c "docker exec -i kiwi_db pg_dump -U kiwi --dbname=kiwi -F c > backup.bak"
         rlAssertExists "backup.bak"
