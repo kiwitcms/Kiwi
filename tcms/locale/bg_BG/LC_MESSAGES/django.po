@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-04 18:56\n"
+"PO-Revision-Date: 2023-06-04 20:05\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -2195,3 +2195,4 @@ msgstr ""
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr ""
+
