@@ -7,6 +7,7 @@ RUN microdnf -y module enable nginx:1.22 && \
     microdnf -y --nodocs update && \
     microdnf clean all
 
+HEALTHCHECK CMD curl --fail --insecure https://localhost:8443/accounts/login
 EXPOSE 8080
 EXPOSE 8443
 COPY ./httpd-foreground /httpd-foreground
