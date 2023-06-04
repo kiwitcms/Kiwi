@@ -83,6 +83,11 @@ export function drawTable () {
         query.stop_date__gte = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
     }
 
+    const testRunSummary = $('#id_test_run_summary').val()
+    if (testRunSummary) {
+        query.run__summary__icontains = testRunSummary
+    }
+
     jsonRPC('Testing.status_matrix', query, data => {
         const tableColumns = [initialColumn]
         const testRunIds = Object.keys(data.runs)

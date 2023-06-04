@@ -28,6 +28,11 @@ export function reloadCharts () {
         query.create_date__gte = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
     }
 
+    const testRunSummary = $('#id_test_run_summary').val()
+    if (testRunSummary) {
+        query.executions__run__summary__icontains = testRunSummary
+    }
+
     jsonRPC('Testing.breakdown', query, result => {
         drawAutomatedBar(result.count)
         drawPrioritiesChart(result.priorities)

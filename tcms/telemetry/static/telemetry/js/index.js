@@ -26,6 +26,19 @@ import {
     initializePage as testCaseHealthInitialize
 } from './testing/test-case-health'
 
+function delayedHandler (handlerFunc, microSeconds = 1000) {
+    let timer = null
+
+    return function () {
+        const context = this; const args = arguments
+        clearTimeout(timer)
+        timer = window.setTimeout(function () {
+            handlerFunc.apply(context, args)
+        },
+        microSeconds)
+    }
+}
+
 export function pageTelemetryReadyHandler (pageId) {
     initializeDateTimePicker('#id_before')
     initializeDateTimePicker('#id_after')
@@ -63,6 +76,7 @@ export function pageTelemetryReadyHandler (pageId) {
     }
     document.getElementById('id_build').onchange = drawChart
     document.getElementById('id_test_plan').onchange = drawChart
+    $('#id_test_run_summary').on('keyup', delayedHandler(drawChart))
 
     $('#id_after').on('dp.change', drawChart)
     $('#id_before').on('dp.change', drawChart)

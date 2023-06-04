@@ -60,4 +60,15 @@
             </div>
         </div>
     </div>
+
+    <div class="form-group">
+        <label for="id_test_run_summary" class="col-md-1 col-lg-1">
+            {% trans "Test run" %}
+        </label>
+        <div class="col-md-3">
+            <input id="id_test_run_summary" type="text" class="form-control"
+                placeholder="{% trans 'Test run summary' %}"
+                value="{{ form.summary.value|default:'' }}">
+        </div>
+    </div>
 </form>

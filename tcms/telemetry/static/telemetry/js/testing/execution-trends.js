@@ -34,6 +34,11 @@ export function drawChart () {
         query.stop_date__gte = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
     }
 
+    const testRunSummary = $('#id_test_run_summary').val()
+    if (testRunSummary) {
+        query.run__summary__icontains = testRunSummary
+    }
+
     const totalKey = $('.main').data('total-key')
 
     jsonRPC('Testing.execution_trends', query, data => {
