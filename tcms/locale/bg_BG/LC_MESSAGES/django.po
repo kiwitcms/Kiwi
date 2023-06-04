@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:56\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -714,6 +714,17 @@ msgstr "ОБЩО"
 msgid "Test plan"
 msgstr "Тест план"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "Тест Изпълнение"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "Резюме от Тест Изпълнение"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "Разбивка на тестове"
@@ -822,11 +833,6 @@ msgstr "Низходящ"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "Тест кейс"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "Тест Изпълнение"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1230,11 +1236,15 @@ msgstr ""
 msgid "Failed creating Issue Tracker"
 msgstr ""
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr ""
 
@@ -1808,10 +1818,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "%(count)s от избраните тест кейсове не са ПОТВЪРДЕНИ и няма да бъдат клонирани! Виж тест плана за повече информация!"
 
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "Резюме от Тест Изпълнение"
-
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"
 msgstr "ID на плана"
@@ -2189,3 +2195,4 @@ msgstr ""
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr ""
+
