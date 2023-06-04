@@ -2218,4 +2218,3 @@ msgstr "группа"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "группы"
-

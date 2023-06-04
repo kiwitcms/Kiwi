@@ -2217,4 +2217,3 @@ msgstr "skupina"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "skupine"
-
