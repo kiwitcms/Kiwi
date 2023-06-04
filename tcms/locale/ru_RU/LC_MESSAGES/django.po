@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -715,6 +715,17 @@ msgstr "ИТОГИ"
 msgid "Test plan"
 msgstr "Тест-план"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "Прогонка теста"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "Итоги по тест-прогону"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "Этапы тестирования"
@@ -824,11 +835,6 @@ msgstr "По убыванию"
 msgid "Test case"
 msgstr "Тест-кейс"
 
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "Прогонка теста"
-
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
 msgstr "Часто падающие тест-кейсы"
@@ -930,8 +936,7 @@ msgstr "Баг %(pk)s был назначен вам.\n\n"
 "Назначен: %(assignee)s\n"
 "Продукт: %(product)s\n"
 "Версия: %(version)s\n"
-"Сборка: %(build)s\n"
-"%(last_comment)s"
+"Сборка: %(build)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1245,11 +1250,15 @@ msgstr "Kiwi TCMS попытается получить подробную ин�
 msgid "Failed creating Issue Tracker"
 msgstr "Не удалось создать трекер ошибок"
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
-msgstr "Проверка конфигурации трекера ошибок пройдена"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "Проверка конфигурации трекера ошибок пройдена"
 
@@ -1824,10 +1833,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 msgstr "%(count)s из ранее выбранных тестов не ПОДТВЕРЖДЕНЫ и не будут скопированы!\n"
 "Смотрите план тестирования для получения более подробной информации!"
 
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "Итоги по тест-прогону"
-
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"
 msgstr "ID плана"
@@ -2213,3 +2218,4 @@ msgstr "группа"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "группы"
+
