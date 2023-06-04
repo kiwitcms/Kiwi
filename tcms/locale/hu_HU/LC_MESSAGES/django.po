@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -715,6 +715,17 @@ msgstr "ÖSSZESEN"
 msgid "Test plan"
 msgstr "Tesztterv"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "Teszt futtatás"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "Tesztfuttatás összefoglaló"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "Tesztelés Elemzés"
@@ -823,11 +834,6 @@ msgstr "Csökkenő"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "Teszteset"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "Teszt futtatás"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1235,11 +1241,15 @@ msgstr "A Kiwi TCMS megpróbálja lekérni a megadott hiba URL címének részle
 msgid "Failed creating Issue Tracker"
 msgstr "Nem sikerült létrehozni Issue Trackert"
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
-msgstr "Issue Tracker konfiguráció ellenőrzése sikeres"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "Az Issue Tracker konfiguráció ellenőrzése sikertelen"
 
@@ -1814,10 +1824,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 msgstr "%(count)s az előre kiválasztott tesztesetek közül nincs MEGERŐSÍTVE és nem lesz klónozva!\n"
 "További részletekért lásd a teszttervet!"
 
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "Tesztfuttatás összefoglaló"
-
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"
 msgstr "Terv ID"
@@ -2202,3 +2208,4 @@ msgstr ""
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr ""
+
