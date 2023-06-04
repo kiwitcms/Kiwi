@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:41\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -701,6 +701,17 @@ msgstr "crwdns836:0crwdne836:0"
 msgid "Test plan"
 msgstr "crwdns394:0crwdne394:0"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "crwdns978:0crwdne978:0"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "crwdns423:0crwdne423:0"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "crwdns956:0crwdne956:0"
@@ -809,11 +820,6 @@ msgstr "crwdns1220:0crwdne1220:0"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "crwdns976:0crwdne976:0"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "crwdns978:0crwdne978:0"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1200,11 +1206,15 @@ msgstr "crwdns1380:0crwdne1380:0"
 msgid "Failed creating Issue Tracker"
 msgstr "crwdns1388:0crwdne1388:0"
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
-msgstr "crwdns1390:0crwdne1390:0"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr "crwdns1491:0crwdne1491:0"
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr "crwdns1493:0crwdne1493:0"
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "crwdns1392:0crwdne1392:0"
 
@@ -1775,10 +1785,6 @@ msgstr "crwdns408:0crwdne408:0"
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
 msgstr "crwdns1014:0%(count)scrwdne1014:0"
-
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "crwdns423:0crwdne423:0"
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"

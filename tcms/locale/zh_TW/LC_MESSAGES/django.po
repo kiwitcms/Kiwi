@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -715,6 +715,17 @@ msgstr "總共"
 msgid "Test plan"
 msgstr "測試計畫"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "測試運行"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "測試執行總結"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "測試分類"
@@ -823,11 +834,6 @@ msgstr "遞減"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "測試案例"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "測試運行"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1232,11 +1238,15 @@ msgstr ""
 msgid "Failed creating Issue Tracker"
 msgstr "建立問題管理系統失敗"
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
-msgstr "問題管理系統設定檢查通過"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "問題管理系統設定檢查失敗"
 
@@ -1810,10 +1820,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "預先選定測試案例中的%(count)s 不是 CONFIRMED，將不會被複製！\n"
 "查看測試計畫以了解更多詳情！"
-
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "測試執行總結"
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"

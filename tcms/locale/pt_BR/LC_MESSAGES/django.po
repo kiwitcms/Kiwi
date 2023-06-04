@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -715,6 +715,17 @@ msgstr "TOTAL"
 msgid "Test plan"
 msgstr "Plano de teste"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "Execução de teste"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "Resumo da execução do teste"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "Detalhamento do teste"
@@ -823,11 +834,6 @@ msgstr "Decrescente"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "Caso de Teste"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "Execução de teste"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1235,11 +1241,15 @@ msgstr "Kiwi TCMS tentará obter detalhes para a URL de bug fornecida usando a i
 msgid "Failed creating Issue Tracker"
 msgstr "Falha ao criar o rastreador de problemas"
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
-msgstr "A checagem da configuração do rastreador de problemas passou"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "A checagem da configuração do rastreador de problemas falhou"
 
@@ -1813,10 +1823,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "%(count)s dos casos de teste pré-selecionados não estão CONFIRMADO(s) e não serão clonados!\n"
 "Veja o plano de teste para mais detalhes!"
-
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "Resumo da execução do teste"
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"

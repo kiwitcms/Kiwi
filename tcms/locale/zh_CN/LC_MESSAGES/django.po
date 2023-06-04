@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:40\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -715,6 +715,17 @@ msgstr "总计"
 msgid "Test plan"
 msgstr "测试计划"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "测试运行"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "测试执行总结"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "测试分类"
@@ -823,11 +834,6 @@ msgstr "降序排序"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "测试情况"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "测试运行"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1245,11 +1251,15 @@ msgstr "TCMS将尝试使用上面定义的集成获取给定的 缺陷URL 的详
 msgid "Failed creating Issue Tracker"
 msgstr "创建问题跟踪程序失败"
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
-msgstr "Active test runs配置检查通过"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "Issue Tracker 配置检查失败"
 
@@ -1823,10 +1833,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "预选测试案例中的 %(count)s 不是 CONFIRMED ，将不会被克隆！\n"
 "查看测试计划以了解更多详情！"
-
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "测试执行总结"
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"

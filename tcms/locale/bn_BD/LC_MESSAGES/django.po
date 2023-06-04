@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 20:33+0000\n"
-"PO-Revision-Date: 2023-05-30 11:41\n"
+"POT-Creation-Date: 2023-06-04 12:43+0000\n"
+"PO-Revision-Date: 2023-06-04 18:57\n"
 "Last-Translator: \n"
 "Language-Team: Bengali\n"
 "Language: bn_BD\n"
@@ -715,6 +715,17 @@ msgstr "মোট"
 msgid "Test plan"
 msgstr "পরীক্ষণ পরিকল্পনা"
 
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:135
+msgid "Test run"
+msgstr "পরীক্ষা রান"
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr "পরীক্ষা রান সারসংক্ষেপ"
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "পরীক্ষার বিরতি"
@@ -823,11 +834,6 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
 msgstr "পরীক্ষা ক্ষেত্রে"
-
-#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:135
-msgid "Test run"
-msgstr "পরীক্ষা রান"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1230,11 +1236,15 @@ msgstr ""
 msgid "Failed creating Issue Tracker"
 msgstr ""
 
-#: tcms/testcases/admin.py:196
-msgid "Issue Tracker configuration check passed"
+#: tcms/testcases/admin.py:199
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr ""
 
-#: tcms/testcases/admin.py:207
+#: tcms/testcases/admin.py:208
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr ""
 
@@ -1806,10 +1816,6 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr "%(count)s প্রাক-নির্বাচিত পরীক্ষাটির ক্ষেত্রে নিশ্চিত নয় এবং ক্লোন করা হবে না!\n"
 "আরো বিস্তারিত জানার জন্য পরীক্ষা পরিকল্পনা দেখুন!"
-
-#: tcms/testruns/templates/testruns/search.html:17
-msgid "Test run summary"
-msgstr "পরীক্ষা রান সারসংক্ষেপ"
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"
