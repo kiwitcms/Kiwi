@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-04 18:57\n"
+"PO-Revision-Date: 2023-06-05 22:08\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -454,11 +454,17 @@ msgstr "crwdns1212:0%(unapplied_migration_count)scrwdnd1212:0%(doc_url)scrwdne12
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr "crwdns1393:0%(doc_url)scrwdne1393:0"
 
-#: tcms/kiwi_attachments/validators.py:8
-msgid "File contains forbidden <script> tag"
-msgstr "crwdns1483:0crwdne1483:0"
+#: tcms/kiwi_attachments/validators.py:11
+#, python-brace-format
+msgid "File contains forbidden tag: <{tag_name}>"
+msgstr "crwdns1495:0{tag_name}crwdne1495:0"
 
-#: tcms/kiwi_attachments/validators.py:12
+#: tcms/kiwi_attachments/validators.py:15
+#, python-brace-format
+msgid "File contains forbidden attribute: `{attr_name}`"
+msgstr "crwdns1497:0{attr_name}crwdne1497:0"
+
+#: tcms/kiwi_attachments/validators.py:19
 msgid "Uploading executable files is forbidden"
 msgstr "crwdns1485:0crwdne1485:0"
 

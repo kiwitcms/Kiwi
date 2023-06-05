@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-04 18:57\n"
+"PO-Revision-Date: 2023-06-05 22:07\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -468,11 +468,17 @@ msgstr "%(unapplied_migration_count)s 件の未適用の移行があります。
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:8
-msgid "File contains forbidden <script> tag"
+#: tcms/kiwi_attachments/validators.py:11
+#, python-brace-format
+msgid "File contains forbidden tag: <{tag_name}>"
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:12
+#: tcms/kiwi_attachments/validators.py:15
+#, python-brace-format
+msgid "File contains forbidden attribute: `{attr_name}`"
+msgstr ""
+
+#: tcms/kiwi_attachments/validators.py:19
 msgid "Uploading executable files is forbidden"
 msgstr ""
 
