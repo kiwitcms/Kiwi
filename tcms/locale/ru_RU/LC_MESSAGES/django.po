@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-05 22:07\n"
+"PO-Revision-Date: 2023-06-16 11:56\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -471,7 +471,7 @@ msgstr "Вы не используете безопасное соединени
 #: tcms/kiwi_attachments/validators.py:11
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
+msgstr "Файл содержит недопустимый тег: <{tag_name}>"
 
 #: tcms/kiwi_attachments/validators.py:15
 #, python-brace-format
@@ -2226,3 +2226,4 @@ msgstr "группа"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "группы"
+
