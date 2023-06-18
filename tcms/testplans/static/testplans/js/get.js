@@ -539,8 +539,44 @@ function toolbarEvents (testPlanId, permissions) {
         return false
     })
 
-    $('#default-tester-button').click(function (ev) {
-        $(this).parents('.dropdown').toggleClass('open')
+    $('input.user-field.typeahead').on('focusin', function () {
+        // Prevents sub-menu options from hidding when
+        // selecting typeahead suggestion.
+        $(this).parents('ul').css('display', 'block')
+    })
+
+    $('input.user-field.typeahead').typeahead({
+        minLength: 3,
+        highlight: true
+    }, {
+        name: 'default-tester-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function (element) {
+            return element.username
+        },
+        source: function (query, processSync, processAsync) {
+            jsonRPC('User.filter', { username__icontains: query }, function (data) {
+                return processAsync(data)
+            })
+        }
+    })
+
+    $('#default-tester-button').click(function () {
+        addDefaultTester()
+    })
+
+    $('#id_tags').keyup(function (event) {
+        if (event.keyCode === 13) {
+            addDefaultTester()
+        };
+    })
+
+    function addDefaultTester () {
+        $('#default-tester-button').parents('.dropdown').removeClass('open')
+        // Closes the sub-menu option that contains input field
+        $('#default-tester-button').parents('ul').css('display', '')
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
@@ -548,7 +584,7 @@ function toolbarEvents (testPlanId, permissions) {
             return false
         }
 
-        const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
+        const emailOrUsername = $('input.typeahead.user-field.tt-input').val()
 
         if (!emailOrUsername) {
             return false
@@ -558,7 +594,7 @@ function toolbarEvents (testPlanId, permissions) {
             testPlanId, permissions)
 
         return false
-    })
+    }
 
     $('#bulk-reviewer-button').click(function (ev) {
         $(this).parents('.dropdown').toggleClass('open')

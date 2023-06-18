@@ -106,7 +106,7 @@
                             <div class="col-sm-12 toolbar-pf-filter" style="padding-left:0">
                                 <form class="toolbar-pf-actions">
                                     <div class="form-group" style="padding-left:10px; padding-right:0; border:0">
-                                        <div class="dropdown btn-group">
+                                        <div class="dropdown btn-group dropdown-keep-open" data-bs-auto-close="false">
                                             <button class="btn btn-link dropdown-toggle"
                                                     type="button" id="testCaseActions"
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -168,14 +168,20 @@
                                                     {% endfor %}
                                                     </ul>
                                                 </li>
-
-                                                <li>
-                                                    <a id="default-tester-button" href="#">
+                                                <li class="dropdown-submenu">
+                                                    <a href="#">
                                                         <span class="fa fa-search"></span>
                                                         {% trans 'Default tester' %}
                                                     </a>
+                                                    <ul class="dropdown-menu dropdown-menu-right js-toolbar-default-tester" style="min-width: 220px;padding: 5px;">
+                                                        <div style="display: inline-block;">
+                                                            <input type="text" class="form-control typeahead user-field">
+                                                        </div>
+                                                        <button class="btn btn-default" title="Apply" style="margin-left: 5px;" id="default-tester-button">
+                                                            <span class="fa fa-check"></span>
+                                                        </button>
+                                                    </ul>
                                                 </li>
-
                                                 <li>
                                                     <a id="bulk-reviewer-button" href="#">
                                                         <span class="fa fa-history"></span>
