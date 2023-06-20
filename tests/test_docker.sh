@@ -83,13 +83,13 @@ rlJournalStart
         assert_up_and_running
     rlPhaseEnd
 
-    rlPhaseStartTest "Use mysqldump for backup"
-        rlRun -t -c "docker exec -i kiwi_db mysqldump --user kiwi --password=kiwi kiwi > backup.sql"
+    rlPhaseStartTest "Use mariadb-dump for backup"
+        rlRun -t -c "docker exec -i kiwi_db mariadb-dump --user kiwi --password=kiwi kiwi > backup.sql"
         rlAssertExists "backup.sql"
     rlPhaseEnd
 
     rlPhaseStartTest "Restore from a backup"
-        rlRun -t -c "cat backup.sql | docker exec -i kiwi_db mysql --user kiwi --password=kiwi -v kiwi"
+        rlRun -t -c "cat backup.sql | docker exec -i kiwi_db mariadb --user kiwi --password=kiwi -v kiwi"
         assert_up_and_running
     rlPhaseEnd
 
