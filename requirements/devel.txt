@@ -7,4 +7,5 @@ black
 parameterized
 robotframework
 robotframework-seleniumlibrary
+selenium==4.9.1
 textdistance
