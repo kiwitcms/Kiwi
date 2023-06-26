@@ -105,6 +105,9 @@ _EOF_
             rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
 
             rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
+
+            CT_HEADER_COUNT=$(curl -k -D- https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
+            rlAssertEquals "There should be only 1 Content-Type header" $CT_HEADER_COUNT 1
         fi
     rlPhaseEnd
 
