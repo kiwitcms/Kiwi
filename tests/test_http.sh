@@ -2,6 +2,9 @@
 
 . /usr/share/beakerlib/beakerlib.sh
 
+HTTPS="https://localhost"
+PROXY="https://localhost:4343"
+
 assert_up_and_running() {
     sleep 10
     # HTTP redirects; HTTPS display the login page
@@ -72,23 +75,28 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Should send ETag header"
-        rlRun -t -c "curl -k -D- https://localhost/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
+        rlRun -t -c "curl -k -D- $HTTPS/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
+        rlRun -t -c "curl -k -D- $PROXY/static/images/kiwi_h20.png 2>/dev/null | grep 'ETag'"
     rlPhaseEnd
 
     rlPhaseStartTest "Should NOT send Cache-Control header"
-        rlRun -t -c "curl -k -D- https://localhost/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
+        rlRun -t -c "curl -k -D- $HTTPS/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
+        rlRun -t -c "curl -k -D- $PROXY/static/images/kiwi_h20.png 2>/dev/null | grep 'Cache-Control'" 1
     rlPhaseEnd
 
     rlPhaseStartTest "Should send X-Frame-Options header"
-        rlRun -t -c "curl -k -D- https://localhost 2>/dev/null | grep 'X-Frame-Options: DENY'"
+        rlRun -t -c "curl -k -D- $HTTPS 2>/dev/null | grep 'X-Frame-Options: DENY'"
+        rlRun -t -c "curl -k -D- $PROXY 2>/dev/null | grep 'X-Frame-Options: DENY'"
     rlPhaseEnd
 
     rlPhaseStartTest "Should send X-Content-Type-Options header"
-        rlRun -t -c "curl -k -D- https://localhost 2>/dev/null | grep 'X-Content-Type-Options: nosniff'"
+        rlRun -t -c "curl -k -D- $HTTPS 2>/dev/null | grep 'X-Content-Type-Options: nosniff'"
+        rlRun -t -c "curl -k -D- $PROXY 2>/dev/null | grep 'X-Content-Type-Options: nosniff'"
     rlPhaseEnd
 
     rlPhaseStartTest "Should send Content-Security-Policy header"
-        rlRun -t -c "curl -k -D- https://localhost 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com;'"
+        rlRun -t -c "curl -k -D- $HTTPS 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com;'"
+        rlRun -t -c "curl -k -D- $PROXY 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com;'"
     rlPhaseEnd
 
     rlPhaseStartTest "Should not execute inline JavaScript"
@@ -97,17 +105,23 @@ _EOF_
             # copy test file externally b/c Kiwi TCMS v12.2 will prevent its upload
             rlRun -t -c "docker exec -i kiwi_web /bin/bash -c 'mkdir -p /Kiwi/uploads/attachments/auth_user/2/'"
             rlRun -t -c "docker cp tests/ui/data/inline_javascript.svg kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
-            rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- $HTTPS/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- $PROXY/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
 
             rlRun -t -c "docker cp tests/ui/data/redirect.js kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
             rlRun -t -c "docker cp tests/ui/data/html_with_external_script.html kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
-            rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
-            rlRun -t -c "curl -k -D- https://localhost/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- $HTTPS/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- $PROXY/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- $HTTPS/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- $PROXY/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
 
             rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
 
-            CT_HEADER_COUNT=$(curl -k -D- https://localhost/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
-            rlAssertEquals "There should be only 1 Content-Type header" $CT_HEADER_COUNT 1
+            CT_HEADER_COUNT=$(curl -k -D- $HTTPS/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
+            rlAssertEquals "There should be only 1 Content-Type header" "$CT_HEADER_COUNT" 1
+
+            CT_HEADER_COUNT=$(curl -k -D- $PROXY/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
+            rlAssertEquals "There should be only 1 Content-Type header" "$CT_HEADER_COUNT" 1
         fi
     rlPhaseEnd
 
