@@ -36,6 +36,20 @@ services:
         cap_drop:
           - ALL
 
+    # this is used only for testing purposes
+    # Not needed for actual deployment!
+    proxy:
+        container_name: reverse_proxy
+        image: nginx
+        volumes:
+            - ./tests/nginx-proxy/nginx.conf:/etc/nginx/nginx.conf:Z
+            - ./tests/nginx-proxy/localhost.key:/etc/nginx/localhost.key:Z
+            - ./tests/nginx-proxy/localhost.crt:/etc/nginx/localhost.crt:Z
+        ports:
+            - 4343:8443
+        depends_on:
+            - web
+
 volumes:
     db_data:
     uploads:
