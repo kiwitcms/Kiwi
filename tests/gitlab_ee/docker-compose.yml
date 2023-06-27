@@ -14,4 +14,4 @@ services:
             letsencrypt['enable'] = false
             letsencrypt['auto_renew'] = false
         volumes:
-          - ./25_api_personal_access_token.rb:/opt/gitlab/embedded/service/gitlab-rails/ee/db/fixtures/production/25_api_personal_access_token.rb
+          - ./25_api_personal_access_token.rb:/opt/gitlab/embedded/service/gitlab-rails/ee/db/fixtures/production/999_api_personal_access_token.rb

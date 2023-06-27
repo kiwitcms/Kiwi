@@ -1,11 +1,23 @@
 # Inspired by https://gitlab.com/gitlab-org/gitlab/-/blob/master/db/fixtures/development/25_api_personal_access_token.rb
 # frozen_string_literal: true
 
-token = PersonalAccessToken.new
-token.user_id = User.find_by(username: 'root').id
-token.name = 'api-token-for-testing'
-token.scopes = ["api"]
-token.set_token('ypCa3Dzb23o5nvsixwPA')
-token.save
+# Create an api access token for root user with the value:
+token = 'ypCa3Dzb23o5nvsixwPA'
+scopes = Gitlab::Auth.all_available_scopes
 
-print 'OK'
+Gitlab::Seeder.quiet do
+  User.find_by(username: 'root').tap do |user|
+    params = {
+      scopes: scopes.map(&:to_s),
+      name: 'seeded-api-token'
+    }
+
+    user.personal_access_tokens.build(params).tap do |pat|
+      pat.expires_at = 365.days.from_now
+      pat.set_token(token)
+      pat.save!
+    end
+  end
+
+  print 'OK'
+end
