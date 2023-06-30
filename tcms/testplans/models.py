@@ -9,6 +9,7 @@ from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models.base import UrlMixin
+from tcms.core.templatetags.extra_filters import bleach_input
 from tcms.management.models import Version
 from tcms.testcases.models import TestCasePlan
 
@@ -213,6 +214,7 @@ class TestPlan(TreeNode, UrlMixin):
             if test_plan.pk == self.pk:
                 active_class = "active"
 
+            plan_name = bleach_input(test_plan.name)
             result += f"""
                 <!-- begin-node -->
                 <div class="list-group-item {active_class}" style="border: none">
@@ -228,7 +230,7 @@ class TestPlan(TreeNode, UrlMixin):
                                 <div class="list-view-pf-description">
                                     <div class="list-group-item-text">
                                         <a href="{test_plan.get_absolute_url()}">
-                                            TP-{test_plan.pk}: {test_plan.name}
+                                            TP-{test_plan.pk}: {plan_name}
                                         </a>
                                     </div>
                                 </div>
