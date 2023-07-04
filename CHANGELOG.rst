@@ -1,6 +1,76 @@
 Change Log
 ==========
 
+
+Kiwi TCMS 12.5 (04 Jul 2023)
+----------------------------
+
+.. important::
+
+    This is a small release which contains security related updates, several improvements
+    and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update django from 4.2.2 to 4.2.3. Fixes
+  `CVE-2023-36053 <https://github.com/advisories/GHSA-jh3w-4vvf-mjgr>`_ -
+  ReDoS vulnerability
+- Patch misconfigured HTTP headers allowing stored XSS execution. Fixes
+  `CVE-2023-36809 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-jpgw-2r9m-8qfw>`_
+- Sanitize test plan name in ``tree_view_html()`` function to reduce the
+  opportunity for exploiting stored XSS vulnerabilities
+- Extend the list of file upload validators to reduce the opportunity for
+  exploiting stored XSS vulnerabilities
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-colorfield from 0.8.0 to 0.9.0
+- Update django-extensions from 3.2.1 to 3.2.3
+- Update django-simple-captcha from 0.5.17 to 0.5.18
+- Update django-tree-queries from 0.14.0 to 0.15.0
+- Update jira from 3.5.1 to 3.5.2
+- Update python-gitlab from 3.14.0 to 3.15.0
+- Small update to ``HEALTHCHECK`` command in container
+- Replace ``mysql`` with native ``mariadb`` commands for backup/restore
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update node_modules/eslint from 8.42.0 to 8.44.0
+- Update node_modules/eslint-plugin-n from 16.0.0 to 16.0.1
+- Update node_modules/webpack from 5.85.0 to 5.88.1
+- Update node_modules/webpack-cli from 5.1.3 to 5.1.4
+- Pin Selenium to 4.9.1 b/c of failures with 4.10.0
+- Add configuration for testing with reverse proxy
+- Assert that Nginx proxy doesn't strip response headers
+- Assert on the number of ``Content-Type`` headers for attachments
+- Update how we seed GitLab API token used for testing
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+
+
+
 Kiwi TCMS 12.4 (06 Jun 2023)
 ----------------------------
 
