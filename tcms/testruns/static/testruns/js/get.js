@@ -517,6 +517,7 @@ function getExpandArea (testExecution) {
         const ul = container.find('.test-execution-hyperlinks')
         ul.innerHTML = ''
         links.forEach(link => ul.append(renderLink(link)))
+        bindDeleteLinkButton()
     })
 
     jsonRPC('TestCase.list_attachments', [testExecution.case], attachments => {
@@ -860,6 +861,7 @@ function addLinkToExecutions (testExecutionIDs) {
                     }
                     const ul = testExecutionRow.find('.test-execution-hyperlinks')
                     ul.append(renderLink(link))
+                    bindDeleteLinkButton()
                 })
             })
         })
@@ -895,8 +897,22 @@ function renderLink (link) {
     const linkUrlEl = template.find('.link-url')
     linkUrlEl.html(link.name || link.url)
     linkUrlEl.attr('href', link.url)
+    template.find('.js-remove-linkreference').attr('data-link-id', link.id)
+    template.find('li').attr('data-link-id', link.id)
 
     return template
+}
+
+export function bindDeleteLinkButton () {
+    $('.js-remove-linkreference').click(function (event) {
+        const row = $(event.target).parents('li')
+        const linkId = $(event.target).parent('.js-remove-linkreference').data('link-id')
+
+        jsonRPC('TestExecution.remove_link', { pk: linkId }, () => {
+            $(row).fadeOut(500)
+        })
+        return false
+    })
 }
 
 function removeCases (testRunId, testCaseIds) {

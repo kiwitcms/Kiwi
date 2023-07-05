@@ -423,7 +423,7 @@
                                                 <div>
                                                     <ul class="test-execution-hyperlinks"></ul>
                                                     <template id="link-entry">
-                                                        <li>
+                                                        <li data-link-id="">
                                                             <span class="link-icon"></span>
                                                             <a class="link-url"></a>
                                                             <a href="#"
@@ -435,6 +435,13 @@
                                                                 data-placement="right">
                                                                 <span class="fa fa-info-circle hidden-print"></span>
                                                             </a>
+                                                            {% if perms.linkreference.delete_linkreference %}
+                                                            <a href="#" data-link-id="" style="float:right"
+                                                                class="js-remove-linkreference hidden-print"
+                                                                title="{% trans 'Delete' %}">
+                                                                <span class="pficon-error-circle-o hidden-print"></span>
+                                                            </a>
+                                                            {% endif %}
                                                         </li>
                                                     </template>
                                                 </div>
