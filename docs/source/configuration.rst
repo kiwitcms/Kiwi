@@ -124,6 +124,10 @@ Also modify ``Dockerfile`` to include the following lines::
 
     RUN pip install django_ses
 
+.. warning::
+
+    The django-ses add-on is available as part of Kiwi TCMS Enterprise!
+
 
 Kerberos authentication
 -----------------------
