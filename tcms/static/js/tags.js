@@ -69,6 +69,7 @@ export function tagsCard (model, objectId, displayFilter, permRemove) {
 
     // remove tags button
     tagsTable.on('draw', function () {
+        $('.remove-tag').off('click')
         $('.remove-tag').click(function () {
             const tr = $(this).parents('tr')
 
