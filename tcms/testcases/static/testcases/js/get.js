@@ -130,6 +130,7 @@ export function pageTestcasesGetReadyHandler () {
 
     // remove component button
     componentsTable.on('draw', function () {
+        $('.remove-component').off('click')
         $('.remove-component').click(function () {
             const tr = $(this).parents('tr')
 
@@ -208,6 +209,7 @@ export function pageTestcasesGetReadyHandler () {
 
     // remove plan button
     plansTable.on('draw', function () {
+        $('.remove-plan').off('click')
         $('.remove-plan').click(function () {
             const tr = $(this).parents('tr')
 
