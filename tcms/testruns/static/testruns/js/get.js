@@ -918,17 +918,25 @@ export function bindDeleteLinkButton () {
 function removeCases (testRunId, testCaseIds) {
     for (const testCaseId of testCaseIds) {
         jsonRPC('TestRun.remove_case', [testRunId, testCaseId], () => {
-            const tePK = $(`.test-execution-case-${testCaseId}`)
-                .find('.test-execution-checkbox')
-                .data('test-execution-id')
+            const testExecutionsIds = []
+            $(`.test-execution-case-${testCaseId}`)
+                .each(
+                    function() {testExecutionsIds.push(
+                        $(this)
+                            .find('.test-execution-checkbox')
+                            .data('test-execution-id')
+                    )}
+                )
             $(`.test-execution-case-${testCaseId}`).remove()
 
-            delete expandedExecutionIds[expandedExecutionIds.indexOf(tePK)]
-            delete allExecutions[tePK]
+            testExecutionsIds.forEach(element => {
+                delete expandedExecutionIds[expandedExecutionIds.indexOf(element)]
+                delete allExecutions[element]
+            })
 
             const testExecutionCountEl = $('.test-executions-count')
             const count = parseInt(testExecutionCountEl[0].innerText)
-            testExecutionCountEl.html(count - 1)
+            testExecutionCountEl.html(count - testExecutionsIds.length)
         }, true)
     }
 
