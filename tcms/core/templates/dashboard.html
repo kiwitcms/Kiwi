@@ -76,7 +76,7 @@ Here are the latest {{ count }}.{% endblocktrans %}
 {% blocktrans with total_count=test_plans_count disabled_count=test_plans_disable_count count=last_15_test_plans|length %}You manage {{ total_count }} TestPlan(s), {{ disabled_count }} are disabled.
 Here are the latest {{ count }}.{% endblocktrans %}
 
-                <a href="{% url "plans-search" %}?author__username__startswith={{ user.username }}">
+                <a href="{% url "plans-search" %}?author={{ user.username }}">
                     {% trans "SEE ALL" %}
                 </a>
             {% else %}

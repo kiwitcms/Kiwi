@@ -40,7 +40,7 @@
                         </li>
 
                         <li>
-                            <a href="{% url "plans-search" %}?author__username__startswith={{ user.username }}" target="_parent">{% trans "My Test Plans" %}</a>
+                            <a href="{% url "plans-search" %}?author={{ user.username }}" target="_parent">{% trans "My Test Plans" %}</a>
                         </li>
 
                         <li class="divider"></li>
