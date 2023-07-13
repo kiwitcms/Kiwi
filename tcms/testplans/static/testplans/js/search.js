@@ -172,13 +172,13 @@ export function pageTestplansSearchReadyHandler () {
 
 function hideExpandedChildren (table, parentRow) {
     const children = hiddenChildRows[parentRow.data().id]
-    if (!children){
-        return;
+    if (!children) {
+        return
     }
     children.forEach(
-        function(element) {
+        function (element) {
             const row = table.row($(element))
-            if (row.child.isShown()){
+            if (row.child.isShown()) {
                 row.child.hide()
             }
             if (hiddenChildRows[row.data().id]) {
