@@ -921,11 +921,13 @@ function removeCases (testRunId, testCaseIds) {
             const testExecutionsIds = []
             $(`.test-execution-case-${testCaseId}`)
                 .each(
-                    function() {testExecutionsIds.push(
-                        $(this)
-                            .find('.test-execution-checkbox')
-                            .data('test-execution-id')
-                    )}
+                    function () {
+                        testExecutionsIds.push(
+                            $(this)
+                                .find('.test-execution-checkbox')
+                                .data('test-execution-id')
+                        )
+                    }
                 )
             $(`.test-execution-case-${testCaseId}`).remove()
 
