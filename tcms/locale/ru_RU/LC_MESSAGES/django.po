@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-16 11:56\n"
+"PO-Revision-Date: 2023-07-14 08:39\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -33,8 +33,8 @@ msgstr "Описание проблемы:\n\n\n"
 "1.\n"
 "2.\n"
 "3.\n\n"
-"Фактические результаты:\n\n\n"
-"Ожидаемые результаты:\n\n\n"
+"Фактический результат:\n\n\n"
+"Ожидаемый результат:\n\n\n"
 "Дополнительная информация:"
 
 #: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:50
@@ -476,7 +476,7 @@ msgstr "Файл содержит недопустимый тег: <{tag_name}>"
 #: tcms/kiwi_attachments/validators.py:15
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
+msgstr "Файл содержит запрещенный атрибут: `{attr_name}`"
 
 #: tcms/kiwi_attachments/validators.py:19
 msgid "Uploading executable files is forbidden"
@@ -1260,11 +1260,11 @@ msgstr "Не удалось создать трекер ошибок"
 
 #: tcms/testcases/admin.py:199
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "Детали извлечены из OpenGraph. Трэкер ошибок все еще может быть настроен неправильно!"
 
 #: tcms/testcases/admin.py:208
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr ""
+msgstr "Детали извлечены из API. Конфигурация трэкера ошибок выглядит хорошо!"
 
 #: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
@@ -1469,7 +1469,7 @@ msgstr "Уведомлять когда"
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "applies only for changes made by somebody else"
-msgstr ""
+msgstr "применимо только к изменениям, сделанным другим пользователем"
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
@@ -2226,3 +2226,4 @@ msgstr "группа"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "группы"
+
