@@ -88,20 +88,6 @@ $(() => {
         window.markdownEditor = initSimpleMDE(this, uploadField)
     })
 
-    $('.dropdown.dropdown-keep-open').on('hide.bs.dropdown', function (ev) {
-        // Disable automatic closing of dropdown menu.
-        // This is required for using typeahead fields in submenu options.
-        return false
-    })
-
-    $(document).on('click', function (ev) {
-        if (!$(ev.target).parents('.dropdown.dropdown-keep-open').length) {
-            // The target is not inside the dropdown element.
-            // Close open dropdowns
-            $('.dropdown.dropdown-keep-open.open').removeClass('open')
-        }
-    })
-
     // for debugging in browser
     window.jsonRPC = jsonRPC
 })
