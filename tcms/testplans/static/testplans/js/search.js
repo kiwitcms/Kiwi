@@ -153,9 +153,7 @@ export function pageTestplansSearchReadyHandler () {
         const row = table.row(tr)
 
         if (row.child.isShown()) {
-            // TODO: hide all expanded children. When closing a top-level parent row
-            // its immediate children are removed, however their descendants aren't.
-            // This leads to dangling rows in situations of multi-tier parent-child TPs
+            hideExpandedChildren(table, row)
             row.child.hide()
             bracket.removeClass('fa-angle-down')
         } else {
@@ -170,6 +168,21 @@ export function pageTestplansSearchReadyHandler () {
     })
 
     $('#id_product').change(updateVersionSelectFromProduct)
+}
+
+function hideExpandedChildren (table, parentRow) {
+    const children = hiddenChildRows[parentRow.data().id]
+    children.forEach(
+        function (element) {
+            const row = table.row($(element))
+            if (row.child.isShown()) {
+                row.child.hide()
+            }
+            if (hiddenChildRows[row.data().id]) {
+                hideExpandedChildren(table, row)
+            }
+        }
+    )
 }
 
 function renderChildrenOf (parentRow, data) {
