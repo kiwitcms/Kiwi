@@ -24,7 +24,7 @@
     "eslint-plugin-n": "16.0.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.1.1",
-    "webpack": "5.88.1",
+    "webpack": "5.88.2",
     "webpack-cli": "5.1.4"
   }
 }
