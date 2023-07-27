@@ -3,4 +3,4 @@
 django-simple-captcha==0.5.18
 django-vinaigrette==2.0.1
 python-bugzilla==3.2.0
-uWSGI==2.0.21
+uWSGI==2.0.22
