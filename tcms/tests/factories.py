@@ -251,20 +251,25 @@ class TestRunFactory(DjangoModelFactory):
                 TestRunCCFactory(run=self, user=user)
 
 
+def text_version_from_history(obj):
+    if obj.case.history.count():
+        return obj.case.history.latest().history_id
+
+    return 0
+
+
 class TestExecutionFactory(DjangoModelFactory):
     class Meta:
         model = "testruns.TestExecution"
 
     assignee = factory.SubFactory(UserFactory)
     tested_by = factory.SubFactory(UserFactory)
-    case_text_version = factory.LazyAttribute(
-        lambda obj: obj.case.history.latest().history_id
-    )
     stop_date = None
     start_date = None
     sortkey = factory.Sequence(lambda n: n)
     run = factory.SubFactory(TestRunFactory)
     case = factory.SubFactory(TestCaseFactory)
+    case_text_version = factory.LazyAttribute(text_version_from_history)
     status = factory.LazyFunction(
         lambda: TestExecutionStatus.objects.order_by("pk").first()
     )
