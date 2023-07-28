@@ -29,7 +29,7 @@ class JIRA(IssueTrackerType):
     Support for JIRA. Requires:
 
     :base_url: the URL of this JIRA instance. For example https://kiwitcms.atlassian.net
-    :api_username: a username registered in JIRA
+    :api_username: an email address registered with JIRA
     :api_password: API token for this username, see
                    https://id.atlassian.com/manage-profile/security/api-tokens
 
