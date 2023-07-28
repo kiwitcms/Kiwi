@@ -191,7 +191,7 @@ Configure external bug trackers</a> section before editting the values below!</h
 
                 details = tracker.details(bug_url)
 
-                if details["from_open_graph"]:
+                if details.get("from_open_graph", False):
                     messages.add_message(
                         request,
                         messages.WARNING,
