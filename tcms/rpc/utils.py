@@ -41,21 +41,18 @@ def encode_multipart(csrf_token, filename, b64content):
         ``\\r\\n`` are expected! Do not change!
     """
     boundary = f"----------{int(time.time() * 1000)}"
-    data = [f"--{boundary}"]
-
-    data.append('Content-Disposition: form-data; name="csrfmiddlewaretoken"\r\n')
-    data.append(csrf_token)
-    data.append(f"--{boundary}")
-
-    data.append(
-        f'Content-Disposition: form-data; name="attachment_file"; filename="{filename}"'
-    )
-    data.append("Content-Type: application/octet-stream")
-    data.append("Content-Transfer-Encoding: base64")
-    data.append(f"Content-Length: {len(b64content)}\r\n")
-    data.append(b64content)
-
-    data.append(f"--{boundary}--\r\n")
+    data = [
+        f"--{boundary}",
+        'Content-Disposition: form-data; name="csrfmiddlewaretoken"\r\n',
+        csrf_token,
+        f"--{boundary}",
+        f'Content-Disposition: form-data; name="attachment_file"; filename="{filename}"',
+        "Content-Type: application/octet-stream",
+        "Content-Transfer-Encoding: base64",
+        f"Content-Length: {len(b64content)}\r\n",
+        b64content,
+        f"--{boundary}--\r\n",
+    ]
     return "\r\n".join(data), boundary
 
 
