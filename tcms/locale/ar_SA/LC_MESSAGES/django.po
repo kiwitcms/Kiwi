@@ -1124,12 +1124,6 @@ msgstr ""
 msgid "Reviewer"
 msgstr ""
 
-#: tcms/templates/plan/get_cases.html:181
-#: tcms/templates/plan/search_case.html:79 tcms/templates/run/get.html:116
-#: tcms/templates/run/report.html:41
-msgid "Default Tester"
-msgstr ""
-
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
 msgstr ""
