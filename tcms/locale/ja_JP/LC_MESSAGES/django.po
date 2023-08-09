@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 12:43+0000\n"
-"PO-Revision-Date: 2023-06-05 22:07\n"
+"POT-Creation-Date: 2023-08-08 08:28+0000\n"
+"PO-Revision-Date: 2023-08-09 13:45\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -139,8 +139,8 @@ msgstr "再オープン"
 #: tcms/testcases/templates/testcases/mutable.html:263
 #: tcms/testplans/templates/testplans/get.html:477
 #: tcms/testplans/templates/testplans/mutable.html:157
-#: tcms/testruns/templates/testruns/get.html:463
-#: tcms/testruns/templates/testruns/get.html:576
+#: tcms/testruns/templates/testruns/get.html:470
+#: tcms/testruns/templates/testruns/get.html:583
 #: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Save"
 msgstr "保存"
@@ -238,7 +238,7 @@ msgstr "以後"
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testplans/templates/testplans/search.html:86
-#: tcms/testruns/templates/testruns/get.html:507
+#: tcms/testruns/templates/testruns/get.html:514
 #: tcms/testruns/templates/testruns/search.html:69
 #: tcms/testruns/templates/testruns/search.html:75
 msgid "Username"
@@ -268,7 +268,7 @@ msgstr "ユーザー名"
 #: tcms/testplans/templates/testplans/mutable.html:138
 #: tcms/testplans/templates/testplans/mutable.html:151
 #: tcms/testplans/templates/testplans/search.html:40
-#: tcms/testruns/templates/testruns/get.html:570
+#: tcms/testruns/templates/testruns/get.html:577
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "Yes"
 msgstr "はい"
@@ -297,7 +297,7 @@ msgstr "はい"
 #: tcms/testplans/templates/testplans/mutable.html:138
 #: tcms/testplans/templates/testplans/mutable.html:151
 #: tcms/testplans/templates/testplans/search.html:40
-#: tcms/testruns/templates/testruns/get.html:570
+#: tcms/testruns/templates/testruns/get.html:577
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "No"
 msgstr "いいえ"
@@ -347,7 +347,8 @@ msgstr "オブジェクトの権限"
 #: tcms/templates/include/properties_card.html:48 tcms/testcases/views.py:151
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:160
-#: tcms/testruns/templates/testruns/get.html:239 tcms/testruns/views.py:215
+#: tcms/testruns/templates/testruns/get.html:239
+#: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
 msgid "Delete"
 msgstr "削除"
@@ -468,17 +469,17 @@ msgstr "%(unapplied_migration_count)s 件の未適用の移行があります。
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:11
+#: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:15
+#: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:19
+#: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
 msgstr ""
 
@@ -983,7 +984,7 @@ msgstr "管理者各位,\n"
 
 #: tcms/templates/include/attachments.html:10
 #: tcms/testplans/templates/testplans/get.html:437
-#: tcms/testruns/templates/testruns/get.html:470
+#: tcms/testruns/templates/testruns/get.html:477
 msgid "Attachments"
 msgstr "添付ファイル"
 
@@ -1006,7 +1007,7 @@ msgid "No records found"
 msgstr "レコードはありません。"
 
 #: tcms/templates/include/bugs_table.html:15
-#: tcms/testruns/templates/testruns/get.html:556
+#: tcms/testruns/templates/testruns/get.html:563
 msgid "URL"
 msgstr "URL"
 
@@ -1030,7 +1031,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:229
 #: tcms/testplans/templates/testplans/get.html:258
 #: tcms/testruns/templates/testruns/get.html:293
-#: tcms/testruns/templates/testruns/get.html:529
+#: tcms/testruns/templates/testruns/get.html:536
 msgid "Add"
 msgstr "追加"
 
@@ -1041,7 +1042,7 @@ msgstr "追加"
 #: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:24
 #: tcms/testplans/templates/testplans/search.html:14
-#: tcms/testruns/templates/testruns/get.html:562
+#: tcms/testruns/templates/testruns/get.html:569
 msgid "Name"
 msgstr "名称"
 
@@ -1434,7 +1435,7 @@ msgid "add new Template"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:180
-#: tcms/testruns/templates/testruns/get.html:500
+#: tcms/testruns/templates/testruns/get.html:507
 msgid "Notify"
 msgstr "通知する"
 
@@ -1505,7 +1506,7 @@ msgid "Select"
 msgstr "選択"
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
-#: tcms/testruns/templates/testruns/get.html:441 tcms/testruns/views.py:202
+#: tcms/testruns/templates/testruns/get.html:448 tcms/testruns/views.py:202
 msgid "History"
 msgstr "履歴"
 
@@ -1611,12 +1612,12 @@ msgid "Inactive"
 msgstr "非アクティブ"
 
 #: tcms/testplans/templates/testplans/get.html:444
-#: tcms/testruns/templates/testruns/get.html:477
+#: tcms/testruns/templates/testruns/get.html:484
 msgid "No attachments"
 msgstr "添付ファイルなし"
 
 #: tcms/testplans/templates/testplans/get.html:469
-#: tcms/testruns/templates/testruns/get.html:466
+#: tcms/testruns/templates/testruns/get.html:473
 msgid "Comments"
 msgstr "コメント"
 
@@ -1751,7 +1752,7 @@ msgstr "コメントの追加"
 
 #: tcms/testruns/templates/testruns/get.html:229
 #: tcms/testruns/templates/testruns/get.html:332
-#: tcms/testruns/templates/testruns/get.html:551
+#: tcms/testruns/templates/testruns/get.html:558
 msgid "Add hyperlink"
 msgstr "ハイパーリンクを追加"
 
@@ -1768,8 +1769,8 @@ msgid "records"
 msgstr "レコード"
 
 #: tcms/testruns/templates/testruns/get.html:333
-#: tcms/testruns/templates/testruns/get.html:590
-#: tcms/testruns/templates/testruns/get.html:607
+#: tcms/testruns/templates/testruns/get.html:597
+#: tcms/testruns/templates/testruns/get.html:614
 msgid "Report bug"
 msgstr "バグをレポート"
 
@@ -1789,16 +1790,16 @@ msgstr "最新バージョン"
 msgid "Bugs and hyperlinks"
 msgstr "バグとハイパーリンク"
 
-#: tcms/testruns/templates/testruns/get.html:568
+#: tcms/testruns/templates/testruns/get.html:575
 msgid "Is a defect"
 msgstr "不具合"
 
-#: tcms/testruns/templates/testruns/get.html:575
-#: tcms/testruns/templates/testruns/get.html:606
+#: tcms/testruns/templates/testruns/get.html:582
+#: tcms/testruns/templates/testruns/get.html:613
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: tcms/testruns/templates/testruns/get.html:595
+#: tcms/testruns/templates/testruns/get.html:602
 msgid "Issue Tracker"
 msgstr "課題管理"
 
