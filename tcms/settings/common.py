@@ -354,8 +354,8 @@ MENU_ITEMS = [
         _("SEARCH"),
         [
             (_("Search Test Plans"), reverse_lazy("plans-search")),
-            (_("Search Test Runs"), reverse_lazy("testruns-search")),
             (_("Search Test Cases"), reverse_lazy("testcases-search")),
+            (_("Search Test Runs"), reverse_lazy("testruns-search")),
             (_("Search Bugs"), reverse_lazy("bugs-search"))
             if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS
             else (),
