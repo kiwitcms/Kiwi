@@ -79,10 +79,14 @@ class AzureBoards(IssueTrackerType):
     """
 
     def _rpc_connection(self):
-        return AzureBoardsAPI(self.bug_system.base_url, self.bug_system.api_password)
+        (_, api_password) = self.rpc_credentials
+
+        return AzureBoardsAPI(self.bug_system.base_url, api_password)
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.bug_system.base_url and self.bug_system.api_password)
+        (_, api_password) = self.rpc_credentials
+
+        return not (self.bug_system.base_url and api_password)
 
     def _report_issue(self, execution, user):
         """

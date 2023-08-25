@@ -48,18 +48,18 @@ class JIRA(IssueTrackerType):
         else:
             options = None
 
+        (api_username, api_password) = self.rpc_credentials
+
         return jira.JIRA(
             self.bug_system.base_url,
-            basic_auth=(self.bug_system.api_username, self.bug_system.api_password),
+            basic_auth=(api_username, api_password),
             options=options,
         )
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (
-            self.bug_system.base_url
-            and self.bug_system.api_username
-            and self.bug_system.api_password
-        )
+        (api_username, api_password) = self.rpc_credentials
+
+        return not (self.bug_system.base_url and api_username and api_password)
 
     @classmethod
     def bug_id_from_url(cls, url):
@@ -181,11 +181,15 @@ class GitHub(IssueTrackerType):
     """
 
     def _rpc_connection(self):
+        (_, api_password) = self.rpc_credentials
+
         # NOTE: we use an access token so only the password field is required
-        return github.Github(self.bug_system.api_password)
+        return github.Github(api_password)
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.bug_system.base_url and self.bug_system.api_password)
+        (_, api_password) = self.rpc_credentials
+
+        return not (self.bug_system.base_url and api_password)
 
     def _report_issue(self, execution, user):
         """
@@ -262,13 +266,15 @@ class Gitlab(IssueTrackerType):
     """
 
     def _rpc_connection(self):
+        (_, api_password) = self.rpc_credentials
+
         # we use an access token so only the password field is required
-        return gitlab.Gitlab(
-            self.bug_system.api_url, private_token=self.bug_system.api_password
-        )
+        return gitlab.Gitlab(self.bug_system.api_url, private_token=api_password)
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (self.bug_system.api_url and self.bug_system.api_password)
+        (_, api_password) = self.rpc_credentials
+
+        return not (self.bug_system.api_url and api_password)
 
     def _report_issue(self, execution, user):
         project = self.rpc.projects.get(self.repo_id)
@@ -319,17 +325,17 @@ class Redmine(IssueTrackerType):
     """
 
     def is_adding_testcase_to_issue_disabled(self):
-        return not (
-            self.bug_system.base_url
-            and self.bug_system.api_username
-            and self.bug_system.api_password
-        )
+        (api_username, api_password) = self.rpc_credentials
+
+        return not (self.bug_system.base_url and api_username and api_password)
 
     def _rpc_connection(self):
+        (api_username, api_password) = self.rpc_credentials
+
         return redminelib.Redmine(
             self.bug_system.base_url,
-            username=self.bug_system.api_username,
-            password=self.bug_system.api_password,
+            username=api_username,
+            password=api_password,
         )
 
     def details(self, url):

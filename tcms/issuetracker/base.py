@@ -188,11 +188,9 @@ TE-{execution.pk}: {execution.case.summary}"""
         :return: True if bug system api url, username and password are provided
         :rtype: bool
         """
-        return not (
-            self.bug_system.api_url
-            and self.bug_system.api_username
-            and self.bug_system.api_password
-        )
+        (api_username, api_password) = self.rpc_credentials
+
+        return not (self.bug_system.api_url and api_username and api_password)
 
     def _rpc_connection(self):
         """
@@ -218,3 +216,15 @@ TE-{execution.pk}: {execution.case.summary}"""
             self.rpc_cache[self.bug_system.base_url] = self._rpc_connection()
 
         return self.rpc_cache[self.bug_system.base_url]
+
+    @property
+    def rpc_credentials(self):
+        """
+        Returns an tuple of (api_username, api_token_or_password) meant for connecting
+        to a 3rd party issue tracker system.
+
+        It can be overriden in order to provide more flexible integrations!
+
+        .. versionadded:: 12.6
+        """
+        return (self.bug_system.api_username, self.bug_system.api_password)
