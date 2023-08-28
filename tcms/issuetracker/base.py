@@ -6,6 +6,18 @@ from opengraph.opengraph import OpenGraph
 
 RE_ENDS_IN_INT = re.compile(r"[\d]+$")
 
+def _function_from_path(fully_qualified_dotted_path):
+    """
+    Helper function which returns a callable object from a
+    fully qualified dotted path string!
+    """
+    function_name = fully_qualified_dotted_path.split(".")[-1]
+    module_name = fully_qualified_dotted_path.replace(f".{function_name}", "")
+
+    module_object = import_module(module_name)
+    function_object = getattr(module_object, function_name)
+    return function_object
+
 
 class IssueTrackerType:
     """
@@ -136,11 +148,7 @@ class IssueTrackerType:
         .. versionadded:: 11.4
         """
         for fully_qualified_dotted_path in settings.EXTERNAL_ISSUE_POST_PROCESSORS:
-            function_name = fully_qualified_dotted_path.split(".")[-1]
-            module_name = fully_qualified_dotted_path.replace(f".{function_name}", "")
-
-            processor_module = import_module(module_name)
-            processor_function = getattr(processor_module, function_name)
+            processor_function = _function_from_path(fully_qualified_dotted_path)
             processor_function(self.rpc, new_issue, execution, user)
 
     def add_testexecution_to_issue(self, executions, issue_url):
