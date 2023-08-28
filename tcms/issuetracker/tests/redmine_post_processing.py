@@ -20,3 +20,7 @@ def change_assignee(rpc, new_issue, execution, user):
     # Note: assignee needs to be a member of the project where issues are created
     # and needs to have a role with the `assignable` flag set to 1.
     rpc.issue.update(new_issue.id, assigned_to_id=atodorov.id)
+
+
+def rpc_creds(issue_tracker):
+    return ("tester", "test-me")

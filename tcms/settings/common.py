@@ -185,6 +185,10 @@ AZURE_BOARDS_API_VERSION = os.environ.get("AZURE_BOARDS_API_VERSION", "6.0")
 # tcms.issuetracker.tests.redmine_post_processing for hints!
 EXTERNAL_ISSUE_POST_PROCESSORS = []
 
+# a fully qualified dotted path which overrides the implementation of
+# tcms.issutracker.base.IssueTrackerType.rpc_credentials
+EXTERNAL_ISSUE_RPC_CREDENTIALS = ""
+
 # Controls the default issue type for newly created issues in Jira.
 # See JIRA.get_issue_from_jira() method
 JIRA_ISSUE_TYPE = "Bug"
