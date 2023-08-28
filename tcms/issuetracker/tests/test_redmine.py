@@ -144,3 +144,20 @@ class TestRedmineIntegration(APITestCase):
                 is_defect=True,
             ).exists()
         )
+
+    def test_non_overriden_credentials_are_returned(self):
+        (rpc_username, rpc_password) = self.integration.rpc_credentials
+
+        # admin:admin as defined above
+        self.assertEqual(rpc_username, "admin")
+        self.assertEqual(rpc_password, "admin")
+
+    @override_settings(
+        EXTERNAL_ISSUE_RPC_CREDENTIALS="tcms.issuetracker.tests.redmine_post_processing.rpc_creds"
+    )
+    def test_overriden_credentials_are_returned(self):
+        (rpc_username, rpc_password) = self.integration.rpc_credentials
+
+        # not admin:admin as defined above
+        self.assertEqual(rpc_username, "tester")
+        self.assertEqual(rpc_password, "test-me")

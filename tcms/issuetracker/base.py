@@ -6,6 +6,7 @@ from opengraph.opengraph import OpenGraph
 
 RE_ENDS_IN_INT = re.compile(r"[\d]+$")
 
+
 def _function_from_path(fully_qualified_dotted_path):
     """
     Helper function which returns a callable object from a
@@ -235,4 +236,10 @@ TE-{execution.pk}: {execution.case.summary}"""
 
         .. versionadded:: 12.6
         """
+        if settings.EXTERNAL_ISSUE_RPC_CREDENTIALS:
+            credentials_function = _function_from_path(
+                settings.EXTERNAL_ISSUE_RPC_CREDENTIALS
+            )
+            return credentials_function(self)
+
         return (self.bug_system.api_username, self.bug_system.api_password)
