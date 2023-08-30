@@ -1,6 +1,94 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.6 (30 Aug 2023)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements, bug fixes
+    and new translations!
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update allpairspy from 2.5.0 to 2.5.1
+- Update django from 4.2.3 to 4.2.4
+- Update django-grappelli from 3.0.6 to 3.0.7
+- Update mysqlclient from 2.1.1 to 2.2.0
+- Update uwsgi from 2.0.21 to 2.0.22
+- Update pygments from 2.15.1 to 2.16.1
+- Update psycopg2 from 2.9.6 to 2.9.7
+- Update node_modules/datatables.net-buttons from 2.3.6 to 2.4.1
+- Update node_modules/markdown from 3.4.3 to 3.4.4
+- Update node_modules/word-wrap from 1.2.3 to 1.2.4
+- Update documentation for JIRA integration
+- Clarify the django-ses add-on mentioned in documentation
+- Add a button to delete URLs from test executions. Fixes
+  `Issue #2936 <https://github.com/kiwitcms/Kiwi/issues/2936>`_
+- Show traceback info during IssueTracker health-check to
+  make it easier to debug problems
+
+API
+~~~
+
+- Define ``IssueTracker.rpc_credentials`` property to make it easier
+  to override credentials for IssueTracker integrations
+
+
+Settings
+~~~~~~~~
+
+- Allow overriding ``IssueTrackerType.rpc_credentials`` via the
+  ``EXTERNAL_ISSUE_RPC_CREDENTIALS`` setting
+
+
+Bug fixes
+~~~~~~~~~
+
+- Hide all expanded child rows in TestPlan Search page. Fixes
+  `Issue #3245 <https://github.com/kiwitcms/Kiwi/issues/3245>`_ (@somenewacc)
+- Fix wrong query parameter on DASHBOARD page (@somenewacc)
+- Fix template variable for form fields in search pages (@somenewacc)
+- Prevent multiplication of callbacks for data tables (@somenewacc)
+- Don't fail IssueTracker health-check if we didn't use OpenGraph
+- Reorder items under ``SEARCH`` menu for consistency with items
+  under the ``TESTING`` menu. Fixes
+  `Issue #3315 <https://github.com/kiwitcms/Kiwi/issues/3315>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update node_modules/eslint from 8.44.0 to 8.48.0
+- Update node_modules/eslint-plugin-import from 2.27.5 to 2.28.1
+- Update node_modules/eslint-plugin-n from 16.0.1 to 16.0.2
+- Update node_modules/webpack from 5.88.1 to 5.88.2
+- Fix exception when no history objects found in ``TestExecutionFactory``
+- Move append items to list definition
+- Provide /usr/lib64/pkgconfig/mariadb.pc inside buildroot
+- Remove unused translation string in ar_SA locale
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+
+
 
 Kiwi TCMS 12.5 (04 Jul 2023)
 ----------------------------
