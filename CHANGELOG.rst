@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Kiwi TCMS 12.6 (30 Aug 2023)
-----------------------------
+Kiwi TCMS 12.6.1 (31 Aug 2023)
+------------------------------
 
 .. important::
 
@@ -27,7 +27,6 @@ Improvements
 
 - Update allpairspy from 2.5.0 to 2.5.1
 - Update django from 4.2.3 to 4.2.4
-- Update django-grappelli from 3.0.6 to 3.0.7
 - Update mysqlclient from 2.1.1 to 2.2.0
 - Update uwsgi from 2.0.21 to 2.0.22
 - Update pygments from 2.15.1 to 2.16.1
