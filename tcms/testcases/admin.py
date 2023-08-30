@@ -1,5 +1,7 @@
 # pylint: disable=no-self-use
 
+import traceback
+
 from django import forms
 from django.conf import settings
 from django.contrib import admin, messages
@@ -214,16 +216,17 @@ Configure external bug trackers</a> section before editting the values below!</h
                     messages.INFO,
                     details,
                 )
-            except Exception as err:  # pylint: disable=broad-except
+            except Exception:  # pylint: disable=broad-except
                 messages.add_message(
                     request,
                     messages.ERROR,
                     _("Issue Tracker configuration check failed"),
                 )
+                # show the actual exception with traceback b/c it can help debug failures
                 messages.add_message(
                     request,
                     messages.ERROR,
-                    err,
+                    traceback.format_exc(),
                 )
 
 
