@@ -242,6 +242,11 @@ export function pageTestrunsGetReadyHandler () {
     })
 }
 
+function isFiltered () {
+    const filterParams = new URLSearchParams(location.search)
+    return $('#toolbar-filter').val() !== '' || filterParams.has('status_id')
+}
+
 function filterTestExecutionsByProperty (runId, executions, filterBy, filterValue) {
     // no input => show all rows
     if (filterValue.trim().length === 0) {
@@ -496,7 +501,7 @@ function getExpandArea (testExecution) {
             const $this = $(this)
             jsonRPC('TestExecution.update', [testExecution.id, testExecutionUpdateArgs(statusId)], execution => {
                 // update TestRun if not filtered
-                reloadRowFor(execution, $('#toolbar-filter').val() === '')
+                reloadRowFor(execution, !isFiltered())
 
                 $this.parents('.list-group-item-container').addClass('hidden')
                 // click the .list-group-item-header, not the .test-execution-element itself, because otherwise the handler will fail
@@ -751,11 +756,10 @@ function changeStatusBulk (statusId) {
     }
 
     const updateArgs = testExecutionUpdateArgs(statusId)
-    const notFiltered = $('#toolbar-filter').val() === ''
     selected.executionIds.forEach(executionId => {
         jsonRPC('TestExecution.update', [executionId, updateArgs], execution => {
             // update TestRun if not filtered
-            reloadRowFor(execution, notFiltered)
+            reloadRowFor(execution, !isFiltered())
         })
     })
 }
