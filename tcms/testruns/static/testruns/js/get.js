@@ -85,7 +85,7 @@ export function pageTestrunsGetReadyHandler () {
             jsonRPC('TestExecution.add_comment', [executionId, comment], () => {
                 const testExecutionRow = $(`.test-execution-${executionId}`)
                 animate(testExecutionRow, () => {
-                    delete expandedExecutionIds[expandedExecutionIds.indexOf(executionId)]
+                    expandedExecutionIds.splice(expandedExecutionIds.indexOf(executionId), 1)
                 })
             })
         })
@@ -730,7 +730,7 @@ function renderTestExecutionRow (testExecution) {
     template.find('.one-click-bug-report-button').click(() => fileBugFromExecution(testExecution))
 
     // remove from expanded list b/c data may have changed
-    delete expandedExecutionIds[expandedExecutionIds.indexOf(testExecution.id)]
+    expandedExecutionIds.splice(expandedExecutionIds.indexOf(testExecution.id), 1)
 
     // WARNING: only comments related stuff below
     if (!permissions.addComment) {
@@ -923,7 +923,7 @@ function removeCases (testRunId, testCaseIds) {
                 .data('test-execution-id')
             $(`.test-execution-case-${testCaseId}`).remove()
 
-            delete expandedExecutionIds[expandedExecutionIds.indexOf(tePK)]
+            expandedExecutionIds.splice(expandedExecutionIds.indexOf(tePK), 1)
             delete allExecutions[tePK]
 
             const testExecutionCountEl = $('.test-executions-count')
