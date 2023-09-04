@@ -83,10 +83,7 @@ export function pageTestrunsGetReadyHandler () {
 
         selected.executionIds.forEach(executionId => {
             jsonRPC('TestExecution.add_comment', [executionId, comment], () => {
-                const testExecutionRow = $(`.test-execution-${executionId}`)
-                animate(testExecutionRow, () => {
-                    expandedExecutionIds.splice(expandedExecutionIds.indexOf(executionId), 1)
-                })
+                reloadRowFor(allExecutions[executionId])
             })
         })
 
