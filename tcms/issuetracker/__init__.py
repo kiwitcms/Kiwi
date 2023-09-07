@@ -33,4 +33,10 @@
         :mod:`tcms.issuetracker.types`!
         Additional integrations are provided via add-ons. For more information
         see :mod:`trackers_integration.issuetracker`!
+
+    .. important::
+
+        Most integrations expect product names in Kiwi TCMS to match product names
+        in the external issue tracker database. See individual documentation for
+        specifics.
 """
