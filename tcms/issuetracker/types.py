@@ -99,7 +99,7 @@ class JIRA(IssueTrackerType):
     def get_project_from_jira(self, execution):
         """
         Returns the project from the actual Jira instance.
-        Will try to match execution.run.plan.product.name, otherwise will
+        Will try to match ``execution.run.plan.product.name``, otherwise will
         return the first found!
 
         You may override this method if you want more control and customization,
@@ -351,7 +351,8 @@ class Redmine(IssueTrackerType):
     def redmine_project_by_name(self, name):
         """
         Return a Redmine project which matches the given product name.
-        If there is no match then return the first project in Redmine!
+        Will try to match ``execution.run.plan.product.name``, otherwise will
+        return the first found!
         """
         all_projects = self.rpc.project.all()
         for project in all_projects:
