@@ -33,8 +33,8 @@ class TestJIRAIntegration(APITestCase):
         )
         self.execution_1.run.save()
 
-        # this is the name of the JIRA Project
-        self.execution_1.run.plan.product.name = "Integration with JIRA"
+        # this is the name of the Project in JIRA. Key is "KT"
+        self.execution_1.run.plan.product.name = "Kiwi TCMS"
         self.execution_1.run.plan.product.save()
 
         self.component = ComponentFactory(
@@ -118,7 +118,7 @@ class TestJIRAIntegration(APITestCase):
         )
         self.assertEqual(result["rc"], 0)
         self.assertIn(self.integration.bug_system.base_url, result["response"])
-        self.assertIn("https://kiwitcms.atlassian.net/browse/JIRA-", result["response"])
+        self.assertIn("https://kiwitcms.atlassian.net/browse/KT-", result["response"])
 
         new_issue_id = self.integration.bug_id_from_url(result["response"])
         issue = self.integration.rpc.issue(new_issue_id)
