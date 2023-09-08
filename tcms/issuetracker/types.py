@@ -107,10 +107,13 @@ class JIRA(IssueTrackerType):
 
         .. versionadded:: 11.4
         """
-        try:
-            return self.rpc.project(execution.run.plan.product.name)
-        except jira.exceptions.JIRAError:
-            return self.rpc.projects()[0]
+        search_for = execution.run.plan.product.name.lower()
+        projects_in_jira = self.rpc.projects()
+        for project in self.rpc.projects():
+            if project.name.lower() == search_for:
+                return project
+
+        return projects_in_jira[0]
 
     def _report_issue(self, execution, user):
         """
