@@ -110,7 +110,9 @@ class JIRA(IssueTrackerType):
         search_for = execution.run.plan.product.name.lower()
         projects_in_jira = self.rpc.projects()
         for project in self.rpc.projects():
-            if project.name.lower() == search_for:
+            if (project.name.lower() == search_for) or (
+                project.key.lower() == search_for
+            ):
                 return project
 
         return projects_in_jira[0]
