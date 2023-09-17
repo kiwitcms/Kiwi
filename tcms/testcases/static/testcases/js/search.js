@@ -106,7 +106,7 @@ export function pageTestcasesSearchReadyHandler () {
             };
 
             if ($('#id_run').val()) {
-                params.executions__run__in = $('#id_run').val()
+                params.executions__run__in = [$('#id_run').val()]
             };
 
             const testPlanIds = selectedPlanIds()
