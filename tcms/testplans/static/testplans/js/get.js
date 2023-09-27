@@ -151,7 +151,7 @@ function redrawSingleRow (testCaseId, testPlanId, permissions) {
     const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions)
 
     // remove from expanded list b/c the comment section may have changed
-    delete expandedTestCaseIds[expandedTestCaseIds.indexOf(testCaseId)]
+    expandedTestCaseIds.splice(expandedTestCaseIds.indexOf(testCaseId), 1)
 
     // replace the element in the dom
     $(`[data-testcase-pk=${testCaseId}]`).replaceWith(newRow)
