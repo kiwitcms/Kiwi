@@ -627,7 +627,11 @@ function renderAdditionalInformation (testRunId, execution) {
                     casesInPlan = Object.keys(casesInPlan).map(id => parseInt(id))
 
                     for (const testCase of testCases) {
-                        const row = $(`.test-execution-case-${testCase.id}`)
+                        let rowSelector = `.test-execution-case-${testCase.id}`
+                        if (execution) {
+                            rowSelector += `.test-execution-${execution.id}`
+                        }
+                        const row = $(rowSelector)
 
                         // when loading this page filtered by status some TCs do not exist
                         // but we don't know about it b/c the above queries are overzealous
