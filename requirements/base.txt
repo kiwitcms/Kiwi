@@ -1,7 +1,7 @@
 -r tarballs.txt
 
 allpairspy==2.5.1
-bleach==6.0.0
+bleach==6.1.0
 bleach-allowlist==1.0.3
 Django==4.2.6
 django-attachments==1.11
