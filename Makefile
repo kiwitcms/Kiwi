@@ -168,7 +168,7 @@ messages:
 	    --ignore "*.egg-info/*" --ignore "*/node_modules/*"
 	git checkout tcms/locale/eo_UY/
 
-	for APP_NAME in "github-app" "github-marketplace" "enterprise" "tenants"; do \
+	for APP_NAME in "github-app" "github-marketplace" "enterprise" "tenants" "trackers-integration"; do \
 	    echo "---- Trying to merge translations from ../$$APP_NAME"; \
 	    if [ -d "../$$APP_NAME" ]; then \
 	        REMOTE_DJANGO_PO=`find ../$$APP_NAME -type f -wholename "*/locale/en/LC_MESSAGES/django.po"`; \
