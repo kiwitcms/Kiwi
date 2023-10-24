@@ -12,6 +12,6 @@ factory_boy
 mock
 pydot
 # linting tools
-pylint-django
+pylint-django==2.5.3
 twine
 pyOpenSSL
