@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 08:28+0000\n"
-"PO-Revision-Date: 2023-09-21 14:54\n"
+"POT-Creation-Date: 2023-10-24 08:36+0000\n"
+"PO-Revision-Date: 2023-10-24 11:23\n"
 "Last-Translator: \n"
 "Language-Team: Macedonian\n"
 "Language: mk_MK\n"
@@ -199,7 +199,7 @@ msgstr "додади ново Создадено"
 msgid "Username or email"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:359
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:363
 msgid "Search Bugs"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:348
+#: tcms/bugs/views.py:68 tcms/settings/common.py:352
 msgid "New Bug"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr "Обновено на %(history_date)s\n"
 "За повеќе информации\n"
 "%(instance_url)s"
 
-#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:374
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:378
 msgid "Dashboard"
 msgstr ""
 
@@ -485,7 +485,7 @@ msgstr ""
 msgid "This email address is already in use"
 msgstr "Оваа имајл адреса е веќе во употреба"
 
-#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:387
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:391
 msgid "Users"
 msgstr ""
 
@@ -575,109 +575,109 @@ msgstr ""
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr ""
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:344
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:346
 msgid "New Test Plan"
 msgstr ""
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:348
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
 msgstr ""
 
-#: tcms/settings/common.py:346 tcms/testplans/templates/testplans/get.html:121
+#: tcms/settings/common.py:350 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:354
+#: tcms/settings/common.py:358
 msgid "SEARCH"
 msgstr ""
 
-#: tcms/settings/common.py:356 tcms/testplans/templates/testplans/search.html:5
+#: tcms/settings/common.py:360 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr ""
 
-#: tcms/settings/common.py:357 tcms/testruns/templates/testruns/search.html:5
-msgid "Search Test Runs"
-msgstr ""
-
-#: tcms/settings/common.py:358 tcms/testcases/templates/testcases/search.html:5
+#: tcms/settings/common.py:361 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:365
+#: tcms/settings/common.py:362 tcms/testruns/templates/testruns/search.html:5
+msgid "Search Test Runs"
+msgstr ""
+
+#: tcms/settings/common.py:369
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:372
 msgid "Testing"
 msgstr ""
 
-#: tcms/settings/common.py:370
+#: tcms/settings/common.py:374
 msgid "Breakdown"
 msgstr ""
 
-#: tcms/settings/common.py:372
+#: tcms/settings/common.py:376
 msgid "Execution"
 msgstr ""
 
-#: tcms/settings/common.py:375
+#: tcms/settings/common.py:379
 #: tcms/testruns/templates/testruns/mutable.html:169
 msgid "Matrix"
 msgstr ""
 
-#: tcms/settings/common.py:376
+#: tcms/settings/common.py:380
 msgid "Trends"
 msgstr ""
 
-#: tcms/settings/common.py:379
+#: tcms/settings/common.py:383
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr ""
 
-#: tcms/settings/common.py:385
+#: tcms/settings/common.py:389
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:388
+#: tcms/settings/common.py:392
 msgid "Groups"
 msgstr ""
 
-#: tcms/settings/common.py:390
+#: tcms/settings/common.py:394
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:393
+#: tcms/settings/common.py:397
 msgid "PLUGINS"
 msgstr ""
 
-#: tcms/settings/common.py:403
+#: tcms/settings/common.py:407
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:406
+#: tcms/settings/common.py:410
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:410
+#: tcms/settings/common.py:414
 msgid "Donate €5 via Open Collective"
 msgstr ""
 
-#: tcms/settings/common.py:412
+#: tcms/settings/common.py:416
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:413
+#: tcms/settings/common.py:417
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:414
+#: tcms/settings/common.py:418
 msgid "API Help"
 msgstr ""
 
@@ -1189,51 +1189,51 @@ msgstr ""
 msgid "Register new account"
 msgstr ""
 
-#: tcms/testcases/admin.py:26
+#: tcms/testcases/admin.py:28
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
 msgstr ""
 
-#: tcms/testcases/admin.py:54
+#: tcms/testcases/admin.py:56
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr ""
 
-#: tcms/testcases/admin.py:129
+#: tcms/testcases/admin.py:131
 msgid "Bug URL"
 msgstr ""
 
-#: tcms/testcases/admin.py:149
+#: tcms/testcases/admin.py:151
 msgid "External Issue Tracker Integration"
 msgstr ""
 
-#: tcms/testcases/admin.py:159
+#: tcms/testcases/admin.py:161
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
 msgstr ""
 
-#: tcms/testcases/admin.py:166
+#: tcms/testcases/admin.py:168
 msgid "Configuration health check"
 msgstr ""
 
-#: tcms/testcases/admin.py:170
+#: tcms/testcases/admin.py:172
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
 msgstr ""
 
-#: tcms/testcases/admin.py:190
+#: tcms/testcases/admin.py:192
 msgid "Failed creating Issue Tracker"
 msgstr ""
 
-#: tcms/testcases/admin.py:199
+#: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr ""
 
-#: tcms/testcases/admin.py:208
+#: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
 msgstr ""
 
-#: tcms/testcases/admin.py:221
+#: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
 msgstr ""
 
@@ -2179,4 +2179,8 @@ msgstr ""
 
 #: tenant_groups/models.py:43
 msgid "groups"
+msgstr ""
+
+#: trackers_integration/menu.py:4
+msgid "Personal API tokens"
 msgstr ""
