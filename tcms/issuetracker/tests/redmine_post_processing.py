@@ -24,3 +24,7 @@ def change_assignee(rpc, new_issue, execution, user):
 
 def rpc_creds(issue_tracker):
     return ("tester", "test-me")
+
+
+def rpc_no_creds(issue_tracker):
+    return None

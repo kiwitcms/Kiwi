@@ -240,6 +240,10 @@ TE-{execution.pk}: {execution.case.summary}"""
             credentials_function = _function_from_path(
                 settings.EXTERNAL_ISSUE_RPC_CREDENTIALS
             )
-            return credentials_function(self)
+            result = credentials_function(self)
+
+            # if result is None or not a tuple then fallback
+            if result and isinstance(result, tuple):
+                return result
 
         return (self.bug_system.api_username, self.bug_system.api_password)
