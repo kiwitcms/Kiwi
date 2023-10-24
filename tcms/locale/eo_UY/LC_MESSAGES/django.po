@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-08 08:28+0000\n"
-"PO-Revision-Date: 2023-09-21 14:54\n"
+"POT-Creation-Date: 2023-10-24 08:36+0000\n"
+"PO-Revision-Date: 2023-10-24 11:23\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -191,7 +191,7 @@ msgstr "crwdns401:0crwdne401:0"
 msgid "Username or email"
 msgstr "crwdns404:0crwdne404:0"
 
-#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:359
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:363
 msgid "Search Bugs"
 msgstr "crwdns1042:0crwdne1042:0"
 
@@ -345,7 +345,7 @@ msgstr "crwdns1240:0crwdne1240:0"
 msgid "Delete"
 msgstr "crwdns516:0crwdne516:0"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:348
+#: tcms/bugs/views.py:68 tcms/settings/common.py:352
 msgid "New Bug"
 msgstr "crwdns1040:0crwdne1040:0"
 
@@ -375,7 +375,7 @@ msgid "Updated on %(history_date)s\n"
 "%(instance_url)s"
 msgstr "crwdns324:0%(history_date)scrwdnd324:0%(username)scrwdnd324:0%(diff)scrwdnd324:0%(instance_url)scrwdne324:0"
 
-#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:374
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:378
 msgid "Dashboard"
 msgstr "crwdns353:0crwdne353:0"
 
@@ -473,7 +473,7 @@ msgstr "crwdns1485:0crwdne1485:0"
 msgid "This email address is already in use"
 msgstr "crwdns321:0crwdne321:0"
 
-#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:387
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:391
 msgid "Users"
 msgstr "crwdns1432:0crwdne1432:0"
 
@@ -563,109 +563,109 @@ msgstr "crwdns854:0crwdne854:0"
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "crwdns1112:0crwdne1112:0"
 
-#: tcms/settings/common.py:340
+#: tcms/settings/common.py:344
 msgid "TESTING"
 msgstr "crwdns331:0crwdne331:0"
 
-#: tcms/settings/common.py:342
+#: tcms/settings/common.py:346
 msgid "New Test Plan"
 msgstr "crwdns332:0crwdne332:0"
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:348
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
 msgstr "crwdns333:0crwdne333:0"
 
-#: tcms/settings/common.py:346 tcms/testplans/templates/testplans/get.html:121
+#: tcms/settings/common.py:350 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "crwdns1322:0crwdne1322:0"
 
-#: tcms/settings/common.py:354
+#: tcms/settings/common.py:358
 msgid "SEARCH"
 msgstr "crwdns334:0crwdne334:0"
 
-#: tcms/settings/common.py:356 tcms/testplans/templates/testplans/search.html:5
+#: tcms/settings/common.py:360 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "crwdns335:0crwdne335:0"
 
-#: tcms/settings/common.py:357 tcms/testruns/templates/testruns/search.html:5
-msgid "Search Test Runs"
-msgstr "crwdns336:0crwdne336:0"
-
-#: tcms/settings/common.py:358 tcms/testcases/templates/testcases/search.html:5
+#: tcms/settings/common.py:361 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "crwdns337:0crwdne337:0"
 
-#: tcms/settings/common.py:365
+#: tcms/settings/common.py:362 tcms/testruns/templates/testruns/search.html:5
+msgid "Search Test Runs"
+msgstr "crwdns336:0crwdne336:0"
+
+#: tcms/settings/common.py:369
 msgid "TELEMETRY"
 msgstr "crwdns912:0crwdne912:0"
 
-#: tcms/settings/common.py:368
+#: tcms/settings/common.py:372
 msgid "Testing"
 msgstr "crwdns952:0crwdne952:0"
 
-#: tcms/settings/common.py:370
+#: tcms/settings/common.py:374
 msgid "Breakdown"
 msgstr "crwdns954:0crwdne954:0"
 
-#: tcms/settings/common.py:372
+#: tcms/settings/common.py:376
 msgid "Execution"
 msgstr "crwdns1473:0crwdne1473:0"
 
-#: tcms/settings/common.py:375
+#: tcms/settings/common.py:379
 #: tcms/testruns/templates/testruns/mutable.html:169
 msgid "Matrix"
 msgstr "crwdns1413:0crwdne1413:0"
 
-#: tcms/settings/common.py:376
+#: tcms/settings/common.py:380
 msgid "Trends"
 msgstr "crwdns1475:0crwdne1475:0"
 
-#: tcms/settings/common.py:379
+#: tcms/settings/common.py:383
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "crwdns1038:0crwdne1038:0"
 
-#: tcms/settings/common.py:385
+#: tcms/settings/common.py:389
 msgid "ADMIN"
 msgstr "crwdns344:0crwdne344:0"
 
-#: tcms/settings/common.py:388
+#: tcms/settings/common.py:392
 msgid "Groups"
 msgstr "crwdns1434:0crwdne1434:0"
 
-#: tcms/settings/common.py:390
+#: tcms/settings/common.py:394
 msgid "Everything else"
 msgstr "crwdns348:0crwdne348:0"
 
-#: tcms/settings/common.py:393
+#: tcms/settings/common.py:397
 msgid "PLUGINS"
 msgstr "crwdns1085:0crwdne1085:0"
 
-#: tcms/settings/common.py:403
+#: tcms/settings/common.py:407
 msgid "Report an Issue"
 msgstr "crwdns417:0crwdne417:0"
 
-#: tcms/settings/common.py:406
+#: tcms/settings/common.py:410
 msgid "Ask for help on StackOverflow"
 msgstr "crwdns418:0crwdne418:0"
 
-#: tcms/settings/common.py:410
+#: tcms/settings/common.py:414
 msgid "Donate €5 via Open Collective"
 msgstr "crwdns1206:0crwdne1206:0"
 
-#: tcms/settings/common.py:412
+#: tcms/settings/common.py:416
 msgid "Administration Guide"
 msgstr "crwdns420:0crwdne420:0"
 
-#: tcms/settings/common.py:413
+#: tcms/settings/common.py:417
 msgid "User Guide"
 msgstr "crwdns419:0crwdne419:0"
 
-#: tcms/settings/common.py:414
+#: tcms/settings/common.py:418
 msgid "API Help"
 msgstr "crwdns421:0crwdne421:0"
 
@@ -1177,51 +1177,51 @@ msgstr "crwdns376:0crwdne376:0"
 msgid "Register new account"
 msgstr "crwdns377:0crwdne377:0"
 
-#: tcms/testcases/admin.py:26
+#: tcms/testcases/admin.py:28
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
 msgstr "crwdns1262:0crwdne1262:0"
 
-#: tcms/testcases/admin.py:54
+#: tcms/testcases/admin.py:56
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr "crwdns1264:0crwdne1264:0"
 
-#: tcms/testcases/admin.py:129
+#: tcms/testcases/admin.py:131
 msgid "Bug URL"
 msgstr "crwdns1378:0crwdne1378:0"
 
-#: tcms/testcases/admin.py:149
+#: tcms/testcases/admin.py:151
 msgid "External Issue Tracker Integration"
 msgstr "crwdns1382:0crwdne1382:0"
 
-#: tcms/testcases/admin.py:159
+#: tcms/testcases/admin.py:161
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
 msgstr "crwdns1384:0crwdne1384:0"
 
-#: tcms/testcases/admin.py:166
+#: tcms/testcases/admin.py:168
 msgid "Configuration health check"
 msgstr "crwdns1386:0crwdne1386:0"
 
-#: tcms/testcases/admin.py:170
+#: tcms/testcases/admin.py:172
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
 msgstr "crwdns1380:0crwdne1380:0"
 
-#: tcms/testcases/admin.py:190
+#: tcms/testcases/admin.py:192
 msgid "Failed creating Issue Tracker"
 msgstr "crwdns1388:0crwdne1388:0"
 
-#: tcms/testcases/admin.py:199
+#: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr "crwdns1491:0crwdne1491:0"
 
-#: tcms/testcases/admin.py:208
+#: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
 msgstr "crwdns1493:0crwdne1493:0"
 
-#: tcms/testcases/admin.py:221
+#: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
 msgstr "crwdns1392:0crwdne1392:0"
 
@@ -2168,3 +2168,8 @@ msgstr "crwdns1463:0crwdne1463:0"
 #: tenant_groups/models.py:43
 msgid "groups"
 msgstr "crwdns1465:0crwdne1465:0"
+
+#: trackers_integration/menu.py:4
+msgid "Personal API tokens"
+msgstr "crwdns1498:0crwdne1498:0"
+
