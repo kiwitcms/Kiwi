@@ -14,7 +14,7 @@ class DbColumnChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("db-column-used")
+    @utils.only_required_for_messages("db-column-used")
     def visit_keyword(self, node):
         if node.arg == "db_column":
             self.add_message("db-column-used", node=node)

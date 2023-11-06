@@ -18,7 +18,7 @@ class BulkCreateChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("bulk-create-used")
+    @utils.only_required_for_messages("bulk-create-used")
     def visit_attribute(self, node):
         if node.attrname == "bulk_create":
             self.add_message("bulk-create-used", node=node)

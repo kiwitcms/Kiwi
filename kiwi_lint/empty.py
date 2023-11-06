@@ -21,7 +21,7 @@ class EmptyModuleChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("remove-empty-module")
+    @utils.only_required_for_messages("remove-empty-module")
     def visit_module(self, node):
         if not node.body and not node.path[0].endswith("__init__.py"):
             self.add_message("remove-empty-module", node=node)
@@ -69,7 +69,7 @@ class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
         for file_name in node.path:
             self.discovered_python_files.add(file_name)
 
-    @utils.check_messages("module-in-directory-without-init")
+    @utils.only_required_for_messages("module-in-directory-without-init")
     def close(self):
         diff = self.all_python_files - self.discovered_python_files
         diff = list(diff)
@@ -93,7 +93,7 @@ class EmptyClassChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("remove-empty-class")
+    @utils.only_required_for_messages("remove-empty-class")
     def visit_classdef(self, node):
         if not node.body:
             self.add_message("remove-empty-class", node=node)

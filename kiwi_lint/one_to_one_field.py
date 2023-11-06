@@ -14,7 +14,7 @@ class OneToOneFieldChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("one-to-one-field")
+    @utils.only_required_for_messages("one-to-one-field")
     def visit_attribute(self, node):
         if node.attrname == "OneToOneField":
             self.add_message("one-to-one-field", node=node)

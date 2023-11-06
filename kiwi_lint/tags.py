@@ -19,7 +19,7 @@ class TagsChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("tag-objects-get_or_create")
+    @utils.only_required_for_messages("tag-objects-get_or_create")
     def visit_attribute(self, node):
         if (
             node.attrname == "get_or_create"

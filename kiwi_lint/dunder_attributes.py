@@ -19,7 +19,7 @@ class DunderClassAttributeChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("dunder-class-attribute")
+    @utils.only_required_for_messages("dunder-class-attribute")
     def visit_classdef(self, node):
         """Detect when class attributes use double underscores."""
         # we can redefine special methods (e.g. __iter__) and some attributes,

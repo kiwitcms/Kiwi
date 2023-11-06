@@ -18,7 +18,7 @@ class RawSQLChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("avoid-raw-sql")
+    @utils.only_required_for_messages("avoid-raw-sql")
     def visit_attribute(self, node):
         # looking for .extra(select={}) patterns
         if node.attrname == "extra" and isinstance(node.parent, astroid.Call):

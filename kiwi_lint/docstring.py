@@ -56,7 +56,7 @@ class DocstringChecker(checkers.BaseTokenChecker):
     def visit_functiondef(self, node):
         self._check_docstring(node)
 
-    @utils.check_messages("use-triple-double-quotes")
+    @utils.only_required_for_messages("use-triple-double-quotes")
     def _check_docstring(self, node):
         if node.doc in self._string_tokens:
             token = self._string_tokens[node.doc]
