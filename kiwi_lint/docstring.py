@@ -58,7 +58,7 @@ class DocstringChecker(checkers.BaseTokenChecker):
 
     @utils.only_required_for_messages("use-triple-double-quotes")
     def _check_docstring(self, node):
-        if node.doc in self._string_tokens:
-            token = self._string_tokens[node.doc]
+        if node.doc_node and node.doc_node.value in self._string_tokens:
+            token = self._string_tokens[node.doc_node.value]
             if not token.startswith('"""'):
                 self.add_message("use-triple-double-quotes", node=node)

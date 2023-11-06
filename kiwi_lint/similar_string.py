@@ -87,7 +87,7 @@ class SimilarStringChecker(BaseChecker):
 
         if similar_string:
             if isinstance(node, str):
-                error_message["node"] = astroid.Module(node, file=node, doc=None)
+                error_message["node"] = astroid.Module(node, file=node)
             else:
                 error_message["node"] = node
             error_message["args"] = (
