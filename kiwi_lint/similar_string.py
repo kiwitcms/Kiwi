@@ -63,7 +63,7 @@ class SimilarStringChecker(BaseChecker):
                 return key, similarity
         return None, None
 
-    @utils.check_messages("similar-string")
+    @utils.only_required_for_messages("similar-string")
     def visit_call(self, node):
         if not (
             isinstance(node.func, astroid.Name)

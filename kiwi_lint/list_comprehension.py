@@ -17,6 +17,6 @@ class ListComprehensionChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("avoid-list-comprehension")
+    @utils.only_required_for_messages("avoid-list-comprehension")
     def visit_listcomp(self, node):
         self.add_message("avoid-list-comprehension", node=node)

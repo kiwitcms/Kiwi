@@ -17,7 +17,7 @@ class ObjectsUpdateChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("objects-update-used")
+    @utils.only_required_for_messages("objects-update-used")
     def visit_attribute(self, node):
         """
         Note: this checker will produce false-positives on

@@ -13,7 +13,7 @@ class AutoFieldChecker(checkers.BaseChecker):
         )
     }
 
-    @utils.check_messages("avoid-auto-field")
+    @utils.only_required_for_messages("avoid-auto-field")
     def visit_attribute(self, node):
         if node.attrname == "AutoField":
             self.add_message("avoid-auto-field", node=node)

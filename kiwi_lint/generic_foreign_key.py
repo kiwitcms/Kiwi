@@ -14,7 +14,7 @@ class GenericForeignKeyChecker(BaseChecker):
         )
     }
 
-    @utils.check_messages("avoid-generic-foreign-key")
+    @utils.only_required_for_messages("avoid-generic-foreign-key")
     def visit_call(self, node):
         if (
             isinstance(node.func, astroid.Name)
