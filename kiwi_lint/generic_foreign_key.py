@@ -1,11 +1,8 @@
 import astroid
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 
 
 class GenericForeignKeyChecker(BaseChecker):
-    __implements__ = (IAstroidChecker,)
-
     name = "generic-foreign-key-checker"
 
     msgs = {

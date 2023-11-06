@@ -1,14 +1,12 @@
-# Copyright (c) 2018 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2018,2023 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 
 class ObjectsUpdateChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "objects-update-checker"
 
     msgs = {

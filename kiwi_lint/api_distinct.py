@@ -1,8 +1,8 @@
-# Copyright (c) 2021 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2021,2023 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-from pylint import checkers, interfaces
+from pylint import checkers
 
 from .utils import is_api_function
 
@@ -14,8 +14,6 @@ class APIDistinctChecker(checkers.BaseChecker):
 
     current_api_method = None
     distinct_found = False
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     name = "api-distinct-checker"
 

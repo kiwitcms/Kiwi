@@ -1,10 +1,8 @@
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint_django.utils import node_is_subclass
 
 
 class FormFieldChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "form-field-label-checker"
 
     msgs = {
@@ -37,8 +35,6 @@ class ModelFormChecker(checkers.BaseChecker):
     """
     Check to ensure that all forms inherit from ModelForm.
     """
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     name = "model-form-checker"
 

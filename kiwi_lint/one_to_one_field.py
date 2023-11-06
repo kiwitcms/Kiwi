@@ -1,10 +1,8 @@
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 
 class OneToOneFieldChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "one-to-one-field-checker"
 
     msgs = {
