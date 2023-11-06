@@ -1,10 +1,8 @@
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 
 class DbColumnChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "db-column-used"
 
     msgs = {

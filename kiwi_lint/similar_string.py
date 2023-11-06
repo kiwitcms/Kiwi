@@ -4,12 +4,10 @@ import string
 
 import astroid
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 from textdistance import levenshtein
 
 
 class SimilarStringChecker(BaseChecker):
-    __implements__ = (IAstroidChecker,)
     name = "similar-string-checker"
 
     msgs = {

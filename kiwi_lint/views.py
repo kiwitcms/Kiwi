@@ -8,7 +8,7 @@ from importlib import import_module
 import django
 from django.conf import settings
 from django.urls.resolvers import URLPattern, URLResolver
-from pylint import checkers, interfaces
+from pylint import checkers
 
 
 class DjangoViewsChecker(checkers.BaseChecker):
@@ -88,8 +88,6 @@ class ClassBasedViewChecker(DjangoViewsChecker):
     This is where we are going to require that all views in
     this project be class based!
     """
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     name = "class-based-view-checker"
 

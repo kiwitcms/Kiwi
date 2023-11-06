@@ -1,9 +1,9 @@
-# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2021,2023 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 import astroid
-from pylint import checkers, interfaces
+from pylint import checkers
 
 from .utils import is_api_function
 
@@ -21,8 +21,6 @@ class MissingPermissionsChecker(checkers.BaseChecker):
         "object_permission_required",
     ]
     inside_views_module = False
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     name = "mising-permissions-checker"
 
@@ -95,8 +93,6 @@ class MissingAPIPermissionsChecker(checkers.BaseChecker):
     """
     Will inspect API functions for the presence of permissions decorator!
     """
-
-    __implements__ = (interfaces.IAstroidChecker,)
 
     name = "mising-api-permissions-checker"
 

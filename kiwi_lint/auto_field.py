@@ -1,10 +1,8 @@
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 
 class AutoFieldChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "auto-field-checker"
 
     msgs = {

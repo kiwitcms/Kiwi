@@ -1,17 +1,15 @@
-# Copyright (c) 2018 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2018,2023 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 import os
 
 import astroid
-from pylint import checkers, interfaces
+from pylint import checkers
 from pylint.checkers import utils
 
 
 class EmptyModuleChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "empty-module-checker"
 
     msgs = {
@@ -30,8 +28,6 @@ class EmptyModuleChecker(checkers.BaseChecker):
 
 
 class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "dir-without-init-checker"
 
     msgs = {
@@ -86,8 +82,6 @@ class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
 
 
 class EmptyClassChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "empty-class-checker"
 
     msgs = {

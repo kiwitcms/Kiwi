@@ -5,12 +5,10 @@
 """
 
 from astroid import nodes
-from pylint import checkers, interfaces
+from pylint import checkers
 
 
 class DatetimeChecker(checkers.BaseChecker):
-    __implements__ = (interfaces.IAstroidChecker,)
-
     name = "datetime-checker"
 
     msgs = {
