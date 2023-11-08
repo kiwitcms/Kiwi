@@ -94,6 +94,7 @@ Brief history
 * May 2020 - Reached 100K+ pulls on Docker Hub
 * Mar 2021 - Became **Verified Publisher** on `GitHub Marketplace <https://github.com/marketplace/kiwi-tcms/>`_
 * Jul 2021 - Reached 1M+ pulls on Docker Hub
+* Nov 2023 - Reached 2M+ pulls on Docker Hub
 
 
 Check it out
