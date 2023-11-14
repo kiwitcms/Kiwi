@@ -221,10 +221,14 @@ TE-{execution.pk}: {execution.case.summary}"""
         if self.is_adding_testcase_to_issue_disabled():
             return None
 
-        if self.bug_system.base_url not in self.rpc_cache:
-            self.rpc_cache[self.bug_system.base_url] = self._rpc_connection()
+        # NOTE: using a tuple as the cache-key to prevent integrations which define
+        # personal ApiTokens to accidentally use a cached version
+        # for the same URL but different credentials
+        rpc_key = (self.bug_system.base_url, getattr(self.request, "user", None))
+        if rpc_key not in self.rpc_cache:
+            self.rpc_cache[rpc_key] = self._rpc_connection()
 
-        return self.rpc_cache[self.bug_system.base_url]
+        return self.rpc_cache[rpc_key]
 
     @property
     def rpc_credentials(self):
