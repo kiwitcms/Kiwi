@@ -151,6 +151,7 @@ You may also use the command line::
 
 .. versionadded:: 8.4
 
+.. _upgrading-instructions:
 
 Upgrading
 ---------
@@ -175,9 +176,10 @@ To upgrade running Kiwi TCMS containers execute the following commands::
 
 .. important::
 
-    Kiwi TCMS does not provide versioned docker images via Docker Hub! When you
-    execute ``docker pull`` above you will lose the older image version which
-    could make it impossible to revert back in case the upgrade fails. Use
+    Version tagged and multi-arch `container images <https://kiwitcms.org/containers/>`_
+    are available only to `Kiwi TCMS subscribers <https://kiwitcms.org/#subscriptions>`_!
+    When you execute ``docker pull`` above you will lose the older image version
+    which could make it impossible to revert back in case the upgrade fails. Use
     ``docker tag`` before ``docker pull`` in order to keep a reference to the
     older Kiwi TCMS image!
 

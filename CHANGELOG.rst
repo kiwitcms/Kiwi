@@ -1,6 +1,98 @@
 Change Log
 ==========
 
+Kiwi TCMS 12.7 (25 Nov 2023)
+----------------------------
+
+.. important::
+
+    This is our first release after reaching 2 million downloads on Docker Hub.
+    It is a small release which contains security related updates, several
+    improvements, bug fixes and internal refactoring!
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    12.6.1 -> 12.7
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update django from 4.2.4 to 4.2.7. Fixes
+  `CVE-2023-46695 <https://docs.djangoproject.com/en/4.2/releases/4.2.7/>`_,
+  `CVE-2023-43665 <https://docs.djangoproject.com/en/4.2/releases/4.2.6/>`_ and
+  `CVE-2023-41164 <https://docs.djangoproject.com/en/4.2/releases/4.2.5/>`_.
+  We believe these issues do not affect Kiwi TCMS
+- Update django-simple-captcha from 0.5.18 to 0.5.20
+- We do not believe that any of these issue affect Kiwi TCMS directly however
+  we recommend that you upgrade your installation as soon as possible
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 6.0.0 to 6.1.0
+- Update django-colorfield from 0.9.0 to 0.10.1
+- Update django-grappelli from 3.0.6 to 3.0.8
+- Update django-simple-history from 3.3.0 to 3.4.0
+- Update markdown from 3.4.4 to 3.5.1
+- Update psycopg2 from 2.9.7 to 2.9.9
+- Update pygments from 2.16.1 to 2.17.2
+- Update python-gitlab from 3.15.0 to 4.1.1
+- Update uwsgi from 2.0.22 to 2.0.23
+- Update node_modules/crypto-js from 4.1.1 to 4.2.0
+- Update node_modules/datatables.net-buttons from 2.4.1 to 2.4.2
+- Update node_modules/pdfmake from 0.2.7 to 0.2.8
+- Update bug-tracker integration documentation with specifics about matches
+  for product name
+- When searching for JIRA projects try also matching by project key
+- Fall-back to credentials from database if
+  ``settings.EXTERNAL_ISSUE_RPC_CREDENTIALS`` override returns ``None``
+
+
+Database
+~~~~~~~~
+
+- New migrations after upgrading django-color-field. Increases field
+  ``max_length`` from 18 to 25
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix error in filtering by TestRun ID on TestCase Search page (@somenewacc)
+- Fix TestRun page to not automatically update its ``stop_date`` when marking
+  statuses for test executions if there are more neutral executions left on
+  the page outside of the currently filtered selection (@somenewacc)
+- Fix bug with JIRA integration not being able to find project via name
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Refactor calls to `delete expandedExecutionIds` to satisfy
+  <https://rules.sonarsource.com/typescript/RSPEC-2870/>_ (@somenewacc)
+- Refactor calls to `delete expandedTestCaseIds` to satisfy
+  <https://rules.sonarsource.com/typescript/RSPEC-2870/>_
+- Use tuple as the cache-key for ``IssueTrackerType.rpc_cache`` internally
+- Add test for ``collectstatic`` because of an upstream issue with
+  django-prappelli
+- Improve tests for JIRA integration
+- Test against Bugzilla on Fedora 39
+- Update actions/checkout from 3 to 4
+- Update node_modules/eslint from 8.48.0 to 8.54.0
+- Update node_modules/eslint-plugin-import from 2.28.1 to 2.29.0
+- Update node_modules/eslint-plugin-n from 16.0.2 to 16.3.1
+- Update node_modules/webpack from 5.88.2 to 5.89.0
+- Update pylint-django from 2.5.3 to 2.5.5 and all of our custom linter rules
+
+
+
 Kiwi TCMS 12.6.1 (31 Aug 2023)
 ------------------------------
 
@@ -40,6 +132,7 @@ Improvements
   `Issue #2936 <https://github.com/kiwitcms/Kiwi/issues/2936>`_
 - Show traceback info during IssueTracker health-check to
   make it easier to debug problems
+
 
 API
 ~~~
