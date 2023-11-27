@@ -143,8 +143,18 @@ export function pageTestplansSearchReadyHandler () {
             $('.children-not-shown-message').hide()
 
             data.each(function (row) {
-                if (row.children__count && row.children__count > hiddenChildRows[row.id].length) {
-                    $(`.test-plan-row-${row.id} .children-not-shown-message`).show()
+                if (row.children__count) {
+                    const selectedChildren = hiddenChildRows[row.id] ? hiddenChildRows[row.id] : []
+
+                    // some children are filtered out, display imbalance icon
+                    if (row.children__count > selectedChildren.length) {
+                        $(`.test-plan-row-${row.id} .children-not-shown-message`).show()
+                    }
+
+                    // all children filtered out, hide +/- button
+                    if (selectedChildren.length === 0) {
+                        $(`.test-plan-row-${row.id} .dt-control`).toggleClass('dt-control')
+                    }
                 }
             })
         },
