@@ -6,7 +6,11 @@
 {% block page_id %}page-testplans-search{% endblock %}
 
 {% block contents %}
-<div class="container-fluid container-cards-pf">
+<div
+    class="container-fluid container-cards-pf"
+    id="main-element"
+    data-trans-some-rows-not-shown="{% trans 'Some child test plans do not match search criteria'%}"
+>
     <form class="form-horizontal" method="get">
         {% csrf_token %}
 
