@@ -48,6 +48,7 @@ export function pageTestplansSearchReadyHandler () {
     initializeDateTimePicker('#id_before')
     initializeDateTimePicker('#id_after')
 
+    const rowsNotShownMessage = $('#main-element').data('trans-some-rows-not-shown')
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
         ajax: function (data, callbackF, settings) {
@@ -108,6 +109,7 @@ export function pageTestplansSearchReadyHandler () {
                 data: null,
                 render: function (data, type, full, meta) {
                     let result = '<a href="/plan/' + data.id + '/">' + escapeHTML(data.name) + '</a>'
+                    result = result + ` <span class="pficon pficon-rebalance children-not-shown-message" title="${rowsNotShownMessage}"></span>`
                     if (!data.is_active) {
                         result = '<strike>' + result + '</strike>'
                     }
@@ -135,6 +137,16 @@ export function pageTestplansSearchReadyHandler () {
                 // WARNING: using .hide() may mess up pagination but makes it
                 // very easy to display child rows afterwards! Not a big issue for now.
             }
+        },
+        drawCallback: function (settings) {
+            const data = this.api().data()
+            $('.children-not-shown-message').hide()
+
+            data.each(function (row) {
+                if (row.children__count && row.children__count > hiddenChildRows[row.id].length) {
+                    $(`.test-plan-row-${row.id} .children-not-shown-message`).show()
+                }
+            })
         },
         dom: 'Bptp',
         buttons: exportButtons,
