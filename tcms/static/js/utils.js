@@ -287,6 +287,7 @@ export function bindDeleteCommentButton (objId, deleteMethod, canDelete, parentN
 }
 
 export function renderCommentsForObject (objId, getMethod, deleteMethod, canDelete, parentNode) {
+    parentNode.empty()
     const commentTemplate = $('template#comment-template')[0]
 
     jsonRPC(getMethod, [objId], comments => {
