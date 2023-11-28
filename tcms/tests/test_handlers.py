@@ -11,9 +11,10 @@ from tcms.handlers import KiwiTCMSJsonRpcHandler, KiwiTCMSXmlRpcHandler
 class TestKiwiTCMSJsonRpcHandler(TestCase):
     @classmethod
     def setUpClass(cls):
-        base_result = JsonSuccessResult(None)
-        base_result.set_jsonrpc_data(request_id=1, version="2.0", is_notification=False)
-        cls.base_result = base_result
+        cls.base_result = JsonSuccessResult(None)
+        cls.base_result.set_jsonrpc_data(
+            request_id=1, version="2.0", is_notification=False
+        )
         cls.rpc_handler = KiwiTCMSJsonRpcHandler(entry_point="/json-rpc/")
 
     def test_html_escape(self):
