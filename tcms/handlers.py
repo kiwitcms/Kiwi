@@ -27,7 +27,6 @@ class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
                 __class__.escape_dict(item)
 
     def dumps_result(self, result: JsonResult) -> str:
-
         if isinstance(result, JsonSuccessResult):
             if isinstance(result.data, str):
                 result.data = html.escape(result.data)
@@ -57,7 +56,6 @@ class KiwiTCMSXmlRpcHandler(XMLRPCHandler):
                 __class__.escape_dict(item)
 
     def dumps_result(self, result: BaseResult) -> str:
-
         if isinstance(result, SuccessResult):
             if isinstance(result.data, timedelta):
                 result.data = result.data.total_seconds()
