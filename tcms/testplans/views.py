@@ -208,10 +208,8 @@ class Clone(FormView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        if self.request.POST.get("product"):
-            form.populate(product_pk=self.request.POST["product"])
-        else:
-            form.populate(product_pk=self.object.product_id)
+        product_id = self.request.POST.get("product", self.object.product_id)
+        form.populate(product_pk=product_id)
         return form
 
     def get_form_kwargs(self):
