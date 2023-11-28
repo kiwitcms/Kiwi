@@ -400,7 +400,6 @@ class TestEditTestCaseViewPermission(PermissionsTestCase):
             case_status=case_status_confirmed,
         )
         cls.url = reverse("testcases-edit", args=[cls.case.pk])
-        # case.save()  # creates a new case entry in the database
 
         cls.post_data.update(
             {
