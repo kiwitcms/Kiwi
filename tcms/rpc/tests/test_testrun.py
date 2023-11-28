@@ -627,7 +627,9 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
         self.assertEqual(attachments[0].object_id, str(self.test_run.pk))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.add_attachment"'
+        ):
             self.rpc_client.TestRun.add_attachment(
                 self.test_run.pk, "test.txt", "a2l3aXRjbXM="
             )

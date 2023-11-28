@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from xmlrpc.client import Fault as XmlRPCFault
-from xmlrpc.client import ProtocolError
 
 from django.test import override_settings
 
@@ -16,7 +15,9 @@ class TestFilterPermission(APIPermissionsTestCase):
         self.assertTrue(isinstance(result, list))
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Environment.filter"'
+        ):
             self.rpc_client.Environment.filter(None)
 
 
@@ -60,7 +61,9 @@ class TestEnvironmentCreatePermissions(APIPermissionsTestCase):
         self.assertEqual(environment.description, description)
 
     def verify_api_without_permission(self):
-        with self.assertRaisesRegex(ProtocolError, "403 Forbidden"):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Environment.create"'
+        ):
             self.rpc_client.Environment.create(
                 {"name": "E8", "description": "Environment without Permissions"}
             )
