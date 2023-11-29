@@ -628,6 +628,13 @@ function renderAdditionalInformation (testRunId, execution) {
 
                     for (const testCase of testCases) {
                         let rowSelector = `.test-execution-case-${testCase.id}`
+                        // Preferably operate over the exact execution row to prevent
+                        // appending new HTML onto existing values, e.g. Tags. See #3367
+                        //
+                        // Root cause of the bug in #3367 is that some fields contain icons
+                        // and pre-existing HTML coming from the template and we can't call .empty()
+                        // on them. When such TE is parametrized then there are multiple HTML rows
+                        // matching `rowSelector`/`testCase.id`, therefore the UI is appended to many times!
                         if (execution) {
                             rowSelector += `.test-execution-${execution.id}`
                         }
