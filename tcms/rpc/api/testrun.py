@@ -242,8 +242,6 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         TestRun.objects.filter(**query)
         .values(
             "id",
-            "plan__product_version",
-            "plan__product_version__value",
             "start_date",
             "stop_date",
             "planned_start",
@@ -255,6 +253,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "plan__name",
             "build",
             "build__name",
+            "build__version",
+            "build__version__value",
             "manager",
             "manager__username",
             "default_tester",
