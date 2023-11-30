@@ -447,6 +447,9 @@ class TestFilter(APITestCase):
             result["build__version__value"],
             self.test_run.build.version.value,
         )
+        self.assertEqual(
+            result["build__version__product"], self.test_run.build.version.product.pk
+        )
         self.assertEqual(result["start_date"], self.test_run.start_date)
         self.assertEqual(result["stop_date"], self.test_run.stop_date)
         self.assertEqual(result["planned_start"], self.test_run.planned_start)
