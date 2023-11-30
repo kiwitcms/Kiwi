@@ -442,12 +442,10 @@ class TestFilter(APITestCase):
         result = result[0]
 
         self.assertEqual(result["id"], self.test_run.pk)
+        self.assertEqual(result["build__version"], self.test_run.build.version.pk)
         self.assertEqual(
-            result["plan__product_version"], self.test_run.plan.product_version.pk
-        )
-        self.assertEqual(
-            result["plan__product_version__value"],
-            self.test_run.plan.product_version.value,
+            result["build__version__value"],
+            self.test_run.build.version.value,
         )
         self.assertEqual(result["start_date"], self.test_run.start_date)
         self.assertEqual(result["stop_date"], self.test_run.stop_date)

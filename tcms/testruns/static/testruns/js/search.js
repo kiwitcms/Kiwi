@@ -108,7 +108,7 @@ export function pageTestrunsSearchReadyHandler () {
             };
 
             if ($('#id_version').val()) {
-                params.plan__product_version = $('#id_version').val()
+                params.build__version = $('#id_version').val()
             };
 
             if ($('#id_build').val()) {
@@ -148,7 +148,7 @@ export function pageTestrunsSearchReadyHandler () {
                 }
             },
             { data: 'product_name' },
-            { data: 'plan__product_version__value' },
+            { data: 'build__version__value' },
             { data: 'build__name' },
             { data: 'start_date' },
             { data: 'stop_date' },
