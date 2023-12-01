@@ -34,8 +34,8 @@ class TestJIRAIntegration(APITestCase):
         self.execution_1.run.save()
 
         # this is the name of the Project in JIRA. Key is "KT"
-        self.execution_1.run.plan.product.name = "Kiwi TCMS"
-        self.execution_1.run.plan.product.save()
+        self.execution_1.build.version.product.name = "Kiwi TCMS"
+        self.execution_1.build.version.product.save()
 
         self.component = ComponentFactory(
             name="JIRA integration", product=self.execution_1.run.plan.product
@@ -129,7 +129,7 @@ class TestJIRAIntegration(APITestCase):
         for expected_string in [
             f"Filed from execution {self.execution_1.get_full_url()}",
             "Reporter",
-            self.execution_1.run.plan.product.name,
+            self.execution_1.build.version.product.name,
             self.component.name,
             "Steps to reproduce",
             self.execution_1.case.text,

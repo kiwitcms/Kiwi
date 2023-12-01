@@ -90,13 +90,16 @@ class IssueTrackerType:
 {reporter}
 
 **Product:**
-{execution.run.plan.product.name}
+{execution.build.version.product.name}
+
+**Version:**
+{execution.build.version.value}
+
+**Build:**
+{execution.build.name}
 
 **Component(s):**
 {self.get_case_components(execution.case)}
-
-**Version-Release number** (if applicable):
-{execution.build.name}
 
 **Steps to reproduce**:
 {txt}
