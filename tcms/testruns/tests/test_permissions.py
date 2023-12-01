@@ -30,7 +30,6 @@ class EditTestRunViewTestCase(PermissionsTestCase):
             "manager": cls.test_run.manager.email,
             "default_tester": intern.email,
             "notes": "New run notes",
-            "product_version": cls.test_run.plan.product_version.pk,
             "plan": cls.test_run.plan.pk,
         }
         super().setUpTestData()
