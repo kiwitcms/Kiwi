@@ -114,8 +114,8 @@ class TestCreateNewRun(BasePlanCase):
         post_data = {
             "summary": new_run_summary,
             "plan": self.plan.pk,
-            "product_id": self.plan.product_id,
-            "product": self.plan.product_id,
+            "product_id": self.build.version.product_id,
+            "product": self.build.version.product_id,
             "build": self.build.pk,
             "manager": self.tester.email,
             "default_tester": self.tester.email,

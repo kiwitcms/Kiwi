@@ -42,17 +42,17 @@
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
-                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}" title="Search test runs of {{ object.plan.product }}">{{ object.plan.product }}</a>
+                    <a href="{% url 'testruns-search' %}?product={{ object.build.version.product_id }}" title="Search test runs of {{ object.build.version.product }}">{{ object.build.version.product }}</a>
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-random"></span>{% trans 'Version' %}:
-                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&version={{ object.plan.product_version_id }}" title="Search test runs of {{ object.plan.product_version.value }}">{{ object.plan.product_version.value }}</a>
+                    <a href="{% url 'testruns-search' %}?product={{ object.build.version.product_id }}&version={{ object.build.version_id }}" title="Search test runs of {{ object.build.version.value }}">{{ object.build.version.value }}</a>
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
                     <span class="fa fa-wrench"></span>{% trans 'Build' %}:
-                    <a href="{% url 'testruns-search' %}?product={{ object.plan.product_id }}&version={{ object.plan.product_version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build }}">{{ object.build }}</a>
+                    <a href="{% url 'testruns-search' %}?product={{ object.build.version.product_id }}&version={{ object.build.version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build }}">{{ object.build }}</a>
                 </h2>
 
                 <h2 class="card-pf-title" style="text-align: left">
@@ -295,7 +295,7 @@
                                     </button>
 
                                     <button class="btn btn-default"
-                                        href="{% url 'testcases-search' %}?product={{ object.plan.product_id }}{% for status in confirmed_statuses %}&case_status={{ status.pk }}{% endfor %}"
+                                        href="{% url 'testcases-search' %}?product={{ object.build.version.product_id }}{% for status in confirmed_statuses %}&case_status={{ status.pk }}{% endfor %}"
                                         id="btn-search-cases" title="{% trans 'Advanced search' %}">
                                         <span class="fa fa-search"></span>
                                     </button>
