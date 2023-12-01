@@ -78,9 +78,9 @@ class Bugzilla(base.IssueTrackerType):
         to a URL with some of the values pre-defined as query parameters!
         """
         args = {
-            "product": execution.run.plan.product.name,
+            "product": execution.build.version.product.name,
             "component": self.get_case_components(execution.case),
-            "version": execution.run.plan.product_version.value,
+            "version": execution.build.version.value,
             "short_desc": f"Test case failure: {execution.case.summary}",
             "comment": self._report_comment(execution, user),
         }

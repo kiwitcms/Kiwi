@@ -105,6 +105,9 @@ class TestBugzillaIntegration(APITestCase):
         test_case.save()  # will generate history object
 
         test_run = TestRunFactory(plan=test_plan)
+        test_run.build.version = version
+        test_run.build.save()
+
         execution2 = TestExecutionFactory(
             run=test_run, case=test_case, build=test_run.build
         )
@@ -144,6 +147,9 @@ class TestBugzillaIntegration(APITestCase):
         test_case.save()  # will generate history object
 
         test_run = TestRunFactory(plan=test_plan)
+        test_run.build.version = version
+        test_run.build.save()
+
         execution2 = TestExecutionFactory(
             run=test_run, case=test_case, build=test_run.build
         )

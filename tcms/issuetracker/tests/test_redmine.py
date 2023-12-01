@@ -33,8 +33,8 @@ class TestRedmineIntegration(APITestCase):
         self.execution_1.case.save()  # will generate history object
 
         # this is the name of the Redmine Project
-        self.execution_1.run.plan.product.name = "Integration with Kiwi TCMS"
-        self.execution_1.run.plan.product.save()
+        self.execution_1.build.version.product.name = "Integration with Kiwi TCMS"
+        self.execution_1.build.version.product.save()
 
         self.component = ComponentFactory(
             name="Redmine integration", product=self.execution_1.run.plan.product
@@ -129,7 +129,7 @@ class TestRedmineIntegration(APITestCase):
         for expected_string in [
             f"Filed from execution {self.execution_1.get_full_url()}",
             "Reporter",
-            self.execution_1.run.plan.product.name,
+            self.execution_1.build.version.product.name,
             self.component.name,
             "Steps to reproduce",
             self.execution_1.case.text,
