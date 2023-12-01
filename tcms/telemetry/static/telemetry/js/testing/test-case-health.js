@@ -9,12 +9,12 @@ export function initializePage () {
 
             const productIds = $('#id_product').val()
             if (productIds.length) {
-                query.run__plan__product__in = productIds
+                query.build__version__product__in = productIds
             }
 
             const versionIds = $('#id_version').val()
             if (versionIds.length) {
-                query.run__plan__product_version__in = versionIds
+                query.build__version__in = versionIds
             }
 
             const buildIds = $('#id_build').val()
