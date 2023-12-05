@@ -148,6 +148,7 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartCleanup
+        rlRun -t -c "docker-compose logs --no-color > test_http_docker.log"
         rlRun -t -c "docker-compose down"
         rm -f /tmp/testcookies.txt
         rm -f /tmp/testdata.txt
