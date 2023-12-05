@@ -131,6 +131,9 @@ SESSION_COOKIE_AGE = 86400
 # Maximum upload file size, default set to 5MB.
 FILE_UPLOAD_MAX_SIZE = 5242880
 
+# DO NOT MODIFY! Maximum size of POST request
+# x1.5 to be able to upload base64 encoded attachments via RPC
+DATA_UPLOAD_MAX_MEMORY_SIZE = int(FILE_UPLOAD_MAX_SIZE * 1.5)
 
 # Controls if django-attachments deletes files from disk
 DELETE_ATTACHMENTS_FROM_DISK = True
