@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9]
+        python-version: [3.11]
         tracker: [azureboards, bitbucket, bugzilla, github, gitlab_ce, gitlab_ee, gitlab_com, jira, kiwitcms, redmine]
 
     steps:
