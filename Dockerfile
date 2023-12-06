@@ -2,7 +2,7 @@
 FROM registry.access.redhat.com/ubi9-minimal
 
 RUN microdnf -y module enable nginx:1.22 && \
-    microdnf -y --nodocs install python3 mariadb-connector-c libpq \
+    microdnf -y --nodocs install python3.11 mariadb-connector-c libpq \
     nginx-core sscg tar glibc-langpack-en && \
     microdnf -y --nodocs update && \
     microdnf clean all

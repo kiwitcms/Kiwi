@@ -3,7 +3,7 @@
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
 FROM registry.access.redhat.com/ubi9-minimal
 
-RUN microdnf -y --nodocs install python3-devel mariadb-connector-c-devel tar gzip make \
+RUN microdnf -y --nodocs install python3.11-devel mariadb-connector-c-devel tar gzip make \
     postgresql-devel libffi-devel gcc gettext npm unzip which rust cargo findutils \
     libjpeg-turbo-devel && \
     microdnf -y --nodocs update && \
@@ -15,7 +15,7 @@ ENV PATH /venv/bin:${PATH} \
     VIRTUAL_ENV /venv
 
 # Create a virtualenv for the application dependencies
-RUN python3 -m venv /venv
+RUN python3.11 -m venv /venv
 
 # because we get some errors from other packages which need newer versions
 RUN pip3 install --no-cache-dir --upgrade pip setuptools twine wheel
