@@ -282,14 +282,14 @@ jobs:
           docker images
 
       - name: Upload logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: wrk-logs
           path: ./wrk-logs-*/
 
       - name: Upload Docker logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: docker-logs
