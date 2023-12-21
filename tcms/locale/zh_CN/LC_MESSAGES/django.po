@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-24 08:36+0000\n"
-"PO-Revision-Date: 2023-10-24 11:23\n"
+"PO-Revision-Date: 2023-12-21 08:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -501,7 +501,7 @@ msgstr "权限"
 
 #: tcms/kiwi_auth/admin.py:199
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "这是最后一个超级用户，无法删除！"
 
 #: tcms/kiwi_auth/forms.py:46
 msgid "A user with that email already exists."
@@ -540,7 +540,7 @@ msgstr "您的账户已成功激活"
 #: tcms/kiwi_auth/views.py:195 tcms/kiwi_auth/views.py:204
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr ""
+msgstr "您正在从租户%s 查看记录"
 
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -627,7 +627,7 @@ msgstr "分解"
 
 #: tcms/settings/common.py:376
 msgid "Execution"
-msgstr ""
+msgstr "执行"
 
 #: tcms/settings/common.py:379
 #: tcms/testruns/templates/testruns/mutable.html:169
@@ -636,7 +636,7 @@ msgstr "网格视图"
 
 #: tcms/settings/common.py:380
 msgid "Trends"
-msgstr ""
+msgstr "趋势"
 
 #: tcms/settings/common.py:383
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -767,13 +767,13 @@ msgstr "分类"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "管理展示仪表盘"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 #: tcms/testcases/templates/testcases/search.html:67
 msgid "Child TPs"
-msgstr ""
+msgstr "子TPs"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -808,7 +808,7 @@ msgstr "完成于"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "执行趋势"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -824,7 +824,7 @@ msgstr "负数"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "执行矩阵表"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
@@ -869,7 +869,7 @@ msgstr "内部服务器错误"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "附件上传错误"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -1260,11 +1260,11 @@ msgstr "创建问题跟踪程序失败"
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "通过 OpenGraph提取的详细信息。问题跟踪器的配置可能仍然不正确！"
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr ""
+msgstr "通过 API 提取的详细信息。问题追踪器配置看起来很好！"
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
@@ -1443,7 +1443,7 @@ msgstr "添加新分类"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr ""
+msgstr "添加新模板"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:507
@@ -1469,7 +1469,7 @@ msgstr "以下情况通知我"
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "applies only for changes made by somebody else"
-msgstr ""
+msgstr "仅适用于别人所做的更改"
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
@@ -2178,7 +2178,7 @@ msgstr "公开可读"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:71
 msgid "Tenant logo"
-msgstr ""
+msgstr "Tenant logo"
 
 #: tcms_tenants/utils.py:62
 msgid "Schema name already in use"
@@ -2211,24 +2211,24 @@ msgstr "只有获得此租户授权的用户才能邀请其他"
 
 #: tenant_groups/admin.py:29
 msgid "users"
-msgstr ""
+msgstr "用户"
 
 #: tenant_groups/models.py:31
 msgid "name"
-msgstr ""
+msgstr "名称"
 
 #: tenant_groups/models.py:34
 msgid "permissions"
-msgstr ""
+msgstr "权限"
 
 #: tenant_groups/models.py:42
 msgid "group"
-msgstr ""
+msgstr "用户组"
 
 #: tenant_groups/models.py:43
 msgid "groups"
-msgstr ""
+msgstr "组"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr ""
+msgstr "个人API令牌"
