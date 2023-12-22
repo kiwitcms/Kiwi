@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name
 
-from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import ComponentFactory, ProductFactory
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilterComponents(APITestCase):

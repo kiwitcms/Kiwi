@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
-from xmlrpc.client import Fault as XmlRPCFault
 
 from django.test import override_settings
 
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import BuildFactory, VersionFactory
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 @override_settings(LANGUAGE_CODE="en")

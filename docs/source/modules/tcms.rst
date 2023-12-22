@@ -34,3 +34,4 @@ Submodules
    tcms.handlers
    tcms.signals
    tcms.wsgi
+   tcms.xmlrpc_wrapper

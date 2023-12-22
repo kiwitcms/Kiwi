@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
-from xmlrpc.client import Fault as XmlRPCFault
-
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
 from django.test import override_settings
@@ -21,6 +19,7 @@ from tcms.tests.factories import (
     UserFactory,
     VersionFactory,
 )
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilter(APITestCase):
