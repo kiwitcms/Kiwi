@@ -1,9 +1,10 @@
 # pylint: disable=attribute-defined-outside-init
 # pylint: disable=wrong-import-position
 import unittest
-from xmlrpc.client import Fault as XmlRPCFault
 
 from django.conf import settings
+
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
-from xmlrpc.client import Fault as XmlRPCFault
 
 from django.test import TestCase
 
@@ -9,6 +8,7 @@ from tcms.rpc.api.user import _get_user_dict
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import GroupFactory, UserFactory
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestUserSerializer(TestCase):

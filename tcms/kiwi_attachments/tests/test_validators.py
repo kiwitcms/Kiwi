@@ -2,12 +2,12 @@
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
 import base64
-from xmlrpc.client import Fault
 
 from django.utils.translation import gettext_lazy as _
 from parameterized import parameterized
 
 from tcms.rpc.tests.utils import APITestCase
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestValidators(APITestCase):
@@ -23,7 +23,7 @@ class TestValidators(APITestCase):
 
             tag_name = "script"
             message = str(_(f"File contains forbidden tag: <{tag_name}>"))
-            with self.assertRaisesRegex(Fault, message):
+            with self.assertRaisesRegex(XmlRPCFault, message):
                 self.rpc_client.User.add_attachment("inline_javascript.svg", b64)
 
     @parameterized.expand(
@@ -37,12 +37,12 @@ class TestValidators(APITestCase):
 
             attr_name = "onload"
             message = str(_(f"File contains forbidden attribute: `{attr_name}`"))
-            with self.assertRaisesRegex(Fault, message):
+            with self.assertRaisesRegex(XmlRPCFault, message):
                 self.rpc_client.User.add_attachment("image.svg", b64)
 
     def test_uploading_filename_ending_in_dot_exe_should_fail(self):
         message = str(_("Uploading executable files is forbidden"))
-        with self.assertRaisesRegex(Fault, message):
+        with self.assertRaisesRegex(XmlRPCFault, message):
             self.rpc_client.User.add_attachment("hello.exe", "a2l3aXRjbXM=")
 
     def test_uploading_real_exe_file_should_fail(self):
@@ -50,5 +50,5 @@ class TestValidators(APITestCase):
             b64 = base64.b64encode(exe_file.read()).decode()
 
             message = str(_("Uploading executable files is forbidden"))
-            with self.assertRaisesRegex(Fault, message):
+            with self.assertRaisesRegex(XmlRPCFault, message):
                 self.rpc_client.User.add_attachment("csrss.exe_from_reactos", b64)

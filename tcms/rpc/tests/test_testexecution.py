@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
 import time
-from xmlrpc.client import Fault as XmlRPCFault
 
 from django.forms.models import model_to_dict
 from django.test import override_settings
@@ -18,6 +17,7 @@ from tcms.tests.factories import (
     TestExecutionFactory,
     UserFactory,
 )
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestExecutionGetComments(APITestCase):

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase
 from tcms.testplans.models import PlanType
 from tcms.tests.factories import PlanTypeFactory
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestPlanTypeFilter(APIPermissionsTestCase):

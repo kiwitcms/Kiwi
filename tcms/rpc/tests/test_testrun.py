@@ -2,7 +2,6 @@
 # pylint: disable=attribute-defined-outside-init, objects-update-used
 
 from datetime import datetime
-from xmlrpc.client import Fault as XmlRPCFault
 
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
@@ -24,6 +23,7 @@ from tcms.tests.factories import (
     UserFactory,
     VersionFactory,
 )
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestAddCase(APITestCase):

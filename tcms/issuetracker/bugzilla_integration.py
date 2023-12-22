@@ -2,13 +2,13 @@
 import os
 import tempfile
 from urllib.parse import urlencode
-from xmlrpc.client import Fault
 
 import bugzilla
 from django.conf import settings
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.issuetracker import base
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class Bugzilla(base.IssueTrackerType):
@@ -94,7 +94,7 @@ class Bugzilla(base.IssueTrackerType):
                 is_defect=True,
             )
             return (new_bug, new_bug.weburl)
-        except Fault:
+        except XmlRPCFault:
             pass
 
         url = self.bug_system.base_url

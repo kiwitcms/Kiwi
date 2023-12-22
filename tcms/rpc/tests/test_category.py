@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
-from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import Category
 from tcms.tests.factories import CategoryFactory, ProductFactory
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestCategory(APITestCase):

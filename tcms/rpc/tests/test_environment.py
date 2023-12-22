@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from xmlrpc.client import Fault as XmlRPCFault
 
 from django.test import override_settings
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testruns.models import Environment
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilterPermission(APIPermissionsTestCase):

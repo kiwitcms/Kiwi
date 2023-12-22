@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.rpc.tests.utils import APITestCase
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestAuthLogin(APITestCase):

@@ -3,7 +3,6 @@
 
 import unittest
 from datetime import timedelta
-from xmlrpc.client import Fault as XmlRPCFault
 
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
@@ -27,6 +26,7 @@ from tcms.tests.factories import (
     UserFactory,
     VersionFactory,
 )
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestValidateEmail(unittest.TestCase):
