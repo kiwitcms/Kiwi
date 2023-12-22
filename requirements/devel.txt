@@ -1,5 +1,5 @@
 -r readthedocs.txt
-tcms-api
+tcms-api==12.8.2
 doc8
 isort==5.13.2
 colorama
