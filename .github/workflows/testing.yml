@@ -69,7 +69,7 @@ jobs:
           HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           verbose: true
 
   check_for_unapplied_migrations:
@@ -109,7 +109,7 @@ jobs:
         HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true
+        fail_ci_if_error: false
         verbose: true
 
   without_internal_bugtracker:
@@ -150,7 +150,7 @@ jobs:
           HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           verbose: true
 
   mariadb:
@@ -199,7 +199,7 @@ jobs:
           HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           verbose: true
 
   postgres:
@@ -246,7 +246,7 @@ jobs:
           HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           verbose: true
 
   docker:

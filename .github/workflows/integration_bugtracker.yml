@@ -66,5 +66,5 @@ jobs:
         HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true
+        fail_ci_if_error: false
         verbose: true
