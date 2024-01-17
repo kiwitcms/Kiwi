@@ -1,6 +1,153 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.0 (17 Jan 2024)
+----------------------------
+
+.. important::
+
+    This is a backwards incompatible release which contains security and functional improvements,
+    runtime, settings and API changes, bug fixes, internal refactoring and updated translations!
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    12.7 -> 13.0
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+Security
+~~~~~~~~
+
+- Preventatively patch calls to the built-in ``xmlrpc.client`` module using the
+  ``defusedxml`` package
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update container runtime from Python 3.9 to Python 3.11
+- Update Django from 4.2.7 to 4.2.9
+- Update django-colorfield from 0.10.1 to 0.11.0
+- Update django-modern-rpc from 0.12.1 to 1.0.2
+- Update django-tree-queries from 0.15.0 to 0.16.1
+- Update django-simple-captcha from 0.5.20 to 0.6.0
+- Update jira from 3.5.2 to 3.6.0
+- Update markdown from 3.5.1 to 3.5.2
+- Update mysqlclient from 2.2.0 to 2.2.1
+- Update psycopg from 2.9.9 to 3.1.17
+- Update python-gitlab from 4.1.1 to 4.4.0
+- Update tzdata from 2023.3 to 2023.4
+- Update node_modules/pdfmake from 0.2.8 to 0.2.9
+- Show an icon when some child TPs not shown on Search Test Plans page to let
+  the user know that parent-child hierarchies shown on the page may be
+  incomplete because the data has been filtered out by their search criteria.
+  Closes `Issue #3313 <https://github.com/kiwitcms/Kiwi/issues/3313>`_
+- Hide the Expand/Collapse button Search Test Plans page for TP with 0 children
+  in the result set
+
+
+Settings
+~~~~~~~~
+
+.. warning::
+
+    The location of the Python runtime inside the container has changed.
+    This affects settings override files as well as any downstream customizations
+    to the Kiwi TCMS container image! For example you may have to adjust Docker
+    volumes like so:
+
+    .. code-block:: diff
+
+                 volumes:
+        -            - ./local_settings.py:/venv/lib64/python3.9/site-packages/tcms/settings/local_settings.py
+        +            - ./local_settings.py:/venv/lib64/python3.11/site-packages/tcms/settings/local_settings.py
+
+- Explicitly define the ``DATA_UPLOAD_MAX_MEMORY_SIZE`` setting. It controls
+  file uploads via RPC, not webUI, because the payload is base64 encoded and is
+  part of the request body. Closes
+  `Issue #3262 <https://github.com/kiwitcms/Kiwi/issues/3262>`_
+
+
+API
+~~~
+
+.. warning::
+
+    This version of Kiwi TCMS introduces backward incompatible changes to API methods
+
+- Method ``TestRun.filter()`` no longer returns the field
+  ``plan__product``
+- Method ``TestRun.filter()`` no longer returns the field
+  ``plan__product_version``
+- Method ``TestRun.filter()`` no longer returns the field
+  ``plan__product_version__value``
+- Method ``TestRun.filter()`` now returns the new field ``build__version``
+- Method ``TestRun.filter()`` now returns the new field
+  ``build__version__product``
+- Method ``TestRun.filter()`` now returns the new field
+  ``build__version__value``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix TestPlan cloning with different product (@somenewacc)
+- Fix row reload when adding new comment in TestRun page (@somenewacc)
+- Fix tag display for parametrized executions on TestRun page (@somenewacc)
+- Fix bug in search/display of Version on Search TestRun page. The root
+  cause was that the correct relationship here should have been
+  TR -> Build -> Version which is independent of the relationship
+  TP -> Product -> Version. Fixes
+  `Issue #3258 <https://github.com/kiwitcms/Kiwi/issues/3258>`_
+- Fix bug in search/display of Product on Search TestRun page. The root
+  cause was that the correct relationship here should have been
+  TR -> Build -> Version -> Product which is independent of the relationship
+  TP -> Product
+- Fix Telemetry pages to query Product/Version from execution's data.
+  All of these underlying queries on these pages operate on TestExecution and
+  Product/Version information should be matched against what is stored in
+  TestExecution->Build because it is more accurate over time, while
+  TE->TR->TP->Product/Version is more likely to change as test plan
+  documents evolve
+- Adjust Product & Version display on TestRun page using the relationship
+  TR->Build as the starting point
+- For IssueTracker integration use Product/Version from ``execution.build``
+  Note that ``execution.build`` is initialized with ``run.build`` and then may
+  change its value if we're recording results against multiple builds inside
+  the same TestRun. For example mark some executions as PASS, others as FAIL;
+  then update TR to a newer Build; retest and mark the FAIL results as PASS.
+  Using the value of ``execution.build`` is more accurate
+- Treat the file ``/Kiwi/etc/uwsgi.override`` as an ini file and load it if it
+  exists. This means that any override files must include the ``[uwsgi]``
+  section as well
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Adjust Kiwi TCMS for newer version of django-modern-rpc (Antoine Lorence)
+- Remove commented out code (@deepsource-autofix[bot])
+- Add integration test for uploading files with maximum allowed size
+- Update isort from 5.12.0 to 5.13.2
+- Update node_modules/eslint from 8.54.0 to 8.56.0
+- Update node_modules/eslint-plugin-import from 2.29.0 to 2.29.1
+- Update node_modules/eslint-plugin-n from 16.3.1 to 16.6.2
+- Update actions/setup-python from 4 to 5
+- Update github/codeql-action from 2 to 3
+- Update actions/upload-artifact from 3 to 4
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+
+
+
 Kiwi TCMS 12.7 (25 Nov 2023)
 ----------------------------
 
