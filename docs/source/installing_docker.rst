@@ -318,7 +318,7 @@ by editing ``docker-compose.yml``:
 
         volumes:
             - uploads:/Kiwi/uploads
-            - ./local_settings.py:/venv/lib64/python3.9/site-packages/tcms/settings/local_settings.py
+            - ./local_settings.py:/venv/lib64/python3.11/site-packages/tcms/settings/local_settings.py
 
   If this file exists it is imported before any of the files under
   ``tcms_settings_dir/``!
