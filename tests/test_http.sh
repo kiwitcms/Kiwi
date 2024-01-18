@@ -129,21 +129,28 @@ _EOF_
     rlPhaseStartTest "Performance baseline for /accounts/register/"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/register/" "$WRK_DIR" "register-account-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 10 r/s" "$COMPLETED_REQUESTS" 100
+        rlAssertLesserOrEqual  "<= 20 r/s" "$COMPLETED_REQUESTS" 200
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/login/"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "login-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 10 r/s" "$COMPLETED_REQUESTS" 100
+        rlAssertLesserOrEqual  "<= 20 r/s" "$COMPLETED_REQUESTS" 200
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/passwordreset/"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/passwordreset/" "$WRK_DIR" "password-reset-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 10 r/s" "$COMPLETED_REQUESTS" 100
+        rlAssertLesserOrEqual  "<= 20 r/s" "$COMPLETED_REQUESTS" 200
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for static file"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/static/images/kiwi_h20.png" "$WRK_DIR" "static-image")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for / aka dashboard"
@@ -151,6 +158,7 @@ _EOF_
         SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/" "$WRK_DIR" "dashboard" "Cookie: sessionid=$SESSION_ID")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 50 r/s" "$COMPLETED_REQUESTS" 500
     rlPhaseEnd
 
     rlPhaseStartCleanup
