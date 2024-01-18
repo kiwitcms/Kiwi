@@ -36,7 +36,8 @@ exec_wrk() {
     test -z "$FAILED_REQUESTS" && FAILED_REQUESTS="0"
     COMPLETED_REQUESTS=$((TOTAL_REQUESTS - FAILED_REQUESTS))
 
-    return "$COMPLETED_REQUESTS"
+    # this is the number of all completed requests across 10 seconds
+    echo "$COMPLETED_REQUESTS"
 }
 
 rlJournalStart
@@ -126,25 +127,30 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/register/"
-        exec_wrk "https://localhost/accounts/register/" "$WRK_DIR" "register-account-page"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/register/" "$WRK_DIR" "register-account-page")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/login/"
-        exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "login-page"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "login-page")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/passwordreset/"
-        exec_wrk "https://localhost/accounts/passwordreset/" "$WRK_DIR" "password-reset-page"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/passwordreset/" "$WRK_DIR" "password-reset-page")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for static file"
-        exec_wrk "https://localhost/static/images/kiwi_h20.png" "$WRK_DIR" "static-image"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/static/images/kiwi_h20.png" "$WRK_DIR" "static-image")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for / aka dashboard"
         # Note: the cookies file is created in get_dashboard() above
         SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
-        exec_wrk "https://localhost/" "$WRK_DIR" "dashboard" "Cookie: sessionid=$SESSION_ID"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/" "$WRK_DIR" "dashboard" "Cookie: sessionid=$SESSION_ID")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
     rlPhaseEnd
 
     rlPhaseStartCleanup
