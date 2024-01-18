@@ -126,34 +126,34 @@ _EOF_
         fi
     rlPhaseEnd
 
-    rlPhaseStartTest "Performance baseline for /accounts/register/"
+    rlPhaseStartTest "Requests to /accounts/register/ are rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/register/" "$WRK_DIR" "register-account-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
         rlAssertGreaterOrEqual ">= 10 r/s" "$COMPLETED_REQUESTS" 100
         rlAssertLesserOrEqual  "<= 20 r/s" "$COMPLETED_REQUESTS" 200
     rlPhaseEnd
 
-    rlPhaseStartTest "Performance baseline for /accounts/login/"
+    rlPhaseStartTest "Requests to /accounts/login/ are rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "login-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
         rlAssertGreaterOrEqual ">= 10 r/s" "$COMPLETED_REQUESTS" 100
         rlAssertLesserOrEqual  "<= 20 r/s" "$COMPLETED_REQUESTS" 200
     rlPhaseEnd
 
-    rlPhaseStartTest "Performance baseline for /accounts/passwordreset/"
+    rlPhaseStartTest "Requests to /accounts/passwordreset/ are rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/passwordreset/" "$WRK_DIR" "password-reset-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
         rlAssertGreaterOrEqual ">= 10 r/s" "$COMPLETED_REQUESTS" 100
         rlAssertLesserOrEqual  "<= 20 r/s" "$COMPLETED_REQUESTS" 200
     rlPhaseEnd
 
-    rlPhaseStartTest "Performance baseline for static file"
+    rlPhaseStartTest "Requests for static files are NOT rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/static/images/kiwi_h20.png" "$WRK_DIR" "static-image")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
         rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
     rlPhaseEnd
 
-    rlPhaseStartTest "Performance baseline for / aka dashboard"
+    rlPhaseStartTest "Authenticated requests to / are NOT rate limited"
         # Note: the cookies file is created in get_dashboard() above
         SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/" "$WRK_DIR" "dashboard" "Cookie: sessionid=$SESSION_ID")
