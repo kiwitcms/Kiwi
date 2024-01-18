@@ -126,7 +126,7 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/register/"
-        exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "register-account-page"
+        exec_wrk "https://localhost/accounts/register/" "$WRK_DIR" "register-account-page"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/login/"
@@ -134,7 +134,7 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for /accounts/passwordreset/"
-        exec_wrk "https://localhost/accounts/login/" "$WRK_DIR" "password-reset-page"
+        exec_wrk "https://localhost/accounts/passwordreset/" "$WRK_DIR" "password-reset-page"
     rlPhaseEnd
 
     rlPhaseStartTest "Performance baseline for static file"
