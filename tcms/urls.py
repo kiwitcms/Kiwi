@@ -23,6 +23,10 @@ from tcms.testplans import urls as testplans_urls
 from tcms.testruns import urls as testruns_urls
 
 urlpatterns = [
+    re_path(
+        r"^robots.txt$",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
     re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
     re_path(r"^captcha/", include(captcha_urls)),
     re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=Protocol.XML_RPC)),
