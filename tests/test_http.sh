@@ -150,6 +150,12 @@ _EOF_
         rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
     rlPhaseEnd
 
+    rlPhaseStartTest "Requests for uploaded files are NOT rate limited"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/uploads/attachments/auth_user/2/redirect.js" "$WRK_DIR" "static-image")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS in 10 seconds"
+        rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
+    rlPhaseEnd
+
     rlPhaseStartTest "Requests for /favicon.ico are NOT rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/favicon.ico" "$WRK_DIR" "favicon")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS in 10 seconds"
