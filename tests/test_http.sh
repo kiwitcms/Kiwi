@@ -150,6 +150,12 @@ _EOF_
         rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
     rlPhaseEnd
 
+    rlPhaseStartTest "Requests for robots.txt are NOT rate limited"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/robots.txt" "$WRK_DIR" "robots-txt")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 800 r/s" "$COMPLETED_REQUESTS" 8000
+    rlPhaseEnd
+
     rlPhaseStartTest "Authenticated requests to / are NOT rate limited"
         # Note: the cookies file is created in get_dashboard() above
         SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
