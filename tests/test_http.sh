@@ -29,12 +29,9 @@ exec_wrk() {
 
     WRK_FILE="$LOGS_DIR/$LOG_BASENAME.log"
 
-    wrk -d10s -t4 -c4 -H "$EXTRA_HEADERS" "$URL" > "$WRK_FILE"
+    wrk -d10s -t4 -c4 --script ./tests/print-non-limited-requests.lua -H "$EXTRA_HEADERS" "$URL" > "$WRK_FILE"
 
-    TOTAL_REQUESTS=$(grep 'requests in ' "$WRK_FILE" | tr -s ' ' | cut -f2 -d' ')
-    FAILED_REQUESTS=$(grep 'Non-2xx or 3xx responses:' "$WRK_FILE" | tr -d ' ' | cut -f2 -d:)
-    test -z "$FAILED_REQUESTS" && FAILED_REQUESTS="0"
-    COMPLETED_REQUESTS=$((TOTAL_REQUESTS - FAILED_REQUESTS))
+    COMPLETED_REQUESTS=$(grep 'non-429 request status=' "$WRK_FILE" | wc -l)
 
     # this is the number of all completed requests across 10 seconds
     echo "$COMPLETED_REQUESTS"
