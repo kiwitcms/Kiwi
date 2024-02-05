@@ -61,7 +61,7 @@ jobs:
 
     - name: Send coverage to codecov.io
       if: env.HAS_TOKEN
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       env:
         HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
       with:
