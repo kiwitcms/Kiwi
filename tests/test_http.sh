@@ -159,7 +159,7 @@ _EOF_
     rlPhaseStartTest "Requests for robots.txt are NOT rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/robots.txt" "$WRK_DIR" "robots-txt")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
-        rlAssertGreaterOrEqual ">= 800 r/s" "$COMPLETED_REQUESTS" 8000
+        rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
     rlPhaseEnd
 
     rlPhaseStartTest "Authenticated requests to / are NOT rate limited"
