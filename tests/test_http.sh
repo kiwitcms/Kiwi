@@ -150,6 +150,12 @@ _EOF_
         rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
     rlPhaseEnd
 
+    rlPhaseStartTest "Requests for /favicon.ico are NOT rate limited"
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/favicon.ico" "$WRK_DIR" "favicon")
+        rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
+        rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
+    rlPhaseEnd
+
     rlPhaseStartTest "Requests for robots.txt are NOT rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/robots.txt" "$WRK_DIR" "robots-txt")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS"
