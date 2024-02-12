@@ -6,6 +6,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
+from django.forms import ValidationError
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
@@ -92,6 +93,11 @@ class TestLogout(TestCase):
         next_url = reverse("tcms-login") + "?next=" + reverse("plans-search")
         response = self.client.get(self.logout_url, {"next": next_url}, follow=True)
         self.assertRedirects(response, next_url)
+
+
+def deny_certain_email_addresses(email):
+    if email.lower().find("yahoo") > -1:
+        raise ValidationError("@yahoo email address has been denied")
 
 
 class TestRegistration(TestCase):
@@ -283,6 +289,25 @@ To activate your account, click this link:
         self.assertContains(response, _("A user with that email already exists."))
 
         user = User.objects.filter(username="test_user")
+        self.assertEqual(user.count(), 0)
+
+    @override_settings(
+        EMAIL_VALIDATORS=(deny_certain_email_addresses,),
+    )
+    def test_custom_email_validators(self):
+        response = self.client.post(
+            self.register_url,
+            {
+                "username": "to_be_denied_user",
+                "password1": __FOR_TESTING__,
+                "password2": __FOR_TESTING__,
+                "email": "will-be-denied@yahoo.co.in",
+            },
+            follow=False,
+        )
+        self.assertContains(response, _("@yahoo email address has been denied"))
+
+        user = User.objects.filter(email__icontains="yahoo")
         self.assertEqual(user.count(), 0)
 
     def test_first_user_is_superuser(self):

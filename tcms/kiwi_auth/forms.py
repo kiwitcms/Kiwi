@@ -28,9 +28,14 @@ def validate_email_already_in_use(email):
         raise forms.ValidationError(_("A user with that email already exists."))
 
 
+def custom_email_validators(email):
+    for validator in getattr(settings, "EMAIL_VALIDATORS", ()):
+        validator(email)
+
+
 class RegistrationForm(UserCreationForm):  # pylint: disable=too-many-ancestors
     email = forms.EmailField(
-        validators=[validate_email_already_in_use],
+        validators=[validate_email_already_in_use, custom_email_validators],
     )
     captcha = (
         fields.CaptchaField(
