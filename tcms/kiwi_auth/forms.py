@@ -23,8 +23,15 @@ class CustomCaptchaTextInput(fields.CaptchaTextInput):
     template_name = "captcha_field.html"
 
 
+def validate_email_already_in_use(email):
+    if User.objects.filter(email__iexact=email.strip()).exists():
+        raise forms.ValidationError(_("A user with that email already exists."))
+
+
 class RegistrationForm(UserCreationForm):  # pylint: disable=too-many-ancestors
-    email = forms.EmailField()
+    email = forms.EmailField(
+        validators=[validate_email_already_in_use],
+    )
     captcha = (
         fields.CaptchaField(
             widget=CustomCaptchaTextInput(attrs={"class": "form-control"})
@@ -36,14 +43,6 @@ class RegistrationForm(UserCreationForm):  # pylint: disable=too-many-ancestors
     class Meta:
         model = User
         fields = ("username",)
-
-    def clean_email(self):
-        email = self.cleaned_data["email"]
-        try:
-            User.objects.get(email=email)
-        except User.DoesNotExist:
-            return email
-        raise forms.ValidationError(_("A user with that email already exists."))
 
     def save(self, commit=True):
         user = super().save(commit=False)
