@@ -67,6 +67,10 @@ ADMINS = [
 SERVER_EMAIL = DEFAULT_FROM_EMAIL = "kiwi@example.com"
 EMAIL_SUBJECT_PREFIX = "[Kiwi-TCMS] "
 
+# functions which can perform custom email address validation on the registration page
+# see tcms/kiwi_auth/tests/test_views.py::TestRegistration.test_custom_email_validators
+EMAIL_VALIDATORS = ()
+
 #  SMTP specific settings
 #  EMAIL_HOST = 'smtp.example.com'
 #  EMAIL_PORT = 25
