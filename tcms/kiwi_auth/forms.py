@@ -33,6 +33,31 @@ def custom_email_validators(email):
         validator(email)
 
 
+def set_activation_key_for(user):
+    return UserActivationKey.set_random_key_for_user(user=user)
+
+
+@override(settings.LANGUAGE_CODE)
+def send_confirmation_email_to(user, request, activation_key):
+    current_site = Site.objects.get(pk=settings.SITE_ID)
+    confirm_url = request_host_link(request, current_site.domain) + reverse(
+        "tcms-confirm",
+        args=[
+            activation_key.activation_key,
+        ],
+    )
+
+    mailto(
+        template_name="email/confirm_registration.txt",
+        recipients=[user.email],
+        subject=_("Please confirm your Kiwi TCMS account email address"),
+        context={
+            "user": user,
+            "confirm_url": confirm_url,
+        },
+    )
+
+
 class RegistrationForm(UserCreationForm):  # pylint: disable=too-many-ancestors
     email = forms.EmailField(
         validators=[validate_email_already_in_use, custom_email_validators],
@@ -63,30 +88,6 @@ class RegistrationForm(UserCreationForm):  # pylint: disable=too-many-ancestors
             user.save()
             initiate_user_with_default_setups(user)
         return user
-
-    def set_activation_key(self):
-        return UserActivationKey.set_random_key_for_user(user=self.instance)
-
-    @override(settings.LANGUAGE_CODE)
-    def send_confirm_mail(self, request, activation_key):
-        current_site = Site.objects.get(pk=settings.SITE_ID)
-        confirm_url = request_host_link(request, current_site.domain) + reverse(
-            "tcms-confirm",
-            args=[
-                activation_key.activation_key,
-            ],
-        )
-
-        mailto(
-            template_name="email/confirm_registration.txt",
-            recipients=self.cleaned_data["email"],
-            subject=_("Your new %s account confirmation") % current_site.domain,
-            context={
-                "user": self.instance,
-                "site_domain": current_site.domain,
-                "confirm_url": confirm_url,
-            },
-        )
 
 
 class PasswordResetForm(
@@ -131,3 +132,21 @@ class PasswordResetForm(
             html_email_template_name,
             extra_email_context,
         )
+
+
+def has_permissions_to_modify(pk):
+    raise forms.ValidationError(_("A user with that email already exists."))
+
+
+class ResetUserEmailForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
+    email_1 = forms.EmailField(
+        validators=[validate_email_already_in_use, custom_email_validators],
+    )
+    email_2 = forms.EmailField()
+
+    def clean_email_2(self):
+        email_01 = self.cleaned_data.get("email_1")
+        email_02 = self.cleaned_data.get("email_2")
+        if email_01 and email_02 and email_01 != email_02:
+            raise forms.ValidationError(_("Email mismatch"))
+        return email_02

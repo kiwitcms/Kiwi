@@ -212,20 +212,21 @@ Go to %(user_url)s to activate the account!"""
         # Verify notification mail
         values = {
             "user": user.username,
-            "site_domain": site.domain,
             "confirm_url": confirm_url,
         }
-        expected_subject = (
-            settings.EMAIL_SUBJECT_PREFIX
-            + _("Your new %s account confirmation") % site.domain
+        expected_subject = settings.EMAIL_SUBJECT_PREFIX + _(
+            "Please confirm your Kiwi TCMS account email address"
         )
         expected_body = (
             _(
-                """Welcome %(user)s,
-thank you for signing up for an %(site_domain)s account!
+                """Welcome to Kiwi TCMS!
 
-To activate your account, click this link:
-%(confirm_url)s"""
+To confirm email address for username `%(user)s` and activate your account
+please follow this URL:
+%(confirm_url)s
+
+Regards,
+Kiwi TCMS"""
             )
             % values
             + "\n"

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Reset email address" %}{% endblock %}
+{% block page_id %}page-reset-user-email{% endblock %}
+
+{% block contents %}
+<div class="row row-cards-pf">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini">
+            <h2 class="card-pf-title">
+                <span class="fa fa-envelope-o"></span>
+                <span class="card-pf-aggregate-status-count">{% trans 'Warning' %}</span>
+            </h2>
+
+            <div>
+                <p>
+{% blocktrans %}After clicking the 'Save' button your account will become <strong>inactive</strong>
+and you will be <strong>logged out</strong>! A confirmation email will be sent to the newly specified address!<br>
+Double check that your new email address is <strong>entered correctly</strong> otherwise
+<strong>you may be left locked out</strong> of your account!
+After following the activation link you will be able to log in as usual!{% endblocktrans %}
+                </p>
+            </div>
+
+            <div class="card-pf-body">
+                <p class="card-pf-aggregate-status-notifications">
+                    <span class="card-pf-aggregate-status-notification">
+                        <span class="pficon pficon-warning-triangle-o"></span>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div><!-- /row -->
+
+
+<div class="container-fluid container-cards-pf">
+    {{ form.non_field_errors }}
+    <form class="form-horizontal" method="post" action="{% url 'reset-user-email' target_user.pk %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_email_1">{% trans "Username" %}</label>
+            <div class="col-sm-11 col-md-8 col-lg-4">
+                <label>
+                    {{ target_user.username }}
+                    {% if request.user.pk != target_user.pk %}
+                        <span class="pficon pficon-warning-triangle-o"></span>
+                        {% trans "NOT yourself" %}
+                    {% endif %}
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_email_1">{% trans "E-mail" %}</label>
+            <div class="col-sm-11 col-md-8 col-lg-4 {% if form.email_1.errors %}has-error{% endif %}">
+                <input type="email" id="id_email_1" name="email_1" value="{{ form.email_1.value|default:'' }}" class="form-control" required>
+                {{ form.email_1.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_email_2">{% trans "Confirm" %}</label>
+            <div class="col-sm-11 col-md-8 col-lg-4 {% if form.email_2.errors %}has-error{% endif %}">
+                <input type="email" id="id_email_2" name="email_2" value="{{ form.email_2.value|default:'' }}" class="form-control" required>
+                <p class="help-block">
+                    <span class="fa fa-exclamation-triangle" style="color: #ec7a08;"></span>
+                    {% trans 'Please type! Do not copy-and-paste value from previous field!' %}
+                </p>
+
+                {{ form.email_2.errors }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+    </form>
+</div><!-- /container -->
+{% endblock %}

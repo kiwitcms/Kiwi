@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from tcms.utils.user import delete_user
@@ -97,6 +97,16 @@ class KiwiUserAdmin(UserAdmin):
     def render_change_form(
         self, request, context, add=False, change=False, form_url="", obj=None
     ):
+        if obj:
+            if not context["adminform"].form._meta.help_texts:
+                context["adminform"].form._meta.help_texts = {}
+
+            label = _("Reset email address")
+            url = reverse_lazy("reset-user-email", args=[obj.pk])
+            context["adminform"].form._meta.help_texts[
+                "email"
+            ] = f"<a href='{url}'>{label}</a>"
+
         if not self.has_change_permission(request, obj):
             context.update(
                 {

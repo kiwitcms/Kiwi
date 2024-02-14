@@ -53,6 +53,10 @@
                             <a href="{% url "admin:password_change" %}" target="_parent">{% trans "Change password" %}</a>
                         </li>
 
+                        <li>
+                            <a href="{% url "reset-user-email" user.pk %}">{% trans "Reset email address" %}</a>
+                        </li>
+
                         <li class="divider"></li>
 
                         <li>

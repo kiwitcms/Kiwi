@@ -45,6 +45,11 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     re_path(
+        r"^(?P<pk>\d+)/reset-user-email/$",
+        views.ResetUserEmail.as_view(),
+        name="reset-user-email",
+    ),
+    re_path(
         r"^admin-users/$",
         views.UsersRouter.as_view(),
         name="admin-users-router",
