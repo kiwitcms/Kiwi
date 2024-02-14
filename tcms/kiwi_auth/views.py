@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, views
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
@@ -11,9 +12,9 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import RedirectView, View
+from django.views.generic.edit import FormView
 
 from tcms.kiwi_auth import forms
-from tcms.kiwi_auth.forms import RegistrationForm
 from tcms.kiwi_auth.models import UserActivationKey
 from tcms.signals import USER_REGISTERED_SIGNAL
 
@@ -45,7 +46,7 @@ class Register(View):  # pylint: disable=missing-permission-required
     """Register method of account"""
 
     template_name = "registration/registration_form.html"
-    form_class = RegistrationForm
+    form_class = forms.RegistrationForm
     success_url = reverse_lazy("core-views-index")
 
     def post(self, request):
@@ -55,7 +56,7 @@ class Register(View):  # pylint: disable=missing-permission-required
             return render(request, self.template_name, {"form": form})
 
         new_user = form.save()
-        activation_key = form.set_activation_key()
+        activation_key = forms.set_activation_key_for(new_user)
         # send a signal that new user has been registered
         USER_REGISTERED_SIGNAL.send(
             sender=form.__class__, request=request, user=new_user
@@ -63,7 +64,7 @@ class Register(View):  # pylint: disable=missing-permission-required
 
         # Send confirmation email to new user
         if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
-            form.send_confirm_mail(request, activation_key)
+            forms.send_confirmation_email_to(new_user, request, activation_key)
 
             msg = _(
                 "Your account has been created, please check your mailbox for confirmation"
@@ -207,3 +208,58 @@ class GroupsRouter(View):  # pylint: disable=missing-permission-required
             return HttpResponseRedirect("/admin/tenant_groups/group/")
 
         return HttpResponseRedirect("/admin/auth/group/")
+
+
+@method_decorator(login_required, name="dispatch")
+class ResetUserEmail(FormView):  # pylint: disable=missing-permission-required
+    template_name = "accounts/reset_user_email.html"
+    form_class = forms.ResetUserEmailForm
+    target_user = None
+
+    def init_user(self, request, pk):
+        self.target_user = request.user
+
+        # admins can reset emails for others
+        if request.user.has_perm("auth.change_user"):
+            self.target_user = User.objects.get(pk=pk)
+
+    def get(self, request, *args, **kwargs):
+        self.init_user(request, kwargs["pk"])
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.init_user(request, kwargs["pk"])
+        return super().post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["target_user"] = self.target_user
+        return context
+
+    def form_valid(self, form):
+        # in case they somehow managed to spoof the form submission
+        if (
+            self.target_user.pk != self.request.user.pk
+            and not self.request.user.has_perm("auth.change_user")
+        ):
+            raise PermissionDenied
+
+        activation_key = forms.set_activation_key_for(self.target_user)
+
+        self.target_user.email = form.cleaned_data["email_2"]
+        self.target_user.is_active = False
+        self.target_user.save()
+
+        forms.send_confirmation_email_to(self.target_user, self.request, activation_key)
+
+        msg = _(
+            "Email address has been reset, please check inbox for further instructions"
+        )
+        messages.add_message(self.request, messages.SUCCESS, msg)
+
+        # logout only when modifying myself
+        if self.request.user.pk == self.target_user.pk:
+            return HttpResponseRedirect(reverse_lazy("tcms-logout"))
+
+        # otherwise maybe they have permissions to view and modify other users
+        return HttpResponseRedirect(reverse_lazy("admin-users-router"))

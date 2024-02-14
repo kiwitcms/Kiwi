@@ -1,5 +1,8 @@
-{% load i18n %}{% blocktrans %}Welcome {{ user }},
-thank you for signing up for an {{ site_domain }} account!
+{% load i18n %}{% blocktrans %}Welcome to Kiwi TCMS!
 
-To activate your account, click this link:
-{{ confirm_url }}{% endblocktrans %}
+To confirm email address for username `{{ user }}` and activate your account
+please follow this URL:
+{{ confirm_url }}
+
+Regards,
+Kiwi TCMS{% endblocktrans %}
