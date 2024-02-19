@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 08:36+0000\n"
-"PO-Revision-Date: 2023-10-24 11:23\n"
+"POT-Creation-Date: 2024-02-19 11:01+0000\n"
+"PO-Revision-Date: 2024-02-19 12:57\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -85,8 +85,8 @@ msgstr ""
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:33
-#: tcms/testplans/templates/testplans/search.html:46
-#: tcms/testplans/templates/testplans/search.html:113
+#: tcms/testplans/templates/testplans/search.html:50
+#: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/get.html:44
 #: tcms/testruns/templates/testruns/mutable.html:46
 #: tcms/testruns/templates/testruns/search.html:35
@@ -99,12 +99,12 @@ msgstr "Προϊόν"
 #: tcms/bugs/templates/bugs/search.html:57
 #: tcms/bugs/templates/bugs/search.html:112
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
-#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:87
+#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:91
 #: tcms/testplans/templates/testplans/clone.html:36
 #: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:48
-#: tcms/testplans/templates/testplans/search.html:56
-#: tcms/testplans/templates/testplans/search.html:114
+#: tcms/testplans/templates/testplans/search.html:60
+#: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/get.html:49
 #: tcms/testruns/templates/testruns/search.html:45
 #: tcms/testruns/templates/testruns/search.html:184
@@ -136,6 +136,7 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:78
 #: tcms/testcases/templates/testcases/mutable.html:263
 #: tcms/testplans/templates/testplans/get.html:477
 #: tcms/testplans/templates/testplans/mutable.html:157
@@ -199,20 +200,20 @@ msgstr ""
 msgid "Username or email"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:363
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:370
 msgid "Search Bugs"
 msgstr "Αναζήτηση σφαλμάτων"
 
 #: tcms/bugs/templates/bugs/search.html:28
 #: tcms/testcases/templates/testcases/search.html:19
-#: tcms/testplans/templates/testplans/search.html:20
+#: tcms/testplans/templates/testplans/search.html:24
 msgid "Created"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:31
 #: tcms/telemetry/templates/telemetry/include/filters.html:53
 #: tcms/testcases/templates/testcases/search.html:22
-#: tcms/testplans/templates/testplans/search.html:23
+#: tcms/testplans/templates/testplans/search.html:27
 #: tcms/testruns/templates/testruns/search.html:90
 #: tcms/testruns/templates/testruns/search.html:110
 #: tcms/testruns/templates/testruns/search.html:131
@@ -223,7 +224,7 @@ msgstr "Πριν"
 #: tcms/bugs/templates/bugs/search.html:37
 #: tcms/telemetry/templates/telemetry/include/filters.html:43
 #: tcms/testcases/templates/testcases/search.html:28
-#: tcms/testplans/templates/testplans/search.html:29
+#: tcms/testplans/templates/testplans/search.html:33
 #: tcms/testruns/templates/testruns/search.html:97
 #: tcms/testruns/templates/testruns/search.html:117
 #: tcms/testruns/templates/testruns/search.html:138
@@ -233,11 +234,12 @@ msgstr "Μετά"
 
 #: tcms/bugs/templates/bugs/search.html:81
 #: tcms/bugs/templates/bugs/search.html:86
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:45
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
 #: tcms/testcases/templates/testcases/search.html:117
-#: tcms/testplans/templates/testplans/search.html:80
-#: tcms/testplans/templates/testplans/search.html:86
+#: tcms/testplans/templates/testplans/search.html:84
+#: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/get.html:514
 #: tcms/testruns/templates/testruns/search.html:69
 #: tcms/testruns/templates/testruns/search.html:75
@@ -267,7 +269,7 @@ msgstr "Όνομα χρήστη"
 #: tcms/testplans/templates/testplans/mutable.html:132
 #: tcms/testplans/templates/testplans/mutable.html:138
 #: tcms/testplans/templates/testplans/mutable.html:151
-#: tcms/testplans/templates/testplans/search.html:40
+#: tcms/testplans/templates/testplans/search.html:44
 #: tcms/testruns/templates/testruns/get.html:577
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "Yes"
@@ -296,7 +298,7 @@ msgstr "Ναι"
 #: tcms/testplans/templates/testplans/mutable.html:132
 #: tcms/testplans/templates/testplans/mutable.html:138
 #: tcms/testplans/templates/testplans/mutable.html:151
-#: tcms/testplans/templates/testplans/search.html:40
+#: tcms/testplans/templates/testplans/search.html:44
 #: tcms/testruns/templates/testruns/get.html:577
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "No"
@@ -305,7 +307,7 @@ msgstr "Οχι"
 #: tcms/bugs/templates/bugs/search.html:97
 #: tcms/testcases/templates/testcases/search.html:143
 #: tcms/testplans/templates/testplans/get.html:221
-#: tcms/testplans/templates/testplans/search.html:99
+#: tcms/testplans/templates/testplans/search.html:103
 #: tcms/testruns/templates/testruns/get.html:274
 #: tcms/testruns/templates/testruns/search.html:170
 msgid "Search"
@@ -316,7 +318,7 @@ msgstr "Αναζήτηση"
 #: tcms/testcases/templates/testcases/get.html:166
 #: tcms/testcases/templates/testcases/search.html:137
 #: tcms/testcases/templates/testcases/search.html:154
-#: tcms/testplans/templates/testplans/search.html:110
+#: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/search.html:180
 msgid "ID"
 msgstr "Ταυτότητα"
@@ -324,7 +326,7 @@ msgstr "Ταυτότητα"
 #: tcms/bugs/templates/bugs/search.html:110
 #: tcms/templates/include/bug_details.html:5
 #: tcms/testcases/templates/testcases/search.html:156
-#: tcms/testplans/templates/testplans/search.html:112
+#: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testruns/templates/testruns/mutable.html:224
 msgid "Created on"
 msgstr "Δημιουργήθηκε στο"
@@ -353,7 +355,7 @@ msgstr ""
 msgid "Delete"
 msgstr "Σβήνω"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:352
+#: tcms/bugs/views.py:68 tcms/settings/common.py:359
 msgid "New Bug"
 msgstr "Νέο σφάλμα"
 
@@ -387,7 +389,7 @@ msgstr "Ενημερώθηκε στις %(history_date)s\n"
 "For more information:\n"
 "%(instance_url)s"
 
-#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:378
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:385
 msgid "Dashboard"
 msgstr ""
 
@@ -432,8 +434,8 @@ msgstr ""
 #: tcms/core/templates/dashboard.html:54
 #: tcms/testcases/templates/testcases/get.html:169
 #: tcms/testplans/templates/testplans/mutable.html:66
-#: tcms/testplans/templates/testplans/search.html:66
-#: tcms/testplans/templates/testplans/search.html:115
+#: tcms/testplans/templates/testplans/search.html:70
+#: tcms/testplans/templates/testplans/search.html:119
 msgid "Type"
 msgstr "Τύπος"
 
@@ -485,59 +487,104 @@ msgstr ""
 msgid "This email address is already in use"
 msgstr "Αυτή η διεύθυνση ηλεκτρονικού ταχυδρομείου είναι ήδη σε χρήση"
 
-#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:391
+#: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:398
 msgid "Users"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:160
+#: tcms/kiwi_auth/admin.py:104
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
+#: tcms/templates/navbar.html:57
+msgid "Reset email address"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:170
 msgid "Personal info"
 msgstr "Προσωπικές πληροφορίες"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:172
 msgid "Permissions"
 msgstr "'Αδειες"
 
-#: tcms/kiwi_auth/admin.py:199
+#: tcms/kiwi_auth/admin.py:209
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr ""
 
-#: tcms/kiwi_auth/forms.py:46
+#: tcms/kiwi_auth/forms.py:28 tcms/kiwi_auth/forms.py:138
 msgid "A user with that email already exists."
 msgstr "Ενας χρήστης με αυτή την ηλεκτρονική διεύθυνση υπάρχει ήδη."
 
-#: tcms/kiwi_auth/forms.py:79
-#, python-format
-msgid "Your new %s account confirmation"
-msgstr "Η επιβεβαίωση λογαριασμού σας %s"
+#: tcms/kiwi_auth/forms.py:53
+msgid "Please confirm your Kiwi TCMS account email address"
+msgstr ""
 
-#: tcms/kiwi_auth/views.py:69
+#: tcms/kiwi_auth/forms.py:151
+msgid "Email mismatch"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
+msgid "Warning"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
+msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
+"and you will be <strong>logged out</strong>! A confirmation email will be sent to the newly specified address!<br>\n"
+"Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
+"<strong>you may be left locked out</strong> of your account!\n"
+"After following the activation link you will be able to log in as usual!"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
+msgid "NOT yourself"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
+#: tcms/templates/registration/password_reset_form.html:16
+#: tcms/templates/registration/registration_form.html:39
+msgid "E-mail"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:66
+#: tcms/templates/registration/password_reset_confirm.html:22
+#: tcms/templates/registration/registration_form.html:31
+msgid "Confirm"
+msgstr "Επιβεβαιώνω"
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
+msgid "Please type! Do not copy-and-paste value from previous field!"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "Ο λογαριασμός σας έχει δημιουργηθεί, ελέγξτε το γραμματοκιβώτιό σας για επιβεβαίωση"
 
-#: tcms/kiwi_auth/views.py:74
+#: tcms/kiwi_auth/views.py:75
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "Ο λογαριασμός σας έχει δημιουργηθεί, αλλά χρειάζεστε έναν διαχειριστή για να τον ενεργοποιήσετε"
 
-#: tcms/kiwi_auth/views.py:79
+#: tcms/kiwi_auth/views.py:80
 msgid "Following is the administrator list"
 msgstr "Ακολουθεί η λίστα διαχειριστών"
 
-#: tcms/kiwi_auth/views.py:122
+#: tcms/kiwi_auth/views.py:123
 msgid "This activation key no longer exists in the database"
 msgstr "Αυτό το κλειδί ενεργοποίησης δεν υπάρχει πλέον στη βάση δεδομένων"
 
-#: tcms/kiwi_auth/views.py:128
+#: tcms/kiwi_auth/views.py:129
 msgid "This activation key has expired"
 msgstr "Αυτό το κλειδί ενεργοποίησης έχει λήξει"
 
-#: tcms/kiwi_auth/views.py:140
+#: tcms/kiwi_auth/views.py:141
 msgid "Your account has been activated successfully"
 msgstr "Ο λογαριασμός σας έχει ενεργοποιηθεί με επιτυχία"
 
-#: tcms/kiwi_auth/views.py:167 tcms/kiwi_auth/views.py:176
-#: tcms/kiwi_auth/views.py:195 tcms/kiwi_auth/views.py:204
+#: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
+#: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:256
+msgid "Email address has been reset, please check inbox for further instructions"
 msgstr ""
 
 #: tcms/management/models.py:52
@@ -552,7 +599,7 @@ msgstr ""
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:129
 #: tcms/testplans/templates/testplans/get.html:217
-#: tcms/testplans/templates/testplans/search.html:90
+#: tcms/testplans/templates/testplans/search.html:94
 #: tcms/testruns/templates/testruns/get.html:264
 #: tcms/testruns/templates/testruns/search.html:27
 msgid "Tag"
@@ -561,7 +608,7 @@ msgstr "Ετικέτα"
 #: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:163
 #: tcms/testplans/templates/testplans/get.html:456
-#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testplans/templates/testplans/search.html:121
 #: tcms/testruns/templates/testruns/get.html:354
 #: tcms/testruns/templates/testruns/search.html:190
 msgid "Tags"
@@ -575,109 +622,109 @@ msgstr ""
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr ""
 
-#: tcms/settings/common.py:344
+#: tcms/settings/common.py:351
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:346
+#: tcms/settings/common.py:353
 msgid "New Test Plan"
 msgstr "Νέο σχέδιο δοκιμών"
 
-#: tcms/settings/common.py:348
+#: tcms/settings/common.py:355
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
 msgstr "Περίπτωση νέας δοκιμής"
 
-#: tcms/settings/common.py:350 tcms/testplans/templates/testplans/get.html:121
+#: tcms/settings/common.py:357 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr ""
 
-#: tcms/settings/common.py:358
+#: tcms/settings/common.py:365
 msgid "SEARCH"
 msgstr "ΨΑΞΙΜΟ"
 
-#: tcms/settings/common.py:360 tcms/testplans/templates/testplans/search.html:5
+#: tcms/settings/common.py:367 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "Δοκιμαστικά σχέδια αναζήτησης"
 
-#: tcms/settings/common.py:361 tcms/testcases/templates/testcases/search.html:5
+#: tcms/settings/common.py:368 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "Αναζήτηση δοκιμαστικών περιπτώσεων"
 
-#: tcms/settings/common.py:362 tcms/testruns/templates/testruns/search.html:5
+#: tcms/settings/common.py:369 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:369
+#: tcms/settings/common.py:376
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:372
+#: tcms/settings/common.py:379
 msgid "Testing"
 msgstr "Δοκιμές"
 
-#: tcms/settings/common.py:374
+#: tcms/settings/common.py:381
 msgid "Breakdown"
 msgstr "Κατάρρευση"
 
-#: tcms/settings/common.py:376
+#: tcms/settings/common.py:383
 msgid "Execution"
 msgstr ""
 
-#: tcms/settings/common.py:379
+#: tcms/settings/common.py:386
 #: tcms/testruns/templates/testruns/mutable.html:169
 msgid "Matrix"
 msgstr ""
 
-#: tcms/settings/common.py:380
+#: tcms/settings/common.py:387
 msgid "Trends"
 msgstr ""
 
-#: tcms/settings/common.py:383
+#: tcms/settings/common.py:390
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr ""
 
-#: tcms/settings/common.py:389
+#: tcms/settings/common.py:396
 msgid "ADMIN"
 msgstr "ΔΙΑΧΕΙΡΙΣΤΗΣ"
 
-#: tcms/settings/common.py:392
+#: tcms/settings/common.py:399
 msgid "Groups"
 msgstr ""
 
-#: tcms/settings/common.py:394
+#: tcms/settings/common.py:401
 msgid "Everything else"
 msgstr "Οτιδήποτε άλλο"
 
-#: tcms/settings/common.py:397
+#: tcms/settings/common.py:404
 msgid "PLUGINS"
 msgstr ""
 
-#: tcms/settings/common.py:407
+#: tcms/settings/common.py:414
 msgid "Report an Issue"
 msgstr "Αναφέρετε ένα πρόβλημα"
 
-#: tcms/settings/common.py:410
+#: tcms/settings/common.py:417
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:414
+#: tcms/settings/common.py:421
 msgid "Donate €5 via Open Collective"
 msgstr ""
 
-#: tcms/settings/common.py:416
+#: tcms/settings/common.py:423
 msgid "Administration Guide"
 msgstr "Οδηγός διαχείρισης"
 
-#: tcms/settings/common.py:417
+#: tcms/settings/common.py:424
 msgid "User Guide"
 msgstr "Οδηγός χρήσης"
 
-#: tcms/settings/common.py:418
+#: tcms/settings/common.py:425
 msgid "API Help"
 msgstr "Βοήθεια API"
 
@@ -713,7 +760,7 @@ msgstr "ΣΥΝΟΛΟ"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:36
 #: tcms/testcases/templates/testcases/search.html:61
-#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/get.html:39
 #: tcms/testruns/templates/testruns/mutable.html:61
 #: tcms/testruns/templates/testruns/search.html:182
@@ -911,10 +958,12 @@ msgstr "το κύριο σύστημα διαχείρισης περιπτώσε
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
-"To activate your account, click this link:\n"
-"%(confirm_url)s"
+msgid "Welcome to Kiwi TCMS!\n\n"
+"To confirm email address for username `%(user)s` and activate your account\n"
+"please follow this URL:\n"
+"%(confirm_url)s\n\n"
+"Regards,\n"
+"Kiwi TCMS"
 msgstr ""
 
 #: tcms/templates/email/post_bug_save/email.txt:2
@@ -1021,7 +1070,7 @@ msgstr "Προσθέτω"
 #: tcms/testplans/templates/testplans/clone.html:14
 #: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:24
-#: tcms/testplans/templates/testplans/search.html:14
+#: tcms/testplans/templates/testplans/search.html:18
 #: tcms/testruns/templates/testruns/get.html:569
 msgid "Name"
 msgstr "'Ονομα"
@@ -1072,44 +1121,44 @@ msgstr "Το προφίλ μου"
 msgid "Change password"
 msgstr "Αλλαξε κωδικό"
 
-#: tcms/templates/navbar.html:59
+#: tcms/templates/navbar.html:63
 msgid "Logout"
 msgstr ""
 
-#: tcms/templates/navbar.html:63 tcms/templates/registration/login.html:4
+#: tcms/templates/navbar.html:67 tcms/templates/registration/login.html:4
 msgid "Login"
 msgstr "Σύνδεση"
 
-#: tcms/templates/navbar.html:70
+#: tcms/templates/navbar.html:74
 #: tcms/templates/registration/registration_form.html:53
 msgid "Register"
 msgstr ""
 
-#: tcms/templates/navbar.html:79
+#: tcms/templates/navbar.html:83
 msgid "Help"
 msgstr "Βοήθεια"
 
-#: tcms/templates/navbar.html:94
+#: tcms/templates/navbar.html:98
 msgid "Language"
 msgstr "Γλώσσα"
 
-#: tcms/templates/navbar.html:98
+#: tcms/templates/navbar.html:102
 msgid "Change language"
 msgstr ""
 
-#: tcms/templates/navbar.html:99
+#: tcms/templates/navbar.html:103
 msgid "Supported languages"
 msgstr "Υποστηριζόμενες γλώσσες"
 
-#: tcms/templates/navbar.html:100
+#: tcms/templates/navbar.html:104
 msgid "Request new language"
 msgstr "Ζητήστε νέα γλώσσα"
 
-#: tcms/templates/navbar.html:106
+#: tcms/templates/navbar.html:110
 msgid "Translation mode"
 msgstr "Λειτουργία μετάφρασης"
 
-#: tcms/templates/navbar.html:110
+#: tcms/templates/navbar.html:114
 msgid "Translation guide"
 msgstr "Οδηγός μετάφρασης"
 
@@ -1155,11 +1204,6 @@ msgstr "Ο κωδικός πρόσβασής σας έχει ρυθμιστεί.
 msgid "now"
 msgstr "τώρα"
 
-#: tcms/templates/registration/password_reset_confirm.html:22
-#: tcms/templates/registration/registration_form.html:31
-msgid "Confirm"
-msgstr "Επιβεβαιώνω"
-
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
 msgstr "Εισαγάγετε δύο φορές τον νέο κωδικό πρόσβασης, ώστε να μπορέσουμε να επιβεβαιώσουμε ότι το πληκτρολογήσατε σωστά"
@@ -1171,11 +1215,6 @@ msgstr "ζητήστε μια νέα επαναφορά κωδικού πρόσ�
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
 msgstr "Εστάλη μήνυμα ηλεκτρονικού ταχυδρομείου επαναφοράς κωδικού πρόσβασης"
-
-#: tcms/templates/registration/password_reset_form.html:16
-#: tcms/templates/registration/registration_form.html:39
-msgid "E-mail"
-msgstr ""
 
 #: tcms/templates/registration/password_reset_form.html:27
 msgid "Password reset"
@@ -1288,8 +1327,8 @@ msgstr ""
 #: tcms/testplans/templates/testplans/get.html:412
 #: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/mutable.html:105
-#: tcms/testplans/templates/testplans/search.html:78
-#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testplans/templates/testplans/search.html:82
+#: tcms/testplans/templates/testplans/search.html:120
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:223
 msgid "Author"
@@ -1303,7 +1342,7 @@ msgstr "Συγγραφέας"
 #: tcms/testplans/templates/testplans/get.html:416
 #: tcms/testplans/templates/testplans/get.html:493
 #: tcms/testplans/templates/testplans/mutable.html:117
-#: tcms/testplans/templates/testplans/search.html:84
+#: tcms/testplans/templates/testplans/search.html:88
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
 #: tcms/testruns/templates/testruns/get.html:65
 #: tcms/testruns/templates/testruns/mutable.html:36
@@ -1474,7 +1513,7 @@ msgid "Text"
 msgstr "Κείμενο"
 
 #: tcms/testcases/templates/testcases/search.html:132
-#: tcms/testplans/templates/testplans/search.html:93
+#: tcms/testplans/templates/testplans/search.html:97
 #: tcms/testruns/templates/testruns/search.html:30
 msgid "Separate multiple values with comma (,)"
 msgstr ""
@@ -1636,11 +1675,15 @@ msgid "Test cases are updated"
 msgstr "Οι περιπτώσεις δοκιμών ενημερώνονται"
 
 #: tcms/testplans/templates/testplans/mutable.html:149
-#: tcms/testplans/templates/testplans/search.html:37
+#: tcms/testplans/templates/testplans/search.html:41
 msgid "Active"
 msgstr "Ενεργός"
 
-#: tcms/testplans/templates/testplans/search.html:16
+#: tcms/testplans/templates/testplans/search.html:12
+msgid "Some child test plans do not match search criteria"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
 msgstr "Όνομα σχεδίου δοκιμής"
 
