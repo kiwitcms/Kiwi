@@ -120,6 +120,44 @@ class TestRunMethods(test.TestCase):
         self.assertIn(["platform=mac"], matrix)
         self.assertIn(["platform=windows"], matrix)
 
+    def test_generate_pairwise_matrix_with_3_dimensional_properties(self):
+        test_run = TestRunFactory()
+        test_case = TestCaseFactory(summary="Installation on RAID array")
+
+        # properties assigned to the test case
+        for raid_level in [0, 1, 4, 5, 6, 10, "linear"]:
+            TestCaseProperty.objects.get_or_create(
+                case=test_case, name="Raid Level", value=raid_level
+            )
+        for encryption in ["Yes", "No"]:
+            TestCaseProperty.objects.get_or_create(
+                case=test_case, name="Encryption", value=encryption
+            )
+        for mount_point in ["/", "/home"]:
+            TestCaseProperty.objects.get_or_create(
+                case=test_case, name="Mount Point", value=mount_point
+            )
+
+        # properties assigned to TestRun (aka environment)
+        for cpu_arch in ["aarch64", "x86_64", "ppc64le"]:
+            TestRunProperty.objects.get_or_create(
+                run=test_run, name="CPU Arch", value=cpu_arch
+            )
+        for fedora_variant in ["Server", "Workstation"]:
+            TestRunProperty.objects.get_or_create(
+                run=test_run, name="Fedora Variant", value=fedora_variant
+            )
+
+        properties = test_run.property_set.union(
+            TestCaseProperty.objects.filter(case=test_case)
+        )
+        matrix = self.deconstruct_matrix(
+            test_run.property_matrix(properties, "pairwise")
+        )
+        # the 2 biggest dimensions control the max size of a pairwise matrix
+        # in this case: CPU Arch * RAID Level == 3 * 7
+        self.assertEqual(len(matrix), 21)
+
 
 class TestExecutionActualDuration(TestCase):
     @parameterized.expand(
