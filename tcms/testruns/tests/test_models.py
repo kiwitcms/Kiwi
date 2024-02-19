@@ -8,6 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from mock import patch
 from parameterized import parameterized
 
+from tcms.testcases.models import Property as TestCaseProperty
+from tcms.testruns.models import Property as TestRunProperty
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import TestCaseFactory, TestExecutionFactory, TestRunFactory
 
@@ -40,6 +42,17 @@ class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
 
 
 class TestRunMethods(test.TestCase):
+    @staticmethod
+    def deconstruct_matrix(matrix_iterator):
+        result = []
+        for prop_tuple in matrix_iterator:
+            combos = []
+            for prop in prop_tuple:
+                combos.append(f"{prop.name}={prop.value}")
+            result.append(combos)
+
+        return result
+
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -53,6 +66,59 @@ class TestRunMethods(test.TestCase):
         for execution in self.test_run.create_execution(self.test_case):
             self.assertEqual(execution.status.weight, 0)
             self.assertEqual(execution.status.name, _("IDLE"))
+
+    def test_generate_full_matrix_with_2_dimensional_properties(self):
+        test_run = TestRunFactory()
+        test_case = TestCaseFactory()
+
+        # properties assigned to TestRun (aka environment)
+        for value in ["Linux", "MacOS", "Windows"]:
+            TestRunProperty.objects.get_or_create(run=test_run, name="OS", value=value)
+
+        # properties assigned to the test case
+        for value in ["Chrome", "Firefox"]:
+            TestCaseProperty.objects.get_or_create(
+                case=test_case, name="Browser", value=value
+            )
+
+        properties = test_run.property_set.union(
+            TestCaseProperty.objects.filter(case=test_case)
+        )
+
+        matrix = self.deconstruct_matrix(test_run.property_matrix(properties, "full"))
+        self.assertEqual(len(matrix), 6)
+        self.assertIn(["Browser=Chrome", "OS=Linux"], matrix)
+        self.assertIn(["Browser=Chrome", "OS=MacOS"], matrix)
+        self.assertIn(["Browser=Chrome", "OS=Windows"], matrix)
+        self.assertIn(["Browser=Firefox", "OS=Linux"], matrix)
+        self.assertIn(["Browser=Firefox", "OS=MacOS"], matrix)
+        self.assertIn(["Browser=Firefox", "OS=Windows"], matrix)
+
+    def test_generate_full_matrix_with_1_dimensional_property(self):
+        test_run = TestRunFactory()
+        test_case = TestCaseFactory()
+
+        # properties assigned to TestRun (aka environment)
+        for value in ["linux", "mac", "windows"]:
+            TestRunProperty.objects.get_or_create(
+                run=test_run, name="platform", value=value
+            )
+
+        # properties assigned to the test case
+        for value in ["linux", "windows"]:
+            TestCaseProperty.objects.get_or_create(
+                case=test_case, name="platform", value=value
+            )
+
+        properties = test_run.property_set.union(
+            TestCaseProperty.objects.filter(case=test_case)
+        )
+
+        matrix = self.deconstruct_matrix(test_run.property_matrix(properties, "full"))
+        self.assertEqual(len(matrix), 3)
+        self.assertIn(["platform=linux"], matrix)
+        self.assertIn(["platform=mac"], matrix)
+        self.assertIn(["platform=windows"], matrix)
 
 
 class TestExecutionActualDuration(TestCase):
