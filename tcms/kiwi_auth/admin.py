@@ -5,7 +5,6 @@ from django.contrib import admin, messages
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import GroupAdmin, UserAdmin, sensitive_post_parameters_m
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
@@ -15,23 +14,6 @@ from django.utils.translation import gettext_lazy as _
 from tcms.utils.user import delete_user
 
 User = get_user_model()  # pylint: disable=invalid-name
-
-
-class MyUserChangeForm(UserChangeForm):
-    """
-    Enforces unique user emails.
-    """
-
-    email = forms.EmailField(required=True)
-
-    def clean_email(self):
-        query_set = User.objects.filter(email=self.cleaned_data["email"])
-        if self.instance:
-            query_set = query_set.exclude(pk=self.instance.pk)
-        if query_set.count():
-            raise forms.ValidationError(_("This email address is already in use"))
-
-        return self.cleaned_data["email"]
 
 
 def _modifying_myself(request, object_id):
@@ -73,10 +55,6 @@ class KiwiUserAdmin(UserAdmin):
         "last_login",
     )
     ordering = ["-pk"]  # same as -date_joined
-
-    # override standard form and make the email address unique
-    # even when adding users via admin panel
-    form = MyUserChangeForm
 
     def has_view_permission(self, request, obj=None):
         return _modifying_myself(
