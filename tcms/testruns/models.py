@@ -158,7 +158,9 @@ class TestRun(models.Model, UrlMixin):
         property_groups = OrderedDict()
         for prop in properties.order_by("name", "value"):
             if prop.name in property_groups:
-                property_groups[prop.name].append(prop)
+                # do not repeat non-distinct values
+                if prop not in property_groups[prop.name]:
+                    property_groups[prop.name].append(prop)
             else:
                 property_groups[prop.name] = [prop]
 
