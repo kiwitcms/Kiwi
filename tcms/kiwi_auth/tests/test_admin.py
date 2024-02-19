@@ -94,6 +94,10 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
 
         # 4 readonly fields
         self.assertEqual(response_str.count("grp-readonly"), 4)
+        self.assertNotContains(response, "id_email")
+        self.assertContains(
+            response, f'<div class="grp-readonly">{self.tester.email}</div>'
+        )
 
         # these fields can be edited
         self.assertContains(response, "id_first_name")
@@ -237,6 +241,10 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
 
         # 9 readonly fields
         self.assertEqual(response_str.count("grp-readonly"), 9)
+        self.assertNotContains(response, "id_email")
+        self.assertContains(
+            response, f'<div class="grp-readonly">{self.tester.email}</div>'
+        )
 
         # no delete button
         self.assertNotContains(response, f"/admin/auth/user/{self.tester.pk}/delete/")
@@ -289,6 +297,10 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
 
         # 3 readonly fields
         self.assertEqual(response_str.count("grp-readonly"), 3)
+        self.assertNotContains(response, "id_email")
+        self.assertContains(
+            response, f'<div class="grp-readonly">{self.tester.email}</div>'
+        )
 
         # these fields can be edited
         self.assertContains(response, "id_first_name")
@@ -390,6 +402,10 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
 
         # 7 readonly fields
         self.assertEqual(response_str.count("grp-readonly"), 7)
+        self.assertNotContains(response, "id_email")
+        self.assertContains(
+            response, f'<div class="grp-readonly">{self.tester.email}</div>'
+        )
 
         # only these fields can be edited
         self.assertContains(response, "id_first_name")
