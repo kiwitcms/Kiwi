@@ -110,7 +110,7 @@ export function pageTestrunsGetReadyHandler () {
 
         const areYouSureText = $('#test_run_pk').data('trans-are-you-sure')
         if (confirm(areYouSureText)) {
-            removeCases(testRunId, selected.caseIds)
+            removeCases(selected.executionIds)
         }
 
         return false
@@ -292,7 +292,7 @@ function addTestCaseToRun (runId) {
     }
 
     jsonRPC('TestRun.add_case', [runId, testCase.id], function (result) {
-    // IMPORTANT: the API result includes a 'sortkey' field value!
+        // IMPORTANT: the API result includes a 'sortkey' field value!
         window.location.reload(true)
 
         // TODO: remove the page reload above and add the new case to the list
@@ -927,16 +927,13 @@ export function bindDeleteLinkButton () {
     })
 }
 
-function removeCases (testRunId, testCaseIds) {
-    for (const testCaseId of testCaseIds) {
-        jsonRPC('TestRun.remove_case', [testRunId, testCaseId], () => {
-            const tePK = $(`.test-execution-case-${testCaseId}`)
-                .find('.test-execution-checkbox')
-                .data('test-execution-id')
-            $(`.test-execution-case-${testCaseId}`).remove()
+function removeCases (executionIds) {
+    for (const executionId of executionIds) {
+        jsonRPC('TestExecution.remove', { id: executionId }, () => {
+            $(`#test-execution-${executionId}`).remove()
 
-            expandedExecutionIds.splice(expandedExecutionIds.indexOf(tePK), 1)
-            delete allExecutions[tePK]
+            expandedExecutionIds.splice(expandedExecutionIds.indexOf(executionId), 1)
+            delete allExecutions[executionId]
 
             const testExecutionCountEl = $('.test-executions-count')
             const count = parseInt(testExecutionCountEl[0].innerText)
