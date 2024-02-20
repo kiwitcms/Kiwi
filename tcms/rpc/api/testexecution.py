@@ -336,3 +336,18 @@ def properties(query):
             "execution",
         )
     )
+
+
+@permissions_required("testruns.delete_testexecution")
+@rpc_method(name="TestExecution.remove")
+def remove(query):
+    """
+    .. function:: RPC TestExecution.remove(query)
+
+        Remove a TestExecution.
+
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
+        :type query: dict
+        :raises PermissionDenied: if missing *testruns.delete_testexecution* permission
+    """
+    TestExecution.objects.filter(**query).delete()
