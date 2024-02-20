@@ -10,7 +10,7 @@ from django.utils import timezone
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
-from tcms.testruns.models import TestExecutionStatus
+from tcms.testruns.models import TestExecution, TestExecutionStatus
 from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
@@ -760,3 +760,29 @@ class TestExecutionUpdateStatus(APITestCase):
         # these are different b/c the API call (e.g. from a plugin) has
         # passed an explicit build value
         self.assertNotEqual(self.execution_1.run.build, build03)
+
+
+class TestExecutionRemovePermissions(APIPermissionsTestCase):
+    permission_label = "testruns.delete_testexecution"
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.user = UserFactory()
+        self.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        self.rpc_client.TestExecution.remove({"pk": self.execution.pk})
+
+        exists = TestExecution.objects.filter(pk=self.execution.pk).exists()
+        self.assertFalse(exists)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.remove"',
+        ):
+            self.rpc_client.TestExecution.remove({"pk": self.execution.pk})
+
+            exists = TestExecution.objects.filter(pk=self.execution.pk).exists()
+            self.assertTrue(exists)
