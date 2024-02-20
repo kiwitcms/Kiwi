@@ -68,13 +68,8 @@ def remove_case(run_id, case_id):
     """
     .. function:: RPC TestRun.remove_case(run_id, case_id)
 
-        Remove a TestCase from the selected test run.
-
-        :param run_id: PK of TestRun to modify
-        :type run_id: int
-        :param case_id: PK of TestCase to be removed
-        :type case_id: int
-        :raises PermissionDenied: if missing *testruns.delete_testexecution* permission
+        WARNING: this method is deprecated in favor of ``TestExecution.remove()``!
+        Nothing in Kiwi TCMS uses it directly and it will be removed in the future!
     """
     TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
