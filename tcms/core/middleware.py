@@ -28,7 +28,6 @@ class ExtraHeadersMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         if settings.DEBUG:
-            response.headers["X-Frame-Options"] = "DENY"
             response.headers["X-Content-Type-Options"] = "nosniff"
             response.headers[
                 "Content-Security-Policy"
