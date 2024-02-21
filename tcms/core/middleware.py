@@ -28,7 +28,6 @@ class ExtraHeadersMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         if settings.DEBUG:
-            response.headers["X-Content-Type-Options"] = "nosniff"
             response.headers[
                 "Content-Security-Policy"
             ] = "script-src 'self' cdn.crowdin.com;"

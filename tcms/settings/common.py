@@ -181,6 +181,7 @@ AUTHENTICATION_BACKENDS = [
 # WARNING: Do not change this unless you know what you are doing !!!
 MIDDLEWARE = [
     "tcms.core.middleware.CheckDBStructureExistsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -193,6 +194,9 @@ MIDDLEWARE = [
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = "DENY"
+
+# https://docs.djangoproject.com/en/4.2/ref/settings/#secure-content-type-nosniff
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # See https://github.com/kiwitcms/Kiwi/issues/2717
 # and tcms/issuetracker/azure_boards.py
