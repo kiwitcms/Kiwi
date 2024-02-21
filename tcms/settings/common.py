@@ -187,9 +187,12 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
+# https://docs.djangoproject.com/en/4.2/ref/settings/#x-frame-options
+X_FRAME_OPTIONS = "DENY"
 
 # See https://github.com/kiwitcms/Kiwi/issues/2717
 # and tcms/issuetracker/azure_boards.py
