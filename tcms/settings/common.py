@@ -128,9 +128,19 @@ USE_CAPTCHA = True
 
 # How often will session cookies expire? We set this to 24hrs by default.
 # You may override based on your security policies
-# https://docs.djangoproject.com/en/2.1/ref/settings/#session-cookie-age
-SESSION_COOKIE_AGE = 86400
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-cookie-age
+# https://docs.djangoproject.com/en/4.2/ref/settings/#session-cookie-age
+CSRF_COOKIE_AGE = SESSION_COOKIE_AGE = 86400
 
+# There should be no need to override these settings
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-cookie-httponly
+# https://docs.djangoproject.com/en/4.2/ref/settings/#session-cookie-httponly
+CSRF_COOKIE_HTTPONLY = SESSION_COOKIE_HTTPONLY = True
+
+# Kiwi TCMS no longer supports plain/text so this shouldn't really change
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-cookie-secure
+# https://docs.djangoproject.com/en/4.2/ref/settings/#session-cookie-secure
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE = True
 
 # Maximum upload file size, default set to 5MB.
 FILE_UPLOAD_MAX_SIZE = 5242880
