@@ -226,6 +226,10 @@ JIRA_ISSUE_TYPE = "Bug"
 # via 1-click integration.
 REDMINE_TRACKER_NAME = "Bugs"
 
+# Anonymous/GDPR compliant analytics via https://plausible.io/
+# see https://plausible.io/privacy-focused-web-analytics for more details
+ANONYMOUS_ANALYTICS = "runserver" not in sys.argv
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ DANGER: Don't change the settings below!
@@ -564,3 +568,6 @@ else:
 
 # See https://github.com/django-guardian/django-guardian/issues/726
 ANONYMOUS_USER_NAME = "AnonymousUser"
+
+# https://plausible.io/kiwitcms-container
+PLAUSIBLE_DOMAIN = "kiwitcms-container"

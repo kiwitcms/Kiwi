@@ -20,6 +20,10 @@
     <script type="text/javascript" src="//cdn.crowdin.com/jipt/jipt.js"></script>
     {% endif %}
 
+    {% if SETTINGS.ANONYMOUS_ANALYTICS %}
+    <script defer data-domain="{{ SETTINGS.PLAUSIBLE_DOMAIN }}" src="https://plausible.io/js/script.js"></script>
+    {% endif %}
+
     {% include 'patternfly.html' %}
     {% block head %}{% endblock %}
 </head>

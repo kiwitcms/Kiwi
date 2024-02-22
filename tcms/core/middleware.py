@@ -30,7 +30,7 @@ class ExtraHeadersMiddleware(MiddlewareMixin):
         if settings.DEBUG:
             response.headers[
                 "Content-Security-Policy"
-            ] = "script-src 'self' cdn.crowdin.com;"
+            ] = "script-src 'self' cdn.crowdin.com plausible.io;"
 
             if request.path.find("/uploads/") > -1:
                 response.headers["Content-Type"] = "text/plain"
