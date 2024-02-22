@@ -25,8 +25,9 @@ COPY ./dist/venv/ /venv
 
 COPY ./manage.py /Kiwi/
 # create directories so we can properly set ownership for them
-RUN mkdir /Kiwi/ssl /Kiwi/static /Kiwi/uploads /Kiwi/etc
+RUN mkdir -p /Kiwi/ssl /Kiwi/static /Kiwi/uploads /Kiwi/etc/cron.jobs
 COPY ./etc/*.conf /Kiwi/etc/
+COPY ./etc/cron.jobs/* /Kiwi/etc/cron.jobs/
 
 # generate self-signed SSL certificate
 RUN /usr/bin/sscg -v -f \
