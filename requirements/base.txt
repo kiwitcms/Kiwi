@@ -12,7 +12,7 @@ django-extensions==3.2.3
 django-grappelli==3.0.8
 django-guardian==2.4.0
 django-modern-rpc==1.0.2
-django-simple-history==3.4.0
+django-simple-history==3.5.0
 django-tree-queries==0.16.1
 django-uuslug==2.0.0
 jira==3.6.0
