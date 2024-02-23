@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 #
-# Copyright (c) 2022-2023 Kiwi TCMS project. All rights reserved.
+# Copyright (c) 2022-2024 Kiwi TCMS project. All rights reserved.
 # Author: Alexander Todorov <info@kiwitcms.org>
 #
 
 import base64
+import os
 import ssl
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -14,6 +16,9 @@ from xmlrpc.client import Fault as XmlRPCFault
 
 import requests
 from tcms_api import TCMS
+
+tcms_root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(tcms_root_path)
 
 from tcms.settings.common import FILE_UPLOAD_MAX_SIZE
 
