@@ -69,7 +69,7 @@ username = testadmin
 password = password
 _EOF_
 
-        rlRun -t -c "PYTHONPATH=../Kiwi ./tests/test_utf8_uploads.py -v"
+        rlRun -t -c "./tests/test_utf8_uploads.py -v"
     rlPhaseEnd
 
     rlPhaseStartTest "Should send ETag header"
