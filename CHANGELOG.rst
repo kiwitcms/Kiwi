@@ -1,6 +1,92 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.1 (26 Feb 2024)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements,
+    new settings and API methods, bug fixes and internal refactoring!
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.0 -> 13.1
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 4.2.9 to 4.2.10
+- Update django-simple-history from 3.4.0 to 3.5.0
+- Update mysqlclient from 2.2.1 to 2.2.4
+- Update psycopg from 3.1.17 to 3.1.18
+- Update tzdata from 2023.4 to 2024.1
+- Update uwsgi from 2.0.23 to 2.0.24
+- Update node_modules/datatables.net-buttons from 2.4.2 to 3.0.0
+- Add ``robots.txt`` file to tell various robots to stop probing Kiwi TCMS
+- Resolve the path ``/favicon.ico`` because some browsers still search for it
+- Send ``Referer:`` header for container ``HEALTHCHECK`` command in order to
+  make NGINX logs more readable
+- Allow users to reset their email by asking them to confirm their new address. Fixes
+  `Issue #3211 <https://github.com/kiwitcms/Kiwi/issues/3211>`_
+- Add support for custom email validators on the registration page
+- Move ``X-Frame-Options`` header definition into settings
+- Move ``X-Content-Type-Options`` header definition into settings
+- Enable anonymous analytics, see
+  https://kiwitcms.org/blog/kiwi-tcms-team/2024/02/23/anonymous-analytics-via-plausibleio/
+
+
+Settings
+~~~~~~~~
+
+- New settings ``ANONYMOUS_ANALYTICS`` and ``PLAUSIBLE_DOMAIN`` control
+  anonymous analytics
+- New setting ``EMAIL_VALIDATORS`` for custom email validation during
+  registration
+- Add the following settings in order to document them -
+  ``CSRF_COOKIE_AGE``, ``CSRF_COOKIE_HTTPONLY``, ``SESSION_COOKIE_HTTPONLY``,
+  ``CSRF_COOKIE_SECURE`` and ``SESSION_COOKIE_SECURE``. Most likely you don't
+  need to change their values
+- Respect ``X_FRAME_OPTIONS`` setting, defaults to ``DENY``
+- Respect ``SECURE_CONTENT_TYPE_NOSNIFF`` setting, defaults to ``nosniff``
+- Configure ``SECURE_SSL_REDIRECT`` setting to ``True``
+
+
+API
+~~~
+
+- New method ``TestExecution.remove()`` which should be used in favor of
+  ``TestRun.remove_case()``
+
+
+Bug fixes
+~~~~~~~~~~
+
+- Fix a bug where non-distinct values made it into generated property matrix
+- On TestRun page allow removal of individual parametrized TestExecution(s).
+  Closes `Pull #3282 <https://github.com/kiwitcms/Kiwi/pull/3282>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update codecov/codecov-action from 3 to 4
+- Update node_modules/webpack from 5.89.0 to 5.90.3
+- Update runner image for CircleCI
+- Fix failure in ``test_utf8_uploads`` on CircleCI
+- Several improvements around performance benchmark tests
+- Refactor ``RegistrationForm.clean_email()`` using field validator function
+- Add tests for test matrix generation functionality
+
+
+
 Kiwi TCMS 13.0 (17 Jan 2024)
 ----------------------------
 
