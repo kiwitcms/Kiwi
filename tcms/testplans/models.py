@@ -192,8 +192,7 @@ class TestPlan(TreeNode, UrlMixin):
                 </div> <!-- end-node -->"""
 
             # indent
-            if test_plan.tree_depth > previous_depth:
-                previous_depth = test_plan.tree_depth
+            previous_depth = max(test_plan.tree_depth, previous_depth)
 
             # outdent
             did_outdent = False
