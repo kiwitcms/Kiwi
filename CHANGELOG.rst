@@ -1,6 +1,37 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.1.1 (27 Feb 2024)
+------------------------------
+
+.. important::
+
+    This is a hot-fix release for a bug introduced in v13.1!
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.1 -> 13.1.1
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Bug fixes
+~~~~~~~~~
+
+- Downgrade node_modules/datatables.net-buttons from 3.0.0 to 2.4.3. Fixes
+  `Issue #3552 <https://github.com/kiwitcms/Kiwi/issues/3552>`_
+
+Refactoring
+~~~~~~~~~~~
+
+- Use ``max()`` built-in function instead of an if block
+
+
+
 Kiwi TCMS 13.1 (26 Feb 2024)
 ----------------------------
 
