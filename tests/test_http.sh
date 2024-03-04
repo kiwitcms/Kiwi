@@ -123,6 +123,17 @@ _EOF_
         fi
     rlPhaseEnd
 
+    rlPhaseStartTest "Can upload attachments via browser UI"
+        ARCH=$(uname -m)
+        if [ "$ARCH" == "x86_64" ]; then
+            # can upload file
+            rlRun -t -c "robot tests/ui/test_upload_file.robot"
+
+            # verify file is there
+            rlRun -t -c "curl -k -D- --silent $HTTPS/uploads/attachments/testplans_testplan/1/test_upload_file.robot | grep '200 OK'"
+        fi
+    rlPhaseEnd
+
     rlPhaseStartTest "Requests to /accounts/register/ are rate limited"
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/accounts/register/" "$WRK_DIR" "register-account-page")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS in 10 seconds"
