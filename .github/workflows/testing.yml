@@ -63,12 +63,11 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
-        if: env.HAS_TOKEN
+        if: env.CODECOV_TOKEN
         uses: codecov/codecov-action@v4
         env:
-          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
           verbose: true
 
@@ -103,12 +102,11 @@ jobs:
         coverage report -m
 
     - name: Send coverage to codecov.io
-      if: env.HAS_TOKEN
+      if: env.CODECOV_TOKEN
       uses: codecov/codecov-action@v4
       env:
-        HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: false
         verbose: true
 
@@ -144,12 +142,11 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
-        if: env.HAS_TOKEN
+        if: env.CODECOV_TOKEN
         uses: codecov/codecov-action@v4
         env:
-          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
           verbose: true
 
@@ -193,12 +190,11 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
-        if: env.HAS_TOKEN
+        if: env.CODECOV_TOKEN
         uses: codecov/codecov-action@v4
         env:
-          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
           verbose: true
 
@@ -240,12 +236,11 @@ jobs:
           coverage report -m
 
       - name: Send coverage to codecov.io
-        if: env.HAS_TOKEN
+        if: env.CODECOV_TOKEN
         uses: codecov/codecov-action@v4
         env:
-          HAS_TOKEN: ${{ secrets.HAS_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
           verbose: true
 
