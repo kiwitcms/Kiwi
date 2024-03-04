@@ -50,7 +50,7 @@
       {% trans "Please login to get started" %}
       {% if SETTINGS.REGISTRATION_ENABLED %}
         {% trans "or" %}
-        <a href="{% url "tcms-register" %}" style="color:white;text-decoration:underline">{% trans "register an account" %}</a>
+        <a href="{% url "tcms-register" %}">{% trans "register an account" %}</a>
         {% trans "if you don't have one!" %}
       {% endif %}
       </p>
