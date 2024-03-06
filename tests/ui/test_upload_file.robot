@@ -1,4 +1,5 @@
 *** Settings ***
+Library           OperatingSystem
 Library           SeleniumLibrary
 
 *** Variables ***
@@ -25,7 +26,8 @@ Uploading file works via file upload
     Title Should Be       Kiwi TCMS - Dashboard
 
     Go To                 ${TEST_PLAN_URL}
-    Choose File   id:id_attachment_file    ${CURDIR}${/}test_upload_file.robot
+    Create File   ${TEMPDIR}${/}hello-robots.txt   Hello Robots
+    Choose File   id:id_attachment_file    ${TEMPDIR}${/}hello-robots.txt
     Click Button  Add attachment
     Page Should Contain   Your attachment was uploaded
 
