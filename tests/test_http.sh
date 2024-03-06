@@ -130,7 +130,7 @@ _EOF_
             rlRun -t -c "robot tests/ui/test_upload_file.robot"
 
             # verify file is there
-            rlRun -t -c "curl -k -D- --silent $HTTPS/uploads/attachments/testplans_testplan/1/test_upload_file.robot | grep '200 OK'"
+            rlRun -t -c "curl -k -D- --silent $HTTPS/uploads/attachments/testplans_testplan/1/hello-robots.txt | grep '200 OK'"
         fi
     rlPhaseEnd
 
