@@ -260,7 +260,15 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get update
-          sudo apt-get install firefox wrk
+          sudo apt-get install firefox git make wrk
+
+          # install beakerlib from source it doesn't ship DEB packages
+          if [ ! -f "/usr/share/beakerlib/beakerlib.sh" ]; then
+              git clone https://github.com/beakerlib/beakerlib.git
+              sudo make -C beakerlib/ install
+          fi
+
+          pip install -r requirements/devel.txt
 
       - name: Docker version info
         run: |
@@ -272,7 +280,6 @@ jobs:
 
       - name: Execute tests
         run: |
-          pip install -r requirements/devel.txt
           make test-docker-image
           docker images
 
