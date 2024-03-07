@@ -260,7 +260,11 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get update
-          sudo apt-get install firefox git make wrk
+          # remove stock FF package
+          sudo snap remove firefox
+          sudo apt-get remove firefox
+
+          sudo apt-get install git make wrk
 
           # install beakerlib from source it doesn't ship DEB packages
           if [ ! -f "/usr/share/beakerlib/beakerlib.sh" ]; then
@@ -269,6 +273,24 @@ jobs:
           fi
 
           pip install -r requirements/devel.txt
+
+          # install Firefox and Geckodriver from Mozilla's DEB repository
+          # b/c Ubuntu 22.04 and later ships FF via snap package (a container)
+          # which causes issues with file access from RobotFramework tests
+          sudo apt-get install software-properties-common
+          sudo add-apt-repository --yes ppa:mozillateam/ppa
+
+          # prioritize the 3rd party repository
+          sudo tee /etc/apt/preferences.d/mozilla-firefox << EOF
+          Package: *
+          Pin: release o=LP-PPA-mozillateam
+          Pin-Priority: 1001
+
+          Package: firefox
+          Pin: version 1:1snap1-0ubuntu2
+          Pin-Priority: -1
+          EOF
+          sudo apt-get install firefox firefox-geckodriver
 
       - name: Docker version info
         run: |
