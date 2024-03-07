@@ -115,7 +115,7 @@ docker-manifest:
 
 .PHONY: test-docker-image
 test-docker-image: docker-image
-	sudo --preserve-env env PATH=$$PATH ./tests/runner.sh
+	./tests/runner.sh
 
 .PHONY: docs
 docs:
