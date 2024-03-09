@@ -40,7 +40,7 @@ def post_analytics():
 
 if not settings.ANONYMOUS_ANALYTICS:
     print("Anonymous analytics are explicitly disabled. Exiting")
-elif "manage.py" in sys.argv and "shell" in sys.argv:
+elif "manage.py" in sys.argv[0] and "shell" in sys.argv:
     # execute only when piped to `./manage.py shell`
     post_analytics()
 else:
