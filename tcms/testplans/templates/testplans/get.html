@@ -49,34 +49,34 @@
         </div>
 
         <div class="col-xs-12 col-sm-12 col-md-3" id="testplan-info">
-            <div class="card-pf card-pf-accented card-pf-aggregate-status" style="text-align: left">
-                <h2 class="card-pf-title">
+            <div class="card-pf card-pf-accented card-pf-aggregate-status">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Author' %}:
                     <a href="{% url "tcms-profile" object.author.username %}">{{ object.author.username }}</a>
                 </h2>
 
-                <h2 class="card-pf-title">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-calendar"></span>{{ object.create_date }}
                 </h2>
 
-                <h2 class="card-pf-title">
+                <h2 class="card-pf-title kiwi-text-align-left">
                 <span id="product_pk"
                       class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
                     <a href="{% url "plans-search" %}?product={{ object.product_id }}"
                        title="Search plans of {{ object.product }} ">{{ object.product }}</a>
                 </h2>
 
-                <h2 class="card-pf-title">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-random"></span>{% trans 'Version' %}:
                     {{ object.product_version.value }}
                 </h2>
 
-                <h2 class="card-pf-title">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-cube"></span>{% trans 'Plan Type' %}:
                     {{ object.type.name  }}
                 </h2>
 
-                <h2 class="card-pf-title">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-link"></span>{% trans 'Reference link' %}:
                     {% if object.extra_link %}
                         <a href="{{ object.extra_link }}">{{ object.extra_link }}</a>

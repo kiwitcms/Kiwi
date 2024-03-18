@@ -43,7 +43,7 @@
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span
                         class="{{ bug.severity.icon|default:'fa fa-fire-extinguisher' }}"
                         {% if bug.severity %}style="color: {{ bug.severity.color }}"{% endif %}
@@ -51,16 +51,16 @@
                     {{ bug.severity.name|default:'-' }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-calendar"></span>{{ object.created_at }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Reporter' %}:
                     <a href="{% url "tcms-profile" object.reporter.username %}">{{ object.reporter.username }}</a>
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Assignee' %}:
                     {% if object.assignee %}
                         <a href="{% url "tcms-profile" object.assignee.username %}">{{ object.assignee.username }}</a>
@@ -69,19 +69,19 @@
                     {% endif %}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span id="product_pk"
                         data-pk="{{ object.product.pk }}"
                         class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
                     {{ object.product }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-refresh"></span>{% trans 'Version' %}:
                     {{ object.version }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-wrench"></span>{% trans 'Build' %}:
                     {{ object.build }}
                 </h2>
