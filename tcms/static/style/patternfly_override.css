@@ -92,3 +92,7 @@ a.disabled {
     color: green;
     font-weight: bold;
 }
+
+.kiwi-font-weight-bold {
+    font-weight: bold;
+}
