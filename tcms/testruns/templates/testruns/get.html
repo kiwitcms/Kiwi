@@ -125,9 +125,7 @@
                             {% endfor %}
                         </ul>
 
-                        <div style="text-align: center">
-                            <label>{% trans "TOTAL" %}</label> - <a href="{% url 'testruns-get' object.pk %}" class="total-execution-count"></a>
-                        </div>
+                        <label>{% trans "TOTAL" %}</label> - <a href="{% url 'testruns-get' object.pk %}" class="total-execution-count"></a>
                     </div>
                     <div class="kiwi-text-align-left">
                         {{ object.notes|markdown2html }}
