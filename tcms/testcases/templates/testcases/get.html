@@ -24,12 +24,12 @@
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-12 col-md-3">
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Author' %}:
                     <a href="{% url "tcms-profile" object.author.username %}">{{ object.author.username }}</a>
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-search"></span>{% trans 'Default tester' %}:
                     {% if object.default_tester  %}
                     <a href="{% url "tcms-profile" object.default_tester.username %}">{{ object.default_tester.username }}</a>
@@ -38,19 +38,19 @@
                     {% endif %}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span id="product_pk"
                         data-pk="{{ object.category.product.pk }}"
                         class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
                     {{ object.category.product }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-tag"></span>{% trans 'Category' %}:
                     {{ object.category }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa
                         {% if object.case_status.is_confirmed %}
                             fa-check-square
@@ -60,31 +60,31 @@
                     {{ object.case_status }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-hourglass"></span>{% trans 'Priority' %}:
                     {{ object.priority }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-calendar"></span>{{ object.create_date }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-clock-o"></span>{% trans 'Setup duration' %}:
                     {{ object.setup_duration|default:"-" }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-clock-o"></span>{% trans 'Testing duration' %}:
                     {{ object.testing_duration|default:"-" }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-clock-o"></span>{% trans 'Expected duration' %}:
                     {{ object.expected_duration }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa
                         {% if object.is_automated %}
                             fa-cog
@@ -94,22 +94,22 @@
                     {{ object.is_automated }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-terminal"></span>{% trans 'Script' %}:
                     {{ object.script|default:'-' }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-terminal"></span>{% trans 'Arguments' %}:
                     {{ object.arguments|default:'-' }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-file-text"></span>{% trans 'Requirements' %}:
                     {{ object.requirement|default:'-' }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-link"></span>{% trans 'Reference link' %}:
                     {% if object.extra_link %}
                         <a href="{{ object.extra_link }}">{{ object.extra_link }}</a>

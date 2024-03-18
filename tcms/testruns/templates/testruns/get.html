@@ -35,45 +35,45 @@
         <div class="col-xs-12 col-sm-12 col-md-3">
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa pficon-topology"></span>{% trans 'Test plan' %}:
                     <a href="{% url 'test_plan_url_short' object.plan.pk %}">TP-{{ object.plan.pk }}: {{ object.plan.name }}</a>
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
                     <a href="{% url 'testruns-search' %}?product={{ object.build.version.product_id }}" title="Search test runs of {{ object.build.version.product }}">{{ object.build.version.product }}</a>
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-random"></span>{% trans 'Version' %}:
                     <a href="{% url 'testruns-search' %}?product={{ object.build.version.product_id }}&version={{ object.build.version_id }}" title="Search test runs of {{ object.build.version.value }}">{{ object.build.version.value }}</a>
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-wrench"></span>{% trans 'Build' %}:
                     <a href="{% url 'testruns-search' %}?product={{ object.build.version.product_id }}&version={{ object.build.version_id }}&build={{ object.build_id }}" title="Search test runs of {{ object.build }}">{{ object.build }}</a>
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Manager' %}:
                     <a href="{% url 'tcms-profile' object.manager.username %}">{{ object.manager.username }}</a>
                 </h2>
 
                 {% if object.default_tester %}
-                    <h2 class="card-pf-title" style="text-align: left">
+                    <h2 class="card-pf-title kiwi-text-align-left">
                         <span class="fa fa-search"></span>{% trans 'Default tester' %}:
                         <a href="{% url 'tcms-profile' object.default_tester.username %}">{{ object.default_tester.username }}</a>
                     </h2>
                 {% endif %}
 
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa fa-calendar-o"></span>{% trans 'Planned start' %}:
                     {{ object.planned_start|default:'-'}}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-calendar"></span>{% trans 'Started at' %}:
                     <span class="start-date">
                         {{ object.start_date|default:'-' }}
@@ -86,12 +86,12 @@
                     {% endif %}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left">
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa fa-calendar-o"></span>{% trans 'Planned stop' %}:
                     {{ object.planned_stop|default:'-' }}
                 </h2>
 
-                <h2 class="card-pf-title" style="text-align: left; overflow: hidden;">
+                <h2 class="card-pf-title kiwi-text-align-left" style="overflow: hidden;">
                     <span class="fa fa-calendar-check-o"></span>{% trans 'Finished at' %}:
                     <span class="stop-date">
                         {{ object.stop_date|default:'-' }}
@@ -119,7 +119,7 @@
                     <div>
                         <ul class="count-per-status-container list-group" style="columns: 2; margin: 0;">
                             {% for status in execution_statuses%}
-                            <li class="list-group-item" style="padding:0; text-align:left">
+                            <li class="list-group-item kiwi-text-align-left" style="padding:0">
                                 <label>{{ status.name }}</label> - <a id="count-for-status-{{ status.pk }}" href="#"></a>
                             </li>
                             {% endfor %}
@@ -129,7 +129,7 @@
                             <label>{% trans "TOTAL" %}</label> - <a href="{% url 'testruns-get' object.pk %}" class="total-execution-count"></a>
                         </div>
                     </div>
-                    <div style="text-align: left">
+                    <div class="kiwi-text-align-left">
                         {{ object.notes|markdown2html }}
                     </div>
                 </div>

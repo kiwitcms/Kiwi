@@ -96,3 +96,7 @@ a.disabled {
 .kiwi-font-weight-bold {
     font-weight: bold;
 }
+
+.kiwi-text-align-left {
+    text-align: left;
+}
