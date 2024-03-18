@@ -1,6 +1,7 @@
 """
     Allow testadmin to log in by setting its password
 """
+
 from django.contrib.auth.models import User
 
 from tcms.management.models import Classification, Product, Version
