@@ -382,9 +382,11 @@ MENU_ITEMS = [
             ("-", "-"),
             (_("New Test Run"), reverse_lazy("testruns-new")),
             ("-", "-") if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS else (),
-            (_("New Bug"), reverse_lazy("bugs-new"))
-            if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS
-            else (),
+            (
+                (_("New Bug"), reverse_lazy("bugs-new"))
+                if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS
+                else ()
+            ),
         ],
     ),
     (
@@ -393,9 +395,11 @@ MENU_ITEMS = [
             (_("Search Test Plans"), reverse_lazy("plans-search")),
             (_("Search Test Cases"), reverse_lazy("testcases-search")),
             (_("Search Test Runs"), reverse_lazy("testruns-search")),
-            (_("Search Bugs"), reverse_lazy("bugs-search"))
-            if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS
-            else (),
+            (
+                (_("Search Bugs"), reverse_lazy("bugs-search"))
+                if "tcms.bugs.apps.AppConfig" in INSTALLED_APPS
+                else ()
+            ),
         ],
     ),
     (

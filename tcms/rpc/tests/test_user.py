@@ -166,9 +166,9 @@ class TestUserUpdate(APITestCase):
     def test_update_own_password(self):
         user_new_attrs = self.user_new_attrs.copy()
         new_password = "new password"  # nosec:B105:hardcoded_password_string
-        user_new_attrs[
-            "password"  # nosec:B105:hardcoded_password_string
-        ] = new_password
+        user_new_attrs["password"] = (  # nosec:B105:hardcoded_password_string
+            new_password
+        )
 
         with self.assertRaisesRegex(XmlRPCFault, "Old password is required"):
             self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
@@ -177,9 +177,9 @@ class TestUserUpdate(APITestCase):
         with self.assertRaisesRegex(XmlRPCFault, "Password is incorrect"):
             self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
 
-        user_new_attrs[
-            "old_password"  # nosec:B105:hardcoded_password_string
-        ] = "api-testing"
+        user_new_attrs["old_password"] = (  # nosec:B105:hardcoded_password_string
+            "api-testing"
+        )
         data = self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
         self.assertNotIn("password", data)
         self.assertEqual(data["first_name"], user_new_attrs["first_name"])
@@ -193,9 +193,9 @@ class TestUserUpdate(APITestCase):
         user_should_have_perm(self.api_user, "auth.change_user")
 
         user_new_attrs = self.user_new_attrs.copy()
-        user_new_attrs[
-            "password"  # nosec:B105:hardcoded_password_string
-        ] = "new password"
+        user_new_attrs["password"] = (  # nosec:B105:hardcoded_password_string
+            "new password"
+        )
 
         with self.assertRaisesRegex(
             XmlRPCFault, "Password updates for other users are not allowed via RPC!"

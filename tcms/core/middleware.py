@@ -28,9 +28,9 @@ class ExtraHeadersMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         if settings.DEBUG:
-            response.headers[
-                "Content-Security-Policy"
-            ] = "script-src 'self' cdn.crowdin.com plausible.io;"
+            response.headers["Content-Security-Policy"] = (
+                "script-src 'self' cdn.crowdin.com plausible.io;"
+            )
 
             if request.path.find("/uploads/") > -1:
                 response.headers["Content-Type"] = "text/plain"

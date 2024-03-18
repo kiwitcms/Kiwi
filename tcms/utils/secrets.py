@@ -1,6 +1,7 @@
 """
 Helper module which deals with loading values from ENV or Docker Secrets.
 """
+
 import os
 
 
