@@ -16,6 +16,8 @@ Available plugins
   for reading junit.xml formatted files. Written in Python
 * Native `JUnit 5 plugin <https://github.com/kiwitcms/junit-plugin/>`_ written
   in Java
+* `PHPUnit plugin <https://github.com/kiwitcms/phpunit-plugin/>`_ written
+  in PHP
 * `Robot Framework plugin <https://github.com/kiwitcms/robotframework-plugin>`_
 * `Django test runner plugin <https://github.com/kiwitcms/django-plugin>`_
 * Native `py.test plugin <https://github.com/kiwitcms/pytest-plugin/>`_ written
@@ -27,8 +29,7 @@ Available plugins
 Plugins still in progress
 -------------------------
 
-* Native `PHPUnit plugin <https://github.com/kiwitcms/phpunit-plugin/>`_ written
-  in PHP
+N/A
 
 Watch their repositories or
 `subscribe to our newsletter <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
