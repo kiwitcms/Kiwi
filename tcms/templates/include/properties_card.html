@@ -9,8 +9,8 @@
             {% trans "Parameters" %}
         {% endif %}
 
-        <span class="fa fa-exclamation-triangle help-tooltip"
-             style="float:right; color: #ec7a08;"
+        <span class="fa fa-exclamation-triangle help-tooltip kiwi-float-right"
+             style="color: #ec7a08;"
              data-toggle="tooltip"
              data-placement="left"
              title="{% trans 'This is a tech-preview feature!' %}">
@@ -30,8 +30,8 @@
 
                         {% if hide_delete_button %}
                         {% else %}
-                        <a href="#" class="js-remove-property no-before" title="{% trans 'Delete' %}"
-                            style="float:right" data-property-name="">
+                        <a href="#" class="js-remove-property no-before kiwi-float-right" title="{% trans 'Delete' %}"
+                            data-property-name="">
                             <span class="pficon-error-circle-o hidden-print"></span>
                         </a>
                         {% endif %}
@@ -67,7 +67,7 @@
                         style="width: 80%; display: inline"
                         maxlength="255"
                         placeholder="{% trans 'name=value' %}">
-                    <a href="#" class="js-add-property-value" title="{% trans 'Add' %}" style="float:right">
+                    <a href="#" class="js-add-property-value kiwi-float-right" title="{% trans 'Add' %}">
                         <span class="fa fa-plus hidden-print"></span>
                     </a>
                 </div>
