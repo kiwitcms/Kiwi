@@ -104,3 +104,7 @@ a.disabled {
 .kiwi-text-align-center {
     text-align: center;
 }
+
+.kiwi-float-right {
+    float: right;
+}

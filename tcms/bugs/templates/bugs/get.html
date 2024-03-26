@@ -146,10 +146,10 @@
                     <div class="form-group">
                         <div>
                             {% if not object.status %}
-                            <button type="submit" name="action" value="reopen" class="btn btn-warning btn-lg" style="float:right">{% trans "Reopen" %}</button>
+                            <button type="submit" name="action" value="reopen" class="btn btn-warning btn-lg kiwi-float-right">{% trans "Reopen" %}</button>
                             {% else %}
                             <button type="submit" name="action" value="comment" class="btn btn-default btn-lg">{% trans "Save" %}</button>
-                            <button type="submit" name="action" value="close" class="btn btn-danger btn-lg" style="float:right">
+                            <button type="submit" name="action" value="close" class="btn btn-danger btn-lg kiwi-float-right">
                                 {% trans "Close" %}
                             </button>
                             {% endif %}
