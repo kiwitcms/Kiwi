@@ -264,8 +264,7 @@ class TestPlan(TreeNode, UrlMixin):
 
         return f"""
             <div id="test-plan-family-tree"
-                 class="list-group tree-list-view-pf"
-                 style="margin-top:0">
+                 class="list-group tree-list-view-pf kiwi-margin-top-0">
                 {result}
             </div>
         """
