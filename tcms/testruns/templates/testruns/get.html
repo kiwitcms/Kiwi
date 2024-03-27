@@ -11,7 +11,7 @@
 {% block contents %}
 <div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
-    <h1 class="col-md-12" style="margin-top: 0; {% if object.stop_date %}text-decoration: line-through{% endif %}">
+    <h1 class="col-md-12 kiwi-margin-top-0" {% if object.stop_date %}style="text-decoration: line-through"{% endif %}>
         <span id="test_run_pk"
             data-pk="{{ object.pk }}"
             data-plan-pk="{{ object.plan_id }}"
@@ -317,10 +317,10 @@
                                         <div class="list-view-pf-left">
                                             <span class="fa fa-angle-right"></span>
                                         </div>
-                                        <div class="list-view-pf-checkbox hidden-print" style="margin-top: 0; margin-bottom: 0">
+                                        <div class="list-view-pf-checkbox hidden-print kiwi-margin-top-0 kiwi-margin-bottom-0">
                                             <input type="checkbox" class="test-execution-checkbox">
                                         </div>
-                                        <div class="list-view-pf-actions hidden-print" style="margin-top: 0; margin-bottom: 0;">
+                                        <div class="list-view-pf-actions hidden-print kiwi-margin-top-0 kiwi-margin-bottom-0">
                                             <div class="dropdown pull-right dropdown-kebab-pf">
                                                 <button class="btn btn-link dropdown-toggle" type="button" id="dropdownKebabRight9"
                                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
