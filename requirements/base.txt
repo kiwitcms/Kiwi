@@ -20,6 +20,6 @@ Markdown==3.6
 PyGithub==1.58.2
 Pygments==2.17.2
 python-gitlab==4.4.0
-python-redmine==2.4.0
+python-redmine==2.5.0
 topicaxis-opengraph==0.5
 tzdata==2024.1
