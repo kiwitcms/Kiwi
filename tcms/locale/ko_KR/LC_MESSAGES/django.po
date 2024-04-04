@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-19 11:01+0000\n"
-"PO-Revision-Date: 2024-02-19 12:57\n"
+"PO-Revision-Date: 2024-04-03 22:08\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -642,7 +642,7 @@ msgstr "새로운 테스트 케이스"
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr ""
+msgstr "새로운 테스트"
 
 #: tcms/settings/common.py:365
 msgid "SEARCH"
