@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-19 11:01+0000\n"
-"PO-Revision-Date: 2024-02-19 12:57\n"
+"PO-Revision-Date: 2024-04-08 21:32\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -132,7 +132,7 @@ msgstr "üzerinde yorum yaptı"
 
 #: tcms/bugs/templates/bugs/get.html:149
 msgid "Reopen"
-msgstr ""
+msgstr "Yeniden aç"
 
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
@@ -491,13 +491,13 @@ msgstr "Bu e-posta adresi şu anda kullanımdadır"
 
 #: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:398
 msgid "Users"
-msgstr ""
+msgstr "Kullanıcılar"
 
 #: tcms/kiwi_auth/admin.py:104
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:57
 msgid "Reset email address"
-msgstr ""
+msgstr "Email adresini sıfırla"
 
 #: tcms/kiwi_auth/admin.py:170
 msgid "Personal info"
@@ -642,7 +642,7 @@ msgstr "Yeni Test Senaryosu"
 #: tcms/testruns/templates/testruns/get.html:173
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr ""
+msgstr "Yeni Test Koşumu"
 
 #: tcms/settings/common.py:365
 msgid "SEARCH"
@@ -674,7 +674,7 @@ msgstr "Analiz"
 
 #: tcms/settings/common.py:383
 msgid "Execution"
-msgstr ""
+msgstr "Yürütme"
 
 #: tcms/settings/common.py:386
 #: tcms/testruns/templates/testruns/mutable.html:169
@@ -696,7 +696,7 @@ msgstr "YÖNETİM"
 
 #: tcms/settings/common.py:399
 msgid "Groups"
-msgstr ""
+msgstr "Gruplar"
 
 #: tcms/settings/common.py:401
 msgid "Everything else"
@@ -859,15 +859,15 @@ msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Pozitif"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Nötr"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negatif"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
@@ -1160,7 +1160,7 @@ msgstr "Dil"
 
 #: tcms/templates/navbar.html:102
 msgid "Change language"
-msgstr ""
+msgstr "Dili Değiştir"
 
 #: tcms/templates/navbar.html:103
 msgid "Supported languages"
@@ -1616,7 +1616,7 @@ msgstr "İnceleyen"
 #: tcms/testplans/templates/testplans/get.html:231
 #: tcms/testplans/templates/testplans/get.html:234
 msgid "Sort key"
-msgstr ""
+msgstr "Sıralama"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
@@ -1625,24 +1625,24 @@ msgstr "Senaryoları yeniden sırala"
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:289
 msgid "Search and add test cases"
-msgstr ""
+msgstr "Ara ve test case ekle"
 
 #: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:299
 msgid "Advanced search"
-msgstr ""
+msgstr "Gelişmiş arama"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr ""
+msgstr "Aktif test koşumları"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
-msgstr ""
+msgstr "Daha"
 
 #: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
-msgstr ""
+msgstr "Etkin değil"
 
 #: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:484
@@ -1731,7 +1731,7 @@ msgstr ""
 
 #: tcms/testruns/models.py:224
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Test yürütme durumu"
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
