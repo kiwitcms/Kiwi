@@ -27,8 +27,8 @@ jobs:
 
     - name: Dockerize
       run: |
-        docker-compose -f tests/${{ matrix.tracker}}/docker-compose.yml build
-        docker-compose -f tests/${{ matrix.tracker}}/docker-compose.yml up -d
+        docker compose -f tests/${{ matrix.tracker}}/docker-compose.yml build
+        docker compose -f tests/${{ matrix.tracker}}/docker-compose.yml up -d
         sleep 10
 
         IP_ADDR=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' bugtracker_kiwitcms_org`

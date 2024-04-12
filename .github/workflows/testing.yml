@@ -166,8 +166,8 @@ jobs:
 
       - name: Create database
         run: |
-          docker-compose pull db
-          docker-compose run -d -p 3306:3306 --name kiwi_db db
+          docker compose pull db
+          docker compose run -d -p 3306:3306 --name kiwi_db db
           docker images
           sleep 20  # wait to initialize
           docker exec -i kiwi_db mariadb -u root -pkiwi-1s-aw3s0m3 -e 'GRANT ALL PRIVILEGES ON test_kiwi.* TO kiwi;'
@@ -214,8 +214,8 @@ jobs:
 
       - name: Create database
         run: |
-          docker-compose -f docker-compose.postgres pull db
-          docker-compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
+          docker compose -f docker-compose.postgres pull db
+          docker compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
           docker images
 
       - name: Execute tests
@@ -297,8 +297,8 @@ jobs:
           docker --version
           docker --help
 
-          docker-compose --version
-          docker-compose --help
+          docker compose --version
+          docker compose --help
 
       - name: Execute tests
         run: |

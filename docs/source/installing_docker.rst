@@ -24,7 +24,7 @@ Clone the git repository::
 Then you can start Kiwi TCMS by executing::
 
     cd path/to/kiwi-tcms/
-    docker-compose up -d
+    docker compose up -d
 
 Your Kiwi TCMS instance will be accessible at https://localhost.
 
@@ -36,7 +36,7 @@ The above command will create two containers:
    image
 
 
-``docker-compose`` will also create two volumes for persistent data storage:
+``docker compose`` will also create two volumes for persistent data storage:
 ``kiwi_db_data`` and ``kiwi_uploads``.
 
 .. note::
@@ -159,10 +159,10 @@ Upgrading
 To upgrade running Kiwi TCMS containers execute the following commands::
 
     cd path/containing/docker-compose/
-    docker-compose down
+    docker compose down
     # !!! docker tag to keep older image version on the machine
-    docker-compose pull # to fetch latest versions from Docker Hub
-    docker-compose up -d
+    docker compose pull # to fetch latest versions from Docker Hub
+    docker compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py upgrade
 
 .. warning::
@@ -421,7 +421,7 @@ The Kiwi TCMS container will print HTTPD logs on STDOUT!
 
 .. warning::
 
-    You must start the containers in the foreground with ``docker-compose up``,
+    You must start the containers in the foreground with ``docker compose up``,
     e.g. without the ``-d`` option in order to see their logs or use
     ``docker container logs [-f|--tail 1000] kiwi_web``!
 
