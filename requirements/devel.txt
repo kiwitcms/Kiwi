@@ -3,7 +3,7 @@ tcms-api
 doc8
 isort==5.13.2
 colorama
-black==24.3.0
+black==24.4.0
 parameterized
 robotframework
 robotframework-seleniumlibrary
