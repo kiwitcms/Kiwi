@@ -49,7 +49,7 @@ we often hear is *How many test execution results can Kiwi TCMS deal with?*
 
     - Client: t2.small in us-east-1a (same availability zone as server)
     - Server: t3.medium in use-east-1a, 30GB gp2 disk with 100 IOPS
-    - Kiwi TCMS v12.0 via ``docker-compose up``
+    - Kiwi TCMS v12.0 via ``docker compose up``
     - Database is ``mariadb:10.10.2`` with a persistent volume backed onto
       the host filesystem
     - Host OS - Amazon Linux, freshly provisioned, no changes from defaults

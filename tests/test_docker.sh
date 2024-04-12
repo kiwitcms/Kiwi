@@ -23,7 +23,7 @@ assert_perform_initdb() {
 
 rlJournalStart
     rlPhaseStartTest "[PostgreSQL] Container up"
-        rlRun -t -c "docker-compose -f docker-compose.postgres up -d"
+        rlRun -t -c "docker compose -f docker-compose.postgres up -d"
         assert_perform_initdb
         assert_up_and_running
     rlPhaseEnd
@@ -48,7 +48,7 @@ rlJournalStart
     rlPhaseEnd
 
     rlPhaseStartTest "[PostgreSQL] Container restart"
-        rlRun -t -c "docker-compose -f docker-compose.postgres restart"
+        rlRun -t -c "docker compose -f docker-compose.postgres restart"
         assert_up_and_running
     rlPhaseEnd
 
@@ -65,7 +65,7 @@ rlJournalStart
     rlPhaseEnd
 
     rlPhaseStartCleanup "[PostgreSQL] Cleanup"
-        rlRun -t -c "docker-compose -f docker-compose.postgres down"
+        rlRun -t -c "docker compose -f docker-compose.postgres down"
 
         if [ -n "$ImageOS" ]; then
             rlRun -t -c "docker volume rm kiwi_db_data"
@@ -78,7 +78,7 @@ rlJournalStart
 
     # the rest of the scenarios use MariaDB by default
     rlPhaseStartTest "Container up"
-        rlRun -t -c "docker-compose up -d"
+        rlRun -t -c "docker compose up -d"
         assert_perform_initdb
         assert_up_and_running
     rlPhaseEnd
@@ -94,26 +94,26 @@ rlJournalStart
     rlPhaseEnd
 
     rlPhaseStartTest "Container restart"
-        rlRun -t -c "docker-compose restart"
+        rlRun -t -c "docker compose restart"
         assert_up_and_running
     rlPhaseEnd
 
     rlPhaseStartTest "Container stop & start"
-        rlRun -t -c "docker-compose stop"
+        rlRun -t -c "docker compose stop"
         sleep 5
-        rlRun -t -c "docker-compose start"
+        rlRun -t -c "docker compose start"
         assert_up_and_running
     rlPhaseEnd
 
     rlPhaseStartTest "Container kill & start"
-        rlRun -t -c "docker-compose kill"
+        rlRun -t -c "docker compose kill"
         sleep 5
-        rlRun -t -c "docker-compose start"
+        rlRun -t -c "docker compose start"
         assert_up_and_running
     rlPhaseEnd
 
     rlPhaseStartCleanup
-        rlRun -t -c "docker-compose down"
+        rlRun -t -c "docker compose down"
         if [ -n "$ImageOS" ]; then
             rlRun -t -c "docker volume rm kiwi_db_data"
         fi
@@ -122,7 +122,7 @@ rlJournalStart
     sleep 5
 
     rlPhaseStartTest "Start Kiwi TCMS with Docker Secrets"
-        rlRun -t -c "docker-compose -f docker-compose.with-secrets up -d"
+        rlRun -t -c "docker compose -f docker-compose.with-secrets up -d"
         sleep 10
 
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
@@ -130,7 +130,7 @@ rlJournalStart
     rlPhaseEnd
 
     rlPhaseStartCleanup
-        rlRun -t -c "docker-compose -f docker-compose.with-secrets down"
+        rlRun -t -c "docker compose -f docker-compose.with-secrets down"
         if [ -n "$ImageOS" ]; then
             rlRun -t -c "docker volume rm kiwi_db_data"
         fi

@@ -46,7 +46,7 @@ rlJournalStart
         WRK_DIR=$(mktemp -d ./wrk-logs-XXXX)
         chmod go+rwx "$WRK_DIR"
 
-        rlRun -t -c "docker-compose up -d"
+        rlRun -t -c "docker compose up -d"
         sleep 10
         rlRun -t -c "docker exec -i kiwi_web /Kiwi/manage.py migrate"
         assert_up_and_running
@@ -188,8 +188,8 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartCleanup
-        rlRun -t -c "docker-compose logs --no-color > test_http_docker.log"
-        rlRun -t -c "docker-compose down"
+        rlRun -t -c "docker compose logs --no-color > test_http_docker.log"
+        rlRun -t -c "docker compose down"
         rm -f /tmp/testcookies.txt
         rm -f /tmp/testdata.txt
         if [ -n "$ImageOS" ]; then

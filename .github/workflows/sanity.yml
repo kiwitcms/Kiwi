@@ -61,8 +61,8 @@ jobs:
 
     - name: Create database
       run: |
-        docker-compose -f docker-compose.postgres pull db
-        docker-compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
+        docker compose -f docker-compose.postgres pull db
+        docker compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
 
     - name: migrations rollback
       run: |
