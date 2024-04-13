@@ -105,7 +105,8 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="{% url "tcms-logout" %}" target="_parent">{% trans "Logout" %}</a>
+                            <a      href="{% url "tcms-logout" %}" id="logout_link">{% trans "Logout" %}</a>
+                            <form action="{% url "tcms-logout" %}" id="logout_form" method="post">{% csrf_token %}</form>
                         </li>
                     {% else %}
                         <li>

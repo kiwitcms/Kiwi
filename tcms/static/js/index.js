@@ -88,6 +88,11 @@ $(() => {
         window.markdownEditor = initSimpleMDE(this, uploadField)
     })
 
+    $('#logout_link').click(function () {
+        $('#logout_form').submit()
+        return false
+    })
+
     // for debugging in browser
     window.jsonRPC = jsonRPC
 })

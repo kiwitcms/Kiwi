@@ -72,7 +72,7 @@ class TestLogout(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestLogout, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.tester = UserFactory()
         cls.tester.set_password("password")
@@ -83,7 +83,7 @@ class TestLogout(TestCase):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username, password="password"
         )
-        response = self.client.get(self.logout_url, follow=True)
+        response = self.client.post(self.logout_url, follow=True)
         self.assertRedirects(response, reverse("tcms-login"))
 
     def test_logout_then_goto_next(self):
@@ -91,7 +91,7 @@ class TestLogout(TestCase):
             username=self.tester.username, password="password"
         )
         next_url = reverse("tcms-login") + "?next=" + reverse("plans-search")
-        response = self.client.get(self.logout_url, {"next": next_url}, follow=True)
+        response = self.client.post(self.logout_url, {"next": next_url}, follow=True)
         self.assertRedirects(response, next_url)
 
 
