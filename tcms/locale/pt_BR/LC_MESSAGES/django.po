@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-19 11:01+0000\n"
-"PO-Revision-Date: 2024-04-18 21:26\n"
+"PO-Revision-Date: 2024-04-19 14:34\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -454,7 +454,7 @@ msgstr "Você gerencia %(total_count)s Plano de Testes, %(disabled_count)s estã
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Não existem planos de teste que pertençam a você"
+msgstr "Não existem plano(s) de teste que pertençam a você"
 
 #: tcms/core/views.py:47
 #, python-format
