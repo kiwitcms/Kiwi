@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-19 11:01+0000\n"
-"PO-Revision-Date: 2024-02-19 12:58\n"
+"PO-Revision-Date: 2024-04-18 21:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -491,13 +491,13 @@ msgstr "Esse endereço de e-mail já está sendo usado"
 
 #: tcms/kiwi_auth/admin.py:54 tcms/settings/common.py:398
 msgid "Users"
-msgstr ""
+msgstr "Usuários"
 
 #: tcms/kiwi_auth/admin.py:104
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:57
 msgid "Reset email address"
-msgstr ""
+msgstr "Redefinir endereço de e-mail"
 
 #: tcms/kiwi_auth/admin.py:170
 msgid "Personal info"
@@ -674,16 +674,16 @@ msgstr "Detalhamento"
 
 #: tcms/settings/common.py:383
 msgid "Execution"
-msgstr ""
+msgstr "Execuções"
 
 #: tcms/settings/common.py:386
 #: tcms/testruns/templates/testruns/mutable.html:169
 msgid "Matrix"
-msgstr ""
+msgstr "Matriz"
 
 #: tcms/settings/common.py:387
 msgid "Trends"
-msgstr ""
+msgstr "Tendências"
 
 #: tcms/settings/common.py:390
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -696,7 +696,7 @@ msgstr "ADMIN"
 
 #: tcms/settings/common.py:399
 msgid "Groups"
-msgstr ""
+msgstr "Grupos"
 
 #: tcms/settings/common.py:401
 msgid "Everything else"
@@ -1160,7 +1160,7 @@ msgstr "Idioma"
 
 #: tcms/templates/navbar.html:102
 msgid "Change language"
-msgstr ""
+msgstr "Alterar Idioma"
 
 #: tcms/templates/navbar.html:103
 msgid "Supported languages"
