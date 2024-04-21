@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-19 11:01+0000\n"
-"PO-Revision-Date: 2024-02-19 12:57\n"
+"PO-Revision-Date: 2024-04-21 10:05\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1156,7 +1156,7 @@ msgstr "Ndihmë"
 
 #: tcms/templates/navbar.html:98
 msgid "Language"
-msgstr "Gjuhë"
+msgstr "Gjuhët"
 
 #: tcms/templates/navbar.html:102
 msgid "Change language"
@@ -2244,3 +2244,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
