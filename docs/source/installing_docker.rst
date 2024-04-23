@@ -3,38 +3,45 @@ Running Kiwi TCMS as a Docker container
 
 In order to run Kiwi TCMS as a production instance you will need
 `Docker <https://docs.docker.com/engine/installation/>`_ and
-`docker-compose <https://docs.docker.com/compose/install/>`_. Refer to
-their documentation about download and installation options.
+`docker-compose <https://docs.docker.com/compose/install/>`_ or equivalent tooling.
+Refer to their documentation about download and installation options.
 
 
 Start with Docker compose
 -------------------------
 
-Clone the git repository::
+For **Kiwi TCMS Community Edition** start by copying our
+`docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
+file and make sure that all other files referenced inside of it are available
+on your local filesystem!
 
-    git clone --depth 1 https://github.com/kiwitcms/Kiwi.git path/to/kiwi-tcms/
+For **Kiwi TCMS Enterprise** start by copying the
+`docker-compose.testing <https://github.com/kiwitcms/enterprise/blob/master/docker-compose.testing>`_
+file from the *kiwitcms/enterprise* git repository!
+
 
 .. important::
 
-    The above command clones the entire source directory but you don't need most files.
-    Make sure that
-    `docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
-    and all files referenced inside of it are available on the local filesystem!
+    We recommend using the above files only as an example to
+    create your own. This is what controls your Kiwi TCMS installation. It is
+    best to keep your own copy under version control too!
+
 
 Then you can start Kiwi TCMS by executing::
 
-    cd path/to/kiwi-tcms/
+    cd path/to/your-docker-compose-git-repo/
     docker compose up -d
-
-Your Kiwi TCMS instance will be accessible at https://localhost.
 
 The above command will create two containers:
 
 1) A web container based on the latest Kiwi TCMS image
 2) A DB container based on the
    `official MariaDB <https://hub.docker.com/_/mariadb>`_
-   image
-
+   image for *Kiwi TCMS Community Edition* or
+   a DB container based on the
+   `official PostgreSQL <https://hub.docker.com/_/postgres>`_
+   image for *Kiwi TCMS Enterprise*. See https://kiwitcms.org/features/
+   for a list of differences.
 
 ``docker compose`` will also create two volumes for persistent data storage:
 ``kiwi_db_data`` and ``kiwi_uploads``.
@@ -45,11 +52,13 @@ The above command will create two containers:
     To use it across the organization simply distribute the FQDN of the system
     running the Docker container to all associates.
 
-.. important::
+.. warning::
 
-    We recommend using our ``docker-compose.yml`` file only as an example to
-    create your own. This is what controls your Kiwi TCMS installation. It is
-    best to keep your own copy under version control too!
+    For *Kiwi TCMS Enterprise* the only way to serve the application is via a FQDN.
+    Using IP addresses will not work! See
+    https://github.com/kiwitcms/tenants/#dns-configuration
+    for more information about DNS configuration for *Kiwi TCMS Enterprise*.
+
 
 .. important::
 
@@ -79,44 +88,32 @@ The above command will create two containers:
 
         *Kiwi TCMS Enterprise* additionally supports database configuration via the
         ``DATABASE_URL`` environment variable, see
-        `dj-database-url <https://github.com/jazzband/dj-database-url>`_. If specified this
-        configuration is applied **after** parsing of ``KIWI_DB_*`` variables and will override them!
+        `example <https://github.com/kiwitcms/enterprise/blob/master/docker-compose.testing>`_.
+        If specified this configuration is applied **after** parsing of ``KIWI_DB_*`` variables
+        and will override them!
         Don't use ``DATABASE_URL`` and ``KIWI_DB_*`` environment variables together!
 
     .. versionadded:: 11.4
 
 .. important::
 
-    Kiwi TCMS does not provide versioned docker images via Docker Hub!
-    When a new version is released the image ``kiwitcms/kiwi:latest`` is
-    updated accordingly!
+    Kiwi TCMS does not provide versioned docker images via Docker Hub, see
+    https://kiwitcms.org/containers/ for more information!
 
 
 Initial configuration of running container
 ------------------------------------------
 
-You may use the following command line tool to perform interactive initial
-configuration of a new Kiwi TCMS installation::
+You need to use the following command line tool to perform interactive initial
+configuration of a new Kiwi TCMS installation **before** accessing the
+application via a browser::
 
     docker exec -it kiwi_web /Kiwi/manage.py initial_setup
 
-.. versionadded:: 8.9
-
-If you prefer web-based tool you can use
-``https://<your_domain_or_ip>/init-db/``
-
-.. versionadded:: 10.1
-
-.. note::
-
-    The first registered user becomes superuser and is active
-    without mail verification!
-
-Alternatively you can use more automation-friendly setup::
-
-    docker exec -it kiwi_web /Kiwi/manage.py migrate
-    docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
-    docker exec -it kiwi_web /Kiwi/manage.py refresh_permissions
+This command will create the necessary database structure, create a super-user
+account and adjust internal settings as needed. Once complete you can access
+your Kiwi TCMS instance via https://localhost (community edition) or
+https://kiwi-tenants-domain (enterprise edition).
 
 
 .. warning::
@@ -126,30 +123,6 @@ Alternatively you can use more automation-friendly setup::
     when executed on a terminal by a person. When used in automated scripts
     ``-t`` often needs to be removed! For more information about ``docker exec``
     see https://docs.docker.com/engine/reference/commandline/exec/#options
-
-.. _configure-kiwi-domain:
-
-Configuration of Kiwi TCMS domain
----------------------------------
-
-The first step you need to do is to configure the domain of your Kiwi TCMS
-installation. This is used to construct links to test plans, test cases, etc,
-usually in emails.
-The default value is ``127.0.0.1:8000`` which is suitable if you are running
-in devel mode.
-
-To update this setting using the web interface go to
-``https://<your_domain_or_ip>/admin/sites/site/1/``!
-Update **Domain name** to the fully qualified domain name or IP address,
-including port if necessary and click the Save button!
-
-|Domain configuration|
-
-You may also use the command line::
-
-    docker exec -it kiwi_web /Kiwi/manage.py set_domain public.tenant.kiwitcms.org
-
-.. versionadded:: 8.4
 
 .. _upgrading-instructions:
 
