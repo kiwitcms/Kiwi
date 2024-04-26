@@ -72,7 +72,7 @@ class ProductTests(TestCase):
         location = reverse(admin_delete_url, args=[product.pk])
         response = self.c.get(location)
         self.assertContains(response, product.name)
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
         # confirm that we're sure we want to delete it
         response = self.c.post(location, {"post": "yes"})
