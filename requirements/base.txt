@@ -4,7 +4,7 @@ allpairspy==2.5.1
 bleach==6.1.0
 bleach-allowlist==1.0.3
 defusedxml==0.7.1
-Django==4.2.11
+Django==5.0.4
 django-attachments==1.11
 django-colorfield==0.11.0
 django-contrib-comments==2.2.0
