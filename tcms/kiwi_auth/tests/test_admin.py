@@ -132,7 +132,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.admin.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
         response = self.client.post(
             reverse("admin:auth_user_delete", args=[self.admin.pk]),
@@ -149,7 +149,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.tester.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
         response = self.client.post(
             reverse("admin:auth_user_delete", args=[self.tester.pk]),
@@ -337,7 +337,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.moderator.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
         response = self.client.post(
             reverse("admin:auth_user_delete", args=[self.moderator.pk]),
@@ -357,7 +357,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.tester.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
         response = self.client.post(
             reverse("admin:auth_user_delete", args=[self.tester.pk]),
@@ -485,7 +485,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         response = self.client.get(
             reverse("admin:auth_user_delete", args=[self.tester.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
         response = self.client.post(
             reverse("admin:auth_user_delete", args=[self.tester.pk]),

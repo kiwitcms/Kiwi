@@ -32,7 +32,7 @@ class TestTestPlanAdmin(LoggedInTestCase):
         response = self.client.get(
             reverse("admin:testplans_testplan_delete", args=[self.test_plan.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
         response = self.client.post(
             reverse("admin:testplans_testplan_delete", args=[self.test_plan.pk]),
             {"post": "yes"},

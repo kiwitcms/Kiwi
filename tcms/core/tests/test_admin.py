@@ -145,7 +145,7 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
         response = self.client.get(self.url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
 
     def test_superuser_should_be_able_to_delete_any_user(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -153,9 +153,8 @@ class TestUserDeletionViaAdminView(LoggedInTestCase):
         )
         response = self.client.get(self.url)
 
-        # verify there's the Yes, I'm certain button
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
         response = self.client.post(self.url, {"post": "yes"}, follow=True)
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertNotContains(

@@ -48,7 +48,7 @@ class TestTestRunAdmin(LoggedInTestCase):
         response = self.client.get(
             reverse("admin:testruns_testrun_delete", args=[self.test_run.pk])
         )
-        self.assertContains(response, _("Yes, I'm sure"))
+        self.assertContains(response, _("Yes, I’m sure"))
         response = self.client.post(
             reverse("admin:testruns_testrun_delete", args=[self.test_run.pk]),
             {"post": "yes"},
@@ -109,7 +109,7 @@ class TestTestExecutionStatusAdmin(LoggedInTestCase):
                     "admin:testruns_testexecutionstatus_delete", args=[exe_status.pk]
                 )
             )
-            self.assertContains(response, _("Yes, I'm sure"))
+            self.assertContains(response, _("Yes, I’m sure"))
             response = self.client.post(
                 reverse(
                     "admin:testruns_testexecutionstatus_delete", args=[exe_status.pk]
