@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import override
 
 from tcms.core.utils import request_host_link
-from tcms.core.utils.mailto import mailto
+from tcms.core.utils.mailto import custom_email_validators, mailto
 from tcms.kiwi_auth.models import UserActivationKey
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -26,11 +26,6 @@ class CustomCaptchaTextInput(fields.CaptchaTextInput):
 def validate_email_already_in_use(email):
     if User.objects.filter(email__iexact=email.strip()).exists():
         raise forms.ValidationError(_("A user with that email already exists."))
-
-
-def custom_email_validators(email):
-    for validator in getattr(settings, "EMAIL_VALIDATORS", ()):
-        validator(email)
 
 
 def set_activation_key_for(user):

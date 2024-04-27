@@ -7,6 +7,11 @@ from django.template.loader import render_to_string
 from django.utils.translation import override
 
 
+def custom_email_validators(email):
+    for validator in getattr(settings, "EMAIL_VALIDATORS", ()):
+        validator(email)
+
+
 @override(settings.LANGUAGE_CODE)
 def mailto(  # pylint: disable=invalid-name
     template_name,
