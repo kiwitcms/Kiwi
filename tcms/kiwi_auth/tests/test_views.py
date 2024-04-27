@@ -6,7 +6,6 @@ import datetime
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
-from django.forms import ValidationError
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
@@ -16,6 +15,7 @@ from mock import patch
 from tcms import signals
 from tcms.kiwi_auth import forms
 from tcms.kiwi_auth.models import UserActivationKey
+from tcms.tests import deny_certain_email_addresses
 from tcms.tests.factories import UserFactory
 
 from . import __FOR_TESTING__
@@ -93,11 +93,6 @@ class TestLogout(TestCase):
         next_url = reverse("tcms-login") + "?next=" + reverse("plans-search")
         response = self.client.post(self.logout_url, {"next": next_url}, follow=True)
         self.assertRedirects(response, next_url)
-
-
-def deny_certain_email_addresses(email):
-    if email.lower().find("yahoo") > -1:
-        raise ValidationError("@yahoo email address has been denied")
 
 
 class TestRegistration(TestCase):

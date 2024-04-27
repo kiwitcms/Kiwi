@@ -3,6 +3,7 @@ import threading
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.forms import ValidationError
 from django.template.loader import render_to_string
 from django.utils.translation import override
 
@@ -10,6 +11,15 @@ from django.utils.translation import override
 def custom_email_validators(email):
     for validator in getattr(settings, "EMAIL_VALIDATORS", ()):
         validator(email)
+
+
+def remove_invalid_address(address):
+    try:
+        custom_email_validators(address)
+    except ValidationError:
+        return False
+
+    return True
 
 
 @override(settings.LANGUAGE_CODE)
@@ -35,6 +45,11 @@ def mailto(  # pylint: disable=invalid-name
     if settings.DEBUG:
         for _, admin_email in settings.ADMINS:
             recipients.append(admin_email)
+
+    # filter out invalid email addresses, e.g. black-listed ones
+    recipients = list(filter(remove_invalid_address, recipients))
+    if not recipients:
+        return
 
     # this is a workaround to allow passing body text directly
     if template_name:
