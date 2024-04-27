@@ -4,14 +4,15 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.translation import gettext_lazy as _
 from mock import patch
 from parameterized import parameterized
 
 from tcms.core.history import history_email_for
+from tcms.core.utils.mailto import mailto
 from tcms.testcases.helpers.email import get_case_notification_recipients
-from tcms.tests import BasePlanCase
+from tcms.tests import BasePlanCase, deny_certain_email_addresses
 from tcms.tests.factories import (
     ComponentFactory,
     TagFactory,
@@ -155,6 +156,51 @@ class TestSendMailOnCaseIsDeleted(BasePlanCase):
             recipients,
             fail_silently=False,
         )
+
+    @override_settings(
+        EMAIL_VALIDATORS=(deny_certain_email_addresses,),
+    )
+    def test_email_sent_only_to_valid_addresses(self):
+        expected_subject = "Test recipient filtering"
+        expected_body = render_to_string(
+            "email/post_case_delete/email.txt", {"case": self.case}
+        )
+
+        with patch("tcms.core.utils.mailto.send_mail") as send_mail:
+            mailto(
+                template_name="email/post_case_delete/email.txt",
+                recipients=["invalid@yahoo.com", "tester@example.bg"],
+                subject=expected_subject,
+                context={
+                    "case": self.case,
+                },
+            )
+
+            send_mail.assert_called_once_with(
+                settings.EMAIL_SUBJECT_PREFIX + expected_subject,
+                expected_body,
+                settings.DEFAULT_FROM_EMAIL,
+                ["tester@example.bg"],
+                fail_silently=False,
+            )
+
+    @override_settings(
+        EMAIL_VALIDATORS=(deny_certain_email_addresses,),
+    )
+    def test_email_not_sent_when_recipient_list_is_empty(self):
+        expected_subject = "Test recipient filtering"
+
+        with patch("tcms.core.utils.mailto.send_mail") as send_mail:
+            mailto(
+                template_name="email/post_case_delete/email.txt",
+                recipients=["invalid@yahoo.com", "another-invalid@yahoo.co.in"],
+                subject=expected_subject,
+                context={
+                    "case": self.case,
+                },
+            )
+
+            send_mail.assert_not_called()
 
 
 class TestCaseCalculateExpectedDuration(TestCase):

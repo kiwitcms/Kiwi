@@ -5,6 +5,7 @@ from django import test
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.forms import ValidationError
 from django.urls import reverse
 
 from tcms.testcases.models import TestCaseStatus
@@ -19,6 +20,11 @@ from tcms.tests.factories import (
     UserFactory,
     VersionFactory,
 )
+
+
+def deny_certain_email_addresses(email):
+    if email.lower().find("yahoo") > -1:
+        raise ValidationError("@yahoo email address has been denied")
 
 
 def user_should_have_perm(user, perm):
