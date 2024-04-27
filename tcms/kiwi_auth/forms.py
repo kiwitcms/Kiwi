@@ -134,10 +134,6 @@ class PasswordResetForm(
         )
 
 
-def has_permissions_to_modify(pk):
-    raise forms.ValidationError(_("A user with that email already exists."))
-
-
 class ResetUserEmailForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     email_1 = forms.EmailField(
         validators=[validate_email_already_in_use, custom_email_validators],
