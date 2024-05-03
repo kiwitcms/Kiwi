@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-27 18:40+0000\n"
-"PO-Revision-Date: 2024-04-27 20:12\n"
+"POT-Creation-Date: 2024-05-03 14:12+0000\n"
+"PO-Revision-Date: 2024-05-03 16:39\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -511,11 +511,11 @@ msgstr ""
 msgid "A user with that email already exists."
 msgstr "해당 이메일을 가진 사용자가 이미 존재합니다."
 
-#: tcms/kiwi_auth/forms.py:53
+#: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
 msgstr ""
 
-#: tcms/kiwi_auth/forms.py:147
+#: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
 msgstr ""
 
@@ -1997,88 +1997,107 @@ msgstr ""
 msgid "Subscriptions"
 msgstr "정액제 계약"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:11
+#: tcms_github_marketplace/templates/tcms_github_marketplace/email/exit_poll.txt:1
+msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
+"We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
+"You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
+"Thank you!"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
 msgstr "테넌트 구독"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:19
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
 msgid "You can access the following tenants"
 msgstr "다음 테넌에 액세스할 수 있습니다."
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:24
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
 msgid "Tenant"
 msgstr "테 넌 트"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:35
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:94
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:28
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
 msgstr "단체"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:48
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:44
 msgid "Docker credentials"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:65
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
 msgid "Private containers instructions"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:79
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
 msgid "You own the following tenants"
 msgstr "다음 세입자를 소유하고 있습니다"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:101
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
 msgid "Price"
 msgstr "가격"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:106
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "Subscription type"
 msgstr "가입 유형"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:111
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:6
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:108
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:8
 msgid "Paid until"
 msgstr "까지 지불"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:118
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:114
 msgid "Cancel subscription"
 msgstr "구독 취소"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
 msgid "You don't own any tenants"
 msgstr "임차인이 없습니다"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:135
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "Subscribe via FastSpring"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:151
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
 msgid "Transaction history"
 msgstr "거래 내역"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:173
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:170
 msgid "Sender"
 msgstr "보낸사람"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:178
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
 msgid "Vendor"
 msgstr "공급업체"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:183
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:184
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:180
 msgid "Received on"
 msgstr "수신"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:42
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
+msgid "Extra emails"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
+msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
+msgid "Separate by comma (,), semi-colon (;) or white space ( )"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
 msgstr "개인 임차인 경고"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:47
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
@@ -2092,11 +2111,19 @@ msgstr "Kiwi TCMS에 대한 개인 테넌트를 만들려고 합니다.\n"
 "500 내부 서버 오류 페이지가 표시되면\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>즉시!"
 
-#: tcms_github_marketplace/views.py:423
+#: tcms_github_marketplace/utils.py:95
+msgid "Kiwi TCMS Subscription Exit Poll"
+msgstr ""
+
+#: tcms_github_marketplace/views.py:567
+msgid "Kiwi TCMS subscription notification"
+msgstr ""
+
+#: tcms_github_marketplace/views.py:749
 msgid "mo"
 msgstr "개월"
 
-#: tcms_github_marketplace/views.py:426
+#: tcms_github_marketplace/views.py:752
 msgid "yr"
 msgstr "년"
 
@@ -2247,3 +2274,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
