@@ -14,13 +14,21 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run: uname -a
-      - run: python3 --version
-      # fail if not using Python 3
-      - run: python3 --version | grep "3\."
-      - run: sudo apt-get install firefox wrk
-      - run: pip3 install -r requirements/devel.txt
-      - run: make test-docker-image
+      - run: |
+            uname -a
+            python3 --version
+            # fail if not using Python 3
+            python3 --version | grep "3\."
+
+            sudo apt-get install firefox git make wrk
+            # install beakerlib from source it doesn't ship DEB packages
+            if [ ! -f "/usr/share/beakerlib/beakerlib.sh" ]; then
+                git clone https://github.com/beakerlib/beakerlib.git
+                sudo make -C beakerlib/ install
+            fi
+
+            pip3 install -r requirements/devel.txt
+            make test-docker-image
 
   aarch64-build-and-push-docker-image:
     machine:
