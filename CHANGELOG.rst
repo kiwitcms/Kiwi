@@ -1,6 +1,73 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.2 (04 May 2024)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements,
+    internal refactoring and updated translations!
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.1.1 -> 13.2
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 4.2.10 to 4.2.11
+- Update django-grappelli from 3.0.8 to 4.0.1
+- Update django-modern-rpc from 1.0.2 to 1.0.3
+- Update django-tree-queries from 0.16.1 to 0.19.0
+- Update jira from 3.6.0 to 3.8.0
+- Update markdown from 3.5.2 to 3.6
+- Update python-redmine from 2.4.0 to 2.5.0
+- Update uwsgi from 2.0.24 to 2.0.25.1
+- Update node_modules/pdfmake from 0.2.9 to 0.2.10
+- Update node_modules/es5-ext from 0.10.62 to 0.10.63
+- Update documentation with better installation instructions when using Docker
+- Remove multiple inline ``style=`` HTML attributes
+
+
+Settings
+~~~~~~~~
+
+- Don't send outgoing emails to addresses which fail validation, including
+  custom validation configured via the ``EMAIL_VALIDATORS`` setting. For
+  example if there are blacklisted addresses Kiwi TCMS will not send messages
+  to them anymore
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update black from 23.12.1 to 24.4.2
+- Update selenium from 4.9.1 to 4.20.0
+- Update node_modules/eslint from 8.56.0 to 8.57.0
+- Update nodemodules/webpack from 5.90.3 to 5.91.0
+- Remove unused ``has_permissions_to_modify()``
+- Do not execute Docker image tests as root
+- Add tests for file upload via browser UI
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Albanian translation <https://crowdin.com/project/kiwitcms/sq#>`_
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Turkish translation <https://crowdin.com/project/kiwitcms/tr#>`_
+
+
+
 Kiwi TCMS 13.1.1 (27 Feb 2024)
 ------------------------------
 
@@ -24,6 +91,7 @@ Bug fixes
 
 - Downgrade node_modules/datatables.net-buttons from 3.0.0 to 2.4.3. Fixes
   `Issue #3552 <https://github.com/kiwitcms/Kiwi/issues/3552>`_
+
 
 Refactoring
 ~~~~~~~~~~~
