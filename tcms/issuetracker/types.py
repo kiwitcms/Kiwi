@@ -188,8 +188,8 @@ class GitHub(IssueTrackerType):
     def _rpc_connection(self):
         (_, api_password) = self.rpc_credentials
 
-        # NOTE: we use an access token so only the password field is required
-        return github.Github(api_password)
+        # NOTE: we use an access token so only the password field is needed
+        return github.Github(auth=github.Auth.Token(api_password))
 
     def is_adding_testcase_to_issue_disabled(self):
         (_, api_password) = self.rpc_credentials
