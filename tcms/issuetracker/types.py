@@ -165,7 +165,7 @@ class JIRA(IssueTrackerType):
 
         return (
             None,
-            url + "/secure/CreateIssueDetails!init.jspa?" + urlencode(args, True),
+            f"{url}secure/CreateIssueDetails!init.jspa?" + urlencode(args, True),
         )
 
     def post_comment(self, execution, bug_id):
