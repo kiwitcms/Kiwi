@@ -147,3 +147,25 @@ class TestJIRAIntegration(APITestCase):
 
         # close issue after we're done
         self.integration.rpc.transition_issue(issue, "DONE")
+
+    def test_report_issue_from_test_execution_fallback_to_manual(self):
+        execution = TestExecutionFactory()
+
+        # Project: Bugtracker Mandatory Field
+        # where: Components and Reporter are mandatory fields
+        execution.build.version.product.name = "BMF"
+        execution.build.version.product.save()
+
+        result = self.rpc_client.Bug.report(
+            execution.pk, self.integration.bug_system.pk
+        )
+        # 1-click bug report fails b/c there are mandatory fields
+        # and it will redirect to a page where the user can create new ticket manually
+        self.assertIn(
+            "https://kiwitcms.atlassian.net/secure/CreateIssueDetails!init.jspa?",
+            result["response"],
+        )
+        self.assertIn("pid=", result["response"])
+        self.assertIn("issuetype=", result["response"])
+        self.assertIn("summary=", result["response"])
+        self.assertIn("description=", result["response"])
