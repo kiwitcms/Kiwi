@@ -37,6 +37,16 @@ class IssueTrackerType:
         self.bug_system = bug_system
         self.request = request
 
+    @staticmethod
+    def truncate(in_str, max_length):
+        result = in_str
+
+        if max_length < len(in_str):
+            result = in_str[:max_length]
+            result += "\n... truncated ..."
+
+        return result
+
     @classmethod
     def bug_id_from_url(cls, url):
         """
@@ -74,11 +84,15 @@ class IssueTrackerType:
 
         return result
 
-    def _report_comment(self, execution, user=None):  # pylint: disable=no-self-use
+    def _report_comment(
+        self, execution, user=None, max_text_length=None
+    ):  # pylint: disable=no-self-use
         """
         Returns the comment which is used in the original defect report.
         """
         txt = execution.case.get_text_with_version(execution.case_text_version)
+        if max_text_length:
+            txt = self.truncate(txt, max_text_length)
 
         reporter = "Unknown"
         if user:
