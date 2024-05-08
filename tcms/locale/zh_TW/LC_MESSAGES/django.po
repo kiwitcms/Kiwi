@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-05-07 09:52\n"
+"PO-Revision-Date: 2024-05-08 06:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1086,7 +1086,7 @@ msgstr "新增"
 #: tcms/testplans/templates/testplans/search.html:18
 #: tcms/testruns/templates/testruns/get.html:567
 msgid "Name"
-msgstr "姓名"
+msgstr "名稱"
 
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
@@ -2278,3 +2278,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
