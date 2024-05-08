@@ -133,6 +133,7 @@ class TestJIRAIntegration(APITestCase):
             self.component.name,
             "Steps to reproduce",
             self.execution_1.case.text,
+            "Actual results",
         ]:
             self.assertIn(expected_string, issue.fields.description)
 
@@ -140,6 +141,55 @@ class TestJIRAIntegration(APITestCase):
         self.assertTrue(
             LinkReference.objects.filter(
                 execution=self.execution_1,
+                url=result["response"],
+                is_defect=True,
+            ).exists()
+        )
+
+        # close issue after we're done
+        self.integration.rpc.transition_issue(issue, "DONE")
+
+    def test_report_issue_from_test_execution_1click_description_is_truncated(self):
+        execution = TestExecutionFactory()
+
+        # note: Product here is Kiwi TCMS and 1-click doesn't require extra fields
+        execution.build = self.execution_1.build
+        execution.save()
+
+        # case with 50k chars
+        execution.case.text = "very-long-" * 5000
+        execution.case.save()
+
+        # simulate user clicking the 'Report bug' button in TE widget, TR page
+        result = self.rpc_client.Bug.report(
+            execution.pk, self.integration.bug_system.pk
+        )
+        self.assertEqual(result["rc"], 0)
+        self.assertIn(self.integration.bug_system.base_url, result["response"])
+        self.assertIn("https://kiwitcms.atlassian.net/browse/KT-", result["response"])
+
+        new_issue_id = self.integration.bug_id_from_url(result["response"])
+        issue = self.integration.rpc.issue(new_issue_id)
+
+        self.assertEqual(f"Failed test: {execution.case.summary}", issue.fields.summary)
+        for expected_string in [
+            f"Filed from execution {execution.get_full_url()}",
+            "Reporter",
+            execution.build.version.product.name,
+            "Steps to reproduce",
+            "very-long-",
+            "... truncated ...",
+            "Actual results",
+        ]:
+            self.assertIn(expected_string, issue.fields.description)
+
+        self.assertGreater(len(issue.fields.description), 30000)
+        self.assertLess(len(issue.fields.description), len(execution.case.text))
+
+        # verify that LR has been added to TE
+        self.assertTrue(
+            LinkReference.objects.filter(
+                execution=execution,
                 url=result["response"],
                 is_defect=True,
             ).exists()
@@ -169,3 +219,36 @@ class TestJIRAIntegration(APITestCase):
         self.assertIn("issuetype=", result["response"])
         self.assertIn("summary=", result["response"])
         self.assertIn("description=", result["response"])
+
+    def test_report_issue_from_test_execution_fallback_description_is_truncated(self):
+        execution = TestExecutionFactory()
+
+        # Project: Bugtracker Mandatory Field
+        # where: Components and Reporter are mandatory fields
+        execution.build.version.product.name = "BMF"
+        execution.build.version.product.save()
+
+        # case with 10k chars
+        execution.case.text = "very-long-" * 1000
+        execution.case.save()
+
+        result = self.rpc_client.Bug.report(
+            execution.pk, self.integration.bug_system.pk
+        )
+        # 1-click bug report fails b/c there are mandatory fields
+        # and it will redirect to a page where the user can create new ticket manually
+        self.assertIn(
+            "https://kiwitcms.atlassian.net/secure/CreateIssueDetails!init.jspa?",
+            result["response"],
+        )
+        self.assertIn("pid=", result["response"])
+        self.assertIn("issuetype=", result["response"])
+        self.assertIn("summary=", result["response"])
+        self.assertIn("description=", result["response"])
+
+        # make sure input has been truncated
+        description = result["response"].split("description=")[1]
+        # note: url encoded
+        self.assertIn("...+truncated+...", description)
+        self.assertGreater(len(description), 6000)
+        self.assertLess(len(description), len(execution.case.text))

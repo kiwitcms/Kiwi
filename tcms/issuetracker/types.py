@@ -40,6 +40,12 @@ class JIRA(IssueTrackerType):
     Additional control can be applied via the ``JIRA_OPTIONS`` configuration
     setting (in ``product.py``). By default this setting is not provided and
     the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
+
+    .. warning::
+
+        ``TestCase.text`` will be truncated to 30k chars for automated POST
+        requests and 6k chars for fallback GET requests to fit inside Jira limitations.
+        Otherwise you may see 400, 414 and/or 500 errors!
     """
 
     def _rpc_connection(self):
@@ -137,7 +143,7 @@ class JIRA(IssueTrackerType):
                 project=project.id,
                 issuetype={"name": issue_type.name},
                 summary=f"Failed test: {execution.case.summary}",
-                description=self._report_comment(execution, user),
+                description=self._report_comment(execution, user, 30000),
             )
             new_url = self.bug_system.base_url + "/browse/" + new_issue.key
 
@@ -156,7 +162,7 @@ class JIRA(IssueTrackerType):
             "pid": project.id,
             "issuetype": issue_type.id,
             "summary": f"Failed test: {execution.case.summary}",
-            "description": self._report_comment(execution, user),
+            "description": self._report_comment(execution, user, 6000),
         }
 
         url = self.bug_system.base_url
