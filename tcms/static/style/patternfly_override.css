@@ -116,3 +116,19 @@ a.disabled {
 .kiwi-margin-bottom-0 {
     margin-bottom: 0;
 }
+
+.kiwi-padding-left-0 {
+    padding-left: 0;
+}
+
+.kiwi-padding-right-0 {
+    padding-right: 0;
+}
+
+.kiwi-color-warning {
+    color: #ec7a08;
+}
+
+.kiwi-cursor-pointer {
+    cursor: pointer;
+}
