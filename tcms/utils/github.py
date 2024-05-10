@@ -1,4 +1,4 @@
-# Copyright (c) 2019 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2024 Alexander Todorov <atodorov@MrSenko.com>
 
 import hashlib
 import hmac
@@ -32,3 +32,14 @@ def verify_signature(request, secret):
         return HttpResponseForbidden()
 
     return True  # b/c of inconsistent-return-statements
+
+
+def repo_id(url):
+    """
+    Return an owner/repository combo given a URL
+    """
+    result = url.strip().strip("/").lower()
+    result = (
+        result.replace("https://", "").replace("http://", "").replace("github.com/", "")
+    )
+    return result

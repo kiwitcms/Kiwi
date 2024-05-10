@@ -16,6 +16,7 @@ from tcms.issuetracker.base import IssueTrackerType
 from tcms.issuetracker.bugzilla_integration import (  # noqa, pylint: disable=unused-import
     Bugzilla,
 )
+from tcms.utils.github import repo_id as github_repo_id
 
 # conditional import b/c this App can be disabled
 if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
@@ -246,13 +247,7 @@ class GitHub(IssueTrackerType):
 
     @property
     def repo_id(self):
-        repo_id = self.bug_system.base_url.strip().strip("/").lower()
-        repo_id = (
-            repo_id.replace("https://", "")
-            .replace("http://", "")
-            .replace("github.com/", "")
-        )
-        return repo_id
+        return github_repo_id(self.bug_system.base_url)
 
     def post_comment(self, execution, bug_id):
         repo = self.rpc.get_repo(self.repo_id)
