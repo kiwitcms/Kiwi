@@ -1,6 +1,61 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.3 (20 May 2024)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements, bug fixes,
+    internal refactoring and updated translations!
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.2 -> 13.3
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 4.2.11 to 4.2.12
+- Update psycopg from 3.1.18 to 3.1.19
+- Update PyGithub from 1.58.2 to 2.3.0
+- Update pygments from 2.17.2 to 2.18.0
+- Update python-gitlab from 4.4.0 to 4.5.0
+- Replace more inline ``style=`` HTML attributes with CSS classes
+
+
+Bug fixes
+~~~~~~~~~
+
+- Truncate ``TestCase.text`` length for Jira 1-click bug reports to avoid
+  400, 414 and/or 500 errors! Text will be truncated to 30k chars for automated
+  POST requests and 6k chars for fallback GET requests to fit inside Jira
+  limitations
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Remove double slash in Jira fallback URL
+- Stop using the ``Github(login_or_token)`` argument b/c it is deprecated
+- Update selenium from 4.20.0 to 4.21.0
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+
+
+
 Kiwi TCMS 13.2 (04 May 2024)
 ----------------------------
 
