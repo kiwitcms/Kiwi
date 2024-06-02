@@ -73,17 +73,6 @@ if settings.DEBUG:
         ]
     )
 
-    try:
-        import debug_toolbar
-
-        urlpatterns += [
-            re_path(r"^__debug__/", include(debug_toolbar.urls)),
-        ]
-    # in case we're trying to debug in production
-    # and debug_toolbar is not installed
-    except ImportError:
-        pass
-
 
 # Overwrite default 500 handler
 # More details could see django.core.urlresolvers._resolve_special()

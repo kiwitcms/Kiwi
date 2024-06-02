@@ -1,6 +1,5 @@
 -r base.txt
 
-django-debug-toolbar
 Sphinx
 sphinx-removed-in
 docutils

@@ -31,11 +31,8 @@ CACHES = {
 # django-debug-toolbar settings
 
 MIDDLEWARE += [  # noqa: F405
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "tcms.core.middleware.ExtraHeadersMiddleware",
 ]
-
-INSTALLED_APPS += ["debug_toolbar"]  # noqa: F405
 
 MEDIA_ROOT = os.path.join(TCMS_ROOT_PATH, "..", "uploads")  # noqa: F405
 
