@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-04 18:21\n"
+"PO-Revision-Date: 2024-06-04 19:52\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -454,7 +454,7 @@ msgstr "你管理 %(total_count)s 測試計畫， %(disabled_count)s 已禁用�
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "ID (key)：沒有屬於您的測試計劃"
+msgstr "沒有屬於你的測試計畫"
 
 #: tcms/core/views.py:47
 #, python-format
@@ -2283,3 +2283,4 @@ msgstr "群組"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人 API Tokens"
+
