@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-05-08 06:38\n"
+"PO-Revision-Date: 2024-06-04 19:52\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -52,7 +52,7 @@ msgstr "打開"
 #: tcms/bugs/templates/bugs/get.html:39
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr "已關閉 "
+msgstr "已關閉"
 
 #: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:79
 #: tcms/bugs/templates/bugs/search.html:114
@@ -479,11 +479,11 @@ msgstr ""
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
+msgstr "檔案包含禁止屬性：{attr_name}"
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "禁止上傳可執行文件"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:428
 msgid "Users"
@@ -493,7 +493,7 @@ msgstr "使用者"
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "重置電子郵件地址"
 
 #: tcms/kiwi_auth/admin.py:148
 msgid "Personal info"
@@ -505,7 +505,7 @@ msgstr "使用權限"
 
 #: tcms/kiwi_auth/admin.py:187
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "這是最後一個超級用戶，無法刪除！"
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
@@ -513,15 +513,15 @@ msgstr "使用此電子郵件的用戶已經存在"
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "請確認您的 Kiwi TCMS 帳戶電子郵件地址"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "電子郵件不符"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -529,11 +529,11 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "點選「儲存」按鈕後，您的帳號將變成<strong>非活動狀態</strong> 您將<strong>退出</strong>！確認電子郵件將發送到新指定的地址！ 仔細檢查您的新電子郵件地址是否<strong>輸入正確</strong>，否則 <strong>您的帳號可能被鎖定</strong>！ 點擊啟動連結後，您將可以像往常一樣登入！"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "NOT yourself"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -549,7 +549,7 @@ msgstr "確認"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "請輸入！不要複製並貼上一個欄位中的值！"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -579,11 +579,11 @@ msgstr "您的帳戶已成功啟用"
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr ""
+msgstr "您正在查看租戶「%s」的記錄"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "電子郵件地址已重置，請檢查收件匣以取得進一步說明"
 
 #: tcms/management/models.py:52
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -670,7 +670,7 @@ msgstr "分解"
 
 #: tcms/settings/common.py:413
 msgid "Execution"
-msgstr ""
+msgstr "執行"
 
 #: tcms/settings/common.py:416
 #: tcms/testruns/templates/testruns/mutable.html:169
@@ -679,7 +679,7 @@ msgstr "矩陣"
 
 #: tcms/settings/common.py:417
 msgid "Trends"
-msgstr ""
+msgstr "趨勢"
 
 #: tcms/settings/common.py:420
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -810,7 +810,7 @@ msgstr "分類"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "執行儀表板"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
@@ -851,7 +851,7 @@ msgstr "完成於："
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "執行趨勢"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -912,7 +912,7 @@ msgstr "內部伺服器錯誤"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "附件上傳錯誤"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -962,7 +962,12 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "Welcome to Kiwi TCMS!\n\n"
+"確認使用者名稱「%(user)s」\n"
+"的電子郵件地址並啟動您的帳戶 請關注此網址：\n"
+" %(confirm_url)s \n\n"
+"Regards,\n"
+"Kiwi TCMS"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -2257,24 +2262,24 @@ msgstr ""
 
 #: tenant_groups/admin.py:29
 msgid "users"
-msgstr ""
+msgstr "使用者"
 
 #: tenant_groups/models.py:31
 msgid "name"
-msgstr ""
+msgstr "名稱"
 
 #: tenant_groups/models.py:34
 msgid "permissions"
-msgstr ""
+msgstr "權限"
 
 #: tenant_groups/models.py:42
 msgid "group"
-msgstr ""
+msgstr "群組"
 
 #: tenant_groups/models.py:43
 msgid "groups"
-msgstr ""
+msgstr "群組"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr ""
+msgstr "個人 API Tokens"
