@@ -16,14 +16,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% if SETTINGS.ANONYMOUS_ANALYTICS %}
-    <script defer
-        event-version="{{ SETTINGS.KIWI_VERSION }}"
-        data-domain="{{ SETTINGS.PLAUSIBLE_DOMAIN }}"
-        src="https://plausible.io/js/script.pageview-props.js">
-    </script>
-    {% endif %}
-
     {{ block.super }}
 
     <script src="{% static 'simplemde/dist/simplemde.min.js' %}"></script>
