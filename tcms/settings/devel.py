@@ -42,3 +42,5 @@ MEDIA_ROOT = os.path.join(TCMS_ROOT_PATH, "..", "uploads")  # noqa: F405
 INTERNAL_IPS = ("127.0.0.1",)
 
 STATICFILES_STORAGE = "tcms.tests.storage.RaiseWhenFileNotFound"
+
+ANONYMOUS_ANALYTICS = False
