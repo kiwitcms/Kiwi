@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-05 09:35\n"
+"PO-Revision-Date: 2024-06-06 13:58\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -407,7 +407,7 @@ msgstr "%(amount)s%% 완전한"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 #: tcms/testruns/templates/testruns/get.html:77
 msgid "Started at"
-msgstr "에 시작"
+msgstr "시작 시점"
 
 #: tcms/core/templates/dashboard.html:32
 #, python-format
@@ -735,7 +735,7 @@ msgstr "승인을 기다리는 새로운 사용자"
 #: tcms/signals.py:161
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "새로운: TestRun #%(pk)d - %(summary)s"
+msgstr "신규: 테스트 실행 #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:230
 #, python-format
@@ -842,14 +842,14 @@ msgstr "상태"
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:374
 msgid "Tested by"
-msgstr "에 의해 테스트"
+msgstr "테스터"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
 #: tcms/testruns/templates/testruns/get.html:95
 #: tcms/testruns/templates/testruns/get.html:403
 #: tcms/testruns/templates/testruns/mutable.html:132
 msgid "Finished at"
-msgstr "Finished At"
+msgstr "완료 시점"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
@@ -1600,7 +1600,7 @@ msgstr "확실한가요?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr "미확인 테스트 케이스로 TestRun을 만들 수 없습니다"
+msgstr "미확인 테스트 케이스로 테스트 실행을 만들 수 없습니다"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
@@ -1731,7 +1731,7 @@ msgstr "부정, 중립, 긍정 상태가 1개씩 필요합니다!"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr "매개 변수 수정"
+msgstr "매개 변수 편집"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1856,7 +1856,7 @@ msgstr "테스트 실행 편집"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "복제 테스트 실행"
+msgstr "테스트 실행 복제"
 
 #: tcms/testruns/templates/testruns/mutable.html:172
 msgid "Affects only test cases with parameters"
@@ -2266,7 +2266,7 @@ msgstr "슈퍼유저와 테넌트 소유자만 테넌트 속성을 편집할 수
 
 #: tcms_tenants/views.py:98
 msgid "Edit tenant"
-msgstr "테넌트 수정"
+msgstr "테넌트 편집"
 
 #: tcms_tenants/views.py:147
 msgid "Only users who are authorized for this tenant can invite others"
