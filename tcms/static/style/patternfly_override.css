@@ -125,6 +125,10 @@ a.disabled {
     padding-right: 0;
 }
 
+.kiwi-padding-0 {
+    padding: 0;
+}
+
 .kiwi-color-black {
     color: black;
 }
