@@ -67,7 +67,7 @@ After following the activation link you will be able to log in as usual!{% endbl
             <div class="col-sm-11 col-md-8 col-lg-4 {% if form.email_2.errors %}has-error{% endif %}">
                 <input type="email" id="id_email_2" name="email_2" value="{{ form.email_2.value|default:'' }}" class="form-control" required>
                 <p class="help-block">
-                    <span class="fa fa-exclamation-triangle" style="color: #ec7a08;"></span>
+                    <span class="fa fa-exclamation-triangle kiwi-color-warning"></span>
                     {% trans 'Please type! Do not copy-and-paste value from previous field!' %}
                 </p>
 
