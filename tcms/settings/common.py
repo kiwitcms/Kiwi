@@ -228,7 +228,7 @@ REDMINE_TRACKER_NAME = "Bugs"
 
 # Anonymous/GDPR compliant analytics via https://plausible.io/
 # see https://plausible.io/privacy-focused-web-analytics for more details
-ANONYMOUS_ANALYTICS = "runserver" not in sys.argv
+ANONYMOUS_ANALYTICS = "runserver" not in sys.argv and "test" not in sys.argv
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
