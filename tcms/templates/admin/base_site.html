@@ -17,7 +17,11 @@
 
 {% block javascripts %}
     {% if SETTINGS.ANONYMOUS_ANALYTICS %}
-    <script defer data-domain="{{ SETTINGS.PLAUSIBLE_DOMAIN }}" src="https://plausible.io/js/script.js"></script>
+    <script defer
+        event-version="{{ SETTINGS.KIWI_VERSION }}"
+        data-domain="{{ SETTINGS.PLAUSIBLE_DOMAIN }}"
+        src="https://plausible.io/js/script.pageview-props.js">
+    </script>
     {% endif %}
 
     {{ block.super }}
