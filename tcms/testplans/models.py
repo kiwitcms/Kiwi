@@ -217,9 +217,8 @@ class TestPlan(TreeNode, UrlMixin):
             result += f"""
                 <!-- begin-node -->
                 <div class="list-group-item {active_class}" style="border: none">
-                    <div class="list-group-item-header" style="padding:0">
-                        <div class="list-view-pf-main-info"
-                             style="padding-top:0; padding-bottom:0">
+                    <div class="list-group-item-header kiwi-padding-0">
+                        <div class="list-view-pf-main-info kiwi-padding-0">
                             <div class="list-view-pf-left"
                                  style="margin-left:3px; padding-right:10px">
                                 <span class="fa fa-angle-right"></span>
