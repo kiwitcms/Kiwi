@@ -462,7 +462,7 @@
                                                     <div class="form-group" style="padding: 15px; text-align: right; display: flex; justify-content: flex-end;">
                                                         <span class="status-buttons">
                                                             {% for status in execution_statuses%}
-                                                            <i class="{{ status.icon }} change-status-button" title="{{ status.name }}" style="font-size: 28px; margin-right: 10px; cursor: pointer; color:{{ status.color }}" data-status-id="{{ status.id }}"></i>
+                                                            <i class="{{ status.icon }} change-status-button kiwi-cursor-pointer" title="{{ status.name }}" style="font-size: 28px; margin-right: 10px; color:{{ status.color }}" data-status-id="{{ status.id }}"></i>
                                                             {% endfor %}
                                                         </span>
                                                         <button class="btn btn-default post-comment">{% trans "Save" %}</button>
