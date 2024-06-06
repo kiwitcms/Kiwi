@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-05-03 16:39\n"
+"PO-Revision-Date: 2024-06-06 08:31\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1064,7 +1064,7 @@ msgstr ""
 
 #: tcms/templates/include/properties_card.html:69
 msgid "name=value"
-msgstr ""
+msgstr "email=manager"
 
 #: tcms/templates/include/properties_card.html:70
 #: tcms/templates/include/tags_card.html:28
@@ -1074,7 +1074,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:291
 #: tcms/testruns/templates/testruns/get.html:534
 msgid "Add"
-msgstr "Shto"
+msgstr "Email"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:167
@@ -2267,3 +2267,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
