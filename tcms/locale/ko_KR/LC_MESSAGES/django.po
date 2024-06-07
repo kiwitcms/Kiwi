@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-07 05:31\n"
+"PO-Revision-Date: 2024-06-07 08:34\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1465,7 +1465,7 @@ msgstr "테스트 계획"
 #: tcms/testplans/templates/testplans/get.html:447
 #: tcms/testruns/templates/testruns/get.html:348
 msgid "Components"
-msgstr "구성 요소"
+msgstr "컴포넌트"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
@@ -1534,7 +1534,7 @@ msgstr "모두"
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:261
 msgid "Component"
-msgstr "구성요소"
+msgstr "컴포넌트"
 
 #: tcms/testcases/templates/testcases/search.html:121
 msgid "Text"
@@ -1553,7 +1553,7 @@ msgstr "선택"
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
 #: tcms/testruns/templates/testruns/get.html:446 tcms/testruns/views.py:202
 msgid "History"
-msgstr "지난 기록"
+msgstr "변경 내역"
 
 #: tcms/testcases/views.py:250
 msgid "TestCase cloning was successful"
@@ -1565,7 +1565,7 @@ msgstr "적어도 하나의 테스트 케이스가 필요합니다"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "클론 테스트 계획"
+msgstr "테스트 계획 복제"
 
 #: tcms/testplans/templates/testplans/clone.html:55
 msgid "Clone TCs"
@@ -1573,15 +1573,15 @@ msgstr "테스트 케이스 복제"
 
 #: tcms/testplans/templates/testplans/clone.html:59
 msgid "Clone or link existing TCs into new TP"
-msgstr "기존 TC를 복제하거나 새 TP에 연결"
+msgstr "기존 테스트 케이스를 복제하거나 새 테스트 계획에 연결"
 
 #: tcms/testplans/templates/testplans/clone.html:63
 msgid "Parent TP"
-msgstr "부모 TP"
+msgstr "상위 테스트 계획"
 
 #: tcms/testplans/templates/testplans/clone.html:67
 msgid "Set the source TP as parent of new TP"
-msgstr "소스 TP를 새 TP의 상위로 설정"
+msgstr "원본 테스트 계획을 새 테스트 계획의 상위 테스트 계획으로 설정"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:22
@@ -1672,7 +1672,7 @@ msgstr "테스트 계획 편집"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr "새로운 TestPlan 만들기"
+msgstr "새 테스트 계획 만들기"
 
 #: tcms/testplans/templates/testplans/mutable.html:81
 msgid "Parent ID"
@@ -2295,3 +2295,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
