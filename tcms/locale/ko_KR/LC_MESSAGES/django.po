@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-06 13:58\n"
+"PO-Revision-Date: 2024-06-07 05:31\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -413,7 +413,7 @@ msgstr "시작 시점"
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr "할당된 %(total_count)s 개의 테스트 실행 혹은 테스트 케이스를 수행해야 합니다.\n"
+msgstr "할당된 %(total_count)s 개의 테스트 수행 혹은 테스트 케이스를 실행해야 합니다.\n"
 "최신 %(count)s 개는 다음과 같습니다."
 
 #: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
@@ -422,7 +422,7 @@ msgstr "모두 보기"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "담당하고 있는 테스트 실행이 없습니다"
+msgstr "담당하고 있는 테스트 수행이 없습니다"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
@@ -640,7 +640,7 @@ msgstr "새 테스트 케이스"
 #: tcms/testruns/templates/testruns/get.html:171
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr "새 테스트 실행"
+msgstr "새 테스트 수행"
 
 #: tcms/settings/common.py:393
 msgid "SEARCH"
@@ -656,7 +656,7 @@ msgstr "테스트 케이스 검색"
 
 #: tcms/settings/common.py:397 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
-msgstr "테스트 실행 검색"
+msgstr "테스트 수행 검색"
 
 #: tcms/settings/common.py:406
 msgid "TELEMETRY"
@@ -735,7 +735,7 @@ msgstr "승인을 기다리는 새로운 사용자"
 #: tcms/signals.py:161
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "신규: 테스트 실행 #%(pk)d - %(summary)s"
+msgstr "신규: 테스트 수행 #%(pk)d - %(summary)s"
 
 #: tcms/signals.py:230
 #, python-format
@@ -771,12 +771,12 @@ msgstr "테스트 계획"
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 #: tcms/testcases/templates/testcases/search.html:135
 msgid "Test run"
-msgstr "테스트 실행 중"
+msgstr "테스트 수행"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:70
 #: tcms/testruns/templates/testruns/search.html:17
 msgid "Test run summary"
-msgstr "테스트 실행 요약"
+msgstr "테스트 수행 요약"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -902,7 +902,7 @@ msgstr "실패한 실행"
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr "%% 실패한 실행의"
+msgstr "실패율(%%)"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -1014,11 +1014,11 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr "%(pk)s 테스트 실행이 생성 혹은 갱신되었습니다.\n\n"
+msgstr "%(pk)s 테스트 수행이 생성 혹은 갱신되었습니다.\n\n"
 "### 연결 ###\n"
-"테스트 실행: %(run_url)s\n"
+"테스트 수행: %(run_url)s\n"
 "테스트 계획: %(plan_url)s\n\n"
-"### 기본 실행 정보 ###\n"
+"### 수행 기본 정보 ###\n"
 "요약: %(summary)s\n\n"
 "관리: %(manager)s\n"
 "기본 테스터: %(default_tester)s\n\n"
@@ -1160,7 +1160,7 @@ msgstr "방문을 환영합니다"
 
 #: tcms/templates/navbar.html:84
 msgid "My Test Runs"
-msgstr "내 테스트 실행"
+msgstr "내 테스트 수행"
 
 #: tcms/templates/navbar.html:88
 msgid "My Test Plans"
@@ -1486,7 +1486,7 @@ msgstr "알림"
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Manager of runs"
-msgstr "실행 관리자"
+msgstr "수행 관리자"
 
 #: tcms/testcases/templates/testcases/mutable.html:198
 msgid "Asignees"
@@ -1494,7 +1494,7 @@ msgstr "담당자"
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 msgid "Default tester of runs"
-msgstr "실행의 기본 테스터"
+msgstr "수행의 기본 테스터"
 
 #: tcms/testcases/templates/testcases/mutable.html:223
 msgid "Notify when"
@@ -1600,7 +1600,7 @@ msgstr "확실한가요?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr "미확인 테스트 케이스로 테스트 실행을 만들 수 없습니다"
+msgstr "미확인 테스트 케이스로 테스트 수행을 만들 수 없습니다"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
@@ -1646,7 +1646,7 @@ msgstr "고급 검색"
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr "활성 테스트 실행"
+msgstr "활성 테스트 수행"
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
@@ -1717,7 +1717,7 @@ msgstr "테스트 계획 이름"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
-msgstr "권한 거부: TestRun이 회원님의 소유가 아닙니다."
+msgstr "권한 없음: 소유한 테스트 수행이 아닙니다."
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1852,11 +1852,11 @@ msgstr "이슈 트래커"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr "테스트 실행 편집"
+msgstr "테스트 수행 편집"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "테스트 실행 복제"
+msgstr "테스트 수행 복제"
 
 #: tcms/testruns/templates/testruns/mutable.html:172
 msgid "Affects only test cases with parameters"
@@ -1874,7 +1874,7 @@ msgstr "선택한 테스트 케이스:"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr "미리 선택된 %(count)s개의 테스트 케이스가 확인되지 않으며 복제되지 않을 것입니다!\n"
+msgstr "확인된 상태가 아닌 %(count)s개의 선택된 테스트 케이스는 복제되지 않습니다!\n"
 "자세한 내용은 테스트 계획을 참조하세요!"
 
 #: tcms/testruns/templates/testruns/search.html:21
@@ -1887,7 +1887,7 @@ msgstr "테스트 계획 식별자"
 
 #: tcms/testruns/templates/testruns/search.html:79
 msgid "Running"
-msgstr "실행 중"
+msgstr "수행 중"
 
 #: tcms/testruns/templates/testruns/search.html:86
 #: tcms/testruns/templates/testruns/search.html:186
@@ -1925,7 +1925,7 @@ msgstr "수행 중"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr "일시정지"
+msgstr "정지"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
@@ -1933,7 +1933,7 @@ msgstr "통과"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr "실패함"
+msgstr "실패"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
@@ -2295,3 +2295,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
