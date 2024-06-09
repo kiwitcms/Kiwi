@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-09 12:38\n"
+"PO-Revision-Date: 2024-06-09 13:35\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1059,7 +1059,7 @@ msgstr "날짜"
 #: tcms/templates/include/bugs_table.html:4
 #: tcms/testplans/templates/testplans/get.html:332
 msgid "No records found"
-msgstr "기록을 찾을 수 없습니다"
+msgstr "항목을 찾을 수 없습니다"
 
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:561
@@ -1632,7 +1632,7 @@ msgstr "키 정렬"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
-msgstr "서비스 케이스 재주문"
+msgstr "다시 정렬"
 
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:287
@@ -2295,3 +2295,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
