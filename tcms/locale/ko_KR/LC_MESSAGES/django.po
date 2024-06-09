@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-07 08:34\n"
+"PO-Revision-Date: 2024-06-09 13:35\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1059,7 +1059,7 @@ msgstr "날짜"
 #: tcms/templates/include/bugs_table.html:4
 #: tcms/testplans/templates/testplans/get.html:332
 msgid "No records found"
-msgstr "기록을 찾을 수 없습니다"
+msgstr "항목을 찾을 수 없습니다"
 
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:561
@@ -1332,11 +1332,11 @@ msgstr "테스트 케이스 복제"
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
-msgstr "TP에 새로운 TC 추가"
+msgstr "같은 테스트 계획에 새로운 테스트 케이스로 추가"
 
 #: tcms/testcases/templates/testcases/clone.html:30
 msgid "Selected TC"
-msgstr "선택된 TC"
+msgstr "선택된 테스트 케이스"
 
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
 #: tcms/testplans/templates/testplans/clone.html:73
@@ -1632,7 +1632,7 @@ msgstr "키 정렬"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
-msgstr "서비스 케이스 재주문"
+msgstr "다시 정렬"
 
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:287
