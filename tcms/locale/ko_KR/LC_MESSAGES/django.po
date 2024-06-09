@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-07 08:34\n"
+"PO-Revision-Date: 2024-06-09 12:38\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1332,11 +1332,11 @@ msgstr "테스트 케이스 복제"
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
-msgstr "TP에 새로운 TC 추가"
+msgstr "같은 테스트 계획에 새로운 테스트 케이스로 추가"
 
 #: tcms/testcases/templates/testcases/clone.html:30
 msgid "Selected TC"
-msgstr "선택된 TC"
+msgstr "선택된 테스트 케이스"
 
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
 #: tcms/testplans/templates/testplans/clone.html:73
@@ -2295,3 +2295,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
