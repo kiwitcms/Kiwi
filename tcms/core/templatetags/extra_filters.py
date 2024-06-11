@@ -2,8 +2,11 @@
     Custom template tag filters.
 """
 
+from importlib import import_module
+
 import bleach
 import markdown
+import pkg_resources
 from bleach_allowlist import markdown_attrs, markdown_tags, print_attrs, print_tags
 from django import template
 from django.contrib.messages import constants as messages
@@ -33,16 +36,26 @@ def markdown2html(md_str):
     if md_str is None:
         md_str = ""
 
+    extensions = [
+        "markdown.extensions.codehilite",
+        "markdown.extensions.fenced_code",
+        "markdown.extensions.nl2br",
+        "markdown.extensions.sane_lists",
+        "markdown.extensions.tables",
+        "tcms.utils.markdown",
+    ]
+    for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
+        try:
+            module_name = f"{plugin.module_name}.markdown"
+            import_module(module_name)
+            extensions.append(module_name)
+        except ModuleNotFoundError:
+            # maybe the add-on doesn't ship markdown extensions
+            pass
+
     rendered_md = markdown.markdown(
         md_str,
-        extensions=[
-            "markdown.extensions.codehilite",
-            "markdown.extensions.fenced_code",
-            "markdown.extensions.nl2br",
-            "markdown.extensions.sane_lists",
-            "markdown.extensions.tables",
-            "tcms.utils.markdown",
-        ],
+        extensions=extensions,
     )
 
     html = bleach_input(rendered_md)
