@@ -1,4 +1,4 @@
-# Copyright (c) 2019,2021-2022 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2024 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -8,6 +8,7 @@ from django.test import TestCase
 from django.urls.resolvers import URLResolver
 from django.utils.translation import gettext_lazy as _
 
+from tcms.core.templatetags.extra_filters import markdown2html
 from tcms.telemetry.tests.plugin import menu as plugin_menu
 from tcms.urls import urlpatterns
 
@@ -83,3 +84,23 @@ class MenuDiscoveryTestCase(TestCase):
         )
         self.assertContains(response, "Go to Dashboard")
         self.assertContains(response, "Go to kiwitcms.org")
+
+
+class MarkdownPluginTestCase(TestCase):
+    def test_markdown_extension_works(self):
+        result = markdown2html(
+            """
+This is the beginning of the text
+```test-me
+this is going to be discarded
+```
+this is the end of the text
+            """
+        )
+
+        self.assertEqual(
+            result,
+            """<p>This is the beginning of the text<br>
+Eat, Sleep, Test, Repeat<br>
+this is the end of the text</p>""",
+        )
