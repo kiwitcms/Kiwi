@@ -1,6 +1,55 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.4 (12 Jun 2024)
+----------------------------
+
+.. important::
+
+    This is a small release which contains several improvements,
+    internal refactoring and updated translations!
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.3 -> 13.4
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 4.2.12 to 4.2.13
+- Update django-simple-history from 3.5.0 to 3.7.0
+- Update python-gitlab from 4.5.0 to 4.6.0
+- Update uwsgi from 2.0.25.1 to 2.0.26
+- Update node_modules/html5sortable from 0.13.3 to 0.14.0
+- Remove cron job for anonymous analytics
+- Remove anonymous analytics from ``/admin/`` pages
+- Replace inline HTML attributes with CSS classes
+- Make it possible for Kiwi TCMS plugins to provide markdown extensions
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove django-debug-toolbar as a development dependency
+- Update node_modules/eslint-plugin-promise from 6.1.1 to 6.2.0
+- Update node_modules/webpack from 5.91.0 to 5.92.0
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+
+
+
 Kiwi TCMS 13.3 (20 May 2024)
 ----------------------------
 
