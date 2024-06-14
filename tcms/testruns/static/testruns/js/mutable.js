@@ -6,6 +6,10 @@ export function pageTestrunsMutableReadyHandler () {
     initializeDateTimePicker('#id_planned_start')
     initializeDateTimePicker('#id_planned_stop')
 
+    $('#add_id_product').click(function () {
+        return showRelatedObjectPopup(this)
+    })
+
     document.getElementById('id_product').onchange = () => {
         $('#id_product').selectpicker('refresh')
         updateTestPlanSelectFromProduct({ is_active: true })

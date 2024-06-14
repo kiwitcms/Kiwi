@@ -42,8 +42,13 @@
         </div>
 
         <div class="form-group">
-            <!-- used only to filter test plans -->
-            <label for="id_product" class="col-md-1 col-lg-1">{% trans "Product" %}</label>
+            <div class="col-md-1 col-lg-1">
+                <label for="id_product">{% trans "Product" %}</label>
+                {% if not plan_id %}
+                    <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
+                {% endif %}
+            </div>
+
             <div class="col-md-3 {% if form.product.errors %}has-error{% endif %}">
                 <select name="product" id="id_product" class="form-control selectpicker">
                     {% if not plan_id %}
