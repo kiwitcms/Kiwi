@@ -12,7 +12,12 @@ export function pageTestrunsMutableReadyHandler () {
 
     document.getElementById('id_product').onchange = () => {
         $('#id_product').selectpicker('refresh')
-        updateTestPlanSelectFromProduct({ is_active: true })
+        updateTestPlanSelectFromProduct({ is_active: true }, function (inputData, callbackF) {
+            callbackF(inputData)
+
+            // trigger on-change handler, possibly updating build
+            $('#id_test_plan').change()
+        })
     }
 
     document.getElementById('id_test_plan').onchange = () => {
