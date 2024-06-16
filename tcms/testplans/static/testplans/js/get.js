@@ -127,6 +127,7 @@ function adjustTestPlanFamilyTree () {
     $('#test-plan-family-tree').find('.list-group-item.active').each(function (index, element) {
         $(element).parents('.list-group-item-container').each(function (idx, container) {
             $(container).toggleClass('hidden')
+            $(container).siblings('.list-group-item-header').find('.fa-angle-right').toggleClass('fa-angle-down')
         })
     })
 }
