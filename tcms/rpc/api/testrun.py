@@ -401,3 +401,23 @@ def add_attachment(run_id, filename, b64content, **kwargs):
         filename,
         b64content,
     )
+
+
+@permissions_required("testruns.delete_testrun")
+@rpc_method(name="TestRun.remove")
+def remove(query):
+    """
+    .. function:: RPC TestRun.remove(query)
+
+        Remove TestRun object(s).
+
+        :param query: Field lookups for :class:`tcms.testruns.models.TestRuns`
+        :type query: dict
+        :raises PermissionDenied: if missing the *testruns.delete_testrun* permission
+        :return: The number of objects deleted and a dictionary with the
+                 number of deletions per object type.
+        :rtype: int, dict
+
+    .. versionadded:: 13.5
+    """
+    return TestRun.objects.filter(**query).delete()
