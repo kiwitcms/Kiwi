@@ -634,3 +634,31 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
             self.rpc_client.TestRun.add_attachment(
                 self.test_run.pk, "test.txt", "a2l3aXRjbXM="
             )
+
+
+class TestRemovePermissions(APIPermissionsTestCase):
+    permission_label = "testruns.delete_testrun"
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.run_1 = TestRunFactory()
+        self.run_2 = TestRunFactory()
+        self.run_3 = TestRunFactory()
+
+        self.query = {"pk__in": [self.run_1.pk, self.run_3.pk]}
+
+    def verify_api_with_permission(self):
+        num_deleted, _ = self.rpc_client.TestRun.remove(self.query)
+        self.assertEqual(num_deleted, 2)
+        self.assertFalse(TestRun.objects.filter(**self.query).exists())
+        self.assertTrue(TestRun.objects.filter(pk=self.run_2.pk).exists())
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.remove"'
+        ):
+            self.rpc_client.TestRun.remove(self.query)
+
+        self.assertTrue(TestRun.objects.filter(**self.query).exists())
+        self.assertTrue(TestRun.objects.filter(pk=self.run_2.pk).exists())
