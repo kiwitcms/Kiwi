@@ -47,3 +47,43 @@ export function dataTableJsonRPC (rpcMethod, rpcParams, callbackF, preProcessDat
 
     jsonRPC(rpcMethod, rpcParams, internalCallback)
 }
+
+
+export function testPlanAutoComplete (selector, planCache) {
+    $(`${selector}.typeahead`).typeahead({
+        minLength: 1,
+        highlight: true
+    }, {
+        name: 'plans-autocomplete',
+        // will display up to X results even if more were returned
+        limit: 100,
+        async: true,
+        display: function (element) {
+            const displayName = 'TP-' + element.id + ': ' + element.name
+            planCache[displayName] = element
+            return displayName
+        },
+        source: function (query, processSync, processAsync) {
+            // accepts "TP-1234" or "tp-1234" or "1234"
+            query = query.toLowerCase().replace('tp-', '')
+            if (query === '') {
+                return
+            }
+
+            let rpcQuery = { pk: query }
+
+            // or arbitrary string
+            if (isNaN(query)) {
+                if (query.length >= 3) {
+                    rpcQuery = { name__icontains: query }
+                } else {
+                    return
+                }
+            }
+
+            jsonRPC('TestPlan.filter', rpcQuery, function (data) {
+                return processAsync(data)
+            })
+        }
+    })
+}
