@@ -48,7 +48,6 @@ export function dataTableJsonRPC (rpcMethod, rpcParams, callbackF, preProcessDat
     jsonRPC(rpcMethod, rpcParams, internalCallback)
 }
 
-
 export function testPlanAutoComplete (selector, planCache) {
     $(`${selector}.typeahead`).typeahead({
         minLength: 1,
