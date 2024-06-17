@@ -78,7 +78,10 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-1 col-lg-1" for="id_parent">{% trans "Parent ID" %}</label>
+                <label class="col-md-1 col-lg-1" for="id_parent">
+                    {% trans "Parent ID" %}:
+                    <span class="js-parent-id-value">{{ form.parent.value|default:'' }}</span>
+                </label>
                 <div class="col-md-3 col-lg-3 {% if form.parent.errors %}has-error{% endif %}">
                     <input type="text" class="form-control typeahead" id="input-select-parent"
                         {% for parent in form.parent.field.queryset %}
@@ -93,6 +96,7 @@
                     >
                     <input type="hidden" id="id_parent" name="parent" value="{{ form.parent.value|default:'' }}" class="form-control">
                     {{ form.parent.errors }}
+                    <p class="help-block">{% trans "Enter to assign; Backspace + Enter to clear" %}</p>
                 </div>
                 <label class="col-md-1 col-lg-1" for="id_reference_link">{% trans "Reference link" %}</label>
                 <div class="col-md-7 col-lg-7 {% if form.extra_link.errors %}has-error{% endif %}">
