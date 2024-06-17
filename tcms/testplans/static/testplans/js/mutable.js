@@ -41,6 +41,7 @@ export function pageTestplansMutableReadyHandler () {
             const planId = plan !== undefined ? plan.id : null
 
             $('#id_parent').val(planId)
+            $('.js-parent-id-value').text(planId)
 
             event.preventDefault()
             return false
