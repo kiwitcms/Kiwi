@@ -80,7 +80,18 @@
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_parent">{% trans "Parent ID" %}</label>
                 <div class="col-md-3 col-lg-3 {% if form.parent.errors %}has-error{% endif %}">
-                    <input type="text" id="id_parent" name="parent" value="{{ form.parent.value|default:'' }}" class="form-control">
+                    <input type="text" class="form-control typeahead" id="input-select-parent"
+                        {% for parent in form.parent.field.queryset %}
+                            {% if parent.pk|escape == form.parent.value|escape %}
+
+                                {% comment %}
+                                    NB: not showing the leading TP-XX: because it breaks auto-complete
+                                {% endcomment %}
+                                value="{{ parent.name }}"
+                            {% endif %}
+                        {% endfor %}
+                    >
+                    <input type="hidden" id="id_parent" name="parent" value="{{ form.parent.value|default:'' }}" class="form-control">
                     {{ form.parent.errors }}
                 </div>
                 <label class="col-md-1 col-lg-1" for="id_reference_link">{% trans "Reference link" %}</label>
