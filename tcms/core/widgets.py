@@ -1,4 +1,4 @@
-#   Copyright (c) 2018,2021 Kiwi TCMS project. All rights reserved.
+#   Copyright (c) 2018-2024 Kiwi TCMS project. All rights reserved.
 #   Author: Alexander Todorov <info@kiwitcms.org>
 
 """
@@ -6,6 +6,7 @@ Custom widgets for Django
 """
 from django import forms
 from django.utils.dateparse import parse_duration
+from django.utils.safestring import SafeString
 
 
 class SimpleMDE(forms.Textarea):
@@ -24,9 +25,11 @@ class SimpleMDE(forms.Textarea):
             }
         )
         rendered_string = super().render(name, value, attrs, renderer)
-        rendered_string += f"""
+        rendered_string += SafeString(
+            f"""
 <input id="{self.file_upload_id}" type="file" style="display: none">
 """
+        )
         return rendered_string
 
     class Media:
