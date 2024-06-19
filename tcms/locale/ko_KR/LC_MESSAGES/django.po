@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-09 13:35\n"
+"PO-Revision-Date: 2024-06-19 08:59\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -401,7 +401,7 @@ msgstr "테스트 실행"
 #: tcms/core/templates/dashboard.html:15
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr "%(amount)s%% 완전한"
+msgstr "%(amount)s%% 완료"
 
 #: tcms/core/templates/dashboard.html:24
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
@@ -2295,3 +2295,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
