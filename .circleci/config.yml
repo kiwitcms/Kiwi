@@ -48,13 +48,13 @@ jobs:
             VERSION=$(python3 -m tcms)
 
             make docker-image
-            docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/version:$VERSION-$(uname -m)
+            docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
 
             echo "+++++ Docker images +++++"
             docker images
 
             echo "$QUAY_PUSH_TOKEN" | docker login -u="$QUAY_PUSH_USERNAME" --password-stdin quay.io
-            docker push quay.io/kiwitcms/version:$VERSION-$(uname -m)
+            docker push quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
             docker logout quay.io
 
 
