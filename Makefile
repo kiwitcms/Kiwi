@@ -101,16 +101,15 @@ docker-image:
 	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \
 	            -r /venv /host/dist/
 	docker build -t kiwitcms/kiwi:latest .
-	docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/kiwi:latest
 
 
 .PHONY: docker-manifest
 docker-manifest:
 	docker manifest create \
-	    quay.io/kiwitcms/version:$(VERSION) \
-	    quay.io/kiwitcms/version:$(VERSION)-x86_64 \
-	    quay.io/kiwitcms/version:$(VERSION)-aarch64
-	docker manifest push quay.io/kiwitcms/version:$(VERSION)
+	    quay.io/kiwitcms/upstream:$(VERSION) \
+	    quay.io/kiwitcms/upstream:$(VERSION)-x86_64 \
+	    quay.io/kiwitcms/upstream:$(VERSION)-aarch64
+	docker manifest push quay.io/kiwitcms/upstream:$(VERSION)
 
 
 .PHONY: test-docker-image
