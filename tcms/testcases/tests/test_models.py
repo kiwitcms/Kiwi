@@ -106,13 +106,18 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
 
     @patch("tcms.core.utils.mailto.send_mail")
     def test_send_mail_to_case_author(self, send_mail):
-        self.case.summary = "New summary for running test"
+        # note: includes \n and \r characters
+        self.case.summary = "New summary\n for\r running test"
         self.case.save()
 
         expected_subject, expected_body = history_email_for(
             self.case, self.case.summary
         )
         recipients = get_case_notification_recipients(self.case)
+
+        # make sure subject doesn't result in a multi-line header
+        self.assertEqual(expected_subject.find("\n"), -1)
+        self.assertEqual(expected_subject.find("\r"), -1)
 
         # Verify notification mail
         send_mail.assert_called_once_with(
