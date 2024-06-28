@@ -54,6 +54,8 @@ def history_email_for(instance, title):
         "pk": instance.pk,
         "title": title,
     }
+    # no multi-line email headers
+    subject = subject.replace("\n", " ").replace("\r", " ")
 
     body = (
         _(
