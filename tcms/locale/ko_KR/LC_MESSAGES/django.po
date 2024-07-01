@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-06-19 08:59\n"
+"PO-Revision-Date: 2024-07-01 02:34\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1887,7 +1887,7 @@ msgstr "테스트 계획 식별자"
 
 #: tcms/testruns/templates/testruns/search.html:79
 msgid "Running"
-msgstr "수행 중"
+msgstr "진행 중"
 
 #: tcms/testruns/templates/testruns/search.html:86
 #: tcms/testruns/templates/testruns/search.html:186
@@ -1921,7 +1921,7 @@ msgstr "대기"
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr "수행 중"
+msgstr "진행 중"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
@@ -2295,3 +2295,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
