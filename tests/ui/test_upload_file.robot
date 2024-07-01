@@ -14,7 +14,7 @@ ${TEST_PLAN_URL}        ${SERVER}/plan/1/
 *** Test Cases ***
 Uploading file works via file upload
     Open Browser    ${LOGIN_URL}    ${BROWSER}
-    Maximize Browser Window
+    Set Window Size     3024    1890
     Set Selenium Speed    ${DELAY}
     Title Should Be    Kiwi TCMS - Login
 
