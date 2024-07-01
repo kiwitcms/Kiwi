@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-05-03 16:39\n"
+"PO-Revision-Date: 2024-07-01 20:50\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -592,7 +592,7 @@ msgstr "Prioridades"
 
 #: tcms/management/models.py:121
 msgid "Builds"
-msgstr "Versão"
+msgstr "Construções"
 
 #: tcms/management/models.py:132
 #: tcms/testcases/templates/testcases/search.html:129
@@ -2277,3 +2277,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
