@@ -26,7 +26,8 @@ export function pageTestplansGetReadyHandler () {
         'perm-remove-testcase': testPlanDataElement.data('perm-remove-testcase') === 'True',
         'perm-add-testcase': testPlanDataElement.data('perm-add-testcase') === 'True',
         'perm-add-comment': testPlanDataElement.data('perm-add-comment') === 'True',
-        'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True'
+        'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True',
+        'perm-view-user': testPlanDataElement.data('perm-view-user') === 'True'
     }
 
     // bind everything in tags table
@@ -377,6 +378,26 @@ function attachEvents (testPlanId, permissions) {
         })
     }
 
+    if (permissions['perm-view-user']) {
+        $('#default-tester-input').typeahead({
+            minLength: 3,
+            highlight: true
+        }, {
+            name: 'default-tester-autocomplete',
+            // will display up to X results even if more were returned
+            limit: 100,
+            async: true,
+            display: function (element) {
+                return element.username
+            },
+            source: function (query, processSync, processAsync) {
+                jsonRPC('User.filter', { username__icontains: query }, function (data) {
+                    return processAsync(data)
+                })
+            }
+        })
+    }
+
     // get details and draw expand area only on expand
     $('.js-testcase-row').click(function (ev) {
     // don't trigger row expansion when kebab menu is clicked
@@ -541,23 +562,25 @@ function toolbarEvents (testPlanId, permissions) {
     })
 
     $('#default-tester-button').click(function (ev) {
-        $(this).parents('.dropdown').toggleClass('open')
-        const selectedCases = getSelectedTestCases()
-
-        if (!selectedCases.length) {
+        if (!getSelectedTestCases().length) {
             alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-            return false
+            ev.stopPropagation()
+        } else {
+            $('#default-tester-modal').modal('show')
         }
+        return false
+    })
 
-        const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
-
-        if (!emailOrUsername) {
-            return false
+    $('.default-tester-form').submit(function (ev) {
+        ev.preventDefault()
+        const selectedCases = getSelectedTestCases()
+        const emailOrUsername = $('#default-tester-input').val()
+        if (emailOrUsername) {
+            updateTestCasesViaAPI(selectedCases, { default_tester: emailOrUsername },
+                testPlanId, permissions)
         }
-
-        updateTestCasesViaAPI(selectedCases, { default_tester: emailOrUsername },
-            testPlanId, permissions)
-
+        $('#default-tester-modal').modal('hide')
+        $('.default-tester-form').trigger('reset')
         return false
     })
 
