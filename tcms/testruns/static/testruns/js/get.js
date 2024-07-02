@@ -920,9 +920,11 @@ export function bindDeleteLinkButton () {
         const row = $(event.target).parents('li')
         const linkId = $(event.target).parent('.js-remove-linkreference').data('link-id')
 
-        jsonRPC('TestExecution.remove_link', { pk: linkId }, () => {
-            $(row).fadeOut(500)
-        })
+        if (linkId) {
+            jsonRPC('TestExecution.remove_link', { pk: linkId }, () => {
+                $(row).fadeOut(500);
+            });
+        }
         return false
     })
 }
