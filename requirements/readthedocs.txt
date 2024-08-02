@@ -1,6 +1,6 @@
 -r base.txt
 
-Sphinx==7.4.7
+Sphinx==8.0.2
 sphinx-removed-in
 docutils
 
