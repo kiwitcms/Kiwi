@@ -283,8 +283,7 @@ def remove_link(query):
                       :class:`tcms.core.contrib.linkreference.models.LinkReference`
         :type query: dict
     """
-    if query:  # Ensure query is not empty
-        LinkReference.objects.filter(**query).delete()
+    LinkReference.objects.filter(**query).delete()
 
 
 @permissions_required("linkreference.view_linkreference")
