@@ -922,8 +922,8 @@ export function bindDeleteLinkButton () {
 
         if (linkId) {
             jsonRPC('TestExecution.remove_link', { pk: linkId }, () => {
-                $(row).fadeOut(500);
-            });
+                $(row).fadeOut(500)
+            })
         }
         return false
     })
