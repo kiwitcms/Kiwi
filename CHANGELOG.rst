@@ -1,6 +1,96 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.5 (07 Aug 2024)
+----------------------------
+
+.. important::
+
+    This release includes security related updates, several improvements,
+    bug fixes and updated translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.4 -> 13.5
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update django from 4.2.13 to 5.0.8, addressing multiple potential security
+  vulnerabilities, which do not seem to affect Kiwi TCMS directly however
+  this is not 100% guaranteed
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update psycopg from 3.1.19 to 3.2.1
+- Update python-gitlab from 4.6.0 to 4.9.0
+- Add a ``Test Plan +`` button on *New Test Run* page. Refs
+  `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
+- Always show the ``Build +`` button on *New Test Run* page. Refs #3680
+  `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
+- Add a ``Product +`` button on *New Test Run* page. Closes
+  `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
+- Add auto-complete for ``Parent ID`` field on *Edit TestPlan* page. Closes
+  `Issue #3189 <https://github.com/kiwitcms/Kiwi/issues/3189>`_
+
+
+API
+~~~
+
+- Add ``TestRun.remove()`` API method. Fixes
+  `Issue #3691 <https://github.com/kiwitcms/Kiwi/issues/3691>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Do not call ``TestExecution.remove_link()`` on *TestRun* page with undefined
+  argument (@Melzmann). Fixes `Issue #3728 <https://github.com/kiwitcms/Kiwi/issues/3728>`_
+  where URLs attached to a test execution suddenly go missing after some time
+- On *New Test Run* page when Product is updated trigger TestPlan on-change
+  to fix a bug where the Build drop-down is not cleared and may be showing
+  values which are invalid for the current selection
+- Adjust angle bracket icon direction when viewing nested testplans. Fixes
+  `Issue #3163 <https://github.com/kiwitcms/Kiwi/issues/3163>`_
+- Strip newline characters from email subjects to avoid crashes.
+  Fixes `Sentry KIWI-TCMS-P7 <https://kiwitcms.sentry.io/issues/5547586648/>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update black from 24.4.2 to 24.8.0
+- Update selenium from 4.21.0 to 4.23.1
+- Update sphinx from 7.4.7 to 8.0.2
+- Update node_modules/webpack from 5.92.0 to 5.93.0
+- Update node_modules/eslint-plugin-promise from 6.2.0 to 6.6.0
+- Modify test case to include newline characters in TestCase summary
+
+
+Other
+~~~~~
+
+- EthicalAds is a GDPR-compliant ad network for devs which doesn't use
+  cookies, and displays only dev-focused ads
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+
+
+
 Kiwi TCMS 13.4 (12 Jun 2024)
 ----------------------------
 
