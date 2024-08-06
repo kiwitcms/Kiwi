@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-08-06 14:53\n"
+"PO-Revision-Date: 2024-08-06 15:23\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -529,11 +529,12 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "Após clicar no botão 'Salvar' sua conta se tornará <strong>inativa</strong> e você será <strong>desconectado</strong>! Um e-mail de confirmação será enviado para o endereço recém-especificado!<br> Verifique novamente se seu novo endereço de e-mail foi <strong>inserido corretamente</strong> caso contrário <strong>você pode ficar sem acesso</strong> à sua conta!\n"
+"Após seguir o link de ativação você poderá fazer login normalmente!"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "NÃO é você mesmo"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -549,7 +550,7 @@ msgstr "Confirmar"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "Por favor, digite! Não copie e cole o valor do campo anterior!"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -2277,3 +2278,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
