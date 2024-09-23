@@ -22,4 +22,4 @@ Pygments==2.18.0
 python-gitlab==4.11.1
 python-redmine==2.5.0
 topicaxis-opengraph==0.5
-tzdata==2024.1
+tzdata==2024.2
