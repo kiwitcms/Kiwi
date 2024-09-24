@@ -22,7 +22,7 @@ class UpdateModelFormMixin:  # pylint: disable=too-few-public-methods
         This needs to be the 1st base class!
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    def __init__(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         data=None,
         files=None,

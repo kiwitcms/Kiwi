@@ -112,7 +112,7 @@ class TestRun(models.Model, UrlMixin):
             start_date=None,
         )
 
-    def create_execution(  # pylint: disable=too-many-arguments
+    def create_execution(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         case,
         assignee=None,

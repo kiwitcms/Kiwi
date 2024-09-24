@@ -71,7 +71,7 @@ class KiwiUserAdmin(UserAdmin):
             request, getattr(obj, "pk", 0)
         ) or super().has_delete_permission(request, obj)
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def render_change_form(
         self, request, context, add=False, change=False, form_url="", obj=None
     ):
