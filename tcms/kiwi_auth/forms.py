@@ -102,7 +102,7 @@ class PasswordResetForm(
         else None
     )
 
-    def save(  # pylint: disable=too-many-arguments
+    def save(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         domain_override=None,
         subject_template_name="registration/password_reset_subject.txt",
