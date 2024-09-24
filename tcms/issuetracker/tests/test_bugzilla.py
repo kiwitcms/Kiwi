@@ -160,7 +160,7 @@ class TestBugzillaIntegration(APITestCase):
         )
         self.assertEqual(result["rc"], 0)
         self.assertIn(
-            "http://bugtracker.kiwitcms.org/bugzilla/show_bug.cgi?id=",
+            "http://bugtracker.kiwitcms.org/show_bug.cgi?id=",
             result["response"],
         )
 
