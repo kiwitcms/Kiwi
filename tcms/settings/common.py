@@ -150,6 +150,9 @@ FILE_UPLOAD_MAX_SIZE = 5242880
 # x1.5 to be able to upload base64 encoded attachments via RPC
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(FILE_UPLOAD_MAX_SIZE * 1.5)
 
+# maximum number of parameters that may be received via GET or POST
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 1024
+
 # Controls if django-attachments deletes files from disk
 DELETE_ATTACHMENTS_FROM_DISK = True
 
