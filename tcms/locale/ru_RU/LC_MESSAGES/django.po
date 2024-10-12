@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-03 14:12+0000\n"
-"PO-Revision-Date: 2024-05-03 16:39\n"
+"POT-Creation-Date: 2024-10-12 11:40+0000\n"
+"PO-Revision-Date: 2024-10-12 12:31\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -119,8 +119,8 @@ msgstr "Версия"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:29
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:54
-#: tcms/testruns/templates/testruns/get.html:409
-#: tcms/testruns/templates/testruns/mutable.html:77
+#: tcms/testruns/templates/testruns/get.html:412
+#: tcms/testruns/templates/testruns/mutable.html:89
 #: tcms/testruns/templates/testruns/search.html:55
 #: tcms/testruns/templates/testruns/search.html:185
 msgid "Build"
@@ -139,10 +139,10 @@ msgstr "Переоткрыть"
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:78
 #: tcms/testcases/templates/testcases/mutable.html:263
 #: tcms/testplans/templates/testplans/get.html:477
-#: tcms/testplans/templates/testplans/mutable.html:157
-#: tcms/testruns/templates/testruns/get.html:468
-#: tcms/testruns/templates/testruns/get.html:581
-#: tcms/testruns/templates/testruns/mutable.html:202
+#: tcms/testplans/templates/testplans/mutable.html:173
+#: tcms/testruns/templates/testruns/get.html:477
+#: tcms/testruns/templates/testruns/get.html:590
+#: tcms/testruns/templates/testruns/mutable.html:210
 msgid "Save"
 msgstr "Сохранить"
 
@@ -164,7 +164,7 @@ msgstr "Закрыть"
 #: tcms/testruns/templates/testruns/get.html:257
 #: tcms/testruns/templates/testruns/get.html:260
 #: tcms/testruns/templates/testruns/mutable.html:23
-#: tcms/testruns/templates/testruns/mutable.html:222
+#: tcms/testruns/templates/testruns/mutable.html:229
 #: tcms/testruns/templates/testruns/search.html:14
 #: tcms/testruns/templates/testruns/search.html:181
 msgid "Summary"
@@ -178,6 +178,7 @@ msgstr "добавить новую степень Важности"
 #: tcms/testcases/templates/testcases/mutable.html:44
 #: tcms/testplans/templates/testplans/clone.html:22
 #: tcms/testplans/templates/testplans/mutable.html:34
+#: tcms/testruns/templates/testruns/mutable.html:48
 msgid "add new Product"
 msgstr "добавить новый Продукт"
 
@@ -189,8 +190,8 @@ msgstr "добавить новую Версию"
 
 #: tcms/bugs/templates/bugs/mutable.html:81
 #: tcms/bugs/templates/bugs/mutable.html:82
-#: tcms/testruns/templates/testruns/mutable.html:83
-#: tcms/testruns/templates/testruns/mutable.html:84
+#: tcms/testruns/templates/testruns/mutable.html:93
+#: tcms/testruns/templates/testruns/mutable.html:94
 msgid "add new Build"
 msgstr "добавить новую Сборку"
 
@@ -200,7 +201,7 @@ msgstr "добавить новую Сборку"
 msgid "Username or email"
 msgstr "Имя пользователя или email"
 
-#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:399
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:402
 msgid "Search Bugs"
 msgstr "Поиск Багов"
 
@@ -240,7 +241,7 @@ msgstr "После"
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testplans/templates/testplans/search.html:84
 #: tcms/testplans/templates/testplans/search.html:90
-#: tcms/testruns/templates/testruns/get.html:512
+#: tcms/testruns/templates/testruns/get.html:521
 #: tcms/testruns/templates/testruns/search.html:69
 #: tcms/testruns/templates/testruns/search.html:75
 msgid "Username"
@@ -263,14 +264,14 @@ msgstr "Имя пользователя"
 #: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
 #: tcms/testplans/templates/testplans/clone.html:66
-#: tcms/testplans/templates/testplans/mutable.html:108
-#: tcms/testplans/templates/testplans/mutable.html:114
-#: tcms/testplans/templates/testplans/mutable.html:120
-#: tcms/testplans/templates/testplans/mutable.html:132
-#: tcms/testplans/templates/testplans/mutable.html:138
-#: tcms/testplans/templates/testplans/mutable.html:151
+#: tcms/testplans/templates/testplans/mutable.html:124
+#: tcms/testplans/templates/testplans/mutable.html:130
+#: tcms/testplans/templates/testplans/mutable.html:136
+#: tcms/testplans/templates/testplans/mutable.html:148
+#: tcms/testplans/templates/testplans/mutable.html:154
+#: tcms/testplans/templates/testplans/mutable.html:167
 #: tcms/testplans/templates/testplans/search.html:44
-#: tcms/testruns/templates/testruns/get.html:575
+#: tcms/testruns/templates/testruns/get.html:584
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "Yes"
 msgstr "Да"
@@ -292,14 +293,14 @@ msgstr "Да"
 #: tcms/testcases/templates/testcases/search.html:70
 #: tcms/testplans/templates/testplans/clone.html:58
 #: tcms/testplans/templates/testplans/clone.html:66
-#: tcms/testplans/templates/testplans/mutable.html:108
-#: tcms/testplans/templates/testplans/mutable.html:114
-#: tcms/testplans/templates/testplans/mutable.html:120
-#: tcms/testplans/templates/testplans/mutable.html:132
-#: tcms/testplans/templates/testplans/mutable.html:138
-#: tcms/testplans/templates/testplans/mutable.html:151
+#: tcms/testplans/templates/testplans/mutable.html:124
+#: tcms/testplans/templates/testplans/mutable.html:130
+#: tcms/testplans/templates/testplans/mutable.html:136
+#: tcms/testplans/templates/testplans/mutable.html:148
+#: tcms/testplans/templates/testplans/mutable.html:154
+#: tcms/testplans/templates/testplans/mutable.html:167
 #: tcms/testplans/templates/testplans/search.html:44
-#: tcms/testruns/templates/testruns/get.html:575
+#: tcms/testruns/templates/testruns/get.html:584
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "No"
 msgstr "Нет"
@@ -327,7 +328,7 @@ msgstr "ID"
 #: tcms/templates/include/bug_details.html:5
 #: tcms/testcases/templates/testcases/search.html:156
 #: tcms/testplans/templates/testplans/search.html:116
-#: tcms/testruns/templates/testruns/mutable.html:224
+#: tcms/testruns/templates/testruns/mutable.html:231
 msgid "Created on"
 msgstr "Создано"
 
@@ -345,17 +346,17 @@ msgstr "Права доступа к объекту"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
-#: tcms/templates/include/properties_card.html:33
-#: tcms/templates/include/properties_card.html:48 tcms/testcases/views.py:151
+#: tcms/templates/include/properties_card.html:32
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:151
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:160
 #: tcms/testruns/templates/testruns/get.html:237
-#: tcms/testruns/templates/testruns/get.html:439 tcms/testruns/views.py:215
+#: tcms/testruns/templates/testruns/get.html:448 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
 msgid "Delete"
 msgstr "Удалить"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:386
+#: tcms/bugs/views.py:68 tcms/settings/common.py:389
 msgid "New Bug"
 msgstr "Новый Баг"
 
@@ -376,7 +377,7 @@ msgstr "*баг переоткрыт*"
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "ОБНОВЛЕНИЕ: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:60
+#: tcms/core/history.py:62
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -389,7 +390,7 @@ msgstr "Обновлено %(history_date)s\n"
 "Дополнительная информация:\n"
 "%(instance_url)s"
 
-#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:415
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:418
 msgid "Dashboard"
 msgstr "Панель мониторинга"
 
@@ -485,7 +486,7 @@ msgstr "Файл содержит запрещенный атрибут: `{attr_
 msgid "Uploading executable files is forbidden"
 msgstr "Загрузка исполняемых файлов запрещена"
 
-#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:428
+#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:431
 msgid "Users"
 msgstr "Пользователи"
 
@@ -620,109 +621,109 @@ msgstr "Включить отчетность к трекеру задач, на
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "Неверный формат даты. Используйте YYYY-MM-DD [HH:MM:SS]."
 
-#: tcms/settings/common.py:377
+#: tcms/settings/common.py:380
 msgid "TESTING"
 msgstr "ТЕСТИРОВАНИЕ"
 
-#: tcms/settings/common.py:379
+#: tcms/settings/common.py:382 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
 msgstr "Новый тест-план"
 
-#: tcms/settings/common.py:381
+#: tcms/settings/common.py:384
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
 msgstr "Новый тест-кейс"
 
-#: tcms/settings/common.py:383 tcms/testplans/templates/testplans/get.html:121
+#: tcms/settings/common.py:386 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:171
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "Новый тестовый прогон"
 
-#: tcms/settings/common.py:393
+#: tcms/settings/common.py:396
 msgid "SEARCH"
 msgstr "ПОИСК"
 
-#: tcms/settings/common.py:395 tcms/testplans/templates/testplans/search.html:5
+#: tcms/settings/common.py:398 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "Поиск тест-планов"
 
-#: tcms/settings/common.py:396 tcms/testcases/templates/testcases/search.html:5
+#: tcms/settings/common.py:399 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "Поиск тест-кейсов"
 
-#: tcms/settings/common.py:397 tcms/testruns/templates/testruns/search.html:5
+#: tcms/settings/common.py:400 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "Поиск тест-прогонов"
 
-#: tcms/settings/common.py:406
+#: tcms/settings/common.py:409
 msgid "TELEMETRY"
 msgstr "ТЕЛЕМЕТРИЯ"
 
-#: tcms/settings/common.py:409
+#: tcms/settings/common.py:412
 msgid "Testing"
 msgstr "Тестирование"
 
-#: tcms/settings/common.py:411
+#: tcms/settings/common.py:414
 msgid "Breakdown"
 msgstr "Разбивка"
 
-#: tcms/settings/common.py:413
+#: tcms/settings/common.py:416
 msgid "Execution"
 msgstr "Выполнение"
 
-#: tcms/settings/common.py:416
-#: tcms/testruns/templates/testruns/mutable.html:169
+#: tcms/settings/common.py:419
+#: tcms/testruns/templates/testruns/mutable.html:177
 msgid "Matrix"
 msgstr "Матрица"
 
-#: tcms/settings/common.py:417
+#: tcms/settings/common.py:420
 msgid "Trends"
 msgstr "Тенденции"
 
-#: tcms/settings/common.py:420
+#: tcms/settings/common.py:423
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "Состояние тест-кейсов"
 
-#: tcms/settings/common.py:426
+#: tcms/settings/common.py:429
 msgid "ADMIN"
 msgstr "АДМИН"
 
-#: tcms/settings/common.py:429
+#: tcms/settings/common.py:432
 msgid "Groups"
 msgstr "Группы"
 
-#: tcms/settings/common.py:431
+#: tcms/settings/common.py:434
 msgid "Everything else"
 msgstr "Прочее"
 
-#: tcms/settings/common.py:434
+#: tcms/settings/common.py:437
 msgid "PLUGINS"
 msgstr "Подключаемые модули"
 
-#: tcms/settings/common.py:444
+#: tcms/settings/common.py:447
 msgid "Report an Issue"
 msgstr "Сообщение о проблеме"
 
-#: tcms/settings/common.py:447
+#: tcms/settings/common.py:450
 msgid "Ask for help on StackOverflow"
 msgstr "Запросить помощь в StackOverflow"
 
-#: tcms/settings/common.py:451
+#: tcms/settings/common.py:454
 msgid "Donate €5 via Open Collective"
 msgstr "Пожертвовать €5 через Open Collective"
 
-#: tcms/settings/common.py:453
+#: tcms/settings/common.py:456
 msgid "Administration Guide"
 msgstr "Руководство администратора"
 
-#: tcms/settings/common.py:454
+#: tcms/settings/common.py:457
 msgid "User Guide"
 msgstr "Руководство пользователя"
 
-#: tcms/settings/common.py:455
+#: tcms/settings/common.py:458
 msgid "API Help"
 msgstr "Справка по API"
 
@@ -760,7 +761,7 @@ msgstr "ИТОГИ"
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/get.html:39
-#: tcms/testruns/templates/testruns/mutable.html:61
+#: tcms/testruns/templates/testruns/mutable.html:67
 #: tcms/testruns/templates/testruns/search.html:182
 msgid "Test plan"
 msgstr "Тест-план"
@@ -832,7 +833,7 @@ msgstr "Дочерние ТПП\\TPs"
 #: tcms/testruns/templates/testruns/get.html:188
 #: tcms/testruns/templates/testruns/get.html:268
 #: tcms/testruns/templates/testruns/get.html:383
-#: tcms/testruns/templates/testruns/mutable.html:225
+#: tcms/testruns/templates/testruns/mutable.html:232
 msgid "Status"
 msgstr "Состояние"
 
@@ -845,7 +846,7 @@ msgstr "Проверено"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
 #: tcms/testruns/templates/testruns/get.html:95
 #: tcms/testruns/templates/testruns/get.html:403
-#: tcms/testruns/templates/testruns/mutable.html:132
+#: tcms/testruns/templates/testruns/mutable.html:140
 msgid "Finished at"
 msgstr "Завершено"
 
@@ -1036,7 +1037,7 @@ msgstr "Уважаемый администратор,\n"
 
 #: tcms/templates/include/attachments.html:10
 #: tcms/testplans/templates/testplans/get.html:437
-#: tcms/testruns/templates/testruns/get.html:475
+#: tcms/testruns/templates/testruns/get.html:484
 msgid "Attachments"
 msgstr "Вложения"
 
@@ -1059,7 +1060,7 @@ msgid "No records found"
 msgstr "Записи не найдены"
 
 #: tcms/templates/include/bugs_table.html:15
-#: tcms/testruns/templates/testruns/get.html:561
+#: tcms/testruns/templates/testruns/get.html:570
 msgid "URL"
 msgstr "URL"
 
@@ -1068,22 +1069,22 @@ msgstr "URL"
 msgid "Parameters"
 msgstr "Параметры"
 
-#: tcms/templates/include/properties_card.html:16
-#: tcms/testruns/templates/testruns/mutable.html:162
+#: tcms/templates/include/properties_card.html:15
+#: tcms/testruns/templates/testruns/mutable.html:170
 msgid "This is a tech-preview feature!"
 msgstr "Это функция предварительного просмотра!"
 
-#: tcms/templates/include/properties_card.html:69
+#: tcms/templates/include/properties_card.html:68
 msgid "name=value"
 msgstr "name=Название"
 
-#: tcms/templates/include/properties_card.html:70
+#: tcms/templates/include/properties_card.html:69
 #: tcms/templates/include/tags_card.html:28
 #: tcms/testcases/templates/testcases/get.html:184
 #: tcms/testcases/templates/testcases/get.html:229
 #: tcms/testplans/templates/testplans/get.html:258
 #: tcms/testruns/templates/testruns/get.html:291
-#: tcms/testruns/templates/testruns/get.html:534
+#: tcms/testruns/templates/testruns/get.html:543
 msgid "Add"
 msgstr "Добавить"
 
@@ -1094,7 +1095,7 @@ msgstr "Добавить"
 #: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:24
 #: tcms/testplans/templates/testplans/search.html:18
-#: tcms/testruns/templates/testruns/get.html:567
+#: tcms/testruns/templates/testruns/get.html:576
 msgid "Name"
 msgstr "Наименование"
 
@@ -1353,11 +1354,11 @@ msgstr "Клонировать"
 #: tcms/testplans/templates/testplans/get.html:54
 #: tcms/testplans/templates/testplans/get.html:412
 #: tcms/testplans/templates/testplans/get.html:492
-#: tcms/testplans/templates/testplans/mutable.html:105
+#: tcms/testplans/templates/testplans/mutable.html:121
 #: tcms/testplans/templates/testplans/search.html:82
 #: tcms/testplans/templates/testplans/search.html:120
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
-#: tcms/testruns/templates/testruns/mutable.html:223
+#: tcms/testruns/templates/testruns/mutable.html:230
 msgid "Author"
 msgstr "Автор"
 
@@ -1368,7 +1369,7 @@ msgstr "Автор"
 #: tcms/testplans/templates/testplans/get.html:378
 #: tcms/testplans/templates/testplans/get.html:416
 #: tcms/testplans/templates/testplans/get.html:493
-#: tcms/testplans/templates/testplans/mutable.html:117
+#: tcms/testplans/templates/testplans/mutable.html:133
 #: tcms/testplans/templates/testplans/search.html:88
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
 #: tcms/testruns/templates/testruns/get.html:65
@@ -1387,7 +1388,7 @@ msgstr "Тестер по умолчанию"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:265
 #: tcms/testruns/templates/testruns/get.html:366
-#: tcms/testruns/templates/testruns/mutable.html:226
+#: tcms/testruns/templates/testruns/mutable.html:233
 msgid "Category"
 msgstr "Категория"
 
@@ -1402,7 +1403,7 @@ msgstr "Категория"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:264
 #: tcms/testruns/templates/testruns/get.html:362
-#: tcms/testruns/templates/testruns/mutable.html:227
+#: tcms/testruns/templates/testruns/mutable.html:234
 msgid "Priority"
 msgstr "Приоритет"
 
@@ -1438,7 +1439,7 @@ msgstr "Требования"
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:162
 #: tcms/testplans/templates/testplans/get.html:80
-#: tcms/testplans/templates/testplans/mutable.html:86
+#: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Reference link"
 msgstr "Ссылка"
 
@@ -1447,7 +1448,7 @@ msgstr "Ссылка"
 #: tcms/testplans/templates/testplans/get.html:433
 #: tcms/testplans/templates/testplans/get.html:434
 #: tcms/testruns/templates/testruns/get.html:398
-#: tcms/testruns/templates/testruns/mutable.html:194
+#: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Notes"
 msgstr "Примечания"
 
@@ -1479,7 +1480,7 @@ msgid "add new Template"
 msgstr "добавить новый шаблон"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
-#: tcms/testruns/templates/testruns/get.html:505
+#: tcms/testruns/templates/testruns/get.html:514
 msgid "Notify"
 msgstr "Уведомления"
 
@@ -1500,7 +1501,7 @@ msgid "Notify when"
 msgstr "Уведомлять когда"
 
 #: tcms/testcases/templates/testcases/mutable.html:224
-#: tcms/testplans/templates/testplans/mutable.html:126
+#: tcms/testplans/templates/testplans/mutable.html:142
 msgid "applies only for changes made by somebody else"
 msgstr "применимо только к изменениям, сделанным другим пользователем"
 
@@ -1550,7 +1551,7 @@ msgid "Select"
 msgstr "Выбрать"
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
-#: tcms/testruns/templates/testruns/get.html:446 tcms/testruns/views.py:202
+#: tcms/testruns/templates/testruns/get.html:455 tcms/testruns/views.py:202
 msgid "History"
 msgstr "История"
 
@@ -1656,12 +1657,12 @@ msgid "Inactive"
 msgstr "Неактивный"
 
 #: tcms/testplans/templates/testplans/get.html:444
-#: tcms/testruns/templates/testruns/get.html:482
+#: tcms/testruns/templates/testruns/get.html:491
 msgid "No attachments"
 msgstr "Без вложений"
 
 #: tcms/testplans/templates/testplans/get.html:469
-#: tcms/testruns/templates/testruns/get.html:471
+#: tcms/testruns/templates/testruns/get.html:480
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -1673,35 +1674,39 @@ msgstr "Изменить тест-план"
 msgid "Create new TestPlan"
 msgstr "Создать новый тест-план"
 
-#: tcms/testplans/templates/testplans/mutable.html:81
+#: tcms/testplans/templates/testplans/mutable.html:82
 msgid "Parent ID"
 msgstr "Родительский ID"
 
-#: tcms/testplans/templates/testplans/mutable.html:94
+#: tcms/testplans/templates/testplans/mutable.html:100
+msgid "Enter to assign; Backspace + Enter to clear"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
 msgstr "Документ тест-плана:"
 
-#: tcms/testplans/templates/testplans/mutable.html:103
+#: tcms/testplans/templates/testplans/mutable.html:119
 msgid "Notify:"
 msgstr "Уведомления:"
 
-#: tcms/testplans/templates/testplans/mutable.html:111
+#: tcms/testplans/templates/testplans/mutable.html:127
 msgid "TestCase author"
 msgstr "Автор тест-кейса"
 
-#: tcms/testplans/templates/testplans/mutable.html:125
+#: tcms/testplans/templates/testplans/mutable.html:141
 msgid "Notify when:"
 msgstr "Уведомлять когда:"
 
-#: tcms/testplans/templates/testplans/mutable.html:129
+#: tcms/testplans/templates/testplans/mutable.html:145
 msgid "TestPlan is updated"
 msgstr "Тест-план обновлен"
 
-#: tcms/testplans/templates/testplans/mutable.html:135
+#: tcms/testplans/templates/testplans/mutable.html:151
 msgid "Test cases are updated"
 msgstr "Тест-кейсы обновлены"
 
-#: tcms/testplans/templates/testplans/mutable.html:149
+#: tcms/testplans/templates/testplans/mutable.html:165
 #: tcms/testplans/templates/testplans/search.html:41
 msgid "Active"
 msgstr "Активный"
@@ -1766,7 +1771,7 @@ msgid "Manager"
 msgstr "Менеджер"
 
 #: tcms/testruns/templates/testruns/get.html:72
-#: tcms/testruns/templates/testruns/mutable.html:102
+#: tcms/testruns/templates/testruns/mutable.html:110
 #: tcms/testruns/templates/testruns/search.html:127
 msgid "Planned start"
 msgstr "Запланированный старт"
@@ -1776,7 +1781,7 @@ msgid "Start"
 msgstr "Начать"
 
 #: tcms/testruns/templates/testruns/get.html:90
-#: tcms/testruns/templates/testruns/mutable.html:115
+#: tcms/testruns/templates/testruns/mutable.html:123
 #: tcms/testruns/templates/testruns/search.html:147
 msgid "Planned stop"
 msgstr "Запланированная остановка"
@@ -1786,7 +1791,7 @@ msgid "Stop"
 msgstr "Остановить"
 
 #: tcms/testruns/templates/testruns/get.html:138
-#: tcms/testruns/templates/testruns/mutable.html:152
+#: tcms/testruns/templates/testruns/mutable.html:160
 msgid "Environment"
 msgstr "Окружение"
 
@@ -1800,7 +1805,7 @@ msgstr "Добавить комментарий"
 
 #: tcms/testruns/templates/testruns/get.html:227
 #: tcms/testruns/templates/testruns/get.html:330
-#: tcms/testruns/templates/testruns/get.html:556
+#: tcms/testruns/templates/testruns/get.html:565
 msgid "Add hyperlink"
 msgstr "Добавить гиперссылку"
 
@@ -1817,8 +1822,8 @@ msgid "records"
 msgstr "записи"
 
 #: tcms/testruns/templates/testruns/get.html:331
-#: tcms/testruns/templates/testruns/get.html:595
-#: tcms/testruns/templates/testruns/get.html:612
+#: tcms/testruns/templates/testruns/get.html:604
+#: tcms/testruns/templates/testruns/get.html:621
 msgid "Report bug"
 msgstr "Отчёт об ошибке"
 
@@ -1830,24 +1835,24 @@ msgstr "Тестовый случай не является частью род�
 msgid "Assigned to"
 msgstr "Исполнитель"
 
-#: tcms/testruns/templates/testruns/get.html:415
+#: tcms/testruns/templates/testruns/get.html:421
 msgid "Text version"
 msgstr "Версия текста"
 
-#: tcms/testruns/templates/testruns/get.html:420
+#: tcms/testruns/templates/testruns/get.html:429
 msgid "Bugs and hyperlinks"
 msgstr "Ошибки и гиперссылки"
 
-#: tcms/testruns/templates/testruns/get.html:573
+#: tcms/testruns/templates/testruns/get.html:582
 msgid "Is a defect"
 msgstr "Неисправность"
 
-#: tcms/testruns/templates/testruns/get.html:580
-#: tcms/testruns/templates/testruns/get.html:611
+#: tcms/testruns/templates/testruns/get.html:589
+#: tcms/testruns/templates/testruns/get.html:620
 msgid "Cancel"
 msgstr "Отменить"
 
-#: tcms/testruns/templates/testruns/get.html:600
+#: tcms/testruns/templates/testruns/get.html:609
 msgid "Issue Tracker"
 msgstr "Система ведения задач"
 
@@ -1859,19 +1864,19 @@ msgstr "Изменить тестовый прогон"
 msgid "Clone TestRun"
 msgstr "Клонировать тестовый прогон"
 
-#: tcms/testruns/templates/testruns/mutable.html:172
+#: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
 msgstr "Влияет на только тестовые случаи с параметрами"
 
-#: tcms/testruns/templates/testruns/mutable.html:186
+#: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
 msgstr "больше информации"
 
-#: tcms/testruns/templates/testruns/mutable.html:211
+#: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
 msgstr "Выбранные тест-кейс(ы):"
 
-#: tcms/testruns/templates/testruns/mutable.html:214
+#: tcms/testruns/templates/testruns/mutable.html:221
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
@@ -2155,41 +2160,41 @@ msgstr "или нажмите ниже, чтобы войти в аккаунт 
 msgid "Legal information"
 msgstr "Правовая информация"
 
-#: tcms_tenants/admin.py:42 tcms_tenants/admin.py:49
-#: tcms_tenants/middleware.py:32
+#: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
+#: tcms_tenants/middleware.py:35
 msgid "Unauthorized"
 msgstr "Неавторизовано"
 
-#: tcms_tenants/admin.py:72
+#: tcms_tenants/admin.py:86
 msgid "Existing username, email or user ID"
 msgstr "Введите имя пользователя, email или ID пользователя"
 
-#: tcms_tenants/admin.py:118
+#: tcms_tenants/admin.py:159
 msgid "Full name"
 msgstr "Полное имя"
 
-#: tcms_tenants/forms.py:27
+#: tcms_tenants/forms.py:30
 msgid "Invalid string"
 msgstr "Неправильная строка"
 
-#: tcms_tenants/menu.py:12
+#: tcms_tenants/menu.py:15
 msgid "Create"
 msgstr "Создать"
 
-#: tcms_tenants/menu.py:17
-#: tcms_tenants/templates/tcms_tenants/invite_users.html:9
+#: tcms_tenants/menu.py:20
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:17
 msgid "Invite users"
 msgstr "Пригласить пользователей"
 
-#: tcms_tenants/menu.py:18
+#: tcms_tenants/menu.py:21
 msgid "Authorized users"
 msgstr "Авторизованные пользователи"
 
-#: tcms_tenants/middleware.py:54
+#: tcms_tenants/middleware.py:59
 msgid "Unpaid"
 msgstr "Не оплачено"
 
-#: tcms_tenants/middleware.py:64
+#: tcms_tenants/middleware.py:70
 msgid "Tenant expires in less than 7 days"
 msgstr "Срок действия аренды истекает через 7 дней"
 
@@ -2199,11 +2204,10 @@ msgid "Dear tester,\n"
 "%(invited_by)s has invited you to join their Kiwi TCMS tenant at\n"
 "%(tenant_url)s\n\n"
 "In case you have never logged in before an account was created for you\n"
-"automatically. You will have to reset your password before you can login!"
-msgstr "Уважаемый тестер,\n"
-"%(invited_by)s пригласил вас присоединиться к TCMS Kiwi на\n"
-"%(tenant_url)s\n\n"
-"Если вы никогда не входили в систему до этого момента, то аккаунт был создан для вас автоматически. Вам необходимо будет сбросить ваш пароль, прежде чем вы сможете войти!"
+"automatically. You can login with a social account which has the same email\n"
+"address or go to %(password_reset_url)s to reset your password.\n"
+"The password reset email message also contains your username!"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2214,80 +2218,80 @@ msgstr "Ваша аренда TCMS Kiwi была начата:\n"
 "%(tenant_url)s\n\n"
 "Если у вас возникли проблемы, пожалуйста, свяжитесь с поддержкой!"
 
-#: tcms_tenants/templates/tcms_tenants/invite_users.html:20
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
 msgstr "Адрес почты"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:9
+#: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
 msgstr "Новый владелец"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:26
+#: tcms_tenants/templates/tcms_tenants/new.html:35
 msgid "Company, team or project name"
 msgstr "Название компании, команды или проекта"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:34
+#: tcms_tenants/templates/tcms_tenants/new.html:43
 msgid "Schema"
 msgstr "Схема"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:47
+#: tcms_tenants/templates/tcms_tenants/new.html:56
 msgid "Validation pattern"
 msgstr "Шаблон валидации"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:52
+#: tcms_tenants/templates/tcms_tenants/new.html:61
 msgid "Publicly readable"
 msgstr "Общедоступный для чтения"
 
-#: tcms_tenants/templates/tcms_tenants/new.html:71
+#: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
 msgstr "Логотип организации"
 
-#: tcms_tenants/utils.py:62
+#: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
 msgstr "Такое название схемы уже используется"
 
-#: tcms_tenants/utils.py:150
+#: tcms_tenants/utils.py:170
 msgid "New Kiwi TCMS tenant created"
 msgstr "Новая организация создана в TCMS Kiwi"
 
-#: tcms_tenants/utils.py:205
+#: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
 msgstr "Пользователь {user.username} добавлен в группу организации {group.name}"
 
-#: tcms_tenants/utils.py:229
+#: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
 msgstr "Приглашение присоединиться к Kiwi TCMS"
 
-#: tcms_tenants/views.py:80
+#: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
 msgstr "Только суперпользователи и владельцы организации могут редактировать свойства организации"
 
-#: tcms_tenants/views.py:98
+#: tcms_tenants/views.py:102
 msgid "Edit tenant"
 msgstr "Изменить владельца"
 
-#: tcms_tenants/views.py:147
+#: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
 msgstr "Только авторизованные пользователи могут приглашать других"
 
-#: tenant_groups/admin.py:29
+#: tenant_groups/admin.py:30
 msgid "users"
 msgstr "пользователи"
 
-#: tenant_groups/models.py:31
+#: tenant_groups/models.py:34
 msgid "name"
 msgstr "название"
 
-#: tenant_groups/models.py:34
+#: tenant_groups/models.py:37
 msgid "permissions"
 msgstr "права доступа"
 
-#: tenant_groups/models.py:42
+#: tenant_groups/models.py:47
 msgid "group"
 msgstr "группа"
 
-#: tenant_groups/models.py:43
+#: tenant_groups/models.py:48
 msgid "groups"
 msgstr "группы"
 
