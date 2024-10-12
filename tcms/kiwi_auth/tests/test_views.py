@@ -6,6 +6,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
+from django.template import loader
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
@@ -397,6 +398,7 @@ class TestLoginViewWithCustomTemplate(TestCase):
         )
 
 
+@override_settings(LANGUAGE_CODE="en")
 class TestPasswordResetView(TestCase):
     """Test for password reset view"""
 
@@ -417,7 +419,7 @@ class TestPasswordResetView(TestCase):
         self.assertContains(response, f">{_password_reset}</button>")
 
     @patch("tcms.kiwi_auth.forms.DjangoPasswordResetForm.send_mail")
-    def test_send_mail_for_password_reset(self, mail_sent):
+    def test_send_mail_for_password_reset(self, send_mail):
         user = User.objects.create_user("kiwi-tester", "tester@example.com", "password")
         user.is_active = True
         user.save()
@@ -444,4 +446,12 @@ class TestPasswordResetView(TestCase):
         self.assertContains(response, _("Password reset email was sent"))
 
         # Verify mail is sent
-        mail_sent.assert_called_once()
+        send_mail.assert_called_once()
+
+        # Verify that reset password email will contain the username as a reminder
+        email_template_name = send_mail.call_args_list[0][0][1]
+        context = send_mail.call_args_list[0][0][2]
+        email_body = loader.render_to_string(email_template_name, context)
+        self.assertIn(
+            f"Your username, in case you've forgotten: {user.username}", email_body
+        )
