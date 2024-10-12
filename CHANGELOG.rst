@@ -1,6 +1,79 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.6 (12 Oct 2024)
+----------------------------
+
+.. important::
+
+    This release includes security related updates, several small improvements
+    and important bug fixes.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.5 -> 13.6
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.0.8 to 5.0.9, addressing multiple potential security
+  vulnerabilities, which do not seem to affect Kiwi TCMS directly however
+  this is not 100% guaranteed
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update markdown from 3.6 to 3.7
+- Update psycopg from 3.2.1 to 3.2.3
+- Update pygithub from 2.3.0 to 2.4.0
+- Update python-bugzilla from 3.2.0 to 3.3.0
+- Update python-gitlab from 4.9.0 to 4.13.0
+- Update tzdata from 2024.1 to 2024.2
+- Update uwsgi from 2.0.26 to 2.0.27
+- Update node_modules/pdfmake from 0.2.10 to 0.2.14
+- Specify ``large_client_header_buffers`` for NGINX proxy configuration example
+  to match the configuration of Kiwi TCMS
+- Set uWSGI configuration ``max-requests`` to 1024
+
+
+Settings
+~~~~~~~~
+
+- Explicitly set ``DATA_UPLOAD_MAX_NUMBER_FIELDS`` to 1024, default is 1000
+
+
+Bug fixes
+~~~~~~~~~
+
+- Increase uWSGI configuration ``buffer-size`` to 20k to allows the creation of
+  a TestRun with 1000 test cases! Fixes
+  `Issue #3387 <https://github.com/kiwitcms/Kiwi/issues/3387>`_,
+  `Issue #3800 <https://github.com/kiwitcms/Kiwi/issues/3800>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update black from 24.8.0 to 24.10.0
+- Update pylint-django from 2.5.5 to 2.6.1
+- Update selenium from 4.23.1 to 4.25.0
+- Update sphinx from 8.0.2 to 8.1.1
+- Update node_modules/webpack from 5.93.0 to 5.95.0
+- Update node_modules/eslint from 8.57.0 to 8.57.1
+- Update node_modules/eslint-plugin-import from 2.29.1 to 2.31.0
+- Assert that password reset email contains username reminder
+- Update translation source strings
+
+
+
 Kiwi TCMS 13.5 (07 Aug 2024)
 ----------------------------
 
@@ -35,7 +108,7 @@ Improvements
 - Update python-gitlab from 4.6.0 to 4.9.0
 - Add a ``Test Plan +`` button on *New Test Run* page. Refs
   `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
-- Always show the ``Build +`` button on *New Test Run* page. Refs #3680
+- Always show the ``Build +`` button on *New Test Run* page. Refs
   `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
 - Add a ``Product +`` button on *New Test Run* page. Closes
   `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
