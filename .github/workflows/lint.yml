@@ -133,7 +133,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: psf/black@24.8.0
+      - uses: psf/black@24.10.0
 
   eslint:
     runs-on: ubuntu-latest
