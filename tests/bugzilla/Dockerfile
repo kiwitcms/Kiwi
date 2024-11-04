@@ -1,5 +1,5 @@
 # checkov:skip=CKV_DOCKER_2:Ensure that HEALTHCHECK instructions have been added to container images
-FROM fedora:40
+FROM fedora:41
 
 RUN dnf -y install httpd && \
     dnf -y install bugzilla "perl(DBD::SQLite)" findutils
