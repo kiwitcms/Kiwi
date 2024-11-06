@@ -27,8 +27,6 @@ class IssueTrackerType:
     supports!
     """
 
-    rpc_cache = {}
-
     def __init__(self, bug_system, request):
         """
         :bug_system: - BugSystem object
@@ -229,23 +227,14 @@ TE-{execution.pk}: {execution.case.summary}"""
     def rpc(self):
         """
         Returns an object which is used to communicate to the external system.
-        This property is meant to be used by the rest of the integration code
-        and provides caching b/c connecting to a remote system may be a slow
-        operation.
+        This property is meant to be used by the rest of the integration code.
         """
         # b/c jira.JIRA tries to connect when object is created
         # see https://github.com/kiwitcms/Kiwi/issues/100
         if self.is_adding_testcase_to_issue_disabled():
             return None
 
-        # NOTE: using a tuple as the cache-key to prevent integrations which define
-        # personal ApiTokens to accidentally use a cached version
-        # for the same URL but different credentials
-        rpc_key = (self.bug_system.base_url, getattr(self.request, "user", None))
-        if rpc_key not in self.rpc_cache:
-            self.rpc_cache[rpc_key] = self._rpc_connection()
-
-        return self.rpc_cache[rpc_key]
+        return self._rpc_connection()
 
     @property
     def rpc_credentials(self):
