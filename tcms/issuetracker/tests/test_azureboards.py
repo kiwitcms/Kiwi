@@ -54,11 +54,14 @@ class TestAzureIntegration(APITestCase):
     def test_details(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual("A pre-existing public issue", result["title"])
+        self.assertEqual(self.existing_bug_id, result["id"])
         self.assertIn(
             "The whole boards-integration project is public so this issue should be public as well",
             result["description"],
         )
+        self.assertEqual("To Do", result["status"])
+        self.assertEqual("A pre-existing public issue", result["title"])
+        self.assertEqual(self.existing_bug_url, result["url"])
 
     def test_auto_update_bugtracker(self):
         last_comment = None
