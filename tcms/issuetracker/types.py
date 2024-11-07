@@ -244,8 +244,11 @@ class GitHub(IssueTrackerType):
         repo = self.rpc.get_repo(self.repo_id)
         issue = repo.get_issue(self.bug_id_from_url(url))
         return {
-            "title": issue.title,
+            "id": issue.number,
             "description": issue.body,
+            "status": issue.state,
+            "title": issue.title,
+            "url": url,
         }
 
     @property
