@@ -151,6 +151,9 @@ class BitBucket(IssueTrackerType):
         """
         issue = self.rpc.get_issue(self.bug_id_from_url(url))
         return {
-            "title": issue["title"],
+            "id": issue["id"],
             "description": issue["content"]["raw"],
+            "status": issue["state"],
+            "title": issue["title"],
+            "url": url,
         }

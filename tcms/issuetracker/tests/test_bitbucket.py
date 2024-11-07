@@ -52,8 +52,11 @@ class TestBitBucketIntegration(APITestCase):
     def test_details(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual("Hello World", result["title"])
+        self.assertEqual(self.existing_bug_id, result["id"])
         self.assertIn("First public bug here", result["description"])
+        self.assertEqual("new", result["status"])
+        self.assertEqual("Hello World", result["title"])
+        self.assertEqual(self.existing_bug_url, result["url"])
 
     def test_auto_update_bugtracker(self):
         initial_comments = self.integration.rpc.get_comments(self.existing_bug_id)
