@@ -58,12 +58,15 @@ class TestJIRAIntegration(APITestCase):
     def test_details_for_url(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual("Hello Jira Cloud", result["title"])
+        self.assertEqual(self.existing_bug_id, result["id"])
         self.assertEqual(
             "This ticket is used in automated tests that verify Kiwi TCMS - JIRA "
             "bug tracking integration.",
             result["description"],
         )
+        self.assertEqual("In Progress", result["status"])
+        self.assertEqual("Hello Jira Cloud", result["title"])
+        self.assertEqual(self.existing_bug_url, result["url"])
 
     def test_auto_update_bugtracker(self):
         issue = self.integration.rpc.issue(self.existing_bug_id)

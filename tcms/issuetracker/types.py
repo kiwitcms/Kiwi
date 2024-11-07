@@ -81,8 +81,11 @@ class JIRA(IssueTrackerType):
         try:
             issue = self.rpc.issue(self.bug_id_from_url(url))
             return {
-                "title": issue.fields.summary,
+                "id": issue.key,
                 "description": issue.fields.description,
+                "status": issue.fields.status.name,
+                "title": issue.fields.summary,
+                "url": url,
             }
         except jira.exceptions.JIRAError:
             return super().details(url)
