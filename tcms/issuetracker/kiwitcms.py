@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2023 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2024 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -7,6 +7,7 @@
 """
 
 from django.template.loader import render_to_string
+from django.utils.translation import gettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.bugs.views import New
@@ -41,10 +42,13 @@ class KiwiTCMS(IssueTrackerType):
             return {}
 
         result = {
-            "title": bug.summary,
+            "id": bug.pk,
             "description": render_to_string(
                 "include/bug_details.html", {"object": bug}
             ),
+            "status": _("Open") if bug.status else _("Closed"),
+            "title": bug.summary,
+            "url": url,
         }
 
         return result
