@@ -50,8 +50,11 @@ class TestGitlabIntegration(APITestCase):
     def test_details_for_public_url(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual("Hello GitLab Hosted", result["title"])
+        self.assertEqual(self.existing_bug_id, result["id"])
         self.assertEqual("Here we start testing.", result["description"])
+        self.assertEqual("opened", result["status"])
+        self.assertEqual("Hello GitLab Hosted", result["title"])
+        self.assertEqual(self.existing_bug_url, result["url"])
 
     def test_details_for_private_url(self):
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
@@ -65,8 +68,13 @@ class TestGitlabIntegration(APITestCase):
 
         result = integration.details("https://gitlab.com/kiwitcms/katinar/-/issues/1")
 
-        self.assertEqual("Hello Private GitLab", result["title"])
+        self.assertEqual(1, result["id"])
         self.assertEqual("Hello World", result["description"])
+        self.assertEqual("closed", result["status"])
+        self.assertEqual("Hello Private GitLab", result["title"])
+        self.assertEqual(
+            "https://gitlab.com/kiwitcms/katinar/-/issues/1", result["url"]
+        )
 
     def test_auto_update_bugtracker(self):
         repo_id = self.integration.repo_id
