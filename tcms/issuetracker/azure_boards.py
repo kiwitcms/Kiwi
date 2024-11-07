@@ -146,6 +146,9 @@ class AzureBoards(IssueTrackerType):
         """
         issue = self.rpc.get_issue(self.bug_id_from_url(url))
         return {
-            "title": issue["fields"]["System.Title"],
+            "id": issue["id"],
             "description": issue["fields"]["System.Description"],
+            "status": issue["fields"]["System.State"],
+            "title": issue["fields"]["System.Title"],
+            "url": url,
         }
