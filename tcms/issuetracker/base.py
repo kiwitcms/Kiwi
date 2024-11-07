@@ -76,7 +76,7 @@ class IssueTrackerType:
         result["from_open_graph"] = True
 
         # remove data which we don't need
-        for key in ["_url", "url", "scrape", "type"]:
+        for key in ["_url", "scrape", "type"]:
             if key in result:
                 del result[key]
 
