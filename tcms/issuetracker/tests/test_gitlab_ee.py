@@ -107,8 +107,13 @@ class TestGitlabIntegration(APITestCase):
             "http://bugtracker.kiwitcms.org/root/katinar/-/issues/1"
         )
 
-        self.assertEqual("Hello Private Issue", result["title"])
+        self.assertEqual(1, result["id"])
         self.assertEqual("Created in secret via CLI", result["description"])
+        self.assertEqual("opened", result["status"])
+        self.assertEqual("Hello Private Issue", result["title"])
+        self.assertEqual(
+            "http://bugtracker.kiwitcms.org/root/katinar/-/issues/1", result["url"]
+        )
 
     def test_auto_update_bugtracker(self):
         repo_id = self.integration.repo_id

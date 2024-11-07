@@ -311,10 +311,14 @@ class Gitlab(IssueTrackerType):
         details b/c it will work for both public and private URLs.
         """
         project = self.rpc.projects.get(self.repo_id)
-        issue = project.issues.get(self.bug_id_from_url(url))
+        issue_id = self.bug_id_from_url(url)
+        issue = project.issues.get(issue_id)
         return {
-            "title": issue.title,
+            "id": issue_id,
             "description": issue.description,
+            "status": issue.state,
+            "title": issue.title,
+            "url": url,
         }
 
     @property
