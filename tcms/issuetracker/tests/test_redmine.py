@@ -57,8 +57,11 @@ class TestRedmineIntegration(APITestCase):
     def test_details_for_url(self):
         result = self.integration.details(self.existing_bug_url)
 
-        self.assertEqual("Hello Redmine", result["title"])
+        self.assertEqual(self.existing_bug_id, result["id"])
         self.assertEqual("Created via API", result["description"])
+        self.assertEqual("OPEN", result["status"])
+        self.assertEqual("Hello Redmine", result["title"])
+        self.assertEqual(self.existing_bug_url, result["url"])
 
     def test_auto_update_bugtracker(self):
         issue = self.integration.rpc.issue.get(self.existing_bug_id)

@@ -358,8 +358,11 @@ class Redmine(IssueTrackerType):
         try:
             issue = self.rpc.issue.get(self.bug_id_from_url(url))
             return {
-                "title": issue.subject,
+                "id": issue.id,
                 "description": issue.description,
+                "status": issue.status.name,
+                "title": issue.subject,
+                "url": url,
             }
         except redminelib.exceptions.ResourceNotFoundError:
             return super().details(url)
