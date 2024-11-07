@@ -10,6 +10,7 @@ if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
 
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+from django.utils.translation import gettext_lazy as _
 
 from tcms.bugs.models import Bug
 from tcms.bugs.tests.factory import BugFactory
@@ -55,14 +56,17 @@ class TestKiwiTCMSIntegration(APITestCase):
         self.assertEqual(self.existing_bug.pk, result)
 
     def test_details_for_url(self):
-        result = self.integration.details(self.existing_bug.get_full_url())
+        full_url = self.existing_bug.get_full_url()
+        result = self.integration.details(full_url)
 
-        self.assertEqual(self.existing_bug.summary, result["title"])
-
+        self.assertEqual(self.existing_bug.pk, result["id"])
         expected_description = render_to_string(
             "include/bug_details.html", {"object": self.existing_bug}
         )
         self.assertEqual(expected_description, result["description"])
+        self.assertEqual(_("Open"), result["status"])
+        self.assertEqual(self.existing_bug.summary, result["title"])
+        self.assertEqual(full_url, result["url"])
 
     def test_auto_update_bugtracker(self):
         # make sure bug is not associated with execution
