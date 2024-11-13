@@ -707,7 +707,7 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
         })
     } else {
         testCases.filter(function (tc) {
-            return (tc[filterBy] && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
+            return (tc[filterBy] !== undefined && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
         }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
     }
 }
