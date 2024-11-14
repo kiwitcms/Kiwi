@@ -696,6 +696,9 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
     }
 
     $('.js-testcase-row').hide()
+
+    // see https://api.jquery.com/multiple-selector/
+    const showOnly = []
     if (filterBy === 'component' || filterBy === 'tag') {
         const query = { plan: planId }
         query[`${filterBy}__name__icontains`] = filterValue
@@ -703,11 +706,15 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
         jsonRPC('TestCase.filter', query, function (filtered) {
             // hide again if a previous async request showed something else
             $('.js-testcase-row').hide()
-            filtered.forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
+            filtered.forEach(tc => showOnly.push(`[data-testcase-pk=${tc.id}]`))
+
+            $(showOnly.join(',')).show()
         })
     } else {
         testCases.filter(function (tc) {
             return (tc[filterBy] !== undefined && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
-        }).forEach(tc => $(`[data-testcase-pk=${tc.id}]`).show())
+        }).forEach(tc => showOnly.push(`[data-testcase-pk=${tc.id}]`))
+
+        $(showOnly.join(',')).show()
     }
 }
