@@ -688,6 +688,73 @@ function getSelectedTestCases () {
     return tcIds
 }
 
+// returns 2 arrays with selectors that need to be either shown or hidden
+// return values will be used as multiple-selector for jQuery
+// see https://api.jquery.com/multiple-selector/
+function findSelectorsToShowAndHide (inputData, filterBy, filterValue) {
+    const hideMe = []
+    const showMe = []
+
+    inputData.forEach(function (element) {
+        if (element[filterBy] !== undefined && element[filterBy].toString().toLowerCase().indexOf(filterValue) > -1) {
+            showMe.push(`[data-testcase-pk=${element.id}]`)
+        } else {
+            hideMe.push(`[data-testcase-pk=${element.id}]`)
+        }
+    })
+
+    return {
+        hide: hideMe,
+        show: showMe
+    }
+}
+
+// similar to the function above, however it operates on API data returned by
+// calls to .filter() API methods. Needs all data as input to be able to calculate
+// which rows should not be visible
+function findSelectorsToShowAndHideFromAPIData (allData, filteredData) {
+    const hideMe = []
+    const showMe = []
+
+    // these need to be hidden
+    const filteredPKs = filteredData.map(element => element.id)
+    allData.forEach(element => {
+        if (filteredPKs.indexOf(element.id) === -1) {
+            hideMe.push(`[data-testcase-pk=${element.id}]`)
+        }
+    })
+
+    // these will remain visible
+    filteredData.forEach(element => {
+        showMe.push(`[data-testcase-pk=${element.id}]`)
+    })
+
+    return {
+        hide: hideMe,
+        show: showMe
+    }
+}
+
+// update the screen in one swoop trying to perform
+// as little display updates as possible
+function showOrHideMultipleRows (rootSelector, rows) {
+    // initial state is that everything is hidden
+
+    if (rows.show.length <= rows.hide.length) {
+        $(rows.show.join(',')).show()
+    } else {
+        /* eslint-disable indent */
+        $('body')
+            .find(rootSelector)
+                .show()
+            .end()
+            .find(rows.hide.join(','))
+                .hide()
+            .end()
+        /* eslint-enable */
+    }
+}
+
 function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
     // no input => show all rows
     if (filterValue.trim().length === 0) {
@@ -697,8 +764,6 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
 
     $('.js-testcase-row').hide()
 
-    // see https://api.jquery.com/multiple-selector/
-    const showOnly = []
     if (filterBy === 'component' || filterBy === 'tag') {
         const query = { plan: planId }
         query[`${filterBy}__name__icontains`] = filterValue
@@ -706,15 +771,12 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
         jsonRPC('TestCase.filter', query, function (filtered) {
             // hide again if a previous async request showed something else
             $('.js-testcase-row').hide()
-            filtered.forEach(tc => showOnly.push(`[data-testcase-pk=${tc.id}]`))
 
-            $(showOnly.join(',')).show()
+            const rows = findSelectorsToShowAndHideFromAPIData(testCases, filtered)
+            showOrHideMultipleRows('.js-testcase-row', rows)
         })
     } else {
-        testCases.filter(function (tc) {
-            return (tc[filterBy] !== undefined && tc[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
-        }).forEach(tc => showOnly.push(`[data-testcase-pk=${tc.id}]`))
-
-        $(showOnly.join(',')).show()
+        const rows = findSelectorsToShowAndHide(testCases, filterBy, filterValue)
+        showOrHideMultipleRows('.js-testcase-row', rows)
     }
 }
