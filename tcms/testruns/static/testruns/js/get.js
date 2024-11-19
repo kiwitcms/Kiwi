@@ -250,6 +250,7 @@ function filterTestExecutionsByProperty (runId, executions, filterBy, filterValu
     // no input => show all rows
     if (filterValue.trim().length === 0) {
         $('.test-execution-element').show()
+        $('.test-executions-count').text(executions.length)
         return
     }
 
@@ -277,10 +278,12 @@ function filterTestExecutionsByProperty (runId, executions, filterBy, filterValu
 
             const rows = findSelectorsToShowAndHideFromAPIData(executions, filtered, '.test-execution-{0}')
             showOrHideMultipleRows('.test-execution-element', rows)
+            $('.test-executions-count').text(rows.show.length)
         })
     } else {
         const rows = findSelectorsToShowAndHide(executions, filterBy, filterValue, '.test-execution-{0}')
         showOrHideMultipleRows('.test-execution-element', rows)
+        $('.test-executions-count').text(rows.show.length)
     }
 }
 
