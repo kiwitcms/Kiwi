@@ -485,3 +485,70 @@ export function updateTestPlanSelectFromProduct (
         jsonRPC('TestPlan.filter', query, internalCallback)
     }
 }
+
+// returns 2 arrays with selectors that need to be either shown or hidden
+// return values will be used as multiple-selector for jQuery
+// see https://api.jquery.com/multiple-selector/
+export function findSelectorsToShowAndHide (inputData, filterBy, filterValue) {
+    const hideMe = []
+    const showMe = []
+
+    inputData.forEach(function (element) {
+        if (element[filterBy] !== undefined && element[filterBy].toString().toLowerCase().indexOf(filterValue) > -1) {
+            showMe.push(`[data-testcase-pk=${element.id}]`)
+        } else {
+            hideMe.push(`[data-testcase-pk=${element.id}]`)
+        }
+    })
+
+    return {
+        hide: hideMe,
+        show: showMe
+    }
+}
+
+// similar to the function above, however it operates on API data returned by
+// calls to .filter() API methods. Needs all data as input to be able to calculate
+// which rows should not be visible
+export function findSelectorsToShowAndHideFromAPIData (allData, filteredData) {
+    const hideMe = []
+    const showMe = []
+
+    // these need to be hidden
+    const filteredPKs = filteredData.map(element => element.id)
+    allData.forEach(element => {
+        if (filteredPKs.indexOf(element.id) === -1) {
+            hideMe.push(`[data-testcase-pk=${element.id}]`)
+        }
+    })
+
+    // these will remain visible
+    filteredData.forEach(element => {
+        showMe.push(`[data-testcase-pk=${element.id}]`)
+    })
+
+    return {
+        hide: hideMe,
+        show: showMe
+    }
+}
+
+// update the screen in one swoop trying to perform
+// as little display updates as possible
+export function showOrHideMultipleRows (rootSelector, rows) {
+    // initial state is that everything is hidden
+
+    if (rows.show.length <= rows.hide.length) {
+        $(rows.show.join(',')).show()
+    } else {
+        /* eslint-disable indent */
+        $('body')
+            .find(rootSelector)
+                .show()
+            .end()
+            .find(rows.hide.join(','))
+                .hide()
+            .end()
+        /* eslint-enable */
+    }
+}
