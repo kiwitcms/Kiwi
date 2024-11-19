@@ -486,18 +486,25 @@ export function updateTestPlanSelectFromProduct (
     }
 }
 
+// usage: 'Hello {0}, your order {1} has been shipped.'.format('John', 10001)
+function formatString (template, ...args) {
+    return template.replace(/{([0-9]+)}/g, function (match, index) {
+        return typeof args[index] === 'undefined' ? match : args[index]
+    })
+}
+
 // returns 2 arrays with selectors that need to be either shown or hidden
 // return values will be used as multiple-selector for jQuery
 // see https://api.jquery.com/multiple-selector/
-export function findSelectorsToShowAndHide (inputData, filterBy, filterValue) {
+export function findSelectorsToShowAndHide (inputData, filterBy, filterValue, selectorStr) {
     const hideMe = []
     const showMe = []
 
     inputData.forEach(function (element) {
         if (element[filterBy] !== undefined && element[filterBy].toString().toLowerCase().indexOf(filterValue) > -1) {
-            showMe.push(`[data-testcase-pk=${element.id}]`)
+            showMe.push(formatString(selectorStr, element.id))
         } else {
-            hideMe.push(`[data-testcase-pk=${element.id}]`)
+            hideMe.push(formatString(selectorStr, element.id))
         }
     })
 
@@ -510,7 +517,7 @@ export function findSelectorsToShowAndHide (inputData, filterBy, filterValue) {
 // similar to the function above, however it operates on API data returned by
 // calls to .filter() API methods. Needs all data as input to be able to calculate
 // which rows should not be visible
-export function findSelectorsToShowAndHideFromAPIData (allData, filteredData) {
+export function findSelectorsToShowAndHideFromAPIData (allData, filteredData, selectorStr) {
     const hideMe = []
     const showMe = []
 
@@ -518,13 +525,13 @@ export function findSelectorsToShowAndHideFromAPIData (allData, filteredData) {
     const filteredPKs = filteredData.map(element => element.id)
     allData.forEach(element => {
         if (filteredPKs.indexOf(element.id) === -1) {
-            hideMe.push(`[data-testcase-pk=${element.id}]`)
+            hideMe.push(formatString(selectorStr, element.id))
         }
     })
 
     // these will remain visible
     filteredData.forEach(element => {
-        showMe.push(`[data-testcase-pk=${element.id}]`)
+        showMe.push(formatString(selectorStr, element.id))
     })
 
     return {

@@ -7,7 +7,9 @@ import {
     arrayToDict, bindDeleteCommentButton,
     changeDropdownSelectedItem, currentTimeWithTimezone,
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
-    quickSearchAndAddTestCase, treeViewBind
+    quickSearchAndAddTestCase, treeViewBind,
+    findSelectorsToShowAndHide, findSelectorsToShowAndHideFromAPIData,
+    showOrHideMultipleRows
 } from '../../../../static/js/utils'
 import { initSimpleMDE } from '../../../../static/js/simplemde_security_override'
 
@@ -259,24 +261,26 @@ function filterTestExecutionsByProperty (runId, executions, filterBy, filterValu
     $('.test-execution-element').hide()
 
     if (filterBy === 'is_automated' || filterBy === 'priority' || filterBy === 'category') {
-        const query = { executions__run: runId }
+        const query = { run: runId }
         if (filterBy === 'is_automated') {
-            query[filterBy] = filterValue
+            query.case__is_automated = filterValue
         } else if (filterBy === 'priority') {
-            query.priority__value__icontains = filterValue
+            query.case__priority__value__icontains = filterValue
         } else if (filterBy === 'category') {
-            query.category__name__icontains = filterValue
+            query.case__category__name__icontains = filterValue
         }
 
-        jsonRPC('TestCase.filter', query, function (filtered) {
+        // note: querying TEs so that -FromAPIData() can work properly!
+        jsonRPC('TestExecution.filter', query, function (filtered) {
             // hide again if a previous async request showed something else
             $('.test-execution-element').hide()
-            filtered.forEach(tc => $(`.test-execution-case-${tc.id}`).show())
+
+            const rows = findSelectorsToShowAndHideFromAPIData(executions, filtered, '.test-execution-{0}')
+            showOrHideMultipleRows('.test-execution-element', rows)
         })
     } else {
-        executions.filter(function (te) {
-            return (te[filterBy] && te[filterBy].toString().toLowerCase().indexOf(filterValue) > -1)
-        }).forEach(te => $(`.test-execution-${te.id}`).show())
+        const rows = findSelectorsToShowAndHide(executions, filterBy, filterValue, '.test-execution-{0}')
+        showOrHideMultipleRows('.test-execution-element', rows)
     }
 }
 

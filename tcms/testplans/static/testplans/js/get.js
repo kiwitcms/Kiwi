@@ -707,11 +707,11 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
             // hide again if a previous async request showed something else
             $('.js-testcase-row').hide()
 
-            const rows = findSelectorsToShowAndHideFromAPIData(testCases, filtered)
+            const rows = findSelectorsToShowAndHideFromAPIData(testCases, filtered, '[data-testcase-pk={0}]')
             showOrHideMultipleRows('.js-testcase-row', rows)
         })
     } else {
-        const rows = findSelectorsToShowAndHide(testCases, filterBy, filterValue)
+        const rows = findSelectorsToShowAndHide(testCases, filterBy, filterValue, '[data-testcase-pk={0}]')
         showOrHideMultipleRows('.js-testcase-row', rows)
     }
 }
