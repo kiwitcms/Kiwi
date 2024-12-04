@@ -968,7 +968,7 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "Kiwi TCMS"
 msgstr "Ласкаво просимо до Kiwi TCMS!\n\n"
 "Щоб підтвердити електронну адресу для користувача `%(user)s` і активувати ваш обліковий запис,\n"
-"будь ласка, перейдіть за цим посиланням:"\n
+"будь ласка, перейдіть за цим посиланням:\n"
 "%(confirm_url)s\n\n"
 "З повагою,\n"
 "Kiwi TCMS"
@@ -987,21 +987,21 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Last comment:\n"
 "%(last_comment)s"
 msgstr "Помилку %(pk)s було оновлено.\n\n"
-"Посилання: %(bug_url)\n\n"
-"Резюме: %(summary)\n"
-"Створено: %(creation_date)\n"
-"Автор: %(reporter)\n"
-"Виконавець: %(assignee)\n"
-"Продукт: %(product)\n"
-"Версія: %(version)\n"
-"Збірка: %(build)\n"
+"Посилання: %(bug_url)s\n\n"
+"Резюме: %(summary)s\n"
+"Створено: %(creation_date)s\n"
+"Автор: %(reporter)s\n"
+"Виконавець: %(assignee)s\n"
+"Продукт: %(product)s\n"
+"Версія: %(version)s\n"
+"Збірка: %(build)s\n"
 "Останній коментар:\n"
-"%(last_comment)\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr "Тестовий Кейс був видалений користувачем %(username)!"
+msgstr "Тестовий Кейс був видалений користувачем %(username)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -1020,17 +1020,17 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "%(notes)s"
 msgstr "Тестовий запуск %(pk)s створено або оновлено для вас.\n\n"
 "### Посилання ###\n"
-"Тестовий запуск: %(run_url)\n"
-"Тестовий план: %(plan_url)\n\n"
+"Тестовий запуск: %(run_url)s\n"
+"Тестовий план: %(plan_url)s\n\n"
 " ### Основна інформація ###\n"
-"Резюме: %(summary)\n\n"
-"Керівник: %(manager).\n"
-"Тестер за замовчуванням: %(default_tester).\n\n"
-"Продукт: %(product)\n"
-"Версія продукту: %(version)\n"
-"Збірка: %(build)\n\n"
+"Резюме: %(summary)s\n\n"
+"Керівник: %(manager)s.\n"
+"Тестер за замовчуванням: %(default_tester)s.\n\n"
+"Продукт: %(product)s\n"
+"Версія продукту: %(version)s\n"
+"Збірка: %(build)s\n\n"
 "Нотатки:\n"
-"%(notes)"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -2281,7 +2281,7 @@ msgstr "Запрошення приєднатися до Kiwi TCMS"
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr "Тільки суперкористувач і власник тенанту можуть редагувати властивості тенанту
+msgstr "Тільки суперкористувач і власник тенанту можуть редагувати властивості тенанту"
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
