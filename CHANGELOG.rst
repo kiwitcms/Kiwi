@@ -1,6 +1,85 @@
 Change Log
 ==========
 
+Kiwi TCMS 13.7 (04 Dec 2024)
+----------------------------
+
+.. important::
+
+    This release includes security related updates, several improvements,
+    API changes, a few bug fixes and new translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.6 -> 13.7
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.0.9 to 5.0.10, addressing
+  one security issue with severity “high” and
+  one security issue with severity “moderate” which do not appear to
+  affect Kiwi TCMS.
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 6.1.0 to 6.2.0
+- Update mysqlclient from 2.2.4 to 2.2.6
+- Update pygithub from 2.4.0 to 2.5.0
+- Update python-gitlab from 4.13.0 to 5.1.0
+- Update uwsgi from 2.0.27 to 2.0.28
+- Update node_modules/pdfmake from 0.2.14 to 0.2.15
+- Speed-up TestCase filtering on the TestPlan view page
+- Speed-up TestExecution filtering on TestRun view page
+
+
+API
+~~~
+
+- Method ``Bug.details()`` will now return the additional fields
+  ``id``, ``status`` and ``url``! References
+  `Issue #3748 <https://github.com/kiwitcms/Kiwi/issues/3748>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Remove internal ``IssueTrackerType.rpc_cache`` attribute. Fixes
+  `Issue #3757 <https://github.com/kiwitcms/Kiwi/issues/3757>`_
+- Update filtering logic for ``Automated=False`` on TestPlan view page. Fixes
+  `Issue #3841 <https://github.com/kiwitcms/Kiwi/issues/3841>`_
+- Refresh test execution counter when filtering on TestRun view page
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update action psf/black from 24.8.0 to 24.10.0
+- Update action codecov/codecov-action from 4 to 5
+- Update selenium from 4.25.0 to 4.27.1
+- Update sphinx from 8.1.1 to 8.1.3
+- Update node_modules/webpack from 5.95.0 to 5.97.0
+- Update fedora from 40 to 41 in /tests/bugzilla
+- Update redmine from 5 to 6 in /tests/redmine
+
+
+Translations
+~~~~~~~~~~~~
+
+- New `Ukrainian translation <https://crowdin.com/project/kiwitcms/uk#>`_
+  (Oleksandr Nemchenko)
+
+
+
 Kiwi TCMS 13.6 (12 Oct 2024)
 ----------------------------
 
