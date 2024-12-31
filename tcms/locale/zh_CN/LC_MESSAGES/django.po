@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2024-10-12 12:31\n"
+"PO-Revision-Date: 2024-12-31 07:33\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2207,7 +2207,9 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "%(invited_by)s 邀请您加入他们的 Kiwi TCMS 租户，访问地址为 %(tenant_url)s。\n\n"
+"如果您之前从未登录过，系统已为您自动创建了一个账户。您可以使用与该账户关联的社交账号登录，或者访问 %(password_reset_url)s 重置密码。\n"
+"密码重置邮件中还包含您的用户名！"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2298,3 +2300,4 @@ msgstr "组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
