@@ -18,10 +18,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Configure ~/.tcms.conf for ${{ matrix.kiwitcms-url }}
         run: |
@@ -79,36 +85,41 @@ jobs:
         python-version: [3.11]
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install Python dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install gettext
-        pip install -r requirements/devel.txt
-        pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
-        pushd tcms/ && ./npm-install && popd
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-    - name: Run test
-      run: |
-        export LANG=en-us
-        export TEST_DASHBOARD_CHECK_UNAPPLIED_MIGRATIONS=1
-        coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.core.tests.test_views.TestDashboardCheckMigrations
-        coverage report -m
+      - name: Install Python dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install gettext
+          pip install -r requirements/devel.txt
+          pushd tcms/ && npm install --dev && ./node_modules/.bin/webpack && popd
+          pushd tcms/ && ./npm-install && popd
 
-    - name: Send coverage to codecov.io
-      if: env.CODECOV_TOKEN
-      uses: codecov/codecov-action@v5
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      with:
-        fail_ci_if_error: false
-        verbose: true
+      - name: Run test
+        run: |
+          export LANG=en-us
+          export TEST_DASHBOARD_CHECK_UNAPPLIED_MIGRATIONS=1
+          coverage run --source='.' ./manage.py test -v2 --noinput --settings=tcms.settings.test tcms.core.tests.test_views.TestDashboardCheckMigrations
+          coverage report -m
+
+      - name: Send coverage to codecov.io
+        if: env.CODECOV_TOKEN
+        uses: codecov/codecov-action@v5
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          fail_ci_if_error: false
+          verbose: true
 
   without_internal_bugtracker:
     name: without internal bugtracker
@@ -123,6 +134,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Execute tests
         run: |
@@ -159,10 +175,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Create database
         run: |
@@ -207,10 +229,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Create database
         run: |
