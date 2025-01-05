@@ -33,18 +33,25 @@ jobs:
         python-version: [3.11]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: test-for-missing-migrations
-      run: |
-        pip install -r requirements/devel.txt
-        pushd tcms/ && ./npm-install && popd
+      - uses: actions/checkout@v4
 
-        export LANG=en-us
-        make test_for_missing_migrations
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: test-for-missing-migrations
+        run: |
+          pip install -r requirements/devel.txt
+          pushd tcms/ && ./npm-install && popd
+
+          export LANG=en-us
+          make test_for_missing_migrations
 
   test-migrations-rollback:
     runs-on: ubuntu-latest
@@ -53,24 +60,30 @@ jobs:
         python-version: [3.11]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+      - uses: actions/checkout@v4
 
-    - name: Create database
-      run: |
-        docker compose -f docker-compose.postgres pull db
-        docker compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: migrations rollback
-      run: |
-        pip install -r requirements/devel.txt
-        pip install -r requirements/postgres.txt
-        pushd tcms/ && ./npm-install && popd
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-        export LANG=en-us
-        # Postgres b/c it has best support for schema altering operations
-        export DJANGO_SETTINGS_MODULE=tcms.settings.test.postgresql
-        ./tests/migrations-rollback
+      - name: Create database
+        run: |
+          docker compose -f docker-compose.postgres pull db
+          docker compose -f docker-compose.postgres run -d -p 5432:5432 --name kiwi_db db
+
+      - name: migrations rollback
+        run: |
+          pip install -r requirements/devel.txt
+          pip install -r requirements/postgres.txt
+          pushd tcms/ && ./npm-install && popd
+
+          export LANG=en-us
+          # Postgres b/c it has best support for schema altering operations
+          export DJANGO_SETTINGS_MODULE=tcms.settings.test.postgresql
+          ./tests/migrations-rollback
