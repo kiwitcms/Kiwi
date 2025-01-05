@@ -3,8 +3,9 @@ import html
 from datetime import timedelta
 
 from modernrpc.handlers import JSONRPCHandler, XMLRPCHandler
-from modernrpc.handlers.base import BaseResult, SuccessResult
+from modernrpc.handlers.base import BaseResult
 from modernrpc.handlers.jsonhandler import JsonResult, JsonSuccessResult
+from modernrpc.handlers.xmlhandler import XmlSuccessResult
 
 
 class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
@@ -56,7 +57,7 @@ class KiwiTCMSXmlRpcHandler(XMLRPCHandler):
                 __class__.escape_dict(item)
 
     def dumps_result(self, result: BaseResult) -> str:
-        if isinstance(result, SuccessResult):
+        if isinstance(result, XmlSuccessResult):
             if isinstance(result.data, timedelta):
                 result.data = result.data.total_seconds()
             elif isinstance(result.data, dict):
