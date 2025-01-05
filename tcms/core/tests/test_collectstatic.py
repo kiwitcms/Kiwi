@@ -10,7 +10,7 @@ class TestCollectstatic(TestCase):
     """
     Test manage.py collectstatic --noinput --link
 
-    with different versions of STATICFILES_STORAGE. See
+    with different versions of STORAGES["staticfiles"]. See
     https://github.com/sehmaschine/django-grappelli/issues/1022
     """
 
@@ -23,7 +23,11 @@ class TestCollectstatic(TestCase):
     )
     def test_collect_static(self, storage):  # pylint: disable=no-self-use
         with override_settings(
-            STATICFILES_STORAGE=storage,
+            STORAGES={
+                "staticfiles": {
+                    "BACKEND": storage,
+                },
+            },
             STATIC_ROOT=tempfile.mkdtemp(),
             STATICFILES_DIRS=[  # pylint: disable=avoid-list-comprehension
                 dir
