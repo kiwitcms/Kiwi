@@ -26,9 +26,15 @@ class Product(models.Model, UrlMixin):
         return self.name
 
     def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
+        self,
+        *args,
+        force_insert=False,
+        force_update=False,
+        using=None,
+        update_fields=None
     ):
         super().save(
+            *args,
             force_insert=force_insert,
             force_update=force_update,
             using=using,
@@ -97,9 +103,15 @@ class Version(models.Model, UrlMixin):
         return self.value
 
     def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
+        self,
+        *args,
+        force_insert=False,
+        force_update=False,
+        using=None,
+        update_fields=None
     ):
         super().save(
+            *args,
             force_insert=force_insert,
             force_update=force_update,
             using=using,
