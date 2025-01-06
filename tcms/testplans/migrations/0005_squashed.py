@@ -207,10 +207,6 @@ class Migration(migrations.Migration):
                 on_delete=models.deletion.CASCADE, to="testplans.PlanType"
             ),
         ),
-        migrations.AlterIndexTogether(
-            name="testplan",
-            index_together={("product", "plan_id")},
-        ),
         migrations.RunPython(forwards_add_initial_data, reverse_add_initial_data),
         migrations.CreateModel(
             name="HistoricalTestPlan",
