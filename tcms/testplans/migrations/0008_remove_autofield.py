@@ -32,10 +32,6 @@ class Migration(migrations.Migration):
             field=models.BooleanField(db_index=True, default=True),
         ),
         # drop TestPlan.plan_id in favor of TestPlan.id
-        migrations.AlterIndexTogether(
-            name="testplan",
-            index_together=set(),
-        ),
         migrations.RenameField(
             model_name="testplan",
             old_name="plan_id",
