@@ -4,6 +4,7 @@ doc8
 isort==5.13.2
 colorama
 black==24.10.0
+locust
 parameterized
 robotframework
 robotframework-seleniumlibrary
