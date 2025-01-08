@@ -29,14 +29,19 @@ class LoggedInTestCase(FastHttpUser):
                 headers={"Referer": self.host},
             )
 
-    def json_rpc(self, rpc_method, rpc_args, **kwargs):
+    def json_rpc(self, rpc_method, rpc_args):
+        # .filter() args are passed as dictionary but other args,
+        # e.g. for .add_tag() are passed as a list of positional values
+        if not isinstance(rpc_args, list):
+            rpc_args = [rpc_args]
+
         payload = {
             "jsonrpc": "2.0",
             "method": rpc_method,
             "params": rpc_args,
             "id": "jsonrpc",
         }
-        return self.client.post("/json-rpc/", json=payload, **kwargs)
+        return self.client.post("/json-rpc/", json=payload).json()["result"]
 
 
 class ExampleTestCase(LoggedInTestCase):
