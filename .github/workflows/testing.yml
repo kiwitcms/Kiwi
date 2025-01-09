@@ -320,6 +320,10 @@ jobs:
           EOF
           sudo apt-get install firefox firefox-geckodriver
 
+          # Locust + Playwright setup
+          pip uninstall --yes trio
+          playwright install firefox
+
       - name: Docker version info
         run: |
           docker --version
