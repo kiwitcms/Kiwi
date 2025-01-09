@@ -5,6 +5,7 @@ isort==5.13.2
 colorama
 black==24.10.0
 locust
+locust-plugins[playwright]
 parameterized
 robotframework
 robotframework-seleniumlibrary
