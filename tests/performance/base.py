@@ -5,7 +5,54 @@
 
 from locust import FastHttpUser, between, task
 from locust_plugins.users.playwright import PlaywrightUser
+from requests.exceptions import HTTPError
 from requests.utils import dict_from_cookiejar
+
+
+def response_time(request):
+    if request.timing["responseEnd"] > -1:
+        return request.timing["responseEnd"]
+
+    # this is already in milliseconds
+    return request.timing["responseStart"]
+
+
+def exception_for_status(request, response):
+    http_error_msg = ""
+    if 400 <= response.status < 500:
+        http_error_msg = f"{response.status} Client Error: {response.status_text} for url: {request.url}"
+    elif 500 <= response.status < 600:
+        http_error_msg = f"{response.status} Server Error: {response.status_text} for url: {request.url}"
+
+    if http_error_msg:
+        return HTTPError(http_error_msg, response=response)
+
+    return request.failure
+
+
+def log_response(user, response):
+    request = response.request
+
+    if not (request.url.startswith(user.host) or user.log_external):
+        return
+
+    response_length = 0
+    if response.headers and "content-length" in response.headers:
+        response_length = int(response.headers["content-length"])
+
+    request_meta = {
+        "request_type": request.method,
+        "name": request.url.replace(user.host, ""),
+        "context": {**user.context()},
+        "response": response,
+        "response_length": response_length,
+        "start_time": request.timing["startTime"],
+        "response_time": response_time(request),
+        "url": request.url,  # full URL
+        "exception": exception_for_status(request, response),
+    }
+
+    user.environment.events.request.fire(**request_meta)
 
 
 class LoggedInTestCase(FastHttpUser):
@@ -61,8 +108,17 @@ class BrowserTestCase(PlaywrightUser, LoggedInTestCase):
     wait_time = between(1, 5)
     session_cookie = None
 
+    log_external = True
+
     def do_login(self):
-        pass
+        """
+        Making this a no-op b/c we login via the browser in
+        self._pwprep() below and keep track of the session cookie!
+        """
+
+    async def setup_page(self, page):
+        await page.context.add_cookies([self.session_cookie])
+        page.on("response", lambda response: log_response(self, response))
 
     async def _pwprep(self):
         await super()._pwprep()
