@@ -187,6 +187,12 @@ _EOF_
         rlAssertGreaterOrEqual ">= 50 r/s" "$COMPLETED_REQUESTS" 500
     rlPhaseEnd
 
+    rlPhaseStartTest "Sanity execute Locust files"
+        # this is designed to check that these files don't crash,
+        rlRun -t -c "locust --headless --users 1 --spawn-rate 1 --run-time 5s -H https://localhost/ --locustfile tests/performance/base.py"
+        rlRun -t -c "locust --headless --users 1 --spawn-rate 1 --run-time 5s -H https://localhost/ --locustfile tests/performance/api_write_test.py"
+    rlPhaseEnd
+
     rlPhaseStartCleanup
         rlRun -t -c "docker compose logs --no-color > test_http_docker.log"
         rlRun -t -c "docker compose down"
