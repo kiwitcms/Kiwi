@@ -12,8 +12,8 @@ RUN microdnf -y module enable nodejs:22 && \
 
 COPY ./requirements/mariadb.pc /usr/lib64/pkgconfig/mariadb.pc
 
-ENV PATH /venv/bin:${PATH} \
-    VIRTUAL_ENV /venv
+ENV PATH=/venv/bin:${PATH} \
+    VIRTUAL_ENV=/venv
 
 # Create a virtualenv for the application dependencies
 RUN python3.11 -m venv /venv
