@@ -32,7 +32,7 @@
     {% block head %}{% endblock %}
 </head>
 <body id="{% block page_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-    {% if not REQUEST_CONTENTS.nonav %}
+    {% if not REQUEST__NONAV %}
         {% include 'navbar.html' %}
     {% endif %}
 
