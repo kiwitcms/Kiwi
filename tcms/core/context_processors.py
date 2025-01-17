@@ -5,9 +5,14 @@ from django.utils import timezone
 
 def request_contents_processor(request):
     """
-    Django request contents RequestContext Handler
+    Exposes only values that we need, not everything!
     """
-    return {"REQUEST_CONTENTS": request.GET or request.POST}
+    data = request.GET or request.POST
+    return {
+        "REQUEST__ALLOW_SELECT": data.get("allow_select"),
+        "REQUEST__NEXT": data.get("next", ""),
+        "REQUEST__NONAV": data.get("nonav"),
+    }
 
 
 def settings_processor(_request):
