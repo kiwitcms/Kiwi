@@ -40,9 +40,13 @@ def log_response(user, response):
     if response.headers and "content-length" in response.headers:
         response_length = int(response.headers["content-length"])
 
+    target_url = request.url.replace(user.host, "")
+    if target_url.startswith("/static/"):
+        target_url = "/static/..."
+
     request_meta = {
         "request_type": request.method,
-        "name": request.url.replace(user.host, ""),
+        "name": target_url,
         "context": {**user.context()},
         "response": response,
         "response_length": response_length,
