@@ -3,6 +3,8 @@
 # Licensed under GNU Affero General Public License v3 or later (AGPLv3+)
 # https://www.gnu.org/licenses/agpl-3.0.html
 
+import re
+
 from locust import FastHttpUser, between, task
 from locust_plugins.users.playwright import PlaywrightUser
 from requests.exceptions import HTTPError
@@ -40,9 +42,20 @@ def log_response(user, response):
     if response.headers and "content-length" in response.headers:
         response_length = int(response.headers["content-length"])
 
+    # compress the actual URLs for more concise reports
     target_url = request.url.replace(user.host, "")
     if target_url.startswith("/static/"):
-        target_url = "/static/..."
+        target_url = "/static/.../"
+    elif target_url.startswith("/cases/clone/?"):
+        target_url = "/cases/clone/"
+    elif re.match(r"/case/\d+/", target_url):
+        target_url = "/case/.../"
+    elif re.match(r"/plan/\d+/", target_url):
+        target_url = "/plan/.../"
+    elif re.match(r"/runs/\d+/", target_url):
+        target_url = "/runs/.../"
+    elif target_url.startswith("/runs/from-plan/"):
+        target_url = "/runs/from-plan/.../"
 
     request_meta = {
         "request_type": request.method,
@@ -108,47 +121,24 @@ class BrowserTestCase(PlaywrightUser, LoggedInTestCase):
 
     abstract = True
     browser_type = "firefox"
-    multiplier = 10
+    multiplier = 1
     wait_time = between(1, 5)
     session_cookie = None
 
     log_external = True
 
-    def do_login(self):
-        """
-        Making this a no-op b/c we login via the browser in
-        self._pwprep() below and keep track of the session cookie!
-        """
-
     async def setup_page(self, page):
-        await page.context.add_cookies([self.session_cookie])
-        page.on("response", lambda response: log_response(self, response))
-
-    async def _pwprep(self):
-        await super()._pwprep()
-
-        # login via the browser
-        browser_context = await self.browser.new_context(
-            ignore_https_errors=True, base_url=self.host
+        cookies = dict_from_cookiejar(self.client.cookiejar)
+        await page.context.add_cookies(
+            [
+                {
+                    "name": "sessionid",
+                    "value": cookies["sessionid"],
+                    "url": self.host,
+                }
+            ]
         )
-        page = await browser_context.new_page()
-        page.set_default_timeout(60000)
-
-        await page.goto(self.login_url)
-        await page.wait_for_load_state()
-
-        await page.locator("#inputUsername").fill(self.username)
-        await page.locator("#inputPassword").fill(self.password)
-        await page.get_by_role("button").click()
-
-        # store this for later use b/c @pw creates
-        # a new context & page for every task!
-        for cookie in await page.context.cookies():
-            if cookie["name"] == "sessionid":
-                self.session_cookie = cookie
-
-        await page.close()
-        await browser_context.close()
+        page.on("response", lambda response: log_response(self, response))
 
 
 class ExampleTestCase(LoggedInTestCase):
