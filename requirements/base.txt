@@ -6,7 +6,7 @@ bleach-allowlist==1.0.3
 defusedxml==0.7.1
 Django==5.1.5
 django-attachments==1.11
-django-colorfield==0.11.0
+django-colorfield==0.12.0
 django-contrib-comments==2.2.0
 django-extensions==3.2.3
 django-grappelli==4.0.1
