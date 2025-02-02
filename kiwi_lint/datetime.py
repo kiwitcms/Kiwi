@@ -1,7 +1,7 @@
 """
-    Warns against usage of datetime.now() which may not be fully timezone
-    safe. Instead we should use django.utils.timezone.now() which acts
-    according to settings!
+Warns against usage of datetime.now() which may not be fully timezone
+safe. Instead we should use django.utils.timezone.now() which acts
+according to settings!
 """
 
 from astroid import nodes

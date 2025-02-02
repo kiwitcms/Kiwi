@@ -1,5 +1,5 @@
 """function_based_views.py provides a pylint checker FunctionBasedViewChecker that warns
-    against using function based views in Django.
+against using function based views in Django.
 """
 
 import os

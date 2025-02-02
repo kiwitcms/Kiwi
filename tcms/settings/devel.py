@@ -1,6 +1,6 @@
 # pylint: disable=wildcard-import, unused-wildcard-import
 """
-    Django settings for devel env.
+Django settings for devel env.
 """
 
 import os
