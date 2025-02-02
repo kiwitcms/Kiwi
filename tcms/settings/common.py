@@ -589,3 +589,6 @@ ANONYMOUS_USER_NAME = "AnonymousUser"
 
 # https://plausible.io/kiwitcms-container
 PLAUSIBLE_DOMAIN = "kiwitcms-container"
+
+# https://app.scarf.sh/analytics/kiwitcms?pixelId=d7cc874e-5b3b-409f-bb20-bb1e410cdcb0
+SCARF_PIXEL_ID = "d7cc874e-5b3b-409f-bb20-bb1e410cdcb0"
