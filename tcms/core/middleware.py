@@ -29,7 +29,7 @@ class ExtraHeadersMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         if settings.DEBUG:
             response.headers["Content-Security-Policy"] = (
-                "script-src 'self' cdn.crowdin.com *.ethicalads.io plausible.io;"
+                "script-src 'self' cdn.crowdin.com *.ethicalads.io plausible.io static.scarf.sh;"
             )
 
             if request.path.find("/uploads/") > -1:
