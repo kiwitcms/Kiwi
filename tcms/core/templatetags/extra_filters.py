@@ -1,5 +1,5 @@
 """
-    Custom template tag filters.
+Custom template tag filters.
 """
 
 from importlib import import_module

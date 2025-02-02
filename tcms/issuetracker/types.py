@@ -1,6 +1,6 @@
 """
-    This module implements Kiwi TCMS interface to external issue tracking systems.
-    Refer to each implementor class for integration specifics!
+This module implements Kiwi TCMS interface to external issue tracking systems.
+Refer to each implementor class for integration specifics!
 """
 
 from urllib.parse import urlencode, urlparse

@@ -1,7 +1,7 @@
 # pylint: disable=wildcard-import, unused-wildcard-import
 
 """
-    Django settings for product env.
+Django settings for product env.
 """
 
 import os

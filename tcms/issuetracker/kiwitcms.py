@@ -3,7 +3,7 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 """
-    This module implements integration with Kiwi TCMS own bug tracking system!
+This module implements integration with Kiwi TCMS own bug tracking system!
 """
 
 from django.template.loader import render_to_string
