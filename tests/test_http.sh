@@ -93,8 +93,8 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Should send Content-Security-Policy header"
-        rlRun -t -c "curl -k -D- $HTTPS 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com \*.ethicalads.io plausible.io static.scarf.sh;'"
-        rlRun -t -c "curl -k -D- $PROXY 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com \*.ethicalads.io plausible.io static.scarf.sh;'"
+        rlRun -t -c "curl -k -D- $HTTPS 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com \*.ethicalads.io plausible.io;'"
+        rlRun -t -c "curl -k -D- $PROXY 2>/dev/null | grep $'Content-Security-Policy: script-src \'self\' cdn.crowdin.com \*.ethicalads.io plausible.io;'"
     rlPhaseEnd
 
     rlPhaseStartTest "Should not execute inline JavaScript"
