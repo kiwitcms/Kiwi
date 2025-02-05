@@ -1,6 +1,95 @@
 Change Log
 ==========
 
+Kiwi TCMS 14.0 (05 Feb 2025)
+----------------------------
+
+.. important::
+
+    This is a major version release which includes security related updates,
+    backwards incompatible changes, several improvements and new translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    13.7 -> 14.0
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+Security
+~~~~~~~~
+
+- Update node_modules/cross-spawn from 7.0.3 to 7.0.6 to resolve a
+  regular expression denial of service (ReDoS) vulnerability,
+  `CVE-2024-21538 <https://github.com/advisories/GHSA-3xgq-45jj-v275>`_
+- Update node_modules/semver from 6.3.0 to 6.3.1 to resolve a
+  regular expression denial of service (ReDoS) vulnerability,
+  `CVE-2022-25883 <https://github.com/advisories/GHSA-c2qf-rxjj-qqgw>`_
+- Note that these are indirect dependencies of Kiwi TCMS, in particular
+  pulled in via some of our developer tools, eslint and webpack,
+  and the risk to existing Kiwi TCMS installations is minimal if at all!
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 5.0.10 to 5.1.6
+- Update django-colorfield from 0.11.0 to 0.12.0
+- Update django-modern-rpc from 1.0.3 to 1.1.0
+- Update django-simple-captcha from 0.6.0 to 0.6.1
+- Update django-simple-history from 3.7.0 to 3.8.0
+- Update mysqlclient from 2.2.6 to 2.2.7
+- Update psycopg[binary] from 3.2.3 to 3.2.4
+- Update pygments from 2.18.0 to 2.19.1
+- Update python-gitlab from 5.1.0 to 5.6.0
+- Update tzdata from 2024.2 to 2025.1
+- Update Node.js runtime from v16 to v22
+- Update node_modules/pdfmake from 0.2.15 to 0.2.18
+- Add Scarf.sh pixel - open source analytics
+
+
+Database
+~~~~~~~~
+
+- **WARNING:** Postgres 12 is no longer supported. Minimum version is 13!
+- Remove ``index_together`` from historical migrations
+
+
+Settings
+~~~~~~~~
+
+- **WARNING:** the ``DEFAULT_FILE_STORAGE`` and ``STATICFILES_STORAGE``
+  settings have been removed!
+- Explicitly define the ``STORAGES`` setting
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update black from 24.10.0 to 25.1.0
+- Update isort from 5.13.2 to 6.0.0
+- Update node_modules/webpack from 5.97.0 to 5.97.1
+- Update node_modules/webpack-cli from 5.1.4 to 6.0.1
+- Refactor ``request_contents_processor()`` to expose only data we use
+  which sometimes lead to traceback recursion when rendering templates!
+- Similate an API write performance test with Locust. References
+  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
+- Simulate a web performance test with Locust + Playwright. References
+  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_. Execution
+  frequencies are informed by our Plausible.io stats
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Hungarian translation <https://crowdin.com/project/kiwitcms/hu#>`_
+
+
+
 Kiwi TCMS 13.7 (04 Dec 2024)
 ----------------------------
 
