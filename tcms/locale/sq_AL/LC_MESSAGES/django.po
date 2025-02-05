@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2024-10-12 12:31\n"
+"PO-Revision-Date: 2025-02-05 00:37\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -245,7 +245,7 @@ msgstr "Më pas"
 #: tcms/testruns/templates/testruns/search.html:69
 #: tcms/testruns/templates/testruns/search.html:75
 msgid "Username"
-msgstr "Emri i përdoruesit"
+msgstr "Test"
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
@@ -488,7 +488,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:431
 msgid "Users"
-msgstr ""
+msgstr "Test"
 
 #: tcms/kiwi_auth/admin.py:82
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
@@ -510,7 +510,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
-msgstr "Një përdorues me atë email tashmë ekziston."
+msgstr "test"
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
@@ -522,7 +522,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "تحزير"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -530,7 +530,7 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "test!"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
@@ -693,7 +693,7 @@ msgstr "ADMINISTRATOR"
 
 #: tcms/settings/common.py:432
 msgid "Groups"
-msgstr ""
+msgstr "Test test test"
 
 #: tcms/settings/common.py:434
 msgid "Everything else"
@@ -701,7 +701,7 @@ msgstr "Gjithçka tjetër"
 
 #: tcms/settings/common.py:437
 msgid "PLUGINS"
-msgstr ""
+msgstr "test"
 
 #: tcms/settings/common.py:447
 msgid "Report an Issue"
@@ -983,7 +983,7 @@ msgstr ""
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr "Rasti i Testimit është %(username)s!"
+msgstr "Rasti i Testimit është %(test)s!"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -2274,3 +2274,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
