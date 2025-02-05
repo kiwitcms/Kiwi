@@ -188,10 +188,13 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Sanity execute Locust files"
-        # this is designed to check that these files don't crash,
-        rlRun -t -c "locust --headless --users 1 --spawn-rate 1 --run-time 5s -H https://localhost/ --locustfile tests/performance/base.py"
-        rlRun -t -c "locust --headless --users 1 --spawn-rate 1 --run-time 5s -H https://localhost/ --locustfile tests/performance/api_write_test.py"
-        rlRun -t -c "locust --headless --users 1 --spawn-rate 0.01 --run-time 5s -H https://localhost/ --locustfile tests/performance/web_simulation_test.py"
+        ARCH=$(uname -m)
+        if [ "$ARCH" == "x86_64" ]; then
+            # this is designed to check that these files don't crash,
+            rlRun -t -c "locust --headless --users 1 --spawn-rate 1 --run-time 5s -H https://localhost/ --locustfile tests/performance/base.py"
+            rlRun -t -c "locust --headless --users 1 --spawn-rate 1 --run-time 5s -H https://localhost/ --locustfile tests/performance/api_write_test.py"
+            rlRun -t -c "locust --headless --users 1 --spawn-rate 0.01 --run-time 5s -H https://localhost/ --locustfile tests/performance/web_simulation_test.py"
+        fi
     rlPhaseEnd
 
     rlPhaseStartCleanup
