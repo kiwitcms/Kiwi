@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2025-02-05 00:37\n"
+"PO-Revision-Date: 2025-02-05 01:37\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -540,7 +540,7 @@ msgstr ""
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "<style><img title=\"</style><img src onerror=alert(1)>\"></style>"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:66
 #: tcms/templates/registration/password_reset_confirm.html:22
@@ -554,7 +554,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Llogaria juaj është krijuar, ju lutemi kontrolloni kutinë tuaj postare për konfirmim"
+msgstr "test"
 
 #: tcms/kiwi_auth/views.py:75
 msgid "Your account has been created, but you need an administrator to activate it"
@@ -1051,7 +1051,7 @@ msgstr "Nuk u gjet asnjë regjistrim"
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:570
 msgid "URL"
-msgstr "URL"
+msgstr "' OR 1=1; --\n"
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:344
@@ -1195,7 +1195,7 @@ msgstr "Mirëseerdhët në Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr "Ju lutemi identifikohuni për të filluar"
+msgstr "a"
 
 #: tcms/templates/registration/login.html:52
 msgid "or"
@@ -2185,7 +2185,7 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "a"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2274,3 +2274,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
