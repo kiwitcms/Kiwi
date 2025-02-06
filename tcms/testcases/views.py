@@ -232,7 +232,7 @@ class CloneTestCaseView(View):
             if len(clone_form.cleaned_data["case"]) == 1:
                 return HttpResponseRedirect(
                     reverse(
-                        "testcases-get",
+                        "testcases-edit",
                         args=[
                             tc_dest.pk,
                         ],
