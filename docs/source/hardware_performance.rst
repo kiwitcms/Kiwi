@@ -204,6 +204,75 @@ to transfer the actual information:
     Firefox timing metrics are explained in
     `Mozilla's documentation <https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor/request_details#timings_tab>`_
 
+Parallel user sessions performance
+----------------------------------
+
+Another important question is *How many parallel users can Kiwi TCMS support?*
+and the answer to this question is heavily dependent on what these users are
+actually doing and how they are interacting with the application which is
+vastly different between various teams and organizations.
+
+To help answer this question we've created the ``web_simulation_test.py`` script
+which uses the Playwright to simulate realistic user activity as if it was
+from a browser. The script implements the top 10 most common activities such as
+viewing the dashboard page, creating test plans and test cases and reporting
+execution tesults in test runs. These actions and their frequency were created
+using our `anonymous analytics metrics <https://kiwitcms.org/privacy/>`_!
+Implementation includes random sleep and varying number of artifacts to
+simulate a plausible human interaction. In all scenarios pages were left to
+load and exercise their default JavaScript actions - for example search pages
+will query and fully load all the results!
+
+.. important::
+
+    The information below has been gathered by using the following environment:
+
+    - Client: AWS c6a.metal (192 CPU core) in us-east-1a (same availability zone as server)
+    - Server: AWS t3.medium in use-east-1a, 30GB gp3 disk, defaults to 3000 IOPS,
+      default throughput 125 MiB/s
+    - Kiwi TCMS v14.0 via ``docker compose up``
+    - Database is ``mariadb:11.6.2`` with a persistent volume backed onto
+      the host filesystem
+    - Host OS - Ubuntu 24.04, freshly provisioned, no changes from defaults
+    - ``web_simulation_test.py`` @
+      `87dd61f <https://github.com/kiwitcms/Kiwi/blob/87dd61ff9955e79de4604259bc29ab7a923f0730/tests/performance/web_simulation_test.py>`_
+      ``locust --processes -1 --users 300 --spawn-rate 0.33 --run-time 60m --locustfile web_simulation_test.py``
+    - ~ 15 min ramp-up of all users; then steady load
+    - Existing state: 20 x TestPlan; 200 x TestCase; 200 x TestRun
+
+The results we've got are:
+
+- 300 users were served with minimum errors; < 0.01% of all requests
+- Errors occured 2 mins before the end of the testing session; could also be
+  related to other processes in the host OS eating up available CPU
+- Cloning (usually more than 1 TC) is the heaviest operation; followed by
+  login and creating a new TR
+- Performance for individual pages must be analyzed separately
+- Median response time is relatively stable
+- 95th percentile response time graph contains occasional spikes
+- We've seen more spikes when the ramp-up period is shorter
+- RAM usage is relatively constant; stayed < 1 GiB
+- CPU load is between 20-60%
+
+|300 users t3.medium datadog|
+|300 users t3.medium locust graph|
+|300 users t3.medium locust graph fails|
+|300 users t3.medium locust table|
+|300 users t3.medium locust table fails|
+
+.. important::
+
+    Using a vanilla ``postgres:17.2`` as the database container resulted in similar
+    outcome with very small differences (also remember the simulation itself contains
+    an element of randomness):
+
+    - 0 requests failed
+    - Slightly higher requests/second served on average
+    - Median response time for every individual request is slightly longer
+      as pointed out above
+    - Slightly more frequent spikes on the 95th percentile response time graph
+    - CPU load is between 40-80%
+
 .. |t3.medium metrics| image:: ./_static/t3.medium_gp3_r100.png
 .. |t3.medium locust graph| image:: ./_static/t3.medium_gp3_locust_graph.png
 .. |t3.medium locust table| image:: ./_static/t3.medium_gp3_locust_table.png
@@ -213,3 +282,8 @@ to transfer the actual information:
 .. |TestCase.filter metrics via Internet| image:: ./_static/TestCase.filter_metrics_via_internet.png
 .. |TestRun.filter metrics| image:: ./_static/TestRun.filter_metrics.png
 .. |TestRun.filter slowest info| image:: ./_static/TestRun.filter_slowest_info.png
+.. |300 users t3.medium datadog| image:: ./_static/300usr_t3.medium_gp3_datadog.png
+.. |300 users t3.medium locust graph| image:: ./_static/300usr_t3.medium_gp3_locust_graph.png
+.. |300 users t3.medium locust graph fails| image:: ./_static/300usr_t3.medium_gp3_locust_graph_fails.png
+.. |300 users t3.medium locust table| image:: ./_static/300usr_t3.medium_gp3_locust_table.png
+.. |300 users t3.medium locust table fails| image:: ./_static/300usr_t3.medium_gp3_locust_table_fails.png

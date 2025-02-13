@@ -79,10 +79,9 @@ class UserActionsTestCase(BrowserTestCase):
         await page.goto(f"/runs/{chosen_run['id']}/")
         await page.wait_for_load_state()
 
-        number_of_executions = int(
-            await page.locator(".test-executions-count").text_content()
+        number_of_executions = len(
+            self.json_rpc("TestExecution.filter", {"run_id": chosen_run["id"]})
         )
-
         if number_of_executions > 0:
             executions = self.json_rpc(
                 "TestExecution.filter",
