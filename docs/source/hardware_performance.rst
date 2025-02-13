@@ -47,40 +47,69 @@ we often hear is *How many test execution results can Kiwi TCMS deal with?*
 
     The information below has been gathered by using the following environment:
 
-    - Client: t2.small in us-east-1a (same availability zone as server)
-    - Server: t3.medium in use-east-1a, 30GB gp2 disk with 100 IOPS
-    - Kiwi TCMS v12.0 via ``docker compose up``
-    - Database is ``mariadb:10.10.2`` with a persistent volume backed onto
+    - Client: AWS t3.medium in us-east-1a (same availability zone as server)
+    - Server: AWS t3.medium in use-east-1a, 30GB gp3 disk, defaults to 3000 IOPS,
+      default throughput 125 MiB/s
+    - Kiwi TCMS v14.0 via ``docker compose up``
+    - Database is ``mariadb:11.6.2`` with a persistent volume backed onto
       the host filesystem
-    - Host OS - Amazon Linux, freshly provisioned, no changes from defaults
-    - ``perf-script-ng`` version
-      `fd942d9 <https://github.com/kiwitcms/api-scripts/blob/fd942d9f805900473b69171d4dada6605ea37a97/perf-script-ng>`_
-      with ``RANGE_SIZE=100`` (called ``R`` below)
-    - For each invocation ``perf-script-ng`` creates new *Product*, *Version*
-      *Build* and *TestPlan*. Test plan contains ``R x test cases`` then
-      ``R x test runs``, each containing the previous test cases and finally
+    - Host OS - Ubuntu 24.04, freshly provisioned, no changes from defaults
+    - ``api_write_test.py`` @
+      `748787a <https://github.com/kiwitcms/Kiwi/blob/748787ad37702ed4df2554330eef987ec40268b8/tests/performance/api_write_test.py>`_
+      with ``RANGE_SIZE=100``;
+      ``locust --users 1 --spawn-rate 1 --run-time 60m --locustfile api_write_test.py``
+    - For each invocation ``api_write_test.py`` creates new *Product*, *Version*
+      *Build* and *TestPlan*. Test plan contains ``RANGE_SIZE x test cases`` then
+      ``RANGE_SIZE x test runs``, each containing the previous test cases and finally
       updating results for all of them. This simulates a huge test matrix against
       the same test plan/product/version/build, e.g. testing on multiple different
       platforms (browser versions + OS combinations for example)
-    - The total number of test execution results is ``R^2``
-    - The total number of API calls is ``10 + 3R + 2R^2``
+    - The total number of test execution results is ``RANGE_SIZE^2``
+    - The total number of API calls is ``10 + 3*RANGE_SIZE + 2*RANGE_SIZE^2``
     - Single client, no other server load in parallel
 
-    For ``R=100`` we've got ``10000`` test execution results and
+    For ``RANGE_SIZE=100`` we've got ``10000`` test execution results and
     ``20310`` API calls in a single script invocation!
 
-The average results are:
+The results we've got are:
 
-- 43000 test execution results/hour
-- 90000 API calls/hour
-- 25 requests/second
-- 40 ms/request
+- 92000+ API calls/hour
+- 45000+ test executions recorded/hour
+- 25+ requests/second
+- 33 ms/request (average); 73 ms/request (95%)
+- 0 requests failed
+
 
 |t3.medium metrics|
+|t3.medium locust graph|
+|t3.medium locust table|
 
 .. important::
 
-    We've experimented with an *i3.large* storage optimized instance which has a
+    Using a vanilla ``postgres:17.2`` as the database container resulted in worse
+    performance out of the box. For the same CPU/system load we saw numbers which
+    were only 60% of the ones reported above. Bombarding Kiwi TCMS with 2 Locust
+    users resulted in comparable outcome at the expense of CPU load averaging 90%
+    on the same hardware! This is due to several factors in the application framework:
+
+    - More rigorous constraint checking in Postgres
+    - Postgres is good at handling "long connections" while
+      MariaDB is better at handling "short connections"
+    - Connecting to Postgres is slower than connecting to a MariaDB
+      (think process vs. thread)
+    - Missing DB connection pooling as part of the application
+      framework until very recently
+    - Possibly Postgres performing more data analysis & optimization behind the
+      scenes
+
+    Aside from involving a DBA to monitor and tailor the performance of your
+    Postgres database to match the behavior of Kiwi TCMS there is little we can
+    do about it!
+
+
+.. important::
+
+    In the past (v12.0) we've also experimented with an *i3.large* storage optimized instance which has a
     Non-Volatile Memory Express (NVMe) SSD-backed storage optimized for low latency and
     very high random I/O performance. We've had to
     ``mkfs.xfs /dev/nvme0n1 && mount /dev/nvme0n1 /var/lib/docker`` before starting the
@@ -88,8 +117,8 @@ The average results are:
 
     While you can see that ``nvme`` disk latency is an
     order of magnitude faster (< 0.1 ms) with the occasional peak from the root filesystem
-    the overall application performance didn't change a lot. The times for ``R=30`` improved
-    but the times for ``R=100`` worsened a bit.
+    the overall application performance didn't change a lot. The times for ``RANGE_SIZE=30`` improved
+    but the times for ``RANGE_SIZE=100`` worsened a bit.
 
     |i3.large metrics|
 
@@ -175,7 +204,9 @@ to transfer the actual information:
     Firefox timing metrics are explained in
     `Mozilla's documentation <https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor/request_details#timings_tab>`_
 
-.. |t3.medium metrics| image:: ./_static/t3.medium_gp2_r100.png
+.. |t3.medium metrics| image:: ./_static/t3.medium_gp3_r100.png
+.. |t3.medium locust graph| image:: ./_static/t3.medium_gp3_locust_graph.png
+.. |t3.medium locust table| image:: ./_static/t3.medium_gp3_locust_table.png
 .. |i3.large metrics| image:: ./_static/i3.large_nvme_r100.png
 .. |TestCase.filter metrics| image:: ./_static/TestCase.filter_metrics.png
 .. |TestCase.filter slowest info| image:: ./_static/TestCase.filter_slowest_info.png
