@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2024-10-12 12:31\n"
+"PO-Revision-Date: 2025-02-15 09:28\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1075,7 +1075,7 @@ msgstr "매개 변수"
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "사전 체험 기능입니다!"
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
@@ -1756,7 +1756,7 @@ msgstr "미확인 테스트 케이스가 추가되지 않았습니다"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "유형 0 혹은 1"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
@@ -1796,7 +1796,7 @@ msgstr "환경"
 
 #: tcms/testruns/templates/testruns/get.html:181
 msgid "Update text version"
-msgstr ""
+msgstr "텍스트 버전 갱신"
 
 #: tcms/testruns/templates/testruns/get.html:216
 msgid "Add comment"
@@ -1818,7 +1818,7 @@ msgstr "전체"
 
 #: tcms/testruns/templates/testruns/get.html:305
 msgid "records"
-msgstr ""
+msgstr "레코드"
 
 #: tcms/testruns/templates/testruns/get.html:331
 #: tcms/testruns/templates/testruns/get.html:604
@@ -1836,7 +1836,7 @@ msgstr "담당자"
 
 #: tcms/testruns/templates/testruns/get.html:421
 msgid "Text version"
-msgstr ""
+msgstr "텍스트 버전"
 
 #: tcms/testruns/templates/testruns/get.html:429
 msgid "Bugs and hyperlinks"
