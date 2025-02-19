@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2025-02-19 18:32\n"
+"PO-Revision-Date: 2025-02-19 20:12\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -748,7 +748,7 @@ msgstr "CONFIRMADO"
 
 #: tcms/telemetry/api.py:61
 msgid "OTHER"
-msgstr "OUTRO(A)"
+msgstr "OUTRO"
 
 #: tcms/telemetry/api.py:133 tcms/telemetry/api.py:185
 #: tcms/telemetry/api.py:191
@@ -2199,7 +2199,9 @@ msgstr ""
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Sua instância Kiwi TCMS foi criada em:\n"
+"%(tenant_url)s\n\n"
+"Se você tiver problemas, entre em contato com o suporte!"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
@@ -2281,3 +2283,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
