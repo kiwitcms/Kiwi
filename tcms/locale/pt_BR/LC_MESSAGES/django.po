@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2025-02-19 20:12\n"
+"PO-Revision-Date: 2025-02-19 20:13\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2254,7 +2254,7 @@ msgstr "Somente o super-usuário e proprietário de inquilinos podem editar as p
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
-msgstr "Editar inquilino"
+msgstr "Editar instância"
 
 #: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
@@ -2283,3 +2283,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
