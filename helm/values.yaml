@@ -1,8 +1,6 @@
 image:
-  repository: kiwitcms/kiwi
+  repository: pub.kiwitcms.eu/kiwitcms/kiwi
   pullPolicy: IfNotPresent
-  # Full list of available tags can be found here:
-  #   https://hub.docker.com/r/kiwitcms/kiwi/tags
   tag: latest
 
 service:

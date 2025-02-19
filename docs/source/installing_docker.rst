@@ -133,8 +133,7 @@ To upgrade running Kiwi TCMS containers execute the following commands::
 
     cd path/containing/docker-compose/
     docker compose down
-    # !!! docker tag to keep older image version on the machine
-    docker compose pull # to fetch latest versions from Docker Hub
+    docker compose pull
     docker compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py upgrade
 
@@ -363,16 +362,6 @@ For more information about what each setting means see :ref:`configuration`.
 Customized docker image
 -----------------------
 
-You can build your own customized version of Kiwi TCMS by adjusting
-the contents of ``Dockerfile`` and then::
-
-    make docker-image
-
-.. note::
-
-    Make sure to modify ``Makefile`` and ``docker-compose.yml`` to use your
-    customized image name instead the default ``kiwitcms/kiwi:latest``!
-
 .. warning::
 
     Modifying the default ``Dockerfile`` directly is not recommended because
@@ -381,10 +370,10 @@ the contents of ``Dockerfile`` and then::
     directly from the master branch.
 
     The proper way to create a downstream docker image is to provide a
-    ``Dockerfile.myorg`` which inherits ``FROM kiwitcms/kiwi:latest``
+    ``Dockerfile.myorg`` which inherits ``FROM pub.kiwitcms.eu/kiwitcms/kiwi:latest``
     and adds your changes as separate layers! Ideally you will keep this into
-    another git repository together with a ``Makefile`` and possibly your customized
-    ``docker-compose.yml``.
+    another git repository together with your build instructions and possibly a
+    customized ``docker-compose.yml`` file.
 
 
 Troubleshooting

@@ -72,8 +72,9 @@ Brief history
   started migrating to modern UI using Patternfly
 * Oct 2017 - Launched http://kiwitcms.org and https://public.tenant.kiwitcms.org;
   first bug report from external contributor
-* Nov 2017 - Pushed ``kiwitcms/kiwi`` to Docker Hub; merged upstream API client
-  sources and modified them to work with the current code base
+* Nov 2017 - Pushed ``pub.kiwitcms.eu/kiwitcms/kiwi`` container;
+  merged upstream API client sources and modified them to work with the current
+  code base
 * Jan 2018 - External contributions are now a fact: German translation by
   @xbln; new team member Anton Sankov
 * Mar 2018 - First pull request from non-team member

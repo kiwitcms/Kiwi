@@ -6334,7 +6334,7 @@ Removed functionality
 - Convert squashed database migrations to regular ones and remove older
   migrations.
   **WARNING:** upgrade from versions <= 5.3.1 to 6.0 will break without an
-  intermediate upgrade to ``kiwitcms/kiwi:5.3.1 a420465852be``.
+  intermediate upgrade to ``pub.kiwitcms.eu/kiwitcms/kiwi:5.3.1 a420465852be``.
 - Remove deprecated ``TestCase.estimated_time`` and ``TestRun.estimated_time``. Fixes
   `Issue #514 <https://github.com/kiwitcms/Kiwi/issues/514>`_
 
@@ -6403,8 +6403,9 @@ tag on StackOverflow to track questions.
 
 This will be the last release to carry around squashed migrations. In version
 6.0 older migrations will be deleted and upgrades from versions <=5.2 to 6.0
-will break without an intermediate upgrade to 5.3! Use ``kiwitcms/kiwi:5.3.1``
-from Docker Hub when upgrading at some point in the future!
+will break without an intermediate upgrade to 5.3!
+Use ``pub.kiwitcms.eu/kiwitcms/kiwi:5.3.1``
+when upgrading at some point in the future!
 
 
 After upgrade don't forget to::
