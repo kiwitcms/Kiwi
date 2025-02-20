@@ -48,7 +48,9 @@ jobs:
             VERSION=$(python3 -m tcms)
 
             make docker-image
-            docker tag kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
+
+            # tag so we can push to private container registry
+            docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
 
             echo "+++++ Docker images +++++"
             docker images
