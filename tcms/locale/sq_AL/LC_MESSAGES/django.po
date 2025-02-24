@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2025-02-20 19:28\n"
+"PO-Revision-Date: 2025-02-24 22:13\n"
 "Last-Translator: \n"
 "Language-Team: Albanian\n"
 "Language: sq_AL\n"
@@ -1086,7 +1086,7 @@ msgstr "Shto"
 #: tcms/testplans/templates/testplans/search.html:18
 #: tcms/testruns/templates/testruns/get.html:576
 msgid "Name"
-msgstr "Emri"
+msgstr "mano"
 
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
@@ -2274,3 +2274,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
