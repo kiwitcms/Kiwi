@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2025-02-15 09:28\n"
+"PO-Revision-Date: 2025-02-24 07:34\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -375,7 +375,7 @@ msgstr "*버그 재개*"
 #: tcms/core/history.py:52
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr "최신 정보:%(model_name)s#%(pk)d - %(title)s"
+msgstr "갱신: %(model_name)s#%(pk)d - %(title)s"
 
 #: tcms/core/history.py:62
 #, python-format
@@ -384,8 +384,7 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr "에 업데이트 %(history_date)s\n"
-"에 의해 업데이트 %(username)s\n\n"
+msgstr "%(history_date)s 에 %(username)s 님이 갱신\n\n"
 "%(diff)s\n\n"
 "자세한 내용은 다음을 참조하세요:\n"
 "%(instance_url)s"
@@ -2300,3 +2299,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
