@@ -160,7 +160,6 @@ def history(execution_id):
             "history_user__username",
             "history_change_reason",
             "history_date",
-            "history_change_reason",
         )
     )
     return list(execution_history)
