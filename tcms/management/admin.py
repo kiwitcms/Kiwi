@@ -120,6 +120,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
+    search_fields = ("name", "id")
     list_display = ("pk", "name")
 
 
