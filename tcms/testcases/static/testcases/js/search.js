@@ -161,6 +161,7 @@ export function pageTestcasesSearchReadyHandler () {
             { data: 'case_status__name' },
             { data: 'is_automated' },
             { data: 'author__username' },
+            { data: 'default_tester__username' },
             { data: 'tag_names' }
         ],
         dom: 'Bptp',
