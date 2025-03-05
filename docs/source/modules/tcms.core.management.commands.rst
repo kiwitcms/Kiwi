@@ -3,8 +3,8 @@ tcms.core.management.commands package
 
 .. automodule:: tcms.core.management.commands
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------

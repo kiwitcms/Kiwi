@@ -3,8 +3,8 @@ tcms.rpc package
 
 .. automodule:: tcms.rpc
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------

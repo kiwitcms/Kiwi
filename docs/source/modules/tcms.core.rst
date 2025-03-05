@@ -3,8 +3,8 @@ tcms.core package
 
 .. automodule:: tcms.core
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------

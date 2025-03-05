@@ -3,8 +3,8 @@ tcms.testcases package
 
 .. automodule:: tcms.testcases
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------

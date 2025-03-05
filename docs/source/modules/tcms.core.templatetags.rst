@@ -3,8 +3,8 @@ tcms.core.templatetags package
 
 .. automodule:: tcms.core.templatetags
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------

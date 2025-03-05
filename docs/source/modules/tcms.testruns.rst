@@ -3,8 +3,8 @@ tcms.testruns package
 
 .. automodule:: tcms.testruns
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------

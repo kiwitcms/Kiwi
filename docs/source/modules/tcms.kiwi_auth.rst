@@ -3,8 +3,8 @@ tcms.kiwi\_auth package
 
 .. automodule:: tcms.kiwi_auth
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------

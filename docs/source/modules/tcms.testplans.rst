@@ -3,8 +3,8 @@ tcms.testplans package
 
 .. automodule:: tcms.testplans
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------
