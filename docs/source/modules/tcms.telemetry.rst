@@ -3,8 +3,8 @@ tcms.telemetry package
 
 .. automodule:: tcms.telemetry
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------

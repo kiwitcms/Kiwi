@@ -3,8 +3,8 @@ tcms.rpc.api.forms package
 
 .. automodule:: tcms.rpc.api.forms
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------

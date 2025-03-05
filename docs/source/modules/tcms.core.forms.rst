@@ -3,8 +3,8 @@ tcms.core.forms package
 
 .. automodule:: tcms.core.forms
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Submodules
 ----------
