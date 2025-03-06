@@ -18,6 +18,7 @@
             data-perm-remove-tag="{{ perms.testruns.delete_testruntag }}"
             data-perm-add-comment="{{ perms.django_comments.add_comment }}"
             data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
+            data-perm-view-historical-testexecution="{{ perms.testruns.view_historicaltestexecution }}"
             data-trans-no-executions-selected="{% trans 'No rows selected! Please select at least one!'%}"
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
@@ -452,6 +453,7 @@
                                                         </li>
                                                     </template>
                                                 </div>
+                                                {% if perms.testruns.view_historicaltestexecution %}
                                                 <strong>{% trans "History" %}: </strong>
                                                 <div class="history-container">
                                                     <template id="history-entry">
@@ -461,7 +463,7 @@
                                                         <span class="history-change-reason"></span>
                                                     </template>
                                                 </div>
-
+                                                {% endif %}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
