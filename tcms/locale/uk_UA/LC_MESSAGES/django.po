@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-12 11:40+0000\n"
-"PO-Revision-Date: 2024-11-05 11:35\n"
+"POT-Creation-Date: 2025-03-06 12:30+0000\n"
+"PO-Revision-Date: 2025-03-06 14:35\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -27,49 +27,41 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr "Опис проблеми:\n\n\n"
-"Як часто відтворюється:\n\n\n"
-"Кроки для відтворення:\n"
-"1.\n"
-"2.\n"
-"3.\n\n"
-"Фактичні результати:\n\n\n"
-"Очикувані результати:\n\n\n"
-"Додаткова інформація:"
+msgstr ""
 
 #: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:50
 #: tcms/bugs/templates/bugs/mutable.html:27
 #: tcms/bugs/templates/bugs/search.html:18
 #: tcms/bugs/templates/bugs/search.html:108
 msgid "Severity"
-msgstr "Серйозність"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:89
-#: tcms/templates/include/bug_details.html:3
+#: tcms/issuetracker/kiwitcms.py:49 tcms/templates/include/bug_details.html:3
 msgid "Open"
-msgstr "Відкрито"
+msgstr ""
 
-#: tcms/bugs/templates/bugs/get.html:39
+#: tcms/bugs/templates/bugs/get.html:39 tcms/issuetracker/kiwitcms.py:49
 #: tcms/templates/include/bug_details.html:3
 msgid "Closed"
-msgstr "Закрито"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:79
 #: tcms/bugs/templates/bugs/search.html:114
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
-msgstr "Автор"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:64
 #: tcms/bugs/templates/bugs/mutable.html:94
 #: tcms/bugs/templates/bugs/search.html:84
 #: tcms/bugs/templates/bugs/search.html:115
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:30
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
 #: tcms/templates/include/bug_details.html:10
 #: tcms/testruns/templates/testruns/get.html:206
 #: tcms/testruns/templates/testruns/get.html:266
 msgid "Assignee"
-msgstr "Виконавець"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:75
 #: tcms/bugs/templates/bugs/mutable.html:45
@@ -92,7 +84,7 @@ msgstr "Виконавець"
 #: tcms/testruns/templates/testruns/search.html:35
 #: tcms/testruns/templates/testruns/search.html:183
 msgid "Product"
-msgstr "Продукт"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
@@ -109,12 +101,12 @@ msgstr "Продукт"
 #: tcms/testruns/templates/testruns/search.html:45
 #: tcms/testruns/templates/testruns/search.html:184
 msgid "Version"
-msgstr "Версія"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
 #: tcms/bugs/templates/bugs/search.html:67
-#: tcms/bugs/templates/bugs/search.html:113 tcms/management/models.py:120
+#: tcms/bugs/templates/bugs/search.html:113 tcms/management/models.py:132
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:29
 #: tcms/templates/include/bug_details.html:17
@@ -124,15 +116,15 @@ msgstr "Версія"
 #: tcms/testruns/templates/testruns/search.html:55
 #: tcms/testruns/templates/testruns/search.html:185
 msgid "Build"
-msgstr "Збірка"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:119
 msgid "commented on"
-msgstr "прокоментовано"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:149
 msgid "Reopen"
-msgstr "Відновити"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
@@ -144,11 +136,11 @@ msgstr "Відновити"
 #: tcms/testruns/templates/testruns/get.html:590
 #: tcms/testruns/templates/testruns/mutable.html:210
 msgid "Save"
-msgstr "Зберегти"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:153
 msgid "Close"
-msgstr "Закрити"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:20
 #: tcms/bugs/templates/bugs/search.html:13
@@ -168,11 +160,11 @@ msgstr "Закрити"
 #: tcms/testruns/templates/testruns/search.html:14
 #: tcms/testruns/templates/testruns/search.html:181
 msgid "Summary"
-msgstr "Резюме"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 msgid "add new Severity"
-msgstr "додати нову Серйозність"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:46
 #: tcms/testcases/templates/testcases/mutable.html:44
@@ -180,36 +172,36 @@ msgstr "додати нову Серйозність"
 #: tcms/testplans/templates/testplans/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:48
 msgid "add new Product"
-msgstr "додати новий Продукт"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/testplans/templates/testplans/clone.html:38
 #: tcms/testplans/templates/testplans/mutable.html:50
 msgid "add new Version"
-msgstr "додати нову Версію"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:81
 #: tcms/bugs/templates/bugs/mutable.html:82
 #: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/mutable.html:94
 msgid "add new Build"
-msgstr "додати нову Збірку"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:98
 #: tcms/testruns/templates/testruns/mutable.html:32
 #: tcms/testruns/templates/testruns/mutable.html:39
 msgid "Username or email"
-msgstr "Ім'я користувача або електронна пошта"
+msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:402
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:414
 msgid "Search Bugs"
-msgstr "Пошук помилок"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:28
 #: tcms/testcases/templates/testcases/search.html:19
 #: tcms/testplans/templates/testplans/search.html:24
 msgid "Created"
-msgstr "Створено"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:31
 #: tcms/telemetry/templates/telemetry/include/filters.html:53
@@ -220,7 +212,7 @@ msgstr "Створено"
 #: tcms/testruns/templates/testruns/search.html:131
 #: tcms/testruns/templates/testruns/search.html:151
 msgid "Before"
-msgstr "До"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:37
 #: tcms/telemetry/templates/telemetry/include/filters.html:43
@@ -231,7 +223,7 @@ msgstr "До"
 #: tcms/testruns/templates/testruns/search.html:138
 #: tcms/testruns/templates/testruns/search.html:158
 msgid "After"
-msgstr "Після"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:81
 #: tcms/bugs/templates/bugs/search.html:86
@@ -245,7 +237,7 @@ msgstr "Після"
 #: tcms/testruns/templates/testruns/search.html:69
 #: tcms/testruns/templates/testruns/search.html:75
 msgid "Username"
-msgstr "Ім'я користувача"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
@@ -274,7 +266,7 @@ msgstr "Ім'я користувача"
 #: tcms/testruns/templates/testruns/get.html:584
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "Yes"
-msgstr "Так"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:91
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
@@ -303,7 +295,7 @@ msgstr "Так"
 #: tcms/testruns/templates/testruns/get.html:584
 #: tcms/testruns/templates/testruns/search.html:81
 msgid "No"
-msgstr "Ні"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:97
 #: tcms/testcases/templates/testcases/search.html:143
@@ -312,7 +304,7 @@ msgstr "Ні"
 #: tcms/testruns/templates/testruns/get.html:272
 #: tcms/testruns/templates/testruns/search.html:170
 msgid "Search"
-msgstr "Пошук"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:107
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:26
@@ -322,7 +314,7 @@ msgstr "Пошук"
 #: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/search.html:180
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:110
 #: tcms/templates/include/bug_details.html:5
@@ -330,19 +322,19 @@ msgstr "ID"
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testruns/templates/testruns/mutable.html:231
 msgid "Created on"
-msgstr "Створено"
+msgstr ""
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:130
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:144
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
-msgstr "Редагувати"
+msgstr ""
 
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:143
 #: tcms/testplans/views.py:152 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
-msgstr "Дозволи на об'єкти"
+msgstr ""
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -354,28 +346,28 @@ msgstr "Дозволи на об'єкти"
 #: tcms/testruns/templates/testruns/get.html:448 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
 msgid "Delete"
-msgstr "Видалити"
+msgstr ""
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:389
+#: tcms/bugs/views.py:68 tcms/settings/common.py:400
 msgid "New Bug"
-msgstr "Нова помилка"
+msgstr ""
 
 #: tcms/bugs/views.py:188
 msgid "Edit bug"
-msgstr "Редагувати помилку"
+msgstr ""
 
 #: tcms/bugs/views.py:231
 msgid "*bug closed*"
-msgstr "*помилку закрито*"
+msgstr ""
 
 #: tcms/bugs/views.py:235
 msgid "*bug reopened*"
-msgstr "*помилку відновлено*"
+msgstr ""
 
 #: tcms/core/history.py:52
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr "ОНОВЛЕННЯ: %(model_name)s #%(pk)d - %(title)s"
+msgstr ""
 
 #: tcms/core/history.py:62
 #, python-format
@@ -384,54 +376,49 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr "Оновлено %(history_date)s\n"
-"Оновлено користувачем %(username)s\n\n"
-"%(diff)s\n\n"
-"Додаткова інформація:\n"
-"%(instance_url)s"
+msgstr ""
 
-#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:418
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:430
 msgid "Dashboard"
-msgstr "Панель керування"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:8
 #: tcms/testruns/templates/testruns/get.html:152
 msgid "Test executions"
-msgstr "Тестові виконання"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:15
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr "%(amount)s%% завершено"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:24
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/testruns/templates/testruns/get.html:77
 msgid "Started at"
-msgstr "Почато о"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:32
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr "%(total_count)s Тестових Запусків або Тестових Кейсів призначено вам для виконання.\n"
-"Ось останні %(count)s."
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
 msgid "SEE ALL"
-msgstr "ПЕРЕГЛЯНУТИ ВСЕ"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "Немає призначених вам Тестових Запусків"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
-msgstr "Ваші Тест-плани"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:52
 msgid "TestPlan"
-msgstr "Тестовий план"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:54
 #: tcms/testcases/templates/testcases/get.html:169
@@ -439,90 +426,89 @@ msgstr "Тестовий план"
 #: tcms/testplans/templates/testplans/search.html:70
 #: tcms/testplans/templates/testplans/search.html:119
 msgid "Type"
-msgstr "Тип"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:55
 #: tcms/templates/include/tc_executions.html:7
 msgid "Executions"
-msgstr "Виконання"
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:76
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr "Ви керуєте %(total_count)s Тестовими Планами, %(disabled_count)s з них вимкнено.\n"
-"Ось останні %(count)s."
+msgstr ""
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "Немає Тест-планів, які належать вам"
+msgstr ""
 
 #: tcms/core/views.py:47
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Базова URL-адреса не налаштована! Дивіться <a href=\"%(doc_url)s\">документацію</a> та <a href=\"%(admin_url)s\">змініть це</a>"
+msgstr ""
 
 #: tcms/core/views.py:71
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr "У вас є %(unapplied_migration_count)s незастосованих міграцій. Дивіться <a href=\"%(doc_url)s\">документацію</a>"
+msgstr ""
 
 #: tcms/core/views.py:92
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr "Ви не використовуєте захищене з'єднання. Дивіться <a href=\"%(doc_url)s\">документацію</a> і увімкніть SSL."
+msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr "Файл містить заборонений тег: <{tag_name}>"
+msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr "Файл містить заборонений атрибут: `{attr_name}`"
+msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr "Завантаження виконуваних файлів заборонено"
+msgstr ""
 
-#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:431
+#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
-msgstr "Користувачі"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:82
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr "Скинути електронну адресу"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:148
 msgid "Personal info"
-msgstr "Особиста інформація"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:150
 msgid "Permissions"
-msgstr "Дозволи"
+msgstr ""
 
 #: tcms/kiwi_auth/admin.py:187
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr "Це останній суперкористувач, його не можна видалити!"
+msgstr ""
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
-msgstr "Користувач з такою електронною адресою вже існує."
+msgstr ""
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr "Будь ласка, підтвердьте свою електронну адресу облікового запису Kiwi TCMS"
+msgstr ""
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr "Електронна адреса не збігається"
+msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr "Попередження"
+msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -530,227 +516,228 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr "Після натискання кнопки 'Зберегти' ваш обліковий запис стане <strong>неактивним</strong>\n"
-"і ви будете <strong>вийшли з системи</strong>! Підтвердження буде надіслано на нову вказану адресу!<br>\n"
-"Переконайтеся, що ваша нова електронна адреса <strong>введена правильно</strong>, інакше\n"
-"<strong>ви можете бути заблоковані</strong> у вашому обліковому записі!"
+msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr "НЕ ви"
+msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr "Електронна пошта"
+msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:66
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 msgid "Confirm"
-msgstr "Підтвердити"
+msgstr ""
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr "Будь ласка, введіть значення вручну! Не копіюйте та вставляйте значення з попереднього поля!"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Ваш обліковий запис створено, будь ласка, перевірте свою поштову скриньку для підтвердження"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:75
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr "Ваш обліковий запис створено, але адміністратор повинен його активувати"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:80
 msgid "Following is the administrator list"
-msgstr "Нижче наведено список адміністраторів"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:123
 msgid "This activation key no longer exists in the database"
-msgstr "Цей ключ активації більше не існує в базі даних"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:129
 msgid "This activation key has expired"
-msgstr "Цей ключ активації минув"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:141
 msgid "Your account has been activated successfully"
-msgstr "Ваш обліковий запис успішно активовано"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr "Ви переглядаєте записи з тенанта '%s'"
+msgstr ""
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr "Електронна адреса скинута, будь ласка, перевірте свою пошту для подальших інструкцій"
+msgstr ""
 
-#: tcms/management/models.py:52
+#: tcms/management/models.py:58
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
-msgstr "Пріоритети"
+msgstr ""
 
-#: tcms/management/models.py:121
+#: tcms/management/models.py:133
 msgid "Builds"
-msgstr "Збірки"
+msgstr ""
 
-#: tcms/management/models.py:132
+#: tcms/management/models.py:144
 #: tcms/testcases/templates/testcases/search.html:129
 #: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:94
 #: tcms/testruns/templates/testruns/get.html:262
 #: tcms/testruns/templates/testruns/search.html:27
 msgid "Tag"
-msgstr "Тег"
+msgstr ""
 
-#: tcms/management/models.py:133 tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:163
+#: tcms/management/models.py:145 tcms/templates/include/tags_card.html:6
+#: tcms/testcases/templates/testcases/search.html:164
 #: tcms/testplans/templates/testplans/get.html:456
 #: tcms/testplans/templates/testplans/search.html:121
 #: tcms/testruns/templates/testruns/get.html:352
 #: tcms/testruns/templates/testruns/search.html:190
 msgid "Tags"
-msgstr "Теги"
+msgstr ""
 
 #: tcms/rpc/api/bug.py:69
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr "Увімкніть звітування до цього Трекера Проблем, налаштувавши його base_url!"
+msgstr ""
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr "Недійсний формат дати. Очікується YYYY-MM-DD [HH:MM:SS]."
+msgstr ""
 
-#: tcms/settings/common.py:380
+#: tcms/settings/common.py:391
 msgid "TESTING"
-msgstr "ТЕСТУВАННЯ"
+msgstr ""
 
-#: tcms/settings/common.py:382 tcms/testruns/templates/testruns/mutable.html:70
+#: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
-msgstr "Новий Тест-план"
+msgstr ""
 
-#: tcms/settings/common.py:384
+#: tcms/settings/common.py:395
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
-msgstr "Новий Тестовий Кейс"
+msgstr ""
 
-#: tcms/settings/common.py:386 tcms/testplans/templates/testplans/get.html:121
+#: tcms/settings/common.py:397 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:171
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr "Новий Тестовий Запуск"
+msgstr ""
 
-#: tcms/settings/common.py:396
+#: tcms/settings/common.py:407
 msgid "SEARCH"
-msgstr "ПОШУК"
+msgstr ""
 
-#: tcms/settings/common.py:398 tcms/testplans/templates/testplans/search.html:5
+#: tcms/settings/common.py:409 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
-msgstr "Пошук Тест-планів"
+msgstr ""
 
-#: tcms/settings/common.py:399 tcms/testcases/templates/testcases/search.html:5
+#: tcms/settings/common.py:410 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
-msgstr "Пошук Тестових Кейсів"
+msgstr ""
 
-#: tcms/settings/common.py:400 tcms/testruns/templates/testruns/search.html:5
+#: tcms/settings/common.py:411 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
-msgstr "Пошук Тестових Запусків"
-
-#: tcms/settings/common.py:409
-msgid "TELEMETRY"
-msgstr "ТЕЛЕМЕТРІЯ"
+msgstr ""
 
 #: tcms/settings/common.py:412
+msgid "Search Test Executions"
+msgstr ""
+
+#: tcms/settings/common.py:421
+msgid "TELEMETRY"
+msgstr ""
+
+#: tcms/settings/common.py:424
 msgid "Testing"
-msgstr "Тестування"
+msgstr ""
 
-#: tcms/settings/common.py:414
+#: tcms/settings/common.py:426
 msgid "Breakdown"
-msgstr "Розподіл"
+msgstr ""
 
-#: tcms/settings/common.py:416
+#: tcms/settings/common.py:428
 msgid "Execution"
-msgstr "Виконання"
+msgstr ""
 
-#: tcms/settings/common.py:419
+#: tcms/settings/common.py:431
 #: tcms/testruns/templates/testruns/mutable.html:177
 msgid "Matrix"
-msgstr "Матриця"
-
-#: tcms/settings/common.py:420
-msgid "Trends"
-msgstr "Тренди"
-
-#: tcms/settings/common.py:423
-#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
-msgid "TestCase health"
-msgstr "Стан Тестових Кейсів"
-
-#: tcms/settings/common.py:429
-msgid "ADMIN"
-msgstr "АДМІН"
+msgstr ""
 
 #: tcms/settings/common.py:432
+msgid "Trends"
+msgstr ""
+
+#: tcms/settings/common.py:435
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
+msgid "TestCase health"
+msgstr ""
+
+#: tcms/settings/common.py:441
+msgid "ADMIN"
+msgstr ""
+
+#: tcms/settings/common.py:444
 msgid "Groups"
-msgstr "Групи"
+msgstr ""
 
-#: tcms/settings/common.py:434
+#: tcms/settings/common.py:446
 msgid "Everything else"
-msgstr "Все інше"
+msgstr ""
 
-#: tcms/settings/common.py:437
+#: tcms/settings/common.py:449
 msgid "PLUGINS"
-msgstr "ПЛАГІНИ"
+msgstr ""
 
-#: tcms/settings/common.py:447
+#: tcms/settings/common.py:459
 msgid "Report an Issue"
-msgstr "Повідомити про Проблему"
+msgstr ""
 
-#: tcms/settings/common.py:450
+#: tcms/settings/common.py:462
 msgid "Ask for help on StackOverflow"
-msgstr "Запитати допомогу на StackOverflow"
+msgstr ""
 
-#: tcms/settings/common.py:454
+#: tcms/settings/common.py:466
 msgid "Donate €5 via Open Collective"
-msgstr "Пожертвувати €5 через Open Collective"
+msgstr ""
 
-#: tcms/settings/common.py:456
+#: tcms/settings/common.py:468
 msgid "Administration Guide"
-msgstr "Посібник з Адміністрування"
+msgstr ""
 
-#: tcms/settings/common.py:457
+#: tcms/settings/common.py:469
 msgid "User Guide"
-msgstr "Керівництво користувача"
+msgstr ""
 
-#: tcms/settings/common.py:458
+#: tcms/settings/common.py:470
 msgid "API Help"
-msgstr "Довідка по API"
+msgstr ""
 
 #: tcms/signals.py:83
 msgid "New user awaiting approval"
-msgstr "Новий користувач очікує затвердження"
+msgstr ""
 
 #: tcms/signals.py:161
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr "НОВЕ: Тестовий Запуск #%(pk)d - %(summary)s"
+msgstr ""
 
 #: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr "Помилка #%(pk)d - %(summary)s"
+msgstr ""
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
-msgstr "ПІДТВЕРДЖЕНО"
+msgstr ""
 
 #: tcms/telemetry/api.py:61
 msgid "OTHER"
-msgstr "ІНШЕ"
+msgstr ""
 
 #: tcms/telemetry/api.py:133 tcms/telemetry/api.py:185
 #: tcms/telemetry/api.py:191
@@ -758,7 +745,7 @@ msgstr "ІНШЕ"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:128
 msgid "TOTAL"
-msgstr "ВСЬОГО"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:36
 #: tcms/testcases/templates/testcases/search.html:61
@@ -767,26 +754,26 @@ msgstr "ВСЬОГО"
 #: tcms/testruns/templates/testruns/mutable.html:67
 #: tcms/testruns/templates/testruns/search.html:182
 msgid "Test plan"
-msgstr "Тест-план"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:66
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 #: tcms/testcases/templates/testcases/search.html:135
 msgid "Test run"
-msgstr "Тестовий запуск"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:70
 #: tcms/testruns/templates/testruns/search.html:17
 msgid "Test run summary"
-msgstr "Резюме тестового запуску"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr "Розподіл тестування"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr "Загалом"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/testcases/templates/testcases/get.html:93
@@ -799,28 +786,28 @@ msgstr "Загалом"
 #: tcms/testruns/templates/testruns/get.html:263
 #: tcms/testruns/templates/testruns/get.html:360
 msgid "Automated"
-msgstr "Автоматизовано"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
 #: tcms/testplans/templates/testplans/get.html:402
 #: tcms/testruns/templates/testruns/get.html:360
 msgid "Manual"
-msgstr "Ручний"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
 #: tcms/testcases/models.py:42
 msgid "Categories"
-msgstr "Категорії"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr "Панель Виконання"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 #: tcms/testcases/templates/testcases/search.html:67
 msgid "Child TPs"
-msgstr "Дочірні Тест-плани"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -838,125 +825,153 @@ msgstr "Дочірні Тест-плани"
 #: tcms/testruns/templates/testruns/get.html:383
 #: tcms/testruns/templates/testruns/mutable.html:232
 msgid "Status"
-msgstr "Статус"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
+#: tcms/testcases/templates/testcases/get.html:33
+#: tcms/testcases/templates/testcases/mutable.html:36
+#: tcms/testcases/templates/testcases/mutable.html:207
+#: tcms/testcases/templates/testcases/search.html:163
+#: tcms/testplans/templates/testplans/get.html:175
+#: tcms/testplans/templates/testplans/get.html:378
+#: tcms/testplans/templates/testplans/get.html:416
+#: tcms/testplans/templates/testplans/get.html:493
+#: tcms/testplans/templates/testplans/mutable.html:133
+#: tcms/testplans/templates/testplans/search.html:88
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
+#: tcms/testruns/templates/testruns/get.html:65
+#: tcms/testruns/templates/testruns/mutable.html:36
+#: tcms/testruns/templates/testruns/search.html:73
+#: tcms/testruns/templates/testruns/search.html:189
+msgid "Default tester"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
+msgid "TC"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
+msgid "TR"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testruns/templates/testruns/get.html:267
 #: tcms/testruns/templates/testruns/get.html:374
 msgid "Tested by"
-msgstr "Тестовано"
+msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
 #: tcms/testruns/templates/testruns/get.html:95
 #: tcms/testruns/templates/testruns/get.html:403
 #: tcms/testruns/templates/testruns/mutable.html:140
 msgid "Finished at"
-msgstr "Завершено о"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr "Тренди Виконання"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr "Позитивний"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr "Нейтральний"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr "Негативний"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr "Матриця Виконання"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
-msgstr "Порядок"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
 msgid "Ascending"
-msgstr "За зростанням"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
 msgid "Descending"
-msgstr "За спаданням"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
-msgstr "Тестовий кейс"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr "Тестові кейси з найбільшою частотою збоїв"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
-msgstr "Тестовий Кейс"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr "Збійні виконання"
+msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr "%% невдалих виконань"
+msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr "Сторінку не знайдено"
+msgstr ""
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr "Внутрішня помилка сервера"
+msgstr ""
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr "Помилка завантаження вкладення"
+msgstr ""
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr "Ви впевнені, що хочете видалити це вкладення?"
+msgstr ""
 
 #: tcms/templates/base.html:8
 msgid "day"
-msgstr "день"
+msgstr ""
 
 #: tcms/templates/base.html:8
 msgid "days"
-msgstr "дні"
+msgstr ""
 
 #: tcms/templates/base.html:9
 msgid "hour"
-msgstr "година"
+msgstr ""
 
 #: tcms/templates/base.html:9
 msgid "hours"
-msgstr "години"
+msgstr ""
 
 #: tcms/templates/base.html:10
 msgid "minute"
-msgstr "хвилина"
+msgstr ""
 
 #: tcms/templates/base.html:10
 msgid "minutes"
-msgstr "хвилини"
+msgstr ""
 
 #: tcms/templates/base.html:11
 msgid "second"
-msgstr "секунда"
+msgstr ""
 
 #: tcms/templates/base.html:11
 msgid "seconds"
-msgstr "секунди"
+msgstr ""
 
 #: tcms/templates/base.html:16 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr "провідна система управління тестовими кейсами з відкритим кодом"
+msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -966,12 +981,7 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr "Ласкаво просимо до Kiwi TCMS!\n\n"
-"Щоб підтвердити електронну адресу для користувача `%(user)s` і активувати ваш обліковий запис,\n"
-"будь ласка, перейдіть за цим посиланням:\n"
-"%(confirm_url)s\n\n"
-"З повагою,\n"
-"Kiwi TCMS"
+msgstr ""
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -986,22 +996,12 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr "Помилку %(pk)s було оновлено.\n\n"
-"Посилання: %(bug_url)s\n\n"
-"Резюме: %(summary)s\n"
-"Створено: %(creation_date)s\n"
-"Автор: %(reporter)s\n"
-"Виконавець: %(assignee)s\n"
-"Продукт: %(product)s\n"
-"Версія: %(version)s\n"
-"Збірка: %(build)s\n"
-"Останній коментар:\n"
-"%(last_comment)s"
+msgstr ""
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "TestCase has been deleted by %(username)s!"
-msgstr "Тестовий Кейс був видалений користувачем %(username)s!"
+msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -1018,19 +1018,7 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr "Тестовий запуск %(pk)s створено або оновлено для вас.\n\n"
-"### Посилання ###\n"
-"Тестовий запуск: %(run_url)s\n"
-"Тестовий план: %(plan_url)s\n\n"
-" ### Основна інформація ###\n"
-"Резюме: %(summary)s\n\n"
-"Керівник: %(manager)s.\n"
-"Тестер за замовчуванням: %(default_tester)s.\n\n"
-"Продукт: %(product)s\n"
-"Версія продукту: %(version)s\n"
-"Збірка: %(build)s\n\n"
-"Нотатки:\n"
-"%(notes)s"
+msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -1038,53 +1026,50 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr "Шановний адміністраторе,\n"
-"хтось щойно зареєстрував обліковий запис з ім'ям користувача %(username)s у вашій\n"
-"інстанції Kiwi TCMS і очікує на ваше підтвердження\n\n!"
-"Перейдіть до %(user_url)s для активації облікового запису!"
+msgstr ""
 
 #: tcms/templates/include/attachments.html:10
 #: tcms/testplans/templates/testplans/get.html:437
 #: tcms/testruns/templates/testruns/get.html:484
 msgid "Attachments"
-msgstr "Вкладення"
+msgstr ""
 
 #: tcms/templates/include/attachments.html:18
 msgid "File"
-msgstr "Файл"
+msgstr ""
 
 #: tcms/templates/include/attachments.html:19
 msgid "Owner"
-msgstr "Власник"
+msgstr ""
 
 #: tcms/templates/include/attachments.html:20
 msgid "Date"
-msgstr "Дата"
+msgstr ""
 
 #: tcms/templates/include/attachments.html:35
 #: tcms/templates/include/bugs_table.html:4
 #: tcms/testplans/templates/testplans/get.html:332
 msgid "No records found"
-msgstr "Записів не знайдено"
+msgstr ""
 
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:570
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:344
 msgid "Parameters"
-msgstr "Параметри"
+msgstr ""
 
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
 msgid "This is a tech-preview feature!"
-msgstr "Це технічний попередній перегляд функції!"
+msgstr ""
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
-msgstr "ім'я=значення"
+msgstr ""
 
 #: tcms/templates/include/properties_card.html:69
 #: tcms/templates/include/tags_card.html:28
@@ -1094,7 +1079,7 @@ msgstr "ім'я=значення"
 #: tcms/testruns/templates/testruns/get.html:291
 #: tcms/testruns/templates/testruns/get.html:543
 msgid "Add"
-msgstr "Додати"
+msgstr ""
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:167
@@ -1105,246 +1090,242 @@ msgstr "Додати"
 #: tcms/testplans/templates/testplans/search.html:18
 #: tcms/testruns/templates/testruns/get.html:576
 msgid "Name"
-msgstr "Назва"
+msgstr ""
 
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
 msgid "Initialize database"
-msgstr "Ініціалізувати базу даних"
+msgstr ""
 
 #: tcms/templates/initdb.html:20
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr "Ваша база даних ще не ініціалізована. Натисніть кнопку нижче, щоб ініціалізувати її!"
+msgstr ""
 
 #: tcms/templates/initdb.html:22
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr "УВАГА: ця операція займе деякий час! Ця сторінка перенаправиться, коли завершиться."
+msgstr ""
 
 #: tcms/templates/initdb.html:27
 msgid "Please wait"
-msgstr "Будь ласка, зачекайте"
+msgstr ""
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
-msgstr "Перемикання навігації"
+msgstr ""
 
 #: tcms/templates/navbar.html:15
 msgid "DASHBOARD"
-msgstr "ПАНЕЛЬ КЕРУВАННЯ"
+msgstr ""
 
 #: tcms/templates/navbar.html:41
 msgid "Language"
-msgstr "Мова"
+msgstr ""
 
 #: tcms/templates/navbar.html:45
 msgid "Change language"
-msgstr "Змінити мову"
+msgstr ""
 
 #: tcms/templates/navbar.html:46
 msgid "Supported languages"
-msgstr "Підтримувані мови"
+msgstr ""
 
 #: tcms/templates/navbar.html:47
 msgid "Request new language"
-msgstr "Запит нової мови"
+msgstr ""
 
 #: tcms/templates/navbar.html:53
 msgid "Translation mode"
-msgstr "Режим перекладу"
+msgstr ""
 
 #: tcms/templates/navbar.html:57
 msgid "Translation guide"
-msgstr "Керівництво з перекладу"
+msgstr ""
 
 #: tcms/templates/navbar.html:63
 msgid "Help"
-msgstr "Довідка"
+msgstr ""
 
 #: tcms/templates/navbar.html:78
 msgid "Welcome Guest"
-msgstr "Ласкаво просимо, Гість"
+msgstr ""
 
 #: tcms/templates/navbar.html:84
 msgid "My Test Runs"
-msgstr "Мої Тестові Запуски"
+msgstr ""
 
 #: tcms/templates/navbar.html:88
 msgid "My Test Plans"
-msgstr "Мої Тестові Плани"
+msgstr ""
 
 #: tcms/templates/navbar.html:94
 msgid "My profile"
-msgstr "Мій профіль"
+msgstr ""
 
 #: tcms/templates/navbar.html:98
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr "Змінити пароль"
+msgstr ""
 
 #: tcms/templates/navbar.html:108
 msgid "Logout"
-msgstr "Вийти"
+msgstr ""
 
 #: tcms/templates/navbar.html:113 tcms/templates/registration/login.html:4
 msgid "Login"
-msgstr "Увійти"
+msgstr ""
 
 #: tcms/templates/navbar.html:120
 #: tcms/templates/registration/registration_form.html:53
 msgid "Register"
-msgstr "Реєстрація"
+msgstr ""
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr "Пароль"
+msgstr ""
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr "Забули пароль"
+msgstr ""
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr "Увійти"
+msgstr ""
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr "Ласкаво просимо до Kiwi TCMS"
+msgstr ""
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr "Будь ласка, увійдіть, щоб розпочати"
+msgstr ""
 
 #: tcms/templates/registration/login.html:52
 msgid "or"
-msgstr "або"
+msgstr ""
 
 #: tcms/templates/registration/login.html:53
 msgid "register an account"
-msgstr "зареєструвати обліковий запис"
+msgstr ""
 
 #: tcms/templates/registration/login.html:54
 msgid "if you don't have one!"
-msgstr "якщо у вас його немає!"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr "Ваш пароль встановлено. Ви можете продовжити і"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr "зараз"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr "Будь ласка, введіть новий пароль двічі, щоб ми могли перевірити, чи ви ввели його правильно"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr "запросити скидання пароля"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr "Лист для скидання пароля було надіслано"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_form.html:27
 msgid "Password reset"
-msgstr "Скидання пароля"
+msgstr ""
 
 #: tcms/templates/registration/password_reset_form.html:34
 msgid "Kiwi TCMS password reset"
-msgstr "Скидання пароля Kiwi TCMS"
+msgstr ""
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr "Зареєструвати новий обліковий запис"
+msgstr ""
 
 #: tcms/testcases/admin.py:28
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr "Для отримання додаткової інформації про налаштування статусів тестових кейсів див.\n"
-"         <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
-"         документацію</a>!"
+msgstr ""
 
 #: tcms/testcases/admin.py:56
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr "Потрібен 1 підтверджений і 1 непідтверджений статус!"
+msgstr ""
 
 #: tcms/testcases/admin.py:131
 msgid "Bug URL"
-msgstr "URL помилки"
+msgstr ""
 
 #: tcms/testcases/admin.py:151
 msgid "External Issue Tracker Integration"
-msgstr "Інтеграція зовнішнього трекера проблем"
+msgstr ""
 
 #: tcms/testcases/admin.py:161
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr "<h1>Увага: прочитайте розділ\n"
-"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
-"Налаштування зовнішніх трекерів проблем</a> перед редагуванням значень нижче!</h1>"
+msgstr ""
 
 #: tcms/testcases/admin.py:168
 msgid "Configuration health check"
-msgstr "Перевірка стану конфігурації"
+msgstr ""
 
 #: tcms/testcases/admin.py:172
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr "Kiwi TCMS спробує отримати дані для зазначеного URL помилки за допомогою вказаної вище інтеграції! Натисніть кнопку `Зберегти та продовжити` і зверніть увагу на повідомлення у верхній частині екрану. <strong>УВАГА:</strong> у разі невдачі деякі трекери проблем будуть використовувати протокол OpenGraph для отримання даних. У цьому випадку результат буде включати поле з назвою `from_open_graph`."
+msgstr ""
 
 #: tcms/testcases/admin.py:192
 msgid "Failed creating Issue Tracker"
-msgstr "Не вдалося створити Трекер Проблем"
+msgstr ""
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr "Деталі отримані через OpenGraph. Можливо, конфігурація трекера проблем неправильна!"
+msgstr ""
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr "Деталі отримані через API. Конфігурація трекера проблем виглядає правильно!"
+msgstr ""
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
-msgstr "Перевірка конфігурації трекера проблем не пройдена"
+msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr "ВИДАЛЕНО: Тестовий Кейс #%(pk)d - %(summary)s"
+msgstr ""
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr "Статус тестового кейсу"
+msgstr ""
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr "Статуси тестових кейсів"
+msgstr ""
 
 #: tcms/testcases/models.py:379
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
-msgstr "Шаблон"
+msgstr ""
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr "Шаблони"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "Клонувати Тестовий Кейс"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
-msgstr "Додати новий ТК до ТП"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:30
 msgid "Selected TC"
-msgstr "Вибраний ТК"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
 #: tcms/testplans/templates/testplans/clone.html:73
@@ -1352,7 +1333,7 @@ msgstr "Вибраний ТК"
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:145
 #: tcms/testruns/views.py:198
 msgid "Clone"
-msgstr "Клонувати"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:28
 #: tcms/testcases/templates/testcases/get.html:168
@@ -1368,24 +1349,7 @@ msgstr "Клонувати"
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:230
 msgid "Author"
-msgstr "Автор"
-
-#: tcms/testcases/templates/testcases/get.html:33
-#: tcms/testcases/templates/testcases/mutable.html:36
-#: tcms/testcases/templates/testcases/mutable.html:207
-#: tcms/testplans/templates/testplans/get.html:175
-#: tcms/testplans/templates/testplans/get.html:378
-#: tcms/testplans/templates/testplans/get.html:416
-#: tcms/testplans/templates/testplans/get.html:493
-#: tcms/testplans/templates/testplans/mutable.html:133
-#: tcms/testplans/templates/testplans/search.html:88
-#: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
-#: tcms/testruns/templates/testruns/get.html:65
-#: tcms/testruns/templates/testruns/mutable.html:36
-#: tcms/testruns/templates/testruns/search.html:73
-#: tcms/testruns/templates/testruns/search.html:189
-msgid "Default tester"
-msgstr "Тестер за замовчуванням"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testcases/templates/testcases/mutable.html:58
@@ -1398,7 +1362,7 @@ msgstr "Тестер за замовчуванням"
 #: tcms/testruns/templates/testruns/get.html:366
 #: tcms/testruns/templates/testruns/mutable.html:233
 msgid "Category"
-msgstr "Категорія"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:86
@@ -1413,43 +1377,43 @@ msgstr "Категорія"
 #: tcms/testruns/templates/testruns/get.html:362
 #: tcms/testruns/templates/testruns/mutable.html:234
 msgid "Priority"
-msgstr "Пріоритет"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:120
 msgid "Setup duration"
-msgstr "Тривалість налаштування"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:78
 #: tcms/testcases/templates/testcases/mutable.html:127
 msgid "Testing duration"
-msgstr "Тривалість тестування"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:83
 msgid "Expected duration"
-msgstr "Очікувана тривалість"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Script"
-msgstr "Скрипт"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:149
 msgid "Arguments"
-msgstr "Аргументи"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:157
 msgid "Requirements"
-msgstr "Вимоги"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:162
 #: tcms/testplans/templates/testplans/get.html:80
 #: tcms/testplans/templates/testplans/mutable.html:102
 msgid "Reference link"
-msgstr "Посилання на довідку"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:133
 #: tcms/testcases/templates/testcases/mutable.html:170
@@ -1458,676 +1422,670 @@ msgstr "Посилання на довідку"
 #: tcms/testruns/templates/testruns/get.html:398
 #: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Notes"
-msgstr "Примітки"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:152
 #: tcms/testruns/templates/testruns/get.html:378
 msgid "Bugs"
-msgstr "Помилки"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:159
 msgid "Test plans"
-msgstr "Тестові плани"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:208
 #: tcms/testplans/templates/testplans/get.html:447
 #: tcms/testruns/templates/testruns/get.html:348
 msgid "Components"
-msgstr "Компоненти"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr "Редагувати Тестовий Кейс"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:59
 msgid "add new Category"
-msgstr "додати нову Категорію"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr "додати новий Шаблон"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:514
 msgid "Notify"
-msgstr "Сповістити"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Manager of runs"
-msgstr "Менеджер запусків"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:198
 msgid "Asignees"
-msgstr "Виконавці"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 msgid "Default tester of runs"
-msgstr "Тестер за замовчуванням для запусків"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:223
 msgid "Notify when"
-msgstr "Сповістити, коли"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:142
 msgid "applies only for changes made by somebody else"
-msgstr "застосовується тільки для змін, внесених кимось іншим"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
-msgstr "Тестовий Кейс оновлено"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:236
 msgid "TestCase is deleted"
-msgstr "Тестовий Кейс видалено"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:245
 msgid "CC to"
-msgstr "Копія (CC)"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:250
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr "Електронні адреси, розділені комою. Сповіщення буде надіслано на кожну електронну адресу зі списку CC."
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:15
 msgid "Test case summary"
-msgstr "Резюме тестового кейсу"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:45
 msgid "Both"
-msgstr "Обидва"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:105
 #: tcms/testcases/templates/testcases/search.html:158
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:261
 msgid "Component"
-msgstr "Компонент"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:121
 msgid "Text"
-msgstr "Текст"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:132
 #: tcms/testplans/templates/testplans/search.html:97
 #: tcms/testruns/templates/testruns/search.html:30
 msgid "Separate multiple values with comma (,)"
-msgstr "Розділяйте кілька значень комою (,)"
+msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:170
+#: tcms/testcases/templates/testcases/search.html:171
 msgid "Select"
-msgstr "Вибрати"
+msgstr ""
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
 #: tcms/testruns/templates/testruns/get.html:455 tcms/testruns/views.py:202
 msgid "History"
-msgstr "Історія"
+msgstr ""
 
 #: tcms/testcases/views.py:250
 msgid "TestCase cloning was successful"
-msgstr "Клонування Тестового Кейсу було успішним"
+msgstr ""
 
 #: tcms/testcases/views.py:281
 msgid "At least one TestCase is required"
-msgstr "Потрібен принаймні один Тестовий Кейс"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "Клонувати Тест-план"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:55
 msgid "Clone TCs"
-msgstr "Клонувати ТК"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:59
 msgid "Clone or link existing TCs into new TP"
-msgstr "Клонувати або пов’язати існуючі ТК у новий ТП"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:63
 msgid "Parent TP"
-msgstr "Батьківський ТП"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/clone.html:67
 msgid "Set the source TP as parent of new TP"
-msgstr "Встановити вихідний ТП як батьківський для нового ТП"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "Enter username, email or user ID:"
-msgstr "Введіть ім'я користувача, електронну адресу або ID користувача:"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:21
 msgid "No rows selected! Please select at least one!"
-msgstr "Не вибрано жодного рядка! Будь ласка, виберіть принаймні один!"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:27
 #: tcms/testruns/templates/testruns/get.html:23
 msgid "Are you sure?"
-msgstr "Ви впевнені?"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr "Неможливо створити Тестовий Запуск з непідтвердженими тестовими кейсами"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
-msgstr "Помилка додавання тестових кейсів"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:43
 msgid "Show more"
-msgstr "Показати більше"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:75
 msgid "Plan Type"
-msgstr "Тип плану"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:100
 msgid "Test cases"
-msgstr "Тестові кейси"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:182
 #: tcms/testplans/templates/testplans/get.html:421
 #: tcms/testplans/templates/testplans/get.html:494
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:10
 msgid "Reviewer"
-msgstr "Рецензент"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:231
 #: tcms/testplans/templates/testplans/get.html:234
 msgid "Sort key"
-msgstr "Ключ сортування"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
-msgstr "Змінити порядок кейсів"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:287
 msgid "Search and add test cases"
-msgstr "Пошук і додавання тестових кейсів"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:297
 msgid "Advanced search"
-msgstr "Розширений пошук"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:286
 msgid "Active test runs"
-msgstr "Активні тестові запуски"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:308
 msgid "More"
-msgstr "Більше"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:310
 msgid "Inactive"
-msgstr "Неактивний"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:444
 #: tcms/testruns/templates/testruns/get.html:491
 msgid "No attachments"
-msgstr "Немає вкладень"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:469
 #: tcms/testruns/templates/testruns/get.html:480
 msgid "Comments"
-msgstr "Коментарі"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr "Редагувати Тест-план"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr "Створити новий Тест-план"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:82
 msgid "Parent ID"
-msgstr "Батьківський ID"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr "Enter для призначення; Backspace + Enter для очищення"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
-msgstr "Документ тест-плану:"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:119
 msgid "Notify:"
-msgstr "Сповістити:"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:127
 msgid "TestCase author"
-msgstr "Автор Тестового Кейсу"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:141
 msgid "Notify when:"
-msgstr "Сповістити, коли:"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:145
 msgid "TestPlan is updated"
-msgstr "Тест-план оновлено"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:151
 msgid "Test cases are updated"
-msgstr "Тестові кейси оновлено"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:165
 #: tcms/testplans/templates/testplans/search.html:41
 msgid "Active"
-msgstr "Активний"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr "Деякі дочірні тест-плани не відповідають критеріям пошуку"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
-msgstr "Назва тест-плану"
+msgstr ""
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
-msgstr "Відмовлено в доступі: Тестовий Запуск не належить вам"
+msgstr ""
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr "Для отримання додаткової інформації про налаштування статусів виконання тестів див.\n"
-"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
-"        документацію</a>!"
+msgstr ""
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr "Потрібен 1 негативний, 1 нейтральний та 1 позитивний статус!"
+msgstr ""
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr "Редагувати параметри"
+msgstr ""
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr "Повний"
+msgstr ""
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr "Парне тестування"
+msgstr ""
 
 #: tcms/testruns/models.py:226
 msgid "Test execution statuses"
-msgstr "Статуси виконання тестів"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Unconfirmed test cases were not added"
-msgstr "Непідтверджені тестові кейси не були додані"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Type 0 or 1"
-msgstr "Введіть 0 або 1"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Comment"
-msgstr "Коментар"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:59
 #: tcms/testruns/templates/testruns/mutable.html:29
 #: tcms/testruns/templates/testruns/search.html:67
 #: tcms/testruns/templates/testruns/search.html:188
 msgid "Manager"
-msgstr "Менеджер"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:72
 #: tcms/testruns/templates/testruns/mutable.html:110
 #: tcms/testruns/templates/testruns/search.html:127
 msgid "Planned start"
-msgstr "Запланований початок"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:83
 msgid "Start"
-msgstr "Початок"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:90
 #: tcms/testruns/templates/testruns/mutable.html:123
 #: tcms/testruns/templates/testruns/search.html:147
 msgid "Planned stop"
-msgstr "Заплановане завершення"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:101
 msgid "Stop"
-msgstr "Зупинка"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:138
 #: tcms/testruns/templates/testruns/mutable.html:160
 msgid "Environment"
-msgstr "Середовище"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:181
 msgid "Update text version"
-msgstr "Оновити текстову версію"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:216
 msgid "Add comment"
-msgstr "Додати коментар"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:227
 #: tcms/testruns/templates/testruns/get.html:330
 #: tcms/testruns/templates/testruns/get.html:565
 msgid "Add hyperlink"
-msgstr "Додати гіперпосилання"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:278
 msgid "Mine"
-msgstr "Мої"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:279
 msgid "All"
-msgstr "Всі"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:305
 msgid "records"
-msgstr "записи"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:331
 #: tcms/testruns/templates/testruns/get.html:604
 #: tcms/testruns/templates/testruns/get.html:621
 msgid "Report bug"
-msgstr "Повідомити про помилку"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:338
 msgid "Test case is not part of parent test plan"
-msgstr "Тестовий кейс не є частиною батьківського тест-плану"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:370
 msgid "Assigned to"
-msgstr "Призначено"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:421
 msgid "Text version"
-msgstr "Текстова версія"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:429
 msgid "Bugs and hyperlinks"
-msgstr "Помилки та гіперпосилання"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:582
 msgid "Is a defect"
-msgstr "Є дефектом"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:589
 #: tcms/testruns/templates/testruns/get.html:620
 msgid "Cancel"
-msgstr "Скасувати"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:609
 msgid "Issue Tracker"
-msgstr "Трекер Проблем"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr "Редагувати Тестовий Запуск"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr "Клонувати Тестовий Запуск"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
-msgstr "Застосовується лише до тестових кейсів з параметрами"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
-msgstr "більше інформації"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
-msgstr "Вибрані Тестові Кейси:"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:221
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr "%(count)s з попередньо вибраних тестових кейсів не є ПІДТВЕРДЖЕНИМИ і не будуть клоновані!\n"
-"Дивіться тест-план для отримання додаткової інформації!"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"
-msgstr "ID плану"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:23
 msgid "TestPlan ID"
-msgstr "ID Тест-плану"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:79
 msgid "Running"
-msgstr "Запущено"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:86
 #: tcms/testruns/templates/testruns/search.html:186
 msgid "Start date"
-msgstr "Дата початку"
+msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:106
 #: tcms/testruns/templates/testruns/search.html:187
 msgid "Stop date"
-msgstr "Дата завершення"
+msgstr ""
 
 #: tcms/testruns/views.py:273
 msgid "Clone of "
-msgstr "Клон "
+msgstr ""
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr "ЗАПРОПОНОВАНО"
+msgstr ""
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
-msgstr "ВІДКЛЮЧЕНО"
+msgstr ""
 
 #: testcases.TestCaseStatus/name:4
 msgid "NEED_UPDATE"
-msgstr "ПОТРІБНО ОНОВИТИ"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:1
 msgid "IDLE"
-msgstr "НЕАКТИВНИЙ"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:2
 msgid "RUNNING"
-msgstr "ЗАПУЩЕНО"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr "ПРИЗУПИНЕНО"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr "ПРОЙДЕНО"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr "ЗБІЙ"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
-msgstr "БЛОКОВАНО"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:7
 msgid "ERROR"
-msgstr "ПОМИЛКА"
+msgstr ""
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr "ВІДМОВЛЕНО"
+msgstr ""
 
 #: tcms_github_app/admin.py:122
 #, python-format
 msgid "For additional configuration see\n"
 "<a href=\"%s\">GitHub</a>"
-msgstr "Для додаткової конфігурації див.\n"
-" <a href=\"%s\">GitHub</a>"
+msgstr ""
+
 #: tcms_github_app/menu.py:11
 msgid "GitHub integration"
-msgstr "Інтеграція з GitHub"
+msgstr ""
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr "Повторна синхронізація"
+msgstr ""
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
-msgstr "Налаштування"
+msgstr ""
 
 #: tcms_github_app/middleware.py:41
 #, python-format
 msgid "Unconfigured GitHub App %d"
-msgstr "Не налаштовано GitHub Додаток %d"
+msgstr ""
 
 #: tcms_github_app/utils.py:274
 #, python-format
 msgid "%s was imported from GitHub"
-msgstr "%s було імпортовано з GitHub"
+msgstr ""
 
 #: tcms_github_app/utils.py:278
 #, python-format
 msgid "%s already exists"
-msgstr "%s вже існує"
+msgstr ""
 
 #: tcms_github_app/views.py:48
 #, python-format
 msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "Ви не увійшли за допомогою облікового запису GitHub! <a href=\"%s\">Натисніть тут</a>!"
+msgstr ""
 
 #: tcms_github_app/views.py:62
 #, python-format
 msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
-msgstr "Ви не встановили Kiwi TCMS у свій обліковий запис GitHub! <a href=\"%s\">Натисніть тут</a>!"
+msgstr ""
 
 #: tcms_github_app/views.py:76
 msgid "Multiple GitHub App installations detected! See below:"
-msgstr "Виявлено кілька установок GitHub Додатка! Дивіться нижче:"
+msgstr ""
 
 #: tcms_github_app/views.py:85
 #, python-format
 msgid "Edit GitHub App <a href=\"%s\">%s</a>"
-msgstr "Редагувати GitHub Додаток <a href=\"%s\">%s</a>"
+msgstr ""
 
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr "Не знайдено установку GitHub Додатка для тенанта \"%s\""
+msgstr ""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
-msgstr "Виявлено кілька установок GitHub Додатка!"
+msgstr ""
 
 #: tcms_github_marketplace/menu.py:11
 msgid "Subscriptions"
-msgstr "Підписки"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/email/exit_poll.txt:1
 msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr "Дякуємо, що використовуєте Kiwi TCMS за допомогою платної підписки.\n"
-"Нам шкода, що ви йдете, але ми б хотіли дізнатися чому, щоб покращити сервіс у майбутньому!\n\n"
-"Ви можете поділитися своїм відгуком на https://forms.gle/RJhFengbjN9C6wtUA\n\n"
-"Дякуємо!"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
-msgstr "Підписки тенанта"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
 msgid "You can access the following tenants"
-msgstr "Ви маєте доступ до наступних тенантів"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
 msgid "Tenant"
-msgstr "Тенант"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
 msgid "Organization"
-msgstr "Організація"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:44
 msgid "Docker credentials"
-msgstr "Облікові дані Docker"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
 msgid "Private containers instructions"
-msgstr "Інструкції для приватних контейнерів"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
 msgid "You own the following tenants"
-msgstr "Ви володієте наступними тенантами"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
 msgid "Price"
-msgstr "Ціна"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
 msgid "Subscription type"
-msgstr "Тип підписки"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:108
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:8
 msgid "Paid until"
-msgstr "Оплачено до"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:114
 msgid "Cancel subscription"
-msgstr "Скасувати підписку"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
 msgid "You don't own any tenants"
-msgstr "Ви не володієте жодним тенантом"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "Subscribe via FastSpring"
-msgstr "Підписатися через FastSpring"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
 msgid "Transaction history"
-msgstr "Історія транзакцій"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:170
 msgid "Sender"
-msgstr "Відправник"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
 msgid "Vendor"
-msgstr "Постачальник"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:180
 msgid "Received on"
-msgstr "Отримано"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
 msgid "Extra emails"
-msgstr "Додаткові електронні адреси"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
-msgstr "Kiwi TCMS спробує зіставити повторювані події виставлення рахунків з tenant.owner.email + tenant.extra_emails"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
-msgstr "Розділяйте комою (,), крапкою з комою (;) або пробілом ( )"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr "Попередження про Приватний Тенант"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2136,78 +2094,73 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr "Ви збираєтеся створити приватного тенанта для Kiwi TCMS.\n"
-"Підготовка схеми вашої БД займе кілька хвилин!\n"
-"Після натискання кнопки 'Зберегти' <strong>не</strong> закривайте або не оновлюйте цю сторінку!<br>\n"
-"Вас буде перенаправлено до нового тенанту після завершення процесу створення!\n"
-"Якщо ви побачите сторінку з помилкою 500 Internal Server Error, будь ласка, негайно зверніться\n"
-"за адресою <a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>!"
+msgstr ""
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr "Опитування при виході з підписки на Kiwi TCMS"
+msgstr ""
 
 #: tcms_github_marketplace/views.py:567
 msgid "Kiwi TCMS subscription notification"
-msgstr "Сповіщення про підписку на Kiwi TCMS"
+msgstr ""
 
 #: tcms_github_marketplace/views.py:749
 msgid "mo"
-msgstr "місяців"
+msgstr ""
 
 #: tcms_github_marketplace/views.py:752
 msgid "yr"
-msgstr "рік"
+msgstr ""
 
 #: tcms_enterprise/pipeline.py:17
 msgid "Email address is required"
-msgstr "Потрібна електронна адреса"
+msgstr ""
 
 #: tcms_enterprise/templates/registration/custom_login.html:10
 msgid "or Continue With"
-msgstr "або Продовжити З"
+msgstr ""
 
 #: tcms_settings_dir/enterprise.py:19
 msgid "Legal information"
-msgstr "Юридична інформація"
+msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
 msgid "Unauthorized"
-msgstr "Неавторизовано"
+msgstr ""
 
 #: tcms_tenants/admin.py:86
 msgid "Existing username, email or user ID"
-msgstr "Існуюче ім'я користувача, електронна пошта або ID користувача"
+msgstr ""
 
 #: tcms_tenants/admin.py:159
 msgid "Full name"
-msgstr "Повне ім'я"
+msgstr ""
 
 #: tcms_tenants/forms.py:30
 msgid "Invalid string"
-msgstr "Недійсний рядок"
+msgstr ""
 
 #: tcms_tenants/menu.py:15
 msgid "Create"
-msgstr "Створити"
+msgstr ""
 
 #: tcms_tenants/menu.py:20
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:17
 msgid "Invite users"
-msgstr "Запросити користувачів"
+msgstr ""
 
 #: tcms_tenants/menu.py:21
 msgid "Authorized users"
-msgstr "Авторизовані користувачі"
+msgstr ""
 
 #: tcms_tenants/middleware.py:59
 msgid "Unpaid"
-msgstr "Неоплачено"
+msgstr ""
 
 #: tcms_tenants/middleware.py:70
-msgid "Tenant expires in less than 7 days"
-msgstr "Орендар закінчується менш ніж через 7 днів"
+msgid "Tenant expires soon"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2218,99 +2171,93 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr "Шановний тестувальнику,\n"
-"%(invited_by)s запросив вас приєднатися до їхнього тенанту Kiwi TCMS за адресою\n"
-"%(tenant_url)s\n\n"
-"Якщо ви раніше не входили, для вас було автоматично створено обліковий запис.\n"
-"Ви можете увійти за допомогою соціального облікового запису з тією ж електронною адресою або перейти на %(password_reset_url)s для скидання пароля.\n"
-"Лист для скидання пароля також містить ваше ім'я користувача!"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr "Ваш тенант Kiwi TCMS було створено за адресою:\n"
-"%(tenant_url)s\n\n"
-"Якщо у вас виникли проблеми, зверніться до служби підтримки!"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
-msgstr "Електронна пошта"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
-msgstr "Новий тенант"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:35
 msgid "Company, team or project name"
-msgstr "Назва компанії, команди або проекту"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:43
 msgid "Schema"
-msgstr "Схема"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:56
 msgid "Validation pattern"
-msgstr "Шаблон перевірки"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:61
 msgid "Publicly readable"
-msgstr "Доступний для публічного читання"
+msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
-msgstr "Логотип тенанта"
+msgstr ""
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
-msgstr "Назва схеми вже використовується"
+msgstr ""
 
 #: tcms_tenants/utils.py:170
 msgid "New Kiwi TCMS tenant created"
-msgstr "Створено нового тенанта Kiwi TCMS"
+msgstr ""
 
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr "Користувач {user.username} доданий до групи тенанту {group.name}"
+msgstr ""
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
-msgstr "Запрошення приєднатися до Kiwi TCMS"
+msgstr ""
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr "Тільки суперкористувач і власник тенанту можуть редагувати властивості тенанту"
+msgstr ""
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
-msgstr "Редагувати тенант"
+msgstr ""
 
 #: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr "Тільки користувачі, авторизовані для цього тенанту, можуть запрошувати інших"
+msgstr ""
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr "користувачі"
+msgstr ""
 
 #: tenant_groups/models.py:34
 msgid "name"
-msgstr "ім'я"
+msgstr ""
 
 #: tenant_groups/models.py:37
 msgid "permissions"
-msgstr "дозволи"
+msgstr ""
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr "група"
+msgstr ""
 
 #: tenant_groups/models.py:48
 msgid "groups"
-msgstr "групи"
+msgstr ""
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr "Особисті API токени"
+msgstr ""
+
