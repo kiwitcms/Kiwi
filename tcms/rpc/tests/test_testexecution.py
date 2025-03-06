@@ -472,7 +472,7 @@ class TestExecutionHistory(APITestCase):
 class TestExecutionHistoryPermissions(APIPermissionsTestCase):
     """Test permissions of TestExecution.history"""
 
-    permission_label = "testruns.view_testexecution"
+    permission_label = "testruns.view_historicaltestexecution"
 
     def _fixture_setup(self):
         super()._fixture_setup()
