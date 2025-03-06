@@ -6,6 +6,37 @@ export function initializePage () {
     document.getElementById('id_include_child_tps').onchange = drawTable
 }
 
+function preProcessData (data, callbackF) {
+    const caseIds = []
+    const runIds = []
+    data.forEach(function (element) {
+        caseIds.push(element.case)
+        runIds.push(element.run)
+    })
+
+    jsonRPC('TestCase.filter', { pk__in: caseIds }, function (cases) {
+        const testerPerCase = {}
+        cases.forEach(function (element) {
+            testerPerCase[element.id] = element.default_tester__username
+        })
+
+        jsonRPC('TestRun.filter', { pk__in: runIds }, function (runs) {
+            const testerPerRun = {}
+            runs.forEach(function (element) {
+                testerPerRun[element.id] = element.default_tester__username
+            })
+
+            // augment data set with additional info
+            data.forEach(function (element) {
+                element.default_tester__from_case = testerPerCase[element.case]
+                element.default_tester__from_run = testerPerRun[element.run]
+            })
+
+            callbackF({ data }) // renders everything
+        })
+    })
+}
+
 export function drawTable () {
     $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
@@ -58,7 +89,7 @@ export function drawTable () {
                 query.run__summary__icontains = testRunSummary
             }
 
-            dataTableJsonRPC('TestExecution.filter', query, callbackF)
+            dataTableJsonRPC('TestExecution.filter', query, callbackF, preProcessData)
         },
         select: {
             className: 'success',
@@ -90,6 +121,12 @@ export function drawTable () {
             },
             {
                 data: 'build__name'
+            },
+            {
+                data: 'default_tester__from_case'
+            },
+            {
+                data: 'default_tester__from_run'
             },
             {
                 data: 'assignee__username'
