@@ -138,7 +138,7 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testruns.view_testexecution")
+@permissions_required("testruns.view_historicaltestexecution")
 @rpc_method(name="TestExecution.history")
 def history(execution_id):
     """
