@@ -589,15 +589,15 @@ function renderAdditionalInformation (testRunId, execution) {
 
     // update bug icons for all executions
     jsonRPC('TestExecution.get_links', linksQuery, (links) => {
-        const withDefects = new Set()
+        const withDefects = {}
         links.forEach((link) => {
             if (link.is_defect) {
-                withDefects.add(link.execution)
+                withDefects[link.execution] = link
             }
         })
-        withDefects.forEach((te) => {
-            $(`.test-execution-${te}`).find('.js-bugs').removeClass('hidden')
-        })
+        for (const teId of Object.keys(withDefects)) {
+            $(`.test-execution-${teId}`).find('.js-bugs').removeClass('hidden')
+        }
     })
 
     // update properties display
