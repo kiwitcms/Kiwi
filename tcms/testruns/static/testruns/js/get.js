@@ -24,6 +24,19 @@ const permissions = {
 }
 const autocompleteCache = {}
 
+function showLastBugForTe (testExecutionRow, bugUrl) {
+    const jsBugs = testExecutionRow.find('.js-bugs')
+    jsBugs.removeClass('hidden')
+
+    const lastBugAnchor = jsBugs.find('a')
+    lastBugAnchor.attr('href', bugUrl)
+
+    jsonRPC('Bug.details', bugUrl, (details) => {
+        lastBugAnchor.text(`${details.id} - ${details.status}`)
+        lastBugAnchor.attr('title', details.title)
+    })
+}
+
 export function pageTestrunsGetReadyHandler () {
     permissions.removeTag = $('#test_run_pk').data('perm-remove-tag') === 'True'
     permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
@@ -589,15 +602,16 @@ function renderAdditionalInformation (testRunId, execution) {
 
     // update bug icons for all executions
     jsonRPC('TestExecution.get_links', linksQuery, (links) => {
-        const withDefects = new Set()
+        const withDefects = {}
         links.forEach((link) => {
             if (link.is_defect) {
-                withDefects.add(link.execution)
+                withDefects[link.execution] = link
             }
         })
-        withDefects.forEach((te) => {
-            $(`.test-execution-${te}`).find('.js-bugs').removeClass('hidden')
-        })
+        for (const teId of Object.keys(withDefects)) {
+            const lastBug = withDefects[teId]
+            showLastBugForTe($(`.test-execution-${teId}`), lastBug.url)
+        }
     })
 
     // update properties display
@@ -850,6 +864,7 @@ function fileBugFromExecution (execution) {
 
             // unescape b/c Issue #1533
             const targetUrl = result.response.replace(/&amp;/g, '&')
+            showLastBugForTe($(`.test-execution-${execution.id}`), targetUrl)
             window.open(targetUrl, '_blank')
         })
         return false
@@ -880,7 +895,7 @@ function addLinkToExecutions (testExecutionIDs) {
                 const testExecutionRow = $(`div.list-group-item.test-execution-${testExecutionId}`)
                 animate(testExecutionRow, () => {
                     if (link.is_defect) {
-                        testExecutionRow.find('.js-bugs').removeClass('hidden')
+                        showLastBugForTe(testExecutionRow, link.url)
                     }
                     const ul = testExecutionRow.find('.test-execution-hyperlinks')
                     ul.append(renderLink(link))
