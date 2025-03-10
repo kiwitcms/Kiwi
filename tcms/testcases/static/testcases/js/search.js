@@ -81,7 +81,7 @@ export function pageTestcasesSearchReadyHandler () {
                 params.create_date__gte = $('#id_after').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
             }
 
-            if ($('#id_product').val()) {
+            if ($('#id_product').val() && $('#include_product').is(':checked')) {
                 params.category__product = $('#id_product').val()
             };
 
