@@ -69,12 +69,12 @@
             <div class="col-md-3">
                 <select name="test_plan" id="id_test_plan" class="form-control selectpicker" multiple title="----------">
                 </select>
-            </div>
 
-            <label class="col-md-1 col-lg-1" for="id_include_child_tps">{% trans "Child TPs" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_include_child_tps" type="checkbox"
-                    data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+                <p class="help-block">
+                    {% trans "include child test plans" %}
+                    <input class="bootstrap-switch" id="id_include_child_tps" type="checkbox"
+                        data-size="mini" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+                </p>
             </div>
         </div>
 
