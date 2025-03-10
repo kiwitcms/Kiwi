@@ -1,6 +1,88 @@
 Change Log
 ==========
 
+Kiwi TCMS 14.1 (10 Mar 2025)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates,
+    several improvements, API changes and new translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    14.0 -> 14.1
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+Security
+~~~~~~~~
+
+- Update Django from 5.1.6 to 5.1.7 addressing a medium severity
+  denial-of-service vulnerability,
+  `CVE-CVE-2025-26699 <https://nvd.nist.gov/vuln/detail/CVE-2025-26699>`_,
+  which does not appear to affect Kiwi TCMS
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-simple-captcha from 0.6.1 to 0.6.2
+- Update psycopg from 3.2.4 to 3.2.5
+- Update pygithub from 2.5.0 to 2.6.1
+- Enable search functionality on Tag Admin page (Jurijs Ješkins). Fixes
+  `Issue #3739 <https://github.com/kiwitcms/Kiwi/issues/3739>`_
+- After cloning a TestCase load its Edit page. (Martin Bodurov)
+- Add ``Search Test Executions`` item under ``SEARCH`` menu in navigation bar
+- Display ``Default tester`` field on Search Test Cases page
+- Display ``Default tester`` fields on Execution Dashboard page. Closes
+  `Issue #3766 <https://github.com/kiwitcms/Kiwi/issues/3766>`_
+- On TestRun view page display TestExecution history diff only when user
+  accessing the page has the ``testruns.view_historicaltestexecution``
+  permission. Otherwise it will not be shown
+- Display ``Last Bug ID - Status`` widget for each TestExecution row on
+  TestRun view page. Closes
+  `Issue #3748 <https://github.com/kiwitcms/Kiwi/issues/3748>`_
+- Allow user to exclude ``Product`` condition on Search Test Cases page
+- Update references to Kiwi TCMS container images across our code base,
+  documentation and website as we may change hosting providers soon
+- Update performance results documentation
+- Document results for parallel user session perfomance. Closes
+  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
+
+
+API
+~~~
+
+- Method ``TestExecution.history()`` is now controlled by the more granular
+  ``testruns.view_historicaltestexecution`` permission instead of the generic
+  ``testruns.view_testexecution``
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update isort from 6.0.0 to 6.0.1
+- Update sphinx from 8.1.3 to 8.2.3
+- Update node_modules/webpack from 5.97.1 to 5.98.0
+- Remove eslint-plugin-promise as a direct dependency
+- Remove duplicate field ``history_change_reason`` from ORM query
+- Refactor code which displays the red bug icon in TestRun view page
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Albanian translation <https://crowdin.com/project/kiwitcms/sq#>`_
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+
+
+
 Kiwi TCMS 14.0 (05 Feb 2025)
 ----------------------------
 
