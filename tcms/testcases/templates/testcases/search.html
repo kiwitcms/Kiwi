@@ -56,6 +56,13 @@
                     <option value="{{ option.pk }}" {% if form.product.value|add:'0' == option.pk %}selected{% endif %}>{{ option.name }}</option>
                 {% endfor %}
                 </select>
+
+                <p class="help-block">
+                    {% trans "include in search request" %}
+
+                    <input class="bootstrap-switch" id="include_product" type="checkbox"
+                        checked data-size="mini" data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
+                </p>
             </div>
 
             <label for="id_test_plan" class="col-md-1 col-lg-1">{% trans "Test plan" %}</label>
