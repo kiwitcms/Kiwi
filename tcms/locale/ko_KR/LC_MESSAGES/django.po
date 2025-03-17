@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:08\n"
+"PO-Revision-Date: 2025-03-17 11:51\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1973,7 +1973,7 @@ msgstr "오류"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr "포기"
+msgstr "면제"
 
 #: tcms_github_app/admin.py:122
 #, python-format
@@ -2323,3 +2323,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
