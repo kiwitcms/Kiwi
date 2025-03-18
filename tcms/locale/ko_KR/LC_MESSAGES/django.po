@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:08\n"
+"PO-Revision-Date: 2025-03-17 13:33\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -662,7 +662,7 @@ msgstr "테스트 수행 검색"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "테스트 실행 검색"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -865,11 +865,11 @@ msgstr "기본 테스터"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
 msgid "TC"
-msgstr ""
+msgstr "테스트 케이스"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 msgid "TR"
-msgstr ""
+msgstr "테스트 수행"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testruns/templates/testruns/get.html:268
@@ -1547,11 +1547,11 @@ msgstr "모두"
 
 #: tcms/testcases/templates/testcases/search.html:61
 msgid "include in search request"
-msgstr ""
+msgstr "검색 요청에 포함"
 
 #: tcms/testcases/templates/testcases/search.html:74
 msgid "include child test plans"
-msgstr ""
+msgstr "하위 테스트 계획 포함"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testcases/templates/testcases/search.html:165
@@ -1704,7 +1704,7 @@ msgstr "상위 테스트 계획 식별자"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "엔터 키를 눌러 할당; 백스페이스 + 엔터 키를 눌러 초기화"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1973,7 +1973,7 @@ msgstr "오류"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr "포기"
+msgstr "면제"
 
 #: tcms_github_app/admin.py:122
 #, python-format
