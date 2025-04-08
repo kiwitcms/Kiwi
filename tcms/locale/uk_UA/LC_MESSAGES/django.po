@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:09\n"
+"PO-Revision-Date: 2025-04-08 21:36\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -490,7 +490,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:150
 msgid "Permissions"
-msgstr ""
+msgstr "Доступи"
 
 #: tcms/kiwi_auth/admin.py:187
 msgid "This is the last superuser, it cannot be deleted!"
@@ -615,19 +615,19 @@ msgstr ""
 
 #: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
-msgstr ""
+msgstr "Новий план тесту"
 
 #: tcms/settings/common.py:395
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
-msgstr ""
+msgstr "Новий тестовий сценарій"
 
 #: tcms/settings/common.py:397 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:172
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr ""
+msgstr "Новий тестовий запуск"
 
 #: tcms/settings/common.py:407
 msgid "SEARCH"
@@ -1091,7 +1091,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:18
 #: tcms/testruns/templates/testruns/get.html:578
 msgid "Name"
-msgstr ""
+msgstr "Назва"
 
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
@@ -1913,7 +1913,7 @@ msgstr ""
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr ""
+msgstr "Успішно"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
@@ -2260,7 +2260,7 @@ msgstr ""
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr ""
+msgstr "група"
 
 #: tenant_groups/models.py:48
 msgid "groups"
