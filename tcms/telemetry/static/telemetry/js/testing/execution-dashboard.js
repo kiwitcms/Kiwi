@@ -16,20 +16,37 @@ function preProcessData (data, callbackF) {
 
     jsonRPC('TestCase.filter', { pk__in: caseIds }, function (cases) {
         const testerPerCase = {}
+        const componentsPerCase = {}
         cases.forEach(function (element) {
             testerPerCase[element.id] = element.default_tester__username
+
+            jsonRPC('Component.filter', {cases: element.id}, function (components) {
+                components.forEach(function (component) {
+                    if (componentsPerCase[element.id] === undefined) {
+                        componentsPerCase[element.id] = []
+                    }
+                    componentsPerCase[element.id].push(component.name)
+                })
+            }, true)
         })
 
         jsonRPC('TestRun.filter', { pk__in: runIds }, function (runs) {
             const testerPerRun = {}
+            const productPerRun = {}
             runs.forEach(function (element) {
                 testerPerRun[element.id] = element.default_tester__username
+                jsonRPC('Product.filter', { pk__in: [element.build__version__product]}, function (products) {
+                    productPerRun[element.id] = products[0].name
+                },true)
             })
 
             // augment data set with additional info
             data.forEach(function (element) {
                 element.default_tester__from_case = testerPerCase[element.case]
                 element.default_tester__from_run = testerPerRun[element.run]
+                element.product__name = productPerRun[element.run]
+                element.test_case_components = componentsPerCase[element.case]
+                element.test_case_components = element.test_case_components.join(', ')
             })
 
             callbackF({ data }) // renders everything
@@ -121,6 +138,12 @@ export function drawTable () {
             },
             {
                 data: 'build__name'
+            },
+            {
+                data: 'product__name',
+            },
+            {
+                data: 'test_case_components'
             },
             {
                 data: 'default_tester__from_case'
