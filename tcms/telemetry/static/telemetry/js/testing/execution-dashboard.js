@@ -13,6 +13,7 @@ function preProcessData (data, callbackF) {
         caseIds.push(element.case)
         runIds.push(element.run)
     })
+
     jsonRPC('TestCase.filter', { pk__in: caseIds }, function (cases) {
         const testerPerCase = {}
         const componentsPerCase = {}
@@ -20,15 +21,16 @@ function preProcessData (data, callbackF) {
             testerPerCase[element.id] = element.default_tester__username
         })
 
-        jsonRPC('Component.filter', {cases__in: cases.map(i => i.id)}, function (components) {
+        jsonRPC('Component.filter', { cases__in: cases.map(i => i.id) }, function (components) {
             components.forEach(function (component) {
                 if (componentsPerCase[component.cases] === undefined) {
                     componentsPerCase[component.cases] = []
                 }
                 componentsPerCase[component.cases].push(component.name)
             })
+
             jsonRPC('TestRun.filter', { pk__in: runIds }, function (runs) {
-                jsonRPC('Product.filter', { pk__in: runs.map(i => i.build__version__product)}, function (products) {
+                jsonRPC('Product.filter', { pk__in: runs.map(i => i.build__version__product) }, function (products) {
                     const productPerRun = {}
                     const productNames = {}
                     const testerPerRun = {}
