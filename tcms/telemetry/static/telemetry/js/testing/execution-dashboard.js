@@ -16,23 +16,43 @@ function preProcessData (data, callbackF) {
 
     jsonRPC('TestCase.filter', { pk__in: caseIds }, function (cases) {
         const testerPerCase = {}
+        const componentsPerCase = {}
         cases.forEach(function (element) {
             testerPerCase[element.id] = element.default_tester__username
         })
 
-        jsonRPC('TestRun.filter', { pk__in: runIds }, function (runs) {
-            const testerPerRun = {}
-            runs.forEach(function (element) {
-                testerPerRun[element.id] = element.default_tester__username
+        jsonRPC('Component.filter', { cases__in: cases.map(i => i.id) }, function (components) {
+            components.forEach(function (component) {
+                if (componentsPerCase[component.cases] === undefined) {
+                    componentsPerCase[component.cases] = []
+                }
+                componentsPerCase[component.cases].push(component.name)
             })
 
-            // augment data set with additional info
-            data.forEach(function (element) {
-                element.default_tester__from_case = testerPerCase[element.case]
-                element.default_tester__from_run = testerPerRun[element.run]
-            })
+            jsonRPC('TestRun.filter', { pk__in: runIds }, function (runs) {
+                jsonRPC('Product.filter', { pk__in: runs.map(i => i.build__version__product) }, function (products) {
+                    const productPerRun = {}
+                    const productNames = {}
+                    const testerPerRun = {}
+                    products.forEach(function (product) {
+                        productNames[product.id] = product.name
+                    })
+                    runs.forEach(function (run) {
+                        testerPerRun[run.id] = run.default_tester__username
+                        productPerRun[run.id] = productNames[run.build__version__product]
+                    })
 
-            callbackF({ data }) // renders everything
+                    // augment data set with additional info
+                    data.forEach(function (element) {
+                        element.default_tester__from_case = testerPerCase[element.case]
+                        element.default_tester__from_run = testerPerRun[element.run]
+                        element.product__name = productPerRun[element.run]
+                        element.test_case_components = componentsPerCase[element.case].join(', ')
+                    })
+
+                    callbackF({ data }) // renders everything
+                })
+            })
         })
     })
 }
@@ -120,7 +140,13 @@ export function drawTable () {
                 }
             },
             {
+                data: 'product__name'
+            },
+            {
                 data: 'build__name'
+            },
+            {
+                data: 'test_case_components'
             },
             {
                 data: 'default_tester__from_case'
