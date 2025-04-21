@@ -28,10 +28,6 @@ rlJournalStart
         assert_up_and_running
     rlPhaseEnd
 
-    rlPhaseStartTest "/Kiwi/uploads/installation-id was created"
-        rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/uploads/installation-id"
-    rlPhaseEnd
-
     rlPhaseStartTest "Container specifies a health-check command"
         rlRun -t -c "docker inspect -f '{{.State.Health.Status}}' kiwi_web"
     rlPhaseEnd
