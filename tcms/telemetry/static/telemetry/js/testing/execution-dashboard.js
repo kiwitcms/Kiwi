@@ -7,12 +7,15 @@ export function initializePage () {
 }
 
 function preProcessData (data, callbackF) {
-    const caseIds = []
-    const runIds = []
+    const caseDict = {}
+    const runDict = {}
     data.forEach(function (element) {
-        caseIds.push(element.case)
-        runIds.push(element.run)
+        caseDict[element.case] = true
+        runDict[element.run] = true
     })
+    // remove duplicate IDs to minimize the size of WHERE clause
+    const caseIds = Object.keys(caseDict).map(id => parseInt(id))
+    const runIds = Object.keys(runDict).map(id => parseInt(id))
 
     jsonRPC('TestCase.filter', { pk__in: caseIds }, function (cases) {
         const testerPerCase = {}
