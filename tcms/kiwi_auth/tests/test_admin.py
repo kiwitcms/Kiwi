@@ -5,6 +5,7 @@ from http import HTTPStatus
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseForbidden
+from django.test import override_settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -562,12 +563,12 @@ class TestGroupAdmin(LoggedInTestCase):
         _label = _("Users")
         self.assertContains(response, f'<label for="id_users">{_label}')
 
+    @override_settings(LANGUAGE_CODE="en")
     def test_should_be_able_to_delete_a_non_default_group(self):
         response = self.client.get(
             reverse("admin:auth_group_delete", args=[self.group.id]), follow=True
         )
-        _are_you_sure = _("Are you sure?")
-        self.assertContains(response, f"<h1>{_are_you_sure}</h1>")
+        self.assertContains(response, "<h2>Are you sure you want to delete")
 
     def test_should_be_able_to_edit_a_non_default_group(self):
         response = self.client.get(
