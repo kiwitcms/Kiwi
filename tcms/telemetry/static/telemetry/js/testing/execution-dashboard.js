@@ -31,14 +31,14 @@ function preProcessData (data, callbackF) {
                 }
                 componentsPerCase[component.cases].push(component.name)
             })
-            
+
             jsonRPC('TestRun.filter', { pk__in: runIds }, function (runs) {
                 const productDict = {}
                 runs.forEach(function (run) {
                     productDict[run.build__version__product] = true
                 })
                 const productIds = Object.keys(productDict).map(id => parseInt(id))
-                
+
                 jsonRPC('Product.filter', { pk__in: productIds }, function (products) {
                     const productPerRun = {}
                     const productNames = {}
