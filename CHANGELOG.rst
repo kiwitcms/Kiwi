@@ -1,6 +1,69 @@
 Change Log
 ==========
 
+Kiwi TCMS 14.2 (23 Apr 2025)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates,
+    several improvements and new translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    14.1 -> 14.2
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.1.7 to 5.1.8 addressing a moderate severity
+  denial-of-service vulnerability,
+  `CVE-2025-27556 <https://nvd.nist.gov/vuln/detail/CVE-2025-27556>`_,
+  which may be affecting Kiwi TCMS instances running natively on Windows
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-attachments from 1.11 to 1.12
+- Update django-colorfield from 0.12.0 to 0.13.0
+- Update django-extensions from 3.2.3 to 4.1
+- Update markdown from 3.7 to 3.8
+- Update psycopg from 3.2.5 to 3.2.6
+- Update tzdata from 2025.1 to 2025.2
+- Update uwsgi from 2.0.28 to 2.0.29
+- On Execution Dashboard page add Product & Components columns
+  (Oskar Hurst, USACE)
+- Remove duplicate IDs to minimize size of SQL WHERE clause
+  for API calls on Execution Dashboard page
+- Remove code which was generating ``/Kiwi/uploads/installation-id``.
+  This file was never used and is not needed
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update node_modules/webpack from 5.98.0 to 5.99.6
+- Update fedora from 41 to 42 in ``tests/bugzilla/Dockerfile``
+- Pin the version of Locust to avoid accidental failures
+- Replace custom function with ``django.utils``
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+- Updates `Ukrainian translation <https://crowdin.com/project/kiwitcms/uk#>`_
+
+
+
 Kiwi TCMS 14.1 (10 Mar 2025)
 ----------------------------
 
@@ -24,7 +87,7 @@ Security
 
 - Update Django from 5.1.6 to 5.1.7 addressing a medium severity
   denial-of-service vulnerability,
-  `CVE-CVE-2025-26699 <https://nvd.nist.gov/vuln/detail/CVE-2025-26699>`_,
+  `CVE-2025-26699 <https://nvd.nist.gov/vuln/detail/CVE-2025-26699>`_,
   which does not appear to affect Kiwi TCMS
 
 
