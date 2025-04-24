@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:09\n"
+"PO-Revision-Date: 2025-04-24 02:18\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -996,7 +996,8 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "欢迎使用Kiwi TCMS！为确认用户名%(user)s的电子邮件地址并激活您的账户，请访问此链接：%(confirm_url)s\n\n"
+"此致， Kiwi TCMS团队"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -2324,3 +2325,4 @@ msgstr "组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
