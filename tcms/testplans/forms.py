@@ -82,3 +82,32 @@ class ClonePlanForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
             )
         else:
             self.fields["version"].queryset = Version.objects.none()
+
+class CloneMultiPlanForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
+    plan = forms.ModelMultipleChoiceField(
+        queryset=TestPlan.objects.all(),
+    )
+
+    product = forms.ModelChoiceField(
+        queryset=Product.objects.all(),
+        empty_label=None,
+        required=False,
+    )
+    version = forms.ModelChoiceField(
+        queryset=Version.objects.none(),
+        empty_label=None,
+        required=False,
+    )
+
+    copy_testcases = forms.BooleanField(required=False)
+    set_parent = forms.BooleanField(required=False)
+
+    def populate(self, plans):
+        if plans:
+            product_pk = TestPlan.objects.filter(pk__in=plans[0])[0].product_id
+            self.fields["version"].queryset = Version.objects.filter(
+                product_id=product_pk
+            )
+            self.fields["plan"].queryset = TestPlan.objects.filter(pk__in=plans)
+        else:
+            self.fields["version"].queryset = Version.objects.none()

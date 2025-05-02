@@ -18,6 +18,7 @@ urlpatterns = [
     ),
     re_path(r"^(?P<pk>\d+)/edit/$", views.Edit.as_view(), name="plan-edit"),
     re_path(r"^(?P<pk>\d+)/clone/$", views.Clone.as_view(), name="plans-clone"),
+    re_path(r"^clone/$", views.MultiClone.as_view(), name="plans-multi-clone"),
     re_path(r"^search/$", views.SearchTestPlanView.as_view(), name="plans-search"),
     re_path(r"^new/$", views.NewTestPlanView.as_view(), name="plans-new"),
 ]
