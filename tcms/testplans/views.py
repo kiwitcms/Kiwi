@@ -277,7 +277,7 @@ class MultiClone(FormView):
         # invalid form
         messages.add_message(request, messages.ERROR, clone_form.errors)
         return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-    
+
     @staticmethod
     def _is_request_data_valid(request, field_name="plan"):
         request_data = getattr(request, request.method)

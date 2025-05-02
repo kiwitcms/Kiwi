@@ -273,6 +273,6 @@ function renderChildrenOf (parentRow, data) {
     if($(parentRow).find('input.row-select').prop('checked')) {
         $(children).find('input.row-select').prop('checked', true).trigger('change')
     }
-    
+
     return $(children).show()
 }
