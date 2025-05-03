@@ -96,7 +96,7 @@ export function pageTestplansSearchReadyHandler () {
             {
                 data: null,
                 orderable: false,
-                render:    function(){ return '<input type="checkbox" class="row-select">'; }
+                render: function () { return '<input type="checkbox" class="row-select">' }
             },
             {
                 data: null,
@@ -174,18 +174,18 @@ export function pageTestplansSearchReadyHandler () {
     })
 
     // header “select all”
-    $('#resultsTable thead').on('change', '#select-all', function(){
-        const checked = this.checked;
+    $('#resultsTable thead').on('change', '#select-all', function () {
+        const checked = this.checked
         $('#resultsTable tbody input.row-select')
-          .prop('checked', checked)
-          .trigger('change');
+            .prop('checked', checked)
+            .trigger('change')
     })
 
     // row checkbox handler
-    $('#resultsTable tbody').on('change', 'input.row-select', function(){
-        const $tr = $(this).closest('tr');
-        if(this.checked) table.row($tr).select();
-        else            table.row($tr).deselect();
+    $('#resultsTable tbody').on('change', 'input.row-select', function () {
+        const $tr = $(this).closest('tr')
+        if (this.checked) table.row($tr).select()
+        else table.row($tr).deselect()
     })
 
     // Add event listener for opening and closing nested test plans
@@ -210,10 +210,10 @@ export function pageTestplansSearchReadyHandler () {
     })
 
     $('#btn_clone_bulk').click(function () {
-        const selectedTestPlans = getSelectedTestPlans();
+        const selectedTestPlans = getSelectedTestPlans()
         if (selectedTestPlans.length === 0) {
-            alert('No test plans selected for cloning.');
-            return false;
+            alert('No test plans selected for cloning.')
+            return false
         }
 
         window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
@@ -227,20 +227,20 @@ function getSelectedTestPlans () {
     const tpIds = []
 
     inputs.each(function (_, el) {
-        const id = $(el).closest('tr').find('td:nth-child(3)').text().trim();
+        const id = $(el).closest('tr').find('td:nth-child(3)').text().trim()
         if (id) {
-            tpIds.push(id);
+            tpIds.push(id)
         }
 
         // Check if the row has collapsed children and add their IDs
-        const row = $('#resultsTable').DataTable().row($(el).closest('tr'));
+        const row = $('#resultsTable').DataTable().row($(el).closest('tr'))
         if (hiddenChildRows[id] && !row.child.isShown()) {
             hiddenChildRows[id].forEach(function (childRow) {
-                const childId = $(childRow).find('td:nth-child(3)').text().trim();
+                const childId = $(childRow).find('td:nth-child(3)').text().trim()
                 if (childId) {
-                    tpIds.push(childId);
+                    tpIds.push(childId)
                 }
-            });
+            })
         }
     })
 
@@ -270,7 +270,7 @@ function renderChildrenOf (parentRow, data) {
     const children = hiddenChildRows[data.id]
     $(children).find('td').css('border', '0').css('padding-left', `${childPadding}px`)
 
-    if($(parentRow).find('input.row-select').prop('checked')) {
+    if ($(parentRow).find('input.row-select').prop('checked')) {
         $(children).find('input.row-select').prop('checked', true).trigger('change')
     }
 

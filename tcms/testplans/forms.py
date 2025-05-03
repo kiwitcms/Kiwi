@@ -83,6 +83,7 @@ class ClonePlanForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
         else:
             self.fields["version"].queryset = Version.objects.none()
 
+
 class CloneMultiPlanForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     plan = forms.ModelMultipleChoiceField(
         queryset=TestPlan.objects.all(),

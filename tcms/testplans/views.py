@@ -3,8 +3,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
-from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
@@ -17,8 +17,8 @@ from tcms.core.forms import SimpleCommentForm
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.forms import (
-    ClonePlanForm,
     CloneMultiPlanForm,
+    ClonePlanForm,
     NewPlanForm,
     PlanNotifyFormSet,
     SearchPlanForm,
@@ -230,6 +230,7 @@ class Clone(FormView):
             reverse("test_plan_url_short", args=[cloned_plan.pk])
         )
 
+
 @method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
 class MultiClone(FormView):
     template_name = "testplans/multi_clone.html"
@@ -237,7 +238,7 @@ class MultiClone(FormView):
 
     http_method_names = ["get", "post"]
 
-    def get(self, request):
+    def get(self, request): # pylint: disable=W0221
         if not self._is_request_data_valid(request, "p"):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -255,7 +256,7 @@ class MultiClone(FormView):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request):
+    def post(self, request): # pylint: disable=W0221
         if not self._is_request_data_valid(request):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -266,7 +267,7 @@ class MultiClone(FormView):
         if clone_form.is_valid():
 
             for tp_src in clone_form.cleaned_data["plan"]:
-                tp_dest = tp_src.clone(name=tp_src.name, **clone_form.cleaned_data)
+                tp_src.clone(name=tp_src.name, **clone_form.cleaned_data)
 
             # Otherwise tell the user the clone action is successful
             messages.add_message(
