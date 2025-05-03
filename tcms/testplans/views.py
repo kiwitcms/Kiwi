@@ -238,7 +238,7 @@ class MultiClone(FormView):
 
     http_method_names = ["get", "post"]
 
-    def get(self, request): # pylint: disable=W0221
+    def get(self, request):  # pylint: disable=W0221
         if not self._is_request_data_valid(request, "p"):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -256,7 +256,7 @@ class MultiClone(FormView):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request): # pylint: disable=W0221
+    def post(self, request):  # pylint: disable=W0221
         if not self._is_request_data_valid(request):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
