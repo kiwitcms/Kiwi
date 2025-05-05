@@ -51,7 +51,7 @@ export function pageTestplansSearchReadyHandler () {
     const multiCloneButton = {
         text: '<i class="fa fa-code-fork"></i>',
         titleAttr: 'Clone Selected',
-        action: function(e, dt, node, config){
+        action: function (e, dt, node, config) {
             const selectedTestPlans = getSelectedTestPlans()
             if (selectedTestPlans.length === 0) {
                 alert($('#main-element').data('trans-no-testplans-selected'))
@@ -60,7 +60,7 @@ export function pageTestplansSearchReadyHandler () {
 
             window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
         }
-      };
+    }
 
     const rowsNotShownMessage = $('#main-element').data('trans-some-rows-not-shown')
     const table = $('#resultsTable').DataTable({
@@ -188,20 +188,20 @@ export function pageTestplansSearchReadyHandler () {
             zeroRecords: 'No records found'
         },
         order: [[2, 'asc']],
-        initComplete: function(){
-            const btnContainer = table.buttons().container();
+        initComplete: function () {
+            const btnContainer = table.buttons().container()
             $(btnContainer).prepend(
                 '<input type="checkbox" id="onlyActive" style=" margin: 0 10px;">'
-            );
-
+            )
+    
             // Hook the checkbox change event to “select all”
-            $('#onlyActive').on('change', function(){
+            $('#onlyActive').on('change', function () {
                 const checked = this.checked
                 $('#resultsTable tbody input.row-select')
                     .prop('checked', checked)
                     .trigger('change')
-            });
-          }
+            })
+        }
     })
 
     // row checkbox handler
@@ -236,27 +236,32 @@ export function pageTestplansSearchReadyHandler () {
 }
 
 function getSelectedTestPlans () {
-    const inputs = $('#resultsTable tbody input.row-select:checked').closest('tr')
+    const inputs = $('#resultsTable tbody input.row-select:checked').closest('tr:visible')
     const tpIds = []
 
     inputs.each(function (_, el) {
-        const id = $(el).closest('tr').find('td:nth-child(3)').text().trim()
-        if (id) {
-            tpIds.push(id)
-        }
-
         // Check if the row has collapsed children and add their IDs
-        const row = $('#resultsTable').DataTable().row($(el).closest('tr'))
-        if (hiddenChildRows[id] && !row.child.isShown()) {
-            hiddenChildRows[id].forEach(function (childRow) {
-                const childId = $(childRow).find('td:nth-child(3)').text().trim()
-                if (childId) {
-                    tpIds.push(childId)
-                }
-            })
-        }
+        tpIds.push(...getChildRows(el))
     })
+    return tpIds
+}
 
+function getChildRows (parentRowId) {
+    const tpIds = []
+    const parentRow = $('#resultsTable').DataTable().row($(parentRowId).closest('tr'))
+    const id = $(parentRowId).closest('tr').find('td:nth-child(3)').text().trim()
+    const children = hiddenChildRows[id]
+
+    if (id) {
+        tpIds.push(id)
+    }
+
+    if (children && !parentRow.child.isShown()) {
+        children.forEach(function (childRow) {
+            tpIds.push(...getChildRows(childRow))
+        })
+        return tpIds
+    }
     return tpIds
 }
 
