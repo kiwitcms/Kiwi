@@ -10,6 +10,7 @@
     class="container-fluid container-cards-pf"
     id="main-element"
     data-trans-some-rows-not-shown="{% trans 'Some child test plans do not match search criteria'%}"
+    data-trans-no-testplans-selected="{% trans 'No rows selected! Please select at least one!'%}"
 >
     <form class="form-horizontal" method="get">
         {% csrf_token %}
@@ -102,9 +103,6 @@
             <div class="col-md-1 col-lg-1">
                 <button id="btn_search" type="submit" class="btn btn-default btn-lg">{% trans "Search" %}</button>
             </div>
-            <div class="col-md-1 col-lg-1">
-                <button id="btn_clone_bulk" type="button" class="btn btn-default btn-lg">{% trans "Clone Selected" %}</button>
-            </div>
         </div>
     </form>
 
@@ -113,7 +111,7 @@
         <table class="table table-striped table-bordered table-hover" id="resultsTable">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="select-all"></th>
+                    <th></th>
                     <th></th>
                     <th>{% trans "ID" %}</th>
                     <th>{% trans "Test plan" %}</th>

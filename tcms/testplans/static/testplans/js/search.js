@@ -48,6 +48,20 @@ export function pageTestplansSearchReadyHandler () {
     initializeDateTimePicker('#id_before')
     initializeDateTimePicker('#id_after')
 
+    const multiCloneButton = {
+        text: '<i class="fa fa-code-fork"></i>',
+        titleAttr: 'Clone Selected',
+        action: function(e, dt, node, config){
+            const selectedTestPlans = getSelectedTestPlans()
+            if (selectedTestPlans.length === 0) {
+                alert($('#main-element').data('trans-no-testplans-selected'))
+                return false
+            }
+    
+            window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
+        }
+      };
+
     const rowsNotShownMessage = $('#main-element').data('trans-some-rows-not-shown')
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
@@ -164,21 +178,30 @@ export function pageTestplansSearchReadyHandler () {
             })
         },
         dom: 'Bptp',
-        buttons: exportButtons,
+        buttons: [
+            multiCloneButton,
+            ...exportButtons
+        ],
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: 'No records found'
         },
-        order: [[2, 'asc']]
-    })
-
-    // header “select all”
-    $('#resultsTable thead').on('change', '#select-all', function () {
-        const checked = this.checked
-        $('#resultsTable tbody input.row-select')
-            .prop('checked', checked)
-            .trigger('change')
+        order: [[2, 'asc']],
+        initComplete: function(){
+            const btnContainer = table.buttons().container();
+            $(btnContainer).prepend(
+                '<input type="checkbox" id="onlyActive" style=" margin: 0 10px;">'
+            );
+    
+            // Hook the checkbox change event to “select all”
+            $('#onlyActive').on('change', function(){
+                const checked = this.checked
+                $('#resultsTable tbody input.row-select')
+                    .prop('checked', checked)
+                    .trigger('change')
+            });
+          }
     })
 
     // row checkbox handler
@@ -207,16 +230,6 @@ export function pageTestplansSearchReadyHandler () {
     $('#btn_search').click(function () {
         table.ajax.reload()
         return false // so we don't actually send the form
-    })
-
-    $('#btn_clone_bulk').click(function () {
-        const selectedTestPlans = getSelectedTestPlans()
-        if (selectedTestPlans.length === 0) {
-            alert('No test plans selected for cloning.')
-            return false
-        }
-
-        window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
     })
 
     $('#id_product').change(updateVersionSelectFromProduct)
