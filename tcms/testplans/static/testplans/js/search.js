@@ -57,7 +57,7 @@ export function pageTestplansSearchReadyHandler () {
                 alert($('#main-element').data('trans-no-testplans-selected'))
                 return false
             }
-    
+
             window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
         }
       };
@@ -193,7 +193,7 @@ export function pageTestplansSearchReadyHandler () {
             $(btnContainer).prepend(
                 '<input type="checkbox" id="onlyActive" style=" margin: 0 10px;">'
             );
-    
+
             // Hook the checkbox change event to “select all”
             $('#onlyActive').on('change', function(){
                 const checked = this.checked
