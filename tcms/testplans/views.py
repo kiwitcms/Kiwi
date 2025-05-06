@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -15,6 +17,7 @@ from tcms.core.forms import SimpleCommentForm
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.forms import (
+    CloneMultiPlanForm,
     ClonePlanForm,
     NewPlanForm,
     PlanNotifyFormSet,
@@ -226,3 +229,64 @@ class Clone(FormView):
         return HttpResponseRedirect(
             reverse("test_plan_url_short", args=[cloned_plan.pk])
         )
+
+
+@method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
+class MultiClone(FormView):
+    template_name = "testplans/multi_clone.html"
+    form_class = CloneMultiPlanForm
+
+    http_method_names = ["get", "post"]
+
+    def get(self, request):  # pylint: disable=W0221
+        if not self._is_request_data_valid(request, "p"):
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+
+        get_params = request.GET.copy()
+        get_params.setlist("plan", request.GET.getlist("p"))
+        del get_params["p"]
+
+        planids = get_params.getlist("plan")
+
+        clone_form = CloneMultiPlanForm(get_params)
+        clone_form.populate(plans=planids)
+
+        context = {
+            "form": clone_form,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):  # pylint: disable=W0221
+        if not self._is_request_data_valid(request):
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+
+        # Do the clone action
+        clone_form = CloneMultiPlanForm(request.POST)
+        clone_form.populate(plans=request.POST.getlist("plan"))
+
+        if clone_form.is_valid():
+
+            for tp_src in clone_form.cleaned_data["plan"]:
+                tp_src.clone(name=tp_src.name, **clone_form.cleaned_data)
+
+            # Otherwise tell the user the clone action is successful
+            messages.add_message(
+                request, messages.SUCCESS, _("TestPlan cloning was successful")
+            )
+            return HttpResponseRedirect(reverse("plans-search"))
+
+        # invalid form
+        messages.add_message(request, messages.ERROR, clone_form.errors)
+        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+
+    @staticmethod
+    def _is_request_data_valid(request, field_name="plan"):
+        request_data = getattr(request, request.method)
+
+        if field_name not in request_data:
+            messages.add_message(
+                request, messages.ERROR, _("At least one TestPlan is required")
+            )
+            return False
+
+        return True
