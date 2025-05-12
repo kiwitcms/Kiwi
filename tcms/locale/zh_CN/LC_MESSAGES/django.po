@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-04-24 02:18\n"
+"PO-Revision-Date: 2025-05-12 05:43\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -425,7 +425,7 @@ msgstr "查看全部"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "没有分配给你的测试执行"
+msgstr "没有分配给你的测试runs"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
@@ -452,17 +452,17 @@ msgstr "执行"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr "您管理 %(total_count)s 测试计划， %(disabled_count)s 已禁用。\n"
+msgstr "您管理 %(total_count)s 测试计划，%(disabled_count)s 已禁用。\n"
 "这里是最新的 %(count)s。"
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "没有属于你的测试计划"
+msgstr "没有属于你的测试计划(们)"
 
 #: tcms/core/views.py:47
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "基本URL未配置！参见 <a href=\"%(doc_url)s\">documentation</a>  和  <a href=\"%(admin_url)s\">change it</a>"
+msgstr "基本URL未配置！参见 <a href=\"%(doc_url)s\">documentation</a>  和 <a href=\"%(admin_url)s\">change it</a>"
 
 #: tcms/core/views.py:71
 #, python-format
@@ -477,16 +477,16 @@ msgstr "您使用的是非安全连接。查看 <a href=\"%(doc_url)s\">文档</
 #: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
+msgstr "文件包含被禁止的标签<{tag_name}>"
 
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
+msgstr "文件包含被禁止的属性名`{attr_name}`"
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "被禁止上传可执行文件"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
@@ -496,7 +496,7 @@ msgstr "用户"
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "重置电子邮件地址"
 
 #: tcms/kiwi_auth/admin.py:148
 msgid "Personal info"
@@ -516,15 +516,15 @@ msgstr "Email已存在，请直接登录或更换Email."
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "请确认您的 Kiwi TCMS 帐户电子邮件地址"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "电子邮件不匹配"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -532,11 +532,15 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "点击“保存”按钮后，您的账户将会成为 <strong>非激活</strong>\n"
+"您将被 <strong>注销</strong>！ 确认邮件将发送到新指定的地址！<br>\n"
+"请仔细检查您的新电子邮件地址是 <strong>输入正确的</strong> 否则\n"
+"<strong>您的账户会被锁定</strong> ！ \n"
+"在关注激活链接后，您将能够像往常一样登录！"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "不是您本人"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -552,7 +556,7 @@ msgstr "确认"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "请输入！不要复制并粘贴上一个字段的值！"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -586,7 +590,7 @@ msgstr "您正在从租户%s 查看记录"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "电子邮件地址已重置，请检查收件箱以获取进一步的说明"
 
 #: tcms/management/models.py:58
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -617,7 +621,7 @@ msgstr "标签"
 
 #: tcms/rpc/api/bug.py:69
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr "通过配置 base_url 来使能 [ 报告给这个问题追踪器 ]"
+msgstr "通过配置 base_url 来启用报告到此问题追踪器！"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -661,7 +665,7 @@ msgstr "搜索测试执行"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "搜索测试执行"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -864,11 +868,11 @@ msgstr "默认测试者"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
 msgid "TC"
-msgstr ""
+msgstr "TC"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testruns/templates/testruns/get.html:268
@@ -1155,7 +1159,7 @@ msgstr "切换导航"
 
 #: tcms/templates/navbar.html:15
 msgid "DASHBOARD"
-msgstr "仪表盘"
+msgstr "显示板"
 
 #: tcms/templates/navbar.html:41
 msgid "Language"
@@ -1547,11 +1551,11 @@ msgstr "都"
 
 #: tcms/testcases/templates/testcases/search.html:61
 msgid "include in search request"
-msgstr ""
+msgstr "包含在搜索请求"
 
 #: tcms/testcases/templates/testcases/search.html:74
 msgid "include child test plans"
-msgstr ""
+msgstr "包括子测试计划"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testcases/templates/testcases/search.html:165
@@ -1568,7 +1572,7 @@ msgstr "文字"
 #: tcms/testplans/templates/testplans/search.html:97
 #: tcms/testruns/templates/testruns/search.html:30
 msgid "Separate multiple values with comma (,)"
-msgstr "使用逗号隔开多个值"
+msgstr "使用逗号(,)隔开多个值"
 
 #: tcms/testcases/templates/testcases/search.html:178
 msgid "Select"
@@ -1704,7 +1708,7 @@ msgstr "父ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "输入要分配的位置；按退后加enter以清除"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1737,7 +1741,7 @@ msgstr "活动"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr ""
+msgstr "一些子测试计划与搜索条件不匹配"
 
 #: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
@@ -1898,7 +1902,7 @@ msgstr "更多信息"
 
 #: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
-msgstr "已选测试用例："
+msgstr "已选测试用例(s)："
 
 #: tcms/testruns/templates/testruns/mutable.html:221
 #, python-format
@@ -2048,7 +2052,10 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "感谢您通过付费订阅使用 Kiwi TCMS。\n"
+"我们很抱歉看到您离开，但我们想知道为什么以便我们可以在未来改进！\n\n"
+"您可以在论坛分享您的反馈。 \n\n"
+"谢谢！"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
@@ -2129,15 +2136,15 @@ msgstr "收到的时间"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
 msgid "Extra emails"
-msgstr ""
+msgstr "额外邮件"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
-msgstr ""
+msgstr "Kiwi TCMS 将尝试匹配与tenant.owners.email + tenant.extern_email相匹配的重复性计费事件"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
-msgstr ""
+msgstr "用逗号 (,), 半冒号 (;) 或空格分开"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -2159,11 +2166,11 @@ msgstr "您将为Kiwi TCMS创建一个私人租户。\n"
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr ""
+msgstr "Kiwi TCMS 订阅退出调查"
 
 #: tcms_github_marketplace/views.py:567
 msgid "Kiwi TCMS subscription notification"
-msgstr ""
+msgstr "Kiwi TCMS 订阅通知"
 
 #: tcms_github_marketplace/views.py:749
 msgid "mo"
@@ -2221,7 +2228,7 @@ msgstr "未缴"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "用户即将过期"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2284,7 +2291,7 @@ msgstr "新的 Kiwi TCMS 租户已创建"
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "用户{user.username} 已添加进账户群组{group.name}"
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
