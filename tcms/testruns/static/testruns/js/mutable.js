@@ -1,6 +1,6 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { jsonRPC } from '../../../../static/js/jsonrpc'
-import { updateSelect, updateTestPlanSelectFromProduct } from '../../../../static/js/utils'
+import { discoverNestedTestPlans, updateSelect, updateTestPlanSelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestrunsMutableReadyHandler () {
     initializeDateTimePicker('#id_planned_start')
@@ -12,8 +12,8 @@ export function pageTestrunsMutableReadyHandler () {
 
     document.getElementById('id_product').onchange = () => {
         $('#id_product').selectpicker('refresh')
-        updateTestPlanSelectFromProduct({ is_active: true }, function (inputData, callbackF) {
-            callbackF(inputData)
+        updateTestPlanSelectFromProduct({ is_active: true, parent: null }, function (inputData, callbackF) {
+            discoverNestedTestPlans(inputData, callbackF)
 
             // trigger on-change handler, possibly updating build
             $('#id_test_plan').change()

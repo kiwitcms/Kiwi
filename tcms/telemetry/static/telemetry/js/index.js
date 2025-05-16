@@ -1,12 +1,10 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import {
+    discoverNestedTestPlans,
     updateBuildSelectFromVersion,
     updateVersionSelectFromProduct,
     updateTestPlanSelectFromProduct
 } from '../../../../static/js/utils'
-import {
-    discoverNestedTestPlans
-} from '../../../../testcases/static/testcases/js/search'
 import { loadInitialProduct } from './testing/utils'
 import {
     reloadCharts as testingBreakdownDrawChart,
