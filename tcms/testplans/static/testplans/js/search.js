@@ -61,7 +61,9 @@ export function pageTestplansSearchReadyHandler () {
                 return false
             }
 
-            window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
+            const firstPlan = encodeURIComponent(selectedTestPlans.shift())
+            const encodedSelectedTestPlans = selectedTestPlans.map((planId) => encodeURIComponent(planId))
+            window.location.assign(`/plan/${firstPlan}/clone/?p=${encodedSelectedTestPlans.join('&p=')}`)
         }
     }
 
