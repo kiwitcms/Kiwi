@@ -189,13 +189,7 @@ export function pageTestplansSearchReadyHandler () {
         },
         order: [[2, 'asc']],
         initComplete: function () {
-            const btnContainer = table.buttons().container()
-            $(btnContainer).prepend(
-                '<input type="checkbox" id="onlyActive" style=" margin: 0 10px;">'
-            )
-
-            // Hook the checkbox change event to “select all”
-            $('#onlyActive').on('change', function () {
+            $('.js-toolbar-select-all').on('change', function () {
                 const checked = this.checked
                 $('#resultsTable tbody input.row-select')
                     .prop('checked', checked)
