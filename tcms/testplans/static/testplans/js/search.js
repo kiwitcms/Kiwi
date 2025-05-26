@@ -201,8 +201,11 @@ export function pageTestplansSearchReadyHandler () {
     // row checkbox handler
     $('#resultsTable tbody').on('change', 'input.row-select', function () {
         const $tr = $(this).closest('tr')
-        if (this.checked) table.row($tr).select()
-        else table.row($tr).deselect()
+        if (this.checked) {
+            table.row($tr).select()
+        } else {
+            table.row($tr).deselect()
+        }
     })
 
     // Add event listener for opening and closing nested test plans
