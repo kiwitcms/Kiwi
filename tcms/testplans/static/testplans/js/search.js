@@ -193,19 +193,9 @@ export function pageTestplansSearchReadyHandler () {
         order: [[2, 'asc']],
         initComplete: function () {
             $('.js-toolbar-select-all').on('change', function () {
-                const checked = this.checked
-                $('#resultsTable tbody input.row-select')
-                    .prop('checked', checked)
-                    .trigger('change')
+                $('#resultsTable tbody input.row-select').prop('checked', this.checked)
             })
         }
-    })
-
-    // row checkbox handler
-    $('#resultsTable tbody').on('change', 'input.row-select', function () {
-        const $tr = $(this).closest('tr')
-        if (this.checked) table.row($tr).select()
-        else table.row($tr).deselect()
     })
 
     // Add event listener for opening and closing nested test plans
