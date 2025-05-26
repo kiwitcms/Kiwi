@@ -2,7 +2,7 @@ import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { dataTableJsonRPC, jsonRPC } from '../../../../static/js/jsonrpc'
 import { exportButtons } from '../../../../static/js/datatables_common'
 import {
-    escapeHTML,
+    escapeHTML, selectedVisibleCheckboxes,
     updateParamsToSearchTags, updateVersionSelectFromProduct
 } from '../../../../static/js/utils'
 
@@ -52,9 +52,12 @@ export function pageTestplansSearchReadyHandler () {
         text: '<i class="fa fa-code-fork"></i>',
         titleAttr: 'Clone Selected',
         action: function (e, dt, node, config) {
-            const selectedTestPlans = getSelectedTestPlans()
+            const selectedTestPlans = selectedVisibleCheckboxes(
+                '#resultsTable tbody input.row-select',
+                $('#main-element').data('trans-no-testplans-selected')
+            ).toArray().map(checkbox => $(checkbox).closest('tr').find('td:nth-child(3)').text().trim())
+
             if (selectedTestPlans.length === 0) {
-                alert($('#main-element').data('trans-no-testplans-selected'))
                 return false
             }
 
@@ -222,16 +225,6 @@ export function pageTestplansSearchReadyHandler () {
     $('#id_product').change(function () {
         updateVersionSelectFromProduct('#id_product', '#id_version')
     })
-}
-
-function getSelectedTestPlans () {
-    const inputs = $('#resultsTable tbody input.row-select:checked').closest('tr:visible')
-    const tpIds = []
-
-    inputs.each(function (_, el) {
-        tpIds.push($(el).find('td:nth-child(3)').text().trim())
-    })
-    return tpIds
 }
 
 function hideExpandedChildren (table, parentRow) {
