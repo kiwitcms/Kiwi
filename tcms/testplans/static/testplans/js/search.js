@@ -49,8 +49,8 @@ export function pageTestplansSearchReadyHandler () {
     initializeDateTimePicker('#id_after')
 
     const multiCloneButton = {
-        text: '<i class="fa fa-code-fork"></i>',
-        titleAttr: 'Clone Selected',
+        text: '<i class="fa fa-clone"> </i>',
+        titleAttr: 'Clone',
         action: function (e, dt, node, config) {
             const selectedTestPlans = getSelectedTestPlans()
             if (selectedTestPlans.length === 0) {
