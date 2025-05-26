@@ -54,7 +54,6 @@ export function pageTestplansSearchReadyHandler () {
         action: function (e, dt, node, config) {
             const selectedTestPlans = getSelectedTestPlans()
             if (selectedTestPlans.length === 0) {
-                alert($('#main-element').data('trans-no-testplans-selected'))
                 return false
             }
 
@@ -240,6 +239,11 @@ function getSelectedTestPlans () {
         // Check if the row has collapsed children and add their IDs
         tpIds.push(...getChildRows(el))
     })
+
+    if (tpIds.length === 0) {
+        alert($('#main-element').data('trans-no-testplans-selected'))
+    }
+
     return tpIds
 }
 
