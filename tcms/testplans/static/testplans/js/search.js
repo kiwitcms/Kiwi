@@ -58,7 +58,7 @@ export function pageTestplansSearchReadyHandler () {
                 return false
             }
 
-            window.location.assign(`/plan/clone/?p=${selectedTestPlans.join('&p=')}`)
+            window.location.assign(`/plan/0/clone/?p=${selectedTestPlans.join('&p=')}`)
         }
     }
 
