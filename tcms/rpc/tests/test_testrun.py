@@ -3,10 +3,10 @@
 
 from datetime import datetime
 
+import tcms_api
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
 from django.utils.translation import gettext_lazy as _
-from tcms_api import xmlrpc
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import TestCaseStatus
@@ -70,11 +70,11 @@ class TestAddCase(APITestCase):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, "testruns.add_testexecution")
 
-        rpc_client = xmlrpc.TCMSXmlrpc(
+        rpc_client = tcms_api.TCMS(
+            f"{self.live_server_url}/xml-rpc/",
             unauthorized_user.username,
             "api-testing",
-            f"{self.live_server_url}/xml-rpc/",
-        ).server
+        ).exec
 
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "TestRun.add_case"'
@@ -127,11 +127,11 @@ class TestRemovesCase(APITestCase):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, "testruns.delete_testexecution")
 
-        rpc_client = xmlrpc.TCMSXmlrpc(
+        rpc_client = tcms_api.TCMS(
+            f"{self.live_server_url}/xml-rpc/",
             unauthorized_user.username,
             "api-testing",
-            f"{self.live_server_url}/xml-rpc/",
-        ).server
+        ).exec
 
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "TestRun.remove_case"'
@@ -254,11 +254,11 @@ class TestAddTag(APITestCase):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, "testruns.add_testruntag")
 
-        rpc_client = xmlrpc.TCMSXmlrpc(
+        rpc_client = tcms_api.TCMS(
+            f"{self.live_server_url}/xml-rpc/",
             unauthorized_user.username,
             "api-testing",
-            f"{self.live_server_url}/xml-rpc/",
-        ).server
+        ).exec
 
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "TestRun.add_tag"'
@@ -327,11 +327,11 @@ class TestRemoveTag(APITestCase):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, "testruns.delete_testruntag")
 
-        rpc_client = xmlrpc.TCMSXmlrpc(
+        rpc_client = tcms_api.TCMS(
+            f"{self.live_server_url}/xml-rpc/",
             unauthorized_user.username,
             "api-testing",
-            f"{self.live_server_url}/xml-rpc/",
-        ).server
+        ).exec
 
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "TestRun.remove_tag"'

@@ -25,11 +25,11 @@ class APITestCase(test.LiveServerTestCase):
         initiate_user_with_default_setups(self.api_user)
 
         # this is the XML-RPC ServerProxy with cookies support
-        self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
+        self.rpc_client = tcms_api.TCMS(
+            f"{self.live_server_url}/xml-rpc/",
             self.api_user.username,
             "api-testing",
-            f"{self.live_server_url}/xml-rpc/",
-        ).server
+        ).exec
 
 
 class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
@@ -50,11 +50,11 @@ class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
         self.tester.save()
 
         # this is the XML-RPC ServerProxy with cookies support
-        self.rpc_client = tcms_api.xmlrpc.TCMSXmlrpc(
+        self.rpc_client = tcms_api.TCMS(
+            f"{self.live_server_url}/xml-rpc/",
             self.tester.username,
             "password",
-            f"{self.live_server_url}/xml-rpc/",
-        ).server
+        ).exec
 
     def verify_api_with_permission(self):
         """
