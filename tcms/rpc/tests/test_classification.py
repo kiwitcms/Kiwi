@@ -11,10 +11,11 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 class TestClassificationFilter(APITestCase):
     """Test Classification.filter method"""
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.classification = ClassificationFactory()
+        cls.classification = ClassificationFactory()
 
     def test_filter_classification(self):
         classifications = self.rpc_client.Classification.filter(
@@ -32,10 +33,11 @@ class TestClassificationFilterPermissions(APIPermissionsTestCase):
 
     permission_label = "management.view_classification"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.classification = ClassificationFactory()
+        cls.classification = ClassificationFactory()
 
     def verify_api_with_permission(self):
         classifications = self.rpc_client.Classification.filter(
