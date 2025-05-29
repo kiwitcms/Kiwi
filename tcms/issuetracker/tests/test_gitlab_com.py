@@ -22,17 +22,18 @@ class TestGitlabIntegration(APITestCase):
     # https://gitlab.com/gitlab-org/gitlab/-/issues/337246
     existing_bug_url = "https://gitlab.com/kiwitcms/integration-testing/-/issues/1"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.execution_1 = TestExecutionFactory()
-        self.execution_1.case.text = "Given-When-Then"
-        self.execution_1.case.save()  # will generate history object
+        cls.execution_1 = TestExecutionFactory()
+        cls.execution_1.case.text = "Given-When-Then"
+        cls.execution_1.case.save()  # will generate history object
 
-        self.component = ComponentFactory(
-            name="Gitlab integration", product=self.execution_1.run.plan.product
+        cls.component = ComponentFactory(
+            name="Gitlab integration", product=cls.execution_1.run.plan.product
         )
-        self.execution_1.case.add_component(self.component)
+        cls.execution_1.case.add_component(cls.component)
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="GitLab-EE for root/kiwitcms",
@@ -41,7 +42,7 @@ class TestGitlabIntegration(APITestCase):
             api_url="https://gitlab.com",
             api_password=os.getenv("GITLAB_INTEGRATION_API_TOKEN"),
         )
-        self.integration = Gitlab(bug_system, None)
+        cls.integration = Gitlab(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)
