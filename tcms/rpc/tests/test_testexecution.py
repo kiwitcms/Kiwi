@@ -23,15 +23,14 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 class TestExecutionGetComments(APITestCase):
     """Test TestExecution.get_comments"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.comments = ["Text for first comment", "Text for second comment"]
+        self.comments = ["Text for first comment", "Text for second comment"]
 
-        cls.execution = TestExecutionFactory()
-        for comment in cls.comments:
-            comments.add_comment([cls.execution], comment, cls.api_user)
+        self.execution = TestExecutionFactory()
+        for comment in self.comments:
+            comments.add_comment([self.execution], comment, self.api_user)
 
     def test_get_comments(self):
         execution_comments = self.rpc_client.TestExecution.get_comments(
@@ -54,15 +53,14 @@ class TestExecutionGetCommentsPermissions(APIPermissionsTestCase):
 
     permission_label = "django_comments.view_comment"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution = TestExecutionFactory()
-        cls.comments = ["Text for first comment", "Text for second comment"]
+        self.execution = TestExecutionFactory()
+        self.comments = ["Text for first comment", "Text for second comment"]
 
-        for comment in cls.comments:
-            comments.add_comment([cls.execution], comment, cls.tester)
+        for comment in self.comments:
+            comments.add_comment([self.execution], comment, self.tester)
 
     def verify_api_with_permission(self):
         execution_comments = self.rpc_client.TestExecution.get_comments(
@@ -84,12 +82,11 @@ class TestExecutionGetCommentsPermissions(APIPermissionsTestCase):
 class TestExecutionAddComment(APITestCase):
     """Test TestExecution.add_comment"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution_1 = TestExecutionFactory()
-        cls.execution_2 = TestExecutionFactory()
+        self.execution_1 = TestExecutionFactory()
+        self.execution_2 = TestExecutionFactory()
 
     def test_add_comment_with_pk_as_int(self):
         created_comment = self.rpc_client.TestExecution.add_comment(
@@ -106,12 +103,11 @@ class TestExecutionAddComment(APITestCase):
 class TestExecutionRemoveComment(APITestCase):
     """Test TestExecution.remove_comment"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.user = UserFactory()
-        cls.execution = TestExecutionFactory()
+        self.user = UserFactory()
+        self.execution = TestExecutionFactory()
 
     def test_delete_all_comments(self):
         comments.add_comment([self.execution], "Hello World!", self.user)
@@ -139,12 +135,11 @@ class TestExecutionRemoveCommentPermissions(APIPermissionsTestCase):
 
     permission_label = "django_comments.delete_comment"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.user = UserFactory()
-        cls.execution = TestExecutionFactory()
+        self.user = UserFactory()
+        self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
         comments.add_comment([self.execution], "Hello World!", self.user)
@@ -167,11 +162,10 @@ class TestExecutionRemoveCommentPermissions(APIPermissionsTestCase):
 class TestExecutionAddLink(APITestCase):
     """Test TestExecution.add_link"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution = TestExecutionFactory()
+        self.execution = TestExecutionFactory()
 
     def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(
@@ -203,11 +197,10 @@ class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
 
     permission_label = "linkreference.add_linkreference"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution = TestExecutionFactory()
+        self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
         links = self.execution.links()
@@ -235,14 +228,13 @@ class TestExecutionAddLinkPermissions(APIPermissionsTestCase):
 
 
 class TestExecutionRemoveLink(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
-        cls.tester = UserFactory()
-        cls.execution = TestExecutionFactory(
-            assignee=cls.tester, tested_by=None, sortkey=10, status=cls.status_idle
+        self.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
+        self.tester = UserFactory()
+        self.execution = TestExecutionFactory(
+            assignee=self.tester, tested_by=None, sortkey=10, status=self.status_idle
         )
 
     def setUp(self):
@@ -281,13 +273,12 @@ class TestExecutionRemoveLinkPermissions(APIPermissionsTestCase):
 
     permission_label = "linkreference.delete_linkreference"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution = TestExecutionFactory()
-        cls.link = LinkReferenceFactory(execution=cls.execution)
-        cls.another_link = LinkReferenceFactory(execution=cls.execution)
+        self.execution = TestExecutionFactory()
+        self.link = LinkReferenceFactory(execution=self.execution)
+        self.another_link = LinkReferenceFactory(execution=self.execution)
 
     def verify_api_with_permission(self):
         links = self.execution.links()
@@ -311,14 +302,13 @@ class TestExecutionRemoveLinkPermissions(APIPermissionsTestCase):
 
 
 class TestExecutionFilter(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
-        cls.tester = UserFactory()
-        cls.execution = TestExecutionFactory(
-            assignee=cls.tester, tested_by=None, sortkey=10, status=cls.status_idle
+        self.status_idle = TestExecutionStatus.objects.filter(weight=0).first()
+        self.tester = UserFactory()
+        self.execution = TestExecutionFactory(
+            assignee=self.tester, tested_by=None, sortkey=10, status=self.status_idle
         )
 
     def test_with_non_exist_id(self):
@@ -384,15 +374,11 @@ class ActualDurationProperty(APITestCase):
 
 
 class TestExecutionGetLinks(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution_1 = TestExecutionFactory()
-        cls.execution_2 = TestExecutionFactory()
-
-    def setUp(self):
-        super().setUp()
+        self.execution_1 = TestExecutionFactory()
+        self.execution_2 = TestExecutionFactory()
 
         self.rpc_client.TestExecution.add_link(
             {
@@ -430,11 +416,10 @@ class TestExecutionGetLinks(APITestCase):
 
 
 class TestExecutionHistory(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution = TestExecutionFactory()
+        self.execution = TestExecutionFactory()
 
     def test_history_for_non_existing_execution(self):
         with self.assertRaisesRegex(
@@ -489,11 +474,10 @@ class TestExecutionHistoryPermissions(APIPermissionsTestCase):
 
     permission_label = "testruns.view_historicaltestexecution"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution = TestExecutionFactory()
+        self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
         history = self.rpc_client.TestExecution.history(self.execution.pk)
@@ -508,15 +492,14 @@ class TestExecutionHistoryPermissions(APIPermissionsTestCase):
 
 @override_settings(LANGUAGE_CODE="en")
 class TestExecutionUpdate(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.user = UserFactory()
-        cls.build = BuildFactory()
-        cls.execution_1 = TestExecutionFactory()
-        cls.execution_2 = TestExecutionFactory()
-        cls.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
+        self.user = UserFactory()
+        self.build = BuildFactory()
+        self.execution_1 = TestExecutionFactory()
+        self.execution_2 = TestExecutionFactory()
+        self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
 
     def test_update_with_single_test_execution(self):
         execution = TestExecutionFactory(tested_by=None)
@@ -691,29 +674,24 @@ class TestExecutionUpdate(APITestCase):
         self.execution_1.case.save()
 
     def test_update_with_no_perm(self):
+        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "TestExecution.update"'
         ):
-            # assign to a temp variable b/c self.rpc_client a property and calling it twice
-            # in sequence results in 1st call logging out and 2nd call logging in automatically
-            rpc_client = self.rpc_client
-
-            rpc_client.Auth.logout()
-            rpc_client.TestExecution.update(
+            self.rpc_client.TestExecution.update(
                 self.execution_1.pk, {"stop_date": timezone.now()}
             )
 
 
 class TestExecutionUpdateStatus(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.user = UserFactory()
-        cls.execution_1 = TestExecutionFactory()
-        cls.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
-        cls.status_negative = TestExecutionStatus.objects.filter(weight__lt=0).last()
-        cls.status_in_progress = TestExecutionStatus.objects.filter(weight=0).last()
+        self.user = UserFactory()
+        self.execution_1 = TestExecutionFactory()
+        self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
+        self.status_negative = TestExecutionStatus.objects.filter(weight__lt=0).last()
+        self.status_in_progress = TestExecutionStatus.objects.filter(weight=0).last()
 
     def test_changes_tested_by(self):
         execution = TestExecutionFactory(tested_by=None)
@@ -787,12 +765,11 @@ class TestExecutionUpdateStatus(APITestCase):
 class TestExecutionRemovePermissions(APIPermissionsTestCase):
     permission_label = "testruns.delete_testexecution"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.user = UserFactory()
-        cls.execution = TestExecutionFactory()
+        self.user = UserFactory()
+        self.execution = TestExecutionFactory()
 
     def verify_api_with_permission(self):
         self.rpc_client.TestExecution.remove({"pk": self.execution.pk})

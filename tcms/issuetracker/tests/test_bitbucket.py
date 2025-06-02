@@ -19,23 +19,22 @@ class TestBitBucketIntegration(APITestCase):
     existing_bug_id = 1
     existing_bug_url = "https://bitbucket.org/kiwitcms/integration/issues/1"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution_1 = TestExecutionFactory()
-        cls.execution_1.case.summary = "Tested at " + timezone.now().isoformat()
-        cls.execution_1.case.text = "Given-When-Then"
-        cls.execution_1.case.save()  # will generate history object
-        cls.execution_1.run.summary = (
+        self.execution_1 = TestExecutionFactory()
+        self.execution_1.case.summary = "Tested at " + timezone.now().isoformat()
+        self.execution_1.case.text = "Given-When-Then"
+        self.execution_1.case.save()  # will generate history object
+        self.execution_1.run.summary = (
             "Automated TR for BitBucket integration on " + timezone.now().isoformat()
         )
-        cls.execution_1.run.save()
+        self.execution_1.run.save()
 
-        cls.component = ComponentFactory(
-            name="BitBucket integration", product=cls.execution_1.run.plan.product
+        self.component = ComponentFactory(
+            name="BitBucket integration", product=self.execution_1.run.plan.product
         )
-        cls.execution_1.case.add_component(cls.component)
+        self.execution_1.case.add_component(self.component)
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="BitBucket for kiwitcms/test-bitbucket-integration",
@@ -44,7 +43,7 @@ class TestBitBucketIntegration(APITestCase):
             api_username=os.getenv("BITBUCKET_INTEGRATION_API_USERNAME"),
             api_password=os.getenv("BITBUCKET_INTEGRATION_API_PASSWORD"),
         )
-        cls.integration = BitBucket(bug_system, None)
+        self.integration = BitBucket(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)

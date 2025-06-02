@@ -27,20 +27,19 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestAddCase(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory(author=cls.api_user)
+        self.plan = TestPlanFactory(author=self.api_user)
 
-        cls.test_case = TestCaseFactory()
-        cls.test_case.case_status = TestCaseStatus.objects.filter(
+        self.test_case = TestCaseFactory()
+        self.test_case.case_status = TestCaseStatus.objects.filter(
             is_confirmed=True
         ).first()
-        cls.test_case.save()  # generate history object
-        cls.plan.add_case(cls.test_case)
+        self.test_case.save()  # generate history object
+        self.plan.add_case(self.test_case)
 
-        cls.test_run = TestRunFactory(plan=cls.plan)
+        self.test_run = TestRunFactory(plan=self.plan)
 
     def test_add_case(self):
         executions = self.rpc_client.TestRun.add_case(
@@ -89,19 +88,20 @@ class TestAddCase(APITestCase):
 
 
 class TestRemovesCase(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory(author=cls.api_user)
+        self.plan = TestPlanFactory(author=self.api_user)
 
-        cls.test_case = TestCaseFactory()
-        cls.test_case.save()  # generate history object
-        cls.plan.add_case(cls.test_case)
+        self.test_case = TestCaseFactory()
+        self.test_case.save()  # generate history object
+        self.plan.add_case(self.test_case)
 
-        cls.test_run = TestRunFactory(plan=cls.plan)
-        cls.test_execution = TestExecutionFactory(run=cls.test_run, case=cls.test_case)
-        cls.test_execution.save()
+        self.test_run = TestRunFactory(plan=self.plan)
+        self.test_execution = TestExecutionFactory(
+            run=self.test_run, case=self.test_case
+        )
+        self.test_execution.save()
 
     def test_nothing_change_if_invalid_case_passed(self):
         self.rpc_client.TestRun.remove_case(self.test_run.pk, 999999)
@@ -151,16 +151,15 @@ class TestRemovesCase(APITestCase):
 
 
 class TestGetCases(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.test_case = TestCaseFactory()
-        cls.test_case.case_status = TestCaseStatus.objects.filter(
+        self.test_case = TestCaseFactory()
+        self.test_case.case_status = TestCaseStatus.objects.filter(
             is_confirmed=True
         ).first()
-        cls.test_case.save()
-        cls.test_run = TestRunFactory()
+        self.test_case.save()
+        self.test_run = TestRunFactory()
 
     def test_get_empty_result_if_no_case_added(self):
         result = self.rpc_client.TestRun.get_cases(self.test_run.pk)
@@ -197,11 +196,10 @@ class TestGetCases(APITestCase):
 class TestGetCasesPermission(APIPermissionsTestCase):
     permission_label = "testruns.view_testrun"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.test_run = TestRunFactory()
+        self.test_run = TestRunFactory()
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestRun.get_cases(self.test_run.pk)
@@ -215,28 +213,27 @@ class TestGetCasesPermission(APIPermissionsTestCase):
 
 
 class TestAddTag(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory(author=cls.api_user)
-        cls.build = BuildFactory(version=cls.plan.product_version)
+        self.plan = TestPlanFactory(author=self.api_user)
+        self.build = BuildFactory(version=self.plan.product_version)
 
-        cls.test_runs = [
+        self.test_runs = [
             TestRunFactory(
-                build=cls.build,
+                build=self.build,
                 default_tester=None,
-                plan=cls.plan,
+                plan=self.plan,
             ),
             TestRunFactory(
-                build=cls.build,
+                build=self.build,
                 default_tester=None,
-                plan=cls.plan,
+                plan=self.plan,
             ),
         ]
 
-        cls.tag0 = TagFactory(name="xmlrpc_test_tag_0")
-        cls.tag1 = TagFactory(name="xmlrpc_test_tag_1")
+        self.tag0 = TagFactory(name="xmlrpc_test_tag_0")
+        self.tag1 = TagFactory(name="xmlrpc_test_tag_1")
 
     def test_add_tag(self):
         result = self.rpc_client.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
@@ -276,34 +273,33 @@ class TestAddTag(APITestCase):
 
 
 class TestRemoveTag(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory()
-        cls.version = VersionFactory(product=cls.product)
-        cls.build = BuildFactory(version=cls.version)
-        cls.plan = TestPlanFactory(author=cls.api_user, product=cls.product)
+        self.product = ProductFactory()
+        self.version = VersionFactory(product=self.product)
+        self.build = BuildFactory(version=self.version)
+        self.plan = TestPlanFactory(author=self.api_user, product=self.product)
 
-        cls.test_runs = [
+        self.test_runs = [
             TestRunFactory(
-                build=cls.build,
+                build=self.build,
                 default_tester=None,
-                plan=cls.plan,
+                plan=self.plan,
             ),
             TestRunFactory(
-                build=cls.build,
+                build=self.build,
                 default_tester=None,
-                plan=cls.plan,
+                plan=self.plan,
             ),
         ]
 
-        cls.tag0 = TagFactory(name="xmlrpc_test_tag_0")
-        cls.tag1 = TagFactory(name="xmlrpc_test_tag_1")
+        self.tag0 = TagFactory(name="xmlrpc_test_tag_0")
+        self.tag1 = TagFactory(name="xmlrpc_test_tag_1")
 
-        for tag in [cls.tag0, cls.tag1]:
-            cls.test_runs[0].add_tag(tag)
-            cls.test_runs[1].add_tag(tag)
+        for tag in [self.tag0, self.tag1]:
+            self.test_runs[0].add_tag(tag)
+            self.test_runs[1].add_tag(tag)
 
     def test_remove_tag(self):
         result = self.rpc_client.TestRun.remove_tag(
@@ -355,12 +351,11 @@ class TestRemoveTag(APITestCase):
 
 
 class TestRunCreate(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory(author=cls.api_user)
-        cls.build = BuildFactory(version=cls.plan.product_version)
+        self.plan = TestPlanFactory(author=self.api_user)
+        self.build = BuildFactory(version=self.plan.product_version)
 
     def test_create_with_invalid_value(self):
         test_run_fields = {
@@ -377,16 +372,15 @@ class TestRunCreate(APITestCase):
 class TestCreatePermission(APIPermissionsTestCase):
     permission_label = "testruns.add_testrun"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
-        cls.build = BuildFactory(version=cls.plan.product_version)
+        self.plan = TestPlanFactory()
+        self.build = BuildFactory(version=self.plan.product_version)
 
-        cls.test_run_fields = {
-            "plan": cls.plan.pk,
-            "build": cls.build.pk,
+        self.test_run_fields = {
+            "plan": self.plan.pk,
+            "build": self.build.pk,
             "summary": "TR created",
             "manager": UserFactory().pk,
             "start_date": datetime.strptime("2020-05-05", "%Y-%m-%d"),
@@ -423,17 +417,16 @@ class TestCreatePermission(APIPermissionsTestCase):
 
 
 class TestFilter(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
-        cls.test_case = TestCaseFactory()
-        cls.test_case.save()
-        cls.plan.add_case(cls.test_case)
+        self.test_case = TestCaseFactory()
+        self.test_case.save()
+        self.plan.add_case(self.test_case)
 
-        cls.test_run = TestRunFactory(plan=cls.plan)
+        self.test_run = TestRunFactory(plan=self.plan)
 
     def test_empty_query(self):
         result = self.rpc_client.TestRun.filter()
@@ -484,20 +477,19 @@ class TestFilterPermission(APIPermissionsTestCase):
 
 
 class TestUpdateTestRun(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.test_run = TestRunFactory()
+        self.test_run = TestRunFactory()
 
-        cls.updated_test_plan = TestPlanFactory()
-        cls.updated_build = BuildFactory()
-        cls.updated_summary = "Updated summary."
-        cls.updated_stop_date = datetime.strptime("2020-05-05", "%Y-%m-%d")
-        cls.updated_planned_start = datetime.strptime(
+        self.updated_test_plan = TestPlanFactory()
+        self.updated_build = BuildFactory()
+        self.updated_summary = "Updated summary."
+        self.updated_stop_date = datetime.strptime("2020-05-05", "%Y-%m-%d")
+        self.updated_planned_start = datetime.strptime(
             "2020-05-05 09:00:00", "%Y-%m-%d %H:%M:%S"
         )
-        cls.updated_planned_stop = datetime.strptime("2020-05-06", "%Y-%m-%d")
+        self.updated_planned_stop = datetime.strptime("2020-05-06", "%Y-%m-%d")
 
     def test_successful_update(self):
         update_fields = {
@@ -592,12 +584,11 @@ class TestUpdateTestRun(APITestCase):
 class TestUpdatePermission(APIPermissionsTestCase):
     permission_label = "testruns.change_testrun"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.test_run = TestRunFactory()
-        cls.update_fields = {
+        self.test_run = TestRunFactory()
+        self.update_fields = {
             "plan": TestPlanFactory().pk,
             "build": BuildFactory().pk,
             "summary": "Updated summary.",
@@ -623,11 +614,10 @@ class TestUpdatePermission(APIPermissionsTestCase):
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
     permission_label = "attachments.add_attachment"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.test_run = TestRunFactory()
+        self.test_run = TestRunFactory()
 
     def verify_api_with_permission(self):
         self.rpc_client.TestRun.add_attachment(
@@ -649,15 +639,14 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
 class TestRemovePermissions(APIPermissionsTestCase):
     permission_label = "testruns.delete_testrun"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.run_1 = TestRunFactory()
-        cls.run_2 = TestRunFactory()
-        cls.run_3 = TestRunFactory()
+        self.run_1 = TestRunFactory()
+        self.run_2 = TestRunFactory()
+        self.run_3 = TestRunFactory()
 
-        cls.query = {"pk__in": [cls.run_1.pk, cls.run_3.pk]}
+        self.query = {"pk__in": [self.run_1.pk, self.run_3.pk]}
 
     def verify_api_with_permission(self):
         num_deleted, _ = self.rpc_client.TestRun.remove(self.query)

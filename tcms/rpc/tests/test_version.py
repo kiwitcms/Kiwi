@@ -11,12 +11,11 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilterVersions(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory(name="StarCraft")
-        cls.version = VersionFactory(value="0.7", product=cls.product)
+        self.product = ProductFactory(name="StarCraft")
+        self.version = VersionFactory(value="0.7", product=self.product)
 
     def test_filter_by_version_id(self):
         result = self.rpc_client.Version.filter({"id": self.version.pk})[0]
@@ -42,12 +41,11 @@ class TestFilterVersions(APITestCase):
 
 @override_settings(LANGUAGE_CODE="en")
 class TestVersionCreateFunctionality(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product_name = "StarCraft"
-        cls.product = ProductFactory(name=cls.product_name)
+        self.product_name = "StarCraft"
+        self.product = ProductFactory(name=self.product_name)
 
     def test_add_version_with_product_id(self):
         result = self.rpc_client.Version.create(
@@ -87,10 +85,9 @@ class TestVersionCreateFunctionality(APITestCase):
 class TestVersionCreatePermissions(APIPermissionsTestCase):
     permission_label = "management.add_version"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        cls.product = ProductFactory()
+        self.product = ProductFactory()
 
     def verify_api_with_permission(self):
         result = self.rpc_client.Version.create(

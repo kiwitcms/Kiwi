@@ -8,14 +8,13 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilterComponents(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory(name="StarCraft")
-        cls.component = ComponentFactory(
+        self.product = ProductFactory(name="StarCraft")
+        self.component = ComponentFactory(
             name="application",
-            product=cls.product,
+            product=self.product,
             initial_owner=None,
             initial_qa_contact=None,
         )
@@ -42,11 +41,10 @@ class TestFilterComponents(APITestCase):
 
 
 class TestCreateComponent(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory()
+        self.product = ProductFactory()
 
     def test_add_component(self):
         result = self.rpc_client.Component.create(
@@ -65,27 +63,22 @@ class TestCreateComponent(APITestCase):
         self.assertEqual(result["description"], "Created via API")
 
     def test_add_component_with_no_perms(self):
+        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "Component.create"'
         ):
-            # assign to a temp variable b/c self.rpc_client a property and calling it twice
-            # in sequence results in 1st call logging out and 2nd call logging in automatically
-            rpc_client = self.rpc_client
-
-            rpc_client.Auth.logout()
-            rpc_client.Component.create(self.product.pk, "MyComponent")
+            self.rpc_client.Component.create(self.product.pk, "MyComponent")
 
 
-# pylint: disable=objects-update-used
 class TestUpdateComponent(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    # pylint: disable=objects-update-used
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory(name="StarCraft")
-        cls.component = ComponentFactory(
+        self.product = ProductFactory(name="StarCraft")
+        self.component = ComponentFactory(
             name="application",
-            product=cls.product,
+            product=self.product,
             initial_owner=None,
             initial_qa_contact=None,
         )
@@ -102,12 +95,8 @@ class TestUpdateComponent(APITestCase):
             self.rpc_client.Component.update(-99, {"name": "new name"})
 
     def test_update_component_with_no_perms(self):
+        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "Component.update"'
         ):
-            # assign to a temp variable b/c self.rpc_client a property and calling it twice
-            # in sequence results in 1st call logging out and 2nd call logging in automatically
-            rpc_client = self.rpc_client
-
-            rpc_client.Auth.logout()
-            rpc_client.Component.update(self.component.pk, {})
+            self.rpc_client.Component.update(self.component.pk, {})

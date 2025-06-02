@@ -23,25 +23,24 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilter(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory()
-        cls.version = VersionFactory(product=cls.product)
-        cls.tester = UserFactory()
-        cls.plan_type = PlanTypeFactory()
-        cls.plan_1 = TestPlanFactory(
-            product_version=cls.version,
-            product=cls.product,
-            author=cls.tester,
-            type=cls.plan_type,
+        self.product = ProductFactory()
+        self.version = VersionFactory(product=self.product)
+        self.tester = UserFactory()
+        self.plan_type = PlanTypeFactory()
+        self.plan_1 = TestPlanFactory(
+            product_version=self.version,
+            product=self.product,
+            author=self.tester,
+            type=self.plan_type,
         )
-        cls.plan_2 = TestPlanFactory(
-            product_version=cls.version,
-            product=cls.product,
-            author=cls.tester,
-            type=cls.plan_type,
+        self.plan_2 = TestPlanFactory(
+            product_version=self.version,
+            product=self.product,
+            author=self.tester,
+            type=self.plan_type,
         )
 
     def test_filter_plans(self):
@@ -69,18 +68,17 @@ class TestFilter(APITestCase):
 
 
 class TestAddTag(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory()
-        cls.plans = [
-            TestPlanFactory(author=cls.api_user, product=cls.product),
-            TestPlanFactory(author=cls.api_user, product=cls.product),
+        self.product = ProductFactory()
+        self.plans = [
+            TestPlanFactory(author=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
         ]
 
-        cls.tag1 = TagFactory(name="xmlrpc_test_tag_1")
-        cls.tag2 = TagFactory(name="xmlrpc_test_tag_2")
+        self.tag1 = TagFactory(name="xmlrpc_test_tag_1")
+        self.tag2 = TagFactory(name="xmlrpc_test_tag_2")
 
     def test_add_tag(self):
         self.rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
@@ -116,21 +114,20 @@ class TestAddTag(APITestCase):
 
 
 class TestRemoveTag(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory()
-        cls.plans = [
-            TestPlanFactory(author=cls.api_user, product=cls.product),
-            TestPlanFactory(author=cls.api_user, product=cls.product),
+        self.product = ProductFactory()
+        self.plans = [
+            TestPlanFactory(author=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
         ]
 
-        cls.tag0 = TagFactory(name="xmlrpc_test_tag_0")
-        cls.tag1 = TagFactory(name="xmlrpc_test_tag_1")
+        self.tag0 = TagFactory(name="xmlrpc_test_tag_0")
+        self.tag1 = TagFactory(name="xmlrpc_test_tag_1")
 
-        cls.plans[0].add_tag(cls.tag0)
-        cls.plans[1].add_tag(cls.tag1)
+        self.plans[0].add_tag(self.tag0)
+        self.plans[1].add_tag(self.tag1)
 
     def test_remove_tag(self):
         self.rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
@@ -172,11 +169,10 @@ class TestRemoveTag(APITestCase):
 
 @override_settings(LANGUAGE_CODE="en")
 class TestUpdate(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
     def test_not_exist_test_plan_id(self):
         err_msg = "Internal error: TestPlan matching query does not exist."
@@ -194,11 +190,10 @@ class TestUpdate(APITestCase):
 class TestUpdatePermission(APIPermissionsTestCase):
     permission_label = "testplans.change_testplan"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestPlan.update(
@@ -234,18 +229,17 @@ class TestUpdatePermission(APIPermissionsTestCase):
 class TestRemoveCase(APITestCase):
     """Test the XML-RPC method TestPlan.remove_case()"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        cls.testcase_1 = TestCaseFactory()
-        cls.testcase_2 = TestCaseFactory()
-        cls.plan_1 = TestPlanFactory()
-        cls.plan_2 = TestPlanFactory()
+        self.testcase_1 = TestCaseFactory()
+        self.testcase_2 = TestCaseFactory()
+        self.plan_1 = TestPlanFactory()
+        self.plan_2 = TestPlanFactory()
 
-        cls.plan_1.add_case(cls.testcase_1)
-        cls.plan_1.add_case(cls.testcase_2)
+        self.plan_1.add_case(self.testcase_1)
+        self.plan_1.add_case(self.testcase_2)
 
-        cls.plan_2.add_case(cls.testcase_2)
+        self.plan_2.add_case(self.testcase_2)
 
     def test_remove_case_with_single_plan(self):
         self.rpc_client.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
@@ -261,20 +255,19 @@ class TestRemoveCase(APITestCase):
 class TestAddCase(APITestCase):
     """Test the XML-RPC method TestPlan.add_case()"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.testcase_1 = TestCaseFactory()
-        cls.testcase_2 = TestCaseFactory()
-        cls.testcase_3 = TestCaseFactory()
+        self.testcase_1 = TestCaseFactory()
+        self.testcase_2 = TestCaseFactory()
+        self.testcase_3 = TestCaseFactory()
 
-        cls.plan_1 = TestPlanFactory()
-        cls.plan_2 = TestPlanFactory()
-        cls.plan_3 = TestPlanFactory()
+        self.plan_1 = TestPlanFactory()
+        self.plan_2 = TestPlanFactory()
+        self.plan_3 = TestPlanFactory()
 
         # case 1 is already linked to plan 1
-        cls.plan_1.add_case(cls.testcase_1)
+        self.plan_1.add_case(self.testcase_1)
 
     def test_ignores_existing_mappings(self):
         plans = [self.plan_1.pk, self.plan_2.pk, self.plan_3.pk]
@@ -371,18 +364,17 @@ class TestCreate(APITestCase):
 class TestCreatePermission(APIPermissionsTestCase):
     permission_label = "testplans.add_testplan"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory()
-        cls.version = VersionFactory(product=cls.product)
-        cls.plan_type = PlanTypeFactory()
-        cls.params = {
-            "product": cls.product.pk,
-            "product_version": cls.version.pk,
+        self.product = ProductFactory()
+        self.version = VersionFactory(product=self.product)
+        self.plan_type = PlanTypeFactory()
+        self.params = {
+            "product": self.product.pk,
+            "product_version": self.version.pk,
             "name": "Testplan foobar",
-            "type": cls.plan_type.pk,
+            "type": self.plan_type.pk,
             "text": "Testing TCMS",
             "parent": None,
         }
@@ -410,11 +402,10 @@ class TestCreatePermission(APIPermissionsTestCase):
 
 @override_settings(LANGUAGE_CODE="en")
 class TestListAttachments(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
     def test_list_attachments(self):
         file_name = "attachment.txt"
@@ -432,11 +423,10 @@ class TestListAttachments(APITestCase):
 class TestListAttachmentsPermissions(APIPermissionsTestCase):
     permission_label = "attachments.view_attachment"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
     def verify_api_with_permission(self):
         attachments = self.rpc_client.TestPlan.list_attachments(self.plan.pk)
@@ -453,11 +443,10 @@ class TestListAttachmentsPermissions(APIPermissionsTestCase):
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
     permission_label = "attachments.add_attachment"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
     def verify_api_with_permission(self):
         file_name = "attachment.txt"
@@ -482,11 +471,10 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
 class TestTreePermission(APIPermissionsTestCase):
     permission_label = "testplans.view_testplan"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan = TestPlanFactory()
+        self.plan = TestPlanFactory()
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestPlan.tree(self.plan.pk)
@@ -506,14 +494,13 @@ class TestTreePermission(APIPermissionsTestCase):
 
 
 class TestTree(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.plan_1 = TestPlanFactory()
-        cls.plan_2 = TestPlanFactory(parent=cls.plan_1)
-        cls.plan_3 = TestPlanFactory(parent=cls.plan_1)
-        cls.plan_4 = TestPlanFactory(parent=cls.plan_2)
+        self.plan_1 = TestPlanFactory()
+        self.plan_2 = TestPlanFactory(parent=self.plan_1)
+        self.plan_3 = TestPlanFactory(parent=self.plan_1)
+        self.plan_4 = TestPlanFactory(parent=self.plan_2)
 
     def test_tree_returns_dfs_order(self):
         result = self.rpc_client.TestPlan.tree(self.plan_1.pk)

@@ -26,21 +26,20 @@ class TestRedmineIntegration(APITestCase):
     existing_bug_id = 1
     existing_bug_url = "http://bugtracker.kiwitcms.org:3000/issues/1"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution_1 = TestExecutionFactory()
-        cls.execution_1.case.save()  # will generate history object
+        self.execution_1 = TestExecutionFactory()
+        self.execution_1.case.save()  # will generate history object
 
         # this is the name of the Redmine Project
-        cls.execution_1.build.version.product.name = "Integration with Kiwi TCMS"
-        cls.execution_1.build.version.product.save()
+        self.execution_1.build.version.product.name = "Integration with Kiwi TCMS"
+        self.execution_1.build.version.product.save()
 
-        cls.component = ComponentFactory(
-            name="Redmine integration", product=cls.execution_1.run.plan.product
+        self.component = ComponentFactory(
+            name="Redmine integration", product=self.execution_1.run.plan.product
         )
-        cls.execution_1.case.add_component(cls.component)
+        self.execution_1.case.add_component(self.component)
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="Redmine at kiwitcms.atlassian.net",
@@ -49,7 +48,7 @@ class TestRedmineIntegration(APITestCase):
             api_username="admin",
             api_password="admin",
         )
-        cls.integration = Redmine(bug_system, None)
+        self.integration = Redmine(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)
