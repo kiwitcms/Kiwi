@@ -9,16 +9,15 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestCategory(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product_nitrate = ProductFactory(name="nitrate")
-        cls.product_xmlrpc = ProductFactory(name="xmlrpc")
-        cls.case_categories = [
-            CategoryFactory(name="auto", product=cls.product_nitrate),
-            CategoryFactory(name="manual", product=cls.product_nitrate),
-            CategoryFactory(name="pending", product=cls.product_xmlrpc),
+        self.product_nitrate = ProductFactory(name="nitrate")
+        self.product_xmlrpc = ProductFactory(name="xmlrpc")
+        self.case_categories = [
+            CategoryFactory(name="auto", product=self.product_nitrate),
+            CategoryFactory(name="manual", product=self.product_nitrate),
+            CategoryFactory(name="pending", product=self.product_xmlrpc),
         ]
 
     def test_filter_by_name_and_product_id(self):
@@ -54,10 +53,9 @@ class TestCategory(APITestCase):
 class TestCategoryCreatePermissions(APIPermissionsTestCase):
     permission_label = "testcases.add_category"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        cls.product = ProductFactory()
+        self.product = ProductFactory()
 
     def verify_api_with_permission(self):
         result = self.rpc_client.Category.create(

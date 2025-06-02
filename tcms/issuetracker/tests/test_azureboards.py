@@ -22,23 +22,22 @@ class TestAzureIntegration(APITestCase):
         "https://dev.azure.com/kiwitcms/boards-integration/_workitems/edit/717"
     )
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.execution_1 = TestExecutionFactory()
-        cls.execution_1.case.summary = "Tested at " + timezone.now().isoformat()
-        cls.execution_1.case.text = "Given-When-Then"
-        cls.execution_1.case.save()  # will generate history object
-        cls.execution_1.run.summary = (
+        self.execution_1 = TestExecutionFactory()
+        self.execution_1.case.summary = "Tested at " + timezone.now().isoformat()
+        self.execution_1.case.text = "Given-When-Then"
+        self.execution_1.case.save()  # will generate history object
+        self.execution_1.run.summary = (
             "Automated TR for Azure integration on " + timezone.now().isoformat()
         )
-        cls.execution_1.run.save()
+        self.execution_1.run.save()
 
-        cls.component = ComponentFactory(
-            name="AzureBoards integration", product=cls.execution_1.run.plan.product
+        self.component = ComponentFactory(
+            name="AzureBoards integration", product=self.execution_1.run.plan.product
         )
-        cls.execution_1.case.add_component(cls.component)
+        self.execution_1.case.add_component(self.component)
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="Azure for kiwitcms/test-azure-integration",
@@ -46,7 +45,7 @@ class TestAzureIntegration(APITestCase):
             base_url="https://dev.azure.com/kiwitcms/boards-integration",
             api_password=os.getenv("AZURE_BOARDS_INTEGRATION_API_TOKEN"),
         )
-        cls.integration = AzureBoards(bug_system, None)
+        self.integration = AzureBoards(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)

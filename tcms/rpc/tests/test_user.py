@@ -28,31 +28,30 @@ class TestUserSerializer(TestCase):
 class TestUserFilter(APITestCase):
     """Test User.filter"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        user_should_have_perm(cls.api_user, "auth.view_user")
+        user_should_have_perm(self.api_user, "auth.view_user")
 
-        cls.group_tester = GroupFactory()
-        cls.group_reviewer = GroupFactory()
+        self.group_tester = GroupFactory()
+        self.group_reviewer = GroupFactory()
 
-        cls.user1 = UserFactory(
+        self.user1 = UserFactory(
             username="user 1",
             email="user1@exmaple.com",
             is_active=True,
-            groups=[cls.group_tester],
+            groups=[self.group_tester],
         )
-        cls.user2 = UserFactory(
+        self.user2 = UserFactory(
             username="user 2",
             email="user2@example.com",
             is_active=False,
-            groups=[cls.group_reviewer],
+            groups=[self.group_reviewer],
         )
-        cls.user3 = UserFactory(
+        self.user3 = UserFactory(
             username="user 3",
             email="user3@example.com",
             is_active=True,
-            groups=[cls.group_reviewer],
+            groups=[self.group_reviewer],
         )
 
     def test_normal_search(self):
@@ -85,15 +84,14 @@ class TestUserFilter(APITestCase):
 class TestUserJoin(APITestCase):
     """Test User.join_group"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
         # needs auth.change_user
-        cls.api_user.is_superuser = True
-        cls.api_user.save()
+        self.api_user.is_superuser = True
+        self.api_user.save()
 
-        cls.user = UserFactory(username="test_username", email="username@example.com")
-        cls.group = GroupFactory(name="test_group")
+        self.user = UserFactory(username="test_username", email="username@example.com")
+        self.group = GroupFactory(name="test_group")
 
     def test_join_normally(self):
         self.rpc_client.User.join_group(self.user.username, self.group.name)
@@ -116,15 +114,14 @@ class TestUserJoin(APITestCase):
 class TestUserUpdate(APITestCase):
     """Test User.update"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.another_user = UserFactory()
-        cls.another_user.set_password("another-password")
-        cls.another_user.save()
+        self.another_user = UserFactory()
+        self.another_user.set_password("another-password")
+        self.another_user.save()
 
-        cls.user_new_attrs = {
+        self.user_new_attrs = {
             "first_name": "new first name",
             "last_name": "new last name",
             "email": "new email",

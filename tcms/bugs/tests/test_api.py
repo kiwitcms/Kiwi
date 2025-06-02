@@ -21,12 +21,11 @@ class TestAddTagPermissions(APIPermissionsTestCase):
 
     permission_label = "bugs.add_bug_tags"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.bug = BugFactory()
-        cls.tag = TagFactory()
+        self.bug = BugFactory()
+        self.tag = TagFactory()
 
     def verify_api_with_permission(self):
         self.rpc_client.Bug.add_tag(self.bug.pk, self.tag.name)
@@ -42,12 +41,11 @@ class TestAddTagPermissions(APIPermissionsTestCase):
 class TestAddTag(APITestCase):
     """Test Bug.add_tag"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.bug = BugFactory()
-        cls.tag = TagFactory()
+        self.bug = BugFactory()
+        self.tag = TagFactory()
 
     def test_add_tag_to_non_existent_bug(self):
         with self.assertRaisesRegex(XmlRPCFault, "Bug matching query does not exist"):
@@ -59,13 +57,12 @@ class TestRemoveTagPermissions(APIPermissionsTestCase):
 
     permission_label = "bugs.delete_bug_tags"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.bug = BugFactory()
-        cls.tag = TagFactory()
-        cls.bug.tags.add(cls.tag)
+        self.bug = BugFactory()
+        self.tag = TagFactory()
+        self.bug.tags.add(self.tag)
 
     def verify_api_with_permission(self):
         self.rpc_client.Bug.remove_tag(self.bug.pk, self.tag.name)
@@ -83,13 +80,12 @@ class TestRemovePermissions(APIPermissionsTestCase):
 
     permission_label = "bugs.delete_bug"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.bug = BugFactory()
-        cls.another_bug = BugFactory()
-        cls.yet_another_bug = BugFactory()
+        self.bug = BugFactory()
+        self.another_bug = BugFactory()
+        self.yet_another_bug = BugFactory()
 
     def verify_api_with_permission(self):
         self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
@@ -109,13 +105,12 @@ class TestRemovePermissions(APIPermissionsTestCase):
 class TestFilter(APITestCase):
     """Test Bug.filter"""
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.bug = BugFactory(status=False)
-        cls.another_bug = BugFactory(status=True)
-        cls.yet_another_bug = BugFactory(status=True)
+        self.bug = BugFactory(status=False)
+        self.another_bug = BugFactory(status=True)
+        self.yet_another_bug = BugFactory(status=True)
 
     def test_filter(self):
         result = self.rpc_client.Bug.filter({"status": True})

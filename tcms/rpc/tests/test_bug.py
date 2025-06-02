@@ -14,11 +14,10 @@ if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
 
 
 class TestBug(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        cls.url = "http://some.url"
-        cls.expected_result = {
+        self.url = "http://some.url"
+        self.expected_result = {
             "title": "Bug from cache",
             "description": "This bug came from the Django cache",
         }

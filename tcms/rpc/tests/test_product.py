@@ -9,12 +9,11 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
 class TestFilter(APITestCase):
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
 
-        cls.product = ProductFactory(name="Kiwi TCMS")
-        cls.product_xmlrpc = ProductFactory(name="XMLRPC API")
+        self.product = ProductFactory(name="Kiwi TCMS")
+        self.product_xmlrpc = ProductFactory(name="XMLRPC API")
 
     def test_filter_by_id(self):
         result = self.rpc_client.Product.filter({"id": self.product.pk})
@@ -31,10 +30,9 @@ class TestFilter(APITestCase):
 class TestProductCreatePermissions(APIPermissionsTestCase):
     permission_label = "management.add_product"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        cls.classification = ClassificationFactory()
+        self.classification = ClassificationFactory()
 
     def verify_api_with_permission(self):
         result = self.rpc_client.Product.create(

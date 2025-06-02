@@ -11,10 +11,9 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 class TestPlanTypeFilter(APIPermissionsTestCase):
     permission_label = "testplans.view_plantype"
 
-    @classmethod
-    def _fixture_setup(cls):
+    def _fixture_setup(self):
         super()._fixture_setup()
-        cls.plan_type = PlanTypeFactory(name="xmlrpc plan type", description="")
+        self.plan_type = PlanTypeFactory(name="xmlrpc plan type", description="")
 
     def verify_api_with_permission(self):
         result = self.rpc_client.PlanType.filter({"name": self.plan_type.name})[0]
