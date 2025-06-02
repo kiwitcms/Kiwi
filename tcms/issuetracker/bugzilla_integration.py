@@ -48,6 +48,21 @@ class Bugzilla(base.IssueTrackerType):
             tokenfile=self._bugzilla_cache_dir + "token",
         )
 
+    def details(self, url):
+        try:
+            bug = self.rpc.getbug(self.bug_id_from_url(url))
+
+            return {
+                "id": bug.id,
+                # RHBZ has this attribute while upstream Bugzilla doesn't
+                "description": getattr(bug, "description", ""),
+                "status": bug.status,
+                "title": bug.summary,
+                "url": url,
+            }
+        except XmlRPCFault:
+            return super().details(url)
+
     def one_click_report(
         self, execution, user, args
     ):  # pylint: disable=unused-argument

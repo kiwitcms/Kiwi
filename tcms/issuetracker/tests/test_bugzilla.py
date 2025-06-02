@@ -50,12 +50,13 @@ class TestBugzillaIntegration(APITestCase):
     def test_details(self):
         result = self.integration.details(self.existing_bug_url)
 
-        # Bugzilla doesn't support OpenGraph and ATM we don't provide
-        # additional integration here
-        # warning:    this vvv is not the regular - (dash) character
-        self.assertEqual("1 – Hello World", result["title"])
-        self.assertEqual("", result["description"])
-        self.assertEqual("", result["image"])
+        self.assertEqual(self.existing_bug_id, result["id"])
+        # RHBZ has this attribute while upstream Bugzilla doesn't
+        if result["description"]:
+            self.assertEqual("This is reported via cli", result["description"])
+        self.assertEqual("CONFIRMED", result["status"])
+        self.assertEqual("Hello World", result["title"])
+        self.assertEqual(self.existing_bug_url, result["url"])
 
     def test_auto_update_bugtracker(self):
         bug = self.integration.rpc.getbug(self.existing_bug_id)
