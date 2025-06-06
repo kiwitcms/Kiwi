@@ -37,7 +37,7 @@ def details(url, **kwargs):
     if not tracker:
         return {}
 
-    result = tracker.details(url)
+    result = dict(tracker.details(url))
     cache.set(url, result)
     return result
 
