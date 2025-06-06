@@ -4,6 +4,7 @@ import tempfile
 from urllib.parse import urlencode
 
 import bugzilla
+from bugzilla.exceptions import BugzillaError
 from django.conf import settings
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -60,7 +61,7 @@ class Bugzilla(base.IssueTrackerType):
                 "title": bug.summary,
                 "url": url,
             }
-        except XmlRPCFault:
+        except (XmlRPCFault, BugzillaError):
             return super().details(url)
 
     def one_click_report(
