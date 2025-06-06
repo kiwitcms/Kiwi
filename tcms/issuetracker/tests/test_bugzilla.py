@@ -46,7 +46,7 @@ class TestBugzillaIntegration(APITestCase):
         result = self.integration.bug_id_from_url(self.existing_bug_url)
         self.assertEqual(self.existing_bug_id, result)
 
-    def test_details(self):
+    def test_details_when_authenticated(self):
         result = self.integration.details(self.existing_bug_url)
 
         self.assertEqual(self.existing_bug_id, result["id"])
@@ -56,6 +56,33 @@ class TestBugzillaIntegration(APITestCase):
         self.assertEqual("CONFIRMED", result["status"])
         self.assertEqual("Hello World", result["title"])
         self.assertEqual(self.existing_bug_url, result["url"])
+
+    def test_details_when_not_authenticated_falls_back_to_opengraph(self):
+        bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            name="Red Hat Bugzilla",
+            tracker_type="tcms.issuetracker.types.Bugzilla",
+            base_url="https://bugzilla.redhat.com/",
+            api_url="https://bugzilla.redhat.com/xmlrpc.cgi",
+            api_username="kiwitcms-bot",
+            api_password="password",
+        )
+        integration = Bugzilla(bug_system, None)
+
+        result = integration.details(
+            "https://bugzilla.redhat.com/show_bug.cgi?id=2213660"
+        )
+
+        self.assertEqual(2213660, result["id"])
+        self.assertEqual("", result["description"])
+        self.assertEqual("", result["status"])
+        self.assertEqual(
+            "2213660 – libvirt clients hang because "
+            "virtnetworkd.service misses when virtnetworkd is dead",
+            result["title"],
+        )
+        self.assertEqual(
+            "https://bugzilla.redhat.com/show_bug.cgi?id=2213660", result["url"]
+        )
 
     def test_auto_update_bugtracker(self):
         bug = self.integration.rpc.getbug(self.existing_bug_id)
