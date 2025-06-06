@@ -67,6 +67,12 @@ class IssueTrackerType:
             if key in result:
                 del result[key]
 
+        if "id" not in result:
+            result["id"] = self.bug_id_from_url(url)
+
+        if "status" not in result:
+            result["status"] = ""
+
         return result
 
     def _report_comment(
