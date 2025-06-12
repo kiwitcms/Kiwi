@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-06-12 02:35\n"
+"PO-Revision-Date: 2025-06-12 03:52\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1716,7 +1716,7 @@ msgstr "测试计划文档随便写的啊"
 
 #: tcms/testplans/templates/testplans/mutable.html:119
 msgid "Notify:"
-msgstr "刘飞彪"
+msgstr "方又松："
 
 #: tcms/testplans/templates/testplans/mutable.html:127
 msgid "TestCase author"
@@ -2332,3 +2332,4 @@ msgstr "组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
