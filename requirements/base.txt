@@ -13,7 +13,7 @@ django-grappelli==4.0.2
 django-guardian==2.4.0
 django-modern-rpc==1.1.0
 django-simple-history==3.8.0
-django-tree-queries==0.19.0
+django-tree-queries==0.20.0
 django-uuslug==2.0.0
 jira==3.8.0
 Markdown==3.8
