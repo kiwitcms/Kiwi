@@ -683,7 +683,7 @@ class TestExecutionUpdate(APITestCase):
             self.rpc_client.TestExecution.update(
                 self.execution_1.pk, {"stop_date": timezone.now()}
             )
-    
+
     def test_update_with_status_with_tested_by_with_build(self):
         self.assertNotEqual(self.execution_2.tested_by, self.user)
         self.assertNotEqual(self.execution_2.tested_by, self.user_2)
