@@ -497,6 +497,8 @@ class TestExecutionUpdate(APITestCase):
 
         self.user = UserFactory()
         self.build = BuildFactory()
+        self.user_2 = UserFactory()
+        self.build_2 = BuildFactory()
         self.execution_1 = TestExecutionFactory()
         self.execution_2 = TestExecutionFactory()
         self.status_positive = TestExecutionStatus.objects.filter(weight__gt=0).last()
@@ -681,6 +683,98 @@ class TestExecutionUpdate(APITestCase):
             self.rpc_client.TestExecution.update(
                 self.execution_1.pk, {"stop_date": timezone.now()}
             )
+    
+    def test_update_with_status_with_tested_by_with_build(self):
+        self.assertNotEqual(self.execution_2.tested_by, self.user)
+        self.assertNotEqual(self.execution_2.tested_by, self.user_2)
+        self.assertNotEqual(self.execution_2.build, self.build)
+        self.assertNotEqual(self.execution_2.build, self.build_2)
+        execution = self.rpc_client.TestExecution.update(
+            self.execution_2.pk, {"tested_by": self.user_2.pk,
+                                  "build": self.build_2.pk
+                                 }
+        )
+        self.execution_2.refresh_from_db()
+
+        self.assertEqual(execution["tested_by"], self.user_2.pk)
+        self.assertEqual(self.execution_2.tested_by, self.user_2)
+
+        self.assertEqual(execution["build"], self.build_2.pk)
+        self.assertEqual(self.execution_2.build, self.build_2)
+
+    def test_update_with_status_with_no_tested_by_with_build(self):
+        self.assertNotEqual(self.execution_2.tested_by, self.user)
+        self.assertNotEqual(self.execution_2.tested_by, self.user_2)
+        self.assertNotEqual(self.execution_2.build, self.build)
+        self.assertNotEqual(self.execution_2.build, self.build_2)
+        execution = self.rpc_client.TestExecution.update(
+            self.execution_2.pk, {"tested_by": None,
+                                  "build": self.build_2.pk
+                                 }
+        )
+        self.execution_2.refresh_from_db()
+
+        self.assertEqual(execution["tested_by"], self.user.pk)
+        self.assertEqual(self.execution_2.tested_by, self.user)
+
+        self.assertEqual(execution["build"], self.build_2.pk)
+        self.assertEqual(self.execution_2.build, self.build_2)
+
+    def test_update_with_no_status_with_no_tested_by_with_build(self):
+        self.assertNotEqual(self.execution_2.tested_by, self.user)
+        self.assertNotEqual(self.execution_2.tested_by, self.user_2)
+        self.assertNotEqual(self.execution_2.build, self.build)
+        self.assertNotEqual(self.execution_2.build, self.build_2)
+        execution = self.rpc_client.TestExecution.update(
+            self.execution_2.pk, {"tested_by": None,
+                                  "build": self.build_2.pk,
+                                  "status": None
+                                 }
+        )
+        self.execution_2.refresh_from_db()
+
+        self.assertEqual(execution["tested_by"], None)
+        self.assertEqual(self.execution_2.tested_by, None)
+
+        self.assertEqual(execution["build"], self.build_2.pk)
+        self.assertEqual(self.execution_2.build, self.build_2)
+
+    def test_update_with_status_with_tested_by_with_no_build(self):
+        self.assertNotEqual(self.execution_2.tested_by, self.user)
+        self.assertNotEqual(self.execution_2.tested_by, self.user_2)
+        self.assertNotEqual(self.execution_2.build, self.build)
+        self.assertNotEqual(self.execution_2.build, self.build_2)
+        execution = self.rpc_client.TestExecution.update(
+            self.execution_2.pk, {"tested_by": self.user_2.pk,
+                                  "build": None
+                                 }
+        )
+        self.execution_2.refresh_from_db()
+
+        self.assertEqual(execution["tested_by"], self.user_2.pk)
+        self.assertEqual(self.execution_2.tested_by, self.user_2)
+
+        self.assertEqual(execution["build"], self.build.pk)
+        self.assertEqual(self.execution_2.build, self.build)
+
+    def test_update_with_no_status_with_tested_by_with_no_build(self):
+        self.assertNotEqual(self.execution_2.tested_by, self.user)
+        self.assertNotEqual(self.execution_2.tested_by, self.user_2)
+        self.assertNotEqual(self.execution_2.build, self.build)
+        self.assertNotEqual(self.execution_2.build, self.build_2)
+        execution = self.rpc_client.TestExecution.update(
+            self.execution_2.pk, {"tested_by": self.user_2.pk,
+                                  "build": None,
+                                  "status": None
+                                 }
+        )
+        self.execution_2.refresh_from_db()
+
+        self.assertEqual(execution["tested_by"], self.user_2.pk)
+        self.assertEqual(self.execution_2.tested_by, self.user_2)
+
+        self.assertEqual(execution["build"], None)
+        self.assertEqual(self.execution_2.build, None)
 
 
 class TestExecutionUpdateStatus(APITestCase):
