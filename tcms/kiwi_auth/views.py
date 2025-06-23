@@ -148,8 +148,8 @@ class Profile(View):  # pylint: disable=missing-permission-required
 
     http_method_names = ["get"]
 
-    def get(self, request, username):  # pylint: disable=no-self-use
-        user = get_object_or_404(User, username=username)
+    def get(self, request, pk):  # pylint: disable=no-self-use
+        user = get_object_or_404(User, pk=pk)
         return HttpResponseRedirect(reverse("admin:auth_user_change", args=[user.pk]))
 
 

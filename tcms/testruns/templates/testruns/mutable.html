@@ -245,7 +245,7 @@ See test plan for more details!{% endblocktrans %}
                             </a>
                         </td>
                         <td>
-                            <a href="{% url 'tcms-profile' test_case.author.username %}">{{ test_case.author.username }}</a>
+                            <a href="{% url 'tcms-profile' test_case.author.pk %}">{{ test_case.author.username }}</a>
                         </td>
                         <td>{{ test_case.create_date }}</td>
                         <td>{{ test_case.case_status }}</td>

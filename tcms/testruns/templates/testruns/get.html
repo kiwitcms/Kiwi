@@ -58,13 +58,13 @@
 
                 <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Manager' %}:
-                    <a href="{% url 'tcms-profile' object.manager.username %}">{{ object.manager.username }}</a>
+                    <a href="{% url 'tcms-profile' object.manager.pk %}">{{ object.manager.username }}</a>
                 </h2>
 
                 {% if object.default_tester %}
                     <h2 class="card-pf-title kiwi-text-align-left">
                         <span class="fa fa-search"></span>{% trans 'Default tester' %}:
-                        <a href="{% url 'tcms-profile' object.default_tester.username %}">{{ object.default_tester.username }}</a>
+                        <a href="{% url 'tcms-profile' object.default_tester.pk %}">{{ object.default_tester.username }}</a>
                     </h2>
                 {% endif %}
 

@@ -26,13 +26,13 @@
             <div class="card-pf card-pf-accented card-pf-aggregate-status">
                 <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Author' %}:
-                    <a href="{% url "tcms-profile" object.author.username %}">{{ object.author.username }}</a>
+                    <a href="{% url "tcms-profile" object.author.pk %}">{{ object.author.username }}</a>
                 </h2>
 
                 <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-search"></span>{% trans 'Default tester' %}:
                     {% if object.default_tester  %}
-                    <a href="{% url "tcms-profile" object.default_tester.username %}">{{ object.default_tester.username }}</a>
+                    <a href="{% url "tcms-profile" object.default_tester.pk %}">{{ object.default_tester.username }}</a>
                     {% else %}
                     -
                     {% endif %}

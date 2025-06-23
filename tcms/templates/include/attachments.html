@@ -26,7 +26,7 @@
             {% for attachment in attachments_list %}
             <tr>
                 <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
-                <td><a href="{% url 'tcms-profile' attachment.creator %}">{{ attachment.creator }}</a></td>
+                <td><a href="{% url 'tcms-profile' attachment.creator.pk %}">{{ attachment.creator }}</a></td>
                 <td>{{ attachment.created }}</td>
                 <td class="hidden-print">{% attachment_delete_link attachment %}</td>
             </tr>
