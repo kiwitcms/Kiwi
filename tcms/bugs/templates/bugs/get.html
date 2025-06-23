@@ -57,13 +57,13 @@
 
                 <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Reporter' %}:
-                    <a href="{% url "tcms-profile" object.reporter.username %}">{{ object.reporter.username }}</a>
+                    <a href="{% url "tcms-profile" object.reporter.pk %}">{{ object.reporter.username }}</a>
                 </h2>
 
                 <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa pficon-user"></span>{% trans 'Assignee' %}:
                     {% if object.assignee %}
-                        <a href="{% url "tcms-profile" object.assignee.username %}">{{ object.assignee.username }}</a>
+                        <a href="{% url "tcms-profile" object.assignee.pk %}">{{ object.assignee.username }}</a>
                     {% else %}
                         -
                     {% endif %}
@@ -112,7 +112,7 @@
             <div class="card-pf card-pf-accented">
                 <h2 class="card-pf-title">
                     {% if comment.user %}
-                        <a href="{% url "tcms-profile" comment.user.username %}">{{ comment.user }}</a>
+                        <a href="{% url "tcms-profile" comment.user.pk %}">{{ comment.user }}</a>
                     {% else %}
                         {{ comment.name }}
                     {% endif %}

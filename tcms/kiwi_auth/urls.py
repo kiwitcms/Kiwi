@@ -7,7 +7,7 @@ from tcms.kiwi_auth import views
 
 urlpatterns = [
     re_path(
-        r"^(?P<username>[\w.@+-]+)/profile/$",
+        r"^(?P<pk>\d+)/profile/$",
         views.Profile.as_view(),
         name="tcms-profile",
     ),
