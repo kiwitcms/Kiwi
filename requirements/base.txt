@@ -14,7 +14,6 @@ django-guardian==3.0.0
 django-modern-rpc==1.1.0
 django-simple-history==3.10.1
 django-tree-queries==0.20.0
-django-uuslug==2.0.0
 jira==3.8.0
 Markdown==3.8.2
 PyGithub==2.6.1

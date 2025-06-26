@@ -2,7 +2,6 @@ from http import HTTPStatus
 
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from uuslug import slugify
 
 from tcms.testplans.models import TestPlan
 from tcms.tests import LoggedInTestCase, PermissionsTestCase, user_should_have_perm
@@ -208,9 +207,7 @@ class TestNewTestPlanViewPermissions(
         test_plan = TestPlan.objects.get(
             name=self.post_data["name"],
         )
-        redirect_url = reverse(
-            "test_plan_url", args=[test_plan.pk, slugify(test_plan.name)]
-        )
+        redirect_url = reverse("test_plan_url", args=[test_plan.pk])
 
         self.assertRedirects(response, redirect_url)
         self.assertContains(response, self.post_data["name"])

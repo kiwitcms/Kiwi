@@ -60,7 +60,7 @@ Here are the latest {{ count }}.{% endblocktrans %}
                 {% if test_plan.is_active %}
                 <tr>
                     <td>
-                        <a href="{% url 'test_plan_url_short' test_plan.pk %}">{{ test_plan.name }}</a>
+                        <a href="{% url 'test_plan_url' test_plan.pk %}">{{ test_plan.name }}</a>
                     </td>
                     <td>{{ test_plan.product }}</td>
                     <td>{{ test_plan.type }}</td>

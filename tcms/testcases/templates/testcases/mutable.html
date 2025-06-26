@@ -25,7 +25,7 @@
                 <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
                     <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
                     {% if test_plan %}
-                        <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
+                        <p class="help-block"><a href="{% url 'test_plan_url' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
                         <input type="hidden" name="from_plan" value="{{ test_plan.pk }}">
                     {% endif %}
                     {{ form.summary.errors }}

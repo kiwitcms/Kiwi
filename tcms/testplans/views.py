@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.decorators import permission_required
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -9,7 +9,6 @@ from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, FormView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
-from uuslug import slugify
 
 from tcms.core.forms import SimpleCommentForm
 from tcms.management.models import Priority
@@ -170,23 +169,6 @@ class TestPlanGetView(DetailView):
         return context
 
 
-@method_decorator(
-    object_permission_required(
-        "testplans.view_testplan", (TestPlan, "pk", "pk"), accept_global_perms=True
-    ),
-    name="dispatch",
-)
-class GetTestPlanRedirectView(DetailView):
-    http_method_names = ["get"]
-    model = TestPlan
-
-    def get(self, request, *args, **kwargs):
-        test_plan = self.get_object()
-        return HttpResponsePermanentRedirect(
-            reverse("test_plan_url", args=[test_plan.pk, slugify(test_plan.name)])
-        )
-
-
 @method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
 class Clone(FormView):
     template_name = "testplans/clone.html"
@@ -223,6 +205,4 @@ class Clone(FormView):
         form.cleaned_data["new_author"] = self.request.user
         cloned_plan = self.object.clone(**form.cleaned_data)
 
-        return HttpResponseRedirect(
-            reverse("test_plan_url_short", args=[cloned_plan.pk])
-        )
+        return HttpResponseRedirect(reverse("test_plan_url", args=[cloned_plan.pk]))
