@@ -6,13 +6,7 @@ from tcms.testplans import views
 
 urlpatterns = [
     re_path(
-        r"^(?P<pk>\d+)/$",
-        views.GetTestPlanRedirectView.as_view(),
-        name="test_plan_url_short",
-    ),
-    # human friendly url
-    re_path(
-        r"^(?P<pk>\d+)/(?P<slug>[-\w\d]+)$",
+        r"^(?P<pk>\d+)/(?:[-\w\d]*)$",
         views.TestPlanGetView.as_view(),
         name="test_plan_url",
     ),

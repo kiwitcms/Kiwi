@@ -18,7 +18,7 @@ class TestPlanAdmin(ObjectPermissionsAdminMixin, ReadOnlyHistoryAdmin):
         return HttpResponseRedirect(reverse("plans-new"))
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
-        return HttpResponseRedirect(reverse("test_plan_url_short", args=[object_id]))
+        return HttpResponseRedirect(reverse("test_plan_url", args=[object_id]))
 
     def response_delete(self, request, obj_display, obj_id):
         super().response_delete(request, obj_display, obj_id)

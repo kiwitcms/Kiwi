@@ -5,7 +5,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
 from tree_queries.models import TreeNode
-from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models.base import UrlMixin
@@ -73,7 +72,7 @@ class TestPlan(TreeNode, UrlMixin):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
 
     def _get_absolute_url(self):
-        return reverse("test_plan_url", args=[self.pk, slugify(self.name)])
+        return reverse("test_plan_url", args=[self.pk])
 
     def get_absolute_url(self):
         return self._get_absolute_url()

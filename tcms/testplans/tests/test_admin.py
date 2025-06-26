@@ -24,8 +24,7 @@ class TestTestPlanAdmin(LoggedInTestCase):
         )
         self.assertRedirects(
             response,
-            reverse("test_plan_url_short", args=[self.test_plan.pk]),
-            target_status_code=301,
+            reverse("test_plan_url", args=[self.test_plan.pk]),
         )
 
     def test_users_can_delete_testplan(self):

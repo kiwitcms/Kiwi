@@ -242,7 +242,7 @@ class CloneTestCaseView(View):
             if len(clone_form.cleaned_data["plan"]) == 1:
                 test_plan = clone_form.cleaned_data["plan"][0]
                 return HttpResponseRedirect(
-                    reverse("test_plan_url_short", args=[test_plan.pk])
+                    reverse("test_plan_url", args=[test_plan.pk])
                 )
 
             # Otherwise tell the user the clone action is successful

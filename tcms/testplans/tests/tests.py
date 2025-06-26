@@ -83,11 +83,9 @@ class PlanTests(BasePlanTest):
         )
 
     def test_plan_details(self):
-        location = reverse("test_plan_url_short", args=[self.plan_id])
-        response = self.client.get(location)
-        self.assertEqual(response.status_code, HTTPStatus.MOVED_PERMANENTLY)
+        location = reverse("test_plan_url", args=[self.plan_id])
 
-        response = self.client.get(location, follow=True)
+        response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_edit(self):
@@ -319,8 +317,7 @@ class TestCloneView(BasePlanCase):
 
         self.assertRedirects(
             response,
-            reverse("test_plan_url_short", args=[cloned_plan.pk]),
-            target_status_code=HTTPStatus.MOVED_PERMANENTLY,
+            reverse("test_plan_url", args=[cloned_plan.pk]),
         )
 
         self.verify_cloned_plan(self.third_plan, cloned_plan)
