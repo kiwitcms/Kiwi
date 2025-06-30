@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:09\n"
+"PO-Revision-Date: 2025-06-30 08:45\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2314,3 +2314,4 @@ msgstr "群組"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人 API Tokens"
+
