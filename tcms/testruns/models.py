@@ -78,12 +78,16 @@ class TestRun(models.Model, UrlMixin):
         """
         Get the all related mails from the run
         """
-        send_to = [self.manager.email]
-        send_to.extend(self.cc.values_list("email", flat=True))
-        if self.default_tester_id:
+        send_to = []
+        if self.manager.is_active:
+            send_to.append(self.manager.email)
+        send_to.extend(self.cc.filter(is_active=True).values_list("email", flat=True))
+        if self.default_tester_id and self.default_tester.is_active:
             send_to.append(self.default_tester.email)
 
-        for execution in self.executions.select_related("assignee").all():
+        for execution in self.executions.select_related("assignee").filter(
+            assignee__is_active=True
+        ):
             if execution.assignee_id:
                 send_to.append(execution.assignee.email)
 

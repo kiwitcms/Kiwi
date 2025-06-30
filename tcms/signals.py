@@ -65,7 +65,9 @@ def notify_admins(sender, **kwargs):
 
     admin_emails = set()
     # super-users can approve others
-    for super_user in get_user_model().objects.filter(is_superuser=True):
+    for super_user in get_user_model().objects.filter(
+        is_superuser=True, is_active=True
+    ):
         admin_emails.add(super_user.email)
     # site admins should be able to do so as well
     for _name, email in settings.ADMINS:
@@ -214,11 +216,14 @@ def handle_emails_post_bug_save(sender, instance, created=False, **kwargs):
     from tcms.core.utils.mailto import mailto
 
     comments = get_comments(instance)
+    recipients = set(
+        comments.filter(user__is_active=True).values_list("user__email", flat=True)
+    )
 
-    recipients = set(comments.values_list("user_email", flat=True))
-    recipients.add(instance.reporter.email)
+    if instance.reporter and instance.reporter.is_active:
+        recipients.add(instance.reporter.email)
 
-    if instance.assignee:
+    if instance.assignee and instance.assignee.is_active:
         recipients.add(instance.assignee.email)
 
     if not recipients:
