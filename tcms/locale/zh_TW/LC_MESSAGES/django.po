@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-06-30 08:45\n"
+"PO-Revision-Date: 2025-06-30 09:20\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -344,7 +344,7 @@ msgstr "編輯"
 #: tcms/testplans/views.py:152 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
-msgstr ""
+msgstr "物件權限"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -425,7 +425,7 @@ msgstr "查看全部"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
-msgstr "沒有指派給你的測試執行"
+msgstr "沒有分配給您的測試執行"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
@@ -452,32 +452,32 @@ msgstr "執行"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr "你管理 %(total_count)s 測試計畫， %(disabled_count)s 已禁用。\n"
-"這裡是最新的  %(count)s。"
+msgstr "您管理 %(total_count)s 個測試計劃，其中 %(disabled_count)s 個已被停用。\n"
+"以下是最新的 %(count)s 個。"
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "沒有屬於你的測試計畫"
+msgstr "沒有屬於您的測試計劃"
 
 #: tcms/core/views.py:47
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "基本URL未設置！參考 <a href=\"%(doc_url)s\">documentation</a>  和  <a href=\"%(admin_url)s\">change it</a>"
+msgstr "基本網址尚未設定！請參考 <a href=\"%(doc_url)s\">文件說明</a>，並到 <a href=\"%(admin_url)s\">管理頁面更改設定</a>。"
 
 #: tcms/core/views.py:71
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr ""
+msgstr "您有 %(unapplied_migration_count)s 個未應用的遷移。詳情請參閱 <a href=\"%(doc_url)s\">文件說明</a>"
 
 #: tcms/core/views.py:92
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "您目前未使用安全連線。請參考 <a href=\"%(doc_url)s\">文件說明</a> 並啟用 SSL。"
 
 #: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
+msgstr "檔案包含禁止使用的標籤：<{tag_name}>"
 
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
@@ -661,7 +661,7 @@ msgstr "搜尋測試執行"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "搜尋測試執行紀錄"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -901,7 +901,7 @@ msgstr "負數"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "執行矩陣"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
@@ -1134,11 +1134,11 @@ msgstr "初始化資料庫"
 
 #: tcms/templates/initdb.html:20
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "您的資料庫尚未初始化。請點擊下方按鈕以初始化"
 
 #: tcms/templates/initdb.html:22
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "警告：此操作可能需要一段時間！完成後本頁將自動重新導向。"
 
 #: tcms/templates/initdb.html:27
 msgid "Please wait"
@@ -1284,7 +1284,8 @@ msgstr "註冊新帳號"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "欲了解更多關於自訂測試案例狀態的資訊，請參考\n"
+"<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">官方文件說明</a>！"
 
 #: tcms/testcases/admin.py:56
 msgid "1 confirmed & 1 uncomfirmed status required!"
@@ -1302,7 +1303,9 @@ msgstr "整合外部問題管理系統"
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "<h1>警告：請先閱讀\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"設定外部錯誤追蹤系統</a> 區段，然後再編輯下方數值！</h1>"
 
 #: tcms/testcases/admin.py:168
 msgid "Configuration health check"
@@ -1310,7 +1313,8 @@ msgstr "檢查設定"
 
 #: tcms/testcases/admin.py:172
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "Kiwi TCMS 將嘗試使用上述設定的整合方式，擷取指定錯誤連結的詳細資訊！請點擊「儲存並繼續」按鈕，並注意螢幕頂端的訊息。\n"
+"<strong>警告</strong>： 若發生錯誤，一些問題追蹤系統會改以 OpenGraph 協議擷取資訊，此時結果中會包含名為 from_open_graph 的欄位。"
 
 #: tcms/testcases/admin.py:192
 msgid "Failed creating Issue Tracker"
@@ -1318,11 +1322,11 @@ msgstr "建立問題管理系統失敗"
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "透過 OpenGraph 擷取的詳細資訊。問題追蹤系統可能仍設定不正確！"
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr ""
+msgstr "透過 API 擷取的詳細資訊。問題追蹤系統設定看起來正常。"
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
@@ -1484,7 +1488,7 @@ msgstr "新增新的類別"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr ""
+msgstr "新增範本"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:516
@@ -1510,7 +1514,7 @@ msgstr "以下情況通知我"
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:142
 msgid "applies only for changes made by somebody else"
-msgstr ""
+msgstr "僅適用於他人所做的變更"
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
@@ -1538,11 +1542,11 @@ msgstr "都"
 
 #: tcms/testcases/templates/testcases/search.html:61
 msgid "include in search request"
-msgstr ""
+msgstr "包含於搜尋請求"
 
 #: tcms/testcases/templates/testcases/search.html:74
 msgid "include child test plans"
-msgstr ""
+msgstr "包含子測試計劃"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testcases/templates/testcases/search.html:165
@@ -1615,7 +1619,7 @@ msgstr "是否確定？"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "無法使用未確認的測試案例建立測試執行（TestRun）"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
@@ -1695,7 +1699,7 @@ msgstr "父層ID:"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "按 Enter 指派；按 Backspace + Enter 清除"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1728,7 +1732,7 @@ msgstr "啟動"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr ""
+msgstr "部分子測試計劃不符合搜尋條件"
 
 #: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
@@ -1748,7 +1752,7 @@ msgstr "要了解更多關於自定義測試執行狀態的資訊，請參考\n"
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "需要 1 個負面、1 個中立及 1 個正面狀態！"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
@@ -1768,7 +1772,7 @@ msgstr "測試執行狀態"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "未確認的測試案例未被新增"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Type 0 or 1"
@@ -1844,7 +1848,7 @@ msgstr "回報Bug"
 
 #: tcms/testruns/templates/testruns/get.html:339
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "測試案例不屬於父測試計劃"
 
 #: tcms/testruns/templates/testruns/get.html:371
 msgid "Assigned to"
@@ -1860,7 +1864,7 @@ msgstr "Bug與超連結"
 
 #: tcms/testruns/templates/testruns/get.html:584
 msgid "Is a defect"
-msgstr ""
+msgstr "是一個缺陷?"
 
 #: tcms/testruns/templates/testruns/get.html:591
 #: tcms/testruns/templates/testruns/get.html:622
@@ -2024,7 +2028,7 @@ msgstr "Edit GitHub App <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "找不到用戶「%s」的 GitHub App 安裝資料"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
@@ -2039,7 +2043,11 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "感謝您使用付費訂閱的 Kiwi TCMS。\n"
+"很遺憾看到您要離開，但我們希望了解原因，以便未來能持續改進！\n\n"
+"您可以在以下連結分享您的意見：\n"
+"https://forms.gle/RJhFengbjN9C6wtUA\n\n"
+"謝謝您！"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
@@ -2120,15 +2128,15 @@ msgstr "已接收"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
 msgid "Extra emails"
-msgstr ""
+msgstr "附加電子郵件"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
-msgstr ""
+msgstr "Kiwi TCMS 將嘗試將定期帳單事件與租戶擁有者的電子郵件（tenant.owner.email）及額外電子郵件（tenant.extra_emails）進行比對"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
-msgstr ""
+msgstr "請以逗號（,）、分號（;）或空白（ ）分隔"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -2150,11 +2158,11 @@ msgstr "你將為Kiwi TCMS建立一個私人租用戶\n"
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr ""
+msgstr "Kiwi TCMS 訂閱退出調查"
 
 #: tcms_github_marketplace/views.py:567
 msgid "Kiwi TCMS subscription notification"
-msgstr ""
+msgstr "Kiwi TCMS 訂閱通知"
 
 #: tcms_github_marketplace/views.py:749
 msgid "mo"
@@ -2212,7 +2220,7 @@ msgstr "未付款"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "租戶即將到期"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2223,7 +2231,13 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "親愛的測試者，\n"
+"%(invited_by)s 邀請您加入他們的 Kiwi TCMS 租戶，網址為：\n"
+"%(tenant_url)s\n\n"
+"如果您之前從未登入過，系統已自動為您建立帳號。\n"
+"您可以使用與該電子郵件相同的社交帳號登入，\n"
+"或前往 %(password_reset_url)s 重設密碼。\n"
+"密碼重設的郵件內容也會包含您的使用者名稱！"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2260,7 +2274,7 @@ msgstr "公開可讀"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
-msgstr ""
+msgstr "租戶商標"
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
@@ -2273,7 +2287,7 @@ msgstr "新的 Kiwi TCMS 訂閱用戶已建立"
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "使用者 {user.username} 已被加入租戶群組 {group.name}"
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
@@ -2281,15 +2295,15 @@ msgstr "邀請加入 Kiwi TCMS"
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "只有超級使用者和租戶擁有者可以編輯租戶屬性"
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
-msgstr ""
+msgstr "編輯租戶"
 
 #: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "只有被授權使用此租戶的使用者才能邀請他人"
 
 #: tenant_groups/admin.py:30
 msgid "users"
@@ -2314,3 +2328,4 @@ msgstr "群組"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人 API Tokens"
+
