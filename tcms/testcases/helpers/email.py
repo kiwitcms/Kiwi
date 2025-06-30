@@ -30,24 +30,32 @@ def email_case_deletion(case):
 def get_case_notification_recipients(case):
     recipients = set()
 
-    if case.emailing.auto_to_case_author:
+    if case.emailing.auto_to_case_author and case.author.is_active:
         recipients.add(case.author.email)
 
-    if case.emailing.auto_to_case_tester and case.default_tester:
+    if (
+        case.emailing.auto_to_case_tester
+        and case.default_tester
+        and case.default_tester.is_active
+    ):
         recipients.add(case.default_tester.email)
 
     if case.emailing.auto_to_run_manager:
-        managers = case.executions.values_list("run__manager__email", flat=True)
+        managers = case.executions.filter(run__manager__is_active=True).values_list(
+            "run__manager__email", flat=True
+        )
         recipients.update(managers)  # pylint: disable=objects-update-used
 
     if case.emailing.auto_to_run_tester:
-        run_testers = case.executions.values_list(
-            "run__default_tester__email", flat=True
-        )
+        run_testers = case.executions.filter(
+            run__default_tester__is_active=True
+        ).values_list("run__default_tester__email", flat=True)
         recipients.update(run_testers)  # pylint: disable=objects-update-used
 
     if case.emailing.auto_to_execution_assignee:
-        assignees = case.executions.values_list("assignee__email", flat=True)
+        assignees = case.executions.filter(assignee__is_active=True).values_list(
+            "assignee__email", flat=True
+        )
         recipients.update(assignees)  # pylint: disable=objects-update-used
 
     # don't email author of last change
