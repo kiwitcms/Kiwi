@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-06-30 09:20\n"
+"PO-Revision-Date: 2025-06-30 09:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -822,7 +822,7 @@ msgstr "執行儀表板"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 msgid "Child TPs"
-msgstr ""
+msgstr "子測試計劃"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -864,11 +864,11 @@ msgstr "預設測試者"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
 msgid "TC"
-msgstr ""
+msgstr "TC(測試案例)"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 msgid "TR"
-msgstr ""
+msgstr "TR(測試執行)"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testruns/templates/testruns/get.html:268
@@ -1104,7 +1104,7 @@ msgstr "這是技術預覽功能！"
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
-msgstr ""
+msgstr "名稱=值"
 
 #: tcms/templates/include/properties_card.html:69
 #: tcms/templates/include/tags_card.html:28
@@ -1760,7 +1760,7 @@ msgstr "編輯參數"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Full"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
@@ -1776,7 +1776,7 @@ msgstr "未確認的測試案例未被新增"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "輸入 0 或 1"
 
 #: tcms/testruns/templates/testruns/get.html:27
 msgid "Comment"
@@ -2328,3 +2328,4 @@ msgstr "群組"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人 API Tokens"
+
