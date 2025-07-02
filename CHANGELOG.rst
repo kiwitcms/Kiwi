@@ -1,6 +1,92 @@
 Change Log
 ==========
 
+Kiwi TCMS 14.3 (03 Jul 2025)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates,
+    several improvements, bug fixes and new translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    14.2 -> 14.3
+
+
+After upgrade don't forget to::
+
+    ./manage.py upgrade
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.1.8 to 5.1.11, addressing medium severity vulnerabilities,
+  `CVE-2025-32873 <https://docs.djangoproject.com/en/5.1/releases/5.1.9/>`_ and
+  `CVE-2025-48432 <https://docs.djangoproject.com/en/5.1/releases/5.1.10/>`_,
+  which do not appear to affect Kiwi TCMS
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Remove the django-uuslug dependency
+- Update django-colorfield from 0.13.0 to 0.14.0
+- Update django-grappelli from 4.0.1 to 4.0.2
+- Update django-guardian from 2.4.0 to 3.0.3
+- Update django-simple-history from 3.8.0 to 3.10.1
+- Update django-tree-queries from 0.19.0 to 0.20.0
+- Update markdown from 3.8 to 3.8.2
+- Update psycopg[binary] from 3.2.6 to 3.2.9
+- Update pygments from 2.19.1 to 2.19.2
+- Update python-gitlab from 5.6.0 to 6.1.0
+- Update uwsgi from 2.0.29 to 2.0.30
+- Update node_modules/pdfmake from 0.2.18 to 0.2.20
+- Display nested Test Plan(s) in select drop-down on New Test Run page
+- Implement ``Bugzilla.details()`` method to fetch more information about
+  reported bugs via the existing Bugzilla integration interface
+- Refactor URL ``/accounts/<username>/profile/`` into
+  ``/accounts/<pk>/profile/``
+  to prevent usernames being exposed in logs or anonymous analytics
+- Refactor URL ``/plan/<pk>/<slug>`` into ``/plan/<pk>/`` to prevent test plan
+  summary being exposed in logs or anonymous analytics. Fixes
+  `Issue #3994 <https://github.com/kiwitcms/Kiwi/issues/3994>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Make sure ``IssueTrackerType.details()`` method provides ``id`` and
+  ``status`` fields to prevent crashes when IssueTracker integration falls back
+  to this method
+- For ``Bug.details()`` API method always cast internal result to dict
+  to avoid the situation where ``modernrpc/handlers/xmlhandler.py::dumps_result()``
+  doesn't know how to serialize that! Fixes
+  `Sentry KIWI-TCMS-VV <https://kiwitcms.sentry.io/issues/6660677083/>`_
+- Don't send email notifications to inactive users
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update node_modules/eslint-plugin-import from 2.31.0 to 2.32.0
+- Update node_modules/webpack from 5.99.6 to 5.99.9
+- Use the public interface ``tcms_api.TCMS().exec`` in tests
+- Add test for unauthenticated ``Bugzilla.details()`` which falls back to
+  OpenGraph
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `Persian translation <https://crowdin.com/project/kiwitcms/fa#>`_
+
+
+
 Kiwi TCMS 14.2 (23 Apr 2025)
 ----------------------------
 
