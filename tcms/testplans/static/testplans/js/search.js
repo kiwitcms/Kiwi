@@ -48,6 +48,19 @@ export function pageTestplansSearchReadyHandler () {
     initializeDateTimePicker('#id_before')
     initializeDateTimePicker('#id_after')
 
+    const multiCloneButton = {
+        text: '<i class="fa fa-clone"> </i>',
+        titleAttr: 'Clone',
+        action: function (e, dt, node, config) {
+            const selectedTestPlans = getSelectedTestPlans()
+            if (selectedTestPlans.length === 0) {
+                return false
+            }
+
+            window.location.assign(`/plan/0/clone/?p=${selectedTestPlans.join('&p=')}`)
+        }
+    }
+
     const rowsNotShownMessage = $('#main-element').data('trans-some-rows-not-shown')
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
@@ -93,6 +106,11 @@ export function pageTestplansSearchReadyHandler () {
             dataTableJsonRPC('TestPlan.filter', params, callbackF, preProcessData)
         },
         columns: [
+            {
+                data: null,
+                orderable: false,
+                render: function () { return '<input type="checkbox" class="row-select">' }
+            },
             {
                 data: null,
                 defaultContent: '',
@@ -159,13 +177,34 @@ export function pageTestplansSearchReadyHandler () {
             })
         },
         dom: 'Bptp',
-        buttons: exportButtons,
+        buttons: [
+            multiCloneButton,
+            ...exportButtons
+        ],
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: 'No records found'
         },
-        order: [[1, 'asc']]
+        order: [[2, 'asc']],
+        initComplete: function () {
+            $('.js-toolbar-select-all').on('change', function () {
+                const checked = this.checked
+                $('#resultsTable tbody input.row-select')
+                    .prop('checked', checked)
+                    .trigger('change')
+            })
+        }
+    })
+
+    // row checkbox handler
+    $('#resultsTable tbody').on('change', 'input.row-select', function () {
+        const $tr = $(this).closest('tr')
+        if (this.checked) {
+            table.row($tr).select()
+        } else {
+            table.row($tr).deselect()
+        }
     })
 
     // Add event listener for opening and closing nested test plans
@@ -192,6 +231,41 @@ export function pageTestplansSearchReadyHandler () {
     $('#id_product').change(updateVersionSelectFromProduct)
 }
 
+function getSelectedTestPlans () {
+    const inputs = $('#resultsTable tbody input.row-select:checked').closest('tr:visible')
+    const tpIds = []
+
+    inputs.each(function (_, el) {
+        // Check if the row has collapsed children and add their IDs
+        tpIds.push(...getChildRows(el))
+    })
+
+    if (tpIds.length === 0) {
+        alert($('#main-element').data('trans-no-testplans-selected'))
+    }
+
+    return tpIds
+}
+
+function getChildRows (parentRowId) {
+    const tpIds = []
+    const parentRow = $('#resultsTable').DataTable().row($(parentRowId).closest('tr'))
+    const id = $(parentRowId).closest('tr').find('td:nth-child(3)').text().trim()
+    const children = hiddenChildRows[id]
+
+    if (id) {
+        tpIds.push(id)
+    }
+
+    if (children && !parentRow.child.isShown()) {
+        children.forEach(function (childRow) {
+            tpIds.push(...getChildRows(childRow))
+        })
+        return tpIds
+    }
+    return tpIds
+}
+
 function hideExpandedChildren (table, parentRow) {
     const children = hiddenChildRows[parentRow.data().id]
     children.forEach(
@@ -214,5 +288,10 @@ function renderChildrenOf (parentRow, data) {
     // this is an array of previously hidden rows
     const children = hiddenChildRows[data.id]
     $(children).find('td').css('border', '0').css('padding-left', `${childPadding}px`)
+
+    if ($(parentRow).find('input.row-select').prop('checked')) {
+        $(children).find('input.row-select').prop('checked', true).trigger('change')
+    }
+
     return $(children).show()
 }
