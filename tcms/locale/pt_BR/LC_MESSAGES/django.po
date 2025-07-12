@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:09\n"
+"PO-Revision-Date: 2025-07-12 04:54\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -587,7 +587,7 @@ msgstr "Você está vendo registros do inquilino '%s'"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "Endereço de e-mail foi redefinido, por favor, verifique a caixa de entrada para mais instruções"
 
 #: tcms/management/models.py:58
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -662,7 +662,7 @@ msgstr "Pesquisar Execuções de Testes"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "Buscar execuções de teste"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -746,7 +746,7 @@ msgstr "NOVO: Execução de Teste #%(pk)d - %(summary)s"
 #: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -818,12 +818,12 @@ msgstr "Categorias"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Painel de execução"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 msgid "Child TPs"
-msgstr ""
+msgstr "TPs infantis"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -865,11 +865,11 @@ msgstr "Testador padrão"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
 msgid "TC"
-msgstr ""
+msgstr "TC"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testruns/templates/testruns/get.html:268
@@ -886,7 +886,7 @@ msgstr "Finalizado em"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "Tendências de Execução"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -902,7 +902,7 @@ msgstr "Negativo"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "Matriz de Execução"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
@@ -947,7 +947,7 @@ msgstr "Erro Interno do Servidor"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "Erro ao carregar anexo"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -997,7 +997,11 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "Bem-vindo ao Kiwi TCMS! \n\n"
+"Para confirmar o endereço de e-mail para o nome de usuário %(user)s e ativar sua conta por favor siga esse URL:\n"
+"%(confirm_url)s\n\n"
+"Atenciosamente,\n"
+"Kiwi TCMS"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -1012,7 +1016,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "O bug %(pk)s foi atualizado.\n\n"
+"Link: %(bug_url)s\n\n"
+"Resumo: %(summary)s\n"
+"Criada em: %(creation_date)s\n"
+"Reporta: %(reporter)s\n"
+"Atribuído: %(assignee)s\n"
+"Produto: %(product)s\n"
+"Versão: %(version)s\n"
+"Build: %(build)s\n"
+"Último comentário:\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1090,16 +1104,16 @@ msgstr "URL"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:345
 msgid "Parameters"
-msgstr ""
+msgstr "Parâmetros"
 
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "Esta é uma característica de pré-visualização tecnológica!"
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
-msgstr ""
+msgstr "nome=valor"
 
 #: tcms/templates/include/properties_card.html:69
 #: tcms/templates/include/tags_card.html:28
@@ -1217,7 +1231,7 @@ msgstr "Senha"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "Esqueci a senha"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1317,11 +1331,11 @@ msgstr "Falha ao criar o rastreador de problemas"
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "Detalhes extraídos via OpenGraph. Issue Tracker ainda pode ser configurado incorretamente!"
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr ""
+msgstr "Detalhes extraídos via API. A configuração do Issue Tracker estão ok!"
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
@@ -1343,11 +1357,11 @@ msgstr "Status do caso de teste"
 #: tcms/testcases/models.py:379
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
-msgstr ""
+msgstr "Modelo"
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr ""
+msgstr "Modelos"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
@@ -1483,7 +1497,7 @@ msgstr "adicionar nova Categoria"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr ""
+msgstr "adicionar novo modelo"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:516
@@ -1509,7 +1523,7 @@ msgstr "Notificar quando"
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:142
 msgid "applies only for changes made by somebody else"
-msgstr ""
+msgstr "aplica-se somente às mudanças feitas por outra pessoa"
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
@@ -1537,11 +1551,11 @@ msgstr "Ambos"
 
 #: tcms/testcases/templates/testcases/search.html:61
 msgid "include in search request"
-msgstr ""
+msgstr "incluir na solicitação de pesquisa"
 
 #: tcms/testcases/templates/testcases/search.html:74
 msgid "include child test plans"
-msgstr ""
+msgstr "incluir planos de teste infantis"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testcases/templates/testcases/search.html:165
@@ -1694,7 +1708,7 @@ msgstr "ID Pai"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "Entre para atribuir; Backspace + Enter para limpar"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1727,7 +1741,7 @@ msgstr "Ativo(s)"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr ""
+msgstr "Alguns planos de teste infantis não correspondem aos critérios de pesquisa"
 
 #: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
@@ -1751,15 +1765,15 @@ msgstr "1 status negativo, 1 neutro e 1 positivo exigido!"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Editar parâmetros"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Cheio"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Pairwise"
 
 #: tcms/testruns/models.py:226
 msgid "Test execution statuses"
@@ -1807,7 +1821,7 @@ msgstr "Parar"
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:160
 msgid "Environment"
-msgstr ""
+msgstr "Ambiente"
 
 #: tcms/testruns/templates/testruns/get.html:182
 msgid "Update text version"
@@ -1825,11 +1839,11 @@ msgstr "Adicionar hiperlink"
 
 #: tcms/testruns/templates/testruns/get.html:279
 msgid "Mine"
-msgstr ""
+msgstr "Meu"
 
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "All"
-msgstr ""
+msgstr "Todos"
 
 #: tcms/testruns/templates/testruns/get.html:306
 msgid "records"
@@ -1868,7 +1882,7 @@ msgstr "Cancelar"
 
 #: tcms/testruns/templates/testruns/get.html:611
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Issue Tracker"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1880,11 +1894,11 @@ msgstr "Clonar Execução de Teste"
 
 #: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Afeta apenas casos de testes com parâmetros"
 
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
-msgstr ""
+msgstr "mais informações"
 
 #: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
@@ -2022,7 +2036,7 @@ msgstr "Editar GitHub App <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "Não foi possível encontrar a instalação do app GitHub para inquilino %s"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
@@ -2037,19 +2051,23 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "Obrigado por usar o Kiwi TSCMS com uma inscrição paga.\n"
+"Sentimos muito por ver você partir, mas gostaríamos de entender o motivo para podermos melhorar no futuro!\n\n"
+"Você pode compartilhar seu feedback em \n"
+"https://forms.gle/RJhFengbjN9C6wtUA\n\n"
+"Obrigado!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "Inscrições dos inquilinos"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "Você pode acessar os seguintes inquilinos"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
 msgid "Tenant"
-msgstr ""
+msgstr "Inquilino"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
@@ -2059,15 +2077,15 @@ msgstr "Organização"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:44
 msgid "Docker credentials"
-msgstr ""
+msgstr "Credenciais do Docker"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Instruções de contêiners privados"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
 msgid "You own the following tenants"
-msgstr ""
+msgstr "Você possui os seguintes inquilinos"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
@@ -2091,7 +2109,7 @@ msgstr "Cancelar assinatura"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "Você não possui nenhum inquilino"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "Subscribe via FastSpring"
@@ -2118,19 +2136,19 @@ msgstr "Recebido em"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
 msgid "Extra emails"
-msgstr ""
+msgstr "E-mails extras"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
-msgstr ""
+msgstr "O Kiwi TCMS tentará corresponder a eventos de faturamento recorrentes contra tenant.owner.email + tenant.extra_emails"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
-msgstr ""
+msgstr "Separar por vírgula (,), ponto e vírgula (;) ou espaço em branco ( )"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Aviso de inquilino privado"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2307,3 +2325,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
