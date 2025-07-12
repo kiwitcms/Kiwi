@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-07-12 04:54\n"
+"PO-Revision-Date: 2025-07-12 04:59\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2051,7 +2051,7 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr "Obrigado por usar o Kiwi TSCMS com uma inscrição paga.\n"
+msgstr "Obrigado por usar o Kiwi TSCMS com uma assinatura paga.\n"
 "Sentimos muito por ver você partir, mas gostaríamos de entender o motivo para podermos melhorar no futuro!\n\n"
 "Você pode compartilhar seu feedback em \n"
 "https://forms.gle/RJhFengbjN9C6wtUA\n\n"
@@ -2167,11 +2167,11 @@ msgstr "Você está prestes a criar um inquilino privado para o Kiwi TCMS.\n"
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr ""
+msgstr "Enquete de saída de assinatura Kiwi TCMS"
 
 #: tcms_github_marketplace/views.py:567
 msgid "Kiwi TCMS subscription notification"
-msgstr ""
+msgstr "Notificação de assinatura Kiwi TCMS"
 
 #: tcms_github_marketplace/views.py:749
 msgid "mo"
@@ -2229,7 +2229,7 @@ msgstr "Não pago"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "O inquilino expira em breve"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2331,3 +2331,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
