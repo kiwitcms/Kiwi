@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-07-12 04:59\n"
+"PO-Revision-Date: 2025-07-12 05:56\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2240,7 +2240,13 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "Prezado testador,\n"
+"%(invited_by)s convidou você a participar do seu inquilino de Kiwi TCMS em\n"
+"%(tenant_url)s\n\n"
+"Caso você nunca tenha logado antes de uma conta ter sido criada para você\n"
+"automaticamente. Você pode entrar com uma conta social que tem o mesmo e-mail\n"
+"ou ir para %(password_reset_url)s para redefinir a sua senha.\n"
+"A mensagem de redefinição de senha também contém seu nome de usuário!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2257,7 +2263,7 @@ msgstr "E-mail"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
-msgstr ""
+msgstr "Novo inquilino"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:35
 msgid "Company, team or project name"
@@ -2277,7 +2283,7 @@ msgstr "Publicamente visível"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
-msgstr ""
+msgstr "Logo do inquilino"
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
@@ -2290,7 +2296,7 @@ msgstr "Novo inquilino do Kiwi TCMS criado"
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "Usuário {user.username} adicionado ao grupo de inquilinos {group.name}"
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
@@ -2310,24 +2316,25 @@ msgstr "Apenas usuários autorizados para este inquilino podem convidar outros"
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr ""
+msgstr "usuários"
 
 #: tenant_groups/models.py:34
 msgid "name"
-msgstr ""
+msgstr "nome"
 
 #: tenant_groups/models.py:37
 msgid "permissions"
-msgstr ""
+msgstr "permissões"
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr ""
+msgstr "grupo"
 
 #: tenant_groups/models.py:48
 msgid "groups"
-msgstr ""
+msgstr "grupos"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr ""
+msgstr "Tokens API pessoais"
+
