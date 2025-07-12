@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:08\n"
+"PO-Revision-Date: 2025-07-12 03:36\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1412,16 +1412,16 @@ msgstr "Prioridad"
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:120
 msgid "Setup duration"
-msgstr ""
+msgstr "Duración de instalación"
 
 #: tcms/testcases/templates/testcases/get.html:78
 #: tcms/testcases/templates/testcases/mutable.html:127
 msgid "Testing duration"
-msgstr ""
+msgstr "Duración de prueba"
 
 #: tcms/testcases/templates/testcases/get.html:83
 msgid "Expected duration"
-msgstr ""
+msgstr "Duración prevista"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:143
@@ -2301,3 +2301,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
