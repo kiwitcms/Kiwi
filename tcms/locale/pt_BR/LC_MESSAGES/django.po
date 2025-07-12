@@ -2157,7 +2157,13 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Você está prestes a criar um inquilino privado para o Kiwi TCMS.\n"
+"Levará alguns minutos para que seu esquema DB fique pronto!\n"
+"Após clicar no botão de salvar<strong> não</strong> feche ou atualize esta página!<br>\n"
+"Você será redirecionado para seu novo inquilino quando o processo de criação for concluído!\n"
+"Se você ver uma página de erro internal 500 por favor \n"
+"contate\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> imediatamente!"
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
@@ -2325,3 +2331,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
