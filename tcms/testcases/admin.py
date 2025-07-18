@@ -156,6 +156,7 @@ class BugSystemAdmin(admin.ModelAdmin):
                     "api_url",
                     "api_username",
                     "api_password",
+                    "api_access_key",
                 ),
                 "description": _(
                     """<h1>Warning: read the

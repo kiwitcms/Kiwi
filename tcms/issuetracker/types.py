@@ -343,16 +343,29 @@ class Redmine(IssueTrackerType):
     def is_adding_testcase_to_issue_disabled(self):
         (api_username, api_password) = self.rpc_credentials
 
-        return not (self.bug_system.base_url and api_username and api_password)
+        return not (
+            self.bug_system.base_url and (
+                self.bug_system.api_access_key or (
+                    self.bug_system.api_username and self.bug_system.api_password
+                )
+            )
+        )
 
     def _rpc_connection(self):
-        (api_username, api_password) = self.rpc_credentials
-
-        return redminelib.Redmine(
-            self.bug_system.base_url,
-            username=api_username,
-            password=api_password,
-        )
+        # Prefer API access key if provided; fallback to username/password
+        if self.bug_system.api_access_key:
+            connection = redminelib.Redmine(
+                self.bug_system.base_url,
+                key=self.bug_system.api_access_key
+            )
+        else:
+            (api_username, api_password) = self.rpc_credentials
+            connection =  redminelib.Redmine(
+                self.bug_system.base_url,
+                username=api_username,
+                password=api_password,
+            )
+        return connection
 
     def details(self, url):
         try:
