@@ -336,23 +336,38 @@ class Redmine(IssueTrackerType):
     Support for Redmine. Requires:
 
     :base_url: the URL for this Redmine instance. For example http://redmine.example.org:3000
-    :api_username: a username registered in Redmine
-    :api_password: the password for this username
+    :api_username: (Optional) A username registered in Redmine. If omitted, the value of
+                   ``:api_password:`` is treated as an API access token.
+    :api_password: Either the user's password (when ``:api_username:`` is
+                   provided), or the API access token (when
+                   ``:api_username:`` is empty).
+
+    Users can manage API tokens at:
+    https://www.redmine.org/my/account and selecting "API access key"
+    (or ``https://<your-redmine-instance>/my/account`` if self-hosted).
     """
 
     def is_adding_testcase_to_issue_disabled(self):
-        (api_username, api_password) = self.rpc_credentials
+        (_api_username, api_password) = self.rpc_credentials
 
-        return not (self.bug_system.base_url and api_username and api_password)
+        return not (self.bug_system.base_url and api_password)
 
     def _rpc_connection(self):
         (api_username, api_password) = self.rpc_credentials
 
-        return redminelib.Redmine(
-            self.bug_system.base_url,
-            username=api_username,
-            password=api_password,
-        )
+        if api_username:
+            connection = redminelib.Redmine(
+                self.bug_system.base_url,
+                username=api_username,
+                password=api_password,
+            )
+        else:
+            connection = redminelib.Redmine(
+                self.bug_system.base_url,
+                key=api_password,
+            )
+
+        return connection
 
     def details(self, url):
         try:
