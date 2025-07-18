@@ -61,7 +61,7 @@ def metrics(query=None):
     results = []
     statuses = list(TestExecutionStatus.objects.exclude(weight=0).values('id', 'name'))
     status_names = [status['name'] for status in statuses]
- 
+
     status_weights = dict(TestExecutionStatus.objects.exclude(weight=0).values_list('id', 'weight'))
     for tr in test_runs:
         tp = tr.plan
@@ -95,7 +95,7 @@ def metrics(query=None):
 
 
 
-        results.append(metrics)    
+        results.append(metrics)
     status_formulas = []
     for status in statuses:
         status_name = status['name'].upper()
