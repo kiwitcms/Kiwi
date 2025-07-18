@@ -174,3 +174,28 @@ class TestRedmineIntegration(APITestCase):
         # admin:admin as defined above b/c rpc_no_creds() returns None
         self.assertEqual(rpc_username, "admin")
         self.assertEqual(rpc_password, "admin")
+
+    def test_auth_with_api_key_only_works(self):
+        """
+        Verify API-key-only auth path: empty username + api_password == API key.
+        The admin API key is fixed in Redmine seeds.rb.
+        """
+        fixed_key = "0123456789abcdef0123456789abcdef01234567"
+
+        bug_system_token = BugSystem.objects.create(  # nosec:B106
+            name="Redmine (token-only)",
+            tracker_type="tcms.issuetracker.types.Redmine",
+            base_url="http://bugtracker.kiwitcms.org:3000",
+            api_username="",  # empty -> treat api_password as API access key
+            api_password=fixed_key,  # seeded fixed key
+        )
+        token_integration = Redmine(bug_system_token, None)
+
+        # If token auth works, details() should succeed and return the known data.
+        details = token_integration.details(self.existing_bug_url)
+
+        self.assertEqual(self.existing_bug_id, details["id"])
+        self.assertEqual("Created via API", details["description"])
+        self.assertEqual("OPEN", details["status"])
+        self.assertEqual("Hello Redmine", details["title"])
+        self.assertEqual(self.existing_bug_url, details["url"])
