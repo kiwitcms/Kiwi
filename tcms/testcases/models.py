@@ -303,6 +303,14 @@ Leave empty to disable!
         max_length=256, null=True, blank=True, verbose_name="API password or token"
     )
 
+    api_access_key = models.CharField(
+        max_length=256,
+        null=True,
+        blank=True,
+        verbose_name="API access key",
+        help_text="Optional API token or access key used for authentication. Takes precedence over username/password if provided.",
+    )
+
     class Meta:
         verbose_name = "Bug tracker"
         verbose_name_plural = "Bug trackers"
