@@ -359,7 +359,7 @@ class Redmine(IssueTrackerType):
                 self.bug_system.base_url,
                 key=self.bug_system.api_access_key
             )
-            
+
         return connection
 
     def details(self, url):
