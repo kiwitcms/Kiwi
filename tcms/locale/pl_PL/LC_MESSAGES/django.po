@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-03-10 11:08\n"
+"PO-Revision-Date: 2025-07-28 07:17\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -42,7 +42,7 @@ msgstr "Opis problemu:\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:18
 #: tcms/bugs/templates/bugs/search.html:108
 msgid "Severity"
-msgstr ""
+msgstr "Ważność"
 
 #: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:89
 #: tcms/issuetracker/kiwitcms.py:49 tcms/templates/include/bug_details.html:3
@@ -2282,3 +2282,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
