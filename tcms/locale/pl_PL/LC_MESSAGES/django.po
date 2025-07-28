@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-07-28 07:57\n"
+"PO-Revision-Date: 2025-07-28 08:21\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -586,7 +586,7 @@ msgstr "Twoje konto zostało pomyślnie aktywowane"
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr "Wyświetlasz rekordy z organizacji '%s'"
+msgstr "Wyświetlasz rekordy z tenant '%s'"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
@@ -1592,7 +1592,7 @@ msgstr "Klonowanie przypadku testowego zostało ukończone pomyślnie"
 
 #: tcms/testcases/views.py:281
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Wymagany jest co najmniej jeden przypadek testowy"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
@@ -1600,19 +1600,19 @@ msgstr "Klonuj przypadek testowy"
 
 #: tcms/testplans/templates/testplans/clone.html:55
 msgid "Clone TCs"
-msgstr ""
+msgstr "Sklonuj przypadki testowe"
 
 #: tcms/testplans/templates/testplans/clone.html:59
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Sklonuj lub połącz istniejące przypadki testowe z nowym planem testów"
 
 #: tcms/testplans/templates/testplans/clone.html:63
 msgid "Parent TP"
-msgstr ""
+msgstr "Nadrzędny plan testów"
 
 #: tcms/testplans/templates/testplans/clone.html:67
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Ustaw źródłowy plan testów jako nadrzędny dla nowego planu testów"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1631,7 +1631,7 @@ msgstr "Czy jesteś pewien?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "Nie można utworzyć przebiegu testów z niezatwierdzonymi przypadkami testowymi"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
@@ -1659,11 +1659,11 @@ msgstr "Recenzent"
 #: tcms/testplans/templates/testplans/get.html:231
 #: tcms/testplans/templates/testplans/get.html:234
 msgid "Sort key"
-msgstr ""
+msgstr "Klucz sortowania"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
-msgstr ""
+msgstr "Przestaw kolejność"
 
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:288
@@ -1711,7 +1711,7 @@ msgstr "ID rodzica"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "Enter, aby przypisać; Backspace + Enter, aby wyczyścić"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1744,7 +1744,7 @@ msgstr "Aktywny"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr ""
+msgstr "Niektóre podrzędne plany testów nie spełniają kryteriów wyszukiwania"
 
 #: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
@@ -1752,21 +1752,22 @@ msgstr "Nazwa planu testowego"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Odmowa dostępu: Przebieg testów nie należy do Ciebie"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Aby uzyskać więcej informacji na temat dostosowywania statusów wykonania testów, zobacz\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">        dokumentację</a>!"
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "Wymagane są 1 negatywny, 1 neutralny i 1 pozytywny status!"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Edytuj parametry"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
@@ -1774,19 +1775,19 @@ msgstr "Pełne"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Paruj"
 
 #: tcms/testruns/models.py:226
 msgid "Test execution statuses"
-msgstr ""
+msgstr "Statusy wykonania testów"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "Niepotwierdzone przypadki testowe nie zostały dodane"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Wpisz 0 lub 1"
 
 #: tcms/testruns/templates/testruns/get.html:27
 msgid "Comment"
@@ -1826,7 +1827,7 @@ msgstr "Środowisko"
 
 #: tcms/testruns/templates/testruns/get.html:182
 msgid "Update text version"
-msgstr ""
+msgstr "Zaktualizuj wersje tekstu"
 
 #: tcms/testruns/templates/testruns/get.html:217
 msgid "Add comment"
@@ -1866,7 +1867,7 @@ msgstr "Przydzielone do"
 
 #: tcms/testruns/templates/testruns/get.html:422
 msgid "Text version"
-msgstr ""
+msgstr "Wersja tekstu"
 
 #: tcms/testruns/templates/testruns/get.html:430
 msgid "Bugs and hyperlinks"
@@ -1874,7 +1875,7 @@ msgstr "Błędy i hiperłącza"
 
 #: tcms/testruns/templates/testruns/get.html:584
 msgid "Is a defect"
-msgstr ""
+msgstr "Jest wadą"
 
 #: tcms/testruns/templates/testruns/get.html:591
 #: tcms/testruns/templates/testruns/get.html:622
@@ -1887,15 +1888,15 @@ msgstr "Tracker problemów"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Edytuj przebieg testów"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Klonuj przebieg testów"
 
 #: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Dotyczy tylko przypadków testowych z parametrami"
 
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
@@ -1909,7 +1910,7 @@ msgstr "Wybrane przypadki testowe:"
 #, python-format
 msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "See test plan for more details!"
-msgstr ""
+msgstr "%(count)s Ze wstępnie wybranych przypadków testowych nie jest POTWIERDZONYCH i nie zostaną sklonowane! Zobacz plan testów, aby uzyskać więcej informacji!"
 
 #: tcms/testruns/templates/testruns/search.html:21
 msgid "Plan ID"
@@ -1917,25 +1918,25 @@ msgstr "ID Planu"
 
 #: tcms/testruns/templates/testruns/search.html:23
 msgid "TestPlan ID"
-msgstr ""
+msgstr "ID planu testowego"
 
 #: tcms/testruns/templates/testruns/search.html:79
 msgid "Running"
-msgstr ""
+msgstr "Uruchamianie"
 
 #: tcms/testruns/templates/testruns/search.html:86
 #: tcms/testruns/templates/testruns/search.html:186
 msgid "Start date"
-msgstr ""
+msgstr "Data rozpoczęcia"
 
 #: tcms/testruns/templates/testruns/search.html:106
 #: tcms/testruns/templates/testruns/search.html:187
 msgid "Stop date"
-msgstr ""
+msgstr "Data zakończenia"
 
 #: tcms/testruns/views.py:273
 msgid "Clone of "
-msgstr ""
+msgstr "Klon: "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1979,7 +1980,7 @@ msgstr "BŁĄD"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr ""
+msgstr "ZOSTAŁE"
 
 #: tcms_github_app/admin.py:122
 #, python-format
@@ -2037,7 +2038,7 @@ msgstr "Edytuj aplikacje GitHub <a href=\"%s\">%s</a>"
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr ""
+msgstr "Nie można znaleźć instalacji aplikacji GitHub dla tenant „%s”"
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
@@ -2052,15 +2053,17 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "Dziękujemy za korzystanie z Kiwi TCMS w ramach płatnej subskrypcji. Przykro nam, że rezygnujesz, ale chcielibyśmy poznać powód, aby móc się ulepszać w przyszłości!\n\n"
+"Możesz podzielić się swoją opinią pod adresem: https://forms.gle/RJhFengbjN9C6wtUA\n\n"
+"Dziękujemy!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "Subskrypcje tenant (-ów)"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "Możesz uzyskać dostęp do następujących tenant (-ów)"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
 msgid "Tenant"
@@ -2078,11 +2081,11 @@ msgstr "Poświadczenia docker'a"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Instrukcje dotyczące prywatnego kontenera"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
 msgid "You own the following tenants"
-msgstr ""
+msgstr "Jesteś właścicielem następujących tenant (-ów)"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
@@ -2106,7 +2109,7 @@ msgstr "Anuluj subskrypcję"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "Nie posiadasz żadnych tenant (-ów)"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "Subscribe via FastSpring"
@@ -2119,7 +2122,7 @@ msgstr "Historia transakcji"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:170
 msgid "Sender"
-msgstr ""
+msgstr "Nadawca"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
@@ -2133,19 +2136,19 @@ msgstr "Otrzymano"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
 msgid "Extra emails"
-msgstr ""
+msgstr "Dodatkowe wiadomości e-mail"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
-msgstr ""
+msgstr "Kiwi TCMS spróbuje dopasować powtarzające się zdarzenia rozliczeniowe na podstawie tenant.owner.email oraz tenant.extra_emails"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
-msgstr ""
+msgstr "Oddziel przecinkiem (,), średnikiem (;) lub spacją ( )"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Ostrzeżenie: Prywatny tenant"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2154,15 +2157,15 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr ""
+msgstr "Zaraz utworzysz prywatny tenant dla Kiwi TCMS. Przygotowanie schematu bazy danych potrwa kilka minut! Po kliknięciu przycisku „Zapisz” <strong>nie</strong> zamykaj ani nie odświeżaj tej strony!<br> Po zakończeniu procesu tworzenia zostaniesz przekierowany do nowego tenant. Jeśli pojawi się strona z błędem 500 Internal Server Error, skontaktuj się natychmiast z <a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a>!"
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr ""
+msgstr "Ankieta rezygnacyjna z subskrypcji Kiwi TCMS"
 
 #: tcms_github_marketplace/views.py:567
 msgid "Kiwi TCMS subscription notification"
-msgstr ""
+msgstr "Powiadomienie o subskrypcji Kiwi TCMS"
 
 #: tcms_github_marketplace/views.py:749
 msgid "mo"
@@ -2199,7 +2202,7 @@ msgstr "Pełne imię i nazwisko"
 
 #: tcms_tenants/forms.py:30
 msgid "Invalid string"
-msgstr ""
+msgstr "Nieprawidłowy ciąg znaków"
 
 #: tcms_tenants/menu.py:15
 msgid "Create"
@@ -2220,7 +2223,7 @@ msgstr "Nie zapłacono"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "Tenant wkrótce wygasa"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2231,14 +2234,21 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "Drogi testerze,\n"
+"%(invited_by)s zaprosił Cię do dołączenia do swojego tenant Kiwi TCMS pod adresem\n"
+"%(tenant_url)s\n\n"
+"Jeśli nigdy wcześniej się nie logowałeś, konto zostało dla Ciebie utworzone automatycznie.\n"
+"Możesz zalogować się za pomocą konta społecznościowego powiązanego z tym samym adresem email lub przejść do %(password_reset_url)s, aby zresetować swoje hasło.\n"
+"W wiadomości e-mail dotyczącej resetowania hasła znajdziesz również swoją nazwę użytkownika!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr ""
+msgstr "Twój tenant Kiwi TCMS został utworzony pod adresem:\n"
+"%(tenant_url)s\n\n"
+"W przypadku problemów skontaktuj się z pomocą techniczną!"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
@@ -2246,7 +2256,7 @@ msgstr "Email"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
-msgstr ""
+msgstr "Nowy tenant"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:35
 msgid "Company, team or project name"
@@ -2254,7 +2264,7 @@ msgstr "Nazwa firmy, zespołu lub projektu"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:43
 msgid "Schema"
-msgstr ""
+msgstr "Schemat"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:56
 msgid "Validation pattern"
@@ -2262,24 +2272,24 @@ msgstr "Wzorzec walidacji"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:61
 msgid "Publicly readable"
-msgstr ""
+msgstr "Publicznie czytelne"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
-msgstr ""
+msgstr "Tenant logo"
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Nazwa schematu jest już w użyciu"
 
 #: tcms_tenants/utils.py:170
 msgid "New Kiwi TCMS tenant created"
-msgstr ""
+msgstr "Nowy tenant TCMS Kiwi został utworzony"
 
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "Użytkownik {user.username} dodany do grupy tenant (-ów) {group.name}"
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
@@ -2287,36 +2297,37 @@ msgstr "Zaproszenie do dołączenia do Kiwi TCMS"
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "Tylko superużytkownik oraz właściciel tenant mogą edytować właściwości tenant"
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
-msgstr ""
+msgstr "Edytuj tenant"
 
 #: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Tylko użytkownicy, którzy są upoważnieni do tego tenat mogą zaprosić innych"
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr ""
+msgstr "użytkownicy"
 
 #: tenant_groups/models.py:34
 msgid "name"
-msgstr ""
+msgstr "nazwa"
 
 #: tenant_groups/models.py:37
 msgid "permissions"
-msgstr ""
+msgstr "uprawnienia"
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr ""
+msgstr "grupa"
 
 #: tenant_groups/models.py:48
 msgid "groups"
-msgstr ""
+msgstr "grupy"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr ""
+msgstr "Osobiste tokeny API"
+
