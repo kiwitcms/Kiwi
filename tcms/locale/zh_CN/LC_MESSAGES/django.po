@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-06-12 06:26\n"
+"PO-Revision-Date: 2025-07-21 09:56\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1167,7 +1167,7 @@ msgstr "语言"
 
 #: tcms/templates/navbar.html:45
 msgid "Change language"
-msgstr "更改语言是"
+msgstr "更改语言是中文"
 
 #: tcms/templates/navbar.html:46
 msgid "Supported languages"
