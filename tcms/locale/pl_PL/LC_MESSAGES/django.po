@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-07-28 07:24\n"
+"PO-Revision-Date: 2025-07-28 07:57\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -477,16 +477,16 @@ msgstr "Nie używasz bezpiecznego połączenia. Zobacz <a href=\"%(doc_url)s\">d
 #: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
+msgstr "Plik zawiera niedozwolony tag: <{tag_name}>"
 
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
+msgstr "Plik zawiera niedozwolony atrybut: `{attr_name}`"
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "Przesyłanie plików wykonywalnych jest niedozwolone"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
@@ -496,7 +496,7 @@ msgstr "Użytkownicy"
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "Zresetuj adres e-mail"
 
 #: tcms/kiwi_auth/admin.py:148
 msgid "Personal info"
@@ -508,7 +508,7 @@ msgstr "Uprawnienia"
 
 #: tcms/kiwi_auth/admin.py:187
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "To jest ostatni użytkownik z uprawnieniami administratora, nie można go usunąć!"
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
@@ -516,15 +516,15 @@ msgstr "Użytkownik z tym adresem e-mail już istnieje."
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "Potwierdź adres e-mail swojego konta Kiwi TCMS"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "Adres e-mail nie pasuje"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "Ostrzeżenie"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -532,11 +532,15 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "Po kliknięciu przycisku „Zapisz” Twoje konto stanie się <strong>nieaktywne</strong> \n"
+"i zostaniesz <strong>wylogowany</strong>! Na nowo podany adres e-mail zostanie wysłana wiadomość potwierdzająca!<br>\n"
+"Upewnij się, że nowy adres e-mail został <strong>wpisany poprawnie</strong>, w przeciwnym razie \n"
+"<strong>możesz zostać zablokowany</strong> i utracić dostęp do konta!\n"
+"Po kliknięciu link aktywacyjny będziesz mógł zalogować się jak zwykle!"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "Nie ty sam"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -552,7 +556,7 @@ msgstr "Potwierdź"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "Proszę wpisać! Nie kopiuj i nie wklejaj wartości z poprzedniego pola!"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -564,29 +568,29 @@ msgstr "Twoje konto zostało utworzone, ale administrator musi je aktywować"
 
 #: tcms/kiwi_auth/views.py:80
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Poniżej znajduje się lista administratorów"
 
 #: tcms/kiwi_auth/views.py:123
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Ten klucz aktywacyjny nie istnieje już w bazie danych"
 
 #: tcms/kiwi_auth/views.py:129
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Ten klucz aktywacyjny wygasł"
 
 #: tcms/kiwi_auth/views.py:141
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Twoje konto zostało pomyślnie aktywowane"
 
 #: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr ""
+msgstr "Wyświetlasz rekordy z organizacji '%s'"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "Adres e-mail został zresetowany, sprawdź skrzynkę odbiorczą, aby uzyskać dalsze instrukcje"
 
 #: tcms/management/models.py:58
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -595,7 +599,7 @@ msgstr "Priorytety"
 
 #: tcms/management/models.py:133
 msgid "Builds"
-msgstr ""
+msgstr "Kompilacje"
 
 #: tcms/management/models.py:144
 #: tcms/testcases/templates/testcases/search.html:136
@@ -617,11 +621,11 @@ msgstr "Tagi"
 
 #: tcms/rpc/api/bug.py:69
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Włącz raportowanie do tego systemu zgłoszeń, konfigurując jego adres bazowy base_url!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
-msgstr ""
+msgstr "Nieprawidłowy format daty. Oczekiwano formatu RRRR-MM-DD [GG:MM:SS]."
 
 #: tcms/settings/common.py:391
 msgid "TESTING"
@@ -661,7 +665,7 @@ msgstr "Wyszukaj uruchomienia testów"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "Wyszukaj wykonania testów"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -677,7 +681,7 @@ msgstr "Awaria"
 
 #: tcms/settings/common.py:428
 msgid "Execution"
-msgstr ""
+msgstr "Wykonanie"
 
 #: tcms/settings/common.py:431
 #: tcms/testruns/templates/testruns/mutable.html:177
@@ -686,7 +690,7 @@ msgstr "Matryca"
 
 #: tcms/settings/common.py:432
 msgid "Trends"
-msgstr ""
+msgstr "Popularne"
 
 #: tcms/settings/common.py:435
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -735,17 +739,17 @@ msgstr "Pomoc API"
 
 #: tcms/signals.py:83
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Nowy użytkownik oczekujący na zatwierdzenie"
 
 #: tcms/signals.py:161
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NOWE: Przebieg testu #%(pk)d – %(summary)s"
 
 #: tcms/signals.py:230
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Błąd #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -781,15 +785,15 @@ msgstr "Przebieg testu"
 #: tcms/telemetry/templates/telemetry/include/filters.html:70
 #: tcms/testruns/templates/testruns/search.html:17
 msgid "Test run summary"
-msgstr ""
+msgstr "Podsumowanie przebiegu testu"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Podział testów"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 msgid "Total"
-msgstr ""
+msgstr "Łącznie"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/testcases/templates/testcases/get.html:93
@@ -817,12 +821,12 @@ msgstr "Kategorie"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Panel wykonania"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 msgid "Child TPs"
-msgstr ""
+msgstr "Podrzędne TP"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -864,11 +868,11 @@ msgstr "Domyślny tester"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
 msgid "TC"
-msgstr ""
+msgstr "TC"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testruns/templates/testruns/get.html:268
@@ -885,23 +889,23 @@ msgstr "Zakończono o"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "Trendy wykonań"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
-msgstr ""
+msgstr "Pozytywny"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
 msgid "Neutral"
-msgstr ""
+msgstr "Neutralny"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
 msgid "Negative"
-msgstr ""
+msgstr "Negatywny"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "Macierz wykonań testów"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
@@ -921,7 +925,7 @@ msgstr "Przypadek testowy"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
-msgstr ""
+msgstr "Najczęściej zawodzące przypadki testowe"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
 msgid "Test Case"
@@ -929,12 +933,12 @@ msgstr "Przypadek testowy"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
 msgid "Failed executions"
-msgstr ""
+msgstr "Nieudane wykonania testów"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
 #, python-format
 msgid "%% of failed executions"
-msgstr ""
+msgstr "%% nieudanych wykonań testów"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -946,7 +950,7 @@ msgstr "Wewnętrzny błąd serwera"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "Błąd przesyłania załącznika"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -996,7 +1000,13 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "Witamy w Kiwi TCMS!\n\n"
+"Aby potwierdzić adres e-mail dla użytkownika %(user)s\n"
+"i aktywować swoje konto,\n"
+"kliknij poniższy link:\n"
+"%(confirm_url)s\n\n"
+"Pozdrowienia,\n"
+"Kiwi TCMS"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -1011,7 +1021,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Błąd %(pk)s został zaktualizowany.\n\n"
+"Link: %(bug_url)s\n\n"
+"Podsumowanie: %(summary)s\n"
+"Utworzono: %(creation_date)s\n"
+"Zgłaszający: %(reporter)s\n"
+"Przypisany do: %(assignee)s\n"
+"Produkt: %(product)s\n"
+"Wersja: %(version)s\n"
+"Kompilacja: %(build)s\n"
+"Ostatni komentarz:\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1033,7 +1053,19 @@ msgid "Test run %(pk)s has been created or updated for you.\n\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s"
-msgstr ""
+msgstr "Przebieg testu %(pk)s został utworzony lub zaktualizowany.\n\n"
+"### Linki ###\n\n"
+"Przebieg testu: %(run_url)s \n"
+"Plan testów: %(plan_url)s\n\n"
+"### Podstawowe informacje o przebiegu ###\n\n"
+"Podsumowanie: %(summary)s\n\n"
+"Zarządzający: %(manager)s. \n"
+"Domyślny tester: %(default_tester)s.\n\n"
+"Produkt: %(product)s \n"
+"Wersja produktu: %(version)s \n"
+"Kompilacja: %(build)s\n\n"
+"Notatki: \n"
+"%(notes)s"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -1041,7 +1073,9 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!"
-msgstr ""
+msgstr "Szanowny Administratorze,\n"
+"ktoś właśnie zarejestrował konto o nazwie użytkownika %(username)s w Twojej instancji Kiwi TCMS i oczekuje na zatwierdzenie!\n\n"
+"Przejdź do %(user_url)s, aby aktywować konto!"
 
 #: tcms/templates/include/attachments.html:10
 #: tcms/testplans/templates/testplans/get.html:437
@@ -1075,16 +1109,16 @@ msgstr "URL"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:345
 msgid "Parameters"
-msgstr ""
+msgstr "Parametry"
 
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "To jest funkcja w wersji zapoznawczej!"
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
-msgstr ""
+msgstr "nazwa=wartość"
 
 #: tcms/templates/include/properties_card.html:69
 #: tcms/templates/include/tags_card.html:28
@@ -1094,7 +1128,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:292
 #: tcms/testruns/templates/testruns/get.html:545
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:167
@@ -1110,15 +1144,15 @@ msgstr "Nazwa"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
 msgid "Initialize database"
-msgstr ""
+msgstr "Inicjalizuj bazę danych"
 
 #: tcms/templates/initdb.html:20
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Twoja baza danych nie została jeszcze zainicjowana. Kliknij przycisk poniżej, aby ją zainicjować!"
 
 #: tcms/templates/initdb.html:22
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "OSTRZEŻENIE: ta operacja może potrwać chwilę! Po zakończeniu nastąpi przekierowanie strony."
 
 #: tcms/templates/initdb.html:27
 msgid "Please wait"
@@ -1138,7 +1172,7 @@ msgstr "Język"
 
 #: tcms/templates/navbar.html:45
 msgid "Change language"
-msgstr ""
+msgstr "Zmień język"
 
 #: tcms/templates/navbar.html:46
 msgid "Supported languages"
@@ -1202,7 +1236,7 @@ msgstr "Hasło"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot password"
-msgstr ""
+msgstr "Nie pamiętasz hasła?"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1230,31 +1264,31 @@ msgstr "jeśli go nie posiadasz!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Twoje hasło zostało ustawione. Możesz przejść dalej"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "teraz"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Proszę wprowadzić nowe hasło dwukrotnie, abyśmy mogli sprawdzić, czy jest wpisane bez pomyłek."
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "poproś o reset hasła"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "Wysłano e-mail resetujący hasło."
 
 #: tcms/templates/registration/password_reset_form.html:27
 msgid "Password reset"
-msgstr ""
+msgstr "Resetowanie hasła"
 
 #: tcms/templates/registration/password_reset_form.html:34
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Resetowanie hasła Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
@@ -1264,11 +1298,12 @@ msgstr "Zarejestruj nowe konto"
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
-msgstr ""
+msgstr "Aby uzyskać więcej informacji na temat dostosowywania statusów przypadków testowych, zobacz\n"
+"<a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\"> dokumentację</a>!"
 
 #: tcms/testcases/admin.py:56
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr ""
+msgstr "Wymagany jest jeden status potwierdzony i jeden niepotwierdzony!"
 
 #: tcms/testcases/admin.py:131
 msgid "Bug URL"
@@ -1276,37 +1311,38 @@ msgstr "Adres URL błędu"
 
 #: tcms/testcases/admin.py:151
 msgid "External Issue Tracker Integration"
-msgstr ""
+msgstr "Integracja z zewnętrznym systemem śledzenia zgłoszeń"
 
 #: tcms/testcases/admin.py:161
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
-msgstr ""
+msgstr "Ostrzeżenie: przed edycją poniższych wartości przeczytaj sekcję\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\"> Konfigurowanie zewnętrznych systemów śledzenia błędów</a> w dokumentacji!"
 
 #: tcms/testcases/admin.py:168
 msgid "Configuration health check"
-msgstr ""
+msgstr "Sprawdzenie kondycji konfiguracji"
 
 #: tcms/testcases/admin.py:172
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
-msgstr ""
+msgstr "Kiwi TCMS spróbuje pobrać szczegóły dla podanego adresu URL błędu, korzystając z powyższej integracji! Kliknij przycisk Zapisz i kontynuuj i obserwuj komunikaty wyświetlane na górze ekranu. <strong>OSTRZEŻENIE:</strong> w przypadku niepowodzenia niektóre systemy śledzenia zgłoszeń pobiorą szczegóły za pomocą protokołu OpenGraph. W takim przypadku wynik będzie zawierał pole o nazwie from_open_graph."
 
 #: tcms/testcases/admin.py:192
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "Nie udało się utworzyć systemu śledzenia zgłoszeń"
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "Szczegóły pobrane za pomocą OpenGraph. System śledzenia zgłoszeń może być nadal niepoprawnie skonfigurowany!"
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr ""
+msgstr "Szczegóły pobrane za pomocą API. Konfiguracja systemu śledzenia zgłoszeń wygląda poprawnie!"
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Sprawdzenie konfiguracji systemu śledzenia zgłoszeń nie powiodło się"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-format
@@ -1336,7 +1372,7 @@ msgstr "Klonuj przypadek testowy"
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
-msgstr ""
+msgstr "Dodaj nowy przypadek testowy do planu testów"
 
 #: tcms/testcases/templates/testcases/clone.html:30
 msgid "Selected TC"
@@ -1464,7 +1500,7 @@ msgstr "dodaj nową kategorie"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr ""
+msgstr "dodaj nowy Szablon"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:516
@@ -1490,7 +1526,7 @@ msgstr "Powiadom gdy"
 #: tcms/testcases/templates/testcases/mutable.html:224
 #: tcms/testplans/templates/testplans/mutable.html:142
 msgid "applies only for changes made by somebody else"
-msgstr ""
+msgstr "dotyczy tylko zmian wprowadzonych przez kogoś innego"
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
@@ -1518,11 +1554,11 @@ msgstr "Oba"
 
 #: tcms/testcases/templates/testcases/search.html:61
 msgid "include in search request"
-msgstr ""
+msgstr "dołącz do zapytania wyszukiwania"
 
 #: tcms/testcases/templates/testcases/search.html:74
 msgid "include child test plans"
-msgstr ""
+msgstr "uwzględnij podrzędne plany testów"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testcases/templates/testcases/search.html:165
@@ -1543,7 +1579,7 @@ msgstr "Oddziel wiele wartości przecinkiem (,)"
 
 #: tcms/testcases/templates/testcases/search.html:178
 msgid "Select"
-msgstr ""
+msgstr "Wybierz"
 
 #: tcms/testcases/views.py:138 tcms/testplans/views.py:147
 #: tcms/testruns/templates/testruns/get.html:457 tcms/testruns/views.py:202
@@ -2284,3 +2320,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
