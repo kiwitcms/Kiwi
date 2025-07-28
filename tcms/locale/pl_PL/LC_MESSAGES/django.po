@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-10 09:44+0000\n"
-"PO-Revision-Date: 2025-07-28 07:17\n"
+"PO-Revision-Date: 2025-07-28 07:24\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -172,7 +172,7 @@ msgstr "Podsumowanie"
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 msgid "add new Severity"
-msgstr ""
+msgstr "dodaj nowy poziom ważności"
 
 #: tcms/bugs/templates/bugs/mutable.html:46
 #: tcms/testcases/templates/testcases/mutable.html:44
@@ -404,19 +404,20 @@ msgstr "Wykonania testów"
 #: tcms/core/templates/dashboard.html:15
 #, python-format
 msgid "%(amount)s%% complete"
-msgstr ""
+msgstr "%(amount)s%% ukończenia"
 
 #: tcms/core/templates/dashboard.html:24
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/testruns/templates/testruns/get.html:78
 msgid "Started at"
-msgstr ""
+msgstr "Rozpoczęto o"
 
 #: tcms/core/templates/dashboard.html:32
 #, python-format
 msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "%(total_count)s testów (TestRun lub TestCase) przypisanych do Ciebie wymaga wykonania.\n"
+"Oto najnowsze %(count)s z nich."
 
 #: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
 msgid "SEE ALL"
@@ -451,7 +452,8 @@ msgstr "Wykonania"
 #, python-format
 msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "Here are the latest %(count)s."
-msgstr ""
+msgstr "Zarządzasz %(total_count)s Planem (-ami) Testów, z czego %(disabled_count)s jest nieaktywnych.\n"
+"Poniżej znajduje się %(count)s najnowszych."
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
@@ -2282,3 +2284,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
