@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2024 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2025 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -47,25 +47,25 @@ class MenuDiscoveryTestCase(TestCase):
     def test_menu_is_updated(self):
         """
         Given there are some plugins installed
-        Then navigation menu under PLUGINS will be extended
+        Then navigation menu under MORE will be extended
         """
         for name, target in settings.MENU_ITEMS:
-            if name == _("PLUGINS"):
+            if name == _("MORE"):
                 for menu_item in plugin_menu.MENU_ITEMS:
                     self.assertIn(menu_item, target)
 
                 return
 
-        self.fail("PLUGINS not found in settings.MENU_ITEMS")
+        self.fail("MORE not found in settings.MENU_ITEMS")
 
     def test_menu_rendering(self):
         """
         Given there are some plugins installed
-        Then navigation menu under PLUGINS will be rendered
+        Then navigation menu under MORE will be rendered
             with several levels of sub menus.
         """
         response = self.client.get("/", follow=True)
-        self.assertContains(response, _("PLUGINS"))
+        self.assertContains(response, _("MORE"))
         self.assertContains(response, "Fake Telemetry plugin")
         self.assertContains(
             response,
