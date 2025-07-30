@@ -1,0 +1,2278 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kiwitcms\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-30 12:22+0000\n"
+"PO-Revision-Date: 2025-07-30 14:54\n"
+"Last-Translator: \n"
+"Language-Team: Georgian\n"
+"Language: ka_GE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Project-ID: 295734\n"
+"X-Crowdin-Language: ka\n"
+"X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+"X-Crowdin-File-ID: 19\n"
+
+#: tcms/bugs/forms.py:33
+msgid "Description of problem:\n\n\n"
+"How often reproducible:\n\n\n"
+"Steps to Reproduce:\n"
+"1.\n"
+"2.\n"
+"3.\n\n"
+"Actual results:\n\n\n"
+"Expected results:\n\n\n"
+"Additional info:"
+msgstr ""
+
+#: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:50
+#: tcms/bugs/templates/bugs/mutable.html:27
+#: tcms/bugs/templates/bugs/search.html:18
+#: tcms/bugs/templates/bugs/search.html:108
+msgid "Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:89
+#: tcms/issuetracker/kiwitcms.py:49 tcms/templates/include/bug_details.html:3
+msgid "Open"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:39 tcms/issuetracker/kiwitcms.py:49
+#: tcms/templates/include/bug_details.html:3
+msgid "Closed"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:79
+#: tcms/bugs/templates/bugs/search.html:114
+#: tcms/templates/include/bug_details.html:7
+msgid "Reporter"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:64
+#: tcms/bugs/templates/bugs/mutable.html:94
+#: tcms/bugs/templates/bugs/search.html:84
+#: tcms/bugs/templates/bugs/search.html:115
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
+#: tcms/templates/include/bug_details.html:10
+#: tcms/testruns/templates/testruns/get.html:207
+#: tcms/testruns/templates/testruns/get.html:267
+msgid "Assignee"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:75
+#: tcms/bugs/templates/bugs/mutable.html:45
+#: tcms/bugs/templates/bugs/search.html:47
+#: tcms/bugs/templates/bugs/search.html:111
+#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:107
+#: tcms/telemetry/templates/telemetry/include/filters.html:8
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:29
+#: tcms/templates/include/bug_details.html:13
+#: tcms/testcases/templates/testcases/get.html:44
+#: tcms/testcases/templates/testcases/get.html:170
+#: tcms/testcases/templates/testcases/mutable.html:43
+#: tcms/testcases/templates/testcases/search.html:51
+#: tcms/testplans/templates/testplans/clone.html:21
+#: tcms/testplans/templates/testplans/get.html:64
+#: tcms/testplans/templates/testplans/mutable.html:33
+#: tcms/testplans/templates/testplans/search.html:50
+#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testruns/templates/testruns/get.html:45
+#: tcms/testruns/templates/testruns/mutable.html:46
+#: tcms/testruns/templates/testruns/search.html:35
+#: tcms/testruns/templates/testruns/search.html:183
+msgid "Product"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:80
+#: tcms/bugs/templates/bugs/mutable.html:60
+#: tcms/bugs/templates/bugs/search.html:57
+#: tcms/bugs/templates/bugs/search.html:112
+#: tcms/telemetry/templates/telemetry/include/filters.html:17
+#: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
+#: tcms/testplans/templates/testplans/clone.html:36
+#: tcms/testplans/templates/testplans/get.html:70
+#: tcms/testplans/templates/testplans/mutable.html:48
+#: tcms/testplans/templates/testplans/search.html:60
+#: tcms/testplans/templates/testplans/search.html:118
+#: tcms/testruns/templates/testruns/get.html:50
+#: tcms/testruns/templates/testruns/search.html:45
+#: tcms/testruns/templates/testruns/search.html:184
+msgid "Version"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:85
+#: tcms/bugs/templates/bugs/mutable.html:78
+#: tcms/bugs/templates/bugs/search.html:67
+#: tcms/bugs/templates/bugs/search.html:113 tcms/management/models.py:132
+#: tcms/telemetry/templates/telemetry/include/filters.html:25
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:30
+#: tcms/templates/include/bug_details.html:17
+#: tcms/testruns/templates/testruns/get.html:55
+#: tcms/testruns/templates/testruns/get.html:414
+#: tcms/testruns/templates/testruns/mutable.html:89
+#: tcms/testruns/templates/testruns/search.html:55
+#: tcms/testruns/templates/testruns/search.html:185
+msgid "Build"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:119
+msgid "commented on"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:149
+msgid "Reopen"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:151
+#: tcms/bugs/templates/bugs/mutable.html:114
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:78
+#: tcms/testcases/templates/testcases/mutable.html:263
+#: tcms/testplans/templates/testplans/get.html:477
+#: tcms/testplans/templates/testplans/mutable.html:173
+#: tcms/testruns/templates/testruns/get.html:480
+#: tcms/testruns/templates/testruns/get.html:593
+#: tcms/testruns/templates/testruns/mutable.html:210
+msgid "Save"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/get.html:153
+msgid "Close"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:20
+#: tcms/bugs/templates/bugs/search.html:13
+#: tcms/bugs/templates/bugs/search.html:109
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:27
+#: tcms/testcases/templates/testcases/mutable.html:24
+#: tcms/testcases/templates/testcases/search.html:13
+#: tcms/testcases/templates/testcases/search.html:162
+#: tcms/testplans/templates/testplans/get.html:212
+#: tcms/testplans/templates/testplans/get.html:487
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:3
+#: tcms/testruns/templates/testruns/get.html:251
+#: tcms/testruns/templates/testruns/get.html:258
+#: tcms/testruns/templates/testruns/get.html:261
+#: tcms/testruns/templates/testruns/mutable.html:23
+#: tcms/testruns/templates/testruns/mutable.html:229
+#: tcms/testruns/templates/testruns/search.html:14
+#: tcms/testruns/templates/testruns/search.html:181
+msgid "Summary"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:28
+msgid "add new Severity"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:46
+#: tcms/testcases/templates/testcases/mutable.html:44
+#: tcms/testplans/templates/testplans/clone.html:22
+#: tcms/testplans/templates/testplans/mutable.html:34
+#: tcms/testruns/templates/testruns/mutable.html:48
+msgid "add new Product"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:62
+#: tcms/testplans/templates/testplans/clone.html:38
+#: tcms/testplans/templates/testplans/mutable.html:50
+msgid "add new Version"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:81
+#: tcms/bugs/templates/bugs/mutable.html:82
+#: tcms/testruns/templates/testruns/mutable.html:93
+#: tcms/testruns/templates/testruns/mutable.html:94
+msgid "add new Build"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/mutable.html:98
+#: tcms/testruns/templates/testruns/mutable.html:32
+#: tcms/testruns/templates/testruns/mutable.html:39
+msgid "Username or email"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:414
+msgid "Search Bugs"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:28
+#: tcms/testcases/templates/testcases/search.html:19
+#: tcms/testplans/templates/testplans/search.html:24
+msgid "Created"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:31
+#: tcms/telemetry/templates/telemetry/include/filters.html:53
+#: tcms/testcases/templates/testcases/search.html:22
+#: tcms/testplans/templates/testplans/search.html:27
+#: tcms/testruns/templates/testruns/search.html:90
+#: tcms/testruns/templates/testruns/search.html:110
+#: tcms/testruns/templates/testruns/search.html:131
+#: tcms/testruns/templates/testruns/search.html:151
+msgid "Before"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:37
+#: tcms/telemetry/templates/telemetry/include/filters.html:43
+#: tcms/testcases/templates/testcases/search.html:28
+#: tcms/testplans/templates/testplans/search.html:33
+#: tcms/testruns/templates/testruns/search.html:97
+#: tcms/testruns/templates/testruns/search.html:117
+#: tcms/testruns/templates/testruns/search.html:138
+#: tcms/testruns/templates/testruns/search.html:158
+msgid "After"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:81
+#: tcms/bugs/templates/bugs/search.html:86
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:45
+#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/registration_form.html:15
+#: tcms/testcases/templates/testcases/search.html:124
+#: tcms/testplans/templates/testplans/search.html:84
+#: tcms/testplans/templates/testplans/search.html:90
+#: tcms/testruns/templates/testruns/get.html:524
+#: tcms/testruns/templates/testruns/search.html:69
+#: tcms/testruns/templates/testruns/search.html:75
+msgid "Username"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:91
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:18
+#: tcms/testcases/templates/testcases/clone.html:22
+#: tcms/testcases/templates/testcases/clone.html:36
+#: tcms/testcases/templates/testcases/mutable.html:100
+#: tcms/testcases/templates/testcases/mutable.html:187
+#: tcms/testcases/templates/testcases/mutable.html:194
+#: tcms/testcases/templates/testcases/mutable.html:201
+#: tcms/testcases/templates/testcases/mutable.html:210
+#: tcms/testcases/templates/testcases/mutable.html:217
+#: tcms/testcases/templates/testcases/mutable.html:232
+#: tcms/testcases/templates/testcases/mutable.html:239
+#: tcms/testcases/templates/testcases/search.html:39
+#: tcms/testcases/templates/testcases/search.html:64
+#: tcms/testcases/templates/testcases/search.html:76
+#: tcms/testplans/templates/testplans/clone.html:58
+#: tcms/testplans/templates/testplans/clone.html:66
+#: tcms/testplans/templates/testplans/mutable.html:124
+#: tcms/testplans/templates/testplans/mutable.html:130
+#: tcms/testplans/templates/testplans/mutable.html:136
+#: tcms/testplans/templates/testplans/mutable.html:148
+#: tcms/testplans/templates/testplans/mutable.html:154
+#: tcms/testplans/templates/testplans/mutable.html:167
+#: tcms/testplans/templates/testplans/search.html:44
+#: tcms/testruns/templates/testruns/get.html:587
+#: tcms/testruns/templates/testruns/search.html:81
+msgid "Yes"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:91
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:18
+#: tcms/testcases/templates/testcases/clone.html:22
+#: tcms/testcases/templates/testcases/clone.html:36
+#: tcms/testcases/templates/testcases/mutable.html:100
+#: tcms/testcases/templates/testcases/mutable.html:187
+#: tcms/testcases/templates/testcases/mutable.html:194
+#: tcms/testcases/templates/testcases/mutable.html:201
+#: tcms/testcases/templates/testcases/mutable.html:210
+#: tcms/testcases/templates/testcases/mutable.html:217
+#: tcms/testcases/templates/testcases/mutable.html:232
+#: tcms/testcases/templates/testcases/mutable.html:239
+#: tcms/testcases/templates/testcases/search.html:42
+#: tcms/testcases/templates/testcases/search.html:64
+#: tcms/testcases/templates/testcases/search.html:76
+#: tcms/testplans/templates/testplans/clone.html:58
+#: tcms/testplans/templates/testplans/clone.html:66
+#: tcms/testplans/templates/testplans/mutable.html:124
+#: tcms/testplans/templates/testplans/mutable.html:130
+#: tcms/testplans/templates/testplans/mutable.html:136
+#: tcms/testplans/templates/testplans/mutable.html:148
+#: tcms/testplans/templates/testplans/mutable.html:154
+#: tcms/testplans/templates/testplans/mutable.html:167
+#: tcms/testplans/templates/testplans/search.html:44
+#: tcms/testruns/templates/testruns/get.html:587
+#: tcms/testruns/templates/testruns/search.html:81
+msgid "No"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:97
+#: tcms/testcases/templates/testcases/search.html:150
+#: tcms/testplans/templates/testplans/get.html:221
+#: tcms/testplans/templates/testplans/search.html:103
+#: tcms/testruns/templates/testruns/get.html:273
+#: tcms/testruns/templates/testruns/search.html:170
+msgid "Search"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:107
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:26
+#: tcms/testcases/templates/testcases/get.html:166
+#: tcms/testcases/templates/testcases/search.html:144
+#: tcms/testcases/templates/testcases/search.html:161
+#: tcms/testplans/templates/testplans/search.html:114
+#: tcms/testruns/templates/testruns/search.html:180
+msgid "ID"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:110
+#: tcms/templates/include/bug_details.html:5
+#: tcms/testcases/templates/testcases/search.html:163
+#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testruns/templates/testruns/mutable.html:231
+msgid "Created on"
+msgstr ""
+
+#: tcms/bugs/views.py:42 tcms/testcases/views.py:130
+#: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:143
+#: tcms/testruns/views.py:194 tcms/testruns/views.py:308
+msgid "Edit"
+msgstr ""
+
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:143
+#: tcms/testplans/views.py:151 tcms/testruns/views.py:207
+#: tcms/testruns/views.py:316
+msgid "Object permissions"
+msgstr ""
+
+#: tcms/bugs/views.py:50
+#: tcms/templates/include/comments_for_object_template.html:10
+#: tcms/templates/include/properties_card.html:32
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:151
+#: tcms/testplans/templates/testplans/get.html:193
+#: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:159
+#: tcms/testruns/templates/testruns/get.html:238
+#: tcms/testruns/templates/testruns/get.html:450 tcms/testruns/views.py:215
+#: tcms/testruns/views.py:324
+msgid "Delete"
+msgstr ""
+
+#: tcms/bugs/views.py:68 tcms/settings/common.py:400
+msgid "New Bug"
+msgstr ""
+
+#: tcms/bugs/views.py:188
+msgid "Edit bug"
+msgstr ""
+
+#: tcms/bugs/views.py:231
+msgid "*bug closed*"
+msgstr ""
+
+#: tcms/bugs/views.py:235
+msgid "*bug reopened*"
+msgstr ""
+
+#: tcms/core/history.py:52
+#, python-format
+msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
+msgstr ""
+
+#: tcms/core/history.py:62
+#, python-format
+msgid "Updated on %(history_date)s\n"
+"Updated by %(username)s\n\n"
+"%(diff)s\n\n"
+"For more information:\n"
+"%(instance_url)s"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:430
+msgid "Dashboard"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:8
+#: tcms/testruns/templates/testruns/get.html:153
+msgid "Test executions"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:15
+#, python-format
+msgid "%(amount)s%% complete"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:24
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:38
+#: tcms/testruns/templates/testruns/get.html:78
+msgid "Started at"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:32
+#, python-format
+msgid "%(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
+"Here are the latest %(count)s."
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
+msgid "SEE ALL"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:39
+msgid "There are no TestRun(s) assigned to you"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:46
+msgid "Your Test plans"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:52
+msgid "TestPlan"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:54
+#: tcms/testcases/templates/testcases/get.html:169
+#: tcms/testplans/templates/testplans/mutable.html:66
+#: tcms/testplans/templates/testplans/search.html:70
+#: tcms/testplans/templates/testplans/search.html:119
+msgid "Type"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:55
+#: tcms/templates/include/tc_executions.html:7
+msgid "Executions"
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:76
+#, python-format
+msgid "You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+"Here are the latest %(count)s."
+msgstr ""
+
+#: tcms/core/templates/dashboard.html:83
+msgid "There are no TestPlan(s) that belong to you"
+msgstr ""
+
+#: tcms/core/views.py:47
+#, python-format
+msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
+msgstr ""
+
+#: tcms/core/views.py:71
+#, python-format
+msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+msgstr ""
+
+#: tcms/core/views.py:92
+#, python-format
+msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
+msgstr ""
+
+#: tcms/kiwi_attachments/validators.py:10
+#, python-brace-format
+msgid "File contains forbidden tag: <{tag_name}>"
+msgstr ""
+
+#: tcms/kiwi_attachments/validators.py:92
+#, python-brace-format
+msgid "File contains forbidden attribute: `{attr_name}`"
+msgstr ""
+
+#: tcms/kiwi_attachments/validators.py:97
+msgid "Uploading executable files is forbidden"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
+msgid "Users"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:82
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
+#: tcms/templates/navbar.html:102
+msgid "Reset email address"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:148
+msgid "Personal info"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:150
+msgid "Permissions"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:187
+msgid "This is the last superuser, it cannot be deleted!"
+msgstr ""
+
+#: tcms/kiwi_auth/forms.py:28
+msgid "A user with that email already exists."
+msgstr ""
+
+#: tcms/kiwi_auth/forms.py:48
+msgid "Please confirm your Kiwi TCMS account email address"
+msgstr ""
+
+#: tcms/kiwi_auth/forms.py:142
+msgid "Email mismatch"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
+msgid "Warning"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
+msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
+"and you will be <strong>logged out</strong>! A confirmation email will be sent to the newly specified address!<br>\n"
+"Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
+"<strong>you may be left locked out</strong> of your account!\n"
+"After following the activation link you will be able to log in as usual!"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
+msgid "NOT yourself"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
+#: tcms/templates/registration/password_reset_form.html:16
+#: tcms/templates/registration/registration_form.html:39
+msgid "E-mail"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:66
+#: tcms/templates/registration/password_reset_confirm.html:22
+#: tcms/templates/registration/registration_form.html:31
+msgid "Confirm"
+msgstr ""
+
+#: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
+msgid "Please type! Do not copy-and-paste value from previous field!"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:70
+msgid "Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:75
+msgid "Your account has been created, but you need an administrator to activate it"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:80
+msgid "Following is the administrator list"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:123
+msgid "This activation key no longer exists in the database"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:129
+msgid "This activation key has expired"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:141
+msgid "Your account has been activated successfully"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
+#: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
+#, python-format
+msgid "You are viewing records from tenant '%s'"
+msgstr ""
+
+#: tcms/kiwi_auth/views.py:256
+msgid "Email address has been reset, please check inbox for further instructions"
+msgstr ""
+
+#: tcms/management/models.py:58
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
+msgid "Priorities"
+msgstr ""
+
+#: tcms/management/models.py:133
+msgid "Builds"
+msgstr ""
+
+#: tcms/management/models.py:144
+#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testplans/templates/testplans/get.html:217
+#: tcms/testplans/templates/testplans/search.html:94
+#: tcms/testruns/templates/testruns/get.html:263
+#: tcms/testruns/templates/testruns/search.html:27
+msgid "Tag"
+msgstr ""
+
+#: tcms/management/models.py:145 tcms/templates/include/tags_card.html:6
+#: tcms/testcases/templates/testcases/search.html:171
+#: tcms/testplans/templates/testplans/get.html:456
+#: tcms/testplans/templates/testplans/search.html:121
+#: tcms/testruns/templates/testruns/get.html:353
+#: tcms/testruns/templates/testruns/search.html:190
+msgid "Tags"
+msgstr ""
+
+#: tcms/rpc/api/bug.py:69
+msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
+msgstr ""
+
+#: tcms/rpc/api/forms/__init__.py:9
+msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
+msgstr ""
+
+#: tcms/settings/common.py:391
+msgid "TESTING"
+msgstr ""
+
+#: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
+msgid "New Test Plan"
+msgstr ""
+
+#: tcms/settings/common.py:395
+#: tcms/testcases/templates/testcases/mutable.html:12
+#: tcms/testplans/templates/testplans/get.html:131
+msgid "New Test Case"
+msgstr ""
+
+#: tcms/settings/common.py:397 tcms/testplans/templates/testplans/get.html:121
+#: tcms/testruns/templates/testruns/get.html:172
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New Test Run"
+msgstr ""
+
+#: tcms/settings/common.py:407
+msgid "SEARCH"
+msgstr ""
+
+#: tcms/settings/common.py:409 tcms/testplans/templates/testplans/search.html:5
+msgid "Search Test Plans"
+msgstr ""
+
+#: tcms/settings/common.py:410 tcms/testcases/templates/testcases/search.html:5
+msgid "Search Test Cases"
+msgstr ""
+
+#: tcms/settings/common.py:411 tcms/testruns/templates/testruns/search.html:5
+msgid "Search Test Runs"
+msgstr ""
+
+#: tcms/settings/common.py:412
+msgid "Search Test Executions"
+msgstr ""
+
+#: tcms/settings/common.py:421
+msgid "TELEMETRY"
+msgstr ""
+
+#: tcms/settings/common.py:424
+msgid "Testing"
+msgstr ""
+
+#: tcms/settings/common.py:426
+msgid "Breakdown"
+msgstr ""
+
+#: tcms/settings/common.py:428
+msgid "Execution"
+msgstr ""
+
+#: tcms/settings/common.py:431
+#: tcms/testruns/templates/testruns/mutable.html:177
+msgid "Matrix"
+msgstr ""
+
+#: tcms/settings/common.py:432
+msgid "Trends"
+msgstr ""
+
+#: tcms/settings/common.py:435
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
+msgid "TestCase health"
+msgstr ""
+
+#: tcms/settings/common.py:441
+msgid "ADMIN"
+msgstr ""
+
+#: tcms/settings/common.py:444
+msgid "Groups"
+msgstr ""
+
+#: tcms/settings/common.py:446
+msgid "Everything else"
+msgstr ""
+
+#: tcms/settings/common.py:449
+msgid "MORE"
+msgstr ""
+
+#: tcms/settings/common.py:459
+msgid "Report an Issue"
+msgstr ""
+
+#: tcms/settings/common.py:462
+msgid "Ask for help on StackOverflow"
+msgstr ""
+
+#: tcms/settings/common.py:466
+msgid "Donate €5 via Open Collective"
+msgstr ""
+
+#: tcms/settings/common.py:468
+msgid "Administration Guide"
+msgstr ""
+
+#: tcms/settings/common.py:469
+msgid "User Guide"
+msgstr ""
+
+#: tcms/settings/common.py:470
+msgid "API Help"
+msgstr ""
+
+#: tcms/signals.py:85
+msgid "New user awaiting approval"
+msgstr ""
+
+#: tcms/signals.py:163
+#, python-format
+msgid "NEW: TestRun #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/signals.py:235
+#, python-format
+msgid "Bug #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
+msgid "CONFIRMED"
+msgstr ""
+
+#: tcms/telemetry/api.py:61
+msgid "OTHER"
+msgstr ""
+
+#: tcms/telemetry/api.py:133 tcms/telemetry/api.py:185
+#: tcms/telemetry/api.py:191
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
+#: tcms/testruns/templates/testruns/get.html:129
+msgid "TOTAL"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:36
+#: tcms/testcases/templates/testcases/search.html:68
+#: tcms/testplans/templates/testplans/search.html:115
+#: tcms/testruns/templates/testruns/get.html:40
+#: tcms/testruns/templates/testruns/mutable.html:67
+#: tcms/testruns/templates/testruns/search.html:182
+msgid "Test plan"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:66
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+#: tcms/testcases/templates/testcases/search.html:142
+msgid "Test run"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/include/filters.html:70
+#: tcms/testruns/templates/testruns/search.html:17
+msgid "Test run summary"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
+msgid "Testing Breakdown"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
+msgid "Total"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
+#: tcms/testcases/templates/testcases/get.html:93
+#: tcms/testcases/templates/testcases/mutable.html:98
+#: tcms/testcases/templates/testcases/search.html:36
+#: tcms/testcases/templates/testcases/search.html:168
+#: tcms/testplans/templates/testplans/get.html:402
+#: tcms/testplans/templates/testplans/get.html:489
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
+#: tcms/testruns/templates/testruns/get.html:264
+#: tcms/testruns/templates/testruns/get.html:361
+msgid "Automated"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
+#: tcms/testplans/templates/testplans/get.html:402
+#: tcms/testruns/templates/testruns/get.html:361
+msgid "Manual"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
+#: tcms/testcases/models.py:42
+msgid "Categories"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
+msgid "Execution Dashboard"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
+msgid "Child TPs"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
+#: tcms/templates/include/bug_details.html:3
+#: tcms/testcases/templates/testcases/get.html:59
+#: tcms/testcases/templates/testcases/mutable.html:74
+#: tcms/testcases/templates/testcases/search.html:91
+#: tcms/testcases/templates/testcases/search.html:167
+#: tcms/testplans/templates/testplans/get.html:149
+#: tcms/testplans/templates/testplans/get.html:363
+#: tcms/testplans/templates/testplans/get.html:396
+#: tcms/testplans/templates/testplans/get.html:488
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:4
+#: tcms/testruns/templates/testruns/get.html:189
+#: tcms/testruns/templates/testruns/get.html:269
+#: tcms/testruns/templates/testruns/get.html:385
+#: tcms/testruns/templates/testruns/mutable.html:232
+msgid "Status"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
+#: tcms/testcases/templates/testcases/get.html:208
+#: tcms/testplans/templates/testplans/get.html:447
+#: tcms/testruns/templates/testruns/get.html:349
+msgid "Components"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
+#: tcms/testcases/templates/testcases/get.html:33
+#: tcms/testcases/templates/testcases/mutable.html:36
+#: tcms/testcases/templates/testcases/mutable.html:207
+#: tcms/testcases/templates/testcases/search.html:170
+#: tcms/testplans/templates/testplans/get.html:175
+#: tcms/testplans/templates/testplans/get.html:378
+#: tcms/testplans/templates/testplans/get.html:416
+#: tcms/testplans/templates/testplans/get.html:493
+#: tcms/testplans/templates/testplans/mutable.html:133
+#: tcms/testplans/templates/testplans/search.html:88
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
+#: tcms/testruns/templates/testruns/get.html:66
+#: tcms/testruns/templates/testruns/mutable.html:36
+#: tcms/testruns/templates/testruns/search.html:73
+#: tcms/testruns/templates/testruns/search.html:189
+msgid "Default tester"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
+msgid "TC"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
+msgid "TR"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
+#: tcms/testruns/templates/testruns/get.html:268
+#: tcms/testruns/templates/testruns/get.html:375
+msgid "Tested by"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:39
+#: tcms/testruns/templates/testruns/get.html:96
+#: tcms/testruns/templates/testruns/get.html:405
+#: tcms/testruns/templates/testruns/mutable.html:140
+msgid "Finished at"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
+msgid "Execution Trends"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
+msgid "Positive"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:24
+msgid "Neutral"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:27
+msgid "Negative"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
+msgid "Execution Matrix"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
+msgid "Order"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
+msgid "Ascending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
+msgid "Descending"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
+msgid "Test case"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
+msgid "Most frequently failing test cases"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:16
+msgid "Test Case"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:18
+msgid "Failed executions"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/test-case-health.html:19
+#, python-format
+msgid "%% of failed executions"
+msgstr ""
+
+#: tcms/templates/404.html:5 tcms/templates/404.html:16
+msgid "Page not found"
+msgstr ""
+
+#: tcms/templates/500.html:5 tcms/templates/500.html:16
+msgid "Internal Server Error"
+msgstr ""
+
+#: tcms/templates/attachments/add.html:3
+msgid "Attachment upload error"
+msgstr ""
+
+#: tcms/templates/attachments/delete_link.html:3
+msgid "Are you sure you want to delete this attachment?"
+msgstr ""
+
+#: tcms/templates/base.html:8
+msgid "day"
+msgstr ""
+
+#: tcms/templates/base.html:8
+msgid "days"
+msgstr ""
+
+#: tcms/templates/base.html:9
+msgid "hour"
+msgstr ""
+
+#: tcms/templates/base.html:9
+msgid "hours"
+msgstr ""
+
+#: tcms/templates/base.html:10
+msgid "minute"
+msgstr ""
+
+#: tcms/templates/base.html:10
+msgid "minutes"
+msgstr ""
+
+#: tcms/templates/base.html:11
+msgid "second"
+msgstr ""
+
+#: tcms/templates/base.html:11
+msgid "seconds"
+msgstr ""
+
+#: tcms/templates/base.html:16 tcms/templates/registration/login.html:46
+msgid "the leading open source test case management system"
+msgstr ""
+
+#: tcms/templates/email/confirm_registration.txt:1
+#, python-format
+msgid "Welcome to Kiwi TCMS!\n\n"
+"To confirm email address for username `%(user)s` and activate your account\n"
+"please follow this URL:\n"
+"%(confirm_url)s\n\n"
+"Regards,\n"
+"Kiwi TCMS"
+msgstr ""
+
+#: tcms/templates/email/post_bug_save/email.txt:2
+#, python-format
+msgid "Bug %(pk)s has been updated.\n\n"
+"Link: %(bug_url)s\n\n"
+"Summary: %(summary)s\n"
+"Created at: %(creation_date)s\n"
+"Reporter: %(reporter)s\n"
+"Assignee: %(assignee)s\n"
+"Product: %(product)s\n"
+"Version: %(version)s\n"
+"Build: %(build)s\n"
+"Last comment:\n"
+"%(last_comment)s"
+msgstr ""
+
+#: tcms/templates/email/post_case_delete/email.txt:2
+#, python-format
+msgid "TestCase has been deleted by %(username)s!"
+msgstr ""
+
+#: tcms/templates/email/post_run_save/email.txt:2
+#, python-format
+msgid "Test run %(pk)s has been created or updated for you.\n\n"
+"### Links ###\n"
+"Test run: %(run_url)s\n"
+"Test plan: %(plan_url)s\n\n"
+"### Basic run information ###\n"
+"Summary: %(summary)s\n\n"
+"Managed: %(manager)s.\n"
+"Default tester: %(default_tester)s.\n\n"
+"Product: %(product)s\n"
+"Product version: %(version)s\n"
+"Build: %(build)s\n\n"
+"Notes:\n"
+"%(notes)s"
+msgstr ""
+
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid "Dear Administrator,\n"
+"somebody just registered an account with username %(username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Go to %(user_url)s to activate the account!"
+msgstr ""
+
+#: tcms/templates/include/attachments.html:10
+#: tcms/testplans/templates/testplans/get.html:437
+#: tcms/testruns/templates/testruns/get.html:487
+msgid "Attachments"
+msgstr ""
+
+#: tcms/templates/include/attachments.html:18
+msgid "File"
+msgstr ""
+
+#: tcms/templates/include/attachments.html:19
+msgid "Owner"
+msgstr ""
+
+#: tcms/templates/include/attachments.html:20
+msgid "Date"
+msgstr ""
+
+#: tcms/templates/include/attachments.html:35
+#: tcms/templates/include/bugs_table.html:4
+#: tcms/testplans/templates/testplans/get.html:332
+msgid "No records found"
+msgstr ""
+
+#: tcms/templates/include/bugs_table.html:15
+#: tcms/testruns/templates/testruns/get.html:573
+msgid "URL"
+msgstr ""
+
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
+#: tcms/testruns/templates/testruns/get.html:345
+msgid "Parameters"
+msgstr ""
+
+#: tcms/templates/include/properties_card.html:15
+#: tcms/testruns/templates/testruns/mutable.html:170
+msgid "This is a tech-preview feature!"
+msgstr ""
+
+#: tcms/templates/include/properties_card.html:68
+msgid "name=value"
+msgstr ""
+
+#: tcms/templates/include/properties_card.html:69
+#: tcms/templates/include/tags_card.html:28
+#: tcms/testcases/templates/testcases/get.html:184
+#: tcms/testcases/templates/testcases/get.html:229
+#: tcms/testplans/templates/testplans/get.html:258
+#: tcms/testruns/templates/testruns/get.html:292
+#: tcms/testruns/templates/testruns/get.html:546
+msgid "Add"
+msgstr ""
+
+#: tcms/templates/include/tags_card.html:13
+#: tcms/testcases/templates/testcases/get.html:167
+#: tcms/testcases/templates/testcases/get.html:215
+#: tcms/testplans/templates/testplans/clone.html:14
+#: tcms/testplans/templates/testplans/get.html:205
+#: tcms/testplans/templates/testplans/mutable.html:24
+#: tcms/testplans/templates/testplans/search.html:18
+#: tcms/testruns/templates/testruns/get.html:579
+msgid "Name"
+msgstr ""
+
+#: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
+#: tcms/templates/initdb.html:29
+msgid "Initialize database"
+msgstr ""
+
+#: tcms/templates/initdb.html:20
+msgid "Your database has not been initialized yet. Click the button below to initialize it!"
+msgstr ""
+
+#: tcms/templates/initdb.html:22
+msgid "WARNING: this operation will take a while! This page will redirect when done."
+msgstr ""
+
+#: tcms/templates/initdb.html:27
+msgid "Please wait"
+msgstr ""
+
+#: tcms/templates/navbar.html:9
+msgid "Toggle navigation"
+msgstr ""
+
+#: tcms/templates/navbar.html:15
+msgid "DASHBOARD"
+msgstr ""
+
+#: tcms/templates/navbar.html:41
+msgid "Language"
+msgstr ""
+
+#: tcms/templates/navbar.html:45
+msgid "Change language"
+msgstr ""
+
+#: tcms/templates/navbar.html:46
+msgid "Supported languages"
+msgstr ""
+
+#: tcms/templates/navbar.html:47
+msgid "Request new language"
+msgstr ""
+
+#: tcms/templates/navbar.html:53
+msgid "Translation mode"
+msgstr ""
+
+#: tcms/templates/navbar.html:57
+msgid "Translation guide"
+msgstr ""
+
+#: tcms/templates/navbar.html:63
+msgid "Help"
+msgstr ""
+
+#: tcms/templates/navbar.html:78
+msgid "Welcome Guest"
+msgstr ""
+
+#: tcms/templates/navbar.html:84
+msgid "My Test Runs"
+msgstr ""
+
+#: tcms/templates/navbar.html:88
+msgid "My Test Plans"
+msgstr ""
+
+#: tcms/templates/navbar.html:94
+msgid "My profile"
+msgstr ""
+
+#: tcms/templates/navbar.html:98
+#: tcms/templates/registration/password_reset_confirm.html:29
+msgid "Change password"
+msgstr ""
+
+#: tcms/templates/navbar.html:108
+msgid "Logout"
+msgstr ""
+
+#: tcms/templates/navbar.html:113 tcms/templates/registration/login.html:4
+msgid "Login"
+msgstr ""
+
+#: tcms/templates/navbar.html:120
+#: tcms/templates/registration/registration_form.html:53
+msgid "Register"
+msgstr ""
+
+#: tcms/templates/registration/login.html:24
+#: tcms/templates/registration/password_reset_confirm.html:15
+#: tcms/templates/registration/registration_form.html:23
+msgid "Password"
+msgstr ""
+
+#: tcms/templates/registration/login.html:31
+msgid "Forgot password"
+msgstr ""
+
+#: tcms/templates/registration/login.html:34
+msgid "Log in"
+msgstr ""
+
+#: tcms/templates/registration/login.html:45
+msgid "Welcome to Kiwi TCMS"
+msgstr ""
+
+#: tcms/templates/registration/login.html:50
+msgid "Please login to get started"
+msgstr ""
+
+#: tcms/templates/registration/login.html:52
+msgid "or"
+msgstr ""
+
+#: tcms/templates/registration/login.html:53
+msgid "register an account"
+msgstr ""
+
+#: tcms/templates/registration/login.html:54
+msgid "if you don't have one!"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_complete.html:12
+msgid "Your password has been set. You may go ahead and"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_complete.html:13
+msgid "now"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_confirm.html:43
+msgid "Please enter your new password twice so we can verify you typed it in correctly"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_confirm.html:46
+msgid "request a new password reset"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_done.html:11
+msgid "Password reset email was sent"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_form.html:27
+msgid "Password reset"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_form.html:34
+msgid "Kiwi TCMS password reset"
+msgstr ""
+
+#: tcms/templates/registration/registration_form.html:4
+msgid "Register new account"
+msgstr ""
+
+#: tcms/testcases/admin.py:28
+msgid "For more information about customizing test case statuses see\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
+"        the documentation</a>!"
+msgstr ""
+
+#: tcms/testcases/admin.py:56
+msgid "1 confirmed & 1 uncomfirmed status required!"
+msgstr ""
+
+#: tcms/testcases/admin.py:131
+msgid "Bug URL"
+msgstr ""
+
+#: tcms/testcases/admin.py:151
+msgid "External Issue Tracker Integration"
+msgstr ""
+
+#: tcms/testcases/admin.py:161
+msgid "<h1>Warning: read the\n"
+"<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
+"Configure external bug trackers</a> section before editting the values below!</h1>"
+msgstr ""
+
+#: tcms/testcases/admin.py:168
+msgid "Configuration health check"
+msgstr ""
+
+#: tcms/testcases/admin.py:172
+msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
+msgstr ""
+
+#: tcms/testcases/admin.py:192
+msgid "Failed creating Issue Tracker"
+msgstr ""
+
+#: tcms/testcases/admin.py:201
+msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
+msgstr ""
+
+#: tcms/testcases/admin.py:210
+msgid "Details extracted via API. Issue Tracker configuration looks good!"
+msgstr ""
+
+#: tcms/testcases/admin.py:223
+msgid "Issue Tracker configuration check failed"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:22
+#, python-format
+msgid "DELETED: TestCase #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/testcases/models.py:23
+msgid "Test case status"
+msgstr ""
+
+#: tcms/testcases/models.py:24
+msgid "Test case statuses"
+msgstr ""
+
+#: tcms/testcases/models.py:379
+#: tcms/testcases/templates/testcases/mutable.html:107
+msgid "Template"
+msgstr ""
+
+#: tcms/testcases/models.py:380
+msgid "Templates"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/clone.html:5
+msgid "Clone TestCase"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/clone.html:15
+msgid "Add new TC into TP"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/clone.html:30
+msgid "Selected TC"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
+#: tcms/testplans/templates/testplans/clone.html:73
+#: tcms/testplans/templates/testplans/get.html:138
+#: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
+#: tcms/testruns/views.py:198
+msgid "Clone"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:28
+#: tcms/testcases/templates/testcases/get.html:168
+#: tcms/testcases/templates/testcases/mutable.html:184
+#: tcms/testcases/templates/testcases/search.html:122
+#: tcms/testcases/templates/testcases/search.html:169
+#: tcms/testplans/templates/testplans/get.html:54
+#: tcms/testplans/templates/testplans/get.html:412
+#: tcms/testplans/templates/testplans/get.html:492
+#: tcms/testplans/templates/testplans/mutable.html:121
+#: tcms/testplans/templates/testplans/search.html:82
+#: tcms/testplans/templates/testplans/search.html:120
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
+#: tcms/testruns/templates/testruns/mutable.html:230
+msgid "Author"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:49
+#: tcms/testcases/templates/testcases/mutable.html:58
+#: tcms/testcases/templates/testcases/search.html:100
+#: tcms/testcases/templates/testcases/search.html:164
+#: tcms/testplans/templates/testplans/get.html:408
+#: tcms/testplans/templates/testplans/get.html:491
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
+#: tcms/testruns/templates/testruns/get.html:266
+#: tcms/testruns/templates/testruns/get.html:367
+#: tcms/testruns/templates/testruns/mutable.html:233
+msgid "Category"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:64
+#: tcms/testcases/templates/testcases/mutable.html:86
+#: tcms/testcases/templates/testcases/search.html:82
+#: tcms/testcases/templates/testcases/search.html:166
+#: tcms/testplans/templates/testplans/get.html:162
+#: tcms/testplans/templates/testplans/get.html:371
+#: tcms/testplans/templates/testplans/get.html:404
+#: tcms/testplans/templates/testplans/get.html:490
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
+#: tcms/testruns/templates/testruns/get.html:265
+#: tcms/testruns/templates/testruns/get.html:363
+#: tcms/testruns/templates/testruns/mutable.html:234
+msgid "Priority"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:73
+#: tcms/testcases/templates/testcases/mutable.html:120
+msgid "Setup duration"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:78
+#: tcms/testcases/templates/testcases/mutable.html:127
+msgid "Testing duration"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:83
+msgid "Expected duration"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:98
+#: tcms/testcases/templates/testcases/mutable.html:143
+msgid "Script"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:103
+#: tcms/testcases/templates/testcases/mutable.html:149
+msgid "Arguments"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:108
+#: tcms/testcases/templates/testcases/mutable.html:157
+msgid "Requirements"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:113
+#: tcms/testcases/templates/testcases/mutable.html:162
+#: tcms/testplans/templates/testplans/get.html:80
+#: tcms/testplans/templates/testplans/mutable.html:102
+msgid "Reference link"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:133
+#: tcms/testcases/templates/testcases/mutable.html:170
+#: tcms/testplans/templates/testplans/get.html:433
+#: tcms/testplans/templates/testplans/get.html:434
+#: tcms/testruns/templates/testruns/get.html:400
+#: tcms/testruns/templates/testruns/mutable.html:202
+msgid "Notes"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:152
+msgid "Bugs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:159
+msgid "Test plans"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:10
+msgid "Edit TestCase"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:59
+msgid "add new Category"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:108
+msgid "add new Template"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:180
+#: tcms/testruns/templates/testruns/get.html:517
+msgid "Notify"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:191
+msgid "Manager of runs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:198
+msgid "Asignees"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:214
+msgid "Default tester of runs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:223
+msgid "Notify when"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:224
+#: tcms/testplans/templates/testplans/mutable.html:142
+msgid "applies only for changes made by somebody else"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:229
+msgid "TestCase is updated"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:236
+msgid "TestCase is deleted"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:245
+msgid "CC to"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:250
+msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:15
+msgid "Test case summary"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:45
+msgid "Both"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:61
+msgid "include in search request"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:74
+msgid "include child test plans"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:112
+#: tcms/testcases/templates/testcases/search.html:165
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testruns/templates/testruns/get.html:262
+msgid "Component"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:128
+msgid "Text"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:139
+#: tcms/testplans/templates/testplans/search.html:97
+#: tcms/testruns/templates/testruns/search.html:30
+msgid "Separate multiple values with comma (,)"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:178
+msgid "Select"
+msgstr ""
+
+#: tcms/testcases/views.py:138 tcms/testplans/views.py:146
+#: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:202
+msgid "History"
+msgstr ""
+
+#: tcms/testcases/views.py:250
+msgid "TestCase cloning was successful"
+msgstr ""
+
+#: tcms/testcases/views.py:281
+msgid "At least one TestCase is required"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:5
+msgid "Clone TestPlan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:55
+msgid "Clone TCs"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:59
+msgid "Clone or link existing TCs into new TP"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:63
+msgid "Parent TP"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:67
+msgid "Set the source TP as parent of new TP"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:25
+#: tcms/testruns/templates/testruns/get.html:23
+msgid "Enter username, email or user ID:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:26
+#: tcms/testruns/templates/testruns/get.html:22
+msgid "No rows selected! Please select at least one!"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:27
+#: tcms/testruns/templates/testruns/get.html:24
+msgid "Are you sure?"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:28
+msgid "Cannot create TestRun with unconfirmed test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:29
+msgid "Error adding test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:43
+msgid "Show more"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:75
+msgid "Plan Type"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:100
+msgid "Test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:182
+#: tcms/testplans/templates/testplans/get.html:421
+#: tcms/testplans/templates/testplans/get.html:494
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:10
+msgid "Reviewer"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:231
+#: tcms/testplans/templates/testplans/get.html:234
+msgid "Sort key"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:244
+msgid "Re-order cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:254
+#: tcms/testruns/templates/testruns/get.html:288
+msgid "Search and add test cases"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:263
+#: tcms/testruns/templates/testruns/get.html:298
+msgid "Advanced search"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:286
+msgid "Active test runs"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:308
+msgid "More"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:310
+msgid "Inactive"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:444
+#: tcms/testruns/templates/testruns/get.html:494
+msgid "No attachments"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/get.html:469
+#: tcms/testruns/templates/testruns/get.html:483
+msgid "Comments"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:10
+msgid "Edit TestPlan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:12
+msgid "Create new TestPlan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:82
+msgid "Parent ID"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:100
+msgid "Enter to assign; Backspace + Enter to clear"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:110
+msgid "Test plan document:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:119
+msgid "Notify:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:127
+msgid "TestCase author"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:141
+msgid "Notify when:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:145
+msgid "TestPlan is updated"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:151
+msgid "Test cases are updated"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:165
+#: tcms/testplans/templates/testplans/search.html:41
+msgid "Active"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:12
+msgid "Some child test plans do not match search criteria"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:20
+msgid "Test plan name"
+msgstr ""
+
+#: tcms/testruns/admin.py:32
+msgid "Permission denied: TestRun does not belong to you"
+msgstr ""
+
+#: tcms/testruns/admin.py:39
+msgid "For more information about customizing test execution statuses see\n"
+"        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses\">\n"
+"        the documentation</a>!"
+msgstr ""
+
+#: tcms/testruns/admin.py:95
+msgid "1 negative, 1 neutral & 1 positive status required!"
+msgstr ""
+
+#: tcms/testruns/admin.py:106
+msgid "Edit parameters"
+msgstr ""
+
+#: tcms/testruns/forms.py:39
+msgid "Full"
+msgstr ""
+
+#: tcms/testruns/forms.py:40
+msgid "Pairwise"
+msgstr ""
+
+#: tcms/testruns/models.py:230
+msgid "Test execution statuses"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:25
+msgid "Unconfirmed test cases were not added"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:26
+msgid "Type 0 or 1"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:27
+msgid "Comment"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:60
+#: tcms/testruns/templates/testruns/mutable.html:29
+#: tcms/testruns/templates/testruns/search.html:67
+#: tcms/testruns/templates/testruns/search.html:188
+msgid "Manager"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:73
+#: tcms/testruns/templates/testruns/mutable.html:110
+#: tcms/testruns/templates/testruns/search.html:127
+msgid "Planned start"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:84
+msgid "Start"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:91
+#: tcms/testruns/templates/testruns/mutable.html:123
+#: tcms/testruns/templates/testruns/search.html:147
+msgid "Planned stop"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:102
+msgid "Stop"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:139
+#: tcms/testruns/templates/testruns/mutable.html:160
+msgid "Environment"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:182
+msgid "Update text version"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:217
+msgid "Add comment"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:228
+#: tcms/testruns/templates/testruns/get.html:331
+#: tcms/testruns/templates/testruns/get.html:568
+msgid "Add hyperlink"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:279
+msgid "Mine"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:280
+msgid "All"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:306
+msgid "records"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:332
+#: tcms/testruns/templates/testruns/get.html:607
+#: tcms/testruns/templates/testruns/get.html:624
+msgid "Report bug"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:339
+msgid "Test case is not part of parent test plan"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:371
+msgid "Assigned to"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:379
+#: tcms/testruns/templates/testruns/get.html:381
+msgid "Last bug"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:423
+msgid "Text version"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:431
+msgid "Bugs and hyperlinks"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:585
+msgid "Is a defect"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:592
+#: tcms/testruns/templates/testruns/get.html:623
+msgid "Cancel"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/get.html:612
+msgid "Issue Tracker"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:7
+msgid "Edit TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:9
+msgid "Clone TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:180
+msgid "Affects only test cases with parameters"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:194
+msgid "more information"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:218
+msgid "Selected TestCase(s):"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:221
+#, python-format
+msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
+"See test plan for more details!"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/search.html:21
+msgid "Plan ID"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/search.html:23
+msgid "TestPlan ID"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/search.html:79
+msgid "Running"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/search.html:86
+#: tcms/testruns/templates/testruns/search.html:186
+msgid "Start date"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/search.html:106
+#: tcms/testruns/templates/testruns/search.html:187
+msgid "Stop date"
+msgstr ""
+
+#: tcms/testruns/views.py:273
+msgid "Clone of "
+msgstr ""
+
+#: testcases.TestCaseStatus/name:1
+msgid "PROPOSED"
+msgstr ""
+
+#: testcases.TestCaseStatus/name:3
+msgid "DISABLED"
+msgstr ""
+
+#: testcases.TestCaseStatus/name:4
+msgid "NEED_UPDATE"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:1
+msgid "IDLE"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:2
+msgid "RUNNING"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:3
+msgid "PAUSED"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:4
+msgid "PASSED"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:5
+msgid "FAILED"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:6
+msgid "BLOCKED"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:7
+msgid "ERROR"
+msgstr ""
+
+#: testruns.TestExecutionStatus/name:8
+msgid "WAIVED"
+msgstr ""
+
+#: tcms_github_app/admin.py:122
+#, python-format
+msgid "For additional configuration see\n"
+"<a href=\"%s\">GitHub</a>"
+msgstr ""
+
+#: tcms_github_app/menu.py:11
+msgid "GitHub integration"
+msgstr ""
+
+#: tcms_github_app/menu.py:12
+msgid "Resync"
+msgstr ""
+
+#: tcms_github_app/menu.py:13
+msgid "Settings"
+msgstr ""
+
+#: tcms_github_app/middleware.py:41
+#, python-format
+msgid "Unconfigured GitHub App %d"
+msgstr ""
+
+#: tcms_github_app/utils.py:274
+#, python-format
+msgid "%s was imported from GitHub"
+msgstr ""
+
+#: tcms_github_app/utils.py:278
+#, python-format
+msgid "%s already exists"
+msgstr ""
+
+#: tcms_github_app/views.py:48
+#, python-format
+msgid "You have not logged-in via GitHub account! <a href=\"%s\">Click here</a>!"
+msgstr ""
+
+#: tcms_github_app/views.py:62
+#, python-format
+msgid "You have not installed Kiwi TCMS into your GitHub account! <a href=\"%s\">Click here</a>!"
+msgstr ""
+
+#: tcms_github_app/views.py:76
+msgid "Multiple GitHub App installations detected! See below:"
+msgstr ""
+
+#: tcms_github_app/views.py:85
+#, python-format
+msgid "Edit GitHub App <a href=\"%s\">%s</a>"
+msgstr ""
+
+#: tcms_github_app/views.py:102
+#, python-format
+msgid "Cannot find GitHub App installation for tenant \"%s\""
+msgstr ""
+
+#: tcms_github_app/views.py:111
+msgid "Multiple GitHub App installations detected!"
+msgstr ""
+
+#: tcms_github_marketplace/menu.py:11
+msgid "Subscriptions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/email/exit_poll.txt:1
+msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
+"We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
+"You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
+"Thank you!"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
+msgid "Tenant subscriptions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
+msgid "You can access the following tenants"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
+msgid "Tenant"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+msgid "Organization"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:44
+msgid "Docker credentials"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
+msgid "Private containers instructions"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
+msgid "You own the following tenants"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
+msgid "Price"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+msgid "Subscription type"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:108
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:8
+msgid "Paid until"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:114
+msgid "Cancel subscription"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
+msgid "You don't own any tenants"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
+msgid "Subscribe via FastSpring"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
+msgid "Transaction history"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:170
+msgid "Sender"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
+msgid "Vendor"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:180
+msgid "Received on"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
+msgid "Extra emails"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
+msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
+msgid "Separate by comma (,), semi-colon (;) or white space ( )"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+msgid "Private Tenant Warning"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
+"It will take a few minutes until your DB schema is ready!\n"
+"After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
+"You will be redirected to your new tenant when the creation process is complete!\n"
+"If you see a 500 Internal Server Error page please contact\n"
+"<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
+msgstr ""
+
+#: tcms_github_marketplace/utils.py:95
+msgid "Kiwi TCMS Subscription Exit Poll"
+msgstr ""
+
+#: tcms_github_marketplace/views.py:567
+msgid "Kiwi TCMS subscription notification"
+msgstr ""
+
+#: tcms_github_marketplace/views.py:749
+msgid "mo"
+msgstr ""
+
+#: tcms_github_marketplace/views.py:752
+msgid "yr"
+msgstr ""
+
+#: tcms_enterprise/pipeline.py:17
+msgid "Email address is required"
+msgstr ""
+
+#: tcms_enterprise/templates/registration/custom_login.html:10
+msgid "or Continue With"
+msgstr ""
+
+#: tcms_settings_dir/enterprise.py:19
+msgid "Legal information"
+msgstr ""
+
+#: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
+#: tcms_tenants/middleware.py:35
+msgid "Unauthorized"
+msgstr ""
+
+#: tcms_tenants/admin.py:86
+msgid "Existing username, email or user ID"
+msgstr ""
+
+#: tcms_tenants/admin.py:159
+msgid "Full name"
+msgstr ""
+
+#: tcms_tenants/forms.py:30
+msgid "Invalid string"
+msgstr ""
+
+#: tcms_tenants/menu.py:15
+msgid "Create"
+msgstr ""
+
+#: tcms_tenants/menu.py:20
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:17
+msgid "Invite users"
+msgstr ""
+
+#: tcms_tenants/menu.py:21
+msgid "Authorized users"
+msgstr ""
+
+#: tcms_tenants/middleware.py:59
+msgid "Unpaid"
+msgstr ""
+
+#: tcms_tenants/middleware.py:70
+msgid "Tenant expires soon"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
+#, python-format
+msgid "Dear tester,\n"
+"%(invited_by)s has invited you to join their Kiwi TCMS tenant at\n"
+"%(tenant_url)s\n\n"
+"In case you have never logged in before an account was created for you\n"
+"automatically. You can login with a social account which has the same email\n"
+"address or go to %(password_reset_url)s to reset your password.\n"
+"The password reset email message also contains your username!"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/email/new.txt:1
+#, python-format
+msgid "Your Kiwi TCMS tenant was created at:\n"
+"%(tenant_url)s\n\n"
+"If you have troubles please contact support!"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/invite_users.html:28
+msgid "Email"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:18
+msgid "New tenant"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:35
+msgid "Company, team or project name"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:43
+msgid "Schema"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:56
+msgid "Validation pattern"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:61
+msgid "Publicly readable"
+msgstr ""
+
+#: tcms_tenants/templates/tcms_tenants/new.html:80
+msgid "Tenant logo"
+msgstr ""
+
+#: tcms_tenants/utils.py:66
+msgid "Schema name already in use"
+msgstr ""
+
+#: tcms_tenants/utils.py:170
+msgid "New Kiwi TCMS tenant created"
+msgstr ""
+
+#: tcms_tenants/utils.py:230
+#, python-brace-format
+msgid "User {user.username} added to tenant group {group.name}"
+msgstr ""
+
+#: tcms_tenants/utils.py:262
+msgid "Invitation to join Kiwi TCMS"
+msgstr ""
+
+#: tcms_tenants/views.py:84
+msgid "Only super-user and tenant owner are allowed to edit tenant properties"
+msgstr ""
+
+#: tcms_tenants/views.py:102
+msgid "Edit tenant"
+msgstr ""
+
+#: tcms_tenants/views.py:153
+msgid "Only users who are authorized for this tenant can invite others"
+msgstr ""
+
+#: tenant_groups/admin.py:30
+msgid "users"
+msgstr ""
+
+#: tenant_groups/models.py:34
+msgid "name"
+msgstr ""
+
+#: tenant_groups/models.py:37
+msgid "permissions"
+msgstr ""
+
+#: tenant_groups/models.py:47
+msgid "group"
+msgstr ""
+
+#: tenant_groups/models.py:48
+msgid "groups"
+msgstr ""
+
+#: trackers_integration/menu.py:4
+msgid "Personal API tokens"
+msgstr ""
+
