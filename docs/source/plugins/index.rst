@@ -28,7 +28,7 @@ entry point and:
 
 - append them to ``INSTALLED_APPS`` so that templates, static files and
   everything else can be discovered. This means models and migrations too;
-- append their menu to ``MENU_ITEMS`` under the PLUGINS navigation item
+- append their menu to ``MENU_ITEMS`` under the MORE navigation item
   so that users can access the plugin via the web interface;
 - include their URL config in ``urlpatterns``, using the plugin name as the
   URL path for inclusion!
