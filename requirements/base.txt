@@ -16,7 +16,7 @@ django-simple-history==3.10.1
 django-tree-queries==0.20.0
 jira==3.8.0
 Markdown==3.8.2
-PyGithub==2.6.1
+PyGithub==2.7.0
 Pygments==2.19.2
 python-gitlab==6.1.0
 python-redmine==2.5.0
