@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-30 12:22+0000\n"
-"PO-Revision-Date: 2025-07-30 13:13\n"
+"PO-Revision-Date: 2025-08-06 12:11\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -517,7 +517,7 @@ msgstr "Пользователь с таким email уже существует
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "Пожалуйста, подтвердите ваш email адрес для аккаунта Kiwi TCMS"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
@@ -2328,3 +2328,4 @@ msgstr "группы"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
