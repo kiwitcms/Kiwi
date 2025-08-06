@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-30 12:22+0000\n"
-"PO-Revision-Date: 2025-08-06 14:37\n"
+"PO-Revision-Date: 2025-08-06 14:56\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1381,11 +1381,11 @@ msgstr "Клонировать Тестовый случай"
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
-msgstr "Добавить новый TC в TP"
+msgstr "Добавить новый тестовый случай в план тестирования"
 
 #: tcms/testcases/templates/testcases/clone.html:30
 msgid "Selected TC"
-msgstr "Выбранные TC"
+msgstr "Выбранные тестовые случаи"
 
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
 #: tcms/testplans/templates/testplans/clone.html:73
@@ -2345,3 +2345,4 @@ msgstr "группы"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Персональные API токены"
+
