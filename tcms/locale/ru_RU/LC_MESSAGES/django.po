@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-30 12:22+0000\n"
-"PO-Revision-Date: 2025-08-06 13:34\n"
+"PO-Revision-Date: 2025-08-06 14:37\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -826,7 +826,7 @@ msgstr "Панель исполнения"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 msgid "Child TPs"
-msgstr "Вложенные ТП\\"
+msgstr "Вложенные планы тестирования"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
 #: tcms/templates/include/bug_details.html:3
@@ -1311,7 +1311,7 @@ msgstr "Для получения дополнительной информац�
 
 #: tcms/testcases/admin.py:56
 msgid "1 confirmed & 1 uncomfirmed status required!"
-msgstr "Требуется подтверждение и 1 неподтверждённый статус!"
+msgstr "Требуется 1 подтвержденный и 1 не подтвержденный статус!"
 
 #: tcms/testcases/admin.py:131
 msgid "Bug URL"
@@ -1347,7 +1347,7 @@ msgstr "Детали извлечены из OpenGraph. Трэкер ошибо�
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr "Детали извлечены из API. Конфигурация трэкера ошибок выглядит хорошо!"
+msgstr "Детали извлечены из API. Конфигурация трэкера ошибок выглядит правильно!"
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
@@ -1356,15 +1356,15 @@ msgstr "Проверка конфигурации трекера ошибок п
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr "УДАЛЕНО: тест-кейс #%(pk)d - %(summary)s"
+msgstr "УДАЛЕНО: тестовый случай #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr "Статус тестового кейса"
+msgstr "Статус тестового случая"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr "Статус тестового кейса"
+msgstr "Статусы тестового случая"
 
 #: tcms/testcases/models.py:379
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1377,7 +1377,7 @@ msgstr "Шаблоны"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "Клонировать Тест-кейс"
+msgstr "Клонировать Тестовый случай"
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
@@ -1461,7 +1461,7 @@ msgstr "Скрипт"
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:149
 msgid "Arguments"
-msgstr "Параметры"
+msgstr "Аргументы"
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:157
@@ -1490,11 +1490,11 @@ msgstr "Ошибки"
 
 #: tcms/testcases/templates/testcases/get.html:159
 msgid "Test plans"
-msgstr "Тест-планы"
+msgstr "Планы тестирований"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr "Редактировать тест-кейс"
+msgstr "Редактировать тестовый случай"
 
 #: tcms/testcases/templates/testcases/mutable.html:59
 msgid "add new Category"
@@ -1532,11 +1532,11 @@ msgstr "применимо только к изменениям, сделанн�
 
 #: tcms/testcases/templates/testcases/mutable.html:229
 msgid "TestCase is updated"
-msgstr "Тест-кейс обновлен"
+msgstr "Тестовый случай обновлен"
 
 #: tcms/testcases/templates/testcases/mutable.html:236
 msgid "TestCase is deleted"
-msgstr "Тест-кейс удален"
+msgstr "Тестовый случай удален"
 
 #: tcms/testcases/templates/testcases/mutable.html:245
 msgid "CC to"
@@ -1544,11 +1544,11 @@ msgstr "Копия к"
 
 #: tcms/testcases/templates/testcases/mutable.html:250
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr "E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены на каждый адрес электронной почты из списка (копия)."
+msgstr "E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены на каждый адрес электронной почты из списка."
 
 #: tcms/testcases/templates/testcases/search.html:15
 msgid "Test case summary"
-msgstr "Итоги по тест-кейсу"
+msgstr "Итоги по тестовому случаю"
 
 #: tcms/testcases/templates/testcases/search.html:45
 msgid "Both"
@@ -1590,31 +1590,31 @@ msgstr "История"
 
 #: tcms/testcases/views.py:250
 msgid "TestCase cloning was successful"
-msgstr "Клонирование тест-кейса прошло успешно"
+msgstr "Клонирование тестового случая прошло успешно"
 
 #: tcms/testcases/views.py:281
 msgid "At least one TestCase is required"
-msgstr "Требуется хотя бы один тест-кейс"
+msgstr "Требуется хотя бы один тестовый случай"
 
 #: tcms/testplans/templates/testplans/clone.html:5
 msgid "Clone TestPlan"
-msgstr "Клонировать тест-план"
+msgstr "Клонировать план тестирования"
 
 #: tcms/testplans/templates/testplans/clone.html:55
 msgid "Clone TCs"
-msgstr "Клонировать TC"
+msgstr "Клонировать тестовый случай"
 
 #: tcms/testplans/templates/testplans/clone.html:59
 msgid "Clone or link existing TCs into new TP"
-msgstr "Клонировать или связать существующие TC в новом TP"
+msgstr "Клонировать или связать существующие тестовый случай в новый план тестирования"
 
 #: tcms/testplans/templates/testplans/clone.html:63
 msgid "Parent TP"
-msgstr "Родительский TP"
+msgstr "Родительский план тестирования"
 
 #: tcms/testplans/templates/testplans/clone.html:67
 msgid "Set the source TP as parent of new TP"
-msgstr "Установить исходный TP как родитель нового TP"
+msgstr "Установить исходный план тестирования как родитель нового плана тестирования"
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1633,11 +1633,11 @@ msgstr "Уверены?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr "Не удается создать TestRun с неподтвержденными тестами"
+msgstr "Не удается создать тестовый прогон с неподтвержденными тестовыми случаями"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
-msgstr "Ошибка при добавлении теста"
+msgstr "Ошибка при добавлении тестового случая"
 
 #: tcms/testplans/templates/testplans/get.html:43
 msgid "Show more"
@@ -1649,7 +1649,7 @@ msgstr "Тип плана"
 
 #: tcms/testplans/templates/testplans/get.html:100
 msgid "Test cases"
-msgstr "Тест-кейсы"
+msgstr "Тестовые случаи"
 
 #: tcms/testplans/templates/testplans/get.html:182
 #: tcms/testplans/templates/testplans/get.html:421
@@ -1665,12 +1665,12 @@ msgstr "Ключи сортировки"
 
 #: tcms/testplans/templates/testplans/get.html:244
 msgid "Re-order cases"
-msgstr "Переупорядочить кейсы"
+msgstr "Переупорядочить случаи"
 
 #: tcms/testplans/templates/testplans/get.html:254
 #: tcms/testruns/templates/testruns/get.html:288
 msgid "Search and add test cases"
-msgstr "Поиск и добавление тестовых кейсов"
+msgstr "Поиск и добавление тестовых случаев"
 
 #: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:298
@@ -1701,11 +1701,11 @@ msgstr "Комментарии"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr "Изменить тест-план"
+msgstr "Изменить план тестирования"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr "Создать новый тест-план"
+msgstr "Создать новый план тестирования"
 
 #: tcms/testplans/templates/testplans/mutable.html:82
 msgid "Parent ID"
@@ -1717,7 +1717,7 @@ msgstr "Нажмите Enter для назначения; Backspace + Enter дл
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
-msgstr "Документ тест-плана:"
+msgstr "Документ плана тестирования:"
 
 #: tcms/testplans/templates/testplans/mutable.html:119
 msgid "Notify:"
@@ -1725,7 +1725,7 @@ msgstr "Уведомления:"
 
 #: tcms/testplans/templates/testplans/mutable.html:127
 msgid "TestCase author"
-msgstr "Автор тест-кейса"
+msgstr "Автор тестового случая"
 
 #: tcms/testplans/templates/testplans/mutable.html:141
 msgid "Notify when:"
@@ -1733,16 +1733,16 @@ msgstr "Уведомлять когда:"
 
 #: tcms/testplans/templates/testplans/mutable.html:145
 msgid "TestPlan is updated"
-msgstr "Тест-план обновлен"
+msgstr "План тестирования обновлен"
 
 #: tcms/testplans/templates/testplans/mutable.html:151
 msgid "Test cases are updated"
-msgstr "Тест-кейсы обновлены"
+msgstr "Планы тестирования обновлены"
 
 #: tcms/testplans/templates/testplans/mutable.html:165
 #: tcms/testplans/templates/testplans/search.html:41
 msgid "Active"
-msgstr "Активный"
+msgstr "Активно"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
@@ -1750,7 +1750,7 @@ msgstr "Некоторые вложенные планы не соответст
 
 #: tcms/testplans/templates/testplans/search.html:20
 msgid "Test plan name"
-msgstr "Название тест-плана"
+msgstr "Название плана тестирования"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
@@ -1778,7 +1778,7 @@ msgstr "Все"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr "Pairwise"
+msgstr "Попарно"
 
 #: tcms/testruns/models.py:230
 msgid "Test execution statuses"
@@ -1811,7 +1811,7 @@ msgstr "Запланированный старт"
 
 #: tcms/testruns/templates/testruns/get.html:84
 msgid "Start"
-msgstr "Начать"
+msgstr "Запуск"
 
 #: tcms/testruns/templates/testruns/get.html:91
 #: tcms/testruns/templates/testruns/mutable.html:123
@@ -1821,7 +1821,7 @@ msgstr "Запланированная остановка"
 
 #: tcms/testruns/templates/testruns/get.html:102
 msgid "Stop"
-msgstr "Остановить"
+msgstr "Остановка"
 
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:160
@@ -1862,7 +1862,7 @@ msgstr "Отчёт об ошибке"
 
 #: tcms/testruns/templates/testruns/get.html:339
 msgid "Test case is not part of parent test plan"
-msgstr "Тестовый случай не является частью родительского тест плана"
+msgstr "Тестовый случай не является частью родительского плана тестирования"
 
 #: tcms/testruns/templates/testruns/get.html:371
 msgid "Assigned to"
@@ -1883,7 +1883,7 @@ msgstr "Ошибки и гиперссылки"
 
 #: tcms/testruns/templates/testruns/get.html:585
 msgid "Is a defect"
-msgstr "Неисправность"
+msgstr "Это неисправность"
 
 #: tcms/testruns/templates/testruns/get.html:592
 #: tcms/testruns/templates/testruns/get.html:623
@@ -1904,7 +1904,7 @@ msgstr "Клонировать тестовый прогон"
 
 #: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
-msgstr "Влияет на только тестовые случаи с параметрами"
+msgstr "Влияет только на тестовые случаи с параметрами"
 
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
@@ -1912,7 +1912,7 @@ msgstr "больше информации"
 
 #: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
-msgstr "Выбранные тест-кейс(ы):"
+msgstr "Выбранные тестовые случаи:"
 
 #: tcms/testruns/templates/testruns/mutable.html:221
 #, python-format
@@ -1927,7 +1927,7 @@ msgstr "ID плана"
 
 #: tcms/testruns/templates/testruns/search.html:23
 msgid "TestPlan ID"
-msgstr "ID тест-плана"
+msgstr "ID плана тестирования"
 
 #: tcms/testruns/templates/testruns/search.html:79
 msgid "Running"
@@ -1945,7 +1945,7 @@ msgstr "Дата остановки"
 
 #: tcms/testruns/views.py:273
 msgid "Clone of "
-msgstr "Клонировать "
+msgstr "Копия "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -1973,11 +1973,11 @@ msgstr "ПРИОСТАНОВЛЕНО"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr "ВЫПОЛНЕНО"
+msgstr "ПРОЙДЕНО"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr "НЕ УДАЛОСЬ"
+msgstr "НЕ ПРОЙДЕНО"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
@@ -2046,7 +2046,7 @@ msgstr "Редактировать приложение GitHub <a href=\"%s\">%s
 #: tcms_github_app/views.py:102
 #, python-format
 msgid "Cannot find GitHub App installation for tenant \"%s\""
-msgstr "Не удается найти установку GitHub App для организации \"%s\""
+msgstr "Не удается найти установку GitHub App для экземпляра \"%s\""
 
 #: tcms_github_app/views.py:111
 msgid "Multiple GitHub App installations detected!"
@@ -2068,15 +2068,15 @@ msgstr "Благодарим вас за использование Kiwi TCMS п
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
-msgstr "Подписки владельца"
+msgstr "Подписки экземпляра"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
 msgid "You can access the following tenants"
-msgstr "Вы можете получить доступ к следующим владельцам"
+msgstr "Вы можете получить доступ к следующим экземплярам"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
 msgid "Tenant"
-msgstr "Владелец"
+msgstr "Экземпляр"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
@@ -2090,11 +2090,11 @@ msgstr "Учетные данные Docker"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
 msgid "Private containers instructions"
-msgstr "Инструкции по закрытым контейнерам"
+msgstr "Инструкции по приватным реестрам контейнеров"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
 msgid "You own the following tenants"
-msgstr "Вы можете получить доступ к следующим владельцам"
+msgstr "Вы можете получить доступ к следующим экземплярам"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
@@ -2118,7 +2118,7 @@ msgstr "Отменить подписку"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
 msgid "You don't own any tenants"
-msgstr "У вас нет ни одной организации"
+msgstr "Вы не владеете ни одним экземпляром"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
 msgid "Subscribe via FastSpring"
@@ -2136,7 +2136,7 @@ msgstr "Отправитель"
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
 msgid "Vendor"
-msgstr "Разработчик"
+msgstr "Поставщик"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:180
@@ -2157,7 +2157,7 @@ msgstr "Разделяйте запятой (,), точкой с запятой 
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
-msgstr "Предупреждение частного владельца"
+msgstr "Предупреждение частного экземпляра"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2166,10 +2166,10 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "You will be redirected to your new tenant when the creation process is complete!\n"
 "If you see a 500 Internal Server Error page please contact\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
-msgstr "Вы собираетесь создать частного арендатора для Kiwi TCMS.\n"
-"Это займет несколько минут, пока ваша схема БД не будет готова!\n"
-"После нажатия на кнопку 'Сохранить' <strong>не</strong> закрыть или обновить эту страницу!<br>\n"
-"Вы будете перенаправлены на нового арендатора после завершения процесса создания!\n"
+msgstr "Вы собираетесь создать частный экземпляр для Kiwi TCMS.\n"
+"Это займет несколько минут, пока ваша схема БД будет готова!\n"
+"После нажатия на кнопку 'Сохранить' <strong>не</strong> закрывайте и не обновляйте эту страницу!<br>\n"
+"Вы будете перенаправлены на новый экземпляр после завершения процесса создания!\n"
 "Если вы видите страницу 500 Внутренняя Ошибка сервера свяжитесь с\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko. om</a> немедленно!"
 
@@ -2204,11 +2204,11 @@ msgstr "Правовая информация"
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
 msgid "Unauthorized"
-msgstr "Неавторизовано"
+msgstr "Неавторизован"
 
 #: tcms_tenants/admin.py:86
 msgid "Existing username, email or user ID"
-msgstr "Введите имя пользователя, email или ID пользователя"
+msgstr "Существующие имя пользователя, email или ID пользователя"
 
 #: tcms_tenants/admin.py:159
 msgid "Full name"
@@ -2216,7 +2216,7 @@ msgstr "Полное имя"
 
 #: tcms_tenants/forms.py:30
 msgid "Invalid string"
-msgstr "Неправильная строка"
+msgstr "Некорректная строка"
 
 #: tcms_tenants/menu.py:15
 msgid "Create"
@@ -2233,7 +2233,7 @@ msgstr "Авторизованные пользователи"
 
 #: tcms_tenants/middleware.py:59
 msgid "Unpaid"
-msgstr "Не оплачено"
+msgstr "Неоплаченный"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
@@ -2261,17 +2261,17 @@ msgstr "Уважаемый тестировщик,\n"
 msgid "Your Kiwi TCMS tenant was created at:\n"
 "%(tenant_url)s\n\n"
 "If you have troubles please contact support!"
-msgstr "Ваша аренда TCMS Kiwi была начата:\n"
+msgstr "Ваш экземпляр TCMS Kiwi был создан в:\n"
 "%(tenant_url)s\n\n"
 "Если у вас возникли проблемы, пожалуйста, свяжитесь с поддержкой!"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
-msgstr "Адрес почты"
+msgstr "Email"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
-msgstr "Новый владелец"
+msgstr "Новый экземпляр"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:35
 msgid "Company, team or project name"
@@ -2283,7 +2283,7 @@ msgstr "Схема"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:56
 msgid "Validation pattern"
-msgstr "Шаблон валидации"
+msgstr "Шаблон проверки"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:61
 msgid "Publicly readable"
@@ -2291,7 +2291,7 @@ msgstr "Общедоступный для чтения"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
-msgstr "Логотип организации"
+msgstr "Логотип экземпляра"
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
@@ -2299,12 +2299,12 @@ msgstr "Такое название схемы уже используется"
 
 #: tcms_tenants/utils.py:170
 msgid "New Kiwi TCMS tenant created"
-msgstr "Новая организация создана в TCMS Kiwi"
+msgstr "Новый экземпляр TCMS Kiwi создан"
 
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr "Пользователь {user.username} добавлен в группу организации {group.name}"
+msgstr "Пользователь {user.username} добавлен в группу экземпляра {group.name}"
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
@@ -2312,15 +2312,15 @@ msgstr "Приглашение присоединиться к Kiwi TCMS"
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr "Только суперпользователи и владельцы организации могут редактировать свойства организации"
+msgstr "Только суперпользователи и владельцы экземпляра могут редактировать свойства экземпляра"
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
-msgstr "Изменить владельца"
+msgstr "Изменить экземпляр"
 
 #: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr "Только авторизованные пользователи могут приглашать других"
+msgstr "Только авторизованные пользователи могут приглашать других в этот экземпляр"
 
 #: tenant_groups/admin.py:30
 msgid "users"
@@ -2345,3 +2345,4 @@ msgstr "группы"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Персональные API токены"
+
