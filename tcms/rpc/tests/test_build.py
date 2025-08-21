@@ -11,17 +11,22 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 
 @override_settings(LANGUAGE_CODE="en")
 class BuildCreate(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.version = VersionFactory()
+        cls.version = VersionFactory()
 
     def test_build_create_with_no_perms(self):
-        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "Build.create"'
         ):
-            self.rpc_client.Build.create({})
+            # assign to a temp variable b/c self.rpc_client a property and calling it twice
+            # in sequence results in 1st call logging out and 2nd call logging in automatically
+            rpc_client = self.rpc_client
+
+            rpc_client.Auth.logout()
+            rpc_client.Build.create({})
 
     def test_build_create_with_no_required_fields(self):
         values = {"is_active": False}
@@ -68,26 +73,31 @@ class BuildCreate(APITestCase):
 
 @override_settings(LANGUAGE_CODE="en")
 class BuildUpdate(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.version = VersionFactory()
-        self.another_version = VersionFactory()
+        cls.version = VersionFactory()
+        cls.another_version = VersionFactory()
 
-        self.build_1 = BuildFactory(version=self.version)
-        self.build_2 = BuildFactory(version=self.version)
-        self.build_3 = BuildFactory(version=self.version)
+        cls.build_1 = BuildFactory(version=cls.version)
+        cls.build_2 = BuildFactory(version=cls.version)
+        cls.build_3 = BuildFactory(version=cls.version)
 
     def test_build_update_with_non_existing_build(self):
         with self.assertRaisesRegex(XmlRPCFault, "Build matching query does not exist"):
             self.rpc_client.Build.update(-99, {})
 
     def test_build_update_with_no_perms(self):
-        self.rpc_client.Auth.logout()
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "Build.update"'
         ):
-            self.rpc_client.Build.update(self.build_1.pk, {})
+            # assign to a temp variable b/c self.rpc_client a property and calling it twice
+            # in sequence results in 1st call logging out and 2nd call logging in automatically
+            rpc_client = self.rpc_client
+
+            rpc_client.Auth.logout()
+            rpc_client.Build.update(self.build_1.pk, {})
 
     def test_build_update_with_multi_id(self):
         builds = (self.build_1.pk, self.build_2.pk, self.build_3.pk)
@@ -112,11 +122,12 @@ class BuildUpdate(APITestCase):
 
 
 class BuildFilter(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.version = VersionFactory()
-        self.build = BuildFactory(version=self.version)
+        cls.version = VersionFactory()
+        cls.build = BuildFactory(version=cls.version)
 
     def test_build_filter_with_non_exist_id(self):
         self.assertEqual(0, len(self.rpc_client.Build.filter({"pk": -9999})))

@@ -10,22 +10,24 @@ from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class APITestCase(test.LiveServerTestCase):
+    # preserves data created via migrations
     serialized_rollback = True
 
-    # NOTE: we setup the required DB data and API objects here
-    # because this method is executed *AFTER* setUpClass() and the
-    # serialized rollback is not yet available during setUpClass()
-    # execution
-    def _fixture_setup(self):
+    # NOTE: we create the required DB records here because
+    # this method is executed *BEFORE* each test scenario!
+    @classmethod
+    def _fixture_setup(cls):
         # restore the serialized data from initial migrations
         # this includes default groups and permissions
         super()._fixture_setup()
-        self.api_user = UserFactory()
-        self.api_user.set_password("api-testing")
-        initiate_user_with_default_setups(self.api_user)
 
-        # this is the XML-RPC ServerProxy with cookies support
-        self.rpc_client = tcms_api.TCMS(
+        cls.api_user = UserFactory()
+        cls.api_user.set_password("api-testing")
+        initiate_user_with_default_setups(cls.api_user)
+
+    @property
+    def rpc_client(self):
+        return tcms_api.TCMS(
             f"{self.live_server_url}/xml-rpc/",
             self.api_user.username,
             "api-testing",
@@ -38,19 +40,21 @@ class APIPermissionsTestCase(PermissionsTestMixin, test.LiveServerTestCase):
     serialized_rollback = True
 
     # NOTE: see comment in APITestCase._fixture_setup()
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         # restore the serialized data from initial migrations
         # this includes default groups and permissions
         super()._fixture_setup()
 
-        self.check_mandatory_attributes()
+        cls.check_mandatory_attributes()
 
-        self.tester = UserFactory()
-        self.tester.set_password("password")
-        self.tester.save()
+        cls.tester = UserFactory()
+        cls.tester.set_password("password")
+        cls.tester.save()
 
-        # this is the XML-RPC ServerProxy with cookies support
-        self.rpc_client = tcms_api.TCMS(
+    @property
+    def rpc_client(self):
+        return tcms_api.TCMS(
             f"{self.live_server_url}/xml-rpc/",
             self.tester.username,
             "password",

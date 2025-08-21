@@ -27,29 +27,30 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
     "Bug tracker integration testing not enabled",
 )
 class TestKiwiTCMSIntegration(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.existing_bug = BugFactory()
+        cls.existing_bug = BugFactory()
 
-        self.execution_1 = TestExecutionFactory()
-        self.execution_1.case.text = "Given-When-Then"
-        self.execution_1.case.save()  # will generate history object
+        cls.execution_1 = TestExecutionFactory()
+        cls.execution_1.case.text = "Given-When-Then"
+        cls.execution_1.case.save()  # will generate history object
 
-        self.component = ComponentFactory(
-            name="KiwiTCMS integration", product=self.execution_1.run.plan.product
+        cls.component = ComponentFactory(
+            name="KiwiTCMS integration", product=cls.execution_1.run.plan.product
         )
-        self.execution_1.case.add_component(self.component)
+        cls.execution_1.case.add_component(cls.component)
 
         site = Site.objects.get(id=settings.SITE_ID)
-        self.base_url = f"https://{site.domain}"
+        cls.base_url = f"https://{site.domain}"
         # note: ^^^ this is https just because .get_full_url() default to that !
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="KiwiTCMS internal bug tracker",
             tracker_type="tcms.issuetracker.types.KiwiTCMS",
-            base_url=self.base_url,
+            base_url=cls.base_url,
         )
-        self.integration = KiwiTCMS(bug_system, None)
+        cls.integration = KiwiTCMS(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug.get_full_url())

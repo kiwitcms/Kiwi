@@ -8,20 +8,21 @@ from tcms.tests.factories import TagFactory
 
 
 class Tag(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.tag_db = TagFactory(name="db")
-        self.tag_fedora = TagFactory(name="fedora")
-        self.tag_python = TagFactory(name="python")
-        self.tag_tests = TagFactory(name="tests")
-        self.tag_xmlrpc = TagFactory(name="xmlrpc")
-        self.tags = [
-            self.tag_db,
-            self.tag_fedora,
-            self.tag_python,
-            self.tag_tests,
-            self.tag_xmlrpc,
+        cls.tag_db = TagFactory(name="db")
+        cls.tag_fedora = TagFactory(name="fedora")
+        cls.tag_python = TagFactory(name="python")
+        cls.tag_tests = TagFactory(name="tests")
+        cls.tag_xmlrpc = TagFactory(name="xmlrpc")
+        cls.tags = [
+            cls.tag_db,
+            cls.tag_fedora,
+            cls.tag_python,
+            cls.tag_tests,
+            cls.tag_xmlrpc,
         ]
 
     def test_get_tags_with_ids(self):

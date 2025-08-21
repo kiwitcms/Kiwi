@@ -45,11 +45,12 @@ class TestValidateEmail(unittest.TestCase):
 class TestAddNotificationCCPermission(APIPermissionsTestCase):
     permission_label = "testcases.change_testcase"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.default_cc = "example@example.com"
-        self.testcase = TestCaseFactory()
+        cls.default_cc = "example@example.com"
+        cls.testcase = TestCaseFactory()
 
     def verify_api_with_permission(self):
         self.rpc_client.TestCase.add_notification_cc(
@@ -79,12 +80,13 @@ class TestAddNotificationCC(APITestCase):
 class TestGetNotificationCCPermission(APIPermissionsTestCase):
     permission_label = "testcases.view_testcase"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.default_cc = "example@example.com"
-        self.testcase = TestCaseFactory()
-        self.testcase.emailing.add_cc(self.default_cc)
+        cls.default_cc = "example@example.com"
+        cls.testcase = TestCaseFactory()
+        cls.testcase.emailing.add_cc(cls.default_cc)
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestCase.get_notification_cc(self.testcase.pk)
@@ -109,12 +111,13 @@ class TestGetNotificationCC(APITestCase):
 class TestRemoveNotificationCCPermission(APIPermissionsTestCase):
     permission_label = "testcases.change_testcase"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.default_cc = "example@example.com"
-        self.testcase = TestCaseFactory()
-        self.testcase.emailing.add_cc(self.default_cc)
+        cls.default_cc = "example@example.com"
+        cls.testcase = TestCaseFactory()
+        cls.testcase.emailing.add_cc(cls.default_cc)
 
     def verify_api_with_permission(self):
         self.rpc_client.TestCase.remove_notification_cc(
@@ -142,30 +145,31 @@ class TestRemoveNotificationCC(APITestCase):
 
 
 class TestCaseFilter(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.tester = UserFactory(username="great tester")
-        self.product = ProductFactory(name="StarCraft")
-        self.version = VersionFactory(value="0.1", product=self.product)
-        self.plan = TestPlanFactory(
+        cls.tester = UserFactory(username="great tester")
+        cls.product = ProductFactory(name="StarCraft")
+        cls.version = VersionFactory(value="0.1", product=cls.product)
+        cls.plan = TestPlanFactory(
             name="Test product.get_cases",
-            author=self.tester,
-            product=self.product,
-            product_version=self.version,
+            author=cls.tester,
+            product=cls.product,
+            product_version=cls.version,
         )
-        self.case_category = CategoryFactory(product=self.product)
-        self.cases_count = 10
-        self.cases = []
-        for _ in range(self.cases_count):
+        cls.case_category = CategoryFactory(product=cls.product)
+        cls.cases_count = 10
+        cls.cases = []
+        for _ in range(cls.cases_count):
             test_case = TestCaseFactory(
-                category=self.case_category,
-                author=self.tester,
-                reviewer=self.tester,
+                category=cls.case_category,
+                author=cls.tester,
+                reviewer=cls.tester,
                 default_tester=None,
-                plan=[self.plan],
+                plan=[cls.plan],
             )
-            self.cases.append(test_case)
+            cls.cases.append(test_case)
 
     def test_filter_query_none(self):
         result = self.rpc_client.TestCase.filter()
@@ -244,13 +248,14 @@ class TestUpdate(APITestCase):
     non_existing_user_id = 999
     non_existing_email = "fake@email.com"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory(
+        cls.testcase = TestCaseFactory(
             summary="Sanity test case", text="Given-When-Then", default_tester=None
         )
-        self.new_author = UserFactory()
+        cls.new_author = UserFactory()
 
     def test_update_text_and_product(self):
         author_pk = self.testcase.author.pk
@@ -579,7 +584,8 @@ class TestUpdate(APITestCase):
 
 
 class TestCreate(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
         for _ in range(5):
@@ -655,14 +661,15 @@ class TestCreate(APITestCase):
 class TestRemovePermissions(APIPermissionsTestCase):
     permission_label = "testcases.delete_testcase"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case_1 = TestCaseFactory()
-        self.case_2 = TestCaseFactory()
-        self.case_3 = TestCaseFactory()
+        cls.case_1 = TestCaseFactory()
+        cls.case_2 = TestCaseFactory()
+        cls.case_3 = TestCaseFactory()
 
-        self.query = {"pk__in": [self.case_1.pk, self.case_2.pk, self.case_3.pk]}
+        cls.query = {"pk__in": [cls.case_1.pk, cls.case_2.pk, cls.case_3.pk]}
 
     def verify_api_with_permission(self):
         num_deleted, _ = self.rpc_client.TestCase.remove(self.query)
@@ -676,13 +683,14 @@ class TestRemovePermissions(APIPermissionsTestCase):
 
 
 class TestAddTag(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.testcase = TestCaseFactory()
+        cls.testcase = TestCaseFactory()
 
-        self.tag1 = TagFactory()
-        self.tag2 = TagFactory()
+        cls.tag1 = TagFactory()
+        cls.tag2 = TagFactory()
 
     def test_add_tag(self):
         self.rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
@@ -718,14 +726,15 @@ class TestAddTag(APITestCase):
 
 
 class TestRemoveTag(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.tag0 = TagFactory()
-        self.tag1 = TagFactory()
+        cls.tag0 = TagFactory()
+        cls.tag1 = TagFactory()
 
-        self.testcase = TestCaseFactory()
-        self.testcase.add_tag(self.tag0)
+        cls.testcase = TestCaseFactory()
+        cls.testcase.add_tag(cls.tag0)
 
     def test_remove_tag(self):
         self.rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
@@ -766,11 +775,12 @@ class TestRemoveTag(APITestCase):
 
 
 class TestAddComponent(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
-        self.test_case = TestCaseFactory()
-        self.good_component = ComponentFactory(product=self.test_case.category.product)
-        self.bad_component = ComponentFactory()
+        cls.test_case = TestCaseFactory()
+        cls.good_component = ComponentFactory(product=cls.test_case.category.product)
+        cls.bad_component = ComponentFactory()
 
     def test_add_component_from_same_product_is_allowed(self):
         result = self.rpc_client.TestCase.add_component(
@@ -791,13 +801,14 @@ class TestAddComponent(APITestCase):
 class TestRemoveComponentPermission(APIPermissionsTestCase):
     permission_label = "testcases.delete_testcasecomponent"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
-        self.test_case = TestCaseFactory()
-        self.good_component = ComponentFactory(product=self.test_case.category.product)
-        self.bad_component = ComponentFactory(product=self.test_case.category.product)
-        self.test_case.add_component(self.good_component)
-        self.test_case.add_component(self.bad_component)
+        cls.test_case = TestCaseFactory()
+        cls.good_component = ComponentFactory(product=cls.test_case.category.product)
+        cls.bad_component = ComponentFactory(product=cls.test_case.category.product)
+        cls.test_case.add_component(cls.good_component)
+        cls.test_case.add_component(cls.bad_component)
 
     def verify_api_with_permission(self):
         self.rpc_client.TestCase.remove_component(
@@ -828,10 +839,11 @@ class TestRemoveComponent(APITestCase):
 class TestAddCommentPermissions(APIPermissionsTestCase):
     permission_label = "django_comments.add_comment"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case = TestCaseFactory()
+        cls.case = TestCaseFactory()
 
     def verify_api_with_permission(self):
         created_comment = self.rpc_client.TestCase.add_comment(
@@ -863,13 +875,14 @@ class TestAddComment(APITestCase):
 class TestRemoveCommentPermissions(APIPermissionsTestCase):
     permission_label = "django_comments.delete_comment"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case = TestCaseFactory()
-        self.comment_1 = comments.add_comment([self.case], "First one", self.tester)[0]
-        self.comment_2 = comments.add_comment([self.case], "Second one", self.tester)[0]
-        self.comment_3 = comments.add_comment([self.case], "Third one", self.tester)[0]
+        cls.case = TestCaseFactory()
+        cls.comment_1 = comments.add_comment([cls.case], "First one", cls.tester)[0]
+        cls.comment_2 = comments.add_comment([cls.case], "Second one", cls.tester)[0]
+        cls.comment_3 = comments.add_comment([cls.case], "Third one", cls.tester)[0]
 
     def verify_api_with_permission(self):
         # Remove a specific comment
@@ -898,20 +911,21 @@ class TestRemoveComment(APITestCase):
 class TestCaseSortkeysPermissions(APIPermissionsTestCase):
     permission_label = "testcases.view_testcase"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.plan = TestPlanFactory()
+        cls.plan = TestPlanFactory()
 
         # add TCs with non-standard sortkeys
-        self.case_1 = TestCaseFactory()
-        self.plan.add_case(self.case_1, sortkey=5)
+        cls.case_1 = TestCaseFactory()
+        cls.plan.add_case(cls.case_1, sortkey=5)
 
-        self.case_2 = TestCaseFactory()
-        self.plan.add_case(self.case_2, sortkey=15)
+        cls.case_2 = TestCaseFactory()
+        cls.plan.add_case(cls.case_2, sortkey=15)
 
-        self.case_3 = TestCaseFactory()
-        self.plan.add_case(self.case_3, sortkey=25)
+        cls.case_3 = TestCaseFactory()
+        cls.plan.add_case(cls.case_3, sortkey=25)
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestCase.sortkeys(
@@ -944,12 +958,13 @@ class TestCaseSortkeysPermissions(APIPermissionsTestCase):
 class TestCaseCommentPermissions(APIPermissionsTestCase):
     permission_label = "django_comments.view_comment"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case = TestCaseFactory()
-        comments.add_comment([self.case], "First one", self.tester)
-        comments.add_comment([self.case], "Second one", self.tester)
+        cls.case = TestCaseFactory()
+        comments.add_comment([cls.case], "First one", cls.tester)
+        comments.add_comment([cls.case], "Second one", cls.tester)
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestCase.comments(self.case.pk)
@@ -975,10 +990,11 @@ class TestCaseCommentPermissions(APIPermissionsTestCase):
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
     permission_label = "attachments.add_attachment"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case = TestCaseFactory()
+        cls.case = TestCaseFactory()
 
     def verify_api_with_permission(self):
         self.rpc_client.TestCase.add_attachment(
@@ -998,10 +1014,11 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
 
 
 class TestListAttachments(APITestCase):
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case = TestCaseFactory()
+        cls.case = TestCaseFactory()
 
     def test_list_attachments(self):
         self.rpc_client.TestCase.add_attachment(
@@ -1020,10 +1037,11 @@ class TestListAttachments(APITestCase):
 class TestListAttachmentPermissions(APIPermissionsTestCase):
     permission_label = "attachments.view_attachment"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.case = TestCaseFactory()
+        cls.case = TestCaseFactory()
 
     def verify_api_with_permission(self):
         attachments = self.rpc_client.TestCase.list_attachments(self.case.pk)
