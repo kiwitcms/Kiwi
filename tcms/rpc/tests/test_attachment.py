@@ -11,14 +11,16 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 class TestRemoveAttachment(APITestCase):
     """Test for Attachment.remove_attachment"""
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.plan = TestPlanFactory()
+        cls.plan = TestPlanFactory()
+
+    def test_remove_attachment(self):
         file_name = "attachment.txt"
         self.rpc_client.TestPlan.add_attachment(self.plan.pk, file_name, "a2l3aXRjbXM=")
 
-    def test_remove_attachment(self):
         attachments = self.rpc_client.TestPlan.list_attachments(self.plan.pk)
         self.rpc_client.Attachment.remove_attachment(attachments[0]["pk"])
         attachments = self.rpc_client.TestPlan.list_attachments(self.plan.pk)
@@ -31,12 +33,13 @@ class TestRemoveAttachmentPermissions(APIPermissionsTestCase):
 
     permission_label = "attachments.delete_attachment"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.plan = TestPlanFactory()
-        user_should_have_perm(self.tester, "attachments.add_attachment")
-        user_should_have_perm(self.tester, "attachments.view_attachment")
+        cls.plan = TestPlanFactory()
+        user_should_have_perm(cls.tester, "attachments.add_attachment")
+        user_should_have_perm(cls.tester, "attachments.view_attachment")
 
     def verify_api_with_permission(self):
         file_name = "attachment.txt"
