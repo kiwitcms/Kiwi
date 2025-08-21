@@ -27,10 +27,11 @@ class TestBugzillaIntegration(APITestCase):
     existing_bug_id = 1
     existing_bug_url = "http://bugtracker.kiwitcms.org/bugzilla/show_bug.cgi?id=1"
 
-    def _fixture_setup(self):
+    @classmethod
+    def _fixture_setup(cls):
         super()._fixture_setup()
 
-        self.execution_1 = TestExecutionFactory()
+        cls.execution_1 = TestExecutionFactory()
 
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="Dockerized Bugzilla",
@@ -40,7 +41,7 @@ class TestBugzillaIntegration(APITestCase):
             api_username="admin@bugzilla.bugs",
             api_password="password",
         )
-        self.integration = Bugzilla(bug_system, None)
+        cls.integration = Bugzilla(bug_system, None)
 
     def test_bug_id_from_url(self):
         result = self.integration.bug_id_from_url(self.existing_bug_url)
