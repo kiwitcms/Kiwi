@@ -5,6 +5,47 @@ from tcms.core.history import history_email_for
 from tcms.core.utils.mailto import mailto
 
 
+def email_case_created(case):
+    recipients = get_case_notification_recipients(case)
+    if not recipients:
+        return
+    cc_list = case.emailing.get_cc_list()
+
+    subject = _("NEW: TestCase #%(pk)d - %(summary)s") % {
+        "pk": case.pk,
+        "summary": case.summary,
+    }
+
+    body = (
+        _(
+            """Test case %(pk)d has been created.
+
+### Basic information ###
+Summary: %(summary)s
+
+Product: %(product)s
+Category: %(category)s
+Priority: %(priority)s
+
+Default tester: %(default_tester)s
+Text:
+%(text)s
+"""
+        )
+        % {
+            "pk": case.pk,
+            "summary": case.summary,
+            "product": case.category.product.name,
+            "category": case.category.name,
+            "priority": case.priority.value,
+            "default_tester": case.default_tester,
+            "text": case.text,
+        }
+    )
+
+    mailto(None, subject, recipients, body, cc=cc_list)
+
+
 def email_case_update(case):
     recipients = get_case_notification_recipients(case)
     if not recipients:

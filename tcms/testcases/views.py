@@ -12,6 +12,7 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 
+from tcms.signals import NEW_TEST_CASE_SIGNAL
 from tcms.testcases.forms import (
     CaseNotifyFormSet,
     CloneCaseForm,
@@ -77,6 +78,8 @@ class NewCaseView(CreateView):
 
             notify_formset.instance = test_case
             notify_formset.save()
+
+            NEW_TEST_CASE_SIGNAL.send(sender=test_case.__class__, instance=test_case)
 
             return HttpResponseRedirect(reverse("testcases-get", args=[test_case.pk]))
 
