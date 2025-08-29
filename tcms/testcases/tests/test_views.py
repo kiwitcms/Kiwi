@@ -6,12 +6,16 @@ import unittest
 from datetime import timedelta
 from http import HTTPStatus
 
+from django.conf import settings
 from django.forms import ValidationError
+from django.test import override_settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from mock import patch
 
 from tcms.management.models import Priority
 from tcms.testcases.fields import MultipleEmailField
+from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.tests import (
     BaseCaseRun,
@@ -20,7 +24,7 @@ from tcms.tests import (
     remove_perm_from_user,
     user_should_have_perm,
 )
-from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestCaseFactory, UserFactory
 
 
 class TestGetTestCase(BaseCaseRun):
@@ -79,12 +83,14 @@ class TestMultipleEmailField(unittest.TestCase):
         self.assertEqual(data, "")
 
 
+@override_settings(LANGUAGE_CODE="en")
 class TestNewCase(BasePlanCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
 
         cls.new_case_url = reverse("testcases-new")
+        cls.default_tester = UserFactory()
 
         cls.summary = "summary"
         cls.text = "some text description"
@@ -96,7 +102,7 @@ class TestNewCase(BasePlanCase):
         cls.data = {
             "author": cls.tester.pk,
             "summary": cls.summary,
-            "default_tester": cls.tester.pk,
+            "default_tester": cls.default_tester.pk,
             "product": cls.case.category.product.pk,
             "category": cls.case.category.pk,
             "case_status": cls.case_status_confirmed.pk,
@@ -147,7 +153,8 @@ class TestNewCase(BasePlanCase):
             html=False,
         )
 
-    def test_create_test_case_successfully(self):
+    @patch("tcms.core.utils.mailto.send_mail")
+    def test_create_test_case_successfully(self, send_mail):
         response = self.client.post(self.new_case_url, self.data)
 
         test_case = TestCase.objects.get(summary=self.summary)
@@ -155,6 +162,32 @@ class TestNewCase(BasePlanCase):
 
         self.assertRedirects(response, redirect_url)
         self._assertTestCase(test_case)
+
+        # make sure notification email was sent
+        recipients = get_case_notification_recipients(test_case)
+        expected_body = f"""Test case {test_case.pk} has been created.
+
+### Basic information ###
+Summary: {test_case.summary}
+
+Product: {test_case.category.product}
+Category: {test_case.category}
+Priority: {test_case.priority}
+
+Default tester: {test_case.default_tester}
+Text:
+{test_case.text}
+"""
+
+        # Verify notification mail
+        send_mail.assert_called_once_with(
+            settings.EMAIL_SUBJECT_PREFIX
+            + f"NEW: TestCase #{test_case.pk} - {test_case.summary}",
+            expected_body,
+            settings.DEFAULT_FROM_EMAIL,
+            recipients,
+            fail_silently=False,
+        )
 
     def test_create_test_case_successfully_from_plan(self):
         self.data["from_plan"] = self.plan.pk
@@ -175,7 +208,7 @@ class TestNewCase(BasePlanCase):
         self.assertEqual(test_case.author, self.tester)
         self.assertEqual(test_case.summary, self.summary)
         self.assertEqual(test_case.category, self.case.category)
-        self.assertEqual(test_case.default_tester, self.tester)
+        self.assertEqual(test_case.default_tester, self.default_tester)
         self.assertEqual(test_case.case_status, self.case_status_confirmed)
         self.assertEqual(test_case.priority, self.case.priority)
         self.assertEqual(test_case.text, self.text)

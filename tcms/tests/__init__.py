@@ -141,7 +141,7 @@ class BasePlanCase(LoggedInTestCase):
         cls.case_status_confirmed = TestCaseStatus.objects.get(name="CONFIRMED")
         cls.case_status_proposed = TestCaseStatus.objects.get(name="PROPOSED")
 
-        cls.product = ProductFactory(name="Kiwi")
+        cls.product = ProductFactory(name="Kiwi TCMS")
         cls.version = VersionFactory(value="0.1", product=cls.product)
 
         cls.plan = TestPlanFactory(

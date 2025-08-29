@@ -21,7 +21,7 @@ altering the following setting::
     INSTALLED_APPS += ['my_custom_app']
 """
 from django.db.models import ObjectDoesNotExist
-from django.dispatch import Signal
+from django.dispatch import Signal, receiver
 from django.utils.translation import gettext_lazy as _
 
 __all__ = [
@@ -42,6 +42,10 @@ __all__ = [
 #: Sent when a new user is registered into Kiwi TCMS. This signal receives two
 #: keyword parameters: ``request`` and ``user`` respectively!
 USER_REGISTERED_SIGNAL = Signal()
+
+#: Sent when a new TestCase is crated.
+#: This signal receives one keyword parameter: ``instance``!
+NEW_TEST_CASE_SIGNAL = Signal()
 
 
 def notify_admins(sender, **kwargs):
@@ -101,6 +105,18 @@ def handle_emails_post_case_save(sender, instance, created=False, **kwargs):
         from tcms.testcases.helpers import email
 
         email.email_case_update(instance)
+
+
+@receiver(NEW_TEST_CASE_SIGNAL)
+def handle_emails_new_test_case(sender, **kwargs):
+    """
+    Send emails after a TestCase has been created! This signal is sent
+    explicitly in the application *after* the 1-to-1 email notifications
+    field is saved in DB!
+    """
+    from tcms.testcases.helpers import email
+
+    email.email_case_created(kwargs["instance"])
 
 
 def handle_emails_pre_case_delete(sender, **kwargs):
