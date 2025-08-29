@@ -11,6 +11,9 @@ from parameterized import parameterized
 
 from tcms.core.history import history_email_for
 from tcms.core.utils.mailto import mailto
+from tcms.management.models import Priority
+from tcms.testcases.models import Category
+from tcms.testcases.models import TestCase
 from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase, deny_certain_email_addresses
 from tcms.tests.factories import (
@@ -91,6 +94,47 @@ class TestCaseRemoveTag(BasePlanCase):
 
         tag_pks = list(self.case.tag.all().values_list("pk", flat=True))
         self.assertEqual([self.tag_fedora.pk], tag_pks)
+
+
+@override_settings(LANGUAGE_CODE="en")
+class TestSendEmailWhenCaseIsCreated(BasePlanCase):
+    @patch("tcms.core.utils.mailto.send_mail")
+    def test_send_mail_to_case_author(self, send_mail):
+        case = TestCase.objects.create(
+            author=self.tester,
+            default_tester=self.tester,
+            case_status=self.case_status_confirmed,
+            category=Category.objects.first(),
+            priority=Priority.objects.first(),
+            summary="Check if email notifications work",
+            text="Create a new TC and expect email to be sent",
+        )
+        # ^^^ will call .save()
+
+        recipients = get_case_notification_recipients(self.case)
+        expected_body = f"""Test case {case.pk} has been created.
+
+### Basic information ###
+Summary: {case.summary}
+
+Product: {case.category.product}
+Category: {case.category}
+Priority: {case.priority}
+
+Default tester: {case.default_tester}
+Text:
+{case.text}
+"""
+
+        # Verify notification mail
+        send_mail.assert_called_once_with(
+            settings.EMAIL_SUBJECT_PREFIX
+            + f"NEW: TestCase #{case.pk} - {case.summary}",
+            expected_body,
+            settings.DEFAULT_FROM_EMAIL,
+            recipients,
+            fail_silently=False,
+        )
 
 
 class TestSendMailOnCaseIsUpdated(BasePlanCase):

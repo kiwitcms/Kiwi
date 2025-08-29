@@ -94,12 +94,14 @@ def handle_emails_post_case_save(sender, instance, created=False, **kwargs):
     """
     Send email updates after a TestCase has been updated!
     """
+    from tcms.testcases.helpers import email
+
     if kwargs.get("raw", False):
         return
 
-    if not created and instance.emailing.notify_on_case_update:
-        from tcms.testcases.helpers import email
-
+    if created:
+        email.email_case_created(instance)
+    elif instance.emailing.notify_on_case_update:
         email.email_case_update(instance)
 
 
