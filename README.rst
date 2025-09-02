@@ -1,6 +1,6 @@
 # PTRAX - Software Test Management System
 
-PTRAX is a fork of Kiwi TCMS customized for  to manage test cases, executions, and traceability. 
+PTRAX is a fork of Kiwi TCMS customized for  to manage test cases, executions, and traceability.
 It allows flexible test metadata, tagging, and full traceability from requirements to test results.
 
 ## Features
