@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-30 12:22+0000\n"
-"PO-Revision-Date: 2025-07-30 13:13\n"
+"POT-Creation-Date: 2025-09-03 11:04+0000\n"
+"PO-Revision-Date: 2025-09-03 12:27\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -66,6 +66,7 @@ msgstr "報告者"
 #: tcms/bugs/templates/bugs/search.html:115
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:10
+#: tcms/testcases/templates/testcases/mutable.html:198
 #: tcms/testruns/templates/testruns/get.html:207
 #: tcms/testruns/templates/testruns/get.html:267
 msgid "Assignee"
@@ -1502,10 +1503,6 @@ msgstr "通知する"
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Manager of runs"
 msgstr "実行マネージャー"
-
-#: tcms/testcases/templates/testcases/mutable.html:198
-msgid "Asignees"
-msgstr "担当者"
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 msgid "Default tester of runs"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-30 12:22+0000\n"
-"PO-Revision-Date: 2025-07-30 14:54\n"
+"POT-Creation-Date: 2025-09-03 11:04+0000\n"
+"PO-Revision-Date: 2025-09-03 12:28\n"
 "Last-Translator: \n"
 "Language-Team: Spanish, Peru\n"
 "Language: es_PE\n"
@@ -66,6 +66,7 @@ msgstr "Informador"
 #: tcms/bugs/templates/bugs/search.html:115
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:10
+#: tcms/testcases/templates/testcases/mutable.html:198
 #: tcms/testruns/templates/testruns/get.html:207
 #: tcms/testruns/templates/testruns/get.html:267
 msgid "Assignee"
@@ -1490,10 +1491,6 @@ msgstr "Notificar"
 #: tcms/testcases/templates/testcases/mutable.html:191
 msgid "Manager of runs"
 msgstr "Gestor de ejecuciones"
-
-#: tcms/testcases/templates/testcases/mutable.html:198
-msgid "Asignees"
-msgstr "Asignados"
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 msgid "Default tester of runs"
