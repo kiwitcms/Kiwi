@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-30 12:22+0000\n"
-"PO-Revision-Date: 2025-07-30 13:13\n"
+"POT-Creation-Date: 2025-09-03 11:04+0000\n"
+"PO-Revision-Date: 2025-09-03 12:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -66,6 +66,7 @@ msgstr "报告人"
 #: tcms/bugs/templates/bugs/search.html:115
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:10
+#: tcms/testcases/templates/testcases/mutable.html:198
 #: tcms/testruns/templates/testruns/get.html:207
 #: tcms/testruns/templates/testruns/get.html:267
 msgid "Assignee"
@@ -1509,10 +1510,6 @@ msgstr "提醒"
 msgid "Manager of runs"
 msgstr "管理执行器"
 
-#: tcms/testcases/templates/testcases/mutable.html:198
-msgid "Asignees"
-msgstr "受配执行者"
-
 #: tcms/testcases/templates/testcases/mutable.html:214
 msgid "Default tester of runs"
 msgstr "默认的测试者"
@@ -2338,3 +2335,4 @@ msgstr "组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
