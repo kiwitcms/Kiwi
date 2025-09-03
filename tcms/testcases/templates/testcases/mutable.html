@@ -195,7 +195,7 @@
                 </div>
 
                 <div class="col-md-1 col-lg-1">
-                    <label> {% trans "Asignees" %} </label>
+                    <label> {% trans "Assignee" %} </label>
                 </div>
                 <div class="col-md-3 col-lg-3">
                     <input class="bootstrap-switch" name="{{ notify_formset.prefix }}-{{ forloop.counter0 }}-auto_to_execution_assignee" type="checkbox" {% if notify_form.auto_to_execution_assignee.value %}checked{% endif %}  data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
