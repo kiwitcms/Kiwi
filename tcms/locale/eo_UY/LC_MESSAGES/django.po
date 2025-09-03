@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 11:04+0000\n"
-"PO-Revision-Date: 2025-09-03 12:28\n"
+"POT-Creation-Date: 2025-09-03 14:17+0000\n"
+"PO-Revision-Date: 2025-09-03 18:12\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -328,13 +328,13 @@ msgstr "crwdns393:0crwdne393:0"
 msgid "Created on"
 msgstr "crwdns410:0crwdne410:0"
 
-#: tcms/bugs/views.py:42 tcms/testcases/views.py:130
+#: tcms/bugs/views.py:42 tcms/testcases/views.py:133
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:143
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "crwdns510:0crwdne510:0"
 
-#: tcms/bugs/views.py:45 tcms/testcases/views.py:143
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:146
 #: tcms/testplans/views.py:151 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
@@ -343,7 +343,7 @@ msgstr "crwdns1240:0crwdne1240:0"
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/templates/include/properties_card.html:32
-#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:151
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:159
 #: tcms/testruns/templates/testruns/get.html:238
@@ -721,16 +721,16 @@ msgstr "crwdns419:0crwdne419:0"
 msgid "API Help"
 msgstr "crwdns421:0crwdne421:0"
 
-#: tcms/signals.py:85
+#: tcms/signals.py:89
 msgid "New user awaiting approval"
 msgstr "crwdns287:0crwdne287:0"
 
-#: tcms/signals.py:163
+#: tcms/signals.py:179
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "crwdns325:0%(pk)dcrwdnd325:0%(summary)scrwdne325:0"
 
-#: tcms/signals.py:235
+#: tcms/signals.py:251
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "crwdns1403:0%(pk)dcrwdnd1403:0%(summary)scrwdne1403:0"
@@ -1303,7 +1303,25 @@ msgstr "crwdns1493:0crwdne1493:0"
 msgid "Issue Tracker configuration check failed"
 msgstr "crwdns1392:0crwdne1392:0"
 
-#: tcms/testcases/helpers/email.py:22
+#: tcms/testcases/helpers/email.py:14
+#, python-format
+msgid "NEW: TestCase #%(pk)d - %(summary)s"
+msgstr "crwdns1550:0%(pk)dcrwdnd1550:0%(summary)scrwdne1550:0"
+
+#: tcms/testcases/helpers/email.py:21
+#, python-format
+msgid "Test case %(pk)d has been created.\n\n"
+"### Basic information ###\n"
+"Summary: %(summary)s\n\n"
+"Product: %(product)s\n"
+"Category: %(category)s\n"
+"Priority: %(priority)s\n\n"
+"Default tester: %(default_tester)s\n"
+"Text:\n"
+"%(text)s\n"
+msgstr "crwdns1552:0%(pk)dcrwdnd1552:0%(summary)scrwdnd1552:0%(product)scrwdnd1552:0%(category)scrwdnd1552:0%(priority)scrwdnd1552:0%(default_tester)scrwdnd1552:0%(text)scrwdne1552:0"
+
+#: tcms/testcases/helpers/email.py:63
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "crwdns936:0%(pk)dcrwdnd936:0%(summary)scrwdne936:0"
@@ -1337,7 +1355,7 @@ msgstr "crwdns992:0crwdne992:0"
 msgid "Selected TC"
 msgstr "crwdns994:0crwdne994:0"
 
-#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
+#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
@@ -1529,16 +1547,16 @@ msgstr "crwdns389:0crwdne389:0"
 msgid "Select"
 msgstr "crwdns1242:0crwdne1242:0"
 
-#: tcms/testcases/views.py:138 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:202
 msgid "History"
 msgstr "crwdns514:0crwdne514:0"
 
-#: tcms/testcases/views.py:250
+#: tcms/testcases/views.py:253
 msgid "TestCase cloning was successful"
 msgstr "crwdns304:0crwdne304:0"
 
-#: tcms/testcases/views.py:281
+#: tcms/testcases/views.py:284
 msgid "At least one TestCase is required"
 msgstr "crwdns303:0crwdne303:0"
 
@@ -2272,3 +2290,4 @@ msgstr "crwdns1465:0crwdne1465:0"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "crwdns1498:0crwdne1498:0"
+
