@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 11:04+0000\n"
-"PO-Revision-Date: 2025-09-03 12:27\n"
+"POT-Creation-Date: 2025-09-04 06:51+0000\n"
+"PO-Revision-Date: 2025-09-04 12:25\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -336,13 +336,13 @@ msgstr "Идентификатор"
 msgid "Created on"
 msgstr "Создано"
 
-#: tcms/bugs/views.py:42 tcms/testcases/views.py:130
+#: tcms/bugs/views.py:42 tcms/testcases/views.py:133
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:143
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "Изменить"
 
-#: tcms/bugs/views.py:45 tcms/testcases/views.py:143
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:146
 #: tcms/testplans/views.py:151 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
@@ -351,7 +351,7 @@ msgstr "Права доступа к объекту"
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/templates/include/properties_card.html:32
-#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:151
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:159
 #: tcms/testruns/templates/testruns/get.html:238
@@ -738,16 +738,16 @@ msgstr "Руководство пользователя"
 msgid "API Help"
 msgstr "Справка по API"
 
-#: tcms/signals.py:85
+#: tcms/signals.py:89
 msgid "New user awaiting approval"
 msgstr "Новый пользователь в ожидании подтверждения"
 
-#: tcms/signals.py:163
+#: tcms/signals.py:179
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:235
+#: tcms/signals.py:251
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "Ошибка #%(pk)d - %(summary)s"
@@ -1354,7 +1354,25 @@ msgstr "Детали извлечены из API. Конфигурация тр�
 msgid "Issue Tracker configuration check failed"
 msgstr "Проверка конфигурации трекера ошибок пройдена"
 
-#: tcms/testcases/helpers/email.py:22
+#: tcms/testcases/helpers/email.py:14
+#, python-format
+msgid "NEW: TestCase #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:21
+#, python-format
+msgid "Test case %(pk)d has been created.\n\n"
+"### Basic information ###\n"
+"Summary: %(summary)s\n\n"
+"Product: %(product)s\n"
+"Category: %(category)s\n"
+"Priority: %(priority)s\n\n"
+"Default tester: %(default_tester)s\n"
+"Text:\n"
+"%(text)s"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:62
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "УДАЛЕНО: тестовый случай #%(pk)d - %(summary)s"
@@ -1388,7 +1406,7 @@ msgstr "Добавить новый тестовый случай в план т
 msgid "Selected TC"
 msgstr "Выбранные тестовые случаи"
 
-#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
+#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
@@ -1580,16 +1598,16 @@ msgstr "Разделяйте значения через запятые (,)"
 msgid "Select"
 msgstr "Выбрать"
 
-#: tcms/testcases/views.py:138 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:202
 msgid "History"
 msgstr "История"
 
-#: tcms/testcases/views.py:250
+#: tcms/testcases/views.py:253
 msgid "TestCase cloning was successful"
 msgstr "Клонирование тестового случая прошло успешно"
 
-#: tcms/testcases/views.py:281
+#: tcms/testcases/views.py:284
 msgid "At least one TestCase is required"
 msgstr "Требуется хотя бы один тестовый случай"
 
@@ -2342,3 +2360,4 @@ msgstr "группы"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Персональные API токены"
+
