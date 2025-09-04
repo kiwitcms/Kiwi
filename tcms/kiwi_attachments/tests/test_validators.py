@@ -52,3 +52,9 @@ class TestValidators(APITestCase):
             message = str(_("Uploading executable files is forbidden"))
             with self.assertRaisesRegex(XmlRPCFault, message):
                 self.rpc_client.User.add_attachment("csrss.exe_from_reactos", b64)
+
+    def test_uploading_txt_file_should_pass(self):
+        with open("tests/ui/data/change-report.txt", "rb") as txt_file:
+            b64 = base64.b64encode(txt_file.read()).decode()
+
+            self.rpc_client.User.add_attachment("change-report.txt", b64)
