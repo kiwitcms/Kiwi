@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 11:04+0000\n"
-"PO-Revision-Date: 2025-09-03 12:27\n"
+"POT-Creation-Date: 2025-09-04 06:51+0000\n"
+"PO-Revision-Date: 2025-09-04 12:25\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -336,13 +336,13 @@ msgstr "ID"
 msgid "Created on"
 msgstr "作成日時"
 
-#: tcms/bugs/views.py:42 tcms/testcases/views.py:130
+#: tcms/bugs/views.py:42 tcms/testcases/views.py:133
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:143
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "編集"
 
-#: tcms/bugs/views.py:45 tcms/testcases/views.py:143
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:146
 #: tcms/testplans/views.py:151 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
@@ -351,7 +351,7 @@ msgstr "オブジェクトの権限"
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/templates/include/properties_card.html:32
-#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:151
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:159
 #: tcms/testruns/templates/testruns/get.html:238
@@ -735,16 +735,16 @@ msgstr "ユーザーガイド"
 msgid "API Help"
 msgstr "API ヘルプ"
 
-#: tcms/signals.py:85
+#: tcms/signals.py:89
 msgid "New user awaiting approval"
 msgstr "承認待ちの新規ユーザー"
 
-#: tcms/signals.py:163
+#: tcms/signals.py:179
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "新着: テストラン #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:235
+#: tcms/signals.py:251
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "バグ #%(pk)d - %(summary)s"
@@ -1344,7 +1344,25 @@ msgstr "API 経由で抽出された詳細。問題トラッカーの設定が�
 msgid "Issue Tracker configuration check failed"
 msgstr "課題トラッカーの設定チェックが完了しました"
 
-#: tcms/testcases/helpers/email.py:22
+#: tcms/testcases/helpers/email.py:14
+#, python-format
+msgid "NEW: TestCase #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:21
+#, python-format
+msgid "Test case %(pk)d has been created.\n\n"
+"### Basic information ###\n"
+"Summary: %(summary)s\n\n"
+"Product: %(product)s\n"
+"Category: %(category)s\n"
+"Priority: %(priority)s\n\n"
+"Default tester: %(default_tester)s\n"
+"Text:\n"
+"%(text)s"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:62
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "削除: テストケース #%(pk)d - %(summary)s"
@@ -1378,7 +1396,7 @@ msgstr "TPに新しいTCを追加"
 msgid "Selected TC"
 msgstr "選択されたTC"
 
-#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
+#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
@@ -1570,16 +1588,16 @@ msgstr "複数の値をカンマで区切ってください (,)"
 msgid "Select"
 msgstr "選択"
 
-#: tcms/testcases/views.py:138 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:202
 msgid "History"
 msgstr "履歴"
 
-#: tcms/testcases/views.py:250
+#: tcms/testcases/views.py:253
 msgid "TestCase cloning was successful"
 msgstr "テストケースの複製に成功しました"
 
-#: tcms/testcases/views.py:281
+#: tcms/testcases/views.py:284
 msgid "At least one TestCase is required"
 msgstr "少なくとも 1 つのテストケースが必要です"
 
@@ -2324,3 +2342,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
