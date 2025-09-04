@@ -87,7 +87,7 @@ def deny_uploads_containing_script_tag(uploaded_file):
             "data:",
             "javascript:",
         ):
-            if chunk.lower().find(attr_name.encode()) > -1:
+            if chunk.lower().find(b" " + attr_name.encode()) > -1:
                 raise ValidationError(
                     _(f"File contains forbidden attribute: `{attr_name}`")
                 )
