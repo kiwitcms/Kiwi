@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 11:04+0000\n"
-"PO-Revision-Date: 2025-09-03 12:27\n"
+"POT-Creation-Date: 2025-09-04 06:51+0000\n"
+"PO-Revision-Date: 2025-09-04 12:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -336,13 +336,13 @@ msgstr "ID"
 msgid "Created on"
 msgstr "建立於"
 
-#: tcms/bugs/views.py:42 tcms/testcases/views.py:130
+#: tcms/bugs/views.py:42 tcms/testcases/views.py:133
 #: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:143
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "編輯"
 
-#: tcms/bugs/views.py:45 tcms/testcases/views.py:143
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:146
 #: tcms/testplans/views.py:151 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
@@ -351,7 +351,7 @@ msgstr "物件權限"
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/templates/include/properties_card.html:32
-#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:151
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:159
 #: tcms/testruns/templates/testruns/get.html:238
@@ -735,16 +735,16 @@ msgstr "使用者指南"
 msgid "API Help"
 msgstr "API 說明"
 
-#: tcms/signals.py:85
+#: tcms/signals.py:89
 msgid "New user awaiting approval"
 msgstr "等待審批的新使用者"
 
-#: tcms/signals.py:163
+#: tcms/signals.py:179
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NEW: 測試執行 #%(pk)d - - %(summary)s"
 
-#: tcms/signals.py:235
+#: tcms/signals.py:251
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "缺陷 #%(pk)d - %(summary)s"
@@ -1341,7 +1341,25 @@ msgstr "透過 API 擷取的詳細資訊。問題追蹤系統設定看起來正�
 msgid "Issue Tracker configuration check failed"
 msgstr "問題管理系統設定檢查失敗"
 
-#: tcms/testcases/helpers/email.py:22
+#: tcms/testcases/helpers/email.py:14
+#, python-format
+msgid "NEW: TestCase #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:21
+#, python-format
+msgid "Test case %(pk)d has been created.\n\n"
+"### Basic information ###\n"
+"Summary: %(summary)s\n\n"
+"Product: %(product)s\n"
+"Category: %(category)s\n"
+"Priority: %(priority)s\n\n"
+"Default tester: %(default_tester)s\n"
+"Text:\n"
+"%(text)s"
+msgstr ""
+
+#: tcms/testcases/helpers/email.py:62
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "已刪除: 測試案例 #%(pk)d - %(summary)s"
@@ -1375,7 +1393,7 @@ msgstr "新增新的TC到TP"
 msgid "Selected TC"
 msgstr "已選擇TC"
 
-#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:134
+#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
@@ -1567,16 +1585,16 @@ msgstr "用逗號分隔變數"
 msgid "Select"
 msgstr "選擇"
 
-#: tcms/testcases/views.py:138 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:202
 msgid "History"
 msgstr "歷史紀錄"
 
-#: tcms/testcases/views.py:250
+#: tcms/testcases/views.py:253
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
-#: tcms/testcases/views.py:281
+#: tcms/testcases/views.py:284
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
@@ -2331,3 +2349,4 @@ msgstr "群組"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人 API Tokens"
+
