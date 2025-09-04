@@ -176,8 +176,7 @@ Priority: {test_case.priority}
 
 Default tester: {test_case.default_tester}
 Text:
-{test_case.text}
-"""
+{test_case.text}"""
 
         # Verify notification mail
         send_mail.assert_called_once_with(

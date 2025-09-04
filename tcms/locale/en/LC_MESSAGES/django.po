@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 14:17+0000\n"
+"POT-Creation-Date: 2025-09-04 06:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1383,10 +1383,10 @@ msgid ""
 "\n"
 "Default tester: %(default_tester)s\n"
 "Text:\n"
-"%(text)s\n"
+"%(text)s"
 msgstr ""
 
-#: tcms/testcases/helpers/email.py:63
+#: tcms/testcases/helpers/email.py:62
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr ""

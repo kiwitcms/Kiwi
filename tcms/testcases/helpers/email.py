@@ -29,8 +29,7 @@ Priority: %(priority)s
 
 Default tester: %(default_tester)s
 Text:
-%(text)s
-"""
+%(text)s"""
         )
         % {
             "pk": case.pk,
