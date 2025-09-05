@@ -259,8 +259,10 @@
             {{ notify_formset.management_form }}
 
             <div class="form-group">
-                <div class="col-md-1 col-lg-1">
-                    <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+                <div class="col-md-12 col-lg-12">
+                    <a href="{% if object %}{% url 'testcases-get' object.pk %}{% else %}{% url 'core-views-index' %}{% endif %}"
+                        class="btn btn-danger btn-lg">{% trans "Cancel" %}</a>
+                    <button type="submit" class="btn btn-primary btn-lg">{% trans "Save" %}</button>
                 </div>
             </div>
         </form>
