@@ -15,7 +15,7 @@ django-modern-rpc==1.1.0
 django-simple-history==3.10.1
 django-tree-queries==0.20.0
 jira==3.8.0
-Markdown==3.8.2
+Markdown==3.9
 PyGithub==2.8.1
 Pygments==2.19.2
 python-gitlab==6.3.0
