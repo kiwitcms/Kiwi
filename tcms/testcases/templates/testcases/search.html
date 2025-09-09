@@ -6,7 +6,11 @@
 {% block page_id %}page-testcases-search{% endblock %}
 
 {% block contents %}
-<div class="container-fluid container-cards-pf">
+<div class="container-fluid container-cards-pf"
+     id="main-element"
+     data-trans-no-records-found="{% trans 'No records found' %}"
+     data-trans-x-records-found="{% trans 'Found _TOTAL_ records' %}"
+>
     <form class="form-horizontal" method="get">
         {% csrf_token %}
         <div class="form-group">

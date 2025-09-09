@@ -10,6 +10,8 @@
     class="container-fluid container-cards-pf"
     id="main-element"
     data-trans-some-rows-not-shown="{% trans 'Some child test plans do not match search criteria'%}"
+    data-trans-no-records-found="{% trans 'No records found' %}"
+    data-trans-x-records-found="{% trans 'Found _TOTAL_ records' %}"
 >
     <form class="form-horizontal" method="get">
         {% csrf_token %}

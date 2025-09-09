@@ -148,3 +148,7 @@ a.disabled {
 .kiwi-cursor-pointer {
     cursor: pointer;
 }
+
+.dataTables_info {
+    display: inline;
+}
