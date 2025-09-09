@@ -158,12 +158,14 @@ export function pageTestplansSearchReadyHandler () {
                 }
             })
         },
-        dom: 'Bptp',
+        dom: 'Biptip',
         buttons: exportButtons,
         language: {
+            info: $('#main-element').data('trans-x-records-found'),
+            infoEmpty: $('#main-element').data('trans-no-records-found'),
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
-            zeroRecords: 'No records found'
+            zeroRecords: $('#main-element').data('trans-no-records-found')
         },
         order: [[1, 'asc']]
     })
