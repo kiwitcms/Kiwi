@@ -123,6 +123,13 @@ _EOF_
         fi
     rlPhaseEnd
 
+    rlPhaseStartTest "UI tests should report PASS"
+        ARCH=$(uname -m)
+        if [ "$ARCH" == "x86_64" ]; then
+            rlRun -t -c "robot tests/ui/test_logout.robot"
+        fi
+    rlPhaseEnd
+
     rlPhaseStartTest "Can upload attachments via browser UI"
         ARCH=$(uname -m)
         if [ "$ARCH" == "x86_64" ]; then
