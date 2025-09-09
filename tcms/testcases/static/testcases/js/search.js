@@ -173,6 +173,7 @@ export function pageTestcasesSearchReadyHandler () {
             infoEmpty: $('#main-element').data('trans-no-records-found'),
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
+            thousands: '',
             zeroRecords: $('#main-element').data('trans-no-records-found')
         },
         order: [[1, 'asc']]
