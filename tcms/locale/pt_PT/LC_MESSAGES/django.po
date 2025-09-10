@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-04 06:51+0000\n"
-"PO-Revision-Date: 2025-09-04 12:25\n"
+"POT-Creation-Date: 2025-09-09 16:19+0000\n"
+"PO-Revision-Date: 2025-09-09 17:42\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -31,12 +31,12 @@ msgstr ""
 
 #: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:50
 #: tcms/bugs/templates/bugs/mutable.html:27
-#: tcms/bugs/templates/bugs/search.html:18
-#: tcms/bugs/templates/bugs/search.html:108
+#: tcms/bugs/templates/bugs/search.html:22
+#: tcms/bugs/templates/bugs/search.html:112
 msgid "Severity"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:89
+#: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:93
 #: tcms/issuetracker/kiwitcms.py:49 tcms/templates/include/bug_details.html:3
 msgid "Open"
 msgstr ""
@@ -46,17 +46,17 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:79
-#: tcms/bugs/templates/bugs/search.html:114
+#: tcms/bugs/templates/bugs/get.html:59 tcms/bugs/templates/bugs/search.html:83
+#: tcms/bugs/templates/bugs/search.html:118
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:64
 #: tcms/bugs/templates/bugs/mutable.html:94
-#: tcms/bugs/templates/bugs/search.html:84
-#: tcms/bugs/templates/bugs/search.html:115
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
+#: tcms/bugs/templates/bugs/search.html:88
+#: tcms/bugs/templates/bugs/search.html:119
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:40
 #: tcms/templates/include/bug_details.html:10
 #: tcms/testcases/templates/testcases/mutable.html:198
 #: tcms/testruns/templates/testruns/get.html:207
@@ -66,57 +66,57 @@ msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:75
 #: tcms/bugs/templates/bugs/mutable.html:45
-#: tcms/bugs/templates/bugs/search.html:47
-#: tcms/bugs/templates/bugs/search.html:111
+#: tcms/bugs/templates/bugs/search.html:51
+#: tcms/bugs/templates/bugs/search.html:115
 #: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:107
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:29
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
 #: tcms/templates/include/bug_details.html:13
 #: tcms/testcases/templates/testcases/get.html:44
 #: tcms/testcases/templates/testcases/get.html:170
 #: tcms/testcases/templates/testcases/mutable.html:43
-#: tcms/testcases/templates/testcases/search.html:51
+#: tcms/testcases/templates/testcases/search.html:55
 #: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:33
-#: tcms/testplans/templates/testplans/search.html:50
-#: tcms/testplans/templates/testplans/search.html:117
+#: tcms/testplans/templates/testplans/search.html:52
+#: tcms/testplans/templates/testplans/search.html:119
 #: tcms/testruns/templates/testruns/get.html:45
 #: tcms/testruns/templates/testruns/mutable.html:46
-#: tcms/testruns/templates/testruns/search.html:35
-#: tcms/testruns/templates/testruns/search.html:183
+#: tcms/testruns/templates/testruns/search.html:39
+#: tcms/testruns/templates/testruns/search.html:187
 msgid "Product"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
-#: tcms/bugs/templates/bugs/search.html:57
-#: tcms/bugs/templates/bugs/search.html:112
+#: tcms/bugs/templates/bugs/search.html:61
+#: tcms/bugs/templates/bugs/search.html:116
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
 #: tcms/testplans/templates/testplans/clone.html:36
 #: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:48
-#: tcms/testplans/templates/testplans/search.html:60
-#: tcms/testplans/templates/testplans/search.html:118
+#: tcms/testplans/templates/testplans/search.html:62
+#: tcms/testplans/templates/testplans/search.html:120
 #: tcms/testruns/templates/testruns/get.html:50
-#: tcms/testruns/templates/testruns/search.html:45
-#: tcms/testruns/templates/testruns/search.html:184
+#: tcms/testruns/templates/testruns/search.html:49
+#: tcms/testruns/templates/testruns/search.html:188
 msgid "Version"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
-#: tcms/bugs/templates/bugs/search.html:67
-#: tcms/bugs/templates/bugs/search.html:113 tcms/management/models.py:132
+#: tcms/bugs/templates/bugs/search.html:71
+#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:132
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:30
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:55
 #: tcms/testruns/templates/testruns/get.html:414
 #: tcms/testruns/templates/testruns/mutable.html:89
-#: tcms/testruns/templates/testruns/search.html:55
-#: tcms/testruns/templates/testruns/search.html:185
+#: tcms/testruns/templates/testruns/search.html:59
+#: tcms/testruns/templates/testruns/search.html:189
 msgid "Build"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 #: tcms/bugs/templates/bugs/get.html:151
 #: tcms/bugs/templates/bugs/mutable.html:114
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:78
-#: tcms/testcases/templates/testcases/mutable.html:263
+#: tcms/testcases/templates/testcases/mutable.html:265
 #: tcms/testplans/templates/testplans/get.html:477
 #: tcms/testplans/templates/testplans/mutable.html:173
 #: tcms/testruns/templates/testruns/get.html:480
@@ -145,12 +145,12 @@ msgid "Close"
 msgstr ""
 
 #: tcms/bugs/templates/bugs/mutable.html:20
-#: tcms/bugs/templates/bugs/search.html:13
-#: tcms/bugs/templates/bugs/search.html:109
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:27
+#: tcms/bugs/templates/bugs/search.html:17
+#: tcms/bugs/templates/bugs/search.html:113
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
 #: tcms/testcases/templates/testcases/mutable.html:24
-#: tcms/testcases/templates/testcases/search.html:13
-#: tcms/testcases/templates/testcases/search.html:162
+#: tcms/testcases/templates/testcases/search.html:17
+#: tcms/testcases/templates/testcases/search.html:166
 #: tcms/testplans/templates/testplans/get.html:212
 #: tcms/testplans/templates/testplans/get.html:487
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:3
@@ -159,8 +159,8 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:261
 #: tcms/testruns/templates/testruns/mutable.html:23
 #: tcms/testruns/templates/testruns/mutable.html:229
-#: tcms/testruns/templates/testruns/search.html:14
-#: tcms/testruns/templates/testruns/search.html:181
+#: tcms/testruns/templates/testruns/search.html:18
+#: tcms/testruns/templates/testruns/search.html:185
 msgid "Summary"
 msgstr ""
 
@@ -199,50 +199,69 @@ msgstr ""
 msgid "Search Bugs"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:28
-#: tcms/testcases/templates/testcases/search.html:19
-#: tcms/testplans/templates/testplans/search.html:24
+#: tcms/bugs/templates/bugs/search.html:11
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:11
+#: tcms/templates/include/attachments.html:35
+#: tcms/templates/include/bugs_table.html:4
+#: tcms/testcases/templates/testcases/search.html:11
+#: tcms/testplans/templates/testplans/get.html:332
+#: tcms/testplans/templates/testplans/search.html:13
+#: tcms/testruns/templates/testruns/search.html:11
+msgid "No records found"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:12
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:12
+#: tcms/testcases/templates/testcases/search.html:12
+#: tcms/testplans/templates/testplans/search.html:14
+#: tcms/testruns/templates/testruns/search.html:12
+msgid "Found _TOTAL_ records"
+msgstr ""
+
+#: tcms/bugs/templates/bugs/search.html:32
+#: tcms/testcases/templates/testcases/search.html:23
+#: tcms/testplans/templates/testplans/search.html:26
 msgid "Created"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:31
+#: tcms/bugs/templates/bugs/search.html:35
 #: tcms/telemetry/templates/telemetry/include/filters.html:53
-#: tcms/testcases/templates/testcases/search.html:22
-#: tcms/testplans/templates/testplans/search.html:27
-#: tcms/testruns/templates/testruns/search.html:90
-#: tcms/testruns/templates/testruns/search.html:110
-#: tcms/testruns/templates/testruns/search.html:131
-#: tcms/testruns/templates/testruns/search.html:151
+#: tcms/testcases/templates/testcases/search.html:26
+#: tcms/testplans/templates/testplans/search.html:29
+#: tcms/testruns/templates/testruns/search.html:94
+#: tcms/testruns/templates/testruns/search.html:114
+#: tcms/testruns/templates/testruns/search.html:135
+#: tcms/testruns/templates/testruns/search.html:155
 msgid "Before"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:37
+#: tcms/bugs/templates/bugs/search.html:41
 #: tcms/telemetry/templates/telemetry/include/filters.html:43
-#: tcms/testcases/templates/testcases/search.html:28
-#: tcms/testplans/templates/testplans/search.html:33
-#: tcms/testruns/templates/testruns/search.html:97
-#: tcms/testruns/templates/testruns/search.html:117
-#: tcms/testruns/templates/testruns/search.html:138
-#: tcms/testruns/templates/testruns/search.html:158
+#: tcms/testcases/templates/testcases/search.html:32
+#: tcms/testplans/templates/testplans/search.html:35
+#: tcms/testruns/templates/testruns/search.html:101
+#: tcms/testruns/templates/testruns/search.html:121
+#: tcms/testruns/templates/testruns/search.html:142
+#: tcms/testruns/templates/testruns/search.html:162
 msgid "After"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:81
-#: tcms/bugs/templates/bugs/search.html:86
+#: tcms/bugs/templates/bugs/search.html:85
+#: tcms/bugs/templates/bugs/search.html:90
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:45
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
-#: tcms/testcases/templates/testcases/search.html:124
-#: tcms/testplans/templates/testplans/search.html:84
-#: tcms/testplans/templates/testplans/search.html:90
+#: tcms/testcases/templates/testcases/search.html:128
+#: tcms/testplans/templates/testplans/search.html:86
+#: tcms/testplans/templates/testplans/search.html:92
 #: tcms/testruns/templates/testruns/get.html:524
-#: tcms/testruns/templates/testruns/search.html:69
-#: tcms/testruns/templates/testruns/search.html:75
+#: tcms/testruns/templates/testruns/search.html:73
+#: tcms/testruns/templates/testruns/search.html:79
 msgid "Username"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:91
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
+#: tcms/bugs/templates/bugs/search.html:95
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:22
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:18
 #: tcms/testcases/templates/testcases/clone.html:22
 #: tcms/testcases/templates/testcases/clone.html:36
@@ -254,9 +273,9 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:217
 #: tcms/testcases/templates/testcases/mutable.html:232
 #: tcms/testcases/templates/testcases/mutable.html:239
-#: tcms/testcases/templates/testcases/search.html:39
-#: tcms/testcases/templates/testcases/search.html:64
-#: tcms/testcases/templates/testcases/search.html:76
+#: tcms/testcases/templates/testcases/search.html:43
+#: tcms/testcases/templates/testcases/search.html:68
+#: tcms/testcases/templates/testcases/search.html:80
 #: tcms/testplans/templates/testplans/clone.html:58
 #: tcms/testplans/templates/testplans/clone.html:66
 #: tcms/testplans/templates/testplans/mutable.html:124
@@ -265,14 +284,14 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:148
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testplans/templates/testplans/mutable.html:167
-#: tcms/testplans/templates/testplans/search.html:44
+#: tcms/testplans/templates/testplans/search.html:46
 #: tcms/testruns/templates/testruns/get.html:587
-#: tcms/testruns/templates/testruns/search.html:81
+#: tcms/testruns/templates/testruns/search.html:85
 msgid "Yes"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:91
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:18
+#: tcms/bugs/templates/bugs/search.html:95
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:22
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:18
 #: tcms/testcases/templates/testcases/clone.html:22
 #: tcms/testcases/templates/testcases/clone.html:36
@@ -284,9 +303,9 @@ msgstr ""
 #: tcms/testcases/templates/testcases/mutable.html:217
 #: tcms/testcases/templates/testcases/mutable.html:232
 #: tcms/testcases/templates/testcases/mutable.html:239
-#: tcms/testcases/templates/testcases/search.html:42
-#: tcms/testcases/templates/testcases/search.html:64
-#: tcms/testcases/templates/testcases/search.html:76
+#: tcms/testcases/templates/testcases/search.html:46
+#: tcms/testcases/templates/testcases/search.html:68
+#: tcms/testcases/templates/testcases/search.html:80
 #: tcms/testplans/templates/testplans/clone.html:58
 #: tcms/testplans/templates/testplans/clone.html:66
 #: tcms/testplans/templates/testplans/mutable.html:124
@@ -295,35 +314,35 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:148
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testplans/templates/testplans/mutable.html:167
-#: tcms/testplans/templates/testplans/search.html:44
+#: tcms/testplans/templates/testplans/search.html:46
 #: tcms/testruns/templates/testruns/get.html:587
-#: tcms/testruns/templates/testruns/search.html:81
+#: tcms/testruns/templates/testruns/search.html:85
 msgid "No"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:97
-#: tcms/testcases/templates/testcases/search.html:150
+#: tcms/bugs/templates/bugs/search.html:101
+#: tcms/testcases/templates/testcases/search.html:154
 #: tcms/testplans/templates/testplans/get.html:221
-#: tcms/testplans/templates/testplans/search.html:103
+#: tcms/testplans/templates/testplans/search.html:105
 #: tcms/testruns/templates/testruns/get.html:273
-#: tcms/testruns/templates/testruns/search.html:170
+#: tcms/testruns/templates/testruns/search.html:174
 msgid "Search"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:107
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:26
+#: tcms/bugs/templates/bugs/search.html:111
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:30
 #: tcms/testcases/templates/testcases/get.html:166
-#: tcms/testcases/templates/testcases/search.html:144
-#: tcms/testcases/templates/testcases/search.html:161
-#: tcms/testplans/templates/testplans/search.html:114
-#: tcms/testruns/templates/testruns/search.html:180
+#: tcms/testcases/templates/testcases/search.html:148
+#: tcms/testcases/templates/testcases/search.html:165
+#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testruns/templates/testruns/search.html:184
 msgid "ID"
 msgstr ""
 
-#: tcms/bugs/templates/bugs/search.html:110
+#: tcms/bugs/templates/bugs/search.html:114
 #: tcms/templates/include/bug_details.html:5
-#: tcms/testcases/templates/testcases/search.html:163
-#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testcases/templates/testcases/search.html:167
+#: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/mutable.html:231
 msgid "Created on"
 msgstr ""
@@ -397,7 +416,7 @@ msgid "%(amount)s%% complete"
 msgstr ""
 
 #: tcms/core/templates/dashboard.html:24
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:38
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:42
 #: tcms/testruns/templates/testruns/get.html:78
 msgid "Started at"
 msgstr ""
@@ -427,8 +446,8 @@ msgstr ""
 #: tcms/core/templates/dashboard.html:54
 #: tcms/testcases/templates/testcases/get.html:169
 #: tcms/testplans/templates/testplans/mutable.html:66
-#: tcms/testplans/templates/testplans/search.html:70
-#: tcms/testplans/templates/testplans/search.html:119
+#: tcms/testplans/templates/testplans/search.html:72
+#: tcms/testplans/templates/testplans/search.html:121
 msgid "Type"
 msgstr ""
 
@@ -586,20 +605,20 @@ msgid "Builds"
 msgstr ""
 
 #: tcms/management/models.py:144
-#: tcms/testcases/templates/testcases/search.html:136
+#: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:217
-#: tcms/testplans/templates/testplans/search.html:94
+#: tcms/testplans/templates/testplans/search.html:96
 #: tcms/testruns/templates/testruns/get.html:263
-#: tcms/testruns/templates/testruns/search.html:27
+#: tcms/testruns/templates/testruns/search.html:31
 msgid "Tag"
 msgstr ""
 
 #: tcms/management/models.py:145 tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:171
+#: tcms/testcases/templates/testcases/search.html:175
 #: tcms/testplans/templates/testplans/get.html:456
-#: tcms/testplans/templates/testplans/search.html:121
+#: tcms/testplans/templates/testplans/search.html:123
 #: tcms/testruns/templates/testruns/get.html:353
-#: tcms/testruns/templates/testruns/search.html:190
+#: tcms/testruns/templates/testruns/search.html:194
 msgid "Tags"
 msgstr ""
 
@@ -752,22 +771,22 @@ msgid "TOTAL"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:36
-#: tcms/testcases/templates/testcases/search.html:68
-#: tcms/testplans/templates/testplans/search.html:115
+#: tcms/testcases/templates/testcases/search.html:72
+#: tcms/testplans/templates/testplans/search.html:117
 #: tcms/testruns/templates/testruns/get.html:40
 #: tcms/testruns/templates/testruns/mutable.html:67
-#: tcms/testruns/templates/testruns/search.html:182
+#: tcms/testruns/templates/testruns/search.html:186
 msgid "Test plan"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:66
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
-#: tcms/testcases/templates/testcases/search.html:142
+#: tcms/testcases/templates/testcases/search.html:146
 msgid "Test run"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:70
-#: tcms/testruns/templates/testruns/search.html:17
+#: tcms/testruns/templates/testruns/search.html:21
 msgid "Test run summary"
 msgstr ""
 
@@ -782,8 +801,8 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:24
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:98
-#: tcms/testcases/templates/testcases/search.html:36
-#: tcms/testcases/templates/testcases/search.html:168
+#: tcms/testcases/templates/testcases/search.html:40
+#: tcms/testcases/templates/testcases/search.html:172
 #: tcms/testplans/templates/testplans/get.html:402
 #: tcms/testplans/templates/testplans/get.html:489
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
@@ -807,17 +826,17 @@ msgstr ""
 msgid "Execution Dashboard"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:15
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:19
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 msgid "Child TPs"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:28
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
 #: tcms/templates/include/bug_details.html:3
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/mutable.html:74
-#: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:167
+#: tcms/testcases/templates/testcases/search.html:95
+#: tcms/testcases/templates/testcases/search.html:171
 #: tcms/testplans/templates/testplans/get.html:149
 #: tcms/testplans/templates/testplans/get.html:363
 #: tcms/testplans/templates/testplans/get.html:396
@@ -830,48 +849,48 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:31
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testcases/templates/testcases/get.html:208
 #: tcms/testplans/templates/testplans/get.html:447
 #: tcms/testruns/templates/testruns/get.html:349
 msgid "Components"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:38
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:36
 #: tcms/testcases/templates/testcases/mutable.html:207
-#: tcms/testcases/templates/testcases/search.html:170
+#: tcms/testcases/templates/testcases/search.html:174
 #: tcms/testplans/templates/testplans/get.html:175
 #: tcms/testplans/templates/testplans/get.html:378
 #: tcms/testplans/templates/testplans/get.html:416
 #: tcms/testplans/templates/testplans/get.html:493
 #: tcms/testplans/templates/testplans/mutable.html:133
-#: tcms/testplans/templates/testplans/search.html:88
+#: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
 #: tcms/testruns/templates/testruns/get.html:66
 #: tcms/testruns/templates/testruns/mutable.html:36
-#: tcms/testruns/templates/testruns/search.html:73
-#: tcms/testruns/templates/testruns/search.html:189
+#: tcms/testruns/templates/testruns/search.html:77
+#: tcms/testruns/templates/testruns/search.html:193
 msgid "Default tester"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
 msgid "TC"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:38
 msgid "TR"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:41
 #: tcms/testruns/templates/testruns/get.html:268
 #: tcms/testruns/templates/testruns/get.html:375
 msgid "Tested by"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:39
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:43
 #: tcms/testruns/templates/testruns/get.html:96
 #: tcms/testruns/templates/testruns/get.html:405
 #: tcms/testruns/templates/testruns/mutable.html:140
@@ -1056,12 +1075,6 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: tcms/templates/include/attachments.html:35
-#: tcms/templates/include/bugs_table.html:4
-#: tcms/testplans/templates/testplans/get.html:332
-msgid "No records found"
-msgstr ""
-
 #: tcms/templates/include/bugs_table.html:15
 #: tcms/testruns/templates/testruns/get.html:573
 msgid "URL"
@@ -1097,7 +1110,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/clone.html:14
 #: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:24
-#: tcms/testplans/templates/testplans/search.html:18
+#: tcms/testplans/templates/testplans/search.html:20
 #: tcms/testruns/templates/testruns/get.html:579
 msgid "Name"
 msgstr ""
@@ -1366,14 +1379,14 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:28
 #: tcms/testcases/templates/testcases/get.html:168
 #: tcms/testcases/templates/testcases/mutable.html:184
-#: tcms/testcases/templates/testcases/search.html:122
-#: tcms/testcases/templates/testcases/search.html:169
+#: tcms/testcases/templates/testcases/search.html:126
+#: tcms/testcases/templates/testcases/search.html:173
 #: tcms/testplans/templates/testplans/get.html:54
 #: tcms/testplans/templates/testplans/get.html:412
 #: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/mutable.html:121
-#: tcms/testplans/templates/testplans/search.html:82
-#: tcms/testplans/templates/testplans/search.html:120
+#: tcms/testplans/templates/testplans/search.html:84
+#: tcms/testplans/templates/testplans/search.html:122
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:8
 #: tcms/testruns/templates/testruns/mutable.html:230
 msgid "Author"
@@ -1381,8 +1394,8 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testcases/templates/testcases/mutable.html:58
-#: tcms/testcases/templates/testcases/search.html:100
-#: tcms/testcases/templates/testcases/search.html:164
+#: tcms/testcases/templates/testcases/search.html:104
+#: tcms/testcases/templates/testcases/search.html:168
 #: tcms/testplans/templates/testplans/get.html:408
 #: tcms/testplans/templates/testplans/get.html:491
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
@@ -1394,8 +1407,8 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:86
-#: tcms/testcases/templates/testcases/search.html:82
-#: tcms/testcases/templates/testcases/search.html:166
+#: tcms/testcases/templates/testcases/search.html:86
+#: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:162
 #: tcms/testplans/templates/testplans/get.html:371
 #: tcms/testplans/templates/testplans/get.html:404
@@ -1510,40 +1523,46 @@ msgstr ""
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:15
+#: tcms/testcases/templates/testcases/mutable.html:264
+#: tcms/testruns/templates/testruns/get.html:592
+#: tcms/testruns/templates/testruns/get.html:623
+msgid "Cancel"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:19
 msgid "Test case summary"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:45
+#: tcms/testcases/templates/testcases/search.html:49
 msgid "Both"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:61
+#: tcms/testcases/templates/testcases/search.html:65
 msgid "include in search request"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:74
+#: tcms/testcases/templates/testcases/search.html:78
 msgid "include child test plans"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:112
-#: tcms/testcases/templates/testcases/search.html:165
+#: tcms/testcases/templates/testcases/search.html:116
+#: tcms/testcases/templates/testcases/search.html:169
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:262
 msgid "Component"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:128
+#: tcms/testcases/templates/testcases/search.html:132
 msgid "Text"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:139
-#: tcms/testplans/templates/testplans/search.html:97
-#: tcms/testruns/templates/testruns/search.html:30
+#: tcms/testcases/templates/testcases/search.html:143
+#: tcms/testplans/templates/testplans/search.html:99
+#: tcms/testruns/templates/testruns/search.html:34
 msgid "Separate multiple values with comma (,)"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:178
+#: tcms/testcases/templates/testcases/search.html:182
 msgid "Select"
 msgstr ""
 
@@ -1704,7 +1723,7 @@ msgid "Test cases are updated"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:165
-#: tcms/testplans/templates/testplans/search.html:41
+#: tcms/testplans/templates/testplans/search.html:43
 msgid "Active"
 msgstr ""
 
@@ -1712,7 +1731,7 @@ msgstr ""
 msgid "Some child test plans do not match search criteria"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:20
+#: tcms/testplans/templates/testplans/search.html:22
 msgid "Test plan name"
 msgstr ""
 
@@ -1760,14 +1779,14 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:60
 #: tcms/testruns/templates/testruns/mutable.html:29
-#: tcms/testruns/templates/testruns/search.html:67
-#: tcms/testruns/templates/testruns/search.html:188
+#: tcms/testruns/templates/testruns/search.html:71
+#: tcms/testruns/templates/testruns/search.html:192
 msgid "Manager"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:73
 #: tcms/testruns/templates/testruns/mutable.html:110
-#: tcms/testruns/templates/testruns/search.html:127
+#: tcms/testruns/templates/testruns/search.html:131
 msgid "Planned start"
 msgstr ""
 
@@ -1777,7 +1796,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:91
 #: tcms/testruns/templates/testruns/mutable.html:123
-#: tcms/testruns/templates/testruns/search.html:147
+#: tcms/testruns/templates/testruns/search.html:151
 msgid "Planned stop"
 msgstr ""
 
@@ -1847,11 +1866,6 @@ msgstr ""
 msgid "Is a defect"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:592
-#: tcms/testruns/templates/testruns/get.html:623
-msgid "Cancel"
-msgstr ""
-
 #: tcms/testruns/templates/testruns/get.html:612
 msgid "Issue Tracker"
 msgstr ""
@@ -1882,25 +1896,25 @@ msgid "%(count)s of the pre-selected test cases is not CONFIRMED and will not be
 "See test plan for more details!"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/search.html:21
+#: tcms/testruns/templates/testruns/search.html:25
 msgid "Plan ID"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/search.html:23
+#: tcms/testruns/templates/testruns/search.html:27
 msgid "TestPlan ID"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/search.html:79
+#: tcms/testruns/templates/testruns/search.html:83
 msgid "Running"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/search.html:86
-#: tcms/testruns/templates/testruns/search.html:186
+#: tcms/testruns/templates/testruns/search.html:90
+#: tcms/testruns/templates/testruns/search.html:190
 msgid "Start date"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/search.html:106
-#: tcms/testruns/templates/testruns/search.html:187
+#: tcms/testruns/templates/testruns/search.html:110
+#: tcms/testruns/templates/testruns/search.html:191
 msgid "Stop date"
 msgstr ""
 
