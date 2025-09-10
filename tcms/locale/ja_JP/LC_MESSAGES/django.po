@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-09 16:19+0000\n"
-"PO-Revision-Date: 2025-09-09 17:42\n"
+"PO-Revision-Date: 2025-09-10 12:40\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -517,7 +517,7 @@ msgstr "ユーザー"
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "メールアドレスをリセット"
 
 #: tcms/kiwi_auth/admin.py:148
 msgid "Personal info"
@@ -537,15 +537,15 @@ msgstr "このメールのユーザーはすでに存在しています。"
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "あなたの Kiwi TCMS アカウントのメールアドレスを確認してください"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "メールアドレスが一致しません"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -553,11 +553,12 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "「保存」ボタンをクリックすると、アカウントは<strong>無効</strong>になり、<strong>ログアウト</strong>されます！新しく指定されたアドレスに確認メールが送信されます！<br>\n"
+"新しいメールアドレスが<strong>正しく入力されている</strong>ことを再度確認してください。そうでないと、アカウントから<strong>ロックアウトされる可能性があります</strong>！アクティベーションリンクをクリックした後、通常通りログインできるようになります！"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "自分自身ではない"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -573,7 +574,7 @@ msgstr "確定する"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "入力してください! 前のフィールドから値をコピー&ペーストしないでください!"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -607,7 +608,7 @@ msgstr "テナントの '%s' からレコードを表示しています"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "メールアドレスがリセットされました。詳細な手順については受信トレイをご確認ください。"
 
 #: tcms/management/models.py:58
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
@@ -682,7 +683,7 @@ msgstr "テスト実行を検索"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "テスト実行の検索"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -728,7 +729,7 @@ msgstr "他のすべて"
 
 #: tcms/settings/common.py:449
 msgid "MORE"
-msgstr ""
+msgstr "もっと見る"
 
 #: tcms/settings/common.py:459
 msgid "Report an Issue"
@@ -892,11 +893,11 @@ msgstr "デフォルトのテスター"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
 msgid "TC"
-msgstr ""
+msgstr "TC"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:38
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:41
 #: tcms/testruns/templates/testruns/get.html:268
@@ -1024,7 +1025,9 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "Kiwi TCMSへようこそ！ユーザー名 %(user)s のメールアドレスを確認してアカウントを有効化するには、以下のURLにアクセスしてください：%(confirm_url)s\n"
+"よろしくお願いいたします。\n"
+"Kiwi TCMS"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -1360,7 +1363,7 @@ msgstr "課題トラッカーの設定チェックが完了しました"
 #: tcms/testcases/helpers/email.py:14
 #, python-format
 msgid "NEW: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "新着: テストケース #%(pk)d - %(summary)s"
 
 #: tcms/testcases/helpers/email.py:21
 #, python-format
@@ -1373,7 +1376,14 @@ msgid "Test case %(pk)d has been created.\n\n"
 "Default tester: %(default_tester)s\n"
 "Text:\n"
 "%(text)s"
-msgstr ""
+msgstr "テストケース %(pk)d が作成されました。\n"
+"基本情報\n"
+"概要: %(summary)s\n"
+"製品: %(product)s\n"
+"カテゴリ: %(category)s\n"
+"優先度: %(priority)s\n"
+"デフォルトテスター: %(default_tester)s\n"
+"テキスト: %(text)s"
 
 #: tcms/testcases/helpers/email.py:62
 #, python-format
@@ -1580,7 +1590,7 @@ msgstr "両方"
 
 #: tcms/testcases/templates/testcases/search.html:65
 msgid "include in search request"
-msgstr ""
+msgstr "検索リクエストに含める"
 
 #: tcms/testcases/templates/testcases/search.html:78
 msgid "include child test plans"
@@ -1737,7 +1747,7 @@ msgstr "親ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "Enterで割り当て、Backspace + Enterでクリア"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1770,7 +1780,7 @@ msgstr "アクティブ"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr ""
+msgstr "一部の子テスト計画が検索条件に一致しません"
 
 #: tcms/testplans/templates/testplans/search.html:22
 msgid "Test plan name"
@@ -1895,7 +1905,7 @@ msgstr "担当"
 #: tcms/testruns/templates/testruns/get.html:379
 #: tcms/testruns/templates/testruns/get.html:381
 msgid "Last bug"
-msgstr ""
+msgstr "最後のバグ"
 
 #: tcms/testruns/templates/testruns/get.html:423
 msgid "Text version"
@@ -2081,7 +2091,7 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "Kiwi TCMSの有料サブスクリプションをご利用いただきありがとうございました。お別れするのは残念ですが、今後の改善のためにその理由をお聞かせください！以下のリンクからフィードバックをお寄せいただけます：https://forms.gle/RJhFengbjN9C6wtUA"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
 msgid "Tenant subscriptions"
@@ -2162,15 +2172,15 @@ msgstr "受信"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
 msgid "Extra emails"
-msgstr ""
+msgstr "メールを追加"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
-msgstr ""
+msgstr "Kiwi TCMSは、定期請求イベントをtenant.owner.email + tenant.extra_emailsと照合します"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
-msgstr ""
+msgstr "カンマ（,）、セミコロン（;）、またはスペース（ ）で区切ってください"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
 msgid "Private Tenant Warning"
@@ -2192,11 +2202,11 @@ msgstr "Kiwi TCMSのプライベートテナントを作成しようとしてい
 
 #: tcms_github_marketplace/utils.py:95
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr ""
+msgstr "Kiwi TCMS サブスクリプション解約アンケート"
 
 #: tcms_github_marketplace/views.py:567
 msgid "Kiwi TCMS subscription notification"
-msgstr ""
+msgstr "Kiwi TCMS サブスクリプション通知"
 
 #: tcms_github_marketplace/views.py:749
 msgid "mo"
@@ -2254,7 +2264,7 @@ msgstr "未払い"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "テナントの有効期限はまもなく切れます"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2265,7 +2275,9 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "テスター様\n"
+"%(invited_by)s さんから、%(tenant_url)s のKiwi TCMSテナントへの招待が届いています。\n"
+"初めてログインされる場合は、アカウントが自動的に作成されています。同じメールアドレスのソーシャルアカウントでログインするか、%(password_reset_url)s にアクセスしてパスワードをリセットしてください。パスワードリセットのメールメッセージにはユーザー名も記載されています！"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
