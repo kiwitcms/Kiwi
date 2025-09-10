@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-09 16:19+0000\n"
-"PO-Revision-Date: 2025-09-10 12:27\n"
+"PO-Revision-Date: 2025-09-10 12:40\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -554,7 +554,7 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
 msgstr "「保存」ボタンをクリックすると、アカウントは<strong>無効</strong>になり、<strong>ログアウト</strong>されます！新しく指定されたアドレスに確認メールが送信されます！<br>\n"
-"新しいメールアドレスが<strong>正しく入力されている</strong>ことを再度確認してください。そうでないと、アカウントから<strong>ロックアウトされる可能性があります</strong>！アクティベーションリンクをクリックした後、通常通りログインできるようになります！\n"
+"新しいメールアドレスが<strong>正しく入力されている</strong>ことを再度確認してください。そうでないと、アカウントから<strong>ロックアウトされる可能性があります</strong>！アクティベーションリンクをクリックした後、通常通りログインできるようになります！"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
@@ -2368,3 +2368,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
