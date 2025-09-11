@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-09 16:19+0000\n"
-"PO-Revision-Date: 2025-09-10 12:40\n"
+"PO-Revision-Date: 2025-09-11 04:37\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -224,7 +224,7 @@ msgstr "レコードはありません。"
 #: tcms/testplans/templates/testplans/search.html:14
 #: tcms/testruns/templates/testruns/search.html:12
 msgid "Found _TOTAL_ records"
-msgstr ""
+msgstr "_TOTAL_ レコードを検出"
 
 #: tcms/bugs/templates/bugs/search.html:32
 #: tcms/testcases/templates/testcases/search.html:23
@@ -1493,7 +1493,7 @@ msgstr "スクリプト名"
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:149
 msgid "Arguments"
-msgstr "アーギュメント"
+msgstr "引数"
 
 #: tcms/testcases/templates/testcases/get.html:108
 #: tcms/testcases/templates/testcases/mutable.html:157
