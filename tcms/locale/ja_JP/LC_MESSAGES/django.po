@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-09 16:19+0000\n"
-"PO-Revision-Date: 2025-09-11 04:37\n"
+"PO-Revision-Date: 2025-09-12 01:10\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -450,7 +450,7 @@ msgstr "あなたに割り当てられたテストランはありません"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
-msgstr "テスト計画"
+msgstr "あなたのテスト計画"
 
 #: tcms/core/templates/dashboard.html:52
 msgid "TestPlan"
@@ -1425,7 +1425,7 @@ msgstr "選択されたTC"
 #: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
 #: tcms/testruns/views.py:198
 msgid "Clone"
-msgstr "クローン"
+msgstr "複製"
 
 #: tcms/testcases/templates/testcases/get.html:28
 #: tcms/testcases/templates/testcases/get.html:168
@@ -2368,3 +2368,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
