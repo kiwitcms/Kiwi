@@ -3,7 +3,7 @@ tcms-api
 doc8
 isort==6.0.1
 colorama
-black==25.1.0
+black==25.9.0
 locust==2.34.1
 locust-plugins[playwright]
 parameterized
