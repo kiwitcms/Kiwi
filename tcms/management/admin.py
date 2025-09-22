@@ -4,6 +4,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from tcms.core.history import ReadOnlyHistoryAdmin
 from tcms.management.models import (
     Build,
     Classification,
@@ -20,8 +21,12 @@ class ClassificationAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
 
 
-class ProductsAdmin(admin.ModelAdmin):
+class ProductsAdmin(ReadOnlyHistoryAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        return ()
+
     search_fields = ("name", "id")
+    view_on_site = False
     list_display = ("id", "name", "classification", "description")
     list_filter = ("id", "name", "classification")
 
@@ -41,8 +46,12 @@ class ComponentAdmin(admin.ModelAdmin):
         return super().get_queryset(request).select_related("product", "initial_owner")
 
 
-class VersionAdmin(admin.ModelAdmin):
+class VersionAdmin(ReadOnlyHistoryAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        return ()
+
     search_fields = ("value", "id")
+    view_on_site = False
     list_display = ("id", "product", "value")
     list_filter = ("product",)
 
@@ -86,8 +95,12 @@ class BuildAdminForm(forms.ModelForm):
             self.fields["version"].queryset = Version.objects.all()
 
 
-class BuildAdmin(admin.ModelAdmin):
+class BuildAdmin(ReadOnlyHistoryAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        return ()
+
     search_fields = ("name", "id")
+    view_on_site = False
     list_display = ("id", "name", "version", "product_name", "is_active")
     list_filter = ("version__product", "version", "is_active")
 
