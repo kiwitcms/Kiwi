@@ -2,8 +2,10 @@
 
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models.base import UrlMixin
 
 
@@ -18,6 +20,8 @@ class Classification(models.Model, UrlMixin):
 
 
 class Product(models.Model, UrlMixin):
+    history = KiwiHistoricalRecords()
+
     name = models.CharField(unique=True, max_length=255)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
@@ -47,6 +51,17 @@ class Product(models.Model, UrlMixin):
 
     class Meta:
         ordering = ["name"]
+
+    def _get_absolute_url(self):
+        return reverse(
+            "admin:management_product_change",
+            args=[
+                self.pk,
+            ],
+        )
+
+    def get_absolute_url(self):
+        return self._get_absolute_url()
 
 
 class Priority(models.Model, UrlMixin):
@@ -90,6 +105,8 @@ class Component(models.Model, UrlMixin):
 
 
 class Version(models.Model, UrlMixin):
+    history = KiwiHistoricalRecords()
+
     value = models.CharField(max_length=192)
     product = models.ForeignKey(
         Product, related_name="version", on_delete=models.CASCADE
@@ -120,8 +137,21 @@ class Version(models.Model, UrlMixin):
 
         self.build.get_or_create(name="unspecified")
 
+    def _get_absolute_url(self):
+        return reverse(
+            "admin:management_version_change",
+            args=[
+                self.pk,
+            ],
+        )
 
-class Build(models.Model):
+    def get_absolute_url(self):
+        return self._get_absolute_url()
+
+
+class Build(models.Model, UrlMixin):
+    history = KiwiHistoricalRecords()
+
     name = models.CharField(max_length=255)
     version = models.ForeignKey(Version, related_name="build", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
@@ -134,6 +164,17 @@ class Build(models.Model):
 
     def __str__(self):
         return self.name
+
+    def _get_absolute_url(self):
+        return reverse(
+            "admin:management_build_change",
+            args=[
+                self.pk,
+            ],
+        )
+
+    def get_absolute_url(self):
+        return self._get_absolute_url()
 
 
 class Tag(models.Model, UrlMixin):
