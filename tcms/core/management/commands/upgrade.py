@@ -44,12 +44,19 @@ delete_stale_comments
             interactive=kwargs["interactive"],
         )
 
-        self.stdout.write("\n3. Deleting stale attachments:")
+        self.stdout.write("\n3. Deleting orphaned object permissions:")
+        call_command(
+            "clean_orphan_obj_perms",
+            verbosity=kwargs["verbosity"],
+            interactive=kwargs["interactive"],
+        )
+
+        self.stdout.write("\n4. Deleting stale attachments:")
         call_command(
             "delete_stale_attachments", verbosity=kwargs["verbosity"], answer=answer
         )
 
-        self.stdout.write("\n4. Deleting stale comments:")
+        self.stdout.write("\n5. Deleting stale comments:")
         call_command(
             "delete_stale_comments", verbosity=kwargs["verbosity"], answer=answer
         )
