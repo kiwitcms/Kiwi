@@ -1,6 +1,101 @@
 Change Log
 ==========
 
+Kiwi TCMS 15.0 (23 Sep 2025)
+----------------------------
+
+.. important::
+
+    This is a major version release which includes important
+    changes to the database, several improvements, bug fixes and
+    new translations.
+
+
+Recommended upgrade path, see :ref:`upgrading-instructions`::
+
+    14.3 -> 15.0
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 5.1.11 to 5.2.6
+- Update django-guardian from 3.0.3 to 3.2.0
+- Update django-tree-queries from 0.20.0 to 0.21.2
+- Update markdown from 3.8.2 to 3.9
+- Update psycopg[binary] from 3.2.9 to 3.2.10
+- Update pygithub from 2.6.1 to 2.8.1
+- Update python-gitlab from 6.1.0 to 6.3.0
+- Support access key authentication for Redmine issue tracker integration
+  (Makson Lee)
+- Rename navbar item PLUGINS -> MORE
+- Send email notifications when a TestCase is created. Fixes
+  `Issue #4058 <https://github.com/kiwitcms/Kiwi/issues/4058>`_
+- Add Cancel button for "New TestCase" & "Edit TestCase" pages. Fixes
+  `Issue #4073 <https://github.com/kiwitcms/Kiwi/issues/4073>`_
+- Display number of records found on Search pages. Fixes
+  `Issue #3324 <https://github.com/kiwitcms/Kiwi/issues/3324>`_
+- Start keeping track of history for ``Product``, ``Version`` and ``Build``
+  records
+
+Database
+~~~~~~~~
+
+- **WARNING:** Postgres 13 is no longer supported. Minimum version is 14!
+- New migration ``management.0011_history_for_product_version_build``
+
+  .. warning::
+
+      For existing Kiwi TCMS installations execute the command
+
+      .. code-block:: bash
+
+         ./manage.py populate_history --auto
+
+
+Bug fixes
+~~~~~~~~~
+
+- Correct a typo. Fixes
+  `Issue #4072 <https://github.com/kiwitcms/Kiwi/issues/4072>`_
+- Avoid broader matches when searching for harmful HTML attributes in
+  uploaded files. Fixes
+  `Issue #4074 <https://github.com/kiwitcms/Kiwi/issues/4074>`_
+- Send a POST request when clicking Logout menu while on Admin page. Fixes
+  `Issue #4005 <https://github.com/kiwitcms/Kiwi/issues/4005>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/checkout from 4 to 5
+- Update actions/setup-node from 4 to 5
+- Update actions/setup-python from 5 to 6
+- Update github.com/pre-commit/pre-commit-hooks from v5.0.0 to v6.0.0
+- Update psf/black from 25.1.0 to 25.9.0
+- Update black from 25.1.0 to 25.9.0
+- Update node_modules/webpack from 5.99.9 to 5.101.3
+- Adjust API tests for Django 5.2
+- Add test for
+  `Issue #4074 <https://github.com/kiwitcms/Kiwi/issues/4074>`_
+- Add logout tests via browser for
+  `Issue #4005 <https://github.com/kiwitcms/Kiwi/issues/4005>`_
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- Updated `Spanish translation <https://crowdin.com/project/kiwitcms/es-ES#>`_
+- Updated `Spanish, Argentina translation <https://crowdin.com/project/kiwitcms/es-AR#>`_
+- Updated `Spanish, Uruguay translation <https://crowdin.com/project/kiwitcms/es-UY#>`_
+
+
+
 Kiwi TCMS 14.3 (03 Jul 2025)
 ----------------------------
 
