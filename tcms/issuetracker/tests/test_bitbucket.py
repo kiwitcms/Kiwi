@@ -17,7 +17,7 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 )
 class TestBitBucketIntegration(APITestCase):
     existing_bug_id = 1
-    existing_bug_url = "https://bitbucket.org/kiwitcms/integration/issues/1"
+    existing_bug_url = "https://bitbucket.org/kiwitcms/integration2025/issues/1"
 
     @classmethod
     def _fixture_setup(cls):
@@ -40,7 +40,7 @@ class TestBitBucketIntegration(APITestCase):
         bug_system = BugSystem.objects.create(  # nosec:B106:hardcoded_password_funcarg
             name="BitBucket for kiwitcms/test-bitbucket-integration",
             tracker_type="tcms.issuetracker.bitbucket.BitBucket",
-            base_url="https://bitbucket.org/kiwitcms/integration",
+            base_url="https://bitbucket.org/kiwitcms/integration2025",
             api_username=os.getenv("BITBUCKET_INTEGRATION_API_USERNAME"),
             api_password=os.getenv("BITBUCKET_INTEGRATION_API_PASSWORD"),
         )
@@ -160,7 +160,7 @@ class TestBitBucketAPI(unittest.TestCase):
         super().setUpClass()
         client_id = os.getenv("BITBUCKET_INTEGRATION_API_USERNAME")
         client_secret = os.getenv("BITBUCKET_INTEGRATION_API_PASSWORD")
-        base_url = "https://bitbucket.org/kiwitcms/integration"
+        base_url = "https://bitbucket.org/kiwitcms/integration2025"
         cls.api_instance = BitBucketAPI(base_url, client_id, client_secret)
 
         test_issue_data = {
