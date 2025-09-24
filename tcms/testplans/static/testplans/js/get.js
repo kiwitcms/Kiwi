@@ -147,6 +147,8 @@ function drawTestCases (testCases, testPlanId, permissions) {
     } else {
         container.append(noCasesTemplate[0].innerHTML)
     }
+
+    $('.test-cases-count').html(testCases.length)
 }
 
 function redrawSingleRow (testCaseId, testPlanId, permissions) {
@@ -373,6 +375,10 @@ function attachEvents (testPlanId, permissions) {
                 $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
                     $(this).remove()
                 })
+
+                const testCasesCountEl = $('.test-cases-count')
+                const count = parseInt(testCasesCountEl[0].innerText)
+                testCasesCountEl.html(count - 1)
             })
 
             return false
@@ -606,6 +612,10 @@ function toolbarEvents (testPlanId, permissions) {
                     })
                 })
             }
+
+            const testCasesCountEl = $('.test-cases-count')
+            const count = parseInt(testCasesCountEl[0].innerText)
+            testCasesCountEl.html(count - selectedCases.length)
         }
 
         return false
@@ -694,6 +704,7 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
     // no input => show all rows
     if (filterValue.trim().length === 0) {
         $('.js-testcase-row').show()
+        $('.test-cases-count').text(testCases.length)
         return
     }
 
@@ -709,9 +720,11 @@ function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
 
             const rows = findSelectorsToShowAndHideFromAPIData(testCases, filtered, '[data-testcase-pk={0}]')
             showOrHideMultipleRows('.js-testcase-row', rows)
+            $('.test-cases-count').text(rows.show.length)
         })
     } else {
         const rows = findSelectorsToShowAndHide(testCases, filterBy, filterValue, '[data-testcase-pk={0}]')
         showOrHideMultipleRows('.js-testcase-row', rows)
+        $('.test-cases-count').text(rows.show.length)
     }
 }
