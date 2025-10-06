@@ -5,7 +5,7 @@
 from django.test import TestCase
 
 from tcms.rpc.api.user import _get_user_dict
-from tcms.rpc.tests.utils import APITestCase
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import GroupFactory, UserFactory
 from tcms.xmlrpc_wrapper import XmlRPCFault
@@ -212,3 +212,54 @@ class TestUserUpdate(APITestCase):
             XmlRPCFault, "Password updates for other users are not allowed via RPC!"
         ):
             self.rpc_client.User.update(self.another_user.pk, user_new_attrs)
+
+
+class TestUserDeactivatePermissions(APIPermissionsTestCase):
+    permission_label = "auth.change_user"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.group_tester = GroupFactory()
+        cls.group_reviewer = GroupFactory()
+
+        cls.user1 = UserFactory(
+            username="user-1",
+            email="user1@kiwitcms.org",
+            is_active=True,
+            groups=[cls.group_tester],
+        )
+        cls.user2 = UserFactory(
+            username="user-2",
+            email="user2@deactivate-me.com",
+            is_active=True,
+            groups=[cls.group_reviewer],
+        )
+        cls.user3 = UserFactory(
+            username="user-3",
+            email="user3@deactivate-me.com",
+            is_active=True,
+            groups=[cls.group_reviewer],
+        )
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.User.deactivate(
+            {"email__endswith": "@deactivate-me.com"}
+        )
+
+        # verify the serialized result
+        self.assertEqual(len(result), 2)
+        for data in result:
+            self.assertIn("id", data)
+            self.assertIn(data["username"], ["user-2", "user-3"])
+            self.assertFalse(data["is_active"])
+            self.assertFalse(data["is_staff"])
+            self.assertFalse(data["is_superuser"])
+            self.assertNotIn("password", data)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "User.deactivate"'
+        ):
+            self.rpc_client.User.deactivate({"pk": self.user1.pk})

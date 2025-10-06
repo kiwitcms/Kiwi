@@ -141,6 +141,52 @@ def update(
 
 
 @permissions_required("auth.change_user")
+@rpc_method(name="User.deactivate")
+def deactivate(query):
+    """
+    .. function:: RPC User.deactivate(query)
+
+        Deactivate the selected user(s) so that they cannot login again!
+
+        :param query: Field lookups for :class:`django.contrib.auth.models.User`
+        :type query: dict
+        :return: Serialized list of :class:`django.contrib.auth.models.User` objects
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing the *auth.change_user* permission
+                 when updating another user or when passwords don't match.
+
+        Specify by user ID::
+
+            >>> User.deactivate({'pk': 123})
+
+        Specify multiple users by ID::
+
+            >>> User.deactivate({'pk__in': [123, 456]})
+
+        Specify by username::
+
+            >>> User.deactivate({'username': 'john-doe'})
+
+        Specify by email::
+
+            >>> User.deactivate({'email__icontains': '@example.com'})
+            >>> User.deactivate({'email__startswith': 'mia@'})
+    """
+    result = []
+    for user in User.objects.filter(**query):
+        # will not allow password reset if activated again
+        user.set_password(None)
+        user.is_active = False
+        user.is_staff = False
+        user.is_superuser = False
+        user.save()
+
+        result.append(_get_user_dict(user))
+
+    return result
+
+
+@permissions_required("auth.change_user")
 @rpc_method(name="User.join_group")
 def join_group(username, groupname):
     """
