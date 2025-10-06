@@ -6,7 +6,7 @@ from django.test import TestCase
 
 from tcms.rpc.api.user import _get_user_dict
 from tcms.rpc.tests.utils import APITestCase
-from tcms.tests import user_should_have_perm
+from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import GroupFactory, UserFactory
 from tcms.xmlrpc_wrapper import XmlRPCFault
 
@@ -80,6 +80,14 @@ class TestUserFilter(APITestCase):
         self.assertEqual(data["first_name"], self.api_user.first_name)
         self.assertEqual(data["last_name"], self.api_user.last_name)
         self.assertEqual(data["email"], self.api_user.email)
+
+    def test_without_permission_should_raise(self):
+        remove_perm_from_user(self.api_user, "auth.view_user")
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "User.filter"'
+        ):
+            self.rpc_client.User.filter({})
 
 
 class TestUserJoin(APITestCase):
