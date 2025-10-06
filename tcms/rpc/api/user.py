@@ -42,9 +42,10 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
         :type query: dict
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
-        :return: Serialized :class:`django.contrib.auth.models.User` object without
-                 the password field!
-        :rtype: dict
+        :return: Serialized list of :class:`django.contrib.auth.models.User` objects
+                 without the password field
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing the *auth.view_user* permission
 
     .. note::
 
