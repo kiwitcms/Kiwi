@@ -30,6 +30,16 @@ class TestAuthLogin(APITestCase):
 
             rpc_client.Auth.login(self.api_user.username, "kiwi-password")
 
+    def test_login_with_deactivated_account_will_raise_exception(self):
+        self.api_user.is_active = False
+        self.api_user.save()
+
+        with self.assertRaisesRegex(XmlRPCFault, "Wrong username or password"):
+            # assign to a temp variable b/c self.rpc_client a property
+            rpc_client = self.rpc_client
+
+            rpc_client.Auth.login(self.api_user.username, "api-testing")
+
 
 class TestAuthLogout(APITestCase):
     """Test Auth.logout method"""

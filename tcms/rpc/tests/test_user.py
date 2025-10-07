@@ -263,3 +263,28 @@ class TestUserDeactivatePermissions(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "User.deactivate"'
         ):
             self.rpc_client.User.deactivate({"pk": self.user1.pk})
+
+
+class TestApiAccessForDeactivatedUser(APITestCase):
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+        user_should_have_perm(cls.api_user, "auth.view_user")
+
+        cls.group_tester = GroupFactory()
+
+        cls.user1 = UserFactory(
+            username="user 1",
+            email="user1@exmaple.com",
+            is_active=True,
+            groups=[cls.group_tester],
+        )
+
+    def test_method_call_from_deactivated_user_account_will_raise_exception(self):
+        self.api_user.is_active = False
+        self.api_user.save()
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Internal error: Wrong username or password"
+        ):
+            self.rpc_client.User.filter({})
