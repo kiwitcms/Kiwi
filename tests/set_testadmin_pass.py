@@ -11,6 +11,16 @@ testadmin = User.objects.get(username="testadmin")
 testadmin.set_password("password")
 testadmin.save()
 
+deactivated_user = User.objects.create(
+    username="deactivated",
+    is_active=False,
+    is_staff=True,
+    is_superuser=True,
+    email="deactivated@domain.com",
+)
+deactivated_user.set_password("password")
+deactivated_user.save()
+
 
 classification, _ = Classification.objects.get_or_create(name="core products")
 product, _ = Product.objects.get_or_create(
