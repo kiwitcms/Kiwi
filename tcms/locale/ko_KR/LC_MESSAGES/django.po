@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 10:36+0000\n"
-"PO-Revision-Date: 2025-10-08 15:03\n"
+"POT-Creation-Date: 2025-10-08 18:12+0000\n"
+"PO-Revision-Date: 2025-10-08 19:19\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -521,21 +521,21 @@ msgstr ""
 msgid "Account '%s' was deactivated"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:96
+#: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
 msgstr "전자우편 주소 재설정"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
 msgstr "개인 정보"
 
-#: tcms/kiwi_auth/admin.py:164
+#: tcms/kiwi_auth/admin.py:171
 msgid "Permissions"
 msgstr "권한"
 
-#: tcms/kiwi_auth/admin.py:201
+#: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr "마지막 슈퍼유저는 삭제할 수 없습니다!"
 
@@ -981,6 +981,10 @@ msgstr "존재하지 않는 카드입니다."
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
 msgstr "내부 서버 오류"
+
+#: tcms/templates/admin/auth/user/submit_line.html:7
+msgid "Deactivate"
+msgstr ""
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -2368,3 +2372,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
