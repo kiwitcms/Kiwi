@@ -1,0 +1,12 @@
+{% extends "admin/submit_line.html" %}
+{% load i18n  %}
+
+{% block submit-row %}
+    {% if perms.auth.change_user %}
+    <div class="grp-float-left">
+        <input type="submit" value="{% trans 'Deactivate' %}" class="grp-button grp-warning" name="_deactivate" />
+    </div>
+    {% endif %}
+
+    {{ block.super }}
+{% endblock %}

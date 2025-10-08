@@ -70,6 +70,13 @@ class KiwiUserAdmin(UserAdmin):
                 messages.SUCCESS,
             )
 
+    def response_change(self, request, obj):
+        if "_deactivate" in request.POST:
+            self.deactivate_selected(request, [obj])
+            return HttpResponseRedirect(reverse("admin:auth_user_changelist"))
+
+        return super().response_change(request, obj)
+
     def has_view_permission(self, request, obj=None):
         return _modifying_myself(
             request, getattr(obj, "pk", 0)
