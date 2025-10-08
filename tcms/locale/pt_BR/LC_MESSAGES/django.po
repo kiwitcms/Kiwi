@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 10:36+0000\n"
-"PO-Revision-Date: 2025-10-08 15:04\n"
+"POT-Creation-Date: 2025-10-08 18:12+0000\n"
+"PO-Revision-Date: 2025-10-08 19:19\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -522,21 +522,21 @@ msgstr ""
 msgid "Account '%s' was deactivated"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:96
+#: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
 msgstr "Redefinir endereço de e-mail"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
 msgstr "Informações pessoais"
 
-#: tcms/kiwi_auth/admin.py:164
+#: tcms/kiwi_auth/admin.py:171
 msgid "Permissions"
 msgstr "Permissões"
 
-#: tcms/kiwi_auth/admin.py:201
+#: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr "Este é o último superusuário, não pode ser excluído!"
 
@@ -981,6 +981,10 @@ msgstr "Página não encontrada"
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
 msgstr "Erro Interno do Servidor"
+
+#: tcms/templates/admin/auth/user/submit_line.html:7
+msgid "Deactivate"
+msgstr ""
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -2382,3 +2386,4 @@ msgstr "grupos"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Tokens API pessoais"
+
