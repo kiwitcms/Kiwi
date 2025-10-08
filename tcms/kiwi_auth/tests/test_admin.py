@@ -39,6 +39,14 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         cls.moderator.set_password("admin-password")
         cls.moderator.save()
 
+        cls.inactive1 = UserFactory(username="inactiveOne")
+        cls.inactive1.is_superuser = False
+        cls.inactive1.save()
+
+        cls.inactive2 = UserFactory(username="inactiveTwo")
+        cls.inactive2.is_superuser = False
+        cls.inactive2.save()
+
     def setUp(self):
         super().setUp()
         # self.tester doesn't have any permissions
@@ -211,6 +219,14 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
 
         response = self.client.get(f"/admin/auth/user/{self.tester.pk}/password/")
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
+
+    def test_superuser_can_view_deactivate_selected_accounts_action(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username, password="admin-password"
+        )
+        response = self.client.get("/admin/auth/user/")
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, _("Deactivate selected accounts"))
 
     def test_moderator_can_view_list_of_all_users(self):
         user_should_have_perm(self.moderator, "auth.view_user")
@@ -386,6 +402,59 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
 
         response = self.client.get(f"/admin/auth/user/{self.tester.pk}/password/")
         self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
+
+    def test_moderator_cannot_see_deactivate_selected_accounts_action_with_view_only_permissions(
+        self,
+    ):
+        user_should_have_perm(self.moderator, "auth.view_user")
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.moderator.username, password="admin-password"
+        )
+        response = self.client.get("/admin/auth/user/")
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertNotContains(response, _("Deactivate selected accounts"))
+
+    def test_moderator_can_see_deactivate_selected_accounts_action_with_view_plus_change_permissions(
+        self,
+    ):
+        user_should_have_perm(self.moderator, "auth.view_user")
+        user_should_have_perm(self.moderator, "auth.change_user")
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.moderator.username, password="admin-password"
+        )
+        response = self.client.get("/admin/auth/user/")
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, _("Deactivate selected accounts"))
+
+    def test_moderator_with_change_permission_can_deactivate_selected_accounts_via_action(
+        self,
+    ):
+        user_should_have_perm(self.moderator, "auth.view_user")
+        user_should_have_perm(self.moderator, "auth.change_user")
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.moderator.username, password="admin-password"
+        )
+
+        response = self.client.post(
+            "/admin/auth/user/",
+            {
+                "_selected_action": [self.inactive1.pk, self.inactive2.pk],
+                "action": "deactivate_selected",
+                "select_across": 0,
+                "index": 0,
+            },
+            follow=True,
+        )
+
+        self.assertContains(
+            response, _("Account '%s' was deactivated") % self.inactive1, html=True
+        )
+        self.assertContains(
+            response, _("Account '%s' was deactivated") % self.inactive2, html=True
+        )
 
     def test_regular_user_cant_view_list_of_all_users(self):
         response = self.client.get("/admin/auth/user/")
