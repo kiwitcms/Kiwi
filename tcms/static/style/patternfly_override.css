@@ -145,6 +145,12 @@ a.disabled {
     color: #ec7a08;
 }
 
+input[type="submit"].grp-warning {
+    border: 1px solid #ec7a08;
+    background-color: #ec7a08;
+    background-image: none;
+}
+
 .kiwi-cursor-pointer {
     cursor: pointer;
 }
