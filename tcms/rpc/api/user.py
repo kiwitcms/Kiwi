@@ -10,6 +10,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
+from tcms.utils import user as user_utils
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -174,12 +175,7 @@ def deactivate(query):
     """
     result = []
     for user in User.objects.filter(**query):
-        # will not allow password reset if activated again
-        user.set_password(None)
-        user.is_active = False
-        user.is_staff = False
-        user.is_superuser = False
-        user.save()
+        user_utils.deactivate(user)
 
         result.append(_get_user_dict(user))
 
