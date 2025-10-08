@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from tcms.utils.user import delete_user
+from tcms.utils import user as user_utils
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -48,6 +48,7 @@ class GroupAdminForm(forms.ModelForm):
 
 
 class KiwiUserAdmin(UserAdmin):
+    actions = ["deactivate_selected"]
     list_display = UserAdmin.list_display + (
         "is_active",
         "is_superuser",
@@ -55,6 +56,19 @@ class KiwiUserAdmin(UserAdmin):
         "last_login",
     )
     ordering = ["-pk"]  # same as -date_joined
+
+    @admin.action(
+        permissions=["change"],
+        description=_("Deactivate selected accounts"),
+    )
+    def deactivate_selected(self, request, queryset):
+        for user in queryset:
+            user_utils.deactivate(user)
+            self.message_user(
+                request,
+                _("Account '%s' was deactivated") % user,
+                messages.SUCCESS,
+            )
 
     def has_view_permission(self, request, obj=None):
         return _modifying_myself(
@@ -213,7 +227,7 @@ class KiwiUserAdmin(UserAdmin):
         return HttpResponseRedirect(reverse("tcms-login"))
 
     def delete_model(self, request, obj):
-        delete_user(obj)
+        user_utils.delete_user(obj)
 
 
 class KiwiGroupAdmin(GroupAdmin):
