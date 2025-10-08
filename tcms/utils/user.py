@@ -27,3 +27,16 @@ def delete_user(user):
 
     else:
         user.delete()
+
+
+def deactivate(user):
+    """
+    Deactivates a user account!
+    """
+
+    # will not allow password reset if activated again
+    user.set_password(None)
+    user.is_active = False
+    user.is_staff = False
+    user.is_superuser = False
+    user.save()
