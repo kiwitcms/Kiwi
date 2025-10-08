@@ -40,10 +40,12 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         cls.moderator.save()
 
         cls.inactive1 = UserFactory(username="inactiveOne")
+        cls.inactive1.is_active = True
         cls.inactive1.is_superuser = False
         cls.inactive1.save()
 
         cls.inactive2 = UserFactory(username="inactiveTwo")
+        cls.inactive2.is_active = True
         cls.inactive2.is_superuser = False
         cls.inactive2.save()
 
@@ -415,6 +417,33 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertNotContains(response, _("Deactivate selected accounts"))
 
+    def test_moderator_with_view_permission_cannot_deactivate_selected_accounts_via_action(
+        self,
+    ):
+        user_should_have_perm(self.moderator, "auth.view_user")
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.moderator.username, password="admin-password"
+        )
+
+        response = self.client.post(
+            "/admin/auth/user/",
+            {
+                "_selected_action": [self.inactive1.pk, self.inactive2.pk],
+                "action": "deactivate_selected",
+                "select_across": 0,
+                "index": 0,
+            },
+            follow=True,
+        )
+
+        for user in [self.inactive1, self.inactive2]:
+            user.refresh_from_db()
+            self.assertNotContains(
+                response, _("Account '%s' was deactivated") % user, html=True
+            )
+            self.assertTrue(user.is_active)
+
     def test_moderator_can_see_deactivate_selected_accounts_action_with_view_plus_change_permissions(
         self,
     ):
@@ -449,12 +478,12 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
             follow=True,
         )
 
-        self.assertContains(
-            response, _("Account '%s' was deactivated") % self.inactive1, html=True
-        )
-        self.assertContains(
-            response, _("Account '%s' was deactivated") % self.inactive2, html=True
-        )
+        for user in [self.inactive1, self.inactive2]:
+            user.refresh_from_db()
+            self.assertContains(
+                response, _("Account '%s' was deactivated") % user, html=True
+            )
+            self.assertFalse(user.is_active)
 
     def test_regular_user_cant_view_list_of_all_users(self):
         response = self.client.get("/admin/auth/user/")
