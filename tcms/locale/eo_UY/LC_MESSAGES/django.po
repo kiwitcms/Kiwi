@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 10:36+0000\n"
-"PO-Revision-Date: 2025-10-08 15:04\n"
+"POT-Creation-Date: 2025-10-08 18:12+0000\n"
+"PO-Revision-Date: 2025-10-08 19:20\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -508,21 +508,21 @@ msgstr "crwdns1558:0crwdne1558:0"
 msgid "Account '%s' was deactivated"
 msgstr "crwdns1560:0%scrwdne1560:0"
 
-#: tcms/kiwi_auth/admin.py:96
+#: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
 msgstr "crwdns1500:0crwdne1500:0"
 
-#: tcms/kiwi_auth/admin.py:162
+#: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
 msgstr "crwdns328:0crwdne328:0"
 
-#: tcms/kiwi_auth/admin.py:164
+#: tcms/kiwi_auth/admin.py:171
 msgid "Permissions"
 msgstr "crwdns329:0crwdne329:0"
 
-#: tcms/kiwi_auth/admin.py:201
+#: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr "crwdns1451:0crwdne1451:0"
 
@@ -966,6 +966,10 @@ msgstr "crwdns350:0crwdne350:0"
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
 msgstr "crwdns351:0crwdne351:0"
+
+#: tcms/templates/admin/auth/user/submit_line.html:7
+msgid "Deactivate"
+msgstr "crwdns1562:0crwdne1562:0"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -2314,3 +2318,4 @@ msgstr "crwdns1465:0crwdne1465:0"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "crwdns1498:0crwdne1498:0"
+
