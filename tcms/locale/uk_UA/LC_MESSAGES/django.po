@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:12+0000\n"
-"PO-Revision-Date: 2025-10-09 15:39\n"
+"PO-Revision-Date: 2025-10-09 19:45\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -27,7 +27,7 @@ msgid "Description of problem:\n\n\n"
 "Actual results:\n\n\n"
 "Expected results:\n\n\n"
 "Additional info:"
-msgstr ":"
+msgstr ""
 
 #: tcms/bugs/models.py:24 tcms/bugs/templates/bugs/get.html:50
 #: tcms/bugs/templates/bugs/mutable.html:27
@@ -2318,3 +2318,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
