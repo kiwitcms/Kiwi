@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-09 16:19+0000\n"
-"PO-Revision-Date: 2025-09-09 17:42\n"
+"POT-Creation-Date: 2025-10-08 18:12+0000\n"
+"PO-Revision-Date: 2025-10-08 19:19\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -76,7 +76,7 @@ msgstr "Исполнитель"
 #: tcms/bugs/templates/bugs/mutable.html:45
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:115
-#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:107
+#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:120
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:33
 #: tcms/templates/include/bug_details.html:13
@@ -116,7 +116,7 @@ msgstr "Версия"
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
 #: tcms/bugs/templates/bugs/search.html:71
-#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:132
+#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:162
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
 #: tcms/templates/include/bug_details.html:17
@@ -140,7 +140,7 @@ msgstr "Переоткрыть"
 #: tcms/bugs/templates/bugs/mutable.html:114
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:78
 #: tcms/testcases/templates/testcases/mutable.html:265
-#: tcms/testplans/templates/testplans/get.html:477
+#: tcms/testplans/templates/testplans/get.html:482
 #: tcms/testplans/templates/testplans/mutable.html:173
 #: tcms/testruns/templates/testruns/get.html:480
 #: tcms/testruns/templates/testruns/get.html:593
@@ -160,7 +160,7 @@ msgstr "Закрыть"
 #: tcms/testcases/templates/testcases/search.html:17
 #: tcms/testcases/templates/testcases/search.html:166
 #: tcms/testplans/templates/testplans/get.html:212
-#: tcms/testplans/templates/testplans/get.html:487
+#: tcms/testplans/templates/testplans/get.html:492
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:3
 #: tcms/testruns/templates/testruns/get.html:251
 #: tcms/testruns/templates/testruns/get.html:258
@@ -212,7 +212,7 @@ msgstr "Поиск ошибок"
 #: tcms/templates/include/attachments.html:35
 #: tcms/templates/include/bugs_table.html:4
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testplans/templates/testplans/get.html:332
+#: tcms/testplans/templates/testplans/get.html:337
 #: tcms/testplans/templates/testplans/search.html:13
 #: tcms/testruns/templates/testruns/search.html:11
 msgid "No records found"
@@ -356,7 +356,7 @@ msgid "Created on"
 msgstr "Создано"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:133
-#: tcms/testplans/templates/testplans/get.html:380 tcms/testplans/views.py:143
+#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:143
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "Изменить"
@@ -372,7 +372,7 @@ msgstr "Права доступа к объекту"
 #: tcms/templates/include/properties_card.html:32
 #: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
-#: tcms/testplans/templates/testplans/get.html:384 tcms/testplans/views.py:159
+#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:159
 #: tcms/testruns/templates/testruns/get.html:238
 #: tcms/testruns/templates/testruns/get.html:450 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
@@ -513,21 +513,30 @@ msgstr "Загрузка исполняемых файлов запрещена"
 msgid "Users"
 msgstr "Пользователи"
 
-#: tcms/kiwi_auth/admin.py:82
+#: tcms/kiwi_auth/admin.py:62
+msgid "Deactivate selected accounts"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:69
+#, python-format
+msgid "Account '%s' was deactivated"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
 msgstr "Сбросить адрес электронной почты"
 
-#: tcms/kiwi_auth/admin.py:148
+#: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
 msgstr "Персональная информация"
 
-#: tcms/kiwi_auth/admin.py:150
+#: tcms/kiwi_auth/admin.py:171
 msgid "Permissions"
 msgstr "Права доступа"
 
-#: tcms/kiwi_auth/admin.py:187
+#: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr "Это последний суперпользователь, он не может быть удален!"
 
@@ -612,16 +621,16 @@ msgstr "Вы просматриваете записи экземпляра '%s'
 msgid "Email address has been reset, please check inbox for further instructions"
 msgstr "Адрес электронной почты был сброшен, пожалуйста, проверьте почту для дальнейших инструкций"
 
-#: tcms/management/models.py:58
+#: tcms/management/models.py:73
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
 msgstr "Приоритеты"
 
-#: tcms/management/models.py:133
+#: tcms/management/models.py:163
 msgid "Builds"
 msgstr "Сборки"
 
-#: tcms/management/models.py:144
+#: tcms/management/models.py:185
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:96
@@ -630,9 +639,9 @@ msgstr "Сборки"
 msgid "Tag"
 msgstr "Тег"
 
-#: tcms/management/models.py:145 tcms/templates/include/tags_card.html:6
+#: tcms/management/models.py:186 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:175
-#: tcms/testplans/templates/testplans/get.html:456
+#: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
 #: tcms/testruns/templates/testruns/get.html:353
 #: tcms/testruns/templates/testruns/search.html:194
@@ -820,8 +829,8 @@ msgstr "Итого"
 #: tcms/testcases/templates/testcases/mutable.html:98
 #: tcms/testcases/templates/testcases/search.html:40
 #: tcms/testcases/templates/testcases/search.html:172
-#: tcms/testplans/templates/testplans/get.html:402
-#: tcms/testplans/templates/testplans/get.html:489
+#: tcms/testplans/templates/testplans/get.html:407
+#: tcms/testplans/templates/testplans/get.html:494
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
 #: tcms/testruns/templates/testruns/get.html:264
 #: tcms/testruns/templates/testruns/get.html:361
@@ -829,7 +838,7 @@ msgid "Automated"
 msgstr "Автоматизирован"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:28
-#: tcms/testplans/templates/testplans/get.html:402
+#: tcms/testplans/templates/testplans/get.html:407
 #: tcms/testruns/templates/testruns/get.html:361
 msgid "Manual"
 msgstr "Ручной"
@@ -855,9 +864,9 @@ msgstr "Вложенные планы тестирования"
 #: tcms/testcases/templates/testcases/search.html:95
 #: tcms/testcases/templates/testcases/search.html:171
 #: tcms/testplans/templates/testplans/get.html:149
-#: tcms/testplans/templates/testplans/get.html:363
-#: tcms/testplans/templates/testplans/get.html:396
-#: tcms/testplans/templates/testplans/get.html:488
+#: tcms/testplans/templates/testplans/get.html:368
+#: tcms/testplans/templates/testplans/get.html:401
+#: tcms/testplans/templates/testplans/get.html:493
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:4
 #: tcms/testruns/templates/testruns/get.html:189
 #: tcms/testruns/templates/testruns/get.html:269
@@ -868,7 +877,7 @@ msgstr "Состояние"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/testcases/templates/testcases/get.html:208
-#: tcms/testplans/templates/testplans/get.html:447
+#: tcms/testplans/templates/testplans/get.html:452
 #: tcms/testruns/templates/testruns/get.html:349
 msgid "Components"
 msgstr "Компоненты"
@@ -880,9 +889,9 @@ msgstr "Компоненты"
 #: tcms/testcases/templates/testcases/mutable.html:207
 #: tcms/testcases/templates/testcases/search.html:174
 #: tcms/testplans/templates/testplans/get.html:175
-#: tcms/testplans/templates/testplans/get.html:378
-#: tcms/testplans/templates/testplans/get.html:416
-#: tcms/testplans/templates/testplans/get.html:493
+#: tcms/testplans/templates/testplans/get.html:383
+#: tcms/testplans/templates/testplans/get.html:421
+#: tcms/testplans/templates/testplans/get.html:498
 #: tcms/testplans/templates/testplans/mutable.html:133
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:9
@@ -974,6 +983,10 @@ msgstr "Страница не найдена"
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
 msgstr "Внутренняя ошибка сервера"
+
+#: tcms/templates/admin/auth/user/submit_line.html:7
+msgid "Deactivate"
+msgstr ""
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -1105,7 +1118,7 @@ msgstr "Уважаемый администратор,\n"
 "Перейдите на %(user_url)s, чтобы активировать учетную запись!"
 
 #: tcms/templates/include/attachments.html:10
-#: tcms/testplans/templates/testplans/get.html:437
+#: tcms/testplans/templates/testplans/get.html:442
 #: tcms/testruns/templates/testruns/get.html:487
 msgid "Attachments"
 msgstr "Вложения"
@@ -1422,7 +1435,7 @@ msgstr "Выбранные тестовые случаи"
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
-#: tcms/testplans/templates/testplans/get.html:358 tcms/testplans/views.py:144
+#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:144
 #: tcms/testruns/views.py:198
 msgid "Clone"
 msgstr "Клонировать"
@@ -1433,8 +1446,8 @@ msgstr "Клонировать"
 #: tcms/testcases/templates/testcases/search.html:126
 #: tcms/testcases/templates/testcases/search.html:173
 #: tcms/testplans/templates/testplans/get.html:54
-#: tcms/testplans/templates/testplans/get.html:412
-#: tcms/testplans/templates/testplans/get.html:492
+#: tcms/testplans/templates/testplans/get.html:417
+#: tcms/testplans/templates/testplans/get.html:497
 #: tcms/testplans/templates/testplans/mutable.html:121
 #: tcms/testplans/templates/testplans/search.html:84
 #: tcms/testplans/templates/testplans/search.html:122
@@ -1447,8 +1460,8 @@ msgstr "Автор"
 #: tcms/testcases/templates/testcases/mutable.html:58
 #: tcms/testcases/templates/testcases/search.html:104
 #: tcms/testcases/templates/testcases/search.html:168
-#: tcms/testplans/templates/testplans/get.html:408
-#: tcms/testplans/templates/testplans/get.html:491
+#: tcms/testplans/templates/testplans/get.html:413
+#: tcms/testplans/templates/testplans/get.html:496
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
 #: tcms/testruns/templates/testruns/get.html:266
 #: tcms/testruns/templates/testruns/get.html:367
@@ -1461,9 +1474,9 @@ msgstr "Категория"
 #: tcms/testcases/templates/testcases/search.html:86
 #: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:162
-#: tcms/testplans/templates/testplans/get.html:371
-#: tcms/testplans/templates/testplans/get.html:404
-#: tcms/testplans/templates/testplans/get.html:490
+#: tcms/testplans/templates/testplans/get.html:376
+#: tcms/testplans/templates/testplans/get.html:409
+#: tcms/testplans/templates/testplans/get.html:495
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
 #: tcms/testruns/templates/testruns/get.html:265
 #: tcms/testruns/templates/testruns/get.html:363
@@ -1509,8 +1522,8 @@ msgstr "Ссылка"
 
 #: tcms/testcases/templates/testcases/get.html:133
 #: tcms/testcases/templates/testcases/mutable.html:170
-#: tcms/testplans/templates/testplans/get.html:433
-#: tcms/testplans/templates/testplans/get.html:434
+#: tcms/testplans/templates/testplans/get.html:438
+#: tcms/testplans/templates/testplans/get.html:439
 #: tcms/testruns/templates/testruns/get.html:400
 #: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Notes"
@@ -1686,8 +1699,8 @@ msgid "Test cases"
 msgstr "Тестовые случаи"
 
 #: tcms/testplans/templates/testplans/get.html:182
-#: tcms/testplans/templates/testplans/get.html:421
-#: tcms/testplans/templates/testplans/get.html:494
+#: tcms/testplans/templates/testplans/get.html:426
+#: tcms/testplans/templates/testplans/get.html:499
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:10
 msgid "Reviewer"
 msgstr "Рецензент"
@@ -1711,24 +1724,29 @@ msgstr "Поиск и добавление тестовых случаев"
 msgid "Advanced search"
 msgstr "Расширенный поиск"
 
-#: tcms/testplans/templates/testplans/get.html:286
+#: tcms/testplans/templates/testplans/get.html:271
+#: tcms/testruns/templates/testruns/get.html:306
+msgid "records"
+msgstr "записи"
+
+#: tcms/testplans/templates/testplans/get.html:291
 msgid "Active test runs"
 msgstr "Активные тестовые запуски"
 
-#: tcms/testplans/templates/testplans/get.html:308
+#: tcms/testplans/templates/testplans/get.html:313
 msgid "More"
 msgstr "Еще"
 
-#: tcms/testplans/templates/testplans/get.html:310
+#: tcms/testplans/templates/testplans/get.html:315
 msgid "Inactive"
 msgstr "Неактивный"
 
-#: tcms/testplans/templates/testplans/get.html:444
+#: tcms/testplans/templates/testplans/get.html:449
 #: tcms/testruns/templates/testruns/get.html:494
 msgid "No attachments"
 msgstr "Без вложений"
 
-#: tcms/testplans/templates/testplans/get.html:469
+#: tcms/testplans/templates/testplans/get.html:474
 #: tcms/testruns/templates/testruns/get.html:483
 msgid "Comments"
 msgstr "Комментарии"
@@ -1883,10 +1901,6 @@ msgstr "Мои"
 #: tcms/testruns/templates/testruns/get.html:280
 msgid "All"
 msgstr "Все"
-
-#: tcms/testruns/templates/testruns/get.html:306
-msgid "records"
-msgstr "записи"
 
 #: tcms/testruns/templates/testruns/get.html:332
 #: tcms/testruns/templates/testruns/get.html:607
