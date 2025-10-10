@@ -40,3 +40,6 @@ def deactivate(user):
     user.is_staff = False
     user.is_superuser = False
     user.save()
+
+    # remove user from all possible groups
+    user.groups.clear()

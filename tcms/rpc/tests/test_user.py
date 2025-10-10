@@ -2,6 +2,7 @@
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
 
+from django.contrib.auth.models import Group
 from django.test import TestCase
 
 from tcms.rpc.api.user import _get_user_dict
@@ -244,6 +245,8 @@ class TestUserDeactivatePermissions(APIPermissionsTestCase):
         )
 
     def verify_api_with_permission(self):
+        initial_group_count = Group.objects.count()
+
         result = self.rpc_client.User.deactivate(
             {"email__endswith": "@deactivate-me.com"}
         )
@@ -257,6 +260,14 @@ class TestUserDeactivatePermissions(APIPermissionsTestCase):
             self.assertFalse(data["is_staff"])
             self.assertFalse(data["is_superuser"])
             self.assertNotIn("password", data)
+
+        for user in (self.user2, self.user3):
+            user.refresh_from_db()
+            self.assertFalse(user.is_active)
+            self.assertQuerySetEqual(user.groups.all(), [])
+
+        current_group_count = Group.objects.count()
+        self.assertEqual(initial_group_count, current_group_count)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(
