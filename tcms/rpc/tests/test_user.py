@@ -2,7 +2,7 @@
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
 
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.test import TestCase
 
 from tcms.rpc.api.user import _get_user_dict
@@ -237,15 +237,26 @@ class TestUserDeactivatePermissions(APIPermissionsTestCase):
             is_active=True,
             groups=[cls.group_reviewer],
         )
+        user_should_have_perm(cls.user2, "management.view_product")
+        user_should_have_perm(cls.user2, "management.change_product")
+
         cls.user3 = UserFactory(
             username="user-3",
             email="user3@deactivate-me.com",
             is_active=True,
             groups=[cls.group_reviewer],
         )
+        user_should_have_perm(cls.user2, "management.view_product")
+        user_should_have_perm(cls.user2, "management.change_product")
+        user_should_have_perm(cls.user3, "management.view_version")
+        user_should_have_perm(cls.user3, "management.change_version")
 
     def verify_api_with_permission(self):
         initial_group_count = Group.objects.count()
+        initial_perm_count = Permission.objects.count()
+
+        for user in (self.user2, self.user3):
+            self.assertGreater(user.user_permissions.count(), 0)
 
         result = self.rpc_client.User.deactivate(
             {"email__endswith": "@deactivate-me.com"}
@@ -265,9 +276,13 @@ class TestUserDeactivatePermissions(APIPermissionsTestCase):
             user.refresh_from_db()
             self.assertFalse(user.is_active)
             self.assertQuerySetEqual(user.groups.all(), [])
+            self.assertQuerySetEqual(user.user_permissions.all(), [])
 
         current_group_count = Group.objects.count()
         self.assertEqual(initial_group_count, current_group_count)
+
+        current_perm_count = Permission.objects.count()
+        self.assertEqual(initial_perm_count, current_perm_count)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(

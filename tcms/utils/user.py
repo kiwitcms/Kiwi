@@ -41,5 +41,8 @@ def deactivate(user):
     user.is_superuser = False
     user.save()
 
-    # remove user from all possible groups
+    # clear all individual permissions
+    user.user_permissions.clear()
+
+    # clear all group assignments
     user.groups.clear()
