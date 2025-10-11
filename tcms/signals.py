@@ -26,6 +26,7 @@ from django.utils.translation import gettext_lazy as _
 
 __all__ = [
     "USER_REGISTERED_SIGNAL",
+    "USER_DEACTIVATED_SIGNAL",
     "notify_admins",
     "pre_save_clean",
     "handle_attachments_pre_delete",
@@ -40,8 +41,14 @@ __all__ = [
 
 
 #: Sent when a new user is registered into Kiwi TCMS. This signal receives two
-#: keyword parameters: ``request`` and ``user`` respectively!
+#: keyword arguments: ``request`` and ``user`` respectively!
 USER_REGISTERED_SIGNAL = Signal()
+
+
+#: Sent when a user account is deactivated. This signal receives one
+#: keyword arguments: ``user`` respectively!
+USER_DEACTIVATED_SIGNAL = Signal()
+
 
 #: Sent when a new TestCase is crated.
 #: This signal receives one keyword parameter: ``instance``!

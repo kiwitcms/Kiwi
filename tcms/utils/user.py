@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import transaction
 
+from tcms.signals import USER_DEACTIVATED_SIGNAL
+
 
 def delete_user(user):
     """
@@ -46,3 +48,5 @@ def deactivate(user):
 
     # clear all group assignments
     user.groups.clear()
+
+    USER_DEACTIVATED_SIGNAL.send(sender=None, user=user)

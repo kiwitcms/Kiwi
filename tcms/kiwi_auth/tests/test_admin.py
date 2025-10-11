@@ -8,6 +8,7 @@ from django.http import HttpResponseForbidden
 from django.test import override_settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from mock import patch
 
 from tcms.kiwi_auth.admin import Group
 from tcms.tests import LoggedInTestCase, user_should_have_perm
@@ -507,8 +508,10 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, _("Deactivate selected accounts"))
 
+    @patch("tcms.signals.USER_DEACTIVATED_SIGNAL.send")
     def test_moderator_with_change_permission_can_deactivate_selected_accounts_via_action(
         self,
+        signal_mock,
     ):
         for user in [self.inactive1, self.inactive2]:
             self.assertTrue(user.is_active)
@@ -537,6 +540,9 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
                 response, _("Account '%s' was deactivated") % user, html=True
             )
             self.assertFalse(user.is_active)
+
+        self.assertTrue(signal_mock.called)
+        self.assertEqual(signal_mock.call_count, 2)
 
     def test_moderator_can_see_deactivate_button_with_view_plus_change_permissions(
         self,
