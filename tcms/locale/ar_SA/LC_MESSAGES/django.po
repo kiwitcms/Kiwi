@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:12+0000\n"
-"PO-Revision-Date: 2025-10-08 19:20\n"
+"POT-Creation-Date: 2025-10-17 08:41+0000\n"
+"PO-Revision-Date: 2025-10-17 11:07\n"
 "Last-Translator: \n"
-"Language-Team: Arabic, Saudi Arabia\n"
+"Language-Team: Arabic\n"
 "Language: ar_SA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Crowdin-Project: kiwitcms\n"
 "X-Crowdin-Project-ID: 295734\n"
-"X-Crowdin-Language: ar-SA\n"
+"X-Crowdin-Language: ar\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 "X-Crowdin-File-ID: 19\n"
 
@@ -749,16 +749,16 @@ msgstr ""
 msgid "API Help"
 msgstr ""
 
-#: tcms/signals.py:89
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:179
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr ""
 
-#: tcms/signals.py:251
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr ""
@@ -2170,16 +2170,22 @@ msgstr ""
 msgid "yr"
 msgstr ""
 
-#: tcms_enterprise/pipeline.py:17
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
 msgid "Email address is required"
 msgstr ""
 
-#: tcms_enterprise/templates/registration/custom_login.html:10
+#: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
+#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr ""
 
-#: tcms_settings_dir/enterprise.py:19
+#: build/lib/tcms_settings_dir/enterprise.py:23
+#: tcms_settings_dir/enterprise.py:23
 msgid "Legal information"
+msgstr ""
+
+#: tcms_enterprise/admin.py:22
+msgid "Export as CSV"
 msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
@@ -2318,3 +2324,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
