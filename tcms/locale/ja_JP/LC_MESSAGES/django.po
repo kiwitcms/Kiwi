@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:12+0000\n"
-"PO-Revision-Date: 2025-10-08 19:19\n"
+"POT-Creation-Date: 2025-10-17 08:41+0000\n"
+"PO-Revision-Date: 2025-10-17 11:08\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -764,16 +764,16 @@ msgstr "ユーザーガイド"
 msgid "API Help"
 msgstr "API ヘルプ"
 
-#: tcms/signals.py:89
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "承認待ちの新規ユーザー"
 
-#: tcms/signals.py:179
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "新着: テストラン #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:251
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "バグ #%(pk)d - %(summary)s"
@@ -2230,17 +2230,23 @@ msgstr "月"
 msgid "yr"
 msgstr "年"
 
-#: tcms_enterprise/pipeline.py:17
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
 msgid "Email address is required"
 msgstr "メールアドレスは必須項目です"
 
-#: tcms_enterprise/templates/registration/custom_login.html:10
+#: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
+#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr "または以下でログイン"
 
-#: tcms_settings_dir/enterprise.py:19
+#: build/lib/tcms_settings_dir/enterprise.py:23
+#: tcms_settings_dir/enterprise.py:23
 msgid "Legal information"
 msgstr "法的情報"
+
+#: tcms_enterprise/admin.py:22
+msgid "Export as CSV"
+msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
@@ -2382,3 +2388,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
