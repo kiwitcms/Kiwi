@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:12+0000\n"
-"PO-Revision-Date: 2025-10-08 19:20\n"
+"POT-Creation-Date: 2025-10-17 08:41+0000\n"
+"PO-Revision-Date: 2025-10-17 11:09\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -749,16 +749,16 @@ msgstr "crwdns419:0crwdne419:0"
 msgid "API Help"
 msgstr "crwdns421:0crwdne421:0"
 
-#: tcms/signals.py:89
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "crwdns287:0crwdne287:0"
 
-#: tcms/signals.py:179
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "crwdns325:0%(pk)dcrwdnd325:0%(summary)scrwdne325:0"
 
-#: tcms/signals.py:251
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "crwdns1403:0%(pk)dcrwdnd1403:0%(summary)scrwdne1403:0"
@@ -2170,17 +2170,23 @@ msgstr "crwdns1166:0crwdne1166:0"
 msgid "yr"
 msgstr "crwdns1168:0crwdne1168:0"
 
-#: tcms_enterprise/pipeline.py:17
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
 msgid "Email address is required"
 msgstr "crwdns1170:0crwdne1170:0"
 
-#: tcms_enterprise/templates/registration/custom_login.html:10
+#: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
+#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr "crwdns1208:0crwdne1208:0"
 
-#: tcms_settings_dir/enterprise.py:19
+#: build/lib/tcms_settings_dir/enterprise.py:23
+#: tcms_settings_dir/enterprise.py:23
 msgid "Legal information"
 msgstr "crwdns1210:0crwdne1210:0"
+
+#: tcms_enterprise/admin.py:22
+msgid "Export as CSV"
+msgstr "crwdns1564:0crwdne1564:0"
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
@@ -2318,3 +2324,4 @@ msgstr "crwdns1465:0crwdne1465:0"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "crwdns1498:0crwdne1498:0"
+
