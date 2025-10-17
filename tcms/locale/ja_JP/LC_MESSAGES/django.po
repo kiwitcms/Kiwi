@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-17 08:41+0000\n"
-"PO-Revision-Date: 2025-10-17 11:08\n"
+"PO-Revision-Date: 2025-10-17 12:16\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -2246,7 +2246,7 @@ msgstr "法的情報"
 
 #: tcms_enterprise/admin.py:22
 msgid "Export as CSV"
-msgstr ""
+msgstr "CSVでエクスポート"
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
@@ -2388,3 +2388,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
