@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:12+0000\n"
-"PO-Revision-Date: 2025-10-08 19:19\n"
+"POT-Creation-Date: 2025-10-17 08:41+0000\n"
+"PO-Revision-Date: 2025-10-17 11:08\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -767,16 +767,16 @@ msgstr "Przewodnik użytkownika"
 msgid "API Help"
 msgstr "Pomoc API"
 
-#: tcms/signals.py:89
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "Nowy użytkownik oczekujący na zatwierdzenie"
 
-#: tcms/signals.py:179
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NOWE: Przebieg testu #%(pk)d – %(summary)s"
 
-#: tcms/signals.py:251
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "Błąd #%(pk)d - %(summary)s"
@@ -2224,17 +2224,23 @@ msgstr "mies."
 msgid "yr"
 msgstr "r"
 
-#: tcms_enterprise/pipeline.py:17
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
 msgid "Email address is required"
 msgstr "Adres e-mail jest wymagany"
 
-#: tcms_enterprise/templates/registration/custom_login.html:10
+#: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
+#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr "albo kontynuuj z"
 
-#: tcms_settings_dir/enterprise.py:19
+#: build/lib/tcms_settings_dir/enterprise.py:23
+#: tcms_settings_dir/enterprise.py:23
 msgid "Legal information"
 msgstr "Informacje prawne"
+
+#: tcms_enterprise/admin.py:22
+msgid "Export as CSV"
+msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35

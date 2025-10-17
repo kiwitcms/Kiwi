@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:12+0000\n"
-"PO-Revision-Date: 2025-10-08 19:19\n"
+"POT-Creation-Date: 2025-10-17 08:41+0000\n"
+"PO-Revision-Date: 2025-10-17 11:08\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -764,16 +764,16 @@ msgstr "사용자 안내서"
 msgid "API Help"
 msgstr "API 도움말"
 
-#: tcms/signals.py:89
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "승인을 기다리는 새로운 사용자"
 
-#: tcms/signals.py:179
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "신규: 테스트 수행 #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:251
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "버그 #%(pk)d - %(summary)s"
@@ -2223,17 +2223,23 @@ msgstr "개월"
 msgid "yr"
 msgstr "년"
 
-#: tcms_enterprise/pipeline.py:17
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
 msgid "Email address is required"
 msgstr "전자우편 주소는 반드시 입력해야 합니다."
 
-#: tcms_enterprise/templates/registration/custom_login.html:10
+#: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
+#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr "또는 계속하기"
 
-#: tcms_settings_dir/enterprise.py:19
+#: build/lib/tcms_settings_dir/enterprise.py:23
+#: tcms_settings_dir/enterprise.py:23
 msgid "Legal information"
 msgstr "법적 정보"
+
+#: tcms_enterprise/admin.py:22
+msgid "Export as CSV"
+msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
