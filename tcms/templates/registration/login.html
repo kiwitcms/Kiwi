@@ -7,34 +7,36 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-7 col-md-6 col-lg-5 login">
-      {{ form.non_field_errors }}
-      <form class="form-horizontal" role="form" action="{% url "tcms-login" %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
+      {% block login_form %}
+          {{ form.non_field_errors }}
+          <form class="form-horizontal" role="form" action="{% url "tcms-login" %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
 
-        <div class="form-group">
-          {{ form.username.errors }}
-          <label for="inputUsername" class="col-sm-2 col-md-2 control-label">{% trans "Username" %}</label>
-          <div class="col-sm-10 col-md-10">
-            <input type="text" class="form-control" id="inputUsername" name="username" placeholder="" tabindex="1">
-          </div>
-        </div>
-        <div class="form-group">
-          {{ form.password.errors }}
-          <label for="inputPassword" class="col-sm-2 col-md-2 control-label">{% trans "Password" %}</label>
-          <div class="col-sm-10 col-md-10">
-            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="" tabindex="2">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-xs-8 col-sm-offset-2 col-sm-6 col-md-offset-2 col-md-6">
-              <span class="help-block"><a href="{% url "tcms-password_reset" %}" tabindex="6">{% trans "Forgot password" %}</a>?</span>
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-4 submit">
-            <button type="submit" class="btn btn-primary btn-lg" tabindex="4">{% trans "Log in" %}</button>
-          </div>
-        </div>
-      </form>
+            <div class="form-group">
+              {{ form.username.errors }}
+              <label for="inputUsername" class="col-sm-2 col-md-2 control-label">{% trans "Username" %}</label>
+              <div class="col-sm-10 col-md-10">
+                <input type="text" class="form-control" id="inputUsername" name="username" placeholder="" tabindex="1">
+              </div>
+            </div>
+            <div class="form-group">
+              {{ form.password.errors }}
+              <label for="inputPassword" class="col-sm-2 col-md-2 control-label">{% trans "Password" %}</label>
+              <div class="col-sm-10 col-md-10">
+                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="" tabindex="2">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-8 col-sm-offset-2 col-sm-6 col-md-offset-2 col-md-6">
+                  <span class="help-block"><a href="{% url "tcms-password_reset" %}" tabindex="6">{% trans "Forgot password" %}</a>?</span>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-4 submit">
+                <button type="submit" class="btn btn-primary btn-lg" tabindex="4">{% trans "Log in" %}</button>
+              </div>
+            </div>
+          </form>
+      {% endblock %}
 
       {% block custom_login %}
       {% endblock %}
