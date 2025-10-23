@@ -6,6 +6,71 @@ Kiwi TCMS 15.0 (23 Sep 2025)
 
 .. important::
 
+    This is a minor version release which includes security related updates,
+    several improvements, new API methods and new translations.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.2.6 to 5.2.7, addressing one security vulnerability with
+  severity “high” and one security vulnerability with severity “low”:
+  `CVE-2025-59681 <https://docs.djangoproject.com/en/5.2/releases/5.2.7/>`_ and
+  `CVE-2025-59682 <https://docs.djangoproject.com/en/5.2/releases/5.2.7/>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update jira from 3.8.0 to 3.10.5
+- Update psycopg[binary] from 3.2.10 to 3.2.11
+- Update python-gitlab from 6.3.0 to 6.5.0
+- Update uwsgi from 2.0.30 to 2.0.31
+- Display records count in TestPlan page. Fixes
+  `Issue #4110 <https://github.com/kiwitcms/Kiwi/issues/4110>`_
+- Add 'Deactivate selected accounts' dropdown on /admin/auth/user/ page
+- Add 'Deactivate' button in 'Change user' admin page
+
+
+API
+~~~
+
+- Add ``User.deactivate()`` API method
+- Update documentation and tests for ``User.filter()`` method
+- Add new internal signal ``USER_DEACTIVATED_SIGNAL``. Sent when account is
+  deactivated
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/setup-node from 5 to 6
+- Update github/codeql-action from 3 to 4
+- Update isort from 6.0.1 to 6.1.0
+- Update locust from 2.34.1 to 2.42.0
+- Update node_modules/webpack from 5.101.3 to 5.102.1
+- Pin intermediate dependency Pillow to 11.3.0 to fix
+  failing container build
+- Define a ``login_form`` template block in login.html
+- Update Bitbucket repository URL b/c the original repository has reached
+  a limit of 10k issues and new ones cannot be created anymore
+- Add login tests for disabled accounts via browser
+- Add tests for API login and method calls from deactivated accounts
+- Collect logs from Postgres container during testing
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+
+
+
+Kiwi TCMS 15.0 (23 Sep 2025)
+----------------------------
+
+.. important::
+
     This is a major version release which includes important
     changes to the database, several improvements, bug fixes and
     new translations.
