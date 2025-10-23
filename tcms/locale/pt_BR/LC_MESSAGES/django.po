@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 08:41+0000\n"
-"PO-Revision-Date: 2025-10-17 11:08\n"
+"POT-Creation-Date: 2025-10-23 07:37+0000\n"
+"PO-Revision-Date: 2025-10-23 10:15\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -257,7 +257,7 @@ msgstr "Após"
 #: tcms/bugs/templates/bugs/search.html:85
 #: tcms/bugs/templates/bugs/search.html:90
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:45
-#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/login.html:18
 #: tcms/templates/registration/registration_form.html:15
 #: tcms/testcases/templates/testcases/search.html:128
 #: tcms/testplans/templates/testplans/search.html:86
@@ -1026,7 +1026,7 @@ msgstr "segundo"
 msgid "seconds"
 msgstr "segundos"
 
-#: tcms/templates/base.html:16 tcms/templates/registration/login.html:46
+#: tcms/templates/base.html:16 tcms/templates/registration/login.html:48
 msgid "the leading open source test case management system"
 msgstr "sistema principal do gerenciamento de casos de teste de código aberto"
 
@@ -1258,37 +1258,37 @@ msgstr "Entrar"
 msgid "Register"
 msgstr "Cadastrar-se"
 
-#: tcms/templates/registration/login.html:24
+#: tcms/templates/registration/login.html:25
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
 msgstr "Senha"
 
-#: tcms/templates/registration/login.html:31
+#: tcms/templates/registration/login.html:32
 msgid "Forgot password"
 msgstr "Esqueci a senha"
 
-#: tcms/templates/registration/login.html:34
+#: tcms/templates/registration/login.html:35
 msgid "Log in"
 msgstr "Iniciar sessão"
 
-#: tcms/templates/registration/login.html:45
+#: tcms/templates/registration/login.html:47
 msgid "Welcome to Kiwi TCMS"
 msgstr "Bem-vindo ao Kiwi TCMS"
 
-#: tcms/templates/registration/login.html:50
+#: tcms/templates/registration/login.html:52
 msgid "Please login to get started"
 msgstr "Por favor, inicie a sessão para começar"
 
-#: tcms/templates/registration/login.html:52
+#: tcms/templates/registration/login.html:54
 msgid "or"
 msgstr "ou"
 
-#: tcms/templates/registration/login.html:53
+#: tcms/templates/registration/login.html:55
 msgid "register an account"
 msgstr "Registrar uma conta"
 
-#: tcms/templates/registration/login.html:54
+#: tcms/templates/registration/login.html:56
 msgid "if you don't have one!"
 msgstr "se você não tiver uma!"
 
@@ -2230,12 +2230,15 @@ msgstr "mês"
 msgid "yr"
 msgstr "ano"
 
-#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
+#: build/lib/tcms_enterprise/admin.py:22 tcms_enterprise/admin.py:22
+msgid "Export as CSV"
+msgstr ""
+
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:21
 msgid "Email address is required"
 msgstr "O endereço de e-mail é obrigatório"
 
 #: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
-#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr "ou continuar com"
 
@@ -2244,8 +2247,8 @@ msgstr "ou continuar com"
 msgid "Legal information"
 msgstr "Informações legais"
 
-#: tcms_enterprise/admin.py:22
-msgid "Export as CSV"
+#: tcms_enterprise/templates/registration/custom_login.html:27
+msgid "Continue with"
 msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
@@ -2392,3 +2395,4 @@ msgstr "grupos"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Tokens API pessoais"
+
