@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-23 07:37+0000\n"
-"PO-Revision-Date: 2025-10-23 10:15\n"
+"PO-Revision-Date: 2025-10-23 10:17\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1379,7 +1379,7 @@ msgstr "Issue Tracker 配置检查失败"
 #: tcms/testcases/helpers/email.py:14
 #, python-format
 msgid "NEW: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "新建: 测试用例 #%(pk)d - %(summary)s"
 
 #: tcms/testcases/helpers/email.py:21
 #, python-format
@@ -2390,3 +2390,4 @@ msgstr "组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
