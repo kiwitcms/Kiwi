@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 08:41+0000\n"
-"PO-Revision-Date: 2025-10-17 11:08\n"
+"POT-Creation-Date: 2025-10-23 07:37+0000\n"
+"PO-Revision-Date: 2025-10-23 10:16\n"
 "Last-Translator: \n"
 "Language-Team: Swahili\n"
 "Language: sw_KE\n"
@@ -257,7 +257,7 @@ msgstr "Baada ya"
 #: tcms/bugs/templates/bugs/search.html:85
 #: tcms/bugs/templates/bugs/search.html:90
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:45
-#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/login.html:18
 #: tcms/templates/registration/registration_form.html:15
 #: tcms/testcases/templates/testcases/search.html:128
 #: tcms/testplans/templates/testplans/search.html:86
@@ -1019,7 +1019,7 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: tcms/templates/base.html:16 tcms/templates/registration/login.html:46
+#: tcms/templates/base.html:16 tcms/templates/registration/login.html:48
 msgid "the leading open source test case management system"
 msgstr "mfumo aina la open source inayoongoza kwa usimamuzi ya upimaji ya kesi"
 
@@ -1223,37 +1223,37 @@ msgstr "Ingia"
 msgid "Register"
 msgstr "Jisajili"
 
-#: tcms/templates/registration/login.html:24
+#: tcms/templates/registration/login.html:25
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
 msgstr "Neno la siri"
 
-#: tcms/templates/registration/login.html:31
+#: tcms/templates/registration/login.html:32
 msgid "Forgot password"
 msgstr ""
 
-#: tcms/templates/registration/login.html:34
+#: tcms/templates/registration/login.html:35
 msgid "Log in"
 msgstr "Ingia"
 
-#: tcms/templates/registration/login.html:45
+#: tcms/templates/registration/login.html:47
 msgid "Welcome to Kiwi TCMS"
 msgstr "Karibu kwa Kiwi TCMS"
 
-#: tcms/templates/registration/login.html:50
+#: tcms/templates/registration/login.html:52
 msgid "Please login to get started"
 msgstr "Tafadhali jiingishe kwenye akounti yako ili unanze"
 
-#: tcms/templates/registration/login.html:52
+#: tcms/templates/registration/login.html:54
 msgid "or"
 msgstr "ama"
 
-#: tcms/templates/registration/login.html:53
+#: tcms/templates/registration/login.html:55
 msgid "register an account"
 msgstr "jiandikishe akounti"
 
-#: tcms/templates/registration/login.html:54
+#: tcms/templates/registration/login.html:56
 msgid "if you don't have one!"
 msgstr "kama hauna moja!"
 
@@ -2178,12 +2178,15 @@ msgstr ""
 msgid "yr"
 msgstr ""
 
-#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:22
+#: build/lib/tcms_enterprise/admin.py:22 tcms_enterprise/admin.py:22
+msgid "Export as CSV"
+msgstr ""
+
+#: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:21
 msgid "Email address is required"
 msgstr ""
 
 #: build/lib/tcms_enterprise/templates/registration/custom_login.html:18
-#: tcms_enterprise/templates/registration/custom_login.html:18
 msgid "or Continue With"
 msgstr "ama endelea na"
 
@@ -2192,8 +2195,8 @@ msgstr "ama endelea na"
 msgid "Legal information"
 msgstr ""
 
-#: tcms_enterprise/admin.py:22
-msgid "Export as CSV"
+#: tcms_enterprise/templates/registration/custom_login.html:27
+msgid "Continue with"
 msgstr ""
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
@@ -2332,3 +2335,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
