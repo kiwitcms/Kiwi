@@ -272,6 +272,18 @@ jobs:
           fail_ci_if_error: false
           verbose: true
 
+      - name: Fetch logs
+        if: always()
+        run: |
+          docker logs kiwi_db >postgres-container.log 2>&1
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postgres-french
+          path: postgres-container.log
+
   docker:
     runs-on: ubuntu-latest
     strategy:
