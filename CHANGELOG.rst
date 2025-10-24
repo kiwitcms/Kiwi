@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Kiwi TCMS 15.0 (23 Sep 2025)
+Kiwi TCMS 15.1 (24 Oct 2025)
 ----------------------------
 
 .. important::
