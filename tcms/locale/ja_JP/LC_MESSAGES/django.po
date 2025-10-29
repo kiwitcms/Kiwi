@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-23 07:37+0000\n"
-"PO-Revision-Date: 2025-10-23 10:15\n"
+"PO-Revision-Date: 2025-10-29 04:50\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -515,12 +515,12 @@ msgstr "ユーザー"
 
 #: tcms/kiwi_auth/admin.py:62
 msgid "Deactivate selected accounts"
-msgstr ""
+msgstr "選択したアカウントを無効にする"
 
 #: tcms/kiwi_auth/admin.py:69
 #, python-format
 msgid "Account '%s' was deactivated"
-msgstr ""
+msgstr "アカウント '%s' は無効になりました"
 
 #: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
@@ -656,7 +656,7 @@ msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS
 
 #: tcms/settings/common.py:391
 msgid "TESTING"
-msgstr "テスト中"
+msgstr "テスト"
 
 #: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
@@ -700,7 +700,7 @@ msgstr "テレメトリー"
 
 #: tcms/settings/common.py:424
 msgid "Testing"
-msgstr "テスト中"
+msgstr "テスト"
 
 #: tcms/settings/common.py:426
 msgid "Breakdown"
@@ -984,7 +984,7 @@ msgstr "内部サーバーエラー"
 
 #: tcms/templates/admin/auth/user/submit_line.html:7
 msgid "Deactivate"
-msgstr ""
+msgstr "無効にする"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -1992,7 +1992,7 @@ msgstr "クローン - "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr "プロポーズ済み"
+msgstr "提案"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
@@ -2249,7 +2249,7 @@ msgstr "法的情報"
 
 #: tcms_enterprise/templates/registration/custom_login.html:27
 msgid "Continue with"
-msgstr ""
+msgstr "以下でログイン"
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
@@ -2391,3 +2391,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
