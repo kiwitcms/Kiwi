@@ -15,7 +15,7 @@ django-modern-rpc==1.1.0
 django-simple-history==3.10.1
 django-tree-queries==0.21.2
 jira==3.10.5
-Markdown==3.9
+Markdown==3.10
 # transient dependency of django-color-field/django-simple-captcha
 pillow==11.3.0
 PyGithub==2.8.1
