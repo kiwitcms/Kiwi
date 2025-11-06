@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-23 07:37+0000\n"
-"PO-Revision-Date: 2025-10-23 10:15\n"
+"PO-Revision-Date: 2025-11-06 20:24\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2367,7 +2367,7 @@ msgstr "Tylko użytkownicy, którzy są upoważnieni do tego tenat mogą zaprosi
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr "użytkownicy"
+msgstr "Użytkownicy"
 
 #: tenant_groups/models.py:34
 msgid "name"
@@ -2388,3 +2388,4 @@ msgstr "grupy"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Osobiste tokeny API"
+
