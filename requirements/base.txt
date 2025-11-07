@@ -13,7 +13,7 @@ django-grappelli==4.0.2
 django-guardian==3.2.0
 django-modern-rpc==1.1.0
 django-simple-history==3.10.1
-django-tree-queries==0.21.2
+django-tree-queries==0.22.0
 jira==3.10.5
 Markdown==3.10
 # transient dependency of django-color-field/django-simple-captcha
