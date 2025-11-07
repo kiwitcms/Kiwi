@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.contrib.auth import views as contrib_auth_views
-from django.urls import re_path, reverse_lazy
+from django.urls import path, re_path, reverse_lazy
 
 from tcms.kiwi_auth import views
 
@@ -34,8 +34,8 @@ urlpatterns = [
         contrib_auth_views.PasswordResetDoneView.as_view(),
         name="password_reset_done",
     ),
-    re_path(
-        r"^passwordreset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$",
+    path(
+        "passwordreset/confirm/<uidb64>/<token>/",
         contrib_auth_views.PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
