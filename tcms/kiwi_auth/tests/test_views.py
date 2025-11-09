@@ -455,3 +455,66 @@ class TestPasswordResetView(TestCase):
         self.assertIn(
             f"Your username, in case you've forgotten: {user.username}", email_body
         )
+
+    @patch("tcms.kiwi_auth.forms.DjangoPasswordResetForm.send_mail")
+    def test_password_reset_e2e(self, send_mail):
+        user = User.objects.create_user("kiwi-tester", "tester@example.com", "password")
+        user.is_active = True
+        user.save()
+
+        try:
+            # https://github.com/mbi/django-simple-captcha/issues/84
+            # pylint: disable=import-outside-toplevel
+            from captcha.conf import settings as captcha_settings
+
+            captcha_settings.CAPTCHA_TEST_MODE = True
+
+            response = self.client.post(
+                self.password_reset_url,
+                {
+                    "email": "tester@example.com",
+                    "captcha_0": "PASSED",
+                    "captcha_1": "PASSED",
+                },
+                follow=True,
+            )
+        finally:
+            captcha_settings.CAPTCHA_TEST_MODE = False
+
+        self.assertContains(response, _("Password reset email was sent"))
+
+        # Verify mail is sent
+        send_mail.assert_called_once()
+
+        # Verify that reset password email will contain the username as a reminder
+        email_template_name = send_mail.call_args_list[0][0][1]
+        context = send_mail.call_args_list[0][0][2]
+        email_body = loader.render_to_string(email_template_name, context)
+
+        confirm_url = "/".join(
+            email_body[email_body.find("http://") :].split("\n")[0].split("/")[3:]
+        )
+
+        # first GET the onfirmation page to set token into session
+        response = self.client.get(f"/{confirm_url}", follow=True)
+        self.assertContains(
+            response,
+            _(
+                "Please enter your new password twice so we can verify you typed it in correctly"
+            ),
+        )
+
+        # then POST the new password to the same URL as above
+        response = self.client.post(
+            # /accounts/passwordreset/confirm/<uid>/set-password/
+            response.redirect_chain[0][0],
+            {
+                "new_password1": "Updated-passw0rd!",
+                "new_password2": "Updated-passw0rd!",
+            },
+            follow=True,
+        )
+
+        self.assertContains(
+            response, _("Your password has been set. You may go ahead and")
+        )
