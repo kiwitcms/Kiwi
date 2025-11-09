@@ -17,7 +17,7 @@ django-tree-queries==0.22.0
 jira==3.10.5
 Markdown==3.10
 # transient dependency of django-color-field/django-simple-captcha
-pillow==11.3.0
+pillow==12.0.0
 PyGithub==2.8.1
 Pygments==2.19.2
 python-gitlab==7.0.0
