@@ -165,6 +165,14 @@
                                         </button>
 
                                         <ul class="dropdown-menu" aria-labelledby="toolbarActions">
+                                            <li>
+                                                <a class="js-open-in-dashboard" href="{% url 'execution-dashboard' %}?run_id={{ object.pk }}">
+                                                    <span class="fa fa-table"></span>
+                                                    {% trans 'View all in Execution Dashboard' %}
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+
                                         {% if perms.testruns.add_testrun %}
                                             <li>
                                                 <a class="js-bulk-create-testrun" href="#">

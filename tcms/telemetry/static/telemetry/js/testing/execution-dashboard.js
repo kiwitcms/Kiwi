@@ -113,6 +113,12 @@ export function drawTable () {
                 query.stop_date__gte = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00')
             }
 
+            // if page has URI params then try filtering, e.g. by run_id
+            const filterParams = new URLSearchParams(location.search)
+            if (filterParams.has('run_id')) {
+                query.run__in = filterParams.getAll('run_id')
+            }
+
             const testRunSummary = $('#id_test_run_summary').val()
             if (testRunSummary) {
                 query.run__summary__icontains = testRunSummary
