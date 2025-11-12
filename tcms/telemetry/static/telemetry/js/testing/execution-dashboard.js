@@ -141,7 +141,7 @@ export function drawTable () {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/case/' + data.case + '/" >' + escapeHTML(data.case__summary) + '</a>'
+                    return `<a href="/case/${data.case}/">TC-${data.case}: ` + escapeHTML(data.case__summary) + '</a>'
                 }
             },
             {
