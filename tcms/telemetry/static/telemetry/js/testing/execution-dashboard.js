@@ -20,8 +20,12 @@ function preProcessData (data, callbackF) {
     jsonRPC('TestCase.filter', { pk__in: caseIds }, function (cases) {
         const testerPerCase = {}
         const componentsPerCase = {}
+        const priorityPerCase = {}
+        const automatedPerCase = {}
         cases.forEach(function (element) {
             testerPerCase[element.id] = element.default_tester__username
+            priorityPerCase[element.id] = element.priority__value
+            automatedPerCase[element.id] = element.is_automated
         })
 
         jsonRPC('Component.filter', { cases__in: caseIds }, function (components) {
@@ -57,6 +61,8 @@ function preProcessData (data, callbackF) {
                         element.default_tester__from_run = testerPerRun[element.run]
                         element.product__name = productPerRun[element.run]
                         element.test_case_components = (componentsPerCase[element.case] ?? []).join(', ')
+                        element.case__priority = priorityPerCase[element.case]
+                        element.case__automated = automatedPerCase[element.case]
                     })
 
                     callbackF({ data }) // renders everything
@@ -143,6 +149,12 @@ export function drawTable () {
                 render: function (data, type, full, meta) {
                     return `<a href="/case/${data.case}/">TC-${data.case}: ` + escapeHTML(data.case__summary) + '</a>'
                 }
+            },
+            {
+                data: 'case__priority'
+            },
+            {
+                data: 'case__automated'
             },
             {
                 data: null,
