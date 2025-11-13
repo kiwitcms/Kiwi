@@ -3,7 +3,7 @@ version: '2'
 services:
     db:
         container_name: kiwi_db
-        image: postgres:17
+        image: postgres:latest
         volumes:
             - db_data:/var/lib/postgresql/data
         restart: always
