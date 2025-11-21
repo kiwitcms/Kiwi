@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-11-12 19:43\n"
+"PO-Revision-Date: 2025-11-21 18:54\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -224,7 +224,7 @@ msgstr "Записей не найдены"
 #: tcms/testplans/templates/testplans/search.html:14
 #: tcms/testruns/templates/testruns/search.html:12
 msgid "Found _TOTAL_ records"
-msgstr ""
+msgstr "Найдено _TOTAL_ записей"
 
 #: tcms/bugs/templates/bugs/search.html:32
 #: tcms/testcases/templates/testcases/search.html:23
@@ -515,12 +515,12 @@ msgstr "Пользователи"
 
 #: tcms/kiwi_auth/admin.py:62
 msgid "Deactivate selected accounts"
-msgstr ""
+msgstr "Отключить выбранные учетные записи"
 
 #: tcms/kiwi_auth/admin.py:69
 #, python-format
 msgid "Account '%s' was deactivated"
-msgstr ""
+msgstr "Учетные записи '%s' были отключены"
 
 #: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
@@ -1003,7 +1003,7 @@ msgstr "Внутренняя ошибка сервера"
 
 #: tcms/templates/admin/auth/user/submit_line.html:7
 msgid "Deactivate"
-msgstr ""
+msgstr "Отключить"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -1400,7 +1400,7 @@ msgstr "Проверка конфигурации трекера ошибок п
 #: tcms/testcases/helpers/email.py:14
 #, python-format
 msgid "NEW: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 
 #: tcms/testcases/helpers/email.py:21
 #, python-format
@@ -1413,7 +1413,15 @@ msgid "Test case %(pk)d has been created.\n\n"
 "Default tester: %(default_tester)s\n"
 "Text:\n"
 "%(text)s"
-msgstr ""
+msgstr "Тест-прогон #%(pk)d создан\n\n"
+"### Базовая информация ###\n"
+"Сводка: %(summary)s\n"
+"Продукт: %(product)s\n"
+"Категория: %(category)s\n"
+"Приоритет: %(priority)s\n\n"
+"Тестировщик по умолчанию: %(default_tester)s\n"
+"Текст:\n"
+"%(text)s"
 
 #: tcms/testcases/helpers/email.py:62
 #, python-format
@@ -1884,7 +1892,7 @@ msgstr "Окружение"
 
 #: tcms/testruns/templates/testruns/get.html:171
 msgid "View all in Execution Dashboard"
-msgstr ""
+msgstr "Просмотреть все в панели выполнения"
 
 #: tcms/testruns/templates/testruns/get.html:190
 msgid "Update text version"
@@ -2240,7 +2248,7 @@ msgstr "г"
 
 #: build/lib/tcms_enterprise/admin.py:22 tcms_enterprise/admin.py:22
 msgid "Export as CSV"
-msgstr ""
+msgstr "Экспортировать в CSV"
 
 #: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:21
 msgid "Email address is required"
@@ -2257,7 +2265,7 @@ msgstr "Правовая информация"
 
 #: tcms_enterprise/templates/registration/custom_login.html:27
 msgid "Continue with"
-msgstr ""
+msgstr "Продолжить с"
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
@@ -2403,3 +2411,4 @@ msgstr "группы"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Персональные API токены"
+
