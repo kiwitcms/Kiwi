@@ -9,7 +9,7 @@ from tcms.xmlrpc_wrapper import XmlRPCFault
 if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")
 
-from tcms.bugs.models import Bug  # noqa: E402
+from tcms.bugs.models import Bug, Severity  # noqa: E402
 from tcms.bugs.tests.factory import BugFactory  # noqa: E402
 from tcms.rpc.tests.utils import APIPermissionsTestCase  # noqa: E402
 from tcms.rpc.tests.utils import APITestCase
@@ -133,3 +133,85 @@ class TestFilter(APITestCase):
     def test_filter_non_existing(self):
         result = self.rpc_client.Bug.filter({"pk": -99})
         self.assertEqual(len(result), 0)
+
+
+class TestSeverityCreate(APIPermissionsTestCase):
+    permission_label = "bugs.add_severity"
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Severity.create(
+            {
+                "name": "Blocker",
+                "weight": 50,
+                "icon": "fa fa-ban",
+                "color": "#ff0f1f",
+            }
+        )
+
+        # verify the serialized result
+        self.assertIn("id", result)
+        self.assertEqual(result["name"], "Blocker")
+        self.assertEqual(result["weight"], 50)
+        self.assertEqual(result["icon"], "fa fa-ban")
+        self.assertEqual(result["color"], "#ff0f1f")
+
+        # verify the object from the DB
+        severity = Severity.objects.get(pk=result["id"])
+        self.assertEqual(severity.name, result["name"])
+        self.assertEqual(severity.weight, result["weight"])
+        self.assertEqual(severity.icon, result["icon"])
+        self.assertEqual(severity.color, result["color"])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Severity.create"'
+        ):
+            self.rpc_client.Severity.create(
+                {
+                    "name": "Minor",
+                    "weight": 0,
+                    "icon": "fa fa-meh-o",
+                    "color": "#e3dada",
+                }
+            )
+
+
+class TestSeverityFilter(APIPermissionsTestCase):
+    permission_label = "bugs.view_severity"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.severity, _ = Severity.objects.get_or_create(
+            name="Low",
+            weight=0,
+            icon="fa fa-volume-down",
+            color="#ff0f1f",
+        )
+
+        _high, _ = Severity.objects.get_or_create(
+            name="High",
+            weight=100,
+            icon="fa fa-volume-up",
+            color="#2ba150",
+        )
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Severity.filter(
+            {
+                "pk": self.severity.pk,
+            }
+        )[0]
+
+        self.assertEqual(result["id"], self.severity.id)
+        self.assertEqual(result["name"], self.severity.name)
+        self.assertEqual(result["weight"], self.severity.weight)
+        self.assertEqual(result["icon"], self.severity.icon)
+        self.assertEqual(result["color"], self.severity.color)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Severity.filter"'
+        ):
+            self.rpc_client.Severity.filter({})
