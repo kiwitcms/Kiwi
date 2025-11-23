@@ -3,11 +3,13 @@
 
 from django.conf import settings
 
-from tcms.rpc.tests.utils import APITestCase
+from tcms.management.models import Tag
+from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.tests.factories import TagFactory
+from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
-class Tag(APITestCase):
+class TestTagFilter(APITestCase):
     @classmethod
     def _fixture_setup(cls):
         super()._fixture_setup()
@@ -59,3 +61,32 @@ class Tag(APITestCase):
         self.assertIn("case", test_tag[0])
         self.assertIn("plan", test_tag[0])
         self.assertIn("run", test_tag[0])
+
+
+class TestTagCreate(APIPermissionsTestCase):
+    permission_label = "management.add_tag"
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Tag.create(
+            {
+                "name": "linux",
+            }
+        )
+
+        # verify the serialized result
+        self.assertIn("id", result)
+        self.assertEqual(result["name"], "linux")
+
+        # verify the object from the DB
+        tag = Tag.objects.get(pk=result["id"])
+        self.assertEqual(tag.name, result["name"])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Tag.create"'
+        ):
+            self.rpc_client.Tag.create(
+                {
+                    "name": "windows",
+                }
+            )
