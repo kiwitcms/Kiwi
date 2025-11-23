@@ -62,5 +62,5 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "classification",
         )
         .distinct()
-        .order_by("pk")
+        .order_by("id")
     )
