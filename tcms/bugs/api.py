@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.bugs.models import Bug
+from tcms.bugs.forms import SeverityForm
+from tcms.bugs.models import Bug, Severity
 from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
 
@@ -102,3 +104,58 @@ def filter(query):  # pylint: disable=redefined-builtin
         .distinct()
     )
     return list(result)
+
+
+@permissions_required("bugs.view_severity")
+@rpc_method(name="Severity.filter")
+def severity_filter(query):  # pylint: disable=redefined-builtin
+    """
+    .. function:: RPC Severity.filter(query)
+
+        Get list of bug severities.
+
+        :param query: Field lookups for :class:`tcms.bugs.models.Severity`
+        :type query: dict
+        :return: List of serialized :class:`tcms.bugs.models.Severity` objects.
+        :rtype: list
+
+    .. versionadded:: 15.2
+    """
+    result = (
+        Severity.objects.filter(**query)
+        .values(
+            "id",
+            "name",
+            "weight",
+            "icon",
+            "color",
+        )
+        .distinct()
+    )
+    return list(result)
+
+
+@permissions_required("bugs.add_severity")
+@rpc_method(name="Severity.create")
+def severity_create(values):
+    """
+    .. function:: RPC Severity.create(values)
+
+        Create a new Severity object and store it in the database.
+
+        :param values: Field values for :class:`tcms.bugs.models.Severity`
+        :type values: dict
+        :return: Serialized :class:`tcms.bugs.models.Severity` object
+        :rtype: dict
+        :raises ValueError: if input values don't validate
+        :raises PermissionDenied: if missing *bugs.add_severity* permission
+
+    .. versionadded:: 15.2
+    """
+    form = SeverityForm(values)
+
+    if form.is_valid():
+        severity = form.save()
+        return model_to_dict(severity)
+
+    raise ValueError(list(form.errors.items()))

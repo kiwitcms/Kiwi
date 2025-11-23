@@ -1,11 +1,11 @@
-# Copyright (c) 2019,2022 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019,2022,2025 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from tcms.bugs.models import Bug
+from tcms.bugs.models import Bug, Severity
 from tcms.core.forms.fields import UserField
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Build, Version
@@ -76,3 +76,9 @@ class BugCommentForm(forms.Form):  # pylint: disable=must-inherit-from-model-for
 
     def populate(self, bug_id):
         self.fields["bug"].queryset = Bug.objects.filter(pk=bug_id)
+
+
+class SeverityForm(forms.ModelForm):
+    class Meta:
+        model = Severity
+        fields = "__all__"
