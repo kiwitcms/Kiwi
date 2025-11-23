@@ -1,6 +1,6 @@
 from django import forms
 
-from tcms.management.models import Build, Classification, Component, Product
+from tcms.management.models import Build, Classification, Component, Priority, Product
 from tcms.rpc.api.forms import UpdateModelFormMixin
 
 
@@ -37,4 +37,10 @@ class ProductForm(forms.ModelForm):
 class ClassificationForm(forms.ModelForm):
     class Meta:
         model = Classification
+        fields = "__all__"
+
+
+class PriorityForm(forms.ModelForm):
+    class Meta:
+        model = Priority
         fields = "__all__"
