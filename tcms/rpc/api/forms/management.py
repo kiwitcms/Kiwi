@@ -1,6 +1,13 @@
 from django import forms
 
-from tcms.management.models import Build, Classification, Component, Priority, Product
+from tcms.management.models import (
+    Build,
+    Classification,
+    Component,
+    Priority,
+    Product,
+    Tag,
+)
 from tcms.rpc.api.forms import UpdateModelFormMixin
 
 
@@ -43,4 +50,10 @@ class ClassificationForm(forms.ModelForm):
 class PriorityForm(forms.ModelForm):
     class Meta:
         model = Priority
+        fields = "__all__"
+
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
         fields = "__all__"
