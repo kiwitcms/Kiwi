@@ -4,7 +4,12 @@ from django.contrib.auth import get_user_model
 from tcms.core.forms.fields import UserField
 from tcms.management.models import Build
 from tcms.rpc.api.forms import DateTimeField, UpdateModelFormMixin
-from tcms.testruns.models import Environment, TestExecution, TestRun
+from tcms.testruns.models import (
+    Environment,
+    TestExecution,
+    TestExecutionStatus,
+    TestRun,
+)
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -45,4 +50,10 @@ class UserForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
 class EnvironmentForm(forms.ModelForm):
     class Meta:
         model = Environment
+        fields = "__all__"
+
+
+class TestExecutionStatusForm(forms.ModelForm):
+    class Meta:
+        model = TestExecutionStatus
         fields = "__all__"
