@@ -23,6 +23,7 @@ Submodules
    tcms.rpc.api.attachment
    tcms.rpc.api.auth
    tcms.rpc.api.bug
+   tcms.rpc.api.bugtracker
    tcms.rpc.api.build
    tcms.rpc.api.category
    tcms.rpc.api.classification

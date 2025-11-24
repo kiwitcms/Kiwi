@@ -2,7 +2,13 @@ from django import forms
 
 from tcms.core.forms.fields import UserField
 from tcms.rpc.api.forms import UpdateModelFormMixin
-from tcms.testcases.models import Category, Template, TestCase, TestCaseStatus
+from tcms.testcases.models import (
+    BugSystem,
+    Category,
+    Template,
+    TestCase,
+    TestCaseStatus,
+)
 
 
 class NewForm(forms.ModelForm):
@@ -24,6 +30,12 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     default_tester = UserField()
     author = UserField()
     reviewer = UserField()
+
+
+class BugSystemForm(forms.ModelForm):
+    class Meta:
+        model = BugSystem
+        fields = "__all__"
 
 
 class CategoryForm(forms.ModelForm):
