@@ -54,10 +54,6 @@ class TemplateCreate(APIPermissionsTestCase):
 class TestTemplateFilter(APIPermissionsTestCase):
     permission_label = "testcases.view_template"
 
-    @classmethod
-    def _fixture_setup(cls):
-        super()._fixture_setup()
-
     def verify_api_with_permission(self):
         result = self.rpc_client.Template.filter(
             {
