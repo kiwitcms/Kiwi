@@ -2,7 +2,7 @@ from django import forms
 
 from tcms.core.forms.fields import UserField
 from tcms.rpc.api.forms import UpdateModelFormMixin
-from tcms.testcases.models import Category, TestCase, TestCaseStatus
+from tcms.testcases.models import Category, Template, TestCase, TestCaseStatus
 
 
 class NewForm(forms.ModelForm):
@@ -29,6 +29,12 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
+        fields = "__all__"
+
+
+class TemplateForm(forms.ModelForm):
+    class Meta:
+        model = Template
         fields = "__all__"
 
 
