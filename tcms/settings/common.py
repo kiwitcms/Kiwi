@@ -498,6 +498,7 @@ MODERNRPC_METHODS_MODULES = [
     "tcms.rpc.api.priority",
     "tcms.rpc.api.product",
     "tcms.rpc.api.tag",
+    "tcms.rpc.api.template",
     "tcms.rpc.api.testcase",
     "tcms.rpc.api.testexecution",
     "tcms.rpc.api.testexecutionstatus",
