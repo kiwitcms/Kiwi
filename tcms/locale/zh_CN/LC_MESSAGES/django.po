@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-11-28 05:18\n"
+"PO-Revision-Date: 2025-11-28 06:14\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1759,7 +1759,7 @@ msgstr "创建新的测试计划"
 
 #: tcms/testplans/templates/testplans/mutable.html:82
 msgid "Parent ID"
-msgstr "ALIP-1"
+msgstr "ALIP"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
@@ -2396,3 +2396,4 @@ msgstr "1组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
