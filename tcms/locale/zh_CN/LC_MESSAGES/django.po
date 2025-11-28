@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-11-19 02:23\n"
+"PO-Revision-Date: 2025-11-28 06:14\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1759,7 +1759,7 @@ msgstr "创建新的测试计划"
 
 #: tcms/testplans/templates/testplans/mutable.html:82
 msgid "Parent ID"
-msgstr "父ID"
+msgstr "ALIP"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
@@ -1767,11 +1767,11 @@ msgstr "输入要分配的位置；按退后加enter以清除"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
-msgstr "测试计划文档随便写的啊"
+msgstr "测试计划："
 
 #: tcms/testplans/templates/testplans/mutable.html:119
 msgid "Notify:"
-msgstr "方又松："
+msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:127
 msgid "TestCase author"
