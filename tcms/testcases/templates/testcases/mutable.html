@@ -21,9 +21,9 @@
             {% csrf_token %}
             <input type="hidden" name="author" value="{{ form.author.value }}">
             <div class="form-group">
-                <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
+                <label class="col-md-1 col-lg-1">{% trans "Summary" %}</label>
                 <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
-                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
+                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control {% if not object %}typeahead{% endif %}" required>
                     {% if test_plan %}
                         <p class="help-block"><a href="{% url 'test_plan_url' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
                         <input type="hidden" name="from_plan" value="{{ test_plan.pk }}">
