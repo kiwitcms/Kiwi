@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-11-12 19:43\n"
+"PO-Revision-Date: 2025-12-01 11:36\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -230,7 +230,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:23
 #: tcms/testplans/templates/testplans/search.html:26
 msgid "Created"
-msgstr ""
+msgstr "Dibuat"
 
 #: tcms/bugs/templates/bugs/search.html:35
 #: tcms/telemetry/templates/telemetry/include/filters.html:53
@@ -493,21 +493,21 @@ msgstr "Anda memiliki%(unapplied_migration_count)s migrasi yang belum diterapkan
 #: tcms/core/views.py:92
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr ""
+msgstr "Anda tidak menggunakan koneksi aman. Lihat <a href=\"%(doc_url)s\">dokumentasi</a> dan aktifkan SSL."
 
 #: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
+msgstr "File berisi atribut terlarang: `{tag_name}`"
 
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
+msgstr "File berisi atribut terlarang: `{attr_name}`"
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "Dilarang mengunggah file yang dapat dieksekusi"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
@@ -1146,7 +1146,7 @@ msgstr ""
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
 msgid "This is a tech-preview feature!"
-msgstr ""
+msgstr "Ini adalah fitur pratinjau teknologi!"
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
