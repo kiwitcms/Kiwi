@@ -94,3 +94,75 @@ export function testPlanAutoComplete (selector, planCache) {
         }
     })
 }
+
+export function testCaseSummaryAutoComplete (selector) {
+    function openTestCase ($suggestion) {
+        const suggestion = $suggestion.data('tt-selectable-object')
+        window.open(`/case/${suggestion.id}/`, '_blank')
+        input.typeahead('close')
+    }
+
+    const input = $(`${selector}.typeahead`)
+    if (input.length === 0) {
+        return
+    }
+
+    // remember exactly what the user typed so that navigating the suggestions
+    // with the keyboard never replaces it
+    let typed = input.val() || ''
+    input.on('input', function () {
+        typed = this.value
+    }).on('keydown', function (event) {
+        // Enter opens the highlighted suggestion instead of submitting the form
+        if (event.key !== 'Enter') {
+            return
+        }
+
+        const active = wrapper.find('.tt-suggestion.tt-cursor').first()
+        if (active.length) {
+            event.preventDefault()
+            openTestCase(active)
+        }
+    }).typeahead({
+        minLength: 3,
+        highlight: true
+    }, {
+        name: 'testcase-summaries-autocomplete',
+        limit: 10,
+        async: true,
+        display: function (element) {
+            return `TC-${element.id}: ${element.summary}`
+        },
+        source: function (query, processSync, processAsync) {
+            jsonRPC('TestCase.filter', { summary__icontains: query }, function (data) {
+                return processAsync(data)
+            })
+        }
+    }).on('typeahead:beforeselect', function (event) {
+        // selecting a suggestion must not replace the typed summary
+        event.preventDefault()
+    }).on('typeahead:beforeautocomplete', function (event) {
+        // Tab or the right-arrow key must not insert a suggestion
+        event.preventDefault()
+    }).on('typeahead:cursorchange', function () {
+        // Up/Down move the highlight but keep the typed summary
+        $(this).val(typed)
+    })
+
+    // override the default inline-block style
+    const wrapper = input.closest('span.twitter-typeahead')
+    wrapper.css('display', 'block')
+    wrapper.find('.tt-menu').css('width', '100%')
+
+    // clicking a suggestion opens the existing test case in a new window
+    wrapper.on('click', '.tt-suggestion', function () {
+        openTestCase($(this))
+    })
+
+    // clicking outside of the input & dropdown closes the menu
+    $(document).on('click', function (event) {
+        if (!wrapper.is(event.target) && wrapper.has(event.target).length === 0) {
+            input.typeahead('close')
+        }
+    })
+}

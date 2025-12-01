@@ -37,6 +37,11 @@ img {
     width: 200px;
 }
 
+.tt-suggestion {
+    cursor: pointer;
+}
+
+.tt-suggestion:hover,
 .tt-suggestion.tt-cursor {
     background-color: #0088ce;
     color: #fff;

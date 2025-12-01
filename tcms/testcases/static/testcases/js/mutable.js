@@ -1,4 +1,5 @@
 import { updateCategorySelectFromProduct } from '../../../../static/js/utils'
+import { testCaseSummaryAutoComplete } from '../../../../static/js/jsonrpc'
 
 export function pageTestcasesMutableReadyHandler () {
     $('#id_template').change(function () {
@@ -51,6 +52,8 @@ export function pageTestcasesMutableReadyHandler () {
         showMinutes: true,
         showSeconds: true
     })
+
+    testCaseSummaryAutoComplete('#id_summary')
 }
 
 function populateProductCategory () {
