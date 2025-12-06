@@ -17,6 +17,8 @@ class Classification(models.Model, UrlMixin):
 
     class Meta:
         ordering = ["name"]
+        verbose_name = _("Classification")
+        verbose_name_plural = _("Classifications")
 
 
 class Product(models.Model, UrlMixin):
@@ -51,6 +53,8 @@ class Product(models.Model, UrlMixin):
 
     class Meta:
         ordering = ["name"]
+        verbose_name = _("Product")
+        verbose_name_plural = _("Products")
 
     def _get_absolute_url(self):
         return reverse(
@@ -70,6 +74,7 @@ class Priority(models.Model, UrlMixin):
 
     class Meta:
         ordering = ["value"]
+        verbose_name = _("Priority")
         verbose_name_plural = _("Priorities")
 
     def __str__(self):
@@ -99,6 +104,8 @@ class Component(models.Model, UrlMixin):
     class Meta:
         ordering = ["name"]
         unique_together = ("product", "name")
+        verbose_name = _("Component")
+        verbose_name_plural = _("Components")
 
     def __str__(self):
         return self.name
@@ -115,6 +122,8 @@ class Version(models.Model, UrlMixin):
     class Meta:
         ordering = ["value"]
         unique_together = ("product", "value")
+        verbose_name = _("Version")
+        verbose_name_plural = _("Versions")
 
     def __str__(self):
         return self.value
