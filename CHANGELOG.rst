@@ -1,6 +1,80 @@
 Change Log
 ==========
 
+Kiwi TCMS 15.2 (06 Dec 2025)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates,
+    several improvements, new API methods and new translations.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.2.7 to 5.2.9 which contains patches for
+  *CVE-2025-64459*, *CVE-2025-64458*, *CVE-2025-13372* and *CVE-2025-64460*
+- Update node_modules/js-yaml from 4.1.0 to 4.1.1
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 6.2.0 to 6.3.0
+- Update django-grappelli from 4.0.2 to 4.0.3. Fixes
+  `Issue #4119 <https://github.com/kiwitcms/Kiwi/issues/4119>`_
+- Update django-tree-queries from 0.21.2 to 0.23.0
+- Update markdown from 3.9 to 3.10
+- Update psycopg[binary] from 3.2.11 to 3.3.1
+- Update python-gitlab from 6.5.0 to 7.0.0
+- Add new toolbar menu item on TestRun page, which opens the
+  Execution Dashboard page with executions from the current TestRun. Closes
+  `Issue #4084 <https://github.com/kiwitcms/Kiwi/issues/4084>`_
+- Display TestCase ID on Execution Dashboard page
+- Display Priority & Automated columns in Execution Dashboard page
+
+
+API
+~~~
+
+- Add ``BugTracker.create()`` API method
+- Add ``BugTracker.filter()`` API method
+- Add ``Priority.create()`` API method
+- Add ``Severity.create()`` API method
+- Add ``Severity.filter()`` API method
+- Add ``Tag.create()`` API method
+- Add ``Template.create()`` API method
+- Add ``Template.filter()`` API method
+- Add ``TestCaseStatus.create()`` API method
+- Add ``TestExecutionStatus.create()`` API method
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/checkout from 5 to 6
+- Update actions/upload-artifact from 4 to 5
+- Update black from 25.9.0 to 25.11.0
+- Update locust from 2.42.0 to 2.42.6
+- Update sphinx from 8.2.3 to 9.0.4
+- Update node_modules/webpack from 5.102.1 to 5.103.0
+- Update password reset URL format to match latest in Django 5.2
+- Add end-to-end test for password reset functionality
+- Remove redundant ``_fixture_setup()`` definition
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Indonesian translation <https://crowdin.com/project/kiwitcms/id#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Polish translation <https://crowdin.com/project/kiwitcms/pl#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+
+
+
 Kiwi TCMS 15.1 (24 Oct 2025)
 ----------------------------
 
