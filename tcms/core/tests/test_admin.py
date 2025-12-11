@@ -33,12 +33,12 @@ class TestAdminView(LoggedInTestCase):
 
         # for tcms.management
         self.assertContains(response, _("Builds"))
-        self.assertContains(response, "Classifications")
-        self.assertContains(response, "Components")
+        self.assertContains(response, _("Classifications"))
+        self.assertContains(response, _("Components"))
         self.assertContains(response, _("Priorities"))
-        self.assertContains(response, "Products")
+        self.assertContains(response, _("Products"))
         self.assertContains(response, _("Tags"))
-        self.assertContains(response, "Versions")
+        self.assertContains(response, _("Versions"))
 
         _bugs = _("Bugs")
         if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
