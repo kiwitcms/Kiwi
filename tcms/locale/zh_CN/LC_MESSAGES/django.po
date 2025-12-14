@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-11-28 06:14\n"
+"POT-Creation-Date: 2025-12-14 14:22+0000\n"
+"PO-Revision-Date: 2025-12-14 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2098,7 +2098,7 @@ msgstr "找不到对于用户 \"%s\"的GitHub 应用安装"
 msgid "Multiple GitHub App installations detected!"
 msgstr "检测到多个GitHub 应用已安装！"
 
-#: tcms_github_marketplace/menu.py:11
+#: tcms_github_marketplace/menu.py:12
 msgid "Subscriptions"
 msgstr "订阅"
 
@@ -2112,100 +2112,108 @@ msgstr "感谢您通过付费订阅使用 Kiwi TCMS。\n"
 "您可以在论坛分享您的反馈。 \n\n"
 "谢谢！"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:14
 msgid "Tenant subscriptions"
 msgstr "租户订阅"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:23
 msgid "You can access the following tenants"
 msgstr "您可以访问以下租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:28
 msgid "Tenant"
 msgstr "租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:39
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:140
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:38
 msgid "Organization"
 msgstr "组织"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:44
-msgid "Docker credentials"
-msgstr "Docker凭据"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
+msgid "Private repository credentials"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
+msgid "Click 'Password' to reveal!"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
 msgstr "Private容器指令"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
+msgid "kiwitcms/gitops prefix"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "You own the following tenants"
 msgstr "你拥有下列租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:148
 msgid "Price"
 msgstr "价格"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:152
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:153
 msgid "Subscription type"
 msgstr "訂閱類型"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:108
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:8
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:157
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:158
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:16
 msgid "Paid until"
 msgstr "支付至"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:114
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
 msgid "Cancel subscription"
 msgstr "停止订购"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
 msgid "You don't own any tenants"
 msgstr "您不拥有任何租户"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:181
 msgid "Subscribe via FastSpring"
 msgstr "通过 FastSpring 订阅"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
 msgid "Transaction history"
 msgstr "交易记录"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:170
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:219
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:220
 msgid "Sender"
 msgstr "发送者"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:224
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:225
 msgid "Vendor"
 msgstr "供应商"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:180
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:229
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:230
 msgid "Received on"
 msgstr "收到的时间"
 
-#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:11
 msgid "Extra emails"
 msgstr "额外邮件"
 
-#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:21
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
 msgstr "Kiwi TCMS 将尝试匹配与tenant.owners.email + tenant.extern_email相匹配的重复性计费事件"
 
-#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:24
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
 msgstr "用逗号 (,), 半冒号 (;) 或空格分开"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:52
 msgid "Private Tenant Warning"
 msgstr "私人租户警告"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:57
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
@@ -2219,19 +2227,19 @@ msgstr "您将为Kiwi TCMS创建一个私人租户。\n"
 "如果看到500 Internal Server Error页面，请联系\n"
 "立即<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a>！"
 
-#: tcms_github_marketplace/utils.py:95
+#: tcms_github_marketplace/utils.py:58
 msgid "Kiwi TCMS Subscription Exit Poll"
 msgstr "Kiwi TCMS 订阅退出调查"
 
-#: tcms_github_marketplace/views.py:567
+#: tcms_github_marketplace/views.py:617
 msgid "Kiwi TCMS subscription notification"
 msgstr "Kiwi TCMS 订阅通知"
 
-#: tcms_github_marketplace/views.py:749
+#: tcms_github_marketplace/views.py:833
 msgid "mo"
 msgstr "月"
 
-#: tcms_github_marketplace/views.py:752
+#: tcms_github_marketplace/views.py:835
 msgid "yr"
 msgstr "年"
 

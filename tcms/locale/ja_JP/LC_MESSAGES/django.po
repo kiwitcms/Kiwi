@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-11-12 19:43\n"
+"POT-Creation-Date: 2025-12-14 14:22+0000\n"
+"PO-Revision-Date: 2025-12-14 15:43\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -2102,7 +2102,7 @@ msgstr "テナント \"%s\" の GitHub アプリのインストールが見つ�
 msgid "Multiple GitHub App installations detected!"
 msgstr "複数の GitHub アプリのインストールが検出されました！"
 
-#: tcms_github_marketplace/menu.py:11
+#: tcms_github_marketplace/menu.py:12
 msgid "Subscriptions"
 msgstr "サブスクリプション"
 
@@ -2113,100 +2113,108 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "Thank you!"
 msgstr "Kiwi TCMSの有料サブスクリプションをご利用いただきありがとうございました。お別れするのは残念ですが、今後の改善のためにその理由をお聞かせください！以下のリンクからフィードバックをお寄せいただけます：https://forms.gle/RJhFengbjN9C6wtUA"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:6
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:14
 msgid "Tenant subscriptions"
 msgstr "テナントサブスクリプション"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:15
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:23
 msgid "You can access the following tenants"
 msgstr "以下のテナントにアクセスできます"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:20
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:28
 msgid "Tenant"
 msgstr "テナント"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:31
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:90
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:30
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:39
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:140
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:38
 msgid "Organization"
 msgstr "組織"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:44
-msgid "Docker credentials"
-msgstr "Docker 資格情報"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
+msgid "Private repository credentials"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:61
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
+msgid "Click 'Password' to reveal!"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
 msgstr "プライベートコンテナの説明"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
+msgid "kiwitcms/gitops prefix"
+msgstr ""
+
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "You own the following tenants"
 msgstr "以下のテナントを所有しています"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:98
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:148
 msgid "Price"
 msgstr "価格"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:102
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:103
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:152
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:153
 msgid "Subscription type"
 msgstr "購読の種類"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:107
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:108
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:8
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:157
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:158
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:16
 msgid "Paid until"
 msgstr "支払完了まで"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:114
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
 msgid "Cancel subscription"
 msgstr "定期購入を解約"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:127
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
 msgid "You don't own any tenants"
 msgstr "テナントを所有していません"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:131
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:181
 msgid "Subscribe via FastSpring"
 msgstr "FastSpring 経由で購読"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
 msgid "Transaction history"
 msgstr "トランザクション履歴"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:170
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:219
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:220
 msgid "Sender"
 msgstr "送信元"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:174
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:175
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:224
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:225
 msgid "Vendor"
 msgstr "ベンダー"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:179
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:180
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:229
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:230
 msgid "Received on"
 msgstr "受信"
 
-#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:4
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:11
 msgid "Extra emails"
 msgstr "メールを追加"
 
-#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:14
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:21
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
 msgstr "Kiwi TCMSは、定期請求イベントをtenant.owner.email + tenant.extra_emailsと照合します"
 
-#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:17
+#: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:24
 msgid "Separate by comma (,), semi-colon (;) or white space ( )"
 msgstr "カンマ（,）、セミコロン（;）、またはスペース（ ）で区切ってください"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:44
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:52
 msgid "Private Tenant Warning"
 msgstr "プライベートテナント警告"
 
-#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:49
+#: tcms_github_marketplace/templates/tcms_tenants/override_new.html:57
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "It will take a few minutes until your DB schema is ready!\n"
 "After clicking the 'Save' button <strong>do not</strong> close or refresh this page!<br>\n"
@@ -2220,19 +2228,19 @@ msgstr "Kiwi TCMSのプライベートテナントを作成しようとしてい
 "500内部サーバーエラーページが表示された場合は、お問い合わせください\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a>すぐに！"
 
-#: tcms_github_marketplace/utils.py:95
+#: tcms_github_marketplace/utils.py:58
 msgid "Kiwi TCMS Subscription Exit Poll"
 msgstr "Kiwi TCMS サブスクリプション解約アンケート"
 
-#: tcms_github_marketplace/views.py:567
+#: tcms_github_marketplace/views.py:617
 msgid "Kiwi TCMS subscription notification"
 msgstr "Kiwi TCMS サブスクリプション通知"
 
-#: tcms_github_marketplace/views.py:749
+#: tcms_github_marketplace/views.py:833
 msgid "mo"
 msgstr "月"
 
-#: tcms_github_marketplace/views.py:752
+#: tcms_github_marketplace/views.py:835
 msgid "yr"
 msgstr "年"
 
