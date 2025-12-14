@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-12 19:25+0000\n"
-"PO-Revision-Date: 2025-12-12 11:19\n"
+"PO-Revision-Date: 2025-12-14 10:27\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1541,7 +1541,7 @@ msgstr "neues Testobjekt hinzufügen"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr "OFFEN"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:525
@@ -1990,7 +1990,7 @@ msgstr "Klon von "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
-msgstr "OFFEN"
+msgstr "VORGESCHLAGEN"
 
 #: testcases.TestCaseStatus/name:3
 msgid "DISABLED"
@@ -2387,3 +2387,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
