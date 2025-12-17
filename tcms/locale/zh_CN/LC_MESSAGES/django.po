@@ -2424,4 +2424,3 @@ msgstr "1组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
-
