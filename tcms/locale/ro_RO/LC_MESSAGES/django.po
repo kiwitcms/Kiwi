@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-14 14:22+0000\n"
-"PO-Revision-Date: 2025-12-14 15:43\n"
+"POT-Creation-Date: 2025-12-17 10:23+0000\n"
+"PO-Revision-Date: 2025-12-17 12:44\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -77,6 +77,7 @@ msgstr "Responsabil"
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:115
 #: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:120
+#: tcms/management/models.py:56
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
 #: tcms/templates/include/bug_details.html:13
@@ -99,7 +100,7 @@ msgstr "Produs"
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/bugs/templates/bugs/search.html:61
-#: tcms/bugs/templates/bugs/search.html:116
+#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:125
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
 #: tcms/testplans/templates/testplans/clone.html:36
@@ -116,7 +117,7 @@ msgstr "Versiune"
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
 #: tcms/bugs/templates/bugs/search.html:71
-#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:162
+#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:171
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:17
@@ -618,16 +619,65 @@ msgstr ""
 msgid "Email address has been reset, please check inbox for further instructions"
 msgstr ""
 
-#: tcms/management/models.py:73
+#: tcms/management/models.py:20
+msgid "Classification"
+msgstr ""
+
+#: tcms/management/models.py:21
+msgid "Classifications"
+msgstr ""
+
+#: tcms/management/models.py:57
+msgid "Products"
+msgstr ""
+
+#: tcms/management/models.py:77
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
+#: tcms/testcases/templates/testcases/get.html:64
+#: tcms/testcases/templates/testcases/mutable.html:86
+#: tcms/testcases/templates/testcases/search.html:86
+#: tcms/testcases/templates/testcases/search.html:170
+#: tcms/testplans/templates/testplans/get.html:162
+#: tcms/testplans/templates/testplans/get.html:376
+#: tcms/testplans/templates/testplans/get.html:409
+#: tcms/testplans/templates/testplans/get.html:495
+#: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
+#: tcms/testruns/templates/testruns/get.html:273
+#: tcms/testruns/templates/testruns/get.html:371
+#: tcms/testruns/templates/testruns/mutable.html:234
+msgid "Priority"
+msgstr "Prioritate"
+
+#: tcms/management/models.py:78
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:34
 msgid "Priorities"
 msgstr "Priorităţi"
 
-#: tcms/management/models.py:163
+#: tcms/management/models.py:107
+#: tcms/testcases/templates/testcases/search.html:116
+#: tcms/testcases/templates/testcases/search.html:169
+#: tcms/testplans/templates/testplans/get.html:216
+#: tcms/testruns/templates/testruns/get.html:270
+msgid "Component"
+msgstr "Component"
+
+#: tcms/management/models.py:108
+#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
+#: tcms/testcases/templates/testcases/get.html:208
+#: tcms/testplans/templates/testplans/get.html:452
+#: tcms/testruns/templates/testruns/get.html:357
+msgid "Components"
+msgstr "Componente"
+
+#: tcms/management/models.py:126
+msgid "Versions"
+msgstr ""
+
+#: tcms/management/models.py:172
 msgid "Builds"
 msgstr "Builds"
 
-#: tcms/management/models.py:185
+#: tcms/management/models.py:194
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:96
@@ -636,7 +686,7 @@ msgstr "Builds"
 msgid "Tag"
 msgstr "Tag-ul"
 
-#: tcms/management/models.py:186 tcms/templates/include/tags_card.html:6
+#: tcms/management/models.py:195 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:175
 #: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
@@ -855,22 +905,6 @@ msgstr ""
 msgid "Child TPs"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
-#: tcms/testcases/templates/testcases/get.html:64
-#: tcms/testcases/templates/testcases/mutable.html:86
-#: tcms/testcases/templates/testcases/search.html:86
-#: tcms/testcases/templates/testcases/search.html:170
-#: tcms/testplans/templates/testplans/get.html:162
-#: tcms/testplans/templates/testplans/get.html:376
-#: tcms/testplans/templates/testplans/get.html:409
-#: tcms/testplans/templates/testplans/get.html:495
-#: tcms/testplans/templates/testplans/toolbar_dropdown.html:6
-#: tcms/testruns/templates/testruns/get.html:273
-#: tcms/testruns/templates/testruns/get.html:371
-#: tcms/testruns/templates/testruns/mutable.html:234
-msgid "Priority"
-msgstr "Prioritate"
-
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
 #: tcms/templates/include/bug_details.html:3
 #: tcms/testcases/templates/testcases/get.html:59
@@ -888,13 +922,6 @@ msgstr "Prioritate"
 #: tcms/testruns/templates/testruns/mutable.html:232
 msgid "Status"
 msgstr "Statutul"
-
-#: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
-#: tcms/testcases/templates/testcases/get.html:208
-#: tcms/testplans/templates/testplans/get.html:452
-#: tcms/testruns/templates/testruns/get.html:357
-msgid "Components"
-msgstr "Componente"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:39
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:40
@@ -1590,13 +1617,6 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:78
 msgid "include child test plans"
 msgstr ""
-
-#: tcms/testcases/templates/testcases/search.html:116
-#: tcms/testcases/templates/testcases/search.html:169
-#: tcms/testplans/templates/testplans/get.html:216
-#: tcms/testruns/templates/testruns/get.html:270
-msgid "Component"
-msgstr "Component"
 
 #: tcms/testcases/templates/testcases/search.html:132
 msgid "Text"
@@ -2383,3 +2403,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
