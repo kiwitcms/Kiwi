@@ -42,7 +42,7 @@ class TestGroupPermissions(APIPermissionsTestCase):
         initiate_user_with_default_setups(UserFactory())
 
     def verify_api_with_permission(self):
-        result = self.rpc_client.Group.permissions("Tester")
+        result = self.rpc_client.Group.permissions(Group.objects.get(name="Tester").pk)
         self.assertGreater(len(result), 0)
 
         self.assertIn("attachments.view_attachment", result)
@@ -54,13 +54,13 @@ class TestGroupPermissions(APIPermissionsTestCase):
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "Group.permissions"'
         ):
-            self.rpc_client.Group.permissions("Administrator")
+            self.rpc_client.Group.permissions(Group.objects.get(name="Tester").pk)
 
 
 class TestGroupPermissionsWithNonExistentGroup(TestGroupPermissions):
     def verify_api_with_permission(self):
         with self.assertRaisesRegex(XmlRPCFault, "Group matching query does not exist"):
-            self.rpc_client.Group.permissions("NonExistentGroup")
+            self.rpc_client.Group.permissions(99999)
 
 
 class TestGroupUsersOnlyWithViewGroupPermission(APIPermissionsTestCase):

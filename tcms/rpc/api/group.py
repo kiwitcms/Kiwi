@@ -38,14 +38,14 @@ def filter(query):  # pylint: disable=redefined-builtin
 
 @permissions_required("auth.view_group")
 @rpc_method(name="Group.permissions")
-def permissions(name):  # pylint: disable=redefined-builtin
+def permissions(group_id):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Group.permissions(query)
 
         Search and return the resulting list of permissions for a particular group.
 
-        :param name: Name of :class:`django.contrib.auth.models.Group`
-        :type name: str
+        :param group_id: PK for a :class:`django.contrib.auth.models.Group` object
+        :type group_id: int
         :return: Serialized list of permission labels
         :rtype: list(str)
         :raises PermissionDenied: if missing the *auth.view_group* permission
@@ -53,7 +53,7 @@ def permissions(name):  # pylint: disable=redefined-builtin
 
     .. versionadded:: 15.3
     """
-    group = Group.objects.get(name=name)
+    group = Group.objects.get(pk=group_id)
 
     return list(
         group.permissions.annotate(
