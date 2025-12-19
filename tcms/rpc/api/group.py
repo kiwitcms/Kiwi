@@ -62,3 +62,31 @@ def permissions(name):  # pylint: disable=redefined-builtin
         .values_list("perm_name", flat=True)
         .distinct()
     )
+
+
+@permissions_required(("auth.view_group", "auth.view_user"))
+@rpc_method(name="Group.users")
+def users(group_id):  # pylint: disable=redefined-builtin
+    """
+    .. function:: RPC Group.users(group_id)
+
+        Return the list of users for a particular group.
+
+        :param group_id: PK for a :class:`django.contrib.auth.models.Group` object
+        :type group_id: int
+        :return: Serialized list of :class:`django.contrib.auth.models.User` objects
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing the *auth.view_group* permission
+        :raises PermissionDenied: if missing the *auth.view_user* permission
+        :raises DoesNotExist: if group doesn't exist
+
+    .. versionadded:: 15.3
+    """
+    group = Group.objects.get(pk=group_id)
+
+    return list(
+        group.user_set.values(
+            "id",
+            "username",
+        ).distinct()
+    )
