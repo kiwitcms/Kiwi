@@ -20,7 +20,7 @@ Markdown==3.10
 pillow==11.3.0
 PyGithub==2.8.1
 Pygments==2.19.2
-python-gitlab==7.0.0
+python-gitlab==7.1.0
 python-redmine==2.5.0
 topicaxis-opengraph==0.5
 tzdata==2025.3
