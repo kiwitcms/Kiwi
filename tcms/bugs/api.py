@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.forms.models import model_to_dict
+from django.utils import timezone
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.bugs.forms import SeverityForm
+from tcms.bugs.forms import NewBugFromRPCForm, SeverityForm
 from tcms.bugs.models import Bug, Severity
 from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
@@ -131,6 +132,56 @@ def filter_canonical(query):  # pylint: disable=redefined-builtin
         .distinct()
     )
     return list(result)
+
+
+@permissions_required("bugs.add_bug")
+@rpc_method(name="Bug.create")
+def create(values, **kwargs):
+    """
+    .. function:: RPC Bug.create(values)
+
+        Create a new Bug object and store it in the database.
+
+        :param values: Field values for :class:`tcms.bugs.models.Bug`
+        :type values: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: Serialized :class:`tcms.bugs.models.Bug` object
+        :rtype: dict
+        :raises ValueError: if input values don't validate
+        :raises PermissionDenied: if missing *bugs.add_bug* permission
+
+    .. versionadded:: 15.3
+    """
+    # mimic behavior specified in models.py b/c empty_value for BooleanField is False
+    if "status" not in values:
+        values["status"] = True
+
+    if not values.get("reporter"):
+        values["reporter"] = kwargs.get(REQUEST_KEY).user.pk
+
+    # although this field is required=False when not present Django
+    # cannot deal with a NULL value so we set it to the current timestamp
+    if "created_at" not in values:
+        values["created_at"] = timezone.now().isoformat()
+
+    form = NewBugFromRPCForm(values)
+    if form.is_valid():
+        bug = form.save()
+
+        # auto_now_add will *always* set current date! see:
+        # https://docs.djangoproject.com/en/6.0/ref/models/fields/#django.db.models.DateField.auto_now_add
+        if "created_at" in form.cleaned_data:
+            bug.created_at = form.cleaned_data["created_at"]
+            bug.save()
+
+        result = model_to_dict(bug)
+        if "created_at" not in result:
+            result["created_at"] = bug.created_at
+
+        return result
+
+    raise ValueError(list(form.errors.items()))
 
 
 @permissions_required("bugs.view_severity")

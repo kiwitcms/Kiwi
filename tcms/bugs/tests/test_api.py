@@ -1,19 +1,24 @@
 # pylint: disable=attribute-defined-outside-init
 # pylint: disable=wrong-import-position
 import unittest
+from datetime import datetime, timedelta
 
 from django.conf import settings
+from django.utils import timezone
 
 from tcms.xmlrpc_wrapper import XmlRPCFault
 
 if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
     raise unittest.SkipTest("tcms.bugs is disabled")
 
-from tcms.bugs.models import Bug, Severity  # noqa: E402
+from tcms.bugs.models import Bug  # noqa: E402
+from tcms.bugs.models import Severity  # noqa: E402
 from tcms.bugs.tests.factory import BugFactory  # noqa: E402
 from tcms.rpc.tests.utils import APIPermissionsTestCase  # noqa: E402
 from tcms.rpc.tests.utils import APITestCase
+from tcms.tests.factories import BuildFactory  # noqa: E402
 from tcms.tests.factories import TagFactory  # noqa: E402
+from tcms.tests.factories import UserFactory  # noqa: E402
 
 
 class TestAddTagPermissions(APIPermissionsTestCase):
@@ -167,6 +172,118 @@ class TestBugFilterCanonical(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "Bug.filter_canonical"'
         ):
             self.rpc_client.Bug.filter_canonical({})
+
+
+class TestBugCreate(APIPermissionsTestCase):
+    permission_label = "bugs.add_bug"
+
+    def verify_api_with_permission(self):
+        reporter = UserFactory()
+        build = BuildFactory()
+        severity, _ = Severity.objects.get_or_create(
+            name="Low",
+            weight=0,
+            icon="fa fa-volume-down",
+            color="#ff0f1f",
+        )
+
+        result = self.rpc_client.Bug.create(
+            {
+                "summary": "A bug created via API",
+                "status": False,
+                "reporter": reporter.pk,
+                "product": build.version.product_id,
+                "version": build.version_id,
+                "build": build.pk,
+                "severity": severity.pk,
+            }
+        )
+
+        # verify the serialized result
+        self.assertIn("id", result)
+        self.assertEqual(result["summary"], "A bug created via API")
+        self.assertGreater(result["created_at"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["created_at"], timezone.now() + timedelta(seconds=1))
+        self.assertEqual(result["status"], False)
+        self.assertEqual(result["reporter"], reporter.pk)
+        self.assertEqual(result["product"], build.version.product_id)
+        self.assertEqual(result["version"], build.version_id)
+        self.assertEqual(result["build"], build.pk)
+        self.assertEqual(result["severity"], severity.pk)
+
+        # verify the object from the DB
+        bug = Bug.objects.get(pk=result["id"])
+        self.assertEqual(bug.summary, result["summary"])
+        self.assertEqual(bug.created_at, result["created_at"])
+        self.assertEqual(bug.status, result["status"])
+        self.assertEqual(bug.reporter_id, result["reporter"])
+        self.assertEqual(bug.product_id, result["product"])
+        self.assertEqual(bug.version_id, result["version"])
+        self.assertEqual(bug.build_id, result["build"])
+        self.assertEqual(bug.severity_id, result["severity"])
+
+    def verify_api_without_permission(self):
+        build = BuildFactory()
+        severity, _ = Severity.objects.get_or_create(
+            name="High",
+            weight=100,
+            icon="fa fa-volume-up",
+            color="#2ba150",
+        )
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.create"'
+        ):
+            self.rpc_client.Bug.create(
+                {
+                    "summary": "A bug created via API",
+                    "status": False,
+                    "reporter": self.tester.pk,
+                    "product": build.version.product_id,
+                    "version": build.version_id,
+                    "build": build.pk,
+                    "severity": severity.pk,
+                }
+            )
+
+
+class TestBugCreateOverrideSomeValues(TestBugCreate):
+    def verify_api_with_permission(self):
+        build = BuildFactory()
+        severity, _ = Severity.objects.get_or_create(
+            name="Low",
+            weight=0,
+            icon="fa fa-volume-down",
+            color="#ff0f1f",
+        )
+
+        result = self.rpc_client.Bug.create(
+            {
+                "summary": "A bug created via API",
+                "product": build.version.product_id,
+                "version": build.version_id,
+                "build": build.pk,
+                "severity": severity.pk,
+                # values below are overriden
+                "created_at": datetime.strptime(
+                    "2026-01-04 00:00:00", "%Y-%m-%d %H:%M:%S"
+                ),
+                # status is not provided, should default to True
+                # reporter not provided, should be self.tester
+            }
+        )
+
+        # verify the serialized result
+        self.assertIn("id", result)
+        self.assertEqual(result["created_at"], datetime(2026, 1, 4, 0, 0, 0))
+        self.assertEqual(result["status"], True)
+        self.assertEqual(result["reporter"], self.tester.pk)
+
+        # verify the object from the DB
+        bug = Bug.objects.get(pk=result["id"])
+        self.assertEqual(bug.created_at, result["created_at"])
+        self.assertEqual(bug.status, result["status"])
+        self.assertEqual(bug.reporter_id, result["reporter"])
 
 
 class TestSeverityCreate(APIPermissionsTestCase):

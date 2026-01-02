@@ -9,6 +9,7 @@ from tcms.bugs.models import Bug, Severity
 from tcms.core.forms.fields import UserField
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Build, Version
+from tcms.rpc.api.forms import DateTimeField
 
 
 class NewBugForm(forms.ModelForm):
@@ -62,6 +63,17 @@ Additional info:"""
         else:
             self.fields["version"].queryset = Version.objects.all()
             self.fields["build"].queryset = Build.objects.all()
+
+
+class NewBugFromRPCForm(forms.ModelForm):
+    created_at = DateTimeField(required=False)
+
+    class Meta:
+        model = Bug
+        exclude = (  # pylint: disable=modelform-uses-exclude
+            "tags",
+            "executions",
+        )
 
 
 class BugCommentForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
