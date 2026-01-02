@@ -106,9 +106,7 @@ class TestRemovePermissions(APIPermissionsTestCase):
             self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
 
 
-class TestFilter(APITestCase):
-    """Test Bug.filter"""
-
+class TestBugFilter(APITestCase):
     @classmethod
     def _fixture_setup(cls):
         super()._fixture_setup()
@@ -133,6 +131,42 @@ class TestFilter(APITestCase):
     def test_filter_non_existing(self):
         result = self.rpc_client.Bug.filter({"pk": -99})
         self.assertEqual(len(result), 0)
+
+
+class TestBugFilterCanonical(APIPermissionsTestCase):
+    permission_label = "bugs.view_bug"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.bug = BugFactory(status=False)
+        cls.another_bug = BugFactory(status=True)
+        cls.yet_another_bug = BugFactory(status=True)
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Bug.filter_canonical(
+            {
+                "id": self.bug.pk,
+            }
+        )[0]
+
+        self.assertEqual(result["id"], self.bug.id)
+        self.assertEqual(result["summary"], self.bug.summary)
+        self.assertEqual(result["created_at"], self.bug.created_at)
+        self.assertEqual(result["status"], self.bug.status)
+        self.assertEqual(result["reporter"], self.bug.reporter_id)
+        self.assertEqual(result["assignee"], self.bug.assignee_id)
+        self.assertEqual(result["product"], self.bug.product_id)
+        self.assertEqual(result["version"], self.bug.version_id)
+        self.assertEqual(result["build"], self.bug.build_id)
+        self.assertEqual(result["severity"], self.bug.severity_id)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.filter_canonical"'
+        ):
+            self.rpc_client.Bug.filter_canonical({})
 
 
 class TestSeverityCreate(APIPermissionsTestCase):

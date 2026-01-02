@@ -99,6 +99,40 @@ def filter(query):  # pylint: disable=redefined-builtin
     return list(result)
 
 
+@permissions_required("bugs.view_bug")
+@rpc_method(name="Bug.filter_canonical")
+def filter_canonical(query):  # pylint: disable=redefined-builtin
+    """
+    .. function:: RPC Bug.filter_canonical(query)
+
+        Get a list of bugs where FKs are reported as IDs.
+
+        :param query: Field lookups for :class:`tcms.bugs.models.Bug`
+        :type query: dict
+        :return: List of serialized :class:`tcms.bugs.models.Bug` objects.
+        :rtype: list
+
+    .. versionadded:: 15.3
+    """
+    result = (
+        Bug.objects.filter(**query)
+        .values(
+            "id",
+            "summary",
+            "created_at",
+            "status",
+            "reporter",
+            "assignee",
+            "product",
+            "version",
+            "build",
+            "severity",
+        )
+        .distinct()
+    )
+    return list(result)
+
+
 @permissions_required("bugs.view_severity")
 @rpc_method(name="Severity.filter")
 def severity_filter(query):  # pylint: disable=redefined-builtin
