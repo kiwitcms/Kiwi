@@ -8,13 +8,6 @@ from tcms.bugs.models import Bug, Severity
 from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
 
-__all__ = (
-    "add_tag",
-    "remove_tag",
-    "filter",
-    "remove",
-)
-
 
 @permissions_required("bugs.add_bug_tags")
 @rpc_method(name="Bug.add_tag")
