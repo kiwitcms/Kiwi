@@ -39,6 +39,7 @@ class Category(models.Model, UrlMixin):
     description = models.TextField(blank=True)
 
     class Meta:
+        ordering = ["name"]
         verbose_name_plural = _("Categories")
         unique_together = ("product", "name")
 
