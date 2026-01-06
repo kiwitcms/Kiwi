@@ -977,7 +977,7 @@ class TestCaseCommentPermissions(APIPermissionsTestCase):
         self.assertEqual(result[1]["comment"], "Second one")
         for entry in result:
             self.assertEqual(entry["object_pk"], str(self.case.pk))
-            self.assertEqual(entry["user"], self.tester.pk)
+            self.assertEqual(entry["user_id"], self.tester.pk)
             self.assertEqual(entry["user_name"], self.tester.username)
 
     def verify_api_without_permission(self):

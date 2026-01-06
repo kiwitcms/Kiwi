@@ -536,11 +536,8 @@ def comments(case_id):
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
-    result = []
-    for comment in helpers.comments.get_comments(case):
-        result.append(model_to_dict(comment))
-
-    return result
+    result = helpers.comments.get_comments(case).values()
+    return list(result)
 
 
 @permissions_required("testcases.view_property")
