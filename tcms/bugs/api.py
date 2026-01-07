@@ -259,3 +259,29 @@ def get_comments(bug_id):
     bug = Bug.objects.get(pk=bug_id)
     result = comments.get_comments(bug).values()
     return list(result)
+
+
+@permissions_required("django_comments.add_comment")
+@rpc_method(name="Bug.add_comment")
+def add_comment(bug_id, comment, **kwargs):
+    """
+    .. function:: RPC Bug.add_comment(bug_id, comment)
+
+        Add comment to selected Bug.
+
+        :param bug_id: PK of a Bug object
+        :type bug_id: int
+        :param comment: The text to add as a comment
+        :type comment: str
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: Serialized :class:`django_comments.models.Comment` object
+        :rtype: dict
+        :raises PermissionDenied: if missing *django_comments.add_comment* permission
+
+    .. versionadded:: 15.3
+    """
+    bug = Bug.objects.get(pk=bug_id)
+    created = comments.add_comment([bug], comment, kwargs.get(REQUEST_KEY).user)
+    # we always create only one comment
+    return model_to_dict(created[0])
