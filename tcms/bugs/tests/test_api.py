@@ -389,6 +389,7 @@ class TestBugGetComments(APIPermissionsTestCase):
             self.assertIn(comment["comment"], ("Hello World", "Happy Testing"))
             self.assertEqual(comment["is_public"], True)
             self.assertEqual(comment["object_pk"], str(self.bug.pk))
+            self.assertIn("user_id", comment)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(
@@ -413,9 +414,70 @@ class TestBugAddComment(APIPermissionsTestCase):
         self.assertEqual(result["comment"], "Hello World")
         self.assertEqual(result["is_public"], True)
         self.assertEqual(result["object_pk"], self.bug.pk)
+        self.assertEqual(result["user"], self.tester.pk)
+        self.assertGreater(result["submit_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["submit_date"], timezone.now() + timedelta(seconds=1))
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(
             XmlRPCFault, 'Authentication failed when calling "Bug.add_comment"'
         ):
             self.rpc_client.Bug.add_comment(self.bug.pk, "Happy Testing")
+
+
+class BugAddCommentFromRegularUser(TestBugAddComment):
+    def verify_api_with_permission(self):
+        new_user = UserFactory()
+
+        # try overriding comment author
+        result = self.rpc_client.Bug.add_comment(
+            self.bug.pk, "Hello World", new_user.pk
+        )
+
+        self.assertEqual(result["comment"], "Hello World")
+        self.assertEqual(result["is_public"], True)
+        self.assertEqual(result["object_pk"], self.bug.pk)
+        self.assertEqual(result["user"], self.tester.pk)
+        self.assertGreater(result["submit_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["submit_date"], timezone.now() + timedelta(seconds=1))
+
+        # try overriding comment submit_date
+        result = self.rpc_client.Bug.add_comment(
+            self.bug.pk, "Happy Testing", new_user.pk, datetime(2026, 1, 4, 0, 0, 0)
+        )
+
+        self.assertEqual(result["comment"], "Happy Testing")
+        self.assertEqual(result["object_pk"], self.bug.pk)
+        self.assertEqual(result["user"], self.tester.pk)
+        self.assertGreater(result["submit_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["submit_date"], timezone.now() + timedelta(seconds=1))
+
+
+class BugAddCommentFromSuperUser(TestBugAddComment):
+    def verify_api_with_permission(self):
+        self.tester.is_superuser = True
+        self.tester.save()
+
+        new_user = UserFactory()
+
+        # try overriding comment author
+        result = self.rpc_client.Bug.add_comment(
+            self.bug.pk, "Hello World", new_user.pk
+        )
+
+        self.assertEqual(result["comment"], "Hello World")
+        self.assertEqual(result["is_public"], True)
+        self.assertEqual(result["object_pk"], self.bug.pk)
+        self.assertEqual(result["user"], new_user.pk)
+        self.assertGreater(result["submit_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["submit_date"], timezone.now() + timedelta(seconds=1))
+
+        # try overriding comment submit_date
+        result = self.rpc_client.Bug.add_comment(
+            self.bug.pk, "Happy Testing", new_user.pk, datetime(2026, 1, 4, 0, 0, 0)
+        )
+
+        self.assertEqual(result["comment"], "Happy Testing")
+        self.assertEqual(result["object_pk"], self.bug.pk)
+        self.assertEqual(result["user"], new_user.pk)
+        self.assertEqual(result["submit_date"], datetime(2026, 1, 4, 0, 0, 0))

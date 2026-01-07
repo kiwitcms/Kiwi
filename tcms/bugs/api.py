@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from modernrpc.core import REQUEST_KEY, rpc_method
@@ -263,7 +264,7 @@ def get_comments(bug_id):
 
 @permissions_required("django_comments.add_comment")
 @rpc_method(name="Bug.add_comment")
-def add_comment(bug_id, comment, **kwargs):
+def add_comment(bug_id, comment, user_id=None, submit_date=None, **kwargs):
     """
     .. function:: RPC Bug.add_comment(bug_id, comment)
 
@@ -273,6 +274,10 @@ def add_comment(bug_id, comment, **kwargs):
         :type bug_id: int
         :param comment: The text to add as a comment
         :type comment: str
+        :param user_id: Override comment ``user`` field. Only super-user can use this!
+        :type user_id: int
+        :param submit_date: Override comment ``submit_date`` field. Only super-user can use this!
+        :type submit_date: datetime.datetime
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django_comments.models.Comment` object
@@ -281,7 +286,17 @@ def add_comment(bug_id, comment, **kwargs):
 
     .. versionadded:: 15.3
     """
+    request_user = kwargs.get(REQUEST_KEY).user
+
+    comment_author = request_user
+    if user_id and request_user.is_superuser:
+        comment_author = get_user_model().objects.get(pk=user_id)
+
+    # only super-user can override this
+    if not request_user.is_superuser:
+        submit_date = None
+
     bug = Bug.objects.get(pk=bug_id)
-    created = comments.add_comment([bug], comment, kwargs.get(REQUEST_KEY).user)
+    created = comments.add_comment([bug], comment, comment_author, submit_date)
     # we always create only one comment
     return model_to_dict(created[0])
