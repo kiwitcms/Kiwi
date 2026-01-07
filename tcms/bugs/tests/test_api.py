@@ -395,3 +395,27 @@ class TestBugGetComments(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "Bug.get_comments"'
         ):
             self.rpc_client.Bug.get_comments(self.bug.pk)
+
+
+class TestBugAddComment(APIPermissionsTestCase):
+    permission_label = "django_comments.add_comment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.bug = BugFactory(status=False)
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Bug.add_comment(self.bug.pk, "Hello World")
+
+        self.assertIn("id", result)
+        self.assertEqual(result["comment"], "Hello World")
+        self.assertEqual(result["is_public"], True)
+        self.assertEqual(result["object_pk"], self.bug.pk)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.add_comment"'
+        ):
+            self.rpc_client.Bug.add_comment(self.bug.pk, "Happy Testing")
