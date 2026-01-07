@@ -82,7 +82,7 @@ def get_comments(execution_id):
         :param execution_id: PK of a TestExecution object
         :type execution_id: int
         :return: Serialized :class:`django_comments.models.Comment` object
-        :rtype: dict
+        :rtype: list(dict)
         :raises PermissionDenied: if missing *django_comments.view_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)

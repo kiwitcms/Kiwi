@@ -14,6 +14,7 @@ if "tcms.bugs.apps.AppConfig" not in settings.INSTALLED_APPS:
 from tcms.bugs.models import Bug  # noqa: E402
 from tcms.bugs.models import Severity  # noqa: E402
 from tcms.bugs.tests.factory import BugFactory  # noqa: E402
+from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase  # noqa: E402
 from tcms.rpc.tests.utils import APITestCase
 from tcms.tests.factories import BuildFactory  # noqa: E402
@@ -366,3 +367,31 @@ class TestSeverityFilter(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "Severity.filter"'
         ):
             self.rpc_client.Severity.filter({})
+
+
+class TestBugGetComments(APIPermissionsTestCase):
+    permission_label = "django_comments.view_comment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.bug = BugFactory(status=False)
+        _ = comments.add_comment([cls.bug], "Hello World", cls.tester)
+        _ = comments.add_comment([cls.bug], "Happy Testing", UserFactory())
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Bug.get_comments(self.bug.pk)
+        self.assertEqual(len(result), 2)
+
+        for comment in result:
+            self.assertIn("id", comment)
+            self.assertIn(comment["comment"], ("Hello World", "Happy Testing"))
+            self.assertEqual(comment["is_public"], True)
+            self.assertEqual(comment["object_pk"], str(self.bug.pk))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.get_comments"'
+        ):
+            self.rpc_client.Bug.get_comments(self.bug.pk)

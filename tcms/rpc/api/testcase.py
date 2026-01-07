@@ -531,7 +531,7 @@ def comments(case_id):
         :param case_id: PK of a TestCase object
         :type case_id: int
         :return: Serialized list of :class:`django_comments.models.Comment` objects
-        :rtype: list
+        :rtype: list(dict)
         :raises PermissionDenied: if missing *django_comments.view_comment* permission
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
