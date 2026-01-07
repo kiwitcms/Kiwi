@@ -6,6 +6,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.bugs.forms import NewBugFromRPCForm, SeverityForm
 from tcms.bugs.models import Bug, Severity
+from tcms.core.helpers import comments
 from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
 
@@ -237,3 +238,24 @@ def severity_create(values):
         return model_to_dict(severity)
 
     raise ValueError(list(form.errors.items()))
+
+
+@permissions_required("django_comments.view_comment")
+@rpc_method(name="Bug.get_comments")
+def get_comments(bug_id):
+    """
+    .. function:: RPC Bug.get_comments(bug_id)
+
+        Get all comments for selected Bug.
+
+        :param bug_id: PK of a Bug object
+        :type bug_id: int
+        :return: Serialized :class:`django_comments.models.Comment` object
+        :rtype: list(dict)
+        :raises PermissionDenied: if missing *django_comments.view_comment* permission
+
+    .. versionadded:: 15.3
+    """
+    bug = Bug.objects.get(pk=bug_id)
+    result = comments.get_comments(bug).values()
+    return list(result)
