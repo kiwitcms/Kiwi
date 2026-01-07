@@ -11,14 +11,14 @@ from django.utils import timezone
 from django_comments.models import Comment
 
 
-def add_comment(objs, comments, user, submit_date=None):
+def add_comment(objs, comment_text, user, submit_date=None):
     """
     Add django.comment for an object.
 
     :param objs: List of object to which to add comments
     :type objs: list
-    :param comments: The commentary
-    :type comments: str
+    :param comment_text: The commentary
+    :type comment_text: str
     :param user: Who is adding this
     :type user: A User model
     :param submit_date: A time stamp
@@ -33,8 +33,8 @@ def add_comment(objs, comments, user, submit_date=None):
         testuser = User.objects.get(email='user@example.com')
         from tcms.testruns.models import TestExecution
         testrun = TestExecution.objects.get(pk=171675)
-        comments = 'stupid comments by Homer'
-        add_comment([testrun,], comments, testuser)
+        comment_text = 'stupid comments by Homer'
+        add_comment([testrun,], comment_text, testuser)
     """
     site = Site.objects.get(pk=settings.SITE_ID)
     created = []
@@ -45,7 +45,7 @@ def add_comment(objs, comments, user, submit_date=None):
             site=site,
             object_pk=obj.pk,
             user=user,
-            comment=comments,
+            comment=comment_text,
             submit_date=submit_date or timezone.now(),
             user_email=user.email,
             user_name=user.username,
