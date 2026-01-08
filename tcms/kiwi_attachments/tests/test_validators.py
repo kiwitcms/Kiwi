@@ -28,7 +28,9 @@ class TestValidators(APITestCase):
 
     @parameterized.expand(
         [
-            "svg_with_onload_attribute.svg",
+            "svg_with_onload_attribute_01.svg",
+            "svg_with_onload_attribute_02.svg",
+            "svg_with_onload_attribute_03.svg",
         ]
     )
     def test_uploading_svg_with_forbidden_attributes_should_fail(self, file_name):
