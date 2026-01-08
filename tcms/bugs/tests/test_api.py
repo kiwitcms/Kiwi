@@ -481,3 +481,24 @@ class BugAddCommentFromSuperUser(TestBugAddComment):
         self.assertEqual(result["object_pk"], self.bug.pk)
         self.assertEqual(result["user"], new_user.pk)
         self.assertEqual(result["submit_date"], datetime(2026, 1, 4, 0, 0, 0))
+
+
+class TestBugListAttachments(APIPermissionsTestCase):
+    permission_label = "attachments.view_attachment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.bug = BugFactory()
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.Bug.list_attachments(self.bug.pk)
+        self.assertEqual(len(result), 0)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "Bug.list_attachments"',
+        ):
+            self.rpc_client.Bug.list_attachments(self.bug.pk)
