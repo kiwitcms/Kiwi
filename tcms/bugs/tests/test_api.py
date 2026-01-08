@@ -3,6 +3,7 @@
 import unittest
 from datetime import datetime, timedelta
 
+from attachments.models import Attachment
 from django.conf import settings
 from django.utils import timezone
 
@@ -17,6 +18,7 @@ from tcms.bugs.tests.factory import BugFactory  # noqa: E402
 from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase  # noqa: E402
 from tcms.rpc.tests.utils import APITestCase
+from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import BuildFactory  # noqa: E402
 from tcms.tests.factories import TagFactory  # noqa: E402
 from tcms.tests.factories import UserFactory  # noqa: E402
@@ -483,6 +485,36 @@ class BugAddCommentFromSuperUser(TestBugAddComment):
         self.assertEqual(result["submit_date"], datetime(2026, 1, 4, 0, 0, 0))
 
 
+class TestBugAddAttachment(APIPermissionsTestCase):
+    permission_label = "attachments.add_attachment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.bug = BugFactory()
+
+    def verify_api_with_permission(self):
+        file_name = "report.txt"
+        self.rpc_client.Bug.add_attachment(self.bug.pk, file_name, "a2l3aXRjbXM=")
+        result = Attachment.objects.attachments_for_object(self.bug)
+        self.assertEqual(1, len(result))
+
+        attachment = result[0]
+        file_url = attachment.attachment_file.url
+        self.assertTrue(file_url.startswith("/uploads/attachments/bugs_bug/"))
+        self.assertTrue(file_url.endswith(file_name))
+        self.assertEqual(attachment.creator, self.tester)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.add_attachment"'
+        ):
+            self.rpc_client.Bug.add_attachment(
+                self.bug.pk, "attachment.txt", "a2l3aXRjbXM="
+            )
+
+
 class TestBugListAttachments(APIPermissionsTestCase):
     permission_label = "attachments.view_attachment"
 
@@ -493,8 +525,14 @@ class TestBugListAttachments(APIPermissionsTestCase):
         cls.bug = BugFactory()
 
     def verify_api_with_permission(self):
+        user_should_have_perm(self.tester, "attachments.add_attachment")
+        self.rpc_client.Bug.add_attachment(
+            self.bug.pk, "bug_report.txt", "a2l3aXRjbXM="
+        )
+        remove_perm_from_user(self.tester, "attachments.add_attachment")
+
         result = self.rpc_client.Bug.list_attachments(self.bug.pk)
-        self.assertEqual(len(result), 0)
+        self.assertEqual(len(result), 1)
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(

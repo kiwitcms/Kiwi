@@ -303,6 +303,32 @@ def add_comment(bug_id, comment, user_id=None, submit_date=None, **kwargs):
     return model_to_dict(created[0])
 
 
+@permissions_required("attachments.add_attachment")
+@rpc_method(name="Bug.add_attachment")
+def add_attachment(bug_id, filename, b64content, **kwargs):
+    """
+    .. function:: RPC Bug.add_attachment(bug_id, filename, b64content)
+
+        Add attachment to the given Bug.
+
+        :param bug_id: PK of Bug
+        :type bug_id: int
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+    """
+    utils.add_attachment(
+        bug_id,
+        "bugs.Bug",
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content,
+    )
+
+
 @permissions_required("attachments.view_attachment")
 @rpc_method(name="Bug.list_attachments")
 def list_attachments(bug_id, **kwargs):
