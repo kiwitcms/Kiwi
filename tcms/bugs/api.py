@@ -9,6 +9,7 @@ from tcms.bugs.forms import NewBugFromRPCForm, SeverityForm
 from tcms.bugs.models import Bug, Severity
 from tcms.core.helpers import comments
 from tcms.management.models import Tag
+from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
 
 
@@ -300,3 +301,26 @@ def add_comment(bug_id, comment, user_id=None, submit_date=None, **kwargs):
     created = comments.add_comment([bug], comment, comment_author, submit_date)
     # we always create only one comment
     return model_to_dict(created[0])
+
+
+@permissions_required("attachments.view_attachment")
+@rpc_method(name="Bug.list_attachments")
+def list_attachments(bug_id, **kwargs):
+    """
+    .. function:: RPC Bug.list_attachments(bug_id)
+
+        List attachments for the given Bug.
+
+        :param bug_id: PK of Bug to inspect
+        :type bug_id: int
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: A list containing information and download URLs for attachements
+        :rtype: list
+        :raises Bug.DoesNotExist: if object specified by PK is missing
+
+    .. versionadded:: 15.3
+    """
+    bug = Bug.objects.get(pk=bug_id)
+    request = kwargs.get(REQUEST_KEY)
+    return utils.get_attachments_for(request, bug)
