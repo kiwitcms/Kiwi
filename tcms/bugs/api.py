@@ -2,7 +2,6 @@
 
 from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
-from django.utils import timezone
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.bugs.forms import NewBugFromRPCForm, SeverityForm
@@ -162,11 +161,6 @@ def create(values, **kwargs):
 
     if not values.get("reporter"):
         values["reporter"] = kwargs.get(REQUEST_KEY).user.pk
-
-    # although this field is required=False when not present Django
-    # cannot deal with a NULL value so we set it to the current timestamp
-    if "created_at" not in values:
-        values["created_at"] = timezone.now().isoformat()
 
     form = NewBugFromRPCForm(values)
     if form.is_valid():

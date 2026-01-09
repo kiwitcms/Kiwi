@@ -268,9 +268,7 @@ class TestBugCreateOverrideSomeValues(TestBugCreate):
                 "build": build.pk,
                 "severity": severity.pk,
                 # values below are overriden
-                "created_at": datetime.strptime(
-                    "2026-01-04 00:00:00", "%Y-%m-%d %H:%M:%S"
-                ),
+                "created_at": "2026-01-04 00:00:00",
                 # status is not provided, should default to True
                 # reporter not provided, should be self.tester
             }
