@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.utils import ErrorList
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -8,6 +9,14 @@ class DateTimeField(forms.DateTimeField):
     default_error_messages = {
         "invalid": _("Invalid date format. Expected YYYY-MM-DD [HH:MM:SS].")
     }
+
+
+class DateTimeFieldWithDefault(DateTimeField):
+    def to_python(self, value):
+        if value in self.empty_values:
+            value = timezone.now()
+
+        return super().to_python(value)
 
 
 class UpdateModelFormMixin:  # pylint: disable=too-few-public-methods

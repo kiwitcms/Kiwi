@@ -1,7 +1,7 @@
 from django import forms
 
 from tcms.core.forms.fields import UserField
-from tcms.rpc.api.forms import UpdateModelFormMixin
+from tcms.rpc.api.forms import DateTimeFieldWithDefault, UpdateModelFormMixin
 from tcms.testcases.models import (
     BugSystem,
     Category,
@@ -12,6 +12,8 @@ from tcms.testcases.models import (
 
 
 class NewForm(forms.ModelForm):
+    create_date = DateTimeFieldWithDefault(required=False)
+
     class Meta:
         model = TestCase
         exclude = (  # pylint: disable=modelform-uses-exclude
