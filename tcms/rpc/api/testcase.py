@@ -233,6 +233,13 @@ def create(values, **kwargs):
 
     if form.is_valid():
         test_case = form.save()
+
+        # auto_now_add will *always* set current date! see:
+        # https://docs.djangoproject.com/en/6.0/ref/models/fields/#django.db.models.DateField.auto_now_add
+        if "create_date" in form.cleaned_data:
+            test_case.create_date = form.cleaned_data["create_date"]
+            test_case.save()
+
         result = model_to_dict(test_case, exclude=["component", "plan", "tag"])
         # b/c date is added in the DB layer and model_to_dict() doesn't return it
         result["create_date"] = test_case.create_date

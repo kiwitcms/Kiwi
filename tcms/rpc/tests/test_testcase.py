@@ -2,12 +2,13 @@
 # pylint: disable=attribute-defined-outside-init,too-many-lines
 
 import unittest
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import tcms_api
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from parameterized import parameterized
 
 from tcms.core.helpers import comments
@@ -583,7 +584,7 @@ class TestUpdate(APITestCase):
         self.assertEqual(initial_reviewer_email, self.testcase.reviewer.email)
 
 
-class TestCreate(APITestCase):
+class TestCaseCreate(APITestCase):
     @classmethod
     def _fixture_setup(cls):
         super()._fixture_setup()
@@ -604,17 +605,15 @@ class TestCreate(APITestCase):
             }
         )
 
-        tc_from_db = TestCase.objects.get(
-            summary=result["summary"], text=result["text"]
-        )
-
-        self.assertEqual(result["id"], tc_from_db.pk)
+        tc_from_db = TestCase.objects.get(pk=result["id"])
         # author field is auto-configured if not passed
         self.assertEqual(result["author"], tc_from_db.author.pk)
         self.assertEqual(self.api_user, tc_from_db.author)
 
         self.assertIn("arguments", result)
         self.assertIn("create_date", result)
+        self.assertGreater(result["create_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["create_date"], timezone.now() + timedelta(seconds=1))
         self.assertIn("default_tester", result)
         self.assertIn("extra_link", result)
         self.assertIn("is_automated", result)
@@ -644,10 +643,28 @@ class TestCreate(APITestCase):
             }
         )
 
-        tc_from_db = TestCase.objects.get(summary=result["summary"], author=new_author)
+        tc_from_db = TestCase.objects.get(pk=result["id"])
 
         self.assertEqual(result["id"], tc_from_db.pk)
         self.assertEqual(new_author, tc_from_db.author)
+
+    def test_create_date_can_be_specified(self):
+        result = self.rpc_client.TestCase.create(
+            {
+                "summary": "TC via API with author",
+                "case_status": TestCaseStatus.objects.last().pk,
+                "priority": Priority.objects.last().pk,
+                "category": Category.objects.last().pk,
+                "create_date": "2026-01-06 20:30:00",
+            }
+        )
+        # create_date can be specified too
+        self.assertEqual(result["create_date"], datetime(2026, 1, 6, 20, 30, 0))
+
+        tc_from_db = TestCase.objects.get(pk=result["id"])
+
+        self.assertEqual(result["id"], tc_from_db.pk)
+        self.assertEqual(result["create_date"], tc_from_db.create_date)
 
     def test_fails_when_mandatory_fields_not_specified(self):
         with self.assertRaises(XmlRPCFault):
