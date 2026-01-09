@@ -1,4 +1,4 @@
-# Copyright (c) 2019,2022,2025 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019,2022,2025-2026 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -9,7 +9,7 @@ from tcms.bugs.models import Bug, Severity
 from tcms.core.forms.fields import UserField
 from tcms.core.widgets import SimpleMDE
 from tcms.management.models import Build, Version
-from tcms.rpc.api.forms import DateTimeField
+from tcms.rpc.api.forms import DateTimeFieldWithDefault
 
 
 class NewBugForm(forms.ModelForm):
@@ -66,7 +66,7 @@ Additional info:"""
 
 
 class NewBugFromRPCForm(forms.ModelForm):
-    created_at = DateTimeField(required=False)
+    created_at = DateTimeFieldWithDefault(required=False)
 
     class Meta:
         model = Bug
