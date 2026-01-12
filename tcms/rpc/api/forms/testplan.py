@@ -1,8 +1,12 @@
 from django import forms
 
-from tcms.rpc.api.forms import UpdateModelFormMixin
+from tcms.rpc.api.forms import DateTimeFieldWithDefault, UpdateModelFormMixin
 from tcms.testplans.forms import NewPlanForm
 from tcms.testplans.models import PlanType
+
+
+class NewPlanAPIForm(NewPlanForm):
+    create_date = DateTimeFieldWithDefault(required=False)
 
 
 class EditPlanForm(

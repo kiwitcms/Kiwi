@@ -6,7 +6,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
-from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanForm
+from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanAPIForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.models import TestPlan
@@ -49,11 +49,17 @@ def create(values, **kwargs):
     if not values.get("is_active"):
         values["is_active"] = True
 
-    form = NewPlanForm(values)
+    form = NewPlanAPIForm(values)
     form.populate(product_id=values["product"])
 
     if form.is_valid():
         test_plan = form.save()
+        # auto_now_add will *always* set current date! see:
+        # https://docs.djangoproject.com/en/6.0/ref/models/fields/#django.db.models.DateField.auto_now_add
+        if "create_date" in form.cleaned_data:
+            test_plan.create_date = form.cleaned_data["create_date"]
+            test_plan.save()
+
         result = model_to_dict(test_plan, exclude=["tag"])
 
         # b/c value is set in the DB directly and if None
