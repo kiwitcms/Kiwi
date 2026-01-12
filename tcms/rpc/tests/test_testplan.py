@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
+from datetime import datetime, timedelta
+
 import tcms_api
 from attachments.models import Attachment
 from django.contrib.auth.models import Permission
 from django.test import override_settings
+from django.utils import timezone
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import TestCasePlan
@@ -338,7 +341,7 @@ class TestCreate(APITestCase):
                 }
             )
 
-    def test_create_plan_with_different_user(self):
+    def test_create_plan_with_overriden_author(self):
         product = ProductFactory()
         version = VersionFactory(product=product)
         plan_type = PlanTypeFactory()
@@ -358,7 +361,8 @@ class TestCreate(APITestCase):
         self.assertIn("id", result)
         self.assertEqual(params["name"], result["name"])
         self.assertEqual(params["text"], result["text"])
-        self.assertIn("create_date", result)
+        self.assertGreater(result["create_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["create_date"], timezone.now() + timedelta(seconds=1))
         self.assertTrue(result["is_active"])
         self.assertIn("extra_link", result)
         self.assertEqual(params["product_version"], result["product_version"])
@@ -366,6 +370,24 @@ class TestCreate(APITestCase):
         self.assertEqual(user.pk, result["author"])
         self.assertEqual(params["type"], result["type"])
         self.assertEqual(params["parent"], result["parent"])
+
+    def test_create_plan_with_overriden_create_date(self):
+        product = ProductFactory()
+        version = VersionFactory(product=product)
+        plan_type = PlanTypeFactory()
+
+        params = {
+            "product": product.pk,
+            "product_version": version.pk,
+            "name": "test plan with overriden create_date",
+            "type": plan_type.pk,
+            "text": "Testing TCMS",
+            "parent": None,
+            "create_date": "2026-01-06 20:30:00",
+        }
+        result = self.rpc_client.TestPlan.create(params)
+
+        self.assertEqual(result["create_date"], datetime(2026, 1, 6, 20, 30, 0))
 
 
 class TestCreatePermission(APIPermissionsTestCase):
@@ -389,6 +411,7 @@ class TestCreatePermission(APIPermissionsTestCase):
 
     def verify_api_with_permission(self):
         result = self.rpc_client.TestPlan.create(self.params)
+        self.assertEqual(self.tester.pk, result["author"])
         self.assertEqual(self.params["product"], result["product"])
         self.assertEqual(self.params["product_version"], result["product_version"])
         self.assertEqual(self.params["name"], result["name"])
@@ -396,6 +419,8 @@ class TestCreatePermission(APIPermissionsTestCase):
         self.assertEqual(self.params["text"], result["text"])
         self.assertEqual(self.params["parent"], result["parent"])
         self.assertEqual(self.tester.pk, result["author"])
+        self.assertGreater(result["create_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["create_date"], timezone.now() + timedelta(seconds=1))
 
         # verify object from DB
         testplan = TestPlan.objects.get(name=self.params["name"])
