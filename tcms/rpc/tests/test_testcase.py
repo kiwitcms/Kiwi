@@ -853,7 +853,7 @@ class TestRemoveComponent(APITestCase):
             self.rpc_client.TestCase.remove_component(-1, -1)
 
 
-class TestAddCommentPermissions(APIPermissionsTestCase):
+class TestCaseAddCommentFromRegularUser(APIPermissionsTestCase):
     permission_label = "django_comments.add_comment"
 
     @classmethod
@@ -865,6 +865,17 @@ class TestAddCommentPermissions(APIPermissionsTestCase):
     def verify_api_with_permission(self):
         created_comment = self.rpc_client.TestCase.add_comment(
             self.case.pk, "Hello World!"
+        )
+
+        self.assertEqual(created_comment["comment"], "Hello World!")
+        self.assertEqual(created_comment["is_public"], True)
+        self.assertEqual(created_comment["object_pk"], self.case.pk)
+        self.assertEqual(created_comment["user"], self.tester.pk)
+        self.assertGreater(
+            created_comment["submit_date"], timezone.now() - timedelta(seconds=5)
+        )
+        self.assertLess(
+            created_comment["submit_date"], timezone.now() + timedelta(seconds=1)
         )
 
         result = comments.get_comments(self.case)
@@ -879,6 +890,36 @@ class TestAddCommentPermissions(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "TestCase.add_comment"'
         ):
             self.rpc_client.TestCase.add_comment(self.case.pk, "Hello World!")
+
+
+class TestCaseAddCommentFromSuperUser(TestCaseAddCommentFromRegularUser):
+    def verify_api_with_permission(self):
+        self.tester.is_superuser = True
+        self.tester.save()
+
+        new_user = UserFactory()
+
+        # try overriding comment author
+        result = self.rpc_client.TestCase.add_comment(
+            self.case.pk, "Hello World", new_user.pk
+        )
+
+        self.assertEqual(result["comment"], "Hello World")
+        self.assertEqual(result["is_public"], True)
+        self.assertEqual(result["object_pk"], self.case.pk)
+        self.assertEqual(result["user"], new_user.pk)
+        self.assertGreater(result["submit_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["submit_date"], timezone.now() + timedelta(seconds=1))
+
+        # try overriding comment submit_date
+        result = self.rpc_client.TestCase.add_comment(
+            self.case.pk, "Happy Testing", new_user.pk, datetime(2026, 1, 4, 0, 0, 0)
+        )
+
+        self.assertEqual(result["comment"], "Happy Testing")
+        self.assertEqual(result["object_pk"], self.case.pk)
+        self.assertEqual(result["user"], new_user.pk)
+        self.assertEqual(result["submit_date"], datetime(2026, 1, 4, 0, 0, 0))
 
 
 class TestAddComment(APITestCase):

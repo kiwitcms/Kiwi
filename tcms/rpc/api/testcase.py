@@ -2,6 +2,7 @@
 
 from datetime import timedelta
 
+from django.contrib.auth import get_user_model
 from django.db.models.functions import Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
@@ -475,7 +476,7 @@ def add_attachment(case_id, filename, b64content, **kwargs):
 
 @permissions_required("django_comments.add_comment")
 @rpc_method(name="TestCase.add_comment")
-def add_comment(case_id, comment, **kwargs):
+def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
     """
     .. function:: TestCase.add_comment(case_id, comment)
 
@@ -485,6 +486,10 @@ def add_comment(case_id, comment, **kwargs):
         :type case_id: int
         :param comment: The text to add as a comment
         :type comment: str
+        :param user_id: Override comment ``user`` field. Only super-user can use this!
+        :type user_id: int
+        :param submit_date: Override comment ``submit_date`` field. Only super-user can use this!
+        :type submit_date: datetime.datetime
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django_comments.models.Comment` object
@@ -497,9 +502,18 @@ def add_comment(case_id, comment, **kwargs):
             In webUI comments are only shown **only** during test case review!
     """
     case = TestCase.objects.get(pk=case_id)
-    created = helpers.comments.add_comment(
-        [case], comment, kwargs.get(REQUEST_KEY).user
-    )
+
+    request_user = kwargs.get(REQUEST_KEY).user
+
+    comment_author = request_user
+    if user_id and request_user.is_superuser:
+        comment_author = get_user_model().objects.get(pk=user_id)
+
+    # only super-user can override this
+    if not request_user.is_superuser:
+        submit_date = None
+
+    created = helpers.comments.add_comment([case], comment, comment_author, submit_date)
     # we always create only one comment
     return model_to_dict(created[0])
 
