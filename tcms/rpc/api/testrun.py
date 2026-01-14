@@ -373,6 +373,30 @@ def properties(query=None):
     )
 
 
+@permissions_required("testruns.add_property")
+@rpc_method(name="TestRun.add_property")
+def add_property(run_id, name, value):
+    """
+    .. function:: TestRun.add_property(run_id, name, value)
+
+        Add property to TestRun! Duplicates are skipped without errors.
+
+        :param run_id: Primary key for :class:`tcms.testruns.models.TestRun`
+        :type run_id: int
+        :param name: Name of the property
+        :type name: str
+        :param value: Value of the property
+        :type value: str
+        :return: Serialized :class:`tcms.testruns.models.Property` object.
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.add_property* permission
+
+    .. versionadded:: 15.3
+    """
+    prop, _ = Property.objects.get_or_create(run_id=run_id, name=name, value=value)
+    return model_to_dict(prop)
+
+
 @permissions_required("attachments.view_attachment")
 @rpc_method(name="TestRun.list_attachments")
 def list_attachments(run_id, **kwargs):
