@@ -389,12 +389,10 @@ class TestCreatePermission(APIPermissionsTestCase):
             "build": cls.build.pk,
             "summary": "TR created",
             "manager": UserFactory().pk,
-            "start_date": datetime.strptime("2020-05-05", "%Y-%m-%d"),
-            "stop_date": datetime.strptime("2020-05-05 00:00:00", "%Y-%m-%d %H:%M:%S"),
-            "planned_start": datetime.strptime(
-                "2020-05-05 09:00:00", "%Y-%m-%d %H:%M:%S"
-            ),
-            "planned_stop": datetime.strptime("2020-05-06", "%Y-%m-%d"),
+            "start_date": "2020-05-05",
+            "stop_date": "2020-05-05 10:00:00",
+            "planned_start": "2020-05-05 09:00:00",
+            "planned_stop": "2020-05-06",
         }
 
     def verify_api_with_permission(self):
@@ -406,10 +404,19 @@ class TestCreatePermission(APIPermissionsTestCase):
         self.assertIn("id", result)
         self.assertEqual(result["summary"], self.test_run_fields["summary"])
         self.assertIn("notes", result)
-        self.assertEqual(result["stop_date"], test_run.stop_date)
+
+        self.assertEqual(result["start_date"], datetime(2020, 5, 5))
         self.assertEqual(result["start_date"], test_run.start_date)
+
+        self.assertEqual(result["stop_date"], test_run.stop_date)
+        self.assertEqual(result["stop_date"], datetime(2020, 5, 5, 10, 0, 0))
+
         self.assertEqual(result["planned_start"], test_run.planned_start)
+        self.assertEqual(result["planned_start"], datetime(2020, 5, 5, 9, 0, 0))
+
         self.assertEqual(result["planned_stop"], test_run.planned_stop)
+        self.assertEqual(result["planned_stop"], datetime(2020, 5, 6))
+
         self.assertEqual(result["plan"], self.plan.pk)
         self.assertEqual(result["build"], self.build.pk)
         self.assertEqual(result["manager"], self.test_run_fields["manager"])
@@ -420,6 +427,35 @@ class TestCreatePermission(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "TestRun.create"'
         ):
             self.rpc_client.TestRun.create(self.test_run_fields)
+
+
+class TestCreateWithoutTimestamps(TestCreatePermission):
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestRun.create(
+            {
+                "plan": self.plan.pk,
+                "build": self.build.pk,
+                "summary": "TR created without timestamps",
+                "manager": UserFactory().pk,
+                # not specifying on purpose
+                # start_date, stop_date, planned_start, planned_stop
+            }
+        )
+
+        run_id = result["id"]
+        test_run = TestRun.objects.get(pk=run_id)
+
+        self.assertIsNone(result["start_date"])
+        self.assertIsNone(test_run.start_date)
+
+        self.assertIsNone(result["stop_date"])
+        self.assertIsNone(test_run.stop_date)
+
+        self.assertIsNone(result["planned_start"])
+        self.assertIsNone(test_run.planned_start)
+
+        self.assertIsNone(result["planned_stop"])
+        self.assertIsNone(test_run.planned_stop)
 
 
 class TestFilter(APITestCase):
