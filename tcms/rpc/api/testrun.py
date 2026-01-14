@@ -373,6 +373,29 @@ def properties(query=None):
     )
 
 
+@permissions_required("attachments.view_attachment")
+@rpc_method(name="TestRun.list_attachments")
+def list_attachments(run_id, **kwargs):
+    """
+    .. function:: RPC TestRun.list_attachments(run_id)
+
+        List attachments for the given TestRun.
+
+        :param run_id: PK of TestRun to inspect
+        :type run_id: int
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: A list containing information and download URLs for attachements
+        :rtype: list
+        :raises TestRun.DoesNotExit: if object specified by PK is missing
+
+    .. versionadded:: 15.3
+    """
+    run = TestRun.objects.get(pk=run_id)
+    request = kwargs.get(REQUEST_KEY)
+    return utils.get_attachments_for(request, run)
+
+
 @permissions_required("attachments.add_attachment")
 @rpc_method(name="TestRun.add_attachment")
 def add_attachment(run_id, filename, b64content, **kwargs):
