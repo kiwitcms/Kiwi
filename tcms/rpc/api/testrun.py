@@ -207,11 +207,7 @@ def create(values, **kwargs):
 
     if form.is_valid():
         test_run = form.save()
-        result = model_to_dict(test_run, exclude=["cc", "tag"])
-        # b/c value is set in the DB directly and if None
-        # model_to_dict() will not return it
-        result["start_date"] = test_run.start_date
-        return result
+        return model_to_dict(test_run, exclude=["cc", "tag"])
 
     raise ValueError(list(form.errors.items()))
 
