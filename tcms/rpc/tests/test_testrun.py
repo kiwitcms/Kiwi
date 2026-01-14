@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import TestCaseStatus
 from tcms.testruns.models import TestExecution, TestRun
-from tcms.tests import remove_perm_from_user
+from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
     ProductFactory,
@@ -654,6 +654,41 @@ class TestUpdatePermission(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "TestRun.update"'
         ):
             self.rpc_client.TestRun.update(self.test_run.pk, self.update_fields)
+
+
+class TestListAttachmentsPermissions(APIPermissionsTestCase):
+    permission_label = "attachments.view_attachment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.test_run = TestRunFactory()
+
+    def verify_api_with_permission(self):
+        user_should_have_perm(self.tester, "attachments.add_attachment")
+        self.rpc_client.TestRun.add_attachment(
+            self.test_run.pk, "attachment.txt", "a2l3aXRjbXM="
+        )
+        remove_perm_from_user(self.tester, "attachments.add_attachment")
+
+        attachments = self.rpc_client.TestRun.list_attachments(self.test_run.pk)
+        self.assertEqual(1, len(attachments))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestRun.list_attachments"',
+        ):
+            self.rpc_client.TestRun.list_attachments(self.test_run.pk)
+
+
+class TestListAttachmentsForUnknownId(TestListAttachmentsPermissions):
+    def verify_api_with_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestRun matching query does not exist"
+        ):
+            self.rpc_client.TestRun.list_attachments(-1)
 
 
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
