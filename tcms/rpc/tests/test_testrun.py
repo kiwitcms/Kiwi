@@ -744,3 +744,37 @@ class TestRemovePermissions(APIPermissionsTestCase):
 
         self.assertTrue(TestRun.objects.filter(**self.query).exists())
         self.assertTrue(TestRun.objects.filter(pk=self.run_2.pk).exists())
+
+
+class TestRunAddProperty(APIPermissionsTestCase):
+    permission_label = "testruns.add_property"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.test_run = TestRunFactory()
+
+    def verify_api_with_permission(self):
+        result1 = self.rpc_client.TestRun.add_property(
+            self.test_run.pk, "browser", "Firefox"
+        )
+
+        self.assertEqual(result1["run"], self.test_run.pk)
+        self.assertEqual(result1["name"], "browser")
+        self.assertEqual(result1["value"], "Firefox")
+
+        # try adding again - should return existing value
+        result2 = self.rpc_client.TestRun.add_property(
+            self.test_run.pk, "browser", "Firefox"
+        )
+        self.assertEqual(result2["id"], result1["id"])
+        self.assertEqual(result2["run"], self.test_run.pk)
+        self.assertEqual(result2["name"], "browser")
+        self.assertEqual(result2["value"], "Firefox")
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestRun.add_property"'
+        ):
+            self.rpc_client.TestRun.add_property(self.test_run.pk, "browser", "Chrome")
