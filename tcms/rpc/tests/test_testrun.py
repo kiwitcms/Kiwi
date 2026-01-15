@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testcases.models import TestCaseStatus
-from tcms.testruns.models import TestExecution, TestRun
+from tcms.testruns.models import TestExecution, TestRun, TestRunCC
 from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
@@ -778,3 +778,36 @@ class TestRunAddProperty(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "TestRun.add_property"'
         ):
             self.rpc_client.TestRun.add_property(self.test_run.pk, "browser", "Chrome")
+
+
+class TestRunGetCC(APIPermissionsTestCase):
+    permission_label = "testruns.view_testrun"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.test_run = TestRunFactory()
+        cls.user = UserFactory()
+
+        TestRunCC.objects.get_or_create(
+            run=cls.test_run,
+            user=cls.user,
+        )
+
+        TestRunCC.objects.get_or_create(
+            run=cls.test_run,
+            user=cls.tester,
+        )
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestRun.get_cc(self.test_run.pk)
+        self.assertIn(self.user.email, result)
+        self.assertIn(self.tester.email, result)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestRun.get_cc"',
+        ):
+            self.rpc_client.TestRun.get_cc(self.test_run.pk)
