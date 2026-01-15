@@ -464,3 +464,22 @@ def remove(query):
     .. versionadded:: 13.5
     """
     return TestRun.objects.filter(**query).delete()
+
+
+@permissions_required("testruns.view_testrun")
+@rpc_method(name="TestRun.get_cc")
+def get_cc(run_id):
+    """
+    .. function:: RPC TestRun.get_cc(run_id)
+
+        Return CC list for specified TestRun
+
+        :param run_id: PK of TestRun
+        :type run_id: int
+        :return: List of email addresses
+        :rtype: list(str)
+        :raises TestRun.DoesNotExist: if object doesn't exist
+
+    .. versionadded:: 15.3
+    """
+    return list(TestRun.objects.get(pk=run_id).cc.values_list("email", flat=True))
