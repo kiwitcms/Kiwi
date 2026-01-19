@@ -16,7 +16,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": str(TEMP_DIR / "kiwi.devel.sqlite"),  # noqa: F405
         "USER": "root",
-        "PASSWORD": "",
+        "PASSWORD": "",  # nosec:B105:hardcoded_password_string
         "HOST": "",
         "PORT": "",
     }

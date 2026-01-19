@@ -22,7 +22,7 @@ class BugTrackerCreate(APIPermissionsTestCase):
                 "base_url": "http://example.com/bugzilla/",
                 "api_url": "http://example.com/bugzilla/xmlrpc.cgi",
                 "api_username": "bugzilla-bot",
-                "api_password": "this-is-secret",
+                "api_password": "this-is-secret",  # nosec:B105:hardcoded_password_string
             }
         )
 
@@ -71,7 +71,7 @@ class BugTrackerCreate(APIPermissionsTestCase):
                     "tracker_type": "tcms.issuetracker.types.JIRA",
                     "base_url": "https://kiwitcms.atlassian.net",
                     "api_username": "hello-world",
-                    "api_password": "this-is-secret",
+                    "api_password": "this-is-secret",  # nosec:B105:hardcoded_password_string
                 }
             )
 
