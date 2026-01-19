@@ -43,6 +43,17 @@ class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
     start_date = DateTimeField()
 
 
+class NewExecutionForm(forms.ModelForm):
+    class Meta:
+        model = TestExecution
+        fields = "__all__"
+
+    assignee = UserField(required=False)
+    tested_by = UserField(required=False)
+    stop_date = DateTimeField(required=False)
+    start_date = DateTimeField(required=False)
+
+
 class UserForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     user = UserField()
 
