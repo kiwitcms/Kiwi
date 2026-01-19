@@ -13,7 +13,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
-from tcms.rpc.api.forms.testrun import UpdateExecutionForm
+from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.testruns.models import TestExecution, TestExecutionProperty
@@ -444,3 +444,31 @@ def add_attachment(execution_id, filename, b64content, **kwargs):
         filename,
         b64content,
     )
+
+
+@permissions_required("testruns.add_testexecution")
+@rpc_method(name="TestExecution.create")
+def create(values, **kwargs):
+    """
+    .. function:: RPC TestExecution.create(values)
+
+        Create new TestExecution object and store it in the database.
+
+        :param values: Field values for :class:`tcms.testruns.models.TestExecution`
+        :type values: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: Serialized :class:`tcms.testruns.models.TestExecution` object
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.add_testexecution* permission
+        :raises ValueError: if data validations fail
+
+    .. versionadded:: 15.3
+    """
+    form = NewExecutionForm(values)
+
+    if form.is_valid():
+        test_execution = form.save()
+        return model_to_dict(test_execution)
+
+    raise ValueError(list(form.errors.items()))

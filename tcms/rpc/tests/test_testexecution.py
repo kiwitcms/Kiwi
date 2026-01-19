@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
+# pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used, too-many-lines
 
 import time
 from datetime import datetime, timedelta
@@ -17,7 +17,9 @@ from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
+    TestCaseFactory,
     TestExecutionFactory,
+    TestRunFactory,
     UserFactory,
 )
 from tcms.xmlrpc_wrapper import XmlRPCFault
@@ -960,3 +962,131 @@ class TestAddProperty(APIPermissionsTestCase):
             self.rpc_client.TestExecution.add_property(
                 self.execution.pk, "browser", "Chrome"
             )
+
+
+class TestCreate(APIPermissionsTestCase):
+    permission_label = "testruns.add_testexecution"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.test_run = TestRunFactory()
+        cls.test_case = TestCaseFactory()
+        cls.new_user = UserFactory()
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestExecution.create(
+            {
+                "assignee": self.tester.pk,
+                "tested_by": self.new_user.pk,
+                "case_text_version": 123,
+                "start_date": "2026-01-19 13:00:00",
+                "stop_date": "2026-01-19 13:10:00",
+                "sortkey": 10,
+                "run": self.test_run.pk,
+                "build": self.test_run.build.pk,
+                "case": self.test_case.pk,
+                "status": TestExecutionStatus.objects.first().pk,
+            }
+        )
+
+        self.assertIn("id", result)
+        execution = TestExecution.objects.get(pk=result["id"])
+
+        self.assertEqual(result["assignee"], self.tester.pk)
+        self.assertEqual(result["assignee"], execution.assignee.pk)
+
+        self.assertEqual(result["tested_by"], self.new_user.pk)
+        self.assertEqual(result["tested_by"], execution.tested_by.pk)
+
+        self.assertEqual(result["case_text_version"], 123)
+        self.assertEqual(result["case_text_version"], execution.case_text_version)
+
+        self.assertEqual(result["start_date"], datetime(2026, 1, 19, 13, 0, 0))
+        self.assertEqual(result["start_date"], execution.start_date)
+
+        self.assertEqual(result["stop_date"], datetime(2026, 1, 19, 13, 10, 0))
+        self.assertEqual(result["stop_date"], execution.stop_date)
+
+        self.assertEqual(result["sortkey"], 10)
+        self.assertEqual(result["sortkey"], execution.sortkey)
+
+        self.assertEqual(result["run"], self.test_run.pk)
+        self.assertEqual(result["run"], execution.run.pk)
+
+        self.assertEqual(result["build"], self.test_run.build.pk)
+        self.assertEqual(result["build"], execution.build.pk)
+
+        self.assertEqual(result["case"], self.test_case.pk)
+        self.assertEqual(result["case"], execution.case.pk)
+
+        self.assertEqual(result["status"], execution.status.pk)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestExecution.create"'
+        ):
+            self.rpc_client.TestExecution.create(
+                {
+                    "assignee": self.tester.pk,
+                    "tested_by": self.new_user.pk,
+                    "case_text_version": 123,
+                    "start_date": "2026-01-19 13:00:00",
+                    "stop_date": "2026-01-19 13:10:00",
+                    "sortkey": 10,
+                    "run": self.test_run.pk,
+                    "build": self.test_run.build.pk,
+                    "case": self.test_case.pk,
+                    "status": TestExecutionStatus.objects.first().pk,
+                }
+            )
+
+
+class TestCreateWithEmptyFields(TestCreate):
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestExecution.create(
+            {
+                "case_text_version": 123,
+                "sortkey": 10,
+                "run": self.test_run.pk,
+                "build": self.test_run.build.pk,
+                "case": self.test_case.pk,
+                "status": TestExecutionStatus.objects.last().pk,
+                # note: these fields are deliberately left out
+                # "assignee", "tested_by"
+                # "start_date", "stop_date"
+            }
+        )
+
+        self.assertIn("id", result)
+        execution = TestExecution.objects.get(pk=result["id"])
+
+        self.assertIsNone(result["assignee"])
+        self.assertIsNone(execution.assignee)
+
+        self.assertIsNone(result["tested_by"])
+        self.assertIsNone(execution.tested_by)
+
+        self.assertEqual(result["case_text_version"], 123)
+        self.assertEqual(result["case_text_version"], execution.case_text_version)
+
+        self.assertIsNone(result["start_date"])
+        self.assertIsNone(execution.start_date)
+
+        self.assertIsNone(result["stop_date"])
+        self.assertIsNone(execution.stop_date)
+
+        self.assertEqual(result["sortkey"], 10)
+        self.assertEqual(result["sortkey"], execution.sortkey)
+
+        self.assertEqual(result["run"], self.test_run.pk)
+        self.assertEqual(result["run"], execution.run.pk)
+
+        self.assertEqual(result["build"], self.test_run.build.pk)
+        self.assertEqual(result["build"], execution.build.pk)
+
+        self.assertEqual(result["case"], self.test_case.pk)
+        self.assertEqual(result["case"], execution.case.pk)
+
+        self.assertEqual(result["status"], execution.status.pk)
