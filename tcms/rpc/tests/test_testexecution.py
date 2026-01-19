@@ -923,3 +923,40 @@ class TestAddAttachmentPermissions(APIPermissionsTestCase):
             self.rpc_client.TestExecution.add_attachment(
                 self.execution.pk, "test-output.txt", "a2l3aXRjbXM="
             )
+
+
+class TestAddProperty(APIPermissionsTestCase):
+    permission_label = "testruns.add_testexecutionproperty"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        result1 = self.rpc_client.TestExecution.add_property(
+            self.execution.pk, "browser", "Firefox"
+        )
+
+        self.assertEqual(result1["execution"], self.execution.pk)
+        self.assertEqual(result1["name"], "browser")
+        self.assertEqual(result1["value"], "Firefox")
+
+        # try adding again - should return existing value
+        result2 = self.rpc_client.TestExecution.add_property(
+            self.execution.pk, "browser", "Firefox"
+        )
+        self.assertEqual(result2["id"], result1["id"])
+        self.assertEqual(result2["execution"], self.execution.pk)
+        self.assertEqual(result2["name"], "browser")
+        self.assertEqual(result2["value"], "Firefox")
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.add_property"',
+        ):
+            self.rpc_client.TestExecution.add_property(
+                self.execution.pk, "browser", "Chrome"
+            )
