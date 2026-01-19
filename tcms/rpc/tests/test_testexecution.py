@@ -2,6 +2,7 @@
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
 import time
+from datetime import datetime, timedelta
 
 from attachments.models import Attachment
 from django.forms.models import model_to_dict
@@ -83,8 +84,8 @@ class TestExecutionGetCommentsPermissions(APIPermissionsTestCase):
             self.rpc_client.TestExecution.get_comments(self.execution.pk)
 
 
-class TestExecutionAddComment(APITestCase):
-    """Test TestExecution.add_comment"""
+class TestAddCommentFromRegularUser(APIPermissionsTestCase):
+    permission_label = "django_comments.add_comment"
 
     @classmethod
     def _fixture_setup(cls):
@@ -93,16 +94,65 @@ class TestExecutionAddComment(APITestCase):
         cls.execution_1 = TestExecutionFactory()
         cls.execution_2 = TestExecutionFactory()
 
-    def test_add_comment_with_pk_as_int(self):
+    def verify_api_with_permission(self):
         created_comment = self.rpc_client.TestExecution.add_comment(
             self.execution_2.pk, "Hello World!"
         )
         execution_comments = comments.get_comments(self.execution_2)
         self.assertEqual(1, execution_comments.count())
+        self.assertEqual(created_comment["user"], self.tester.pk)
+        self.assertGreater(
+            created_comment["submit_date"], timezone.now() - timedelta(seconds=5)
+        )
+        self.assertLess(
+            created_comment["submit_date"], timezone.now() + timedelta(seconds=1)
+        )
 
         first_comment = execution_comments.first()
         self.assertEqual("Hello World!", first_comment.comment)
         self.assertEqual(created_comment["comment"], first_comment.comment)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.add_comment"',
+        ):
+            self.rpc_client.TestExecution.add_comment(
+                self.execution_1.pk, "Hello World!"
+            )
+
+
+class TestAddCommentFromSuperUser(TestAddCommentFromRegularUser):
+    def verify_api_with_permission(self):
+        self.tester.is_superuser = True
+        self.tester.save()
+
+        new_user = UserFactory()
+
+        # try overriding comment author
+        result = self.rpc_client.TestExecution.add_comment(
+            self.execution_1.pk, "Hello World", new_user.pk
+        )
+
+        self.assertEqual(result["comment"], "Hello World")
+        self.assertEqual(result["is_public"], True)
+        self.assertEqual(result["object_pk"], self.execution_1.pk)
+        self.assertEqual(result["user"], new_user.pk)
+        self.assertGreater(result["submit_date"], timezone.now() - timedelta(seconds=5))
+        self.assertLess(result["submit_date"], timezone.now() + timedelta(seconds=1))
+
+        # try overriding comment submit_date
+        result = self.rpc_client.TestExecution.add_comment(
+            self.execution_2.pk,
+            "Happy Testing",
+            new_user.pk,
+            datetime(2026, 1, 4, 0, 0, 0),
+        )
+
+        self.assertEqual(result["comment"], "Happy Testing")
+        self.assertEqual(result["object_pk"], self.execution_2.pk)
+        self.assertEqual(result["user"], new_user.pk)
+        self.assertEqual(result["submit_date"], datetime(2026, 1, 4, 0, 0, 0))
 
 
 class TestExecutionRemoveComment(APITestCase):
