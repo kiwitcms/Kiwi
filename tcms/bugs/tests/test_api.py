@@ -21,6 +21,7 @@ from tcms.rpc.tests.utils import APITestCase
 from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import BuildFactory  # noqa: E402
 from tcms.tests.factories import TagFactory  # noqa: E402
+from tcms.tests.factories import TestExecutionFactory  # noqa: E402
 from tcms.tests.factories import UserFactory  # noqa: E402
 
 
@@ -538,3 +539,27 @@ class TestBugListAttachments(APIPermissionsTestCase):
             'Authentication failed when calling "Bug.list_attachments"',
         ):
             self.rpc_client.Bug.list_attachments(self.bug.pk)
+
+
+class TestAddExecution(APIPermissionsTestCase):
+    permission_label = "bugs.add_bug_executions"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.bug = BugFactory()
+        cls.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        self.assertEqual(self.bug.executions.count(), 0)
+
+        self.rpc_client.Bug.add_execution(self.bug.pk, self.execution.pk)
+        self.assertEqual(self.bug.executions.count(), 1)
+        self.assertIn(self.execution, self.bug.executions.all())
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "Bug.add_execution"'
+        ):
+            self.rpc_client.Bug.add_execution(self.bug.pk, self.execution.pk)
