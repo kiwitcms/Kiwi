@@ -88,13 +88,15 @@ class MenuDiscoveryTestCase(TestCase):
 
 class MarkdownPluginTestCase(TestCase):
     def test_markdown_extension_works(self):
-        result = markdown2html("""
+        result = markdown2html(
+            """
 This is the beginning of the text
 ```test-me
 this is going to be discarded
 ```
 this is the end of the text
-            """)
+            """
+        )
 
         self.assertEqual(
             result,

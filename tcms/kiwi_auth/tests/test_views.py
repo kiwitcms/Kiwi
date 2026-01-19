@@ -174,11 +174,16 @@ class TestRegistration(TestCase):
                 "username": "signal-handler",
                 "user_url": f"http://testserver/admin/auth/user/{user.pk}/change/",
             }
-            expected = _("""Dear Administrator,
+            expected = (
+                _(
+                    """Dear Administrator,
 somebody just registered an account with username %(username)s at your
 Kiwi TCMS instance and is awaiting your approval!
 
-Go to %(user_url)s to activate the account!""") % values
+Go to %(user_url)s to activate the account!"""
+                )
+                % values
+            )
             self.assertEqual(
                 expected.strip(), send_mail.call_args_list[0][0][1].strip()
             )
@@ -208,14 +213,20 @@ Go to %(user_url)s to activate the account!""") % values
         expected_subject = settings.EMAIL_SUBJECT_PREFIX + _(
             "Please confirm your Kiwi TCMS account email address"
         )
-        expected_body = _("""Welcome to Kiwi TCMS!
+        expected_body = (
+            _(
+                """Welcome to Kiwi TCMS!
 
 To confirm email address for username `%(user)s` and activate your account
 please follow this URL:
 %(confirm_url)s
 
 Regards,
-Kiwi TCMS""") % values + "\n"
+Kiwi TCMS"""
+            )
+            % values
+            + "\n"
+        )
         send_mail.assert_called_once_with(
             expected_subject,
             expected_body,

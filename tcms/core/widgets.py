@@ -26,9 +26,11 @@ class SimpleMDE(forms.Textarea):
             }
         )
         rendered_string = super().render(name, value, attrs, renderer)
-        rendered_string += SafeString(f"""
+        rendered_string += SafeString(
+            f"""
 <input id="{self.file_upload_id}" type="file" style="display: none">
-""")  # nosec:B703:django_mark_safe
+"""
+        )  # nosec:B703:django_mark_safe
         return rendered_string
 
     class Media:
