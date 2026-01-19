@@ -3,6 +3,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db.models import F
 from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
@@ -28,7 +29,7 @@ else:
 
 @permissions_required("django_comments.add_comment")
 @rpc_method(name="TestExecution.add_comment")
-def add_comment(execution_id, comment, **kwargs):
+def add_comment(execution_id, comment, user_id=None, submit_date=None, **kwargs):
     """
     .. function:: RPC TestExecution.add_comment(execution_id, comment)
 
@@ -38,6 +39,10 @@ def add_comment(execution_id, comment, **kwargs):
         :type execution_id: int
         :param comment: The text to add as a comment
         :type comment: str
+        :param user_id: Override comment ``user`` field. Only super-user can use this!
+        :type user_id: int
+        :param submit_date: Override comment ``submit_date`` field. Only super-user can use this!
+        :type submit_date: datetime.datetime
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
         :return: Serialized :class:`django_comments.models.Comment` object
@@ -45,7 +50,18 @@ def add_comment(execution_id, comment, **kwargs):
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
-    created = comments.add_comment([execution], comment, kwargs.get(REQUEST_KEY).user)
+
+    request_user = kwargs.get(REQUEST_KEY).user
+
+    comment_author = request_user
+    if user_id and request_user.is_superuser:
+        comment_author = get_user_model().objects.get(pk=user_id)
+
+    # only super-user can override this
+    if not request_user.is_superuser:
+        submit_date = None
+
+    created = comments.add_comment([execution], comment, comment_author, submit_date)
     # we always create only one comment
     return model_to_dict(created[0])
 
