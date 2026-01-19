@@ -10,6 +10,7 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
+from tcms.rpc import utils
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
@@ -350,3 +351,54 @@ def remove(query):
         :raises PermissionDenied: if missing *testruns.delete_testexecution* permission
     """
     TestExecution.objects.filter(**query).delete()
+
+
+@permissions_required("attachments.view_attachment")
+@rpc_method(name="TestExecution.list_attachments")
+def list_attachments(execution_id, **kwargs):
+    """
+    .. function:: RPC TestExecution.list_attachments(execution_id)
+
+        List attachments for the given TestExecution.
+
+        :param execution_id: PK of TestExecution to inspect
+        :type execution_id: int
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: A list containing information and download URLs for attachements
+        :rtype: list
+        :raises TestExecution.DoesNotExit: if object specified by PK is missing
+
+    .. versionadded:: 15.3
+    """
+    execution = TestExecution.objects.get(pk=execution_id)
+    request = kwargs.get(REQUEST_KEY)
+    return utils.get_attachments_for(request, execution)
+
+
+@permissions_required("attachments.add_attachment")
+@rpc_method(name="TestExecution.add_attachment")
+def add_attachment(execution_id, filename, b64content, **kwargs):
+    """
+    .. function:: RPC TestExecution.add_attachment(execution_id, filename, b64content)
+
+        Add attachment to the given TestExecution.
+
+        :param execution_id: PK of TestExecution
+        :type execution_id: int
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+
+    .. versionadded:: 15.3
+    """
+    utils.add_attachment(
+        execution_id,
+        "testruns.TestExecution",
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content,
+    )
