@@ -10,6 +10,7 @@ from tcms.core.helpers import comments
 from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
+from tcms.testruns.models import TestExecution
 
 
 @permissions_required("bugs.add_bug_tags")
@@ -344,3 +345,26 @@ def list_attachments(bug_id, **kwargs):
     bug = Bug.objects.get(pk=bug_id)
     request = kwargs.get(REQUEST_KEY)
     return utils.get_attachments_for(request, bug)
+
+
+@permissions_required("bugs.add_bug_executions")
+@rpc_method(name="Bug.add_execution")
+def add_execution(bug_id, execution_id):
+    """
+    .. function:: RPC Bug.add_execution(bug_id, execution_id)
+
+        Add TestExecution to the specified Bug.
+
+        :param bug_id: PK of Bug to modify
+        :type bug_id: int
+        :param execution_id: PK of TestExecution to be added
+        :type execution_id: int
+        :raises PermissionDenied: if missing *bugs.add_bug_executions* permission
+        :raises Bug.DoesNotExist: if object specified by PK doesn't exist
+        :raises TestExecution.DoesNotExist: if object specified by PK doesn't exist
+
+    .. versionadded:: 15.3
+    """
+    bug = Bug.objects.get(pk=bug_id)
+    execution = TestExecution.objects.get(pk=execution_id)
+    bug.executions.add(execution)
