@@ -354,6 +354,32 @@ def properties(query):
     )
 
 
+@permissions_required("testruns.add_testexecutionproperty")
+@rpc_method(name="TestExecution.add_property")
+def add_property(execution_id, name, value):
+    """
+    .. function:: TestExecution.add_property(execution_id, name, value)
+
+        Add property to TestExecution! Duplicates are skipped without errors.
+
+        :param execution_id: Primary key for :class:`tcms.testruns.models.TestExecution`
+        :type execution_id: int
+        :param name: Name of the property
+        :type name: str
+        :param value: Value of the property
+        :type value: str
+        :return: Serialized :class:`tcms.testruns.models.TestExecutionProperty` object.
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.add_testexecutionproperty* permission
+
+    .. versionadded:: 15.3
+    """
+    prop, _ = TestExecutionProperty.objects.get_or_create(
+        execution_id=execution_id, name=name, value=value
+    )
+    return model_to_dict(prop)
+
+
 @permissions_required("testruns.delete_testexecution")
 @rpc_method(name="TestExecution.remove")
 def remove(query):
