@@ -3,6 +3,7 @@
 
 import time
 
+from attachments.models import Attachment
 from django.forms.models import model_to_dict
 from django.test import override_settings
 from django.utils import timezone
@@ -11,6 +12,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
 from tcms.testruns.models import TestExecution, TestExecutionStatus
+from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
@@ -809,3 +811,65 @@ class TestExecutionRemovePermissions(APIPermissionsTestCase):
 
             exists = TestExecution.objects.filter(pk=self.execution.pk).exists()
             self.assertTrue(exists)
+
+
+class TestListAttachmentsPermissions(APIPermissionsTestCase):
+    permission_label = "attachments.view_attachment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        user_should_have_perm(self.tester, "attachments.add_attachment")
+        self.rpc_client.TestExecution.add_attachment(
+            self.execution.pk, "actual-results.txt", "a2l3aXRjbXM="
+        )
+        remove_perm_from_user(self.tester, "attachments.add_attachment")
+
+        attachments = self.rpc_client.TestExecution.list_attachments(self.execution.pk)
+        self.assertEqual(1, len(attachments))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.list_attachments"',
+        ):
+            self.rpc_client.TestExecution.list_attachments(self.execution.pk)
+
+
+class TestListAttachmentsForUnknownId(TestListAttachmentsPermissions):
+    def verify_api_with_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestExecution matching query does not exist"
+        ):
+            self.rpc_client.TestExecution.list_attachments(-1)
+
+
+class TestAddAttachmentPermissions(APIPermissionsTestCase):
+    permission_label = "attachments.add_attachment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        self.rpc_client.TestExecution.add_attachment(
+            self.execution.pk, "test-output.log", "a2l3aXRjbXM="
+        )
+        attachments = Attachment.objects.attachments_for_object(self.execution)
+        self.assertEqual(len(attachments), 1)
+        self.assertEqual(attachments[0].object_id, str(self.execution.pk))
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.add_attachment"',
+        ):
+            self.rpc_client.TestExecution.add_attachment(
+                self.execution.pk, "test-output.txt", "a2l3aXRjbXM="
+            )
