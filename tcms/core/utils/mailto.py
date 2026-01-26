@@ -30,6 +30,9 @@ def mailto(  # pylint: disable=invalid-name
     context=None,
     cc=None,
 ):
+    # no multi-line email headers
+    subject = subject.replace("\n", " ").replace("\r", " ")
+
     # make a list with recipients and filter out duplicates
     if isinstance(recipients, list):
         recipients = list(set(recipients))
