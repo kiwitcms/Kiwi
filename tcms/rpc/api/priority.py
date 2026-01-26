@@ -22,7 +22,10 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: dict
     """
     return list(
-        Priority.objects.filter(**query).values("id", "value", "is_active").distinct()
+        Priority.objects.filter(**query)
+        .values("id", "value", "is_active")
+        .order_by("id")
+        .distinct()
     )
 
 

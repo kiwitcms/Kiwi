@@ -51,5 +51,6 @@ def filter(query):  # pylint: disable=redefined-builtin
             "name",
             "description",
         )
+        .order_by("id")
         .distinct()
     )

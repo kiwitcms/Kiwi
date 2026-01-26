@@ -35,6 +35,7 @@ def filter(query):  # pylint: disable=redefined-builtin
             "description",
             "cases",
         )
+        .order_by("id")
         .distinct()
     )
 

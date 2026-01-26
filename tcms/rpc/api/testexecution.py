@@ -151,6 +151,7 @@ def filter(query):  # pylint: disable=redefined-builtin
             "expected_duration",
             "actual_duration",
         )
+        .order_by("id")
         .distinct()
     )
 

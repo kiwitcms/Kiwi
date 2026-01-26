@@ -24,6 +24,7 @@ def filter(query):  # pylint: disable=redefined-builtin
     return list(
         TestCaseStatus.objects.filter(**query)
         .values("id", "name", "description", "is_confirmed")
+        .order_by("id")
         .distinct()
     )
 

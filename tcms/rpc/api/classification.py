@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2023 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2026 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -23,7 +23,12 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.management.models.Classification` objects
         :rtype: dict
     """
-    return list(Classification.objects.filter(**query).values("id", "name").distinct())
+    return list(
+        Classification.objects.filter(**query)
+        .values("id", "name")
+        .order_by("id")
+        .distinct()
+    )
 
 
 @rpc_method(name="Classification.create")

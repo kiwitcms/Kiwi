@@ -251,6 +251,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "default_tester",
             "default_tester__username",
         )
+        .order_by("id")
         .distinct()
     )
 
