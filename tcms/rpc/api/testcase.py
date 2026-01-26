@@ -301,6 +301,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "testing_duration",
             "expected_duration",
         )
+        .order_by("id")
         .distinct()
     )
 

@@ -24,6 +24,7 @@ def filter(query):  # pylint: disable=redefined-builtin
     return list(
         Category.objects.filter(**query)
         .values("id", "name", "product", "description")
+        .order_by("id")
         .distinct()
     )
 

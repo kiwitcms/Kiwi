@@ -1,4 +1,4 @@
-# Copyright (c) 2025 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2025-2026 Alexander Todorov <atodorov@MrSenko.com>
 #
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -32,6 +32,7 @@ def filter(query):  # pylint: disable=redefined-builtin
             "id",
             "name",
         )
+        .order_by("id")
         .distinct()
     )
 

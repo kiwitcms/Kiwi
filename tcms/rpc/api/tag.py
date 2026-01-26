@@ -25,7 +25,9 @@ def filter(query):  # pylint: disable=redefined-builtin
     if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
         fields_list.append("bugs")
 
-    return list(Tag.objects.filter(**query).values(*fields_list).distinct())
+    return list(
+        Tag.objects.filter(**query).values(*fields_list).order_by("id").distinct()
+    )
 
 
 @permissions_required("management.add_tag")

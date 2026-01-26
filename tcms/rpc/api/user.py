@@ -67,6 +67,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
             "last_name",
             "username",
         )
+        .order_by("id")
         .distinct()
     )
 
