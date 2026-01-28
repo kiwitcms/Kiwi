@@ -1,6 +1,105 @@
 Change Log
 ==========
 
+Kiwi TCMS 15.3 (28 Jan 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes updates and improvements,
+    database migrations and several new API methods.
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 5.2.9 to 5.2.10
+- Update django-simple-captcha from 0.6.2 to 0.6.3
+- Update django-simple-history from 3.10.1 to 3.11.0
+- Update from 3.10 to 3.10.1
+- Update psycopg[binary] from 3.3.1 to 3.3.2
+- Update python-gitlab from 7.0.0 to 8.0.0
+- Update tzdata from 2025.2 to 2025.3
+- Update node_modules/pdfmake from 0.2.20 to 0.3.3
+- Models Classification, Product, Priority, Component and Version can now be
+  translated in Admin pages (@nichicom-yasutake). Fixes
+  `Issue #4193 <https://github.com/kiwitcms/Kiwi/issues/4193>`_
+- Display categories ordered by name. Fixes
+  `Issue #4166 <https://github.com/kiwitcms/Kiwi/issues/4166>`_
+- Stricter checking for attributes in uploaded files
+- Strip newline characters from email subjects to avoid crashes
+
+
+Database
+~~~~~~~~
+
+- Add migration
+  ``management.0012_alter_classification_options_alter_component_options_and_more``
+- Add migration ``testcases.0023_alter_category_ordering``
+
+
+API
+~~~
+
+- Add ``Bug.create()`` API method
+- Add ``Bug.filter_canonical()`` API method
+- Add ``Bug.get_comments()`` API method
+- Add ``Bug.add_comment()`` API method
+- Add ``Bug.add_attachment()`` API method
+- Add ``Bug.list_attachments()`` API method
+- Add ``Bug.add_execution()`` API method
+- Add ``Group.filter()`` API method
+- Add ``Group.permissions()`` API method
+- Add ``Group.users()`` API method
+- Add ``TestExecution.add_attachment()`` API method
+- Add ``TestExecution.list_attachments()`` API method
+- Add ``TestExecution.create()`` API method
+- Add ``TestExecution.add_property()`` API method
+- Add ``TestRun.list_attachments()`` API method
+- Add ``TestRun.add_property()`` API method
+- Add ``TestRun.get_cc()`` API method
+- Allow ``TestCase.create()`` API method to override ``TestCase.create_date``
+- Allow ``TestPlan.create()`` API method to override ``TestPlan.create_date``
+- Allow super-user to override comment author/submission date for
+  ``TestCase.add_comment()`` API method
+- Allow super-user to override comment author/submission date for
+  ``TestExecution.add_comment()`` API method
+- For ``BugTracker.filter()`` API method order results by ``id`` field
+- For ``Category.filter()`` API method order results by ``id`` field
+- For ``Classification.filter()`` API method order results by ``id`` field
+- For ``Component.filter()`` API method order results by ``id`` field
+- For ``Group.filter()`` API method order results by ``id`` field
+- For ``PlanType.filter()`` API method order results by ``id`` field
+- For ``Priority.filter()`` API method order results by ``id`` field
+- For ``Tag.filter()`` API method order results by ``id`` field
+- For ``Template.filter()`` API method order results by ``id`` field
+- For ``TestCase.filter()`` API method order results by ``id`` field
+- For ``TestCaseStatus.filter()`` API method order results by ``id`` field
+- For ``TestExecution.filter()`` API method order results by ``id`` field
+- For ``TestExecutionStatus.filter()`` API method order results by ``id`` field
+- For ``TestRun.filter()`` API method order results by ``id`` field
+- For ``User.filter()`` API method order results by ``id`` field
+- ``TestCase.comments()`` API method changes the following fields in its
+  response:
+
+  - ``site`` -> ``site_id``
+  - ``user`` -> ``user_id``
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/upload-artifact from 5 to 6
+- Update black from 25.11.0 to 25.12.0
+- Update locust from 2.42.6 to 2.43.1
+- Update node_modules/brace-expansion from 1.1.11 to 1.1.12
+- Update node_modules/webpack from 5.103.0 to 5.104.1
+- Update URL to website article
+- Remove redundant code snippet in ``TestRun.create()`` API method
+- Add more assertions for ``TestRun.create()`` API test scenario
+
+
+
 Kiwi TCMS 15.2 (06 Dec 2025)
 ----------------------------
 
