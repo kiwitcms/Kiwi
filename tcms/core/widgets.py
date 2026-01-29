@@ -4,6 +4,7 @@
 """
 Custom widgets for Django
 """
+
 from django import forms
 from django.utils.dateparse import parse_duration
 from django.utils.safestring import SafeString
@@ -25,11 +26,11 @@ class SimpleMDE(forms.Textarea):
             }
         )
         rendered_string = super().render(name, value, attrs, renderer)
-        rendered_string += SafeString(  # nosec:B703:django_mark_safe
+        rendered_string += SafeString(
             f"""
 <input id="{self.file_upload_id}" type="file" style="display: none">
 """
-        )
+        )  # nosec:B703:django_mark_safe
         return rendered_string
 
     class Media:
