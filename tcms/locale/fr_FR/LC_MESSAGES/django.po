@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-02-09 16:36\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -705,7 +705,7 @@ msgstr "Format de date non valide. YYYY-MM-JJ attendu [HH:MM:SS]."
 
 #: tcms/settings/common.py:391
 msgid "TESTING"
-msgstr "EN_TEST"
+msgstr "TESTER"
 
 #: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
@@ -2415,3 +2415,4 @@ msgstr "groupes"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
