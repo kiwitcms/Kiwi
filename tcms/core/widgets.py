@@ -36,6 +36,14 @@ class SimpleMDE(forms.Textarea):
         css = {"all": ["simplemde/dist/simplemde.min.css"]}
 
 
+class SimpleMDENotes(SimpleMDE):
+    """
+    SimpleMDE widget for notes field with unique file upload ID
+    """
+
+    file_upload_id = "simplemde-notes-file-upload"
+
+
 class DurationWidget(forms.Widget):
     template_name = "widgets/duration.html"
 
