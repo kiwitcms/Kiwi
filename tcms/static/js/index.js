@@ -84,8 +84,12 @@ $(() => {
         const fileUploadId = $(this).data('file-upload-id')
         const uploadField = $(`#${fileUploadId}`)
 
+        // Use textarea id/name for unique autosave ID to prevent content sharing
+        const textareaId = $(this).attr('id') || $(this).attr('name') || 'default'
+        const autoSaveId = window.location.toString() + '#' + textareaId
+
         // this value is only used in testcases/js/mutable.js
-        window.markdownEditor = initSimpleMDE(this, uploadField)
+        window.markdownEditor = initSimpleMDE(this, uploadField, autoSaveId)
     })
 
     $('#logout_link').click(function () {
