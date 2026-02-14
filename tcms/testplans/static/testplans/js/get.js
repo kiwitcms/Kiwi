@@ -179,7 +179,7 @@ function getTestCaseRowContent (rowContent, testCase, permissions, testPlanId) {
 
     // set the links in the kebab menu
     if (permissions['perm-change-testcase']) {
-        row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit/?from_plan=${testPlanId}`
+        row.find('.js-test-case-menu-edit')[0].href = `/case/${testCase.id}/edit/`
     }
 
     if (permissions['perm-add-testcase']) {
