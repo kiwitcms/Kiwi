@@ -167,7 +167,7 @@ function getTestCaseRowContent (rowContent, testCase, permissions, testPlanId) {
     const row = $(rowContent)
 
     row[0].firstElementChild.dataset.testcasePk = testCase.id
-    row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/?from_plan=${testPlanId}`)
+    row.find('.js-test-case-link').html(`TC-${testCase.id}: ${testCase.summary}`).attr('href', `/case/${testCase.id}/`)
     // todo: TestCaseStatus here isn't translated b/c TestCase.filter uses a
     // custom serializer which needs to be refactored as well
     row.find('.js-test-case-status').html(`${testCase.case_status__name}`)
