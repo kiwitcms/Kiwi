@@ -6,7 +6,7 @@
     "html5sortable": "0.14.0",
     "jszip": "3.10.1",
     "patternfly": "3.59.5",
-    "pdfmake": "0.3.3",
+    "pdfmake": "0.3.4",
     "simplemde": "1.11.2",
     "typeahead.js": "0.11.1"
   },
