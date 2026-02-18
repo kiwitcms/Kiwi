@@ -277,6 +277,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         .values(
             "id",
             "create_date",
+            "updated_at",
             "is_automated",
             "script",
             "arguments",
@@ -382,6 +383,7 @@ def update(case_id, values):
         result = model_to_dict(test_case, exclude=["component", "plan", "tag"])
         # b/c date may be None and model_to_dict() doesn't return it
         result["create_date"] = test_case.create_date
+        result["updated_at"] = test_case.updated_at
 
         # additional information
         result["case_status__name"] = test_case.case_status.name

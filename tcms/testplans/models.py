@@ -32,6 +32,7 @@ class TestPlan(TreeNode, UrlMixin):
     name = models.CharField(max_length=255, db_index=True)
     text = models.TextField(blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     is_active = models.BooleanField(default=True, db_index=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 

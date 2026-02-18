@@ -94,6 +94,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "name",
             "text",
             "create_date",
+            "updated_at",
             "is_active",
             "extra_link",
             "product_version",
@@ -182,6 +183,7 @@ def update(plan_id, values):
         # b/c value is set in the DB directly and if None
         # model_to_dict() will not return it
         result["create_date"] = test_plan.create_date
+        result["updated_at"] = test_plan.updated_at
         return result
 
     raise ValueError(list(form.errors.items()))
