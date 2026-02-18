@@ -87,7 +87,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return list(
+    result = list(
         TestPlan.objects.filter(**query)
         .values(
             "id",
@@ -111,6 +111,10 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         .order_by("product", "id")
         .distinct()
     )
+    for item in result:
+        if item["updated_at"] is None:
+            item["updated_at"] = item["create_date"]
+    return result
 
 
 @permissions_required("testplans.add_testplantag")
@@ -183,7 +187,7 @@ def update(plan_id, values):
         # b/c value is set in the DB directly and if None
         # model_to_dict() will not return it
         result["create_date"] = test_plan.create_date
-        result["updated_at"] = test_plan.updated_at
+        result["updated_at"] = test_plan.updated_at or test_plan.create_date
         return result
 
     raise ValueError(list(form.errors.items()))

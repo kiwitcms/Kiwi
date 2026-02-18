@@ -71,7 +71,7 @@
 
                 <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-pencil"></span>{% trans 'Last modified' %}:
-                    {{ object.updated_at|default:"-" }}
+                    {{ object.updated_at|default:object.create_date }}
                 </h2>
 
                 <h2 class="card-pf-title kiwi-text-align-left">
