@@ -1,5 +1,6 @@
 -r base.txt
 
+setuptools<82
 Sphinx==9.0.4
 sphinx-removed-in
 docutils

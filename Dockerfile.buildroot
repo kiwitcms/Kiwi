@@ -19,7 +19,7 @@ ENV PATH=/venv/bin:${PATH} \
 RUN python3.11 -m venv /venv
 
 # because we get some errors from other packages which need newer versions
-RUN pip3 install --no-cache-dir --upgrade pip setuptools twine wheel
+RUN pip3 install --no-cache-dir --upgrade pip "setuptools<82" twine wheel
 
 # build and install the application
 COPY . /Kiwi/
