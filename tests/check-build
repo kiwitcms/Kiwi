@@ -92,7 +92,7 @@ tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testruns/templates"
 echo "..... Trying to install the new tarballs inside a virtualenv"
 $(which python) -m venv .venv/test-tarball
 source .venv/test-tarball/bin/activate
-pip install --upgrade setuptools pip
+pip install --upgrade "setuptools<82" pip
 # workaround for https://github.com/pypa/setuptools/issues/3424
 pip install setuptools-scm-git-archive
 pip install --no-binary :all: dist/kiwitcms*.tar.gz
@@ -103,7 +103,7 @@ rm -rf .venv/
 echo "..... Trying to install the new wheels inside a virtualenv"
 $(which python) -m venv .venv/test-wheel
 source .venv/test-wheel/bin/activate
-pip install --upgrade setuptools pip
+pip install --upgrade "setuptools<82" pip
 pip install -r requirements/tarballs.txt
 pip install --only-binary :all: dist/kiwitcms*.whl
 pip freeze | grep kiwitcms
