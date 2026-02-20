@@ -1,7 +1,7 @@
 -r readthedocs.txt
 tcms-api
 doc8
-isort==6.1.0
+isort==7.0.0
 colorama
 black==25.12.0
 locust==2.43.2
