@@ -1,6 +1,5 @@
 default: help
 
-PATH_TO_SITE_PACKAGES = $(shell python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')
 VERSION = $(shell python -m tcms)
 FLAKE8_EXCLUDE=.git
 
@@ -69,24 +68,9 @@ pylint:
 similar_strings:
 	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=kiwi_lint -d all -e similar-string tcms/ tcms_settings_dir/
 
-.PHONY: pylint_site_packages
-pylint_site_packages:
-	if [ -d "$(PATH_TO_SITE_PACKAGES)" ]; then \
-	    PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=tcms.settings.common \
-	        pylint --load-plugins=kiwi_lint --disable=all --enable=avoid-generic-foreign-key \
-	                --ignore=setuptools $(PATH_TO_SITE_PACKAGES) ;\
-	fi
-
 .PHONY: bandit
 bandit:
 	bandit -r *.py tcms/ kiwi_lint/ tcms_settings_dir/
-
-
-.PHONY: bandit_site_packages
-bandit_site_packages:
-	if [ -d "$(PATH_TO_SITE_PACKAGES)" ]; then \
-	    bandit -a vuln -r $(PATH_TO_SITE_PACKAGES); \
-	fi
 
 
 .PHONY: docker-image
