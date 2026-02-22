@@ -13,7 +13,7 @@ permissions: read-all
 
 jobs:
   checkov:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -30,7 +30,7 @@ jobs:
           checkov --quiet --directory .
 
   bandit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -49,7 +49,7 @@ jobs:
   # this is expected to fail but we need to know what issues are there
   npm_audit:
     name: npm audit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
 
