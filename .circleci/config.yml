@@ -7,8 +7,8 @@ version: 2.1
 jobs:
   aarch64-test-docker-image:
     machine:
-      # https://circleci.com/developer/machine/image/ubuntu-2204
-      image: ubuntu-2204:2023.10.1
+      # https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2025.09.1
     resource_class: arm.medium
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
@@ -32,8 +32,8 @@ jobs:
 
   aarch64-build-and-push-docker-image:
     machine:
-      # https://circleci.com/developer/machine/image/ubuntu-2204
-      image: ubuntu-2204:2023.10.1
+      # https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2025.09.1
     resource_class: arm.medium
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps

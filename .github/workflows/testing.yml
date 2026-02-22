@@ -14,7 +14,7 @@ permissions: read-all
 jobs:
   sqlite:
     name: sqlite / english
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -83,7 +83,7 @@ jobs:
 
   check_for_unapplied_migrations:
     name: check for unapplied migrations
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -127,7 +127,7 @@ jobs:
 
   without_internal_bugtracker:
     name: without internal bugtracker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -172,7 +172,7 @@ jobs:
 
   mariadb:
     name: mariadb / slovenian
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -226,7 +226,7 @@ jobs:
 
   postgres:
     name: postgres / french
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
@@ -289,7 +289,7 @@ jobs:
           path: postgres-container.log
 
   docker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: [3.11]
