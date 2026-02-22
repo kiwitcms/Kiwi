@@ -51,6 +51,7 @@ class TestCase(models.Model, UrlMixin):
     history = KiwiHistoricalRecords()
 
     create_date = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     is_automated = models.BooleanField(default=False)
     script = models.TextField(blank=True, null=True)
     arguments = models.TextField(blank=True, null=True)

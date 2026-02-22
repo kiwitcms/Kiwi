@@ -117,6 +117,7 @@ export function pageTestplansSearchReadyHandler () {
                 }
             },
             { data: 'create_date' },
+            { data: 'updated_at' },
             { data: 'product__name' },
             { data: 'product_version__value' },
             { data: 'type__name' },
