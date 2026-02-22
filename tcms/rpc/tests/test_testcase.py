@@ -716,6 +716,12 @@ class TestAddTag(APITestCase):
         ).exists()
         self.assertTrue(tag_exists)
 
+        history_entry = self.testcase.history.latest("history_id")
+        self.assertIn(self.tag1.name, history_entry.history_change_reason)
+        self.assertIn(
+            f"Tag added: {self.tag1.name}", history_entry.history_change_reason
+        )
+
     def test_add_tag_without_permissions(self):
         unauthorized_user = UserFactory()
         unauthorized_user.set_password("api-testing")
@@ -759,6 +765,12 @@ class TestRemoveTag(APITestCase):
             pk=self.testcase.pk, tag__pk=self.tag0.pk
         ).exists()
         self.assertFalse(tag_exists)
+
+        history_entry = self.testcase.history.latest("history_id")
+        self.assertIn(self.tag0.name, history_entry.history_change_reason)
+        self.assertIn(
+            f"Tag removed: {self.tag0.name}", history_entry.history_change_reason
+        )
 
     def test_remove_tag_without_permissions(self):
         unauthorized_user = UserFactory()
