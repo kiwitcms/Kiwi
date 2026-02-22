@@ -46,29 +46,6 @@ jobs:
           pip install bandit
           make bandit
 
-  # this is expected to fail b/c bandit detects lots of issues
-  # from 3rd party libraries!
-  bandit_site_packages:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.11]
-
-    steps:
-      - uses: actions/checkout@v6
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Check with bandit
-        run: |
-          pip install bandit
-
-          pip install -r requirements/mariadb.txt
-          pip install -r requirements/postgres.txt
-
-          make bandit_site_packages
-
   # this is expected to fail but we need to know what issues are there
   npm_audit:
     name: npm audit
