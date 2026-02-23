@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-02-23 20:04\n"
 "Last-Translator: \n"
 "Language-Team: Spanish, Venezuela\n"
 "Language: es_VE\n"
@@ -42,7 +42,7 @@ msgstr "Descripción del problema:\n\n\n"
 #: tcms/bugs/templates/bugs/search.html:22
 #: tcms/bugs/templates/bugs/search.html:112
 msgid "Severity"
-msgstr ""
+msgstr "Gravedad"
 
 #: tcms/bugs/templates/bugs/get.html:37 tcms/bugs/templates/bugs/search.html:93
 #: tcms/issuetracker/kiwitcms.py:49 tcms/templates/include/bug_details.html:3
@@ -58,7 +58,7 @@ msgstr "Cerrado"
 #: tcms/bugs/templates/bugs/search.html:118
 #: tcms/templates/include/bug_details.html:7
 msgid "Reporter"
-msgstr "Informador"
+msgstr "Reporte"
 
 #: tcms/bugs/templates/bugs/get.html:64
 #: tcms/bugs/templates/bugs/mutable.html:94
@@ -70,7 +70,7 @@ msgstr "Informador"
 #: tcms/testruns/templates/testruns/get.html:215
 #: tcms/testruns/templates/testruns/get.html:275
 msgid "Assignee"
-msgstr "Asignatario"
+msgstr "Analista Asignado"
 
 #: tcms/bugs/templates/bugs/get.html:75
 #: tcms/bugs/templates/bugs/mutable.html:45
@@ -127,11 +127,11 @@ msgstr "Versión"
 #: tcms/testruns/templates/testruns/search.html:59
 #: tcms/testruns/templates/testruns/search.html:189
 msgid "Build"
-msgstr "Compilación"
+msgstr "Reléase"
 
 #: tcms/bugs/templates/bugs/get.html:119
 msgid "commented on"
-msgstr "comentado en"
+msgstr "Comentado por"
 
 #: tcms/bugs/templates/bugs/get.html:149
 msgid "Reopen"
@@ -151,7 +151,7 @@ msgstr "Guardar"
 
 #: tcms/bugs/templates/bugs/get.html:153
 msgid "Close"
-msgstr "Cerrar"
+msgstr "Cerrado"
 
 #: tcms/bugs/templates/bugs/mutable.html:20
 #: tcms/bugs/templates/bugs/search.html:17
@@ -183,20 +183,20 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:48
 msgid "add new Product"
-msgstr "agregar un nuevo producto"
+msgstr "Agregar nuevo Producto"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
 #: tcms/testplans/templates/testplans/clone.html:38
 #: tcms/testplans/templates/testplans/mutable.html:50
 msgid "add new Version"
-msgstr "añadir nueva versión"
+msgstr "añadir una nueva Versión"
 
 #: tcms/bugs/templates/bugs/mutable.html:81
 #: tcms/bugs/templates/bugs/mutable.html:82
 #: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/mutable.html:94
 msgid "add new Build"
-msgstr "añadir nueva compilación"
+msgstr "Añadir nueva Compilación"
 
 #: tcms/bugs/templates/bugs/mutable.html:98
 #: tcms/testruns/templates/testruns/mutable.html:32
@@ -217,7 +217,7 @@ msgstr "Buscar errores"
 #: tcms/testplans/templates/testplans/search.html:13
 #: tcms/testruns/templates/testruns/search.html:11
 msgid "No records found"
-msgstr "Ningún registro encontrado"
+msgstr "No hay registros"
 
 #: tcms/bugs/templates/bugs/search.html:12
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:12
@@ -354,7 +354,7 @@ msgstr "ID"
 #: tcms/testplans/templates/testplans/search.html:118
 #: tcms/testruns/templates/testruns/mutable.html:231
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:133
 #: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:143
@@ -366,7 +366,7 @@ msgstr "Editar"
 #: tcms/testplans/views.py:151 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
-msgstr ""
+msgstr "Permisos de objeto"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
@@ -378,7 +378,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Eliminar"
 
 #: tcms/bugs/views.py:68 tcms/settings/common.py:400
 msgid "New Bug"
@@ -386,11 +386,11 @@ msgstr "Nuevo error"
 
 #: tcms/bugs/views.py:188
 msgid "Edit bug"
-msgstr "Editar bug"
+msgstr "Editar error"
 
 #: tcms/bugs/views.py:231
 msgid "*bug closed*"
-msgstr "* error cerrado*"
+msgstr "*error cerrado*"
 
 #: tcms/bugs/views.py:235
 msgid "*bug reopened*"
@@ -432,7 +432,7 @@ msgstr "%(amount)s%% completo"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:44
 #: tcms/testruns/templates/testruns/get.html:78
 msgid "Started at"
-msgstr "Comenzó el"
+msgstr "Comenzado el"
 
 #: tcms/core/templates/dashboard.html:32
 #, python-format
@@ -443,7 +443,7 @@ msgstr "%(total_count)s TestRun(s) o TestCase(s) asignados a usted necesita ser 
 
 #: tcms/core/templates/dashboard.html:36 tcms/core/templates/dashboard.html:80
 msgid "SEE ALL"
-msgstr "VER TODOS"
+msgstr "MOSTRAR TODO"
 
 #: tcms/core/templates/dashboard.html:39
 msgid "There are no TestRun(s) assigned to you"
@@ -451,7 +451,7 @@ msgstr "No hay pruebas(s) asignadas a usted"
 
 #: tcms/core/templates/dashboard.html:46
 msgid "Your Test plans"
-msgstr "Sus planes de prueba"
+msgstr "Tus planes de prueba"
 
 #: tcms/core/templates/dashboard.html:52
 msgid "TestPlan"
@@ -479,7 +479,7 @@ msgstr "Administras %(total_count)s TestPlan(s), %(disabled_count)s están desac
 
 #: tcms/core/templates/dashboard.html:83
 msgid "There are no TestPlan(s) that belong to you"
-msgstr "No hay ningún Plan(s) de prueba que le pertenezca"
+msgstr "No hay ningún Plan de Pruebas que le pertenezca"
 
 #: tcms/core/views.py:47
 #, python-format
@@ -508,15 +508,15 @@ msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "Está prohibido cargar archivos ejecutables"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #: tcms/kiwi_auth/admin.py:62
 msgid "Deactivate selected accounts"
-msgstr ""
+msgstr "Desactivar cuentas seleccionadas"
 
 #: tcms/kiwi_auth/admin.py:69
 #, python-format
@@ -527,7 +527,7 @@ msgstr ""
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "Restablecer dirección de correo"
 
 #: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
@@ -539,7 +539,7 @@ msgstr "Permisos"
 
 #: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "Este es el último superusuario, ¡no se puede eliminar!"
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
@@ -547,15 +547,15 @@ msgstr "Ya existe un usuario con este correo electrónico."
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "Por favor, confirma tu dirección de correo electrónico de Kiwi TCMS"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "Email no coincide"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "Advertencia"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -583,11 +583,11 @@ msgstr "Confirmar"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "¡Escribe! ¡No copie y pegue el valor del campo anterior!"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Su cuenta ha sido creada, por favor, compruebe su buzón para confirmación"
+msgstr "Su cuenta ha sido creada, por favor revise su buzón de correo para obtener confirmación"
 
 #: tcms/kiwi_auth/views.py:75
 msgid "Your account has been created, but you need an administrator to activate it"
@@ -595,7 +595,7 @@ msgstr "Tu cuenta ha sido creada, pero necesitas un administrador para activarla
 
 #: tcms/kiwi_auth/views.py:80
 msgid "Following is the administrator list"
-msgstr "Siguiente es la lista de administradores"
+msgstr "Lo siguiente es la lista de administradores"
 
 #: tcms/kiwi_auth/views.py:123
 msgid "This activation key no longer exists in the database"
@@ -607,7 +607,7 @@ msgstr "Esta clave de activación ha expirado"
 
 #: tcms/kiwi_auth/views.py:141
 msgid "Your account has been activated successfully"
-msgstr "Su cuenta ha sido activada con éxito"
+msgstr "Su cuenta ha sido activada correctamente"
 
 #: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
@@ -617,7 +617,7 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "La dirección de correo electrónico ha sido restablecida, por favor verifique la bandeja de entrada para más instrucciones"
 
 #: tcms/management/models.py:20
 msgid "Classification"
@@ -625,11 +625,11 @@ msgstr ""
 
 #: tcms/management/models.py:21
 msgid "Classifications"
-msgstr ""
+msgstr "Clasificaciones"
 
 #: tcms/management/models.py:57
 msgid "Products"
-msgstr ""
+msgstr "Productos"
 
 #: tcms/management/models.py:77
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
@@ -671,11 +671,11 @@ msgstr "Componentes"
 
 #: tcms/management/models.py:126
 msgid "Versions"
-msgstr ""
+msgstr "Versiones"
 
 #: tcms/management/models.py:172
 msgid "Builds"
-msgstr ""
+msgstr "Compilaciones"
 
 #: tcms/management/models.py:194
 #: tcms/testcases/templates/testcases/search.html:140
@@ -697,7 +697,7 @@ msgstr "Etiquetas"
 
 #: tcms/rpc/api/bug.py:69
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr "¡Habilita la notificación a este gestor de problemas configurando su base_url!"
+msgstr "¡Habilitar reportar a este rastreador de incidencias configurando su base_url!"
 
 #: tcms/rpc/api/forms/__init__.py:9
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
@@ -709,7 +709,7 @@ msgstr "TESTING"
 
 #: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
-msgstr "Nuevo plan de prueba"
+msgstr "Nuevo Plan de Prueba"
 
 #: tcms/settings/common.py:395
 #: tcms/testcases/templates/testcases/mutable.html:12
@@ -721,7 +721,7 @@ msgstr "Nuevo Caso de Prueba"
 #: tcms/testruns/templates/testruns/get.html:180
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr ""
+msgstr "Nueva Ejecución de Caso de Pruebas"
 
 #: tcms/settings/common.py:407
 msgid "SEARCH"
@@ -729,7 +729,7 @@ msgstr "BUSCAR"
 
 #: tcms/settings/common.py:409 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
-msgstr "Buscar planes de prueba"
+msgstr "Buscar Planes de Prueba"
 
 #: tcms/settings/common.py:410 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
@@ -741,7 +741,7 @@ msgstr "Buscar ejecuciones de Casos de Prueba"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "Buscar Ejecuciones de prueba"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -757,16 +757,16 @@ msgstr "Desglose"
 
 #: tcms/settings/common.py:428
 msgid "Execution"
-msgstr ""
+msgstr "Ejecuciones"
 
 #: tcms/settings/common.py:431
 #: tcms/testruns/templates/testruns/mutable.html:177
 msgid "Matrix"
-msgstr ""
+msgstr "Matriz"
 
 #: tcms/settings/common.py:432
 msgid "Trends"
-msgstr ""
+msgstr "Tendencias"
 
 #: tcms/settings/common.py:435
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -775,11 +775,11 @@ msgstr "Salud del Caso de Prueba"
 
 #: tcms/settings/common.py:441
 msgid "ADMIN"
-msgstr "ADMINISTRACIÓN"
+msgstr "ADMIN"
 
 #: tcms/settings/common.py:444
 msgid "Groups"
-msgstr ""
+msgstr "Grupos"
 
 #: tcms/settings/common.py:446
 msgid "Everything else"
@@ -787,7 +787,7 @@ msgstr "Todo lo demás"
 
 #: tcms/settings/common.py:449
 msgid "MORE"
-msgstr ""
+msgstr "MAS"
 
 #: tcms/settings/common.py:459
 msgid "Report an Issue"
@@ -807,7 +807,7 @@ msgstr "Guía de Administración"
 
 #: tcms/settings/common.py:469
 msgid "User Guide"
-msgstr "Guía de usuario"
+msgstr "Guía del Usuario"
 
 #: tcms/settings/common.py:470
 msgid "API Help"
@@ -850,13 +850,13 @@ msgstr "TOTAL"
 #: tcms/testruns/templates/testruns/mutable.html:67
 #: tcms/testruns/templates/testruns/search.html:186
 msgid "Test plan"
-msgstr "Plan de pruebas"
+msgstr "Plan de Pruebas"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:66
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 #: tcms/testcases/templates/testcases/search.html:146
 msgid "Test run"
-msgstr "Prueba de ejecución"
+msgstr "Ejecución de Prueba"
 
 #: tcms/telemetry/templates/telemetry/include/filters.html:70
 #: tcms/testruns/templates/testruns/search.html:21
@@ -898,7 +898,7 @@ msgstr "Categorías"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Panel de ejecución"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:19
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
@@ -945,11 +945,11 @@ msgstr "Tester por defecto"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:39
 msgid "TC"
-msgstr ""
+msgstr "TC"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:40
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:43
 #: tcms/testruns/templates/testruns/get.html:276
@@ -966,7 +966,7 @@ msgstr "Terminado el"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "Tendencias de ejecución"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -982,23 +982,23 @@ msgstr "Negativo"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "Matriz de ejecución"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
-msgstr ""
+msgstr "Pedido"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
 msgid "Ascending"
-msgstr ""
+msgstr "Ascendente"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:24
 msgid "Descending"
-msgstr ""
+msgstr "Descendente"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:32
 msgid "Test case"
-msgstr "Caso de prueba"
+msgstr "Caso de Prueba"
 
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:12
 msgid "Most frequently failing test cases"
@@ -1027,11 +1027,11 @@ msgstr "Error interno del servidor"
 
 #: tcms/templates/admin/auth/user/submit_line.html:7
 msgid "Deactivate"
-msgstr ""
+msgstr "Desactivar"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "Error al subir el archivo adjunto"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -1155,7 +1155,7 @@ msgstr "Archivo"
 
 #: tcms/templates/include/attachments.html:19
 msgid "Owner"
-msgstr "Propietario/a"
+msgstr "Propietario"
 
 #: tcms/templates/include/attachments.html:20
 msgid "Date"
@@ -1169,7 +1169,7 @@ msgstr "URL (dirección web)"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:353
 msgid "Parameters"
-msgstr ""
+msgstr "Parámetros"
 
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
@@ -1204,19 +1204,19 @@ msgstr "Nombre"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
 msgid "Initialize database"
-msgstr ""
+msgstr "Inicializar base de datos"
 
 #: tcms/templates/initdb.html:20
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
-msgstr ""
+msgstr "Tu base de datos aún no ha sido inicializada. ¡Haz clic en el botón de abajo para inicializarla!"
 
 #: tcms/templates/initdb.html:22
 msgid "WARNING: this operation will take a while! This page will redirect when done."
-msgstr ""
+msgstr "ADVERTENCIA: ¡Esta operación tomará un tiempo! Esta página redirigirá cuando termine."
 
 #: tcms/templates/initdb.html:27
 msgid "Please wait"
-msgstr ""
+msgstr "Por favor espere"
 
 #: tcms/templates/navbar.html:9
 msgid "Toggle navigation"
@@ -1224,7 +1224,7 @@ msgstr "Cambiar el modo de navegación"
 
 #: tcms/templates/navbar.html:15
 msgid "DASHBOARD"
-msgstr "DASHBOARD"
+msgstr "PANEL"
 
 #: tcms/templates/navbar.html:41
 msgid "Language"
@@ -1232,7 +1232,7 @@ msgstr "Idioma"
 
 #: tcms/templates/navbar.html:45
 msgid "Change language"
-msgstr ""
+msgstr "Cambiar idioma"
 
 #: tcms/templates/navbar.html:46
 msgid "Supported languages"
@@ -1277,7 +1277,7 @@ msgstr "Cambiar Contraseña"
 
 #: tcms/templates/navbar.html:108
 msgid "Logout"
-msgstr "Cerrar sesión"
+msgstr "Cerrar Sesión"
 
 #: tcms/templates/navbar.html:113 tcms/templates/registration/login.html:4
 msgid "Login"
@@ -1296,7 +1296,7 @@ msgstr "Contraseña"
 
 #: tcms/templates/registration/login.html:32
 msgid "Forgot password"
-msgstr ""
+msgstr "Olvidó la contraseña"
 
 #: tcms/templates/registration/login.html:35
 msgid "Log in"
@@ -1316,7 +1316,7 @@ msgstr "o"
 
 #: tcms/templates/registration/login.html:55
 msgid "register an account"
-msgstr "registrar una cuenta"
+msgstr "Registrar una cuenta"
 
 #: tcms/templates/registration/login.html:56
 msgid "if you don't have one!"
@@ -1340,7 +1340,7 @@ msgstr "solicitar un nuevo restablecimiento de contraseña"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr "Se envió el email de restablecimiento de contraseña"
+msgstr "Se envió el correo electrónico de restablecimiento de contraseña"
 
 #: tcms/templates/registration/password_reset_form.html:27
 msgid "Password reset"
@@ -1366,7 +1366,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:131
 msgid "Bug URL"
-msgstr ""
+msgstr "URL de error"
 
 #: tcms/testcases/admin.py:151
 msgid "External Issue Tracker Integration"
@@ -1380,7 +1380,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:168
 msgid "Configuration health check"
-msgstr ""
+msgstr "Control de estado de configuración"
 
 #: tcms/testcases/admin.py:172
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
@@ -1388,11 +1388,11 @@ msgstr ""
 
 #: tcms/testcases/admin.py:192
 msgid "Failed creating Issue Tracker"
-msgstr ""
+msgstr "Error al crear el rastreador de incidencias"
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "Detalles extraídos a través de OpenGraph. ¡El rastreador de incidencias todavía puede ser configurado incorrectamente!"
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
@@ -1400,7 +1400,7 @@ msgstr ""
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
-msgstr ""
+msgstr "Falló la comprobación de configuración del rastreador de problemas"
 
 #: tcms/testcases/helpers/email.py:14
 #, python-format
@@ -1427,24 +1427,24 @@ msgstr "BORRADO: Caso de prueba #%(pk)d - %(summary)s"
 
 #: tcms/testcases/models.py:23
 msgid "Test case status"
-msgstr ""
+msgstr "Estado del caso de prueba"
 
 #: tcms/testcases/models.py:24
 msgid "Test case statuses"
-msgstr ""
+msgstr "Estados de caso de prueba"
 
 #: tcms/testcases/models.py:379
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #: tcms/testcases/models.py:380
 msgid "Templates"
-msgstr ""
+msgstr "Plantillas"
 
 #: tcms/testcases/templates/testcases/clone.html:5
 msgid "Clone TestCase"
-msgstr "Clonar TestCase"
+msgstr "Clonar Caso de Pruebas"
 
 #: tcms/testcases/templates/testcases/clone.html:15
 msgid "Add new TC into TP"
@@ -1494,16 +1494,16 @@ msgstr "Categoría"
 #: tcms/testcases/templates/testcases/get.html:73
 #: tcms/testcases/templates/testcases/mutable.html:120
 msgid "Setup duration"
-msgstr "Duración de instalación"
+msgstr "Duración de configuración"
 
 #: tcms/testcases/templates/testcases/get.html:78
 #: tcms/testcases/templates/testcases/mutable.html:127
 msgid "Testing duration"
-msgstr "Duración de prueba"
+msgstr "Duración de la prueba"
 
 #: tcms/testcases/templates/testcases/get.html:83
 msgid "Expected duration"
-msgstr "Duración prevista"
+msgstr "Duración esperada"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:143
@@ -1542,19 +1542,19 @@ msgstr "Errores"
 
 #: tcms/testcases/templates/testcases/get.html:159
 msgid "Test plans"
-msgstr "Planes de prueba"
+msgstr "Plan de Pruebas"
 
 #: tcms/testcases/templates/testcases/mutable.html:10
 msgid "Edit TestCase"
-msgstr "Editar TestCase"
+msgstr "Editar Caso de Pruebas"
 
 #: tcms/testcases/templates/testcases/mutable.html:59
 msgid "add new Category"
-msgstr "añadir nueva categoría"
+msgstr "añadir nueva Categoría"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
-msgstr ""
+msgstr "Añadir nueva plantilla"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
 #: tcms/testruns/templates/testruns/get.html:525
@@ -1584,7 +1584,7 @@ msgstr "El Caso de Prueba está actualizado"
 
 #: tcms/testcases/templates/testcases/mutable.html:236
 msgid "TestCase is deleted"
-msgstr "TestCase ha sido eliminado"
+msgstr "El Caso de Prueba está eliminado"
 
 #: tcms/testcases/templates/testcases/mutable.html:245
 msgid "CC to"
@@ -1592,7 +1592,7 @@ msgstr "CC a"
 
 #: tcms/testcases/templates/testcases/mutable.html:250
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr "Direcciones de correo electrónico separadas por coma. Se enviará un correo de notificación a cada dirección de correo electrónico dentro de la lista CC."
+msgstr "Direcciones de correo separadas por comas. Se enviará un correo electrónico de notificación a cada dirección de correo dentro de la lista CC."
 
 #: tcms/testcases/templates/testcases/mutable.html:264
 #: tcms/testruns/templates/testruns/get.html:600
@@ -1602,7 +1602,7 @@ msgstr "Cancelar"
 
 #: tcms/testcases/templates/testcases/search.html:19
 msgid "Test case summary"
-msgstr "Resumen de caso de prueba"
+msgstr "Resumen del Caso de Prueba"
 
 #: tcms/testcases/templates/testcases/search.html:49
 msgid "Both"
@@ -1610,11 +1610,11 @@ msgstr "Ambos"
 
 #: tcms/testcases/templates/testcases/search.html:65
 msgid "include in search request"
-msgstr ""
+msgstr "Incluir en la solicitud de búsqueda"
 
 #: tcms/testcases/templates/testcases/search.html:78
 msgid "include child test plans"
-msgstr ""
+msgstr "Incluir planes de pruebas hijas"
 
 #: tcms/testcases/templates/testcases/search.html:132
 msgid "Text"
@@ -1628,7 +1628,7 @@ msgstr "Separar varios valores con coma (,)"
 
 #: tcms/testcases/templates/testcases/search.html:182
 msgid "Select"
-msgstr ""
+msgstr "Seleccionar"
 
 #: tcms/testcases/views.py:141 tcms/testplans/views.py:146
 #: tcms/testruns/templates/testruns/get.html:466 tcms/testruns/views.py:202
@@ -1637,7 +1637,7 @@ msgstr "Historial"
 
 #: tcms/testcases/views.py:253
 msgid "TestCase cloning was successful"
-msgstr "La clonación de prueba fue exitosa"
+msgstr "La clonación del caso de prueba fue exitosa"
 
 #: tcms/testcases/views.py:284
 msgid "At least one TestCase is required"
@@ -1666,25 +1666,25 @@ msgstr "Establecer el TP fuente como padre del nuevo TP"
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:23
 msgid "Enter username, email or user ID:"
-msgstr ""
+msgstr "Introduzca nombre de usuario, email o ID de usuario:"
 
 #: tcms/testplans/templates/testplans/get.html:26
 #: tcms/testruns/templates/testruns/get.html:22
 msgid "No rows selected! Please select at least one!"
-msgstr ""
+msgstr "No hay filas seleccionadas! Por favor seleccione al menos una!"
 
 #: tcms/testplans/templates/testplans/get.html:27
 #: tcms/testruns/templates/testruns/get.html:24
 msgid "Are you sure?"
-msgstr "¿Estás seguro/a?"
+msgstr "¿Estás seguro?"
 
 #: tcms/testplans/templates/testplans/get.html:28
 msgid "Cannot create TestRun with unconfirmed test cases"
-msgstr ""
+msgstr "No se puede crear TestRun con casos de prueba no confirmados"
 
 #: tcms/testplans/templates/testplans/get.html:29
 msgid "Error adding test cases"
-msgstr ""
+msgstr "Error al añadir casos de prueba"
 
 #: tcms/testplans/templates/testplans/get.html:43
 msgid "Show more"
@@ -1696,7 +1696,7 @@ msgstr "Tipo de plan"
 
 #: tcms/testplans/templates/testplans/get.html:100
 msgid "Test cases"
-msgstr "Casos de prueba"
+msgstr "Casos de Prueba"
 
 #: tcms/testplans/templates/testplans/get.html:182
 #: tcms/testplans/templates/testplans/get.html:426
@@ -1722,12 +1722,12 @@ msgstr "Buscar y añadir casos de prueba"
 #: tcms/testplans/templates/testplans/get.html:263
 #: tcms/testruns/templates/testruns/get.html:306
 msgid "Advanced search"
-msgstr "Busqueda avanzada"
+msgstr "Búsqueda avanzada"
 
 #: tcms/testplans/templates/testplans/get.html:271
 #: tcms/testruns/templates/testruns/get.html:314
 msgid "records"
-msgstr ""
+msgstr "registros"
 
 #: tcms/testplans/templates/testplans/get.html:291
 msgid "Active test runs"
@@ -1739,7 +1739,7 @@ msgstr "Más"
 
 #: tcms/testplans/templates/testplans/get.html:315
 msgid "Inactive"
-msgstr "Inactivas"
+msgstr "Inactivo"
 
 #: tcms/testplans/templates/testplans/get.html:449
 #: tcms/testruns/templates/testruns/get.html:502
@@ -1765,7 +1765,7 @@ msgstr "ID padre"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "Introducir para asignar; Backspace + Enter para limpiar"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1777,7 +1777,7 @@ msgstr "Notificar:"
 
 #: tcms/testplans/templates/testplans/mutable.html:127
 msgid "TestCase author"
-msgstr "Autor de TestCase"
+msgstr "Autor del Caso de Prueba"
 
 #: tcms/testplans/templates/testplans/mutable.html:141
 msgid "Notify when:"
@@ -1798,11 +1798,11 @@ msgstr "Activo"
 
 #: tcms/testplans/templates/testplans/search.html:12
 msgid "Some child test plans do not match search criteria"
-msgstr ""
+msgstr "Algunos planes de prueba hijo no coinciden con los criterios de búsqueda"
 
 #: tcms/testplans/templates/testplans/search.html:22
 msgid "Test plan name"
-msgstr "Nombre del plan de prueba"
+msgstr "Nombre del Plan de Prueba"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
@@ -1818,31 +1818,31 @@ msgstr "¡Para más información sobre la personalización de los estados de eje
 
 #: tcms/testruns/admin.py:95
 msgid "1 negative, 1 neutral & 1 positive status required!"
-msgstr ""
+msgstr "1 negativo, 1 neutral y 1 positivo requerido!"
 
 #: tcms/testruns/admin.py:106
 msgid "Edit parameters"
-msgstr ""
+msgstr "Editar parámetros"
 
 #: tcms/testruns/forms.py:39
 msgid "Full"
-msgstr ""
+msgstr "Lleno"
 
 #: tcms/testruns/forms.py:40
 msgid "Pairwise"
-msgstr ""
+msgstr "Pareados"
 
 #: tcms/testruns/models.py:230
 msgid "Test execution statuses"
-msgstr "Probar estados de ejecución"
+msgstr "Probar Estados de Ejecución"
 
 #: tcms/testruns/templates/testruns/get.html:25
 msgid "Unconfirmed test cases were not added"
-msgstr ""
+msgstr "No se han añadido casos de prueba no confirmados"
 
 #: tcms/testruns/templates/testruns/get.html:26
 msgid "Type 0 or 1"
-msgstr ""
+msgstr "Tipo 0 o 1"
 
 #: tcms/testruns/templates/testruns/get.html:27
 msgid "Comment"
@@ -1859,26 +1859,26 @@ msgstr "Administrador"
 #: tcms/testruns/templates/testruns/mutable.html:110
 #: tcms/testruns/templates/testruns/search.html:131
 msgid "Planned start"
-msgstr ""
+msgstr "Inicio planeado"
 
 #: tcms/testruns/templates/testruns/get.html:84
 msgid "Start"
-msgstr ""
+msgstr "Comenzar"
 
 #: tcms/testruns/templates/testruns/get.html:91
 #: tcms/testruns/templates/testruns/mutable.html:123
 #: tcms/testruns/templates/testruns/search.html:151
 msgid "Planned stop"
-msgstr ""
+msgstr "Parada planificada"
 
 #: tcms/testruns/templates/testruns/get.html:102
 msgid "Stop"
-msgstr ""
+msgstr "Parar"
 
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:160
 msgid "Environment"
-msgstr ""
+msgstr "Entorno"
 
 #: tcms/testruns/templates/testruns/get.html:171
 msgid "View all in Execution Dashboard"
@@ -1886,25 +1886,25 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:190
 msgid "Update text version"
-msgstr ""
+msgstr "Actualizar versión de texto"
 
 #: tcms/testruns/templates/testruns/get.html:225
 msgid "Add comment"
-msgstr ""
+msgstr "Añadir comentario"
 
 #: tcms/testruns/templates/testruns/get.html:236
 #: tcms/testruns/templates/testruns/get.html:339
 #: tcms/testruns/templates/testruns/get.html:576
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Añadir hiperenlace"
 
 #: tcms/testruns/templates/testruns/get.html:287
 msgid "Mine"
-msgstr ""
+msgstr "Mina"
 
 #: tcms/testruns/templates/testruns/get.html:288
 msgid "All"
-msgstr ""
+msgstr "Todos"
 
 #: tcms/testruns/templates/testruns/get.html:340
 #: tcms/testruns/templates/testruns/get.html:615
@@ -1914,32 +1914,32 @@ msgstr "Reportar error"
 
 #: tcms/testruns/templates/testruns/get.html:347
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "El caso de prueba no es parte del plan de prueba padre"
 
 #: tcms/testruns/templates/testruns/get.html:379
 msgid "Assigned to"
-msgstr ""
+msgstr "Asignado a"
 
 #: tcms/testruns/templates/testruns/get.html:387
 #: tcms/testruns/templates/testruns/get.html:389
 msgid "Last bug"
-msgstr ""
+msgstr "Último error"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
-msgstr ""
+msgstr "Versión de texto"
 
 #: tcms/testruns/templates/testruns/get.html:439
 msgid "Bugs and hyperlinks"
-msgstr "Bugs e hipervínculos"
+msgstr "Errores e hipervínculos"
 
 #: tcms/testruns/templates/testruns/get.html:593
 msgid "Is a defect"
-msgstr ""
+msgstr "Es un defecto"
 
 #: tcms/testruns/templates/testruns/get.html:620
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Rastreador de incidencias"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1951,15 +1951,15 @@ msgstr "Clonar Ejecución de Caso de Pruebas"
 
 #: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Afecta solo casos de prueba con parámetros"
 
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
-msgstr ""
+msgstr "más información"
 
 #: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
-msgstr "Prueba seleccionada(s):"
+msgstr "Caso de prueba seleccionado(s):"
 
 #: tcms/testruns/templates/testruns/mutable.html:221
 #, python-format
@@ -1983,16 +1983,16 @@ msgstr "Ejecutando"
 #: tcms/testruns/templates/testruns/search.html:90
 #: tcms/testruns/templates/testruns/search.html:190
 msgid "Start date"
-msgstr ""
+msgstr "Fecha de Inicio"
 
 #: tcms/testruns/templates/testruns/search.html:110
 #: tcms/testruns/templates/testruns/search.html:191
 msgid "Stop date"
-msgstr ""
+msgstr "Fecha de Culminación"
 
 #: tcms/testruns/views.py:273
 msgid "Clone of "
-msgstr "Clon de "
+msgstr "Clonar de "
 
 #: testcases.TestCaseStatus/name:1
 msgid "PROPOSED"
@@ -2016,15 +2016,15 @@ msgstr "EN EJECUCIÓN"
 
 #: testruns.TestExecutionStatus/name:3
 msgid "PAUSED"
-msgstr "EN PAUSA"
+msgstr "PAUSADO"
 
 #: testruns.TestExecutionStatus/name:4
 msgid "PASSED"
-msgstr "PASO"
+msgstr "PASÓ"
 
 #: testruns.TestExecutionStatus/name:5
 msgid "FAILED"
-msgstr "FALLO"
+msgstr "FALLÓ"
 
 #: testruns.TestExecutionStatus/name:6
 msgid "BLOCKED"
@@ -2036,7 +2036,7 @@ msgstr "ERROR"
 
 #: testruns.TestExecutionStatus/name:8
 msgid "WAIVED"
-msgstr "WAIVADO"
+msgstr "NO APLICA"
 
 #: tcms_github_app/admin.py:122
 #, python-format
@@ -2050,7 +2050,7 @@ msgstr "Integración de GitHub"
 
 #: tcms_github_app/menu.py:12
 msgid "Resync"
-msgstr ""
+msgstr "Resync"
 
 #: tcms_github_app/menu.py:13
 msgid "Settings"
@@ -2112,15 +2112,15 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:14
 msgid "Tenant subscriptions"
-msgstr ""
+msgstr "Suscripciones del cliente"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:23
 msgid "You can access the following tenants"
-msgstr ""
+msgstr "Puede acceder a los siguientes inquilinos"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:28
 msgid "Tenant"
-msgstr ""
+msgstr "Instante"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:39
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:140
@@ -2130,11 +2130,11 @@ msgstr "Organización"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
 msgid "Private repository credentials"
-msgstr ""
+msgstr "Credenciales de repositorio privado"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
 msgid "Click 'Password' to reveal!"
-msgstr ""
+msgstr "Haga clic en 'contraseña' para mostrar!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
@@ -2146,7 +2146,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "You own the following tenants"
-msgstr ""
+msgstr "Usted posee los siguientes inquilinos"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:148
@@ -2170,11 +2170,11 @@ msgstr "Cancelar suscripción"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
 msgid "You don't own any tenants"
-msgstr ""
+msgstr "No posees ningún inquilino"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:181
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Suscríbete vía FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
 msgid "Transaction history"
@@ -2197,7 +2197,7 @@ msgstr "Recibido en"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:11
 msgid "Extra emails"
-msgstr ""
+msgstr "Emails adicionales"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:21
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:52
 msgid "Private Tenant Warning"
-msgstr ""
+msgstr "Advertencia para inquilinos privados"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:57
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2222,11 +2222,11 @@ msgstr ""
 
 #: tcms_github_marketplace/utils.py:58
 msgid "Kiwi TCMS Subscription Exit Poll"
-msgstr ""
+msgstr "Suscripción Kiwi TCMS Salir encuesta"
 
 #: tcms_github_marketplace/views.py:617
 msgid "Kiwi TCMS subscription notification"
-msgstr ""
+msgstr "Notificación de suscripción a Kiwi TCMS"
 
 #: tcms_github_marketplace/views.py:833
 msgid "mo"
@@ -2238,7 +2238,7 @@ msgstr "año"
 
 #: build/lib/tcms_enterprise/admin.py:22 tcms_enterprise/admin.py:22
 msgid "Export as CSV"
-msgstr ""
+msgstr "Exportar como CSV"
 
 #: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:21
 msgid "Email address is required"
@@ -2255,7 +2255,7 @@ msgstr "Información legal"
 
 #: tcms_enterprise/templates/registration/custom_login.html:27
 msgid "Continue with"
-msgstr ""
+msgstr "Continuar con"
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
@@ -2264,7 +2264,7 @@ msgstr "No autorizado"
 
 #: tcms_tenants/admin.py:86
 msgid "Existing username, email or user ID"
-msgstr ""
+msgstr "Nombre de usuario, email o ID de usuario existente"
 
 #: tcms_tenants/admin.py:159
 msgid "Full name"
@@ -2281,7 +2281,7 @@ msgstr "Crear"
 #: tcms_tenants/menu.py:20
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:17
 msgid "Invite users"
-msgstr ""
+msgstr "Invitar usuarios"
 
 #: tcms_tenants/menu.py:21
 msgid "Authorized users"
@@ -2293,7 +2293,7 @@ msgstr "No pagado"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "La suscripción expira pronto"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2315,27 +2315,27 @@ msgstr ""
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
-msgstr ""
+msgstr "Nuevo inquilino"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:35
 msgid "Company, team or project name"
-msgstr "Prueba Marcos"
+msgstr "Nombre de la empresa, equipo o proyecto"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:43
 msgid "Schema"
-msgstr "Esquema prueba Marcos"
+msgstr "Esquema"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:56
 msgid "Validation pattern"
-msgstr "Patrón de validación prueba Marcos"
+msgstr "Patrón de validación"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:61
 msgid "Publicly readable"
-msgstr ""
+msgstr "Públicamente legible"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
@@ -2343,7 +2343,7 @@ msgstr ""
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
-msgstr ""
+msgstr "Nombre de esquema ya esta en uso"
 
 #: tcms_tenants/utils.py:170
 msgid "New Kiwi TCMS tenant created"
@@ -2356,40 +2356,40 @@ msgstr ""
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
-msgstr ""
+msgstr "Invitación a unirse a Kiwi TCMS"
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr ""
+msgstr "Sólo el super-usuario y el propietario del inquilino pueden editar propiedades del inquilino"
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
-msgstr ""
+msgstr "Editar inquilino"
 
 #: tcms_tenants/views.py:153
 msgid "Only users who are authorized for this tenant can invite others"
-msgstr ""
+msgstr "Sólo los usuarios autorizados para esta instancia pueden invitar a otros"
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr ""
+msgstr "Usuarios"
 
 #: tenant_groups/models.py:34
 msgid "name"
-msgstr ""
+msgstr "nombre"
 
 #: tenant_groups/models.py:37
 msgid "permissions"
-msgstr ""
+msgstr "permisos"
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr ""
+msgstr "grupo"
 
 #: tenant_groups/models.py:48
 msgid "groups"
-msgstr ""
+msgstr "Grupos"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr ""
+msgstr "Tokens API personales"
