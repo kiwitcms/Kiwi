@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-02-24 17:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -516,12 +516,12 @@ msgstr "Usuários"
 
 #: tcms/kiwi_auth/admin.py:62
 msgid "Deactivate selected accounts"
-msgstr ""
+msgstr "Desativar as contas selecionadas"
 
 #: tcms/kiwi_auth/admin.py:69
 #, python-format
 msgid "Account '%s' was deactivated"
-msgstr ""
+msgstr "Conta '%s' foi desativada"
 
 #: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
@@ -622,15 +622,15 @@ msgstr "Endereço de e-mail foi redefinido, por favor, verifique a caixa de entr
 
 #: tcms/management/models.py:20
 msgid "Classification"
-msgstr ""
+msgstr "Classificação"
 
 #: tcms/management/models.py:21
 msgid "Classifications"
-msgstr ""
+msgstr "Classificações"
 
 #: tcms/management/models.py:57
 msgid "Products"
-msgstr ""
+msgstr "Produtos"
 
 #: tcms/management/models.py:77
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
@@ -672,7 +672,7 @@ msgstr "Componentes"
 
 #: tcms/management/models.py:126
 msgid "Versions"
-msgstr ""
+msgstr "Versões"
 
 #: tcms/management/models.py:172
 msgid "Builds"
@@ -788,7 +788,7 @@ msgstr "Todo o resto"
 
 #: tcms/settings/common.py:449
 msgid "MORE"
-msgstr ""
+msgstr "MAIS"
 
 #: tcms/settings/common.py:459
 msgid "Report an Issue"
@@ -1028,7 +1028,7 @@ msgstr "Erro Interno do Servidor"
 
 #: tcms/templates/admin/auth/user/submit_line.html:7
 msgid "Deactivate"
-msgstr ""
+msgstr "Desativar"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
@@ -1436,7 +1436,15 @@ msgid "Test case %(pk)d has been created.\n\n"
 "Default tester: %(default_tester)s\n"
 "Text:\n"
 "%(text)s"
-msgstr ""
+msgstr "O caso %(pk)d de teste foi criado.\n\n"
+"### Informação básica ###\n"
+"Resumo: %(summary)s\n\n"
+"Produto: %(product)s\n"
+"Categoria: %(category)s\n"
+"Prioridade: %(priority)s\n\n"
+"Testador padrão: %(default_tester)s\n"
+"Texto:\n"
+"%(text)s"
 
 #: tcms/testcases/helpers/email.py:62
 #, python-format
@@ -1900,7 +1908,7 @@ msgstr "Ambiente"
 
 #: tcms/testruns/templates/testruns/get.html:171
 msgid "View all in Execution Dashboard"
-msgstr ""
+msgstr "Visualizar tudo no Painel de Execução"
 
 #: tcms/testruns/templates/testruns/get.html:190
 msgid "Update text version"
@@ -1941,7 +1949,7 @@ msgstr "Atribuído para"
 #: tcms/testruns/templates/testruns/get.html:387
 #: tcms/testruns/templates/testruns/get.html:389
 msgid "Last bug"
-msgstr ""
+msgstr "Último bug"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
@@ -2152,11 +2160,11 @@ msgstr "Organização"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
 msgid "Private repository credentials"
-msgstr ""
+msgstr "Credenciais do repositório privado"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
 msgid "Click 'Password' to reveal!"
-msgstr ""
+msgstr "Clique em \"Senha\" para revelar!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
@@ -2266,7 +2274,7 @@ msgstr "ano"
 
 #: build/lib/tcms_enterprise/admin.py:22 tcms_enterprise/admin.py:22
 msgid "Export as CSV"
-msgstr ""
+msgstr "Exportar para CSV"
 
 #: build/lib/tcms_enterprise/pipeline.py:22 tcms_enterprise/pipeline.py:21
 msgid "Email address is required"
@@ -2283,7 +2291,7 @@ msgstr "Informações legais"
 
 #: tcms_enterprise/templates/registration/custom_login.html:27
 msgid "Continue with"
-msgstr ""
+msgstr "Continuar com"
 
 #: tcms_tenants/admin.py:55 tcms_tenants/admin.py:62
 #: tcms_tenants/middleware.py:35
