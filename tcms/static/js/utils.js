@@ -560,6 +560,186 @@ export function showOrHideMultipleRows (rootSelector, rows) {
     }
 }
 
+/*
+    Reusable duplicate-check logic for "new" forms.
+
+    config = {
+        rpcMethod:      'TestCase.filter',     // JSON-RPC method
+        fieldName:      'summary',             // model field name
+        inputSelector:  '#id_summary',         // input element
+        groupSelector:  '#summary-group',      // form-group with data-trans-* attrs
+        warningSelector:'#duplicate-summary-warning',
+        autocompleteSelector: '#summary-autocomplete',
+        modalSelector:  '#duplicate-tc-modal',
+        prefix:         'TC',                  // display prefix, e.g. TC, TR, TP
+        detailUrlBase:  '/case/',              // URL path for detail view
+        modalRows:      function(g, item) {},  // returns array of [label, value]
+        descriptionField: 'text'               // field name for markdown description, or null
+    }
+*/
+export function initDuplicateCheck (config) {
+    const duplicateWarning = $(config.warningSelector)
+    if (!duplicateWarning.length) {
+        return
+    }
+
+    const group = $(config.groupSelector)
+    const input = $(config.inputSelector)
+    const autocomplete = $(config.autocompleteSelector)
+    const modal = $(config.modalSelector)
+    const maxItems = 10
+    let debounceTimer = null
+    let duplicateMatches = []
+
+    function showModal (item) {
+        const g = group.data.bind(group)
+        $('#duplicate-modal-title').text(
+            g('trans-duplicate-modal-title') + ' - ' + config.prefix + '-' + item.id
+        )
+
+        $('#duplicate-modal-view-btn').attr('href', config.detailUrlBase + item.id + '/')
+        $('#duplicate-modal-view-label').text(
+            g('trans-duplicate-modal-view') + ' ' + config.prefix + '-' + item.id
+        )
+
+        const body = $('#duplicate-modal-body')
+        body.empty()
+
+        const table = $('<table>', { class: 'table table-striped table-condensed' })
+        const rows = config.modalRows(g, item)
+        rows.forEach(function (row) {
+            $('<tr>')
+                .append($('<th>', { text: row[0], css: { width: '150px' } }))
+                .append($('<td>', { text: row[1] || '' }))
+                .appendTo(table)
+        })
+
+        if (config.descriptionField) {
+            const descriptionContainer = $('<div>', {
+                css: {
+                    'max-height': '300px',
+                    'overflow-y': 'auto',
+                    'background-color': '#f5f5f5',
+                    padding: '10px',
+                    'border-radius': '4px'
+                }
+            })
+            const descriptionRow = $('<tr>')
+                .append($('<th>', { text: g('trans-duplicate-modal-text'), css: { width: '150px', 'vertical-align': 'top' } }))
+                .append($('<td>').append(descriptionContainer))
+            table.append(descriptionRow)
+            body.append(table)
+
+            const descValue = item[config.descriptionField]
+            if (descValue) {
+                markdown2HTML(descValue, descriptionContainer[0])
+            } else {
+                descriptionContainer.text('-')
+            }
+        } else {
+            body.append(table)
+        }
+
+        modal.modal('show')
+    }
+
+    function updateWarning () {
+        if (duplicateMatches.length > 0) {
+            duplicateWarning.html(
+                '<span class="fa fa-exclamation-triangle"></span> ' +
+                group.data('trans-duplicate-blocked')
+            ).removeClass('hidden')
+        } else {
+            duplicateWarning.addClass('hidden').empty()
+        }
+    }
+
+    const fieldContains = config.fieldName + '__icontains'
+    const fieldIexact = config.fieldName + '__iexact'
+
+    input.on('input', function () {
+        const value = $(this).val().trim()
+        clearTimeout(debounceTimer)
+
+        if (value.length < 3) {
+            duplicateWarning.addClass('hidden').empty()
+            autocomplete.hide().empty()
+            duplicateMatches = []
+            return
+        }
+
+        const filterParam = {}
+        filterParam[fieldContains] = value
+
+        debounceTimer = setTimeout(function () {
+            jsonRPC(config.rpcMethod, filterParam, function (data) {
+                duplicateMatches = data.filter(function (item) {
+                    return item[config.fieldName].toLowerCase() === value.toLowerCase()
+                })
+                updateWarning()
+
+                autocomplete.empty()
+                if (data.length > 0) {
+                    data.slice(0, maxItems).forEach(function (item) {
+                        $('<a>', {
+                            href: '#',
+                            class: 'list-group-item',
+                            text: config.prefix + '-' + item.id + ': ' + item[config.fieldName]
+                        }).on('click', function (e) {
+                            e.preventDefault()
+                            autocomplete.hide()
+                            showModal(item)
+                        }).appendTo(autocomplete)
+                    })
+                    if (data.length > maxItems) {
+                        $('<span>', {
+                            class: 'list-group-item disabled',
+                            text: '... and ' + (data.length - maxItems) + ' more'
+                        }).appendTo(autocomplete)
+                    }
+                    autocomplete.show()
+                } else {
+                    autocomplete.hide()
+                }
+            })
+        }, 500)
+    })
+
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest(config.inputSelector + ', ' + config.autocompleteSelector).length) {
+            autocomplete.hide()
+        }
+    })
+
+    input.on('focus', function () {
+        if (autocomplete.children().length > 0) {
+            autocomplete.show()
+        }
+    })
+
+    duplicateWarning.closest('form').on('submit', function (e) {
+        const currentValue = input.val().trim()
+        if (currentValue.length < 1) {
+            return
+        }
+
+        const exactParam = {}
+        exactParam[fieldIexact] = currentValue
+
+        duplicateMatches = []
+        jsonRPC(config.rpcMethod, exactParam, function (data) {
+            duplicateMatches = data
+        }, true)
+
+        if (duplicateMatches.length > 0) {
+            e.preventDefault()
+            updateWarning()
+            showModal(duplicateMatches[0])
+            return false
+        }
+    })
+}
+
 export function discoverNestedTestPlans (inputData, callbackF) {
     const prefix = '&nbsp;&nbsp;&nbsp;&nbsp;'
     const result = []
