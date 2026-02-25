@@ -24,6 +24,14 @@ const permissions = {
 }
 const autocompleteCache = {}
 
+function showAttachmentCountForTe (container, executionCount, caseCount) {
+    const jsAttachments = container.find('.js-attachments')
+    if (executionCount > 0 || caseCount > 0) {
+        jsAttachments.removeClass('hidden')
+        jsAttachments.find('.test-execution-attachment-count').text(`E:${executionCount} / TC:${caseCount}`)
+    }
+}
+
 function showLastBugForTe (testExecutionRow, bugUrl) {
     const jsBugs = testExecutionRow.find('.js-bugs')
     jsBugs.removeClass('hidden')
@@ -546,6 +554,8 @@ function getExpandArea (testExecution) {
 
     jsonRPC('TestCase.list_attachments', [testExecution.case], testCaseAttachments => {
         jsonRPC('TestExecution.list_attachments', [testExecution.id], testExecutionAttachments => {
+            showAttachmentCountForTe(container, testExecutionAttachments.length, testCaseAttachments.length)
+
             const attachments = testCaseAttachments.concat(testExecutionAttachments)
             const ul = container.find('.test-case-attachments')
 
