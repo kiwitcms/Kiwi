@@ -19,6 +19,8 @@
             data-perm-add-comment="{{ perms.django_comments.add_comment }}"
             data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
             data-perm-view-historical-testexecution="{{ perms.testruns.view_historicaltestexecution }}"
+            data-perm-add-attachment="{{ perms.attachments.add_attachment }}"
+            data-perm-delete-attachment="{{ perms.attachments.delete_attachment }}"
             data-trans-no-executions-selected="{% trans 'No rows selected! Please select at least one!'%}"
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
@@ -388,6 +390,10 @@
                                                         <span class="fa fa-bug kiwi-color-red"></span>
                                                         <a href="#" target="_blank" title="{% trans 'Last bug' %}"></a>
                                                     </div>
+                                                    <div title="{% trans 'Attachments' %}" class="list-view-pf-additional-info-item js-attachments hidden">
+                                                        <span class="fa fa-paperclip"></span>
+                                                        <span class="test-execution-attachment-count"></span>
+                                                    </div>
                                                 </div>
                                                 <div class="list-view-pf-additional-info" style="width: 30%;">
                                                     <div title="{% trans 'Status' %}" class="list-view-pf-additional-info-item">
@@ -492,15 +498,65 @@
                                                 <div class="comments"></div>
                                             </div>
                                             <div>
-                                                <span>{% trans 'Attachments' %}:</span>
-                                                <ul class="list-group list-unstyled test-case-attachments">
-                                                    <template id="attachments-list-item">
-                                                        <li class="list-group-item'">
-                                                            <a></a>
-                                                        </li>
-                                                    </template>
-                                                    <li class="list-group-item hidden">{% trans "No attachments" %}</li>
-                                                </ul>
+                                                <strong>{% trans 'Execution attachments' %}:</strong>
+                                                <table class="table table-striped table-condensed test-execution-attachments">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{% trans 'File' %}</th>
+                                                            <th>{% trans 'Owner' %}</th>
+                                                            <th>{% trans 'Date' %}</th>
+                                                            <th class="hidden-print"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template class="execution-attachment-template">
+                                                            <tr>
+                                                                <td><a class="execution-attachment-link"></a></td>
+                                                                <td class="execution-attachment-owner"></td>
+                                                                <td class="execution-attachment-date"></td>
+                                                                <td class="hidden-print">
+                                                                    <a href="#" class="js-remove-execution-attachment" title="{% trans 'Delete' %}">
+                                                                        <span class="pficon-error-circle-o"></span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                        <tr class="no-execution-attachments hidden">
+                                                            <td colspan="4">{% trans "No attachments" %}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="execution-attachment-upload hidden-print">
+                                                    <label class="btn btn-default btn-xs" title="{% trans 'Upload' %}">
+                                                        <span class="fa fa-paperclip"></span>
+                                                        <input type="file" multiple class="hidden execution-attachment-file-input">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div>
+                                                <strong>{% trans 'Test case attachments' %}:</strong>
+                                                <table class="table table-striped table-condensed test-case-attachments">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{% trans 'File' %}</th>
+                                                            <th>{% trans 'Owner' %}</th>
+                                                            <th>{% trans 'Date' %}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template class="attachments-list-item">
+                                                            <tr>
+                                                                <td><a class="tc-attachment-link"></a></td>
+                                                                <td class="tc-attachment-owner"></td>
+                                                                <td class="tc-attachment-date"></td>
+                                                            </tr>
+                                                        </template>
+                                                        <tr class="no-tc-attachments hidden">
+                                                            <td colspan="3">{% trans "No attachments" %}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
