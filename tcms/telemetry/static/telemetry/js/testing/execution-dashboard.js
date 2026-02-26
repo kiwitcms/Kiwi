@@ -141,7 +141,15 @@ export function drawTable () {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return `<a href="/runs/${data.run}/#test-execution-${data.id}">TE-${data.id}</a>`
+                    if (type === 'display' || type === 'filter') {
+                        return `<a href="/runs/${data.run}/#test-execution-${data.id}">TE-${data.id}</a>`;
+                    }
+
+                    if (type === 'sort' || type === 'type') {
+                        return parseInt(data.id, 10);
+                    }
+
+                    return data.id;
                 }
             },
             {
@@ -204,6 +212,6 @@ export function drawTable () {
             thousands: '',
             zeroRecords: $('#main-element').data('trans-no-records-found')
         },
-        order: [[1, 'asc']]
+        order: [[0, 'asc']]
     })
 }

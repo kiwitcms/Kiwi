@@ -65,7 +65,7 @@
     <script src="{% static 'js/bundle.js' %}"></script>
 
     {% block contents %}{% endblock %}
-    {% include 'include/ads.html' %}
+    <!-- {% include 'include/ads.html' %} -->
 
     {% if SETTINGS.ANONYMOUS_ANALYTICS %}
     <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid={{ SETTINGS.SCARF_PIXEL_ID }}">
