@@ -1,2 +1,2 @@
 -r base.txt
-psycopg[binary]==3.3.2
+psycopg[binary]==3.3.3
