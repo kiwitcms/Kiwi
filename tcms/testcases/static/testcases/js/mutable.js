@@ -2,7 +2,10 @@ import { updateCategorySelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestcasesMutableReadyHandler () {
     $('#id_template').change(function () {
-        window.markdownEditor.codemirror.setValue($(this).val())
+        const editor = window.markdownEditors && window.markdownEditors['id_text']
+        if (editor) {
+            editor.codemirror.setValue($(this).val())
+        }
     })
 
     $('#add_id_template').click(function () {

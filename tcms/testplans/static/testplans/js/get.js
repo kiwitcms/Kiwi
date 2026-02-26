@@ -141,7 +141,7 @@ function drawTestCases (testCases, testPlanId, permissions) {
 
     if (testCases.length > 0) {
         testCases.forEach(function (element) {
-            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions))
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions, testPlanId))
         })
         attachEvents(testPlanId, permissions)
     } else {
@@ -153,7 +153,7 @@ function drawTestCases (testCases, testPlanId, permissions) {
 
 function redrawSingleRow (testCaseId, testPlanId, permissions) {
     const testCaseRowDocumentFragment = $('#test_case_row')[0].content
-    const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions)
+    const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions, testPlanId)
 
     // remove from expanded list b/c the comment section may have changed
     expandedTestCaseIds.splice(expandedTestCaseIds.indexOf(testCaseId), 1)
@@ -163,7 +163,7 @@ function redrawSingleRow (testCaseId, testPlanId, permissions) {
     attachEvents(testPlanId, permissions)
 }
 
-function getTestCaseRowContent (rowContent, testCase, permissions) {
+function getTestCaseRowContent (rowContent, testCase, permissions, testPlanId) {
     const row = $(rowContent)
 
     row[0].firstElementChild.dataset.testcasePk = testCase.id
@@ -224,7 +224,7 @@ function getTestCaseRowContent (rowContent, testCase, permissions) {
 function getTestCaseExpandArea (row, testCase, permissions) {
     markdown2HTML(testCase.text, row.find('.js-test-case-expand-text'))
     if (testCase.notes.trim().length > 0) {
-        row.find('.js-test-case-expand-notes').html(testCase.notes)
+        markdown2HTML(testCase.notes, row.find('.js-test-case-expand-notes'))
     }
 
     // draw the attachments

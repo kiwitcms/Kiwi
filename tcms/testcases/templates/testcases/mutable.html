@@ -19,6 +19,9 @@
     <div class="container-fluid container-cards-pf">
         <form class="form-horizontal" action="{% if object %}{% url 'testcases-edit' object.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
             {% csrf_token %}
+            {% if request.GET.from_plan %}
+            <input type="hidden" name="from_plan" value="{{ request.GET.from_plan }}">
+            {% endif %}
             <input type="hidden" name="author" value="{{ form.author.value }}">
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
@@ -169,7 +172,7 @@
             <div class="form-group">
                 <label for="id_notes" class="col-md-1 col-lg-1">{% trans "Notes" %}</label>
                 <div class="col-md-12 col-lg-12 {% if form.notes.errors %}has-error{% endif %}">
-                    <textarea id="id_notes" rows="4" name="notes" class="form-control">{{ form.notes.value|default:'' }}</textarea>
+                    {{ form.notes }}
                     {{ form.notes.errors }}
                 </div>
             </div>
@@ -260,7 +263,7 @@
 
             <div class="form-group">
                 <div class="col-md-12 col-lg-12">
-                    <a href="{% if object %}{% url 'testcases-get' object.pk %}{% else %}{% url 'core-views-index' %}{% endif %}"
+                    <a href="{% if object %}{% url 'testcases-get' object.pk %}{% if request.GET.from_plan %}?from_plan={{ request.GET.from_plan }}{% endif %}{% else %}{% url 'core-views-index' %}{% endif %}"
                         class="btn btn-danger btn-lg">{% trans "Cancel" %}</a>
                     <button type="submit" class="btn btn-primary btn-lg">{% trans "Save" %}</button>
                 </div>

@@ -80,12 +80,18 @@ $(() => {
         $('[data-toggle="tooltip"]').tooltip()
     }
 
+    window.markdownEditors = {}
+
     $('.js-simplemde-textarea').each(function () {
         const fileUploadId = $(this).data('file-upload-id')
         const uploadField = $(`#${fileUploadId}`)
 
-        // this value is only used in testcases/js/mutable.js
-        window.markdownEditor = initSimpleMDE(this, uploadField)
+        // Use textarea id/name for unique autosave ID to prevent content sharing
+        const textareaId = $(this).attr('id') || $(this).attr('name') || 'default'
+        const autoSaveId = window.location.toString() + '#' + textareaId
+
+        const editor = initSimpleMDE(this, uploadField, autoSaveId)
+        window.markdownEditors[textareaId] = editor
     })
 
     $('#logout_link').click(function () {
