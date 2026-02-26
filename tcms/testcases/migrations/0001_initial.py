@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 from django.conf import settings
 from django.db import migrations, models
 
