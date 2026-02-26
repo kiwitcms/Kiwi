@@ -3,6 +3,7 @@
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
+from django.db.models import OuterRef, Subquery
 from django.db.models.functions import Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
@@ -271,12 +272,18 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     qs = (
         TestCase.objects.annotate(
             expected_duration=Coalesce("setup_duration", timedelta(0))
-            + Coalesce("testing_duration", timedelta(0))
+            + Coalesce("testing_duration", timedelta(0)),
+            last_modified=Subquery(
+                TestCase.history.model.objects.filter(id=OuterRef("pk"))
+                .order_by("-history_date")
+                .values("history_date")[:1]
+            ),
         )
         .filter(**query)
         .values(
             "id",
             "create_date",
+            "last_modified",
             "is_automated",
             "script",
             "arguments",

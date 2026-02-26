@@ -125,6 +125,11 @@ class TestCaseGetView(DetailView):
         context["executions"] = self.object.executions.select_related(
             "run", "tested_by", "assignee", "case", "status"
         ).order_by("run__plan", "run")
+        context["last_modified"] = (
+            self.object.history.latest().history_date
+            if self.object.history.exists()
+            else self.object.create_date
+        )
         context["OBJECT_MENU_ITEMS"] = [
             (
                 "...",
