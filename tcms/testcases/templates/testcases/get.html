@@ -10,6 +10,9 @@
 
 {% block contents %}
 <div class="container-cards-pf">
+    {% trans "Test Cases" as tc_breadcrumb_label %}
+    {% include "include/breadcrumbs.html" with search_url="testcases-search" search_label=tc_breadcrumb_label view_url="testcases-get" object_label="TC-" current_view="view" %}
+    {% include "include/page_toolbar.html" with current_view="view" view_url="testcases-get" edit_url="testcases-edit" new_url="testcases-new" search_url="testcases-search" tc_clone=True admin_url_prefix="testcases/testcase" show_actions=True show_history=True edit_perm=perms.testcases.change_testcase add_perm=perms.testcases.add_testcase delete_perm=perms.testcases.delete_testcase admin_perm=perms.testcases.change_testcase %}
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12 kiwi-margin-top-0">
         <span id="test_case_pk"
@@ -118,7 +121,12 @@
                     {% endif %}
                 </h2>
 
-                <div class="card-pf-body"></div>
+                <h2 class="card-pf-title kiwi-text-align-left">
+                    <span class="fa fa-exchange"></span>{% trans 'Related' %}
+                </h2>
+                <div class="card-pf-body">
+                    <a href="{% url 'testruns-search' %}?case={{ object.pk }}">{% trans 'Test runs with this case' %}</a>
+                </div>
             </div>
         </div>
 

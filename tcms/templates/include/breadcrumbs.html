@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<ol class="breadcrumb">
+    <li><a href="{% url 'core-views-index' %}">{% trans "Dashboard" %}</a></li>
+    <li><a href="{% url search_url %}">{{ search_label }}</a></li>
+    {% if current_view == "view" %}
+        <li class="active">{{ object_label }}{{ object.pk }}: {{ object }}</li>
+    {% elif current_view == "edit" %}
+        <li><a href="{% url view_url object.pk %}">{{ object_label }}{{ object.pk }}: {{ object }}</a></li>
+        <li class="active">{% trans "Edit" %}</li>
+    {% elif current_view == "new" %}
+        <li class="active">{% trans "New" %}</li>
+    {% endif %}
+</ol>
