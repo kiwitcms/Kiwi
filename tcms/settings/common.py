@@ -432,6 +432,7 @@ MENU_ITEMS = [
                             (_("Trends"), reverse_lazy("testing-execution-trends")),
                         ],
                     ),
+                    (_("Metrics"), reverse_lazy("testing-metrics")),
                     (_("TestCase health"), reverse_lazy("test-case-health")),
                 ],
             ),

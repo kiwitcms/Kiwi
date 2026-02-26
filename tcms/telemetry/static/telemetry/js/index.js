@@ -19,6 +19,7 @@ import {
     initializePage as executionDashboardInitialize
 } from './testing/execution-dashboard'
 import { drawChart as executionTrendsDrawChart } from './testing/execution-trends'
+import { drawTable as metricsDrawTable } from './testing/metrics'
 import {
     reloadTable as testCaseHealthDrawChart,
     initializePage as testCaseHealthInitialize
@@ -46,7 +47,8 @@ export function pageTelemetryReadyHandler (pageId) {
         'page-telemetry-status-matrix': statusMatrixDrawChart,
         'page-telemetry-execution-dashboard': executionDashboardDrawTable,
         'page-telemetry-execution-trends': executionTrendsDrawChart,
-        'page-telemetry-test-case-health': testCaseHealthDrawChart
+        'page-telemetry-test-case-health': testCaseHealthDrawChart,
+        'page-telemetry-metrics': metricsDrawTable
     }[pageId]
 
     const initializePage = {
@@ -54,12 +56,15 @@ export function pageTelemetryReadyHandler (pageId) {
         'page-telemetry-status-matrix': statusMatrixInitialize,
         'page-telemetry-execution-dashboard': executionDashboardInitialize,
         'page-telemetry-execution-trends': () => {},
-        'page-telemetry-test-case-health': testCaseHealthInitialize
+        'page-telemetry-test-case-health': testCaseHealthInitialize,
+        'page-telemetry-metrics': () => {}
     }[pageId]
 
     initializePage()
 
-    loadInitialProduct()
+    loadInitialProduct(() => {
+        drawChart()
+    })
 
     document.getElementById('id_product').onchange = () => {
         updateVersionSelectFromProduct()
