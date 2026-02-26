@@ -110,9 +110,11 @@ class KiwiHistoricalRecords(HistoricalRecords):
             # DB query so it is better to use the private field instead!
             # In older simple_history version this field wasn't private but was renamed
             # in 2.10.0 hence the pylint disable!
-            instance._change_reason = diff_objects(  # pylint: disable=protected-access
+            diff = diff_objects(
                 instance.previous, instance, self.fields_included(instance)
             )
+            if diff:
+                instance._change_reason = diff  # pylint: disable=protected-access
         super().post_save(instance, created, using, **kwargs)
 
     def finalize(self, sender, **kwargs):
@@ -133,6 +135,30 @@ class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
 
     def Diff(self, obj):  # pylint: disable=invalid-name
         return safe(f"<pre>{obj.history_change_reason}</pre>")
+
+    def set_history_delta_changes(
+        self, request, historical_records, foreign_keys_are_objs=True
+    ):
+        super().set_history_delta_changes(
+            request, historical_records, foreign_keys_are_objs
+        )
+        for record in historical_records:
+            if getattr(record, "history_delta_changes", None):
+                continue
+
+            reason = record.history_change_reason or ""
+            first_line = reason.split("\n")[0]
+
+            if first_line.startswith("Tag added: "):
+                tag_name = first_line[len("Tag added: ") :]
+                record.history_delta_changes = [
+                    {"field": _("Tags"), "old": "", "new": tag_name}
+                ]
+            elif first_line.startswith("Tag removed: "):
+                tag_name = first_line[len("Tag removed: ") :]
+                record.history_delta_changes = [
+                    {"field": _("Tags"), "old": tag_name, "new": ""}
+                ]
 
     def get_readonly_fields(self, request, obj=None):
         # make all fields readonly

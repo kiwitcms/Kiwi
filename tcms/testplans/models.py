@@ -63,10 +63,21 @@ class TestPlan(TreeNode, UrlMixin):
         )[0]
 
     def add_tag(self, tag):
-        return TestPlanTag.objects.get_or_create(plan=self, tag=tag)
+        result = TestPlanTag.objects.get_or_create(plan=self, tag=tag)
+        self._change_reason = (  # pylint: disable=protected-access
+            f"Tag added: {tag.name}\n\n"
+            f"--- tag\n+++ tag\n@@ -1,1 +1,1 @@\n-\n+{tag.name}"
+        )
+        self.save()
+        return result
 
     def remove_tag(self, tag):
         TestPlanTag.objects.filter(plan=self, tag=tag).delete()
+        self._change_reason = (  # pylint: disable=protected-access
+            f"Tag removed: {tag.name}\n\n"
+            f"--- tag\n+++ tag\n@@ -1,1 +1,1 @@\n-{tag.name}\n+"
+        )
+        self.save()
 
     def delete_case(self, case):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
