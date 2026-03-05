@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-03-05 01:37\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -512,22 +512,22 @@ msgstr "Dilarang mengunggah file yang dapat dieksekusi"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
-msgstr ""
+msgstr "Pengguna"
 
 #: tcms/kiwi_auth/admin.py:62
 msgid "Deactivate selected accounts"
-msgstr ""
+msgstr "Non aktifkan akun terpilih"
 
 #: tcms/kiwi_auth/admin.py:69
 #, python-format
 msgid "Account '%s' was deactivated"
-msgstr ""
+msgstr "Akun '%s' dinonaktifkan"
 
 #: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "Atur ulang alamat email"
 
 #: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
@@ -2395,3 +2395,4 @@ msgstr ""
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
