@@ -163,7 +163,7 @@ function redrawSingleRow (testCaseId, testPlanId, permissions) {
     attachEvents(testPlanId, permissions)
 }
 
-function getTestCaseRowContent (rowContent, testCase, permissions, testPlanId) {
+function getTestCaseRowContent (rowContent, testCase, permissions) {
     const row = $(rowContent)
 
     row[0].firstElementChild.dataset.testcasePk = testCase.id
