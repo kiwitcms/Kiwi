@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2026-03-05 01:37\n"
+"PO-Revision-Date: 2026-03-05 02:39\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -539,7 +539,7 @@ msgstr "Perizinan"
 
 #: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "Ini adalah superuser terakhir, akun ini tidak bisa dihapus!"
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
@@ -547,15 +547,15 @@ msgstr "Pengguna dengan alamat email ini sudah terdaftar"
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "Silahkan konfirmasi alamat email akun Kiwi TCMS anda"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "Email tidak cocok"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "Peringatan"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -563,11 +563,14 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "Setelah menekan tombol 'Simpan' akun anda akan <strong>dinonaktifkan</strong>\n"
+"dan anda akan <strong>dikeluarkan</strong>! akan ada email konfirmasi dikirimkan ke alamat terbaru!<br>\n"
+"Periksa ulang alamat email baru anda <strong>dimasukkan dengan benar</strong> atau akun anda akan <strong>terkunci</strong>!\n"
+"Setelah mengikuti tautan aktifasi berikut, anda akan dapat masuk seperti semula!"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "BUKAN anda"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -583,7 +586,7 @@ msgstr "Konfirmasi"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "Tolong ketik! Jangan gunakan salin tempel informasi dari field sebelumnya!"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -613,23 +616,23 @@ msgstr "Akun anda telah berhasil diaktifkan"
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr ""
+msgstr "Anda sedang melihat rekaman dari pengguna '%s'"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "Alamat email telah diatur ulang, silahkan cek kotak masuk untuk instruksi lebih lanjut"
 
 #: tcms/management/models.py:20
 msgid "Classification"
-msgstr ""
+msgstr "Pengelompokan"
 
 #: tcms/management/models.py:21
 msgid "Classifications"
-msgstr ""
+msgstr "Kelompok"
 
 #: tcms/management/models.py:57
 msgid "Products"
-msgstr ""
+msgstr "Produk"
 
 #: tcms/management/models.py:77
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
@@ -671,7 +674,7 @@ msgstr "Komponen"
 
 #: tcms/management/models.py:126
 msgid "Versions"
-msgstr ""
+msgstr "Versi"
 
 #: tcms/management/models.py:172
 msgid "Builds"
@@ -721,7 +724,7 @@ msgstr "Uji Kasus Baru"
 #: tcms/testruns/templates/testruns/get.html:180
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
-msgstr ""
+msgstr "Pelaksanaan Uji Baru"
 
 #: tcms/settings/common.py:407
 msgid "SEARCH"
@@ -741,7 +744,7 @@ msgstr "Cari Uji Operasi"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "Cari pelaksanaan uji"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -757,16 +760,16 @@ msgstr "Perincian"
 
 #: tcms/settings/common.py:428
 msgid "Execution"
-msgstr ""
+msgstr "Pelaksanaan"
 
 #: tcms/settings/common.py:431
 #: tcms/testruns/templates/testruns/mutable.html:177
 msgid "Matrix"
-msgstr ""
+msgstr "Matriks"
 
 #: tcms/settings/common.py:432
 msgid "Trends"
-msgstr ""
+msgstr "Tren"
 
 #: tcms/settings/common.py:435
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -779,7 +782,7 @@ msgstr "ADMIN"
 
 #: tcms/settings/common.py:444
 msgid "Groups"
-msgstr ""
+msgstr "Kelompok"
 
 #: tcms/settings/common.py:446
 msgid "Everything else"
@@ -787,7 +790,7 @@ msgstr "Lainnya"
 
 #: tcms/settings/common.py:449
 msgid "MORE"
-msgstr ""
+msgstr "LAINNYA"
 
 #: tcms/settings/common.py:459
 msgid "Report an Issue"
@@ -825,7 +828,7 @@ msgstr "BARU: UjiOperasi #%(pk)d - %(summary)s"
 #: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Bug #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
@@ -898,12 +901,12 @@ msgstr "Kategori"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Papan pelaksanaan uji"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:19
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
 msgid "Child TPs"
-msgstr ""
+msgstr "Rencana Uji Turunan"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:34
 #: tcms/templates/include/bug_details.html:3
@@ -945,11 +948,11 @@ msgstr "Penguji semula"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:39
 msgid "TC"
-msgstr ""
+msgstr "TC"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:40
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:43
 #: tcms/testruns/templates/testruns/get.html:276
@@ -1039,35 +1042,35 @@ msgstr "Apakah Anda yakin ingin menghapus lampiran ini?"
 
 #: tcms/templates/base.html:8
 msgid "day"
-msgstr ""
+msgstr "hari"
 
 #: tcms/templates/base.html:8
 msgid "days"
-msgstr ""
+msgstr "hari"
 
 #: tcms/templates/base.html:9
 msgid "hour"
-msgstr ""
+msgstr "jam"
 
 #: tcms/templates/base.html:9
 msgid "hours"
-msgstr ""
+msgstr "jam"
 
 #: tcms/templates/base.html:10
 msgid "minute"
-msgstr ""
+msgstr "menit"
 
 #: tcms/templates/base.html:10
 msgid "minutes"
-msgstr ""
+msgstr "menit"
 
 #: tcms/templates/base.html:11
 msgid "second"
-msgstr ""
+msgstr "detik"
 
 #: tcms/templates/base.html:11
 msgid "seconds"
-msgstr ""
+msgstr "detik"
 
 #: tcms/templates/base.html:16 tcms/templates/registration/login.html:48
 msgid "the leading open source test case management system"
@@ -1081,7 +1084,12 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "Selamat datang di Kiwi TCMS!\n\n"
+"Untuk mengkonfirmasi alamat email untuk pengguna `%(user)s` dan mengaktifkan akun \n"
+"silahkan ikuti tautan ini:\n"
+"%(confirm_url)s\n\n"
+"Dengan Hormat,\n"
+"Kiwi TCMS"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -1096,7 +1104,17 @@ msgid "Bug %(pk)s has been updated.\n\n"
 "Build: %(build)s\n"
 "Last comment:\n"
 "%(last_comment)s"
-msgstr ""
+msgstr "Bug %(pk)s telah diperbarui.\n\n"
+"Tautan: %(bug_url)s\n\n"
+"Rangkuman: %(summary)s\n"
+"Dibuat pada: %(creation_date)s\n"
+"Pelapor: %(reporter)s\n"
+"Pelaksana: %(assignee)s\n"
+"Produk: %(product)s\n"
+"Versi: %(version)s\n"
+"Build: %(build)s\n"
+"Komentar terakhir:\n"
+"%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -1168,7 +1186,7 @@ msgstr "URL"
 #: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
 #: tcms/testruns/templates/testruns/get.html:353
 msgid "Parameters"
-msgstr ""
+msgstr "Parameter"
 
 #: tcms/templates/include/properties_card.html:15
 #: tcms/testruns/templates/testruns/mutable.html:170
@@ -1177,7 +1195,7 @@ msgstr "Ini adalah fitur pratinjau teknologi!"
 
 #: tcms/templates/include/properties_card.html:68
 msgid "name=value"
-msgstr ""
+msgstr "nama=nilai"
 
 #: tcms/templates/include/properties_card.html:69
 #: tcms/templates/include/tags_card.html:28
@@ -1203,7 +1221,7 @@ msgstr "Nama"
 #: tcms/templates/initdb.html:5 tcms/templates/initdb.html:17
 #: tcms/templates/initdb.html:29
 msgid "Initialize database"
-msgstr ""
+msgstr "Pengaturan awal basis data"
 
 #: tcms/templates/initdb.html:20
 msgid "Your database has not been initialized yet. Click the button below to initialize it!"
@@ -1860,48 +1878,48 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/get.html:84
 msgid "Start"
-msgstr ""
+msgstr "Mulai"
 
 #: tcms/testruns/templates/testruns/get.html:91
 #: tcms/testruns/templates/testruns/mutable.html:123
 #: tcms/testruns/templates/testruns/search.html:151
 msgid "Planned stop"
-msgstr ""
+msgstr "Rencana berhenti"
 
 #: tcms/testruns/templates/testruns/get.html:102
 msgid "Stop"
-msgstr ""
+msgstr "Berhenti"
 
 #: tcms/testruns/templates/testruns/get.html:139
 #: tcms/testruns/templates/testruns/mutable.html:160
 msgid "Environment"
-msgstr ""
+msgstr "Lingkungan"
 
 #: tcms/testruns/templates/testruns/get.html:171
 msgid "View all in Execution Dashboard"
-msgstr ""
+msgstr "Lihat semua di Papan Pelaksanaan"
 
 #: tcms/testruns/templates/testruns/get.html:190
 msgid "Update text version"
-msgstr ""
+msgstr "Ubah tulisan versi"
 
 #: tcms/testruns/templates/testruns/get.html:225
 msgid "Add comment"
-msgstr ""
+msgstr "Tambahkan komentar"
 
 #: tcms/testruns/templates/testruns/get.html:236
 #: tcms/testruns/templates/testruns/get.html:339
 #: tcms/testruns/templates/testruns/get.html:576
 msgid "Add hyperlink"
-msgstr ""
+msgstr "Tambahkan tautan"
 
 #: tcms/testruns/templates/testruns/get.html:287
 msgid "Mine"
-msgstr ""
+msgstr "Milikku"
 
 #: tcms/testruns/templates/testruns/get.html:288
 msgid "All"
-msgstr ""
+msgstr "Semua"
 
 #: tcms/testruns/templates/testruns/get.html:340
 #: tcms/testruns/templates/testruns/get.html:615
@@ -1911,20 +1929,20 @@ msgstr "Laporkan bug"
 
 #: tcms/testruns/templates/testruns/get.html:347
 msgid "Test case is not part of parent test plan"
-msgstr ""
+msgstr "Test case bukan bagian dari rencana uji utama"
 
 #: tcms/testruns/templates/testruns/get.html:379
 msgid "Assigned to"
-msgstr ""
+msgstr "Tugaskan kepada"
 
 #: tcms/testruns/templates/testruns/get.html:387
 #: tcms/testruns/templates/testruns/get.html:389
 msgid "Last bug"
-msgstr ""
+msgstr "Bug terakhir"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
-msgstr ""
+msgstr "Tulisan versi"
 
 #: tcms/testruns/templates/testruns/get.html:439
 msgid "Bugs and hyperlinks"
@@ -1932,11 +1950,11 @@ msgstr "Bugs dan hyperlinks"
 
 #: tcms/testruns/templates/testruns/get.html:593
 msgid "Is a defect"
-msgstr ""
+msgstr "Kesalahan"
 
 #: tcms/testruns/templates/testruns/get.html:620
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Pelacak Masalah"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -1948,11 +1966,11 @@ msgstr "Salin UjiOperasi"
 
 #: tcms/testruns/templates/testruns/mutable.html:180
 msgid "Affects only test cases with parameters"
-msgstr ""
+msgstr "Berimbas hanya kepada kasus uji dengan parameter"
 
 #: tcms/testruns/templates/testruns/mutable.html:194
 msgid "more information"
-msgstr ""
+msgstr "informasi lebih lanjut"
 
 #: tcms/testruns/templates/testruns/mutable.html:218
 msgid "Selected TestCase(s):"
@@ -1980,12 +1998,12 @@ msgstr "Sedang beroperasi"
 #: tcms/testruns/templates/testruns/search.html:90
 #: tcms/testruns/templates/testruns/search.html:190
 msgid "Start date"
-msgstr ""
+msgstr "Tanggal mulai"
 
 #: tcms/testruns/templates/testruns/search.html:110
 #: tcms/testruns/templates/testruns/search.html:191
 msgid "Stop date"
-msgstr ""
+msgstr "Tanggal selesai"
 
 #: tcms/testruns/views.py:273
 msgid "Clone of "
@@ -2105,7 +2123,10 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "Terimakasih telah menggunakan Kiwi TCMS melalui langganan berbayar.\n"
+"Kamu sedih melihat anda pergi tapi kami ingin tahu kenapa agar kami bisa memperbaiki diri di kemudian hari!\n\n"
+"Anda dapat membagikan pendapat anda di https://forms.gle/RJhFengbjN9C6wtUA\n\n"
+"Terimakasih!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:14
 msgid "Tenant subscriptions"
@@ -2127,19 +2148,19 @@ msgstr "Organisasi"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
 msgid "Private repository credentials"
-msgstr ""
+msgstr "Identitas penyimpanan pribadi"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
 msgid "Click 'Password' to reveal!"
-msgstr ""
+msgstr "Klik 'Password' untuk melihat!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
-msgstr ""
+msgstr "Instruksi penyimpanan pribadi"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
 msgid "kiwitcms/gitops prefix"
-msgstr ""
+msgstr "awalan kiwitcms/gitops"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "You own the following tenants"
@@ -2171,7 +2192,7 @@ msgstr "Anda tidak memiliki satupun Tenant"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:181
 msgid "Subscribe via FastSpring"
-msgstr ""
+msgstr "Berlangganan melalui FastSpring"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
 msgid "Transaction history"
@@ -2194,7 +2215,7 @@ msgstr "Diterima pada"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:11
 msgid "Extra emails"
-msgstr ""
+msgstr "Surat elektronik tambahan"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:21
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
@@ -2317,7 +2338,7 @@ msgstr "Tenant Kiwi TCMS anda telah dibuat di:%(tenant_url)s\n\n"
 
 #: tcms_tenants/templates/tcms_tenants/invite_users.html:28
 msgid "Email"
-msgstr ""
+msgstr "Surat elektronik"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:18
 msgid "New tenant"
@@ -2374,24 +2395,25 @@ msgstr ""
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr ""
+msgstr "pengguna"
 
 #: tenant_groups/models.py:34
 msgid "name"
-msgstr ""
+msgstr "nama"
 
 #: tenant_groups/models.py:37
 msgid "permissions"
-msgstr ""
+msgstr "perizinan"
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr ""
+msgstr "kelompok"
 
 #: tenant_groups/models.py:48
 msgid "groups"
-msgstr ""
+msgstr "kelompok"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr ""
+
