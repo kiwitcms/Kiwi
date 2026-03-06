@@ -116,7 +116,13 @@ class TestCase(models.Model, UrlMixin):
         return TestCaseComponent.objects.get_or_create(case=self, component=component)
 
     def add_tag(self, tag):
-        return TestCaseTag.objects.get_or_create(case=self, tag=tag)
+        result = TestCaseTag.objects.get_or_create(case=self, tag=tag)
+        self._change_reason = (  # pylint: disable=protected-access
+            f"Tag added: {tag.name}\n\n"
+            f"--- tag\n+++ tag\n@@ -1,1 +1,1 @@\n-\n+{tag.name}"
+        )
+        self.save()
+        return result
 
     def get_text_with_version(self, case_text_version=None):
         if case_text_version:
@@ -138,6 +144,11 @@ class TestCase(models.Model, UrlMixin):
 
     def remove_tag(self, tag):
         self.tag.through.objects.filter(case=self.pk, tag=tag.pk).delete()
+        self._change_reason = (  # pylint: disable=protected-access
+            f"Tag removed: {tag.name}\n\n"
+            f"--- tag\n+++ tag\n@@ -1,1 +1,1 @@\n-{tag.name}\n+"
+        )
+        self.save()
 
     def _get_absolute_url(self, request=None):
         return reverse(
