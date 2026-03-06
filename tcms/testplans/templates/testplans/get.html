@@ -10,6 +10,9 @@
 
 {% block contents %}
 <div class="container-cards-pf">
+    {% trans "Test Plans" as tp_breadcrumb_label %}
+    {% include "include/breadcrumbs.html" with search_url="plans-search" search_label=tp_breadcrumb_label view_url="test_plan_url" object_label="TP-" current_view="view" %}
+    {% include "include/page_toolbar.html" with current_view="view" view_url="test_plan_url" edit_url="plan-edit" new_url="plans-new" search_url="plans-search" clone_url="plans-clone" admin_url_prefix="testplans/testplan" show_actions=True show_history=True edit_perm=perms.testplans.change_testplan add_perm=perms.testplans.add_testplan delete_perm=perms.testplans.delete_testplan admin_perm=perms.testplans.change_testplan %}
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12 kiwi-margin-top-0">
         {% if not object.is_active %}<s>{% endif %}
@@ -87,6 +90,14 @@
 
                 <div class="card-pf-body">
                     {{ object.tree_view_html|safe }}
+                </div>
+
+                <h2 class="card-pf-title kiwi-text-align-left">
+                    <span class="fa fa-exchange"></span>{% trans 'Related' %}
+                </h2>
+                <div class="card-pf-body">
+                    <a href="{% url 'testcases-search' %}?plan={{ object.pk }}">{% trans 'Test cases in this plan' %}</a><br>
+                    <a href="{% url 'testruns-search' %}?plan={{ object.pk }}">{% trans 'Test runs for this plan' %}</a>
                 </div>
             </div>
         </div>
