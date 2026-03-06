@@ -22,12 +22,20 @@ export function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
         contentType: 'application/json',
         success: function (result) {
             if (result.error) {
-                alert(result.error.message)
+                // If authentication error and we are on the login page, ignore
+                if ((result.error.code === 401 || result.error.code === 403) && document.body.id === 'login') {
+                    // do nothing
+                }
+                // Optionally handle error here (alert removed)
             } else {
                 callback(result.result)
             }
         },
         error: function (err, status, thrown) {
+            // If authentication error and we are on the login page, ignore
+            if (err && (err.status === 401 || err.status === 403) && document.body.id === 'login') {
+                return
+            }
             console.log('*** jsonRPC ERROR: ' + err + ' STATUS: ' + status + ' ' + thrown)
         }
     })
