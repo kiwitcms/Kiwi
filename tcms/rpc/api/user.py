@@ -8,9 +8,9 @@ from django.core.exceptions import PermissionDenied
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
+from tcms.dao.user_dao import user_dao
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
-from tcms.utils import user as user_utils
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -55,21 +55,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     if not query:
         query = {"pk": kwargs.get(REQUEST_KEY).user.pk}
 
-    return list(
-        User.objects.filter(**query)
-        .values(
-            "email",
-            "first_name",
-            "id",
-            "is_active",
-            "is_staff",
-            "is_superuser",
-            "last_name",
-            "username",
-        )
-        .order_by("id")
-        .distinct()
-    )
+    return user_dao.filter(query)
 
 
 @rpc_method(name="User.update")
@@ -103,7 +89,7 @@ def update(
     """
     request = kwargs.get(REQUEST_KEY)
     if user_id:
-        user_being_updated = User.objects.get(pk=user_id)
+        user_being_updated = user_dao.get_by_id(user_id)
     else:
         user_being_updated = request.user
 
@@ -138,7 +124,7 @@ def update(
         else:
             setattr(user_being_updated, field, values[field])
 
-    user_being_updated.save(update_fields=update_fields)
+    user_dao.save(user_being_updated, update_fields=update_fields)
     return _get_user_dict(user_being_updated)
 
 
@@ -175,8 +161,8 @@ def deactivate(query):
             >>> User.deactivate({'email__startswith': 'mia@'})
     """
     result = []
-    for user in User.objects.filter(**query):
-        user_utils.deactivate(user)
+    for user in user_dao.filter_objects(query):
+        user_dao.deactivate(user)
 
         result.append(_get_user_dict(user))
 
@@ -197,9 +183,9 @@ def join_group(username, groupname):
         :type groupname: str
         :raises PermissionDenied: if missing *auth.change_user* permission
     """
-    user = User.objects.get(username=username)
+    user = user_dao.get_by_username(username)
     group = Group.objects.get(name=groupname)
-    user.groups.add(group)
+    user_dao.add_to_group(user, group)
 
 
 @permissions_required("attachments.add_attachment")
