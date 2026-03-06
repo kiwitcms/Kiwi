@@ -20,9 +20,19 @@ const permissions = {
     removeTag: false,
     addComment: false,
     removeComment: false,
-    viewHistoricalTestExecution: false
+    viewHistoricalTestExecution: false,
+    addAttachment: false,
+    deleteAttachment: false
 }
 const autocompleteCache = {}
+
+function showAttachmentCountForTe (container, executionCount, caseCount) {
+    const jsAttachments = container.find('.js-attachments')
+    if (executionCount > 0 || caseCount > 0) {
+        jsAttachments.removeClass('hidden')
+        jsAttachments.find('.test-execution-attachment-count').text(`E:${executionCount} / TC:${caseCount}`)
+    }
+}
 
 function showLastBugForTe (testExecutionRow, bugUrl) {
     const jsBugs = testExecutionRow.find('.js-bugs')
@@ -42,6 +52,8 @@ export function pageTestrunsGetReadyHandler () {
     permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
     permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'
     permissions.viewHistoricalTestExecution = $('#test_run_pk').data('perm-view-historical-testexecution') === 'True'
+    permissions.addAttachment = $('#test_run_pk').data('perm-add-attachment') === 'True'
+    permissions.deleteAttachment = $('#test_run_pk').data('perm-delete-attachment') === 'True'
 
     const testRunId = $('#test_run_pk').data('pk')
 
@@ -544,23 +556,36 @@ function getExpandArea (testExecution) {
         bindDeleteLinkButton()
     })
 
+    const attachCounts = { execution: 0, testcase: 0 }
+
+    loadExecutionAttachments(container, testExecution, attachCounts)
+
     jsonRPC('TestCase.list_attachments', [testExecution.case], attachments => {
-        const ul = container.find('.test-case-attachments')
+        attachCounts.testcase = attachments.length
+        showAttachmentCountForTe(container, attachCounts.execution, attachCounts.testcase)
+
+        const table = container.find('.test-case-attachments')
+        const tbody = table.find('tbody')
 
         if (!attachments.length) {
-            ul.find('.hidden').removeClass('hidden')
+            tbody.find('.no-tc-attachments').removeClass('hidden')
             return
         }
 
-        const liTemplate = $('#attachments-list-item')[0].content
+        const rowTemplate = container.find('.attachments-list-item')[0].content
 
         attachments.forEach(attachment => {
-            const li = liTemplate.cloneNode(true)
-            const attachmentLink = $(li).find('a')[0]
+            const row = rowTemplate.cloneNode(true)
+            const link = $(row).find('.tc-attachment-link')
+            link.attr('href', attachment.url)
+            link.text(attachment.url.split('/').slice(-1)[0])
 
-            attachmentLink.href = attachment.url
-            attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
-            ul.append(li)
+            $(row).find('.tc-attachment-owner').text(attachment.owner_username || '-')
+            $(row).find('.tc-attachment-date').text(
+                attachment.date ? moment(attachment.date).format('DD MMM YYYY, HH:mm a') : '-'
+            )
+
+            tbody.append(row)
         })
     })
 
@@ -982,4 +1007,90 @@ function testExecutionUpdateArgs (statusId) {
     }
 
     return updateArgs
+}
+
+function loadExecutionAttachments (container, testExecution, attachCounts) {
+    if (!permissions.addAttachment) {
+        container.find('.execution-attachment-upload').hide()
+    }
+
+    refreshExecutionAttachments(container, testExecution, attachCounts)
+
+    container.find('.execution-attachment-file-input').on('change', function () {
+        const files = this.files
+        if (!files.length) return
+
+        let pending = files.length
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i]
+            const reader = new FileReader()
+            reader.onload = function (e) {
+                const b64content = e.target.result.split('base64,')[1]
+                jsonRPC('TestExecution.add_attachment', [testExecution.id, file.name, b64content], () => {
+                    pending--
+                    if (pending === 0) {
+                        refreshExecutionAttachments(container, testExecution, attachCounts)
+                    }
+                })
+            }
+            reader.readAsDataURL(file)
+        }
+
+        // reset the input so the same file can be uploaded again
+        this.value = ''
+    })
+}
+
+function refreshExecutionAttachments (container, testExecution, attachCounts) {
+    const table = container.find('.test-execution-attachments')
+    const tbody = table.find('tbody')
+
+    // remove previously rendered rows but keep template and placeholder
+    tbody.find('tr:not(.no-execution-attachments)').remove()
+
+    jsonRPC('TestExecution.list_attachments', [testExecution.id], attachments => {
+        if (attachCounts) {
+            attachCounts.execution = attachments.length
+            showAttachmentCountForTe(container, attachCounts.execution, attachCounts.testcase)
+        }
+
+        if (!attachments.length) {
+            tbody.find('.no-execution-attachments').removeClass('hidden')
+            return
+        }
+
+        tbody.find('.no-execution-attachments').addClass('hidden')
+        const rowTemplate = container.find('.execution-attachment-template')[0].content
+
+        attachments.forEach(attachment => {
+            const row = rowTemplate.cloneNode(true)
+            const link = $(row).find('.execution-attachment-link')
+            link.attr('href', attachment.url)
+            link.text(attachment.url.split('/').slice(-1)[0])
+
+            $(row).find('.execution-attachment-owner').text(attachment.owner_username || '-')
+            $(row).find('.execution-attachment-date').text(
+                attachment.date ? moment(attachment.date).format('DD MMM YYYY, HH:mm a') : '-'
+            )
+
+            const deleteBtn = $(row).find('.js-remove-execution-attachment')
+            if (permissions.deleteAttachment) {
+                deleteBtn.on('click', function (e) {
+                    e.preventDefault()
+                    jsonRPC('Attachment.remove_attachment', attachment.pk, () => {
+                        $(this).parents('tr').fadeOut(500, function () {
+                            $(this).remove()
+                            if (!tbody.find('tr:not(.no-execution-attachments)').length) {
+                                tbody.find('.no-execution-attachments').removeClass('hidden')
+                            }
+                        })
+                    })
+                })
+            } else {
+                deleteBtn.hide()
+            }
+
+            tbody.append(row)
+        })
+    })
 }
