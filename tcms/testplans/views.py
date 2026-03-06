@@ -136,6 +136,11 @@ class TestPlanGetView(DetailView):
         context["test_runs"] = TestRun.objects.filter(
             plan_id=self.object.pk, stop_date__isnull=True
         ).order_by("-id")[:5]
+        context["last_modified"] = (
+            self.object.history.latest().history_date
+            if self.object.history.exists()
+            else self.object.create_date
+        )
         context["OBJECT_MENU_ITEMS"] = [
             (
                 "...",
