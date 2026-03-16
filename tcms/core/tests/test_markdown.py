@@ -35,18 +35,22 @@ class TestMarkdownExtraFilters(unittest.TestCase):
 
     def test_markdown2html_convert_nl2br(self):
         self.assertEqual(
-            markdown2html("""Line 1
-Line 2"""),
+            markdown2html(
+                """Line 1
+Line 2"""
+            ),
             """<p>Line 1<br>
 Line 2</p>""",
         )
 
     def test_markdown2html_convert_fenced_code(self):
         self.assertEqual(
-            markdown2html("""```{
+            markdown2html(
+                """```{
 "firstName": "John",
 "lastName": "Smith",
-"age": 25}``` """),
+"age": 25}``` """
+            ),
             """<p><code>{
 "firstName": "John",
 "lastName": "Smith",
@@ -55,10 +59,12 @@ Line 2</p>""",
 
     def test_markdown2html_with_codehilite(self):
         self.assertEqual(
-            markdown2html("""```python
+            markdown2html(
+                """```python
 def hello():
     pass
-```"""),
+```"""
+            ),
             """<div class="codehilite"><pre><span></span>\
 <code><span class="k">def</span><span class="w"> </span><span class="nf">hello</span>\
 <span class="p">():</span>
@@ -78,22 +84,28 @@ def hello():
         )
 
         self.assertEqual(
-            markdown2html("""_hello_ <html><head></head>
-<body></body></html>"""),
+            markdown2html(
+                """_hello_ <html><head></head>
+<body></body></html>"""
+            ),
             """<p><em>hello</em> &lt;html&gt;&lt;head&gt;&lt;/head&gt;</p>
 &lt;body&gt;&lt;/body&gt;\n&lt;/html&gt;""",
         )
 
         self.assertEqual(
-            markdown2html("""__hello__ <xmp><video><track>
-<title><rt><ruby><param>"""),
+            markdown2html(
+                """__hello__ <xmp><video><track>
+<title><rt><ruby><param>"""
+            ),
             """<p><strong>hello</strong> &lt;xmp&gt;&lt;video&gt;&lt;track&gt;<br>
 &lt;title&gt;&lt;rt&gt;&lt;ruby&gt;&lt;param&gt;</p>""",
         )
 
         self.assertEqual(
-            markdown2html("""*hello* <object><link><iframe>
-<frame><frameset><embed>"""),
+            markdown2html(
+                """*hello* <object><link><iframe>
+<frame><frameset><embed>"""
+            ),
             """<p><em>hello</em> &lt;object&gt;&lt;link&gt;&lt;iframe&gt;<br>
 &lt;frame&gt;&lt;frameset&gt;&lt;embed&gt;</p>""",
         )
