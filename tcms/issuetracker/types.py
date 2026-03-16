@@ -55,7 +55,7 @@ class JIRA(IssueTrackerType):
         else:
             options = None
 
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         return jira.JIRA(
             self.bug_system.base_url,
@@ -64,7 +64,7 @@ class JIRA(IssueTrackerType):
         )
 
     def is_adding_testcase_to_issue_disabled(self):
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         return not (self.bug_system.base_url and api_username and api_password)
 
@@ -196,13 +196,13 @@ class GitHub(IssueTrackerType):
     """
 
     def _rpc_connection(self):
-        (_, api_password) = self.rpc_credentials
+        _, api_password = self.rpc_credentials
 
         # NOTE: we use an access token so only the password field is needed
         return github.Github(auth=github.Auth.Token(api_password))
 
     def is_adding_testcase_to_issue_disabled(self):
-        (_, api_password) = self.rpc_credentials
+        _, api_password = self.rpc_credentials
 
         return not (self.bug_system.base_url and api_password)
 
@@ -278,13 +278,13 @@ class Gitlab(IssueTrackerType):
     """
 
     def _rpc_connection(self):
-        (_, api_password) = self.rpc_credentials
+        _, api_password = self.rpc_credentials
 
         # we use an access token so only the password field is required
         return gitlab.Gitlab(self.bug_system.api_url, private_token=api_password)
 
     def is_adding_testcase_to_issue_disabled(self):
-        (_, api_password) = self.rpc_credentials
+        _, api_password = self.rpc_credentials
 
         return not (self.bug_system.api_url and api_password)
 
@@ -348,12 +348,12 @@ class Redmine(IssueTrackerType):
     """
 
     def is_adding_testcase_to_issue_disabled(self):
-        (_api_username, api_password) = self.rpc_credentials
+        _api_username, api_password = self.rpc_credentials
 
         return not (self.bug_system.base_url and api_password)
 
     def _rpc_connection(self):
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         if api_username:
             connection = redminelib.Redmine(

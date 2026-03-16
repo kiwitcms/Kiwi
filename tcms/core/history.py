@@ -58,15 +58,13 @@ def history_email_for(instance, title):
     subject = subject.replace("\n", " ").replace("\r", " ")
 
     body = (
-        _(
-            """Updated on %(history_date)s
+        _("""Updated on %(history_date)s
 Updated by %(username)s
 
 %(diff)s
 
 For more information:
-%(instance_url)s"""
-        )
+%(instance_url)s""")
         % {
             "history_date": history.history_date.strftime("%c"),
             "username": getattr(history.history_user, "username", ""),

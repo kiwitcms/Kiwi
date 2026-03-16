@@ -24,11 +24,9 @@ from tcms.testcases.models import (
 
 
 class TestCaseStatusAdmin(admin.ModelAdmin):
-    _for_more_info = _(
-        """For more information about customizing test case statuses see
+    _for_more_info = _("""For more information about customizing test case statuses see
         <a href="https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses">
-        the documentation</a>!"""
-    )
+        the documentation</a>!""")
     list_display = ("id", "name", "is_confirmed")
     ordering = ["-is_confirmed", "id"]
     fieldsets = [
@@ -157,11 +155,9 @@ class BugSystemAdmin(admin.ModelAdmin):
                     "api_username",
                     "api_password",
                 ),
-                "description": _(
-                    """<h1>Warning: read the
+                "description": _("""<h1>Warning: read the
 <a href="http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers">
-Configure external bug trackers</a> section before editting the values below!</h1>"""
-                ),
+Configure external bug trackers</a> section before editting the values below!</h1>"""),
             },
         ),
         (

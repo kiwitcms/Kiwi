@@ -141,7 +141,7 @@ class IssueTrackerType:
         :user: User object
         :return: - string - URL
         """
-        (new_issue, url) = self._report_issue(execution, user)
+        new_issue, url = self._report_issue(execution, user)
         if new_issue:
             self.post_process_new_issue(new_issue, execution, user)
         return url
@@ -205,7 +205,7 @@ TE-{execution.pk}: {execution.case.summary}"""
         :return: True if bug system api url, username and password are provided
         :rtype: bool
         """
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         return not (self.bug_system.api_url and api_username and api_password)
 

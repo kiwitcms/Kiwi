@@ -93,7 +93,7 @@ class BitBucket(IssueTrackerType):
     """
 
     def _rpc_connection(self):
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         return BitBucketAPI(
             self.bug_system.base_url,
@@ -102,7 +102,7 @@ class BitBucket(IssueTrackerType):
         )
 
     def is_adding_testcase_to_issue_disabled(self):
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         return not (self.bug_system.base_url and api_username and api_password)
 

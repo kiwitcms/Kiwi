@@ -44,7 +44,7 @@ class Utf8UploadTestCase(unittest.TestCase):
         """
         Create a temporary file with specific size.
         """
-        (_handle, file_name) = tempfile.mkstemp(prefix=f"kiwitcms-test-{name}.")
+        _handle, file_name = tempfile.mkstemp(prefix=f"kiwitcms-test-{name}.")
         with open(file_name, "wb") as file:
             for _ in range(size):
                 file.write(b"T")
