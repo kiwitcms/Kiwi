@@ -1,6 +1,60 @@
 Change Log
 ==========
 
+Kiwi TCMS 15.4 (17 Mar 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates,
+    dependency updates and new translations.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.2.10 to 5.2.12
+- Update node_modules/pdfmake from 0.3.3 to 0.3.6
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-guardian from 3.2.0 to 3.3.0
+- Update django-tree-queries from 0.23.0 to 0.23.1
+- Update markdown from 3.10.1 to 3.10.2
+- Update mysqlclient from 2.2.7 to 2.2.8
+- Update psycopg[binary] from 3.3.2 to 3.3.3
+- Update python-gitlab from 8.0.0 to 8.1.0
+- Update node_modules/webpack from 5.104.1 to 5.105.4
+- Update node_modules/webpack-cli from 6.0.1 to 7.0.1
+- Update transient node_modules/ dependencies
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/upload-artifact from 6 to 7
+- Update locust from 2.43.1 to 2.43.3
+- Update pylint-django from 2.6.1 to 2.7.0
+- Pin setuptools<82 to workaround pkg_resources API deprecation
+- Pin pylint to 3.3.9 to workaround false positive errors
+- Adjust code for newer pylint
+- Cancel CI jobs when new ones are in queue
+- Standardize CI jobs on Ubuntu 24.04
+- Remove CI jobs against site-packages
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Indonesian translation <https://crowdin.com/project/kiwitcms/id#>`_
+- Updated `Portuguese, Brazilian translation <https://crowdin.com/project/kiwitcms/pt-BR#>`_
+- Updated `Spanish, Venezuela translation <https://crowdin.com/project/kiwitcms/es-VE#>`_
+
+
+
 Kiwi TCMS 15.3 (28 Jan 2026)
 ----------------------------
 
