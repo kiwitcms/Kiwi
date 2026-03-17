@@ -1,4 +1,4 @@
-# Copyright (c) 2018,2023 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2018,2023,2026 Alexander Todorov <atodorov@otb.bg>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -57,6 +57,10 @@ class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
         for root, _dirs, files in os.walk(self.project_root, topdown=False):
             # skip migrations
             if root.find("migrations") > -1:
+                continue
+
+            # skip python files shipped in Node.js packages
+            if root.find("tcms/node_modules") > -1:
                 continue
 
             for file_name in files:
