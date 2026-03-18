@@ -19,8 +19,8 @@ class TestGitlabIntegration(APITestCase):
     existing_bug_id = 1
     # NOTE: repository has been made private to workaround problems with automatically
     # created issues marked as SPAM, see:
-    # https://gitlab.com/gitlab-org/gitlab/-/issues/337246
-    existing_bug_url = "https://gitlab.com/kiwitcms/integration-testing/-/issues/1"
+    # https://gitlab.com/gitlab-org/gitlab/-/work_items/337246
+    existing_bug_url = "https://gitlab.com/kiwitcms/integration-testing/-/work_items/1"
 
     @classmethod
     def _fixture_setup(cls):
@@ -67,14 +67,16 @@ class TestGitlabIntegration(APITestCase):
         )
         integration = Gitlab(bug_system, None)
 
-        result = integration.details("https://gitlab.com/kiwitcms/katinar/-/issues/1")
+        result = integration.details(
+            "https://gitlab.com/kiwitcms/katinar/-/work_items/1"
+        )
 
         self.assertEqual(1, result["id"])
         self.assertEqual("Hello World", result["description"])
         self.assertEqual("closed", result["status"])
         self.assertEqual("Hello Private GitLab", result["title"])
         self.assertEqual(
-            "https://gitlab.com/kiwitcms/katinar/-/issues/1", result["url"]
+            "https://gitlab.com/kiwitcms/katinar/-/work_items/1", result["url"]
         )
 
     def test_auto_update_bugtracker(self):
@@ -133,7 +135,7 @@ class TestGitlabIntegration(APITestCase):
         )
         self.assertEqual(result["rc"], 0)
         self.assertIn(self.integration.bug_system.base_url, result["response"])
-        self.assertIn("/-/issues/", result["response"])
+        self.assertIn("/-/work_items/", result["response"])
 
         # assert that the result looks like valid URL parameters
         new_issue_id = self.integration.bug_id_from_url(result["response"])
