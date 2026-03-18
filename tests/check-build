@@ -95,7 +95,9 @@ source .venv/test-tarball/bin/activate
 pip install --upgrade "setuptools<82" pip
 # workaround for https://github.com/pypa/setuptools/issues/3424
 pip install setuptools-scm-git-archive
-pip install --no-binary :all: dist/kiwitcms*.tar.gz
+# pillow is a transient dependency of django-colorfield/django-simple-captcha
+# allow binaries b/c of compilation issues of its build dependencies
+pip install --no-binary :all: --only-binary pillow dist/kiwitcms*.tar.gz
 pip freeze | grep kiwitcms
 deactivate
 rm -rf .venv/
