@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-03-22 12:51\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -2382,7 +2382,7 @@ msgstr "Kiwi TCMS 가입 초대"
 
 #: tcms_tenants/views.py:84
 msgid "Only super-user and tenant owner are allowed to edit tenant properties"
-msgstr "슈퍼유저와 테넌트 소유자만 테넌트 속성을 편집할 수 있습니다"
+msgstr "슈퍼 유저와 테넌트 소유자만 테넌트 속성을 편집할 수 있습니다"
 
 #: tcms_tenants/views.py:102
 msgid "Edit tenant"
@@ -2415,3 +2415,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
