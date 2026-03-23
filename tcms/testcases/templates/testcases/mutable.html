@@ -17,6 +17,9 @@
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
+        {% trans "Test Cases" as tc_breadcrumb_label %}
+        {% include "include/breadcrumbs.html" with search_url="testcases-search" search_label=tc_breadcrumb_label view_url="testcases-get" object_label="TC-" current_view=object|yesno:"edit,new" %}
+        {% include "include/page_toolbar.html" with current_view=object|yesno:"edit,new" view_url="testcases-get" edit_url="testcases-edit" new_url="testcases-new" search_url="testcases-search" edit_perm=perms.testcases.change_testcase add_perm=perms.testcases.add_testcase %}
         <form class="form-horizontal" action="{% if object %}{% url 'testcases-edit' object.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="author" value="{{ form.author.value }}">
