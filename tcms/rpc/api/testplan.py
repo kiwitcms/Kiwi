@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.db.models import Count
+from django.db.models import Count, OuterRef, Subquery
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
@@ -88,12 +88,20 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         query = {}
 
     return list(
-        TestPlan.objects.filter(**query)
+        TestPlan.objects.annotate(
+            last_modified=Subquery(
+                TestPlan.history.model.objects.filter(id=OuterRef("pk"))
+                .order_by("-history_date")
+                .values("history_date")[:1]
+            ),
+        )
+        .filter(**query)
         .values(
             "id",
             "name",
             "text",
             "create_date",
+            "last_modified",
             "is_active",
             "extra_link",
             "product_version",
