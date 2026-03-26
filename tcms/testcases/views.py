@@ -12,6 +12,7 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 
+from tcms.dao.testcases.test_case_dao import test_case_dao
 from tcms.signals import NEW_TEST_CASE_SIGNAL
 from tcms.testcases.forms import (
     CaseNotifyFormSet,
@@ -78,6 +79,7 @@ class NewCaseView(CreateView):
 
             notify_formset.instance = test_case
             notify_formset.save()
+            test_case_dao.save(test_case)
 
             NEW_TEST_CASE_SIGNAL.send(sender=test_case.__class__, instance=test_case)
 

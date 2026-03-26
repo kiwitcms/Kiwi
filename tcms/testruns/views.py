@@ -15,6 +15,9 @@ from guardian.decorators import permission_required as object_permission_require
 
 from tcms.core.contrib.linkreference.forms import LinkReferenceForm
 from tcms.core.forms import SimpleCommentForm
+from tcms.dao.testcases.test_case_dao import test_case_dao
+from tcms.dao.testplans.test_plan_dao import test_plan_dao
+from tcms.dao.testruns.test_run_dao import test_run_dao
 from tcms.testcases.models import BugSystem, TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.forms import NewRunForm, SearchRunForm
@@ -40,12 +43,12 @@ class NewTestRunView(View):
 
         # note: ordered by pk for test_show_create_new_run_page()
         test_cases = (
-            TestCase.objects.filter(pk__in=request.GET.getlist("c"))
+            test_case_dao.filter_objects(pk__in=request.GET.getlist("c"))
             .select_related("author", "case_status", "category", "priority")
             .order_by("pk")
         )
 
-        test_plan = TestPlan.objects.filter(pk=plan_id).first()
+        test_plan = test_plan_dao.filter_objects(pk=plan_id).first()
         if not form_initial:
             form_initial = {
                 "summary": f"Test run for {test_plan.name}" if test_plan else "",
@@ -73,6 +76,7 @@ class NewTestRunView(View):
 
         if form.is_valid():
             test_run = form.save()
+            test_run_dao.save(test_run)
 
             # copy all of the selected properties into the test run
             for prop in EnvironmentProperty.objects.filter(
@@ -109,7 +113,7 @@ class NewTestRunView(View):
             )
 
         test_cases = (
-            TestCase.objects.filter(pk__in=request.POST.getlist("case"))
+            test_case_dao.filter_objects(pk__in=request.POST.getlist("case"))
             .select_related("author", "case_status", "category", "priority")
             .order_by("pk")
         )

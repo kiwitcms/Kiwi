@@ -16,7 +16,8 @@ from guardian.decorators import permission_required as object_permission_require
 from tcms.bugs.forms import BugCommentForm, NewBugForm
 from tcms.bugs.models import Bug
 from tcms.core.helpers.comments import add_comment
-from tcms.management.models import Component
+from tcms.dao.bugs.bug_dao import bug_dao
+from tcms.dao.management.component_dao import component_dao
 
 
 @method_decorator(
@@ -91,6 +92,7 @@ class New(CreateView):
             self.object.assignee = New.find_assignee(self.request.POST)
             self.object.save()
         add_comment([self.object], form.cleaned_data["text"], self.request.user)
+        bug_dao.save(self.object)
 
         return response
 
@@ -123,7 +125,7 @@ class New(CreateView):
 
         if not assignee:
             assignee = New.assignee_from_components(
-                Component.objects.filter(product=data["product"])
+                component_dao.filter_objects(product=data["product"])
             )
 
         return assignee
@@ -146,7 +148,8 @@ class New(CreateView):
         text = data["text"]
         del data["text"]
 
-        bug = Bug.objects.create(**data)
+        bug = Bug(**data)
+        bug_dao.save(bug)
         add_comment([bug], text, bug.reporter)
 
         return bug
@@ -233,7 +236,7 @@ class AddComment(View):
             if request_action == "reopen":
                 bug.status = True
                 add_comment([bug], _("*bug reopened*"), request.user)
-            bug.save()
+            bug_dao.save(bug)
 
             return HttpResponseRedirect(reverse("bugs-get", args=[bug.pk]))
 

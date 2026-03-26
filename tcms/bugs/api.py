@@ -7,10 +7,11 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 from tcms.bugs.forms import NewBugFromRPCForm, SeverityForm
 from tcms.bugs.models import Bug, Severity
 from tcms.core.helpers import comments
+from tcms.dao.bugs.bug_dao import bug_dao
+from tcms.dao.testruns.test_execution_dao import test_execution_dao
 from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.models import TestExecution
 
 
 @permissions_required("bugs.add_bug_tags")
@@ -34,7 +35,7 @@ def add_tag(bug_id, tag, **kwargs):
     """
     request = kwargs.get(REQUEST_KEY)
     tag, _ = Tag.get_or_create(request.user, tag)
-    Bug.objects.get(pk=bug_id).tags.add(tag)
+    bug_dao.get_by_id(bug_id).tags.add(tag)
 
 
 @permissions_required("bugs.delete_bug_tags")
@@ -52,7 +53,7 @@ def remove_tag(bug_id, tag):
         :raises PermissionDenied: if missing *bugs.delete_bug_tags* permission
         :raises DoesNotExist: if objects specified don't exist
     """
-    Bug.objects.get(pk=bug_id).tags.remove(Tag.objects.get(name=tag))
+    bug_dao.get_by_id(bug_id).tags.remove(Tag.objects.get(name=tag))
 
 
 @permissions_required("bugs.delete_bug")
@@ -67,7 +68,7 @@ def remove(query):
         :type query: dict
         :raises PermissionDenied: if missing *bugs.delete_bugtag* permission
     """
-    Bug.objects.filter(**query).delete()
+    bug_dao.remove(query)
 
 
 @permissions_required("bugs.view_bug")
@@ -83,24 +84,7 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: List of serialized :class:`tcms.bugs.models.Bug` objects.
         :rtype: list
     """
-    result = (
-        Bug.objects.filter(**query)
-        .values(
-            "pk",
-            "summary",
-            "created_at",
-            "product__name",
-            "version__value",
-            "build__name",
-            "reporter__username",
-            "assignee__username",
-            "severity__name",
-            "severity__color",
-            "severity__icon",
-        )
-        .distinct()
-    )
-    return list(result)
+    return bug_dao.filter_with_names(query)
 
 
 @permissions_required("bugs.view_bug")
@@ -118,23 +102,7 @@ def filter_canonical(query):  # pylint: disable=redefined-builtin
 
     .. versionadded:: 15.3
     """
-    result = (
-        Bug.objects.filter(**query)
-        .values(
-            "id",
-            "summary",
-            "created_at",
-            "status",
-            "reporter",
-            "assignee",
-            "product",
-            "version",
-            "build",
-            "severity",
-        )
-        .distinct()
-    )
-    return list(result)
+    return bug_dao.filter_canonical(query)
 
 
 @permissions_required("bugs.add_bug")
@@ -171,7 +139,7 @@ def create(values, **kwargs):
         # https://docs.djangoproject.com/en/6.0/ref/models/fields/#django.db.models.DateField.auto_now_add
         if "created_at" in form.cleaned_data:
             bug.created_at = form.cleaned_data["created_at"]
-            bug.save()
+        bug_dao.save(bug)
 
         result = model_to_dict(bug)
         if "created_at" not in result:
@@ -253,7 +221,7 @@ def get_comments(bug_id):
 
     .. versionadded:: 15.3
     """
-    bug = Bug.objects.get(pk=bug_id)
+    bug = bug_dao.get_by_id(bug_id)
     result = comments.get_comments(bug).values()
     return list(result)
 
@@ -292,7 +260,7 @@ def add_comment(bug_id, comment, user_id=None, submit_date=None, **kwargs):
     if not request_user.is_superuser:
         submit_date = None
 
-    bug = Bug.objects.get(pk=bug_id)
+    bug = bug_dao.get_by_id(bug_id)
     created = comments.add_comment([bug], comment, comment_author, submit_date)
     # we always create only one comment
     return model_to_dict(created[0])
@@ -342,7 +310,7 @@ def list_attachments(bug_id, **kwargs):
 
     .. versionadded:: 15.3
     """
-    bug = Bug.objects.get(pk=bug_id)
+    bug = bug_dao.get_by_id(bug_id)
     request = kwargs.get(REQUEST_KEY)
     return utils.get_attachments_for(request, bug)
 
@@ -365,6 +333,6 @@ def add_execution(bug_id, execution_id):
 
     .. versionadded:: 15.3
     """
-    bug = Bug.objects.get(pk=bug_id)
-    execution = TestExecution.objects.get(pk=execution_id)
+    bug = bug_dao.get_by_id(bug_id)
+    execution = test_execution_dao.get_by_id(execution_id)
     bug.executions.add(execution)

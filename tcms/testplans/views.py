@@ -11,6 +11,8 @@ from django.views.generic.edit import CreateView, FormView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 
 from tcms.core.forms import SimpleCommentForm
+from tcms.dao.testplans.test_plan_dao import test_plan_dao
+from tcms.dao.testruns.test_run_dao import test_run_dao
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.forms import (
@@ -20,7 +22,6 @@ from tcms.testplans.forms import (
     SearchPlanForm,
 )
 from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestRun
 
 
 @method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
@@ -49,6 +50,7 @@ class NewTestPlanView(CreateView):
         notify_formset = PlanNotifyFormSet(self.request.POST)
         if notify_formset.is_valid():
             test_plan = form.save()
+            test_plan_dao.save(test_plan)
             notify_formset.instance = test_plan
             notify_formset.save()
 
@@ -133,7 +135,7 @@ class TestPlanGetView(DetailView):
         context["statuses"] = TestCaseStatus.objects.all()
         context["priorities"] = Priority.objects.filter(is_active=True)
         context["comment_form"] = SimpleCommentForm()
-        context["test_runs"] = TestRun.objects.filter(
+        context["test_runs"] = test_run_dao.filter_objects(
             plan_id=self.object.pk, stop_date__isnull=True
         ).order_by("-id")[:5]
         context["OBJECT_MENU_ITEMS"] = [
@@ -176,11 +178,11 @@ class Clone(FormView):
     object = None
 
     def get(self, request, *args, **kwargs):
-        self.object = TestPlan.objects.get(pk=kwargs["pk"])
+        self.object = test_plan_dao.get_by_id(kwargs["pk"])
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.object = TestPlan.objects.get(pk=kwargs["pk"])
+        self.object = test_plan_dao.get_by_id(kwargs["pk"])
         return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

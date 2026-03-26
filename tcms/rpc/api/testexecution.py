@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from datetime import timedelta
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.db.models import F
-from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.helpers import comments
-from tcms.rpc import utils
+from tcms.dao.shared.attachment_dao import attachment_dao
+from tcms.dao.shared.comment_dao import comment_dao
+from tcms.dao.shared.property_dao import testexecution_property_dao
+from tcms.dao.testruns.link_reference_dao import link_reference_dao
+from tcms.dao.testruns.test_execution_dao import test_execution_dao
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.models import TestExecution, TestExecutionProperty
+from tcms.testruns.models import TestExecution
 
 # conditional import b/c this App can be disabled
 if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
@@ -49,7 +47,7 @@ def add_comment(execution_id, comment, user_id=None, submit_date=None, **kwargs)
         :rtype: dict
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
     """
-    execution = TestExecution.objects.get(pk=execution_id)
+    execution = test_execution_dao.get_by_id(execution_id)
 
     request_user = kwargs.get(REQUEST_KEY).user
 
@@ -61,9 +59,7 @@ def add_comment(execution_id, comment, user_id=None, submit_date=None, **kwargs)
     if not request_user.is_superuser:
         submit_date = None
 
-    created = comments.add_comment([execution], comment, comment_author, submit_date)
-    # we always create only one comment
-    return model_to_dict(created[0])
+    return comment_dao.add_comment(execution, comment, comment_author, submit_date)
 
 
 @permissions_required("django_comments.delete_comment")
@@ -80,12 +76,8 @@ def remove_comment(execution_id, comment_id=None):
         :type comment_id: int
         :raises PermissionDenied: if missing *django_comments.delete_comment* permission
     """
-    execution = TestExecution.objects.get(pk=execution_id)
-    to_be_deleted = comments.get_comments(execution)
-    if comment_id:
-        to_be_deleted = to_be_deleted.filter(pk=comment_id)
-
-    to_be_deleted.delete()
+    execution = test_execution_dao.get_by_id(execution_id)
+    comment_dao.remove_comment(execution, comment_id)
 
 
 @permissions_required("django_comments.view_comment")
@@ -102,9 +94,8 @@ def get_comments(execution_id):
         :rtype: list(dict)
         :raises PermissionDenied: if missing *django_comments.view_comment* permission
     """
-    execution = TestExecution.objects.get(pk=execution_id)
-    execution_comments = comments.get_comments(execution).values()
-    return list(execution_comments)
+    execution = test_execution_dao.get_by_id(execution_id)
+    return comment_dao.get_comments(execution)
 
 
 @permissions_required("testruns.view_testexecution")
@@ -120,40 +111,7 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: List of serialized :class:`tcms.testruns.models.TestExecution` objects
         :rtype: list(dict)
     """
-    return list(
-        TestExecution.objects.annotate(
-            expected_duration=(
-                Coalesce("case__setup_duration", timedelta(0))
-                + Coalesce("case__testing_duration", timedelta(0))
-            ),
-            actual_duration=F("stop_date") - F("start_date"),
-        )
-        .filter(**query)
-        .values(
-            "id",
-            "assignee",
-            "assignee__username",
-            "tested_by",
-            "tested_by__username",
-            "case_text_version",
-            "start_date",
-            "stop_date",
-            "sortkey",
-            "run",
-            "case",
-            "case__summary",
-            "build",
-            "build__name",
-            "status",
-            "status__name",
-            "status__icon",
-            "status__color",
-            "expected_duration",
-            "actual_duration",
-        )
-        .order_by("id")
-        .distinct()
-    )
+    return test_execution_dao.filter(query)
 
 
 @permissions_required("testruns.view_historicaltestexecution")
@@ -170,7 +128,7 @@ def history(execution_id):
         :rtype: list(dict)
         :raises PermissionDenied: if missing *testruns.view_testexecution* permission
     """
-    execution = TestExecution.objects.get(pk=execution_id)
+    execution = test_execution_dao.get_by_id(execution_id)
     execution_history = (
         execution.history.all()
         .order_by("-history_date")
@@ -202,7 +160,7 @@ def update(execution_id, values, **kwargs):
         :raises ValueError: if data validations fail
         :raises PermissionDenied: if missing *testruns.change_testexecution* permission
     """
-    test_execution = TestExecution.objects.get(pk=execution_id)
+    test_execution = test_execution_dao.get_by_id(execution_id)
 
     if values.get("case_text_version") == "latest":
         values["case_text_version"] = test_execution.case.history.latest().history_id
@@ -217,6 +175,7 @@ def update(execution_id, values, **kwargs):
 
     if form.is_valid():
         test_execution = form.save()
+        test_execution_dao.save(test_execution)
     else:
         raise ValueError(list(form.errors.items()))
 
@@ -285,7 +244,7 @@ def add_link(values, update_tracker=False, **kwargs):
     ) or isinstance(tracker, KiwiTCMS):
         tracker.add_testexecution_to_issue([link.execution], link.url)
 
-    return model_to_dict(link)
+    return link_reference_dao.save(link)
 
 
 @permissions_required("linkreference.delete_linkreference")
@@ -300,7 +259,7 @@ def remove_link(query):
                       :class:`tcms.core.contrib.linkreference.models.LinkReference`
         :type query: dict
     """
-    LinkReference.objects.filter(**query).delete()
+    link_reference_dao.remove(query)
 
 
 @permissions_required("linkreference.view_linkreference")
@@ -318,16 +277,7 @@ def get_links(query):
                  objects
         :rtype: dict
     """
-    return list(
-        LinkReference.objects.filter(**query).values(
-            "id",
-            "name",
-            "url",
-            "execution",
-            "created_on",
-            "is_defect",
-        )
-    )
+    return link_reference_dao.get_links(query)
 
 
 @permissions_required("testruns.view_testexecutionproperty")
@@ -345,13 +295,10 @@ def properties(query):
                  objects
         :rtype: dict
     """
-    return list(
-        TestExecutionProperty.objects.filter(**query).values(
-            "id",
-            "name",
-            "value",
-            "execution",
-        )
+    return testexecution_property_dao.filter(
+        query,
+        value_fields=("id", "name", "value", "execution"),
+        order_by=("execution", "name", "value"),
     )
 
 
@@ -375,10 +322,7 @@ def add_property(execution_id, name, value):
 
     .. versionadded:: 15.3
     """
-    prop, _ = TestExecutionProperty.objects.get_or_create(
-        execution_id=execution_id, name=name, value=value
-    )
-    return model_to_dict(prop)
+    return testexecution_property_dao.get_or_create(execution_id, name, value)
 
 
 @permissions_required("testruns.delete_testexecution")
@@ -393,7 +337,7 @@ def remove(query):
         :type query: dict
         :raises PermissionDenied: if missing *testruns.delete_testexecution* permission
     """
-    TestExecution.objects.filter(**query).delete()
+    test_execution_dao.remove(query)
 
 
 @permissions_required("attachments.view_attachment")
@@ -414,9 +358,9 @@ def list_attachments(execution_id, **kwargs):
 
     .. versionadded:: 15.3
     """
-    execution = TestExecution.objects.get(pk=execution_id)
+    execution = test_execution_dao.get_by_id(execution_id)
     request = kwargs.get(REQUEST_KEY)
-    return utils.get_attachments_for(request, execution)
+    return attachment_dao.list_attachments(request, execution)
 
 
 @permissions_required("attachments.add_attachment")
@@ -438,7 +382,7 @@ def add_attachment(execution_id, filename, b64content, **kwargs):
 
     .. versionadded:: 15.3
     """
-    utils.add_attachment(
+    attachment_dao.add_attachment(
         execution_id,
         "testruns.TestExecution",
         kwargs.get(REQUEST_KEY).user,
@@ -470,6 +414,7 @@ def create(values, **kwargs):
 
     if form.is_valid():
         test_execution = form.save()
+        test_execution_dao.save(test_execution)
         return model_to_dict(test_execution)
 
     raise ValueError(list(form.errors.items()))

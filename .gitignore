@@ -18,3 +18,4 @@ docs/target/
 .cache/
 tcms/node_modules/
 tcms/static/js/bundle.js
+tcms/settings/local_settings.py

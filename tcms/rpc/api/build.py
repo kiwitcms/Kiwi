@@ -3,7 +3,7 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
-from tcms.management.models import Build
+from tcms.dao.management.build_dao import build_dao
 from tcms.rpc.api.forms.management import BuildForm, BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
 
@@ -24,18 +24,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 
     if query is None:
         query = {}
-    return list(
-        Build.objects.filter(**query)
-        .values(
-            "id",
-            "name",
-            "version",
-            "version__value",
-            "is_active",
-        )
-        .order_by("version", "id")
-        .distinct()
-    )
+    return build_dao.filter(query)
 
 
 @rpc_method(name="Build.create")
@@ -59,6 +48,7 @@ def create(values):
     form = BuildForm(values)
     if form.is_valid():
         build = form.save()
+        build_dao.save(build)
         return model_to_dict(build)
 
     raise ValueError(list(form.errors.items()))
@@ -82,11 +72,12 @@ def update(build_id, values):
         :raises PermissionDenied: if missing *management.change_build* permission
         :raises ValueError: if input values don't validate
     """
-    build = Build.objects.get(pk=build_id)
+    build = build_dao.get_by_id(build_id)
     form = BuildUpdateForm(values, instance=build)
 
     if form.is_valid():
         build = form.save()
+        build_dao.save(build)
         return model_to_dict(build)
 
     raise ValueError(list(form.errors.items()))

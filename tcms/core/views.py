@@ -23,6 +23,8 @@ from django.views import i18n
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.generic.base import TemplateView, View
 
+from tcms.dao.testplans.test_plan_dao import test_plan_dao
+from tcms.dao.testruns.test_run_dao import test_run_dao
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
@@ -100,7 +102,7 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
 
         # List all recent TestPlans and TestRuns
         test_plans = (
-            TestPlan.objects.filter(author=self.request.user)
+            test_plan_dao.filter_objects(author=self.request.user)
             .order_by("-pk")
             .select_related("product", "type")
             .annotate(num_runs=Count("run", distinct=True))
@@ -109,7 +111,7 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
 
         # pylint: disable=unsupported-binary-operation
         test_runs = (
-            TestRun.objects.filter(
+            test_run_dao.filter_objects(
                 Q(manager=self.request.user)
                 | Q(default_tester=self.request.user)
                 | Q(executions__assignee=self.request.user),

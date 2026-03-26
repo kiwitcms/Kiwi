@@ -46,3 +46,8 @@ STORAGES["staticfiles"][  # noqa: F405
 ] = "tcms.tests.storage.RaiseWhenFileNotFound"
 
 ANONYMOUS_ANALYTICS = False
+
+try:
+    from .local_settings import *  # noqa: F401,F403
+except ImportError:
+    pass

@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from django.db.models import Count
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.management.models import Tag
-from tcms.rpc import utils
+from tcms.dao.shared.attachment_dao import attachment_dao
+from tcms.dao.shared.tag_dao import tag_dao
+from tcms.dao.testcases.test_case_dao import test_case_dao
+from tcms.dao.testplans.test_plan_dao import test_plan_dao
 from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanAPIForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.models import TestCase, TestCasePlan
-from tcms.testplans.models import TestPlan
 
 
 @permissions_required("testplans.add_testplan")
@@ -60,6 +59,7 @@ def create(values, **kwargs):
             test_plan.create_date = form.cleaned_data["create_date"]
             test_plan.save()
 
+        test_plan_dao.save(test_plan)
         result = model_to_dict(test_plan, exclude=["tag"])
 
         # b/c value is set in the DB directly and if None
@@ -87,29 +87,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return list(
-        TestPlan.objects.filter(**query)
-        .values(
-            "id",
-            "name",
-            "text",
-            "create_date",
-            "is_active",
-            "extra_link",
-            "product_version",
-            "product_version__value",
-            "product",
-            "product__name",
-            "author",
-            "author__username",
-            "type",
-            "type__name",
-            "parent",
-        )
-        .annotate(Count("children"))
-        .order_by("product", "id")
-        .distinct()
-    )
+    return test_plan_dao.filter(query)
 
 
 @permissions_required("testplans.add_testplantag")
@@ -132,8 +110,9 @@ def add_tag(plan_id, tag_name, **kwargs):
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
-    tag, _ = Tag.get_or_create(request.user, tag_name)
-    TestPlan.objects.get(pk=plan_id).add_tag(tag)
+    tag_obj, _ = tag_dao.get_or_create(request.user, tag_name)
+    plan = test_plan_dao.get_by_id(plan_id)
+    tag_dao.add_tag(plan, tag_obj)
 
 
 @permissions_required("testplans.delete_testplantag")
@@ -151,8 +130,9 @@ def remove_tag(plan_id, tag_name):
         :raises PermissionDenied: if missing *testplans.delete_testplantag* permission
         :raises DoesNotExist: if objects specified don't exist
     """
-    tag = Tag.objects.get(name=tag_name)
-    TestPlan.objects.get(pk=plan_id).remove_tag(tag)
+    tag_obj = tag_dao.get_by_name(tag_name)
+    plan = test_plan_dao.get_by_id(plan_id)
+    tag_dao.remove_tag(plan, tag_obj)
 
 
 @permissions_required("testplans.change_testplan")
@@ -173,10 +153,11 @@ def update(plan_id, values):
         :raises PermissionDenied: if missing *testplans.change_testplan* permission
         :raises ValueError: if validations fail
     """
-    test_plan = TestPlan.objects.get(pk=plan_id)
+    test_plan = test_plan_dao.get_by_id(plan_id)
     form = EditPlanForm(values, instance=test_plan)
     if form.is_valid():
         test_plan = form.save()
+        test_plan_dao.save(test_plan)
         result = model_to_dict(test_plan, exclude=["tag"])
 
         # b/c value is set in the DB directly and if None
@@ -206,14 +187,9 @@ def add_case(plan_id, case_id):
                  by PKs are missing
         :raises PermissionDenied: if missing *testcases.add_testcaseplan* permission
     """
-    plan = TestPlan.objects.get(pk=plan_id)
-    case = TestCase.objects.get(pk=case_id)
-    test_case_plan = plan.add_case(case)
-
-    result = model_to_dict(case, exclude=["component", "plan", "tag"])
-    result["create_date"] = case.create_date
-    result["sortkey"] = test_case_plan.sortkey
-    return result
+    plan = test_plan_dao.get_by_id(plan_id)
+    case = test_case_dao.get_by_id(case_id)
+    return test_plan_dao.add_case(plan, case)
 
 
 @permissions_required("testcases.delete_testcaseplan")
@@ -230,7 +206,7 @@ def remove_case(plan_id, case_id):
         :type case_id: int
         :raises PermissionDenied: if missing *testcases.delete_testcaseplan* permission
     """
-    TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
+    test_plan_dao.remove_case(plan_id, case_id)
 
 
 @permissions_required("testcases.change_testcaseplan")
@@ -250,9 +226,7 @@ def update_case_order(plan_id, case_id, sortkey):
         :type sortkey: int
         :raises PermissionDenied: if missing *testcases.delete_testcaseplan* permission
     """
-    TestCasePlan.objects.filter(  # pylint:disable=objects-update-used
-        case=case_id, plan=plan_id
-    ).update(sortkey=sortkey)
+    test_plan_dao.update_case_order(plan_id, case_id, sortkey)
 
 
 @permissions_required("attachments.view_attachment")
@@ -271,9 +245,9 @@ def list_attachments(plan_id, **kwargs):
         :rtype: list
         :raises TestPlan.DoesNotExit: if object specified by PK is missing
     """
-    plan = TestPlan.objects.get(pk=plan_id)
+    plan = test_plan_dao.get_by_id(plan_id)
     request = kwargs.get(REQUEST_KEY)
-    return utils.get_attachments_for(request, plan)
+    return attachment_dao.list_attachments(request, plan)
 
 
 @permissions_required("attachments.add_attachment")
@@ -293,7 +267,7 @@ def add_attachment(plan_id, filename, b64content, **kwargs):
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
     """
-    utils.add_attachment(
+    attachment_dao.add_attachment(
         plan_id,
         "testplans.TestPlan",
         kwargs.get(REQUEST_KEY).user,
@@ -318,18 +292,5 @@ def tree(plan_id):
         :rtype: list
         :raises TestPlan.DoesNotExit: if object specified by PK is missing
     """
-    plan = TestPlan.objects.get(pk=plan_id)
-    result = []
-
-    for record in plan.tree_as_list():
-        result.append(
-            {
-                "id": record.pk,
-                "name": record.name,
-                "parent_id": record.parent_id,
-                "tree_depth": record.tree_depth,
-                "url": record.get_full_url(),
-            }
-        )
-
-    return result
+    plan = test_plan_dao.get_by_id(plan_id)
+    return test_plan_dao.tree(plan)

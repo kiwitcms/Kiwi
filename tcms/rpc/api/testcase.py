@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from datetime import timedelta
-
 from django.contrib.auth import get_user_model
-from django.db.models.functions import Coalesce
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.core import helpers
-from tcms.management.models import Component, Tag
-from tcms.rpc import utils
+from tcms.dao.management.component_dao import component_dao
+from tcms.dao.shared.attachment_dao import attachment_dao
+from tcms.dao.shared.comment_dao import comment_dao
+from tcms.dao.shared.property_dao import testcase_property_dao
+from tcms.dao.shared.tag_dao import tag_dao
+from tcms.dao.testcases.test_case_dao import test_case_dao
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.models import Property, TestCase, TestCasePlan
 
 
 @permissions_required("testcases.add_testcasecomponent")
@@ -35,10 +34,9 @@ def add_component(case_id, component):
         :raises DoesNotExist: if missing test case or component that match the
                  specified PKs
     """
-    case = TestCase.objects.get(pk=case_id)
-    component_obj = Component.objects.get(name=component, product=case.category.product)
-    case.add_component(component_obj)
-    return model_to_dict(component_obj)
+    case = test_case_dao.get_by_id(case_id)
+    component_obj = component_dao.get_by_name_and_product(component, case.category.product)
+    return test_case_dao.add_component(case, component_obj)
 
 
 @permissions_required("testcases.delete_testcasecomponent")
@@ -58,9 +56,8 @@ def remove_component(case_id, component_id):
         :raises DoesNotExist: if missing test case or component that match the
                  specified PKs
     """
-    TestCase.objects.get(pk=case_id).remove_component(
-        Component.objects.get(pk=component_id)
-    )
+    case = test_case_dao.get_by_id(case_id)
+    test_case_dao.remove_component(case, component_dao.get_by_id(component_id))
 
 
 def _validate_cc_list(cc_list):
@@ -113,8 +110,8 @@ def add_notification_cc(case_id, cc_list):
 
     _validate_cc_list(cc_list)
 
-    test_case = TestCase.objects.get(pk=case_id)
-    test_case.emailing.add_cc(cc_list)
+    case = test_case_dao.get_by_id(case_id)
+    test_case_dao.add_notification_cc(case, cc_list)
 
 
 @permissions_required("testcases.change_testcase")
@@ -136,7 +133,8 @@ def remove_notification_cc(case_id, cc_list):
 
     _validate_cc_list(cc_list)
 
-    TestCase.objects.get(pk=case_id).emailing.remove_cc(cc_list)
+    case = test_case_dao.get_by_id(case_id)
+    test_case_dao.remove_notification_cc(case, cc_list)
 
 
 @permissions_required("testcases.view_testcase")
@@ -153,7 +151,8 @@ def get_notification_cc(case_id):
         :rtype: list(str)
         :raises TestCase.DoesNotExist: if object with case_id doesn't exist
     """
-    return TestCase.objects.get(pk=case_id).emailing.get_cc_list()
+    case = test_case_dao.get_by_id(case_id)
+    return test_case_dao.get_notification_cc(case)
 
 
 @permissions_required("testcases.add_testcasetag")
@@ -176,8 +175,9 @@ def add_tag(case_id, tag, **kwargs):
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
-    tag, _ = Tag.get_or_create(request.user, tag)
-    TestCase.objects.get(pk=case_id).add_tag(tag)
+    tag_obj, _ = tag_dao.get_or_create(request.user, tag)
+    case = test_case_dao.get_by_id(case_id)
+    tag_dao.add_tag(case, tag_obj)
 
 
 @permissions_required("testcases.delete_testcasetag")
@@ -195,7 +195,9 @@ def remove_tag(case_id, tag):
         :raises PermissionDenied: if missing *testcases.delete_testcasetag* permission
         :raises DoesNotExist: if objects specified don't exist
     """
-    TestCase.objects.get(pk=case_id).remove_tag(Tag.objects.get(name=tag))
+    tag_obj = tag_dao.get_by_name(tag)
+    case = test_case_dao.get_by_id(case_id)
+    tag_dao.remove_tag(case, tag_obj)
 
 
 @permissions_required("testcases.add_testcase")
@@ -241,6 +243,7 @@ def create(values, **kwargs):
             test_case.create_date = form.cleaned_data["create_date"]
             test_case.save()
 
+        test_case_dao.save(test_case)
         result = model_to_dict(test_case, exclude=["component", "plan", "tag"])
         # b/c date is added in the DB layer and model_to_dict() doesn't return it
         result["create_date"] = test_case.create_date
@@ -268,44 +271,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    qs = (
-        TestCase.objects.annotate(
-            expected_duration=Coalesce("setup_duration", timedelta(0))
-            + Coalesce("testing_duration", timedelta(0))
-        )
-        .filter(**query)
-        .values(
-            "id",
-            "create_date",
-            "is_automated",
-            "script",
-            "arguments",
-            "extra_link",
-            "summary",
-            "requirement",
-            "notes",
-            "text",
-            "case_status",
-            "case_status__name",
-            "category",
-            "category__name",
-            "priority",
-            "priority__value",
-            "author",
-            "author__username",
-            "default_tester",
-            "default_tester__username",
-            "reviewer",
-            "reviewer__username",
-            "setup_duration",
-            "testing_duration",
-            "expected_duration",
-        )
-        .order_by("id")
-        .distinct()
-    )
-
-    return list(qs)
+    return test_case_dao.filter(query)
 
 
 @permissions_required("testcases.view_testcase")
@@ -326,7 +292,8 @@ def history(case_id, query=None):
     if query is None:
         query = {}
 
-    return list(TestCase.objects.get(pk=case_id).history.filter(**query).values())
+    case = test_case_dao.get_by_id(case_id)
+    return test_case_dao.history(case, query)
 
 
 @permissions_required("testcases.view_testcase")
@@ -347,13 +314,7 @@ def sortkeys(query=None):
     if query is None:
         query = {}
 
-    result = {}
-    for record in TestCasePlan.objects.filter(**query):
-        # NOTE: convert to str() otherwise we get:
-        # Unable to serialize result as valid XML: dictionary key must be string
-        result[str(record.case_id)] = record.sortkey
-
-    return result
+    return test_case_dao.sortkeys(query)
 
 
 @permissions_required("testcases.change_testcase")
@@ -374,11 +335,12 @@ def update(case_id, values):
         :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
         :raises PermissionDenied: if missing *testcases.change_testcase* permission
     """
-    test_case = TestCase.objects.get(pk=case_id)
+    test_case = test_case_dao.get_by_id(case_id)
     form = UpdateForm(values, instance=test_case)
 
     if form.is_valid():
         test_case = form.save()
+        test_case_dao.save(test_case)
         result = model_to_dict(test_case, exclude=["component", "plan", "tag"])
         # b/c date may be None and model_to_dict() doesn't return it
         result["create_date"] = test_case.create_date
@@ -425,7 +387,7 @@ def remove(query):
                 'pk__in': [1, 2, 3, 4],
             })
     """
-    return TestCase.objects.filter(**query).delete()
+    return test_case_dao.remove(query)
 
 
 @permissions_required("attachments.view_attachment")
@@ -444,9 +406,9 @@ def list_attachments(case_id, **kwargs):
         :rtype: list
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
-    case = TestCase.objects.get(pk=case_id)
+    case = test_case_dao.get_by_id(case_id)
     request = kwargs.get(REQUEST_KEY)
-    return utils.get_attachments_for(request, case)
+    return attachment_dao.list_attachments(request, case)
 
 
 @permissions_required("attachments.add_attachment")
@@ -466,7 +428,7 @@ def add_attachment(case_id, filename, b64content, **kwargs):
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
     """
-    utils.add_attachment(
+    attachment_dao.add_attachment(
         case_id,
         "testcases.TestCase",
         kwargs.get(REQUEST_KEY).user,
@@ -502,7 +464,7 @@ def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
 
             In webUI comments are only shown **only** during test case review!
     """
-    case = TestCase.objects.get(pk=case_id)
+    case = test_case_dao.get_by_id(case_id)
 
     request_user = kwargs.get(REQUEST_KEY).user
 
@@ -514,9 +476,7 @@ def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
     if not request_user.is_superuser:
         submit_date = None
 
-    created = helpers.comments.add_comment([case], comment, comment_author, submit_date)
-    # we always create only one comment
-    return model_to_dict(created[0])
+    return comment_dao.add_comment(case, comment, comment_author, submit_date)
 
 
 @permissions_required("django_comments.delete_comment")
@@ -534,12 +494,8 @@ def remove_comment(case_id, comment_id=None):
         :raises PermissionDenied: if missing *django_comments.delete_comment* permission
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
-    case = TestCase.objects.get(pk=case_id)
-    to_be_deleted = helpers.comments.get_comments(case)
-    if comment_id:
-        to_be_deleted = to_be_deleted.filter(pk=comment_id)
-
-    to_be_deleted.delete()
+    case = test_case_dao.get_by_id(case_id)
+    comment_dao.remove_comment(case, comment_id)
 
 
 @permissions_required("django_comments.view_comment")
@@ -557,9 +513,8 @@ def comments(case_id):
         :raises PermissionDenied: if missing *django_comments.view_comment* permission
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
-    case = TestCase.objects.get(pk=case_id)
-    result = helpers.comments.get_comments(case).values()
-    return list(result)
+    case = test_case_dao.get_by_id(case_id)
+    return comment_dao.get_comments(case)
 
 
 @permissions_required("testcases.view_property")
@@ -579,16 +534,10 @@ def properties(query=None):
     if query is None:
         query = {}
 
-    return list(
-        Property.objects.filter(**query)
-        .values(
-            "id",
-            "case",
-            "name",
-            "value",
-        )
-        .order_by("case", "name", "value")
-        .distinct()
+    return testcase_property_dao.filter(
+        query,
+        value_fields=("id", "case", "name", "value"),
+        order_by=("case", "name", "value"),
     )
 
 
@@ -604,7 +553,7 @@ def remove_property(query):
         :type query: dict
         :raises PermissionDenied: if missing *testcases.delete_property* permission
     """
-    Property.objects.filter(**query).delete()
+    testcase_property_dao.remove(query)
 
 
 @permissions_required("testcases.add_property")
@@ -625,5 +574,4 @@ def add_property(case_id, name, value):
         :rtype: dict
         :raises PermissionDenied: if missing *testcases.add_property* permission
     """
-    prop, _ = Property.objects.get_or_create(case_id=case_id, name=name, value=value)
-    return model_to_dict(prop)
+    return testcase_property_dao.get_or_create(case_id, name, value)

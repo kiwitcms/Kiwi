@@ -2,13 +2,15 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
-from tcms.management.models import Tag
-from tcms.rpc import utils
+from tcms.dao.shared.attachment_dao import attachment_dao
+from tcms.dao.shared.property_dao import testrun_property_dao
+from tcms.dao.shared.tag_dao import tag_dao
+from tcms.dao.testcases.test_case_dao import test_case_dao
+from tcms.dao.testruns.test_run_dao import test_run_dao
 from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
-from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
-from tcms.testruns.models import Property, TestExecution, TestRun
+from tcms.testruns.models import TestRun
 
 
 @permissions_required("testruns.add_testexecution")
@@ -29,37 +31,9 @@ def add_case(run_id, case_id):
         :raises PermissionDenied: if missing *testruns.add_testexecution* permission
         :raises RuntimeError: if test case status is not CONFIRMED
     """
-    run = TestRun.objects.get(pk=run_id)
-    case = TestCase.objects.get(pk=case_id)
-
-    if run.executions.filter(case=case).exists():
-        return annotate_executions_with_properties(run.executions.filter(case=case))
-
-    if not case.case_status.is_confirmed:
-        raise RuntimeError(f"TC-{case.pk} status is not confirmed")
-
-    # always add new TEs at the end of TR
-    sortkey = 10
-    last_te = run.executions.order_by("sortkey").last()
-    if last_te:  # in case there are no other TEs
-        sortkey += last_te.sortkey
-
-    return annotate_executions_with_properties(
-        run.create_execution(case=case, sortkey=sortkey)
-    )
-
-
-def annotate_executions_with_properties(executions_iterable):
-    result = []
-
-    for execution in executions_iterable:
-        serialized_execution = model_to_dict(execution)
-        serialized_execution["properties"] = list(
-            execution.properties().values("name", "value")
-        )
-        result.append(serialized_execution)
-
-    return result
+    run = test_run_dao.get_by_id(run_id)
+    case = test_case_dao.get_by_id(case_id)
+    return test_run_dao.add_case(run, case)
 
 
 @permissions_required("testruns.delete_testexecution")
@@ -71,7 +45,7 @@ def remove_case(run_id, case_id):
         WARNING: this method is deprecated in favor of ``TestExecution.remove()``!
         Nothing in Kiwi TCMS uses it directly and it will be removed in the future!
     """
-    TestExecution.objects.filter(run=run_id, case=case_id).delete()
+    test_run_dao.remove_case(run_id, case_id)
 
 
 @permissions_required("testruns.view_testrun")
@@ -88,38 +62,7 @@ def get_cases(run_id):
                  augmented with ``execution_id`` and ``status`` information.
         :rtype: list(dict)
     """
-    result = list(
-        TestCase.objects.filter(executions__run_id=run_id).values(
-            "id",
-            "create_date",
-            "is_automated",
-            "script",
-            "arguments",
-            "extra_link",
-            "summary",
-            "requirement",
-            "notes",
-            "text",
-            "case_status",
-            "category",
-            "priority",
-            "author",
-            "default_tester",
-            "reviewer",
-        )
-    )
-
-    executions = TestExecution.objects.filter(run_id=run_id).values(
-        "case", "pk", "status__name"
-    )
-    extra_info = {row["case"]: row for row in executions.iterator()}
-
-    for case in result:
-        info = extra_info[case["id"]]
-        case["execution_id"] = info["pk"]
-        case["status"] = info["status__name"]
-
-    return result
+    return test_run_dao.get_cases(run_id)
 
 
 @permissions_required("testruns.add_testruntag")
@@ -144,9 +87,9 @@ def add_tag(run_id, tag_name, **kwargs):
                  doesn't exist in the database!
     """
     request = kwargs.get(REQUEST_KEY)
-    tag, _ = Tag.get_or_create(request.user, tag_name)
-    test_run = TestRun.objects.get(pk=run_id)
-    test_run.add_tag(tag)
+    tag_obj, _ = tag_dao.get_or_create(request.user, tag_name)
+    test_run = test_run_dao.get_by_id(run_id)
+    tag_dao.add_tag(test_run, tag_obj)
     return list(test_run.tag.values("id", "name"))
 
 
@@ -167,9 +110,9 @@ def remove_tag(run_id, tag_name):
         :raises PermissionDenied: if missing *testruns.delete_testruntag* permission
         :raises DoesNotExist: if objects specified don't exist
     """
-    tag = Tag.objects.get(name=tag_name)
-    test_run = TestRun.objects.get(pk=run_id)
-    test_run.remove_tag(tag)
+    tag_obj = tag_dao.get_by_name(tag_name)
+    test_run = test_run_dao.get_by_id(run_id)
+    tag_dao.remove_tag(test_run, tag_obj)
     return list(test_run.tag.values("id", "name"))
 
 
@@ -207,6 +150,7 @@ def create(values, **kwargs):
 
     if form.is_valid():
         test_run = form.save()
+        test_run_dao.save(test_run)
         return model_to_dict(test_run, exclude=["cc", "tag"])
 
     raise ValueError(list(form.errors.items()))
@@ -229,31 +173,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    return list(
-        TestRun.objects.filter(**query)
-        .values(
-            "id",
-            "start_date",
-            "stop_date",
-            "planned_start",
-            "planned_stop",
-            "summary",
-            "notes",
-            "plan",
-            "plan__name",
-            "build",
-            "build__name",
-            "build__version",
-            "build__version__value",
-            "build__version__product",
-            "manager",
-            "manager__username",
-            "default_tester",
-            "default_tester__username",
-        )
-        .order_by("id")
-        .distinct()
-    )
+    return test_run_dao.filter(query)
 
 
 @permissions_required("testruns.change_testrun")
@@ -273,7 +193,7 @@ def update(run_id, values):
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
-    test_run = TestRun.objects.get(pk=run_id)
+    test_run = test_run_dao.get_by_id(run_id)
     form = UpdateForm(values, instance=test_run)
 
     # In the rare case where this TR is reassigned to another TP
@@ -284,6 +204,7 @@ def update(run_id, values):
 
     if form.is_valid():
         test_run = form.save()
+        test_run_dao.save(test_run)
         result = model_to_dict(test_run, exclude=["cc", "tag"])
         # b/c value is set in the DB directly and if None
         # model_to_dict() will not return it
@@ -310,13 +231,13 @@ def add_cc(run_id, username):
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
-    test_run = TestRun.objects.get(pk=run_id)
+    test_run = test_run_dao.get_by_id(run_id)
     form = UserForm({"user": username})
 
     if not form.is_valid():
         raise ValueError(list(form.errors.items()))
 
-    test_run.add_cc(form.cleaned_data["user"])
+    test_run_dao.add_cc(test_run, form.cleaned_data["user"])
 
 
 @permissions_required("testruns.change_testrun")
@@ -335,13 +256,13 @@ def remove_cc(run_id, username):
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
-    test_run = TestRun.objects.get(pk=run_id)
+    test_run = test_run_dao.get_by_id(run_id)
     form = UserForm({"user": username})
 
     if not form.is_valid():
         raise ValueError(list(form.errors.items()))
 
-    test_run.remove_cc(form.cleaned_data["user"])
+    test_run_dao.remove_cc(test_run, form.cleaned_data["user"])
 
 
 @permissions_required("testruns.view_property")
@@ -361,16 +282,10 @@ def properties(query=None):
     if query is None:
         query = {}
 
-    return list(
-        Property.objects.filter(**query)
-        .values(
-            "id",
-            "run",
-            "name",
-            "value",
-        )
-        .order_by("run", "name", "value")
-        .distinct()
+    return testrun_property_dao.filter(
+        query,
+        value_fields=("id", "run", "name", "value"),
+        order_by=("run", "name", "value"),
     )
 
 
@@ -394,8 +309,7 @@ def add_property(run_id, name, value):
 
     .. versionadded:: 15.3
     """
-    prop, _ = Property.objects.get_or_create(run_id=run_id, name=name, value=value)
-    return model_to_dict(prop)
+    return testrun_property_dao.get_or_create(run_id, name, value)
 
 
 @permissions_required("attachments.view_attachment")
@@ -416,9 +330,9 @@ def list_attachments(run_id, **kwargs):
 
     .. versionadded:: 15.3
     """
-    run = TestRun.objects.get(pk=run_id)
+    run = test_run_dao.get_by_id(run_id)
     request = kwargs.get(REQUEST_KEY)
-    return utils.get_attachments_for(request, run)
+    return attachment_dao.list_attachments(request, run)
 
 
 @permissions_required("attachments.add_attachment")
@@ -438,7 +352,7 @@ def add_attachment(run_id, filename, b64content, **kwargs):
         :param \\**kwargs: Dict providing access to the current request, protocol,
                 entry point name and handler instance from the rpc method
     """
-    utils.add_attachment(
+    attachment_dao.add_attachment(
         run_id,
         "testruns.TestRun",
         kwargs.get(REQUEST_KEY).user,
@@ -464,7 +378,7 @@ def remove(query):
 
     .. versionadded:: 13.5
     """
-    return TestRun.objects.filter(**query).delete()
+    return test_run_dao.remove(query)
 
 
 @permissions_required("testruns.view_testrun")
@@ -483,4 +397,5 @@ def get_cc(run_id):
 
     .. versionadded:: 15.3
     """
-    return list(TestRun.objects.get(pk=run_id).cc.values_list("email", flat=True))
+    run = test_run_dao.get_by_id(run_id)
+    return test_run_dao.get_cc(run)
