@@ -65,7 +65,7 @@ jobs:
 
     - name: Send coverage to codecov.io
       if: env.CODECOV_TOKEN
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v6
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
