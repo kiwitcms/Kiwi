@@ -22,7 +22,6 @@ Submodules
 
    tcms.issuetracker.azure_boards
    tcms.issuetracker.base
-   tcms.issuetracker.bitbucket
    tcms.issuetracker.bugzilla_integration
    tcms.issuetracker.kiwitcms
    tcms.issuetracker.types
