@@ -17,9 +17,9 @@ from tcms.tests.factories import ComponentFactory, TestExecutionFactory
 )
 class TestGitlabIntegration(APITestCase):
     existing_bug_id = 1
-    existing_bug_url = "http://bugtracker.kiwitcms.org/root/kiwitcms/issues/1"
+    existing_bug_url = "http://bugtracker.kiwitcms.org/root/kiwitcms/work_items/1"
     existing_bug_url_in_group = (
-        "http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/issues/1"
+        "http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/work_items/1"
     )
 
     @classmethod
@@ -50,7 +50,7 @@ class TestGitlabIntegration(APITestCase):
 
         # this is an alternative URL, with a dash
         result = self.integration.bug_id_from_url(
-            "http://bugtracker.kiwitcms.org/root/kiwitcms/-/issues/1"
+            "http://bugtracker.kiwitcms.org/root/kiwitcms/-/work_items/1"
         )
         self.assertEqual(self.existing_bug_id, result)
 
@@ -69,7 +69,7 @@ class TestGitlabIntegration(APITestCase):
 
         # this is an alternative URL, with a dash
         result = integration.bug_id_from_url(
-            "http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/-/issues/1"
+            "http://bugtracker.kiwitcms.org/group/sub_group/kiwitcms_in_group/-/work_items/1"
         )
         self.assertEqual(self.existing_bug_id, result)
 
@@ -105,7 +105,7 @@ class TestGitlabIntegration(APITestCase):
         integration = Gitlab(bug_system, None)
 
         result = integration.details(
-            "http://bugtracker.kiwitcms.org/root/katinar/-/issues/1"
+            "http://bugtracker.kiwitcms.org/root/katinar/-/work_items/1"
         )
 
         self.assertEqual(1, result["id"])
@@ -113,7 +113,7 @@ class TestGitlabIntegration(APITestCase):
         self.assertEqual("opened", result["status"])
         self.assertEqual("Hello Private Issue", result["title"])
         self.assertEqual(
-            "http://bugtracker.kiwitcms.org/root/katinar/-/issues/1", result["url"]
+            "http://bugtracker.kiwitcms.org/root/katinar/-/work_items/1", result["url"]
         )
 
     def test_auto_update_bugtracker(self):
@@ -169,7 +169,7 @@ class TestGitlabIntegration(APITestCase):
         )
         self.assertEqual(result["rc"], 0)
         self.assertIn(self.integration.bug_system.base_url, result["response"])
-        self.assertIn("/-/issues/", result["response"])
+        self.assertIn("/-/work_items/", result["response"])
 
         # assert that the result looks like valid URL parameters
         new_issue_id = self.integration.bug_id_from_url(result["response"])
