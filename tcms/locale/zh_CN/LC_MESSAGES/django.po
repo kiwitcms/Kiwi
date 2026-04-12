@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2026-04-10 07:51\n"
+"PO-Revision-Date: 2026-04-12 12:10\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -225,7 +225,7 @@ msgstr "没有找到记录"
 #: tcms/testplans/templates/testplans/search.html:14
 #: tcms/testruns/templates/testruns/search.html:12
 msgid "Found _TOTAL_ records"
-msgstr "查找全部记录"
+msgstr ""
 
 #: tcms/bugs/templates/bugs/search.html:32
 #: tcms/testcases/templates/testcases/search.html:23
@@ -2432,3 +2432,4 @@ msgstr "1组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
