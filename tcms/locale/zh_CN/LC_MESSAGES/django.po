@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-04-12 12:10\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1436,7 +1436,15 @@ msgid "Test case %(pk)d has been created.\n\n"
 "Default tester: %(default_tester)s\n"
 "Text:\n"
 "%(text)s"
-msgstr ""
+msgstr "测试用例%(pk)d被创建\n\n"
+"### 基本信息 ###\n"
+"总结: %(summary)s\n\n"
+"产品: %(product)s\n"
+"类别: %(category)s\n"
+"优先级: %(priority)s\n\n"
+"默认测试者: %(default_tester)s\n"
+"文本:\n"
+"%(text)s"
 
 #: tcms/testcases/helpers/email.py:62
 #, python-format
@@ -1900,7 +1908,7 @@ msgstr "环境"
 
 #: tcms/testruns/templates/testruns/get.html:171
 msgid "View all in Execution Dashboard"
-msgstr ""
+msgstr "在Dashboard查看所有执行"
 
 #: tcms/testruns/templates/testruns/get.html:190
 msgid "Update text version"
@@ -1941,7 +1949,7 @@ msgstr "分配给"
 #: tcms/testruns/templates/testruns/get.html:387
 #: tcms/testruns/templates/testruns/get.html:389
 msgid "Last bug"
-msgstr ""
+msgstr "最近的bug"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
