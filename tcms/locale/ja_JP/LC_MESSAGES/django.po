@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-04-17 07:04\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -622,15 +622,15 @@ msgstr "メールアドレスがリセットされました。詳細な手順に
 
 #: tcms/management/models.py:20
 msgid "Classification"
-msgstr ""
+msgstr "分類"
 
 #: tcms/management/models.py:21
 msgid "Classifications"
-msgstr ""
+msgstr "分類"
 
 #: tcms/management/models.py:57
 msgid "Products"
-msgstr ""
+msgstr "製品"
 
 #: tcms/management/models.py:77
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
@@ -672,7 +672,7 @@ msgstr "コンポーネント"
 
 #: tcms/management/models.py:126
 msgid "Versions"
-msgstr ""
+msgstr "バージョン"
 
 #: tcms/management/models.py:172
 msgid "Builds"
@@ -963,7 +963,7 @@ msgstr "によってテストされた"
 #: tcms/testruns/templates/testruns/get.html:413
 #: tcms/testruns/templates/testruns/mutable.html:140
 msgid "Finished at"
-msgstr "完了"
+msgstr "完了日時"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
@@ -1572,7 +1572,7 @@ msgstr "テストケースの編集"
 
 #: tcms/testcases/templates/testcases/mutable.html:59
 msgid "add new Category"
-msgstr "新しいカテゴリーを追加する。"
+msgstr "新しいカテゴリーを追加"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
@@ -1636,7 +1636,7 @@ msgstr "検索リクエストに含める"
 
 #: tcms/testcases/templates/testcases/search.html:78
 msgid "include child test plans"
-msgstr ""
+msgstr "子のテスト計画に含める"
 
 #: tcms/testcases/templates/testcases/search.html:132
 msgid "Text"
@@ -1904,7 +1904,7 @@ msgstr "環境設定"
 
 #: tcms/testruns/templates/testruns/get.html:171
 msgid "View all in Execution Dashboard"
-msgstr ""
+msgstr "実行ダッシュボードですべてを表示"
 
 #: tcms/testruns/templates/testruns/get.html:190
 msgid "Update text version"
@@ -2153,11 +2153,11 @@ msgstr "組織"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
 msgid "Private repository credentials"
-msgstr ""
+msgstr "プライベートリポジトリの秘匿情報"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
 msgid "Click 'Password' to reveal!"
-msgstr ""
+msgstr "パスワードを表示"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
@@ -2165,7 +2165,7 @@ msgstr "プライベートコンテナの説明"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
 msgid "kiwitcms/gitops prefix"
-msgstr ""
+msgstr "kiwitcms/gitops prefix"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "You own the following tenants"
@@ -2425,3 +2425,4 @@ msgstr "グループ"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "個人用APIトークン"
+
