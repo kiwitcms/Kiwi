@@ -70,6 +70,11 @@
                 </h2>
 
                 <h2 class="card-pf-title kiwi-text-align-left">
+                    <span class="fa fa-pencil"></span>{% trans 'Last modified' %}:
+                    {{ last_modified }}
+                </h2>
+
+                <h2 class="card-pf-title kiwi-text-align-left">
                     <span class="fa fa-clock-o"></span>{% trans 'Setup duration' %}:
                     {{ object.setup_duration|default:"-" }}
                 </h2>

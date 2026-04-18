@@ -60,6 +60,11 @@
                 </h2>
 
                 <h2 class="card-pf-title kiwi-text-align-left">
+                    <span class="fa fa-pencil"></span>{% trans 'Last modified' %}:
+                    {{ last_modified }}
+                </h2>
+
+                <h2 class="card-pf-title kiwi-text-align-left">
                 <span id="product_pk"
                       class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
                     <a href="{% url "plans-search" %}?product={{ object.product_id }}"
