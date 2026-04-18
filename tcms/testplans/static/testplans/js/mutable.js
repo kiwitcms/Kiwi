@@ -1,5 +1,5 @@
 import { testPlanAutoComplete } from '../../../../static/js/jsonrpc'
-import { populateVersion } from '../../../../static/js/utils'
+import { initDuplicateCheck, populateVersion } from '../../../../static/js/utils'
 
 const planCache = {}
 
@@ -50,4 +50,26 @@ export function pageTestplansMutableReadyHandler () {
 
     // override the default inline-block style
     $('span.twitter-typeahead').css('display', 'block')
+
+    initDuplicateCheck({
+        rpcMethod: 'TestPlan.filter',
+        fieldName: 'name',
+        inputSelector: '#id_name',
+        groupSelector: '#name-group',
+        warningSelector: '#duplicate-name-warning',
+        autocompleteSelector: '#name-autocomplete',
+        modalSelector: '#duplicate-modal',
+        prefix: 'TP',
+        detailUrlBase: '/plan/',
+        descriptionField: 'text',
+        modalRows: function (g, tp) {
+            return [
+                [g('trans-duplicate-modal-name'), tp.name],
+                [g('trans-duplicate-modal-product'), tp.product__name],
+                [g('trans-duplicate-modal-version'), tp.product_version__value],
+                [g('trans-duplicate-modal-type'), tp.type__name],
+                [g('trans-duplicate-modal-author'), tp.author__username]
+            ]
+        }
+    })
 }
