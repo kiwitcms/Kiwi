@@ -170,6 +170,8 @@ class TestCaseFilter(APITestCase):
                 default_tester=None,
                 plan=[cls.plan],
             )
+            # generate history record
+            test_case.save()
             cls.cases.append(test_case)
 
     def test_filter_query_none(self):
@@ -180,6 +182,7 @@ class TestCaseFilter(APITestCase):
 
         self.assertIn("id", result[0])
         self.assertIn("create_date", result[0])
+        self.assertIn("history_date", result[0])
         self.assertIn("is_automated", result[0])
         self.assertIn("script", result[0])
         self.assertIn("arguments", result[0])
@@ -236,6 +239,7 @@ class TestCaseFilter(APITestCase):
         self, _name, init_dict, setup_duration, testing_duration, expected_duration
     ):
         testcase = TestCaseFactory(**init_dict)
+        testcase.save()
         result = self.rpc_client.TestCase.filter({"pk": testcase.pk})
 
         self.assertIsNotNone(result)
