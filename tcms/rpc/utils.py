@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import builtins
 import io
 import json
 import time
@@ -101,3 +102,21 @@ def add_attachment(obj_id, app_model, user, filename, b64content):
         # response is application/json and this should be a dict
         errors = json.loads(response.content)
         raise ValueError(errors)
+
+
+def filter_distinct(qs):
+    """
+    Python implementation of .distinct("id")!
+    """
+    unique_ids = []
+
+    # pylint: disable=nested-function-found
+    def distinct_only(record):
+        # skip duplicate records
+        if record["id"] in unique_ids:
+            return None
+
+        unique_ids.append(record["id"])
+        return record
+
+    return builtins.filter(distinct_only, qs)
