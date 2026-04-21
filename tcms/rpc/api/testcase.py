@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.db.models.functions import Coalesce
+from django.db.utils import NotSupportedError
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
@@ -305,10 +305,14 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "expected_duration",
         )
         .order_by("id", "-history_date")
-        .distinct("id")
+        .distinct()
     )
 
-    return list(qs)
+    try:
+        return list(qs.distinct("id"))
+    except NotSupportedError:
+        # DISTINCT ON fields is supported only on PostgreSQL
+        return list(utils.filter_distinct(qs))
 
 
 @permissions_required("testcases.view_testcase")
