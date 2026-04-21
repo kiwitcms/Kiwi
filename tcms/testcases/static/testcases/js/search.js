@@ -157,6 +157,7 @@ export function pageTestcasesSearchReadyHandler () {
                 }
             },
             { data: 'create_date' },
+            { data: 'history_date' },
             { data: 'category__name' },
             { data: 'component_names' },
             { data: 'priority__value' },
