@@ -268,15 +268,18 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
+    test_case_ids = TestCase.objects.filter(**query).values("id")
     qs = (
-        TestCase.objects.annotate(
+        # note: queries from HistoricalTestCase
+        TestCase.history.annotate(  # pylint: disable=no-member
             expected_duration=Coalesce("setup_duration", timedelta(0))
             + Coalesce("testing_duration", timedelta(0))
         )
-        .filter(**query)
+        .filter(id__in=test_case_ids)
         .values(
             "id",
             "create_date",
+            "history_date",
             "is_automated",
             "script",
             "arguments",
@@ -301,8 +304,8 @@ def filter(query=None):  # pylint: disable=redefined-builtin
             "testing_duration",
             "expected_duration",
         )
-        .order_by("id")
-        .distinct()
+        .order_by("id", "-history_date")
+        .distinct("id")
     )
 
     return list(qs)
