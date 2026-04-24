@@ -21,11 +21,22 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Build & push docker images for ${{ github.event.ref }}
+      - name: Build for ${{ github.event.ref }}
+        run: |
+            make docker-image
+
+            echo "+++++ Docker images +++++"
+            docker images
+
+      - name: Upload packages for ${{ github.event.ref }}
+        env:
+          TWINE_PASSWORD: ${{ secrets.GEMFURY_PUSH_TOKEN }}
+        run: |
+            make upload-pkg
+
+      - name: Push docker images for ${{ github.event.ref }}
         run: |
             VERSION=$(python -m tcms)
-
-            make docker-image
 
             # tag so we can push to private container registry
             docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest kiwitcms/kiwi:latest
