@@ -72,6 +72,11 @@ similar_strings:
 bandit:
 	bandit -r *.py tcms/ kiwi_lint/ tcms_settings_dir/
 
+.PHONY: upload-pkg
+upload-pkg:
+	test -n "$(TWINE_PASSWORD)" || exit 2
+	curl -F p1=@dist/kiwitcms-$(VERSION).tar.gz -F p1_language=python https://$(TWINE_PASSWORD)@push.fury.io/kiwitcms/
+	curl -F p1=@dist/kiwitcms-$(VERSION)-py3-none-any.whl -F p1_language=python https://$(TWINE_PASSWORD)@push.fury.io/kiwitcms/
 
 .PHONY: docker-image
 docker-image:
