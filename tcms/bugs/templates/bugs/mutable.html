@@ -13,6 +13,9 @@
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
+        {% trans "Bugs" as bugs_breadcrumb_label %}
+        {% include "include/breadcrumbs.html" with search_url="bugs-search" search_label=bugs_breadcrumb_label view_url="bugs-get" object_label="BUG-" current_view=object|yesno:"edit,new" %}
+        {% include "include/page_toolbar.html" with current_view=object|yesno:"edit,new" view_url="bugs-get" edit_url="bugs-edit" new_url="bugs-new" search_url="bugs-search" edit_perm=perms.bugs.change_bug add_perm=perms.bugs.add_bug %}
         <form class="form-horizontal" action="{{ form_post_url }}" method="post">
             {% csrf_token %}
             <input type="hidden" name="reporter" value="{{ form.reporter.value }}">
@@ -110,8 +113,10 @@
         {% endif %}
 
             <div class="form-group">
-                <div class="col-md-1 col-lg-1">
-                    <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+                <div class="col-md-12 col-lg-12">
+                    <a href="{% if object %}{% url 'bugs-get' object.pk %}{% else %}{% url 'core-views-index' %}{% endif %}"
+                        class="btn btn-danger btn-lg">{% trans "Cancel" %}</a>
+                    <button type="submit" class="btn btn-primary btn-lg">{% trans "Save" %}</button>
                 </div>
             </div>
         </form>

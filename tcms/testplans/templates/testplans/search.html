@@ -13,6 +13,7 @@
     data-trans-no-records-found="{% trans 'No records found' %}"
     data-trans-x-records-found="{% trans 'Found _TOTAL_ records' %}"
 >
+    {% include "include/page_toolbar.html" with current_view="search" new_url="plans-new" search_url="plans-search" add_perm=perms.testplans.add_testplan %}
     <form class="form-horizontal" method="get">
         {% csrf_token %}
 
