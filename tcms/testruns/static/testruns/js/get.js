@@ -475,7 +475,7 @@ function getExpandArea (testExecution) {
         }], (data) => {
             data.forEach((entry) => {
                 markdown2HTML(entry.text, container.find('.test-execution-text')[0])
-                container.find('.test-execution-notes').append(entry.notes)
+                markdown2HTML(entry.notes, container.find('.test-execution-notes'))
             })
         })
 
