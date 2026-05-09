@@ -30,6 +30,14 @@ spec:
           {{- else -}}
           emptyDir: {}
           {{- end }}
+        {{- if or .Values.uwsgi.override .Values.uwsgi.existingConfigMap }}
+        - name: uwsgi-override
+          configMap:
+            name: {{ .Values.uwsgi.existingConfigMap | default (printf "%s-uwsgi" (include "kiwi.fullname" .)) }}
+            items:
+              - key: uwsgi.override
+                path: uwsgi.override
+        {{- end }}
 
       initContainers:
         - name: migrations
@@ -70,14 +78,18 @@ spec:
             - name: https
               containerPort: {{ .Values.service.port.https }}
               protocol: TCP
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            httpGet:
-              path: /accounts/login/
-              port: http
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
           readinessProbe:
-            httpGet:
-              path: /accounts/login/
-              port: http
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -104,8 +116,31 @@ spec:
             value: {{ .Values.database.db_name }}
           - name: SERVER_EMAIL
             value: {{ .Values.email.from }}
+          - name: DEFAULT_FROM_EMAIL
+            value: {{ .Values.email.from }}
           - name: EMAIL_SUBJECT_PREFIX
             value: {{ .Values.email.subject | quote }}
+          {{- if .Values.email.smtp.enabled }}
+          {{- $smtpSecret := .Values.email.smtp.existingSecret | default (printf "%s-smtp" (include "kiwi.fullname" .)) }}
+          - name: EMAIL_HOST
+            value: {{ .Values.email.smtp.host | quote }}
+          - name: EMAIL_PORT
+            value: {{ .Values.email.smtp.port | quote }}
+          - name: EMAIL_USE_TLS
+            value: {{ .Values.email.smtp.useTLS | quote }}
+          - name: EMAIL_USE_SSL
+            value: {{ .Values.email.smtp.useSSL | quote }}
+          - name: EMAIL_HOST_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ $smtpSecret }}
+                key: smtp-user
+          - name: EMAIL_HOST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $smtpSecret }}
+                key: smtp-password
+          {{- end }}
           - name: MEDIA_ROOT
             value: {{ .Values.media.root }}
           - name: MEDIA_URL
@@ -114,3 +149,9 @@ spec:
           volumeMounts:
           - name: media
             mountPath: {{ .Values.media.root }}
+          {{- if or .Values.uwsgi.override .Values.uwsgi.existingConfigMap }}
+          - name: uwsgi-override
+            mountPath: /Kiwi/etc/uwsgi.override
+            subPath: uwsgi.override
+            readOnly: true
+          {{- end }}
