@@ -1,0 +1,11 @@
+{{- if and .Values.uwsgi.override (not .Values.uwsgi.existingConfigMap) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kiwi.fullname" . }}-uwsgi
+  labels:
+    {{- include "kiwi.labels" . | nindent 4 }}
+data:
+  uwsgi.override: |
+    {{- .Values.uwsgi.override | nindent 4 }}
+{{- end }}
