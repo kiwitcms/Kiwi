@@ -62,9 +62,37 @@ function preProcessData (data, callbackF) {
     })
 }
 
+function updateDurationParam (inputSelector, paramName, params) {
+    const value = $(inputSelector).val()
+
+    if (value && value !== '0') {
+        params[paramName] = value
+    }
+}
+
 export function pageTestcasesSearchReadyHandler () {
     initializeDateTimePicker('#id_before')
     initializeDateTimePicker('#id_after')
+    $('.duration-picker').durationPicker({
+        translations: {
+            day: $('html').data('trans-day'),
+            days: $('html').data('trans-days'),
+
+            hour: $('html').data('trans-hour'),
+            hours: $('html').data('trans-hours'),
+
+            minute: $('html').data('trans-minute'),
+            minutes: $('html').data('trans-minutes'),
+
+            second: $('html').data('trans-second'),
+            seconds: $('html').data('trans-seconds')
+        },
+
+        showDays: true,
+        showHours: true,
+        showMinutes: true,
+        showSeconds: true
+    })
 
     const table = $('#resultsTable').DataTable({
         pageLength: $('#navbar').data('defaultpagesize'),
@@ -110,6 +138,10 @@ export function pageTestcasesSearchReadyHandler () {
             if ($('#id_run').val()) {
                 params.executions__run__in = [$('#id_run').val()]
             };
+
+            updateDurationParam('#id_setup_duration', 'setup_duration', params)
+            updateDurationParam('#id_testing_duration', 'testing_duration', params)
+            updateDurationParam('#id_expected_duration', 'expected_duration', params)
 
             const testPlanIds = selectedPlanIds()
             if (testPlanIds.length) {

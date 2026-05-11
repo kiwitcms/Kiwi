@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load static %}
 
+{% block head %}
+    {{ form.media }}
+{% endblock %}
 {% block title %}{% trans "Search Test Cases" %}{% endblock %}
 {% block page_id %}page-testcases-search{% endblock %}
 
@@ -146,6 +149,26 @@
             <label class="col-md-1 col-lg-1" for="id_run">{% trans "Test run" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_run" type="text" class="form-control" placeholder="{% trans 'ID' %}" value="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_setup_duration">{% trans "Setup duration" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="duration-picker" id="id_setup_duration" type="hidden"
+                    value="{{ form.setup_duration.value|default:'0' }}">
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_testing_duration">{% trans "Testing duration" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="duration-picker" id="id_testing_duration" type="hidden"
+                    value="{{ form.testing_duration.value|default:'0' }}">
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_expected_duration">{% trans "Expected duration" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input class="duration-picker" id="id_expected_duration" type="hidden"
+                    value="{{ form.expected_duration.value|default:'0' }}">
             </div>
         </div>
 
