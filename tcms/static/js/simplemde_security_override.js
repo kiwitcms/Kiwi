@@ -24,9 +24,6 @@ export function initSimpleMDE (textArea, fileUploadElement, autoSaveId = window.
         return null
     }
 
-    // Capture the server-rendered value before SimpleMDE replaces it
-    const serverValue = textArea.value
-
     const simpleMDE = new SimpleMDE({
         element: textArea,
         autoDownloadFontAwesome: false,
@@ -74,11 +71,6 @@ export function initSimpleMDE (textArea, fileUploadElement, autoSaveId = window.
             return renderedText
         }
     })
-
-    // Remove legacy shared autosave key (before per-textarea unique IDs)
-    // to prevent cross-field content leaking
-    const legacyKey = 'smde_' + window.location.toString()
-    try { localStorage.removeItem(legacyKey) } catch (e) { /* ignore */ }
 
     fileUploadElement.change(function () {
         const attachment = this.files[0]

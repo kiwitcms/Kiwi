@@ -141,7 +141,7 @@ function drawTestCases (testCases, testPlanId, permissions) {
 
     if (testCases.length > 0) {
         testCases.forEach(function (element) {
-            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions, testPlanId))
+            container.append(getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), element, permissions))
         })
         attachEvents(testPlanId, permissions)
     } else {
@@ -153,7 +153,7 @@ function drawTestCases (testCases, testPlanId, permissions) {
 
 function redrawSingleRow (testCaseId, testPlanId, permissions) {
     const testCaseRowDocumentFragment = $('#test_case_row')[0].content
-    const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions, testPlanId)
+    const newRow = getTestCaseRowContent(testCaseRowDocumentFragment.cloneNode(true), allTestCases[testCaseId], permissions)
 
     // remove from expanded list b/c the comment section may have changed
     expandedTestCaseIds.splice(expandedTestCaseIds.indexOf(testCaseId), 1)
