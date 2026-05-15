@@ -53,6 +53,15 @@
             <button type="submit" class="btn btn-primary btn-lg" tabindex="5">{% trans "Register" %}</button>
           </div>
         </div>
+
+        <div class="form-group">
+          <div class="col-xs-12 col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10">
+            <span class="help-block">
+                {% trans "Already have an account?" %}
+                <a href="{% url 'tcms-login' %}">{% trans "Log in" %}</a>
+            </span>
+          </div>
+        </div>
       </form>
 </div>
 {% endblock %}

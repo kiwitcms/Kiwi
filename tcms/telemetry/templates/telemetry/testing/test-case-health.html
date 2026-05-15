@@ -7,6 +7,7 @@
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
+        {% include "telemetry/include/nav.html" with active_tab="health" %}
         {% include "telemetry/include/filters.html" %}
 
         <h2>{% trans "Most frequently failing test cases" %}</h2>

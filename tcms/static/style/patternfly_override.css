@@ -155,6 +155,17 @@ input[type="submit"].grp-warning {
     cursor: pointer;
 }
 
+/* Danger pill variant for Delete action in page toolbar */
+.nav-pills > li.kiwi-pill-danger > a {
+    color: #cc0000;
+}
+
+.nav-pills > li.kiwi-pill-danger > a:hover,
+.nav-pills > li.kiwi-pill-danger > a:focus {
+    background-color: #cc0000;
+    color: #fff;
+}
+
 .dataTables_info {
     display: inline;
 }

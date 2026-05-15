@@ -16,6 +16,9 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
+    {% trans "Test Runs" as tr_breadcrumb_label %}
+    {% include "include/breadcrumbs.html" with search_url="testruns-search" search_label=tr_breadcrumb_label view_url="testruns-get" object_label="TR-" current_view=object|yesno:"edit,new" %}
+    {% include "include/page_toolbar.html" with current_view=object|yesno:"edit,new" view_url="testruns-get" edit_url="testruns-edit" new_url="testruns-new" search_url="testruns-search" edit_perm=perms.testruns.change_testrun add_perm=perms.testruns.add_testrun %}
     <form class="form-horizontal" action="{% if object %}{% url 'testruns-edit' object.pk %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
@@ -206,8 +209,10 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-1 col-lg-1">
-                <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+            <div class="col-md-12 col-lg-12">
+                <a href="{% if object %}{% url 'testruns-get' object.pk %}{% else %}{% url 'core-views-index' %}{% endif %}"
+                    class="btn btn-danger btn-lg">{% trans "Cancel" %}</a>
+                <button type="submit" class="btn btn-primary btn-lg">{% trans "Save" %}</button>
             </div>
         </div>
 
