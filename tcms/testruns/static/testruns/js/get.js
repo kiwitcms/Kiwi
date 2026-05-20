@@ -1,5 +1,5 @@
 import { fetchBugDetails } from '../../../../static/js/bugs'
-import { jsonRPC } from '../../../../static/js/jsonrpc'
+import { jsonRPC, userAutoComplete } from '../../../../static/js/jsonrpc'
 import { propertiesCard } from '../../../../static/js/properties'
 import { tagsCard } from '../../../../static/js/tags'
 import {
@@ -16,11 +16,13 @@ import { initSimpleMDE } from '../../../../static/js/simplemde_security_override
 const allExecutionStatuses = {}
 const allExecutions = {}
 const expandedExecutionIds = []
+const userAutocompleteCache = {}
 const permissions = {
     removeTag: false,
     addComment: false,
     removeComment: false,
-    viewHistoricalTestExecution: false
+    viewHistoricalTestExecution: false,
+    viewUser: false
 }
 const autocompleteCache = {}
 
@@ -42,6 +44,7 @@ export function pageTestrunsGetReadyHandler () {
     permissions.addComment = $('#test_run_pk').data('perm-add-comment') === 'True'
     permissions.removeComment = $('#test_run_pk').data('perm-remove-comment') === 'True'
     permissions.viewHistoricalTestExecution = $('#test_run_pk').data('perm-view-historical-testexecution') === 'True'
+    permissions.viewUser = $('#test_run_pk').data('perm-view-user') === 'True'
 
     const testRunId = $('#test_run_pk').data('pk')
 
@@ -135,7 +138,7 @@ export function pageTestrunsGetReadyHandler () {
 
     $('.change-assignee-bulk').click(function () {
         $(this).parents('.dropdown').toggleClass('open')
-        changeAssigneeBulk()
+        openChangeAssigneeModal()
 
         return false
     })
@@ -189,6 +192,10 @@ export function pageTestrunsGetReadyHandler () {
     })
 
     quickSearchAndAddTestCase(testRunId, addTestCaseToRun, autocompleteCache, { case_status__is_confirmed: true })
+    if (permissions.viewUser) {
+        userAutoComplete('#id-change-assignee', userAutocompleteCache)
+    }
+
     $('#btn-search-cases').click(function () {
         return advancedSearchAndAddTestCases(
             testRunId, 'TestRun.add_case', $(this).attr('href'),
@@ -811,19 +818,35 @@ function reloadRowFor (execution, updateTestRun = false) {
     })
 }
 
-function changeAssigneeBulk () {
+function openChangeAssigneeModal () {
     const selected = selectedCheckboxes()
     if ($.isEmptyObject(selected)) {
         return false
     }
 
-    const enterAssigneeText = $('#test_run_pk').data('trans-enter-assignee-name-or-email')
-    const assignee = prompt(enterAssigneeText)
+    const input = $('#id-change-assignee')
+    input.val('')
+    $('.change-assignee-form').off('submit')
+    $('.change-assignee-form').submit(() => {
+        const assigneeValue = input.val().trim()
+        const selectedUser = userAutocompleteCache[assigneeValue]
+        const assignee = selectedUser ? selectedUser.username : assigneeValue
 
-    if (!assignee) {
+        if (!assignee) {
+            return false
+        }
+
+        changeAssigneeBulk(selected.executionIds, assignee)
+        $('#change-assignee-modal').modal('hide')
         return false
-    }
-    selected.executionIds.forEach(executionId => {
+    })
+
+    $('#change-assignee-modal').modal('show')
+    return true
+}
+
+function changeAssigneeBulk (executionIds, assignee) {
+    executionIds.forEach(executionId => {
         jsonRPC('TestExecution.update', [executionId, { assignee }], execution => {
             reloadRowFor(execution)
         })

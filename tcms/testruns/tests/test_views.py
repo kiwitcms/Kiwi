@@ -248,11 +248,22 @@ class TestRunCasesMenu(BaseCaseRun):
         user_should_have_perm(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertContains(response, self.change_assignee_html, html=True)
+        self.assertContains(response, 'id="change-assignee-modal"')
+        self.assertContains(response, 'data-perm-view-user="False"')
+        self.assertContains(response, _("Enter an exact username, email or user ID"))
 
     def test_change_assignee_without_permission(self):
         remove_perm_from_user(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertNotContains(response, self.change_assignee_html, html=True)
+        self.assertNotContains(response, 'id="change-assignee-modal"')
+
+    def test_change_assignee_with_user_view_permission(self):
+        user_should_have_perm(self.tester, "testruns.change_testexecution")
+        user_should_have_perm(self.tester, "auth.view_user")
+        response = self.client.get(self.url)
+        self.assertContains(response, 'data-perm-view-user="True"')
+        self.assertContains(response, _("Start typing to search for a user"))
 
     def test_update_text_version_with_permission(self):
         user_should_have_perm(self.tester, "testruns.change_testexecution")
