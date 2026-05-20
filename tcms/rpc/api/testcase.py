@@ -6,6 +6,7 @@ from django.db.models.functions import Coalesce
 from django.db.utils import NotSupportedError
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
+from django.utils.dateparse import parse_duration
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
@@ -14,6 +15,44 @@ from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import Property, TestCase, TestCasePlan
+
+
+DURATION_FILTER_FIELDS = ("setup_duration", "testing_duration", "expected_duration")
+
+
+def _duration_filter_value(value):
+    if isinstance(value, timedelta):
+        return value
+
+    if isinstance(value, (int, float)):
+        return timedelta(seconds=value)
+
+    if isinstance(value, str):
+        try:
+            return timedelta(seconds=float(value))
+        except ValueError:
+            duration = parse_duration(value)
+            if duration is not None:
+                return duration
+
+    return value
+
+
+def _normalize_duration_filters(query):
+    normalized_query = {}
+
+    for key, value in query.items():
+        field_name, _separator, lookup = key.partition("__")
+        if field_name not in DURATION_FILTER_FIELDS or lookup == "isnull":
+            normalized_query[key] = value
+            continue
+
+        if lookup == "in":
+            normalized_query[key] = [_duration_filter_value(item) for item in value]
+        else:
+            normalized_query[key] = _duration_filter_value(value)
+
+    return normalized_query
 
 
 @permissions_required("testcases.add_testcasecomponent")
@@ -268,7 +307,15 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    test_case_ids = TestCase.objects.filter(**query).values("id")
+    query = _normalize_duration_filters(query)
+    test_case_ids = (
+        TestCase.objects.annotate(
+            expected_duration=Coalesce("setup_duration", timedelta(0))
+            + Coalesce("testing_duration", timedelta(0))
+        )
+        .filter(**query)
+        .values("id")
+    )
     qs = (
         # note: queries from HistoricalTestCase
         TestCase.history.annotate(  # pylint: disable=no-member

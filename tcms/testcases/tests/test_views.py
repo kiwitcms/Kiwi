@@ -531,6 +531,12 @@ class TestSearchCases(BasePlanCase):
     def test_page_renders(self):
         response = self.client.get(self.search_url, {})
         self.assertContains(response, '<option value="">----------</option>', html=True)
+        self.assertContains(response, 'id="id_setup_duration__gte"')
+        self.assertContains(response, 'id="id_setup_duration__lte"')
+        self.assertContains(response, 'id="id_testing_duration__gte"')
+        self.assertContains(response, 'id="id_testing_duration__lte"')
+        self.assertContains(response, 'id="id_expected_duration__gte"')
+        self.assertContains(response, 'id="id_expected_duration__lte"')
 
     def test_get_parameter_should_be_accepted_for_a_product(self):
         response = self.client.get(self.search_url, {"product": self.product.pk})

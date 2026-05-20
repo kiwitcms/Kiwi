@@ -247,6 +247,41 @@ class TestCaseFilter(APITestCase):
         self.assertEqual(result[0]["testing_duration"], testing_duration)
         self.assertEqual(result[0]["expected_duration"], expected_duration)
 
+    @parameterized.expand(
+        [
+            ("setup_duration_min", "setup_duration__gte", 120),
+            ("setup_duration_max", "setup_duration__lte", "00:02:00"),
+            ("testing_duration_min", "testing_duration__gte", 300),
+            ("testing_duration_max", "testing_duration__lte", "00:05:00"),
+            ("expected_duration_min", "expected_duration__gte", 420),
+            ("expected_duration_max", "expected_duration__lte", "00:07:00"),
+        ]
+    )
+    def test_filter_by_duration_fields(self, _name, lookup, value):
+        matching_case = TestCaseFactory(
+            setup_duration=timedelta(minutes=2),
+            testing_duration=timedelta(minutes=5),
+        )
+        matching_case.save()
+        if lookup.endswith("__gte"):
+            excluded_setup_duration = timedelta(seconds=1)
+            excluded_testing_duration = timedelta(seconds=1)
+        else:
+            excluded_setup_duration = timedelta(minutes=10)
+            excluded_testing_duration = timedelta(minutes=15)
+
+        excluded_case = TestCaseFactory(
+            setup_duration=excluded_setup_duration,
+            testing_duration=excluded_testing_duration,
+        )
+        excluded_case.save()
+
+        result = self.rpc_client.TestCase.filter({lookup: value})
+        result_ids = [testcase["id"] for testcase in result]
+
+        self.assertIn(matching_case.pk, result_ids)
+        self.assertNotIn(excluded_case.pk, result_ids)
+
 
 class TestUpdate(APITestCase):
     non_existing_username = "FakeUsername"

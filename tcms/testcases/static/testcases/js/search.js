@@ -62,6 +62,13 @@ function preProcessData (data, callbackF) {
     })
 }
 
+function updateDurationFilter (selector, filterName, params) {
+    const value = $(selector).val()
+    if (value !== '') {
+        params[filterName] = Number(value)
+    }
+}
+
 export function pageTestcasesSearchReadyHandler () {
     initializeDateTimePicker('#id_before')
     initializeDateTimePicker('#id_after')
@@ -130,6 +137,12 @@ export function pageTestcasesSearchReadyHandler () {
             };
 
             updateParamsToSearchTags('#id_tag', params)
+            updateDurationFilter('#id_setup_duration__gte', 'setup_duration__gte', params)
+            updateDurationFilter('#id_setup_duration__lte', 'setup_duration__lte', params)
+            updateDurationFilter('#id_testing_duration__gte', 'testing_duration__gte', params)
+            updateDurationFilter('#id_testing_duration__lte', 'testing_duration__lte', params)
+            updateDurationFilter('#id_expected_duration__gte', 'expected_duration__gte', params)
+            updateDurationFilter('#id_expected_duration__lte', 'expected_duration__lte', params)
 
             dataTableJsonRPC('TestCase.filter', params, callbackF, preProcessData)
         },
