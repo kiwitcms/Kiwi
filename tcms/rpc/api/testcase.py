@@ -6,6 +6,7 @@ from django.db.models.functions import Coalesce
 from django.db.utils import NotSupportedError
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
+from django.utils.dateparse import parse_duration
 from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
@@ -14,6 +15,49 @@ from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.testcases.models import Property, TestCase, TestCasePlan
+
+_DURATION_FILTER_FIELDS = ("setup_duration", "testing_duration", "expected_duration")
+_DURATION_FILTER_LOOKUPS = ("", "exact", "gt", "gte", "lt", "lte")
+
+
+def _expected_duration_expression():
+    return Coalesce("setup_duration", timedelta(0)) + Coalesce(
+        "testing_duration", timedelta(0)
+    )
+
+
+def _duration_filter_value(value):
+    if isinstance(value, timedelta):
+        return value
+
+    if isinstance(value, (int, float)):
+        return timedelta(seconds=value)
+
+    if isinstance(value, str):
+        value = value.strip()
+        if value == "":
+            return value
+
+        try:
+            return timedelta(seconds=float(value))
+        except ValueError:
+            parsed = parse_duration(value)
+            if parsed is not None:
+                return parsed
+
+    return value
+
+
+def _normalize_duration_filter_query(query):
+    query = query.copy()
+
+    for field in _DURATION_FILTER_FIELDS:
+        for lookup in _DURATION_FILTER_LOOKUPS:
+            key = field if lookup == "" else f"{field}__{lookup}"
+            if key in query:
+                query[key] = _duration_filter_value(query[key])
+
+    return query
 
 
 @permissions_required("testcases.add_testcasecomponent")
@@ -267,13 +311,16 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     """
     if query is None:
         query = {}
+    query = _normalize_duration_filter_query(query)
 
-    test_case_ids = TestCase.objects.filter(**query).values("id")
+    test_cases = TestCase.objects.annotate(
+        expected_duration=_expected_duration_expression()
+    )
+    test_case_ids = test_cases.filter(**query).values("id")
     qs = (
         # note: queries from HistoricalTestCase
         TestCase.history.annotate(  # pylint: disable=no-member
-            expected_duration=Coalesce("setup_duration", timedelta(0))
-            + Coalesce("testing_duration", timedelta(0))
+            expected_duration=_expected_duration_expression()
         )
         .filter(id__in=test_case_ids)
         .values(

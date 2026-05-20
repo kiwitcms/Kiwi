@@ -111,6 +111,8 @@ export function pageTestcasesSearchReadyHandler () {
                 params.executions__run__in = [$('#id_run').val()]
             };
 
+            updateDurationFilterParams(params)
+
             const testPlanIds = selectedPlanIds()
             if (testPlanIds.length) {
                 params.plan__in = testPlanIds
@@ -242,6 +244,33 @@ export function pageTestcasesSearchReadyHandler () {
 
     if (window.location.href.indexOf('product') > -1) {
         $('#id_product').change()
+    }
+}
+
+function updateDurationFilterParams (params) {
+    const filters = {
+        setup_duration: {
+            min: $('#id_setup_duration_min').val(),
+            max: $('#id_setup_duration_max').val()
+        },
+        testing_duration: {
+            min: $('#id_testing_duration_min').val(),
+            max: $('#id_testing_duration_max').val()
+        },
+        expected_duration: {
+            min: $('#id_expected_duration_min').val(),
+            max: $('#id_expected_duration_max').val()
+        }
+    }
+
+    for (const field of Object.keys(filters)) {
+        if (filters[field].min) {
+            params[`${field}__gte`] = filters[field].min
+        }
+
+        if (filters[field].max) {
+            params[`${field}__lte`] = filters[field].max
+        }
     }
 }
 

@@ -247,6 +247,42 @@ class TestCaseFilter(APITestCase):
         self.assertEqual(result[0]["testing_duration"], testing_duration)
         self.assertEqual(result[0]["expected_duration"], expected_duration)
 
+    def test_filter_by_setup_duration_range(self):
+        matching = TestCaseFactory(setup_duration=timedelta(minutes=2))
+        TestCaseFactory(setup_duration=timedelta(seconds=30))
+
+        result = self.rpc_client.TestCase.filter(
+            {"setup_duration__gte": "60", "setup_duration__lte": "180"}
+        )
+
+        self.assertEqual([matching.pk], [testcase["id"] for testcase in result])
+
+    def test_filter_by_testing_duration_range(self):
+        matching = TestCaseFactory(testing_duration=timedelta(minutes=3))
+        TestCaseFactory(testing_duration=timedelta(minutes=5))
+
+        result = self.rpc_client.TestCase.filter(
+            {"testing_duration__gte": "120", "testing_duration__lte": "240"}
+        )
+
+        self.assertEqual([matching.pk], [testcase["id"] for testcase in result])
+
+    def test_filter_by_expected_duration_range(self):
+        matching = TestCaseFactory(
+            setup_duration=timedelta(minutes=1),
+            testing_duration=timedelta(minutes=2),
+        )
+        TestCaseFactory(
+            setup_duration=timedelta(minutes=3),
+            testing_duration=timedelta(minutes=3),
+        )
+
+        result = self.rpc_client.TestCase.filter(
+            {"expected_duration__gte": "180", "expected_duration__lte": "240"}
+        )
+
+        self.assertEqual([matching.pk], [testcase["id"] for testcase in result])
+
 
 class TestUpdate(APITestCase):
     non_existing_username = "FakeUsername"
