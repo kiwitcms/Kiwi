@@ -19,16 +19,14 @@ class Command(BaseCommand):
         if kwargs["interactive"]:
             answer = "n"
 
-        self.stdout.write(
-            """To finish the upgrade process, the following
+        self.stdout.write("""To finish the upgrade process, the following
 management commands will be executed:
 
 migrate
 refresh_permissions
 delete_stale_attachments
 delete_stale_comments
-            """
-        )
+            """)
 
         self.stdout.write("\n1. Applying migrations:")
         call_command(

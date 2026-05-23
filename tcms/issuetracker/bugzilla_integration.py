@@ -40,7 +40,7 @@ class Bugzilla(base.IssueTrackerType):
         if not os.path.exists(self._bugzilla_cache_dir):
             os.makedirs(self._bugzilla_cache_dir, 0o700)
 
-        (api_username, api_password) = self.rpc_credentials
+        api_username, api_password = self.rpc_credentials
 
         return bugzilla.Bugzilla(
             self.bug_system.api_url,

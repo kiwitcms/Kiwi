@@ -30,8 +30,7 @@ class NewBugForm(forms.ModelForm):
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,
-        initial=_(
-            """Description of problem:
+        initial=_("""Description of problem:
 
 
 How often reproducible:
@@ -48,8 +47,7 @@ Actual results:
 Expected results:
 
 
-Additional info:"""
-        ),
+Additional info:"""),
     )
 
     def populate(self, product_id=None):

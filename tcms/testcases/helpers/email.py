@@ -17,8 +17,7 @@ def email_case_created(case):
     }
 
     body = (
-        _(
-            """Test case %(pk)d has been created.
+        _("""Test case %(pk)d has been created.
 
 ### Basic information ###
 Summary: %(summary)s
@@ -29,8 +28,7 @@ Priority: %(priority)s
 
 Default tester: %(default_tester)s
 Text:
-%(text)s"""
-        )
+%(text)s""")
         % {
             "pk": case.pk,
             "summary": case.summary,
