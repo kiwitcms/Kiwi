@@ -70,14 +70,12 @@ class TestTestExecutionStatusAdmin(LoggedInTestCase):
         )
         self.assertContains(
             response,
-            (
-                """
+            ("""
             <span style="background-color: #92d400; height: 20px; display: block;
                          color: black; font-weight: bold">
                 #92d400
             </span>
-            """
-            ),
+            """),
         )
 
     def test_changelist_view_icon_column(self):
@@ -86,11 +84,9 @@ class TestTestExecutionStatusAdmin(LoggedInTestCase):
         )
         self.assertContains(
             response,
-            (
-                """
+            ("""
             <span class="fa fa-check-circle-o" style="font-size: 18px; color: #92d400;"></span>
-            """
-            ),
+            """),
         )
 
     @parameterized.expand(

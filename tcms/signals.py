@@ -20,6 +20,7 @@ altering the following setting::
 
     INSTALLED_APPS += ['my_custom_app']
 """
+
 from django.db.models import ObjectDoesNotExist
 from django.dispatch import Signal, receiver
 from django.utils.translation import gettext_lazy as _
