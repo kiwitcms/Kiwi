@@ -1,8 +1,9 @@
-# Copyright (c) 2019-2025 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2026 Alexander Todorov <atodorov@otb.bg>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-import pkg_resources
+from importlib.metadata import entry_points
+
 from django.conf import settings
 from django.test import TestCase
 from django.urls.resolvers import URLResolver
@@ -19,8 +20,12 @@ class PluginDiscoveryTestCase(TestCase):
         Given there are some plugins installed
         Then validate the plugin module is added to INSTALLED_APPS
         """
-        for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
-            self.assertIn(plugin.module_name, settings.INSTALLED_APPS)
+        assertions_count = 0
+        for plugin in entry_points().select(group="kiwitcms.plugins"):
+            self.assertIn(plugin.value, settings.INSTALLED_APPS)
+            assertions_count += 1
+
+        self.assertGreater(assertions_count, 0)
 
 
 class UrlDiscoveryTestCase(TestCase):
@@ -31,12 +36,11 @@ class UrlDiscoveryTestCase(TestCase):
 
             - ^<plugin-name>/ includes(<plugin-module-urls>)
         """
-        for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
+        for plugin in entry_points().select(group="kiwitcms.plugins"):
             for url_resolver in urlpatterns:
                 if isinstance(url_resolver, URLResolver) and (
                     str(url_resolver.pattern) == f"^{plugin.name}/"
-                    and url_resolver.urlconf_module.__name__
-                    == plugin.module_name + ".urls"
+                    and url_resolver.urlconf_module.__name__ == f"{plugin.value}.urls"
                 ):
                     return
 

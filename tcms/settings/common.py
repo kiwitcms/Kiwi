@@ -5,8 +5,8 @@ import pathlib
 import sys
 import tempfile
 from importlib import import_module
+from importlib.metadata import entry_points
 
-import pkg_resources
 from django.contrib.messages import constants as messages
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -382,8 +382,8 @@ INSTALLED_APPS = TENANT_APPS + [
     "tcms.rpc",
 ]
 
-for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
-    INSTALLED_APPS.append(plugin.module_name)
+for plugin in entry_points().select(group="kiwitcms.plugins"):
+    INSTALLED_APPS.append(plugin.value)
 
 # this is the main navigation menu
 MENU_ITEMS = [
@@ -450,8 +450,8 @@ MENU_ITEMS = [
 ]
 
 # last element is always MORE so we can easily extend & override it
-for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
-    plugin_menu = import_module(f"{plugin.module_name}.menu")
+for plugin in entry_points().select(group="kiwitcms.plugins"):
+    plugin_menu = import_module(f"{plugin.value}.menu")
     MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)
 
 # redefine the help menu in the navigation bar
