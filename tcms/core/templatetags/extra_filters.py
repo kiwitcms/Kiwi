@@ -3,10 +3,10 @@ Custom template tag filters.
 """
 
 from importlib import import_module
+from importlib.metadata import entry_points
 
 import bleach
 import markdown
-import pkg_resources
 from bleach_allowlist import markdown_attrs, markdown_tags, print_attrs, print_tags
 from django import template
 from django.contrib.messages import constants as messages
@@ -44,9 +44,9 @@ def markdown2html(md_str):
         "markdown.extensions.tables",
         "tcms.utils.markdown",
     ]
-    for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
+    for plugin in entry_points().select(group="kiwitcms.plugins"):
         try:
-            module_name = f"{plugin.module_name}.markdown"
+            module_name = f"{plugin.value}.markdown"
             import_module(module_name)
             extensions.append(module_name)
         except ModuleNotFoundError:

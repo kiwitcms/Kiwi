@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from importlib import import_module
+from importlib.metadata import entry_points
 
-import pkg_resources
 from attachments import urls as attachments_urls
 from captcha import urls as captcha_urls
 from django.conf import settings
@@ -59,8 +59,8 @@ if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
     urlpatterns.append(re_path(r"^bugs/", include(bugs_urls)))
 
 
-for plugin in pkg_resources.iter_entry_points("kiwitcms.plugins"):
-    plugin_urls = import_module(f"{plugin.module_name}.urls")
+for plugin in entry_points().select(group="kiwitcms.plugins"):
+    plugin_urls = import_module(f"{plugin.value}.urls")
     urlpatterns.append(re_path(f"^{plugin.name}/", include(plugin_urls)))
 
 
