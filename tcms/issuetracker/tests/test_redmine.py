@@ -150,7 +150,7 @@ class TestRedmineIntegration(APITestCase):
         )
 
     def test_non_overriden_credentials_are_returned(self):
-        (rpc_username, rpc_password) = self.integration.rpc_credentials
+        rpc_username, rpc_password = self.integration.rpc_credentials
 
         # admin:admin as defined above
         self.assertEqual(rpc_username, "admin")
@@ -160,7 +160,7 @@ class TestRedmineIntegration(APITestCase):
         EXTERNAL_ISSUE_RPC_CREDENTIALS="tcms.issuetracker.tests.redmine_post_processing.rpc_creds"
     )
     def test_overriden_credentials_are_returned(self):
-        (rpc_username, rpc_password) = self.integration.rpc_credentials
+        rpc_username, rpc_password = self.integration.rpc_credentials
 
         # not admin:admin as defined above
         self.assertEqual(rpc_username, "tester")
@@ -170,7 +170,7 @@ class TestRedmineIntegration(APITestCase):
         EXTERNAL_ISSUE_RPC_CREDENTIALS="tcms.issuetracker.tests.redmine_post_processing.rpc_no_creds"
     )
     def test_overriden_credentials_fallback(self):
-        (rpc_username, rpc_password) = self.integration.rpc_credentials
+        rpc_username, rpc_password = self.integration.rpc_credentials
 
         # admin:admin as defined above b/c rpc_no_creds() returns None
         self.assertEqual(rpc_username, "admin")
