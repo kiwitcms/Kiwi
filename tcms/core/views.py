@@ -6,6 +6,7 @@ import time
 from django import http
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
 from django.db import DEFAULT_DB_ALIAS, connections
@@ -177,7 +178,22 @@ class IterOpen(subprocess.Popen):  # pylint: disable=missing-permission-required
 class InitDBView(TemplateView):  # pylint: disable=missing-permission-required
     template_name = "initdb.html"
 
+    def get(self, request, *args, **kwargs):
+        try:
+            _ = get_user_model().objects.first()
+            return HttpResponseRedirect("/")
+        except Exception:  # nosec:B110:try_except_pass pylint: disable=broad-except
+            pass
+
+        return super().get(request, *args, **kwargs)
+
     def post(self, request):  # pylint: disable=no-self-use
+        try:
+            _ = get_user_model().objects.first()
+            return HttpResponseRedirect("/")
+        except Exception:  # nosec:B110:try_except_pass pylint: disable=broad-except
+            pass
+
         # Default production installation
         manage_path = "/Kiwi/manage.py"
         if not os.path.exists(manage_path):
