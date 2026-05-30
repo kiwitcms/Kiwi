@@ -72,24 +72,20 @@ similar_strings:
 bandit:
 	bandit -r *.py tcms/ kiwi_lint/ tcms_settings_dir/
 
+.PHONY: build-pkg
+build-pkg:
+	rm -rf dist/
+	docker build --output type=local,dest=dist/ --target pkg-dist .
+
 .PHONY: upload-pkg
-upload-pkg:
+upload-pkg: build-pkg
 	test -n "$(TWINE_PASSWORD)" || exit 2
 	curl -F p1=@dist/kiwitcms-$(VERSION).tar.gz -F p1_language=python https://$(TWINE_PASSWORD)@push.fury.io/kiwitcms/
 	curl -F p1=@dist/kiwitcms-$(VERSION)-py3-none-any.whl -F p1_language=python https://$(TWINE_PASSWORD)@push.fury.io/kiwitcms/
 
 .PHONY: docker-image
 docker-image:
-	sudo rm -rf dist/
-	docker pull registry.access.redhat.com/ubi9-minimal
-	docker build -t kiwitcms/buildroot -f Dockerfile.buildroot .
-	docker run --rm --security-opt label=disable \
-	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \
-	            -r /Kiwi/dist/ /host/
-	docker run --rm --security-opt label=disable \
-	            -v `pwd`:/host --entrypoint /bin/cp kiwitcms/buildroot \
-	            -r /venv /host/dist/
-	docker build -t pub.kiwitcms.eu/kiwitcms/kiwi:latest .
+	docker build --no-cache -t pub.kiwitcms.eu/kiwitcms/kiwi:latest .
 
 
 .PHONY: docker-manifest

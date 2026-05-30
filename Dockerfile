@@ -1,5 +1,5 @@
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
-FROM registry.access.redhat.com/ubi9-minimal
+FROM registry.access.redhat.com/ubi9-minimal AS runtime-base
 
 RUN microdnf -y module enable nginx:1.26 && \
     microdnf -y module enable nodejs:22 && \
@@ -8,23 +8,54 @@ RUN microdnf -y module enable nginx:1.26 && \
     microdnf -y --nodocs update && \
     microdnf clean all
 
+ENV PATH=/venv/bin:${PATH} \
+    VIRTUAL_ENV=/venv
+
+WORKDIR /Kiwi
+
+
+FROM runtime-base AS buildroot
+RUN microdnf -y --nodocs install python3.12-devel gzip make \
+    mariadb-connector-c-devel postgresql-devel libjpeg-turbo-devel \
+    libffi-devel gcc gettext npm unzip which rust cargo findutils
+
+COPY ./requirements/mariadb.pc /usr/lib64/pkgconfig/mariadb.pc
+COPY . /Kiwi/
+
+RUN python3.12 -m venv /venv && \
+    pip3 install --no-cache-dir --upgrade pip setuptools twine wheel && \
+    pip3 install --no-cache-dir -r requirements/mariadb.txt -r requirements/postgres.txt
+
+RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" manage.py
+
+# compile tcms/static/js/bundle.js explicitly
+RUN pushd tcms/ && npm install --include=dev && ./node_modules/.bin/webpack && popd
+
+RUN ./tests/check-build && \
+    pip3 install --no-cache-dir dist/kiwitcms-*.tar.gz
+
+
+FROM scratch AS pkg-dist
+COPY --from=buildroot /Kiwi/dist/ /
+
+
+FROM runtime-base AS kiwitcms
+
 HEALTHCHECK CMD curl --fail -k -H "Referer: healthcheck" https://127.0.0.1:8443/accounts/login/
+
 EXPOSE 8080
 EXPOSE 8443
+
 COPY ./httpd-foreground /httpd-foreground
 CMD /httpd-foreground
 
-ENV PATH=/venv/bin:${PATH} \
-    VIRTUAL_ENV=/venv      \
-    LC_ALL=en_US.UTF-8     \
+ENV LC_ALL=en_US.UTF-8     \
     LANG=en_US.UTF-8       \
     LANGUAGE=en_US.UTF-8
 
-# copy virtualenv dir which has been built inside the kiwitcms/buildroot container
-# this helps keep -devel dependencies outside of this image
-COPY ./dist/venv/ /venv
-
+COPY --from=buildroot /venv/ /venv
 COPY ./manage.py /Kiwi/
+
 # create directories so we can properly set ownership for them
 RUN mkdir -p /Kiwi/ssl /Kiwi/static /Kiwi/uploads /Kiwi/etc/cron.jobs
 COPY ./etc/*.conf /Kiwi/etc/
@@ -38,6 +69,7 @@ RUN /usr/bin/sscg -v -f \
     --ca-file       /Kiwi/static/ca.crt     \
     --cert-file     /Kiwi/ssl/localhost.crt \
     --cert-key-file /Kiwi/ssl/localhost.key
+
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py && \
     ln -s /Kiwi/ssl/localhost.crt /etc/pki/tls/certs/localhost.crt && \
     ln -s /Kiwi/ssl/localhost.key /etc/pki/tls/private/localhost.key
