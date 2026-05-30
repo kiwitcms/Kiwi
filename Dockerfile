@@ -1,7 +1,7 @@
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
 FROM registry.access.redhat.com/ubi9-minimal
 
-RUN microdnf -y module enable nginx:1.22 && \
+RUN microdnf -y module enable nginx:1.26 && \
     microdnf -y module enable nodejs:22 && \
     microdnf -y --nodocs install python3.12 mariadb-connector-c libpq \
     nginx-core sscg tar glibc-langpack-en && \
