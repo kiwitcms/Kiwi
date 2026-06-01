@@ -2,6 +2,7 @@ default: help
 
 VERSION = $(shell python -m tcms)
 FLAKE8_EXCLUDE=.git
+RUNTIME_BASE := $(or $(RUNTIME_BASE), "quay.io/centos/centos:stream10")
 
 .PHONY: flake8
 flake8:
@@ -85,7 +86,9 @@ upload-pkg: build-pkg
 
 .PHONY: docker-image
 docker-image:
-	docker build --no-cache -t pub.kiwitcms.eu/kiwitcms/kiwi:latest .
+	docker build --no-cache \
+	    --build-arg RUNTIME_BASE=$(RUNTIME_BASE) \
+	    -t pub.kiwitcms.eu/kiwitcms/kiwi:latest .
 
 
 .PHONY: docker-manifest
