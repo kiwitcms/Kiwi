@@ -1,12 +1,12 @@
 # checkov:skip=CKV_DOCKER_7:Ensure the base image uses a non latest version tag
-FROM registry.access.redhat.com/ubi9-minimal AS runtime-base
+ARG RUNTIME_BASE=quay.io/centos/centos:stream10
+FROM $RUNTIME_BASE AS runtime-base
 
-RUN microdnf -y module enable nginx:1.26 && \
-    microdnf -y module enable nodejs:22 && \
-    microdnf -y --nodocs install python3.12 mariadb-connector-c libpq \
+RUN ln -s /usr/bin/microdnf /usr/bin/dnf 2>/dev/null || echo -n && \
+    dnf -y --nodocs install python3.12 mariadb-connector-c libpq \
     nginx-core sscg tar glibc-langpack-en && \
-    microdnf -y --nodocs update && \
-    microdnf clean all
+    dnf -y --nodocs update && \
+    dnf clean all
 
 ENV PATH=/venv/bin:${PATH} \
     VIRTUAL_ENV=/venv
@@ -15,9 +15,9 @@ WORKDIR /Kiwi
 
 
 FROM runtime-base AS buildroot
-RUN microdnf -y --nodocs install python3.12-devel gzip make \
+RUN dnf -y --nodocs install python3.12-devel gzip make \
     mariadb-connector-c-devel postgresql-devel libjpeg-turbo-devel \
-    libffi-devel gcc gettext npm unzip which rust cargo findutils
+    libffi-devel gcc gettext nodejs22-npm unzip which rust cargo findutils
 
 COPY ./requirements/mariadb.pc /usr/lib64/pkgconfig/mariadb.pc
 COPY . /Kiwi/

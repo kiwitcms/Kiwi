@@ -10,6 +10,8 @@ jobs:
       # https://circleci.com/developer/machine/image/ubuntu-2404
       image: ubuntu-2404:2025.09.1
     resource_class: arm.medium
+    environment:
+      RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
@@ -30,11 +32,16 @@ jobs:
             pip3 install -r requirements/devel.txt
             make test-docker-image
 
+            echo "+++++ Docker images +++++"
+            docker images
+
   aarch64-build-and-push-docker-image:
     machine:
       # https://circleci.com/developer/machine/image/ubuntu-2404
       image: ubuntu-2404:2025.09.1
     resource_class: arm.medium
+    environment:
+      RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
