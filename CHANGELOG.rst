@@ -1,6 +1,92 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.0 (04 Jun 2026)
+----------------------------
+
+.. important::
+
+    This is a major version release which includes security related updates
+    several improvements, backwards incompatible changes and new translations.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 5.2.12 to 5.2.15
+- Upadate pillow from 11.3.0 to 12.1.1
+- Update node_modules/fast-uri from 3.1.0 to 3.1.2
+- Update node_modules/flatted from 3.3.3 to 3.4.2
+- Make /init-db/ page a no-op if already executed once. Fixes
+  `CVE-2026-49292 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-v8rp-6xcv-fwgh>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Python runtime from 3.11 to 3.12
+- Update Node.js runtime from 16 to 22
+- Update Nginx runtime from 1.22 to 1.26
+- Update django-grappelli from 4.0.3 to 5.0.0
+- Update django-guardian from 3.3.0 to 3.3.1
+- Update django-tree-queries from 0.23.1 to 0.24.0
+- Update psycopg from 3.3.3 to 3.3.4
+- Update pygithub from 2.8.1 to 2.9.1
+- Update pygments from 2.19.2 to 2.20.0
+- Update python-gitlab from 8.1.0 to 8.4.0
+- Update tzdata from 2025.3 to 2026.2
+- Update node_modules/pdfmake from 0.3.6 to 0.3.7
+- Update node_modules/webpack-cli from 7.0.1 to 7.0.2
+- Update node_modules/webpack from 5.105.4 to 5.106.0
+- Display ``Last modified`` column in TestCase Search page. Closes
+  `Issue #4140 <https://github.com/kiwitcms/Kiwi/issues/4140>`_
+- Remove requirement for ``setuptools<82``. Fixes
+  `Issue #4299 <https://github.com/kiwitcms/Kiwi/issues/4299>`_
+
+
+Removals
+~~~~~~~~
+
+- Remove Bitbucket Issues integration because Atlassian has announced the
+  removal of this feature
+
+
+Release
+~~~~~~~
+
+- ``pub.kiwitcms.eu/kiwitcms/kiwi`` container is now a rolling release
+- PyPI packages are uploaded to
+  `pkg.kiwitcms.eu <https://kiwitcms.org/packages/>`_. Closes
+  `Issue #3376 <https://github.com/kiwitcms/Kiwi/issues/3376>`_
+
+
+API
+~~~
+
+- API method ``TestCase.filter()`` now returns the ``history_date`` field
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update black from 25.12.0 to 26.5.1
+- Update locust from 2.43.3 to 2.44.1
+- Update codecov/codecov-action from 5 to 6
+- Merge Dockerfile.buildroot with Dockerfile. Closes
+  `Issue #3496 <https://github.com/kiwitcms/Kiwi/issues/3496>`_
+- Replace ``pkg_resources`` discovery with ``importlib.metadata``
+- GitLab Issues are now called Work Items
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Japanese translation <https://crowdin.com/project/kiwitcms/ja#>`_
+- Updated `Korean translation <https://crowdin.com/project/kiwitcms/ko#>`_
+
+
+
 Kiwi TCMS 15.4 (17 Mar 2026)
 ----------------------------
 
