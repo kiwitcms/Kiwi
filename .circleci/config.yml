@@ -8,7 +8,7 @@ jobs:
   aarch64-test-docker-image:
     machine:
       # https://circleci.com/developer/machine/image/ubuntu-2404
-      image: ubuntu-2404:2025.09.1
+      image: ubuntu-2404:2026.05.1
     resource_class: arm.medium
     environment:
       RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
@@ -38,7 +38,7 @@ jobs:
   aarch64-build-and-push-docker-image:
     machine:
       # https://circleci.com/developer/machine/image/ubuntu-2404
-      image: ubuntu-2404:2025.09.1
+      image: ubuntu-2404:2026.05.1
     resource_class: arm.medium
     environment:
       RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
