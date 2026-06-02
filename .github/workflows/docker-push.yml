@@ -1,0 +1,40 @@
+name: docker-push
+
+on:
+  push:
+    branches: master
+
+permissions: read-all
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python-version: [3.12]
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build for ${{ github.event.ref }}
+        run: |
+            make docker-image
+
+            echo "+++++ Docker images +++++"
+            docker images
+
+      - name: Push docker image for ${{ github.event.ref }}
+        run: |
+            # tag so we can push to private container registry
+            docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest kiwitcms/kiwi:latest
+
+            echo "+++++ Docker images +++++"
+            docker images
+
+            echo "${{ secrets.DOCKER_PUSH_TOKEN }}" | docker login -u="${{ secrets.DOCKER_PUSH_USERNAME }}" --password-stdin
+            docker push kiwitcms/kiwi:latest
+            docker logout

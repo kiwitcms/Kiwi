@@ -1,4 +1,4 @@
-name: docker
+name: docker-tag
 
 on:
   push:
@@ -36,20 +36,15 @@ jobs:
         run: |
             make upload-pkg
 
-      - name: Push docker images for ${{ github.event.ref }}
+      - name: Push docker image for ${{ github.event.ref }}
         run: |
             VERSION=$(python -m tcms)
 
             # tag so we can push to private container registry
-            docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest kiwitcms/kiwi:latest
             docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
 
             echo "+++++ Docker images +++++"
             docker images
-
-            echo "${{ secrets.DOCKER_PUSH_TOKEN }}" | docker login -u="${{ secrets.DOCKER_PUSH_USERNAME }}" --password-stdin
-            docker push kiwitcms/kiwi:latest
-            docker logout
 
             echo "${{ secrets.QUAY_PUSH_TOKEN }}" | docker login -u="${{ secrets.QUAY_PUSH_USERNAME }}" --password-stdin quay.io
             docker push quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
