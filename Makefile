@@ -76,7 +76,7 @@ bandit:
 .PHONY: build-pkg
 build-pkg:
 	rm -rf dist/
-	docker build --output type=local,dest=dist/ --target pkg-dist .
+	docker build --build-arg RUNTIME_BASE=$(RUNTIME_BASE) --output type=local,dest=dist/ --target pkg-dist .
 
 .PHONY: upload-pkg
 upload-pkg: build-pkg
