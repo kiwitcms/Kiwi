@@ -1,0 +1,5 @@
+{
+  "features": {
+    "containerd-snapshotter": false
+  }
+}
