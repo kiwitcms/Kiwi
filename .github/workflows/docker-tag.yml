@@ -9,6 +9,8 @@ permissions: read-all
 
 jobs:
   build_and_push:
+    env:
+      RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -22,8 +24,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build for ${{ github.event.ref }}
-        env:
-          RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
         run: |
             make docker-image
 
