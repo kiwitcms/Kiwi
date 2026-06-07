@@ -29,6 +29,11 @@ jobs:
                 sudo make -C beakerlib/ install
             fi
 
+            sudo cp .circleci/daemon.json /etc/docker/
+            sudo systemctl restart docker
+            docker --version
+            docker info -f '{{ .DriverStatus }}'
+
             pip3 install -r requirements/devel.txt
             make test-docker-image
 
@@ -53,6 +58,11 @@ jobs:
             python3 --version | grep "3\."
 
             VERSION=$(python3 -m tcms)
+
+            sudo cp .circleci/daemon.json /etc/docker/
+            sudo systemctl restart docker
+            docker --version
+            docker info -f '{{ .DriverStatus }}'
 
             make docker-image
 
