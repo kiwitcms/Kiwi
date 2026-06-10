@@ -111,6 +111,9 @@ class Confirm(RedirectView):  # pylint: disable=missing-permission-required
 
     def get_redirect_url(self, *args, **kwargs):
         self.url = self.request.GET.get("next", reverse("core-views-index"))
+        if not self.url.startswith("/"):
+            self.url = reverse("core-views-index")
+
         activation_key = kwargs["activation_key"]
         try:
             _activation_key = UserActivationKey.objects.select_related("user").get(
