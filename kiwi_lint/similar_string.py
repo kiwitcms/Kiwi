@@ -41,6 +41,30 @@ class SimilarStringChecker(BaseChecker):
                     )
 
     @staticmethod
+    def is_plural_form(first, second):
+        """
+        Return True if one of the strings is the regular English plural form
+        of the other, e.g. "Product"/"Products" or "status"/"statuses".
+
+        Such pairs are intentionally different and translators expect both
+        the singular and the plural, so they should not be reported as
+        similar strings.
+        """
+        singular, plural = sorted(
+            (first.strip().lower(), second.strip().lower()), key=len
+        )
+        if not singular or singular == plural:
+            return False
+
+        # cat -> cats, box -> boxes
+        if plural in (singular + "s", singular + "es"):
+            return True
+        # category -> categories
+        if singular.endswith("y") and plural == singular[:-1] + "ies":
+            return True
+        return False
+
+    @staticmethod
     def clean_string(text):
         """
         This method removes the operators and other punctuations
@@ -86,6 +110,10 @@ class SimilarStringChecker(BaseChecker):
         similar_string, similarity = self.check_similar_string(translation_string)
 
         if similar_string:
+            # plural forms of an already seen string are expected to differ
+            if self.is_plural_form(translation_string, similar_string):
+                self._dict_of_strings[translation_string] = True
+                return
             if isinstance(node, str):
                 error_message["node"] = astroid.Module(node, file=node)
             else:
