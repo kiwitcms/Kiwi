@@ -24,6 +24,6 @@
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-node": "11.1.0",
     "webpack": "5.107.2",
-    "webpack-cli": "7.0.2"
+    "webpack-cli": "7.0.3"
   }
 }
