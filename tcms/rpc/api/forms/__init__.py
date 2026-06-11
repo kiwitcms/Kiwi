@@ -16,7 +16,7 @@ class DateTimeFieldWithDefault(DateTimeField):
         if value in self.empty_values:
             value = timezone.now()
 
-        return super().to_python(value)
+        return super().to_python(value)  # pylint: disable=no-member
 
 
 class UpdateModelFormMixin:  # pylint: disable=too-few-public-methods
