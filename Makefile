@@ -67,7 +67,7 @@ pylint:
 
 .PHONY: similar_strings
 similar_strings:
-	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=kiwi_lint --load-plugins=pylint.extensions.no_self_use -d all -e similar-string tcms/ tcms_settings_dir/
+	PYTHONPATH=.:./tcms/ DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pylint --load-plugins=kiwi_lint --load-plugins=pylint_django --load-plugins=pylint.extensions.no_self_use -d all -e similar-string tcms/ tcms_settings_dir/
 
 .PHONY: bandit
 bandit:
