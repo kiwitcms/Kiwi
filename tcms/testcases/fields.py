@@ -37,7 +37,7 @@ class MultipleEmailField(EmailField):
 
         for email_addr in email_addrs:
             try:
-                super_instance.run_validators(email_addr)
+                super_instance.run_validators(email_addr)  # pylint: disable=no-member
             except ValidationError:
                 invalid_email_addrs.append(email_addr)
             else:
