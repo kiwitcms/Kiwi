@@ -35,7 +35,7 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
 class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
     class Meta:
         model = TestExecution
-        fields = "__all__"
+        exclude = ("tag",)  # pylint: disable=modelform-uses-exclude
 
     assignee = UserField()
     tested_by = UserField()
@@ -46,7 +46,7 @@ class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
 class NewExecutionForm(forms.ModelForm):
     class Meta:
         model = TestExecution
-        fields = "__all__"
+        exclude = ("tag",)  # pylint: disable=modelform-uses-exclude
 
     assignee = UserField(required=False)
     tested_by = UserField(required=False)
