@@ -89,6 +89,10 @@ class SimilarStringChecker(BaseChecker):
 
     @utils.only_required_for_messages("similar-string")
     def visit_call(self, node):
+        # don't inspect test modules, i.e. files named test_*.py
+        module_file = node.root().file
+        if module_file and os.path.basename(module_file).startswith("test_"):
+            return
         if not (
             isinstance(node.func, astroid.Name)
             and node.func.name in ("_", "gettext_lazy")
