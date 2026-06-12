@@ -273,6 +273,10 @@ class TestExecution(models.Model, UrlMixin):
     status = models.ForeignKey(TestExecutionStatus, on_delete=models.CASCADE)
     build = models.ForeignKey("management.Build", on_delete=models.CASCADE)
 
+    tag = models.ManyToManyField(
+        "management.Tag", through="testruns.TestExecutionTag", related_name="execution"
+    )
+
     def __str__(self):
         return f"{self.pk}: {self.case_id}"
 
@@ -303,6 +307,13 @@ class TestExecutionProperty(abstract.Property):
 class TestRunTag(models.Model):
     tag = models.ForeignKey("management.Tag", on_delete=models.CASCADE)
     run = models.ForeignKey(TestRun, related_name="tags", on_delete=models.CASCADE)
+
+
+class TestExecutionTag(models.Model):
+    tag = models.ForeignKey("management.Tag", on_delete=models.CASCADE)
+    execution = models.ForeignKey(
+        TestExecution, related_name="tags", on_delete=models.CASCADE
+    )
 
 
 class TestRunCC(models.Model):
