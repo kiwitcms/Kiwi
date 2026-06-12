@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2026-06-12 18:13\n"
+"PO-Revision-Date: 2026-06-12 18:32\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -70,7 +70,7 @@ msgstr "Berichterstatter"
 #: tcms/testruns/templates/testruns/get.html:215
 #: tcms/testruns/templates/testruns/get.html:275
 msgid "Assignee"
-msgstr "Beauftragter"
+msgstr "Zuständiger"
 
 #: tcms/bugs/templates/bugs/get.html:75
 #: tcms/bugs/templates/bugs/mutable.html:45
@@ -516,18 +516,18 @@ msgstr "Benutzer"
 
 #: tcms/kiwi_auth/admin.py:62
 msgid "Deactivate selected accounts"
-msgstr ""
+msgstr "Ausgewählte Konten deaktivieren"
 
 #: tcms/kiwi_auth/admin.py:69
 #, python-format
 msgid "Account '%s' was deactivated"
-msgstr ""
+msgstr "Das Konto '%s' wurde deaktiviert"
 
 #: tcms/kiwi_auth/admin.py:103
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr "Bitte bestätigen Sie die E-Mail-Adresse Ihres Kiwi-Tcms-Kontos"
+msgstr "Bitte bestätigen Sie die E-Mail-Adresse Ihres Kiwi-TCMS-Kontos"
 
 #: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
@@ -539,7 +539,7 @@ msgstr "Berechtigungen"
 
 #: tcms/kiwi_auth/admin.py:208
 msgid "This is the last superuser, it cannot be deleted!"
-msgstr ""
+msgstr "Dies ist der letzte Superuser, er kann nicht gelöscht werden!"
 
 #: tcms/kiwi_auth/forms.py:28
 msgid "A user with that email already exists."
@@ -547,7 +547,7 @@ msgstr "Ein Benutzer mit dieser E-Mail-Adresse ist bereits vorhanden."
 
 #: tcms/kiwi_auth/forms.py:48
 msgid "Please confirm your Kiwi TCMS account email address"
-msgstr ""
+msgstr "Bitte bestätigen Sie die E-Mail-Adresse Ihres Kiwi-TCMS-Kontos"
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
@@ -563,11 +563,15 @@ msgid "After clicking the 'Save' button your account will become <strong>inactiv
 "Double check that your new email address is <strong>entered correctly</strong> otherwise\n"
 "<strong>you may be left locked out</strong> of your account!\n"
 "After following the activation link you will be able to log in as usual!"
-msgstr ""
+msgstr "Nachdem Sie auf die Schaltfläche „Speichern“ geklickt haben, wird Ihr Konto <strong>deaktiviert</strong>\n"
+"und Sie werden <strong>abgemeldet</strong>! Eine Bestätigungs-E-Mail wird an die neu angegebene Adresse gesendet!<br>\n"
+"Überprüfen Sie bitte noch einmal, ob Ihre neue E-Mail-Adresse <strong>korrekt eingegeben</strong> wurde, da Sie sonst\n"
+"<strong>möglicherweise keinen Zugriff mehr</strong> auf Ihr Konto haben!\n"
+"Nachdem Sie dem Aktivierungslink gefolgt sind, können Sie sich wie gewohnt anmelden!"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:51
 msgid "NOT yourself"
-msgstr ""
+msgstr "NICHT du selbst"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:58
 #: tcms/templates/registration/password_reset_form.html:16
@@ -583,7 +587,7 @@ msgstr "Bestätige"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:71
 msgid "Please type! Do not copy-and-paste value from previous field!"
-msgstr ""
+msgstr "Bitte eingeben! Bitte keinen Wert aus dem vorherigen Feld kopieren und einfügen!"
 
 #: tcms/kiwi_auth/views.py:70
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -613,23 +617,23 @@ msgstr "Dein Konto wurde erfolgreich aktiviert"
 #: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
 #, python-format
 msgid "You are viewing records from tenant '%s'"
-msgstr ""
+msgstr "Sie sehen gerade die Datensätze des Mandaten '%s'"
 
 #: tcms/kiwi_auth/views.py:256
 msgid "Email address has been reset, please check inbox for further instructions"
-msgstr ""
+msgstr "Die E-Mail-Adresse wurde zurückgesetzt. Bitte überprüfen Sie Ihren Posteingang für weitere Anweisungen"
 
 #: tcms/management/models.py:20
 msgid "Classification"
-msgstr ""
+msgstr "Klassifikation"
 
 #: tcms/management/models.py:21
 msgid "Classifications"
-msgstr ""
+msgstr "Klassifikationen"
 
 #: tcms/management/models.py:57
 msgid "Products"
-msgstr ""
+msgstr "Produkte"
 
 #: tcms/management/models.py:77
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:32
@@ -671,7 +675,7 @@ msgstr "Komponenten"
 
 #: tcms/management/models.py:126
 msgid "Versions"
-msgstr ""
+msgstr "Versionen"
 
 #: tcms/management/models.py:172
 msgid "Builds"
@@ -741,7 +745,7 @@ msgstr "Suche Testlauf"
 
 #: tcms/settings/common.py:412
 msgid "Search Test Executions"
-msgstr ""
+msgstr "Testausführungen suchen"
 
 #: tcms/settings/common.py:421
 msgid "TELEMETRY"
@@ -757,7 +761,7 @@ msgstr "Aufschlüsselung"
 
 #: tcms/settings/common.py:428
 msgid "Execution"
-msgstr ""
+msgstr "Ausführung"
 
 #: tcms/settings/common.py:431
 #: tcms/testruns/templates/testruns/mutable.html:177
@@ -766,7 +770,7 @@ msgstr "Matrix"
 
 #: tcms/settings/common.py:432
 msgid "Trends"
-msgstr ""
+msgstr "Trends"
 
 #: tcms/settings/common.py:435
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
@@ -787,7 +791,7 @@ msgstr "Alles andere"
 
 #: tcms/settings/common.py:449
 msgid "MORE"
-msgstr ""
+msgstr "MEHR"
 
 #: tcms/settings/common.py:459
 msgid "Report an Issue"
@@ -898,7 +902,7 @@ msgstr "Testobjekte"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:5
 msgid "Execution Dashboard"
-msgstr ""
+msgstr "Ausführungs-Dashboard"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:19
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:15
@@ -966,7 +970,7 @@ msgstr "Beendet am"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 msgid "Execution Trends"
-msgstr ""
+msgstr "Ausführungstrends"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:21
 msgid "Positive"
@@ -982,7 +986,7 @@ msgstr "Negativ"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Execution Matrix"
-msgstr ""
+msgstr "Ausführungsmatrix"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:21
 msgid "Order"
@@ -1027,11 +1031,11 @@ msgstr "Interner Serverfehler"
 
 #: tcms/templates/admin/auth/user/submit_line.html:7
 msgid "Deactivate"
-msgstr ""
+msgstr "Deaktivieren"
 
 #: tcms/templates/attachments/add.html:3
 msgid "Attachment upload error"
-msgstr ""
+msgstr "Fehler beim Hochladen eines Anhangs"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
@@ -1081,7 +1085,12 @@ msgid "Welcome to Kiwi TCMS!\n\n"
 "%(confirm_url)s\n\n"
 "Regards,\n"
 "Kiwi TCMS"
-msgstr ""
+msgstr "Willkommen bei Kiwi TCMS!\n\n"
+"Um die E-Mail-Adresse für den Benutzernamen `%(user)s` zu bestätigen und Ihr Konto zu aktivieren,\n"
+"folgen Sie bitte diesem Link:\n"
+"%(confirm_url)s\n\n"
+"Mit freundlichen Grüßen\n"
+"Kiwi TCMS"
 
 #: tcms/templates/email/post_bug_save/email.txt:2
 #, python-format
@@ -1406,11 +1415,11 @@ msgstr "Fehler beim Erstellen eines externen Ticketsystems"
 
 #: tcms/testcases/admin.py:201
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
-msgstr ""
+msgstr "Die Details wurden über OpenGraph abgerufen. Der Issue Tracker ist möglicherweise noch falsch konfiguriert!"
 
 #: tcms/testcases/admin.py:210
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
-msgstr ""
+msgstr "Details wurden über die API abgerufen. Die Konfiguration des Issue Trackers sieht gut aus!"
 
 #: tcms/testcases/admin.py:223
 msgid "Issue Tracker configuration check failed"
@@ -2227,7 +2236,7 @@ msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:52
 msgid "Private Tenant Warning"
-msgstr "Private Mandant Warnung"
+msgstr "Private Mandant-Warnung"
 
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:57
 msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
@@ -2423,3 +2432,4 @@ msgstr "Gruppen"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "Persönliche API-Token"
+
