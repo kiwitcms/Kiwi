@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"PO-Revision-Date: 2026-06-12 18:13\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -29,7 +29,7 @@ msgid "Description of problem:\n\n\n"
 "Additional info:"
 msgstr "Beschreibung des Problems:\n\n\n"
 "Wie oft kann es reproduziert werden:\n\n\n"
-"Schrite zur Reproduktion:\n"
+"Schritte zur Reproduktion:\n"
 "1.\n"
 "2.\n"
 "3.\n\n\n"
@@ -131,7 +131,7 @@ msgstr "Build"
 
 #: tcms/bugs/templates/bugs/get.html:119
 msgid "commented on"
-msgstr "kommentiert am"
+msgstr "Kommentiert am"
 
 #: tcms/bugs/templates/bugs/get.html:149
 msgid "Reopen"
@@ -175,7 +175,7 @@ msgstr "Zusammenfassung"
 
 #: tcms/bugs/templates/bugs/mutable.html:28
 msgid "add new Severity"
-msgstr "neuen Schweregrad hinzufügen"
+msgstr "Neuen Schweregrad hinzufügen"
 
 #: tcms/bugs/templates/bugs/mutable.html:46
 #: tcms/testcases/templates/testcases/mutable.html:44
@@ -189,14 +189,14 @@ msgstr "neues Produkt hinzufügen"
 #: tcms/testplans/templates/testplans/clone.html:38
 #: tcms/testplans/templates/testplans/mutable.html:50
 msgid "add new Version"
-msgstr "neue Version hinzufügen"
+msgstr "Neue Version hinzufügen"
 
 #: tcms/bugs/templates/bugs/mutable.html:81
 #: tcms/bugs/templates/bugs/mutable.html:82
 #: tcms/testruns/templates/testruns/mutable.html:93
 #: tcms/testruns/templates/testruns/mutable.html:94
 msgid "add new Build"
-msgstr "neuen Build hinzufügen"
+msgstr "Neuen Build hinzufügen"
 
 #: tcms/bugs/templates/bugs/mutable.html:98
 #: tcms/testruns/templates/testruns/mutable.html:32
@@ -242,7 +242,7 @@ msgstr "Erstellt"
 #: tcms/testruns/templates/testruns/search.html:135
 #: tcms/testruns/templates/testruns/search.html:155
 msgid "Before"
-msgstr "vor"
+msgstr "Vor"
 
 #: tcms/bugs/templates/bugs/search.html:41
 #: tcms/telemetry/templates/telemetry/include/filters.html:43
@@ -499,16 +499,16 @@ msgstr "Sie verwenden keine sichere Verbindung. Siehe <a href=\"%(doc_url)s\">-D
 #: tcms/kiwi_attachments/validators.py:10
 #, python-brace-format
 msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
+msgstr "Die Datei enthält ein unzulässiges Tag: <{tag_name}>"
 
 #: tcms/kiwi_attachments/validators.py:92
 #, python-brace-format
 msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
+msgstr "Die Datei enthält ein unzulässiges Attribut: `{attr_name}`"
 
 #: tcms/kiwi_attachments/validators.py:97
 msgid "Uploading executable files is forbidden"
-msgstr ""
+msgstr "Das Hochladen von ausführbaren Dateien ist verboten"
 
 #: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
 msgid "Users"
@@ -527,7 +527,7 @@ msgstr ""
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
-msgstr ""
+msgstr "Bitte bestätigen Sie die E-Mail-Adresse Ihres Kiwi-Tcms-Kontos"
 
 #: tcms/kiwi_auth/admin.py:169
 msgid "Personal info"
@@ -551,11 +551,11 @@ msgstr ""
 
 #: tcms/kiwi_auth/forms.py:142
 msgid "Email mismatch"
-msgstr ""
+msgstr "E-Mail-Adressen stimmen nicht überein"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:14
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:19
 msgid "After clicking the 'Save' button your account will become <strong>inactive</strong>\n"
@@ -1105,7 +1105,7 @@ msgstr "Fehler %(pk)s wurde Ihnen zugewiesen.\n\n"
 "Produkt: %(product)s\n"
 "Version: %(version)s\n"
 "Build: %(build)s\n"
-"Letztes Kommentar:\n"
+"Letzter Kommentar:\n"
 "%(last_comment)s"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
@@ -1564,7 +1564,7 @@ msgstr "Testfall bearbeiten"
 
 #: tcms/testcases/templates/testcases/mutable.html:59
 msgid "add new Category"
-msgstr "neues Testobjekt hinzufügen"
+msgstr "Neues Testobjekt hinzufügen"
 
 #: tcms/testcases/templates/testcases/mutable.html:108
 msgid "add new Template"
@@ -1651,7 +1651,7 @@ msgstr "Verlauf"
 
 #: tcms/testcases/views.py:253
 msgid "TestCase cloning was successful"
-msgstr "Das Konen des Testfalls war erfolgreich"
+msgstr "Das Klonen des Testfalls war erfolgreich"
 
 #: tcms/testcases/views.py:284
 msgid "At least one TestCase is required"
@@ -1779,7 +1779,7 @@ msgstr "Parent ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:100
 msgid "Enter to assign; Backspace + Enter to clear"
-msgstr ""
+msgstr "Enter zum Bestätigen; Rücktaste + Enter zum Löschen"
 
 #: tcms/testplans/templates/testplans/mutable.html:110
 msgid "Test plan document:"
@@ -1820,7 +1820,7 @@ msgstr "Name des Testplans"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
-msgstr "Zugriff verweigert: TestRun gehört Ihnen nicht"
+msgstr "Zugriff verweigert: Testlauf gehört Ihnen nicht"
 
 #: tcms/testruns/admin.py:39
 msgid "For more information about customizing test execution statuses see\n"
@@ -1937,7 +1937,7 @@ msgstr "Zugewiesen an"
 #: tcms/testruns/templates/testruns/get.html:387
 #: tcms/testruns/templates/testruns/get.html:389
 msgid "Last bug"
-msgstr ""
+msgstr "Letzter Fehler"
 
 #: tcms/testruns/templates/testruns/get.html:431
 msgid "Text version"
@@ -1957,7 +1957,7 @@ msgstr "Issue Tracker"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr "TestRun bearbeiten"
+msgstr "Testlauf bearbeiten"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
@@ -2123,7 +2123,10 @@ msgid "Thank you for using Kiwi TCMS via a paid subscription.\n"
 "We're sorry to see you go but we'd like to know why so we can improve in the future!\n\n"
 "You can share your feedback at https://forms.gle/RJhFengbjN9C6wtUA\n\n"
 "Thank you!"
-msgstr ""
+msgstr "Vielen Dank, dass Sie Kiwi TCMS über ein kostenpflichtiges Abonnement nutzen.\n"
+"Es tut uns leid, dass du gehst, aber wir möchten gerne wissen, warum wir uns in Zukunft verbessern können!\n\n"
+"Sie können Ihr Feedback unter https://forms. le/RJhFengbjN9C6wtUA\n\n"
+"Vielen Dank!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:14
 msgid "Tenant subscriptions"
@@ -2145,11 +2148,11 @@ msgstr "Organisation"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
 msgid "Private repository credentials"
-msgstr ""
+msgstr "Anmeldedaten für private Repositorys"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
 msgid "Click 'Password' to reveal!"
-msgstr ""
+msgstr "Klicken Sie auf „Passwort“, um es anzuzeigen!"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
 msgid "Private containers instructions"
@@ -2212,7 +2215,7 @@ msgstr "Erhalten am"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:11
 msgid "Extra emails"
-msgstr ""
+msgstr "Weitere E-Mails"
 
 #: tcms_github_marketplace/templates/tcms_tenants/include/tenant_extra_emails.html:21
 msgid "Kiwi TCMS will try to match recurring billing events against tenant.owner.email + tenant.extra_emails"
@@ -2313,7 +2316,7 @@ msgstr "Unbezahlt"
 
 #: tcms_tenants/middleware.py:70
 msgid "Tenant expires soon"
-msgstr ""
+msgstr "Mandant läuft bald ab"
 
 #: tcms_tenants/templates/tcms_tenants/email/invite_user.txt:1
 #, python-format
@@ -2324,7 +2327,12 @@ msgid "Dear tester,\n"
 "automatically. You can login with a social account which has the same email\n"
 "address or go to %(password_reset_url)s to reset your password.\n"
 "The password reset email message also contains your username!"
-msgstr ""
+msgstr "Sehr geehrte Testerin, sehr geehrter Tester,\n"
+"%(invited_by)s hat Sie eingeladen, seinem Kiwi TCMS-Mandanten unter\n"
+"%(tenant_url)s beizutreten.\n\n"
+"Falls Sie sich noch nie angemeldet haben, wurde automatisch ein Konto für Sie angelegt. Sie können sich mit einem Social-Media-Konto anmelden, das dieselbe E-Mail-Adresse verwendet, oder unter\n"
+"%(password_reset_url)s Ihr Passwort zurücksetzen.\n"
+"Die E-Mail zum Zurücksetzen des Passworts enthält auch Ihren Benutzernamen!"
 
 #: tcms_tenants/templates/tcms_tenants/email/new.txt:1
 #, python-format
@@ -2361,7 +2369,7 @@ msgstr "Öffentlich lesbar"
 
 #: tcms_tenants/templates/tcms_tenants/new.html:80
 msgid "Tenant logo"
-msgstr ""
+msgstr "Mandanten-Logo"
 
 #: tcms_tenants/utils.py:66
 msgid "Schema name already in use"
@@ -2374,7 +2382,7 @@ msgstr "Neuer Kiwi TCMS Tenant erstellt"
 #: tcms_tenants/utils.py:230
 #, python-brace-format
 msgid "User {user.username} added to tenant group {group.name}"
-msgstr ""
+msgstr "Der Benutzer {user.username} wurde zur Gruppe {group.name} des Mandanten hingefügt"
 
 #: tcms_tenants/utils.py:262
 msgid "Invitation to join Kiwi TCMS"
@@ -2394,24 +2402,25 @@ msgstr "Nur Benutzer, die für diesen Mandanten berechtigt sind, können andere 
 
 #: tenant_groups/admin.py:30
 msgid "users"
-msgstr ""
+msgstr "Benutzer"
 
 #: tenant_groups/models.py:34
 msgid "name"
-msgstr ""
+msgstr "Name"
 
 #: tenant_groups/models.py:37
 msgid "permissions"
-msgstr ""
+msgstr "Berechtigungen"
 
 #: tenant_groups/models.py:47
 msgid "group"
-msgstr ""
+msgstr "Gruppe"
 
 #: tenant_groups/models.py:48
 msgid "groups"
-msgstr ""
+msgstr "Gruppen"
 
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
-msgstr ""
+msgstr "Persönliche API-Token"
+
