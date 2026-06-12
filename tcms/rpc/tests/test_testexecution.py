@@ -12,11 +12,12 @@ from django.utils import timezone
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
-from tcms.testruns.models import TestExecution, TestExecutionStatus
+from tcms.testruns.models import TestExecution, TestExecutionStatus, TestExecutionTag
 from tcms.tests import remove_perm_from_user, user_should_have_perm
 from tcms.tests.factories import (
     BuildFactory,
     LinkReferenceFactory,
+    TagFactory,
     TestCaseFactory,
     TestExecutionFactory,
     TestRunFactory,
@@ -1090,3 +1091,72 @@ class TestCreateWithEmptyFields(TestCreate):
         self.assertEqual(result["case"], execution.case.pk)
 
         self.assertEqual(result["status"], execution.status.pk)
+
+
+class TestExecutionAddTag(APIPermissionsTestCase):
+    permission_label = "testruns.add_testexecutiontag"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.execution = TestExecutionFactory()
+        cls.tag = TagFactory(name="xmlrpc_test_tag_0")
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestExecution.add_tag(self.execution.pk, self.tag.name)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["id"], self.tag.pk)
+        self.assertEqual(result[0]["name"], self.tag.name)
+
+        tag_exists = TestExecution.objects.filter(
+            pk=self.execution.pk, tag__pk=self.tag.pk
+        ).exists()
+        self.assertTrue(tag_exists)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestExecution.add_tag"'
+        ):
+            self.rpc_client.TestExecution.add_tag(self.execution.pk, self.tag.name)
+
+        # tags were not modified
+        tag_exists = TestExecution.objects.filter(
+            pk=self.execution.pk, tag__pk=self.tag.pk
+        ).exists()
+        self.assertFalse(tag_exists)
+
+
+class TestExecutionRemoveTag(APIPermissionsTestCase):
+    permission_label = "testruns.delete_testexecutiontag"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.execution = TestExecutionFactory()
+        cls.tag = TagFactory(name="xmlrpc_test_tag_0")
+        TestExecutionTag.objects.create(execution=cls.execution, tag=cls.tag)
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestExecution.remove_tag(
+            self.execution.pk, self.tag.name
+        )
+        self.assertEqual(len(result), 0)
+
+        tag_exists = TestExecution.objects.filter(
+            pk=self.execution.pk, tag__pk=self.tag.pk
+        ).exists()
+        self.assertFalse(tag_exists)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestExecution.remove_tag"'
+        ):
+            self.rpc_client.TestExecution.remove_tag(self.execution.pk, self.tag.name)
+
+        # tag was not removed
+        tag_exists = TestExecution.objects.filter(
+            pk=self.execution.pk, tag__pk=self.tag.pk
+        ).exists()
+        self.assertTrue(tag_exists)

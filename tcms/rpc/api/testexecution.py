@@ -11,12 +11,13 @@ from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
+from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
-from tcms.testruns.models import TestExecution, TestExecutionProperty
+from tcms.testruns.models import TestExecution, TestExecutionProperty, TestExecutionTag
 
 # conditional import b/c this App can be disabled
 if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
@@ -473,3 +474,57 @@ def create(values, **kwargs):
         return model_to_dict(test_execution)
 
     raise ValueError(list(form.errors.items()))
+
+
+@permissions_required("testruns.add_testexecutiontag")
+@rpc_method(name="TestExecution.add_tag")
+def add_tag(execution_id, tag_name, **kwargs):
+    """
+    .. function:: RPC TestExecution.add_tag(execution_id, tag_name)
+
+        Add one tag to the specified test execution.
+
+        :param execution_id: PK of TestExecution to modify
+        :type execution_id: int
+        :param tag_name: Tag name to add
+        :type tag_name: str
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :return: Serialized list of :class:`tcms.management.models.Tag` objects
+        :rtype: dict
+        :raises PermissionDenied: if missing *testruns.add_testexecutiontag* permission
+        :raises TestExecution.DoesNotExist: if object specified by PK doesn't exist
+        :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag_name*
+                 doesn't exist in the database!
+
+    .. versionadded:: 16.1
+    """
+    request = kwargs.get(REQUEST_KEY)
+    tag, _ = Tag.get_or_create(request.user, tag_name)
+    test_execution = TestExecution.objects.get(pk=execution_id)
+    TestExecutionTag.objects.get_or_create(execution=test_execution, tag=tag)
+    return list(test_execution.tag.values("id", "name"))
+
+
+@permissions_required("testruns.delete_testexecutiontag")
+@rpc_method(name="TestExecution.remove_tag")
+def remove_tag(execution_id, tag_name):
+    """
+    .. function:: RPC TestExecution.remove_tag(execution_id, tag_name)
+
+        Remove one tag from the specified test execution.
+
+        :param execution_id: PK of TestExecution to modify
+        :type execution_id: int
+        :param tag_name: Tag name to remove
+        :type tag_name: str
+        :raises PermissionDenied: if missing *testruns.delete_testexecutiontag* permission
+        :raises TestExecution.DoesNotExist: if object specified by PK doesn't exist
+
+    .. versionadded:: 16.1
+    """
+    test_execution = TestExecution.objects.get(pk=execution_id)
+    TestExecutionTag.objects.filter(
+        execution=test_execution, tag__name=tag_name
+    ).delete()
+    return list(test_execution.tag.values("id", "name"))
