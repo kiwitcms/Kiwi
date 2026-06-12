@@ -504,3 +504,27 @@ def add_tag(execution_id, tag_name, **kwargs):
     test_execution = TestExecution.objects.get(pk=execution_id)
     TestExecutionTag.objects.get_or_create(execution=test_execution, tag=tag)
     return list(test_execution.tag.values("id", "name"))
+
+
+@permissions_required("testruns.delete_testexecutiontag")
+@rpc_method(name="TestExecution.remove_tag")
+def remove_tag(execution_id, tag_name):
+    """
+    .. function:: RPC TestExecution.remove_tag(execution_id, tag_name)
+
+        Remove one tag from the specified test execution.
+
+        :param execution_id: PK of TestExecution to modify
+        :type execution_id: int
+        :param tag_name: Tag name to remove
+        :type tag_name: str
+        :raises PermissionDenied: if missing *testruns.delete_testexecutiontag* permission
+        :raises TestExecution.DoesNotExist: if object specified by PK doesn't exist
+
+    .. versionadded:: 16.1
+    """
+    test_execution = TestExecution.objects.get(pk=execution_id)
+    TestExecutionTag.objects.filter(
+        execution=test_execution, tag__name=tag_name
+    ).delete()
+    return list(test_execution.tag.values("id", "name"))
