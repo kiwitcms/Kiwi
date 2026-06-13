@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Metrics" %}{% endblock %}
+{% block page_id %}page-telemetry-metrics{% endblock %}
+
+{% block contents %}
+
+<style>
+.dataTables_paginate {
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.dataTables_paginate .paginate_button {
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #337ab7;
+    padding: 4px 12px;
+    margin: 0 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 13px;
+    min-width: 32px;
+    min-height: 28px;
+    box-shadow: none;
+    outline: none;
+    transition: background 0.2s, color 0.2s;
+}
+.dataTables_paginate .paginate_button.current,
+.dataTables_paginate .paginate_button.current:hover {
+    background: #337ab7;
+    color: #fff !important;
+    border-color: #337ab7;
+}
+.dataTables_paginate .paginate_button:hover {
+    background: #e6e6e6;
+    color: #23527c;
+    border-color: #adadad;
+}
+.dataTables_paginate .ellipsis {
+    padding: 4px 8px;
+    color: #888;
+}
+</style>
+
+<div class="container-fluid container-cards-pf">
+    <div id="metrics-help-block-server" class="alert alert-info" style="margin-bottom: 24px; display:none;">
+        <strong>{% trans "How are these metrics calculated?" %}</strong><br>
+        <div id="metrics-coverage-checkboxes" style="margin-bottom: 12px;"></div>
+        <ul style="margin-bottom: 8px;">
+            <li id="metrics-execution-coverage"></li>
+        </ul>
+        <ul style="margin-bottom: 8px;" id="metrics-status-formulas-list">
+        </ul>
+        <small id="metrics-nota"></small>
+    </div>
+    <form id="metrics-filters-form" class="form-horizontal" style="margin-bottom: 16px;">
+        <div class="form-group">
+            <label for="id_test_run_summary" class="col-md-1 col-lg-1" style="font-weight: bold;">Test run</label>
+            <div class="col-md-3 col-lg-3">
+                <input id="id_test_run_summary" name="test_run_summary" type="text" class="form-control" placeholder="Test run summary" value="">
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped table-bordered table-hover" id="resultsTable">
+        <thead>
+            <tr id="resultsTableHead">
+
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+<!-- FontAwesome para íconos de flechas -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<!-- DataTables Bootstrap Input Paging -->
+<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.13.7/integration/bootstrap/3/dataTables.bootstrap.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<!-- DataTables Bootstrap Input Paging Plugin -->
+<script src="https://cdn.datatables.net/plug-ins/1.13.7/pagination/bootstrap_input.js"></script>
+<script src="{% static 'telemetry/js/testing/metrics.js' %}"></script>
+<script>
+// Sobrescribir el bloque de ayuda de métricas usando los textos de la API y traducirlos si es necesario
+$(document).on('metricsHelpLoaded', function (e, metricsHelp) {
+    if (metricsHelp) {
+        $('#metrics-help-block-server').show();
+        $('#metrics-execution-coverage').text(metricsHelp.execution_coverage);
+        $('#metrics-nota').text(metricsHelp.nota);
+        const $list = $('#metrics-status-formulas-list');
+        $list.empty();
+        metricsHelp.status_formulas.forEach(function (f) {
+            $list.append($('<li>').text(f));
+        });
+    } else {
+        $('#metrics-help-block-server').hide();
+    }
+});
+</script>
+{% endblock %}
