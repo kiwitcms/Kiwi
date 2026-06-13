@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.forms.fields import UserField
+from tcms.core.widgets import SimpleMDENotes
 from tcms.management.models import Build, Product, Version
 from tcms.rpc.api.forms import DateTimeField
 from tcms.testcases.models import TestCase
@@ -23,6 +24,10 @@ class NewRunForm(forms.ModelForm):
     stop_date = DateTimeField(required=False)
     planned_start = DateTimeField(required=False)
     planned_stop = DateTimeField(required=False)
+    notes = forms.CharField(
+        widget=SimpleMDENotes(),
+        required=False,
+    )
 
     case = forms.ModelMultipleChoiceField(
         queryset=TestCase.objects.none(),

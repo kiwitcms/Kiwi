@@ -3,7 +3,7 @@ from django import forms
 from django.forms import inlineformset_factory
 
 from tcms.core.forms.fields import UserField
-from tcms.core.widgets import DurationWidget, SimpleMDE
+from tcms.core.widgets import DurationWidget, SimpleMDE, SimpleMDENotes
 from tcms.management.models import Component, Priority, Product
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.models import (
@@ -40,6 +40,10 @@ class TestCaseForm(forms.ModelForm):
     )
     testing_duration = forms.DurationField(
         widget=DurationWidget(),
+        required=False,
+    )
+    notes = forms.CharField(
+        widget=SimpleMDENotes(),
         required=False,
     )
     text = forms.CharField(
