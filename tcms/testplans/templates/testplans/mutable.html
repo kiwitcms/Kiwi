@@ -17,6 +17,9 @@
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
+        {% trans "Test Plans" as tp_breadcrumb_label %}
+        {% include "include/breadcrumbs.html" with search_url="plans-search" search_label=tp_breadcrumb_label view_url="test_plan_url" object_label="TP-" current_view=object|yesno:"edit,new" %}
+        {% include "include/page_toolbar.html" with current_view=object|yesno:"edit,new" view_url="test_plan_url" edit_url="plan-edit" new_url="plans-new" search_url="plans-search" edit_perm=perms.testplans.change_testplan add_perm=perms.testplans.add_testplan %}
         <form class="form-horizontal" action="{% if object %}{% url 'plan-edit' object.pk %}{% else %}{% url 'plans-new' %}{% endif %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="author" value="{{ form.author.value }}">
@@ -168,8 +171,10 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-1 col-lg-1">
-                    <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+                <div class="col-md-12 col-lg-12">
+                    <a href="{% if object %}{% url 'test_plan_url' object.pk %}{% else %}{% url 'core-views-index' %}{% endif %}"
+                        class="btn btn-danger btn-lg">{% trans "Cancel" %}</a>
+                    <button type="submit" class="btn btn-primary btn-lg">{% trans "Save" %}</button>
                 </div>
             </div>
         </form>

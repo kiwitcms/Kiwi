@@ -1,0 +1,87 @@
+{% load i18n %}
+
+<div class="well well-sm clearfix">
+    <ul class="nav nav-pills pull-left">
+        {% if view_url and object %}
+        <li {% if current_view == "view" %}class="active"{% endif %}>
+            <a href="{% url view_url object.pk %}">
+                <span class="fa fa-eye"></span> {% trans "View" %}
+            </a>
+        </li>
+        {% endif %}
+
+        {% if edit_url and object %}
+            {% if edit_perm %}
+            <li {% if current_view == "edit" %}class="active"{% endif %}>
+                <a href="{% url edit_url object.pk %}">
+                    <span class="fa fa-pencil"></span> {% trans "Edit" %}
+                </a>
+            </li>
+            {% endif %}
+        {% endif %}
+
+        {% if new_url %}
+            {% if add_perm %}
+            <li {% if current_view == "new" %}class="active"{% endif %}>
+                <a href="{% url new_url %}">
+                    <span class="fa fa-plus"></span> {% trans "New" %}
+                </a>
+            </li>
+            {% endif %}
+        {% endif %}
+
+        {% if search_url %}
+        <li {% if current_view == "search" %}class="active"{% endif %}>
+            <a href="{% url search_url %}">
+                <span class="fa fa-search"></span> {% trans "Search" %}
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    {% if show_actions and object %}
+    <ul class="nav nav-pills pull-right">
+        {% if tc_clone %}
+            {% if add_perm %}
+            <li>
+                <a href="{% url 'testcases-clone' %}?c={{ object.pk }}" title="{% trans 'Clone' %}">
+                    <span class="fa fa-clone"></span> {% trans "Clone" %}
+                </a>
+            </li>
+            {% endif %}
+        {% elif clone_url %}
+            {% if add_perm %}
+            <li>
+                <a href="{% url clone_url object.pk %}" title="{% trans 'Clone' %}">
+                    <span class="fa fa-clone"></span> {% trans "Clone" %}
+                </a>
+            </li>
+            {% endif %}
+        {% endif %}
+
+        {% if admin_url_prefix and show_history %}
+        <li>
+            <a href="/admin/{{ admin_url_prefix }}/{{ object.pk }}/history/" title="{% trans 'History' %}">
+                <span class="fa fa-history"></span> {% trans "History" %}
+            </a>
+        </li>
+        {% endif %}
+
+        {% if admin_perm %}
+        <li>
+            <a href="/admin/{{ admin_url_prefix }}/{{ object.pk }}/change/" title="{% trans 'Permissions' %}">
+                <span class="fa fa-lock"></span> {% trans "Admin" %}
+            </a>
+        </li>
+        {% endif %}
+
+        {% if delete_perm %}
+        <li class="kiwi-pill-danger">
+            <a href="/admin/{{ admin_url_prefix }}/{{ object.pk }}/delete/" title="{% trans 'Delete' %}">
+                <span class="fa fa-trash-o"></span> {% trans "Delete" %}
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>

@@ -11,6 +11,7 @@
          data-trans-no-records-found="{% trans 'No records found' %}"
          data-trans-x-records-found="{% trans 'Found _TOTAL_ records' %}"
     >
+        {% include "telemetry/include/nav.html" with active_tab="dashboard" %}
         {% include "telemetry/include/filters.html" %}
 
         <form class="form-horizontal">
