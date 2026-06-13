@@ -28,7 +28,8 @@ export function pageTestplansGetReadyHandler () {
         'perm-remove-testcase': testPlanDataElement.data('perm-remove-testcase') === 'True',
         'perm-add-testcase': testPlanDataElement.data('perm-add-testcase') === 'True',
         'perm-add-comment': testPlanDataElement.data('perm-add-comment') === 'True',
-        'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True'
+        'perm-delete-comment': testPlanDataElement.data('perm-delete-comment') === 'True',
+        'perm-view-user': testPlanDataElement.data('perm-view-user') === 'True'
     }
 
     // bind everything in tags table
@@ -443,6 +444,8 @@ function updateTestCasesViaAPI (testCaseIds, updateQuery, testPlanId, permission
 }
 
 function toolbarEvents (testPlanId, permissions) {
+    initDefaultTesterModal(permissions)
+
     $('.js-checkbox-toolbar').click(function (ev) {
         const isChecked = ev.target.checked
         const testCaseRows = $('.js-testcase-row').find('input')
@@ -557,6 +560,11 @@ function toolbarEvents (testPlanId, permissions) {
             return false
         }
 
+        if (permissions['perm-view-user']) {
+            $('#default-tester-modal').modal('show')
+            return false
+        }
+
         const emailOrUsername = window.prompt($('#test_plan_pk').data('trans-username-email-prompt'))
 
         if (!emailOrUsername) {
@@ -566,6 +574,27 @@ function toolbarEvents (testPlanId, permissions) {
         updateTestCasesViaAPI(selectedCases, { default_tester: emailOrUsername },
             testPlanId, permissions)
 
+        return false
+    })
+
+    $('#default-tester-form').submit(function (ev) {
+        ev.preventDefault()
+
+        const selectedCases = getSelectedTestCases()
+        if (!selectedCases.length) {
+            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+            return false
+        }
+
+        const emailOrUsername = $('#default-tester-input').typeahead('val') || $('#default-tester-input').val()
+        if (!emailOrUsername) {
+            return false
+        }
+
+        updateTestCasesViaAPI(selectedCases, { default_tester: emailOrUsername },
+            testPlanId, permissions)
+
+        $('#default-tester-modal').modal('hide')
         return false
     })
 
@@ -654,6 +683,52 @@ function toolbarEvents (testPlanId, permissions) {
         window.location.assign(`${newTestRunUrl}?c=${selectedTestCases.join('&c=')}`)
         return false
     })
+}
+
+function initDefaultTesterModal (permissions) {
+    const input = $('#default-tester-input')
+    const modal = $('#default-tester-modal')
+
+    if (!modal.data('kiwiDefaultTesterModalInitialized')) {
+        modal.on('show.bs.modal', function () {
+            if (input.data('ttTypeahead')) {
+                input.typeahead('val', '')
+            }
+            input.val('')
+        })
+        modal.data('kiwiDefaultTesterModalInitialized', true)
+    }
+
+    if (!permissions['perm-view-user'] || input.data('kiwiTypeaheadInitialized')) {
+        return
+    }
+
+    input.typeahead({
+        minLength: 3,
+        highlight: true
+    }, {
+        name: 'default-tester-autocomplete',
+        limit: 100,
+        async: true,
+        display: function (element) {
+            return element.username
+        },
+        source: function (query, processSync, processAsync) {
+            query = query.trim()
+            let rpcQuery = { username__icontains: query }
+
+            if (/^\d+$/.test(query)) {
+                rpcQuery = { pk: query }
+            } else if (query.includes('@')) {
+                rpcQuery = { email__icontains: query }
+            }
+
+            jsonRPC('User.filter', rpcQuery, function (data) {
+                return processAsync(data)
+            })
+        }
+    })
+    input.data('kiwiTypeaheadInitialized', true)
 }
 
 function isTestCaseConfirmed (status) {
