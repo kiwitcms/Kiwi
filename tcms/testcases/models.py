@@ -3,6 +3,7 @@ from datetime import timedelta
 
 import vinaigrette
 from django.conf import settings
+from django.core.validators import URLValidator
 from django.db import models
 from django.db.models import ObjectDoesNotExist
 from django.urls import reverse
@@ -54,7 +55,13 @@ class TestCase(models.Model, UrlMixin):
     is_automated = models.BooleanField(default=False)
     script = models.TextField(blank=True, null=True)
     arguments = models.TextField(blank=True, null=True)
-    extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
+    extra_link = models.URLField(
+        max_length=1024,
+        default=None,
+        blank=True,
+        null=True,
+        validators=[URLValidator(schemes=["http", "https", "ftp", "ftps"])],
+    )
     summary = models.CharField(max_length=255, db_index=True)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)

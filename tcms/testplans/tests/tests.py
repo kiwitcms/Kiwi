@@ -4,9 +4,11 @@
 from http import HTTPStatus
 
 from django import test
+from django.core.exceptions import ValidationError
 from django.db.models import F
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from parameterized import parameterized
 
 from tcms.management.models import Product, Version
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
@@ -154,6 +156,34 @@ class TestPlanModel(test.TestCase):
         self.assertIsNotNone(test_plan_url)
         self.assertNotEqual(test_plan_url[-1], "/")
         self.assertContains(response, self.plan_1.name)
+
+
+class TestExtraLinkURLField(test.TestCase):
+    @parameterized.expand(
+        [
+            ("http", "http://example.com"),
+            ("https", "https://example.com"),
+            ("ftp", "ftp://example.com"),
+            ("ftps", "ftps://example.com"),
+        ]
+    )
+    def test_extra_link_valid_schemes(self, _name, url):
+        plan = TestPlanFactory(extra_link=url)
+        plan.full_clean()
+        self.assertEqual(plan.extra_link, url)
+
+    @parameterized.expand(
+        [
+            ("javascript_colon", "javascript:alert(1)"),
+            ("javascript_slash", "javascript://alert(1)"),
+            ("invalid_scheme", "other://example.com"),
+            ("no_scheme", "example.com"),
+        ]
+    )
+    def test_extra_link_invalid_schemes(self, _name, url):
+        plan = TestPlanFactory.build(extra_link=url)
+        with self.assertRaises(ValidationError):
+            plan.full_clean()
 
 
 class TestCloneView(BasePlanCase):
