@@ -3,6 +3,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.template.loader import render_to_string
 from django.test import TestCase, override_settings
 from django.utils.translation import gettext_lazy as _
@@ -206,6 +207,34 @@ class TestSendMailOnCaseIsDeleted(BasePlanCase):
             )
 
             send_mail.assert_not_called()
+
+
+class TestExtraLinkURLField(TestCase):
+    @parameterized.expand(
+        [
+            ("http", "http://example.com"),
+            ("https", "https://example.com"),
+            ("ftp", "ftp://example.com"),
+            ("ftps", "ftps://example.com"),
+        ]
+    )
+    def test_extra_link_valid_schemes(self, _name, url):
+        case = TestCaseFactory(extra_link=url)
+        case.full_clean()
+        self.assertEqual(case.extra_link, url)
+
+    @parameterized.expand(
+        [
+            ("javascript_colon", "javascript:alert(1)"),
+            ("javascript_slash", "javascript://alert(1)"),
+            ("invalid_scheme", "other://example.com"),
+            ("no_scheme", "example.com"),
+        ]
+    )
+    def test_extra_link_invalid_schemes(self, _name, url):
+        case = TestCaseFactory.build(extra_link=url)
+        with self.assertRaises(ValidationError):
+            case.full_clean()
 
 
 class TestCaseCalculateExpectedDuration(TestCase):

@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import URLValidator
 from django.db import models
 from django.urls import reverse
 from tree_queries.models import TreeNode
@@ -33,7 +34,13 @@ class TestPlan(TreeNode, UrlMixin):
     text = models.TextField(blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True, db_index=True)
-    extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
+    extra_link = models.URLField(
+        max_length=1024,
+        default=None,
+        blank=True,
+        null=True,
+        validators=[URLValidator(schemes=["http", "https", "ftp", "ftps"])],
+    )
 
     product_version = models.ForeignKey(
         Version, related_name="plans", on_delete=models.CASCADE
