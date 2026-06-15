@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2026-04-12 12:10\n"
+"PO-Revision-Date: 2026-06-15 12:50\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -791,7 +791,7 @@ msgstr "管理其他事项"
 
 #: tcms/settings/common.py:449
 msgid "MORE"
-msgstr ""
+msgstr "更多"
 
 #: tcms/settings/common.py:459
 msgid "Report an Issue"
@@ -2432,3 +2432,4 @@ msgstr "1组"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "个人API令牌"
+
