@@ -4,12 +4,14 @@ from django import forms
 from django.contrib import admin, messages
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import GroupAdmin, UserAdmin, sensitive_post_parameters_m
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from django.contrib.auth.models import Group, Permission
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.debug import sensitive_post_parameters
 
 from tcms.utils import user as user_utils
 
@@ -188,7 +190,7 @@ class KiwiUserAdmin(UserAdmin):
 
         return ((None, {"fields": first_fieldset_fields}),) + remaining_fieldsets
 
-    @sensitive_post_parameters_m
+    @method_decorator(sensitive_post_parameters())
     def user_change_password(
         self, request, id, form_url=""
     ):  # pylint: disable=redefined-builtin
