@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
 from tcms.utils import user as user_utils
@@ -199,7 +200,7 @@ class KiwiUserAdmin(UserAdmin):
 
         raise PermissionDenied
 
-    @admin.options.csrf_protect_m
+    @method_decorator(csrf_protect)
     def delete_view(self, request, object_id, extra_context=None):
         user = User.objects.get(pk=object_id)
         # check whether the last superuser is being deleted
