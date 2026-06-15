@@ -759,7 +759,7 @@ class TestGroupAdmin(LoggedInTestCase):
             'class="selectfilter" data-field-name="users" data-is-stacked="0">',
         )
         _label = _("Users")
-        self.assertContains(response, f'<label for="id_users">{_label}')
+        self.assertContains(response, f'<legend for="id_users">{_label}')
 
     @override_settings(LANGUAGE_CODE="en")
     def test_should_be_able_to_delete_a_non_default_group(self):
