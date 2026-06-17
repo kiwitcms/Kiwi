@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2026-04-17 07:04\n"
+"POT-Creation-Date: 2026-06-17 18:46+0000\n"
+"PO-Revision-Date: 2026-06-17 19:56\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -401,7 +401,7 @@ msgstr "*バグが再オープンされました。*"
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "更新: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:62
+#: tcms/core/history.py:61
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -481,63 +481,53 @@ msgstr "%(total_count)s TestPlan(s), %(disabled_count)s が無効になってい
 msgid "There are no TestPlan(s) that belong to you"
 msgstr "あなたに属するテスト計画はありません"
 
-#: tcms/core/views.py:47
+#: tcms/core/views.py:48
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "ベースURLが設定されていません！ <a href=\"%(doc_url)s\">ドキュメント</a> を参照し、 <a href=\"%(admin_url)s\">変更してください。</a>"
 
-#: tcms/core/views.py:71
+#: tcms/core/views.py:72
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr "%(unapplied_migration_count)s 件の未適用の移行があります。 <a href=\"%(doc_url)s\">ドキュメント</a> を参照してください。"
 
-#: tcms/core/views.py:92
+#: tcms/core/views.py:93
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr "セキュアな接続を使用していません。 <a href=\"%(doc_url)s\">ドキュメント</a> を参照して、SSL を有効にしてください。"
 
-#: tcms/kiwi_attachments/validators.py:10
-#, python-brace-format
-msgid "File contains forbidden tag: <{tag_name}>"
-msgstr "ファイルに禁止タグが含まれています: <{tag_name}>"
-
-#: tcms/kiwi_attachments/validators.py:92
-#, python-brace-format
-msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr "ファイルに禁止属性が含まれています: `{attr_name}`"
-
-#: tcms/kiwi_attachments/validators.py:97
+#: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"
 msgstr "実行可能ファイルのアップロードは禁止されています"
 
-#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
+#: tcms/kiwi_auth/admin.py:39 tcms/settings/common.py:443
 msgid "Users"
 msgstr "ユーザー"
 
-#: tcms/kiwi_auth/admin.py:62
+#: tcms/kiwi_auth/admin.py:65
 msgid "Deactivate selected accounts"
 msgstr "選択したアカウントを無効にする"
 
-#: tcms/kiwi_auth/admin.py:69
+#: tcms/kiwi_auth/admin.py:72
 #, python-format
 msgid "Account '%s' was deactivated"
 msgstr "アカウント '%s' は無効になりました"
 
-#: tcms/kiwi_auth/admin.py:103
+#: tcms/kiwi_auth/admin.py:106
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
 msgstr "メールアドレスをリセット"
 
-#: tcms/kiwi_auth/admin.py:169
+#: tcms/kiwi_auth/admin.py:172
 msgid "Personal info"
 msgstr "個人情報"
 
-#: tcms/kiwi_auth/admin.py:171
+#: tcms/kiwi_auth/admin.py:174
 msgid "Permissions"
 msgstr "権限"
 
-#: tcms/kiwi_auth/admin.py:208
+#: tcms/kiwi_auth/admin.py:211
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr "これは最後のスーパーユーザーであり、削除できません！"
 
@@ -598,25 +588,25 @@ msgstr "アカウントが作成されましたが、有効化するには管理
 msgid "Following is the administrator list"
 msgstr "管理者リストは次のとおりです。"
 
-#: tcms/kiwi_auth/views.py:123
+#: tcms/kiwi_auth/views.py:126
 msgid "This activation key no longer exists in the database"
 msgstr "このアクティベーションキーはデータベースに存在しません。"
 
-#: tcms/kiwi_auth/views.py:129
+#: tcms/kiwi_auth/views.py:132
 msgid "This activation key has expired"
 msgstr "アクティベーションキーの有効期限が切れました。"
 
-#: tcms/kiwi_auth/views.py:141
+#: tcms/kiwi_auth/views.py:144
 msgid "Your account has been activated successfully"
 msgstr "アカウントがアクティブになりました。"
 
-#: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
-#: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
+#: tcms/kiwi_auth/views.py:171 tcms/kiwi_auth/views.py:180
+#: tcms/kiwi_auth/views.py:199 tcms/kiwi_auth/views.py:208
 #, python-format
 msgid "You are viewing records from tenant '%s'"
 msgstr "テナントの '%s' からレコードを表示しています"
 
-#: tcms/kiwi_auth/views.py:256
+#: tcms/kiwi_auth/views.py:259
 msgid "Email address has been reset, please check inbox for further instructions"
 msgstr "メールアドレスがリセットされました。詳細な手順については受信トレイをご確認ください。"
 
@@ -637,7 +627,7 @@ msgstr "製品"
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:86
 #: tcms/testcases/templates/testcases/search.html:86
-#: tcms/testcases/templates/testcases/search.html:170
+#: tcms/testcases/templates/testcases/search.html:171
 #: tcms/testplans/templates/testplans/get.html:162
 #: tcms/testplans/templates/testplans/get.html:376
 #: tcms/testplans/templates/testplans/get.html:409
@@ -656,7 +646,7 @@ msgstr "優先順位"
 
 #: tcms/management/models.py:107
 #: tcms/testcases/templates/testcases/search.html:116
-#: tcms/testcases/templates/testcases/search.html:169
+#: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:270
 msgid "Component"
@@ -688,7 +678,7 @@ msgid "Tag"
 msgstr "タグ"
 
 #: tcms/management/models.py:195 tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:175
+#: tcms/testcases/templates/testcases/search.html:176
 #: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
 #: tcms/testruns/templates/testruns/get.html:361
@@ -700,7 +690,7 @@ msgstr "タグ"
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "base_urlを設定することで、この課題トラッカーへの報告を有効にします！"
 
-#: tcms/rpc/api/forms/__init__.py:9
+#: tcms/rpc/api/forms/__init__.py:10
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "不正な日付フォーマットです。期待値 YYYY-MM-DD [HH:MM:SS]。"
 
@@ -814,16 +804,16 @@ msgstr "ユーザーガイド"
 msgid "API Help"
 msgstr "API ヘルプ"
 
-#: tcms/signals.py:96
+#: tcms/signals.py:97
 msgid "New user awaiting approval"
 msgstr "承認待ちの新規ユーザー"
 
-#: tcms/signals.py:186
+#: tcms/signals.py:187
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "新着: テストラン #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:258
+#: tcms/signals.py:259
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "バグ #%(pk)d - %(summary)s"
@@ -877,7 +867,7 @@ msgstr "合計"
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:98
 #: tcms/testcases/templates/testcases/search.html:40
-#: tcms/testcases/templates/testcases/search.html:172
+#: tcms/testcases/templates/testcases/search.html:173
 #: tcms/testplans/templates/testplans/get.html:407
 #: tcms/testplans/templates/testplans/get.html:494
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
@@ -893,7 +883,7 @@ msgid "Manual"
 msgstr "手動"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
-#: tcms/testcases/models.py:42
+#: tcms/testcases/models.py:44
 msgid "Categories"
 msgstr "カテゴリ"
 
@@ -911,7 +901,7 @@ msgstr "子TPs"
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/mutable.html:74
 #: tcms/testcases/templates/testcases/search.html:95
-#: tcms/testcases/templates/testcases/search.html:171
+#: tcms/testcases/templates/testcases/search.html:172
 #: tcms/testplans/templates/testplans/get.html:149
 #: tcms/testplans/templates/testplans/get.html:368
 #: tcms/testplans/templates/testplans/get.html:401
@@ -929,7 +919,7 @@ msgstr "状態"
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:36
 #: tcms/testcases/templates/testcases/mutable.html:207
-#: tcms/testcases/templates/testcases/search.html:174
+#: tcms/testcases/templates/testcases/search.html:175
 #: tcms/testplans/templates/testplans/get.html:175
 #: tcms/testplans/templates/testplans/get.html:383
 #: tcms/testplans/templates/testplans/get.html:421
@@ -1348,8 +1338,9 @@ msgid "Please enter your new password twice so we can verify you typed it in cor
 msgstr "確認のために、新しいパスワードを2回入力してください。"
 
 #: tcms/templates/registration/password_reset_confirm.html:47
-msgid "request a new password reset"
-msgstr "パスワードリセットのリクエスト"
+#, python-format
+msgid "The password reset link was invalid, possibly because it has already been used. Please <a href=\"%(reset_url)s\">request a new password reset</a>."
+msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1367,7 +1358,7 @@ msgstr "Kiwi TCMS パスワードのリセット"
 msgid "Register new account"
 msgstr "新しいアカウントの登録"
 
-#: tcms/testcases/admin.py:28
+#: tcms/testcases/admin.py:27
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
@@ -1375,45 +1366,45 @@ msgstr "テストケースのステータスのカスタマイズについての
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        ドキュメント</a> を参照してください!"
 
-#: tcms/testcases/admin.py:56
+#: tcms/testcases/admin.py:54
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr "確認済みと未確認のステータスが１つずつは必要です!"
 
-#: tcms/testcases/admin.py:131
+#: tcms/testcases/admin.py:129
 msgid "Bug URL"
 msgstr "バグのURL"
 
-#: tcms/testcases/admin.py:151
+#: tcms/testcases/admin.py:149
 msgid "External Issue Tracker Integration"
 msgstr "外部課題トラッキングシステムの統合"
 
-#: tcms/testcases/admin.py:161
+#: tcms/testcases/admin.py:158
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
 msgstr "<h1>警告:以下の値を編集する前に<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">外部バグトラッカーを設定</a> セクションを読んでください！</h1>"
 
-#: tcms/testcases/admin.py:168
+#: tcms/testcases/admin.py:164
 msgid "Configuration health check"
 msgstr "設定のヘルスチェック"
 
-#: tcms/testcases/admin.py:172
+#: tcms/testcases/admin.py:168
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
 msgstr "Kiwi TCMSは、上記で定義した統合して使用されるバグのURLから詳細を取得しようとします。 「保存して続ける」ボタンをクリックし、画面上部に表示されるメッセージを確認してください。 <strong>警告:</strong> 問題が発生した場合には、OpenGraphプロトコルを介して詳細を取得するためにトラッカーが転送されます。 その場合、結果には `from_open_graph` という名前のフィールドが含まれます。"
 
-#: tcms/testcases/admin.py:192
+#: tcms/testcases/admin.py:188
 msgid "Failed creating Issue Tracker"
 msgstr "課題トラッカーの作成に失敗しました"
 
-#: tcms/testcases/admin.py:201
+#: tcms/testcases/admin.py:197
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr "OpenGraphで抽出された詳細。問題トラッカーが正しく設定されていない可能性があります。"
 
-#: tcms/testcases/admin.py:210
+#: tcms/testcases/admin.py:206
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
 msgstr "API 経由で抽出された詳細。問題トラッカーの設定が良いです！"
 
-#: tcms/testcases/admin.py:223
+#: tcms/testcases/admin.py:219
 msgid "Issue Tracker configuration check failed"
 msgstr "課題トラッカーの設定チェックが完了しました"
 
@@ -1422,7 +1413,7 @@ msgstr "課題トラッカーの設定チェックが完了しました"
 msgid "NEW: TestCase #%(pk)d - %(summary)s"
 msgstr "新着: テストケース #%(pk)d - %(summary)s"
 
-#: tcms/testcases/helpers/email.py:21
+#: tcms/testcases/helpers/email.py:20
 #, python-format
 msgid "Test case %(pk)d has been created.\n\n"
 "### Basic information ###\n"
@@ -1442,25 +1433,25 @@ msgstr "テストケース %(pk)d が作成されました。\n"
 "デフォルトテスター: %(default_tester)s\n"
 "テキスト: %(text)s"
 
-#: tcms/testcases/helpers/email.py:62
+#: tcms/testcases/helpers/email.py:60
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "削除: テストケース #%(pk)d - %(summary)s"
 
-#: tcms/testcases/models.py:23
+#: tcms/testcases/models.py:24
 msgid "Test case status"
 msgstr "テストケースのステータス"
 
-#: tcms/testcases/models.py:24
+#: tcms/testcases/models.py:25
 msgid "Test case statuses"
 msgstr "テストケースのステータス"
 
-#: tcms/testcases/models.py:379
+#: tcms/testcases/models.py:387
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
 msgstr "テンプレート"
 
-#: tcms/testcases/models.py:380
+#: tcms/testcases/models.py:388
 msgid "Templates"
 msgstr "テンプレート"
 
@@ -1488,7 +1479,7 @@ msgstr "複製"
 #: tcms/testcases/templates/testcases/get.html:168
 #: tcms/testcases/templates/testcases/mutable.html:184
 #: tcms/testcases/templates/testcases/search.html:126
-#: tcms/testcases/templates/testcases/search.html:173
+#: tcms/testcases/templates/testcases/search.html:174
 #: tcms/testplans/templates/testplans/get.html:54
 #: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/get.html:497
@@ -1503,7 +1494,7 @@ msgstr "作成者"
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testcases/templates/testcases/mutable.html:58
 #: tcms/testcases/templates/testcases/search.html:104
-#: tcms/testcases/templates/testcases/search.html:168
+#: tcms/testcases/templates/testcases/search.html:169
 #: tcms/testplans/templates/testplans/get.html:413
 #: tcms/testplans/templates/testplans/get.html:496
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
@@ -1648,7 +1639,11 @@ msgstr "テキスト"
 msgid "Separate multiple values with comma (,)"
 msgstr "複数の値をカンマで区切ってください (,)"
 
-#: tcms/testcases/templates/testcases/search.html:182
+#: tcms/testcases/templates/testcases/search.html:168
+msgid "Last modified"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:183
 msgid "Select"
 msgstr "選択"
 
@@ -2146,75 +2141,77 @@ msgid "Tenant"
 msgstr "テナント"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:39
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:140
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:38
 msgid "Organization"
 msgstr "組織"
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
-msgid "Private repository credentials"
-msgstr "プライベートリポジトリの秘匿情報"
+msgid "Private credentials"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
-msgid "Click 'Password' to reveal!"
-msgstr "パスワードを表示"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
+msgid "Click field to reveal!"
+msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
-msgid "Private containers instructions"
-msgstr "プライベートコンテナの説明"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
+msgid "Instructions"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
-msgid "kiwitcms/gitops prefix"
-msgstr "kiwitcms/gitops prefix"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
+msgid "Token"
+msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
 msgid "You own the following tenants"
 msgstr "以下のテナントを所有しています"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:148
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:119
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:120
 msgid "Price"
 msgstr "価格"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:152
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:153
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "Subscription type"
 msgstr "購読の種類"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:157
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:158
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:129
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:130
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:16
 msgid "Paid until"
 msgstr "支払完了まで"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:136
 msgid "Cancel subscription"
 msgstr "定期購入を解約"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:149
 msgid "You don't own any tenants"
 msgstr "テナントを所有していません"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:181
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:153
 msgid "Subscribe via FastSpring"
 msgstr "FastSpring 経由で購読"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
 msgid "Transaction history"
 msgstr "トランザクション履歴"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:219
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:220
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:191
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:192
 msgid "Sender"
 msgstr "送信元"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:224
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:225
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:196
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
 msgid "Vendor"
 msgstr "ベンダー"
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:229
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:230
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:201
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:202
 msgid "Received on"
 msgstr "受信"
 
@@ -2248,19 +2245,19 @@ msgstr "Kiwi TCMSのプライベートテナントを作成しようとしてい
 "500内部サーバーエラーページが表示された場合は、お問い合わせください\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\"> kiwitcms@mrsenko.com </a>すぐに！"
 
-#: tcms_github_marketplace/utils.py:58
+#: tcms_github_marketplace/utils.py:64
 msgid "Kiwi TCMS Subscription Exit Poll"
 msgstr "Kiwi TCMS サブスクリプション解約アンケート"
 
-#: tcms_github_marketplace/views.py:617
+#: tcms_github_marketplace/views.py:628
 msgid "Kiwi TCMS subscription notification"
 msgstr "Kiwi TCMS サブスクリプション通知"
 
-#: tcms_github_marketplace/views.py:833
+#: tcms_github_marketplace/views.py:846
 msgid "mo"
 msgstr "月"
 
-#: tcms_github_marketplace/views.py:835
+#: tcms_github_marketplace/views.py:848
 msgid "yr"
 msgstr "年"
 

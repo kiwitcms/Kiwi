@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 10:23+0000\n"
-"PO-Revision-Date: 2025-12-17 12:44\n"
+"POT-Creation-Date: 2026-06-17 18:46+0000\n"
+"PO-Revision-Date: 2026-06-17 19:56\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -401,7 +401,7 @@ msgstr ""
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
 msgstr "GÜNCELLEME: %(model_name)s #%(pk)d - %(title)s"
 
-#: tcms/core/history.py:62
+#: tcms/core/history.py:61
 #, python-format
 msgid "Updated on %(history_date)s\n"
 "Updated by %(username)s\n\n"
@@ -481,63 +481,53 @@ msgstr "%(total_count)s adet test planı yönetiyorsunuz, %(disabled_count)s ade
 msgid "There are no TestPlan(s) that belong to you"
 msgstr "Size atanmış herhangi bir test planı yok"
 
-#: tcms/core/views.py:47
+#: tcms/core/views.py:48
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
 msgstr "Ana URL ayarlanmadı! <a href=\"%(doc_url)s\">Dokümanı</a> inceleyin ve <a href=\"%(admin_url)s\">değiştirin</a>"
 
-#: tcms/core/views.py:71
+#: tcms/core/views.py:72
 #, python-format
 msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
 msgstr ""
 
-#: tcms/core/views.py:92
+#: tcms/core/views.py:93
 #, python-format
 msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:10
-#, python-brace-format
-msgid "File contains forbidden tag: <{tag_name}>"
-msgstr ""
-
-#: tcms/kiwi_attachments/validators.py:92
-#, python-brace-format
-msgid "File contains forbidden attribute: `{attr_name}`"
-msgstr ""
-
-#: tcms/kiwi_attachments/validators.py:97
+#: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:36 tcms/settings/common.py:443
+#: tcms/kiwi_auth/admin.py:39 tcms/settings/common.py:443
 msgid "Users"
 msgstr "Kullanıcılar"
 
-#: tcms/kiwi_auth/admin.py:62
+#: tcms/kiwi_auth/admin.py:65
 msgid "Deactivate selected accounts"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:69
+#: tcms/kiwi_auth/admin.py:72
 #, python-format
 msgid "Account '%s' was deactivated"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:103
+#: tcms/kiwi_auth/admin.py:106
 #: tcms/kiwi_auth/templates/accounts/reset_user_email.html:5
 #: tcms/templates/navbar.html:102
 msgid "Reset email address"
 msgstr "Email adresini sıfırla"
 
-#: tcms/kiwi_auth/admin.py:169
+#: tcms/kiwi_auth/admin.py:172
 msgid "Personal info"
 msgstr "Kişisel bilgi"
 
-#: tcms/kiwi_auth/admin.py:171
+#: tcms/kiwi_auth/admin.py:174
 msgid "Permissions"
 msgstr "İzinler"
 
-#: tcms/kiwi_auth/admin.py:208
+#: tcms/kiwi_auth/admin.py:211
 msgid "This is the last superuser, it cannot be deleted!"
 msgstr ""
 
@@ -597,25 +587,25 @@ msgstr "Hesabınız oluşturuldu, fakat etkileşmesi için yönetici onayı gere
 msgid "Following is the administrator list"
 msgstr "Aşağıda yönetici listesi"
 
-#: tcms/kiwi_auth/views.py:123
+#: tcms/kiwi_auth/views.py:126
 msgid "This activation key no longer exists in the database"
 msgstr "Bu etkileştirme anahtarı artık veritabanında mevcut değil"
 
-#: tcms/kiwi_auth/views.py:129
+#: tcms/kiwi_auth/views.py:132
 msgid "This activation key has expired"
 msgstr "Bu etkinleştirme anahtarının süresi dolmuş"
 
-#: tcms/kiwi_auth/views.py:141
+#: tcms/kiwi_auth/views.py:144
 msgid "Your account has been activated successfully"
 msgstr "Hesabınız başarıyla etkinleştirildi"
 
-#: tcms/kiwi_auth/views.py:168 tcms/kiwi_auth/views.py:177
-#: tcms/kiwi_auth/views.py:196 tcms/kiwi_auth/views.py:205
+#: tcms/kiwi_auth/views.py:171 tcms/kiwi_auth/views.py:180
+#: tcms/kiwi_auth/views.py:199 tcms/kiwi_auth/views.py:208
 #, python-format
 msgid "You are viewing records from tenant '%s'"
 msgstr ""
 
-#: tcms/kiwi_auth/views.py:256
+#: tcms/kiwi_auth/views.py:259
 msgid "Email address has been reset, please check inbox for further instructions"
 msgstr ""
 
@@ -636,7 +626,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:86
 #: tcms/testcases/templates/testcases/search.html:86
-#: tcms/testcases/templates/testcases/search.html:170
+#: tcms/testcases/templates/testcases/search.html:171
 #: tcms/testplans/templates/testplans/get.html:162
 #: tcms/testplans/templates/testplans/get.html:376
 #: tcms/testplans/templates/testplans/get.html:409
@@ -655,7 +645,7 @@ msgstr "Öncelikler"
 
 #: tcms/management/models.py:107
 #: tcms/testcases/templates/testcases/search.html:116
-#: tcms/testcases/templates/testcases/search.html:169
+#: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:216
 #: tcms/testruns/templates/testruns/get.html:270
 msgid "Component"
@@ -687,7 +677,7 @@ msgid "Tag"
 msgstr "Etiket"
 
 #: tcms/management/models.py:195 tcms/templates/include/tags_card.html:6
-#: tcms/testcases/templates/testcases/search.html:175
+#: tcms/testcases/templates/testcases/search.html:176
 #: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
 #: tcms/testruns/templates/testruns/get.html:361
@@ -699,7 +689,7 @@ msgstr "Etiketler"
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "Ana URL'i ayarlayarak bu İş Takip sistemine raporlamayı etkinleştirin!"
 
-#: tcms/rpc/api/forms/__init__.py:9
+#: tcms/rpc/api/forms/__init__.py:10
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr ""
 
@@ -813,16 +803,16 @@ msgstr "Kullanım Kılavuzu"
 msgid "API Help"
 msgstr "API Yardım"
 
-#: tcms/signals.py:96
+#: tcms/signals.py:97
 msgid "New user awaiting approval"
 msgstr "Onay bekleyen yeni kullanıcı var"
 
-#: tcms/signals.py:186
+#: tcms/signals.py:187
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "YENİ: Test Koşumu #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:258
+#: tcms/signals.py:259
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr ""
@@ -876,7 +866,7 @@ msgstr "Toplam"
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:98
 #: tcms/testcases/templates/testcases/search.html:40
-#: tcms/testcases/templates/testcases/search.html:172
+#: tcms/testcases/templates/testcases/search.html:173
 #: tcms/testplans/templates/testplans/get.html:407
 #: tcms/testplans/templates/testplans/get.html:494
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:5
@@ -892,7 +882,7 @@ msgid "Manual"
 msgstr "Manuel"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:39
-#: tcms/testcases/models.py:42
+#: tcms/testcases/models.py:44
 msgid "Categories"
 msgstr "Kategoriler"
 
@@ -910,7 +900,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/mutable.html:74
 #: tcms/testcases/templates/testcases/search.html:95
-#: tcms/testcases/templates/testcases/search.html:171
+#: tcms/testcases/templates/testcases/search.html:172
 #: tcms/testplans/templates/testplans/get.html:149
 #: tcms/testplans/templates/testplans/get.html:368
 #: tcms/testplans/templates/testplans/get.html:401
@@ -928,7 +918,7 @@ msgstr "Durum"
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:36
 #: tcms/testcases/templates/testcases/mutable.html:207
-#: tcms/testcases/templates/testcases/search.html:174
+#: tcms/testcases/templates/testcases/search.html:175
 #: tcms/testplans/templates/testplans/get.html:175
 #: tcms/testplans/templates/testplans/get.html:383
 #: tcms/testplans/templates/testplans/get.html:421
@@ -1334,8 +1324,9 @@ msgid "Please enter your new password twice so we can verify you typed it in cor
 msgstr "Lütfen doğru bir şekilde yazdığınızı onaylamak için şifreyi iki kez girin"
 
 #: tcms/templates/registration/password_reset_confirm.html:47
-msgid "request a new password reset"
-msgstr "yeni bir şifre değişikliği talebi oluşturun"
+#, python-format
+msgid "The password reset link was invalid, possibly because it has already been used. Please <a href=\"%(reset_url)s\">request a new password reset</a>."
+msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1353,51 +1344,51 @@ msgstr "Kiwi TCMS şifre değişikliği"
 msgid "Register new account"
 msgstr "Yeni Hesap Oluştur"
 
-#: tcms/testcases/admin.py:28
+#: tcms/testcases/admin.py:27
 msgid "For more information about customizing test case statuses see\n"
 "        <a href=\"https://kiwitcms.readthedocs.io/en/latest/admin.html#test-case-statuses\">\n"
 "        the documentation</a>!"
 msgstr ""
 
-#: tcms/testcases/admin.py:56
+#: tcms/testcases/admin.py:54
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr ""
 
-#: tcms/testcases/admin.py:131
+#: tcms/testcases/admin.py:129
 msgid "Bug URL"
 msgstr ""
 
-#: tcms/testcases/admin.py:151
+#: tcms/testcases/admin.py:149
 msgid "External Issue Tracker Integration"
 msgstr ""
 
-#: tcms/testcases/admin.py:161
+#: tcms/testcases/admin.py:158
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
 msgstr ""
 
-#: tcms/testcases/admin.py:168
+#: tcms/testcases/admin.py:164
 msgid "Configuration health check"
 msgstr ""
 
-#: tcms/testcases/admin.py:172
+#: tcms/testcases/admin.py:168
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
 msgstr ""
 
-#: tcms/testcases/admin.py:192
+#: tcms/testcases/admin.py:188
 msgid "Failed creating Issue Tracker"
 msgstr ""
 
-#: tcms/testcases/admin.py:201
+#: tcms/testcases/admin.py:197
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr ""
 
-#: tcms/testcases/admin.py:210
+#: tcms/testcases/admin.py:206
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
 msgstr ""
 
-#: tcms/testcases/admin.py:223
+#: tcms/testcases/admin.py:219
 msgid "Issue Tracker configuration check failed"
 msgstr ""
 
@@ -1406,7 +1397,7 @@ msgstr ""
 msgid "NEW: TestCase #%(pk)d - %(summary)s"
 msgstr ""
 
-#: tcms/testcases/helpers/email.py:21
+#: tcms/testcases/helpers/email.py:20
 #, python-format
 msgid "Test case %(pk)d has been created.\n\n"
 "### Basic information ###\n"
@@ -1419,25 +1410,25 @@ msgid "Test case %(pk)d has been created.\n\n"
 "%(text)s"
 msgstr ""
 
-#: tcms/testcases/helpers/email.py:62
+#: tcms/testcases/helpers/email.py:60
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "SİLİNDİ: Test Senaryosu #%(pk)d - %(summary)s"
 
-#: tcms/testcases/models.py:23
+#: tcms/testcases/models.py:24
 msgid "Test case status"
 msgstr ""
 
-#: tcms/testcases/models.py:24
+#: tcms/testcases/models.py:25
 msgid "Test case statuses"
 msgstr ""
 
-#: tcms/testcases/models.py:379
+#: tcms/testcases/models.py:387
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
 msgstr ""
 
-#: tcms/testcases/models.py:380
+#: tcms/testcases/models.py:388
 msgid "Templates"
 msgstr ""
 
@@ -1465,7 +1456,7 @@ msgstr "Kopyala"
 #: tcms/testcases/templates/testcases/get.html:168
 #: tcms/testcases/templates/testcases/mutable.html:184
 #: tcms/testcases/templates/testcases/search.html:126
-#: tcms/testcases/templates/testcases/search.html:173
+#: tcms/testcases/templates/testcases/search.html:174
 #: tcms/testplans/templates/testplans/get.html:54
 #: tcms/testplans/templates/testplans/get.html:417
 #: tcms/testplans/templates/testplans/get.html:497
@@ -1480,7 +1471,7 @@ msgstr "Oluşturan"
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testcases/templates/testcases/mutable.html:58
 #: tcms/testcases/templates/testcases/search.html:104
-#: tcms/testcases/templates/testcases/search.html:168
+#: tcms/testcases/templates/testcases/search.html:169
 #: tcms/testplans/templates/testplans/get.html:413
 #: tcms/testplans/templates/testplans/get.html:496
 #: tcms/testplans/templates/testplans/toolbar_dropdown.html:7
@@ -1625,7 +1616,11 @@ msgstr "Metin"
 msgid "Separate multiple values with comma (,)"
 msgstr "Birden fazla değeri virgüle (,) ile ayırın"
 
-#: tcms/testcases/templates/testcases/search.html:182
+#: tcms/testcases/templates/testcases/search.html:168
+msgid "Last modified"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:183
 msgid "Select"
 msgstr ""
 
@@ -2120,75 +2115,77 @@ msgid "Tenant"
 msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:39
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:140
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:112
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:38
 msgid "Organization"
 msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:52
-msgid "Private repository credentials"
+msgid "Private credentials"
 msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:68
-msgid "Click 'Password' to reveal!"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
+msgid "Click field to reveal!"
 msgstr ""
 
 #: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:70
-msgid "Private containers instructions"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:83
+msgid "Instructions"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:81
-msgid "kiwitcms/gitops prefix"
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:75
+msgid "Token"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:97
 msgid "You own the following tenants"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:147
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:148
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:119
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:120
 msgid "Price"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:152
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:153
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:124
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:125
 msgid "Subscription type"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:157
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:158
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:129
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:130
 #: tcms_github_marketplace/templates/tcms_tenants/override_new.html:16
 msgid "Paid until"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:164
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:136
 msgid "Cancel subscription"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:177
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:149
 msgid "You don't own any tenants"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:181
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:153
 msgid "Subscribe via FastSpring"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:169
 msgid "Transaction history"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:219
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:220
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:191
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:192
 msgid "Sender"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:224
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:225
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:196
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:197
 msgid "Vendor"
 msgstr ""
 
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:229
-#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:230
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:201
+#: tcms_github_marketplace/templates/tcms_github_marketplace/subscription.html:202
 msgid "Received on"
 msgstr ""
 
@@ -2217,19 +2214,19 @@ msgid "You are about to create a Private Tenant for Kiwi TCMS.\n"
 "<a href=\"mailto:kiwitcms@mrsenko.com\">kiwitcms@mrsenko.com</a> immediately!"
 msgstr ""
 
-#: tcms_github_marketplace/utils.py:58
+#: tcms_github_marketplace/utils.py:64
 msgid "Kiwi TCMS Subscription Exit Poll"
 msgstr ""
 
-#: tcms_github_marketplace/views.py:617
+#: tcms_github_marketplace/views.py:628
 msgid "Kiwi TCMS subscription notification"
 msgstr ""
 
-#: tcms_github_marketplace/views.py:833
+#: tcms_github_marketplace/views.py:846
 msgid "mo"
 msgstr ""
 
-#: tcms_github_marketplace/views.py:835
+#: tcms_github_marketplace/views.py:848
 msgid "yr"
 msgstr ""
 
