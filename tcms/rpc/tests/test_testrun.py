@@ -504,6 +504,21 @@ class TestFilter(APITestCase):
         self.assertEqual(result["manager"], self.test_run.manager.pk)
         self.assertEqual(result["default_tester"], self.test_run.default_tester.pk)
 
+    def test_filter_with_non_printable_chars(self):
+        run = TestRunFactory()
+        # contains End Of Text character: \u0003
+        run.notes = "FULL Validation on Label 15 ␃"
+        run.save()
+
+        result = self.rpc_client.TestRun.filter({"id": run.pk})
+        self.assertEqual(1, len(result))
+
+        result = result[0]
+
+        self.assertEqual(result["id"], run.pk)
+        self.assertEqual(result["build__version"], run.build.version.pk)
+        self.assertEqual(result["notes"], "FULL Validation on Label 15 ␃")
+
 
 class TestFilterPermission(APIPermissionsTestCase):
     permission_label = "testruns.view_testrun"
