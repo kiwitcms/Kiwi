@@ -4,7 +4,7 @@ doc8
 isort==8.0.1
 colorama
 black==26.5.1
-locust==2.44.3
+locust==2.44.4
 locust-plugins[playwright]
 parameterized
 robotframework
