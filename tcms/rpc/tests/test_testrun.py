@@ -514,6 +514,7 @@ class TestFilter(APITestCase):
         self.assertEqual(1, len(result))
 
         result = result[0]
+        print("DEBUG: result=", result)
 
         self.assertEqual(result["id"], run.pk)
         self.assertEqual(result["build__version"], run.build.version.pk)
