@@ -21,7 +21,7 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: list(dict)
     """
-    fields_list = ["id", "name", "case", "plan", "run"]
+    fields_list = ["id", "name", "case", "plan", "run", "execution"]
     if "tcms.bugs.apps.AppConfig" in settings.INSTALLED_APPS:
         fields_list.append("bugs")
 

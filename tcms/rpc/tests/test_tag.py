@@ -61,6 +61,7 @@ class TestTagFilter(APITestCase):
         self.assertIn("case", test_tag[0])
         self.assertIn("plan", test_tag[0])
         self.assertIn("run", test_tag[0])
+        self.assertIn("execution", test_tag[0])
 
 
 class TestTagCreate(APIPermissionsTestCase):
