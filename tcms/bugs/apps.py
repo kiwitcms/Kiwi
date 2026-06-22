@@ -13,7 +13,6 @@ class AppConfig(DjangoAppConfig):
         from .models import Bug
 
         post_save.connect(signals.handle_emails_post_bug_save, sender=Bug)
-        post_save.connect(signals.handle_attachments_post_save, sender=Bug)
         pre_delete.connect(signals.handle_attachments_pre_delete, sender=Bug)
         pre_delete.connect(signals.handle_comments_pre_delete, sender=Bug)
         post_migrate.connect(
