@@ -1,6 +1,82 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.1 (24 Jun 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates,
+    several improvements, database migrations, new API methods and updated translations.
+
+
+Security
+~~~~~~~~
+
+- Restrict open redirect. Fixes
+  `CVE-2026-54724 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-hmj5-jm8h-h9fh>`_
+- Validate user input in ``extra_link`` fields. Fixes
+  `CVE-2026-55630 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-473p-56xx-vg67>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update bleach from 6.3.0 to 6.4.0
+- Update django from 5.2.15 to 6.0.6
+- Update django-guardian from 3.3.1 to 3.3.2
+- Update django-simple-history from 3.11.0 to 3.12.0
+- Update node_modules/js-yaml from 4.1.1 to 4.2.0
+- Update node_modules/pdfmake from 0.3.7 to 0.3.11
+- Update node_modules/webpack from 5.106.0 to 5.107.2
+- Update node_modules/webpack-cli from 7.0.2 to 7.0.3
+- Remove the ``handle_attachments_post_save()`` signal. Going forward files
+  uploaded via rich text editor will be linked to the user who uploaded them
+
+
+Database
+~~~~~~~~
+
+- Add migration ``testcases.0024_alter_testcase_extra_link``
+- Add migration ``testplans.0011_alter_testplan_extra_link``
+- Add migration ``testruns.0020_testexecutiontag``
+
+
+API
+~~~
+
+- Add ``TestExecution.remove_tag()`` API method. Refs
+  `Issue #4349 <https://github.com/kiwitcms/Kiwi/issues/4349>`_
+- ``Tag.filter()`` API method now returns the ``execution`` field
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix invalid multiline ``{% trans %}`` on password reset confirm page
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/checkout from 6 to 7
+- Update codecov/codecov-action from 6 to 7
+- Update isort from 6.1.0 to 8.0.1
+- Update locust from 2.44.1 to 2.44.4
+- Update pylint from 3.3.9 to 4.0.6
+- Silence false-positive errors & adjustments for newer pylint
+- Skip English plural forms of seen strings in ``similar-string`` linter
+- Add XML-RPC API test case with non-printable character
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+
+
+
 Kiwi TCMS 16.0 (04 Jun 2026)
 ----------------------------
 
