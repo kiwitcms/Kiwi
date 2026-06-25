@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from parameterized import parameterized
 
-from tcms.testruns.models import TestExecutionStatus, TestRun
+from tcms.testruns.models import Environment, TestExecutionStatus, TestRun
 from tcms.tests import LoggedInTestCase
 from tcms.tests.factories import TestRunFactory, UserFactory
 from tcms.utils.permissions import initiate_user_with_default_setups
@@ -133,3 +133,17 @@ class TestTestExecutionStatusAdmin(LoggedInTestCase):
             _("1 negative, 1 neutral & 1 positive status required!"),
             html=True,
         )
+
+
+class TestEnvironmentAdmin(LoggedInTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        initiate_user_with_default_setups(cls.tester)
+        Environment.objects.create(name="Test Environment")
+
+    def test_admin_page_loads(self):
+        response = self.client.get("/admin/testruns/environment/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Select environment to change")
+        self.assertContains(response, "Edit parameters")
