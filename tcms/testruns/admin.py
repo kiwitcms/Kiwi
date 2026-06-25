@@ -103,15 +103,14 @@ class TestExecutionStatusAdmin(admin.ModelAdmin):
 
 
 class EnvironmentAdmin(ObjectPermissionsAdminMixin, admin.ModelAdmin):
-    _edit_properties_text = _("Edit parameters")
-
     list_display = ("id", "name", "properties_link")
     search_fields = ("name",)
 
     def properties_link(self, obj):
-        url = reverse("testruns-environment", args=[obj.id])
         return format_html(
-            f"<a href='{url}'>{self._edit_properties_text}</a>",
+            "<a href='{}'>{}</a>",
+            reverse("testruns-environment", args=[obj.id]),
+            _("Edit parameters"),
         )
 
     properties_link.short_description = _("Parameters")
