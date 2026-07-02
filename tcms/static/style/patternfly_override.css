@@ -158,3 +158,8 @@ input[type="submit"].grp-warning {
 .dataTables_info {
     display: inline;
 }
+
+/* login buttons for OAuth login */
+.inline-display {
+    display: inline;
+}
