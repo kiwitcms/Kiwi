@@ -32,7 +32,7 @@ Plugins still in progress
 N/A
 
 Watch their repositories or
-`subscribe to our newsletter <https://kiwitcms.us17.list-manage.com/subscribe/post?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
+`subscribe to our newsletter <https://kiwitcms.us17.list-manage.com/subscribe?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 to be notified when they are officially released.
 
 .. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
