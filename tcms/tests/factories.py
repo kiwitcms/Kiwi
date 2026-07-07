@@ -69,7 +69,6 @@ class ComponentFactory(DjangoModelFactory):
     name = factory.Sequence(lambda n: f"Component {n}")
     product = factory.SubFactory(ProductFactory)
     initial_owner = factory.SubFactory(UserFactory)
-    initial_qa_contact = factory.SubFactory(UserFactory)
 
 
 class VersionFactory(DjangoModelFactory):
