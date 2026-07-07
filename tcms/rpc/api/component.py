@@ -31,7 +31,6 @@ def filter(query):  # pylint: disable=redefined-builtin
             "name",
             "product",
             "initial_owner",
-            "initial_qa_contact",
             "description",
             "cases",
         )
@@ -59,16 +58,12 @@ def create(values, **kwargs):
 
     .. note::
 
-        If ``initial_owner_id`` or ``initial_qa_owner_id`` are
-        not specified or don't exist in the database these fields are set to the
+        If ``initial_owner_id`` is not specified this field is set to the
         user issuing the RPC request!
     """
     request = kwargs.get(REQUEST_KEY)
     if "initial_owner" not in values:
         values["initial_owner"] = request.user.pk
-
-    if "initial_qa_contact" not in values:
-        values["initial_qa_contact"] = request.user.pk
 
     if "description" not in values:
         values["description"] = "Created via API"

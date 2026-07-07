@@ -44,13 +44,11 @@ class TestCaseRemoveComponent(BasePlanCase):
             name="Application",
             product=cls.product,
             initial_owner=cls.tester,
-            initial_qa_contact=cls.tester,
         )
         cls.component_2 = ComponentFactory(
             name="Database",
             product=cls.product,
             initial_owner=cls.tester,
-            initial_qa_contact=cls.tester,
         )
 
         cls.cc_rel_1 = TestCaseComponentFactory(

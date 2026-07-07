@@ -92,13 +92,6 @@ class Component(models.Model, UrlMixin):
         null=True,
         on_delete=models.CASCADE,
     )
-    initial_qa_contact = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name="initial_qa_contact",
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-    )
     description = models.TextField()
 
     class Meta:

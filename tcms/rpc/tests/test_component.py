@@ -17,7 +17,6 @@ class TestFilterComponents(APITestCase):
             name="application",
             product=cls.product,
             initial_owner=None,
-            initial_qa_contact=None,
         )
 
     def test_filter_by_product_id(self):
@@ -29,7 +28,6 @@ class TestFilterComponents(APITestCase):
         self.assertEqual(result["product"], self.product.pk)
         self.assertIn("description", result)
         self.assertIn("initial_owner", result)
-        self.assertIn("initial_qa_contact", result)
 
     def test_filter_by_name(self):
         com = self.rpc_client.Component.filter({"name": "application"})
@@ -61,7 +59,6 @@ class TestCreateComponent(APITestCase):
         self.assertEqual(result["name"], "application")
         self.assertEqual(result["product"], self.product.pk)
         self.assertEqual(result["initial_owner"], self.api_user.pk)
-        self.assertEqual(result["initial_qa_contact"], self.api_user.pk)
         self.assertEqual(result["description"], "Created via API")
 
     def test_add_component_with_no_perms(self):
@@ -87,7 +84,6 @@ class TestUpdateComponent(APITestCase):
             name="application",
             product=cls.product,
             initial_owner=None,
-            initial_qa_contact=None,
         )
 
     def test_update_component(self):
