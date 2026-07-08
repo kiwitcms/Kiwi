@@ -3,8 +3,9 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.management.forms import BuildForm
 from tcms.management.models import Build
-from tcms.rpc.api.forms.management import BuildForm, BuildUpdateForm
+from tcms.rpc.api.forms.management import BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
 
 

@@ -3,8 +3,8 @@ from django.conf import settings
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.management.forms import TagForm
 from tcms.management.models import Tag
-from tcms.rpc.api.forms.management import TagForm
 from tcms.rpc.decorators import permissions_required
 
 
