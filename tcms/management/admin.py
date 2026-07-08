@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from tcms.core.history import ReadOnlyHistoryAdmin
+from tcms.management.forms import ComponentForm
 from tcms.management.models import (
     Build,
     Classification,
@@ -38,9 +39,10 @@ class PriorityAdmin(admin.ModelAdmin):
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    search_fields = ("name", "id")
+    form = ComponentForm
     list_display = ("id", "name", "product", "initial_owner", "description")
     list_filter = ("product",)
+    search_fields = ("name", "id")
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related("product", "initial_owner")
