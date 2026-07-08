@@ -4,8 +4,9 @@ from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
 from modernrpc.core import REQUEST_KEY, rpc_method
 
+from tcms.management.forms import ComponentForm
 from tcms.management.models import Component
-from tcms.rpc.api.forms.management import ComponentForm, ComponentUpdateForm
+from tcms.rpc.api.forms.management import ComponentUpdateForm
 from tcms.rpc.decorators import permissions_required
 
 User = get_user_model()  # pylint: disable=invalid-name

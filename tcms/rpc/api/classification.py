@@ -5,8 +5,8 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.management.forms import ClassificationForm
 from tcms.management.models import Classification
-from tcms.rpc.api.forms.management import ClassificationForm
 from tcms.rpc.decorators import permissions_required
 
 

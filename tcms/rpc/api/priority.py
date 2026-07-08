@@ -3,8 +3,8 @@
 from django.forms.models import model_to_dict
 from modernrpc.core import rpc_method
 
+from tcms.management.forms import PriorityForm
 from tcms.management.models import Priority
-from tcms.rpc.api.forms.management import PriorityForm
 from tcms.rpc.decorators import permissions_required
 
 
