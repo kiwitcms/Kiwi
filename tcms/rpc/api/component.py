@@ -69,7 +69,7 @@ def create(values, **kwargs):
     if "description" not in values:
         values["description"] = "Created via API"
 
-    form = ComponentForm(values)
+    form = ComponentForm(values, request=request)
 
     if form.is_valid():
         component = form.save()
@@ -80,7 +80,7 @@ def create(values, **kwargs):
 
 @permissions_required("management.change_component")
 @rpc_method(name="Component.update")
-def update(component_id, values):
+def update(component_id, values, **kwargs):
     """
     .. function:: RPC Component.update
 
@@ -90,13 +90,16 @@ def update(component_id, values):
         :type component_id: int
         :param values: Fields and values to be updated
         :type values: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
         :raises ValueError: if data validation fails
         :raises PermissionDenied: if missing *management.change_component* permission
     """
+    request = kwargs.get(REQUEST_KEY)
     component = Component.objects.get(pk=component_id)
-    form = ComponentUpdateForm(values, instance=component)
+    form = ComponentUpdateForm(values, instance=component, request=request)
 
     if form.is_valid():
         component = form.save()

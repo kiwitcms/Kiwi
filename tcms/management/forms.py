@@ -30,6 +30,14 @@ class ComponentForm(forms.ModelForm):
         model = Component
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if request and hasattr(request, "tenant"):
+            self.fields["initial_owner"].queryset = (
+                request.tenant.authorized_users.all()
+            )
+
 
 class PriorityForm(forms.ModelForm):
     class Meta:

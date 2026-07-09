@@ -44,6 +44,7 @@ class UpdateModelFormMixin:  # pylint: disable=too-few-public-methods
         instance=None,
         use_required_attribute=None,
         renderer=None,
+        **kwargs,
     ):
         super().__init__(
             data,
@@ -57,6 +58,7 @@ class UpdateModelFormMixin:  # pylint: disable=too-few-public-methods
             instance,
             use_required_attribute,
             renderer,
+            **kwargs,
         )
 
         for field in self.fields:
