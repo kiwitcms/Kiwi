@@ -26,7 +26,7 @@ class ProductsAdmin(ReadOnlyHistoryAdmin):
     def get_readonly_fields(self, request, obj=None):
         return ()
 
-    search_fields = ("id", "name")
+    search_fields = ("name", "id")
     view_on_site = False
     list_display = ("id", "name", "classification", "description")
     list_filter = ("id", "name", "classification")
@@ -62,7 +62,7 @@ class VersionAdmin(ReadOnlyHistoryAdmin):
     def get_readonly_fields(self, request, obj=None):
         return ()
 
-    search_fields = ("id", "product", "value")
+    search_fields = ("value", "id")
     view_on_site = False
     list_display = ("id", "product", "value")
     list_filter = ("product",)
@@ -111,7 +111,7 @@ class BuildAdmin(ReadOnlyHistoryAdmin):
     def get_readonly_fields(self, request, obj=None):
         return ()
 
-    search_fields = ("id", "name")
+    search_fields = ("name", "id")
     view_on_site = False
     list_display = ("id", "name", "version", "product_name", "is_active")
     list_filter = ("version__product", "version", "is_active")
@@ -145,7 +145,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    search_fields = ("id", "name")
+    search_fields = ("name", "id")
     list_display = ("pk", "name")
 
 
