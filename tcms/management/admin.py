@@ -4,7 +4,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from tcms.core.history import ReadOnlyHistoryAdmin
+from tcms.core_history import ReadOnlyHistoryAdmin
 from tcms.management.forms import ComponentForm
 from tcms.management.models import (
     Build,
@@ -26,7 +26,7 @@ class ProductsAdmin(ReadOnlyHistoryAdmin):
     def get_readonly_fields(self, request, obj=None):
         return ()
 
-    search_fields = ("name", "id")
+    search_fields = ("id", "name")
     view_on_site = False
     list_display = ("id", "name", "classification", "description")
     list_filter = ("id", "name", "classification")
@@ -44,6 +44,16 @@ class ComponentAdmin(admin.ModelAdmin):
     list_filter = ("product",)
     search_fields = ("name", "id")
 
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        Form = super().get_form(request, obj, change, **kwargs)
+
+        class RequestAwareForm(Form):
+            def __init__(self, *args, **kwargs):
+                kwargs["request"] = request
+                super().__init__(*args, **kwargs)
+
+        return RequestAwareForm
+
     def get_queryset(self, request):
         return super().get_queryset(request).select_related("product", "initial_owner")
 
@@ -52,7 +62,7 @@ class VersionAdmin(ReadOnlyHistoryAdmin):
     def get_readonly_fields(self, request, obj=None):
         return ()
 
-    search_fields = ("value", "id")
+    search_fields = ("id", "product", "value")
     view_on_site = False
     list_display = ("id", "product", "value")
     list_filter = ("product",)
@@ -101,7 +111,7 @@ class BuildAdmin(ReadOnlyHistoryAdmin):
     def get_readonly_fields(self, request, obj=None):
         return ()
 
-    search_fields = ("name", "id")
+    search_fields = ("id", "name")
     view_on_site = False
     list_display = ("id", "name", "version", "product_name", "is_active")
     list_filter = ("version__product", "version", "is_active")
@@ -135,7 +145,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    search_fields = ("name", "id")
+    search_fields = ("id", "name")
     list_display = ("pk", "name")
 
 

@@ -69,7 +69,7 @@ def create(values, **kwargs):
     if "description" not in values:
         values["description"] = "Created via API"
 
-    form = ComponentForm(values)
+    form = ComponentForm(values, request=request)
 
     if form.is_valid():
         component = form.save()
