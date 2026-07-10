@@ -50,6 +50,14 @@ Expected results:
 Additional info:"""),
     )
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if request and hasattr(request, "tenant"):
+            tenant_users = request.tenant.authorized_users.all()
+            self.fields["reporter"].queryset = tenant_users
+            self.fields["assignee"].queryset = tenant_users
+
     def populate(self, product_id=None):
         if product_id:
             self.fields["version"].queryset = Version.objects.filter(
@@ -63,7 +71,7 @@ Additional info:"""),
             self.fields["build"].queryset = Build.objects.all()
 
 
-class NewBugFromRPCForm(forms.ModelForm):
+class NewBugFromRPCForm(NewBugForm):
     created_at = DateTimeFieldWithDefault(required=False)
 
     class Meta:

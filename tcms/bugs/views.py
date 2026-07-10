@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2021 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2026 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -76,6 +76,7 @@ class New(CreateView):
                 "reporter": self.request.user,
             }
         )
+        kwargs["request"] = self.request
         return kwargs
 
     def get_form(self, form_class=None):
@@ -177,6 +178,11 @@ class Edit(UpdateView):
                 result += f"{field.title()}: {_before_update} -> {_after_update}\n"
         if result:
             add_comment([self.object], result, self.request.user)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def get_initial(self):
         return {

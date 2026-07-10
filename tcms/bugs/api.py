@@ -160,10 +160,11 @@ def create(values, **kwargs):
     if "status" not in values:
         values["status"] = True
 
+    request = kwargs.get(REQUEST_KEY)
     if not values.get("reporter"):
-        values["reporter"] = kwargs.get(REQUEST_KEY).user.pk
+        values["reporter"] = request.user.pk
 
-    form = NewBugFromRPCForm(values)
+    form = NewBugFromRPCForm(values, request=request)
     if form.is_valid():
         bug = form.save()
 

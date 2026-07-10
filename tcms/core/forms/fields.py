@@ -14,6 +14,13 @@ class UserField(forms.CharField):
     Will eventually support user selection
     """
 
+    def __init__(self, *, queryset=None, **kwargs):
+        super().__init__(**kwargs)
+        if queryset is None:
+            self.queryset = User.objects.all()
+        else:
+            self.queryset = queryset
+
     def clean(self, value):
         """
         Form-validation:  accept a string/integer.
@@ -25,18 +32,18 @@ class UserField(forms.CharField):
             return None
         if isinstance(value, int):
             try:
-                return User.objects.get(pk=value)
+                return self.queryset.get(pk=value)
             except User.DoesNotExist:
                 raise ValidationError(f'Unknown user_id: "{value}"') from None
         else:
             value = value.strip()
             if value.isdigit():
                 try:
-                    return User.objects.get(pk=value)
+                    return self.queryset.get(pk=value)
                 except User.DoesNotExist:
                     raise ValidationError(f'Unknown user_id: "{value}"') from None
             else:
                 try:
-                    return User.objects.get((Q(email=value) | Q(username=value)))
+                    return self.queryset.get((Q(email=value) | Q(username=value)))
                 except User.DoesNotExist:
                     raise ValidationError(f'Unknown user: "{value}"') from None
