@@ -38,6 +38,7 @@ class NewTestPlanView(CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["initial"]["author"] = self.request.user
+        kwargs["request"] = self.request
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -78,6 +79,11 @@ class Edit(UpdateView):
         else:
             form.populate(product_id=self.object.product_id)
         return form
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
