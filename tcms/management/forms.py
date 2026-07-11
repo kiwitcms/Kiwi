@@ -33,7 +33,11 @@ class ComponentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
-        if request and hasattr(request, "tenant"):
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
             self.fields["initial_owner"].queryset = (
                 request.tenant.authorized_users.all()
             )

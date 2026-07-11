@@ -53,7 +53,11 @@ Additional info:"""),
     def __init__(self, *args, **kwargs):
         request = kwargs.pop("request", None)
         super().__init__(*args, **kwargs)
-        if request and hasattr(request, "tenant"):
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
             tenant_users = request.tenant.authorized_users.all()
             self.fields["reporter"].queryset = tenant_users
             self.fields["assignee"].queryset = tenant_users
