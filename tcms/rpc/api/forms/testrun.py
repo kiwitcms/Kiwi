@@ -42,6 +42,18 @@ class NewExecutionForm(forms.ModelForm):
     stop_date = DateTimeField(required=False)
     start_date = DateTimeField(required=False)
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
+            tenant_users = request.tenant.authorized_users.all()
+            self.fields["assignee"].queryset = tenant_users
+            self.fields["tested_by"].queryset = tenant_users
+
 
 class UpdateExecutionForm(  # pylint: disable=remove-empty-class,too-many-ancestors
     UpdateModelFormMixin, NewExecutionForm

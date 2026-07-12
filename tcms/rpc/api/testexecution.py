@@ -203,18 +203,19 @@ def update(execution_id, values, **kwargs):
         :raises ValueError: if data validations fail
         :raises PermissionDenied: if missing *testruns.change_testexecution* permission
     """
+    request = kwargs.get(REQUEST_KEY)
     test_execution = TestExecution.objects.get(pk=execution_id)
 
     if values.get("case_text_version") == "latest":
         values["case_text_version"] = test_execution.case.history.latest().history_id
 
     if values.get("status") and not values.get("tested_by"):
-        values["tested_by"] = kwargs.get(REQUEST_KEY).user.id
+        values["tested_by"] = request.user.id
 
     if values.get("status") and not values.get("build"):
         values["build"] = test_execution.run.build.pk
 
-    form = UpdateExecutionForm(values, instance=test_execution)
+    form = UpdateExecutionForm(values, instance=test_execution, request=request)
 
     if form.is_valid():
         test_execution = form.save()
@@ -467,7 +468,8 @@ def create(values, **kwargs):
 
     .. versionadded:: 15.3
     """
-    form = NewExecutionForm(values)
+    request = kwargs.get(REQUEST_KEY)
+    form = NewExecutionForm(values, request=request)
 
     if form.is_valid():
         test_execution = form.save()
