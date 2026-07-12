@@ -12,7 +12,16 @@ from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
 from tcms.utils import user as user_utils
 
-User = get_user_model()  # pylint: disable=invalid-name
+
+def get_queryset(request):
+    queryset = get_user_model().objects.all()
+    if (
+        request
+        and hasattr(request, "tenant")
+        and request.tenant.schema_name != "public"
+    ):
+        queryset = request.tenant.authorized_users.all()
+    return queryset
 
 
 def _get_user_dict(user):
@@ -52,11 +61,13 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 
         If query is ``None`` will return the user issuing the RPC request.
     """
+    request = kwargs.get(REQUEST_KEY)
     if not query:
-        query = {"pk": kwargs.get(REQUEST_KEY).user.pk}
+        query = {"pk": request.user.pk}
 
     return list(
-        User.objects.filter(**query)
+        get_queryset(request)
+        .filter(**query)
         .values(
             "email",
             "first_name",
@@ -103,7 +114,7 @@ def update(
     """
     request = kwargs.get(REQUEST_KEY)
     if user_id:
-        user_being_updated = User.objects.get(pk=user_id)
+        user_being_updated = get_queryset(request).get(pk=user_id)
     else:
         user_being_updated = request.user
 
@@ -144,7 +155,7 @@ def update(
 
 @permissions_required("auth.change_user")
 @rpc_method(name="User.deactivate")
-def deactivate(query):
+def deactivate(query, **kwargs):
     """
     .. function:: RPC User.deactivate(query)
 
@@ -152,6 +163,8 @@ def deactivate(query):
 
         :param query: Field lookups for :class:`django.contrib.auth.models.User`
         :type query: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :return: Serialized list of :class:`django.contrib.auth.models.User` objects
         :rtype: list(dict)
         :raises PermissionDenied: if missing the *auth.change_user* permission
@@ -174,8 +187,9 @@ def deactivate(query):
             >>> User.deactivate({'email__icontains': '@example.com'})
             >>> User.deactivate({'email__startswith': 'mia@'})
     """
+    request = kwargs.get(REQUEST_KEY)
     result = []
-    for user in User.objects.filter(**query):
+    for user in get_queryset(request).filter(**query):
         user_utils.deactivate(user)
 
         result.append(_get_user_dict(user))
@@ -185,7 +199,7 @@ def deactivate(query):
 
 @permissions_required("auth.change_user")
 @rpc_method(name="User.join_group")
-def join_group(username, groupname):
+def join_group(username, groupname, **kwargs):
     """
     .. function:: RPC User.join_group(username, groupname)
 
@@ -195,9 +209,12 @@ def join_group(username, groupname):
         :type username: str
         :param groupname: Name of group to join, must exist!
         :type groupname: str
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :raises PermissionDenied: if missing *auth.change_user* permission
     """
-    user = User.objects.get(username=username)
+    request = kwargs.get(REQUEST_KEY)
+    user = get_queryset(request).get(username=username)
     group = Group.objects.get(name=groupname)
     user.groups.add(group)
 
