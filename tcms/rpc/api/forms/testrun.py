@@ -32,17 +32,6 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
         )
 
 
-class UpdateExecutionForm(UpdateModelFormMixin, forms.ModelForm):
-    class Meta:
-        model = TestExecution
-        exclude = ("tag",)  # pylint: disable=modelform-uses-exclude
-
-    assignee = UserField()
-    tested_by = UserField()
-    stop_date = DateTimeField()
-    start_date = DateTimeField()
-
-
 class NewExecutionForm(forms.ModelForm):
     class Meta:
         model = TestExecution
@@ -52,6 +41,12 @@ class NewExecutionForm(forms.ModelForm):
     tested_by = UserField(required=False)
     stop_date = DateTimeField(required=False)
     start_date = DateTimeField(required=False)
+
+
+class UpdateExecutionForm(  # pylint: disable=remove-empty-class,too-many-ancestors
+    UpdateModelFormMixin, NewExecutionForm
+):
+    pass
 
 
 class UserForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
