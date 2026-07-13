@@ -26,6 +26,18 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     planned_start = DateTimeField()
     planned_stop = DateTimeField()
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
+            tenant_users = request.tenant.authorized_users.all()
+            self.fields["manager"].queryset = tenant_users
+            self.fields["default_tester"].queryset = tenant_users
+
     def populate(self, version_id):
         self.fields["build"].queryset = Build.objects.filter(
             version_id=version_id, is_active=True
