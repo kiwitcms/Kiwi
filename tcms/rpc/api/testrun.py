@@ -199,10 +199,11 @@ def create(values, **kwargs):
             }
             >>> TestRun.create(values)
     """
+    request = kwargs.get(REQUEST_KEY)
     if not values.get("default_tester"):
-        values["default_tester"] = kwargs.get(REQUEST_KEY).user.pk
+        values["default_tester"] = request.user.pk
 
-    form = NewRunForm(values)
+    form = NewRunForm(values, request=request)
     form.populate(values.get("plan"))
 
     if form.is_valid():
@@ -258,7 +259,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 
 @permissions_required("testruns.change_testrun")
 @rpc_method(name="TestRun.update")
-def update(run_id, values):
+def update(run_id, values, **kwargs):
     """
     .. function:: RPC TestRun.update(run_id, values)
 
@@ -268,13 +269,16 @@ def update(run_id, values):
         :type run_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestRun`
         :type values: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testruns.models.TestRun` object
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
+    request = kwargs.get(REQUEST_KEY)
     test_run = TestRun.objects.get(pk=run_id)
-    form = UpdateForm(values, instance=test_run)
+    form = UpdateForm(values, instance=test_run, request=request)
 
     # In the rare case where this TR is reassigned to another TP
     # don't validate if TR.build has a FK relationship with TP.product_version.

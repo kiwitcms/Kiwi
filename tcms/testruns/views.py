@@ -55,7 +55,7 @@ class NewTestRunView(View):
                 "plan": plan_id,
             }
 
-        form = NewRunForm(initial=form_initial)
+        form = NewRunForm(initial=form_initial, request=request)
         form.populate(plan_id)
 
         context_data = {
@@ -68,7 +68,7 @@ class NewTestRunView(View):
         return render(request, self.template_name, context_data)
 
     def post(self, request):
-        form = NewRunForm(data=request.POST)
+        form = NewRunForm(data=request.POST, request=request)
         form.populate(request.POST.get("plan"))
 
         if form.is_valid():
@@ -241,6 +241,11 @@ class EditTestRunView(UpdateView):
         form.populate(self.object.plan_id)
 
         return form
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
