@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.management import call_command
 from django.urls import include, path, reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from tcms import urls
@@ -32,14 +33,15 @@ class TestDashboard(LoggedInTestCase):
             "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
             "#configuration-of-kiwi-tcms-domain"
         )
-        cls.base_url_error_message = _(
-            "Base URL is not configured! "
-            'See <a href="%(doc_url)s">documentation</a> and '
-            '<a href="%(admin_url)s">change it</a>'
-        ) % {
-            "doc_url": doc_url,
-            "admin_url": reverse("admin:sites_site_change", args=[settings.SITE_ID]),
-        }
+        cls.base_url_error_message = format_html(
+            _(
+                "Base URL is not configured! "
+                'See <a href="{doc_url}">documentation</a> and '
+                '<a href="{admin_url}">change it</a>'
+            ),
+            doc_url=doc_url,
+            admin_url=reverse("admin:sites_site_change", args=[settings.SITE_ID]),
+        )
 
     def test_when_not_logged_in_redirects_to_login(self):
         self.client.logout()
@@ -91,10 +93,13 @@ class TestDashboard(LoggedInTestCase):
             "https://kiwitcms.readthedocs.io/en/latest/installing_docker.html"
             "#ssl-configuration"
         )
-        ssl_error_message = _(
-            "You are not using a secure connection. "
-            'See <a href="%(doc_url)s">documentation</a> and enable SSL.'
-        ) % {"doc_url": doc_url}
+        ssl_error_message = format_html(
+            _(
+                "You are not using a secure connection. "
+                'See <a href="{doc_url}">documentation</a> and enable SSL.'
+            ),
+            doc_url=doc_url,
+        )
         self.assertContains(response, ssl_error_message)
 
 
