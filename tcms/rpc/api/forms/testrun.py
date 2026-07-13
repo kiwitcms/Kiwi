@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth import get_user_model
 
 from tcms.core.forms.fields import UserField
 from tcms.management.models import Build
@@ -10,8 +9,6 @@ from tcms.testruns.models import (
     TestExecutionStatus,
     TestRun,
 )
-
-User = get_user_model()  # pylint: disable=invalid-name
 
 
 class UpdateForm(UpdateModelFormMixin, forms.ModelForm):

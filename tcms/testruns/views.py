@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
@@ -24,8 +23,6 @@ from tcms.testruns.models import (
     TestExecutionStatus,
     TestRun,
 )
-
-User = get_user_model()  # pylint: disable=invalid-name
 
 
 @method_decorator(permission_required("testruns.add_testrun"), name="dispatch")
