@@ -17,7 +17,7 @@ from django.template import loader
 from django.urls import reverse
 from django.utils import timezone, translation
 from django.utils.decorators import method_decorator
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import trans_real
 from django.views import i18n
@@ -43,16 +43,14 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
             messages.add_message(
                 self.request,
                 messages.ERROR,
-                mark_safe(  # nosec:B308:B703
+                format_html(
                     _(
                         "Base URL is not configured! "
-                        'See <a href="%(doc_url)s">documentation</a> and '
-                        '<a href="%(admin_url)s">change it</a>'
-                    )
-                    % {
-                        "doc_url": doc_url,
-                        "admin_url": reverse("admin:sites_site_change", args=[site.pk]),
-                    }
+                        'See <a href="{doc_url}">documentation</a> and '
+                        '<a href="{admin_url}">change it</a>'
+                    ),
+                    doc_url=doc_url,
+                    admin_url=reverse("admin:sites_site_change", args=[site.pk]),
                 ),
             )
 
@@ -67,15 +65,13 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
             messages.add_message(
                 self.request,
                 messages.ERROR,
-                mark_safe(  # nosec:B308:B703
+                format_html(
                     _(
-                        "You have %(unapplied_migration_count)s unapplied migration(s). "
-                        'See <a href="%(doc_url)s">documentation</a>'
-                    )
-                    % {
-                        "unapplied_migration_count": len(plan),
-                        "doc_url": doc_url,
-                    }
+                        "You have {unapplied_migration_count} unapplied migration(s). "
+                        'See <a href="{doc_url}">documentation</a>'
+                    ),
+                    unapplied_migration_count=len(plan),
+                    doc_url=doc_url,
                 ),
             )
 
@@ -88,14 +84,12 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
             messages.add_message(
                 self.request,
                 messages.WARNING,
-                mark_safe(  # nosec:B308:B703
+                format_html(
                     _(
                         "You are not using a secure connection. "
-                        'See <a href="%(doc_url)s">documentation</a> and enable SSL.'
-                    )
-                    % {
-                        "doc_url": doc_url,
-                    }
+                        'See <a href="{doc_url}">documentation</a> and enable SSL.'
+                    ),
+                    doc_url=doc_url,
                 ),
             )
 
