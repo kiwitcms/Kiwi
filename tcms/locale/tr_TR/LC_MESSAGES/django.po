@@ -482,18 +482,18 @@ msgid "There are no TestPlan(s) that belong to you"
 msgstr "Size atanmış herhangi bir test planı yok"
 
 #: tcms/core/views.py:48
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Ana URL ayarlanmadı! <a href=\"%(doc_url)s\">Dokümanı</a> inceleyin ve <a href=\"%(admin_url)s\">değiştirin</a>"
+#, python-brace-format
+msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
+msgstr "Ana URL ayarlanmadı! <a href=\"{doc_url}\">Dokümanı</a> inceleyin ve <a href=\"{admin_url}\">değiştirin</a>"
 
 #: tcms/core/views.py:72
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
+#, python-brace-format
+msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
 msgstr ""
 
 #: tcms/core/views.py:93
-#, python-format
-msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
+#, python-brace-format
+msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
 msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:101

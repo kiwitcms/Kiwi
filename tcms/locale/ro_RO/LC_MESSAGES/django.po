@@ -482,18 +482,18 @@ msgid "There are no TestPlan(s) that belong to you"
 msgstr "Nu există niciun plan de testare care să vă aparţină"
 
 #: tcms/core/views.py:48
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Adresa URL de bază nu este configurat! Vezi documentația <a href=\"%(doc_url)s\"></a> și <a href=\"%(admin_url)s\"> schimbați-l</a>"
+#, python-brace-format
+msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
+msgstr "Adresa URL de bază nu este configurat! Vezi documentația <a href=\"{doc_url}\"></a> și <a href=\"{admin_url}\"> schimbați-l</a>"
 
 #: tcms/core/views.py:72
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr "Aveți %(unapplied_migration_count)s migrări neaplicate. Consultați <a href=\"%(doc_url)s\">documentația</a>"
+#, python-brace-format
+msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
+msgstr "Aveți {unapplied_migration_count} migrări neaplicate. Consultați <a href=\"{doc_url}\">documentația</a>"
 
 #: tcms/core/views.py:93
-#, python-format
-msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
+#, python-brace-format
+msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
 msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:101

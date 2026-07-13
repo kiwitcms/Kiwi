@@ -482,19 +482,19 @@ msgid "There are no TestPlan(s) that belong to you"
 msgstr "Tidak ada RencanaUji milik anda"
 
 #: tcms/core/views.py:48
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Basis URL belum dikonfigurasi! Lihat <a href=\"%(doc_url)s\">dokumentasi</a>dan<a href=\"%(admin_url)s\">ubah</a>"
+#, python-brace-format
+msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
+msgstr "Basis URL belum dikonfigurasi! Lihat <a href=\"{doc_url}\">dokumentasi</a>dan<a href=\"{admin_url}\">ubah</a>"
 
 #: tcms/core/views.py:72
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr "Anda memiliki%(unapplied_migration_count)s migrasi yang belum diterapkan. Lihat<a href=\"%(doc_url)s\">Dokumentasi</a>"
+#, python-brace-format
+msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
+msgstr "Anda memiliki{unapplied_migration_count} migrasi yang belum diterapkan. Lihat<a href=\"{doc_url}\">Dokumentasi</a>"
 
 #: tcms/core/views.py:93
-#, python-format
-msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr "Anda tidak menggunakan koneksi aman. Lihat <a href=\"%(doc_url)s\">dokumentasi</a> dan aktifkan SSL."
+#, python-brace-format
+msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
+msgstr "Anda tidak menggunakan koneksi aman. Lihat <a href=\"{doc_url}\">dokumentasi</a> dan aktifkan SSL."
 
 #: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"

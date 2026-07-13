@@ -482,19 +482,19 @@ msgid "There are no TestPlan(s) that belong to you"
 msgstr "Nem tartozik hozzád Tesztterv"
 
 #: tcms/core/views.py:48
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Az alap URL nincs beállítva! Lásd a <a href=\"%(doc_url)s\">dokumentációt</a> a <a href=\"%(admin_url)s\">beállításokhoz</a>"
+#, python-brace-format
+msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
+msgstr "Az alap URL nincs beállítva! Lásd a <a href=\"{doc_url}\">dokumentációt</a> a <a href=\"{admin_url}\">beállításokhoz</a>"
 
 #: tcms/core/views.py:72
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr "%(unapplied_migration_count)s nem alkalmazott migrációd van. Lásd a <a href=\"%(doc_url)s\">dokumentációt</a>"
+#, python-brace-format
+msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
+msgstr "{unapplied_migration_count} nem alkalmazott migrációd van. Lásd a <a href=\"{doc_url}\">dokumentációt</a>"
 
 #: tcms/core/views.py:93
-#, python-format
-msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr "Nem biztonságos kapcsolatot használsz. Tekintsd meg a <a href=\"%(doc_url)s\">dokumentációt</a> és engedélyezd az SSL-t."
+#, python-brace-format
+msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
+msgstr "Nem biztonságos kapcsolatot használsz. Tekintsd meg a <a href=\"{doc_url}\">dokumentációt</a> és engedélyezd az SSL-t."
 
 #: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"
