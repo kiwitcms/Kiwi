@@ -481,19 +481,19 @@ msgid "There are no TestPlan(s) that belong to you"
 msgstr "당신에게 속한 테스트 계획이 없습니다"
 
 #: tcms/core/views.py:48
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "기본 URL이 구성되지 않았습니다! 참조<a href=\"%(doc_url)s\">설명서</a> 및 <a href=\"%(admin_url)s\">변경</a>"
+#, python-brace-format
+msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
+msgstr "기본 URL이 구성되지 않았습니다! 참조<a href=\"{doc_url}\">설명서</a> 및 <a href=\"{admin_url}\">변경</a>"
 
 #: tcms/core/views.py:72
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr "%(unapplied_migration_count)s 개의 적용되지 않은 마이그레이션이 있습니다. <a href=\"%(doc_url)s\">문서</a>를 참고하세요"
+#, python-brace-format
+msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
+msgstr "{unapplied_migration_count} 개의 적용되지 않은 마이그레이션이 있습니다. <a href=\"{doc_url}\">문서</a>를 참고하세요"
 
 #: tcms/core/views.py:93
-#, python-format
-msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr "보안 연결을 사용하지 않고 있습니다. <a href=\"%(doc_url)s\">안내서</a>를 참고해 SSL을 활성화 하세요."
+#, python-brace-format
+msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
+msgstr "보안 연결을 사용하지 않고 있습니다. <a href=\"{doc_url}\">안내서</a>를 참고해 SSL을 활성화 하세요."
 
 #: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"

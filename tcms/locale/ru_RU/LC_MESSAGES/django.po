@@ -482,19 +482,19 @@ msgid "There are no TestPlan(s) that belong to you"
 msgstr "Нет планов тестирования, принадлежащих вам"
 
 #: tcms/core/views.py:48
-#, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "Базовый URL-адрес не настроен! Смотрите <a href=\"%(doc_url)s\">документацию</a> и <a href=\"%(admin_url)s\">измените это</a>"
+#, python-brace-format
+msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
+msgstr "Базовый URL-адрес не настроен! Смотрите <a href=\"{doc_url}\">документацию</a> и <a href=\"{admin_url}\">измените это</a>"
 
 #: tcms/core/views.py:72
-#, python-format
-msgid "You have %(unapplied_migration_count)s unapplied migration(s). See <a href=\"%(doc_url)s\">documentation</a>"
-msgstr "У вас %(unapplied_migration_count)s непримененных миграции(ев). Смотрите <a href=\"%(doc_url)s\">документацию</a>"
+#, python-brace-format
+msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
+msgstr "У вас {unapplied_migration_count} непримененных миграции(ев). Смотрите <a href=\"{doc_url}\">документацию</a>"
 
 #: tcms/core/views.py:93
-#, python-format
-msgid "You are not using a secure connection. See <a href=\"%(doc_url)s\">documentation</a> and enable SSL."
-msgstr "Вы не используете безопасное соединение. Смотрите <a href=\"%(doc_url)s\">документацию</a> и включите SSL."
+#, python-brace-format
+msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
+msgstr "Вы не используете безопасное соединение. Смотрите <a href=\"{doc_url}\">документацию</a> и включите SSL."
 
 #: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"
