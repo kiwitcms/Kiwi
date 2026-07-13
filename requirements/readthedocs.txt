@@ -12,6 +12,6 @@ mock
 pydot
 # linting tools
 pylint==4.0.6
-pylint-django==2.7.0
+pylint-django==2.8.0
 twine
 pyOpenSSL
