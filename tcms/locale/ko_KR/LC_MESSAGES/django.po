@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 18:46+0000\n"
-"PO-Revision-Date: 2026-06-17 19:56\n"
+"POT-Creation-Date: 2026-07-13 19:00+0000\n"
+"PO-Revision-Date: 2026-07-13 21:06\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -76,7 +76,7 @@ msgstr "담당자"
 #: tcms/bugs/templates/bugs/mutable.html:45
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:115
-#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:120
+#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:133
 #: tcms/management/models.py:56
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
@@ -100,7 +100,7 @@ msgstr "제품"
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/bugs/templates/bugs/search.html:61
-#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:125
+#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:118
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
 #: tcms/testplans/templates/testplans/clone.html:36
@@ -117,7 +117,7 @@ msgstr "버전"
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
 #: tcms/bugs/templates/bugs/search.html:71
-#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:171
+#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:164
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:17
@@ -357,13 +357,13 @@ msgid "Created on"
 msgstr "작성일"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:133
-#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:143
+#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:149
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "편집"
 
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:146
-#: tcms/testplans/views.py:151 tcms/testruns/views.py:207
+#: tcms/testplans/views.py:157 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
 msgstr "객체 권한"
@@ -373,7 +373,7 @@ msgstr "객체 권한"
 #: tcms/templates/include/properties_card.html:32
 #: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
-#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:159
+#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:165
 #: tcms/testruns/templates/testruns/get.html:246
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
@@ -384,15 +384,15 @@ msgstr "삭제"
 msgid "New Bug"
 msgstr "새 버그"
 
-#: tcms/bugs/views.py:188
+#: tcms/bugs/views.py:194
 msgid "Edit bug"
 msgstr "버그 편집"
 
-#: tcms/bugs/views.py:231
+#: tcms/bugs/views.py:237
 msgid "*bug closed*"
 msgstr "*버그 마감*"
 
-#: tcms/bugs/views.py:235
+#: tcms/bugs/views.py:241
 msgid "*bug reopened*"
 msgstr "*버그 재개*"
 
@@ -483,17 +483,17 @@ msgstr "당신에게 속한 테스트 계획이 없습니다"
 #: tcms/core/views.py:48
 #, python-brace-format
 msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
-msgstr "기본 URL이 구성되지 않았습니다! 참조<a href=\"{doc_url}\">설명서</a> 및 <a href=\"{admin_url}\">변경</a>"
+msgstr ""
 
-#: tcms/core/views.py:72
+#: tcms/core/views.py:70
 #, python-brace-format
 msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
-msgstr "{unapplied_migration_count} 개의 적용되지 않은 마이그레이션이 있습니다. <a href=\"{doc_url}\">문서</a>를 참고하세요"
+msgstr ""
 
-#: tcms/core/views.py:93
+#: tcms/core/views.py:89
 #, python-brace-format
 msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
-msgstr "보안 연결을 사용하지 않고 있습니다. <a href=\"{doc_url}\">안내서</a>를 참고해 SSL을 활성화 하세요."
+msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"
@@ -644,7 +644,7 @@ msgstr "우선순위"
 msgid "Priorities"
 msgstr "우선순위"
 
-#: tcms/management/models.py:107
+#: tcms/management/models.py:100
 #: tcms/testcases/templates/testcases/search.html:116
 #: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:216
@@ -652,7 +652,7 @@ msgstr "우선순위"
 msgid "Component"
 msgstr "컴포넌트"
 
-#: tcms/management/models.py:108
+#: tcms/management/models.py:101
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
 #: tcms/testcases/templates/testcases/get.html:208
 #: tcms/testplans/templates/testplans/get.html:452
@@ -660,15 +660,15 @@ msgstr "컴포넌트"
 msgid "Components"
 msgstr "컴포넌트"
 
-#: tcms/management/models.py:126
+#: tcms/management/models.py:119
 msgid "Versions"
 msgstr ""
 
-#: tcms/management/models.py:172
+#: tcms/management/models.py:165
 msgid "Builds"
 msgstr "빌드"
 
-#: tcms/management/models.py:194
+#: tcms/management/models.py:187
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:96
@@ -677,7 +677,7 @@ msgstr "빌드"
 msgid "Tag"
 msgstr "태그"
 
-#: tcms/management/models.py:195 tcms/templates/include/tags_card.html:6
+#: tcms/management/models.py:188 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:176
 #: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
@@ -804,16 +804,16 @@ msgstr "사용자 안내서"
 msgid "API Help"
 msgstr "API 도움말"
 
-#: tcms/signals.py:97
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "승인을 기다리는 새로운 사용자"
 
-#: tcms/signals.py:187
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "신규: 테스트 수행 #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:259
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "버그 #%(pk)d - %(summary)s"
@@ -1168,7 +1168,7 @@ msgstr "날짜"
 msgid "URL"
 msgstr "URL"
 
-#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:116
 #: tcms/testruns/templates/testruns/get.html:353
 msgid "Parameters"
 msgstr "매개 변수"
@@ -1462,7 +1462,7 @@ msgstr "선택된 테스트 케이스"
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
-#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:144
+#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:150
 #: tcms/testruns/views.py:198
 msgid "Clone"
 msgstr "복제"
@@ -1639,7 +1639,7 @@ msgstr ""
 msgid "Select"
 msgstr "선택"
 
-#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:152
 #: tcms/testruns/templates/testruns/get.html:466 tcms/testruns/views.py:202
 msgid "History"
 msgstr "변경 내역"
@@ -1827,7 +1827,7 @@ msgstr "테스트 실행 상태 사용자 지정에 대한 자세한 내용은<a
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "부정, 중립, 긍정 상태가 1개씩 필요합니다!"
 
-#: tcms/testruns/admin.py:106
+#: tcms/testruns/admin.py:113
 msgid "Edit parameters"
 msgstr "매개 변수 편집"
 
@@ -2412,3 +2412,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
