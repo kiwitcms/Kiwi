@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 18:46+0000\n"
-"PO-Revision-Date: 2026-06-17 19:56\n"
+"POT-Creation-Date: 2026-07-13 19:00+0000\n"
+"PO-Revision-Date: 2026-07-13 21:06\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
 "Language: bg_BG\n"
@@ -76,7 +76,7 @@ msgstr "Изпълнител"
 #: tcms/bugs/templates/bugs/mutable.html:45
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:115
-#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:120
+#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:133
 #: tcms/management/models.py:56
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
@@ -100,7 +100,7 @@ msgstr "Продукт"
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/bugs/templates/bugs/search.html:61
-#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:125
+#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:118
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
 #: tcms/testplans/templates/testplans/clone.html:36
@@ -117,7 +117,7 @@ msgstr "Версия"
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
 #: tcms/bugs/templates/bugs/search.html:71
-#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:171
+#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:164
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:17
@@ -357,13 +357,13 @@ msgid "Created on"
 msgstr "Създаден на"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:133
-#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:143
+#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:149
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "Редактиране"
 
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:146
-#: tcms/testplans/views.py:151 tcms/testruns/views.py:207
+#: tcms/testplans/views.py:157 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
 msgstr "Права за достъп"
@@ -373,7 +373,7 @@ msgstr "Права за достъп"
 #: tcms/templates/include/properties_card.html:32
 #: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
-#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:159
+#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:165
 #: tcms/testruns/templates/testruns/get.html:246
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
@@ -384,15 +384,15 @@ msgstr "Изтриване"
 msgid "New Bug"
 msgstr "Нов дефект"
 
-#: tcms/bugs/views.py:188
+#: tcms/bugs/views.py:194
 msgid "Edit bug"
 msgstr "Редакция на бъг"
 
-#: tcms/bugs/views.py:231
+#: tcms/bugs/views.py:237
 msgid "*bug closed*"
 msgstr "*затворен бъг*"
 
-#: tcms/bugs/views.py:235
+#: tcms/bugs/views.py:241
 msgid "*bug reopened*"
 msgstr "преотворен бъг"
 
@@ -483,14 +483,14 @@ msgstr "Нямаш Тест(ови) план(ове)"
 #: tcms/core/views.py:48
 #, python-brace-format
 msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
-msgstr "Не е настроен Основен URL! Виж <a href=\"{doc_url}\">документация</a> и <a href=\"{admin_url}\">го промени</a>"
+msgstr ""
 
-#: tcms/core/views.py:72
+#: tcms/core/views.py:70
 #, python-brace-format
 msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
 msgstr ""
 
-#: tcms/core/views.py:93
+#: tcms/core/views.py:89
 #, python-brace-format
 msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
 msgstr ""
@@ -642,7 +642,7 @@ msgstr "Приоритет"
 msgid "Priorities"
 msgstr "Приоритети"
 
-#: tcms/management/models.py:107
+#: tcms/management/models.py:100
 #: tcms/testcases/templates/testcases/search.html:116
 #: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:216
@@ -650,7 +650,7 @@ msgstr "Приоритети"
 msgid "Component"
 msgstr "Компонент"
 
-#: tcms/management/models.py:108
+#: tcms/management/models.py:101
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
 #: tcms/testcases/templates/testcases/get.html:208
 #: tcms/testplans/templates/testplans/get.html:452
@@ -658,15 +658,15 @@ msgstr "Компонент"
 msgid "Components"
 msgstr "Компоненти"
 
-#: tcms/management/models.py:126
+#: tcms/management/models.py:119
 msgid "Versions"
 msgstr ""
 
-#: tcms/management/models.py:172
+#: tcms/management/models.py:165
 msgid "Builds"
 msgstr "Билд"
 
-#: tcms/management/models.py:194
+#: tcms/management/models.py:187
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:96
@@ -675,7 +675,7 @@ msgstr "Билд"
 msgid "Tag"
 msgstr "Таг"
 
-#: tcms/management/models.py:195 tcms/templates/include/tags_card.html:6
+#: tcms/management/models.py:188 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:176
 #: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
@@ -802,16 +802,16 @@ msgstr "Потребителско ръководство"
 msgid "API Help"
 msgstr "API документация"
 
-#: tcms/signals.py:97
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "Нов потребител, чака потвърждение"
 
-#: tcms/signals.py:187
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "НОВО: Тест Изпълнение #%(pk)d - %(summary)s"
 
-#: tcms/signals.py:259
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "Бъг #%(pk)d - %(summary)s"
@@ -1154,7 +1154,7 @@ msgstr "Дата"
 msgid "URL"
 msgstr "URL"
 
-#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:116
 #: tcms/testruns/templates/testruns/get.html:353
 msgid "Parameters"
 msgstr "Параметри"
@@ -1446,7 +1446,7 @@ msgstr "Избрани TK"
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
-#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:144
+#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:150
 #: tcms/testruns/views.py:198
 msgid "Clone"
 msgstr "Клониране"
@@ -1623,7 +1623,7 @@ msgstr ""
 msgid "Select"
 msgstr "Избери"
 
-#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:152
 #: tcms/testruns/templates/testruns/get.html:466 tcms/testruns/views.py:202
 msgid "History"
 msgstr "История"
@@ -1813,7 +1813,7 @@ msgstr "Относно как да се настроят статуси на т�
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "Необходими са: 1 негативен, 1 неутрален и 1 позитивен статус!"
 
-#: tcms/testruns/admin.py:106
+#: tcms/testruns/admin.py:113
 msgid "Edit parameters"
 msgstr ""
 

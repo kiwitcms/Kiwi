@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 18:46+0000\n"
-"PO-Revision-Date: 2026-06-17 19:56\n"
+"POT-Creation-Date: 2026-07-13 19:00+0000\n"
+"PO-Revision-Date: 2026-07-13 21:07\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -76,7 +76,7 @@ msgstr "負責執行者"
 #: tcms/bugs/templates/bugs/mutable.html:45
 #: tcms/bugs/templates/bugs/search.html:51
 #: tcms/bugs/templates/bugs/search.html:115
-#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:120
+#: tcms/core/templates/dashboard.html:53 tcms/management/admin.py:133
 #: tcms/management/models.py:56
 #: tcms/telemetry/templates/telemetry/include/filters.html:8
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:35
@@ -100,7 +100,7 @@ msgstr "產品"
 #: tcms/bugs/templates/bugs/get.html:80
 #: tcms/bugs/templates/bugs/mutable.html:60
 #: tcms/bugs/templates/bugs/search.html:61
-#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:125
+#: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:118
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
 #: tcms/testplans/templates/testplans/clone.html:36
@@ -117,7 +117,7 @@ msgstr "版本"
 #: tcms/bugs/templates/bugs/get.html:85
 #: tcms/bugs/templates/bugs/mutable.html:78
 #: tcms/bugs/templates/bugs/search.html:71
-#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:171
+#: tcms/bugs/templates/bugs/search.html:117 tcms/management/models.py:164
 #: tcms/telemetry/templates/telemetry/include/filters.html:25
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:17
@@ -357,13 +357,13 @@ msgid "Created on"
 msgstr "建立於"
 
 #: tcms/bugs/views.py:42 tcms/testcases/views.py:133
-#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:143
+#: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:149
 #: tcms/testruns/views.py:194 tcms/testruns/views.py:308
 msgid "Edit"
 msgstr "編輯"
 
 #: tcms/bugs/views.py:45 tcms/testcases/views.py:146
-#: tcms/testplans/views.py:151 tcms/testruns/views.py:207
+#: tcms/testplans/views.py:157 tcms/testruns/views.py:207
 #: tcms/testruns/views.py:316
 msgid "Object permissions"
 msgstr "物件權限"
@@ -373,7 +373,7 @@ msgstr "物件權限"
 #: tcms/templates/include/properties_card.html:32
 #: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
 #: tcms/testplans/templates/testplans/get.html:193
-#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:159
+#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:165
 #: tcms/testruns/templates/testruns/get.html:246
 #: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:215
 #: tcms/testruns/views.py:324
@@ -384,15 +384,15 @@ msgstr "刪除"
 msgid "New Bug"
 msgstr "新增Bug"
 
-#: tcms/bugs/views.py:188
+#: tcms/bugs/views.py:194
 msgid "Edit bug"
 msgstr "編輯Bug"
 
-#: tcms/bugs/views.py:231
+#: tcms/bugs/views.py:237
 msgid "*bug closed*"
 msgstr "bug 已關閉"
 
-#: tcms/bugs/views.py:235
+#: tcms/bugs/views.py:241
 msgid "*bug reopened*"
 msgstr "bug 重新打開"
 
@@ -484,17 +484,17 @@ msgstr "沒有屬於您的測試計劃"
 #: tcms/core/views.py:48
 #, python-brace-format
 msgid "Base URL is not configured! See <a href=\"{doc_url}\">documentation</a> and <a href=\"{admin_url}\">change it</a>"
-msgstr "基本網址尚未設定！請參考 <a href=\"{doc_url}\">文件說明</a>，並到 <a href=\"{admin_url}\">管理頁面更改設定</a>。"
+msgstr ""
 
-#: tcms/core/views.py:72
+#: tcms/core/views.py:70
 #, python-brace-format
 msgid "You have {unapplied_migration_count} unapplied migration(s). See <a href=\"{doc_url}\">documentation</a>"
-msgstr "您有 {unapplied_migration_count} 個未應用的遷移。詳情請參閱 <a href=\"{doc_url}\">文件說明</a>"
+msgstr ""
 
-#: tcms/core/views.py:93
+#: tcms/core/views.py:89
 #, python-brace-format
 msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
-msgstr "您目前未使用安全連線。請參考 <a href=\"{doc_url}\">文件說明</a> 並啟用 SSL。"
+msgstr ""
 
 #: tcms/kiwi_attachments/validators.py:101
 msgid "Uploading executable files is forbidden"
@@ -643,7 +643,7 @@ msgstr "優先級"
 msgid "Priorities"
 msgstr "優先程度"
 
-#: tcms/management/models.py:107
+#: tcms/management/models.py:100
 #: tcms/testcases/templates/testcases/search.html:116
 #: tcms/testcases/templates/testcases/search.html:170
 #: tcms/testplans/templates/testplans/get.html:216
@@ -651,7 +651,7 @@ msgstr "優先程度"
 msgid "Component"
 msgstr "元件/組件"
 
-#: tcms/management/models.py:108
+#: tcms/management/models.py:101
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:37
 #: tcms/testcases/templates/testcases/get.html:208
 #: tcms/testplans/templates/testplans/get.html:452
@@ -659,15 +659,15 @@ msgstr "元件/組件"
 msgid "Components"
 msgstr "元件/組件"
 
-#: tcms/management/models.py:126
+#: tcms/management/models.py:119
 msgid "Versions"
 msgstr ""
 
-#: tcms/management/models.py:172
+#: tcms/management/models.py:165
 msgid "Builds"
 msgstr "建置"
 
-#: tcms/management/models.py:194
+#: tcms/management/models.py:187
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/get.html:217
 #: tcms/testplans/templates/testplans/search.html:96
@@ -676,7 +676,7 @@ msgstr "建置"
 msgid "Tag"
 msgstr "標籤"
 
-#: tcms/management/models.py:195 tcms/templates/include/tags_card.html:6
+#: tcms/management/models.py:188 tcms/templates/include/tags_card.html:6
 #: tcms/testcases/templates/testcases/search.html:176
 #: tcms/testplans/templates/testplans/get.html:461
 #: tcms/testplans/templates/testplans/search.html:123
@@ -803,16 +803,16 @@ msgstr "使用者指南"
 msgid "API Help"
 msgstr "API 說明"
 
-#: tcms/signals.py:97
+#: tcms/signals.py:96
 msgid "New user awaiting approval"
 msgstr "等待審批的新使用者"
 
-#: tcms/signals.py:187
+#: tcms/signals.py:186
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NEW: 測試執行 #%(pk)d - - %(summary)s"
 
-#: tcms/signals.py:259
+#: tcms/signals.py:258
 #, python-format
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "缺陷 #%(pk)d - %(summary)s"
@@ -1161,7 +1161,7 @@ msgstr "日期"
 msgid "URL"
 msgstr "網址"
 
-#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:117
+#: tcms/templates/include/properties_card.html:9 tcms/testruns/admin.py:116
 #: tcms/testruns/templates/testruns/get.html:353
 msgid "Parameters"
 msgstr "參數"
@@ -1457,7 +1457,7 @@ msgstr "已選擇TC"
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
-#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:144
+#: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:150
 #: tcms/testruns/views.py:198
 msgid "Clone"
 msgstr "克隆"
@@ -1634,7 +1634,7 @@ msgstr ""
 msgid "Select"
 msgstr "選擇"
 
-#: tcms/testcases/views.py:141 tcms/testplans/views.py:146
+#: tcms/testcases/views.py:141 tcms/testplans/views.py:152
 #: tcms/testruns/templates/testruns/get.html:466 tcms/testruns/views.py:202
 msgid "History"
 msgstr "歷史紀錄"
@@ -1824,7 +1824,7 @@ msgstr "要了解更多關於自定義測試執行狀態的資訊，請參考\n"
 msgid "1 negative, 1 neutral & 1 positive status required!"
 msgstr "需要 1 個負面、1 個中立及 1 個正面狀態！"
 
-#: tcms/testruns/admin.py:106
+#: tcms/testruns/admin.py:113
 msgid "Edit parameters"
 msgstr "編輯參數"
 
