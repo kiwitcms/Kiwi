@@ -25,7 +25,7 @@ class TestTestRunAdmin(LoggedInTestCase):
 
     def test_regular_user_can_not_add_testrun(self):
         response = self.client.get(reverse("admin:testruns_testrun_add"))
-        self.assertRedirects(response, reverse("admin:testruns_testrun_changelist"))
+        self.assertRedirects(response, reverse("testruns-new"))
 
     def test_regular_user_can_not_change_testrun(self):
         response = self.client.get(
