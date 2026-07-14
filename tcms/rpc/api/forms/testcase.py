@@ -23,6 +23,19 @@ class NewForm(forms.ModelForm):
             "plan",
         )
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
+            tenant_users = request.tenant.authorized_users.all()
+            self.fields["author"].queryset = tenant_users
+            self.fields["default_tester"].queryset = tenant_users
+            self.fields["reviewer"].queryset = tenant_users
+
 
 class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     class Meta:
@@ -32,6 +45,19 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
     default_tester = UserField()
     author = UserField()
     reviewer = UserField()
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
+            tenant_users = request.tenant.authorized_users.all()
+            self.fields["author"].queryset = tenant_users
+            self.fields["default_tester"].queryset = tenant_users
+            self.fields["reviewer"].queryset = tenant_users
 
 
 class BugSystemForm(forms.ModelForm):

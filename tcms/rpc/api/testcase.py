@@ -230,7 +230,7 @@ def create(values, **kwargs):
     if not (values.get("author") or values.get("author_id")):
         values["author"] = request.user.pk
 
-    form = NewForm(values)
+    form = NewForm(values, request=request)
 
     if form.is_valid():
         test_case = form.save()
@@ -381,8 +381,9 @@ def update(case_id, values):
         :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
         :raises PermissionDenied: if missing *testcases.change_testcase* permission
     """
+    request = kwargs.get(REQUEST_KEY)
     test_case = TestCase.objects.get(pk=case_id)
-    form = UpdateForm(values, instance=test_case)
+    form = UpdateForm(values, instance=test_case, request=request)
 
     if form.is_valid():
         test_case = form.save()

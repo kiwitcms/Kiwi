@@ -48,6 +48,7 @@ class NewCaseView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
         kwargs["initial"].update(  # pylint: disable=objects-update-used
             {
                 "author": self.request.user,
@@ -200,6 +201,11 @@ class EditTestCaseView(UpdateView):
         else:
             form.populate(product_id=self.object.category.product_id)
         return form
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def get_initial(self):
         default_tester = None
