@@ -300,7 +300,7 @@ def update(run_id, values, **kwargs):
 
 @permissions_required("testruns.change_testrun")
 @rpc_method(name="TestRun.add_cc")
-def add_cc(run_id, username):
+def add_cc(run_id, username, **kwargs):
     """
     .. function:: RPC TestRun.add_cc(run_id, username)
 
@@ -310,12 +310,15 @@ def add_cc(run_id, username):
         :type run_id: int
         :param username: PK, email or username
         :type username: string
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :raises DoesNotExist: if test run specified by the PK doesn't exist
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
+    request = kwargs.get(REQUEST_KEY)
     test_run = TestRun.objects.get(pk=run_id)
-    form = UserForm({"user": username})
+    form = UserForm({"user": username}, request=request)
 
     if not form.is_valid():
         raise ValueError(list(form.errors.items()))
@@ -325,7 +328,7 @@ def add_cc(run_id, username):
 
 @permissions_required("testruns.change_testrun")
 @rpc_method(name="TestRun.remove_cc")
-def remove_cc(run_id, username):
+def remove_cc(run_id, username, **kwargs):
     """
     .. function:: RPC TestRun.remove_cc(run_id, username)
 
@@ -335,12 +338,15 @@ def remove_cc(run_id, username):
         :type run_id: int
         :param username: PK, email or username
         :type username: string
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :raises DoesNotExist: if test run specified by the PK doesn't exist
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
+    request = kwargs.get(REQUEST_KEY)
     test_run = TestRun.objects.get(pk=run_id)
-    form = UserForm({"user": username})
+    form = UserForm({"user": username}, request=request)
 
     if not form.is_valid():
         raise ValueError(list(form.errors.items()))
