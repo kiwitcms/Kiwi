@@ -73,6 +73,16 @@ class UpdateExecutionForm(  # pylint: disable=remove-empty-class,too-many-ancest
 class UserForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     user = UserField()
 
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request", None)
+        super().__init__(*args, **kwargs)
+        if (
+            request
+            and hasattr(request, "tenant")
+            and request.tenant.schema_name != "public"
+        ):
+            self.fields["user"].queryset = request.tenant.authorized_users.all()
+
 
 class EnvironmentForm(forms.ModelForm):
     class Meta:
