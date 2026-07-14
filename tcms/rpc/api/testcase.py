@@ -230,7 +230,7 @@ def create(values, **kwargs):
     if not (values.get("author") or values.get("author_id")):
         values["author"] = request.user.pk
 
-    form = NewForm(values)
+    form = NewForm(values, request=request)
 
     if form.is_valid():
         test_case = form.save()
@@ -365,9 +365,9 @@ def sortkeys(query=None):
 
 @permissions_required("testcases.change_testcase")
 @rpc_method(name="TestCase.update")
-def update(case_id, values):
+def update(case_id, values, **kwargs):
     """
-    .. function:: RPC TestCase.update(case_id, values)
+    .. function:: RPC TestCase.update(case_id, values, **kwargs)
 
         Update the fields of the selected test case.
 
@@ -375,14 +375,17 @@ def update(case_id, values):
         :type case_id: int
         :param values: Field values for :class:`tcms.testcases.models.TestCase`.
         :type values: dict
+        :param \\**kwargs: Dict providing access to the current request, protocol,
+                entry point name and handler instance from the rpc method
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
         :raises ValueError: if form is not valid
         :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
         :raises PermissionDenied: if missing *testcases.change_testcase* permission
     """
+    request = kwargs.get(REQUEST_KEY)
     test_case = TestCase.objects.get(pk=case_id)
-    form = UpdateForm(values, instance=test_case)
+    form = UpdateForm(values, instance=test_case, request=request)
 
     if form.is_valid():
         test_case = form.save()
