@@ -5,7 +5,7 @@ from unittest import TestCase
 from modernrpc.handlers.jsonhandler import JsonSuccessResult
 from modernrpc.handlers.xmlhandler import XmlSuccessResult
 
-from tcms.handlers import KiwiTCMSJsonRpcHandler, KiwiTCMSXmlRpcHandler
+from tcms.rpc.handlers import KiwiTCMSJsonRpcHandler, KiwiTCMSXmlRpcHandler
 
 
 class TestKiwiTCMSJsonRpcHandler(TestCase):

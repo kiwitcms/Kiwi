@@ -477,8 +477,8 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 # WARNING: do not edit. The stock JSONRPC handler does not HTML escape !!!
 # Stock handlers don't serialize timedelta into a meaningfull value
 MODERNRPC_HANDLERS = [
-    "tcms.handlers.KiwiTCMSXmlRpcHandler",
-    "tcms.handlers.KiwiTCMSJsonRpcHandler",
+    "tcms.rpc.handlers.KiwiTCMSXmlRpcHandler",
+    "tcms.rpc.handlers.KiwiTCMSJsonRpcHandler",
 ]
 
 # in alphabetic order
