@@ -31,7 +31,6 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   tcms.handlers
    tcms.signals
    tcms.wsgi
    tcms.xmlrpc_wrapper

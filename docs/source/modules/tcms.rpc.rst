@@ -21,4 +21,5 @@ Submodules
    :maxdepth: 4
 
    tcms.rpc.decorators
+   tcms.rpc.handlers
    tcms.rpc.utils
