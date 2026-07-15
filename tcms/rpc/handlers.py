@@ -3,66 +3,46 @@ import html
 from datetime import timedelta
 
 from modernrpc.handlers import JSONRPCHandler, XMLRPCHandler
-from modernrpc.handlers.base import BaseResult
-from modernrpc.handlers.jsonhandler import JsonResult, JsonSuccessResult
+from modernrpc.handlers.jsonhandler import JsonSuccessResult
 from modernrpc.handlers.xmlhandler import XmlSuccessResult
 
 
-class KiwiTCMSJsonRpcHandler(JSONRPCHandler):
-    @staticmethod
-    def escape_dict(result_dict):
-        for key, value in result_dict.items():
-            if isinstance(value, str):
-                result_dict[key] = html.escape(value)
-            elif isinstance(value, timedelta):
-                result_dict[key] = value.total_seconds()
+class KiwiTCMSHandlerMixin:
 
     @staticmethod
-    def escape_list(result_list):
-        for index, item in enumerate(result_list):
-            if isinstance(item, str):
-                result_list[index] = html.escape(item)
-            elif isinstance(item, timedelta):
-                result_list[index] = item.total_seconds()
-            elif isinstance(item, dict):
-                __class__.escape_dict(item)
+    def escape_value(value):
+        if isinstance(value, str):
+            return html.escape(value)
+        if isinstance(value, timedelta):
+            return value.total_seconds()
+        return value
 
-    def dumps_result(self, result: JsonResult) -> str:
-        if isinstance(result, JsonSuccessResult):
-            if isinstance(result.data, str):
-                result.data = html.escape(result.data)
-            elif isinstance(result.data, timedelta):
-                result.data = result.data.total_seconds()
-            elif isinstance(result.data, dict):
-                self.escape_dict(result.data)
-            elif isinstance(result.data, list):
-                self.escape_list(result.data)
+    @staticmethod
+    def escape(value):
+        """Recursively walk *value* and transform it in place."""
+        if isinstance(value, dict):
+            for key, val in value.items():
+                value[key] = __class__.escape(val)
+        elif isinstance(value, list):
+            for idx, item in enumerate(value):
+                value[idx] = __class__.escape(item)
+        else:
+            return __class__.escape_value(value)
+        return value
 
+    def dumps_result(self, result):
+        if isinstance(result, (JsonSuccessResult, XmlSuccessResult)):
+            result.data = __class__.escape(result.data)
         return super().dumps_result(result)
 
 
-class KiwiTCMSXmlRpcHandler(XMLRPCHandler):
-    @staticmethod
-    def escape_dict(result_dict):
-        for key, value in result_dict.items():
-            if isinstance(value, timedelta):
-                result_dict[key] = value.total_seconds()
+class KiwiTCMSJsonRpcHandler(
+    KiwiTCMSHandlerMixin, JSONRPCHandler
+):  # pylint: disable=remove-empty-class
+    pass
 
-    @staticmethod
-    def escape_list(result_list):
-        for index, item in enumerate(result_list):
-            if isinstance(item, timedelta):
-                result_list[index] = item.total_seconds()
-            elif isinstance(item, dict):
-                __class__.escape_dict(item)
 
-    def dumps_result(self, result: BaseResult) -> str:
-        if isinstance(result, XmlSuccessResult):
-            if isinstance(result.data, timedelta):
-                result.data = result.data.total_seconds()
-            elif isinstance(result.data, dict):
-                self.escape_dict(result.data)
-            elif isinstance(result.data, list):
-                self.escape_list(result.data)
-
-        return super().dumps_result(result)
+class KiwiTCMSXmlRpcHandler(
+    KiwiTCMSHandlerMixin, XMLRPCHandler
+):  # pylint: disable=remove-empty-class
+    pass
