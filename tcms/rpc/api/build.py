@@ -1,16 +1,16 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.management.forms import BuildForm
 from tcms.management.models import Build
 from tcms.rpc.api.forms.management import BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("management.view_build")
-@rpc_method(name="Build.filter")
+@rpc_method(
+    name="Build.filter",
+    auth=permissions_required("management.view_build"),
+)
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Build.filter(query)
@@ -39,8 +39,10 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     )
 
 
-@rpc_method(name="Build.create")
-@permissions_required("management.add_build")
+@rpc_method(
+    name="Build.create",
+    auth=permissions_required("management.add_build"),
+)
 def create(values):
     """
     .. function:: RPC Build.create(values)
@@ -65,8 +67,10 @@ def create(values):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("management.change_build")
-@rpc_method(name="Build.update")
+@rpc_method(
+    name="Build.update",
+    auth=permissions_required("management.change_build"),
+)
 def update(build_id, values):
     """
     .. function:: RPC Build.update(build_id, values)

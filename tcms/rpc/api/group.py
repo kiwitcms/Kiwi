@@ -5,13 +5,15 @@
 from django.contrib.auth.models import Group
 from django.db.models import Value
 from django.db.models.functions import Concat
-from modernrpc.core import rpc_method
 
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("auth.view_group")
-@rpc_method(name="Group.filter")
+@rpc_method(
+    name="Group.filter",
+    auth=permissions_required("auth.view_group"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Group.filter(query)
@@ -37,8 +39,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("auth.view_group")
-@rpc_method(name="Group.permissions")
+@rpc_method(
+    name="Group.permissions",
+    auth=permissions_required("auth.view_group"),
+)
 def permissions(group_id):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Group.permissions(query)
@@ -65,8 +69,10 @@ def permissions(group_id):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required(("auth.view_group", "auth.view_user"))
-@rpc_method(name="Group.users")
+@rpc_method(
+    name="Group.users",
+    auth=permissions_required("auth.view_group", "auth.view_user"),
+)
 def users(group_id):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Group.users(group_id)

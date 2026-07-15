@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.management.forms import VersionForm
 from tcms.management.models import Version
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("management.view_version")
-@rpc_method(name="Version.filter")
+@rpc_method(
+    name="Version.filter",
+    auth=permissions_required("management.view_version"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Version.filter(query)
@@ -29,8 +29,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("management.add_version")
-@rpc_method(name="Version.create")
+@rpc_method(
+    name="Version.create",
+    auth=permissions_required("management.add_version"),
+)
 def create(values):
     """
     .. function:: RPC Version.create(values)

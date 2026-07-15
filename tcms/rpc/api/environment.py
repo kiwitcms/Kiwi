@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testrun import EnvironmentForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testruns.models import Environment, EnvironmentProperty
 
 
-@permissions_required("testruns.view_environmentproperty")
-@rpc_method(name="Environment.properties")
+@rpc_method(
+    name="Environment.properties",
+    auth=permissions_required("testruns.view_environmentproperty"),
+)
 def properties(query=None):
     """
     .. function:: Environment.properties(query)
@@ -38,8 +38,10 @@ def properties(query=None):
     )
 
 
-@permissions_required("testruns.delete_environmentproperty")
-@rpc_method(name="Environment.remove_property")
+@rpc_method(
+    name="Environment.remove_property",
+    auth=permissions_required("testruns.delete_environmentproperty"),
+)
 def remove_property(query):
     """
     .. function:: Environment.remove_property(query)
@@ -53,8 +55,10 @@ def remove_property(query):
     EnvironmentProperty.objects.filter(**query).delete()
 
 
-@permissions_required("testruns.add_environmentproperty")
-@rpc_method(name="Environment.add_property")
+@rpc_method(
+    name="Environment.add_property",
+    auth=permissions_required("testruns.add_environmentproperty"),
+)
 def add_property(environment_id, name, value):
     """
     .. function:: Environment.add_property(environment_id, name, value)
@@ -77,8 +81,10 @@ def add_property(environment_id, name, value):
     return model_to_dict(prop)
 
 
-@permissions_required("testruns.view_environment")
-@rpc_method(name="Environment.filter")
+@rpc_method(
+    name="Environment.filter",
+    auth=permissions_required("testruns.view_environment"),
+)
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: Environment.filter(query)
@@ -106,8 +112,10 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testruns.add_environment")
-@rpc_method(name="Environment.create")
+@rpc_method(
+    name="Environment.create",
+    auth=permissions_required("testruns.add_environment"),
+)
 def create(values):
     """
     .. function:: RPC Environment.create(values)

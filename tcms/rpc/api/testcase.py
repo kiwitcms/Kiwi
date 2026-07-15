@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
@@ -6,18 +5,20 @@ from django.db.models.functions import Coalesce
 from django.db.utils import NotSupportedError
 from django.forms import EmailField, ValidationError
 from django.forms.models import model_to_dict
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core import helpers
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Property, TestCase, TestCasePlan
 
 
-@permissions_required("testcases.add_testcasecomponent")
-@rpc_method(name="TestCase.add_component")
+@rpc_method(
+    name="TestCase.add_component",
+    auth=permissions_required("testcases.add_testcasecomponent"),
+)
 def add_component(case_id, component):
     """
     .. function:: RPC TestCase.add_component(case_id, component)
@@ -41,8 +42,10 @@ def add_component(case_id, component):
     return model_to_dict(component_obj)
 
 
-@permissions_required("testcases.delete_testcasecomponent")
-@rpc_method(name="TestCase.remove_component")
+@rpc_method(
+    name="TestCase.remove_component",
+    auth=permissions_required("testcases.delete_testcasecomponent"),
+)
 def remove_component(case_id, component_id):
     """
     .. function:: RPC TestCase.remove_component(case_id, component_id)
@@ -94,8 +97,10 @@ def _validate_cc_list(cc_list):
         )
 
 
-@permissions_required("testcases.change_testcase")
-@rpc_method(name="TestCase.add_notification_cc")
+@rpc_method(
+    name="TestCase.add_notification_cc",
+    auth=permissions_required("testcases.change_testcase"),
+)
 def add_notification_cc(case_id, cc_list):
     """
     .. function:: RPC TestCase.add_notification_cc(case_id, cc_list)
@@ -117,8 +122,10 @@ def add_notification_cc(case_id, cc_list):
     test_case.emailing.add_cc(cc_list)
 
 
-@permissions_required("testcases.change_testcase")
-@rpc_method(name="TestCase.remove_notification_cc")
+@rpc_method(
+    name="TestCase.remove_notification_cc",
+    auth=permissions_required("testcases.change_testcase"),
+)
 def remove_notification_cc(case_id, cc_list):
     """
     .. function:: RPC TestCase.remove_notification_cc(case_id, cc_list)
@@ -139,8 +146,10 @@ def remove_notification_cc(case_id, cc_list):
     TestCase.objects.get(pk=case_id).emailing.remove_cc(cc_list)
 
 
-@permissions_required("testcases.view_testcase")
-@rpc_method(name="TestCase.get_notification_cc")
+@rpc_method(
+    name="TestCase.get_notification_cc",
+    auth=permissions_required("testcases.view_testcase"),
+)
 def get_notification_cc(case_id):
     """
     .. function:: RPC TestCase.get_notification_cc(case_id)
@@ -156,9 +165,12 @@ def get_notification_cc(case_id):
     return TestCase.objects.get(pk=case_id).emailing.get_cc_list()
 
 
-@permissions_required("testcases.add_testcasetag")
-@rpc_method(name="TestCase.add_tag")
-def add_tag(case_id, tag, **kwargs):
+@rpc_method(
+    name="TestCase.add_tag",
+    auth=permissions_required("testcases.add_testcasetag"),
+    context_target="rpc_context",
+)
+def add_tag(case_id, tag, rpc_context=None):
     """
     .. function:: RPC TestCase.add_tag(case_id, tag)
 
@@ -168,20 +180,23 @@ def add_tag(case_id, tag, **kwargs):
         :type case_id: int
         :param tag: Tag name to add
         :type tag: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :raises PermissionDenied: if missing *testcases.add_testcasetag* permission
         :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
         :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag*
                  doesn't exist in the database!
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     tag, _ = Tag.get_or_create(request.user, tag)
     TestCase.objects.get(pk=case_id).add_tag(tag)
 
 
-@permissions_required("testcases.delete_testcasetag")
-@rpc_method(name="TestCase.remove_tag")
+@rpc_method(
+    name="TestCase.remove_tag",
+    auth=permissions_required("testcases.delete_testcasetag"),
+)
 def remove_tag(case_id, tag):
     """
     .. function:: RPC TestCase.remove_tag(case_id, tag)
@@ -198,9 +213,12 @@ def remove_tag(case_id, tag):
     TestCase.objects.get(pk=case_id).remove_tag(Tag.objects.get(name=tag))
 
 
-@permissions_required("testcases.add_testcase")
-@rpc_method(name="TestCase.create")
-def create(values, **kwargs):
+@rpc_method(
+    name="TestCase.create",
+    auth=permissions_required("testcases.add_testcase"),
+    context_target="rpc_context",
+)
+def create(values, rpc_context=None):
     """
     .. function:: RPC TestCase.create(values)
 
@@ -208,8 +226,9 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testcases.models.TestCase`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
         :raises ValueError: if form is not valid
@@ -225,7 +244,7 @@ def create(values, **kwargs):
             }
             >>> TestCase.create(values)
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
 
     if not (values.get("author") or values.get("author_id")):
         values["author"] = request.user.pk
@@ -251,8 +270,10 @@ def create(values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testcases.view_testcase")
-@rpc_method(name="TestCase.filter")
+@rpc_method(
+    name="TestCase.filter",
+    auth=permissions_required("testcases.view_testcase"),
+)
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestCase.filter(query)
@@ -315,8 +336,10 @@ def filter(query=None):  # pylint: disable=redefined-builtin
         return list(utils.filter_distinct(qs))
 
 
-@permissions_required("testcases.view_testcase")
-@rpc_method(name="TestCase.history")
+@rpc_method(
+    name="TestCase.history",
+    auth=permissions_required("testcases.view_testcase"),
+)
 def history(case_id, query=None):
     """
     .. function:: RPC TestCase.history(case_id, query)
@@ -336,8 +359,10 @@ def history(case_id, query=None):
     return list(TestCase.objects.get(pk=case_id).history.filter(**query).values())
 
 
-@permissions_required("testcases.view_testcase")
-@rpc_method(name="TestCase.sortkeys")
+@rpc_method(
+    name="TestCase.sortkeys",
+    auth=permissions_required("testcases.view_testcase"),
+)
 def sortkeys(query=None):
     """
     .. function:: RPC TestCase.sortkeys(query)
@@ -363,9 +388,12 @@ def sortkeys(query=None):
     return result
 
 
-@permissions_required("testcases.change_testcase")
-@rpc_method(name="TestCase.update")
-def update(case_id, values, **kwargs):
+@rpc_method(
+    name="TestCase.update",
+    auth=permissions_required("testcases.change_testcase"),
+    context_target="rpc_context",
+)
+def update(case_id, values, rpc_context=None):
     """
     .. function:: RPC TestCase.update(case_id, values, **kwargs)
 
@@ -375,15 +403,16 @@ def update(case_id, values, **kwargs):
         :type case_id: int
         :param values: Field values for :class:`tcms.testcases.models.TestCase`.
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
         :raises ValueError: if form is not valid
         :raises TestCase.DoesNotExist: if object specified by PK doesn't exist
         :raises PermissionDenied: if missing *testcases.change_testcase* permission
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     test_case = TestCase.objects.get(pk=case_id)
     form = UpdateForm(values, instance=test_case, request=request)
 
@@ -414,8 +443,10 @@ def update(case_id, values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testcases.delete_testcase")
-@rpc_method(name="TestCase.remove")
+@rpc_method(
+    name="TestCase.remove",
+    auth=permissions_required("testcases.delete_testcase"),
+)
 def remove(query):
     """
     .. function:: RPC TestCase.remove(query)
@@ -438,9 +469,12 @@ def remove(query):
     return TestCase.objects.filter(**query).delete()
 
 
-@permissions_required("attachments.view_attachment")
-@rpc_method(name="TestCase.list_attachments")
-def list_attachments(case_id, **kwargs):
+@rpc_method(
+    name="TestCase.list_attachments",
+    auth=permissions_required("attachments.view_attachment"),
+    context_target="rpc_context",
+)
+def list_attachments(case_id, rpc_context=None):
     """
     .. function:: RPC TestCase.list_attachments(case_id)
 
@@ -448,20 +482,24 @@ def list_attachments(case_id, **kwargs):
 
         :param case_id: PK of TestCase to inspect
         :type case_id: int
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: A list containing information and download URLs for attachements
         :rtype: list
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     return utils.get_attachments_for(request, case)
 
 
-@permissions_required("attachments.add_attachment")
-@rpc_method(name="TestCase.add_attachment")
-def add_attachment(case_id, filename, b64content, **kwargs):
+@rpc_method(
+    name="TestCase.add_attachment",
+    auth=permissions_required("attachments.add_attachment"),
+    context_target="rpc_context",
+)
+def add_attachment(case_id, filename, b64content, rpc_context=None):
     """
     .. function:: RPC TestCase.add_attachment(case_id, filename, b64content)
 
@@ -473,21 +511,25 @@ def add_attachment(case_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
     """
     utils.add_attachment(
         case_id,
         "testcases.TestCase",
-        kwargs.get(REQUEST_KEY).user,
+        rpc_context.request.user,
         filename,
         b64content,
     )
 
 
-@permissions_required("django_comments.add_comment")
-@rpc_method(name="TestCase.add_comment")
-def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
+@rpc_method(
+    name="TestCase.add_comment",
+    auth=permissions_required("django_comments.add_comment"),
+    context_target="rpc_context",
+)
+def add_comment(case_id, comment, user_id=None, submit_date=None, rpc_context=None):
     """
     .. function:: TestCase.add_comment(case_id, comment)
 
@@ -501,8 +543,9 @@ def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
         :type user_id: int
         :param submit_date: Override comment ``submit_date`` field. Only super-user can use this!
         :type submit_date: datetime.datetime
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`django_comments.models.Comment` object
         :rtype: dict
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
@@ -514,7 +557,7 @@ def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
     """
     case = TestCase.objects.get(pk=case_id)
 
-    request_user = kwargs.get(REQUEST_KEY).user
+    request_user = rpc_context.request.user
 
     comment_author = request_user
     if user_id and request_user.is_superuser:
@@ -529,8 +572,10 @@ def add_comment(case_id, comment, user_id=None, submit_date=None, **kwargs):
     return model_to_dict(created[0])
 
 
-@permissions_required("django_comments.delete_comment")
-@rpc_method(name="TestCase.remove_comment")
+@rpc_method(
+    name="TestCase.remove_comment",
+    auth=permissions_required("django_comments.delete_comment"),
+)
 def remove_comment(case_id, comment_id=None):
     """
     .. function:: TestCase.remove_comment(case_id, comment_id)
@@ -552,8 +597,10 @@ def remove_comment(case_id, comment_id=None):
     to_be_deleted.delete()
 
 
-@permissions_required("django_comments.view_comment")
-@rpc_method(name="TestCase.comments")
+@rpc_method(
+    name="TestCase.comments",
+    auth=permissions_required("django_comments.view_comment"),
+)
 def comments(case_id):
     """
     .. function:: TestCase.comments(case_id)
@@ -572,8 +619,10 @@ def comments(case_id):
     return list(result)
 
 
-@permissions_required("testcases.view_property")
-@rpc_method(name="TestCase.properties")
+@rpc_method(
+    name="TestCase.properties",
+    auth=permissions_required("testcases.view_property"),
+)
 def properties(query=None):
     """
     .. function:: TestCase.properties(query)
@@ -602,8 +651,10 @@ def properties(query=None):
     )
 
 
-@permissions_required("testcases.delete_property")
-@rpc_method(name="TestCase.remove_property")
+@rpc_method(
+    name="TestCase.remove_property",
+    auth=permissions_required("testcases.delete_property"),
+)
 def remove_property(query):
     """
     .. function:: TestCase.remove_property(query)
@@ -617,8 +668,10 @@ def remove_property(query):
     Property.objects.filter(**query).delete()
 
 
-@permissions_required("testcases.add_property")
-@rpc_method(name="TestCase.add_property")
+@rpc_method(
+    name="TestCase.add_property",
+    auth=permissions_required("testcases.add_property"),
+)
 def add_property(case_id, name, value):
     """
     .. function:: TestCase.add_property(case_id, name, value)

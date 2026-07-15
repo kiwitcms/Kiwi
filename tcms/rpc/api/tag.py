@@ -1,15 +1,16 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.management.forms import TagForm
 from tcms.management.models import Tag
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("management.view_tag")
-@rpc_method(name="Tag.filter")
+@rpc_method(
+    name="Tag.filter",
+    auth=permissions_required("management.view_tag"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Tag.filter(query)
@@ -30,8 +31,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("management.add_tag")
-@rpc_method(name="Tag.create")
+@rpc_method(
+    name="Tag.create",
+    auth=permissions_required("management.add_tag"),
+)
 def create(values):
     """
     .. function:: RPC Tag.create(values)
