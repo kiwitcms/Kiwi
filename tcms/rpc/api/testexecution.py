@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from datetime import timedelta
 
 from django.conf import settings
@@ -7,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.db.models import F
 from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
@@ -17,6 +14,7 @@ from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testruns.models import TestExecution, TestExecutionProperty, TestExecutionTag
 
 # conditional import b/c this App can be disabled
@@ -28,9 +26,14 @@ else:
         pass
 
 
-@permissions_required("django_comments.add_comment")
-@rpc_method(name="TestExecution.add_comment")
-def add_comment(execution_id, comment, user_id=None, submit_date=None, **kwargs):
+@rpc_method(
+    name="TestExecution.add_comment",
+    auth=permissions_required("django_comments.add_comment"),
+    context_target="rpc_context",
+)
+def add_comment(
+    execution_id, comment, user_id=None, submit_date=None, rpc_context=None
+):
     """
     .. function:: RPC TestExecution.add_comment(execution_id, comment)
 
@@ -44,15 +47,16 @@ def add_comment(execution_id, comment, user_id=None, submit_date=None, **kwargs)
         :type user_id: int
         :param submit_date: Override comment ``submit_date`` field. Only super-user can use this!
         :type submit_date: datetime.datetime
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`django_comments.models.Comment` object
         :rtype: dict
         :raises PermissionDenied: if missing *django_comments.add_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
 
-    request_user = kwargs.get(REQUEST_KEY).user
+    request_user = rpc_context.request.user
 
     comment_author = request_user
     if user_id and request_user.is_superuser:
@@ -67,8 +71,10 @@ def add_comment(execution_id, comment, user_id=None, submit_date=None, **kwargs)
     return model_to_dict(created[0])
 
 
-@permissions_required("django_comments.delete_comment")
-@rpc_method(name="TestExecution.remove_comment")
+@rpc_method(
+    name="TestExecution.remove_comment",
+    auth=permissions_required("django_comments.delete_comment"),
+)
 def remove_comment(execution_id, comment_id=None):
     """
     .. function:: RPC TestExecution.remove_comment(execution_id, comment_id)
@@ -89,8 +95,10 @@ def remove_comment(execution_id, comment_id=None):
     to_be_deleted.delete()
 
 
-@permissions_required("django_comments.view_comment")
-@rpc_method(name="TestExecution.get_comments")
+@rpc_method(
+    name="TestExecution.get_comments",
+    auth=permissions_required("django_comments.view_comment"),
+)
 def get_comments(execution_id):
     """
     .. function:: RPC TestExecution.get_comments(execution_id)
@@ -108,8 +116,10 @@ def get_comments(execution_id):
     return list(execution_comments)
 
 
-@permissions_required("testruns.view_testexecution")
-@rpc_method(name="TestExecution.filter")
+@rpc_method(
+    name="TestExecution.filter",
+    auth=permissions_required("testruns.view_testexecution"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestExecution.filter(query)
@@ -157,8 +167,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testruns.view_historicaltestexecution")
-@rpc_method(name="TestExecution.history")
+@rpc_method(
+    name="TestExecution.history",
+    auth=permissions_required("testruns.view_historicaltestexecution"),
+)
 def history(execution_id):
     """
     .. function:: RPC TestExecution.history(execution_id)
@@ -184,9 +196,12 @@ def history(execution_id):
     return list(execution_history)
 
 
-@permissions_required("testruns.change_testexecution")
-@rpc_method(name="TestExecution.update")
-def update(execution_id, values, **kwargs):
+@rpc_method(
+    name="TestExecution.update",
+    auth=permissions_required("testruns.change_testexecution"),
+    context_target="rpc_context",
+)
+def update(execution_id, values, rpc_context=None):
     """
     .. function:: RPC TestExecution.update(execution_id, values)
 
@@ -196,14 +211,15 @@ def update(execution_id, values, **kwargs):
         :type execution_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :rtype: dict
         :raises ValueError: if data validations fail
         :raises PermissionDenied: if missing *testruns.change_testexecution* permission
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     test_execution = TestExecution.objects.get(pk=execution_id)
 
     if values.get("case_text_version") == "latest":
@@ -238,9 +254,12 @@ def update(execution_id, values, **kwargs):
     return result
 
 
-@permissions_required("linkreference.add_linkreference")
-@rpc_method(name="TestExecution.add_link")
-def add_link(values, update_tracker=False, **kwargs):
+@rpc_method(
+    name="TestExecution.add_link",
+    auth=permissions_required("linkreference.add_linkreference"),
+    context_target="rpc_context",
+)
+def add_link(values, update_tracker=False, rpc_context=None):
     """
     .. function:: RPC TestExecution.add_link(values)
 
@@ -252,8 +271,9 @@ def add_link(values, update_tracker=False, **kwargs):
         :param update_tracker: Automatically update Issue Tracker by placing a comment
                                linking back to the failed TestExecution.
         :type update_tracker: bool, default=False
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized
                  :class:`tcms.core.contrib.linkreference.models.LinkReference` object
         :rtype: dict
@@ -276,7 +296,7 @@ def add_link(values, update_tracker=False, **kwargs):
     else:
         raise ValueError(list(form.errors.items()))
 
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     tracker = tracker_from_url(link.url, request)
 
     if (
@@ -290,8 +310,10 @@ def add_link(values, update_tracker=False, **kwargs):
     return model_to_dict(link)
 
 
-@permissions_required("linkreference.delete_linkreference")
-@rpc_method(name="TestExecution.remove_link")
+@rpc_method(
+    name="TestExecution.remove_link",
+    auth=permissions_required("linkreference.delete_linkreference"),
+)
 def remove_link(query):
     """
     .. function:: RPC TestExecution.remove_link(query)
@@ -305,8 +327,10 @@ def remove_link(query):
     LinkReference.objects.filter(**query).delete()
 
 
-@permissions_required("linkreference.view_linkreference")
-@rpc_method(name="TestExecution.get_links")
+@rpc_method(
+    name="TestExecution.get_links",
+    auth=permissions_required("linkreference.view_linkreference"),
+)
 def get_links(query):
     """
     .. function:: RPC TestExecution.get_links(query)
@@ -332,8 +356,10 @@ def get_links(query):
     )
 
 
-@permissions_required("testruns.view_testexecutionproperty")
-@rpc_method(name="TestExecution.properties")
+@rpc_method(
+    name="TestExecution.properties",
+    auth=permissions_required("testruns.view_testexecutionproperty"),
+)
 def properties(query):
     """
     .. function:: RPC TestExecution.properties(query)
@@ -357,8 +383,10 @@ def properties(query):
     )
 
 
-@permissions_required("testruns.add_testexecutionproperty")
-@rpc_method(name="TestExecution.add_property")
+@rpc_method(
+    name="TestExecution.add_property",
+    auth=permissions_required("testruns.add_testexecutionproperty"),
+)
 def add_property(execution_id, name, value):
     """
     .. function:: TestExecution.add_property(execution_id, name, value)
@@ -383,8 +411,10 @@ def add_property(execution_id, name, value):
     return model_to_dict(prop)
 
 
-@permissions_required("testruns.delete_testexecution")
-@rpc_method(name="TestExecution.remove")
+@rpc_method(
+    name="TestExecution.remove",
+    auth=permissions_required("testruns.delete_testexecution"),
+)
 def remove(query):
     """
     .. function:: RPC TestExecution.remove(query)
@@ -398,9 +428,12 @@ def remove(query):
     TestExecution.objects.filter(**query).delete()
 
 
-@permissions_required("attachments.view_attachment")
-@rpc_method(name="TestExecution.list_attachments")
-def list_attachments(execution_id, **kwargs):
+@rpc_method(
+    name="TestExecution.list_attachments",
+    auth=permissions_required("attachments.view_attachment"),
+    context_target="rpc_context",
+)
+def list_attachments(execution_id, rpc_context=None):
     """
     .. function:: RPC TestExecution.list_attachments(execution_id)
 
@@ -408,8 +441,9 @@ def list_attachments(execution_id, **kwargs):
 
         :param execution_id: PK of TestExecution to inspect
         :type execution_id: int
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: A list containing information and download URLs for attachements
         :rtype: list
         :raises TestExecution.DoesNotExit: if object specified by PK is missing
@@ -417,13 +451,16 @@ def list_attachments(execution_id, **kwargs):
     .. versionadded:: 15.3
     """
     execution = TestExecution.objects.get(pk=execution_id)
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     return utils.get_attachments_for(request, execution)
 
 
-@permissions_required("attachments.add_attachment")
-@rpc_method(name="TestExecution.add_attachment")
-def add_attachment(execution_id, filename, b64content, **kwargs):
+@rpc_method(
+    name="TestExecution.add_attachment",
+    auth=permissions_required("attachments.add_attachment"),
+    context_target="rpc_context",
+)
+def add_attachment(execution_id, filename, b64content, rpc_context=None):
     """
     .. function:: RPC TestExecution.add_attachment(execution_id, filename, b64content)
 
@@ -435,23 +472,27 @@ def add_attachment(execution_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
 
     .. versionadded:: 15.3
     """
     utils.add_attachment(
         execution_id,
         "testruns.TestExecution",
-        kwargs.get(REQUEST_KEY).user,
+        rpc_context.request.user,
         filename,
         b64content,
     )
 
 
-@permissions_required("testruns.add_testexecution")
-@rpc_method(name="TestExecution.create")
-def create(values, **kwargs):
+@rpc_method(
+    name="TestExecution.create",
+    auth=permissions_required("testruns.add_testexecution"),
+    context_target="rpc_context",
+)
+def create(values, rpc_context=None):
     """
     .. function:: RPC TestExecution.create(values)
 
@@ -459,8 +500,9 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testruns.models.TestExecution`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.add_testexecution* permission
@@ -468,7 +510,7 @@ def create(values, **kwargs):
 
     .. versionadded:: 15.3
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     form = NewExecutionForm(values, request=request)
 
     if form.is_valid():
@@ -478,9 +520,12 @@ def create(values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testruns.add_testexecutiontag")
-@rpc_method(name="TestExecution.add_tag")
-def add_tag(execution_id, tag_name, **kwargs):
+@rpc_method(
+    name="TestExecution.add_tag",
+    auth=permissions_required("testruns.add_testexecutiontag"),
+    context_target="rpc_context",
+)
+def add_tag(execution_id, tag_name, rpc_context=None):
     """
     .. function:: RPC TestExecution.add_tag(execution_id, tag_name)
 
@@ -490,8 +535,9 @@ def add_tag(execution_id, tag_name, **kwargs):
         :type execution_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.add_testexecutiontag* permission
@@ -501,15 +547,17 @@ def add_tag(execution_id, tag_name, **kwargs):
 
     .. versionadded:: 16.1
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     tag, _ = Tag.get_or_create(request.user, tag_name)
     test_execution = TestExecution.objects.get(pk=execution_id)
     TestExecutionTag.objects.get_or_create(execution=test_execution, tag=tag)
     return list(test_execution.tag.values("id", "name"))
 
 
-@permissions_required("testruns.delete_testexecutiontag")
-@rpc_method(name="TestExecution.remove_tag")
+@rpc_method(
+    name="TestExecution.remove_tag",
+    auth=permissions_required("testruns.delete_testexecutiontag"),
+)
 def remove_tag(execution_id, tag_name):
     """
     .. function:: RPC TestExecution.remove_tag(execution_id, tag_name)

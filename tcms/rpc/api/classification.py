@@ -3,15 +3,17 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.management.forms import ClassificationForm
 from tcms.management.models import Classification
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("management.view_classification")
-@rpc_method(name="Classification.filter")
+@rpc_method(
+    name="Classification.filter",
+    auth=permissions_required("management.view_classification"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Classification.filter(query)
@@ -31,8 +33,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@rpc_method(name="Classification.create")
-@permissions_required("management.add_classification")
+@rpc_method(
+    name="Classification.create",
+    auth=permissions_required("management.add_classification"),
+)
 def create(values):
     """
     .. function:: RPC Classification.create(values)

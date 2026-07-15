@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testplan import PlanTypeForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testplans.models import PlanType
 
 
-@rpc_method(name="PlanType.create")
-@permissions_required("testplans.add_plantype")
+@rpc_method(
+    name="PlanType.create",
+    auth=permissions_required("testplans.add_plantype"),
+)
 def create(values):
     """
     .. function:: RPC PlanType.create(values)
@@ -31,8 +31,10 @@ def create(values):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testplans.view_plantype")
-@rpc_method(name="PlanType.filter")
+@rpc_method(
+    name="PlanType.filter",
+    auth=permissions_required("testplans.view_plantype"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC PlanType.filter(query)

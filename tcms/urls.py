@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from importlib import import_module
 from importlib.metadata import entry_points
 
@@ -12,11 +11,10 @@ from django.urls import re_path
 from django.views.generic import TemplateView
 from django.views.i18n import JavaScriptCatalog
 from grappelli import urls as grappelli_urls
-from modernrpc.core import Protocol
-from modernrpc.views import RPCEntryPoint
 
 from tcms.core import views as core_views
 from tcms.kiwi_auth import urls as auth_urls
+from tcms.rpc.views import json_rpc_server, xml_rpc_server
 from tcms.telemetry import urls as telemetry_urls
 from tcms.testcases import urls as testcases_urls
 from tcms.testplans import urls as testplans_urls
@@ -25,8 +23,8 @@ from tcms.testruns import urls as testruns_urls
 urlpatterns = [
     re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
     re_path(r"^captcha/", include(captcha_urls)),
-    re_path(r"^xml-rpc/", RPCEntryPoint.as_view(protocol=Protocol.XML_RPC)),
-    re_path(r"^json-rpc/$", RPCEntryPoint.as_view(protocol=Protocol.JSON_RPC)),
+    re_path(r"^xml-rpc/", xml_rpc_server.view),
+    re_path(r"^json-rpc/$", json_rpc_server.view),
     re_path(r"^init-db/$", core_views.InitDBView.as_view(), name="init-db"),
     re_path(
         r"^translation-mode/",

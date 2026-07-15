@@ -1,20 +1,21 @@
-# -*- coding: utf-8 -*-
-
 from django.db.models import Count
 from django.forms.models import model_to_dict
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanAPIForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.models import TestPlan
 
 
-@permissions_required("testplans.add_testplan")
-@rpc_method(name="TestPlan.create")
-def create(values, **kwargs):
+@rpc_method(
+    name="TestPlan.create",
+    auth=permissions_required("testplans.add_testplan"),
+    context_target="rpc_context",
+)
+def create(values, rpc_context=None):
     """
     .. function:: RPC TestPlan.create(values)
 
@@ -22,8 +23,9 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testplans.models.TestPlan`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testplans.models.TestPlan` object
         :rtype: dict
         :raises PermissionDenied: if missing *testplans.add_testplan* permission
@@ -41,7 +43,7 @@ def create(values, **kwargs):
             }
             >>> TestPlan.create(values)
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
 
     if not values.get("author"):
         values["author"] = request.user.pk
@@ -70,8 +72,10 @@ def create(values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testplans.view_testplan")
-@rpc_method(name="TestPlan.filter")
+@rpc_method(
+    name="TestPlan.filter",
+    auth=permissions_required("testplans.view_testplan"),
+)
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestPlan.filter(query)
@@ -112,9 +116,12 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testplans.add_testplantag")
-@rpc_method(name="TestPlan.add_tag")
-def add_tag(plan_id, tag_name, **kwargs):
+@rpc_method(
+    name="TestPlan.add_tag",
+    auth=permissions_required("testplans.add_testplantag"),
+    context_target="rpc_context",
+)
+def add_tag(plan_id, tag_name, rpc_context=None):
     """
     .. function:: RPC TestPlan.add_tag(plan_id, tag_name)
 
@@ -124,20 +131,23 @@ def add_tag(plan_id, tag_name, **kwargs):
         :type plan_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :raises PermissionDenied: if missing *testplans.add_testplantag* permission
         :raises TestPlan.DoesNotExist: if object specified by PK doesn't exist
         :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag_name*
                  doesn't exist in the database!
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     tag, _ = Tag.get_or_create(request.user, tag_name)
     TestPlan.objects.get(pk=plan_id).add_tag(tag)
 
 
-@permissions_required("testplans.delete_testplantag")
-@rpc_method(name="TestPlan.remove_tag")
+@rpc_method(
+    name="TestPlan.remove_tag",
+    auth=permissions_required("testplans.delete_testplantag"),
+)
 def remove_tag(plan_id, tag_name):
     """
     .. function:: RPC TestPlan.remove_tag(plan_id, tag_name)
@@ -155,9 +165,12 @@ def remove_tag(plan_id, tag_name):
     TestPlan.objects.get(pk=plan_id).remove_tag(tag)
 
 
-@permissions_required("testplans.change_testplan")
-@rpc_method(name="TestPlan.update")
-def update(plan_id, values, **kwargs):
+@rpc_method(
+    name="TestPlan.update",
+    auth=permissions_required("testplans.change_testplan"),
+    context_target="rpc_context",
+)
+def update(plan_id, values, rpc_context=None):
     """
     .. function:: RPC TestPlan.update(plan_id, values)
 
@@ -167,15 +180,16 @@ def update(plan_id, values, **kwargs):
         :type plan_id: int
         :param values: Field values for :class:`tcms.testplans.models.TestPlan`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testplans.models.TestPlan` object
         :rtype: dict
         :raises TestPlan.DoesNotExist: if object specified by PK doesn't exist
         :raises PermissionDenied: if missing *testplans.change_testplan* permission
         :raises ValueError: if validations fail
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     test_plan = TestPlan.objects.get(pk=plan_id)
     form = EditPlanForm(values, instance=test_plan, request=request)
     if form.is_valid():
@@ -190,8 +204,10 @@ def update(plan_id, values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testcases.add_testcaseplan")
-@rpc_method(name="TestPlan.add_case")
+@rpc_method(
+    name="TestPlan.add_case",
+    auth=permissions_required("testcases.add_testcaseplan"),
+)
 def add_case(plan_id, case_id):
     """
     .. function:: RPC TestPlan.add_case(plan_id, case_id)
@@ -219,8 +235,10 @@ def add_case(plan_id, case_id):
     return result
 
 
-@permissions_required("testcases.delete_testcaseplan")
-@rpc_method(name="TestPlan.remove_case")
+@rpc_method(
+    name="TestPlan.remove_case",
+    auth=permissions_required("testcases.delete_testcaseplan"),
+)
 def remove_case(plan_id, case_id):
     """
     .. function:: RPC TestPlan.remove_case(plan_id, case_id)
@@ -236,8 +254,10 @@ def remove_case(plan_id, case_id):
     TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
 
 
-@permissions_required("testcases.change_testcaseplan")
-@rpc_method(name="TestPlan.update_case_order")
+@rpc_method(
+    name="TestPlan.update_case_order",
+    auth=permissions_required("testcases.change_testcaseplan"),
+)
 def update_case_order(plan_id, case_id, sortkey):
     """
     .. function:: RPC TestPlan.update_case_order(plan_id, case_id, sortkey)
@@ -258,9 +278,12 @@ def update_case_order(plan_id, case_id, sortkey):
     ).update(sortkey=sortkey)
 
 
-@permissions_required("attachments.view_attachment")
-@rpc_method(name="TestPlan.list_attachments")
-def list_attachments(plan_id, **kwargs):
+@rpc_method(
+    name="TestPlan.list_attachments",
+    auth=permissions_required("attachments.view_attachment"),
+    context_target="rpc_context",
+)
+def list_attachments(plan_id, rpc_context=None):
     """
     .. function:: RPC TestPlan.list_attachments(plan_id)
 
@@ -268,20 +291,24 @@ def list_attachments(plan_id, **kwargs):
 
         :param plan_id: PK of TestPlan to inspect
         :type plan_id: int
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: A list containing information and download URLs for attachements
         :rtype: list
         :raises TestPlan.DoesNotExit: if object specified by PK is missing
     """
     plan = TestPlan.objects.get(pk=plan_id)
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     return utils.get_attachments_for(request, plan)
 
 
-@permissions_required("attachments.add_attachment")
-@rpc_method(name="TestPlan.add_attachment")
-def add_attachment(plan_id, filename, b64content, **kwargs):
+@rpc_method(
+    name="TestPlan.add_attachment",
+    auth=permissions_required("attachments.add_attachment"),
+    context_target="rpc_context",
+)
+def add_attachment(plan_id, filename, b64content, rpc_context=None):
     """
     .. function:: RPC TestPlan.add_attachment(plan_id, filename, b64content)
 
@@ -293,20 +320,23 @@ def add_attachment(plan_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
     """
     utils.add_attachment(
         plan_id,
         "testplans.TestPlan",
-        kwargs.get(REQUEST_KEY).user,
+        rpc_context.request.user,
         filename,
         b64content,
     )
 
 
-@permissions_required("testplans.view_testplan")
-@rpc_method(name="TestPlan.tree")
+@rpc_method(
+    name="TestPlan.tree",
+    auth=permissions_required("testplans.view_testplan"),
+)
 def tree(plan_id):
     """
     .. function:: RPC TestPlan.tree(plan_id)

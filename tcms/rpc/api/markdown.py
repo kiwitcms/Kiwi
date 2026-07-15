@@ -1,13 +1,14 @@
-# -*- coding: utf-8 -*-
 from django.core.cache import cache
-from modernrpc.auth.basic import http_basic_auth_login_required
-from modernrpc.core import rpc_method
 
 from tcms.core.templatetags.extra_filters import markdown2html
+from tcms.rpc.decorators import django_login_required
+from tcms.rpc.views import rpc_method
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Markdown.render")
+@rpc_method(
+    name="Markdown.render",
+    auth=django_login_required,
+)
 def render(text):
     """
     .. function:: RPC Markdown.render(text)

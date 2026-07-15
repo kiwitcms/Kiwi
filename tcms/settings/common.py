@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import pathlib
 import sys
@@ -379,7 +377,7 @@ INSTALLED_APPS = TENANT_APPS + [
     "tcms.core",
     "tcms.kiwi_auth",
     "tcms.telemetry",
-    "tcms.rpc",
+    "tcms.rpc.apps.AppConfig",
 ]
 
 for plugin in entry_points().select(group="kiwitcms.plugins"):

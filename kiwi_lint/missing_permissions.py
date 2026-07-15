@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2021,2023 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2026 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -104,6 +104,31 @@ class MissingAPIPermissionsChecker(checkers.BaseChecker):
         )
     }
 
+    @staticmethod
+    def rpc_method_has_permissions_required(decorator):
+        if not isinstance(decorator, astroid.Call):
+            return False
+
+        keywords = decorator.keywords or []
+        for keyword in keywords:
+            if keyword.arg != "auth":
+                continue
+
+            if (
+                isinstance(keyword.value, astroid.Call)
+                and isinstance(keyword.value.func, astroid.Name)
+                and keyword.value.func.name == "permissions_required"
+            ):
+                return True
+
+            if (
+                isinstance(keyword.value, astroid.Name)
+                and keyword.value.name == "django_login_required"
+            ):
+                return True
+
+        return False
+
     def visit_functiondef(self, node):
         if not is_api_function(node):
             return
@@ -122,6 +147,10 @@ class MissingAPIPermissionsChecker(checkers.BaseChecker):
                 isinstance(decorator, astroid.Name)
                 and decorator.name == "http_basic_auth_login_required"
             ):
+                found_permissions_required = True
+                break
+
+            if self.rpc_method_has_permissions_required(decorator):
                 found_permissions_required = True
                 break
 

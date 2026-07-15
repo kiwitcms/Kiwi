@@ -1,16 +1,16 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.management.forms import ComponentForm
 from tcms.management.models import Component
 from tcms.rpc.api.forms.management import ComponentUpdateForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("management.view_component")
-@rpc_method(name="Component.filter")
+@rpc_method(
+    name="Component.filter",
+    auth=permissions_required("management.view_component"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Component.filter(query)
@@ -37,9 +37,12 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("management.add_component")
-@rpc_method(name="Component.create")
-def create(values, **kwargs):
+@rpc_method(
+    name="Component.create",
+    auth=permissions_required("management.add_component"),
+    context_target="rpc_context",
+)
+def create(values, rpc_context=None):
     """
     .. function:: RPC Component.create(values)
 
@@ -47,8 +50,9 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.management.models.Component`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
         :raises ValueError: if data validation fails
@@ -59,7 +63,7 @@ def create(values, **kwargs):
         If ``initial_owner_id`` is not specified this field is set to the
         user issuing the RPC request!
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     if "initial_owner" not in values:
         values["initial_owner"] = request.user.pk
 
@@ -75,9 +79,12 @@ def create(values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("management.change_component")
-@rpc_method(name="Component.update")
-def update(component_id, values, **kwargs):
+@rpc_method(
+    name="Component.update",
+    auth=permissions_required("management.change_component"),
+    context_target="rpc_context",
+)
+def update(component_id, values, rpc_context=None):
     """
     .. function:: RPC Component.update
 
@@ -87,14 +94,15 @@ def update(component_id, values, **kwargs):
         :type component_id: int
         :param values: Fields and values to be updated
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict
         :raises ValueError: if data validation fails
         :raises PermissionDenied: if missing *management.change_component* permission
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     component = Component.objects.get(pk=component_id)
     form = ComponentUpdateForm(values, instance=component, request=request)
 
