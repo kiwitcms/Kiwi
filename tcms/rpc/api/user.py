@@ -1,15 +1,13 @@
-# -*- coding: utf-8 -*-
-
 from attachments.models import Attachment
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.forms.models import model_to_dict
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc import utils
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.utils import user as user_utils
 
 
@@ -40,9 +38,12 @@ def _get_user_dict(user):
     return user_dict
 
 
-@permissions_required("auth.view_user")
-@rpc_method(name="User.filter")
-def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
+@rpc_method(
+    name="User.filter",
+    auth=permissions_required("auth.view_user"),
+    context_target="rpc_context",
+)
+def filter(query=None, rpc_context=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC User.filter(query)
 
@@ -50,8 +51,9 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 
         :param query: Field lookups for :class:`django.contrib.auth.models.User`
         :type query: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized list of :class:`django.contrib.auth.models.User` objects
                  without the password field
         :rtype: list(dict)
@@ -61,7 +63,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 
         If query is ``None`` will return the user issuing the RPC request.
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     if not query:
         query = {"pk": request.user.pk}
 
@@ -83,9 +85,13 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     )
 
 
-@rpc_method(name="User.update")
+@rpc_method(
+    name="User.update",
+    auth=None,
+    context_target="rpc_context",
+)
 def update(
-    user_id, values, **kwargs
+    user_id, values, rpc_context=None
 ):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: RPC User.update(user_id, values)
@@ -97,8 +103,9 @@ def update(
         :type user_id: int
         :param values: Field values for :class:`django.contrib.auth.models.User`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`django.contrib.auth.models.User` object
         :rtype: dict
         :raises PermissionDenied: if missing the *auth.change_user* permission
@@ -112,7 +119,7 @@ def update(
 
             Changing the password for another user via RPC is not allowed!
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     if user_id:
         user_being_updated = get_queryset(request).get(pk=user_id)
     else:
@@ -153,9 +160,12 @@ def update(
     return _get_user_dict(user_being_updated)
 
 
-@permissions_required("auth.change_user")
-@rpc_method(name="User.deactivate")
-def deactivate(query, **kwargs):
+@rpc_method(
+    name="User.deactivate",
+    auth=permissions_required("auth.change_user"),
+    context_target="rpc_context",
+)
+def deactivate(query, rpc_context=None):
     """
     .. function:: RPC User.deactivate(query)
 
@@ -163,8 +173,9 @@ def deactivate(query, **kwargs):
 
         :param query: Field lookups for :class:`django.contrib.auth.models.User`
         :type query: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized list of :class:`django.contrib.auth.models.User` objects
         :rtype: list(dict)
         :raises PermissionDenied: if missing the *auth.change_user* permission
@@ -187,7 +198,7 @@ def deactivate(query, **kwargs):
             >>> User.deactivate({'email__icontains': '@example.com'})
             >>> User.deactivate({'email__startswith': 'mia@'})
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     result = []
     for user in get_queryset(request).filter(**query):
         user_utils.deactivate(user)
@@ -197,9 +208,12 @@ def deactivate(query, **kwargs):
     return result
 
 
-@permissions_required("auth.change_user")
-@rpc_method(name="User.join_group")
-def join_group(username, groupname, **kwargs):
+@rpc_method(
+    name="User.join_group",
+    auth=permissions_required("auth.change_user"),
+    context_target="rpc_context",
+)
+def join_group(username, groupname, rpc_context=None):
     """
     .. function:: RPC User.join_group(username, groupname)
 
@@ -209,19 +223,23 @@ def join_group(username, groupname, **kwargs):
         :type username: str
         :param groupname: Name of group to join, must exist!
         :type groupname: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :raises PermissionDenied: if missing *auth.change_user* permission
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     user = get_queryset(request).get(username=username)
     group = Group.objects.get(name=groupname)
     user.groups.add(group)
 
 
-@permissions_required("attachments.add_attachment")
-@rpc_method(name="User.add_attachment")
-def add_attachment(filename, b64content, **kwargs):
+@rpc_method(
+    name="User.add_attachment",
+    auth=permissions_required("attachments.add_attachment"),
+    context_target="rpc_context",
+)
+def add_attachment(filename, b64content, rpc_context=None):
     """
     .. function:: RPC User.add_attachment(filename, b64content)
 
@@ -237,12 +255,13 @@ def add_attachment(filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Information about the attachment
         :rtype: dict
     """
-    user = kwargs.get(REQUEST_KEY).user
+    user = rpc_context.request.user
     utils.add_attachment(
         user.pk,
         settings.AUTH_USER_MODEL,

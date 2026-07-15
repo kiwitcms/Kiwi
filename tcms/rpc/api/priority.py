@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.management.forms import PriorityForm
 from tcms.management.models import Priority
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@permissions_required("management.view_priority")
-@rpc_method(name="Priority.filter")
+@rpc_method(
+    name="Priority.filter",
+    auth=permissions_required("management.view_priority"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Priority.filter(query)
@@ -29,8 +29,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("management.add_priority")
-@rpc_method(name="Priority.create")
+@rpc_method(
+    name="Priority.create",
+    auth=permissions_required("management.add_priority"),
+)
 def create(values):
     """
     .. function:: RPC Priority.create(values)

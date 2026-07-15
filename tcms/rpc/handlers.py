@@ -1,10 +1,8 @@
-# coding: utf-8
 import html
 from datetime import timedelta
 
-from modernrpc.handlers import JSONRPCHandler, XMLRPCHandler
-from modernrpc.handlers.jsonhandler import JsonSuccessResult
-from modernrpc.handlers.xmlhandler import XmlSuccessResult
+from modernrpc.jsonrpc.handler import JsonRpcHandler
+from modernrpc.xmlrpc.handler import XmlRpcHandler
 
 
 class KiwiTCMSHandlerMixin:
@@ -30,19 +28,18 @@ class KiwiTCMSHandlerMixin:
             return __class__.escape_value(value)
         return value
 
-    def dumps_result(self, result):
-        if isinstance(result, (JsonSuccessResult, XmlSuccessResult)):
-            result.data = __class__.escape(result.data)
-        return super().dumps_result(result)
+    def build_success_result(self, request, data):
+        data = __class__.escape(data)
+        return super().build_success_result(request, data)
 
 
 class KiwiTCMSJsonRpcHandler(
-    KiwiTCMSHandlerMixin, JSONRPCHandler
+    KiwiTCMSHandlerMixin, JsonRpcHandler
 ):  # pylint: disable=remove-empty-class
     pass
 
 
 class KiwiTCMSXmlRpcHandler(
-    KiwiTCMSHandlerMixin, XMLRPCHandler
+    KiwiTCMSHandlerMixin, XmlRpcHandler
 ):  # pylint: disable=remove-empty-class
     pass

@@ -1,15 +1,17 @@
 from django.db.models import CharField, Count, Value
 from django.db.models.functions import Concat
 from django.utils.translation import gettext_lazy as _
-from modernrpc.auth.basic import http_basic_auth_login_required
-from modernrpc.core import rpc_method
 
+from tcms.rpc.decorators import django_login_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestExecution, TestExecutionStatus
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Testing.breakdown")
+@rpc_method(
+    name="Testing.breakdown",
+    auth=django_login_required,
+)
 def breakdown(query=None):
     """
     .. function:: RPC Testing.breakdown(query)
@@ -66,8 +68,10 @@ def _map_query_set(query_set, field):
     return {entry[field]: entry["count"] for entry in query_set}
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Testing.status_matrix")
+@rpc_method(
+    name="Testing.status_matrix",
+    auth=django_login_required,
+)
 def status_matrix(query=None):
     """
     .. function:: RPC Testing.status_matrix(query)
@@ -116,8 +120,10 @@ def status_matrix(query=None):
     }
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Testing.execution_trends")
+@rpc_method(
+    name="Testing.execution_trends",
+    auth=django_login_required,
+)
 def execution_trends(query=None):
     if query is None:
         query = {}
@@ -191,8 +197,10 @@ def _append_status_counts_to_result(counts, result):
     result.get(str(_("TOTAL"))).append(total)
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Testing.test_case_health")
+@rpc_method(
+    name="Testing.test_case_health",
+    auth=django_login_required,
+)
 def test_case_health(query=None):
     if query is None:
         query = {}
@@ -226,8 +234,10 @@ def test_case_health(query=None):
     return data
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Testing.individual_test_case_health")
+@rpc_method(
+    name="Testing.individual_test_case_health",
+    auth=django_login_required,
+)
 def individual_test_case_health_simple(query=None):
     if query is None:
         query = {}

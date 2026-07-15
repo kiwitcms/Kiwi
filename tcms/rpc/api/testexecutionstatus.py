@@ -3,15 +3,17 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testrun import TestExecutionStatusForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testruns.models import TestExecutionStatus
 
 
-@permissions_required("testruns.view_testexecutionstatus")
-@rpc_method(name="TestExecutionStatus.filter")
+@rpc_method(
+    name="TestExecutionStatus.filter",
+    auth=permissions_required("testruns.view_testexecutionstatus"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestExecutionStatus.filter(query)
@@ -31,8 +33,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testruns.add_testexecutionstatus")
-@rpc_method(name="TestExecutionStatus.create")
+@rpc_method(
+    name="TestExecutionStatus.create",
+    auth=permissions_required("testruns.add_testexecutionstatus"),
+)
 def create(values):
     """
     .. function:: RPC TestExecutionStatus.create(values)

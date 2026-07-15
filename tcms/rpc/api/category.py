@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testcase import CategoryForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Category
 
 
-@permissions_required("testcases.view_category")
-@rpc_method(name="Category.filter")
+@rpc_method(
+    name="Category.filter",
+    auth=permissions_required("testcases.view_category"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Category.filter(query)
@@ -29,8 +29,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testcases.add_category")
-@rpc_method(name="Category.create")
+@rpc_method(
+    name="Category.create",
+    auth=permissions_required("testcases.add_category"),
+)
 def create(values):
     """
     .. function:: RPC Category.create(values)

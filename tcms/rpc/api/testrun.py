@@ -1,18 +1,19 @@
-# -*- coding: utf-8 -*-
 from django.forms.models import model_to_dict
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
 from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import Property, TestExecution, TestRun
 
 
-@permissions_required("testruns.add_testexecution")
-@rpc_method(name="TestRun.add_case")
+@rpc_method(
+    name="TestRun.add_case",
+    auth=permissions_required("testruns.add_testexecution"),
+)
 def add_case(run_id, case_id):
     """
     .. function:: RPC TestRun.add_case(run_id, case_id)
@@ -62,8 +63,10 @@ def annotate_executions_with_properties(executions_iterable):
     return result
 
 
-@permissions_required("testruns.delete_testexecution")
-@rpc_method(name="TestRun.remove_case")
+@rpc_method(
+    name="TestRun.remove_case",
+    auth=permissions_required("testruns.delete_testexecution"),
+)
 def remove_case(run_id, case_id):
     """
     .. function:: RPC TestRun.remove_case(run_id, case_id)
@@ -74,8 +77,10 @@ def remove_case(run_id, case_id):
     TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
 
-@permissions_required("testruns.view_testrun")
-@rpc_method(name="TestRun.get_cases")
+@rpc_method(
+    name="TestRun.get_cases",
+    auth=permissions_required("testruns.view_testrun"),
+)
 def get_cases(run_id):
     """
     .. function:: RPC TestRun.get_cases(run_id)
@@ -122,9 +127,12 @@ def get_cases(run_id):
     return result
 
 
-@permissions_required("testruns.add_testruntag")
-@rpc_method(name="TestRun.add_tag")
-def add_tag(run_id, tag_name, **kwargs):
+@rpc_method(
+    name="TestRun.add_tag",
+    auth=permissions_required("testruns.add_testruntag"),
+    context_target="rpc_context",
+)
+def add_tag(run_id, tag_name, rpc_context=None):
     """
     .. function:: RPC TestRun.add_tag(run_id, tag)
 
@@ -134,8 +142,9 @@ def add_tag(run_id, tag_name, **kwargs):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.add_testruntag* permission
@@ -143,15 +152,17 @@ def add_tag(run_id, tag_name, **kwargs):
         :raises Tag.DoesNotExist: if missing *management.add_tag* permission and *tag_name*
                  doesn't exist in the database!
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     tag, _ = Tag.get_or_create(request.user, tag_name)
     test_run = TestRun.objects.get(pk=run_id)
     test_run.add_tag(tag)
     return list(test_run.tag.values("id", "name"))
 
 
-@permissions_required("testruns.delete_testruntag")
-@rpc_method(name="TestRun.remove_tag")
+@rpc_method(
+    name="TestRun.remove_tag",
+    auth=permissions_required("testruns.delete_testruntag"),
+)
 def remove_tag(run_id, tag_name):
     """
     .. function:: RPC TestRun.remove_tag(run_id, tag)
@@ -173,9 +184,12 @@ def remove_tag(run_id, tag_name):
     return list(test_run.tag.values("id", "name"))
 
 
-@permissions_required("testruns.add_testrun")
-@rpc_method(name="TestRun.create")
-def create(values, **kwargs):
+@rpc_method(
+    name="TestRun.create",
+    auth=permissions_required("testruns.add_testrun"),
+    context_target="rpc_context",
+)
+def create(values, rpc_context=None):
     """
     .. function:: RPC TestRun.create(values)
 
@@ -183,8 +197,9 @@ def create(values, **kwargs):
 
         :param values: Field values for :class:`tcms.testruns.models.TestRun`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testruns.models.TestRun` object
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.add_testrun* permission
@@ -199,7 +214,7 @@ def create(values, **kwargs):
             }
             >>> TestRun.create(values)
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     if not values.get("default_tester"):
         values["default_tester"] = request.user.pk
 
@@ -213,8 +228,10 @@ def create(values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testruns.view_testrun")
-@rpc_method(name="TestRun.filter")
+@rpc_method(
+    name="TestRun.filter",
+    auth=permissions_required("testruns.view_testrun"),
+)
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestRun.filter(query)
@@ -257,9 +274,12 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testruns.change_testrun")
-@rpc_method(name="TestRun.update")
-def update(run_id, values, **kwargs):
+@rpc_method(
+    name="TestRun.update",
+    auth=permissions_required("testruns.change_testrun"),
+    context_target="rpc_context",
+)
+def update(run_id, values, rpc_context=None):
     """
     .. function:: RPC TestRun.update(run_id, values)
 
@@ -269,14 +289,15 @@ def update(run_id, values, **kwargs):
         :type run_id: int
         :param values: Field values for :class:`tcms.testruns.models.TestRun`
         :type values: dict
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Serialized :class:`tcms.testruns.models.TestRun` object
         :rtype: dict
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     test_run = TestRun.objects.get(pk=run_id)
     form = UpdateForm(values, instance=test_run, request=request)
 
@@ -298,9 +319,12 @@ def update(run_id, values, **kwargs):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("testruns.change_testrun")
-@rpc_method(name="TestRun.add_cc")
-def add_cc(run_id, username, **kwargs):
+@rpc_method(
+    name="TestRun.add_cc",
+    auth=permissions_required("testruns.change_testrun"),
+    context_target="rpc_context",
+)
+def add_cc(run_id, username, rpc_context=None):
     """
     .. function:: RPC TestRun.add_cc(run_id, username)
 
@@ -310,13 +334,14 @@ def add_cc(run_id, username, **kwargs):
         :type run_id: int
         :param username: PK, email or username
         :type username: string
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :raises DoesNotExist: if test run specified by the PK doesn't exist
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     test_run = TestRun.objects.get(pk=run_id)
     form = UserForm({"user": username}, request=request)
 
@@ -326,9 +351,12 @@ def add_cc(run_id, username, **kwargs):
     test_run.add_cc(form.cleaned_data["user"])
 
 
-@permissions_required("testruns.change_testrun")
-@rpc_method(name="TestRun.remove_cc")
-def remove_cc(run_id, username, **kwargs):
+@rpc_method(
+    name="TestRun.remove_cc",
+    auth=permissions_required("testruns.change_testrun"),
+    context_target="rpc_context",
+)
+def remove_cc(run_id, username, rpc_context=None):
     """
     .. function:: RPC TestRun.remove_cc(run_id, username)
 
@@ -338,13 +366,14 @@ def remove_cc(run_id, username, **kwargs):
         :type run_id: int
         :param username: PK, email or username
         :type username: string
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :raises DoesNotExist: if test run specified by the PK doesn't exist
         :raises PermissionDenied: if missing *testruns.change_testrun* permission
         :raises ValueError: if data validations fail
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     test_run = TestRun.objects.get(pk=run_id)
     form = UserForm({"user": username}, request=request)
 
@@ -354,8 +383,10 @@ def remove_cc(run_id, username, **kwargs):
     test_run.remove_cc(form.cleaned_data["user"])
 
 
-@permissions_required("testruns.view_property")
-@rpc_method(name="TestRun.properties")
+@rpc_method(
+    name="TestRun.properties",
+    auth=permissions_required("testruns.view_property"),
+)
 def properties(query=None):
     """
     .. function:: TestRun.properties(query)
@@ -384,8 +415,10 @@ def properties(query=None):
     )
 
 
-@permissions_required("testruns.add_property")
-@rpc_method(name="TestRun.add_property")
+@rpc_method(
+    name="TestRun.add_property",
+    auth=permissions_required("testruns.add_property"),
+)
 def add_property(run_id, name, value):
     """
     .. function:: TestRun.add_property(run_id, name, value)
@@ -408,9 +441,12 @@ def add_property(run_id, name, value):
     return model_to_dict(prop)
 
 
-@permissions_required("attachments.view_attachment")
-@rpc_method(name="TestRun.list_attachments")
-def list_attachments(run_id, **kwargs):
+@rpc_method(
+    name="TestRun.list_attachments",
+    auth=permissions_required("attachments.view_attachment"),
+    context_target="rpc_context",
+)
+def list_attachments(run_id, rpc_context=None):
     """
     .. function:: RPC TestRun.list_attachments(run_id)
 
@@ -418,8 +454,9 @@ def list_attachments(run_id, **kwargs):
 
         :param run_id: PK of TestRun to inspect
         :type run_id: int
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: A list containing information and download URLs for attachements
         :rtype: list
         :raises TestRun.DoesNotExit: if object specified by PK is missing
@@ -427,13 +464,16 @@ def list_attachments(run_id, **kwargs):
     .. versionadded:: 15.3
     """
     run = TestRun.objects.get(pk=run_id)
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     return utils.get_attachments_for(request, run)
 
 
-@permissions_required("attachments.add_attachment")
-@rpc_method(name="TestRun.add_attachment")
-def add_attachment(run_id, filename, b64content, **kwargs):
+@rpc_method(
+    name="TestRun.add_attachment",
+    auth=permissions_required("attachments.add_attachment"),
+    context_target="rpc_context",
+)
+def add_attachment(run_id, filename, b64content, rpc_context=None):
     """
     .. function:: RPC TestRun.add_attachment(run_id, filename, b64content)
 
@@ -445,20 +485,23 @@ def add_attachment(run_id, filename, b64content, **kwargs):
         :type filename: str
         :param b64content: Base64 encoded content
         :type b64content: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
     """
     utils.add_attachment(
         run_id,
         "testruns.TestRun",
-        kwargs.get(REQUEST_KEY).user,
+        rpc_context.request.user,
         filename,
         b64content,
     )
 
 
-@permissions_required("testruns.delete_testrun")
-@rpc_method(name="TestRun.remove")
+@rpc_method(
+    name="TestRun.remove",
+    auth=permissions_required("testruns.delete_testrun"),
+)
 def remove(query):
     """
     .. function:: RPC TestRun.remove(query)
@@ -477,8 +520,10 @@ def remove(query):
     return TestRun.objects.filter(**query).delete()
 
 
-@permissions_required("testruns.view_testrun")
-@rpc_method(name="TestRun.get_cc")
+@rpc_method(
+    name="TestRun.get_cc",
+    auth=permissions_required("testruns.view_testrun"),
+)
 def get_cc(run_id):
     """
     .. function:: RPC TestRun.get_cc(run_id)

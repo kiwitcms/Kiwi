@@ -1,19 +1,20 @@
-# -*- coding: utf-8 -*-
 from django.core.cache import cache
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
-from modernrpc.auth.basic import http_basic_auth_login_required
-from modernrpc.core import REQUEST_KEY, rpc_method
 
 from tcms.rpc.api.utils import tracker_from_url
-from tcms.rpc.decorators import permissions_required
+from tcms.rpc.decorators import django_login_required, permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestExecution
 
 
-@http_basic_auth_login_required
-@rpc_method(name="Bug.details")
-def details(url, **kwargs):
+@rpc_method(
+    name="Bug.details",
+    auth=django_login_required,
+    context_target="rpc_context",
+)
+def details(url, rpc_context=None):
     """
     .. function:: RPC Bug.details(url)
 
@@ -22,8 +23,9 @@ def details(url, **kwargs):
 
         :param url: URL address
         :type url: str
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Detailed information about this URL. Depends on the underlying
                  issue tracker.
         :rtype: dict
@@ -32,7 +34,7 @@ def details(url, **kwargs):
     if result:
         return result
 
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     tracker = tracker_from_url(url, request)
     if not tracker:
         return {}
@@ -42,11 +44,14 @@ def details(url, **kwargs):
     return result
 
 
-@permissions_required(
-    ("testruns.view_testexecution", "linkreference.add_linkreference")
+@rpc_method(
+    name="Bug.report",
+    auth=permissions_required(
+        "testruns.view_testexecution", "linkreference.add_linkreference"
+    ),
+    context_target="rpc_context",
 )
-@rpc_method(name="Bug.report")
-def report(execution_id, tracker_id, **kwargs):
+def report(execution_id, tracker_id, rpc_context=None):
     """
     .. function:: RPC Bug.report(execution_id, tracker_id)
 
@@ -57,12 +62,13 @@ def report(execution_id, tracker_id, **kwargs):
         :type execution_id: int
         :param tracker_id: PK for :class:`tcms.testcases.models.BugSystem` object
         :type tracker_id: int
-        :param \\**kwargs: Dict providing access to the current request, protocol,
+        :param rpc_context: Provides access to the current request, protocol,
                 entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
         :return: Success response with bug URL or failure message
         :rtype: dict
     """
-    request = kwargs.get(REQUEST_KEY)
+    request = rpc_context.request
     response = {
         "rc": 1,
         "response": _(

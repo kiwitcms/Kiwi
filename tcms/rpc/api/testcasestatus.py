@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testcase import TestCaseStatusForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCaseStatus
 
 
-@permissions_required("testcases.view_testcasestatus")
-@rpc_method(name="TestCaseStatus.filter")
+@rpc_method(
+    name="TestCaseStatus.filter",
+    auth=permissions_required("testcases.view_testcasestatus"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestCaseStatus.filter(query)
@@ -29,8 +29,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testcases.add_testcasestatus")
-@rpc_method(name="TestCaseStatus.create")
+@rpc_method(
+    name="TestCaseStatus.create",
+    auth=permissions_required("testcases.add_testcasestatus"),
+)
 def create(values):
     """
     .. function:: RPC TestCaseStatus.create(values)

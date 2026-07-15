@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-
-from modernrpc.auth.basic import http_basic_auth_login_required
-from modernrpc.core import rpc_method
-
 from tcms import __version__
+from tcms.rpc.decorators import django_login_required
+from tcms.rpc.views import rpc_method
 
 
-@http_basic_auth_login_required
-@rpc_method(name="KiwiTCMS.version")
+@rpc_method(
+    name="KiwiTCMS.version",
+    auth=django_login_required,
+)
 def version():
     """
     .. function:: RPC KiwiTCMS.version()

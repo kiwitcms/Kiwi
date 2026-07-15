@@ -3,15 +3,17 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testcase import TemplateForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Template
 
 
-@permissions_required("testcases.view_template")
-@rpc_method(name="Template.filter")
+@rpc_method(
+    name="Template.filter",
+    auth=permissions_required("testcases.view_template"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Template.filter(query)
@@ -32,8 +34,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testcases.add_template")
-@rpc_method(name="Template.create")
+@rpc_method(
+    name="Template.create",
+    auth=permissions_required("testcases.add_template"),
+)
 def create(values):
     """
     .. function:: RPC Template.create(values)

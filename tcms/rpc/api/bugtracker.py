@@ -3,15 +3,17 @@
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.rpc.api.forms.testcase import BugSystemForm
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 from tcms.testcases.models import BugSystem
 
 
-@permissions_required("testcases.view_bugsystem")
-@rpc_method(name="BugTracker.filter")
+@rpc_method(
+    name="BugTracker.filter",
+    auth=permissions_required("testcases.view_bugsystem"),
+)
 def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC BugTracker.filter(query)
@@ -41,8 +43,10 @@ def filter(query):  # pylint: disable=redefined-builtin
     )
 
 
-@permissions_required("testcases.add_bugsystem")
-@rpc_method(name="BugTracker.create")
+@rpc_method(
+    name="BugTracker.create",
+    auth=permissions_required("testcases.add_bugsystem"),
+)
 def create(values):
     """
     .. function:: RPC BugTracker.create(values)

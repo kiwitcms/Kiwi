@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.forms.models import model_to_dict
-from modernrpc.core import rpc_method
 
 from tcms.management.forms import ProductForm
 from tcms.management.models import Product
 from tcms.rpc.decorators import permissions_required
+from tcms.rpc.views import rpc_method
 
 
-@rpc_method(name="Product.create")
-@permissions_required("management.add_product")
+@rpc_method(
+    name="Product.create",
+    auth=permissions_required("management.add_product"),
+)
 def create(values):
     """
     .. function:: RPC Product.create(values)
@@ -32,8 +32,10 @@ def create(values):
     raise ValueError(list(form.errors.items()))
 
 
-@permissions_required("management.view_product")
-@rpc_method(name="Product.filter")
+@rpc_method(
+    name="Product.filter",
+    auth=permissions_required("management.view_product"),
+)
 def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Product.filter(query)
