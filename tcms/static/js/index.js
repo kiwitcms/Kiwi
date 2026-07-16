@@ -19,6 +19,8 @@ import { pageManagementBuildAdminReadyHandler } from '../../management/static/ma
 
 import { pageTelemetryReadyHandler } from '../../telemetry/static/telemetry/js/index'
 
+import { drawTable as pageTelemetryMetricsReadyHandler } from '../../telemetry/static/telemetry/js/testing/metrics'
+
 import { jsonRPC } from './jsonrpc'
 import { initSimpleMDE } from './simplemde_security_override'
 
@@ -52,7 +54,8 @@ const pageHandlers = {
     'page-telemetry-status-matrix': pageTelemetryReadyHandler,
     'page-telemetry-execution-dashboard': pageTelemetryReadyHandler,
     'page-telemetry-execution-trends': pageTelemetryReadyHandler,
-    'page-telemetry-test-case-health': pageTelemetryReadyHandler
+    'page-telemetry-test-case-health': pageTelemetryReadyHandler,
+    'page-telemetry-metrics': pageTelemetryMetricsReadyHandler
 }
 
 $(() => {

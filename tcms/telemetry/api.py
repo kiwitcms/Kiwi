@@ -4,8 +4,108 @@ from django.utils.translation import gettext_lazy as _
 from modernrpc.auth.basic import http_basic_auth_login_required
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import TestCase
-from tcms.testruns.models import TestExecution, TestExecutionStatus
+from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testplans.models import TestPlan
+from tcms.testruns.models import TestExecution, TestExecutionStatus, TestRun
+@http_basic_auth_login_required
+@rpc_method(name="Testing.metrics")
+def metrics(query=None):
+    """
+    .. function:: RPC Testing.metrics(query)
+
+        Return metrics for test runs and executions
+
+        :param query: Field lookups for :class:`tcms.testruns.models.TestRun`
+        :type query: dict
+        :return: List of dicts with metrics per test run
+        :rtype: list(dict)
+    """
+    if not isinstance(query, dict):
+        query = {}
+
+    test_runs = TestRun.objects.filter(**query).select_related('plan').order_by('-start_date')
+    run_ids = [tr.id for tr in test_runs]
+    plan_ids = [tr.plan_id for tr in test_runs if tr.plan_id]
+
+
+    planned_cases = TestCasePlan.objects.filter(plan_id__in=plan_ids).values('plan_id').annotate(count=Count('id'))
+    planned_cases_map = {pc['plan_id']: pc['count'] for pc in planned_cases}
+
+
+
+    executions = TestExecution.objects.filter(run_id__in=run_ids)
+
+
+    status_ids_weighted = set(TestExecutionStatus.objects.exclude(weight=0).values_list('id', flat=True))
+
+
+    executed_cases = executions.filter(status_id__in=status_ids_weighted).values('run_id').annotate(count=Count('case_id', distinct=True))
+    executed_cases_map = {e['run_id']: e['count'] for e in executed_cases}
+
+
+    status_counts = executions.values('run_id', 'status_id').annotate(count=Count('id'))
+    status_count_map = {}
+    for item in status_counts:
+        run_id = item['run_id']
+        status_id = item['status_id']
+        count = item['count']
+        status_count_map.setdefault(run_id, {})[status_id] = count
+
+
+    total_exec = executions.values('run_id').annotate(count=Count('id'))
+    total_exec_map = {e['run_id']: e['count'] for e in total_exec}
+
+
+    statuses = TestExecutionStatus.objects.exclude(weight=0).values('id', 'name')
+
+    results = []
+    statuses = list(TestExecutionStatus.objects.exclude(weight=0).values('id', 'name'))
+    status_names = [status['name'] for status in statuses]
+
+    status_weights = dict(TestExecutionStatus.objects.exclude(weight=0).values_list('id', 'weight'))
+    for tr in test_runs:
+        tp = tr.plan
+        total_planned = planned_cases_map.get(tr.plan_id, 0)
+        executed_cases = executed_cases_map.get(tr.id, 0)
+        status_counts_run = status_count_map.get(tr.id, {})
+        total_exec = total_exec_map.get(tr.id, 0)
+
+        def percent(status_id):
+            if total_exec == 0:
+                return 0.0
+            return round(status_counts_run.get(status_id, 0) / total_exec * 100, 2)
+
+        metrics = {
+            'test_run_id': tr.id,
+            'test_run_name': tr.summary,
+            'start_date': tr.start_date,
+            'stop_date': tr.stop_date,
+            'test_plan_name': tp.name if tp else None,
+            'total_planned_cases': total_planned,
+            'executed_cases': executed_cases,
+        }
+
+
+        for status in statuses:
+            metrics[f"{status['name'].lower()}_percent"] = percent(status['id'])
+
+        metrics['execution_coverage'] = round(executed_cases / total_planned * 100, 2) if total_planned else 0.0
+
+
+
+
+
+        results.append(metrics)
+    status_formulas = []
+    for status in statuses:
+        status_name = status['name'].upper()
+        formula = f"Cobertura de casos de prueba con estado {status_name} = (Número de pruebas con estado {status_name} / Número total de pruebas ejecutadas) × 100"
+        status_formulas.append(formula)
+
+    return {
+        "results": results,
+        "statuses": status_names
+    }
 
 
 @http_basic_auth_login_required
