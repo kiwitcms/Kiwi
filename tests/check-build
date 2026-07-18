@@ -101,6 +101,7 @@ pip install \
     --no-binary :all:          \
     --only-binary pillow       \
     --only-binary cryptography \
+    --only-binary django-modern-rpc \
     dist/kiwitcms*.tar.gz
 pip freeze | grep kiwitcms
 deactivate
