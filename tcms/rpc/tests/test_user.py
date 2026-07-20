@@ -68,6 +68,15 @@ class TestUserFilter(APITestCase):
         )
         self.assertEqual(len(users), 2)
 
+        # this should fail
+        with self.assertRaisesRegex(XmlRPCFault, "Unsupported field"):
+            self.rpc_client.User.filter(
+                {
+                    "email": "user2@example.com",
+                    "password__contains": "z",  # nosec:B105:hardcoded_password_string
+                }
+            )
+
     def test_search_by_groups(self):
         users = self.rpc_client.User.filter({"groups__name": self.group_reviewer.name})
         self.assertEqual(len(users), 2)
@@ -314,3 +323,88 @@ class TestApiAccessForDeactivatedUser(APITestCase):
             XmlRPCFault, "Internal error: Wrong username or password"
         ):
             self.rpc_client.User.filter({})
+
+
+class TestUserFilterJsonRpc(APIPermissionsTestCase):
+    permission_label = "auth.view_user"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+        user_should_have_perm(cls.tester, cls.permission_label)
+
+        cls.user1 = UserFactory()
+        cls.user2 = UserFactory(
+            username="user 2",
+            email="user2@example.com",
+            is_active=False,
+        )
+        cls.user3 = UserFactory()
+
+    def verify_api_with_permission(self):
+        response = self.client.post(
+            "/json-rpc/",
+            {
+                "id": "jsonrpc",
+                "jsonrpc": "2.0",
+                "method": "User.filter",
+                "params": [
+                    {
+                        "email": "user2@example.com",
+                    }
+                ],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        result = response.json()
+        self.assertIn("result", result)
+        users = result["result"]
+        self.assertEqual(len(users), 1)
+        user = users[0]
+        self.assertEqual(user["id"], self.user2.pk)
+        self.assertEqual(user["username"], self.user2.username)
+
+        # filtering by this field should fail
+        response = self.client.post(
+            "/json-rpc/",
+            {
+                "id": "jsonrpc",
+                "jsonrpc": "2.0",
+                "method": "User.filter",
+                "params": [
+                    {
+                        "email": "user2@example.com",
+                        "password__contains": "z",  # nosec:B105:hardcoded_password_string
+                    }
+                ],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        result = response.json()
+        self.assertIn("error", result)
+        self.assertIn("Unsupported field", result["error"]["message"])
+
+    def verify_api_without_permission(self):
+        response = self.client.post(
+            "/json-rpc/",
+            {
+                "id": "jsonrpc",
+                "jsonrpc": "2.0",
+                "method": "User.filter",
+                "params": [
+                    {
+                        "email": "user2@example.com",
+                    }
+                ],
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        result = response.json()
+        self.assertIn("error", result)
+        self.assertIn("Authentication failed", result["error"]["message"])
