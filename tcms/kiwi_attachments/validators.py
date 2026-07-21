@@ -4,7 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 def deny_uploads_containing_script_tag(uploaded_file):
-    for chunk in uploaded_file.chunks(2048):
+    look_back = b""
+    for current_chunk in uploaded_file.chunks(2048):
+        chunk = look_back + current_chunk
+
         for tag_name in generally_xss_unsafe:
             if chunk.lower().find(b"<" + tag_name.encode()) > -1:
                 raise ValidationError(_(f"File contains forbidden tag: <{tag_name}>"))
@@ -95,6 +98,8 @@ def deny_uploads_containing_script_tag(uploaded_file):
                 raise ValidationError(
                     _(f"File contains forbidden attribute: `{attr_name}`")
                 )
+
+        look_back = current_chunk[-48:]
 
 
 def deny_uploads_ending_in_dot_exe(uploaded_file):
