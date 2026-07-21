@@ -15,6 +15,7 @@ class TestValidators(APITestCase):
         [
             "inline_javascript.svg",
             "inline_javascript_mixed_case.svg",
+            "inline_javascript_3mb.svg",
         ]
     )
     def test_uploading_svg_with_inline_script_should_fail(self, file_name):
