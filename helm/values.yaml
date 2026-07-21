@@ -49,8 +49,71 @@ media:
   url: "/uploads/"
 
 email:
+  # SERVER_EMAIL + DEFAULT_FROM_EMAIL Django settings
   from: "kiwi@example.com"
   subject: "[Kiwi-TCMS] "
+
+  # SMTP backend — corresponds to Django EMAIL_HOST / EMAIL_PORT / EMAIL_USE_TLS / EMAIL_USE_SSL.
+  # When enabled is false, no SMTP env vars are injected and Django falls back
+  # to its default email backend.
+  smtp:
+    enabled: false
+
+    host: ""
+    port: 25
+    useTLS: false
+    useSSL: false
+
+    # Inline credentials (used only when existingSecret is empty).
+    user: ""
+    # Set via --set email.smtp.password=... on install
+    password: ""
+
+    # Use an existing Secret with keys 'smtp-user' and 'smtp-password'.
+    # Takes precedence over inline user/password.
+    existingSecret: ""
+
+# Liveness probe — full spec is rendered with toYaml so any field is overridable.
+livenessProbe:
+  httpGet:
+    path: /accounts/login/
+    port: http
+
+# Readiness probe — full spec, same defaults as before.
+readinessProbe:
+  httpGet:
+    path: /accounts/login/
+    port: http
+
+# Startup probe — disabled by default (empty map).
+# Recommended for slow first-time DB migrations, e.g.:
+#   startupProbe:
+#     httpGet:
+#       path: /accounts/login/
+#       port: http
+#     failureThreshold: 30
+#     periodSeconds: 10
+startupProbe: {}
+
+# uwsgi override configuration.
+# The Kiwi image natively supports loading additional uwsgi config from
+# /Kiwi/etc/uwsgi.override (see etc/uwsgi.conf in upstream).
+uwsgi:
+  # Inline override content. When set (and existingConfigMap is empty),
+  # the chart creates a ConfigMap and mounts it as /Kiwi/etc/uwsgi.override.
+  # Example:
+  #   override: |
+  #     [uwsgi]
+  #     processes = 8
+  #     threads = 2
+  #     harakiri = 60
+  #     max-requests = 2048
+  #     buffer-size = 32768
+  override: ""
+
+  # Name of an existing ConfigMap that contains a key "uwsgi.override".
+  # When set, this takes precedence over the inline `override` field.
+  existingConfigMap: ""
 
 database:
   type: mariadb
