@@ -1,6 +1,8 @@
-# Copyright (c) 2019-2020 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2019-2026 Alexander Todorov <atodorov@MrSenko.com>
 
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+from urllib.parse import urlparse
 
 from django.utils.module_loading import import_string
 
@@ -13,8 +15,14 @@ def tracker_from_url(url, request):
     where ``base_url`` is part of ``url``. Usually we pass
     URLs to pre-existing defects to this method.
     """
+    _in = urlparse(url)
     for bug_system in BugSystem.objects.all():
-        if bug_system.base_url and url.startswith(bug_system.base_url):
+        _db = urlparse(bug_system.base_url)
+        if (_in.scheme, _in.hostname, _in.port) == (
+            _db.scheme,
+            _db.hostname,
+            _db.port,
+        ) and _in.path.startswith(_db.path):
             return import_string(bug_system.tracker_type)(bug_system, request)
 
     return None
