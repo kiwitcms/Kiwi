@@ -1,6 +1,84 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.2 (22 Jul 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes multiple security related updates,
+    several improvements, database migrations, API changes and bug fixes.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 6.0.6 to 6.0.7
+- Update node_modules/fast-uri from 3.1.3 to 3.1.4
+- Make admin pages, views and API methods tenant aware so that
+  they only show users which are authorized for the current tenant. Fixes
+  `Issue #4410 <https://github.com/kiwitcms/Kiwi/issues/4410>`_
+- Restrict field arguments for API method calls. See
+  `GHSA-554x-3chh-x3h9 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-554x-3chh-x3h9>`_
+- Remove handling for ``?next=`` parameter in Confirm view. See
+  `GHSA-gcwf-c25f-p9rv <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-gcwf-c25f-p9rv>`_
+- Improve how upload validator interprets chunks for large files. See
+  `GHSA-cjrx-h8r2-jgc7 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-cjrx-h8r2-jgc7>`_
+- Improve parsing for ``tracker_from_url()`` helper. See
+  `GHSA-3qxv-9j3q-c68v <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-3qxv-9j3q-c68v>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-modern-rpc from 1.1.0 to 2.1.0
+- Update tzdata from 2026.2 to 2026.3
+- Update node_modules/webpack from 5.107.2 to 5.108.4
+- Update node_modules/webpack-cli from 7.0.3 to 7.2.1
+- On TestRun Admin page when clicking the "+ Add test run" button redirect to
+  the New Test Run page
+
+
+API
+~~~
+
+- Method ``Component.create()`` no longer accepts the ``initial_qa_contact``
+  field
+- Method ``Component.filter()`` no longer returns the ``initial_qa_contact``
+  field
+
+
+Database
+~~~~~~~~~
+
+- Remove ``initial_qa_contact`` field from Component model - not used anywhere
+- Introduce new migration ``management.0013_remove_initial_qa_contact``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix broken URL in documentation. Fixes
+  `Issue #4401 <https://github.com/kiwitcms/Kiwi/issues/4401>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/setup-node from 6 to 7
+- Update locust from 2.44.4 to 2.46.1
+- Update pylint-django from 2.7.0 to 2.8.0
+- Add JSON-RPC tests for ``User.filter`` API method
+- Add test case for Environment Admin page
+- Adjust calls to ``format_html()`` to always pass arguments
+- Replace ``mark_safe()`` with ``format_html()``
+- Refactor API methods for compatibility with django-modern-rpc v2
+- Refactor HTML escape logic with class-based ``KiwiTCMSHandlerMixin`` base for
+  the existing custom API handlers
+- Remove unused ``User = get_user_model()`` assignments
+
+
+
 Kiwi TCMS 16.1 (24 Jun 2026)
 ----------------------------
 
