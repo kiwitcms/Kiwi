@@ -4,6 +4,8 @@
 
 assert_up_and_running() {
     sleep 10
+    # print health status for db and web containers
+    rlRun -t -c "docker inspect -f '{{.State.Health.Status}}' kiwi_web"
     # HTTP redirects; HTTPS displays the login page
     rlRun -t -c "curl       -o- http://localhost/  | grep '301 Moved Permanently'"
     rlRun -t -c "curl -k -L -o- https://localhost/ | grep 'Welcome to Kiwi TCMS'"
@@ -11,6 +13,8 @@ assert_up_and_running() {
 
 assert_perform_initdb() {
     sleep 10
+    # print health status for db and web containers
+    rlRun -t -c "docker inspect -f '{{.State.Health.Status}}' kiwi_web"
     # HTTPS displays the init-db page
     rm -f /tmp/testcookies.txt
     rlRun -t -c "curl -k -L -o- -c /tmp/testcookies.txt https://localhost/ | grep 'Initialize database'"
