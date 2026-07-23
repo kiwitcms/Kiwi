@@ -19,6 +19,7 @@
             data-perm-add-comment="{{ perms.django_comments.add_comment }}"
             data-perm-remove-comment="{{ perms.django_comments.delete_comment }}"
             data-perm-view-historical-testexecution="{{ perms.testruns.view_historicaltestexecution }}"
+            data-perm-view-user="{{ perms.auth.view_user }}"
             data-trans-no-executions-selected="{% trans 'No rows selected! Please select at least one!'%}"
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
@@ -604,6 +605,40 @@
     </div>
   </div>
 </div>
+
+{% if perms.testruns.change_testexecution %}
+<div class="modal fade" id="change-assignee-modal" tabindex="-1" role="dialog" aria-labelledby="change-assignee-modal-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="change-assignee-modal-title">{% trans "Assignee" %}</h4>
+      </div>
+      <form class="form-horizontal change-assignee-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="id-change-assignee">{% trans "Assignee" %}</label>
+            <div class="col-sm-9">
+              <input type="text" id="id-change-assignee" class="form-control typeahead" placeholder="{% trans 'Username or email' %}">
+              {% if perms.auth.view_user %}
+                <span class="help-block">{% trans "Start typing to search for a user" %}</span>
+              {% else %}
+                <span class="help-block">{% trans "Enter an exact username, email or user ID" %}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn btn-primary change-assignee-button">{% trans "Save" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 <div class="modal fade" id="one-click-bug-report-modal" tabindex="-1" role="dialog" aria-labelledby="one-click-bug-report-title" aria-hidden="true">
   <div class="modal-dialog">

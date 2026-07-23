@@ -86,3 +86,45 @@ export function testPlanAutoComplete (selector, planCache) {
         }
     })
 }
+
+export function userAutoComplete (selector, cache) {
+    $(`${selector}.typeahead`).typeahead({
+        minLength: 1,
+        highlight: true
+    }, {
+        name: 'users-autocomplete',
+        limit: 100,
+        async: true,
+        display: function (user) {
+            let displayName = user.username
+            if (user.email) {
+                displayName += ` <${user.email}>`
+            }
+            cache[displayName] = user
+            return displayName
+        },
+        source: function (query, processSync, processAsync) {
+            query = query.trim()
+            if (query === '') {
+                return
+            }
+
+            let rpcQuery = { pk: query }
+
+            if (isNaN(query)) {
+                if (query.length < 3) {
+                    return
+                }
+
+                rpcQuery = { username__icontains: query }
+                if (query.indexOf('@') > -1) {
+                    rpcQuery = { email__icontains: query }
+                }
+            }
+
+            jsonRPC('User.filter', rpcQuery, function (data) {
+                return processAsync(data)
+            })
+        }
+    })
+}
