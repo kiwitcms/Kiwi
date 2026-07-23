@@ -107,7 +107,7 @@ rlJournalStart
 
     rlPhaseStartTest "Container kill & start"
         rlRun -t -c "docker compose kill"
-        sleep 5
+        sleep 35
         rlRun -t -c "docker compose start"
         assert_up_and_running
     rlPhaseEnd
