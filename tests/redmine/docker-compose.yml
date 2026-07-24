@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     # build our own modified image to make it easier for testing
     bugtracker_kiwitcms_org:

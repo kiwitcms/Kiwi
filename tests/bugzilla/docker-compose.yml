@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     # build ourselves b/c bugzilla/docker-bugzilla-dev
     # is too old and doesn't work
