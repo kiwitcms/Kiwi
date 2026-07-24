@@ -1,3 +1,5 @@
+import hashlib
+
 from django.core.cache import cache
 
 from tcms.core.templatetags.extra_filters import markdown2html
@@ -25,10 +27,11 @@ def render(text):
         :return: Rendered HTML text
         :rtype: str
     """
-    result = cache.get(text)
+    cache_key = hashlib.sha256(text.encode()).hexdigest()
+    result = cache.get(cache_key)
     if result:
         return result
 
     result = markdown2html(text)
-    cache.set(text, result)
+    cache.set(cache_key, result)
     return result
