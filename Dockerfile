@@ -17,7 +17,9 @@ WORKDIR /Kiwi
 FROM runtime-base AS buildroot
 RUN dnf -y --nodocs install python3.12-devel gzip make \
     mariadb-connector-c-devel postgresql-devel libjpeg-turbo-devel \
-    libffi-devel gcc gettext nodejs22-npm unzip which rust cargo findutils
+    libffi-devel gcc gettext nodejs24-npm unzip which rust cargo findutils && \
+    ln -s /usr/bin/npm-24 /usr/bin/npm && \
+    ln -s /usr/bin/node-24 /usr/bin/node
 
 COPY ./requirements/mariadb.pc /usr/lib64/pkgconfig/mariadb.pc
 COPY . /Kiwi/
