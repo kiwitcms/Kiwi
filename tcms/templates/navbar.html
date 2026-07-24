@@ -88,6 +88,17 @@
                             <a href="{% url "plans-search" %}?author={{ user.username }}" target="_parent">{% trans "My Test Plans" %}</a>
                         </li>
 
+                        <li>
+                            <a href="{% url "testcases-search" %}?author={{ user.username }}" target="_parent">{% trans "My Test Cases" %}</a>
+                        </li>
+
+                        {% url "bugs-search" as bugs_search_url %}
+                        {% if bugs_search_url %}
+                        <li>
+                            <a href="{{ bugs_search_url }}?reporter={{ user.username }}" target="_parent">{% trans "My Bugs" %}</a>
+                        </li>
+                        {% endif %}
+
                         <li class="divider"></li>
 
                         <li>

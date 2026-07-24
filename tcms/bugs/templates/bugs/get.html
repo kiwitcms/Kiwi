@@ -17,6 +17,9 @@
 
 {% block contents %}
 <div class="container-cards-pf">
+    {% trans "Bugs" as bugs_breadcrumb_label %}
+    {% include "include/breadcrumbs.html" with search_url="bugs-search" search_label=bugs_breadcrumb_label view_url="bugs-get" object_label="BUG-" current_view="view" %}
+    {% include "include/page_toolbar.html" with current_view="view" view_url="bugs-get" edit_url="bugs-edit" new_url="bugs-new" search_url="bugs-search" admin_url_prefix="bugs/bug" show_actions=True edit_perm=perms.bugs.change_bug add_perm=perms.bugs.add_bug delete_perm=perms.bugs.delete_bug admin_perm=perms.bugs.change_bug %}
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12 kiwi-margin-top-0">
         {% if bug.severity %}
@@ -86,7 +89,12 @@
                     {{ object.build }}
                 </h2>
 
-                <div class="card-pf-body"></div>
+                <h2 class="card-pf-title kiwi-text-align-left">
+                    <span class="fa fa-exchange"></span>{% trans 'Related' %}
+                </h2>
+                <div class="card-pf-body">
+                    <a href="{% url 'testruns-search' %}?product={{ object.product_id }}">{% trans 'Test runs for this product' %}</a>
+                </div>
             </div>
         </div>
 

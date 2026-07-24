@@ -10,6 +10,9 @@
 
 {% block contents %}
 <div class="container-cards-pf">
+    {% trans "Test Runs" as tr_breadcrumb_label %}
+    {% include "include/breadcrumbs.html" with search_url="testruns-search" search_label=tr_breadcrumb_label view_url="testruns-get" object_label="TR-" current_view="view" %}
+    {% include "include/page_toolbar.html" with current_view="view" view_url="testruns-get" edit_url="testruns-edit" new_url="testruns-new" search_url="testruns-search" clone_url="testruns-clone" admin_url_prefix="testruns/testrun" show_actions=True show_history=True edit_perm=perms.testruns.change_testrun add_perm=perms.testruns.add_testrun delete_perm=perms.testruns.delete_testrun admin_perm=perms.testruns.change_testrun %}
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12 kiwi-margin-top-0" {% if object.stop_date %}style="text-decoration: line-through"{% endif %}>
         <span id="test_run_pk"
@@ -105,7 +108,12 @@
                     {% endif %}
                 </h2>
 
-                <div class="card-pf-body"></div>
+                <h2 class="card-pf-title kiwi-text-align-left">
+                    <span class="fa fa-exchange"></span>{% trans 'Related' %}
+                </h2>
+                <div class="card-pf-body">
+                    <a href="{% url 'testcases-search' %}?plan={{ object.plan_id }}">{% trans 'Test cases in test plan' %}</a>
+                </div>
             </div>
         </div>
 
