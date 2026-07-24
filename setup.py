@@ -46,7 +46,6 @@ setup(
     maintainer="Kiwi TCMS",
     maintainer_email="info@kiwitcms.org",
     url="https://github.com/kiwitcms/Kiwi/",
-    license="GPLv2",
     keywords="test case",
     install_requires=INSTALL_REQUIRES,
     dependency_links=DEPENDENCY_LINKS,
@@ -63,7 +62,6 @@ setup(
     include_package_data=True,
     classifiers=[
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.11",
