@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     bugtracker_kiwitcms_org:
         container_name: bugtracker_kiwitcms_org

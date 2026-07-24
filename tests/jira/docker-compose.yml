@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     # just because the CI config needs this.
     # not using it in actual tests
