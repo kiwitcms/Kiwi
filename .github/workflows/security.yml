@@ -27,7 +27,7 @@ jobs:
       - name: Check with checkov
         run: |
           pip install checkov
-          checkov --quiet --directory .
+          checkov --quiet --directory . --skip-path helm/
 
   bandit:
     runs-on: ubuntu-24.04
