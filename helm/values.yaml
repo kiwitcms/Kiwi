@@ -60,9 +60,9 @@ email:
     enabled: false
 
     host: ""
-    port: 25
+    port: 465
+    useSSL: true
     useTLS: false
-    useSSL: false
 
     # Inline credentials (used only when existingSecret is empty).
     user: ""
