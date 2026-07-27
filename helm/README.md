@@ -1,8 +1,11 @@
-<!--- app-name: Kiwi TCMS -->
+# Helm charts for Kiwi TCMS
 
-# Kiwi TCMS
+**WARNING:** this directory is a community contribution and isn't very well tested -
+use at your own risk!
 
-Kiwi TCMS - open source test management
+Please open a pull request for any improvements and/or problems you may have with this
+chart - the Kiwi TCMS isn't going to actively maintain it!
+
 
 ## TL;DR
 
@@ -18,9 +21,7 @@ helm upgrade --install kiwi --namespace kiwi --create-namespace .  --set databas
 
 ## Introduction
 
-This chart bootstraps a [Kiwi](https://github.com/kiwitcms/Kiwi) test case management system on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
-
-Currently no any organization hosts this Helm chart and we would appreciate much if someone would do it.
+This chart bootstraps a Kiwi TCMS instance on a Kubernetes cluster using the Helm package manager.
 
 ## Prerequisites
 
@@ -32,7 +33,8 @@ Currently no any organization hosts this Helm chart and we would appreciate much
 
 To install the chart with the release name `my-release`:
 
-ATTENTION: make sure you have pwgen utility installed. Otherwise consider to supply a pre-generated password
+ATTENTION: make sure you have `pwgen` utility installed. Otherwise consider to supply a pre-generated password
+
 ```console
 git clone https://github.com/kiwitcms/Kiwi.git
 
