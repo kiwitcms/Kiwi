@@ -1,14 +1,21 @@
 Running Kiwi TCMS as a Docker container
-=========================================
+=======================================
 
-In order to run Kiwi TCMS as a production instance you will need
-`Docker <https://docs.docker.com/engine/installation/>`_ and
-`docker-compose <https://docs.docker.com/compose/install/>`_ or equivalent tooling.
-Refer to their documentation about download and installation options.
+Running Kiwi TCMS as a production instance requires a containerized environment!
+The examples below use
+`docker compose <https://docs.docker.com/compose/install/>`_ because this is the
+easiest way to get started - not necessarily the most production ready!
+
+.. important::
+
+    The actual container tooling you will use in production depends on your environment!
+    For Kubernetes + Helm see the
+    `helm/ <https://github.com/kiwitcms/Kiwi/tree/master/helm>`_ directory in the source
+    code!
 
 
-Start with Docker compose
--------------------------
+Example with docker-compose
+---------------------------
 
 For **Kiwi TCMS Community Edition** start by copying our
 `docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
