@@ -73,11 +73,13 @@ spec:
           livenessProbe:
             httpGet:
               path: /accounts/login/
-              port: http
+              port: https
+              scheme: HTTPS
           readinessProbe:
             httpGet:
               path: /accounts/login/
-              port: http
+              port: https
+              scheme: HTTPS
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
