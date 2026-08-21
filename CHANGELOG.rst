@@ -18,14 +18,14 @@ Security
 - Make admin pages, views and API methods tenant aware so that
   they only show users which are authorized for the current tenant. Fixes
   `Issue #4410 <https://github.com/kiwitcms/Kiwi/issues/4410>`_
-- Restrict field arguments for API method calls. See
-  `GHSA-554x-3chh-x3h9 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-554x-3chh-x3h9>`_
-- Remove handling for ``?next=`` parameter in Confirm view. See
-  `GHSA-gcwf-c25f-p9rv <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-gcwf-c25f-p9rv>`_
-- Improve how upload validator interprets chunks for large files. See
-  `GHSA-cjrx-h8r2-jgc7 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-cjrx-h8r2-jgc7>`_
-- Improve parsing for ``tracker_from_url()`` helper. See
-  `GHSA-3qxv-9j3q-c68v <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-3qxv-9j3q-c68v>`_
+- Restrict field arguments for API method calls. Fixes
+  `CVE-2026-77437 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-554x-3chh-x3h9>`_
+- Remove handling for ``?next=`` parameter in Confirm view. Fixes
+  `CVE-2026-77433 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-gcwf-c25f-p9rv>`_
+- Improve how file upload validator interprets chunks for large files. Fixes
+  `CVE-2026-77434 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-cjrx-h8r2-jgc7>`_
+- Improve parsing for ``tracker_from_url()`` helper. Fixes
+  `CVE-2026-77435 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-3qxv-9j3q-c68v>`_
 
 
 Improvements
