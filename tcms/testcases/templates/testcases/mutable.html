@@ -20,17 +20,37 @@
         <form class="form-horizontal" action="{% if object %}{% url 'testcases-edit' object.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="author" value="{{ form.author.value }}">
-            <div class="form-group">
+            <div class="form-group" id="summary-group"
+                data-trans-duplicate-blocked="{% trans 'A test case with this exact summary already exists. Duplicates are not allowed.' %}"
+                data-trans-duplicate-modal-title="{% trans 'Duplicate test case found' %}"
+                data-trans-duplicate-modal-summary="{% trans 'Summary' %}"
+                data-trans-duplicate-modal-author="{% trans 'Author' %}"
+                data-trans-duplicate-modal-status="{% trans 'Status' %}"
+                data-trans-duplicate-modal-category="{% trans 'Category' %}"
+                data-trans-duplicate-modal-priority="{% trans 'Priority' %}"
+                data-trans-duplicate-modal-text="{% trans 'Description' %}"
+                data-trans-duplicate-modal-view="{% trans 'View existing test case' %}">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
                 <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
-                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
+                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required autocomplete="off">
+                    {% if not object %}
+                    <div id="summary-autocomplete" class="list-group" style="display: none; max-height: 200px; overflow-y: auto; margin-bottom: 0; background-color: #f5f5f5; border: 1px solid #b7b7b7;"></div>
+                    {% endif %}
                     {% if test_plan %}
                         <p class="help-block"><a href="{% url 'test_plan_url' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
                         <input type="hidden" name="from_plan" value="{{ test_plan.pk }}">
                     {% endif %}
                     {{ form.summary.errors }}
+                    {% if not object %}
+                    <div id="duplicate-summary-warning" class="help-block hidden kiwi-color-warning">
+                    </div>
+                    {% endif %}
                 </div>
             </div>
+
+            {% if not object %}
+            {% include "include/duplicate_check_modal.html" %}
+            {% endif %}
 
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
