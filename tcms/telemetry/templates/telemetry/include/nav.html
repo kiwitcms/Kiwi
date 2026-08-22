@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<ul class="nav nav-tabs">
+    <li {% if active_tab == "breakdown" %}class="active"{% endif %}>
+        <a href="{% url 'testing-breakdown' %}">
+            <span class="fa fa-pie-chart"></span> {% trans "Breakdown" %}
+        </a>
+    </li>
+    <li {% if active_tab == "dashboard" %}class="active"{% endif %}>
+        <a href="{% url 'execution-dashboard' %}">
+            <span class="fa fa-table"></span> {% trans "Dashboard" %}
+        </a>
+    </li>
+    <li {% if active_tab == "matrix" %}class="active"{% endif %}>
+        <a href="{% url 'testing-status-matrix' %}">
+            <span class="fa fa-th"></span> {% trans "Matrix" %}
+        </a>
+    </li>
+    <li {% if active_tab == "trends" %}class="active"{% endif %}>
+        <a href="{% url 'testing-execution-trends' %}">
+            <span class="fa fa-line-chart"></span> {% trans "Trends" %}
+        </a>
+    </li>
+    <li {% if active_tab == "health" %}class="active"{% endif %}>
+        <a href="{% url 'test-case-health' %}">
+            <span class="fa fa-heartbeat"></span> {% trans "TestCase health" %}
+        </a>
+    </li>
+</ul>
