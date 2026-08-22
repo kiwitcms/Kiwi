@@ -247,6 +247,29 @@ class TestCaseFilter(APITestCase):
         self.assertEqual(result[0]["testing_duration"], testing_duration)
         self.assertEqual(result[0]["expected_duration"], expected_duration)
 
+    @parameterized.expand(
+        [
+            ("setup_duration", {"setup_duration": "45"}),
+            ("testing_duration", {"testing_duration": "300"}),
+            ("expected_duration", {"expected_duration": "345"}),
+        ]
+    )
+    def test_filter_by_duration_fields_returns_matching_test_case(self, _name, query):
+        testcase = TestCaseFactory(
+            setup_duration=timedelta(seconds=45),
+            testing_duration=timedelta(minutes=5),
+        )
+        testcase.save()
+        other_testcase = TestCaseFactory(
+            setup_duration=timedelta(minutes=1),
+            testing_duration=timedelta(minutes=2),
+        )
+        other_testcase.save()
+
+        result = self.rpc_client.TestCase.filter(query)
+
+        self.assertEqual([testcase.pk], [case["id"] for case in result])
+
 
 class TestUpdate(APITestCase):
     non_existing_username = "FakeUsername"
