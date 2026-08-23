@@ -113,9 +113,17 @@ class IssueTrackerTypeField(forms.ChoiceField):
 
 
 class BugSystemAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.api_password:
+            self.fields["api_password"].help_text = (
+                "WARNING: value from DB not shown; type a new one to overwrite"
+            )
+
     # make password show asterisks
     api_password = forms.CharField(
-        widget=forms.PasswordInput(render_value=True), required=False
+        widget=forms.PasswordInput(render_value=False, attrs={"class": "vTextField"}),
+        required=False,
     )
 
     # select only tracker types for which we have available integrations
@@ -178,6 +186,13 @@ Configure external bug trackers</a> section before editting the values below!</h
     form = BugSystemAdminForm
 
     def save_model(self, request, obj, form, change):
+        # prevent overwriting when editing other fields subsequently
+        if not obj.api_password and change:
+            from_db = obj.__class__.objects.get(pk=obj.pk)
+
+            obj.api_password = from_db.api_password
+            form.cleaned_data["api_password"] = from_db.api_password
+
         super().save_model(request, obj, form, change)
         # try health check
         bug_url = form.cleaned_data["hc_bug_url"]
