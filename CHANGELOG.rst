@@ -1,6 +1,66 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.3 (24 Aug 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes critical security related updates
+    and several improvements.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 6.0.7 to 6.0.8
+- Update django-simple-captcha from 0.6.3 to 0.7.0
+- Update node_modules/brace-expansion from 1.1.12 to 1.1.18
+- Update node_modules/fast-uri from 3.1.4 to 3.1.5
+- Update node_modules/js-yaml from 4.2.0 to 4.3.1
+- Do not render ``BugSystem.api_password`` field value in Admin page to prevent
+  exposing 3rd party credentials. Fixes
+  `GHSA-cq4x-2h36-285q <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-cq4x-2h36-285q>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Node.js runtime from 22 to 24
+- Update django-guardian from 3.3.2 to 3.3.3
+- Update django-simple-history from 3.12.0 to 3.13.0
+- Update markdown from 3.10.2 to 3.10.3
+- Update pygments from 2.20.0 to 2.21.0
+- Update python-gitlab from 8.4.0 to 8.5.0
+- Update node_modules/webpack from 5.108.4 to 5.109.2
+- Update node_modules/webpack-cli from 7.2.1 to 7.2.2
+- Improve internal caching for ``Markdown.render()`` API method
+  to remove cache key warnings and avoid crashes with 3rd party cache backends
+- Update helm charts. Closes
+  `Issue #4232 <https://github.com/kiwitcms/Kiwi/issues/4232>`_ and
+  `Issue #3323 <https://github.com/kiwitcms/Kiwi/issues/3323>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix broken URL. Refs
+  `Issue #4401 <https://github.com/kiwitcms/Kiwi/issues/4401>`_
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update actions/setup-python from 6 to 7
+- Update locust from 2.46.1 to 2.46.3
+- Update pylint from 4.0.6 to 4.0.7
+- Update fedora from 43 to 44 in /tests/bugzilla
+- Update redmine from 6 to 7 in /tests/redmine
+- Remove deprecated ``version`` field from docker-compose files
+- Remove license specifier from ``setup.py`` in favor of ``setup.cfg``
+
+
+
 Kiwi TCMS 16.2 (22 Jul 2026)
 ----------------------------
 
