@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
+from django.db import DEFAULT_DB_ALIAS, connections
 
 
 class Command(BaseCommand):
@@ -11,6 +12,13 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+            "--database",
+            default=DEFAULT_DB_ALIAS,
+            choices=tuple(connections),
+            help='Specifies the database to use. Default is "default".',
+        )
+
+        parser.add_argument(
             "domain",
             nargs="?",
             default=None,
@@ -18,7 +26,8 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
-        site = Site.objects.get(id=settings.SITE_ID)
+        database = kwargs["database"]
+        site = Site.objects.using(database).get(id=settings.SITE_ID)
         if not kwargs["domain"]:
             self.stdout.write(site.domain)
             return
