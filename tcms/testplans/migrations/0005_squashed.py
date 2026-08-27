@@ -28,14 +28,16 @@ if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
 def forwards_add_initial_data(apps, schema_editor):
     plan_type_model = apps.get_model("testplans", "PlanType")
 
-    plan_type_model.objects.bulk_create(
+    plan_type_model.objects.using(schema_editor.connection.alias).bulk_create(
         [plan_type_model(name=name, description="") for name in plan_types]
     )
 
 
 def reverse_add_initial_data(apps, schema_editor):
     plan_type_model = apps.get_model("testplans", "PlanType")
-    plan_type_model.objects.filter(name__in=plan_types).delete()
+    plan_type_model.objects.using(schema_editor.connection.alias).filter(
+        name__in=plan_types
+    ).delete()
 
 
 class Migration(migrations.Migration):

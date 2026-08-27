@@ -12,7 +12,7 @@ if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
 
 def forwards_add_initial_data(apps, schema_editor):
     priority_model = apps.get_model("management", "Priority")
-    priority_model.objects.bulk_create(
+    priority_model.objects.using(schema_editor.connection.alias).bulk_create(
         [
             priority_model(value="P1", sortkey=1),
             priority_model(value="P2", sortkey=2),
@@ -25,7 +25,9 @@ def forwards_add_initial_data(apps, schema_editor):
 
 def reverse_remove_initial_data(apps, schema_editor):
     priority_model = apps.get_model("management", "Priority")
-    priority_model.objects.filter(value__in=["P1", "P2", "P3", "P4", "P5"]).delete()
+    priority_model.objects.using(schema_editor.connection.alias).filter(
+        value__in=["P1", "P2", "P3", "P4", "P5"]
+    ).delete()
 
 
 class Migration(migrations.Migration):

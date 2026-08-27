@@ -6,12 +6,14 @@ from django.forms.models import model_to_dict
 
 
 def forward_copy_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     bug_model = apps.get_model("testcases", "Bug")
     link_reference_model = apps.get_model("linkreference", "LinkReference")
     link_reference_ids = []
 
-    for bug in bug_model.objects.all():
-        bug_file_name = f"kiwitcms-testcases-migrations-0010-Bug-{bug.pk}"
+    for bug in bug_model.objects.using(database).all():
+        bug_file_name = f"kiwitcms-{database}-testcases-migrations-0010-Bug-{bug.pk}"
         bug_file = settings.TEMP_DIR / bug_file_name
         with bug_file.open("w") as outfile:
             json.dump(model_to_dict(bug), outfile)
@@ -19,7 +21,7 @@ def forward_copy_data(apps, schema_editor):
         if not bug.case_run_id:
             continue
 
-        link_reference = link_reference_model.objects.create(
+        link_reference = link_reference_model.objects.using(database).create(
             execution_id=bug.case_run_id,
             name=f"{bug.bug_system.name} {bug.bug_id}",
             url=bug.bug_system.url_reg_exp % bug.bug_id,
@@ -28,7 +30,7 @@ def forward_copy_data(apps, schema_editor):
         link_reference_ids.append(link_reference.pk)
 
     link_reference_ids_file_name = (
-        "kiwitcms-testcases-migrations-0010-new-LinkReference-IDs"
+        f"kiwitcms-{database}-testcases-migrations-0010-new-LinkReference-IDs"
     )
     link_reference_ids_file = settings.TEMP_DIR / link_reference_ids_file_name
     with link_reference_ids_file.open("w") as outfile:
@@ -36,22 +38,28 @@ def forward_copy_data(apps, schema_editor):
 
 
 def backward_restore_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     bug_model = apps.get_model("testcases", "Bug")
     link_reference_model = apps.get_model("linkreference", "LinkReference")
 
-    for file in settings.TEMP_DIR.glob("kiwitcms-testcases-migrations-0010-Bug-*"):
+    for file in settings.TEMP_DIR.glob(
+        f"kiwitcms-{database}-testcases-migrations-0010-Bug-*"
+    ):
         with file.open("r") as infile:
             data = json.load(infile)
             bug = bug_model(**data)
-            bug.save()
+            bug.save(using=database)
 
     link_reference_ids_file_name = (
-        "kiwitcms-testcases-migrations-0010-new-LinkReference-IDs"
+        f"kiwitcms-{database}-testcases-migrations-0010-new-LinkReference-IDs"
     )
     link_reference_ids_file = settings.TEMP_DIR / link_reference_ids_file_name
     with link_reference_ids_file.open("r") as infile:
         link_reference_ids = json.load(infile)
-        link_reference_model.objects.filter(pk__in=link_reference_ids).delete()
+        link_reference_model.objects.using(database).filter(
+            pk__in=link_reference_ids
+        ).delete()
 
 
 class Migration(migrations.Migration):

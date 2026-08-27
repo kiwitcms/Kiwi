@@ -4,51 +4,53 @@ from django.db import migrations, models
 
 
 def insert_default_values(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     test_execution_status_model = apps.get_model("testruns", "TestExecutionStatus")
 
-    failed = test_execution_status_model.objects.get(name="FAILED")
+    failed = test_execution_status_model.objects.using(database).get(name="FAILED")
     failed.weight = -30
     failed.color = "#cc0000"
     failed.icon = "fa fa-times-circle-o"
     failed.save()
 
-    error = test_execution_status_model.objects.get(name="ERROR")
+    error = test_execution_status_model.objects.using(database).get(name="ERROR")
     error.weight = -20
     error.color = "#cc0000"
     error.icon = "fa fa-minus-circle"
     error.save()
 
-    blocked = test_execution_status_model.objects.get(name="BLOCKED")
+    blocked = test_execution_status_model.objects.using(database).get(name="BLOCKED")
     blocked.weight = -10
     blocked.color = "#cc0000"
     blocked.icon = "fa fa-stop-circle-o"
     blocked.save()
 
-    idle = test_execution_status_model.objects.get(name="IDLE")
+    idle = test_execution_status_model.objects.using(database).get(name="IDLE")
     idle.weight = 0
     idle.color = "#72767b"
     idle.icon = "fa fa-question-circle-o"
     idle.save()
 
-    paused = test_execution_status_model.objects.get(name="PAUSED")
+    paused = test_execution_status_model.objects.using(database).get(name="PAUSED")
     paused.weight = 0
     paused.color = "#72767b"
     paused.icon = "fa fa-pause-circle-o"
     paused.save()
 
-    running = test_execution_status_model.objects.get(name="RUNNING")
+    running = test_execution_status_model.objects.using(database).get(name="RUNNING")
     running.weight = 0
     running.color = "#72767b"
     running.icon = "fa fa-play-circle-o"
     running.save()
 
-    waived = test_execution_status_model.objects.get(name="WAIVED")
+    waived = test_execution_status_model.objects.using(database).get(name="WAIVED")
     waived.weight = 10
     waived.color = "#92d400"
     waived.icon = "fa fa-commenting-o"
     waived.save()
 
-    passed = test_execution_status_model.objects.get(name="PASSED")
+    passed = test_execution_status_model.objects.using(database).get(name="PASSED")
     passed.weight = 20
     passed.color = "#92d400"
     passed.icon = "fa fa-check-circle-o"

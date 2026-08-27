@@ -8,17 +8,20 @@ from django.forms.models import model_to_dict
 def forwards(apps, schema_editor):
     build_model = apps.get_model("management", "Build")
     version_model = apps.get_model("management", "Version")
+    database = schema_editor.connection.alias
 
-    for build in build_model.objects.all():
+    for build in build_model.objects.using(database).all():
         # backup current values
-        file_name = f"kiwitcms-management-migration-0009-build_to_version-{build.pk}"
+        file_name = (
+            f"kiwitcms-{database}-management-migration-0009-build_to_version-{build.pk}"
+        )
         file_name = settings.TEMP_DIR / file_name
 
         with file_name.open("w") as outfile:
             json.dump(model_to_dict(build), outfile)
 
         # then adjust the value for the `version` field
-        qset = version_model.objects.filter(product=build.product)
+        qset = version_model.objects.using(database).filter(product=build.product)
         version = qset.filter(value="unspecified").first()
 
         # if Version "unspecified" has been removed then pin builds
@@ -32,10 +35,13 @@ def forwards(apps, schema_editor):
 
 def backwards(apps, schema_editor):
     build_model = apps.get_model("management", "Build")
+    database = schema_editor.connection.alias
 
-    for build in build_model.objects.all():
+    for build in build_model.objects.using(database).all():
         # restore product field value
-        file_name = f"kiwitcms-management-migration-0009-build_to_version-{build.pk}"
+        file_name = (
+            f"kiwitcms-{database}-management-migration-0009-build_to_version-{build.pk}"
+        )
         file_name = settings.TEMP_DIR / file_name
 
         with file_name.open("r") as infile:

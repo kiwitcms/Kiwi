@@ -13,7 +13,9 @@ if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
 def forwards_add_initial_data(apps, schema_editor):
     test_case_run_status_model = apps.get_model("testruns", "TestCaseRunStatus")
 
-    test_case_run_status_model.objects.bulk_create(
+    test_case_run_status_model.objects.using(
+        schema_editor.connection.alias
+    ).bulk_create(
         [
             test_case_run_status_model(name="IDLE"),
             test_case_run_status_model(name="RUNNING"),
@@ -39,7 +41,9 @@ def reverse_add_initial_data(apps, schema_editor):
         "ERROR",
         "WAIVED",
     ]
-    test_case_run_status_model.objects.filter(name__in=status_names).delete()
+    test_case_run_status_model.objects.using(schema_editor.connection.alias).filter(
+        name__in=status_names
+    ).delete()
 
 
 class Migration(migrations.Migration):

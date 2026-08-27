@@ -6,9 +6,11 @@ from django.db import migrations, models
 
 
 def forwards(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     template_model = apps.get_model("testcases", "Template")
 
-    template_model.objects.create(
+    template_model.objects.using(database).create(
         name="Gherkin syntax",
         text="""**Scenario**: ... what behavior will be tested ...
   **Given** ... conditions ...
@@ -17,7 +19,7 @@ def forwards(apps, schema_editor):
 """,
     )
 
-    template_model.objects.create(
+    template_model.objects.using(database).create(
         name="Itemized list",
         text="""**Steps to reproduce**:
 

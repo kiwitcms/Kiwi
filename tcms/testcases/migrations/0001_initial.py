@@ -16,8 +16,10 @@ if settings.DATABASES["default"]["ENGINE"].find("sqlite") > -1:
 
 
 def forwards_add_initial_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     bug_system_model = apps.get_model("testcases", "BugSystem")
-    bug_system_model.objects.bulk_create(
+    bug_system_model.objects.using(database).bulk_create(
         [
             bug_system_model(
                 name="Bugzilla",
@@ -35,7 +37,7 @@ def forwards_add_initial_data(apps, schema_editor):
     )
 
     test_case_status_model = apps.get_model("testcases", "TestCaseStatus")
-    test_case_status_model.objects.bulk_create(
+    test_case_status_model.objects.using(database).bulk_create(
         [
             test_case_status_model(name=name, description="")
             for name in test_case_statuss
@@ -44,11 +46,17 @@ def forwards_add_initial_data(apps, schema_editor):
 
 
 def reverse_add_initial_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     bug_system_model = apps.get_model("testcases", "BugSystem")
-    bug_system_model.objects.filter(name__in=["Bugzilla", "JIRA"]).delete()
+    bug_system_model.objects.using(database).filter(
+        name__in=["Bugzilla", "JIRA"]
+    ).delete()
 
     test_case_status_model = apps.get_model("testcases", "TestCaseStatus")
-    test_case_status_model.objects.filter(name__in=test_case_statuss).delete()
+    test_case_status_model.objects.using(database).filter(
+        name__in=test_case_statuss
+    ).delete()
 
 
 class Migration(migrations.Migration):

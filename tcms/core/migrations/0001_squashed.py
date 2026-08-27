@@ -4,8 +4,10 @@ from django.db import migrations
 
 
 def forwards_add_initial_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     group_model = apps.get_model("auth", "Group")
-    group_model.objects.bulk_create(
+    group_model.objects.using(database).bulk_create(
         [
             group_model(name="Administrator"),
             group_model(name="Tester"),
@@ -13,26 +15,32 @@ def forwards_add_initial_data(apps, schema_editor):
     )
 
     site_model = apps.get_model("sites", "Site")
-    site_model.objects.create(name="localhost", domain="127.0.0.1:8000")
+    site_model.objects.using(database).create(name="localhost", domain="127.0.0.1:8000")
 
 
 def reverse_remove_initial_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     group_model = apps.get_model("auth", "Group")
-    group_model.objects.filter(name__in=["Administrator", "Tester"]).delete()
+    group_model.objects.using(database).filter(
+        name__in=["Administrator", "Tester"]
+    ).delete()
 
     site_model = apps.get_model("sites", "Site")
-    site_model.objects.filter(name="localhost").delete()
+    site_model.objects.using(database).filter(name="localhost").delete()
 
 
 def forwards_add_default_perms(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     group_model = apps.get_model("auth", "Group")
     permission_model = apps.get_model("auth", "Permission")
 
-    admin = group_model.objects.get(name="Administrator")
-    all_perms = permission_model.objects.all()
+    admin = group_model.objects.using(database).get(name="Administrator")
+    all_perms = permission_model.objects.using(database).all()
     admin.permissions.add(*all_perms)
 
-    tester = group_model.objects.get(name="Tester")
+    tester = group_model.objects.using(database).get(name="Tester")
     # apply all permissions for test case & product management
     for app_name in [
         "bugs",
@@ -43,19 +51,20 @@ def forwards_add_default_perms(apps, schema_editor):
         "testplans",
         "testruns",
     ]:
-        app_perms = permission_model.objects.filter(
+        app_perms = permission_model.objects.using(database).filter(
             content_type__app_label__contains=app_name
         )
         tester.permissions.add(*app_perms)
 
 
 def reverse_remove_default_perms(apps, schema_editor):
+    database = schema_editor.connection.alias
     group_model = apps.get_model("auth", "Group")
 
-    admin = group_model.objects.get(name="Administrator")
+    admin = group_model.objects.using(database).get(name="Administrator")
     admin.permissions.clear()
 
-    tester = group_model.objects.get(name="Tester")
+    tester = group_model.objects.using(database).get(name="Tester")
     tester.permissions.clear()
 
 

@@ -13,7 +13,11 @@ def inspect_extra_links(apps, schema_editor):
     )
 
     for model in [TestPlan, HistoricalTestPlan]:
-        queryset = model.objects.exclude(extra_link__isnull=True).exclude(extra_link="")
+        queryset = (
+            model.objects.using(schema_editor.connection.alias)
+            .exclude(extra_link__isnull=True)
+            .exclude(extra_link="")
+        )
 
         for obj in queryset:
             try:
