@@ -3,7 +3,9 @@ from django.db import migrations, models
 
 def forwards(apps, schema_editor):
     test_case_status_model = apps.get_model("testcases", "TestCaseStatus")
-    test_case_status_model.objects.filter(name="CONFIRMED").update(is_confirmed=True)
+    test_case_status_model.objects.using(schema_editor.connection.alias).filter(
+        name="CONFIRMED"
+    ).update(is_confirmed=True)
 
 
 class Migration(migrations.Migration):

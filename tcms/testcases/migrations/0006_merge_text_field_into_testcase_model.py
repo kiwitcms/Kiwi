@@ -21,20 +21,21 @@ def convert_test_case_text(test_case_text):
 
 
 def forward_copy_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     test_case_model = apps.get_model("testcases", "TestCase")
     test_case_text_model = apps.get_model("testcases", "TestCaseText")
     historical_test_case_model = apps.get_model("testcases", "HistoricalTestCase")
 
-    for test_case in test_case_model.objects.all():
+    for test_case in test_case_model.objects.using(database).all():
         latest_text = (
-            test_case_text_model.objects.filter(case=test_case.pk)
+            test_case_text_model.objects.using(database)
+            .filter(case=test_case.pk)
             .order_by("-pk")
             .first()
         )
         if latest_text:
-            file_name = (
-                f"kiwitcms-testcases-migrations-0006-TestCaseText-{latest_text.pk}"
-            )
+            file_name = f"kiwitcms-{database}-testcases-migrations-0006-TestCaseText-{latest_text.pk}"
             test_case_file = settings.TEMP_DIR / file_name
             with test_case_file.open("w") as outfile:
                 json.dump(model_to_dict(latest_text), outfile)
@@ -43,7 +44,8 @@ def forward_copy_data(apps, schema_editor):
             test_case.save()
             # b/c the above will not generate history
             history = (
-                historical_test_case_model.objects.filter(case_id=test_case.pk)
+                historical_test_case_model.objects.using(database)
+                .filter(case_id=test_case.pk)
                 .order_by("-history_id")
                 .first()
             )
@@ -52,15 +54,17 @@ def forward_copy_data(apps, schema_editor):
 
 
 def backward_restore_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     test_case_text_model = apps.get_model("testcases", "TestCaseText")
 
     for file in settings.TEMP_DIR.glob(
-        "kiwitcms-testcases-migrations-0006-TestCaseText-*"
+        f"kiwitcms-{database}-testcases-migrations-0006-TestCaseText-*"
     ):
         with file.open("r") as infile:
             data = json.load(infile)
             test_case_text = test_case_text_model(**data)
-            test_case_text.save()
+            test_case_text.save(using=database)
 
 
 class Migration(migrations.Migration):

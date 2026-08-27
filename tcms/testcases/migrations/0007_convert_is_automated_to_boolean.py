@@ -4,27 +4,31 @@ from django.db import migrations, models
 
 
 def forward_migrate_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     test_case_model = apps.get_model("testcases", "TestCase")
     historical_test_case_model = apps.get_model("testcases", "HistoricalTestCase")
 
-    for test_case in test_case_model.objects.all():
+    for test_case in test_case_model.objects.using(database).all():
         test_case.new_is_automated = test_case.is_automated >= 1
         test_case.save()
 
-    for tc_history in historical_test_case_model.objects.all():
+    for tc_history in historical_test_case_model.objects.using(database).all():
         tc_history.new_is_automated = tc_history.is_automated >= 1
         tc_history.save()
 
 
 def backward_restore_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     test_case_model = apps.get_model("testcases", "TestCase")
     historical_test_case_model = apps.get_model("testcases", "HistoricalTestCase")
 
-    for test_case in test_case_model.objects.all():
+    for test_case in test_case_model.objects.using(database).all():
         test_case.is_automated = int(test_case.new_is_automated)
         test_case.save()
 
-    for tc_history in historical_test_case_model.objects.all():
+    for tc_history in historical_test_case_model.objects.using(database).all():
         tc_history.is_automated = int(tc_history.new_is_automated)
         tc_history.save()
 

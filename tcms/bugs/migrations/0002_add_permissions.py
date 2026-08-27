@@ -7,21 +7,26 @@ def forwards_add_perms(apps, schema_editor):
     This is useful in case that is an existing installation
     upgrading post 7.0.
     """
+    database = schema_editor.connection.alias
+
     group_model = apps.get_model("auth", "Group")
     permission_model = apps.get_model("auth", "Permission")
 
-    tester = group_model.objects.get(name="Tester")
-    app_perms = permission_model.objects.filter(
+    tester = group_model.objects.using(database).get(name="Tester")
+    app_perms = permission_model.objects.using(database).filter(
         content_type__app_label__contains="bugs"
     )
     tester.permissions.add(*app_perms)
 
 
 def backwards(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     group_model = apps.get_model("auth", "Group")
     permission_model = apps.get_model("auth", "Permission")
-    tester = group_model.objects.get(name="Tester")
-    app_perms = permission_model.objects.filter(
+
+    tester = group_model.objects.using(database).get(name="Tester")
+    app_perms = permission_model.objects.using(database).filter(
         content_type__app_label__contains="bugs"
     )
     tester.permissions.remove(*app_perms)

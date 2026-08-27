@@ -6,10 +6,14 @@ from django.forms.models import model_to_dict
 
 
 def forwards_store_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     bug_system_model = apps.get_model("testcases", "BugSystem")
 
-    for bug_system in bug_system_model.objects.all():
-        file_name = f"kiwitcms-testcases-migration-0011-BugSystem-{bug_system.pk}"
+    for bug_system in bug_system_model.objects.using(database).all():
+        file_name = (
+            f"kiwitcms-{database}-testcases-migration-0011-BugSystem-{bug_system.pk}"
+        )
         bug_file = settings.TEMP_DIR / file_name
 
         with bug_file.open("w") as outfile:
@@ -17,13 +21,17 @@ def forwards_store_data(apps, schema_editor):
 
 
 def backwards_restore_data(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     bug_system_model = apps.get_model("testcases", "BugSystem")
 
-    for file in settings.TEMP_DIR.glob("kiwitcms-testcases-migration-0011-BugSystem-*"):
+    for file in settings.TEMP_DIR.glob(
+        f"kiwitcms-{database}-testcases-migration-0011-BugSystem-*"
+    ):
         with file.open("r") as infile:
             data = json.load(infile)
             bug_system = bug_system_model(**data)
-            bug_system.save()
+            bug_system.save(using=database)
 
 
 class Migration(migrations.Migration):

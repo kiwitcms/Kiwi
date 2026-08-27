@@ -8,11 +8,12 @@ from django.forms.models import model_to_dict
 
 
 def forwards(apps, schema_editor):
+    database = schema_editor.connection.alias
     component_model = apps.get_model("management", "Component")
 
-    for component in component_model.objects.all():
+    for component in component_model.objects.using(database).all():
         # backup current values
-        file_name = f"kiwitcms-management-migration-0013-remove_initial_qa_contact-{component.pk}"
+        file_name = f"kiwitcms-{database}-management-migration-0013-remove_initial_qa_contact-{component.pk}"
         file_name = settings.TEMP_DIR / file_name
 
         with file_name.open("w") as outfile:
@@ -20,11 +21,13 @@ def forwards(apps, schema_editor):
 
 
 def backwards(apps, schema_editor):
+    database = schema_editor.connection.alias
+
     component_model = apps.get_model("management", "Component")
 
-    for component in component_model.objects.all():
+    for component in component_model.objects.using(database).all():
         # restore initial_qa_contact field value
-        file_name = f"kiwitcms-management-migration-0013-remove_initial_qa_contact-{component.pk}"
+        file_name = f"kiwitcms-{database}-management-migration-0013-remove_initial_qa_contact-{component.pk}"
         file_name = settings.TEMP_DIR / file_name
 
         with file_name.open("r") as infile:
