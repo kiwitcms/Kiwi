@@ -285,7 +285,7 @@ class BugSystem(models.Model, UrlMixin):
         default="IssueTrackerType",
     )
 
-    base_url = models.CharField(  # pylint:disable=form-field-help-text-used
+    base_url = models.URLField(  # pylint:disable=form-field-help-text-used
         max_length=1024,
         null=True,
         blank=True,
@@ -293,14 +293,16 @@ class BugSystem(models.Model, UrlMixin):
         help_text="""Base URL, for example <strong>https://bugzilla.example.com</strong>!
 Leave empty to disable!
 """,
+        validators=[URLValidator(schemes=["http", "https"])],
     )
 
-    api_url = models.CharField(  # pylint:disable=form-field-help-text-used
+    api_url = models.URLField(  # pylint:disable=form-field-help-text-used
         max_length=1024,
         null=True,
         blank=True,
         verbose_name="API URL",
         help_text="This is the URL to which API requests will be sent. Leave empty to disable!",
+        validators=[URLValidator(schemes=["http", "https"])],
     )
 
     api_username = models.CharField(

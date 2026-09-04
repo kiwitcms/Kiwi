@@ -13,6 +13,7 @@ from parameterized import parameterized
 from tcms.core.history import history_email_for
 from tcms.core.utils.mailto import mailto
 from tcms.testcases.helpers.email import get_case_notification_recipients
+from tcms.testcases.models import BugSystem
 from tcms.tests import BasePlanCase, deny_certain_email_addresses
 from tcms.tests.factories import (
     ComponentFactory,
@@ -233,6 +234,41 @@ class TestExtraLinkURLField(TestCase):
         case = TestCaseFactory.build(extra_link=url)
         with self.assertRaises(ValidationError):
             case.full_clean()
+
+
+class TestBugSystemURLFields(TestCase):
+    @parameterized.expand(
+        [
+            ("http", "http://example.com"),
+            ("https", "https://example.com"),
+        ]
+    )
+    def test_base_url_and_api_url_valid_schemes(self, _name, url):
+        bug_system = BugSystem(
+            name="Test tracker",
+            base_url=url,
+            api_url=url,
+        )
+        bug_system.full_clean()
+        self.assertEqual(bug_system.base_url, url)
+        self.assertEqual(bug_system.api_url, url)
+
+    @parameterized.expand(
+        [
+            ("javascript_colon", "javascript:alert(1)"),
+            ("javascript_slash", "javascript://alert(1)"),
+            ("invalid_scheme", "other://example.com"),
+            ("no_scheme", "example.com"),
+        ]
+    )
+    def test_base_url_and_api_url_invalid_schemes(self, _name, url):
+        bug_system = BugSystem(
+            name="Test tracker",
+            base_url=url,
+            api_url=url,
+        )
+        with self.assertRaises(ValidationError):
+            bug_system.full_clean()
 
 
 class TestCaseCalculateExpectedDuration(TestCase):
