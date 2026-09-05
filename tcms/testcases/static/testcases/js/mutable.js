@@ -1,4 +1,4 @@
-import { updateCategorySelectFromProduct } from '../../../../static/js/utils'
+import { initDuplicateCheck, updateCategorySelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestcasesMutableReadyHandler () {
     $('#id_template').change(function () {
@@ -50,6 +50,28 @@ export function pageTestcasesMutableReadyHandler () {
         showHours: true,
         showMinutes: true,
         showSeconds: true
+    })
+
+    initDuplicateCheck({
+        rpcMethod: 'TestCase.filter',
+        fieldName: 'summary',
+        inputSelector: '#id_summary',
+        groupSelector: '#summary-group',
+        warningSelector: '#duplicate-summary-warning',
+        autocompleteSelector: '#summary-autocomplete',
+        modalSelector: '#duplicate-modal',
+        prefix: 'TC',
+        detailUrlBase: '/case/',
+        descriptionField: 'text',
+        modalRows: function (g, tc) {
+            return [
+                [g('trans-duplicate-modal-summary'), tc.summary],
+                [g('trans-duplicate-modal-status'), tc.case_status__name],
+                [g('trans-duplicate-modal-category'), tc.category__name],
+                [g('trans-duplicate-modal-priority'), tc.priority__value],
+                [g('trans-duplicate-modal-author'), tc.author__username]
+            ]
+        }
     })
 }
 
