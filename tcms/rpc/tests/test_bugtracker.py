@@ -50,16 +50,16 @@ class BugTrackerCreate(APIPermissionsTestCase):
         result = self.rpc_client.BugTracker.create(
             {
                 "name": "Local Kiwi TCMS",
-                "tracker_type": "tcms.issuetracker.types.KiwiTCMS",
-                "base_url": "https://example.com",
+                "tracker_type": "tcms.issuetracker.types.GitHub",
+                "base_url": "https://github.com/kiwitcms",
             }
         )
 
         # verify the serialized result
         self.assertIn("id", result)
         self.assertEqual(result["name"], "Local Kiwi TCMS")
-        self.assertEqual(result["tracker_type"], "tcms.issuetracker.types.KiwiTCMS")
-        self.assertEqual(result["base_url"], "https://example.com")
+        self.assertEqual(result["tracker_type"], "tcms.issuetracker.types.GitHub")
+        self.assertEqual(result["base_url"], "https://github.com/kiwitcms")
         self.assertIsNone(result["api_url"])
         self.assertIsNone(result["api_username"])
         self.assertNotIn("api_password", result)
