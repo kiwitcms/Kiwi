@@ -539,3 +539,10 @@ class TestSearchCases(BasePlanCase):
             f'<option value="{self.product.pk}" selected>{self.product.name}</option>',
             html=True,
         )
+
+    def test_search_page_includes_duration_filters(self):
+        response = self.client.get(self.search_url, {})
+
+        self.assertContains(response, 'for="id_setup_duration"')
+        self.assertContains(response, 'for="id_testing_duration"')
+        self.assertContains(response, 'for="id_expected_duration"')

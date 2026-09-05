@@ -99,6 +99,19 @@ class SearchCaseForm(forms.ModelForm):
         model = TestCase
         fields = "__all__"
 
+    setup_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
+    testing_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
+    expected_duration = forms.DurationField(
+        widget=DurationWidget(),
+        required=False,
+    )
+
     # overriden initial values
     product = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
     category = forms.ModelChoiceField(queryset=Category.objects.none(), required=False)
