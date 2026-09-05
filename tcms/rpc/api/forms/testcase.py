@@ -2,13 +2,7 @@ from django import forms
 
 from tcms.core.forms.fields import UserField
 from tcms.rpc.api.forms import DateTimeFieldWithDefault, UpdateModelFormMixin
-from tcms.testcases.models import (
-    BugSystem,
-    Category,
-    Template,
-    TestCase,
-    TestCaseStatus,
-)
+from tcms.testcases.models import Category, Template, TestCase, TestCaseStatus
 
 
 class NewForm(forms.ModelForm):
@@ -57,12 +51,6 @@ class UpdateForm(UpdateModelFormMixin, forms.ModelForm):
             self.fields["author"].queryset = tenant_users
             self.fields["default_tester"].queryset = tenant_users
             self.fields["reviewer"].queryset = tenant_users
-
-
-class BugSystemForm(forms.ModelForm):
-    class Meta:
-        model = BugSystem
-        fields = "__all__"
 
 
 class CategoryForm(forms.ModelForm):

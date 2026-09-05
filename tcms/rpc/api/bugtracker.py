@@ -4,9 +4,9 @@
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.api.forms.testcase import BugSystemForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+from tcms.testcases.admin import BugSystemAdminForm
 from tcms.testcases.models import BugSystem
 
 
@@ -60,7 +60,7 @@ def create(values):
         :raises ValueError: if input values don't validate
         :raises PermissionDenied: if missing *testcases.add_bugsystem* permission
     """
-    form = BugSystemForm(values)
+    form = BugSystemAdminForm(values)
 
     if form.is_valid():
         bug_system = form.save()

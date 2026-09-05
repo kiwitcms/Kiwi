@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from django.urls import reverse
+from parameterized import parameterized
 
 from tcms.testcases.models import BugSystem
 from tcms.tests import LoggedInTestCase
@@ -58,3 +59,61 @@ class TestBugSystemAdmin(LoggedInTestCase):
         self.assertEqual("https://bugzilla.example.org", self.bug_system.base_url)
         # will always overwrite this field
         self.assertEqual("", self.bug_system.api_password)
+
+    @parameterized.expand(
+        [
+            ("base_class", "tcms.issuetracker.base.IssueTrackerType"),
+            ("raises_in_init", "tcms.issuetracker.tests.raise.Bogus"),
+            ("random_dotted_path", "random.dotted.string"),
+            ("not_a_dotted_path", "random string"),
+        ]
+    )
+    def test_add_view_with_invalid_tracker_type_will_fail(self, _name, tracker_type):
+        response = self.client.post(
+            reverse("admin:testcases_bugsystem_add"),
+            {
+                "name": f"Bogus tracker: {_name}",
+                "tracker_type": tracker_type,
+                "base_url": "https://bogus.example.com",
+            },
+            follow=True,
+        )
+
+        self.assertContains(response, "Please correct the error below.")
+        self.assertContains(
+            response,
+            f"Select a valid choice. {tracker_type} is not one of the available choices.",
+        )
+        self.assertFalse(
+            BugSystem.objects.filter(name=f"Bogus tracker: {_name}").exists()
+        )
+
+    @parameterized.expand(
+        [
+            ("base_class", "tcms.issuetracker.base.IssueTrackerType"),
+            ("raises_in_init", "tcms.issuetracker.tests.raise.Bogus"),
+            ("random_dotted_path", "random.dotted.string"),
+            ("not_a_dotted_path", "random string"),
+        ]
+    )
+    def test_change_view_with_invalid_tracker_type_will_fail(self, _name, tracker_type):
+        response = self.client.post(
+            reverse("admin:testcases_bugsystem_change", args=[self.bug_system.pk]),
+            {
+                "name": self.bug_system.name,
+                "tracker_type": tracker_type,
+                "base_url": self.bug_system.base_url,
+            },
+            follow=True,
+        )
+
+        self.assertContains(response, "Please correct the error below.")
+        self.assertContains(
+            response,
+            f"Select a valid choice. {tracker_type} is not one of the available choices.",
+        )
+
+        self.bug_system.refresh_from_db()
+        self.assertEqual(
+            "tcms.issuetracker.types.Bugzilla", self.bug_system.tracker_type
+        )

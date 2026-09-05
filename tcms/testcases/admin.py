@@ -109,7 +109,7 @@ class IssueTrackerTypeField(forms.ChoiceField):
     widget = IssueTrackerTypeSelectWidget
 
     def valid_value(self, value):
-        return True
+        return value in settings.EXTERNAL_BUG_TRACKERS
 
 
 class BugSystemAdminForm(forms.ModelForm):

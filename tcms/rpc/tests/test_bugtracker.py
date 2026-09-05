@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 #
-# Copyright (c) 2025 Alexander Todorov <atodorov@MrSenko.com>
+# Copyright (c) 2025-2026 Alexander Todorov <atodorov@MrSenko.com>
 #
 # Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+
+from parameterized import parameterized
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase
 from tcms.testcases.models import BugSystem
@@ -74,6 +76,34 @@ class BugTrackerCreate(APIPermissionsTestCase):
                     "api_password": "this-is-secret",  # nosec:B105:hardcoded_password_string
                 }
             )
+
+    @parameterized.expand(
+        [
+            ("base_class", "tcms.issuetracker.base.IssueTrackerType"),
+            ("raises_in_init", "tcms.issuetracker.tests.raise.Bogus"),
+            ("random_dotted_path", "random.dotted.string"),
+            ("not_a_dotted_path", "random string"),
+        ]
+    )
+    def test_create_with_invalid_tracker_type_will_fail(self, _name, tracker_type):
+        # grant only the permission needed for BugTracker.create
+        self.no_permissions_but(self.permission_label)
+
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            f".*tracker_type.*Select a valid choice. {tracker_type} is not one of the available choices.*",
+        ):
+            self.rpc_client.BugTracker.create(
+                {
+                    "name": f"Bogus tracker: {_name}",
+                    "tracker_type": tracker_type,
+                    "base_url": "https://bogus.example.com",
+                }
+            )
+
+        self.assertFalse(
+            BugSystem.objects.filter(name=f"Bogus tracker: {_name}").exists()
+        )
 
 
 class TestBugTrackerFilter(APIPermissionsTestCase):
