@@ -30,6 +30,19 @@ class KiwiTCMSHandlerMixin:
         return value
 
     @staticmethod
+    def dict_keys(extract_from, depth=0):
+        if depth > 4:
+            return
+
+        if isinstance(extract_from, dict):
+            for key, value in extract_from.items():
+                yield key
+                yield from __class__.dict_keys(value, depth + 1)
+        elif isinstance(extract_from, (list, tuple)):
+            for value in extract_from:
+                yield from __class__.dict_keys(value, depth + 1)
+
+    @staticmethod
     def inspect_rpc_args(rpc_request):
         if rpc_request.method_name.endswith(
             ".create"
@@ -45,14 +58,8 @@ class KiwiTCMSHandlerMixin:
             "apikey",
         )
 
-        keys_to_check = []
-        for arg in rpc_request.args:
-            if isinstance(arg, dict):
-                keys_to_check.extend(arg.keys())
-
-        kwargs = getattr(rpc_request, "kwargs", None)
-        if isinstance(kwargs, dict):
-            keys_to_check.extend(kwargs.keys())
+        keys_to_check = list(__class__.dict_keys(rpc_request.args))
+        keys_to_check.extend(__class__.dict_keys(getattr(rpc_request, "kwargs", None)))
 
         for key in keys_to_check:
             key_str = str(key).lower()

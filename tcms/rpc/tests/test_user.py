@@ -414,6 +414,28 @@ class TestUserFilterJsonRpc(APIPermissionsTestCase):
         self.assertIn("error", result)
         self.assertIn("Unsupported field", result["error"]["message"])
 
+        # filtering by this field should fail
+        response = self.client.post(
+            "/json-rpc/",
+            {
+                "id": "jsonrpc",
+                "jsonrpc": "2.0",
+                "method": "User.filter",
+                "params": {
+                    "query": {
+                        "email": "user2@example.com",
+                        "password__contains": "z",  # nosec:B105:hardcoded_password_string
+                    }
+                },
+            },
+            content_type="application/json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        result = response.json()
+        self.assertIn("error", result)
+        self.assertIn("Unsupported field", result["error"]["message"])
+
     def verify_api_without_permission(self):
         response = self.client.post(
             "/json-rpc/",
