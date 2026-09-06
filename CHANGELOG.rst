@@ -1,6 +1,57 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.4 (07 Sep 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes critical security related updates
+    and several improvements.
+
+
+Security
+~~~~~~~~
+
+- Overwrite all fields when saving BugSystem via Admin. Fixes
+  `GHSA-38fx-5xmx-c3r8 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-38fx-5xmx-c3r8>`_
+- Improve field arguments restriction for JSON-RPC API method calls. Fixes
+  `GHSA-9g83-4wjw-77gx <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-9g83-4wjw-77gx>`_
+- Validate ``BugSystem.tracker_type`` field against ``settings.EXTERNAL_BUG_TRACKERS``. Fixes
+  `GHSA-vm6v-85rx-3mr2 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-vm6v-85rx-3mr2>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django from 6.0.8 to 6.1.1
+- Update django-guardian from 3.3.3 to 3.4.1
+- Update django-tree-queries from 0.24.0 to 0.25.1
+- Update psycopg from 3.3.4 to 3.3.5
+- Update pygithub from 2.9.1 to 2.10.0
+- Update node_modules/browserslist from 4.28.1 to 4.28.8
+- Update node_modules/webpack from 5.109.2 to 5.110.3
+- Update node_modules/webpack-cli from 7.2.2 to 7.2.3
+- Convert ``BugSystem.base_url`` and ``BugSystem.api_url`` to ``URLField``
+- Add ``--database`` option to ``initial_setup`` & ``set_domain`` commands
+
+
+Database
+~~~~~~~~
+
+- Introduce new migration
+  ``testcases.0025_alter_bugsystem_api_url_alter_bugsystem_base_url``
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update isort from 8.0.1 to 9.0.1
+- Update locust from 2.46.3 to 2.46.4
+- Update pylint from 4.0.7 to 4.0.8
+
+
+
 Kiwi TCMS 16.3 (24 Aug 2026)
 ----------------------------
 
