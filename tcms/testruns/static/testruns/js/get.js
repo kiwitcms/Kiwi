@@ -544,7 +544,7 @@ function getExpandArea (testExecution) {
         bindDeleteLinkButton()
     })
 
-    jsonRPC('TestCase.list_attachments', [testExecution.case], attachments => {
+    jsonRPC('TestExecution.list_attachments', [testExecution.id], attachments => {
         const ul = container.find('.test-case-attachments')
 
         if (!attachments.length) {
