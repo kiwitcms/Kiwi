@@ -19,11 +19,26 @@
     <form class="form-horizontal" action="{% if object %}{% url 'testruns-edit' object.pk %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
-        <div class="form-group">
+        <div class="form-group" id="summary-group"
+            data-trans-duplicate-blocked="{% trans 'A test run with this exact summary already exists. Duplicates are not allowed.' %}"
+            data-trans-duplicate-modal-title="{% trans 'Duplicate test run found' %}"
+            data-trans-duplicate-modal-summary="{% trans 'Summary' %}"
+            data-trans-duplicate-modal-plan="{% trans 'Test plan' %}"
+            data-trans-duplicate-modal-build="{% trans 'Build' %}"
+            data-trans-duplicate-modal-manager="{% trans 'Manager' %}"
+            data-trans-duplicate-modal-text="{% trans 'Notes' %}"
+            data-trans-duplicate-modal-view="{% trans 'View existing test run' %}">
             <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
             <div class="col-md-3 col-lg-3 {% if form.summary.errors %}has-error{% endif %}">
-                <input type="text" id="id_summary" name="summary" value="{{ form.summary.value }}" class="form-control" required>
+                <input type="text" id="id_summary" name="summary" value="{{ form.summary.value }}" class="form-control" required autocomplete="off">
+                {% if not object %}
+                <div id="summary-autocomplete" class="list-group" style="display: none; max-height: 200px; overflow-y: auto; margin-bottom: 0; background-color: #f5f5f5; border: 1px solid #b7b7b7;"></div>
+                {% endif %}
                 {{ form.summary.errors }}
+                {% if not object %}
+                <div id="duplicate-summary-warning" class="help-block hidden kiwi-color-warning">
+                </div>
+                {% endif %}
             </div>
 
             <label class="col-md-1 col-lg-1" for="id_manager">{% trans "Manager" %}</label>
@@ -40,6 +55,10 @@
                 {{ form.default_tester.errors }}
             </div>
         </div>
+
+        {% if not object %}
+        {% include "include/duplicate_check_modal.html" %}
+        {% endif %}
 
         <div class="form-group">
             <div class="col-md-1 col-lg-1">
