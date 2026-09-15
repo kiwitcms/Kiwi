@@ -544,23 +544,26 @@ function getExpandArea (testExecution) {
         bindDeleteLinkButton()
     })
 
-    jsonRPC('TestCase.list_attachments', [testExecution.case], attachments => {
-        const ul = container.find('.test-case-attachments')
+    jsonRPC('TestCase.list_attachments', [testExecution.case], testCaseAttachments => {
+        jsonRPC('TestExecution.list_attachments', [testExecution.id], testExecutionAttachments => {
+            const attachments = testCaseAttachments.concat(testExecutionAttachments)
+            const ul = container.find('.test-case-attachments')
 
-        if (!attachments.length) {
-            ul.find('.hidden').removeClass('hidden')
-            return
-        }
+            if (!attachments.length) {
+                ul.find('.hidden').removeClass('hidden')
+                return
+            }
 
-        const liTemplate = $('#attachments-list-item')[0].content
+            const liTemplate = $('#attachments-list-item')[0].content
 
-        attachments.forEach(attachment => {
-            const li = liTemplate.cloneNode(true)
-            const attachmentLink = $(li).find('a')[0]
+            attachments.forEach(attachment => {
+                const li = liTemplate.cloneNode(true)
+                const attachmentLink = $(li).find('a')[0]
 
-            attachmentLink.href = attachment.url
-            attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
-            ul.append(li)
+                attachmentLink.href = attachment.url
+                attachmentLink.innerText = attachment.url.split('/').slice(-1)[0]
+                ul.append(li)
+            })
         })
     })
 
