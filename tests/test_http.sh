@@ -103,22 +103,22 @@ _EOF_
             # copy test file externally b/c Kiwi TCMS v12.2 will prevent its upload
             rlRun -t -c "docker exec -i kiwi_web /bin/bash -c 'mkdir -p /Kiwi/uploads/attachments/auth_user/2/'"
             rlRun -t -c "docker cp tests/ui/data/inline_javascript.svg kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
-            rlRun -t -c "curl -k -D- $HTTPS/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
-            rlRun -t -c "curl -k -D- $PROXY/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt $HTTPS/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt $PROXY/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep 'Content-Type: text/plain'"
 
             rlRun -t -c "docker cp tests/ui/data/redirect.js kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
             rlRun -t -c "docker cp tests/ui/data/html_with_external_script.html kiwi_web:/Kiwi/uploads/attachments/auth_user/2/"
-            rlRun -t -c "curl -k -D- $HTTPS/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
-            rlRun -t -c "curl -k -D- $PROXY/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
-            rlRun -t -c "curl -k -D- $HTTPS/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
-            rlRun -t -c "curl -k -D- $PROXY/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt $HTTPS/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt $PROXY/uploads/attachments/auth_user/2/redirect.js 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt $HTTPS/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt $PROXY/uploads/attachments/auth_user/2/html_with_external_script.html 2>/dev/null | grep 'Content-Type: text/plain'"
 
             rlRun -t -c "robot tests/ui/test_inline_javascript.robot"
 
-            CT_HEADER_COUNT=$(curl -k -D- $HTTPS/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
+            CT_HEADER_COUNT=$(curl -k -D- -b /tmp/login-cookies.txt $HTTPS/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
             rlAssertEquals "There should be only 1 Content-Type header" "$CT_HEADER_COUNT" 1
 
-            CT_HEADER_COUNT=$(curl -k -D- $PROXY/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
+            CT_HEADER_COUNT=$(curl -k -D- -b /tmp/login-cookies.txt $PROXY/uploads/attachments/auth_user/2/inline_javascript.svg 2>/dev/null | grep -c 'Content-Type:')
             rlAssertEquals "There should be only 1 Content-Type header" "$CT_HEADER_COUNT" 1
         fi
     rlPhaseEnd
@@ -137,8 +137,17 @@ _EOF_
             rlRun -t -c "robot tests/ui/test_upload_file.robot"
 
             # verify file is there
-            rlRun -t -c "curl -k -D- --silent $HTTPS/uploads/attachments/testplans_testplan/1/hello-robots.txt | grep '200 OK'"
+            rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt --silent $HTTPS/uploads/attachments/testplans_testplan/1/hello-robots.txt | grep '200 OK'"
         fi
+    rlPhaseEnd
+
+    rlPhaseStartTest "Anonymous GET /uploads/ returns 403"
+        rlRun -t -c "curl -k -D- --silent $HTTPS/uploads/attachments/testplans_testplan/1/hello-robots.txt | grep '403 Forbidden'"
+    rlPhaseEnd
+
+    rlPhaseStartTest "GET /ngx-uploads/ returns 404"
+        rlRun -t -c "curl -k -D- --silent $HTTPS/ngx-uploads/attachments/testplans_testplan/1/hello-robots.txt | grep '404 Not Found'"
+        rlRun -t -c "curl -k -D- -b /tmp/login-cookies.txt --silent $HTTPS/ngx-uploads/attachments/testplans_testplan/1/hello-robots.txt | grep '404 Not Found'"
     rlPhaseEnd
 
     rlPhaseStartTest "Requests to /accounts/register/ are rate limited"
@@ -169,9 +178,11 @@ _EOF_
     rlPhaseEnd
 
     rlPhaseStartTest "Requests for uploaded files are NOT rate limited"
-        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/uploads/attachments/auth_user/2/redirect.js" "$WRK_DIR" "static-image")
+        # Note: the cookies file is created in get_dashboard() above
+        SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
+        COMPLETED_REQUESTS=$(exec_wrk "https://localhost/uploads/attachments/auth_user/2/redirect.js" "$WRK_DIR" "uploads" "Cookie: sessionid=$SESSION_ID")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS in 10 seconds"
-        rlAssertGreaterOrEqual ">= 1000 r/s" "$COMPLETED_REQUESTS" 10000
+        rlAssertGreaterOrEqual ">= 700 r/s" "$COMPLETED_REQUESTS" 7000
     rlPhaseEnd
 
     rlPhaseStartTest "Requests for /favicon.ico are NOT rate limited"

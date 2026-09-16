@@ -21,6 +21,17 @@ deactivated_user = User.objects.create(
 deactivated_user.set_password("password")
 deactivated_user.save()
 
+# no permissions to view attachments
+regular_user = User.objects.create(
+    username="regular",
+    is_active=True,
+    is_staff=True,
+    is_superuser=False,
+    email="regular@domain.com",
+)
+regular_user.set_password("password")
+regular_user.save()
+
 
 classification, _ = Classification.objects.get_or_create(name="core products")
 product, _ = Product.objects.get_or_create(

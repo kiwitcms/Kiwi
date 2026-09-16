@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from urllib.parse import quote
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, views
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -264,3 +266,18 @@ class ResetUserEmail(FormView):  # pylint: disable=missing-permission-required
 
         # otherwise maybe they have permissions to view and modify other users
         return HttpResponseRedirect(reverse_lazy("admin-users-router"))
+
+
+@method_decorator(
+    permission_required("attachments.view_attachment", raise_exception=True),
+    name="dispatch",
+)
+class ViewAttachment(View):
+    http_method_names = ["get"]
+
+    def get(self, request, path):  # pylint: disable=unused-argument, no-self-use
+        response = HttpResponse(b"", content_type="text/plain")
+        response["X-Accel-Redirect"] = quote(
+            request.path.replace(settings.MEDIA_URL, "/ngx-uploads/")
+        )
+        return response
