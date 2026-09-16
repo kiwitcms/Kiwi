@@ -1,5 +1,7 @@
+import re
 from importlib import import_module
 from importlib.metadata import entry_points
+from urllib.parse import urlsplit
 
 from attachments import urls as attachments_urls
 from captcha import urls as captcha_urls
@@ -14,6 +16,7 @@ from grappelli import urls as grappelli_urls
 
 from tcms.core import views as core_views
 from tcms.kiwi_auth import urls as auth_urls
+from tcms.kiwi_auth import views as auth_views
 from tcms.rpc.views import json_rpc_server, xml_rpc_server
 from tcms.telemetry import urls as telemetry_urls
 from tcms.testcases import urls as testcases_urls
@@ -68,6 +71,17 @@ if settings.DEBUG:
         [
             re_path(r"^500/$", TemplateView.as_view(template_name="500.html")),
             re_path(r"^404/$", TemplateView.as_view(template_name="404.html")),
+        ]
+    )
+elif not settings.DEBUG and not urlsplit(settings.MEDIA_URL).netloc:
+    # route requests to /uploads/ internally and then back to Nginx
+    prefix = re.escape(settings.MEDIA_URL.lstrip("/"))
+    urlpatterns.extend(
+        [
+            re_path(
+                f"^{prefix}(?P<path>.*)$",
+                auth_views.ViewAttachment.as_view(),
+            ),
         ]
     )
 
