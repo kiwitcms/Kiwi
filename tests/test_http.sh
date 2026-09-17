@@ -182,7 +182,7 @@ _EOF_
         SESSION_ID=$(grep sessionid /tmp/login-cookies.txt | cut -f 7)
         COMPLETED_REQUESTS=$(exec_wrk "https://localhost/uploads/attachments/auth_user/2/redirect.js" "$WRK_DIR" "uploads" "Cookie: sessionid=$SESSION_ID")
         rlLogInfo "COMPLETED_REQUESTS=$COMPLETED_REQUESTS in 10 seconds"
-        rlAssertGreaterOrEqual ">= 700 r/s" "$COMPLETED_REQUESTS" 7000
+        rlAssertGreaterOrEqual ">= 400 r/s" "$COMPLETED_REQUESTS" 4000
     rlPhaseEnd
 
     rlPhaseStartTest "Requests for /favicon.ico are NOT rate limited"

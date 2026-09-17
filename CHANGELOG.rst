@@ -1,6 +1,45 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.5 (17 Sep 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes security related updates
+    and several improvements.
+
+
+Security
+~~~~~~~~
+
+- Update node_modules/js-yaml from 4.3.1 to 4.3.2
+- Update node_modules/jszip from 3.10.1 to 3.10.2
+- Route requests to ``/uploads/`` internally to check for permissions before
+  handing off to Nginx to serve the actual file. Fixes
+  `GHSA-4fp9-ph54-5fjw <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-4fp9-ph54-5fjw>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update django-guardian from 3.4.1 to 3.5.0
+- Update django-tree-queries from 0.25.1 to 0.26.1
+- Update tzdata from 2026.3 to 2026.4
+- Display TestExecution attachments on Test Run page to support the use-case
+  where attachments have been uploaded via ``TestExecution.add_attachmment()``
+  API method (Arnoldas Bagdonas)
+- Small visual rearrangements on login page
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update locust from 2.46.4 to 2.46.5
+- Remove deprecated field ``version:`` from YAML files
+
+
+
 Kiwi TCMS 16.4 (07 Sep 2026)
 ----------------------------
 
