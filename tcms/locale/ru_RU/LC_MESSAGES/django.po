@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-13 19:00+0000\n"
-"PO-Revision-Date: 2026-07-13 21:06\n"
+"PO-Revision-Date: 2026-09-17 11:37\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1236,7 +1236,7 @@ msgstr "Панель управления"
 
 #: tcms/templates/navbar.html:41
 msgid "Language"
-msgstr "Язык"
+msgstr "Language"
 
 #: tcms/templates/navbar.html:45
 msgid "Change language"
