@@ -1,6 +1,6 @@
 import { initializeDateTimePicker } from '../../../../static/js/datetime_picker'
 import { jsonRPC } from '../../../../static/js/jsonrpc'
-import { discoverNestedTestPlans, updateSelect, updateTestPlanSelectFromProduct } from '../../../../static/js/utils'
+import { discoverNestedTestPlans, initDuplicateCheck, updateSelect, updateTestPlanSelectFromProduct } from '../../../../static/js/utils'
 
 export function pageTestrunsMutableReadyHandler () {
     initializeDateTimePicker('#id_planned_start')
@@ -41,5 +41,26 @@ export function pageTestrunsMutableReadyHandler () {
 
     $('#add_id_build').click(function () {
         return showRelatedObjectPopup(this)
+    })
+
+    initDuplicateCheck({
+        rpcMethod: 'TestRun.filter',
+        fieldName: 'summary',
+        inputSelector: '#id_summary',
+        groupSelector: '#summary-group',
+        warningSelector: '#duplicate-summary-warning',
+        autocompleteSelector: '#summary-autocomplete',
+        modalSelector: '#duplicate-modal',
+        prefix: 'TR',
+        detailUrlBase: '/runs/',
+        descriptionField: 'notes',
+        modalRows: function (g, tr) {
+            return [
+                [g('trans-duplicate-modal-summary'), tr.summary],
+                [g('trans-duplicate-modal-plan'), tr.plan__name],
+                [g('trans-duplicate-modal-build'), tr.build__name],
+                [g('trans-duplicate-modal-manager'), tr.manager__username]
+            ]
+        }
     })
 }
