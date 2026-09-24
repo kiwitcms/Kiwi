@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from attachments.models import Attachment
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db.models import F
@@ -453,6 +454,35 @@ def list_attachments(execution_id, rpc_context=None):
     execution = TestExecution.objects.get(pk=execution_id)
     request = rpc_context.request
     return utils.get_attachments_for(request, execution)
+
+
+@rpc_method(
+    name="TestExecution.count_attachments",
+    auth=permissions_required("attachments.view_attachment"),
+)
+def count_attachments(execution_id):
+    """
+    .. function:: RPC TestExecution.count_attachments(execution_id)
+
+        Count attachments for the given TestExecution and its TestCase.
+
+        :param execution_id: PK of TestExecution to inspect
+        :type execution_id: int
+        :return: A dict containing the number of attachments which came from
+                the TestExecution and the number which came from its TestCase
+        :rtype: dict
+        :raises TestExecution.DoesNotExist: if object specified by PK is missing
+
+    .. versionadded:: 16.6
+    """
+    execution = TestExecution.objects.get(pk=execution_id)
+    from_execution = Attachment.objects.attachments_for_object(execution).count()
+    from_case = Attachment.objects.attachments_for_object(execution.case).count()
+    return {
+        "from_execution": from_execution,
+        "from_case": from_case,
+        "total": from_execution + from_case,
+    }
 
 
 @rpc_method(
