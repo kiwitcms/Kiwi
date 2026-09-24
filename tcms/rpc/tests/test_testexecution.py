@@ -901,6 +901,46 @@ class TestListAttachmentsForUnknownId(TestListAttachmentsPermissions):
             self.rpc_client.TestExecution.list_attachments(-1)
 
 
+class TestCountAttachmentsPermissions(APIPermissionsTestCase):
+    permission_label = "attachments.view_attachment"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.execution = TestExecutionFactory()
+
+    def verify_api_with_permission(self):
+        user_should_have_perm(self.tester, "attachments.add_attachment")
+        self.rpc_client.TestExecution.add_attachment(
+            self.execution.pk, "actual-results.txt", "a2l3aXRjbXM="
+        )
+        self.rpc_client.TestCase.add_attachment(
+            self.execution.case.pk, "case-attachment.txt", "a2l3aXRjbXM="
+        )
+        remove_perm_from_user(self.tester, "attachments.add_attachment")
+
+        result = self.rpc_client.TestExecution.count_attachments(self.execution.pk)
+        self.assertEqual(1, result["from_execution"])
+        self.assertEqual(1, result["from_case"])
+        self.assertEqual(2, result["total"])
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault,
+            'Authentication failed when calling "TestExecution.count_attachments"',
+        ):
+            self.rpc_client.TestExecution.count_attachments(self.execution.pk)
+
+
+class TestCountAttachmentsForUnknownId(TestCountAttachmentsPermissions):
+    def verify_api_with_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestExecution matching query does not exist"
+        ):
+            self.rpc_client.TestExecution.count_attachments(-1)
+
+
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
     permission_label = "attachments.add_attachment"
 
