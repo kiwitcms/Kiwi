@@ -24,12 +24,19 @@ const permissions = {
 }
 const autocompleteCache = {}
 
-function showAttachmentCountForTe (container, executionCount, caseCount) {
-    const jsAttachments = container.find('.js-attachments')
-    if (executionCount > 0 || caseCount > 0) {
-        jsAttachments.removeClass('hidden')
-        jsAttachments.find('.test-execution-attachment-count').text(`E:${executionCount} / TC:${caseCount}`)
-    }
+function renderAttachmentCounts (query) {
+    jsonRPC('TestExecution.count_attachments', query, counts => {
+        for (const teId of Object.keys(counts)) {
+            const jsAttachments = $(`.test-execution-${teId}`).find('.js-attachments')
+            if (!counts[teId].total) {
+                jsAttachments.addClass('hidden')
+                continue
+            }
+
+            jsAttachments.removeClass('hidden')
+            jsAttachments.find('.test-execution-attachment-count').text(counts[teId].total)
+        }
+    })
 }
 
 function showLastBugForTe (testExecutionRow, bugUrl) {
@@ -554,8 +561,6 @@ function getExpandArea (testExecution) {
 
     jsonRPC('TestCase.list_attachments', [testExecution.case], testCaseAttachments => {
         jsonRPC('TestExecution.list_attachments', [testExecution.id], testExecutionAttachments => {
-            showAttachmentCountForTe(container, testExecutionAttachments.length, testCaseAttachments.length)
-
             const attachments = testCaseAttachments.concat(testExecutionAttachments)
             const ul = container.find('.test-case-attachments')
 
@@ -601,6 +606,7 @@ function renderAdditionalInformation (testRunId, execution) {
     let componentQ = { cases__executions__run: testRunId }
     let tagsQ = { case__executions__run: testRunId }
     let propertiesQ = { execution__run: testRunId }
+    let attachmentsQ = { run_id: testRunId }
     const planId = Number($('#test_run_pk').data('plan-pk'))
 
     // if called from reloadRowFor(execution) then filter only for
@@ -611,7 +617,10 @@ function renderAdditionalInformation (testRunId, execution) {
         componentQ = { cases__executions: execution.id }
         tagsQ = { case__executions: execution.id }
         propertiesQ = { execution: execution.id }
+        attachmentsQ = { id: execution.id }
     }
+
+    renderAttachmentCounts(attachmentsQ)
 
     // update bug icons for all executions
     jsonRPC('TestExecution.get_links', linksQuery, (links) => {
