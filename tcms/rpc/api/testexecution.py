@@ -3,6 +3,7 @@ from datetime import timedelta
 from attachments.models import Attachment
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import F
 from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
@@ -16,6 +17,7 @@ from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestExecution, TestExecutionProperty, TestExecutionTag
 
 # conditional import b/c this App can be disabled
@@ -460,29 +462,45 @@ def list_attachments(execution_id, rpc_context=None):
     name="TestExecution.count_attachments",
     auth=permissions_required("attachments.view_attachment"),
 )
-def count_attachments(execution_id):
+def count_attachments(query=None):  # pylint: disable=redefined-builtin
     """
-    .. function:: RPC TestExecution.count_attachments(execution_id)
+    .. function:: RPC TestExecution.count_attachments(query)
 
-        Count attachments for the given TestExecution and its TestCase.
+        Count attachments for the given TestExecutions and their TestCases.
 
-        :param execution_id: PK of TestExecution to inspect
-        :type execution_id: int
-        :return: A dict containing the number of attachments which came from
-                the TestExecution and the number which came from its TestCase
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
+        :type query: dict
+        :return: A dict mapping TestExecution PKs to the number of attachments
+                 which came from the TestExecution and the number which came
+                 from its TestCase
         :rtype: dict
-        :raises TestExecution.DoesNotExist: if object specified by PK is missing
 
     .. versionadded:: 16.6
     """
-    execution = TestExecution.objects.get(pk=execution_id)
-    from_execution = Attachment.objects.attachments_for_object(execution).count()
-    from_case = Attachment.objects.attachments_for_object(execution.case).count()
-    return {
-        "from_execution": from_execution,
-        "from_case": from_case,
-        "total": from_execution + from_case,
-    }
+    if query is None:
+        query = {}
+
+    execution_type = ContentType.objects.get_for_model(TestExecution)
+    case_type = ContentType.objects.get_for_model(TestCase)
+
+    result = {}
+    for execution in TestExecution.objects.filter(**query).values("pk", "case"):
+        from_execution = Attachment.objects.filter(
+            content_type=execution_type, object_id=execution["pk"]
+        ).count()
+        from_case = Attachment.objects.filter(
+            content_type=case_type, object_id=execution["case"]
+        ).count()
+
+        # NOTE: convert to str() otherwise we get:
+        # Unable to serialize result as valid XML: dictionary key must be string
+        result[str(execution["pk"])] = {
+            "from_execution": from_execution,
+            "from_case": from_case,
+            "total": from_execution + from_case,
+        }
+
+    return result
 
 
 @rpc_method(

@@ -920,25 +920,26 @@ class TestCountAttachmentsPermissions(APIPermissionsTestCase):
         )
         remove_perm_from_user(self.tester, "attachments.add_attachment")
 
-        result = self.rpc_client.TestExecution.count_attachments(self.execution.pk)
-        self.assertEqual(1, result["from_execution"])
-        self.assertEqual(1, result["from_case"])
-        self.assertEqual(2, result["total"])
+        result = self.rpc_client.TestExecution.count_attachments(
+            {"pk": self.execution.pk}
+        )
+        counts = result[str(self.execution.pk)]
+        self.assertEqual(1, counts["from_execution"])
+        self.assertEqual(1, counts["from_case"])
+        self.assertEqual(2, counts["total"])
 
     def verify_api_without_permission(self):
         with self.assertRaisesRegex(
             XmlRPCFault,
             'Authentication failed when calling "TestExecution.count_attachments"',
         ):
-            self.rpc_client.TestExecution.count_attachments(self.execution.pk)
+            self.rpc_client.TestExecution.count_attachments({"pk": self.execution.pk})
 
 
 class TestCountAttachmentsForUnknownId(TestCountAttachmentsPermissions):
     def verify_api_with_permission(self):
-        with self.assertRaisesRegex(
-            XmlRPCFault, "TestExecution matching query does not exist"
-        ):
-            self.rpc_client.TestExecution.count_attachments(-1)
+        result = self.rpc_client.TestExecution.count_attachments({"pk": -1})
+        self.assertEqual({}, result)
 
 
 class TestAddAttachmentPermissions(APIPermissionsTestCase):
