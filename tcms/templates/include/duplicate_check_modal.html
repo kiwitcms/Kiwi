@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class="modal fade" id="duplicate-modal" tabindex="-1" role="dialog" aria-labelledby="duplicate-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <a id="duplicate-modal-view-btn" href="#" target="_blank" class="btn btn-default btn-sm pull-right" style="margin-right: 10px;">
+          <span class="fa fa-external-link"></span> <span id="duplicate-modal-view-label"></span>
+        </a>
+        <h4 class="modal-title" id="duplicate-modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <div id="duplicate-modal-body"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
