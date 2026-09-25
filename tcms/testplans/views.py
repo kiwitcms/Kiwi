@@ -177,17 +177,22 @@ class TestPlanGetView(DetailView):
 
 @method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
 class Clone(FormView):
+    """
+    Renders the clone page. The actual cloning is performed by the
+    ``TestPlan.clone()`` RPC method, called from the browser, so that the
+    page knows the ID of the newly created plan and can redirect to it!
+    See tcms/rpc/api/testplan.py
+    """
+
     template_name = "testplans/clone.html"
     form_class = ClonePlanForm
     object = None
 
+    http_method_names = ["get"]
+
     def get(self, request, *args, **kwargs):
         self.object = TestPlan.objects.get(pk=kwargs["pk"])
         return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.object = TestPlan.objects.get(pk=kwargs["pk"])
-        return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -196,8 +201,7 @@ class Clone(FormView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        product_id = self.request.POST.get("product", self.object.product_id)
-        form.populate(product_pk=product_id, parent_pk=self.object.pk)
+        form.populate(product_pk=self.object.product_id, parent_pk=self.object.pk)
         return form
 
     def get_form_kwargs(self):
@@ -206,9 +210,3 @@ class Clone(FormView):
         kwargs["initial"]["product"] = self.object.product
         kwargs["initial"]["version"] = self.object.product_version
         return kwargs
-
-    def form_valid(self, form):
-        form.cleaned_data["new_author"] = self.request.user
-        cloned_plan = self.object.clone(**form.cleaned_data)
-
-        return HttpResponseRedirect(reverse("test_plan_url", args=[cloned_plan.pk]))

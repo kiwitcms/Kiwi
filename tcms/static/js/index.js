@@ -6,6 +6,7 @@ import { pageTestcasesGetReadyHandler } from '../../testcases/static/testcases/j
 import { pageTestcasesMutableReadyHandler } from '../../testcases/static/testcases/js/mutable'
 import { pageTestcasesSearchReadyHandler } from '../../testcases/static/testcases/js/search'
 
+import { pageTestplansCloneReadyHandler } from '../../testplans/static/testplans/js/clone'
 import { pageTestplansGetReadyHandler } from '../../testplans/static/testplans/js/get'
 import { pageTestplansMutableReadyHandler } from '../../testplans/static/testplans/js/mutable'
 import { pageTestplansSearchReadyHandler } from '../../testplans/static/testplans/js/search'
@@ -39,6 +40,7 @@ const pageHandlers = {
     'page-testcases-mutable': pageTestcasesMutableReadyHandler,
     'page-testcases-search': pageTestcasesSearchReadyHandler,
 
+    'page-testplans-clone': pageTestplansCloneReadyHandler,
     'page-testplans-get': pageTestplansGetReadyHandler,
     'page-testplans-mutable': pageTestplansMutableReadyHandler,
     'page-testplans-search': pageTestplansSearchReadyHandler,

@@ -1,6 +1,6 @@
 // JSON-RPC client inspired by
 // https://stackoverflow.com/questions/8147211/jquery-jsonrpc-2-0-call-via-ajax-gets-correct-response-but-does-not-work
-export function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
+export function jsonRPC (rpcMethod, rpcParams, callback, isSync, errorCallback) {
     // .filter() args are passed as dictionary but other args,
     // e.g. for .add_tag() are passed as a list of positional values
     if (!Array.isArray(rpcParams)) {
@@ -22,13 +22,21 @@ export function jsonRPC (rpcMethod, rpcParams, callback, isSync) {
         contentType: 'application/json',
         success: function (result) {
             if (result.error) {
-                alert(result.error.message)
+                if (errorCallback) {
+                    errorCallback(result.error.message)
+                } else {
+                    alert(result.error.message)
+                }
             } else {
                 callback(result.result)
             }
         },
         error: function (err, status, thrown) {
             console.log('*** jsonRPC ERROR: ' + err + ' STATUS: ' + status + ' ' + thrown)
+
+            if (errorCallback) {
+                errorCallback(thrown || status)
+            }
         }
     })
 }
