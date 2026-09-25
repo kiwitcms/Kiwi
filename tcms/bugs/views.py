@@ -17,6 +17,7 @@ from tcms.bugs.forms import BugCommentForm, NewBugForm
 from tcms.bugs.models import Bug
 from tcms.core.helpers.comments import add_comment
 from tcms.management.models import Component
+from tcms.utils import save_referer_redirect
 
 
 @method_decorator(
@@ -243,7 +244,7 @@ class AddComment(View):
 
             return HttpResponseRedirect(reverse("bugs-get", args=[bug.pk]))
 
-        return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        return save_referer_redirect(request)
 
 
 @method_decorator(permission_required("bugs.view_bug"), name="dispatch")
