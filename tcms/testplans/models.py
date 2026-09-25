@@ -105,7 +105,7 @@ class TestPlan(TreeNode, UrlMixin):
         product=None,
         version=None,
         new_author=None,
-        set_parent=False,
+        parent=None,
         copy_testcases=False,
         **_kwargs,
     ):
@@ -121,9 +121,9 @@ class TestPlan(TreeNode, UrlMixin):
         :param new_author: New author of cloned plan. If not passed, original plan's
             author is used.
         :type new_author: settings.AUTH_USER_MODEL
-        :param set_parent: Whether to set original plan as parent of cloned plan.
-            Default is False.
-        :type set_parent: bool
+        :param parent: Parent of cloned plan. If not passed the cloned plan
+            is created without a parent.
+        :type parent: :class:`tcms.testplans.models.TestPlan`
         :param copy_testcases: Whether to copy cases to cloned plan instead of just
             linking them. Default is False.
         :type copy_testcases: bool
@@ -141,7 +141,7 @@ class TestPlan(TreeNode, UrlMixin):
             create_date=self.create_date,
             is_active=self.is_active,
             extra_link=self.extra_link,
-            parent=self if set_parent else None,
+            parent=parent,
             text=self.text,
         )
 
