@@ -278,7 +278,9 @@ class TestCloneView(BasePlanCase):
         )
 
     def verify_cloned_plan(self, original_plan, cloned_plan, copy_cases=None):
-        self.assertEqual(f"Copy of {original_plan.name}", cloned_plan.name)
+        self.assertEqual(
+            f"Clone of TP-{original_plan.pk}: {original_plan.name}", cloned_plan.name
+        )
         self.assertEqual(cloned_plan.text, original_plan.text)
         self.assertEqual(Product.objects.get(pk=self.product.pk), cloned_plan.product)
         self.assertEqual(
