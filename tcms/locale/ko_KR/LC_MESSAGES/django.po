@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 19:00+0000\n"
-"PO-Revision-Date: 2026-07-13 21:06\n"
+"POT-Creation-Date: 2026-09-25 11:06+0000\n"
+"PO-Revision-Date: 2026-09-25 12:55\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -122,7 +122,7 @@ msgstr "버전"
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:36
 #: tcms/templates/include/bug_details.html:17
 #: tcms/testruns/templates/testruns/get.html:55
-#: tcms/testruns/templates/testruns/get.html:422
+#: tcms/testruns/templates/testruns/get.html:426
 #: tcms/testruns/templates/testruns/mutable.html:89
 #: tcms/testruns/templates/testruns/search.html:59
 #: tcms/testruns/templates/testruns/search.html:189
@@ -143,8 +143,8 @@ msgstr "다시 열기"
 #: tcms/testcases/templates/testcases/mutable.html:265
 #: tcms/testplans/templates/testplans/get.html:482
 #: tcms/testplans/templates/testplans/mutable.html:173
-#: tcms/testruns/templates/testruns/get.html:488
-#: tcms/testruns/templates/testruns/get.html:601
+#: tcms/testruns/templates/testruns/get.html:492
+#: tcms/testruns/templates/testruns/get.html:605
 #: tcms/testruns/templates/testruns/mutable.html:210
 msgid "Save"
 msgstr "저장"
@@ -204,7 +204,7 @@ msgstr "새로운 빌드 추가"
 msgid "Username or email"
 msgstr "사용자 이름 또는 전자 메일"
 
-#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:414
+#: tcms/bugs/templates/bugs/search.html:5 tcms/settings/common.py:412
 msgid "Search Bugs"
 msgstr "버그 검색"
 
@@ -263,7 +263,7 @@ msgstr "이후"
 #: tcms/testcases/templates/testcases/search.html:128
 #: tcms/testplans/templates/testplans/search.html:86
 #: tcms/testplans/templates/testplans/search.html:92
-#: tcms/testruns/templates/testruns/get.html:532
+#: tcms/testruns/templates/testruns/get.html:536
 #: tcms/testruns/templates/testruns/search.html:73
 #: tcms/testruns/templates/testruns/search.html:79
 msgid "Username"
@@ -294,7 +294,7 @@ msgstr "사용자 이름"
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testplans/templates/testplans/mutable.html:167
 #: tcms/testplans/templates/testplans/search.html:46
-#: tcms/testruns/templates/testruns/get.html:595
+#: tcms/testruns/templates/testruns/get.html:599
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "Yes"
 msgstr "네"
@@ -324,7 +324,7 @@ msgstr "네"
 #: tcms/testplans/templates/testplans/mutable.html:154
 #: tcms/testplans/templates/testplans/mutable.html:167
 #: tcms/testplans/templates/testplans/search.html:46
-#: tcms/testruns/templates/testruns/get.html:595
+#: tcms/testruns/templates/testruns/get.html:599
 #: tcms/testruns/templates/testruns/search.html:85
 msgid "No"
 msgstr "아니오"
@@ -356,31 +356,31 @@ msgstr "식별자"
 msgid "Created on"
 msgstr "작성일"
 
-#: tcms/bugs/views.py:42 tcms/testcases/views.py:133
+#: tcms/bugs/views.py:42 tcms/testcases/views.py:134
 #: tcms/testplans/templates/testplans/get.html:385 tcms/testplans/views.py:149
-#: tcms/testruns/views.py:194 tcms/testruns/views.py:308
+#: tcms/testruns/views.py:191 tcms/testruns/views.py:310
 msgid "Edit"
 msgstr "편집"
 
-#: tcms/bugs/views.py:45 tcms/testcases/views.py:146
-#: tcms/testplans/views.py:157 tcms/testruns/views.py:207
-#: tcms/testruns/views.py:316
+#: tcms/bugs/views.py:45 tcms/testcases/views.py:147
+#: tcms/testplans/views.py:157 tcms/testruns/views.py:204
+#: tcms/testruns/views.py:318
 msgid "Object permissions"
 msgstr "객체 권한"
 
 #: tcms/bugs/views.py:50
 #: tcms/templates/include/comments_for_object_template.html:10
 #: tcms/templates/include/properties_card.html:32
-#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:154
+#: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:155
 #: tcms/testplans/templates/testplans/get.html:193
 #: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:165
 #: tcms/testruns/templates/testruns/get.html:246
-#: tcms/testruns/templates/testruns/get.html:458 tcms/testruns/views.py:215
-#: tcms/testruns/views.py:324
+#: tcms/testruns/templates/testruns/get.html:462 tcms/testruns/views.py:212
+#: tcms/testruns/views.py:326
 msgid "Delete"
 msgstr "삭제"
 
-#: tcms/bugs/views.py:68 tcms/settings/common.py:400
+#: tcms/bugs/views.py:68 tcms/settings/common.py:398
 msgid "New Bug"
 msgstr "새 버그"
 
@@ -413,7 +413,7 @@ msgstr "%(history_date)s 에 %(username)s 님이 갱신\n\n"
 "자세한 내용은 다음을 참조하세요:\n"
 "%(instance_url)s"
 
-#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:430
+#: tcms/core/templates/dashboard.html:3 tcms/settings/common.py:428
 msgid "Dashboard"
 msgstr "대시보드"
 
@@ -495,11 +495,11 @@ msgstr ""
 msgid "You are not using a secure connection. See <a href=\"{doc_url}\">documentation</a> and enable SSL."
 msgstr ""
 
-#: tcms/kiwi_attachments/validators.py:101
+#: tcms/kiwi_attachments/validators.py:106
 msgid "Uploading executable files is forbidden"
 msgstr "실행 파일은 올릴 수 없습니다"
 
-#: tcms/kiwi_auth/admin.py:39 tcms/settings/common.py:443
+#: tcms/kiwi_auth/admin.py:39 tcms/settings/common.py:441
 msgid "Users"
 msgstr "사용자"
 
@@ -576,15 +576,15 @@ msgstr "확인"
 msgid "Please type! Do not copy-and-paste value from previous field!"
 msgstr "직접 입력하세요! 이전 필드에서 복사한 값을 붙여넣지 마세요!"
 
-#: tcms/kiwi_auth/views.py:70
+#: tcms/kiwi_auth/views.py:72
 msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "계정이 생성되었습니다. 확인 링크를 메일로 가서 확인하세요"
 
-#: tcms/kiwi_auth/views.py:75
+#: tcms/kiwi_auth/views.py:77
 msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "계정이 생성되었지만 활성화하려면 관리자가 필요합니다"
 
-#: tcms/kiwi_auth/views.py:80
+#: tcms/kiwi_auth/views.py:82
 msgid "Following is the administrator list"
 msgstr "다음은 관리자 목록입니다"
 
@@ -686,7 +686,7 @@ msgstr "태그"
 msgid "Tags"
 msgstr "태그"
 
-#: tcms/rpc/api/bug.py:69
+#: tcms/rpc/api/bug.py:75
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr "base_url 구성하여 이 문제 추적기에 보고할 수 있습니다!"
 
@@ -694,113 +694,113 @@ msgstr "base_url 구성하여 이 문제 추적기에 보고할 수 있습니다
 msgid "Invalid date format. Expected YYYY-MM-DD [HH:MM:SS]."
 msgstr "날짜 형식은 YYYY-MM-DD [HH:MM:SS] 여야 합니다."
 
-#: tcms/settings/common.py:391
+#: tcms/settings/common.py:389
 msgid "TESTING"
 msgstr "테스트"
 
-#: tcms/settings/common.py:393 tcms/testruns/templates/testruns/mutable.html:70
+#: tcms/settings/common.py:391 tcms/testruns/templates/testruns/mutable.html:70
 msgid "New Test Plan"
 msgstr "새 테스트 계획"
 
-#: tcms/settings/common.py:395
+#: tcms/settings/common.py:393
 #: tcms/testcases/templates/testcases/mutable.html:12
 #: tcms/testplans/templates/testplans/get.html:131
 msgid "New Test Case"
 msgstr "새 테스트 케이스"
 
-#: tcms/settings/common.py:397 tcms/testplans/templates/testplans/get.html:121
+#: tcms/settings/common.py:395 tcms/testplans/templates/testplans/get.html:121
 #: tcms/testruns/templates/testruns/get.html:180
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New Test Run"
 msgstr "새 테스트 수행"
 
-#: tcms/settings/common.py:407
+#: tcms/settings/common.py:405
 msgid "SEARCH"
 msgstr "검색"
 
-#: tcms/settings/common.py:409 tcms/testplans/templates/testplans/search.html:5
+#: tcms/settings/common.py:407 tcms/testplans/templates/testplans/search.html:5
 msgid "Search Test Plans"
 msgstr "테스트 계획 검색"
 
-#: tcms/settings/common.py:410 tcms/testcases/templates/testcases/search.html:5
+#: tcms/settings/common.py:408 tcms/testcases/templates/testcases/search.html:5
 msgid "Search Test Cases"
 msgstr "테스트 케이스 검색"
 
-#: tcms/settings/common.py:411 tcms/testruns/templates/testruns/search.html:5
+#: tcms/settings/common.py:409 tcms/testruns/templates/testruns/search.html:5
 msgid "Search Test Runs"
 msgstr "테스트 수행 검색"
 
-#: tcms/settings/common.py:412
+#: tcms/settings/common.py:410
 msgid "Search Test Executions"
 msgstr "테스트 실행 검색"
 
-#: tcms/settings/common.py:421
+#: tcms/settings/common.py:419
 msgid "TELEMETRY"
 msgstr "텔레메트리"
 
-#: tcms/settings/common.py:424
+#: tcms/settings/common.py:422
 msgid "Testing"
 msgstr "테스트"
 
-#: tcms/settings/common.py:426
+#: tcms/settings/common.py:424
 msgid "Breakdown"
 msgstr "중단"
 
-#: tcms/settings/common.py:428
+#: tcms/settings/common.py:426
 msgid "Execution"
 msgstr "실행"
 
-#: tcms/settings/common.py:431
+#: tcms/settings/common.py:429
 #: tcms/testruns/templates/testruns/mutable.html:177
 msgid "Matrix"
 msgstr "매트릭스"
 
-#: tcms/settings/common.py:432
+#: tcms/settings/common.py:430
 msgid "Trends"
 msgstr "동향"
 
-#: tcms/settings/common.py:435
+#: tcms/settings/common.py:433
 #: tcms/telemetry/templates/telemetry/testing/test-case-health.html:5
 msgid "TestCase health"
 msgstr "테스트 케이스 상태"
 
-#: tcms/settings/common.py:441
+#: tcms/settings/common.py:439
 msgid "ADMIN"
 msgstr "관리자"
 
-#: tcms/settings/common.py:444
+#: tcms/settings/common.py:442
 msgid "Groups"
 msgstr "그룹"
 
-#: tcms/settings/common.py:446
+#: tcms/settings/common.py:444
 msgid "Everything else"
 msgstr "기타"
 
-#: tcms/settings/common.py:449
+#: tcms/settings/common.py:447
 msgid "MORE"
 msgstr ""
 
-#: tcms/settings/common.py:459
+#: tcms/settings/common.py:457
 msgid "Report an Issue"
 msgstr "문제 보고하기"
 
-#: tcms/settings/common.py:462
+#: tcms/settings/common.py:460
 msgid "Ask for help on StackOverflow"
 msgstr "스택오버플로우에 도움 요청하기"
 
-#: tcms/settings/common.py:466
+#: tcms/settings/common.py:464
 msgid "Donate €5 via Open Collective"
 msgstr "Open Collective를 통해 € 5 기부"
 
-#: tcms/settings/common.py:468
+#: tcms/settings/common.py:466
 msgid "Administration Guide"
 msgstr "관리 안내서"
 
-#: tcms/settings/common.py:469
+#: tcms/settings/common.py:467
 msgid "User Guide"
 msgstr "사용자 안내서"
 
-#: tcms/settings/common.py:470
+#: tcms/settings/common.py:468
 msgid "API Help"
 msgstr "API 도움말"
 
@@ -818,16 +818,16 @@ msgstr "신규: 테스트 수행 #%(pk)d - %(summary)s"
 msgid "Bug #%(pk)d - %(summary)s"
 msgstr "버그 #%(pk)d - %(summary)s"
 
-#: tcms/telemetry/api.py:60 testcases.TestCaseStatus/name:2
+#: tcms/telemetry/api.py:62 testcases.TestCaseStatus/name:2
 msgid "CONFIRMED"
 msgstr "확인"
 
-#: tcms/telemetry/api.py:61
+#: tcms/telemetry/api.py:63
 msgid "OTHER"
 msgstr "다른"
 
-#: tcms/telemetry/api.py:133 tcms/telemetry/api.py:185
-#: tcms/telemetry/api.py:191
+#: tcms/telemetry/api.py:139 tcms/telemetry/api.py:191
+#: tcms/telemetry/api.py:197
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:9
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:13
 #: tcms/testruns/templates/testruns/get.html:129
@@ -950,7 +950,7 @@ msgstr "테스터"
 
 #: tcms/telemetry/templates/telemetry/testing/execution-dashboard.html:45
 #: tcms/testruns/templates/testruns/get.html:96
-#: tcms/testruns/templates/testruns/get.html:413
+#: tcms/testruns/templates/testruns/get.html:417
 #: tcms/testruns/templates/testruns/mutable.html:140
 msgid "Finished at"
 msgstr "완료 시점"
@@ -1060,7 +1060,7 @@ msgstr "초"
 msgid "seconds"
 msgstr "초"
 
-#: tcms/templates/base.html:16 tcms/templates/registration/login.html:48
+#: tcms/templates/base.html:16 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
 msgstr "선도적인 오픈 소스 테스트 케이스 관리 시스템"
 
@@ -1147,7 +1147,8 @@ msgstr "%(username)s라는 사용자가 Kiwi TCMS 계정 등록이 승인되길 
 
 #: tcms/templates/include/attachments.html:10
 #: tcms/testplans/templates/testplans/get.html:442
-#: tcms/testruns/templates/testruns/get.html:495
+#: tcms/testruns/templates/testruns/get.html:397
+#: tcms/testruns/templates/testruns/get.html:499
 msgid "Attachments"
 msgstr "첨부 파일"
 
@@ -1164,7 +1165,7 @@ msgid "Date"
 msgstr "날짜"
 
 #: tcms/templates/include/bugs_table.html:15
-#: tcms/testruns/templates/testruns/get.html:581
+#: tcms/testruns/templates/testruns/get.html:585
 msgid "URL"
 msgstr "URL"
 
@@ -1188,7 +1189,7 @@ msgstr "이름=값"
 #: tcms/testcases/templates/testcases/get.html:229
 #: tcms/testplans/templates/testplans/get.html:258
 #: tcms/testruns/templates/testruns/get.html:300
-#: tcms/testruns/templates/testruns/get.html:554
+#: tcms/testruns/templates/testruns/get.html:558
 msgid "Add"
 msgstr "추가"
 
@@ -1199,7 +1200,7 @@ msgstr "추가"
 #: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:24
 #: tcms/testplans/templates/testplans/search.html:20
-#: tcms/testruns/templates/testruns/get.html:587
+#: tcms/testruns/templates/testruns/get.html:591
 msgid "Name"
 msgstr "이름"
 
@@ -1296,33 +1297,25 @@ msgstr "회원가입"
 msgid "Password"
 msgstr "비밀번호"
 
-#: tcms/templates/registration/login.html:32
-msgid "Forgot password"
-msgstr "비밀번호를 잊어버렸나요"
-
-#: tcms/templates/registration/login.html:35
+#: tcms/templates/registration/login.html:33
 msgid "Log in"
 msgstr "로그인"
 
-#: tcms/templates/registration/login.html:47
+#: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
 msgstr "Kiwi TCMS에 오신 것을 환영합니다"
 
-#: tcms/templates/registration/login.html:52
+#: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
 msgstr "시작하려면 로그인하세요"
 
-#: tcms/templates/registration/login.html:54
-msgid "or"
-msgstr "또는"
+#: tcms/templates/registration/login.html:53
+msgid "Register an account"
+msgstr ""
 
-#: tcms/templates/registration/login.html:55
-msgid "register an account"
-msgstr "계정 등록"
-
-#: tcms/templates/registration/login.html:56
-msgid "if you don't have one!"
-msgstr "계정이 없다면!"
+#: tcms/templates/registration/login.html:57
+msgid "Forgot password"
+msgstr "비밀번호를 잊어버렸나요"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
@@ -1369,41 +1362,41 @@ msgstr "테스트 케이스 상태를 사용자 정의하는 방법을 더 자�
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr "1개의 확인 상태와 1개의 미확인 상태가 필요합니다!"
 
-#: tcms/testcases/admin.py:129
+#: tcms/testcases/admin.py:131
 msgid "Bug URL"
 msgstr "버그 URL"
 
-#: tcms/testcases/admin.py:149
+#: tcms/testcases/admin.py:151
 msgid "External Issue Tracker Integration"
 msgstr "외부 이슈 트래커 통합"
 
-#: tcms/testcases/admin.py:158
+#: tcms/testcases/admin.py:160
 msgid "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">\n"
 "Configure external bug trackers</a> section before editting the values below!</h1>"
 msgstr "<h1>경고: 아래 값을 수정하기 전에 <a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers\">외부 이슈 트래커 설정</a> 섹션을 읽어보세요!</h1>"
 
-#: tcms/testcases/admin.py:164
+#: tcms/testcases/admin.py:166
 msgid "Configuration health check"
 msgstr "설정 상태 검사"
 
-#: tcms/testcases/admin.py:168
+#: tcms/testcases/admin.py:170
 msgid "Kiwi TCMS will try fetching details for the given bug URL using the integration defined above! Click the `Save and continue` button and watch out for messages at the top of the screen. <strong>WARNING:</strong> in case of failures some issue trackers will fall back to fetching details via the OpenGraph protocol. In that case the result will include field named `from_open_graph`."
 msgstr "위에서 정의한 통합 정보를 사용해 Kiwi TCMS가 주어진 버그 URL의 세부 정보를 가져옵니다! `저장 후 계속` 버튼을 클릭하고 화면 상단의 메시지를 주의 깊게 살펴보세요. <strong>경고:</strong> 실패할 경우 일부 이슈 트래커는 OpenGraph 프로토콜을 사용해 세부 정보를 가져오려고 시도합니다. 이 경우, 결과에 `from_open_graph` 필드가 포함됩니다."
 
-#: tcms/testcases/admin.py:188
+#: tcms/testcases/admin.py:190
 msgid "Failed creating Issue Tracker"
 msgstr "이슈 트래커를 만들지 못했습니다"
 
-#: tcms/testcases/admin.py:197
+#: tcms/testcases/admin.py:199
 msgid "Details extracted via OpenGraph. Issue Tracker may still be configured incorrectly!"
 msgstr "OpenGraph를 사용해 세부 정보를 가져왔습니다. 이슈 트래커가 잘못 설정되었을 수 있습니다!"
 
-#: tcms/testcases/admin.py:206
+#: tcms/testcases/admin.py:208
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
 msgstr "API를 사용해 세부 정보를 가져왔습니다. 이슈 트래커 설정이 잘 되었습니다!"
 
-#: tcms/testcases/admin.py:219
+#: tcms/testcases/admin.py:221
 msgid "Issue Tracker configuration check failed"
 msgstr "이슈 트래커 설정 검사 실패"
 
@@ -1438,12 +1431,12 @@ msgstr "테스트 케이스 상태"
 msgid "Test case statuses"
 msgstr "테스트 케이스 상태"
 
-#: tcms/testcases/models.py:387
+#: tcms/testcases/models.py:389
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Template"
 msgstr "템플릿"
 
-#: tcms/testcases/models.py:388
+#: tcms/testcases/models.py:390
 msgid "Templates"
 msgstr "템플릿"
 
@@ -1459,11 +1452,11 @@ msgstr "같은 테스트 계획에 새로운 테스트 케이스로 추가"
 msgid "Selected TC"
 msgstr "선택된 테스트 케이스"
 
-#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:137
+#: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:138
 #: tcms/testplans/templates/testplans/clone.html:73
 #: tcms/testplans/templates/testplans/get.html:138
 #: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:150
-#: tcms/testruns/views.py:198
+#: tcms/testruns/views.py:195
 msgid "Clone"
 msgstr "복제"
 
@@ -1536,7 +1529,7 @@ msgstr "참조 링크"
 #: tcms/testcases/templates/testcases/mutable.html:170
 #: tcms/testplans/templates/testplans/get.html:438
 #: tcms/testplans/templates/testplans/get.html:439
-#: tcms/testruns/templates/testruns/get.html:408
+#: tcms/testruns/templates/testruns/get.html:412
 #: tcms/testruns/templates/testruns/mutable.html:202
 msgid "Notes"
 msgstr "노트"
@@ -1562,7 +1555,7 @@ msgid "add new Template"
 msgstr "새 템플릿 추가"
 
 #: tcms/testcases/templates/testcases/mutable.html:180
-#: tcms/testruns/templates/testruns/get.html:525
+#: tcms/testruns/templates/testruns/get.html:529
 msgid "Notify"
 msgstr "알림"
 
@@ -1600,8 +1593,8 @@ msgid "Email addresses separated by comma. A notification email will be sent to 
 msgstr "전자우편 주소는 쉼표로 구분됩니다. 참조(CC) 목록 내의 각 전자우편 주소로 알림이 발송됩니다."
 
 #: tcms/testcases/templates/testcases/mutable.html:264
-#: tcms/testruns/templates/testruns/get.html:600
-#: tcms/testruns/templates/testruns/get.html:631
+#: tcms/testruns/templates/testruns/get.html:604
+#: tcms/testruns/templates/testruns/get.html:635
 msgid "Cancel"
 msgstr "취소"
 
@@ -1639,16 +1632,16 @@ msgstr ""
 msgid "Select"
 msgstr "선택"
 
-#: tcms/testcases/views.py:141 tcms/testplans/views.py:152
-#: tcms/testruns/templates/testruns/get.html:466 tcms/testruns/views.py:202
+#: tcms/testcases/views.py:142 tcms/testplans/views.py:152
+#: tcms/testruns/templates/testruns/get.html:470 tcms/testruns/views.py:199
 msgid "History"
 msgstr "변경 내역"
 
-#: tcms/testcases/views.py:253
+#: tcms/testcases/views.py:259
 msgid "TestCase cloning was successful"
 msgstr "테스트 케이스 복제 성공"
 
-#: tcms/testcases/views.py:284
+#: tcms/testcases/views.py:290
 msgid "At least one TestCase is required"
 msgstr "적어도 하나의 테스트 케이스가 필요합니다"
 
@@ -1669,8 +1662,9 @@ msgid "Parent TP"
 msgstr "상위 테스트 계획"
 
 #: tcms/testplans/templates/testplans/clone.html:67
-msgid "Set the source TP as parent of new TP"
-msgstr "원본 테스트 계획을 새 테스트 계획의 상위 테스트 계획으로 설정"
+#, python-format
+msgid "Set TP-%(parent_id)s as parent of new TP"
+msgstr ""
 
 #: tcms/testplans/templates/testplans/get.html:25
 #: tcms/testruns/templates/testruns/get.html:23
@@ -1751,12 +1745,12 @@ msgid "Inactive"
 msgstr "비활성"
 
 #: tcms/testplans/templates/testplans/get.html:449
-#: tcms/testruns/templates/testruns/get.html:502
+#: tcms/testruns/templates/testruns/get.html:506
 msgid "No attachments"
 msgstr "첨부 파일이 없습니다"
 
 #: tcms/testplans/templates/testplans/get.html:474
-#: tcms/testruns/templates/testruns/get.html:491
+#: tcms/testruns/templates/testruns/get.html:495
 msgid "Comments"
 msgstr "코멘트"
 
@@ -1831,11 +1825,11 @@ msgstr "부정, 중립, 긍정 상태가 1개씩 필요합니다!"
 msgid "Edit parameters"
 msgstr "매개 변수 편집"
 
-#: tcms/testruns/forms.py:39
+#: tcms/testruns/forms.py:48
 msgid "Full"
 msgstr ""
 
-#: tcms/testruns/forms.py:40
+#: tcms/testruns/forms.py:49
 msgid "Pairwise"
 msgstr ""
 
@@ -1901,7 +1895,7 @@ msgstr "댓글 추가"
 
 #: tcms/testruns/templates/testruns/get.html:236
 #: tcms/testruns/templates/testruns/get.html:339
-#: tcms/testruns/templates/testruns/get.html:576
+#: tcms/testruns/templates/testruns/get.html:580
 msgid "Add hyperlink"
 msgstr "하이퍼링크 추가"
 
@@ -1914,8 +1908,8 @@ msgid "All"
 msgstr "전체"
 
 #: tcms/testruns/templates/testruns/get.html:340
-#: tcms/testruns/templates/testruns/get.html:615
-#: tcms/testruns/templates/testruns/get.html:632
+#: tcms/testruns/templates/testruns/get.html:619
+#: tcms/testruns/templates/testruns/get.html:636
 msgid "Report bug"
 msgstr "버그 신고"
 
@@ -1932,19 +1926,19 @@ msgstr "담당자"
 msgid "Last bug"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/get.html:431
+#: tcms/testruns/templates/testruns/get.html:435
 msgid "Text version"
 msgstr "텍스트 버전"
 
-#: tcms/testruns/templates/testruns/get.html:439
+#: tcms/testruns/templates/testruns/get.html:443
 msgid "Bugs and hyperlinks"
 msgstr "버그와 하이퍼 링크"
 
-#: tcms/testruns/templates/testruns/get.html:593
+#: tcms/testruns/templates/testruns/get.html:597
 msgid "Is a defect"
 msgstr "결함 여부"
 
-#: tcms/testruns/templates/testruns/get.html:620
+#: tcms/testruns/templates/testruns/get.html:624
 msgid "Issue Tracker"
 msgstr "이슈 트래커"
 
@@ -1997,7 +1991,7 @@ msgstr "시작 날짜"
 msgid "Stop date"
 msgstr "중단 날짜"
 
-#: tcms/testruns/views.py:273
+#: tcms/testruns/views.py:275
 msgid "Clone of "
 msgstr "의 복제 "
 
@@ -2271,6 +2265,10 @@ msgstr "또는 계속하기"
 msgid "Legal information"
 msgstr "법적 정보"
 
+#: tcms_enterprise/templates/registration/custom_login.html:25
+msgid "or"
+msgstr "또는"
+
 #: tcms_enterprise/templates/registration/custom_login.html:27
 msgid "Continue with"
 msgstr ""
@@ -2412,3 +2410,4 @@ msgstr "그룹"
 #: trackers_integration/menu.py:4
 msgid "Personal API tokens"
 msgstr "개인용 접근 토큰"
+
