@@ -9,7 +9,7 @@ import {
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
     quickSearchAndAddTestCase, treeViewBind,
     findSelectorsToShowAndHide, findSelectorsToShowAndHideFromAPIData,
-    showOrHideMultipleRows
+    selectedVisibleCheckboxes, showOrHideMultipleRows
 } from '../../../../static/js/utils'
 import { initSimpleMDE } from '../../../../static/js/simplemde_security_override'
 
@@ -338,12 +338,12 @@ function addTestCaseToRun (runId) {
 }
 
 function selectedCheckboxes () {
-    const allSelected = $('.test-execution-checkbox:checked')
+    const allSelected = selectedVisibleCheckboxes(
+        '.test-execution-checkbox',
+        $('#test_run_pk').data('trans-no-executions-selected')
+    )
 
     if (!allSelected.length) {
-        const warningText = $('#test_run_pk').data('trans-no-executions-selected')
-        alert(warningText)
-
         return {}
     }
 
