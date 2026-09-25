@@ -3,25 +3,26 @@
 {% load static %}
 
 {% block title %}{% trans "Clone TestPlan" %} - {{ test_plan.name }}{% endblock %}
-{% block page_id %}page-testplans-mutable{% endblock %}
+{% block page_id %}page-testplans-clone{% endblock %}
 
 {% block contents %}
-<div class="container-fluid container-cards-pf">
-    <form class="form-horizontal" method="post" action="{% url "plans-clone" object.pk %}">
-        {% csrf_token %}
+<div class="container-fluid container-cards-pf"
+     id="main-element"
+     data-plan-id="{{ object.pk }}">
+    <div id="js-clone-error" class="alert alert-danger hidden"></div>
 
+    <form class="form-horizontal">
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
-            <div class="col-md-3 col-lg-3 {% if form.name.errors %}has-error{% endif %}">
+            <div class="col-md-3 col-lg-3">
                 <input type="text" id="id_name" name="name" value="{{ form.name.value|default:'' }}" class="form-control" required>
-                {{ form.name.errors }}
             </div>
 
             <div class="col-md-1 col-lg-1">
                 <label for="id_product">{% trans "Product" %}</label>
                 <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
             </div>
-            <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
+            <div class="col-md-3 col-lg-3">
                 <select id="id_product" name="product" class="form-control selectpicker">
                     {% for product in form.product.field.queryset %}
                         <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
@@ -29,7 +30,6 @@
                         </option>
                     {% endfor %}
                 </select>
-                {{ form.product.errors }}
             </div>
 
             <div class="col-md-1 col-lg-1">
@@ -39,7 +39,7 @@
                     +
                 </a>
             </div>
-            <div class="col-md-3 col-lg-3 {% if form.version.errors %}has-error{% endif %}">
+            <div class="col-md-3 col-lg-3">
                 <select id="id_version" name="version" class="form-control selectpicker">
                     {% for product_version in form.version.field.queryset %}
                         <option value="{{ product_version.pk }}" {% if product_version.pk|escape == form.version.value|escape %}selected{% endif %}>
@@ -47,7 +47,6 @@
                         </option>
                     {% endfor %}
                 </select>
-                {{ form.version.errors }}
             </div>
         </div>
 
@@ -70,7 +69,7 @@
 
         <div class="form-group">
             <div class="col-md-1 col-lg-1">
-                <button type="submit" class="btn btn-default btn-lg">{% trans "Clone" %}</button>
+                <button type="button" id="js-clone-button" class="btn btn-default btn-lg">{% trans "Clone" %}</button>
             </div>
         </div>
     </form>
