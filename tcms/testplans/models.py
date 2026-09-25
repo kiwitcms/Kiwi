@@ -97,8 +97,7 @@ class TestPlan(TreeNode, UrlMixin):
     emailing = property(_get_email_conf)
 
     def make_cloned_name(self):
-        """Make default name of cloned plan"""
-        return f"Copy of {self.name}"
+        return f"Clone of TP-{self.pk}: {self.name}"
 
     def clone(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
