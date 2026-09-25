@@ -560,6 +560,16 @@ export function showOrHideMultipleRows (rootSelector, rows) {
     }
 }
 
+export function selectedVisibleCheckboxes (selector, warningMessage) {
+    const selected = $(selector).filter(':checked').filter(':visible')
+
+    if (!selected.length && warningMessage) {
+        alert(warningMessage)
+    }
+
+    return selected
+}
+
 export function discoverNestedTestPlans (inputData, callbackF) {
     const prefix = '&nbsp;&nbsp;&nbsp;&nbsp;'
     const result = []

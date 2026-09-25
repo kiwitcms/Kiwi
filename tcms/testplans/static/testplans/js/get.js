@@ -7,7 +7,7 @@ import {
     markdown2HTML, renderCommentsForObject, renderCommentHTML,
     treeViewBind, quickSearchAndAddTestCase,
     findSelectorsToShowAndHide, findSelectorsToShowAndHideFromAPIData,
-    showOrHideMultipleRows
+    selectedVisibleCheckboxes, showOrHideMultipleRows
 } from '../../../../static/js/utils'
 import { initSimpleMDE } from '../../../../static/js/simplemde_security_override'
 
@@ -664,27 +664,11 @@ function sortTestCases (testCases, testPlanId, permissions, defaultSortBy = unde
     drawTestCases(testCases, testPlanId, permissions)
 }
 
-// todo check selectedCheckboxes function in testrun/get.js
 function getSelectedTestCases () {
-    const inputs = $('.js-testcase-row input:checked')
-    const tcIds = []
-
-    inputs.each(function (index, el) {
-        const elJq = $(el)
-
-        if (elJq.is(':hidden')) {
-            return
-        }
-
-        const id = elJq.closest('.js-testcase-row').data('testcase-pk')
-        tcIds.push(id)
-    })
-
-    if (!tcIds.length) {
-        alert($('#test_plan_pk').data('trans-no-testcases-selected'))
-    }
-
-    return tcIds
+    return selectedVisibleCheckboxes(
+        '.js-testcase-row input',
+        $('#test_plan_pk').data('trans-no-testcases-selected')
+    ).toArray().map(checkbox => $(checkbox).closest('.js-testcase-row').data('testcase-pk'))
 }
 
 function filterTestCasesByProperty (planId, testCases, filterBy, filterValue) {
