@@ -526,7 +526,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -541,7 +540,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -555,7 +553,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -576,7 +573,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -597,7 +593,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -616,7 +611,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedCases = getSelectedTestCases()
 
         if (!selectedCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -628,7 +622,6 @@ function toolbarEvents (testPlanId, permissions) {
         const selectedTestCases = getSelectedTestCases()
 
         if (!selectedTestCases.length) {
-            alert($('#test_plan_pk').data('trans-no-testcases-selected'))
             return false
         }
 
@@ -686,6 +679,10 @@ function getSelectedTestCases () {
         const id = elJq.closest('.js-testcase-row').data('testcase-pk')
         tcIds.push(id)
     })
+
+    if (!tcIds.length) {
+        alert($('#test_plan_pk').data('trans-no-testcases-selected'))
+    }
 
     return tcIds
 }
