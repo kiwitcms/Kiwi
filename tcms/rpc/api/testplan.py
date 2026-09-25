@@ -7,6 +7,7 @@ from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanAPIForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.models import TestPlan
 
 
@@ -67,6 +68,74 @@ def create(values, rpc_context=None):
         # b/c value is set in the DB directly and if None
         # model_to_dict() will not return it
         result["create_date"] = test_plan.create_date
+        return result
+
+    raise ValueError(list(form.errors.items()))
+
+
+@rpc_method(
+    name="TestPlan.clone",
+    auth=permissions_required("testplans.add_testplan"),
+    context_target="rpc_context",
+)
+def clone(plan_id, values=None, rpc_context=None):
+    """
+    .. function:: RPC TestPlan.clone(plan_id, values)
+
+        Clone the TestPlan specified by ``plan_id``.
+
+        The values for the cloned plan default to the values of the source
+        plan, validation is performed by :class:`tcms.testplans.forms.ClonePlanForm`,
+        the same form used by the *Clone* page. The parent of the cloned plan
+        can only be the source plan itself, just like the *Clone* page.
+
+        :param plan_id: PK of TestPlan to clone
+        :type plan_id: int
+        :param values: Field values for the cloned :class:`tcms.testplans.models.TestPlan`
+        :type values: dict
+        :param rpc_context: Provides access to the current request, protocol,
+                entry point name and handler instance from the rpc method
+        :type rpc_context: modernrpc.core.RpcRequestContext
+        :return: Serialized :class:`tcms.testplans.models.TestPlan` object
+        :rtype: dict
+        :raises TestPlan.DoesNotExist: if object specified by PK is missing
+        :raises PermissionDenied: if missing *testplans.add_testplan* permission
+        :raises ValueError: if data validation fails
+
+        Minimal parameters::
+
+            >>> values = {
+                'name': 'Clone of TP-1: Plan name',
+                'product': 61,
+                'version': 93,
+                'parent': 1,
+                'copy_testcases': True,
+            }
+            >>> TestPlan.clone(1, values)
+
+        .. versionadded:: 16.6
+    """
+    request = rpc_context.request
+    test_plan = TestPlan.objects.get(pk=plan_id)
+
+    values = dict(values or {})
+
+    # same defaults as the tcms.testplans.views.Clone form
+    values.setdefault("name", test_plan.make_cloned_name())
+    values.setdefault("product", test_plan.product_id)
+    values.setdefault("version", test_plan.product_version_id)
+
+    form = ClonePlanForm(values)
+    form.populate(product_pk=values["product"], parent_pk=test_plan.pk)
+
+    if form.is_valid():
+        cloned_plan = test_plan.clone(new_author=request.user, **form.cleaned_data)
+
+        result = model_to_dict(cloned_plan, exclude=["tag"])
+
+        # b/c value is set in the DB directly and if None
+        # model_to_dict() will not return it
+        result["create_date"] = cloned_plan.create_date
         return result
 
     raise ValueError(list(form.errors.items()))
