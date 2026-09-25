@@ -366,20 +366,7 @@ function attachEvents (testPlanId, permissions) {
     // delete testcase from the plan
         $('.js-test-case-menu-delete').click(function (ev) {
             $(this).parents('.dropdown').toggleClass('open')
-            const testCaseId = getCaseIdFromEvent(ev)
-
-            jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
-                delete allTestCases[testCaseId]
-
-                // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
-                $(ev.target).closest(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
-                    $(this).remove()
-                })
-
-                const testCasesCountEl = $('.test-cases-count')
-                const count = parseInt(testCasesCountEl[0].innerText)
-                testCasesCountEl.html(count - 1)
-            })
+            removeTestCaseFromPlan(testPlanId, getCaseIdFromEvent(ev))
 
             return false
         })
@@ -439,6 +426,21 @@ function updateTestCasesViaAPI (testCaseIds, updateQuery, testPlanId, permission
                 redrawSingleRow(caseId, testPlanId, permissions)
             })
         })
+    })
+}
+
+function removeTestCaseFromPlan (testPlanId, testCaseId) {
+    jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
+        delete allTestCases[testCaseId]
+
+        // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
+        $(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
+            $(this).remove()
+        })
+
+        const testCasesCountEl = $('.test-cases-count')
+        const count = parseInt(testCasesCountEl[0].innerText)
+        testCasesCountEl.html(count - 1)
     })
 }
 
@@ -601,21 +603,9 @@ function toolbarEvents (testPlanId, permissions) {
 
         const areYouSureText = $('#test_plan_pk').data('trans-are-you-sure')
         if (confirm(areYouSureText)) {
-            for (let i = 0; i < selectedCases.length; i++) {
-                const testCaseId = selectedCases[i]
-                jsonRPC('TestPlan.remove_case', [testPlanId, testCaseId], function () {
-                    delete allTestCases[testCaseId]
-
-                    // fadeOut the row then remove it from the dom, if we remove it directly the user may not see the change
-                    $(`[data-testcase-pk=${testCaseId}]`).fadeOut(fadeAnimationTime, function () {
-                        $(this).remove()
-                    })
-                })
-            }
-
-            const testCasesCountEl = $('.test-cases-count')
-            const count = parseInt(testCasesCountEl[0].innerText)
-            testCasesCountEl.html(count - selectedCases.length)
+            selectedCases.forEach(function (testCaseId) {
+                removeTestCaseFromPlan(testPlanId, testCaseId)
+            })
         }
 
         return false
