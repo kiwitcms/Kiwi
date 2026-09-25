@@ -390,6 +390,130 @@ class TestCreate(APITestCase):
         self.assertEqual(result["create_date"], datetime(2026, 1, 6, 20, 30, 0))
 
 
+@override_settings(LANGUAGE_CODE="en")
+class TestClone(APITestCase):
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.product = ProductFactory()
+        cls.version = VersionFactory(product=cls.product)
+        cls.plan_type = PlanTypeFactory()
+        cls.plan = TestPlanFactory(
+            product=cls.product,
+            product_version=cls.version,
+            type=cls.plan_type,
+            author=cls.api_user,
+        )
+        for _i in range(3):
+            TestCaseFactory(plan=[cls.plan])
+
+    def test_clone_uses_source_plan_values_by_default(self):
+        result = self.rpc_client.TestPlan.clone(self.plan.pk)
+
+        cloned_plan = TestPlan.objects.get(pk=result["id"])
+        self.assertEqual(self.plan.make_cloned_name(), result["name"])
+        self.assertEqual(self.plan.product_id, result["product"])
+        self.assertEqual(self.plan.product_version_id, result["product_version"])
+        self.assertEqual(self.plan.type_id, result["type"])
+        self.assertEqual(self.plan.text, result["text"])
+        self.assertEqual(self.api_user.pk, result["author"])
+
+        # the source plan is not set as parent by default
+        self.assertIsNone(result["parent"])
+
+        # test cases are linked, not copied
+        self.assertEqual(self.plan.cases.count(), cloned_plan.cases.count())
+        for case in cloned_plan.cases.all():
+            self.assertTrue(
+                TestCasePlan.objects.filter(plan=self.plan, case=case).exists()
+            )
+
+    def test_clone_with_overriden_values(self):
+        product = ProductFactory()
+        version = VersionFactory(product=product)
+
+        params = {
+            "name": "cloned plan",
+            "product": product.pk,
+            "version": version.pk,
+            "copy_testcases": True,
+            "parent": self.plan.pk,
+        }
+        result = self.rpc_client.TestPlan.clone(self.plan.pk, params)
+
+        cloned_plan = TestPlan.objects.get(pk=result["id"])
+        self.assertEqual(params["name"], result["name"])
+        self.assertEqual(params["product"], result["product"])
+        self.assertEqual(params["version"], result["product_version"])
+        self.assertEqual(params["parent"], result["parent"])
+
+        # test cases are copied and are no longer linked to the source plan
+        self.assertEqual(self.plan.cases.count(), cloned_plan.cases.count())
+        for case in cloned_plan.cases.all():
+            self.assertFalse(
+                TestCasePlan.objects.filter(plan=self.plan, case=case).exists()
+            )
+            self.assertEqual(self.api_user.pk, case.author_id)
+
+    def test_clone_with_empty_name(self):
+        with self.assertRaisesRegex(XmlRPCFault, "This field is required."):
+            self.rpc_client.TestPlan.clone(self.plan.pk, {"name": ""})
+
+    def test_clone_with_version_from_another_product(self):
+        version = VersionFactory()
+
+        with self.assertRaisesRegex(XmlRPCFault, "Select a valid choice."):
+            self.rpc_client.TestPlan.clone(self.plan.pk, {"version": version.pk})
+
+    def test_clone_with_parent_which_is_not_the_source_plan(self):
+        other_plan = TestPlanFactory()
+
+        with self.assertRaisesRegex(XmlRPCFault, "Select a valid choice."):
+            self.rpc_client.TestPlan.clone(self.plan.pk, {"parent": other_plan.pk})
+
+    def test_clone_nonexistent_plan(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "TestPlan matching query does not exist"
+        ):
+            self.rpc_client.TestPlan.clone(-1)
+
+
+class TestClonePermission(APIPermissionsTestCase):
+    permission_label = "testplans.add_testplan"
+
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.product = ProductFactory()
+        cls.version = VersionFactory(product=cls.product)
+        cls.plan = TestPlanFactory(
+            product=cls.product,
+            product_version=cls.version,
+            author=cls.tester,
+        )
+
+    def verify_api_with_permission(self):
+        result = self.rpc_client.TestPlan.clone(self.plan.pk)
+
+        self.assertEqual(self.plan.make_cloned_name(), result["name"])
+        self.assertEqual(self.plan.product_id, result["product"])
+        self.assertEqual(self.plan.product_version_id, result["product_version"])
+        self.assertEqual(self.tester.pk, result["author"])
+        self.assertIsNone(result["parent"])
+
+        # verify object from DB
+        cloned_plan = TestPlan.objects.get(pk=result["id"])
+        self.assertEqual(self.plan.make_cloned_name(), cloned_plan.name)
+
+    def verify_api_without_permission(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, 'Authentication failed when calling "TestPlan.clone"'
+        ):
+            self.rpc_client.TestPlan.clone(self.plan.pk)
+
+
 class TestCreatePermission(APIPermissionsTestCase):
     permission_label = "testplans.add_testplan"
 
