@@ -75,9 +75,10 @@ export function populateVersion () {
         $('#add_id_build').removeClass('disabled')
     }
 
-    const href = $('#add_id_version')[0].href
-    $('#add_id_version')[0].href = href.slice(0, href.indexOf('&product'))
-    $('#add_id_version')[0].href += `&product=${productId}`
+    const versionLink = $('#add_id_version')[0]
+    const versionUrl = new URL(versionLink.href, window.location.origin)
+    versionUrl.searchParams.set('product', String(productId))
+    versionLink.href = versionUrl.toString()
     $('#id_version').find('option').remove()
     updateVersionSelectFromProduct()
 }
