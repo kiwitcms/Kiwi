@@ -62,10 +62,10 @@ function populateProductCategory () {
         $('#add_id_category').removeClass('disabled')
     }
 
+    const safeProductId = encodeURIComponent(productId === null ? '' : String(productId))
     const href = $('#add_id_category')[0].href
     $('#add_id_category')[0].href = href.slice(0, href.indexOf('&product'))
-    const encodedProductId = encodeURIComponent(productId === null ? '' : String(productId))
-    $('#add_id_category')[0].href += `&product=${encodedProductId}`
+    $('#add_id_category')[0].href += `&product=${safeProductId}`
     $('#id_category').find('option').remove()
     updateCategorySelectFromProduct()
 }
