@@ -118,9 +118,9 @@ export function populateBuild () {
         $('#add_id_build').removeClass('disabled')
     }
 
+    const safeVersionId = encodeURIComponent(versionId === null ? '' : String(versionId))
+    const safeProductId = encodeURIComponent(productId === null ? '' : String(productId))
     const href = $('#add_id_build')[0].href
-    const safeVersionId = encodeURIComponent(String(versionId))
-    const safeProductId = encodeURIComponent(String(productId))
     $('#add_id_build')[0].href = href.slice(0, href.indexOf('&version'))
     $('#add_id_build')[0].href += `&version=${safeVersionId}&product=${safeProductId}`
     updateBuildSelectFromVersion()
