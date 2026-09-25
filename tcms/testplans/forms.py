@@ -83,12 +83,21 @@ class ClonePlanForm(forms.Form):  # pylint: disable=must-inherit-from-model-form
     )
 
     copy_testcases = forms.BooleanField(required=False)
-    set_parent = forms.BooleanField(required=False)
+    parent = forms.ModelChoiceField(
+        queryset=TestPlan.objects.none(),
+        empty_label=None,
+        required=False,
+    )
 
-    def populate(self, product_pk):
+    def populate(self, product_pk, parent_pk=None):
         if product_pk:
             self.fields["version"].queryset = Version.objects.filter(
                 product_id=product_pk
             )
         else:
             self.fields["version"].queryset = Version.objects.none()
+
+        if parent_pk:
+            self.fields["parent"].queryset = TestPlan.objects.filter(pk=parent_pk)
+        else:
+            self.fields["parent"].queryset = TestPlan.objects.none()

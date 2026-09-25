@@ -277,6 +277,13 @@ class TestCloneView(BasePlanCase):
             html=True,
         )
 
+        # option to set the source TP as the parent is pre-filled with its ID
+        self.assertContains(
+            response,
+            f'{_("Parent TP")} (TP-{self.plan.pk})',
+        )
+        self.assertContains(response, 'id="id_parent" name="parent"')
+
     def verify_cloned_plan(self, original_plan, cloned_plan, copy_cases=None):
         self.assertEqual(
             f"Clone of TP-{original_plan.pk}: {original_plan.name}", cloned_plan.name
@@ -293,7 +300,7 @@ class TestCloneView(BasePlanCase):
         # number of TCs should always be the same
         self.assertEqual(cloned_plan.cases.count(), original_plan.cases.count())
 
-        # Verify option set_parent
+        # Verify option parent
         self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
 
         # Verify option copy_testcases
@@ -335,7 +342,7 @@ class TestCloneView(BasePlanCase):
             "name": self.third_plan.make_cloned_name(),
             "product": self.product.pk,
             "version": self.version.pk,
-            "set_parent": "on",
+            "parent": self.third_plan.pk,
             "submit": "Clone",
         }
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -354,12 +361,28 @@ class TestCloneView(BasePlanCase):
 
         self.verify_cloned_plan(self.third_plan, cloned_plan)
 
+    def test_clone_a_plan_without_parent(self):
+        post_data = {
+            "name": self.third_plan.make_cloned_name(),
+            "product": self.product.pk,
+            "version": self.version.pk,
+            "submit": "Clone",
+        }
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username, password="password"
+        )
+        self.client.post(reverse("plans-clone", args=[self.third_plan.pk]), post_data)
+
+        cloned_plan = TestPlan.objects.get(name=self.third_plan.make_cloned_name())
+
+        self.assertIsNone(cloned_plan.parent)
+
     def test_clone_a_plan_by_copying_cases(self):
         post_data = {
             "name": self.totally_new_plan.make_cloned_name(),
             "product": self.product.pk,
             "version": self.version.pk,
-            "set_parent": "on",
+            "parent": self.totally_new_plan.pk,
             "submit": "Clone",
             "copy_testcases": "on",
         }
