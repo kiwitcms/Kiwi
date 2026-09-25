@@ -256,6 +256,7 @@ class TestCloneView(BasePlanCase):
         user_should_have_perm(cls.plan_tester, "testplans.add_testplan")
         user_should_have_perm(cls.plan_tester, "testplans.view_testplan")
 
+    @test.override_settings(LANGUAGE_CODE="en")
     def test_open_clone_page_to_clone_one_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username, password="password"
@@ -277,12 +278,8 @@ class TestCloneView(BasePlanCase):
             html=True,
         )
 
-        # option to set the source TP as the parent is pre-filled with its ID
-        self.assertContains(
-            response,
-            f'{_("Parent TP")} (TP-{self.plan.pk})',
-        )
-        self.assertContains(response, 'id="id_parent" name="parent"')
+        # the option to set the source TP as parent is pre-filled with its ID
+        self.assertContains(response, f"Set TP-{self.plan.pk} as parent of new TP")
 
     def verify_cloned_plan(self, original_plan, cloned_plan, copy_cases=None):
         self.assertEqual(
