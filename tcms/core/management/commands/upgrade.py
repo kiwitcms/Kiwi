@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
@@ -42,14 +43,19 @@ delete_stale_comments
             interactive=kwargs["interactive"],
         )
 
-        self.stdout.write("\n3. Deleting stale attachments:")
-        call_command(
-            "delete_stale_attachments", verbosity=kwargs["verbosity"], answer=answer
-        )
+        if "tcms_tenants" in settings.INSTALLED_APPS:
+            call_command("upgrade_tenants")
+        else:
+            self.stdout.write("\n3. Deleting stale attachments:")
+            call_command(
+                "delete_stale_attachments",
+                verbosity=kwargs["verbosity"],
+                answer=answer,
+            )
 
-        self.stdout.write("\n4. Deleting stale comments:")
-        call_command(
-            "delete_stale_comments", verbosity=kwargs["verbosity"], answer=answer
-        )
+            self.stdout.write("\n4. Deleting stale comments:")
+            call_command(
+                "delete_stale_comments", verbosity=kwargs["verbosity"], answer=answer
+            )
 
         self.stdout.write("Done.")
