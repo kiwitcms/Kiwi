@@ -6,7 +6,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView, View
@@ -22,6 +21,7 @@ from tcms.testcases.forms import (
 )
 from tcms.testcases.models import Template, TestCase
 from tcms.testplans.models import TestPlan
+from tcms.utils import save_referer_redirect
 
 
 def plan_from_request_or_none(request):  # pylint: disable=missing-permission-required
@@ -226,20 +226,9 @@ class CloneTestCaseView(View):
     template_name = "testcases/clone.html"
     http_method_names = ["get", "post"]
 
-    @staticmethod
-    def _safe_referer_redirect(request):
-        referer = request.META.get("HTTP_REFERER", "/")
-        if url_has_allowed_host_and_scheme(
-            url=referer,
-            allowed_hosts={request.get_host()},
-            require_https=request.is_secure(),
-        ):
-            return HttpResponseRedirect(referer)
-        return HttpResponseRedirect("/")
-
     def post(self, request):
         if not self._is_request_data_valid(request):
-            return self._safe_referer_redirect(request)
+            return save_referer_redirect(request)
 
         # Do the clone action
         clone_form = CloneCaseForm(request.POST)
@@ -274,11 +263,11 @@ class CloneTestCaseView(View):
 
         # invalid form
         messages.add_message(request, messages.ERROR, clone_form.errors)
-        return self._safe_referer_redirect(request)
+        return save_referer_redirect(request)
 
     def get(self, request):
         if not self._is_request_data_valid(request, "c"):
-            return self._safe_referer_redirect(request)
+            return save_referer_redirect(request)
 
         # account for short param names in URI
         get_params = request.GET.copy()
