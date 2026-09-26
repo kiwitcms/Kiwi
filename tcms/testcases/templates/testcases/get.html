@@ -8,18 +8,53 @@
 {% block page_id %}page-testcases-get{% endblock %}
 {% block body_class %}cards-pf{% endblock %}
 
+
 {% block contents %}
 <div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12 kiwi-margin-top-0">
         <span id="test_case_pk"
             data-pk="{{ object.pk }}"
+            data-from-plan="{{ request.GET.from_plan|default:'' }}"
             data-perm-remove-tag="{{ perms.testcases.delete_testcasetag }}"
             data-perm-remove-component="{{ perms.testcases.delete_testcasecomponent }}"
             data-perm-remove-plan="{{ perms.testcases.delete_testcaseplan }}"
             data-perm-remove-bug="{{ perms.testcases.delete_bug }}"
         >TC-{{ object.pk }}:</span> {{ object.summary }}
     </h1>
+
+    <div id="tc-navigation-bar" class="col-md-12" style="display:none;">
+        <div class="pull-left">
+            <button id="btn-prev-case" class="btn btn-default btn-sm" disabled>
+                <span class="fa fa-arrow-left"></span> {% trans 'Previous' %}
+            </button>
+            <span id="tc-position" class="text-muted"></span>
+            <button id="btn-next-case" class="btn btn-default btn-sm" disabled>
+                {% trans 'Next' %} <span class="fa fa-arrow-right"></span>
+            </button>
+        </div>
+        <div class="pull-right">
+            <button id="btn-toggle-sidebar" class="btn btn-default btn-sm">
+                <span class="fa fa-list"></span> {% trans 'Case List' %}
+            </button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="tc-sidebar-panel" class="col-md-3 pull-right" style="display:none;">
+        <div class="card-pf card-pf-accented">
+            <h2 class="card-pf-title">
+                <span class="fa fa-sitemap"></span>
+                <a id="sidebar-plan-link" href="#"></a>
+                <button class="btn btn-link btn-sm pull-right" id="btn-close-sidebar">
+                    <span class="fa fa-times"></span>
+                </button>
+            </h2>
+            <div class="card-pf-body" id="tc-sidebar-body" style="max-height:70vh; overflow-y:auto;">
+                <div class="spinner spinner-lg"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-12 col-md-3">
@@ -129,10 +164,10 @@
                         {{ object.text|markdown2html }}
                     </div>
 
-                    <p>
-                        <strong>{% trans 'Notes' %}:</strong>
-                        {{ object.notes }}
-                    </p>
+                    <div class="markdown-text">
+                        {{ object.notes|markdown2html }}
+                    </div>
+
                 </div>
             </div>
         </div>
