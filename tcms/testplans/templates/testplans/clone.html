@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans "Clone TestPlan" %} - {{ test_plan.name }}{% endblock %}
+{% block title %}{% trans "Clone TestPlan" %}{% endblock %}
 {% block page_id %}page-testplans-clone{% endblock %}
 
 {% block contents %}
@@ -13,16 +13,18 @@
 
     <form class="form-horizontal">
         <div class="form-group">
-            <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input type="text" id="id_name" name="name" value="{{ form.name.value|default:'' }}" class="form-control" required>
+                <label>TP-{{ object.pk }}: {{ object.name }}</label>
             </div>
 
-            <div class="col-md-1 col-lg-1">
-                <label for="id_product">{% trans "Product" %}</label>
-                <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
-            </div>
             <div class="col-md-3 col-lg-3">
+                <input type="text" id="id_name" name="name" value="{{ form.name.value|default:'' }}" class="form-control" required>
+                <p class="help-block">
+                    <label for="id_name">{% trans "Name" %}</label>
+                </p>
+            </div>
+
+            <div class="col-md-2 col-lg-2">
                 <select id="id_product" name="product" class="form-control selectpicker">
                     {% for product in form.product.field.queryset %}
                         <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
@@ -30,16 +32,13 @@
                         </option>
                     {% endfor %}
                 </select>
+                <p class="help-block">
+                    <label for="id_product">{% trans "Product" %}</label>
+                    <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
+                </p>
             </div>
 
-            <div class="col-md-1 col-lg-1">
-                <label for="id_version">{% trans "Version" %}</label>
-                <a href="{% url 'admin:management_version_add' %}?_popup&product={{ form.product.value }}"
-                   id="add_id_version" alt="{% trans 'add new Version' %}" title="{% trans 'add new Version' %}">
-                    +
-                </a>
-            </div>
-            <div class="col-md-3 col-lg-3">
+            <div class="col-md-2 col-lg-2">
                 <select id="id_version" name="version" class="form-control selectpicker">
                     {% for product_version in form.version.field.queryset %}
                         <option value="{{ product_version.pk }}" {% if product_version.pk|escape == form.version.value|escape %}selected{% endif %}>
@@ -47,23 +46,25 @@
                         </option>
                     {% endfor %}
                 </select>
+                <p class="help-block">
+                    <label for="id_version">{% trans "Version" %}</label>
+                    <a href="{% url 'admin:management_version_add' %}?_popup&product={{ form.product.value }}"
+                       id="add_id_version" alt="{% trans 'add new Version' %}" title="{% trans 'add new Version' %}">
+                        +
+                    </a>
+                </p>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label class="col-md-1 col-lg-1" for="id_copy_testcases">{% trans "Clone TCs" %}</label>
-            <div class="col-md-3 col-lg-3">
+            <div class="col-md-1 col-lg-1">
                 <input class="bootstrap-switch" id="id_copy_testcases" name="copy_testcases"
-                           type="checkbox" {% if form.copy_testcases.value %}checked{% endif %} data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-                <p class="help-block">{% trans "Clone or link existing TCs into new TP" %}</p>
+                           type="checkbox" {% if form.copy_testcases.value %}checked{% endif %} data-on-text="{% trans 'Clone' %}" data-off-text="{% trans 'Link' %}">
+                <p class="help-block">{% trans "existing TCs" %}</p>
             </div>
 
-
-            <label class="col-md-1 col-lg-1" for="id_parent">{% trans "Parent TP" %}</label>
-            <div class="col-md-3 col-lg-3">
+            <div class="col-md-1 col-lg-1">
                 <input class="bootstrap-switch" id="id_parent" name="parent"
-                       type="checkbox" value="{{ object.pk }}" {% if form.parent.value %}checked{% endif %} data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-                <p class="help-block">{% blocktrans with parent_id=object.pk %}Set TP-{{ parent_id }} as parent of new TP{% endblocktrans %}</p>
+                       type="checkbox" value="{{ object.pk }}" {% if form.parent.value %}checked{% endif %} data-on-text="TP-{{ object.pk }}" data-off-text="{% trans 'None' %}">
+                <p class="help-block">{% trans 'parent of new TP' %}</p>
             </div>
         </div>
 
