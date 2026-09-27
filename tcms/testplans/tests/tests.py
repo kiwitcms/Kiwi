@@ -220,7 +220,7 @@ class TestCloneView(BasePlanCase):
         )
 
         # the option to set the source TP as parent is pre-filled with its ID
-        self.assertContains(response, f'data-on-text="TP-{self.plan.pk}"', html=True)
+        self.assertContains(response, f'data-on-text="TP-{self.plan.pk}"')
 
     def test_clone_page_does_not_clone_via_post(self):
         # the actual cloning is done by TestPlan.clone(), see tcms/rpc/api/testplan.py
