@@ -43,15 +43,15 @@ export function updateSelect (data, selector, idAttr, valueAttr, groupAttr) {
 /*
     Used for on-change event handlers
 */
-export function updateVersionSelectFromProduct () {
+export function updateVersionSelectFromProduct (idProduct, idVersion) {
     const updateVersionSelectCallback = function (data) {
-        updateSelect(data, '#id_version', 'id', 'value', 'product__name')
+        updateSelect(data, idVersion, 'id', 'value', 'product__name')
 
         // trigger on-change handler, possibly updating build
-        $('#id_version').change()
+        $(idVersion).change()
     }
 
-    let productIds = $('#id_product').val()
+    let productIds = $(idProduct).val()
 
     if (productIds && productIds.length) {
         if (!Array.isArray(productIds)) {
@@ -80,7 +80,7 @@ export function populateVersion () {
     $('#add_id_version')[0].href = href.slice(0, href.indexOf('&product'))
     $('#add_id_version')[0].href += `&product=${safeProductId}`
     $('#id_version').find('option').remove()
-    updateVersionSelectFromProduct()
+    updateVersionSelectFromProduct('#id_product', '#id_version')
 }
 
 /*
