@@ -62,7 +62,7 @@ export function pageTelemetryReadyHandler (pageId) {
     loadInitialProduct()
 
     document.getElementById('id_product').onchange = () => {
-        updateVersionSelectFromProduct()
+        updateVersionSelectFromProduct('#id_product', '#id_version')
         // note: don't pass drawChart as callback to avoid calling it twice
         // b/c update_version_select... triggers .onchange()
         updateTestPlanSelectFromProduct({ parent: null }, discoverNestedTestPlans)

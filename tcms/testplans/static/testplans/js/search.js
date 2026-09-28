@@ -192,7 +192,9 @@ export function pageTestplansSearchReadyHandler () {
         return false // so we don't actually send the form
     })
 
-    $('#id_product').change(updateVersionSelectFromProduct)
+    $('#id_product').change(function () {
+        updateVersionSelectFromProduct('#id_product', '#id_version')
+    })
 }
 
 function hideExpandedChildren (table, parentRow) {

@@ -96,7 +96,7 @@ export function pageBugsSearchReadyHandler () {
     })
 
     $('#id_product').change(function () {
-        updateVersionSelectFromProduct()
+        updateVersionSelectFromProduct('#id_product', '#id_version')
     })
 
     $('#id_version').change(function () {
