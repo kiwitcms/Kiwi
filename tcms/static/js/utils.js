@@ -64,23 +64,23 @@ export function updateVersionSelectFromProduct (idProduct, idVersion) {
     }
 }
 
-export function populateVersion () {
-    const productId = $('#id_product').val()
+export function populateVersion (idProduct, idVersion, addIdVersion, addIdBuild) {
+    const productId = $(idProduct).val()
 
     if (productId === null) {
-        $('#add_id_version').addClass('disabled')
-        $('#add_id_build').addClass('disabled')
+        $(addIdVersion).addClass('disabled')
+        $(addIdBuild).addClass('disabled')
     } else {
-        $('#add_id_version').removeClass('disabled')
-        $('#add_id_build').removeClass('disabled')
+        $(addIdVersion).removeClass('disabled')
+        $(addIdBuild).removeClass('disabled')
     }
 
     const safeProductId = encodeURIComponent(productId === null ? '' : String(productId))
-    const href = $('#add_id_version')[0].href
-    $('#add_id_version')[0].href = href.slice(0, href.indexOf('&product'))
-    $('#add_id_version')[0].href += `&product=${safeProductId}`
-    $('#id_version').find('option').remove()
-    updateVersionSelectFromProduct('#id_product', '#id_version')
+    const href = $(addIdVersion)[0].href
+    $(addIdVersion)[0].href = href.slice(0, href.indexOf('&product'))
+    $(addIdVersion)[0].href += `&product=${safeProductId}`
+    $(idVersion).find('option').remove()
+    updateVersionSelectFromProduct(idProduct, idVersion)
 }
 
 /*

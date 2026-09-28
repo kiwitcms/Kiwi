@@ -16,7 +16,7 @@ export function pageTestplansCloneReadyHandler () {
 
     document.getElementById('id_product').onchange = function () {
         $('#id_product').selectpicker('refresh')
-        populateVersion()
+        populateVersion('#id_product', '#id_version', '#add_id_version', '#add_id_build')
     }
 
     document.getElementById('id_version').onchange = function () {

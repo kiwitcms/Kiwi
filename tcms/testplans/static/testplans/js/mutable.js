@@ -8,7 +8,7 @@ const planCache = {}
 */
 export function pageTestplansMutableReadyHandler () {
     if ($('#id_version').find('option').length === 0) {
-        populateVersion()
+        populateVersion('#id_product', '#id_version', '#add_id_version', '#add_id_build')
     }
 
     $('#add_id_product').click(function () {
@@ -21,7 +21,7 @@ export function pageTestplansMutableReadyHandler () {
 
     document.getElementById('id_product').onchange = function () {
         $('#id_product').selectpicker('refresh')
-        populateVersion()
+        populateVersion('#id_product', '#id_version', '#add_id_version', '#add_id_build')
     }
 
     document.getElementById('id_version').onchange = function () {
