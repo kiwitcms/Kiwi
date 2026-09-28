@@ -19,7 +19,7 @@ export function pageBugsMutableReadyHandler () {
 
     document.getElementById('id_product').onchange = function () {
         $('#id_product').selectpicker('refresh')
-        populateVersion()
+        populateVersion('#id_product', '#id_version', '#add_id_version', '#add_id_build')
     }
 
     document.getElementById('id_version').onchange = function () {
@@ -37,6 +37,6 @@ export function pageBugsMutableReadyHandler () {
 
     // initialize at the end b/c we rely on .change() event to initialize builds
     if ($('#id_version').find('option').length === 0) {
-        populateVersion()
+        populateVersion('#id_product', '#id_version', '#add_id_version', '#add_id_build')
     }
 }
