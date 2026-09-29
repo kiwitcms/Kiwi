@@ -6,7 +6,6 @@ from http import HTTPStatus
 from django import test
 from django.core.exceptions import ValidationError
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from parameterized import parameterized
 
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
@@ -191,11 +190,29 @@ class TestCloneView(BasePlanCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
+        cls.another_plan = TestPlanFactory(
+            name="Another plan for test",
+            author=cls.tester,
+            product=cls.product,
+            product_version=cls.version,
+        )
+        cls.third_plan = TestPlanFactory(
+            name="Third plan for test",
+            author=cls.tester,
+            product=cls.product,
+            product_version=cls.version,
+        )
+
         cls.plan_tester = UserFactory()
         cls.plan_tester.set_password("password")
         cls.plan_tester.save()
         user_should_have_perm(cls.plan_tester, "testplans.add_testplan")
         user_should_have_perm(cls.plan_tester, "testplans.view_testplan")
+
+    @staticmethod
+    def plan_rows(response):
+        """number of TestPlans rendered for cloning"""
+        return response.content.count(b'class="js-clone-row"')
 
     @test.override_settings(LANGUAGE_CODE="en")
     def test_open_clone_page_to_clone_one_plan(self):
@@ -205,22 +222,59 @@ class TestCloneView(BasePlanCase):
 
         response = self.client.get(reverse("plans-clone", args=[self.plan.pk]))
 
-        _name = _("Name")
-        self.assertContains(
-            response,
-            f'<label for="id_name">{_name}</label>',
-            html=True,
-        )
+        self.assertEqual(1, self.plan_rows(response))
 
-        self.assertContains(
-            response,
-            f'<input type="text" id="id_name" name="name" value="{self.plan.make_cloned_name()}"'
-            ' class="form-control" required>',
-            html=True,
-        )
-
-        # the option to set the source TP as parent is pre-filled with its ID
+        self.assertContains(response, f"TP-{self.plan.pk}: {self.plan.name}")
+        self.assertContains(response, f'data-plan-id="{self.plan.pk}"')
         self.assertContains(response, f'data-on-text="TP-{self.plan.pk}"')
+
+        self.assertContains(
+            response,
+            f'<input type="text" value="{self.plan.make_cloned_name()}"'
+            f' class="js-name form-control" required>',
+            html=True,
+        )
+
+        # the add-related links must be named add_ + the id of the select
+        # they belong to, otherwise the admin pop-up machinery can't find
+        # the element to update, see RelatedObjectLookups.js
+        for field in ["product", "version"]:
+            self.assertContains(response, f'id="id_{field}_{self.plan.pk}"')
+            self.assertContains(response, f'id="add_id_{field}_{self.plan.pk}"')
+
+    @test.override_settings(LANGUAGE_CODE="en")
+    def test_open_clone_page_to_clone_several_plans(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username, password="password"
+        )
+
+        response = self.client.get(
+            reverse("plans-clone", args=[self.plan.pk]),
+            {"p": [self.another_plan.pk, self.third_plan.pk]},
+        )
+
+        self.assertEqual(3, self.plan_rows(response))
+
+        for plan in [self.plan, self.another_plan, self.third_plan]:
+            self.assertContains(response, f"TP-{plan.pk}: {plan.name}")
+            self.assertContains(response, f'data-plan-id="{plan.pk}"')
+            self.assertContains(response, f'value="{plan.make_cloned_name()}"')
+            # IDs are scoped to each row so that they are unique
+            self.assertContains(response, f'id="id_product_{plan.pk}"')
+            self.assertContains(response, f'id="add_id_product_{plan.pk}"')
+
+    @test.override_settings(LANGUAGE_CODE="en")
+    def test_clone_page_ignores_duplicate_and_invalid_plan_ids(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username, password="password"
+        )
+
+        response = self.client.get(
+            reverse("plans-clone", args=[self.plan.pk]),
+            {"p": [str(self.plan.pk), "not-a-number", "-1"]},
+        )
+
+        self.assertEqual(1, self.plan_rows(response))
 
     def test_clone_page_does_not_clone_via_post(self):
         # the actual cloning is done by TestPlan.clone(), see tcms/rpc/api/testplan.py
