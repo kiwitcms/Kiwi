@@ -5,7 +5,26 @@
 import { jsonRPC } from '../../../../static/js/jsonrpc'
 import { populateVersion } from '../../../../static/js/utils'
 
+function syncOtherProductSelects (current, productId, productName) {
+    $('select.js-product').not(current).each(function (index, select) {
+        select.add(new Option(productName, productId))
+        $(select).selectpicker('refresh')
+    })
+}
+
 export function pageTestplansCloneReadyHandler () {
+    const dismissAddRelatedObjectPopup = window.dismissAddRelatedObjectPopup
+
+    window.dismissAddRelatedObjectPopup = function (win, newId, newRepr, optgroup) {
+        const current = document.getElementById(win.name)
+
+        if (current && $(current).hasClass('js-product')) {
+            syncOtherProductSelects(current, newId, newRepr)
+        }
+
+        return dismissAddRelatedObjectPopup.apply(window, arguments)
+    }
+
     $('.js-add-product').click(function () {
         return showRelatedObjectPopup(this)
     })
