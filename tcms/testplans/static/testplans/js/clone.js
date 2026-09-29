@@ -12,6 +12,17 @@ function syncOtherProductSelects (current, productId, productName) {
     })
 }
 
+function syncOtherVersionSelects (current, productId, versionId, versionName) {
+    $('select.js-version').not(current).each(function (index, select) {
+        const row = $(select).closest('.js-clone-row')
+
+        if (row.find('select.js-product').val() === productId) {
+            select.add(new Option(versionName, versionId))
+            $(select).selectpicker('refresh')
+        }
+    })
+}
+
 export function pageTestplansCloneReadyHandler () {
     const dismissAddRelatedObjectPopup = window.dismissAddRelatedObjectPopup
 
@@ -20,6 +31,11 @@ export function pageTestplansCloneReadyHandler () {
 
         if (current && $(current).hasClass('js-product')) {
             syncOtherProductSelects(current, newId, newRepr)
+        } else if (current && $(current).hasClass('js-version')) {
+            const row = $(current).closest('.js-clone-row')
+            const productId = row.find('select.js-product').val()
+
+            syncOtherVersionSelects(current, productId, newId, newRepr)
         }
 
         return dismissAddRelatedObjectPopup.apply(window, arguments)
