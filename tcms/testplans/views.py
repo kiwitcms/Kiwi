@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, FormView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from guardian.decorators import permission_required as object_permission_required
 
 from tcms.core.forms import SimpleCommentForm
@@ -176,37 +176,51 @@ class TestPlanGetView(DetailView):
 
 
 @method_decorator(permission_required("testplans.add_testplan"), name="dispatch")
-class Clone(FormView):
+class Clone(TemplateView):
     """
-    Renders the clone page. The actual cloning is performed by the
+    Renders the clone page. The TestPlan from the URL and the additional
+    ones listed via the ``?p=`` query string arguments are cloned together,
+    one form per TestPlan. The actual cloning is performed by the
     ``TestPlan.clone()`` RPC method, called from the browser, so that the
-    page knows the ID of the newly created plan and can redirect to it!
+    page knows the IDs of the newly created TestPlans!
     See tcms/rpc/api/testplan.py
     """
 
     template_name = "testplans/clone.html"
-    form_class = ClonePlanForm
-    object = None
 
     http_method_names = ["get"]
 
-    def get(self, request, *args, **kwargs):
-        self.object = TestPlan.objects.get(pk=kwargs["pk"])
-        return super().get(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object"] = self.object
+
+        # the TestPlan from the URL plus the additional ones specified via
+        # the ?p= query string arguments. Duplicates are not a problem and
+        # invalid values are ignored b/c they can never be cloned!
+        pks = [self.kwargs["pk"]]
+        for plan_id in self.request.GET.getlist("p"):
+            try:
+                pks.append(int(plan_id))
+            except ValueError:
+                continue
+
+        objects = TestPlan.objects.filter(pk__in=pks).order_by("pk")
+
+        rows = []
+        for plan in objects:
+            rows.append((plan, self.make_clone_form(plan)))
+
+        context["rows"] = rows
+
         return context
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.populate(product_pk=self.object.product_id, parent_pk=self.object.pk)
+    @staticmethod
+    def make_clone_form(plan):
+        form = ClonePlanForm(
+            initial={
+                "name": plan.make_cloned_name(),
+                "product": plan.product,
+                "version": plan.product_version,
+            }
+        )
+        form.populate(product_pk=plan.product_id, parent_pk=plan.pk)
         return form
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["initial"]["name"] = self.object.make_cloned_name()
-        kwargs["initial"]["product"] = self.object.product
-        kwargs["initial"]["version"] = self.object.product_version
-        return kwargs
