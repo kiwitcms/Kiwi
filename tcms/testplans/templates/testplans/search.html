@@ -5,6 +5,10 @@
 {% block title %}{% trans "Search Test Plans" %}{% endblock %}
 {% block page_id %}page-testplans-search{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'testplans/style/datatables_override.css' %}" />
+{% endblock %}
+
 {% block contents %}
 <div
     class="container-fluid container-cards-pf"

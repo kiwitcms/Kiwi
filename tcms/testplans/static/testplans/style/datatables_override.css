@@ -1,0 +1,13 @@
+/* override some DataTables styles for the test plans table */
+
+/* Condense the selection and expand-control columns. Without this both
+   columns inherit the default cell padding and grow as wide as the ID
+   column, leaving a lot of empty space around the checkbox and the
+   expand marker. */
+#resultsTable th.noVis,
+#resultsTable td.noVis {
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 1%;
+    white-space: nowrap;
+}
