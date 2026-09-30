@@ -55,7 +55,7 @@ export function pageTestplansSearchReadyHandler () {
             const selectedTestPlans = selectedVisibleCheckboxes(
                 '#resultsTable tbody input.row-select',
                 $('#main-element').data('trans-no-testplans-selected')
-            ).toArray().map(checkbox => $(checkbox).closest('tr').find('td:nth-child(3)').text().trim())
+            ).toArray().map(checkbox => $(checkbox).data('plan-id'))
 
             if (selectedTestPlans.length === 0) {
                 return false
@@ -116,7 +116,7 @@ export function pageTestplansSearchReadyHandler () {
                 data: null,
                 orderable: false,
                 className: 'noVis',
-                render: function () { return '<input type="checkbox" class="row-select">' }
+                render: function (data, type, full, meta) { return `<input type="checkbox" class="row-select" data-plan-id="${data.id}">` }
             },
             {
                 data: null,
