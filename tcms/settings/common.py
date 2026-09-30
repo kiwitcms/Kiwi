@@ -455,14 +455,6 @@ for plugin in entry_points().select(group="kiwitcms.plugins"):
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
     ("https://github.com/kiwitcms/Kiwi/issues/new/choose", _("Report an Issue")),
-    (
-        "https://stackoverflow.com/questions/tagged/kiwi-tcms",
-        _("Ask for help on StackOverflow"),
-    ),
-    (
-        "https://opencollective.com/kiwitcms#section-contribute",
-        _("Donate €5 via Open Collective"),
-    ),
     ("http://kiwitcms.readthedocs.io/en/latest/admin.html", _("Administration Guide")),
     ("http://kiwitcms.readthedocs.io/en/latest/tutorial.html", _("User Guide")),
     ("http://kiwitcms.readthedocs.io/en/latest/api/index.html", _("API Help")),

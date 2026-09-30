@@ -794,23 +794,15 @@ msgstr ""
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:460
-msgid "Ask for help on StackOverflow"
-msgstr ""
-
-#: tcms/settings/common.py:464
-msgid "Donate €5 via Open Collective"
-msgstr ""
-
-#: tcms/settings/common.py:466
+#: tcms/settings/common.py:458
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:467
+#: tcms/settings/common.py:459
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:468
+#: tcms/settings/common.py:460
 msgid "API Help"
 msgstr ""
 
