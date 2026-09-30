@@ -2,7 +2,7 @@ export const exportButtons = [
     {
         extend: 'csv',
         exportOptions: {
-            columns: ':visible'
+            columns: ':visible:not(.noVis)'
         },
         text: '<i class="fa fa-th-list" aria-hidden="true"></i>',
         titleAttr: 'CSV'
@@ -10,7 +10,7 @@ export const exportButtons = [
     {
         extend: 'excel',
         exportOptions: {
-            columns: ':visible'
+            columns: ':visible:not(.noVis)'
         },
         text: '<i class="fa fa-file-excel-o" aria-hidden="true"></i>',
         titleAttr: 'Excel'
@@ -18,7 +18,7 @@ export const exportButtons = [
     {
         extend: 'pdf',
         exportOptions: {
-            columns: ':visible'
+            columns: ':visible:not(.noVis)'
         },
         text: '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',
         titleAttr: 'PDF'
@@ -26,7 +26,7 @@ export const exportButtons = [
     {
         extend: 'print',
         exportOptions: {
-            columns: ':visible'
+            columns: ':visible:not(.noVis)'
         },
         text: '<i class="fa fa-print" aria-hidden="true"></i>',
         titleAttr: 'Print'
