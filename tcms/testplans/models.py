@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import URLValidator
-from django.db import models
+from django.db import connection, models
 from django.urls import reverse
 from tree_queries.models import TreeNode
 
@@ -12,6 +12,29 @@ from tcms.core.models.base import UrlMixin
 from tcms.core.templatetags.extra_filters import bleach_input
 from tcms.management.models import Version
 from tcms.testcases.models import TestCasePlan
+
+# django-tree-queries declares the columns of its recursive CTE as char(1000)
+# and MariaDB doesn't widen that type when the branches of the CTE are merged.
+# tree_ordering grows by exactly 20 characters per level, a 20 character zero
+# padded PK plus the separator, so it is the column which limits how deep a
+# tree can be before it gets truncated. Truncated tree columns silently lose
+# the depth first ordering, which breaks tree_view_html(), and raise DataError
+# when sql_mode is strict, which breaks saving.
+# See https://github.com/kiwitcms/Kiwi/issues/4334
+TREE_COLUMN_WIDTH = 1000
+TREE_ORDERING_CHARS_PER_LEVEL = 20
+
+# The tree columns are compared as strings and MariaDB only compares the first
+# max_sort_length bytes of a sort key, 1024 by default. Under utf8mb4
+# collations the key is expanded to 2 bytes per character, so about 512
+# characters are compared before two different paths look equal and the depth
+# first ordering is lost.
+TREE_SORTED_CHARS = 1024 // 2
+
+# the maximum number of TestPlan objects on a single root to leaf path
+MAX_TREE_NODES = (
+    min(TREE_COLUMN_WIDTH - 1, TREE_SORTED_CHARS) // TREE_ORDERING_CHARS_PER_LEVEL
+)
 
 
 class PlanType(models.Model, UrlMixin):
@@ -173,6 +196,82 @@ class TestPlan(TreeNode, UrlMixin):
         result = tree_root.descendants(include_self=True)
 
         return result
+
+    def _parent_id_as_stored(self):
+        """
+        Returns the parent_id value currently stored in the database
+        for the current object.
+        """
+        return (
+            TestPlan.objects.filter(pk=self.pk)
+            .values_list("parent_id", flat=True)
+            .first()
+        )
+
+    def _count_nodes_on_longest_path(self):
+        """
+        Returns the number of TestPlan objects from the root of the tree
+        down to the deepest descendant of the current object.
+        """
+        nodes = 1  # the current object
+
+        parent_id = self.parent_id
+        while parent_id is not None:
+            nodes += 1
+            parent_id = (
+                TestPlan.objects.filter(pk=parent_id)
+                .values_list("parent_id", flat=True)
+                .first()
+            )
+
+        if self.pk is None:
+            return nodes
+
+        level = [self.pk]
+        while True:
+            level = list(
+                TestPlan.objects.filter(parent_id__in=level).values_list(
+                    "pk", flat=True
+                )
+            )
+            if not level:
+                break
+            nodes += 1
+
+        return nodes
+
+    @staticmethod
+    def tree_columns_are_truncated():
+        if connection.vendor != "mysql":
+            # other backends either use arrays for the tree columns or don't
+            # have a width limitation at all
+            return False
+
+        # NOTE: if the server can't be interrogated assume MariaDB, which
+        # truncates while MySQL widens the columns of recursive CTEs
+        return getattr(connection, "mysql_is_mariadb", True)
+
+    def clean(self):
+        super().clean()
+
+        if not self.tree_columns_are_truncated():
+            return
+
+        if not self._state.adding:
+            # the depth of the current object and of its sub-tree changes only
+            # when the parent changes. In that case the whole sub-tree is
+            # taken into account by _count_nodes_on_longest_path() below
+            if self.parent_id == self._parent_id_as_stored():
+                return
+
+        nodes = self._count_nodes_on_longest_path()
+        if nodes > MAX_TREE_NODES:
+            raise RuntimeError(
+                f"A TestPlan tree can have at most {MAX_TREE_NODES} TestPlans "
+                "on a single root to leaf path, otherwise the tree columns "
+                "of django-tree-queries are truncated. See "
+                "https://github.com/kiwitcms/Kiwi/issues/4334"
+            )
 
     def tree_view_html(self):
         """
