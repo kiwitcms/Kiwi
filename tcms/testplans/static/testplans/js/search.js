@@ -115,6 +115,7 @@ export function pageTestplansSearchReadyHandler () {
             {
                 data: null,
                 orderable: false,
+                className: 'noVis',
                 render: function () { return '<input type="checkbox" class="row-select">' }
             },
             {
