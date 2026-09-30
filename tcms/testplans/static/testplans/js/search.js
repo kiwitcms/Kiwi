@@ -193,7 +193,7 @@ export function pageTestplansSearchReadyHandler () {
         order: [[2, 'asc']],
         initComplete: function () {
             $('.js-toolbar-select-all').on('change', function () {
-                $('#resultsTable tbody input.row-select').prop('checked', this.checked)
+                $('#resultsTable tbody input.row-select:visible').prop('checked', this.checked)
             })
         }
     })
@@ -229,28 +229,8 @@ function getSelectedTestPlans () {
     const tpIds = []
 
     inputs.each(function (_, el) {
-        // Check if the row has collapsed children and add their IDs
-        tpIds.push(...getChildRows(el))
+        tpIds.push($(el).find('td:nth-child(3)').text().trim())
     })
-    return tpIds
-}
-
-function getChildRows (parentRowId) {
-    const tpIds = []
-    const parentRow = $('#resultsTable').DataTable().row($(parentRowId).closest('tr'))
-    const id = $(parentRowId).closest('tr').find('td:nth-child(3)').text().trim()
-    const children = hiddenChildRows[id]
-
-    if (id) {
-        tpIds.push(id)
-    }
-
-    if (children && !parentRow.child.isShown()) {
-        children.forEach(function (childRow) {
-            tpIds.push(...getChildRows(childRow))
-        })
-        return tpIds
-    }
     return tpIds
 }
 
@@ -276,10 +256,5 @@ function renderChildrenOf (parentRow, data) {
     // this is an array of previously hidden rows
     const children = hiddenChildRows[data.id]
     $(children).find('td').css('border', '0').css('padding-left', `${childPadding}px`)
-
-    if ($(parentRow).find('input.row-select').prop('checked')) {
-        $(children).find('input.row-select').prop('checked', true).trigger('change')
-    }
-
     return $(children).show()
 }
