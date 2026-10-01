@@ -23,6 +23,27 @@ function syncOtherVersionSelects (current, productId, versionId, versionName) {
     })
 }
 
+function rowValues (row) {
+    const values = {
+        name: row.find('input.js-name').val(),
+        product: Number(row.find('select.js-product').val()),
+        version: Number(row.find('select.js-version').val()),
+        copy_testcases: row.find('input.js-copy-testcases').is(':checked')
+    }
+
+    if (row.find('input.js-parent').is(':checked')) {
+        values.parent = Number(row.find('input.js-parent').val())
+    }
+
+    return values
+}
+
+function showRowError (row, message) {
+    row.find('.js-clone-error-text').text(message)
+    row.find('.js-clone-error').removeClass('hidden')
+    $('#js-clone-button').button('reset')
+}
+
 export function pageTestplansCloneReadyHandler () {
     const dismissAddRelatedObjectPopup = window.dismissAddRelatedObjectPopup
 
@@ -98,16 +119,7 @@ export function pageTestplansCloneReadyHandler () {
             const row = $(this)
             row.find('.js-clone-error').addClass('hidden')
 
-            const values = {
-                name: row.find('input.js-name').val(),
-                product: Number(row.find('select.js-product').val()),
-                version: Number(row.find('select.js-version').val()),
-                copy_testcases: row.find('input.js-copy-testcases').is(':checked')
-            }
-
-            if (row.find('input.js-parent').is(':checked')) {
-                values.parent = Number(row.find('input.js-parent').val())
-            }
+            const values = rowValues(row)
 
             jsonRPC('TestPlan.clone', [row.data('plan-id'), values], function (result) {
                 clonedPlanIds.push(result.id)
@@ -115,9 +127,7 @@ export function pageTestplansCloneReadyHandler () {
                 row.find('.js-clone-ok').removeClass('hidden')
                 cloneIsDone()
             }, false, function (message) {
-                row.find('.js-clone-error-text').text(message)
-                row.find('.js-clone-error').removeClass('hidden')
-                cloneButton.button('reset')
+                showRowError(row, message)
             })
         })
     })
