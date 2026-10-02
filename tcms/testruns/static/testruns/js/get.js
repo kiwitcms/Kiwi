@@ -155,6 +155,13 @@ export function pageTestrunsGetReadyHandler () {
         return false
     })
 
+    $('.change-tested-by-bulk').click(function () {
+        $(this).parents('.dropdown').toggleClass('open')
+        changeTestedByBulk()
+
+        return false
+    })
+
     $('.update-case-text-bulk').click(function () {
         $(this).parents('.dropdown').toggleClass('open')
         updateCaseText()
@@ -847,6 +854,25 @@ function changeAssigneeBulk () {
     }
     selected.executionIds.forEach(executionId => {
         jsonRPC('TestExecution.update', [executionId, { assignee }], execution => {
+            reloadRowFor(execution)
+        })
+    })
+}
+
+function changeTestedByBulk () {
+    const selected = selectedCheckboxes()
+    if ($.isEmptyObject(selected)) {
+        return false
+    }
+
+    const enterTesterText = $('#test_run_pk').data('trans-enter-tested-by-name-or-email')
+    const testedBy = prompt(enterTesterText)
+
+    if (!testedBy) {
+        return false
+    }
+    selected.executionIds.forEach(executionId => {
+        jsonRPC('TestExecution.update', [executionId, { tested_by: testedBy }], execution => {
             reloadRowFor(execution)
         })
     })
