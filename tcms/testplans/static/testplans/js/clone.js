@@ -94,15 +94,18 @@ export function pageTestplansCloneReadyHandler () {
     const cloneButton = $('#js-clone-button')
     cloneButton.click(function () {
         const rows = $('.js-clone-row').not('.js-cloned')
-        const clonedPlanIds = []
+        // maps the id of a source TestPlan to the id of its clone
+        const clonedPlanIds = {}
 
         const cloneIsDone = function () {
-            if (clonedPlanIds.length < rows.length) {
+            const newPlanIds = Object.values(clonedPlanIds)
+
+            if (newPlanIds.length < rows.length) {
                 return
             }
 
-            if (clonedPlanIds.length === 1) {
-                window.location.assign(`/plan/${clonedPlanIds[0]}/`)
+            if (newPlanIds.length === 1) {
+                window.location.assign(`/plan/${newPlanIds[0]}/`)
             } else {
                 window.location.assign(document.referrer || '/')
             }
@@ -122,7 +125,7 @@ export function pageTestplansCloneReadyHandler () {
             const values = rowValues(row)
 
             jsonRPC('TestPlan.clone', [row.data('plan-id'), values], function (result) {
-                clonedPlanIds.push(result.id)
+                clonedPlanIds[row.data('plan-id')] = result.id
                 row.addClass('js-cloned')
                 row.find('.js-clone-ok').removeClass('hidden')
                 cloneIsDone()
