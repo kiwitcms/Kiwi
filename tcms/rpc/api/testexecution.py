@@ -4,7 +4,7 @@ from attachments.models import Attachment
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import F
+from django.db.models import Count, F
 from django.db.models.functions import Coalesce
 from django.forms.models import model_to_dict
 
@@ -458,6 +458,17 @@ def list_attachments(execution_id, rpc_context=None):
     return utils.get_attachments_for(request, execution)
 
 
+def _count_attachments_by_object(content_type, object_ids):
+    result = {}
+    for row in (
+        Attachment.objects.filter(content_type=content_type, object_id__in=object_ids)
+        .values("object_id")
+        .annotate(count=Count("pk"))
+    ):
+        result[row["object_id"]] = row["count"]
+    return result
+
+
 @rpc_method(
     name="TestExecution.count_attachments",
     auth=permissions_required("attachments.view_attachment"),
@@ -480,17 +491,27 @@ def count_attachments(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    execution_type = ContentType.objects.get_for_model(TestExecution)
-    case_type = ContentType.objects.get_for_model(TestCase)
+    executions = list(TestExecution.objects.filter(**query).values("pk", "case"))
+
+    execution_ids = set()
+    case_ids = set()
+    for execution in executions:
+        execution_ids.add(str(execution["pk"]))
+        case_ids.add(str(execution["case"]))
+
+    # NOTE: object_id is stored as a string so count them beforehand and reuse
+    # the results below instead of issuing 2 queries per TestExecution
+    execution_counts = _count_attachments_by_object(
+        ContentType.objects.get_for_model(TestExecution), execution_ids
+    )
+    case_counts = _count_attachments_by_object(
+        ContentType.objects.get_for_model(TestCase), case_ids
+    )
 
     result = {}
-    for execution in TestExecution.objects.filter(**query).values("pk", "case"):
-        from_execution = Attachment.objects.filter(
-            content_type=execution_type, object_id=execution["pk"]
-        ).count()
-        from_case = Attachment.objects.filter(
-            content_type=case_type, object_id=execution["case"]
-        ).count()
+    for execution in executions:
+        from_execution = execution_counts.get(str(execution["pk"]), 0)
+        from_case = case_counts.get(str(execution["case"]), 0)
 
         # NOTE: convert to str() otherwise we get:
         # Unable to serialize result as valid XML: dictionary key must be string
