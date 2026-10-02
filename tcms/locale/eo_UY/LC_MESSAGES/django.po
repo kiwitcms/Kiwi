@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-30 12:28+0000\n"
-"PO-Revision-Date: 2026-09-30 14:30\n"
+"POT-Creation-Date: 2026-10-02 10:02+0000\n"
+"PO-Revision-Date: 2026-10-02 11:14\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -77,7 +77,7 @@ msgstr "crwdns790:0crwdne790:0"
 #: tcms/testcases/templates/testcases/get.html:170
 #: tcms/testcases/templates/testcases/mutable.html:43
 #: tcms/testcases/templates/testcases/search.html:55
-#: tcms/testplans/templates/testplans/clone.html:40
+#: tcms/testplans/templates/testplans/clone.html:41
 #: tcms/testplans/templates/testplans/get.html:64
 #: tcms/testplans/templates/testplans/mutable.html:33
 #: tcms/testplans/templates/testplans/search.html:57
@@ -95,7 +95,7 @@ msgstr "crwdns361:0crwdne361:0"
 #: tcms/bugs/templates/bugs/search.html:116 tcms/management/models.py:118
 #: tcms/telemetry/templates/telemetry/include/filters.html:17
 #: tcms/templates/include/bug_details.html:15 tcms/templates/navbar.html:71
-#: tcms/testplans/templates/testplans/clone.html:54
+#: tcms/testplans/templates/testplans/clone.html:55
 #: tcms/testplans/templates/testplans/get.html:70
 #: tcms/testplans/templates/testplans/mutable.html:48
 #: tcms/testplans/templates/testplans/search.html:67
@@ -171,14 +171,14 @@ msgstr "crwdns1430:0crwdne1430:0"
 
 #: tcms/bugs/templates/bugs/mutable.html:46
 #: tcms/testcases/templates/testcases/mutable.html:44
-#: tcms/testplans/templates/testplans/clone.html:41
+#: tcms/testplans/templates/testplans/clone.html:42
 #: tcms/testplans/templates/testplans/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:48
 msgid "add new Product"
 msgstr "crwdns452:0crwdne452:0"
 
 #: tcms/bugs/templates/bugs/mutable.html:62
-#: tcms/testplans/templates/testplans/clone.html:56
+#: tcms/testplans/templates/testplans/clone.html:57
 #: tcms/testplans/templates/testplans/mutable.html:50
 msgid "add new Version"
 msgstr "crwdns454:0crwdne454:0"
@@ -351,7 +351,7 @@ msgid "Edit"
 msgstr "crwdns510:0crwdne510:0"
 
 #: tcms/bugs/views.py:46 tcms/testcases/views.py:148
-#: tcms/testplans/views.py:157 tcms/testruns/views.py:204
+#: tcms/testplans/views.py:161 tcms/testruns/views.py:204
 #: tcms/testruns/views.py:318
 msgid "Object permissions"
 msgstr "crwdns1240:0crwdne1240:0"
@@ -361,7 +361,7 @@ msgstr "crwdns1240:0crwdne1240:0"
 #: tcms/templates/include/properties_card.html:32
 #: tcms/templates/include/properties_card.html:47 tcms/testcases/views.py:156
 #: tcms/testplans/templates/testplans/get.html:193
-#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:165
+#: tcms/testplans/templates/testplans/get.html:389 tcms/testplans/views.py:169
 #: tcms/testruns/templates/testruns/get.html:246
 #: tcms/testruns/templates/testruns/get.html:462 tcms/testruns/views.py:212
 #: tcms/testruns/views.py:326
@@ -1143,7 +1143,7 @@ msgstr "crwdns496:0crwdne496:0"
 #: tcms/templates/include/tags_card.html:13
 #: tcms/testcases/templates/testcases/get.html:167
 #: tcms/testcases/templates/testcases/get.html:215
-#: tcms/testplans/templates/testplans/clone.html:27
+#: tcms/testplans/templates/testplans/clone.html:28
 #: tcms/testplans/templates/testplans/get.html:205
 #: tcms/testplans/templates/testplans/mutable.html:24
 #: tcms/testplans/templates/testplans/search.html:25
@@ -1398,8 +1398,8 @@ msgid "Selected TC"
 msgstr "crwdns994:0crwdne994:0"
 
 #: tcms/testcases/templates/testcases/clone.html:45 tcms/testcases/views.py:139
-#: tcms/testplans/templates/testplans/clone.html:64
-#: tcms/testplans/templates/testplans/clone.html:80
+#: tcms/testplans/templates/testplans/clone.html:65
+#: tcms/testplans/templates/testplans/clone.html:83
 #: tcms/testplans/templates/testplans/get.html:138
 #: tcms/testplans/templates/testplans/get.html:363 tcms/testplans/views.py:150
 #: tcms/testruns/views.py:195
@@ -1578,7 +1578,7 @@ msgstr "crwdns1587:0crwdne1587:0"
 msgid "Select"
 msgstr "crwdns1242:0crwdne1242:0"
 
-#: tcms/testcases/views.py:143 tcms/testplans/views.py:152
+#: tcms/testcases/views.py:143 tcms/testplans/views.py:156
 #: tcms/testruns/templates/testruns/get.html:470 tcms/testruns/views.py:199
 msgid "History"
 msgstr "crwdns514:0crwdne514:0"
@@ -1595,27 +1595,27 @@ msgstr "crwdns303:0crwdne303:0"
 msgid "Clone TestPlan"
 msgstr "crwdns664:0crwdne664:0"
 
-#: tcms/testplans/templates/testplans/clone.html:20
+#: tcms/testplans/templates/testplans/clone.html:21
 msgid "Cloned successfully"
 msgstr "crwdns1615:0crwdne1615:0"
 
-#: tcms/testplans/templates/testplans/clone.html:64
+#: tcms/testplans/templates/testplans/clone.html:65
 msgid "Link"
 msgstr "crwdns1607:0crwdne1607:0"
 
-#: tcms/testplans/templates/testplans/clone.html:65
+#: tcms/testplans/templates/testplans/clone.html:66
 msgid "existing TCs"
 msgstr "crwdns1609:0crwdne1609:0"
 
-#: tcms/testplans/templates/testplans/clone.html:70
+#: tcms/testplans/templates/testplans/clone.html:72
 msgid "None"
 msgstr "crwdns1611:0crwdne1611:0"
 
-#: tcms/testplans/templates/testplans/clone.html:71
+#: tcms/testplans/templates/testplans/clone.html:73
 msgid "parent of new TP"
 msgstr "crwdns1613:0crwdne1613:0"
 
-#: tcms/testplans/templates/testplans/clone.html:80
+#: tcms/testplans/templates/testplans/clone.html:83
 msgid "Cloning ..."
 msgstr "crwdns1617:0crwdne1617:0"
 
@@ -1760,6 +1760,10 @@ msgstr "crwdns1518:0crwdne1518:0"
 #: tcms/testplans/templates/testplans/search.html:27
 msgid "Test plan name"
 msgstr "crwdns381:0crwdne381:0"
+
+#: tcms/testplans/views.py:152
+msgid "Deep clone"
+msgstr "crwdns1619:0crwdne1619:0"
 
 #: tcms/testruns/admin.py:32
 msgid "Permission denied: TestRun does not belong to you"
