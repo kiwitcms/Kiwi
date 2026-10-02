@@ -50,12 +50,13 @@ class KiwiTCMSHandlerMixin:
             return
 
         restricted_fields = (
-            "password",
-            "token",
-            "secret",
+            "__email__",
             "activation_key",
             "api_key",
             "apikey",
+            "password",
+            "secret",
+            "token",
         )
 
         keys_to_check = list(__class__.dict_keys(rpc_request.args))
