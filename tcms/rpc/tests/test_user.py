@@ -162,13 +162,13 @@ class TestUserUpdate(APITestCase):
         data = self.rpc_client.User.update(self.api_user.pk, self.user_new_attrs)
         self.assertEqual(data["first_name"], self.user_new_attrs["first_name"])
         self.assertEqual(data["last_name"], self.user_new_attrs["last_name"])
-        self.assertEqual(data["email"], self.user_new_attrs["email"])
+        self.assertNotEqual(data["email"], self.user_new_attrs["email"])
 
     def test_update_myself_without_passing_id(self):
         data = self.rpc_client.User.update(None, self.user_new_attrs)
         self.assertEqual(data["first_name"], self.user_new_attrs["first_name"])
         self.assertEqual(data["last_name"], self.user_new_attrs["last_name"])
-        self.assertEqual(data["email"], self.user_new_attrs["email"])
+        self.assertNotEqual(data["email"], self.user_new_attrs["email"])
 
     def test_update_other_missing_permission(self):
         new_values = {"some_attr": "xxx"}
@@ -179,6 +179,10 @@ class TestUserUpdate(APITestCase):
         user_should_have_perm(self.api_user, "auth.change_user")
 
         data = self.rpc_client.User.update(self.another_user.pk, self.user_new_attrs)
+        self.assertEqual(data["first_name"], self.user_new_attrs["first_name"])
+        self.assertEqual(data["last_name"], self.user_new_attrs["last_name"])
+        self.assertNotEqual(data["email"], self.user_new_attrs["email"])
+
         self.another_user.refresh_from_db()
         self.assertEqual(data["first_name"], self.another_user.first_name)
         self.assertEqual(data["last_name"], self.another_user.last_name)
@@ -205,7 +209,7 @@ class TestUserUpdate(APITestCase):
         self.assertNotIn("password", data)
         self.assertEqual(data["first_name"], user_new_attrs["first_name"])
         self.assertEqual(data["last_name"], user_new_attrs["last_name"])
-        self.assertEqual(data["email"], user_new_attrs["email"])
+        self.assertNotEqual(data["email"], user_new_attrs["email"])
 
         self.api_user.refresh_from_db()
         self.assertTrue(self.api_user.check_password(new_password))

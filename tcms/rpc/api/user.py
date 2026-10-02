@@ -125,7 +125,7 @@ def update(
     else:
         user_being_updated = request.user
 
-    editable_fields = ("first_name", "last_name", "email", "password")
+    editable_fields = ("first_name", "last_name", "password")
     can_change_user = request.user.has_perm("auth.change_user")
 
     is_updating_other = request.user != user_being_updated
