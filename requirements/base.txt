@@ -18,7 +18,7 @@ jira==3.10.5
 Markdown==3.11
 PyGithub==2.10.0
 Pygments==2.21.0
-python-gitlab==8.5.0
+python-gitlab==8.6.0
 python-redmine==2.5.0
 topicaxis-opengraph==0.5
 tzdata==2026.4
