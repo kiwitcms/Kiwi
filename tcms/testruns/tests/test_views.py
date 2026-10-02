@@ -224,6 +224,14 @@ class TestRunCasesMenu(BaseCaseRun):
             </a>
         """
 
+        _tested_by = _("Tested by")
+        cls.change_tested_by_html = f"""
+            <a class="change-tested-by-bulk" href="#">
+                <span class="fa fa-search"></span>
+                {_tested_by}
+            </a>
+        """
+
         _delete = _("Delete")
         cls.remove_executions_html = f"""
             <a class="bg-danger remove-execution-bulk" href="#">
@@ -253,6 +261,16 @@ class TestRunCasesMenu(BaseCaseRun):
         remove_perm_from_user(self.tester, "testruns.change_testexecution")
         response = self.client.get(self.url)
         self.assertNotContains(response, self.change_assignee_html, html=True)
+
+    def test_change_tested_by_with_permission(self):
+        user_should_have_perm(self.tester, "testruns.change_testexecution")
+        response = self.client.get(self.url)
+        self.assertContains(response, self.change_tested_by_html, html=True)
+
+    def test_change_tested_by_without_permission(self):
+        remove_perm_from_user(self.tester, "testruns.change_testexecution")
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.change_tested_by_html, html=True)
 
     def test_update_text_version_with_permission(self):
         user_should_have_perm(self.tester, "testruns.change_testexecution")

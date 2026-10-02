@@ -21,6 +21,7 @@
             data-perm-view-historical-testexecution="{{ perms.testruns.view_historicaltestexecution }}"
             data-trans-no-executions-selected="{% trans 'No rows selected! Please select at least one!'%}"
             data-trans-enter-assignee-name-or-email="{% trans 'Enter username, email or user ID:'%}"
+            data-trans-enter-tested-by-name-or-email="{% trans 'Enter username, email or user ID:'%}"
             data-trans-are-you-sure="{% trans 'Are you sure?' %}"
             data-trans-error-adding-cases="{% trans 'Unconfirmed test cases were not added' %}"
             data-trans-bool-value-required="{% trans 'Type 0 or 1' %}"
@@ -213,6 +214,13 @@
                                                 <a href="#" class="change-assignee-bulk">
                                                     <span class="fa pficon-user"></span>
                                                     {% trans 'Assignee' %}
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#" class="change-tested-by-bulk">
+                                                    <span class="fa fa-search"></span>
+                                                    {% trans 'Tested by' %}
                                                 </a>
                                             </li>
                                         {% endif %}
