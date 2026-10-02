@@ -59,6 +59,9 @@ export function tagsCard (model, objectId, displayFilter, permRemove) {
             }
         ],
         dom: 't',
+        // show all tags b/c the pager & info controls are hidden by dom:'t'
+        // and PatternFly 3 defaults DataTables to 20 rows per page
+        paging: false,
         language: {
             loadingRecords: '<div class="spinner spinner-lg"></div>',
             processing: '<div class="spinner spinner-lg"></div>',
