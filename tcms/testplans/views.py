@@ -202,6 +202,30 @@ class Clone(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        is_tree = self.request.GET.get("tree") in ("1", "true", "on", "yes")
+        context["is_tree"] = is_tree
+
+        objects = self.get_clone_objects(is_tree)
+
+        rows = []
+        path = []
+        for index, plan in enumerate(objects):
+            if is_tree:
+                self.augment_with_tree_prefix(plan, path, objects, index)
+
+            rows.append((plan, self.make_clone_form(plan)))
+
+        context["rows"] = rows
+        return context
+
+    def get_clone_objects(self, is_tree):
+        if is_tree:
+            # when ?tree=1 is given clone the whole sub-tree rooted at the
+            # TestPlan from the URL instead, in depth first order, so that
+            # every row appears after its parent
+            tree_root = TestPlan.objects.with_tree_fields().get(pk=self.kwargs["pk"])
+            return list(tree_root.descendants(include_self=True))
+
         # the TestPlan from the URL plus the additional ones specified via
         # the ?p= query string arguments. Duplicates are not a problem and
         # invalid values are ignored b/c they can never be cloned!
@@ -212,53 +236,32 @@ class Clone(TemplateView):
             except ValueError:
                 continue
 
-        objects = TestPlan.objects.filter(pk__in=pks).order_by("pk")
+        return list(TestPlan.objects.filter(pk__in=pks).order_by("pk"))
 
-        rows = []
-        for plan in objects:
-            rows.append((plan, self.make_clone_form(plan)))
+    @staticmethod
+    def augment_with_tree_prefix(plan, path, objects, index):
+        plan.is_last_child = True
+        for sibling in objects[index + 1 :]:
+            if sibling.tree_depth < plan.tree_depth:
+                break
+            if sibling.tree_depth == plan.tree_depth:
+                plan.is_last_child = False
+                break
 
-        context["rows"] = rows
+        # objects[0] is the root of the sub-tree being cloned
+        depth = plan.tree_depth - objects[0].tree_depth
+        del path[depth:]
 
-        # when ?tree=1 is given clone the whole sub-tree rooted at the
-        # TestPlan from the URL instead, in depth first order, so that
-        # every row appears after its parent
-        is_tree = self.request.GET.get("tree") in ("1", "true", "on", "yes")
-        context["is_tree"] = is_tree
+        plan.tree_prefix = ""
+        for level in range(1, depth):
+            if path[level].is_last_child:
+                plan.tree_prefix += "\u00a0\u00a0\u00a0"
+            else:
+                plan.tree_prefix += "│\u00a0\u00a0"
+        if depth:
+            plan.tree_prefix += "└─\u00a0" if plan.is_last_child else "├─\u00a0"
 
-        if is_tree:
-            tree_root = TestPlan.objects.with_tree_fields().get(pk=self.kwargs["pk"])
-            tree_nodes = list(tree_root.descendants(include_self=True))
-
-            rows = []
-            path = []
-            for index, plan in enumerate(tree_nodes):
-                plan.is_last_child = True
-                for sibling in tree_nodes[index + 1 :]:
-                    if sibling.tree_depth < plan.tree_depth:
-                        break
-                    if sibling.tree_depth == plan.tree_depth:
-                        plan.is_last_child = False
-                        break
-
-                depth = plan.tree_depth - tree_root.tree_depth
-                path = path[:depth]
-
-                plan.tree_prefix = ""
-                for level in range(1, depth):
-                    if path[level].is_last_child:
-                        plan.tree_prefix += "\u00a0\u00a0\u00a0"
-                    else:
-                        plan.tree_prefix += "│\u00a0\u00a0"
-                if depth:
-                    plan.tree_prefix += "└─\u00a0" if plan.is_last_child else "├─\u00a0"
-
-                path.append(plan)
-                rows.append((plan, self.make_clone_form(plan)))
-
-            context["rows"] = rows
-
-        return context
+        path.append(plan)
 
     @staticmethod
     def make_clone_form(plan):
