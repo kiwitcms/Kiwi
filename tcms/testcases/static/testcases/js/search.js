@@ -107,6 +107,10 @@ export function pageTestcasesSearchReadyHandler () {
                 params.author__username__startswith = $('#id_author').val()
             };
 
+            if ($('#id_default_tester').val()) {
+                params.default_tester__username__startswith = $('#id_default_tester').val()
+            };
+
             if ($('#id_run').val()) {
                 params.executions__run__in = [$('#id_run').val()]
             };
