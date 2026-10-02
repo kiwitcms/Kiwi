@@ -149,6 +149,10 @@ class TestPlanGetView(DetailView):
                     (_("Edit"), reverse("plan-edit", args=[self.object.pk])),
                     (_("Clone"), reverse("plans-clone", args=[self.object.pk])),
                     (
+                        _("Deep clone"),
+                        reverse("plans-clone", args=[self.object.pk]) + "?tree=1",
+                    ),
+                    (
                         _("History"),
                         f"/admin/testplans/testplan/{self.object.pk}/history/",
                     ),
@@ -184,6 +188,11 @@ class Clone(TemplateView):
     ``TestPlan.clone()`` RPC method, called from the browser, so that the
     page knows the IDs of the newly created TestPlans!
     See tcms/rpc/api/testplan.py
+
+    When the ``?tree=1`` query string argument is present the whole sub-tree
+    rooted at the TestPlan from the URL is rendered instead, in depth first
+    order. The browser then clones every row and re-parents the newly created
+    TestPlans so that the cloned tree mimics the source tree!
     """
 
     template_name = "testplans/clone.html"
@@ -210,6 +219,44 @@ class Clone(TemplateView):
             rows.append((plan, self.make_clone_form(plan)))
 
         context["rows"] = rows
+
+        # when ?tree=1 is given clone the whole sub-tree rooted at the
+        # TestPlan from the URL instead, in depth first order, so that
+        # every row appears after its parent
+        is_tree = self.request.GET.get("tree") in ("1", "true", "on", "yes")
+        context["is_tree"] = is_tree
+
+        if is_tree:
+            tree_root = TestPlan.objects.with_tree_fields().get(pk=self.kwargs["pk"])
+            tree_nodes = list(tree_root.descendants(include_self=True))
+
+            rows = []
+            path = []
+            for index, plan in enumerate(tree_nodes):
+                plan.is_last_child = True
+                for sibling in tree_nodes[index + 1 :]:
+                    if sibling.tree_depth < plan.tree_depth:
+                        break
+                    if sibling.tree_depth == plan.tree_depth:
+                        plan.is_last_child = False
+                        break
+
+                depth = plan.tree_depth - tree_root.tree_depth
+                path = path[:depth]
+
+                plan.tree_prefix = ""
+                for level in range(1, depth):
+                    if path[level].is_last_child:
+                        plan.tree_prefix += "\u00a0\u00a0\u00a0"
+                    else:
+                        plan.tree_prefix += "│\u00a0\u00a0"
+                if depth:
+                    plan.tree_prefix += "└─\u00a0" if plan.is_last_child else "├─\u00a0"
+
+                path.append(plan)
+                rows.append((plan, self.make_clone_form(plan)))
+
+            context["rows"] = rows
 
         return context
 

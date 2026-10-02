@@ -93,6 +93,7 @@ export function pageTestplansCloneReadyHandler () {
 
     const cloneButton = $('#js-clone-button')
     cloneButton.click(function () {
+        const isTree = $('#main-element').data('is-tree') === 1
         const rows = $('.js-clone-row').not('.js-cloned')
         // maps the id of a source TestPlan to the id of its clone
         const clonedPlanIds = {}
@@ -104,11 +105,44 @@ export function pageTestplansCloneReadyHandler () {
                 return
             }
 
-            if (newPlanIds.length === 1) {
-                window.location.assign(`/plan/${newPlanIds[0]}/`)
-            } else {
-                window.location.assign(document.referrer || '/')
+            const redirectToClonedPlan = function () {
+                if (isTree || newPlanIds.length === 1) {
+                    window.location.assign(`/plan/${newPlanIds[0]}/`)
+                } else {
+                    window.location.assign(document.referrer || '/')
+                }
             }
+
+            // in tree mode set the parent of every clone, which can only be
+            // done once all of the clones have been created.
+            if (isTree) {
+                let updatedCount = 0
+
+                const updateIsDone = function () {
+                    updatedCount += 1
+
+                    if (updatedCount === rows.length) {
+                        redirectToClonedPlan()
+                    }
+                }
+
+                rows.each(function () {
+                    const row = $(this)
+
+                    jsonRPC(
+                        'TestPlan.update',
+                        [
+                            clonedPlanIds[row.data('plan-id')],
+                            { parent: clonedPlanIds[row.attr('data-parent-id')] }
+                        ],
+                        updateIsDone
+                    )
+                })
+
+                return
+            }
+
+            redirectToClonedPlan()
         }
 
         if (!rows.length) {

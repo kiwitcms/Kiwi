@@ -264,6 +264,40 @@ class TestCloneView(BasePlanCase):
             self.assertContains(response, f'id="add_id_product_{plan.pk}"')
 
     @test.override_settings(LANGUAGE_CODE="en")
+    def test_open_clone_page_for_a_tree(self):
+        child = TestPlanFactory(
+            parent=self.plan, product=self.product, product_version=self.version
+        )
+        grandchild = TestPlanFactory(
+            parent=child, product=self.product, product_version=self.version
+        )
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username, password="password"
+        )
+
+        response = self.client.get(
+            reverse("plans-clone", args=[self.plan.pk]), {"tree": "1"}
+        )
+
+        # the whole sub tree is rendered, in depth first order
+        self.assertEqual(3, self.plan_rows(response))
+        self.assertContains(response, 'data-tree-depth="0"')
+        self.assertContains(response, 'data-tree-depth="1"')
+        self.assertContains(response, 'data-tree-depth="2"')
+
+        body = response.content.decode()
+        self.assertLess(
+            body.index(f"TP-{self.plan.pk}:"), body.index(f"TP-{child.pk}:")
+        )
+        self.assertLess(
+            body.index(f"TP-{child.pk}:"), body.index(f"TP-{grandchild.pk}:")
+        )
+
+        # the parent is deduced from the source tree, there is no per row input
+        self.assertNotContains(response, 'class="bootstrap-switch js-parent"')
+
+    @test.override_settings(LANGUAGE_CODE="en")
     def test_clone_page_ignores_duplicate_and_invalid_plan_ids(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username, password="password"
