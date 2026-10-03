@@ -168,6 +168,11 @@ def create(values, rpc_context=None):
         :raises ValueError: if input values don't validate
         :raises PermissionDenied: if missing *bugs.add_bug* permission
 
+        .. note::
+
+            The optional ``text`` value is stored as the initial comment
+            for the newly created Bug!
+
     .. versionadded:: 15.3
     """
     # mimic behavior specified in models.py b/c empty_value for BooleanField is False
@@ -191,6 +196,10 @@ def create(values, rpc_context=None):
         result = model_to_dict(bug)
         if "created_at" not in result:
             result["created_at"] = bug.created_at
+
+        # text is not a Bug model field, store it as comment, see tcms/bugs/views.py
+        if form.cleaned_data["text"]:
+            comments.add_comment([bug], form.cleaned_data["text"], request.user)
 
         return result
 
