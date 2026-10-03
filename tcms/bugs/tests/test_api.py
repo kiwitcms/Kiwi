@@ -288,6 +288,58 @@ class TestBugCreateOverrideSomeValues(TestBugCreate):
         self.assertEqual(bug.reporter_id, result["reporter"])
 
 
+class TestBugCreateWithText(APIPermissionsTestCase):
+    permission_label = "bugs.add_bug"
+
+    def verify_api_with_permission(self):
+        build = BuildFactory()
+        severity, _ = Severity.objects.get_or_create(
+            name="Low",
+            weight=0,
+            icon="fa fa-volume-down",
+            color="#ff0f1f",
+        )
+
+        result = self.rpc_client.Bug.create(
+            {
+                "summary": "A bug created via API with text",
+                "product": build.version.product_id,
+                "version": build.version_id,
+                "build": build.pk,
+                "severity": severity.pk,
+                "text": "Steps to Reproduce:\n1. Do something",
+            }
+        )
+
+        # the text must be preserved as the initial comment
+        bug = Bug.objects.get(pk=result["id"])
+        bug_comments = list(comments.get_comments(bug))
+        self.assertEqual(len(bug_comments), 1)
+        self.assertEqual(
+            bug_comments[0].comment, "Steps to Reproduce:\n1. Do something"
+        )
+        # and attributed to the user who called the API
+        self.assertEqual(bug_comments[0].user, self.tester)
+
+        # empty text must not create a comment
+        result = self.rpc_client.Bug.create(
+            {
+                "summary": "A bug created via API without text",
+                "product": build.version.product_id,
+                "version": build.version_id,
+                "build": build.pk,
+                "severity": severity.pk,
+                "text": "",
+            }
+        )
+
+        bug = Bug.objects.get(pk=result["id"])
+        self.assertEqual(comments.get_comments(bug).count(), 0)
+
+    def verify_api_without_permission(self):
+        pass
+
+
 class TestSeverityCreate(APIPermissionsTestCase):
     permission_label = "bugs.add_severity"
 
