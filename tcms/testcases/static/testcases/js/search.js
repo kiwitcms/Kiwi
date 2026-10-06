@@ -240,10 +240,6 @@ export function pageTestcasesSearchReadyHandler () {
         updateTestPlanSelectFromProduct({ parent: null }, discoverNestedTestPlans)
     })
 
-    $('#id_test_plan').change(function () {
-        $(this).parents('.bootstrap-select').toggleClass('open')
-    })
-
     if (window.location.href.indexOf('product') > -1) {
         $('#id_product').change()
     }
