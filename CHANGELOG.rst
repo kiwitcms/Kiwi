@@ -1,6 +1,92 @@
 Change Log
 ==========
 
+Kiwi TCMS 16.6 (07 Oct 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes multiple security related updates,
+    improvements and bug fixes, new API methods and internal refactoring.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 6.1.1 to 6.1.2
+- Update node_modules/brace-expansion from 1.1.18 to 1.1.21
+- Update node_modules/fast-uri from 3.1.6 to 3.1.8
+- Update node_modules/minimatch from 3.1.3 to 3.1.4
+- Update node_modules/moment from 2.29.4 to 2.31.0
+- Restrict email lookups via RPC calls. Fixes
+  `GHSA-7fw6-cfjr-g2hj <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7fw6-cfjr-g2hj>`_
+- Prevent email address confirmation bypass via API method. Fixes
+  `GHSA-wv2r-fx3r-qfj5 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-wv2r-fx3r-qfj5>`_
+- Fixes for code scanning alerts: DOM text reinterpreted as HTML
+- Fixes for code scanning alerts: URL redirection from remote source
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update markdown from 3.10.3 to 3.11
+- Update mysqlclient from 2.2.8 to 2.3.0
+- Update psycopg from 3.3.5 to 3.3.6
+- Update python-gitlab from 8.5.0 to 8.6.0
+- Update tzdata from 2026.4 to 2026.5
+- Update node_modules/webpack from 5.110.3 to 5.111.1
+- Show paperclip icon with attachment count on TestExecution rows
+  (**Achmad Fienan Rahardianto**)
+- Implement TestPlan multi-clone functionality via Search Test Plans page
+  (**Oskar Hurst, USACE**). Closes
+  `Issue #3976 <https://github.com/kiwitcms/Kiwi/issues/3976>`_
+- Implement TestPlan tree-clone functionality. Closes
+  `Issue #4306 <https://github.com/kiwitcms/Kiwi/issues/4306>`_
+- Add ``Default tester`` search field to Search Test Cases page. Closes
+  `Issue #4522 <https://github.com/kiwitcms/Kiwi/issues/4522>`_
+- Add ``Tested by`` bulk menu on Test Run page. Closes
+  `Issue #4562 <https://github.com/kiwitcms/Kiwi/issues/4562>`_
+- Include ID in default name when cloning a TestPlan
+- Skip UI only columns when exporting search results
+- Prevent TestPlan trees deeper than django-tree-queries can handle. Closes
+  `Issue #4334 <https://github.com/kiwitcms/Kiwi/issues/4334>`_
+- Show test cases with similar summaries on New Test Case page. Closes
+  `Issue #4111 <https://github.com/kiwitcms/Kiwi/issues/4111>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Show all rows in the tags card, not limited to the first 20. Fixes
+  `Issue #2914 <https://github.com/kiwitcms/Kiwi/issues/2914>`_
+- Don't collapse Test plan multiselect on Search Test Cases page. Refs
+  `Issue #3325 <https://github.com/kiwitcms/Kiwi/issues/3325>`_
+
+
+API
+~~~
+
+- ``Bug.create()`` method will store the ``text`` field as initial comment. Closes
+  `Issue #4617 <https://github.com/kiwitcms/Kiwi/issues/4617>`_
+- ``User.update()`` method no longer accepts the ``email`` field
+- Add ``TestExecution.count_attachments()`` method
+- Add ``TestPlan.clone()`` method
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update isort from 9.0.1 to 9.0.2
+- Update locust from 2.46.5 to 2.46.6
+- Update pylint from 4.0.8 to 4.1.2
+- Redesign UI of Clone TestPlan page - all widgets now fit on one line
+- Clone TestPlan page now uses the ``TestPlan.clone()`` API method
+- Refactor calls to ``TestPlan.remove_case``
+- Refactor ``updateVersionSelectFromProduct()`` to accept arguments
+- Refactor ``populateVersion()`` to accept arguments
+
+
+
 Kiwi TCMS 16.5 (17 Sep 2026)
 ----------------------------
 
