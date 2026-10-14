@@ -22,5 +22,6 @@ Submodules
 
    tcms.rpc.decorators
    tcms.rpc.handlers
+   tcms.rpc.registry
    tcms.rpc.utils
    tcms.rpc.views

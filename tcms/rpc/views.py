@@ -5,6 +5,8 @@
 from modernrpc.constants import Protocol
 from modernrpc.server import RpcServer
 
+from tcms.rpc import registry
+
 xml_rpc_server = RpcServer(supported_protocol=Protocol.XML_RPC)
 json_rpc_server = RpcServer(supported_protocol=Protocol.JSON_RPC)
 
@@ -17,6 +19,7 @@ def rpc_method(name, auth, context_target=None):
         xml_rpc_server.register_procedure(
             func, name=name, auth=auth, context_target=context_target
         )
+        registry.register(func, name=name, auth=auth, context_target=context_target)
         return func
 
     return decorator
