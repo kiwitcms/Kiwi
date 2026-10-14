@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2026 Alexander Todorov <atodorov@otb.bg>
 #
-# Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 """
 Tests for the Test Plan family tree.
