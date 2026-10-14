@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2025 Alexander Todorov <atodorov@MrSenko.com>
 #
-# Licensed under the GPL 2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase
