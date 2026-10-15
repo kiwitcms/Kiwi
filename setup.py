@@ -54,7 +54,6 @@ setup(
             "docs*",
             "kiwi_lint*",
             "tests",
-            "*.tests",
             "tcms.settings.test",
         ]
     ),
