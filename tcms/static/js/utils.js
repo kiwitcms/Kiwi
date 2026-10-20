@@ -551,7 +551,7 @@ export function showOrHideMultipleRows (rootSelector, rows) {
     if (rows.show.length <= rows.hide.length) {
         $(rows.show.join(',')).show()
     } else {
-        /* eslint-disable indent */
+        /* eslint-disable @stylistic/indent */
         $('body')
             .find(rootSelector)
                 .show()
