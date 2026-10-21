@@ -1,3 +1,7 @@
+// Copyright (c) 2023-2026 Alexander Todorov <atodorov@otb.bg>
+
+// Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
 function fitTableToPage (doc) {
     const table = doc.content[doc.content.length - 1].table
     const columnCount = table.body[0].length
