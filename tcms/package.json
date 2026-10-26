@@ -20,7 +20,7 @@
   "devDependencies": {
     "eslint": "10.13.0",
     "neostandard": "0.14.1",
-    "webpack": "5.112.0",
+    "webpack": "5.112.1",
     "webpack-cli": "7.2.3"
   }
 }
