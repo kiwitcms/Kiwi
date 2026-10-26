@@ -540,7 +540,7 @@ function getExpandArea (testExecution) {
             })
 
             const $this = $(this)
-            jsonRPC('TestExecution.update', [testExecution.id, testExecutionUpdateArgs(statusId)], execution => {
+            jsonRPC('TestExecution.update', [testExecution.id, testExecutionUpdateArgs(statusId, testExecution)], execution => {
                 // update TestRun if not filtered
                 reloadRowFor(execution, !isFiltered())
 
@@ -817,8 +817,8 @@ function changeStatusBulk (statusId) {
         return false
     }
 
-    const updateArgs = testExecutionUpdateArgs(statusId)
     selected.executionIds.forEach(executionId => {
+        const updateArgs = testExecutionUpdateArgs(statusId, allExecutions[executionId])
         jsonRPC('TestExecution.update', [executionId, updateArgs], execution => {
             // update TestRun if not filtered
             reloadRowFor(execution, !isFiltered())
@@ -1020,13 +1020,19 @@ function removeCases (executionIds) {
     drawPercentBar(Object.values(allExecutions))
 }
 
-function testExecutionUpdateArgs (statusId) {
+function testExecutionUpdateArgs (statusId, testExecution) {
     const statusWeight = allExecutionStatuses[statusId].weight
+    const timeZone = $('#clock').data('time-zone')
+    const now = currentTimeWithTimezone(timeZone)
 
     const updateArgs = { status: statusId, stop_date: '' }
     if (statusWeight !== 0) {
-        const timeZone = $('#clock').data('time-zone')
-        updateArgs.stop_date = currentTimeWithTimezone(timeZone)
+        updateArgs.stop_date = now
+    }
+
+    // set start_date on the first status change and keep it on subsequent changes
+    if (!testExecution.start_date) {
+        updateArgs.start_date = now
     }
 
     return updateArgs
