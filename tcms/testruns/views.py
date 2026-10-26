@@ -197,7 +197,10 @@ class GetTestRunView(DetailView):
                     ),
                     (
                         _("History"),
-                        f"/admin/testruns/testrun/{self.object.pk}/history/",
+                        reverse(
+                            "admin:testruns_testrun_history",
+                            args=[self.object.pk],
+                        ),
                     ),
                     ("-", "-"),
                     (
