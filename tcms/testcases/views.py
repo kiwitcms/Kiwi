@@ -141,7 +141,10 @@ class TestCaseGetView(DetailView):
                     ),
                     (
                         _("History"),
-                        f"/admin/testcases/testcase/{self.object.pk}/history/",
+                        reverse(
+                            "admin:testcases_testcase_history",
+                            args=[self.object.pk],
+                        ),
                     ),
                     ("-", "-"),
                     (

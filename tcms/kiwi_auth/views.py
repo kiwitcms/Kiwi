@@ -171,7 +171,7 @@ class UsersRouter(View):  # pylint: disable=missing-permission-required
                     _("You are viewing records from tenant '%s'") % "MAIN",
                 )
 
-            return HttpResponseRedirect("/admin/auth/user/")
+            return HttpResponseRedirect(reverse("admin:auth_user_changelist"))
 
         if is_multi_tenant and request.tenant.schema_name != get_public_schema_name():
             messages.add_message(
@@ -180,9 +180,11 @@ class UsersRouter(View):  # pylint: disable=missing-permission-required
                 _("You are viewing records from tenant '%s'")
                 % request.tenant.schema_name,
             )
-            return HttpResponseRedirect("/admin/tcms_tenants/tenant_authorized_users/")
+            return HttpResponseRedirect(
+                reverse("admin:tcms_tenants_tenant_authorized_users_changelist")
+            )
 
-        return HttpResponseRedirect("/admin/auth/user/")
+        return HttpResponseRedirect(reverse("admin:auth_user_changelist"))
 
 
 @method_decorator(login_required, name="dispatch")
@@ -199,7 +201,7 @@ class GroupsRouter(View):  # pylint: disable=missing-permission-required
                     _("You are viewing records from tenant '%s'") % "MAIN",
                 )
 
-            return HttpResponseRedirect("/admin/auth/group/")
+            return HttpResponseRedirect(reverse("admin:auth_group_changelist"))
 
         if is_multi_tenant and request.tenant.schema_name != get_public_schema_name():
             messages.add_message(
@@ -208,9 +210,9 @@ class GroupsRouter(View):  # pylint: disable=missing-permission-required
                 _("You are viewing records from tenant '%s'")
                 % request.tenant.schema_name,
             )
-            return HttpResponseRedirect("/admin/tenant_groups/group/")
+            return HttpResponseRedirect(reverse("admin:tenant_groups_group_changelist"))
 
-        return HttpResponseRedirect("/admin/auth/group/")
+        return HttpResponseRedirect(reverse("admin:auth_group_changelist"))
 
 
 @method_decorator(login_required, name="dispatch")

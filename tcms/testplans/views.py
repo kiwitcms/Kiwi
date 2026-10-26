@@ -154,7 +154,10 @@ class TestPlanGetView(DetailView):
                     ),
                     (
                         _("History"),
-                        f"/admin/testplans/testplan/{self.object.pk}/history/",
+                        reverse(
+                            "admin:testplans_testplan_history",
+                            args=[self.object.pk],
+                        ),
                     ),
                     ("-", "-"),
                     (
