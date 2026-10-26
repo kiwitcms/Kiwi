@@ -79,6 +79,15 @@ class LoggedInTestCase(FastHttpUser):
     password = "password"
     login_url = "/accounts/login/"
 
+    def __init__(self, *args, **kwargs):
+        # strip trailing slash from --host b/c locust >= 2.47 will produce
+        # a protocol-relative URI, e.g. //accounts/login/, which is
+        # rejected by geventhttpclient >= 2.5.1
+        if self.host:
+            self.host = self.host.rstrip("/")
+
+        super().__init__(*args, **kwargs)
+
     def on_start(self):
         self.do_login()
 
