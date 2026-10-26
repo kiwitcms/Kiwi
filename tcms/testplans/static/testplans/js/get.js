@@ -224,7 +224,7 @@ function getTestCaseRowContent (rowContent, testCase, permissions) {
 function getTestCaseExpandArea (row, testCase, permissions) {
     markdown2HTML(testCase.text, row.find('.js-test-case-expand-text'))
     if (testCase.notes.trim().length > 0) {
-        row.find('.js-test-case-expand-notes').html(testCase.notes)
+        markdown2HTML(testCase.notes, row.find('.js-test-case-expand-notes'))
     }
 
     // draw the attachments
