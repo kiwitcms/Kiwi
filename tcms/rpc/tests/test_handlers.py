@@ -3,6 +3,7 @@ from datetime import timedelta
 from unittest.mock import Mock
 
 from django.test import TestCase
+from modernrpc.exceptions import RPCInvalidRequest
 from parameterized import parameterized
 
 from tcms.rpc.handlers import (
@@ -247,3 +248,45 @@ class TestEscape(TestCase):
 
         self.assertIsInstance(result, tuple)
         self.assertEqual(result, ("&lt;b&gt;", 1.0))
+
+
+class TestInspectRPCArgs(TestCase):
+    def test_rejects_restricted_field(self):
+        with self.assertRaises(RPCInvalidRequest):
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "User.filter", kwargs={"query": {"password": "x"}}  # nosec:B105
+            )
+
+    def test_rejects_restricted_field_in_lookup_path(self):
+        with self.assertRaises(RPCInvalidRequest):
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "TestCase.filter",
+                kwargs={"query": {"author__password__startswith": "x"}},  # nosec:B105
+            )
+
+    def test_rejects_restricted_positional_argument(self):
+        with self.assertRaises(RPCInvalidRequest):
+            query = ({"secret": "x"},)  # nosec:B105
+            KiwiTCMSHandlerMixin.inspect_rpc_args("User.filter", query)
+
+    def test_allows_restricted_fields_for_create_and_update(self):
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "User.update", kwargs={"values": {"password": "x"}}  # nosec:B105
+            )
+        )
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "TestCase.create", kwargs={"values": {"token": "x"}}  # nosec:B105
+            )
+        )
+
+    def test_allows_safe_fields(self):
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "TestCase.filter", kwargs={"query": {"author__username": "x"}}
+            )
+        )
+
+    def test_accepts_no_arguments(self):
+        self.assertIsNone(KiwiTCMSHandlerMixin.inspect_rpc_args("TestCase.filter"))

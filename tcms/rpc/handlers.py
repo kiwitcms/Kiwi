@@ -113,10 +113,8 @@ class KiwiTCMSHandlerMixin:
                 yield from __class__.dict_keys(value, depth + 1)
 
     @staticmethod
-    def inspect_rpc_args(rpc_request):
-        if rpc_request.method_name.endswith(
-            ".create"
-        ) or rpc_request.method_name.endswith(".update"):
+    def inspect_rpc_args(method_name, args=(), kwargs=None):
+        if method_name.endswith(".create") or method_name.endswith(".update"):
             return
 
         restricted_fields = (
@@ -129,8 +127,8 @@ class KiwiTCMSHandlerMixin:
             "token",
         )
 
-        keys_to_check = list(__class__.dict_keys(rpc_request.args))
-        keys_to_check.extend(__class__.dict_keys(getattr(rpc_request, "kwargs", None)))
+        keys_to_check = list(__class__.dict_keys(args))
+        keys_to_check.extend(__class__.dict_keys(kwargs))
 
         for key in keys_to_check:
             key_str = str(key).lower()
@@ -139,7 +137,11 @@ class KiwiTCMSHandlerMixin:
 
     def process_single_request(self, rpc_request, context):
         try:
-            self.inspect_rpc_args(rpc_request)
+            self.inspect_rpc_args(
+                rpc_request.method_name,
+                rpc_request.args,
+                getattr(rpc_request, "kwargs", None),
+            )
         except Exception as exc:  # pylint: disable=broad-exception-caught
             rpc_exc = context.server.on_error(exc, context)
             return self.build_error_result(
@@ -153,7 +155,11 @@ class KiwiTCMSHandlerMixin:
 
     async def aprocess_single_request(self, rpc_request, context):
         try:
-            self.inspect_rpc_args(rpc_request)
+            self.inspect_rpc_args(
+                rpc_request.method_name,
+                rpc_request.args,
+                getattr(rpc_request, "kwargs", None),
+            )
         except Exception as exc:  # pylint: disable=broad-exception-caught
             rpc_exc = context.server.on_error(exc, context)
             return self.build_error_result(
