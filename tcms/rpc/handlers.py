@@ -88,6 +88,8 @@ class KiwiTCMSHandlerMixin:
         elif isinstance(value, list):
             for idx, item in enumerate(value):
                 value[idx] = __class__.escape(item)
+        elif isinstance(value, tuple):
+            return tuple(__class__.escape(item) for item in value)
         else:
             return __class__.escape_value(value)
         return value

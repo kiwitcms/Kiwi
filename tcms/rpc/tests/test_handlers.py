@@ -58,6 +58,13 @@ class TestKiwiTCMSJsonRpcHandler(TestCase):
         self.assertEqual(result.data[0], 300.0)
         self.assertEqual(result.data[1], 7200.0)
 
+    def test_tuple_with_html_escape(self):
+        data = ("<b>bold</b>", "normal")
+        result = self.handler.escape(data)
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(result[0], html.escape("<b>bold</b>"))
+        self.assertEqual(result[1], "normal")
+
     def test_complex_nested_structure(self):
         data = {
             "items": [
@@ -116,6 +123,13 @@ class TestKiwiTCMSXmlRpcHandler(TestCase):
         result = self.handler.build_success_result(self.request, data)
         self.assertEqual(result.data[0], 300.0)
         self.assertEqual(result.data[1], 7200.0)
+
+    def test_tuple_with_html_escape(self):
+        data = ("<b>bold</b>", "normal")
+        result = self.handler.escape(data)
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(result[0], html.escape("<b>bold</b>"))
+        self.assertEqual(result[1], "normal")
 
     def test_complex_nested_structure(self):
         data = {
