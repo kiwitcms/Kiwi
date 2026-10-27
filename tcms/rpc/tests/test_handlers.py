@@ -211,3 +211,39 @@ class TestUnicodeNormalization(TestCase):
             ),
             KiwiTCMSHandlerMixin.normalize_text(value),
         )
+
+
+class TestEscape(TestCase):
+    def test_does_not_modify_input(self):
+        data = {
+            "message": "<b>bold</b>",
+            "items": ["<i>item</i>", timedelta(seconds=5)],
+        }
+        result = KiwiTCMSHandlerMixin.escape(data)
+
+        self.assertEqual(
+            data,
+            {
+                "message": "<b>bold</b>",
+                "items": ["<i>item</i>", timedelta(seconds=5)],
+            },
+        )
+        self.assertEqual(result["message"], "&lt;b&gt;bold&lt;/b&gt;")
+        self.assertEqual(result["items"][0], "&lt;i&gt;item&lt;/i&gt;")
+        self.assertEqual(result["items"][1], 5.0)
+        self.assertIsNot(result, data)
+        self.assertIsNot(result["items"], data["items"])
+
+    def test_aliased_values_are_escaped_once(self):
+        shared = ["<b>"]
+        result = KiwiTCMSHandlerMixin.escape({"a": shared, "b": shared})
+
+        self.assertEqual(result["a"], ["&lt;b&gt;"])
+        self.assertEqual(result["b"], ["&lt;b&gt;"])
+        self.assertEqual(shared, ["<b>"])
+
+    def test_preserves_container_types(self):
+        result = KiwiTCMSHandlerMixin.escape(("<b>", timedelta(seconds=1)))
+
+        self.assertIsInstance(result, tuple)
+        self.assertEqual(result, ("&lt;b&gt;", 1.0))

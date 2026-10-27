@@ -81,18 +81,23 @@ class KiwiTCMSHandlerMixin:
 
     @staticmethod
     def escape(value):
-        """Recursively walk *value* and transform it in place."""
+        """Return a copy of *value* with all string values escaped."""
         if isinstance(value, dict):
+            result = {}
             for key, val in value.items():
-                value[key] = __class__.escape(val)
-        elif isinstance(value, list):
-            for idx, item in enumerate(value):
-                value[idx] = __class__.escape(item)
-        elif isinstance(value, tuple):
-            return tuple(__class__.escape(item) for item in value)
-        else:
-            return __class__.escape_value(value)
-        return value
+                result[key] = __class__.escape(val)
+            return result
+        if isinstance(value, list):
+            result = []
+            for item in value:
+                result.append(__class__.escape(item))
+            return result
+        if isinstance(value, tuple):
+            result = []
+            for item in value:
+                result.append(__class__.escape(item))
+            return tuple(result)
+        return __class__.escape_value(value)
 
     @staticmethod
     def dict_keys(extract_from, depth=0):
