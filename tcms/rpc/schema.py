@@ -402,9 +402,7 @@ def form_examples(form_class) -> list[dict]:
             sample.update(dict(optional[:2]))
             examples.append(sample)
     else:
-        sample = {
-            name: form_placeholder(field) for name, field in list(fields.items())[:2]
-        }
+        sample = {name: form_placeholder(field) for name, field in fields.items()}
         if sample:
             examples.append(sample)
 
