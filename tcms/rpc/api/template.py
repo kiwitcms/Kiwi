@@ -6,13 +6,14 @@ from typing import Annotated, Any
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testcase import TemplateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Template
 
 TemplateQuery = Annotated[dict[str, Any], ModelQuery(Template)]
+TemplateValues = Annotated[dict[str, Any], FormValues(TemplateForm)]
 
 
 @rpc_method(
@@ -43,7 +44,7 @@ def filter(query: TemplateQuery):  # pylint: disable=redefined-builtin
     name="Template.create",
     auth=permissions_required("testcases.add_template"),
 )
-def create(values):
+def create(values: TemplateValues):
     """
     .. function:: RPC Template.create(values)
 

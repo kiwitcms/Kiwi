@@ -8,11 +8,12 @@ from django.forms.models import model_to_dict
 
 from tcms.management.forms import ClassificationForm
 from tcms.management.models import Classification
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 
 ClassificationQuery = Annotated[dict[str, Any], ModelQuery(Classification)]
+ClassificationValues = Annotated[dict[str, Any], FormValues(ClassificationForm)]
 
 
 @rpc_method(
@@ -42,7 +43,7 @@ def filter(query: ClassificationQuery):  # pylint: disable=redefined-builtin
     name="Classification.create",
     auth=permissions_required("management.add_classification"),
 )
-def create(values):
+def create(values: ClassificationValues):
     """
     .. function:: RPC Classification.create(values)
 

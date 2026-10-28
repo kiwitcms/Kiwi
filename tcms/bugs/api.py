@@ -8,13 +8,15 @@ from tcms.bugs.models import Bug, Severity
 from tcms.core.helpers import comments
 from tcms.management.models import Tag
 from tcms.rpc import utils
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testruns.models import TestExecution
 
 BugQuery = Annotated[dict[str, Any], ModelQuery(Bug)]
 SeverityQuery = Annotated[dict[str, Any], ModelQuery(Severity)]
+BugValues = Annotated[dict[str, Any], FormValues(NewBugFromRPCForm)]
+SeverityValues = Annotated[dict[str, Any], FormValues(SeverityForm)]
 
 
 @rpc_method(
@@ -158,7 +160,7 @@ def filter_canonical(query: BugQuery):  # pylint: disable=redefined-builtin
     auth=permissions_required("bugs.add_bug"),
     context_target="rpc_context",
 )
-def create(values, rpc_context=None):
+def create(values: BugValues, rpc_context=None):
     """
     .. function:: RPC Bug.create(values)
 
@@ -247,7 +249,7 @@ def severity_filter(query: SeverityQuery):  # pylint: disable=redefined-builtin
     name="Severity.create",
     auth=permissions_required("bugs.add_severity"),
 )
-def severity_create(values):
+def severity_create(values: SeverityValues):
     """
     .. function:: RPC Severity.create(values)
 

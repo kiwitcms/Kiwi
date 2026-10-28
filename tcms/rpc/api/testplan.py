@@ -5,7 +5,7 @@ from django.forms.models import model_to_dict
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanAPIForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
@@ -14,6 +14,9 @@ from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.models import TestPlan
 
 TestPlanQuery = Annotated[dict[str, Any], ModelQuery(TestPlan)]
+TestPlanValues = Annotated[dict[str, Any], FormValues(NewPlanAPIForm)]
+TestPlanUpdateValues = Annotated[dict[str, Any], FormValues(EditPlanForm)]
+ClonePlanValues = Annotated[dict[str, Any], FormValues(ClonePlanForm)]
 
 
 @rpc_method(
@@ -21,7 +24,7 @@ TestPlanQuery = Annotated[dict[str, Any], ModelQuery(TestPlan)]
     auth=permissions_required("testplans.add_testplan"),
     context_target="rpc_context",
 )
-def create(values, rpc_context=None):
+def create(values: TestPlanValues, rpc_context=None):
     """
     .. function:: RPC TestPlan.create(values)
 
@@ -83,7 +86,7 @@ def create(values, rpc_context=None):
     auth=permissions_required("testplans.add_testplan"),
     context_target="rpc_context",
 )
-def clone(plan_id, values=None, rpc_context=None):
+def clone(plan_id, values: ClonePlanValues | None = None, rpc_context=None):
     """
     .. function:: RPC TestPlan.clone(plan_id, values)
 
@@ -244,7 +247,7 @@ def remove_tag(plan_id, tag_name):
     auth=permissions_required("testplans.change_testplan"),
     context_target="rpc_context",
 )
-def update(plan_id, values, rpc_context=None):
+def update(plan_id, values: TestPlanUpdateValues, rpc_context=None):
     """
     .. function:: RPC TestPlan.update(plan_id, values)
 

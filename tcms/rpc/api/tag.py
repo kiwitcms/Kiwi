@@ -5,11 +5,12 @@ from django.forms.models import model_to_dict
 
 from tcms.management.forms import TagForm
 from tcms.management.models import Tag
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 
 TagQuery = Annotated[dict[str, Any], ModelQuery(Tag)]
+TagValues = Annotated[dict[str, Any], FormValues(TagForm)]
 
 
 @rpc_method(
@@ -40,7 +41,7 @@ def filter(query: TagQuery):  # pylint: disable=redefined-builtin
     name="Tag.create",
     auth=permissions_required("management.add_tag"),
 )
-def create(values):
+def create(values: TagValues):
     """
     .. function:: RPC Tag.create(values)
 

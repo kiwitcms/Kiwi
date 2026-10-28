@@ -99,7 +99,7 @@ def filter(  # pylint: disable=redefined-builtin
     context_target="rpc_context",
 )
 def update(
-    user_id, values, rpc_context=None
+    user_id, values: dict[str, Any], rpc_context=None
 ):  # pylint: disable=missing-api-permissions-required
     """
     .. function:: RPC User.update(user_id, values)

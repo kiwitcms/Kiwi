@@ -4,11 +4,12 @@ from django.forms.models import model_to_dict
 
 from tcms.management.forms import VersionForm
 from tcms.management.models import Version
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 
 VersionQuery = Annotated[dict[str, Any], ModelQuery(Version)]
+VersionValues = Annotated[dict[str, Any], FormValues(VersionForm)]
 
 
 @rpc_method(
@@ -38,7 +39,7 @@ def filter(query: VersionQuery):  # pylint: disable=redefined-builtin
     name="Version.create",
     auth=permissions_required("management.add_version"),
 )
-def create(values):
+def create(values: VersionValues):
     """
     .. function:: RPC Version.create(values)
 

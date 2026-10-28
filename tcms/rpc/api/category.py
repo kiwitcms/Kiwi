@@ -2,13 +2,14 @@ from typing import Annotated, Any
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testcase import CategoryForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Category
 
 CategoryQuery = Annotated[dict[str, Any], ModelQuery(Category)]
+CategoryValues = Annotated[dict[str, Any], FormValues(CategoryForm)]
 
 
 @rpc_method(
@@ -38,7 +39,7 @@ def filter(query: CategoryQuery):  # pylint: disable=redefined-builtin
     name="Category.create",
     auth=permissions_required("testcases.add_category"),
 )
-def create(values):
+def create(values: CategoryValues):
     """
     .. function:: RPC Category.create(values)
 
