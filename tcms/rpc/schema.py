@@ -334,13 +334,91 @@ def form_field_schema(field) -> dict:
     return prop
 
 
+def form_instance(form_class):
+    """Instantiate a form so __init__-time changes (e.g. update forms) apply."""
+    try:
+        return form_class()
+    except TypeError:
+        return form_class(data={})
+
+
+def first_choice(field):
+    choices = field.choices
+    if callable(choices):
+        choices = choices()
+    choices = list(choices)
+    return str(choices[0][0]) if choices else "..."
+
+
+def form_placeholder(field):
+    result = "..."
+    if isinstance(field, forms.ModelMultipleChoiceField):
+        result = [1]
+    elif isinstance(field, forms.ModelChoiceField):
+        result = 1
+    elif isinstance(field, forms.MultipleChoiceField):
+        choices = field.choices
+        if callable(choices):
+            choices = choices()
+        choices = list(choices)
+        result = [str(choices[0][0])] if choices else ["..."]
+    elif isinstance(field, forms.BooleanField):
+        result = True
+    elif isinstance(field, forms.IntegerField):
+        result = 1
+    elif isinstance(field, (forms.FloatField, forms.DecimalField)):
+        result = 1.0
+    elif isinstance(field, forms.DateTimeField):
+        result = "2026-01-01T00:00:00"
+    elif isinstance(field, forms.DateField):
+        result = "2026-01-01"
+    elif isinstance(field, forms.TimeField):
+        result = "12:00:00"
+    elif isinstance(field, forms.EmailField):
+        result = "user@example.com"
+    elif isinstance(field, forms.ChoiceField):
+        result = first_choice(field)
+    return result
+
+
+def form_examples(form_class) -> list[dict]:
+    fields = form_instance(form_class).fields
+    required = {
+        name: form_placeholder(field)
+        for name, field in fields.items()
+        if field.required
+    }
+
+    examples = []
+    if required:
+        examples.append(required)
+        optional = [
+            (name, form_placeholder(field))
+            for name, field in fields.items()
+            if not field.required
+        ]
+        if optional:
+            sample = dict(required)
+            sample.update(dict(optional[:2]))
+            examples.append(sample)
+    else:
+        sample = {
+            name: form_placeholder(field) for name, field in list(fields.items())[:2]
+        }
+        if sample:
+            examples.append(sample)
+
+    return examples
+
+
 def form_schema(marker: FormValues) -> dict:
-    form = marker.form
-    model = getattr(getattr(form, "_meta", None), "model", None)
+    form_class = marker.form
+    instance = form_instance(form_class)
+    model = getattr(getattr(form_class, "_meta", None), "model", None)
     properties = {}
     required = []
 
-    for name, field in form.base_fields.items():
+    for name, field in instance.fields.items():
         model_field = None
         if model is not None:
             try:
@@ -365,8 +443,9 @@ def form_schema(marker: FormValues) -> dict:
         "type": "object",
         "properties": properties,
         "required": required,
+        "examples": form_examples(form_class),
         "additionalProperties": True,
-        "x-kiwitcms-form": form.__name__,
+        "x-kiwitcms-form": form_class.__name__,
     }
 
 
