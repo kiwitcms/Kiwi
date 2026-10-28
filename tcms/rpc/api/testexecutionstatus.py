@@ -2,19 +2,24 @@
 
 # Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testrun import TestExecutionStatusForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testruns.models import TestExecutionStatus
+
+TestExecutionStatusQuery = Annotated[dict[str, Any], ModelQuery(TestExecutionStatus)]
 
 
 @rpc_method(
     name="TestExecutionStatus.filter",
     auth=permissions_required("testruns.view_testexecutionstatus"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: TestExecutionStatusQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestExecutionStatus.filter(query)
 

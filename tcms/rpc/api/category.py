@@ -1,16 +1,21 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testcase import CategoryForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Category
+
+CategoryQuery = Annotated[dict[str, Any], ModelQuery(Category)]
 
 
 @rpc_method(
     name="Category.filter",
     auth=permissions_required("testcases.view_category"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: CategoryQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Category.filter(query)
 

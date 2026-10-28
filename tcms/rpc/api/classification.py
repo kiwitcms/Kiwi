@@ -2,19 +2,24 @@
 
 # Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import ClassificationForm
 from tcms.management.models import Classification
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+ClassificationQuery = Annotated[dict[str, Any], ModelQuery(Classification)]
 
 
 @rpc_method(
     name="Classification.filter",
     auth=permissions_required("management.view_classification"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: ClassificationQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Classification.filter(query)
 

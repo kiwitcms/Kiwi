@@ -1,13 +1,19 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase
 from tcms.testruns.forms import NewRunForm
 from tcms.testruns.models import Property, TestExecution, TestRun
+
+TestRunQuery = Annotated[dict[str, Any], ModelQuery(TestRun)]
+PropertyQuery = Annotated[dict[str, Any], ModelQuery(Property)]
 
 
 @rpc_method(
@@ -232,7 +238,7 @@ def create(values, rpc_context=None):
     name="TestRun.filter",
     auth=permissions_required("testruns.view_testrun"),
 )
-def filter(query=None):  # pylint: disable=redefined-builtin
+def filter(query: TestRunQuery | None = None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestRun.filter(query)
 
@@ -387,7 +393,7 @@ def remove_cc(run_id, username, rpc_context=None):
     name="TestRun.properties",
     auth=permissions_required("testruns.view_property"),
 )
-def properties(query=None):
+def properties(query: PropertyQuery | None = None):
     """
     .. function:: TestRun.properties(query)
 
@@ -502,13 +508,13 @@ def add_attachment(run_id, filename, b64content, rpc_context=None):
     name="TestRun.remove",
     auth=permissions_required("testruns.delete_testrun"),
 )
-def remove(query):
+def remove(query: TestRunQuery):
     """
     .. function:: RPC TestRun.remove(query)
 
         Remove TestRun object(s).
 
-        :param query: Field lookups for :class:`tcms.testruns.models.TestRuns`
+        :param query: Field lookups for :class:`tcms.testruns.models.TestRun`
         :type query: dict
         :raises PermissionDenied: if missing the *testruns.delete_testrun* permission
         :return: The number of objects deleted and a dictionary with the

@@ -1,18 +1,24 @@
+from typing import Annotated, Any
+
 from django.db.models import CharField, Count, Value
 from django.db.models.functions import Concat
 from django.utils.translation import gettext_lazy as _
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import django_login_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestExecution, TestExecutionStatus
+
+TestCaseQuery = Annotated[dict[str, Any], ModelQuery(TestCase)]
+TestExecutionQuery = Annotated[dict[str, Any], ModelQuery(TestExecution)]
 
 
 @rpc_method(
     name="Testing.breakdown",
     auth=django_login_required,
 )
-def breakdown(query=None):
+def breakdown(query: TestCaseQuery | None = None):
     """
     .. function:: RPC Testing.breakdown(query)
 
@@ -72,14 +78,14 @@ def _map_query_set(query_set, field):
     name="Testing.status_matrix",
     auth=django_login_required,
 )
-def status_matrix(query=None):
+def status_matrix(query: TestExecutionQuery | None = None):
     """
     .. function:: RPC Testing.status_matrix(query)
 
         Perform a search and return data_set needed to visualize the status matrix
         of test plans, test cases and test executions
 
-        :param query: Field lookups for :class:`tcms.testcases.models.TestPlan`
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
         :type query: dict
         :return: A dictionary, containing the information about test executions
         :rtype: dict
@@ -124,7 +130,18 @@ def status_matrix(query=None):
     name="Testing.execution_trends",
     auth=django_login_required,
 )
-def execution_trends(query=None):
+def execution_trends(query: TestExecutionQuery | None = None):
+    """
+    .. function:: RPC Testing.execution_trends(query)
+
+        Return execution trends for the selected test executions.
+
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
+        :type query: dict
+        :return: Dictionary containing ``categories``, ``data_set``, ``colors``
+                 and ``status_count``.
+        :rtype: dict
+    """
     if query is None:
         query = {}
 
@@ -201,7 +218,18 @@ def _append_status_counts_to_result(counts, result):
     name="Testing.test_case_health",
     auth=django_login_required,
 )
-def test_case_health(query=None):
+def test_case_health(query: TestExecutionQuery | None = None):
+    """
+    .. function:: RPC Testing.test_case_health(query)
+
+        Return pass/fail statistics per test case for the selected test
+        executions.
+
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
+        :type query: dict
+        :return: List of per-test-case statistics.
+        :rtype: list(dict)
+    """
     if query is None:
         query = {}
 
@@ -238,7 +266,18 @@ def test_case_health(query=None):
     name="Testing.individual_test_case_health",
     auth=django_login_required,
 )
-def individual_test_case_health_simple(query=None):
+def individual_test_case_health_simple(query: TestExecutionQuery | None = None):
+    """
+    .. function:: RPC Testing.individual_test_case_health(query)
+
+        Return individual test execution health records for the selected
+        test executions.
+
+        :param query: Field lookups for :class:`tcms.testruns.models.TestExecution`
+        :type query: dict
+        :return: Serialized list of test execution records.
+        :rtype: list(dict)
+    """
     if query is None:
         query = {}
 

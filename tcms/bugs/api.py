@@ -1,3 +1,5 @@
+from typing import Annotated, Any
+
 from django.contrib.auth import get_user_model
 from django.forms.models import model_to_dict
 
@@ -6,9 +8,13 @@ from tcms.bugs.models import Bug, Severity
 from tcms.core.helpers import comments
 from tcms.management.models import Tag
 from tcms.rpc import utils
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testruns.models import TestExecution
+
+BugQuery = Annotated[dict[str, Any], ModelQuery(Bug)]
+SeverityQuery = Annotated[dict[str, Any], ModelQuery(Severity)]
 
 
 @rpc_method(
@@ -63,7 +69,7 @@ def remove_tag(bug_id, tag):
     name="Bug.remove",
     auth=permissions_required("bugs.delete_bug"),
 )
-def remove(query):
+def remove(query: BugQuery):
     """
     .. function:: RPC Bug.remove(bug_id)
 
@@ -80,7 +86,7 @@ def remove(query):
     name="Bug.filter",
     auth=permissions_required("bugs.view_bug"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: BugQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Bug.filter(query)
 
@@ -115,7 +121,7 @@ def filter(query):  # pylint: disable=redefined-builtin
     name="Bug.filter_canonical",
     auth=permissions_required("bugs.view_bug"),
 )
-def filter_canonical(query):  # pylint: disable=redefined-builtin
+def filter_canonical(query: BugQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Bug.filter_canonical(query)
 
@@ -210,7 +216,7 @@ def create(values, rpc_context=None):
     name="Severity.filter",
     auth=permissions_required("bugs.view_severity"),
 )
-def severity_filter(query):  # pylint: disable=redefined-builtin
+def severity_filter(query: SeverityQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Severity.filter(query)
 

@@ -1,17 +1,22 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import BuildForm
 from tcms.management.models import Build
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.management import BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+BuildQuery = Annotated[dict[str, Any], ModelQuery(Build)]
 
 
 @rpc_method(
     name="Build.filter",
     auth=permissions_required("management.view_build"),
 )
-def filter(query=None):  # pylint: disable=redefined-builtin
+def filter(query: BuildQuery | None = None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Build.filter(query)
 

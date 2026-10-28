@@ -1,16 +1,21 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testcase import TestCaseStatusForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCaseStatus
+
+TestCaseStatusQuery = Annotated[dict[str, Any], ModelQuery(TestCaseStatus)]
 
 
 @rpc_method(
     name="TestCaseStatus.filter",
     auth=permissions_required("testcases.view_testcasestatus"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: TestCaseStatusQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestCaseStatus.filter(query)
 
