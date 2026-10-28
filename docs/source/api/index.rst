@@ -9,6 +9,8 @@ Server side RPC methods are documented in :mod:`tcms.rpc.api`.
 Machine-readable description
 ----------------------------
 
+.. versionadded:: 16.7
+
 Static files are generated at build time by
 ``manage.py generate_rpc_schema`` and served under
 ``https://<kiwitcms-host>/static/api/``:
