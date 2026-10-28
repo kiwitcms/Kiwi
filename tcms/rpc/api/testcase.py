@@ -1,5 +1,7 @@
 from datetime import timedelta
+from typing import Annotated, Any
 
+from django.apps import apps
 from django.contrib.auth import get_user_model
 from django.db.models.functions import Coalesce
 from django.db.utils import NotSupportedError
@@ -9,10 +11,20 @@ from django.forms.models import model_to_dict
 from tcms.core import helpers
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Property, TestCase, TestCasePlan
+
+TestCaseQuery = Annotated[dict[str, Any], ModelQuery(TestCase)]
+# HistoricalTestCase is generated at runtime, hence the app registry lookup.
+HistoricalTestCaseQuery = Annotated[
+    dict[str, Any],
+    ModelQuery(apps.get_model("testcases", "HistoricalTestCase")),
+]
+TestCasePlanQuery = Annotated[dict[str, Any], ModelQuery(TestCasePlan)]
+PropertyQuery = Annotated[dict[str, Any], ModelQuery(Property)]
 
 
 @rpc_method(
@@ -274,7 +286,7 @@ def create(values, rpc_context=None):
     name="TestCase.filter",
     auth=permissions_required("testcases.view_testcase"),
 )
-def filter(query=None):  # pylint: disable=redefined-builtin
+def filter(query: TestCaseQuery | None = None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestCase.filter(query)
 
@@ -340,7 +352,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     name="TestCase.history",
     auth=permissions_required("testcases.view_testcase"),
 )
-def history(case_id, query=None):
+def history(case_id, query: HistoricalTestCaseQuery | None = None):
     """
     .. function:: RPC TestCase.history(case_id, query)
 
@@ -348,7 +360,7 @@ def history(case_id, query=None):
 
         :param case_id: TestCase PK
         :type case_id: int
-        :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
+        :param query: Field lookups for :class:`tcms.testcases.HistoricalTestCase`
         :type query: dict
         :return: Serialized list of HistoricalTestCase objects.
         :rtype: list(dict)
@@ -363,7 +375,7 @@ def history(case_id, query=None):
     name="TestCase.sortkeys",
     auth=permissions_required("testcases.view_testcase"),
 )
-def sortkeys(query=None):
+def sortkeys(query: TestCasePlanQuery | None = None):
     """
     .. function:: RPC TestCase.sortkeys(query)
 
@@ -447,7 +459,7 @@ def update(case_id, values, rpc_context=None):
     name="TestCase.remove",
     auth=permissions_required("testcases.delete_testcase"),
 )
-def remove(query):
+def remove(query: TestCaseQuery):
     """
     .. function:: RPC TestCase.remove(query)
 
@@ -623,7 +635,7 @@ def comments(case_id):
     name="TestCase.properties",
     auth=permissions_required("testcases.view_property"),
 )
-def properties(query=None):
+def properties(query: PropertyQuery | None = None):
     """
     .. function:: TestCase.properties(query)
 
@@ -655,7 +667,7 @@ def properties(query=None):
     name="TestCase.remove_property",
     auth=permissions_required("testcases.delete_property"),
 )
-def remove_property(query):
+def remove_property(query: PropertyQuery):
     """
     .. function:: TestCase.remove_property(query)
 

@@ -2,19 +2,24 @@
 #
 # Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.admin import BugSystemAdminForm
 from tcms.testcases.models import BugSystem
+
+BugSystemQuery = Annotated[dict[str, Any], ModelQuery(BugSystem)]
 
 
 @rpc_method(
     name="BugTracker.filter",
     auth=permissions_required("testcases.view_bugsystem"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: BugSystemQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC BugTracker.filter(query)
 

@@ -2,19 +2,24 @@
 #
 # Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testcase import TemplateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import Template
+
+TemplateQuery = Annotated[dict[str, Any], ModelQuery(Template)]
 
 
 @rpc_method(
     name="Template.filter",
     auth=permissions_required("testcases.view_template"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: TemplateQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Template.filter(query)
 

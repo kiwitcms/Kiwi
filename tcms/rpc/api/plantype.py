@@ -1,9 +1,14 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testplan import PlanTypeForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testplans.models import PlanType
+
+PlanTypeQuery = Annotated[dict[str, Any], ModelQuery(PlanType)]
 
 
 @rpc_method(
@@ -35,7 +40,7 @@ def create(values):
     name="PlanType.filter",
     auth=permissions_required("testplans.view_plantype"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: PlanTypeQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC PlanType.filter(query)
 

@@ -1,16 +1,21 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import PriorityForm
 from tcms.management.models import Priority
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+PriorityQuery = Annotated[dict[str, Any], ModelQuery(Priority)]
 
 
 @rpc_method(
     name="Priority.filter",
     auth=permissions_required("management.view_priority"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: PriorityQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Priority.filter(query)
 

@@ -1,17 +1,22 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import ComponentForm
 from tcms.management.models import Component
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.management import ComponentUpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+ComponentQuery = Annotated[dict[str, Any], ModelQuery(Component)]
 
 
 @rpc_method(
     name="Component.filter",
     auth=permissions_required("management.view_component"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: ComponentQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Component.filter(query)
 

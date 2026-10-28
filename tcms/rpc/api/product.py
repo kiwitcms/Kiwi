@@ -1,9 +1,14 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import ProductForm
 from tcms.management.models import Product
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+ProductQuery = Annotated[dict[str, Any], ModelQuery(Product)]
 
 
 @rpc_method(
@@ -36,7 +41,7 @@ def create(values):
     name="Product.filter",
     auth=permissions_required("management.view_product"),
 )
-def filter(query=None):  # pylint: disable=redefined-builtin
+def filter(query: ProductQuery | None = None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Product.filter(query)
 

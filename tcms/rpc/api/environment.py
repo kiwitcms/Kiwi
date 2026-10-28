@@ -1,16 +1,22 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testrun import EnvironmentForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testruns.models import Environment, EnvironmentProperty
+
+EnvironmentQuery = Annotated[dict[str, Any], ModelQuery(Environment)]
+EnvironmentPropertyQuery = Annotated[dict[str, Any], ModelQuery(EnvironmentProperty)]
 
 
 @rpc_method(
     name="Environment.properties",
     auth=permissions_required("testruns.view_environmentproperty"),
 )
-def properties(query=None):
+def properties(query: EnvironmentPropertyQuery | None = None):
     """
     .. function:: Environment.properties(query)
 
@@ -42,7 +48,7 @@ def properties(query=None):
     name="Environment.remove_property",
     auth=permissions_required("testruns.delete_environmentproperty"),
 )
-def remove_property(query):
+def remove_property(query: EnvironmentPropertyQuery):
     """
     .. function:: Environment.remove_property(query)
 
@@ -85,7 +91,7 @@ def add_property(environment_id, name, value):
     name="Environment.filter",
     auth=permissions_required("testruns.view_environment"),
 )
-def filter(query=None):  # pylint: disable=redefined-builtin
+def filter(query: EnvironmentQuery | None = None):  # pylint: disable=redefined-builtin
     """
     .. function:: Environment.filter(query)
 

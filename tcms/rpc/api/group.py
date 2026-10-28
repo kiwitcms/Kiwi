@@ -2,19 +2,24 @@
 #
 # Licensed under the GPL 2.0 or later: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
+from typing import Annotated, Any
+
 from django.contrib.auth.models import Group
 from django.db.models import Value
 from django.db.models.functions import Concat
 
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+GroupQuery = Annotated[dict[str, Any], ModelQuery(Group)]
 
 
 @rpc_method(
     name="Group.filter",
     auth=permissions_required("auth.view_group"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: GroupQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Group.filter(query)
 

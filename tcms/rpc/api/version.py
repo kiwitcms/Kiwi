@@ -1,16 +1,21 @@
+from typing import Annotated, Any
+
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import VersionForm
 from tcms.management.models import Version
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+VersionQuery = Annotated[dict[str, Any], ModelQuery(Version)]
 
 
 @rpc_method(
     name="Version.filter",
     auth=permissions_required("management.view_version"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: VersionQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Version.filter(query)
 

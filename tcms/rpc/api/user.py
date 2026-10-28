@@ -1,3 +1,5 @@
+from typing import Annotated, Any
+
 from attachments.models import Attachment
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -6,9 +8,12 @@ from django.core.exceptions import PermissionDenied
 from django.forms.models import model_to_dict
 
 from tcms.rpc import utils
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.utils import user as user_utils
+
+UserQuery = Annotated[dict[str, Any], ModelQuery(get_user_model())]
 
 
 def get_queryset(request):
@@ -43,7 +48,10 @@ def _get_user_dict(user):
     auth=permissions_required("auth.view_user"),
     context_target="rpc_context",
 )
-def filter(query=None, rpc_context=None):  # pylint: disable=redefined-builtin
+def filter(  # pylint: disable=redefined-builtin
+    query: UserQuery | None = None,
+    rpc_context=None,
+):
     """
     .. function:: RPC User.filter(query)
 
@@ -165,7 +173,7 @@ def update(
     auth=permissions_required("auth.change_user"),
     context_target="rpc_context",
 )
-def deactivate(query, rpc_context=None):
+def deactivate(query: UserQuery, rpc_context=None):
     """
     .. function:: RPC User.deactivate(query)
 

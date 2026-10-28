@@ -1,14 +1,19 @@
+from typing import Annotated, Any
+
 from django.db.models import Count
 from django.forms.models import model_to_dict
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testplan import EditPlanForm, NewPlanAPIForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.models import TestPlan
+
+TestPlanQuery = Annotated[dict[str, Any], ModelQuery(TestPlan)]
 
 
 @rpc_method(
@@ -145,7 +150,7 @@ def clone(plan_id, values=None, rpc_context=None):
     name="TestPlan.filter",
     auth=permissions_required("testplans.view_testplan"),
 )
-def filter(query=None):  # pylint: disable=redefined-builtin
+def filter(query: TestPlanQuery | None = None):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestPlan.filter(query)
 

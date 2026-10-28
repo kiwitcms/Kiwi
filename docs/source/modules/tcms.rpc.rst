@@ -20,6 +20,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   tcms.rpc.annotations
    tcms.rpc.decorators
    tcms.rpc.handlers
    tcms.rpc.registry

@@ -1,17 +1,22 @@
+from typing import Annotated, Any
+
 from django.conf import settings
 from django.forms.models import model_to_dict
 
 from tcms.management.forms import TagForm
 from tcms.management.models import Tag
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
+
+TagQuery = Annotated[dict[str, Any], ModelQuery(Tag)]
 
 
 @rpc_method(
     name="Tag.filter",
     auth=permissions_required("management.view_tag"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: TagQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC Tag.filter(query)
 

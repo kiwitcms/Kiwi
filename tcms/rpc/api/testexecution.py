@@ -1,4 +1,5 @@
 from datetime import timedelta
+from typing import Annotated, Any
 
 from attachments.models import Attachment
 from django.conf import settings
@@ -12,6 +13,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.management.models import Tag
 from tcms.rpc import utils
+from tcms.rpc.annotations import ModelQuery
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
@@ -27,6 +29,13 @@ else:
 
     class KiwiTCMS:  # pylint: disable=remove-empty-class,nested-class-found,too-few-public-methods
         pass
+
+
+TestExecutionQuery = Annotated[dict[str, Any], ModelQuery(TestExecution)]
+TestExecutionPropertyQuery = Annotated[
+    dict[str, Any], ModelQuery(TestExecutionProperty)
+]
+LinkReferenceQuery = Annotated[dict[str, Any], ModelQuery(LinkReference)]
 
 
 @rpc_method(
@@ -123,7 +132,7 @@ def get_comments(execution_id):
     name="TestExecution.filter",
     auth=permissions_required("testruns.view_testexecution"),
 )
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query: TestExecutionQuery):  # pylint: disable=redefined-builtin
     """
     .. function:: RPC TestExecution.filter(query)
 
@@ -317,7 +326,7 @@ def add_link(values, update_tracker=False, rpc_context=None):
     name="TestExecution.remove_link",
     auth=permissions_required("linkreference.delete_linkreference"),
 )
-def remove_link(query):
+def remove_link(query: LinkReferenceQuery):
     """
     .. function:: RPC TestExecution.remove_link(query)
 
@@ -334,7 +343,7 @@ def remove_link(query):
     name="TestExecution.get_links",
     auth=permissions_required("linkreference.view_linkreference"),
 )
-def get_links(query):
+def get_links(query: LinkReferenceQuery):
     """
     .. function:: RPC TestExecution.get_links(query)
 
@@ -363,7 +372,7 @@ def get_links(query):
     name="TestExecution.properties",
     auth=permissions_required("testruns.view_testexecutionproperty"),
 )
-def properties(query):
+def properties(query: TestExecutionPropertyQuery):
     """
     .. function:: RPC TestExecution.properties(query)
 
@@ -418,7 +427,7 @@ def add_property(execution_id, name, value):
     name="TestExecution.remove",
     auth=permissions_required("testruns.delete_testexecution"),
 )
-def remove(query):
+def remove(query: TestExecutionQuery):
     """
     .. function:: RPC TestExecution.remove(query)
 
@@ -473,7 +482,9 @@ def _count_attachments_by_object(content_type, object_ids):
     name="TestExecution.count_attachments",
     auth=permissions_required("attachments.view_attachment"),
 )
-def count_attachments(query=None):  # pylint: disable=redefined-builtin
+def count_attachments(  # pylint: disable=redefined-builtin
+    query: TestExecutionQuery | None = None,
+):
     """
     .. function:: RPC TestExecution.count_attachments(query)
 
