@@ -32,6 +32,23 @@ rlJournalStart
         assert_up_and_running
     rlPhaseEnd
 
+    rlPhaseStartTest "Static API files"
+        rlRun -t -c "docker exec -i kiwi_web ls -lR /Kiwi/static/api/"
+        echo "--------------------"
+        rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/static/api/llms.txt"
+        echo "--------------------"
+        rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/static/api/methods/Product.filter.md"
+        echo "--------------------"
+        rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/static/api/methods/TestCase.create.md"
+        echo "--------------------"
+        rlRun -t -c "docker exec -i kiwi_web cat /Kiwi/static/api/methods/TestExecution.update.md"
+        echo "--------------------"
+        rlRun -t -c "docker exec -i kiwi_web /bin/tar -cC /Kiwi/static api > static-api.tar"
+        rlAssertExists "static-api.tar"
+        rlRun -t -c "rm -rf static-api && mkdir -p static-api && tar -xf static-api.tar -C static-api"
+        rlRun -t -c "find static-api -type f | sort"
+    rlPhaseEnd
+
     rlPhaseStartTest "Container specifies a health-check command"
         rlRun -t -c "docker inspect -f '{{.State.Health.Status}}' kiwi_web"
     rlPhaseEnd
