@@ -276,16 +276,27 @@ def query_examples(model, method_name: str) -> list[dict]:
     return examples
 
 
+def lookup_definition(model, method_name: str) -> dict:
+    return {
+        "type": "object",
+        "properties": one_hop_properties(model, method_name, "relation__"),
+        "additionalProperties": True,
+    }
+
+
 def query_schema(marker: ModelQuery, method_name: str) -> dict:
     model = marker.model
+    reachable = reachable_models(model, marker.depth)
     definitions = {
-        definition_name(item): {
-            "type": "object",
-            "properties": one_hop_properties(item, method_name, "relation__"),
-            "additionalProperties": True,
-        }
-        for item in reachable_models(model, marker.depth)
+        definition_name(item): lookup_definition(item, method_name)
+        for item in reachable
+        if item is not model
     }
+    if any(
+        field.related_model is model for item in reachable for field in relations(item)
+    ):
+        definitions[definition_name(model)] = lookup_definition(model, method_name)
+
     examples = query_examples(model, method_name)
 
     return {
