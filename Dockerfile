@@ -77,8 +77,8 @@ RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py && \
     ln -s /Kiwi/ssl/localhost.key /etc/pki/tls/private/localhost.key
 
 
-# collect static files
-RUN /Kiwi/manage.py collectstatic --noinput --link
+RUN /Kiwi/manage.py collectstatic --noinput --link && \
+    /Kiwi/manage.py generate_rpc_schema
 
 # from now on execute as non-root
 RUN chown -R 1001 /Kiwi/ /venv/

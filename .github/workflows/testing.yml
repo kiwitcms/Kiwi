@@ -366,3 +366,4 @@ jobs:
             ./*docker.log
             ./*cookies*
             ./test*.txt
+            ./static-api/
