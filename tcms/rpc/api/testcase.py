@@ -11,7 +11,7 @@ from django.forms.models import model_to_dict
 from tcms.core import helpers
 from tcms.management.models import Component, Tag
 from tcms.rpc import utils
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testcase import NewForm, UpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
@@ -25,6 +25,8 @@ HistoricalTestCaseQuery = Annotated[
 ]
 TestCasePlanQuery = Annotated[dict[str, Any], ModelQuery(TestCasePlan)]
 PropertyQuery = Annotated[dict[str, Any], ModelQuery(Property)]
+TestCaseValues = Annotated[dict[str, Any], FormValues(NewForm)]
+TestCaseUpdateValues = Annotated[dict[str, Any], FormValues(UpdateForm)]
 
 
 @rpc_method(
@@ -230,7 +232,7 @@ def remove_tag(case_id, tag):
     auth=permissions_required("testcases.add_testcase"),
     context_target="rpc_context",
 )
-def create(values, rpc_context=None):
+def create(values: TestCaseValues, rpc_context=None):
     """
     .. function:: RPC TestCase.create(values)
 
@@ -405,7 +407,7 @@ def sortkeys(query: TestCasePlanQuery | None = None):
     auth=permissions_required("testcases.change_testcase"),
     context_target="rpc_context",
 )
-def update(case_id, values, rpc_context=None):
+def update(case_id, values: TestCaseUpdateValues, rpc_context=None):
     """
     .. function:: RPC TestCase.update(case_id, values, **kwargs)
 

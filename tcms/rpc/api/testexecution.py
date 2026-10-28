@@ -13,7 +13,7 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.helpers import comments
 from tcms.management.models import Tag
 from tcms.rpc import utils
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testexecution import LinkReferenceForm
 from tcms.rpc.api.forms.testrun import NewExecutionForm, UpdateExecutionForm
 from tcms.rpc.api.utils import tracker_from_url
@@ -36,6 +36,9 @@ TestExecutionPropertyQuery = Annotated[
     dict[str, Any], ModelQuery(TestExecutionProperty)
 ]
 LinkReferenceQuery = Annotated[dict[str, Any], ModelQuery(LinkReference)]
+TestExecutionValues = Annotated[dict[str, Any], FormValues(NewExecutionForm)]
+TestExecutionUpdateValues = Annotated[dict[str, Any], FormValues(UpdateExecutionForm)]
+LinkReferenceValues = Annotated[dict[str, Any], FormValues(LinkReferenceForm)]
 
 
 @rpc_method(
@@ -213,7 +216,7 @@ def history(execution_id):
     auth=permissions_required("testruns.change_testexecution"),
     context_target="rpc_context",
 )
-def update(execution_id, values, rpc_context=None):
+def update(execution_id, values: TestExecutionUpdateValues, rpc_context=None):
     """
     .. function:: RPC TestExecution.update(execution_id, values)
 
@@ -271,7 +274,7 @@ def update(execution_id, values, rpc_context=None):
     auth=permissions_required("linkreference.add_linkreference"),
     context_target="rpc_context",
 )
-def add_link(values, update_tracker=False, rpc_context=None):
+def add_link(values: LinkReferenceValues, update_tracker=False, rpc_context=None):
     """
     .. function:: RPC TestExecution.add_link(values)
 
@@ -572,7 +575,7 @@ def add_attachment(execution_id, filename, b64content, rpc_context=None):
     auth=permissions_required("testruns.add_testexecution"),
     context_target="rpc_context",
 )
-def create(values, rpc_context=None):
+def create(values: TestExecutionValues, rpc_context=None):
     """
     .. function:: RPC TestExecution.create(values)
 

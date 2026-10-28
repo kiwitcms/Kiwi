@@ -7,6 +7,7 @@
 from dataclasses import dataclass
 
 from django.db.models import Model
+from django.forms import BaseForm
 
 
 @dataclass(frozen=True)
@@ -20,3 +21,10 @@ class ModelQuery:
 
     model: type[Model]
     depth: int | None = None
+
+
+@dataclass(frozen=True)
+class FormValues:
+    """Annotation for RPC arguments which are validated by a Django form."""
+
+    form: type[BaseForm]

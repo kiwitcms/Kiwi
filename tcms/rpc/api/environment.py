@@ -2,7 +2,7 @@ from typing import Annotated, Any
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testrun import EnvironmentForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
@@ -10,6 +10,7 @@ from tcms.testruns.models import Environment, EnvironmentProperty
 
 EnvironmentQuery = Annotated[dict[str, Any], ModelQuery(Environment)]
 EnvironmentPropertyQuery = Annotated[dict[str, Any], ModelQuery(EnvironmentProperty)]
+EnvironmentValues = Annotated[dict[str, Any], FormValues(EnvironmentForm)]
 
 
 @rpc_method(
@@ -122,7 +123,7 @@ def filter(query: EnvironmentQuery | None = None):  # pylint: disable=redefined-
     name="Environment.create",
     auth=permissions_required("testruns.add_environment"),
 )
-def create(values):
+def create(values: EnvironmentValues):
     """
     .. function:: RPC Environment.create(values)
 

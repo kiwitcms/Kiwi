@@ -2,13 +2,14 @@ from typing import Annotated, Any
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testcase import TestCaseStatusForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.models import TestCaseStatus
 
 TestCaseStatusQuery = Annotated[dict[str, Any], ModelQuery(TestCaseStatus)]
+TestCaseStatusValues = Annotated[dict[str, Any], FormValues(TestCaseStatusForm)]
 
 
 @rpc_method(
@@ -38,7 +39,7 @@ def filter(query: TestCaseStatusQuery):  # pylint: disable=redefined-builtin
     name="TestCaseStatus.create",
     auth=permissions_required("testcases.add_testcasestatus"),
 )
-def create(values):
+def create(values: TestCaseStatusValues):
     """
     .. function:: RPC TestCaseStatus.create(values)
 

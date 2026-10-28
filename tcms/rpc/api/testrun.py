@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 
 from tcms.management.models import Tag
 from tcms.rpc import utils
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testrun import UpdateForm, UserForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
@@ -14,6 +14,8 @@ from tcms.testruns.models import Property, TestExecution, TestRun
 
 TestRunQuery = Annotated[dict[str, Any], ModelQuery(TestRun)]
 PropertyQuery = Annotated[dict[str, Any], ModelQuery(Property)]
+TestRunValues = Annotated[dict[str, Any], FormValues(NewRunForm)]
+TestRunUpdateValues = Annotated[dict[str, Any], FormValues(UpdateForm)]
 
 
 @rpc_method(
@@ -195,7 +197,7 @@ def remove_tag(run_id, tag_name):
     auth=permissions_required("testruns.add_testrun"),
     context_target="rpc_context",
 )
-def create(values, rpc_context=None):
+def create(values: TestRunValues, rpc_context=None):
     """
     .. function:: RPC TestRun.create(values)
 
@@ -285,7 +287,7 @@ def filter(query: TestRunQuery | None = None):  # pylint: disable=redefined-buil
     auth=permissions_required("testruns.change_testrun"),
     context_target="rpc_context",
 )
-def update(run_id, values, rpc_context=None):
+def update(run_id, values: TestRunUpdateValues, rpc_context=None):
     """
     .. function:: RPC TestRun.update(run_id, values)
 

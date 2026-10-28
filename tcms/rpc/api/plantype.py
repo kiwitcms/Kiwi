@@ -2,20 +2,21 @@ from typing import Annotated, Any
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.testplan import PlanTypeForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testplans.models import PlanType
 
 PlanTypeQuery = Annotated[dict[str, Any], ModelQuery(PlanType)]
+PlanTypeValues = Annotated[dict[str, Any], FormValues(PlanTypeForm)]
 
 
 @rpc_method(
     name="PlanType.create",
     auth=permissions_required("testplans.add_plantype"),
 )
-def create(values):
+def create(values: PlanTypeValues):
     """
     .. function:: RPC PlanType.create(values)
 

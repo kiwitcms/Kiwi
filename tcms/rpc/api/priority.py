@@ -4,11 +4,12 @@ from django.forms.models import model_to_dict
 
 from tcms.management.forms import PriorityForm
 from tcms.management.models import Priority
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 
 PriorityQuery = Annotated[dict[str, Any], ModelQuery(Priority)]
+PriorityValues = Annotated[dict[str, Any], FormValues(PriorityForm)]
 
 
 @rpc_method(
@@ -38,7 +39,7 @@ def filter(query: PriorityQuery):  # pylint: disable=redefined-builtin
     name="Priority.create",
     auth=permissions_required("management.add_priority"),
 )
-def create(values):
+def create(values: PriorityValues):
     """
     .. function:: RPC Priority.create(values)
 

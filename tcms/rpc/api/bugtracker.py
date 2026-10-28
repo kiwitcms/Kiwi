@@ -6,13 +6,14 @@ from typing import Annotated, Any
 
 from django.forms.models import model_to_dict
 
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 from tcms.testcases.admin import BugSystemAdminForm
 from tcms.testcases.models import BugSystem
 
 BugSystemQuery = Annotated[dict[str, Any], ModelQuery(BugSystem)]
+BugSystemValues = Annotated[dict[str, Any], FormValues(BugSystemAdminForm)]
 
 
 @rpc_method(
@@ -52,7 +53,7 @@ def filter(query: BugSystemQuery):  # pylint: disable=redefined-builtin
     name="BugTracker.create",
     auth=permissions_required("testcases.add_bugsystem"),
 )
-def create(values):
+def create(values: BugSystemValues):
     """
     .. function:: RPC BugTracker.create(values)
 

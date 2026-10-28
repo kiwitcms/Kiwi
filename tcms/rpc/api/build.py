@@ -4,12 +4,14 @@ from django.forms.models import model_to_dict
 
 from tcms.management.forms import BuildForm
 from tcms.management.models import Build
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.api.forms.management import BuildUpdateForm
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 
 BuildQuery = Annotated[dict[str, Any], ModelQuery(Build)]
+BuildValues = Annotated[dict[str, Any], FormValues(BuildForm)]
+BuildUpdateValues = Annotated[dict[str, Any], FormValues(BuildUpdateForm)]
 
 
 @rpc_method(
@@ -48,7 +50,7 @@ def filter(query: BuildQuery | None = None):  # pylint: disable=redefined-builti
     name="Build.create",
     auth=permissions_required("management.add_build"),
 )
-def create(values):
+def create(values: BuildValues):
     """
     .. function:: RPC Build.create(values)
 
@@ -76,7 +78,7 @@ def create(values):
     name="Build.update",
     auth=permissions_required("management.change_build"),
 )
-def update(build_id, values):
+def update(build_id, values: BuildUpdateValues):
     """
     .. function:: RPC Build.update(build_id, values)
 

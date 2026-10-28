@@ -4,18 +4,19 @@ from django.forms.models import model_to_dict
 
 from tcms.management.forms import ProductForm
 from tcms.management.models import Product
-from tcms.rpc.annotations import ModelQuery
+from tcms.rpc.annotations import FormValues, ModelQuery
 from tcms.rpc.decorators import permissions_required
 from tcms.rpc.views import rpc_method
 
 ProductQuery = Annotated[dict[str, Any], ModelQuery(Product)]
+ProductValues = Annotated[dict[str, Any], FormValues(ProductForm)]
 
 
 @rpc_method(
     name="Product.create",
     auth=permissions_required("management.add_product"),
 )
-def create(values):
+def create(values: ProductValues):
     """
     .. function:: RPC Product.create(values)
 
