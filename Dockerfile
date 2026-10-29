@@ -3,7 +3,7 @@ ARG RUNTIME_BASE=quay.io/centos/centos:stream10
 FROM $RUNTIME_BASE AS runtime-base
 
 RUN ln -s /usr/bin/microdnf /usr/bin/dnf 2>/dev/null || echo -n && \
-    dnf -y --nodocs install python3.12 mariadb-connector-c libpq \
+    dnf -y --nodocs install python3.14 mariadb-connector-c libpq \
     nginx-core sscg tar glibc-langpack-en && \
     dnf -y --nodocs update && \
     dnf clean all
@@ -15,7 +15,7 @@ WORKDIR /Kiwi
 
 
 FROM runtime-base AS buildroot
-RUN dnf -y --nodocs install python3.12-devel gzip make \
+RUN dnf -y --nodocs install python3.14-devel gzip make \
     mariadb-connector-c-devel postgresql-devel libjpeg-turbo-devel \
     libffi-devel gcc gettext nodejs24-npm unzip which rust cargo findutils && \
     ln -s /usr/bin/npm-24 /usr/bin/npm && \
@@ -24,7 +24,7 @@ RUN dnf -y --nodocs install python3.12-devel gzip make \
 COPY ./requirements/mariadb.pc /usr/lib64/pkgconfig/mariadb.pc
 COPY . /Kiwi/
 
-RUN python3.12 -m venv /venv && \
+RUN python3.14 -m venv /venv && \
     pip3 install --no-cache-dir --upgrade pip setuptools twine wheel && \
     pip3 install --no-cache-dir -r requirements/mariadb.txt -r requirements/postgres.txt
 
