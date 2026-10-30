@@ -64,14 +64,9 @@ def add_comment(objs, comment_text, user, submit_date=None):
 
 def get_comments(obj):
     content_type = ContentType.objects.get_for_model(obj)
-    return (
-        Comment.objects.filter(
-            content_type=content_type,
-            object_pk=obj.pk,
-            site=settings.SITE_ID,
-            is_removed=False,
-        )
-        .select_related("user")
-        .only("submit_date", "user__username", "comment")
-        .order_by("pk")
-    )
+    return Comment.objects.filter(
+        content_type=content_type,
+        object_pk=obj.pk,
+        site=settings.SITE_ID,
+        is_removed=False,
+    ).order_by("pk")

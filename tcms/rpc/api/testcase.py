@@ -629,7 +629,9 @@ def comments(case_id):
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
-    result = helpers.comments.get_comments(case).values()
+    result = helpers.comments.get_comments(case).values(
+        "id", "comment", "object_pk", "user_id", "user_name", "submit_date"
+    )
     return list(result)
 
 

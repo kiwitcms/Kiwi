@@ -440,7 +440,6 @@ class TestBugGetComments(APIPermissionsTestCase):
         for comment in result:
             self.assertIn("id", comment)
             self.assertIn(comment["comment"], ("Hello World", "Happy Testing"))
-            self.assertEqual(comment["is_public"], True)
             self.assertEqual(comment["object_pk"], str(self.bug.pk))
             self.assertIn("user_id", comment)
 
