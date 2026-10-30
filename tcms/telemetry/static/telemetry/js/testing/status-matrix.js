@@ -14,9 +14,6 @@ const initialColumn = {
 }
 
 export function initializePage () {
-    document.getElementById('id_order').onchange = drawTable
-    document.getElementById('id_include_child_tps').onchange = drawTable
-
     $('#table').on('draw.dt', function () {
         setMaxHeight($(this))
     })

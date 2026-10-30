@@ -2,10 +2,6 @@ import { dataTableJsonRPC, jsonRPC } from '../../../../../static/js/jsonrpc'
 import { exportButtons } from '../../../../../static/js/datatables_common'
 import { escapeHTML } from '../../../../../static/js/utils'
 
-export function initializePage () {
-    document.getElementById('id_include_child_tps').onchange = drawTable
-}
-
 function preProcessData (data, callbackF) {
     const caseDict = {}
     const runDict = {}
