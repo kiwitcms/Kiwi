@@ -7,24 +7,7 @@
 
 {% block contents %}
     <div class="container-fluid container-cards-pf">
-        {% include "telemetry/include/filters.html" %}
-
-        <form class="form-horizontal">
-            {% csrf_token %}
-            <div class="form-group">
-                <label class="col-md-1 col-lg-1" for="id_include_child_tps">{% trans "Child TPs" %}</label>
-                <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" id="id_include_child_tps" type="checkbox"
-                        data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-                </div>
-
-                <label class="col-md-1 col-lg-1" for="id_order">{% trans "Order" %}</label>
-                <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" id="id_order" type="checkbox" checked
-                        data-on-text="{% trans 'Ascending' %}" data-off-text="{% trans 'Descending' %}">
-                </div>
-            </div>
-        </form>
+        {% include "telemetry/include/filters.html" with extra_filter_fields="telemetry/include/filters-status-matrix.html" %}
 
         <table class="table table-bordered table-with-horizontal-scroll" id="table">
             <thead>

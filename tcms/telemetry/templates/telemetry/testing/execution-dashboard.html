@@ -11,18 +11,7 @@
          data-trans-no-records-found="{% trans 'No records found' %}"
          data-trans-x-records-found="{% trans 'Found _TOTAL_ records' %}"
     >
-        {% include "telemetry/include/filters.html" %}
-
-        <form class="form-horizontal">
-            {% csrf_token %}
-            <div class="form-group">
-                <label class="col-md-1 col-lg-1" for="id_include_child_tps">{% trans "Child TPs" %}</label>
-                <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" id="id_include_child_tps" type="checkbox"
-                        data-on-text="{% trans 'Yes' %}" data-off-text="{% trans 'No' %}">
-                </div>
-            </div>
-        </form>
+        {% include "telemetry/include/filters.html" with extra_filter_fields="telemetry/include/filters-execution-dashboard.html" %}
 
         <table class="table table-striped table-bordered table-hover" id="resultsTable">
             <thead>
