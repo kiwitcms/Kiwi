@@ -127,7 +127,9 @@ def get_comments(execution_id):
         :raises PermissionDenied: if missing *django_comments.view_comment* permission
     """
     execution = TestExecution.objects.get(pk=execution_id)
-    execution_comments = comments.get_comments(execution).values()
+    execution_comments = comments.get_comments(execution).values(
+        "id", "comment", "object_pk", "user_id", "user_name", "submit_date"
+    )
     return list(execution_comments)
 
 

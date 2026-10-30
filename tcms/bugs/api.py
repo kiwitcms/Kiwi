@@ -292,7 +292,9 @@ def get_comments(bug_id):
     .. versionadded:: 15.3
     """
     bug = Bug.objects.get(pk=bug_id)
-    result = comments.get_comments(bug).values()
+    result = comments.get_comments(bug).values(
+        "id", "comment", "object_pk", "user_id", "user_name", "submit_date"
+    )
     return list(result)
 
 
