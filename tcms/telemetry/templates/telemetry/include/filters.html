@@ -71,4 +71,10 @@
                 value="{{ form.summary.value|default:'' }}">
         </div>
     </div>
+
+    {# Page specific extra search fields are injected here so they end up #}
+    {# inside this form, before the closing tag and above any Search button. #}
+    {% if extra_filter_fields %}
+        {% include extra_filter_fields %}
+    {% endif %}
 </form>
