@@ -1,6 +1,82 @@
 Change Log
 ==========
 
+Kiwi TCMS 17.0 (03 Nov 2026)
+----------------------------
+
+.. important::
+
+    This is a major version release which includes security related updates,
+    new Python runtime, several improvements and API changes.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 6.1.2 to 6.1.3
+- Update django-guardian from 3.5.0 to 3.5.1
+- Update node_modules/fast-uri from 3.1.8 to 3.1.9
+- Normalize Unicode and strip invisible characters from API responses
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Python runtime from 3.12 to 3.14
+- Update django-grappelli from 5.0.0 to 5.0.1
+- Update django-guardian from 3.5.1 to 3.5.2
+- Update django-tree-queries from 0.26.1 to 0.28.0
+- Update markdown from 3.11 to 3.11.2
+- Update psycopg from 3.3.6 to 3.3.7
+- Update tzdata from 2026.5 to 2026.6
+- Update node_modules/pdfmake from 0.3.11 to 0.3.13
+- Update node_modules/webpack from 5.111.1 to 5.112.2
+- Update node_modules/webpack-cli from 7.2.3 to 7.3.1
+- Add Search button to Telemetry pages and redraw when pressed. Fixes
+  `Issue #3325 <https://github.com/kiwitcms/Kiwi/issues/3325>`_
+- PDF export Search results in A3 landscape & auto-fit to page width. Fixes
+  `Issue #4496 <https://github.com/kiwitcms/Kiwi/issues/4496>`_
+- Replace hard-coded ``/admin/`` URLs. Closes
+  `Issue #4595 <https://github.com/kiwitcms/Kiwi/issues/4595>`_
+- Set ``TestExecution.start_date`` when changing status on TestRun page. Closes
+  `Issue #4371 <https://github.com/kiwitcms/Kiwi/issues/4371>`_
+- Keep stored API password when editing BugSystem via Admin. Closes
+  `Issue #4643 <https://github.com/kiwitcms/Kiwi/issues/4643>`_
+- Remove redundant CSS file from HTML template. Fixes
+  `Issue #4634 <https://github.com/kiwitcms/Kiwi/issues/4634>`_
+- Return to Test Plan page when Cancel button is clicked on New Test Case page.
+  Closes `Issue #4499 <https://github.com/kiwitcms/Kiwi/issues/4499>`_
+
+
+API
+~~~
+
+- API method ``Bug.get_comments()`` now returns fields
+  ``id``, ``comment``, ``object_pk``, ``user_id``, ``user_name``,
+  ``submit_date``
+- API method ``TestCase.comments()`` now returns fields
+  ``id``, ``comment``, ``object_pk``, ``user_id``, ``user_name``,
+  ``submit_date``
+- API method ``TestExecution.get_comments()`` now returns fields
+  ``id``, ``comment``, ``object_pk``, ``user_id``, ``user_name``,
+  ``submit_date``
+- Add ``generate_rpc_schema`` command for static API descriptions
+- Annotate API method arguments with their types
+- Generate OpenAPI schema and llms.txt files from the API registry and serve
+  them under ``https://<kiwitcms-host>/static/api/``
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update locust from 2.46.6 to 2.47.0
+- Update pylint from 4.1.2 to 4.1.3
+- Update sphinx from 9.0.4 to 9.1.1
+- Migrate to ESLint 10 with flat config
+- Include test packages in the Python package
+
+
+
 Kiwi TCMS 16.6 (07 Oct 2026)
 ----------------------------
 
