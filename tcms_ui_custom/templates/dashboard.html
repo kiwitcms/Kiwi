@@ -39,8 +39,8 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;">
                 {% for product in jira_sidebar_products %}
                     <a href="{% url 'project_overview' product.pk %}" class="text-decoration-none" style="color: inherit;">
-                        <div style="border: 1px solid var(--jira-border); border-radius: 8px; padding: 20px; background: #FAFBFC; transition: all 0.2s; height: 100%;" 
-                             onmouseover="this.style.boxShadow='0 4px 12px rgba(9,30,66,0.1)'; this.style.borderColor='var(--jira-blue)'" 
+                        <div style="border: 1px solid var(--jira-border); border-radius: 8px; padding: 20px; background: #FAFBFC; transition: all 0.2s; height: 100%;"
+                             onmouseover="this.style.boxShadow='0 4px 12px rgba(9,30,66,0.1)'; this.style.borderColor='var(--jira-blue)'"
                              onmouseout="this.style.boxShadow='none'; this.style.borderColor='var(--jira-border)'">
                             <h4 class="text-primary text-bold font-14 mb-16" style="margin: 0;">
                                 <i class="fa-solid fa-box"></i> {{ product.name }}

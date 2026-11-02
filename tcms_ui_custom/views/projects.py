@@ -30,7 +30,7 @@ def project_create(request):
 @login_required
 def project_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    
+
     # Handle the Cancel redirect logic
     if request.GET.get('next') == 'overview':
         cancel_url = reverse('project_overview', args=[product.pk])
@@ -45,10 +45,10 @@ def project_edit(request, pk):
             return redirect(cancel_url)
     else:
         form = ProjectForm(instance=product)
-        
+
     return render(request, 'tcms_ui_custom/project_form.html', {
-        'form': form, 
-        'action': 'Edit', 
+        'form': form,
+        'action': 'Edit',
         'cancel_url': cancel_url
     })
 
@@ -56,11 +56,11 @@ def project_edit(request, pk):
 def project_overview(request, pk):
     product = get_object_or_404(Product, pk=pk)
     form_has_error = False
-    
+
     if request.method == 'POST' and 'add_module' in request.POST:
         name = request.POST.get('name', '').strip()
         description = request.POST.get('description', '').strip()
-        
+
         if not name or not description:
             messages.error(request, "Both Module Name and Description are required.")
             form_has_error = True
@@ -76,8 +76,8 @@ def project_overview(request, pk):
     testplans = TestPlan.objects.filter(product=product, is_active=True).order_by('-id')
 
     return render(request, 'tcms_ui_custom/project_overview.html', {
-        'product': product, 
-        'components': components, 
+        'product': product,
+        'components': components,
         'testcases': testcases,
         'versions': versions,
         'builds': builds,
@@ -102,14 +102,14 @@ def component_edit(request, pk):
 def component_delete(request, pk):
     component = get_object_or_404(Component, pk=pk)
     product_id = component.product.pk
-    
+
     if request.method == 'POST':
         try:
             component.delete()
             messages.success(request, "Module deleted.")
         except ProtectedError as e:
             messages.error(request, str(e))
-            
+
     return redirect('project_overview', pk=product_id)
 
 @login_required

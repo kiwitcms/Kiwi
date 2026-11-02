@@ -13,14 +13,14 @@ def get_deferred_status():
 def testrun_detail(request, pk):
     run = get_object_or_404(TestRun, pk=pk)
     executions = TestExecution.objects.filter(run=run).order_by('id')
-    
+
     total = executions.count()
     passed = executions.filter(status__name='PASS').count()
     failed = executions.filter(status__name='FAIL').count()
     blocked = executions.filter(status__name='BLOCKED').count()
     deferred = executions.filter(status__name='DEFERRED').count()
     untested = total - (passed + failed + blocked + deferred)
-    
+
     pass_pct = (passed / total * 100) if total > 0 else 0
     fail_pct = (failed / total * 100) if total > 0 else 0
     block_pct = (blocked / total * 100) if total > 0 else 0
@@ -49,7 +49,7 @@ def testrun_detail(request, pk):
 def testrun_edit(request, pk):
     run = get_object_or_404(TestRun, pk=pk)
     executions = TestExecution.objects.filter(run=run).order_by('id')
-    
+
     modules_dict = {}
     for exe in executions:
         comp = exe.case.component.first()
@@ -60,7 +60,7 @@ def testrun_edit(request, pk):
 
     if request.method == 'POST':
         selected_ids = request.POST.getlist('selected_executions[]')
-        
+
         # Delete any executions for this run that were NOT selected
         deleted_count, _ = TestExecution.objects.filter(run=run).exclude(id__in=selected_ids).delete()
         messages.success(request, f"Run updated. {deleted_count} test cases removed.")
@@ -76,30 +76,30 @@ def execute_test(request, run_pk, case_pk):
     run = get_object_or_404(TestRun, pk=run_pk)
     testcase = get_object_or_404(TestCase, pk=case_pk)
     execution = get_object_or_404(TestExecution, run=run, case=testcase)
-    
+
     if request.method == 'POST':
         status_name = request.POST.get('status')
         notes = request.POST.get('notes', '')
-        
+
         status_obj = TestExecutionStatus.objects.filter(name=status_name).first()
         if not status_obj and status_name == 'DEFERRED':
             status_obj = get_deferred_status()
-            
+
         if status_obj:
             execution.status = status_obj
             execution.notes = notes
             execution.save()
             messages.success(request, f"Test Case TC-{testcase.pk} marked as {status_name}.")
-            
+
         action = request.POST.get('action')
         executions = list(TestExecution.objects.filter(run=run).order_by('id'))
         current_index = executions.index(execution)
-        
+
         if action == 'next' and current_index < len(executions) - 1:
             return redirect('execute_test', run_pk=run.pk, case_pk=executions[current_index + 1].case.pk)
         elif action == 'prev' and current_index > 0:
             return redirect('execute_test', run_pk=run.pk, case_pk=executions[current_index - 1].case.pk)
-            
+
         return redirect('testrun_detail', pk=run.pk)
 
     executions = list(TestExecution.objects.filter(run=run).order_by('id'))

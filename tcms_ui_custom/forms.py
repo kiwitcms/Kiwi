@@ -34,7 +34,7 @@ class TestCaseForm(forms.ModelForm):
     description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
     pre_conditions = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
     post_conditions = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
-    
+
     # Tags as a multi-select dropdown
     tags_input = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
@@ -46,7 +46,7 @@ class TestCaseForm(forms.ModelForm):
         queryset=Component.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    
+
     case_status = forms.ModelChoiceField(
         queryset=TestCaseStatus.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
@@ -54,7 +54,7 @@ class TestCaseForm(forms.ModelForm):
 
     class Meta:
         model = TestCase
-        fields = ['summary'] 
+        fields = ['summary']
         widgets = {
             'summary': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Brief title of the test case'}),
         }

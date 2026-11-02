@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // 2. Define the change handlers FIRST
     $('#id_product').change(function() {
         const productId = $(this).val();
-        
+
         // Clear and disable modules
         $('#id_modules').val(null).trigger('change');
         $('#id_modules').empty().prop('disabled', true);
-        
+
         // Clear versions
         $('#id_product_version').empty().append('<option value="">Select Version...</option>');
 
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#id_modules').change(function() {
         const moduleIds = $(this).val();
-        
+
         $('#in-scope-container').html('<p class="text-light text-center">Loading test cases...</p>');
         $('#out-scope-container').html('<p class="text-light text-center">Excluded test cases will appear here.</p>');
 
@@ -111,14 +111,14 @@ document.addEventListener("DOMContentLoaded", function() {
             const item = $(this).closest('.case-item');
             const label = item.find('label').text();
             const modName = item.data('module');
-            
+
             item.fadeOut(200, function() {
                 $(this).remove();
                 if ($('#in-scope-container').children().length === 0) {
                     $('#in-scope-container').html('<p class="text-light text-center">Select Modules to load cases.</p>');
                 }
             });
-            
+
             $('#out-scope-container').append(`
                 <div class="case-item out-scope-item" id="out-item-${caseId}" data-module="${modName}">
                     <input type="hidden" name="out_scope_cases[]" value="${caseId}">
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <span class="font-14">${label}</span>
                 </div>
             `);
-            
+
             if ($('#out-scope-container').find('.text-center').length > 0) {
                 $('#out-scope-container').find('.text-center').remove();
             }
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         outItem.fadeOut(200, function() {
             $(this).remove();
-            
+
             let targetGroup = $(`.module-group[data-module="${modName}"]`);
             if (targetGroup.length === 0) {
                 $('#in-scope-container').append(`

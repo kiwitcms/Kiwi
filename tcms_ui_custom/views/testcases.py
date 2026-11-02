@@ -13,10 +13,10 @@ def _format_testcase_text(form, request):
     desc = form.cleaned_data.get('description', '')
     pre = form.cleaned_data.get('pre_conditions', '')
     post = form.cleaned_data.get('post_conditions', '')
-    
+
     steps = request.POST.getlist('step[]')
     expected = request.POST.getlist('expected[]')
-    
+
     steps_html = "<table><thead><tr><th style='width: 50%;'>Step</th><th>Expected Result</th></tr></thead><tbody>"
     has_steps = False
     for s, e in zip(steps, expected):
@@ -43,10 +43,10 @@ def testcase_list(request):
 
     if component_id:
         testcases = testcases.filter(component__id=component_id)
-    
+
     if query:
         testcases = testcases.filter(Q(summary__icontains=query) | Q(pk__icontains=query))
-        
+
     if status_filter:
         testcases = testcases.filter(case_status__name=status_filter)
 
@@ -72,7 +72,7 @@ def testcase_create(request):
         if form.is_valid():
             component_obj = form.cleaned_data['component']
             testcase = form.save(commit=False)
-            
+
             testcase.author = request.user
             testcase.default_tester = request.user
             testcase.priority = Priority.objects.first() or Priority.objects.create(value=1, is_active=True)
@@ -82,10 +82,10 @@ def testcase_create(request):
             testcase.text = _format_testcase_text(form, request)
             testcase.save()
             testcase.component.add(component_obj)
-            
+
             for tag in form.cleaned_data['tags_input']:
                 testcase.add_tag(tag)
-                
+
             messages.success(request, "Test Case created successfully!")
             return redirect(f"/repository/?product={component_obj.product.pk}&component={component_obj.pk}")
     else:
@@ -111,14 +111,14 @@ def testcase_edit(request, pk):
             tc.case_status = form.cleaned_data['case_status']
             tc.text = _format_testcase_text(form, request)
             tc.save()
-            
+
             tc.component.clear()
             tc.component.add(form.cleaned_data['component'])
-            
+
             tc.tag.clear()
             for tag in form.cleaned_data['tags_input']:
                 tc.add_tag(tag)
-                
+
             messages.success(request, "Test Case updated successfully!")
             return redirect('testcase_view', pk=tc.pk)
     else:
@@ -139,8 +139,8 @@ def testcase_edit(request, pk):
         form = TestCaseForm(instance=testcase, initial=initial_data)
 
         return render(request, 'tcms_ui_custom/testcase_form.html', {
-            'form': form, 
-            'action': 'Edit', 
+            'form': form,
+            'action': 'Edit',
             'tc': testcase,
             'existing_steps': steps
         })
@@ -152,12 +152,12 @@ def testcase_delete(request, pk):
     testcase = get_object_or_404(TestCase, pk=pk)
     component_id = testcase.component.first().pk if testcase.component.exists() else None
     product_id = testcase.component.first().product.pk if testcase.component.exists() else None
-    
+
     if request.method == 'POST':
         testcase.delete()
         messages.success(request, "Test Case deleted.")
         if component_id:
             return redirect(f"/repository/?product={product_id}&component={component_id}")
         return redirect('testcase_list')
-        
+
     return render(request, 'tcms_ui_custom/testcase_confirm_delete.html', {'tc': testcase})

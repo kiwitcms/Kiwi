@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    
+
     // 1. Initialize Select2 for the tags dropdown
     if (window.jQuery && jQuery.fn.select2) {
         jQuery('#id_tags_input').select2({

@@ -19,7 +19,7 @@
 {% block content %}
 <div class="row" style="margin-top: 20px;">
     <div class="col-md-10 col-md-offset-1">
-        
+
         <div class="jira-card">
             <div class="jira-card-header">
                 <div>
@@ -32,13 +32,13 @@
                     <a href="{% url 'testcase_delete' tc.pk %}" class="btn-jira-primary" style="background: var(--jira-red); font-size: 13px; padding: 6px 16px; margin-left: 8px;">Delete</a>
                 </div>
             </div>
-            
+
             <div class="jira-meta-grid">
                 <div class="jira-meta-item">
                     <span class="jira-meta-label">Status</span>
                     <div><span class="jira-pill jira-pill-success">{{ tc.case_status.name }}</span></div>
                 </div>
-                
+
                 <div class="jira-meta-item">
                     <span class="jira-meta-label">Module</span>
                     <div class="jira-meta-value">
@@ -51,7 +51,7 @@
                         {% endwith %}
                     </div>
                 </div>
-                
+
                 <div class="jira-meta-item">
                     <span class="jira-meta-label">Tags</span>
                     <div class="jira-meta-value">

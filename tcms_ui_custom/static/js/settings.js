@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    
+
     // 1. Delete Modal Logic
     document.body.addEventListener('click', function(e) {
         var deleteBtn = e.target.closest('.delete-btn');
@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             var url = deleteBtn.getAttribute('data-url');
             var name = deleteBtn.getAttribute('data-name');
-            
+
             document.getElementById('deleteItemForm').setAttribute('action', url);
             document.getElementById('modalItemName').textContent = name;
-            
+
             if (window.jQuery) {
                 window.jQuery('#deleteItemModal').modal('show');
             }

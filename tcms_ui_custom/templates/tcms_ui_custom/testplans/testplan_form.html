@@ -11,17 +11,17 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="jira-title mb-24">Create Test Plan</h1>
-        
-        <form method="POST" id="testPlanForm" 
-              data-url-modules="{% url 'api_get_modules' %}" 
-              data-url-cases="{% url 'api_get_testcases' %}" 
-              data-url-versions="{% url 'api_get_versions' %}" 
+
+        <form method="POST" id="testPlanForm"
+              data-url-modules="{% url 'api_get_modules' %}"
+              data-url-cases="{% url 'api_get_testcases' %}"
+              data-url-versions="{% url 'api_get_versions' %}"
               data-selected-product="{{ selected_product_id|default:'' }}">
             {% csrf_token %}
-            
+
             <div class="jira-card mb-24">
                 <h3 class="jira-title font-16 mb-16">Plan Details</h3>
-                
+
                 <div class="row">
                     <div class="col-md-6 form-group mb-16">
                         <label class="text-bold font-14 mb-16">Test Plan Title <span class="text-danger">*</span></label>

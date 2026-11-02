@@ -15,7 +15,7 @@ from django.views.i18n import JavaScriptCatalog
 from grappelli import urls as grappelli_urls
 
 from tcms.core import views as core_views
-from tcms_ui_custom.views.dashboard import dashboard 
+from tcms_ui_custom.views.dashboard import dashboard
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.kiwi_auth import views as auth_views
 from tcms.rpc.views import json_rpc_server, xml_rpc_server

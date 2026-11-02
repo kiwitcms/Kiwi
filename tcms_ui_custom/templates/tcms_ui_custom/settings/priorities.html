@@ -19,7 +19,7 @@
             </form>
         </div>
     </div>
-    
+
     <div class="col-md-7">
         <div class="jira-card p-0 overflow-hidden">
             <table class="jira-table">
@@ -40,7 +40,7 @@
                                     <button class="icon-btn edit-btn icon-primary" title="Edit">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    
+
                                     {% if p.pk in priorities_in_use_ids %}
                                         <button class="icon-btn icon-gray" title="This priority is in use and cannot be deleted." disabled style="cursor: not-allowed; opacity: 0.6;">
                                             <i class="fa-solid fa-lock"></i>

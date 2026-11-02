@@ -10,7 +10,7 @@ urlpatterns = [
     path('settings/projects/new/', projects.project_create, name='project_create'),
     path('settings/projects/<int:pk>/edit/', projects.project_edit, name='project_edit'),
     path('projects/<int:pk>/', projects.project_overview, name='project_overview'),
-    
+
     # --- MODULES (COMPONENTS) ---
     path('components/<int:pk>/edit/', projects.component_edit, name='component_edit'),
     path('components/<int:pk>/delete/', projects.component_delete, name='component_delete'),

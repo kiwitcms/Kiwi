@@ -9,7 +9,7 @@ class TestPlanMetadata(models.Model):
         ('IN_PROGRESS', 'In Progress'),
         ('COMPLETED', 'Completed'),
     )
-    
+
     testplan = models.OneToOneField(TestPlan, on_delete=models.CASCADE, related_name='custom_metadata')
     description = models.TextField(blank=True, null=True)
     environment = models.CharField(max_length=255, blank=True, null=True)

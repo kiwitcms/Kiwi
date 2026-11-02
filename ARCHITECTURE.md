@@ -16,11 +16,11 @@
 
 ## 3. Data Storage Strategy (Current State)
 - **Test Cases:** Stored in Kiwi's `TestCase` model.
-- **Steps & Conditions (Option A):** Stored as HTML inside `TestCase.text`. This is abstracted via the `_format_testcase_text()` helper in `views.py`. 
+- **Steps & Conditions (Option A):** Stored as HTML inside `TestCase.text`. This is abstracted via the `_format_testcase_text()` helper in `views.py`.
 - **Future Migration (Option B):** When we move to relational steps, we will create a `CustomStep` model in `tcms_ui_custom` with a ForeignKey to `TestCase`. The helper function will be updated to save to this new table, leaving the views untouched.
 
 ## 4. Security & Constraints
-- **Content Security Policy (CSP):** Kiwi blocks all inline scripts (`onclick`, `<script>` blocks) and external CDNs (like Cloudflare). 
+- **Content Security Policy (CSP):** Kiwi blocks all inline scripts (`onclick`, `<script>` blocks) and external CDNs (like Cloudflare).
   - *Rule:* ALL JavaScript must be written in separate `.js` files inside `tcms_ui_custom/static/js/` and linked via `<script src="...">`.
 - **ManyToMany Relationships:** Be careful. `TestCase.component` is a M2M field. Use `.add()` and `.clear()`, and filter using `component__id`.
 

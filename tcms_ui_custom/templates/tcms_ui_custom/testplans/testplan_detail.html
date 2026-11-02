@@ -30,7 +30,7 @@
     <div class="col-md-4">
         <div class="jira-card">
             <h3 class="jira-title font-16 mb-16">Details</h3>
-            
+
             <!-- Status Updater -->
             <form method="POST" class="mb-16">
                 {% csrf_token %}
@@ -48,7 +48,7 @@
             <p class="font-14 mb-16"><strong>Environment:</strong> {{ plan.custom_metadata.environment|default:"-" }}</p>
             <p class="font-14 mb-16"><strong>Target Date:</strong> {{ plan.custom_metadata.target_date|date:"M d, Y"|default:"-" }}</p>
             <p class="font-14 mb-16"><strong>Description:</strong><br>{{ plan.custom_metadata.description|default:"-" }}</p>
-            
+
             <hr>
             <h3 class="jira-title font-16 mb-16">Resources</h3>
             <ul style="padding-left: 20px; margin: 0;">
@@ -60,7 +60,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="col-md-8">
         <div class="jira-card p-0 overflow-hidden">
             <div style="padding: 24px 24px 16px 24px;">

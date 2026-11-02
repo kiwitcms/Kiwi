@@ -6,5 +6,5 @@ def jira_sidebar_products(request):
 
     # Now we use the correct reverse relationship name: 'component'
     products = Product.objects.prefetch_related('component').all().order_by('name')
-    
+
     return {'jira_sidebar_products': products}

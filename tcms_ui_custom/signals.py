@@ -50,4 +50,3 @@ def protect_version(sender, instance, **kwargs):
 @receiver(pre_delete, sender=Build)
 def protect_build(sender, instance, **kwargs):
     _prevent_delete_if_in_use(instance, TestRun.objects.filter(build=instance), "Build")
-

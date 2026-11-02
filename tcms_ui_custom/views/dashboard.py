@@ -14,6 +14,6 @@ def dashboard(request):
         'recent_failures': TestExecution.objects.filter(
             status__name__in=['FAIL', 'BLOCKED']
         ).order_by('-id')[:5],
-        'jira_sidebar_products': Product.objects.all().order_by('name') 
+        'jira_sidebar_products': Product.objects.all().order_by('name')
     }
-    return render(request, 'dashboard.html', context) 
+    return render(request, 'dashboard.html', context)

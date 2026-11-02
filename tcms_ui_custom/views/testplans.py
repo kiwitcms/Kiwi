@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.db import transaction 
+from django.db import transaction
 
 from tcms.testplans.models import TestPlan, PlanType
-from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus 
+from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
 from tcms.testcases.models import TestCase
 from tcms.management.models import Product, Component, Tag, Version, Build
 from ..models import TestPlanMetadata
@@ -49,7 +49,7 @@ def testplan_create(request):
         name = request.POST.get('name')
         product_id = request.POST.get('product')
         version_id = request.POST.get('product_version')
-        
+
         if not name or not product_id or not version_id:
             messages.error(request, "Name, Project, and Version are required.")
         else:
@@ -57,27 +57,27 @@ def testplan_create(request):
                 with transaction.atomic():
                     product = get_object_or_404(Product, pk=product_id)
                     product_version = get_object_or_404(Version, pk=version_id)
-                    
+
                     plan_type = PlanType.objects.first() or PlanType.objects.create(name='Default')
 
                     plan = TestPlan.objects.create(
-                        name=name, product=product, product_version=product_version, 
+                        name=name, product=product, product_version=product_version,
                         type=plan_type, author=request.user
                     )
-                    
+
                     metadata = TestPlanMetadata.objects.create(
                         testplan=plan,
                         description=request.POST.get('description'),
                         environment=request.POST.get('environment'),
                         target_date=request.POST.get('target_date') or None
                     )
-                    
+
                     if request.POST.getlist('resources[]'):
                         metadata.resources.set(request.POST.getlist('resources[]'))
-                    
+
                     in_scope_cases = TestCase.objects.filter(id__in=request.POST.getlist('in_scope_cases[]'))
                     plan.cases.add(*in_scope_cases)
-                    
+
                     if request.POST.getlist('out_scope_cases[]'):
                         metadata.out_of_scope_cases.set(TestCase.objects.filter(id__in=request.POST.getlist('out_scope_cases[]')))
 
@@ -100,7 +100,7 @@ def testplan_create(request):
                         cases_for_run = in_scope_cases.filter(tag=strategy)
                         for case in cases_for_run:
                             TestExecution.objects.create(
-                                run=run, case=case, build=product_build,      
+                                run=run, case=case, build=product_build,
                                 status=default_status, case_text_version=1,
                                 assignee=request.user, sortkey=0
                             )
@@ -129,7 +129,7 @@ def testplan_detail(request, pk):
     plan = get_object_or_404(TestPlan, pk=pk)
     test_cases = TestCase.objects.filter(testcaseplan__plan=plan).order_by('id')
     runs = TestRun.objects.filter(plan=plan).order_by('-id')
-    
+
     # Calculate completion status for each run
     runs_data = []
     for run in runs:
@@ -138,7 +138,7 @@ def testplan_detail(request, pk):
             'run': run,
             'is_complete': (untested == 0)
         })
-    
+
     if request.method == 'POST' and 'update_status' in request.POST:
         new_status = request.POST.get('status')
         if new_status in dict(TestPlanMetadata.STATUS_CHOICES):
@@ -148,7 +148,7 @@ def testplan_detail(request, pk):
             return redirect('testplan_detail', pk=plan.pk)
 
     return render(request, 'tcms_ui_custom/testplans/testplan_detail.html', {
-        'plan': plan, 
+        'plan': plan,
         'test_cases': test_cases,
         'runs_data': runs_data,
         'status_choices': TestPlanMetadata.STATUS_CHOICES

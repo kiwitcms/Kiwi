@@ -22,7 +22,7 @@
     <div class="col-md-12">
         <h1 class="jira-title">{{ run.summary }}</h1>
         <p class="text-light font-14 mt-16">
-            <strong>Build:</strong> {{ run.build.name|default:"-" }} &nbsp;|&nbsp; 
+            <strong>Build:</strong> {{ run.build.name|default:"-" }} &nbsp;|&nbsp;
             <strong>Manager:</strong> {{ run.manager.username|default:"-" }}
         </p>
     </div>
@@ -34,7 +34,7 @@
         <h3 class="jira-title font-16" style="margin:0;">Execution Progress</h3>
         <span class="font-14 text-bold">{{ stats.total }} Total Test Cases</span>
     </div>
-    
+
     <!-- FIXED: Using data-width to avoid CSS linter errors -->
     <div class="progress-container">
         <div class="pb-pass dynamic-width" data-width="{{ stats.pass_pct }}" title="Passed: {{ stats.passed }}"></div>

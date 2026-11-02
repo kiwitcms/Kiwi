@@ -59,7 +59,7 @@
                 <td class="text-right">
                     <div class="flex-gap-10" style="justify-content: flex-end;">
                         <a href="{% url 'testplan_detail' plan.pk %}" class="btn btn-default font-12" style="padding: 4px 10px; font-weight: 500;">View</a>
-                        
+
                         <!-- Disable Button (Kept so you can hide plans from this view) -->
                         <form method="POST" action="{% url 'testplan_toggle_active' plan.pk %}" class="m-0">
                             {% csrf_token %}

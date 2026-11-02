@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
         <h2 class="jira-title" style="margin-bottom: 24px;">{{ action }} Test Case</h2>
-        
+
         {% if form.errors %}
             <div class="alert alert-danger">
                 <strong>Error:</strong> Please correct the issues below.<br>{{ form.errors }}
@@ -27,7 +27,7 @@
         <div class="jira-card">
             <form method="POST">
                 {% csrf_token %}
-                
+
                 <div class="tr-field-group">
                     <label>Title <span style="color: var(--jira-red);">*</span></label>
                     {{ form.summary }}
@@ -97,7 +97,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                
+
                 <button type="button" class="btn btn-default" id="add-step-btn" style="margin-bottom: 32px; font-weight: 500;">+ Add Step</button>
 
                 <div style="text-align: right; border-top: 1px solid var(--jira-border); padding-top: 20px;">

@@ -14,14 +14,14 @@ def settings_index(request):
 def settings_priorities(request):
     priorities = Priority.objects.all().order_by('value')
     priorities_in_use_ids = list(TestCase.objects.values_list('priority_id', flat=True).distinct())
-    
+
     if request.method == 'POST':
         value = request.POST.get('value', '').strip()
         if value:
             Priority.objects.create(value=value, is_active=True)
             messages.success(request, f"Priority '{value}' added.")
             return redirect('settings_priorities')
-            
+
     return render(request, 'tcms_ui_custom/settings/priorities.html', {
         'priorities': priorities,
         'priorities_in_use_ids': priorities_in_use_ids
@@ -54,14 +54,14 @@ def priority_delete(request, pk):
 def settings_statuses(request):
     statuses = TestCaseStatus.objects.all().order_by('name')
     statuses_in_use_ids = list(TestCase.objects.values_list('case_status_id', flat=True).distinct())
-    
+
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
         if name:
             TestCaseStatus.objects.create(name=name.upper())
             messages.success(request, f"Status '{name.upper()}' added.")
             return redirect('settings_statuses')
-            
+
     return render(request, 'tcms_ui_custom/settings/statuses.html', {
         'statuses': statuses,
         'statuses_in_use_ids': statuses_in_use_ids
@@ -94,14 +94,14 @@ def status_delete(request, pk):
 def settings_tags(request):
     tags = Tag.objects.all().order_by('name')
     tags_in_use_ids = list(TestCaseTag.objects.values_list('tag_id', flat=True).distinct())
-    
+
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
         if name:
             Tag.objects.create(name=name)
             messages.success(request, f"Tag '{name}' added.")
             return redirect('settings_tags')
-            
+
     return render(request, 'tcms_ui_custom/settings/tags.html', {
         'tags': tags,
         'tags_in_use_ids': tags_in_use_ids

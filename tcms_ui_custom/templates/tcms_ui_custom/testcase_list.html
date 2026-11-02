@@ -90,9 +90,9 @@
         {% if page_obj.has_previous %}
             <li><a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if component_id %}&component={{ component_id }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">&laquo;</a></li>
         {% endif %}
-        
+
         <li class="active"><span class="btn-jira-primary" style="border-radius: 0;">{{ page_obj.number }}</span></li>
-        
+
         {% if page_obj.has_next %}
             <li><a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if component_id %}&component={{ component_id }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">&raquo;</a></li>
         {% endif %}

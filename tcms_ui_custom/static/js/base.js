@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (window.jQuery) {
         // Show toasts with a fade-in
         jQuery('.custom-toast').fadeIn(300);
-        
+
         // Auto-hide after 3 seconds
         setTimeout(function(){
             jQuery('.custom-toast').fadeOut(300);
