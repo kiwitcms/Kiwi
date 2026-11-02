@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Overview{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">{{ product.name }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Project Header -->
+<div class="row mb-24">
+    <div class="col-md-12 flex-start">
+        <div>
+            <h1 class="jira-title"><i class="fa-solid fa-box text-primary"></i> {{ product.name }}</h1>
+            <p class="text-light mt-16">
+                {{ product.description|default:"No description provided." }}
+            </p>
+        </div>
+        <div class="flex-between" style="gap: 10px;">
+            <a href="{% url 'testplan_create' %}?product={{ product.pk }}" class="btn-jira-primary font-13">
+                <i class="fa-solid fa-plus"></i> New Test Plan
+            </a>
+            <a href="{% url 'project_edit' product.pk %}?next=overview" class="btn btn-default font-13"
+                style="font-weight: 500;">
+                <i class="fa-solid fa-gear"></i> Edit Project
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Left Column: Modules List & Add Form -->
+    <div class="col-md-4">
+        <div class="jira-card">
+            <div class="flex-between mb-16" style="border-bottom: 1px solid var(--jira-border); padding-bottom: 12px;">
+                <h3 class="jira-title font-16" style="margin: 0;">Modules</h3>
+                <button type="button" class="btn btn-default btn-sm font-12 text-bold" data-toggle="collapse"
+                    data-target="#addModuleForm" style="color: var(--jira-blue);">
+                    + Add Module
+                </button>
+            </div>
+
+            <!-- Collapsible Add Module Form -->
+            <div id="addModuleForm" class="collapse {% if form_has_error %}in{% endif %}"
+                style="margin-bottom: 20px; padding: 16px; background: #FAFBFC; border: 1px solid var(--jira-border); border-radius: 4px;">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_module" value="1">
+                    <div class="form-group mb-16">
+                        <label class="text-bold font-13 mb-16">Module Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" required placeholder="e.g., OTA Login"
+                            style="background: #FFFFFF;">
+                    </div>
+                    <div class="form-group mb-16">
+                        <label class="text-bold font-13 mb-16">Description <span class="text-danger">*</span></label>
+                        <textarea name="description" class="form-control" rows="2" required
+                            placeholder="Short description..." style="background: #FFFFFF;"></textarea>
+                    </div>
+                    <button type="submit" class="btn-jira-primary font-12 w-100">Save Module</button>
+                </form>
+            </div>
+
+            <!-- Module List -->
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                {% for comp in components %}
+                <li class="flex-between" style="padding: 12px 0; border-bottom: 1px solid var(--jira-border);">
+                    <a href="/repository/?product={{ product.pk }}&component={{ comp.pk }}"
+                        class="text-primary text-decoration-none font-14">
+                        <i class="fa-regular fa-folder text-light"></i> {{ comp.name }}
+                    </a>
+                    <div class="flex-between" style="gap: 8px;">
+                        <a href="{% url 'component_edit' comp.pk %}" title="Edit Module" class="icon-btn icon-primary">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <button type="button" class="icon-btn delete-module-btn icon-danger" title="Delete Module"
+                            data-url="{% url 'component_delete' comp.pk %}" data-name="{{ comp.name }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="text-light font-14" style="padding: 12px 0;">
+                    No modules yet. Add one to get started.
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Right Column: Test Plans & Recent Test Cases -->
+    <div class="col-md-8">
+
+        <!-- Test Plans Table -->
+        <div class="jira-card p-0 overflow-hidden mb-24">
+            <div class="flex-between" style="padding: 24px 24px 16px 24px;">
+                <h3 class="jira-title font-16" style="margin:0;">Test Plans</h3>
+                <a href="{% url 'testplan_create' %}?product={{ product.pk }}" class="btn btn-default font-12"
+                    style="font-weight: 500;">+ Create Plan</a>
+            </div>
+            <table class="jira-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Target Date</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in testplans %}
+                    <tr>
+                        <td class="text-light font-14 text-bold">TP-{{ plan.pk }}</td>
+                        <td><a href="{% url 'testplan_detail' plan.pk %}"
+                                class="text-primary text-decoration-none font-14 text-bold">{{ plan.name }}</a></td>
+                        <td>
+                            {% if plan.custom_metadata.status == 'NOT_STARTED' %}
+                            <span class="jira-pill jira-pill-gray">NOT STARTED</span>
+                            {% elif plan.custom_metadata.status == 'IN_PROGRESS' %}
+                            <span class="jira-pill" style="background: #FFAB00; color: #fff;">IN PROGRESS</span>
+                            {% else %}
+                            <span class="jira-pill jira-pill-success">COMPLETED</span>
+                            {% endif %}
+                        </td>
+                        <td class="font-14">{{ plan.custom_metadata.target_date|date:"M d, Y"|default:"-" }}</td>
+                        <td class="text-right">
+                            <!-- NEW: Added flex container and Disable button -->
+                            <div class="flex-gap-10" style="justify-content: flex-end;">
+                                <a href="{% url 'testplan_detail' plan.pk %}" class="btn btn-default font-12"
+                                    style="padding: 4px 10px; font-weight: 500;">View</a>
+
+                                <form method="POST" action="{% url 'testplan_toggle_active' plan.pk %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="icon-btn icon-danger" title="Disable Plan">
+                                        <i class="fa-solid fa-ban"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-light" style="padding: 20px;">No Test Plans found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recent Test Cases Table -->
+        <div class="jira-card p-0 overflow-hidden">
+            <div style="padding: 24px 24px 0 24px;">
+                <h3 class="jira-title font-16 mb-16">Recent Test Cases</h3>
+            </div>
+            <table class="jira-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">ID</th>
+                        <th>Summary</th>
+                        <th>Module</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tc in testcases %}
+                    <tr>
+                        <td class="text-light font-14 text-bold">TC-{{ tc.pk }}</td>
+                        <td>
+                            <a href="{% url 'testcase_view' tc.pk %}"
+                                class="text-primary text-decoration-none font-14 text-bold">
+                                {{ tc.summary }}
+                            </a>
+                        </td>
+                        <td class="font-14">
+                            {% with comp=tc.component.first %}
+                            {% if comp %}
+                            <i class="fa-regular fa-folder text-light"></i> {{ comp.name }}
+                            {% else %}
+                            -
+                            {% endif %}
+                            {% endwith %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-light" style="padding: 40px;">
+                            No test cases have been created in this project yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- NEW ROW: Versions & Builds -->
+<div class="row mb-24">
+    <!-- Versions -->
+    <div class="col-md-6">
+        <div class="jira-card">
+            <h3 class="jira-title font-16 mb-16">Versions</h3>
+            <form method="POST" action="{% url 'version_create' product.pk %}" class="flex-between mb-16">
+                {% csrf_token %}
+                <input type="text" name="value" class="form-control mr-10" placeholder="e.g., v1.0" required>
+                <button type="submit" class="btn-jira-primary font-12" style="white-space: nowrap;">Add Version</button>
+            </form>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                {% for v in versions %}
+                <li class="flex-between" style="padding: 8px 0; border-bottom: 1px solid var(--jira-border);">
+                    <span class="font-14 text-bold"><i class="fa-solid fa-tag text-light"></i> {{ v.value }}</span>
+                    <form method="POST" action="{% url 'version_delete' product.pk v.pk %}" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="icon-btn icon-danger" title="Delete Version"><i
+                                class="fa-solid fa-trash"></i></button>
+                    </form>
+                </li>
+                {% empty %}
+                <li class="text-light font-14">No versions found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Builds -->
+    <div class="col-md-6">
+        <div class="jira-card">
+            <h3 class="jira-title font-16 mb-16">Builds</h3>
+            <form method="POST" action="{% url 'build_create' product.pk %}" class="flex-between mb-16">
+                {% csrf_token %}
+                <input type="text" name="name" class="form-control mr-10" placeholder="e.g., Build 123" required>
+                <button type="submit" class="btn-jira-primary font-12" style="white-space: nowrap;">Add Build</button>
+            </form>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                {% for b in builds %}
+                <li class="flex-between" style="padding: 8px 0; border-bottom: 1px solid var(--jira-border);">
+                    <span class="font-14 text-bold"><i class="fa-solid fa-cube text-light"></i> {{ b.name }}</span>
+                    <form method="POST" action="{% url 'build_delete' product.pk b.pk %}" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="icon-btn icon-danger" title="Delete Build"><i
+                                class="fa-solid fa-trash"></i></button>
+                    </form>
+                </li>
+                {% empty %}
+                <li class="text-light font-14">No builds found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Module Modal -->
+<div class="modal fade" id="deleteModuleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 8px; border: none; margin-top: 100px;">
+            <form method="POST" id="deleteModuleForm">
+                {% csrf_token %}
+                <div class="modal-header" style="border-bottom: 1px solid var(--jira-border); padding: 20px 24px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="font-size: 24px; outline: none;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <h4 class="modal-title text-bold" style="color: var(--jira-red);">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Delete Module
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding: 24px;">
+                    <p class="font-14" style="margin: 0;">
+                        Are you sure you want to delete <strong id="modalModuleName"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer" style="border-top: none; padding: 0 24px 24px 24px;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        style="font-weight: 500; padding: 8px 16px;">Cancel</button>
+                    <button type="submit" class="btn-jira-primary"
+                        style="background-color: var(--jira-red); padding: 8px 16px;">Yes, Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/project_overview.js' %}"></script>
+{% endblock %}

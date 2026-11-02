@@ -311,6 +311,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
+            os.path.join(TCMS_ROOT_PATH, "..", "tcms_ui_custom", "templates").replace("\\", "/"),
             os.path.join(TCMS_ROOT_PATH, "templates/").replace("\\", "/"),
         ],
         "OPTIONS": {
@@ -324,6 +325,7 @@ TEMPLATES = [
                 "tcms.core.context_processors.request_contents_processor",
                 "tcms.core.context_processors.settings_processor",
                 "tcms.core.context_processors.server_time_processor",
+                "tcms_ui_custom.context_processors.jira_sidebar_products",
             ],
             "loaders": [
                 "django.template.loaders.filesystem.Loader",
@@ -361,6 +363,7 @@ if os.environ.get("KIWI_DISABLE_BUGTRACKER") is None:
 
 
 INSTALLED_APPS = TENANT_APPS + [
+    "tcms_ui_custom",
     "grappelli",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -585,3 +588,6 @@ PLAUSIBLE_DOMAIN = "kiwitcms-container"
 
 # https://app.scarf.sh/analytics/kiwitcms?pixelId=d7cc874e-5b3b-409f-bb20-bb1e410cdcb0
 SCARF_PIXEL_ID = "d7cc874e-5b3b-409f-bb20-bb1e410cdcb0"
+
+# Use our custom styled registration form
+KIWI_REGISTRATION_FORM = 'tcms_ui_custom.forms.CustomRegistrationForm'

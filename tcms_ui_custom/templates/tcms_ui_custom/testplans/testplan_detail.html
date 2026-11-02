@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}{{ plan.name }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'project_overview' plan.product.pk %}">{{ plan.product.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'testplan_list' %}">Test Plans</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">{{ plan.name }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-24">
+    <div class="col-md-12 flex-start">
+        <div>
+            <h1 class="jira-title"><span class="text-light font-16">TP-{{ plan.pk }}</span> {{ plan.name }}</h1>
+        </div>
+        <div>
+            <a href="{% url 'testplan_list' %}" class="btn btn-default font-13" style="font-weight: 500;"><i class="fa-solid fa-arrow-left"></i> Back to Plans</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="jira-card">
+            <h3 class="jira-title font-16 mb-16">Details</h3>
+            
+            <!-- Status Updater -->
+            <form method="POST" class="mb-16">
+                {% csrf_token %}
+                <label class="text-bold font-14 mb-16">Plan Status</label>
+                <div class="flex-between">
+                    <select name="status" class="form-control mr-10">
+                        {% for val, label in status_choices %}
+                            <option value="{{ val }}" {% if plan.custom_metadata.status == val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" name="update_status" class="btn-jira-primary font-12" style="white-space: nowrap;">Update</button>
+                </div>
+            </form>
+
+            <p class="font-14 mb-16"><strong>Environment:</strong> {{ plan.custom_metadata.environment|default:"-" }}</p>
+            <p class="font-14 mb-16"><strong>Target Date:</strong> {{ plan.custom_metadata.target_date|date:"M d, Y"|default:"-" }}</p>
+            <p class="font-14 mb-16"><strong>Description:</strong><br>{{ plan.custom_metadata.description|default:"-" }}</p>
+            
+            <hr>
+            <h3 class="jira-title font-16 mb-16">Resources</h3>
+            <ul style="padding-left: 20px; margin: 0;">
+                {% for user in plan.custom_metadata.resources.all %}
+                    <li class="font-14 mb-8"><i class="fa-solid fa-user text-light"></i> {{ user.username }}</li>
+                {% empty %}
+                    <li class="font-14 text-light">No resources assigned.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="jira-card p-0 overflow-hidden">
+            <div style="padding: 24px 24px 16px 24px;">
+                <h3 class="jira-title font-16" style="margin:0;">Test Runs (Executions)</h3>
+            </div>
+            <table class="jira-table">
+                <thead>
+                    <tr><th>Run Name</th><th>Build</th><th class="text-right">Actions</th></tr>
+                </thead>
+                <tbody>
+                    {% for data in runs_data %}
+                    <tr>
+                        <td class="font-14 text-bold">{{ data.run.summary }}</td>
+                        <td><span class="jira-pill jira-pill-gray">{{ data.run.build.name|default:"No Build" }}</span></td>
+                        <td class="text-right">
+                            <div class="flex-gap-10" style="justify-content: flex-end;">
+                                {% if data.is_complete %}
+                                    <!-- Disabled state if 100% done -->
+                                    <button class="btn btn-default font-12" style="padding: 4px 10px; opacity: 0.5; cursor: not-allowed;" title="Cannot edit a completed run" disabled>Edit</button>
+                                    <button class="btn-jira-primary font-12" style="padding: 4px 10px; opacity: 0.5; cursor: not-allowed; background: var(--jira-text-light);" title="Run is complete" disabled>Execute <i class="fa-solid fa-check"></i></button>
+                                {% else %}
+                                    <!-- Active state -->
+                                    <a href="{% url 'testrun_edit' data.run.pk %}" class="btn btn-default font-12" style="padding: 4px 10px; font-weight: 500;">Edit</a>
+                                    <a href="{% url 'testrun_detail' data.run.pk %}" class="btn-jira-primary font-12" style="padding: 4px 10px;">Execute <i class="fa-solid fa-play ml-4"></i></a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

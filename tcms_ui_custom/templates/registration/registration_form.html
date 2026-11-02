@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign Up - My QA TCMS{% endblock %}
+
+{% block content %}
+<div class="row" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+    <div class="col-md-5">
+        <div class="jira-card" style="padding: 40px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="jira-title" style="font-size: 24px;">Create an Account</h2>
+                <p class="text-light font-14 mt-16">Join the QA team</p>
+            </div>
+
+            {% if form.errors %}
+                <div class="alert alert-danger font-14" style="padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                    Please correct the errors below.
+                </div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'tcms-register' %}">
+                {% csrf_token %}
+                
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Username</label>
+                    <input type="text" name="username" class="form-control" required autofocus placeholder="Enter username" value="{{ form.username.value|default:'' }}">
+                    {% if form.username.errors %}<div class="text-danger font-13 mt-16">{{ form.username.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Email address</label>
+                    <input type="email" name="email" class="form-control" required placeholder="Enter email" value="{{ form.email.value|default:'' }}">
+                    {% if form.email.errors %}<div class="text-danger font-13 mt-16">{{ form.email.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Password</label>
+                    <input type="password" name="password1" class="form-control" required placeholder="Enter password">
+                    {% if form.password1.errors %}<div class="text-danger font-13 mt-16">{{ form.password1.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="form-group mb-24">
+                    <label class="text-bold font-14 mb-16">Confirm Password</label>
+                    <input type="password" name="password2" class="form-control" required placeholder="Confirm password">
+                    {% if form.password2.errors %}<div class="text-danger font-13 mt-16">{{ form.password2.errors.0 }}</div>{% endif %}
+                </div>
+
+                <!-- Render CAPTCHA securely if enabled -->
+                {% if form.captcha %}
+                    <div class="form-group">
+                        <label class="text-bold font-14 mb-16">Security Check</label>
+                        <!-- Custom wrapper to fix layout -->
+                        <div class="custom-captcha-wrapper">
+                            {{ form.captcha }}
+                        </div>
+                        {% if form.captcha.errors %}<div class="text-danger font-13 mt-16">{{ form.captcha.errors.0 }}</div>{% endif %}
+                    </div>
+                {% endif %}
+
+                <!-- Clear wrapper for the button -->
+                <div style="clear: both; padding-top: 10px;">
+                    <button type="submit" class="btn-jira-primary w-100 font-16" style="padding: 10px; display: block;">Register</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-24">
+                <a href="{% url 'tcms-login' %}" class="text-light font-14">Already have an account? <strong>Log in</strong></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

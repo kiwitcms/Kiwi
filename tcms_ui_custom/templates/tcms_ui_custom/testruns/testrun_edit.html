@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Run: {{ run.summary }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'project_overview' run.plan.product.pk %}">{{ run.plan.product.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'testplan_detail' run.plan.pk %}">{{ run.plan.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">Edit Run: {{ run.summary }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-24">
+    <div class="col-md-12 flex-between">
+        <div>
+            <h1 class="jira-title">Edit Run: {{ run.summary }}</h1>
+            <p class="text-light font-14 mt-16">Uncheck modules or test cases to exclude them from this run.</p>
+        </div>
+        <div>
+            <a href="{% url 'testplan_detail' run.plan.pk %}" class="btn btn-default font-13">Cancel</a>
+            <button type="submit" form="editRunForm" class="btn-jira-primary font-13 ml-10">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<form method="POST" id="editRunForm">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for module_name, executions in modules_dict.items %}
+            <div class="jira-card mb-24 p-0 overflow-hidden">
+                <div style="padding: 20px 24px 16px 24px; border-bottom: 1px solid var(--jira-border); display: flex; justify-content: space-between; align-items: center;">
+                    <h3 class="jira-title font-16" style="margin:0;">
+                        <i class="fa-regular fa-folder text-light"></i> {{ module_name }}
+                    </h3>
+                    <!-- Toggle for the whole module -->
+                    <label style="cursor: pointer; margin: 0; font-weight: 600; font-size: 13px; color: var(--jira-text-light);">
+                        <input type="checkbox" class="module-toggle" checked> Select All
+                    </label>
+                </div>
+                <table class="jira-table">
+                    <tbody>
+                        {% for exe in executions %}
+                        <tr>
+                            <td style="width: 40px; text-align: center;">
+                                <input type="checkbox" name="selected_executions[]" value="{{ exe.pk }}" class="case-checkbox" checked>
+                            </td>
+                            <td class="text-light font-14 text-bold" style="width: 80px;">TC-{{ exe.case.pk }}</td>
+                            <td class="font-14 text-bold">{{ exe.case.summary }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% empty %}
+            <div class="jira-card">
+                <p class="text-center text-light font-14" style="margin: 0; padding: 20px;">No test cases in this run.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Logic for "Select All" per module
+        document.querySelectorAll('.module-toggle').forEach(function(toggle) {
+            toggle.addEventListener('change', function() {
+                var card = this.closest('.jira-card');
+                var checkboxes = card.querySelectorAll('.case-checkbox');
+                checkboxes.forEach(function(cb) {
+                    cb.checked = this.checked;
+                }, this);
+            });
+        });
+
+        // If a user manually unchecks a case, uncheck the "Select All" toggle
+        document.querySelectorAll('.case-checkbox').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                var card = this.closest('.jira-card');
+                var toggle = card.querySelector('.module-toggle');
+                var allChecked = card.querySelectorAll('.case-checkbox:checked').length === card.querySelectorAll('.case-checkbox').length;
+                toggle.checked = allChecked;
+            });
+        });
+    });
+</script>
+{% endblock %}

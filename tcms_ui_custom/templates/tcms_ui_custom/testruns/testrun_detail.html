@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ run.summary }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'project_overview' run.plan.product.pk %}">{{ run.plan.product.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'testplan_list' %}">Test Plans</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'testplan_detail' run.plan.pk %}">{{ run.plan.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">{{ run.summary }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-24">
+    <div class="col-md-12">
+        <h1 class="jira-title">{{ run.summary }}</h1>
+        <p class="text-light font-14 mt-16">
+            <strong>Build:</strong> {{ run.build.name|default:"-" }} &nbsp;|&nbsp; 
+            <strong>Manager:</strong> {{ run.manager.username|default:"-" }}
+        </p>
+    </div>
+</div>
+
+<!-- Execution Progress -->
+<div class="jira-card mb-24">
+    <div class="flex-between mb-16">
+        <h3 class="jira-title font-16" style="margin:0;">Execution Progress</h3>
+        <span class="font-14 text-bold">{{ stats.total }} Total Test Cases</span>
+    </div>
+    
+    <!-- FIXED: Using data-width to avoid CSS linter errors -->
+    <div class="progress-container">
+        <div class="pb-pass dynamic-width" data-width="{{ stats.pass_pct }}" title="Passed: {{ stats.passed }}"></div>
+        <div class="pb-fail dynamic-width" data-width="{{ stats.fail_pct }}" title="Failed: {{ stats.failed }}"></div>
+        <div class="pb-blocked dynamic-width" data-width="{{ stats.block_pct }}" title="Blocked: {{ stats.blocked }}"></div>
+        <div class="pb-deferred dynamic-width" data-width="{{ stats.defer_pct }}" title="Deferred: {{ stats.deferred }}"></div>
+        <div class="pb-untested dynamic-width" data-width="{{ stats.untested_pct }}" title="Untested: {{ stats.untested }}"></div>
+    </div>
+
+    <div class="row mt-16">
+        <div class="col-md-2 col-md-offset-1">
+            <div class="stat-box">
+                <span class="stat-value" style="color: var(--jira-green);">{{ stats.passed }}</span>
+                <span class="stat-label">Passed</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-box">
+                <span class="stat-value" style="color: var(--jira-red);">{{ stats.failed }}</span>
+                <span class="stat-label">Failed</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-box">
+                <span class="stat-value" style="color: #FFAB00;">{{ stats.blocked }}</span>
+                <span class="stat-label">Blocked</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-box">
+                <span class="stat-value" style="color: #6B778C;">{{ stats.deferred }}</span>
+                <span class="stat-label">Deferred</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-box">
+                <span class="stat-value">{{ stats.untested }}</span>
+                <span class="stat-label">Untested</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modules & Test Cases List -->
+<div class="row">
+    <div class="col-md-12">
+        {% for module_name, executions in modules_dict.items %}
+        <div class="jira-card mb-24 p-0 overflow-hidden">
+            <div style="padding: 20px 24px 16px 24px; border-bottom: 1px solid var(--jira-border);">
+                <h3 class="jira-title font-16" style="margin:0;">
+                    <i class="fa-regular fa-folder text-light"></i> {{ module_name }}
+                </h3>
+            </div>
+            <table class="jira-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">ID</th>
+                        <th>Test Case</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exe in executions %}
+                    <tr>
+                        <td class="text-light font-14 text-bold">TC-{{ exe.case.pk }}</td>
+                        <td class="font-14 text-bold">{{ exe.case.summary }}</td>
+                        <td class="font-14">
+                            <i class="fa-solid fa-user text-light"></i> {{ exe.assignee.username|default:"Unassigned" }}
+                        </td>
+                        <td>
+                            {% if exe.status.name == 'PASS' %}
+                                <span class="jira-pill jira-pill-success">PASS</span>
+                            {% elif exe.status.name == 'FAIL' %}
+                                <span class="jira-pill" style="background: var(--jira-red); color: #fff;">FAIL</span>
+                            {% elif exe.status.name == 'BLOCKED' %}
+                                <span class="jira-pill" style="background: #FFAB00; color: #fff;">BLOCKED</span>
+                            {% elif exe.status.name == 'DEFERRED' %}
+                                <span class="jira-pill" style="background: #6B778C; color: #fff;">DEFERRED</span>
+                            {% else %}
+                                <span class="jira-pill jira-pill-gray">{{ exe.status.name }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-right">
+                            <a href="{% url 'execute_test' run.pk exe.case.pk %}" class="btn-jira-primary font-12" style="padding: 4px 12px;">
+                                Run Test <i class="fa-solid fa-play ml-4"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% empty %}
+        <div class="jira-card">
+            <p class="text-center text-light font-14" style="margin: 0; padding: 20px;">
+                No test cases found in this run.
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Apply dynamic widths for the progress bar
+        document.querySelectorAll('.dynamic-width').forEach(function(el) {
+            var width = el.getAttribute('data-width');
+            if (width) {
+                el.style.width = width + '%';
+            }
+        });
+    });
+</script>
+{% endblock %}

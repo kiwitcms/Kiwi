@@ -1,0 +1,49 @@
+{% extends "tcms_ui_custom/settings/base_settings.html" %}
+
+{% block title %}Project Settings{% endblock %}
+
+{% block settings_content %}
+<div class="row" style="margin-bottom: 24px;">
+    <div class="col-md-12" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1 class="jira-title">⚙️ Project Settings</h1>
+            <p style="color: var(--jira-text-light); margin-top: 8px;">Manage your projects and modules here.</p>
+        </div>
+        <a href="{% url 'project_create' %}" class="btn-jira-primary">+ New Project</a>
+    </div>
+</div>
+
+<div class="jira-card" style="padding: 0; overflow: hidden;">
+    <table class="jira-table">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th style="text-align: right;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>
+                    <strong>
+                        <a href="{% url 'project_overview' product.pk %}" style="color: var(--jira-blue); text-decoration: none; font-size: 15px;">
+                            {{ product.name }}
+                        </a>
+                    </strong>
+                </td>
+                <td style="text-align: right;">
+                    <a href="{% url 'project_overview' product.pk %}" class="btn-jira-primary" style="font-size: 12px; padding: 6px 12px;">Manage Modules</a>
+                    <a href="{% url 'project_edit' product.pk %}?next=settings" class="btn btn-default" style="font-size: 12px; padding: 5px 12px; margin-left: 8px; font-weight: 500;">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 40px; color: var(--jira-text-light);">
+                    No projects found. Click "+ New Project" to create one.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

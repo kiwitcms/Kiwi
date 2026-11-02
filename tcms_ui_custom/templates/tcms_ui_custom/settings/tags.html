@@ -1,0 +1,77 @@
+{% extends "tcms_ui_custom/settings/base_settings.html" %}
+
+{% block settings_content %}
+<div class="jira-card-header">
+    <h1 class="jira-title">Tags</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="jira-card">
+            <h3 class="jira-title font-16 mb-16">+ Add Tag</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Tag Name</label>
+                    <input type="text" name="name" class="form-control" required placeholder="e.g., regression">
+                </div>
+                <button type="submit" class="btn-jira-primary w-100">Add Tag</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="col-md-7">
+        <div class="jira-card p-0 overflow-hidden">
+            <table class="jira-table">
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in tags %}
+                    <tr>
+                        <td>
+                            <!-- Display Mode -->
+                            <div class="edit-display-mode flex-between">
+                                <span class="jira-pill jira-pill-purple">{{ t.name }}</span>
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="icon-btn edit-btn icon-primary" title="Edit">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    
+                                    {% if t.pk in tags_in_use_ids %}
+                                        <button class="icon-btn icon-gray" title="Tag is in use by Test Cases and cannot be deleted." disabled style="cursor: not-allowed; opacity: 0.6;">
+                                            <i class="fa-solid fa-lock"></i>
+                                        </button>
+                                    {% else %}
+                                        <button class="icon-btn delete-btn icon-danger" data-url="{% url 'tag_delete' t.pk %}" data-name="{{ t.name }}" title="Delete">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Edit Mode -->
+                            <form method="POST" action="{% url 'tag_edit' t.pk %}" class="edit-edit-mode" style="display: none;">
+                                {% csrf_token %}
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="text" name="name" class="form-control item-edit-input" value="{{ t.name }}" style="max-width: 200px;">
+                                    <button type="submit" class="icon-btn icon-success" title="Save">
+                                        <i class="fa-solid fa-floppy-disk"></i>
+                                    </button>
+                                    <button type="button" class="icon-btn cancel-btn icon-gray" title="Cancel">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

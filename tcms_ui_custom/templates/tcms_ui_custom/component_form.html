@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Module{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h1 class="jira-title" style="margin-bottom: 24px;">✏️ Edit Module</h1>
+        
+        <div class="jira-card">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; margin-bottom: 8px; display: block;">Module Name <span style="color: var(--jira-red);">*</span></label>
+                    {{ form.name }}
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; margin-bottom: 8px; display: block;">Description <span style="color: var(--jira-red);">*</span></label>
+                    {{ form.description }}
+                </div>
+
+                <div style="margin-top: 30px; border-top: 1px solid var(--jira-border); padding-top: 20px; text-align: right;">
+                    <a href="{% url 'project_overview' component.product.pk %}" class="btn btn-default" style="padding: 8px 16px;">Cancel</a>
+                    <button type="submit" class="btn-jira-primary" style="margin-left: 10px;">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

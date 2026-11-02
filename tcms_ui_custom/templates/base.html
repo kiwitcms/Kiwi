@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}My QA TCMS{% endblock %}</title>
+
+    <!-- Kiwi Core CSS -->
+    <link rel="stylesheet" href="{% static 'patternfly/dist/css/patternfly.min.css' %}">
+    <link rel="stylesheet" href="{% static 'patternfly/dist/css/patternfly-additions.min.css' %}">
+
+    <!-- Load FontAwesome 6 Locally -->
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
+
+    <!-- Our Custom Jira Theme -->
+    <link rel="stylesheet" href="{% static 'css/new_theme.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    {% if request.user.is_authenticated %}
+    <!-- ========================================== -->
+    <!-- 1. LOGGED IN NAVIGATION (Dark Jira Blue)   -->
+    <!-- ========================================== -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <i class="fa-solid fa-rocket me-1"></i> My QA TCMS
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'testplan_list' %}">Test Plans</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'project_create' %}" style="font-weight: 600;">
+                        <i class="fa-solid fa-plus"></i> Create Project
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'settings_index' %}" style="font-weight: 600;">
+                        <i class="fa-solid fa-gear"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <form method="post" action="{% url 'tcms-logout' %}" style="margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="navbar-logout-btn">
+                            Logout ({{ request.user.username }})
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Left Sidebar (Only for Logged In) -->
+    <div class="jira-sidebar">
+        <div class="jira-meta-label" style="padding: 0 20px 10px;">
+            Projects
+        </div>
+        <ul class="sidebar-menu" style="list-style: none; padding-left: 0;">
+            {% for product in jira_sidebar_products %}
+            <li style="margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+                    <a href="{% url 'project_overview' product.pk %}"
+                        style="font-weight: 600; color: var(--jira-text); text-decoration: none; font-size: 14px;">
+                        <i class="fa-solid fa-box icon-primary"></i> {{ product.name }}
+                    </a>
+                    <a href="#project-{{ product.pk }}" data-toggle="collapse" aria-expanded="true"
+                        style="color: var(--jira-text-light); text-decoration: none; cursor: pointer;">
+                        <i class="fa-solid fa-chevron-down icon-sm"></i>
+                    </a>
+                </div>
+
+                <ul id="project-{{ product.pk }}" class="collapse in"
+                    style="list-style: none; padding-left: 20px; margin-top: 5px;">
+                    {% for comp in product.component.all %}
+                    <li style="position: relative;">
+                        <div
+                            style="position: absolute; left: 10px; top: 0; bottom: 0; border-left: 2px solid var(--jira-border);">
+                        </div>
+                        <a href="/repository/?product={{ product.pk }}&component={{ comp.pk }}"
+                            style="display: block; padding: 6px 20px; font-size: 13px; color: var(--jira-text-light); text-decoration: none;">
+                            <i class="fa-regular fa-folder icon-gray"></i> {{ comp.name }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li style="padding: 5px 20px; font-size: 12px; color: #A5ADBA; font-style: italic;">No modules yet
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <!-- ========================================== -->
+    <!-- 2. LOGGED OUT NAVIGATION (Clean White)     -->
+    <!-- ========================================== -->
+    <nav class="navbar navbar-fixed-top navbar-landing">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <i class="fa-solid fa-rocket me-1" style="color: var(--jira-blue);"></i> My QA TCMS
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'tcms-login' %}">Login</a></li>
+                <li>
+                    <a href="{% url 'tcms-register' %}" class="navbar-btn-register">
+                        Sign up for free
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+
+    <!-- Floating Toast Notifications -->
+    <div aria-live="polite" aria-atomic="true" style="position: relative; z-index: 9999;">
+        <div id="toast-container" style="position: fixed; top: 70px; right: 20px; min-width: 300px;">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="custom-toast {% if message.tags == 'error' %}toast-error{% else %}toast-success{% endif %}"
+                style="display: none; opacity: 1; background-color: #FFFFFF; box-shadow: 0 4px 12px rgba(9,30,66,0.15); border-radius: 4px; margin-bottom: 10px;">
+                <div class="toast-header"
+                    style="background: transparent; border-bottom: none; padding: 10px 15px 5px 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <strong class="toast-title" style="font-size: 14px;">
+                        {% if message.tags == 'error' %}
+                        <i class="fa-solid fa-circle-exclamation"></i> Error
+                        {% else %}
+                        <i class="fa-solid fa-circle-check"></i> Success
+                        {% endif %}
+                    </strong>
+                    <button type="button" class="close-toast" aria-label="Close"
+                        style="background: none; border: none; font-size: 20px; cursor: pointer; color: #6B778C; padding: 0;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="toast-body"
+                    style="padding: 5px 15px 15px 15px; font-weight: 500; color: var(--jira-text); font-size: 13px;">
+                    {{ message }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+        <!-- Main Content Area -->
+    <!-- If logged in, shift content for sidebar. If logged out, center it with container. -->
+    <div class="{% if request.user.is_authenticated %}jira-main-content{% else %}container auth-container{% endif %}">
+        {% block breadcrumbs %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Execute TC-{{ testcase.pk }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'project_overview' run.plan.product.pk %}">{{ run.plan.product.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'testplan_detail' run.plan.pk %}">{{ run.plan.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'testrun_detail' run.pk %}">{{ run.summary }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">TC-{{ testcase.pk }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Header Bar -->
+<div class="row mb-24">
+    <div class="col-md-12 flex-between" style="background: #FFFFFF; padding: 20px; border-radius: 8px; border: 1px solid var(--jira-border); box-shadow: 0 1px 3px rgba(9,30,66,0.08);">
+        <div>
+            <h2 class="jira-title" style="margin: 0;">
+                <span class="text-light font-16">TC-{{ testcase.pk }}</span> {{ testcase.summary }}
+            </h2>
+            <div class="flex-between mt-16" style="justify-content: flex-start; gap: 20px;">
+                <span class="text-light font-14"><i class="fa-regular fa-folder"></i> {{ testcase.component.first.name }}</span>
+                <span class="text-light font-14"><strong>Env:</strong> {{ run.plan.custom_metadata.environment|default:"Not specified" }}</span>
+                <span class="text-light font-14"><strong>Build:</strong> {{ run.build.name|default:"Not specified" }}</span>
+            </div>
+        </div>
+        <div class="flex-between" style="gap: 10px;">
+            {% if prev_case %}
+                <a href="{% url 'execute_test' run.pk prev_case.pk %}" class="btn btn-default font-13"><i class="fa-solid fa-arrow-left"></i> Previous</a>
+            {% else %}
+                <button class="btn btn-default font-13" disabled><i class="fa-solid fa-arrow-left"></i> Previous</button>
+            {% endif %}
+            
+            <a href="{% url 'testrun_detail' run.pk %}" class="btn btn-default font-13">Back to Run</a>
+            
+            {% if next_case %}
+                <a href="{% url 'execute_test' run.pk next_case.pk %}" class="btn btn-default font-13">Next <i class="fa-solid fa-arrow-right"></i></a>
+            {% else %}
+                <button class="btn btn-default font-13" disabled>Next <i class="fa-solid fa-arrow-right"></i></button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <!-- Left Side: Test Case Details -->
+        <div class="col-md-8">
+            <div class="jira-card h-100">
+                <div class="rich-text-content execution-details">
+                    {{ testcase.text|safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Execution Form -->
+        <div class="col-md-4">
+            <div class="jira-card h-100">
+                <h3 class="jira-title font-16 mb-16">Execution Result</h3>
+                
+                <div class="form-group mb-24">
+                    <label class="text-bold font-14 mb-16">Status</label>
+                    <div class="flex-between" style="gap: 10px; flex-wrap: wrap;">
+                        <button type="submit" name="status" value="PASS" class="btn-jira-primary" style="background: var(--jira-green); padding: 12px; font-size: 13px; flex: 1 1 40%;"><i class="fa-solid fa-check"></i> PASS</button>
+                        <button type="submit" name="status" value="FAIL" class="btn-jira-primary" style="background: var(--jira-red); padding: 12px; font-size: 13px; flex: 1 1 40%;"><i class="fa-solid fa-xmark"></i> FAIL</button>
+                        <button type="submit" name="status" value="BLOCKED" class="btn-jira-primary" style="background: #FFAB00; padding: 12px; font-size: 13px; flex: 1 1 40%;"><i class="fa-solid fa-ban"></i> BLOCK</button>
+                        <button type="submit" name="status" value="DEFERRED" class="btn-jira-primary" style="background: #6B778C; padding: 12px; font-size: 13px; flex: 1 1 40%;"><i class="fa-solid fa-forward"></i> DEFER</button>
+                    </div>
+                </div>
+
+                <div class="form-group mb-24">
+                    <label class="text-bold font-14 mb-16">Actual Result / Comments</label>
+                    <textarea name="notes" class="form-control" rows="10" placeholder="Enter actual result, bugs found, or comments...">{{ execution.notes|default:'' }}</textarea>
+                </div>
+
+                <div class="flex-between" style="gap: 10px;">
+                    <button type="submit" name="action" value="save" class="btn btn-default w-100" style="padding: 8px;">Save & Close</button>
+                    {% if next_case %}
+                        <button type="submit" name="action" value="next" class="btn-jira-primary w-100" style="padding: 8px;">Save & Next</button>
+                    {% else %}
+                        <button type="submit" name="action" value="next" class="btn-jira-primary w-100" style="padding: 8px;">Save & Finish</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

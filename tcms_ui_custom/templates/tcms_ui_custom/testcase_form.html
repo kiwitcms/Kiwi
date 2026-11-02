@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ action }} Test Case{% endblock %}
+
+{% block extra_head %}
+<link href="{% static 'vendor/select2/select2.min.css' %}" rel="stylesheet" />
+<style>
+    .tr-field-group { margin-bottom: 20px; }
+    .tr-field-group label { font-weight: 600; font-size: 13px; color: var(--jira-text); margin-bottom: 8px; display: block; }
+    .step-row { background: #FAFBFC; padding: 16px; border-radius: 4px; margin-bottom: 12px; border: 1px solid var(--jira-border); }
+    .select2-container .select2-selection--multiple { min-height: 38px; border: 2px solid var(--jira-border); border-radius: 3px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h2 class="jira-title" style="margin-bottom: 24px;">{{ action }} Test Case</h2>
+        
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>Error:</strong> Please correct the issues below.<br>{{ form.errors }}
+            </div>
+        {% endif %}
+
+        <div class="jira-card">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="tr-field-group">
+                    <label>Title <span style="color: var(--jira-red);">*</span></label>
+                    {{ form.summary }}
+                </div>
+
+                <div class="tr-field-group">
+                    <label>Description</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 tr-field-group">
+                        <label>Module <span style="color: var(--jira-red);">*</span></label>
+                        {{ form.component }}
+                    </div>
+                    <div class="col-md-6 tr-field-group">
+                        <label>Tags</label>
+                        {{ form.tags_input }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 tr-field-group">
+                        <label>Status <span style="color: var(--jira-red);">*</span></label>
+                        {{ form.case_status }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 tr-field-group">
+                        <label>Pre-conditions</label>
+                        {{ form.pre_conditions }}
+                    </div>
+                    <div class="col-md-6 tr-field-group">
+                        <label>Post-conditions</label>
+                        {{ form.post_conditions }}
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 32px; margin-bottom: 16px; font-size: 16px; font-weight: 600; color: var(--jira-text);">Steps</h4>
+                <div id="steps-container">
+                    {% for step, expected in existing_steps %}
+                        <div class="step-row">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label style="font-size: 12px; text-transform: uppercase; color: #6B778C;">Step</label>
+                                    <textarea name="step[]" class="form-control" rows="2">{{ step }}</textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="font-size: 12px; text-transform: uppercase; color: #6B778C;">Expected Result</label>
+                                    <textarea name="expected[]" class="form-control" rows="2">{{ expected }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="step-row">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label style="font-size: 12px; text-transform: uppercase; color: #6B778C;">Step</label>
+                                    <textarea name="step[]" class="form-control" rows="2"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="font-size: 12px; text-transform: uppercase; color: #6B778C;">Expected Result</label>
+                                    <textarea name="expected[]" class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <button type="button" class="btn btn-default" id="add-step-btn" style="margin-bottom: 32px; font-weight: 500;">+ Add Step</button>
+
+                <div style="text-align: right; border-top: 1px solid var(--jira-border); padding-top: 20px;">
+                    <a href="{% if tc %}{% url 'testcase_view' tc.pk %}{% else %}/{% endif %}" class="btn btn-default" style="padding: 8px 16px;">Cancel</a>
+                    <button type="submit" class="btn-jira-primary" style="margin-left: 10px;">Save Test Case</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'js/testcase_form.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Test Plans{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">Test Plans</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-24">
+    <div class="col-md-12 flex-between">
+        <div>
+            <h1 class="jira-title">Test Plans</h1>
+            <p class="text-light font-14 mt-16">Manage your testing cycles and execution plans.</p>
+        </div>
+        <a href="{% url 'testplan_create' %}" class="btn-jira-primary">
+            <i class="fa-solid fa-plus"></i> New Test Plan
+        </a>
+    </div>
+</div>
+
+<div class="jira-card p-0 overflow-hidden">
+    <table class="jira-table">
+        <thead>
+            <tr>
+                <th style="width: 80px;">ID</th>
+                <th>Name</th>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Target Date</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in testplans %}
+            <tr>
+                <td class="text-light font-14 text-bold">TP-{{ plan.pk }}</td>
+                <td>
+                    <a href="{% url 'testplan_detail' plan.pk %}" class="text-primary text-decoration-none font-14 text-bold">{{ plan.name }}</a>
+                </td>
+                <td class="font-14"><i class="fa-solid fa-box text-light"></i> {{ plan.product.name }}</td>
+                <td>
+                    <!-- FIXED: Now using the custom status logic -->
+                    {% if plan.custom_metadata.status == 'NOT_STARTED' %}
+                        <span class="jira-pill jira-pill-gray">NOT STARTED</span>
+                    {% elif plan.custom_metadata.status == 'IN_PROGRESS' %}
+                        <span class="jira-pill" style="background: #FFAB00; color: #fff;">IN PROGRESS</span>
+                    {% elif plan.custom_metadata.status == 'COMPLETED' %}
+                        <span class="jira-pill jira-pill-success">COMPLETED</span>
+                    {% else %}
+                        <span class="jira-pill jira-pill-gray">UNKNOWN</span>
+                    {% endif %}
+                </td>
+                <td class="font-14">{{ plan.custom_metadata.target_date|date:"M d, Y"|default:"-" }}</td>
+                <td class="text-right">
+                    <div class="flex-gap-10" style="justify-content: flex-end;">
+                        <a href="{% url 'testplan_detail' plan.pk %}" class="btn btn-default font-12" style="padding: 4px 10px; font-weight: 500;">View</a>
+                        
+                        <!-- Disable Button (Kept so you can hide plans from this view) -->
+                        <form method="POST" action="{% url 'testplan_toggle_active' plan.pk %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="icon-btn icon-danger" title="Disable Plan">
+                                <i class="fa-solid fa-ban"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center text-light" style="padding: 40px;">No active Test Plans found. Click "New Test Plan" to create one.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

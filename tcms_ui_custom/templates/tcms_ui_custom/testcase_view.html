@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}TC-{{ tc.pk }}: {{ tc.summary }}{% endblock %}
+
+{% block breadcrumbs %}
+{% with comp=tc.component.first %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'project_overview' comp.product.pk %}">{{ comp.product.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="/repository/?product={{ comp.product.pk }}&component={{ comp.pk }}">{{ comp.name }}</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">TC-{{ tc.pk }}</span>
+</div>
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-10 col-md-offset-1">
+        
+        <div class="jira-card">
+            <div class="jira-card-header">
+                <div>
+                    <h1 class="jira-title">
+                        <span class="jira-subtitle">TC-{{ tc.pk }}</span> {{ tc.summary }}
+                    </h1>
+                </div>
+                <div>
+                    <a href="{% url 'testcase_edit' tc.pk %}" class="btn-jira-primary" style="font-size: 13px; padding: 6px 16px;">Edit</a>
+                    <a href="{% url 'testcase_delete' tc.pk %}" class="btn-jira-primary" style="background: var(--jira-red); font-size: 13px; padding: 6px 16px; margin-left: 8px;">Delete</a>
+                </div>
+            </div>
+            
+            <div class="jira-meta-grid">
+                <div class="jira-meta-item">
+                    <span class="jira-meta-label">Status</span>
+                    <div><span class="jira-pill jira-pill-success">{{ tc.case_status.name }}</span></div>
+                </div>
+                
+                <div class="jira-meta-item">
+                    <span class="jira-meta-label">Module</span>
+                    <div class="jira-meta-value">
+                        {% with comp=tc.component.first %}
+                            {% if comp %}
+                                📁 {{ comp.name }}
+                            {% else %}
+                                <span style="color: #A5ADBA;">None</span>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <div class="jira-meta-item">
+                    <span class="jira-meta-label">Tags</span>
+                    <div class="jira-meta-value">
+                        {% for tag in tc.tag.all %}
+                            <span class="jira-pill jira-pill-purple">{{ tag.name }}</span>
+                        {% empty %}
+                            <span style="color: #A5ADBA;">-</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="jira-card">
+            <div class="rich-text-content">
+                {{ tc.text|safe }}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

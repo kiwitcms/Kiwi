@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <a href="{% url 'settings_index' %}">Settings</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    <span class="current">{% block settings_breadcrumb %}Overview{% endblock %}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Settings Sidebar -->
+    <div class="col-md-3">
+        <div class="jira-card">
+            <h3 class="jira-meta-label mb-16">Settings</h3>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li><a href="{% url 'settings_index' %}" class="settings-nav-link {% if request.resolver_match.url_name == 'settings_index' %}active{% endif %}">Overview</a></li>
+                <li><a href="{% url 'project_settings' %}" class="settings-nav-link {% if request.resolver_match.url_name == 'project_settings' %}active{% endif %}">Projects</a></li>
+                <li><a href="{% url 'settings_statuses' %}" class="settings-nav-link {% if 'status' in request.resolver_match.url_name %}active{% endif %}">Test Case Statuses</a></li>
+                <li><a href="{% url 'settings_priorities' %}" class="settings-nav-link {% if 'priority' in request.resolver_match.url_name %}active{% endif %}">Priorities</a></li>
+                <li><a href="{% url 'settings_tags' %}" class="settings-nav-link {% if 'tag' in request.resolver_match.url_name %}active{% endif %}">Tags</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Settings Content Area -->
+    <div class="col-md-9">
+        {% block settings_content %}{% endblock %}
+    </div>
+</div>
+
+<!-- Reusable Delete Confirmation Modal -->
+<div class="modal fade" id="deleteItemModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 8px; border: none; margin-top: 100px;">
+            <form method="POST" id="deleteItemForm">
+                {% csrf_token %}
+                <div class="modal-header" style="border-bottom: 1px solid var(--jira-border); padding: 20px 24px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 24px; outline: none;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <h4 class="modal-title text-bold" style="color: var(--jira-red);">⚠️ Confirm Delete</h4>
+                </div>
+                <div class="modal-body" style="padding: 24px;">
+                    <p class="font-14" style="margin: 0;">Are you sure you want to delete <strong id="modalItemName"></strong>?</p>
+                </div>
+                <div class="modal-footer" style="border-top: none; padding: 0 24px 24px 24px;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="font-weight: 500; padding: 8px 16px;">Cancel</button>
+                    <button type="submit" class="btn-jira-primary" style="background-color: var(--jira-red); padding: 8px 16px;">Yes, Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/settings.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action }} Project{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h1 class="jira-title" style="margin-bottom: 24px;">{{ action }} Project</h1>
+        
+        <div class="jira-card">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; margin-bottom: 8px; display: block;">Project Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div style="color: var(--jira-red); font-size: 12px; margin-top: 5px;">{{ form.name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; margin-bottom: 8px; display: block;">Description</label>
+                    {{ form.description }}
+                </div>
+
+                <div style="margin-top: 30px; border-top: 1px solid var(--jira-border); padding-top: 20px; text-align: right;">
+                    <!-- FIXED CANCEL BUTTON -->
+                    <a href="{{ cancel_url }}" class="btn btn-default" style="padding: 8px 16px;">Cancel</a>
+                    <button type="submit" class="btn-jira-primary" style="margin-left: 10px;">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

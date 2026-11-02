@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard - My QA TCMS{% endblock %}
+
+{% block content %}
+<div class="row mb-24">
+    <div class="col-md-12">
+        <h2 class="jira-title">Welcome back, {{ request.user.first_name|default:request.user.username }} 👋</h2>
+        <p class="text-light mt-16">Here is what's happening across your QA projects today.</p>
+    </div>
+</div>
+
+<div class="row mb-24">
+    <div class="col-md-4">
+        <div class="jira-card text-center">
+            <span class="stat-value">{{ total_projects }}</span>
+            <span class="stat-label">Total Projects</span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="jira-card text-center">
+            <span class="stat-value">{{ total_testcases }}</span>
+            <span class="stat-label">Total Test Cases</span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="jira-card text-center">
+            <span class="stat-value">{{ active_plans }}</span>
+            <span class="stat-label">Active Test Plans</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="jira-card">
+            <h3 class="jira-title font-16 mb-16">Your Projects</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;">
+                {% for product in jira_sidebar_products %}
+                    <a href="{% url 'project_overview' product.pk %}" class="text-decoration-none" style="color: inherit;">
+                        <div style="border: 1px solid var(--jira-border); border-radius: 8px; padding: 20px; background: #FAFBFC; transition: all 0.2s; height: 100%;" 
+                             onmouseover="this.style.boxShadow='0 4px 12px rgba(9,30,66,0.1)'; this.style.borderColor='var(--jira-blue)'" 
+                             onmouseout="this.style.boxShadow='none'; this.style.borderColor='var(--jira-border)'">
+                            <h4 class="text-primary text-bold font-14 mb-16" style="margin: 0;">
+                                <i class="fa-solid fa-box"></i> {{ product.name }}
+                            </h4>
+                            <span class="jira-pill jira-pill-gray">{{ product.component.count }} Modules</span>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p class="text-light font-14">No projects found. Create one to get started.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="jira-card p-0 overflow-hidden">
+            <div style="padding: 24px 24px 16px 24px;">
+                <h3 class="jira-title font-16" style="margin:0;"><i class="fa-solid fa-triangle-exclamation text-danger"></i> Recent Failures</h3>
+            </div>
+            <table class="jira-table">
+                <tbody>
+                    {% for exe in recent_failures %}
+                    <tr>
+                        <td>
+                            <div class="font-14 text-bold text-primary">TC-{{ exe.case.pk }}</div>
+                            <div class="font-13 text-light">{{ exe.case.summary|truncatechars:35 }}</div>
+                            <div class="font-12 mt-16">
+                                {% if exe.status.name == 'FAIL' %}
+                                    <span class="jira-pill" style="background: var(--jira-red); color: #fff;">FAIL</span>
+                                {% else %}
+                                    <span class="jira-pill" style="background: #FFAB00; color: #fff;">BLOCKED</span>
+                                {% endif %}
+                                <span class="text-light ml-10">in {{ exe.run.summary|truncatechars:20 }}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td class="text-center text-light" style="padding: 20px;">No recent failures. Great job!</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

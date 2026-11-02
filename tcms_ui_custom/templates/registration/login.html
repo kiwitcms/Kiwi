@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login - My QA TCMS{% endblock %}
+
+{% block content %}
+<div class="row" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+    <div class="col-md-4">
+        <div class="jira-card" style="padding: 40px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 class="jira-title" style="font-size: 24px;">🚀 My QA TCMS</h2>
+                <p class="text-light font-14 mt-16">Log in to your account</p>
+            </div>
+
+            {% if form.errors %}
+                <div class="alert alert-danger font-14" style="padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                    Your username and password didn't match. Please try again.
+                </div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'tcms-login' %}">
+                {% csrf_token %}
+                
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Username</label>
+                    <input type="text" name="username" class="form-control" required autofocus placeholder="Enter username">
+                </div>
+
+                <div class="form-group mb-24">
+                    <label class="text-bold font-14 mb-16">Password</label>
+                    <input type="password" name="password" class="form-control" required placeholder="Enter password">
+                </div>
+
+                <!-- Hidden field to redirect after login -->
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <button type="submit" class="btn-jira-primary w-100 font-16" style="padding: 10px;">Log In</button>
+            </form>
+
+            <div class="text-center mt-24">
+                <a href="{% url 'tcms-register' %}" class="text-light font-14">Don't have an account? <strong>Sign up</strong></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Test Plan{% endblock %}
+
+{% block extra_head %}
+<link href="{% static 'vendor/select2/select2.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="jira-title mb-24">Create Test Plan</h1>
+        
+        <form method="POST" id="testPlanForm" 
+              data-url-modules="{% url 'api_get_modules' %}" 
+              data-url-cases="{% url 'api_get_testcases' %}" 
+              data-url-versions="{% url 'api_get_versions' %}" 
+              data-selected-product="{{ selected_product_id|default:'' }}">
+            {% csrf_token %}
+            
+            <div class="jira-card mb-24">
+                <h3 class="jira-title font-16 mb-16">Plan Details</h3>
+                
+                <div class="row">
+                    <div class="col-md-6 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">Test Plan Title <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" required placeholder="e.g., Sprint 42 Regression Plan">
+                    </div>
+                    <div class="col-md-3 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">Project <span class="text-danger">*</span></label>
+                        <select name="product" id="id_product" class="form-control" required>
+                            <option value="">Select Project...</option>
+                            {% for p in products %}
+                                <option value="{{ p.pk }}" {% if selected_product_id == p.pk|stringformat:"s" %}selected{% endif %}>{{ p.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">Product Version <span class="text-danger">*</span></label>
+                        <select name="product_version" id="id_product_version" class="form-control" required>
+                            <option value="">Select Version...</option>
+                            {% for v in versions %}
+                                <option value="{{ v.pk }}">{{ v.value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Description</label>
+                    <textarea name="description" class="form-control" rows="3" placeholder="Describe the goal of this Test Plan..."></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">In-Scope Modules</label>
+                        <select name="modules" id="id_modules" class="form-control" multiple disabled></select>
+                    </div>
+                    <div class="col-md-6 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">Test Strategies</label>
+                        <select name="strategies[]" id="id_strategies" class="form-control" multiple>
+                            {% for tag in strategies %}
+                                <option value="{{ tag.pk }}">{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">Environment</label>
+                        <input type="text" name="environment" class="form-control" placeholder="e.g., QA, Staging">
+                    </div>
+                    <div class="col-md-6 form-group mb-16">
+                        <label class="text-bold font-14 mb-16">Target Deadline</label>
+                        <input type="date" name="target_date" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group mb-16">
+                    <label class="text-bold font-14 mb-16">Resources Involved</label>
+                    <select name="resources[]" id="id_resources" class="form-control" multiple>
+                        {% for u in users %}
+                            <option value="{{ u.pk }}">{{ u.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-24">
+                <div class="col-md-7">
+                    <div class="jira-card p-0 overflow-hidden">
+                        <div class="jira-card-header" style="padding: 16px;">
+                            <h3 class="jira-title font-16" style="margin:0;">In-Scope Test Cases</h3>
+                        </div>
+                        <div class="case-list-container" id="in-scope-container">
+                            <p class="text-light text-center">Select a Project and Modules above to load Test Cases.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="jira-card p-0 overflow-hidden out-of-scope-card">
+                        <div class="jira-card-header out-of-scope-header" style="padding: 16px;">
+                            <h3 class="jira-title font-16" style="margin:0; color: inherit;">Out-of-Scope (Excluded)</h3>
+                        </div>
+                        <div class="case-list-container" id="out-scope-container" style="background: transparent; border: none;">
+                            <p class="text-light text-center">Excluded test cases will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right mb-24">
+                <a href="{% url 'testplan_list' %}" class="btn btn-default" style="padding: 8px 16px;">Cancel</a>
+                <button type="submit" class="btn-jira-primary" style="margin-left: 10px;">Save Plan & Generate Runs</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<script src="{% static 'js/testplan_create.js' %}"></script>
+{% endblock %}

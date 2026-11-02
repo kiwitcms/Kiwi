@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Repository{% endblock %}
+
+{% block breadcrumbs %}
+<div class="jira-breadcrumbs">
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <i class="fa-solid fa-chevron-right separator"></i>
+    {% if selected_component %}
+        <a href="{% url 'project_overview' selected_component.product.pk %}">{{ selected_component.product.name }}</a>
+        <i class="fa-solid fa-chevron-right separator"></i>
+        <span class="current">{{ selected_component.name }}</span>
+    {% else %}
+        <span class="current">Repository</span>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-24">
+    <div class="col-md-12 flex-between">
+        <div>
+            <h2 class="jira-title">{% if selected_component %}<i class="fa-regular fa-folder text-light"></i> {{ selected_component.name }}{% else %}Repository{% endif %}</h2>
+        </div>
+        <a href="{% url 'testcase_create' %}{% if selected_component %}?component={{ selected_component.pk }}{% endif %}" class="btn-jira-primary">+ Create Test Case</a>
+    </div>
+</div>
+
+<!-- Search & Filter Bar -->
+<div class="jira-card mb-24" style="padding: 16px;">
+    <form method="GET" class="flex-between" style="gap: 10px;">
+        {% if component_id %}<input type="hidden" name="component" value="{{ component_id }}">{% endif %}
+        <input type="text" name="q" class="form-control" placeholder="Search by title or ID..." value="{{ query }}">
+        <select name="status" class="form-control" style="max-width: 200px;">
+            <option value="">All Statuses</option>
+            {% for s in statuses %}
+                <option value="{{ s.name }}" {% if status_filter == s.name %}selected{% endif %}>{{ s.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn-jira-primary font-13" style="padding: 8px 20px;">Search</button>
+    </form>
+</div>
+
+<div class="jira-card p-0 overflow-hidden">
+    <table class="jira-table">
+        <thead>
+            <tr>
+                <th style="width: 80px;">ID</th>
+                <th>Summary</th>
+                <th>Tags</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tc in testcases %}
+            <tr>
+                <td class="text-light font-14 text-bold">TC-{{ tc.pk }}</td>
+                <td>
+                    <a href="{% url 'testcase_view' tc.pk %}" class="text-primary text-decoration-none font-14 text-bold">
+                        {{ tc.summary }}
+                    </a>
+                </td>
+                <td>
+                    {% for tag in tc.tag.all %}
+                        <span class="jira-pill jira-pill-purple">{{ tag.name }}</span>
+                    {% endfor %}
+                </td>
+                <td><span class="jira-pill jira-pill-success">{{ tc.case_status.name }}</span></td>
+                <td class="text-right">
+                    <a href="{% url 'testcase_edit' tc.pk %}" class="icon-btn icon-primary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="{% url 'testcase_delete' tc.pk %}" class="icon-btn icon-danger" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center text-light" style="padding: 40px;">No test cases found matching your criteria.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+<div class="flex-between mt-24">
+    <div class="text-light font-13">
+        Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
+    </div>
+    <ul class="pagination" style="margin: 0;">
+        {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if component_id %}&component={{ component_id }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">&laquo;</a></li>
+        {% endif %}
+        
+        <li class="active"><span class="btn-jira-primary" style="border-radius: 0;">{{ page_obj.number }}</span></li>
+        
+        {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if component_id %}&component={{ component_id }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">&raquo;</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

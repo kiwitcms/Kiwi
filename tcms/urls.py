@@ -15,6 +15,7 @@ from django.views.i18n import JavaScriptCatalog
 from grappelli import urls as grappelli_urls
 
 from tcms.core import views as core_views
+from tcms_ui_custom.views.dashboard import dashboard 
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.kiwi_auth import views as auth_views
 from tcms.rpc.views import json_rpc_server, xml_rpc_server
@@ -24,7 +25,8 @@ from tcms.testplans import urls as testplans_urls
 from tcms.testruns import urls as testruns_urls
 
 urlpatterns = [
-    re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
+    re_path(r"^$", dashboard, name="core-views-index"),
+    # re_path(r"^$", core_views.DashboardView.as_view(), name="core-views-index"),
     re_path(r"^captcha/", include(captcha_urls)),
     re_path(r"^xml-rpc/", xml_rpc_server.view),
     re_path(r"^json-rpc/$", json_rpc_server.view),
@@ -50,6 +52,7 @@ urlpatterns = [
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     re_path(r"^jsi18n/$", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    re_path(r"^", include("tcms_ui_custom.urls")),
 ]
 
 

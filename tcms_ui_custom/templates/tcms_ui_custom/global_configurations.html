@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Global Configurations{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 24px;">
+    <div class="col-md-12">
+        <h1 class="jira-title">🌐 Global Configurations</h1>
+        <p style="color: var(--jira-text-light); margin-top: 8px;">Manage settings that apply across all projects.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="jira-card">
+            <h3 class="jira-title" style="font-size: 16px; margin-bottom: 16px;">Tags</h3>
+            
+            <form method="POST" style="display: flex; gap: 10px; margin-bottom: 24px;">
+                {% csrf_token %}
+                {{ form.name }}
+                <button type="submit" class="btn-jira-primary" style="white-space: nowrap;">Add Tag</button>
+            </form>
+
+            <div style="max-height: 400px; overflow-y: auto;">
+                <table class="jira-table">
+                    <tbody>
+                        {% for tag in tags %}
+                        <tr>
+                            <td style="font-weight: 500;">
+                                <span class="jira-pill jira-pill-gray">{{ tag.name }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td style="color: var(--jira-text-light); text-align: center; padding: 20px;">No tags created yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

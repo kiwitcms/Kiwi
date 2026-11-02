@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }} | My QA TCMS Admin{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <!-- Inject our Jira Theme into the Admin -->
+    <link rel="stylesheet" href="{% static 'css/new_theme.css' %}">
+    <style>
+        /* Admin-specific Jira overrides */
+        #header {
+            background-color: var(--jira-header) !important;
+            color: #FFFFFF !important;
+        }
+        #branding h1, #branding h1 a:link, #branding h1 a:visited {
+            color: #FFFFFF !important;
+            font-weight: 600;
+        }
+        .module h2, .module caption, .inline-group h2 {
+            background: var(--jira-blue) !important;
+            color: #FFFFFF !important;
+        }
+        div.breadcrumbs {
+            background: #EBECF0 !important;
+            color: var(--jira-text) !important;
+        }
+        div.breadcrumbs a {
+            color: var(--jira-blue) !important;
+        }
+        /* Make the body background match Jira */
+        body {
+            background-color: var(--jira-bg) !important;
+        }
+    </style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">🚀 My QA TCMS Admin</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
