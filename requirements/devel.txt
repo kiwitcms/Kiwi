@@ -9,5 +9,5 @@ locust-plugins[playwright]
 parameterized
 robotframework
 robotframework-seleniumlibrary
-selenium==4.27.1
+selenium==4.52.0
 textdistance
