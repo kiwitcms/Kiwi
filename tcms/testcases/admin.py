@@ -113,12 +113,31 @@ class IssueTrackerTypeField(forms.ChoiceField):
 
 
 class BugSystemAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # never expose the stored value and don't report it as changed
+        # when the field is left blank
+        self.fields["api_password"].initial = ""
+
     # make password show asterisks
     api_password = forms.CharField(  # pylint:disable=form-field-help-text-used
         widget=forms.PasswordInput(render_value=False, attrs={"class": "vTextField"}),
         required=False,
-        help_text="WARNING: will overwrite existing value",
+        help_text=_(
+            "Leave blank to keep current value. "
+            "Stored credentials are never displayed."
+        ),
     )
+
+    def clean_api_password(self):
+        api_password = self.cleaned_data.get("api_password")
+
+        # don't overwrite the stored value when the field is left blank
+        if not api_password and self.instance.pk:
+            return self.instance.api_password
+
+        return api_password
 
     # select only tracker types for which we have available integrations
     tracker_type = IssueTrackerTypeField(  # pylint:disable=form-field-help-text-used

@@ -1359,15 +1359,20 @@ msgstr ""
 msgid "1 confirmed & 1 uncomfirmed status required!"
 msgstr ""
 
-#: tcms/testcases/admin.py:131
+#: tcms/testcases/admin.py:127
+msgid ""
+"Leave blank to keep current value. Stored credentials are never displayed."
+msgstr ""
+
+#: tcms/testcases/admin.py:150
 msgid "Bug URL"
 msgstr ""
 
-#: tcms/testcases/admin.py:151
+#: tcms/testcases/admin.py:170
 msgid "External Issue Tracker Integration"
 msgstr ""
 
-#: tcms/testcases/admin.py:160
+#: tcms/testcases/admin.py:179
 msgid ""
 "<h1>Warning: read the\n"
 "<a href=\"http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-"
@@ -1376,11 +1381,11 @@ msgid ""
 "</h1>"
 msgstr ""
 
-#: tcms/testcases/admin.py:166
+#: tcms/testcases/admin.py:185
 msgid "Configuration health check"
 msgstr ""
 
-#: tcms/testcases/admin.py:170
+#: tcms/testcases/admin.py:188
 msgid ""
 "Kiwi TCMS will try fetching details for the given bug URL using the "
 "integration defined above! Click the `Save and continue` button and watch "
@@ -1390,21 +1395,21 @@ msgid ""
 "`from_open_graph`."
 msgstr ""
 
-#: tcms/testcases/admin.py:190
+#: tcms/testcases/admin.py:209
 msgid "Failed creating Issue Tracker"
 msgstr ""
 
-#: tcms/testcases/admin.py:199
+#: tcms/testcases/admin.py:217
 msgid ""
 "Details extracted via OpenGraph. Issue Tracker may still be configured "
 "incorrectly!"
 msgstr ""
 
-#: tcms/testcases/admin.py:208
+#: tcms/testcases/admin.py:226
 msgid "Details extracted via API. Issue Tracker configuration looks good!"
 msgstr ""
 
-#: tcms/testcases/admin.py:221
+#: tcms/testcases/admin.py:240
 msgid "Issue Tracker configuration check failed"
 msgstr ""
 
