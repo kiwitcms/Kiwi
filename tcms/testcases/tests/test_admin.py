@@ -59,8 +59,31 @@ class TestBugSystemAdmin(LoggedInTestCase):
         self.bug_system.refresh_from_db()
         self.assertEqual("Renamed Bugzilla", self.bug_system.name)
         self.assertEqual("https://bugzilla.example.org", self.bug_system.base_url)
-        # will always overwrite this field
-        self.assertEqual("", self.bug_system.api_password)
+        # blank field keeps the stored value
+        self.assertEqual(
+            "hello-world",  # nosec:B106:hardcoded_password_string
+            self.bug_system.api_password,
+        )
+
+    def test_change_view_can_update_api_password(self):
+        response = self.client.post(
+            reverse("admin:testcases_bugsystem_change", args=[self.bug_system.pk]),
+            {
+                "name": self.bug_system.name,
+                "tracker_type": self.bug_system.tracker_type,
+                "base_url": self.bug_system.base_url,
+                "api_password": "new-secret",  # nosec:B106:hardcoded_password_string
+            },
+            follow=True,
+        )
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+
+        self.bug_system.refresh_from_db()
+        self.assertEqual(
+            "new-secret",  # nosec:B106:hardcoded_password_string
+            self.bug_system.api_password,
+        )
 
     @parameterized.expand(
         [
