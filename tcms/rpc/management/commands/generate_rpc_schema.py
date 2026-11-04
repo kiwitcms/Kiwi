@@ -15,7 +15,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from tcms import __version__
+from tcms import __release_date__, __version__
 from tcms.rpc.schema import describe_methods
 
 OPENAPI_DESCRIPTION = """
@@ -33,9 +33,15 @@ Every operation documents two HTTP headers used for access-log correlation:
 These headers are metadata only and do not change JSON-RPC semantics.
 """.strip()
 
-LLMS_HEADER = """# Kiwi TCMS API
+RELEASE_DATE = __release_date__.date().isoformat()
+
+
+LLMS_HEADER = f"""# Kiwi TCMS API
 
 > JSON-RPC 2.0 API for test management.
+
+Version: {__version__}
+Release date: {RELEASE_DATE}
 
 Transport: POST JSON-RPC requests to `/json-rpc/`.
 Authentication: `Auth.login` returns a session cookie.
@@ -150,6 +156,7 @@ def render_openapi(methods, base_url="/") -> str:
         "info": {
             "title": "Kiwi TCMS API",
             "version": __version__,
+            "x-release-date": RELEASE_DATE,
             "description": OPENAPI_DESCRIPTION,
         },
         "servers": [{"url": base_url}],
