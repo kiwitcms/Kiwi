@@ -21,10 +21,38 @@ from tcms.rpc.schema import describe_methods
 OPENAPI_DESCRIPTION = """
 Kiwi TCMS exposes a JSON-RPC 2.0 API at /json-rpc/.
 
-The path keys below identify individual RPC methods and are not REST routes.
+The path keys below identify individual API methods and are not REST routes.
 Every operation is a POST to /json-rpc/ with a JSON-RPC envelope. Authentication
 is done with Auth.login, which sets a session cookie.
+
+Every operation documents two HTTP headers used for access-log correlation:
+
+- Referer: <Method>@<kiwitcms-host>
+- User-Agent: <agent-or-model>/<version>
+
+These headers are metadata only and do not change JSON-RPC semantics.
 """.strip()
+
+LLMS_HEADER = """# Kiwi TCMS API
+
+> JSON-RPC 2.0 API for test management.
+
+Transport: POST JSON-RPC requests to `/json-rpc/`.
+Authentication: `Auth.login` returns a session cookie.
+Query arguments are Django field lookups: `<field>__<lookup>` or `<relation>__<field>__<lookup>`.
+
+## HTTP headers
+
+Set these headers on every request so access logs identify the API method and
+the calling agent:
+
+- `Referer: <Method>@<kiwitcms-host>`
+- `User-Agent: <agent-or-model>/<version>`
+
+They are metadata only and do not change JSON-RPC semantics.
+
+## Methods
+"""
 
 
 def parameter_schema(method) -> dict:
@@ -53,6 +81,29 @@ def render_openapi(methods, base_url="/") -> str:
                 "summary": method.summary,
                 "description": method.description,
                 "tags": [method.name.split(".", 1)[0]],
+                "parameters": [
+                    {
+                        "name": "Referer",
+                        "in": "header",
+                        "required": False,
+                        "description": (
+                            f"Set to '{method.name}@<kiwitcms-host>' so access logs "
+                            "identify the API method."
+                        ),
+                        "schema": {"type": "string"},
+                        "example": (f"{method.name}@<kiwitcms-host>"),
+                    },
+                    {
+                        "name": "User-Agent",
+                        "in": "header",
+                        "required": False,
+                        "description": (
+                            "Identify the calling agent or model and its version."
+                        ),
+                        "schema": {"type": "string"},
+                        "example": "<agent-or-model>/<version>",
+                    },
+                ],
                 "x-jsonrpc-method": method.name,
                 "x-jsonrpc-endpoint": "/json-rpc/",
                 "requestBody": {
@@ -97,13 +148,17 @@ def render_openapi(methods, base_url="/") -> str:
     document = {
         "openapi": "3.1.0",
         "info": {
-            "title": "Kiwi TCMS RPC API",
+            "title": "Kiwi TCMS API",
             "version": __version__,
             "description": OPENAPI_DESCRIPTION,
         },
         "servers": [{"url": base_url}],
         "paths": paths,
         "components": {"schemas": dict(sorted(components.items()))},
+        "x-kiwitcms-http-conventions": {
+            "referer": "{method}@{kiwitcms_host}",
+            "userAgent": "{agent_or_model}/{version}",
+        },
     }
     return json.dumps(document, indent=2, sort_keys=False) + "\n"
 
@@ -152,20 +207,7 @@ def render_method(method) -> str:
 
 
 def render_llms_index(methods) -> str:
-    lines = [
-        "# Kiwi TCMS RPC API",
-        "",
-        "> JSON-RPC 2.0 API for test management.",
-        "",
-        "Transport: POST JSON-RPC requests to `/json-rpc/`.",
-        "Authentication: `Auth.login` returns a session cookie.",
-        "Query arguments are Django field lookups: `<field>__<lookup>` or `<relation>__<field>__<lookup>`.",
-        "",
-        f"Methods: {len(methods)}",
-        "",
-        "## Methods",
-        "",
-    ]
+    lines = [LLMS_HEADER, f"Methods: {len(methods)}", ""]
     for method in methods:
         lines.append(f"- [{method.name}](methods/{method.name}.md): {method.summary}")
     lines.append("")
@@ -173,7 +215,7 @@ def render_llms_index(methods) -> str:
 
 
 def render_llms_full(methods) -> str:
-    lines = ["# Kiwi TCMS RPC API — full reference", ""]
+    lines = [LLMS_HEADER]
     for method in methods:
         lines.append(render_method(method))
         lines.append("---")
