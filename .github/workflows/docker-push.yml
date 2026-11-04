@@ -12,7 +12,7 @@ permissions: read-all
 
 jobs:
   build_and_push:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -29,7 +29,7 @@ jobs:
             make docker-image
 
             echo "+++++ Docker images +++++"
-            docker images
+            docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
       - name: Push docker image for ${{ github.event.ref }}
         run: |
@@ -37,7 +37,7 @@ jobs:
             docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest kiwitcms/kiwi:latest
 
             echo "+++++ Docker images +++++"
-            docker images
+            docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
             echo "${{ secrets.DOCKER_PUSH_TOKEN }}" | docker login -u="${{ secrets.DOCKER_PUSH_USERNAME }}" --password-stdin
             docker push kiwitcms/kiwi:latest

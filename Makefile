@@ -87,17 +87,18 @@ upload-pkg: build-pkg
 .PHONY: docker-image
 docker-image:
 	docker build --no-cache \
+	    --provenance=false \
+	    --sbom=false \
 	    --build-arg RUNTIME_BASE=$(RUNTIME_BASE) \
 	    -t pub.kiwitcms.eu/kiwitcms/kiwi:latest .
 
 
 .PHONY: docker-manifest
 docker-manifest:
-	docker manifest create \
-	    quay.io/kiwitcms/upstream:$(VERSION) \
+	docker buildx imagetools create \
+	    -t quay.io/kiwitcms/upstream:$(VERSION) \
 	    quay.io/kiwitcms/upstream:$(VERSION)-x86_64 \
 	    quay.io/kiwitcms/upstream:$(VERSION)-aarch64
-	docker manifest push quay.io/kiwitcms/upstream:$(VERSION)
 
 
 .PHONY: test-docker-image
