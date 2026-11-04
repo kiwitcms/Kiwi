@@ -44,7 +44,11 @@ delete_stale_comments
         )
 
         if "tcms_tenants" in settings.INSTALLED_APPS:
-            call_command("upgrade_tenants")
+            call_command(
+                "upgrade_tenants",
+                verbosity=kwargs["verbosity"],
+                interactive=kwargs["interactive"],
+            )
         else:
             self.stdout.write("\n3. Deleting stale attachments:")
             call_command(
