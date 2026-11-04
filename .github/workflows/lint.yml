@@ -13,7 +13,7 @@ permissions: read-all
 
 jobs:
   doc8:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -30,7 +30,7 @@ jobs:
         make doc8
 
   flake8:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -48,7 +48,7 @@ jobs:
 
   # this still contains failures
   pylint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -67,7 +67,7 @@ jobs:
         make pylint
 
   similar_strings:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -86,7 +86,7 @@ jobs:
         make similar_strings
 
   isort:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -107,7 +107,7 @@ jobs:
         isort --check --color --diff --skip kiwi_lint/__init__.py .
 
   black:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -120,7 +120,7 @@ jobs:
       - uses: psf/black@26.10.1
 
   eslint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     steps:
       - uses: actions/checkout@v7
