@@ -11,7 +11,7 @@ jobs:
   build_and_push:
     env:
       RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -28,7 +28,7 @@ jobs:
             make docker-image
 
             echo "+++++ Docker images +++++"
-            docker images
+            docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
       - name: Upload packages for ${{ github.event.ref }}
         env:
@@ -44,7 +44,7 @@ jobs:
             docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
 
             echo "+++++ Docker images +++++"
-            docker images
+            docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
             echo "${{ secrets.QUAY_PUSH_TOKEN }}" | docker login -u="${{ secrets.QUAY_PUSH_USERNAME }}" --password-stdin quay.io
             docker push quay.io/kiwitcms/upstream:$VERSION-$(uname -m)

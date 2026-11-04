@@ -7,8 +7,8 @@ version: 2.1
 jobs:
   aarch64-test-docker-image:
     machine:
-      # https://circleci.com/developer/machine/image/ubuntu-2404
-      image: ubuntu-2404:2026.05.1
+      # https://circleci.com/developer/machine/image/ubuntu-2604
+      image: ubuntu-2604:2026.07.1
     resource_class: arm.medium
     environment:
       RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
@@ -29,21 +29,16 @@ jobs:
                 sudo make -C beakerlib/ install
             fi
 
-            sudo cp .circleci/daemon.json /etc/docker/
-            sudo systemctl restart docker
-            docker --version
-            docker info -f '{{ .DriverStatus }}'
-
             pip3 install -r requirements/devel.txt
             make test-docker-image
 
             echo "+++++ Docker images +++++"
-            docker images
+            docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
   aarch64-build-and-push-docker-image:
     machine:
-      # https://circleci.com/developer/machine/image/ubuntu-2404
-      image: ubuntu-2404:2026.05.1
+      # https://circleci.com/developer/machine/image/ubuntu-2604
+      image: ubuntu-2604:2026.07.1
     resource_class: arm.medium
     environment:
       RUNTIME_BASE: registry.access.redhat.com/ubi10-minimal:latest
@@ -59,18 +54,13 @@ jobs:
 
             VERSION=$(python3 -m tcms)
 
-            sudo cp .circleci/daemon.json /etc/docker/
-            sudo systemctl restart docker
-            docker --version
-            docker info -f '{{ .DriverStatus }}'
-
             make docker-image
 
             # tag so we can push to private container registry
             docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
 
             echo "+++++ Docker images +++++"
-            docker images
+            docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
             echo "$QUAY_PUSH_TOKEN" | docker login -u="$QUAY_PUSH_USERNAME" --password-stdin quay.io
             docker push quay.io/kiwitcms/upstream:$VERSION-$(uname -m)

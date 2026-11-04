@@ -289,7 +289,7 @@ jobs:
           path: postgres-container.log
 
   docker:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         python-version: [3.14]
@@ -351,7 +351,7 @@ jobs:
       - name: Execute tests
         run: |
           make test-docker-image
-          docker images
+          docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
       - name: Upload logs
         uses: actions/upload-artifact@v7
