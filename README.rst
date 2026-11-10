@@ -121,11 +121,9 @@ Help us improve Kiwi TCMS
 
 - Click the `Star` button at https://github.com/kiwitcms/Kiwi/stargazers
 - Click the star icon at https://hub.docker.com/r/kiwitcms/kiwi/
-- Follow @KiwiTCMS at https://twitter.com/KiwiTCMS
 - Subscribe to our
   `newsletter <https://kiwitcms.us17.list-manage.com/subscribe?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 - Send us testimonials and feedback about how your team is using Kiwi TCMS
-- Donate €5 or more via https://opencollective.com/kiwitcms#section-contribute
 - Become a `contributor <http://kiwitcms.readthedocs.org/en/latest/contribution.html>`_
 
 
