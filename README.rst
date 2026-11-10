@@ -116,6 +116,27 @@ Language support
 - `Translation guide <https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation>`_
 
 
+Name and logo
+-------------
+
+The name is always written as two separate words, **Kiwi TCMS**,
+capitalized exactly like that. Do not shorten it to "Kiwi" and do not
+combine it into "KiwiTCMS", "Kiwitcms" or "kiwi tcms". Keep it in the
+same typeface as the rest of your text and do not translate it. Use the
+full name on first mention when referring to this project.
+
+The logo contains the stylized kiwi bird, the three checkmarks and the
+"Kiwi TCMS" wording. These are the official logos. Please don't use
+random kiwi bird artwork or a modified version of these files:
+
+- `Kiwi-TCMS-logo-header.svg <https://github.com/kiwitcms/kiwitcms.github.io/blob/source/theme/static/images/Kiwi-TCMS-logo-header.svg>`_ - horizontal logo, green, as used in the website header
+- `Kiwi-TCMS-logo-footer.svg <https://github.com/kiwitcms/kiwitcms.github.io/blob/source/theme/static/images/Kiwi-TCMS-logo-footer.svg>`_ - horizontal logo, white, as used in the website footer
+- `square_logo.svg <https://github.com/kiwitcms/Kiwi/blob/master/tcms/static/images/square_logo.svg>`_ - square logo, color, transparent background
+- `square-with-name.png <https://github.com/kiwitcms/Kiwi/blob/master/tcms/static/images/square-with-name.png>`_ - square logo with the name, without the tagline
+
+The Kiwi TCMS logo has been designed by Milos Babic.
+
+
 Help us improve Kiwi TCMS
 -------------------------
 
