@@ -27,9 +27,7 @@ img {
     font-weight:bold;
 }
 
-/* messages with extra tags are rendered as ".alert ... danger" instead of
-   ".alert-danger" and keep the default text color, which is hard to read on
-   the dark login page; use the same red as the .pficon-error-circle-o glyph */
+/* use the same red as the .pficon-error-circle-o glyph */
 .alert.danger strong {
     color: #c00;
 }
