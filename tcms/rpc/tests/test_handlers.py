@@ -288,5 +288,46 @@ class TestInspectRPCArgs(TestCase):
             )
         )
 
+    @parameterized.expand(
+        [
+            ("Bug.remove", [{}], None),
+            ("Bug.remove", [], {"query": {}}),
+            ("TestExecution.remove_link", [{}], None),
+            ("TestExecution.remove_link", [], {"query": {}}),
+            ("TestCase.remove_property", [{}], None),
+            ("TestCase.remove_property", [], {"query": {}}),
+        ]
+    )
+    def test_rejects_empty_query_for_remove_methods(self, method_name, args, kwargs):
+        with self.assertRaisesRegex(
+            RPCInvalidRequest, "Refusing an empty query: it would delete every record"
+        ):
+            KiwiTCMSHandlerMixin.inspect_rpc_args(method_name, args, kwargs)
+
+    def test_allows_non_empty_query_for_remove_methods(self):
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args("TestRun.remove", [{"pk": 1}])
+        )
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "TestRun.remove", kwargs={"query": {"pk": 1}}
+            )
+        )
+
+    def test_allows_remove_methods_which_do_not_take_a_query(self):
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args("TestCase.remove_tag", [1, "tag"])
+        )
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args(
+                "TestCase.remove_tag", kwargs={"case_id": 1, "tag": "tag"}
+            )
+        )
+
+    def test_allows_empty_query_for_other_methods(self):
+        self.assertIsNone(
+            KiwiTCMSHandlerMixin.inspect_rpc_args("TestCase.filter", [{}])
+        )
+
     def test_accepts_no_arguments(self):
         self.assertIsNone(KiwiTCMSHandlerMixin.inspect_rpc_args("TestCase.filter"))

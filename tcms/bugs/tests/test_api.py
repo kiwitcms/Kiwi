@@ -114,6 +114,17 @@ class TestRemovePermissions(APIPermissionsTestCase):
         ):
             self.rpc_client.Bug.remove({"pk__in": [self.bug.pk, self.another_bug.pk]})
 
+    def test_remove_with_empty_query_raises_and_deletes_nothing(self):
+        # grant only the permission needed for Bug.remove
+        self.no_permissions_but(self.permission_label)
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.Bug.remove({})
+
+        self.assertEqual(Bug.objects.count(), 3)
+
 
 class TestBugFilter(APITestCase):
     @classmethod

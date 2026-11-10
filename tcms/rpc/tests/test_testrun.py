@@ -760,6 +760,17 @@ class TestRemovePermissions(APIPermissionsTestCase):
         self.assertTrue(TestRun.objects.filter(**self.query).exists())
         self.assertTrue(TestRun.objects.filter(pk=self.run_2.pk).exists())
 
+    def test_remove_with_empty_query_raises_and_deletes_nothing(self):
+        # grant only the permission needed for TestRun.remove
+        self.no_permissions_but(self.permission_label)
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.TestRun.remove({})
+
+        self.assertEqual(TestRun.objects.count(), 3)
+
 
 class TestRunAddProperty(APIPermissionsTestCase):
     permission_label = "testruns.add_property"

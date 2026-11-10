@@ -3,7 +3,7 @@
 from django.test import override_settings
 
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
-from tcms.testruns.models import Environment
+from tcms.testruns.models import Environment, EnvironmentProperty
 from tcms.xmlrpc_wrapper import XmlRPCFault
 
 
@@ -67,3 +67,34 @@ class TestEnvironmentCreatePermissions(APIPermissionsTestCase):
             self.rpc_client.Environment.create(
                 {"name": "E8", "description": "Environment without Permissions"}
             )
+
+
+class EnvironmentRemoveProperty(APITestCase):
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.environment = Environment.objects.create(name="E9")
+        cls.property = EnvironmentProperty.objects.create(
+            environment=cls.environment, name="os", value="Linux"
+        )
+        cls.another_property = EnvironmentProperty.objects.create(
+            environment=cls.environment, name="arch", value="x86_64"
+        )
+
+    def test_remove_property(self):
+        self.rpc_client.Environment.remove_property({"pk": self.property.pk})
+
+        properties = EnvironmentProperty.objects.filter(environment=self.environment)
+        self.assertNotIn(self.property, properties)
+        self.assertIn(self.another_property, properties)
+
+    def test_remove_property_with_empty_query_raises_and_deletes_nothing(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.Environment.remove_property({})
+
+        self.assertEqual(
+            EnvironmentProperty.objects.filter(environment=self.environment).count(), 2
+        )

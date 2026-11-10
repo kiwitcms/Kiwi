@@ -15,7 +15,7 @@ from tcms.core.helpers import comments
 from tcms.management.models import Priority
 from tcms.rpc.api.testcase import _validate_cc_list
 from tcms.rpc.tests.utils import APIPermissionsTestCase, APITestCase
-from tcms.testcases.models import Category, TestCase, TestCaseStatus
+from tcms.testcases.models import Category, Property, TestCase, TestCaseStatus
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import (
     CategoryFactory,
@@ -701,6 +701,44 @@ class TestRemovePermissions(APIPermissionsTestCase):
             XmlRPCFault, 'Authentication failed when calling "TestCase.remove"'
         ):
             self.rpc_client.TestCase.remove(self.query)
+
+    def test_remove_with_empty_query_raises_and_deletes_nothing(self):
+        # grant only the permission needed for TestCase.remove
+        self.no_permissions_but(self.permission_label)
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.TestCase.remove({})
+
+        self.assertEqual(TestCase.objects.count(), 3)
+
+
+class TestRemoveProperty(APITestCase):
+    @classmethod
+    def _fixture_setup(cls):
+        super()._fixture_setup()
+
+        cls.case = TestCaseFactory()
+        cls.property = Property.objects.create(case=cls.case, name="os", value="Linux")
+        cls.another_property = Property.objects.create(
+            case=cls.case, name="arch", value="x86_64"
+        )
+
+    def test_remove_property(self):
+        self.rpc_client.TestCase.remove_property({"pk": self.property.pk})
+
+        properties = Property.objects.filter(case=self.case)
+        self.assertNotIn(self.property, properties)
+        self.assertIn(self.another_property, properties)
+
+    def test_remove_property_with_empty_query_raises_and_deletes_nothing(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.TestCase.remove_property({})
+
+        self.assertEqual(Property.objects.filter(case=self.case).count(), 2)
 
 
 class TestAddTag(APITestCase):
