@@ -29,15 +29,6 @@ Kiwi TCMS - open source test management
     :target: https://tidelift.com/subscription/pkg/pypi-kiwitcms?utm_source=pypi-kiwitcms&utm_medium=github&utm_campaign=readme
     :alt: Tidelift
 
-.. image:: https://opencollective.com/kiwitcms/tiers/sponsor/badge.svg?label=sponsors&color=brightgreen
-   :target: https://opencollective.com/kiwitcms#contributors
-   :alt: Become a sponsor
-
-.. image:: https://img.shields.io/twitter/follow/KiwiTCMS.svg
-    :target: https://twitter.com/KiwiTCMS
-    :alt: Kiwi TCMS on Twitter
-
-
 Introduction
 ------------
 
@@ -125,16 +116,35 @@ Language support
 - `Translation guide <https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation>`_
 
 
+Name and logo
+-------------
+
+The name is always written as two separate words, **Kiwi TCMS**,
+capitalized exactly like that. Do not shorten it to "Kiwi" and do not
+combine it into "KiwiTCMS", "Kiwitcms" or "kiwi tcms". Keep it in the
+same typeface as the rest of your text and do not translate it. Use the
+full name on first mention when referring to this project.
+
+The logo contains the stylized kiwi bird, the three checkmarks and the
+"Kiwi TCMS" wording. These are the official logos. Please don't use
+random kiwi bird artwork or a modified version of these files:
+
+- `Kiwi-TCMS-logo-header.svg <https://github.com/kiwitcms/kiwitcms.github.io/blob/source/theme/static/images/Kiwi-TCMS-logo-header.svg>`_ - horizontal logo, green, as used in the website header
+- `Kiwi-TCMS-logo-footer.svg <https://github.com/kiwitcms/kiwitcms.github.io/blob/source/theme/static/images/Kiwi-TCMS-logo-footer.svg>`_ - horizontal logo, white, as used in the website footer
+- `square_logo.svg <https://github.com/kiwitcms/Kiwi/blob/master/tcms/static/images/square_logo.svg>`_ - square logo, color, transparent background
+- `square-with-name.png <https://github.com/kiwitcms/Kiwi/blob/master/tcms/static/images/square-with-name.png>`_ - square logo with the name, without the tagline
+
+The Kiwi TCMS logo has been designed by Milos Babic.
+
+
 Help us improve Kiwi TCMS
 -------------------------
 
 - Click the `Star` button at https://github.com/kiwitcms/Kiwi/stargazers
 - Click the star icon at https://hub.docker.com/r/kiwitcms/kiwi/
-- Follow @KiwiTCMS at https://twitter.com/KiwiTCMS
 - Subscribe to our
   `newsletter <https://kiwitcms.us17.list-manage.com/subscribe?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 - Send us testimonials and feedback about how your team is using Kiwi TCMS
-- Donate €5 or more via https://opencollective.com/kiwitcms#section-contribute
 - Become a `contributor <http://kiwitcms.readthedocs.org/en/latest/contribution.html>`_
 
 
