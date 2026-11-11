@@ -36,7 +36,7 @@ jobs:
 
       - name: Run Coverity Scan script
         env:
-          COVERITY_SCAN_PROJECT_NAME: kiwitcms/Kiwi
+          COVERITY_SCAN_PROJECT_NAME: kiwitcms/kiwitcms
           COVERITY_SCAN_TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
           COVERITY_SCAN_EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
         run: |

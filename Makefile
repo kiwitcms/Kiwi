@@ -90,7 +90,7 @@ docker-image:
 	    --provenance=false \
 	    --sbom=false \
 	    --build-arg RUNTIME_BASE=$(RUNTIME_BASE) \
-	    -t pub.kiwitcms.eu/kiwitcms/kiwi:latest .
+	    -t pub.kiwitcms.eu/kiwitcms/kiwitcms:latest .
 
 
 .PHONY: docker-manifest

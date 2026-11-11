@@ -45,7 +45,7 @@ setup(
     long_description_content_type="text/x-rst",
     maintainer="Kiwi TCMS",
     maintainer_email="info@kiwitcms.org",
-    url="https://github.com/kiwitcms/Kiwi/",
+    url="https://github.com/kiwitcms/kiwitcms/",
     keywords="test case",
     install_requires=INSTALL_REQUIRES,
     dependency_links=DEPENDENCY_LINKS,
