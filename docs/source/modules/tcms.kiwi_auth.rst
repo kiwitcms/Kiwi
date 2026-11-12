@@ -16,4 +16,5 @@ Submodules
    tcms.kiwi_auth.backends
    tcms.kiwi_auth.forms
    tcms.kiwi_auth.models
+   tcms.kiwi_auth.validator
    tcms.kiwi_auth.views

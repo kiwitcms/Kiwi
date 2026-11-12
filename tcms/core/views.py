@@ -8,10 +8,12 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.sites.models import Site
 from django.db import DEFAULT_DB_ALIAS, connections
 from django.db.migrations.executor import MigrationExecutor
 from django.db.models import Count, Q
+from django.forms import ValidationError
 from django.http import HttpResponseRedirect, StreamingHttpResponse
 from django.template import loader
 from django.urls import reverse
@@ -72,6 +74,21 @@ class DashboardView(TemplateView):  # pylint: disable=missing-permission-require
                     ),
                     unapplied_migration_count=len(plan),
                     doc_url=doc_url,
+                ),
+            )
+
+        try:
+            validate_password(settings.SECRET_KEY)
+        except ValidationError:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                format_html(
+                    _(
+                        "Your SECRET_KEY setting is unsecure. "
+                        'See <a href="{doc_url}">documentation</a> and change it immediately'
+                    ),
+                    doc_url="https://kiwitcms.readthedocs.io/en/latest/installing_docker.html#customization",
                 ),
             )
 
