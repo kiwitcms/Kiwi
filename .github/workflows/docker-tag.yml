@@ -49,3 +49,9 @@ jobs:
             echo "${{ secrets.QUAY_PUSH_TOKEN }}" | docker login -u="${{ secrets.QUAY_PUSH_USERNAME }}" --password-stdin quay.io
             docker push quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
             docker logout quay.io
+
+      - name: Remove container registry credentials
+        if: always()
+        run: |
+          docker logout quay.io || true
+          rm -f ~/.docker/config.json
