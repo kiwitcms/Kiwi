@@ -47,3 +47,9 @@ jobs:
             docker push kiwitcms/kiwitcms:latest
             docker push kiwitcms/kiwi:latest
             docker logout
+
+      - name: Remove container registry credentials
+        if: always()
+        run: |
+          docker logout || true
+          rm -f ~/.docker/config.json
