@@ -2,6 +2,7 @@
 # pylint: disable=too-many-ancestors
 import os
 import unittest
+import uuid
 from http import HTTPStatus
 
 from django import test
@@ -11,6 +12,7 @@ from django.core.management import call_command
 from django.urls import include, path, reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from parameterized import parameterized
 
 from tcms import urls
 from tcms.tests import LoggedInTestCase
@@ -101,6 +103,43 @@ class TestDashboard(LoggedInTestCase):
             doc_url=doc_url,
         )
         self.assertContains(response, ssl_error_message)
+
+    @test.override_settings(LANGUAGE_CODE="en")
+    def test_check_for_default_secret_key_value(self):
+        response = self.client.get("/", follow=True)
+
+        self.assertContains(response, "Kiwi TCMS - Dashboard")
+        self.assertContains(response, "Your SECRET_KEY setting is unsecure.")
+
+    def test_check_for_unsecure_secret_key_value(self):
+        with test.override_settings(SECRET_KEY=uuid.uuid4().hex, LANGUAGE_CODE="en"):
+            self.client.login(  # nosec:B106:hardcoded_password_funcarg
+                username=self.tester.username,
+                password="password",
+            )
+            response = self.client.get("/", follow=True)
+
+            self.assertContains(response, "Kiwi TCMS - Dashboard")
+            self.assertNotContains(response, "Your SECRET_KEY setting is unsecure.")
+
+    @parameterized.expand(
+        [
+            ("weak", "Hunter2"),
+            ("lower_case", "letmein"),
+            ("known", "kiwitcms"),
+            ("change_me", "change-me"),
+        ]
+    )
+    def test_check_for_invalid_secret_key_value(self, _name, _value):
+        with test.override_settings(SECRET_KEY=_value, LANGUAGE_CODE="en"):
+            self.client.login(  # nosec:B106:hardcoded_password_funcarg
+                username=self.tester.username,
+                password="password",
+            )
+            response = self.client.get("/", follow=True)
+
+            self.assertContains(response, "Kiwi TCMS - Dashboard")
+            self.assertContains(response, "Your SECRET_KEY setting is unsecure.")
 
 
 @unittest.skipUnless(

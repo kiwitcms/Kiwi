@@ -96,7 +96,7 @@ DEFAULT_GROUPS = ["Tester"]
 AUTO_APPROVE_NEW_USERS = True
 
 # Password validation rules, see
-# https://docs.djangoproject.com/en/4.1/topics/auth/passwords/#enabling-password-validation
+# https://docs.djangoproject.com/en/6.1/topics/auth/passwords/#enabling-password-validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -112,6 +112,46 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+    {
+        "NAME": "tcms.kiwi_auth.validator.CommonPasswordValidator",
+        "OPTIONS": {
+            "extra_passwords": [
+                "",
+                "***",
+                "admin",
+                "admin-password",
+                "change-me",
+                "dummy_s3cr3t",
+                "h3llo-w0rld",
+                "hello-world",
+                "kiwi",
+                "kiwitcms",
+                "kiwi-1s-aw3s0m3",
+                "kiwi-credentials",
+                "mcp-test-bearer-0001",
+                "mcp-test-bearer-change-0002",
+                "mcp-test-bearer-cross-tenant-0001",
+                "mcp-test-bearer-expired-0001",
+                "mcp-test-bearer-stale-0001",
+                "mcp-test-bearer-unauthorized-0001",
+                "new password",
+                "new-secret",
+                "ollama-local",
+                "password",
+                "s3cr3t-Password",
+                "sanity",
+                "Secret-t0k3n",
+                "smtp_password",
+                "test-secret",
+                "test-token",
+                "this-is-secret",
+                "very-big-secret",
+                "x",
+                "ypCa3Dzb23o5nvsixwPA",
+                "^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv",
+            ]
+        },
     },
 ]
 
