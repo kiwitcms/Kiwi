@@ -33,19 +33,19 @@ Improvements
 - Update node_modules/webpack from 5.111.1 to 5.112.2
 - Update node_modules/webpack-cli from 7.2.3 to 7.3.1
 - Add Search button to Telemetry pages and redraw when pressed. Fixes
-  `Issue #3325 <https://github.com/kiwitcms/Kiwi/issues/3325>`_
+  `Issue #3325 <https://github.com/kiwitcms/kiwitcms/issues/3325>`_
 - PDF export Search results in A3 landscape & auto-fit to page width. Fixes
-  `Issue #4496 <https://github.com/kiwitcms/Kiwi/issues/4496>`_
+  `Issue #4496 <https://github.com/kiwitcms/kiwitcms/issues/4496>`_
 - Replace hard-coded ``/admin/`` URLs. Closes
-  `Issue #4595 <https://github.com/kiwitcms/Kiwi/issues/4595>`_
+  `Issue #4595 <https://github.com/kiwitcms/kiwitcms/issues/4595>`_
 - Set ``TestExecution.start_date`` when changing status on TestRun page. Closes
-  `Issue #4371 <https://github.com/kiwitcms/Kiwi/issues/4371>`_
+  `Issue #4371 <https://github.com/kiwitcms/kiwitcms/issues/4371>`_
 - Keep stored API password when editing BugSystem via Admin. Closes
-  `Issue #4643 <https://github.com/kiwitcms/Kiwi/issues/4643>`_
+  `Issue #4643 <https://github.com/kiwitcms/kiwitcms/issues/4643>`_
 - Remove redundant CSS file from HTML template. Fixes
-  `Issue #4634 <https://github.com/kiwitcms/Kiwi/issues/4634>`_
+  `Issue #4634 <https://github.com/kiwitcms/kiwitcms/issues/4634>`_
 - Return to Test Plan page when Cancel button is clicked on New Test Case page.
-  Closes `Issue #4499 <https://github.com/kiwitcms/Kiwi/issues/4499>`_
+  Closes `Issue #4499 <https://github.com/kiwitcms/kiwitcms/issues/4499>`_
 
 
 API
@@ -95,9 +95,9 @@ Security
 - Update node_modules/minimatch from 3.1.3 to 3.1.4
 - Update node_modules/moment from 2.29.4 to 2.31.0
 - Restrict email lookups via RPC calls. Fixes
-  `GHSA-7fw6-cfjr-g2hj <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7fw6-cfjr-g2hj>`_
+  `GHSA-7fw6-cfjr-g2hj <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-7fw6-cfjr-g2hj>`_
 - Prevent email address confirmation bypass via API method. Fixes
-  `GHSA-wv2r-fx3r-qfj5 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-wv2r-fx3r-qfj5>`_
+  `GHSA-wv2r-fx3r-qfj5 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-wv2r-fx3r-qfj5>`_
 - Fixes for code scanning alerts: DOM text reinterpreted as HTML
 - Fixes for code scanning alerts: URL redirection from remote source
 
@@ -115,35 +115,35 @@ Improvements
   (**Achmad Fienan Rahardianto**)
 - Implement TestPlan multi-clone functionality via Search Test Plans page
   (**Oskar Hurst, USACE**). Closes
-  `Issue #3976 <https://github.com/kiwitcms/Kiwi/issues/3976>`_
+  `Issue #3976 <https://github.com/kiwitcms/kiwitcms/issues/3976>`_
 - Implement TestPlan tree-clone functionality. Closes
-  `Issue #4306 <https://github.com/kiwitcms/Kiwi/issues/4306>`_
+  `Issue #4306 <https://github.com/kiwitcms/kiwitcms/issues/4306>`_
 - Add ``Default tester`` search field to Search Test Cases page. Closes
-  `Issue #4522 <https://github.com/kiwitcms/Kiwi/issues/4522>`_
+  `Issue #4522 <https://github.com/kiwitcms/kiwitcms/issues/4522>`_
 - Add ``Tested by`` bulk menu on Test Run page. Closes
-  `Issue #4562 <https://github.com/kiwitcms/Kiwi/issues/4562>`_
+  `Issue #4562 <https://github.com/kiwitcms/kiwitcms/issues/4562>`_
 - Include ID in default name when cloning a TestPlan
 - Skip UI only columns when exporting search results
 - Prevent TestPlan trees deeper than django-tree-queries can handle. Closes
-  `Issue #4334 <https://github.com/kiwitcms/Kiwi/issues/4334>`_
+  `Issue #4334 <https://github.com/kiwitcms/kiwitcms/issues/4334>`_
 - Show test cases with similar summaries on New Test Case page. Closes
-  `Issue #4111 <https://github.com/kiwitcms/Kiwi/issues/4111>`_
+  `Issue #4111 <https://github.com/kiwitcms/kiwitcms/issues/4111>`_
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Show all rows in the tags card, not limited to the first 20. Fixes
-  `Issue #2914 <https://github.com/kiwitcms/Kiwi/issues/2914>`_
+  `Issue #2914 <https://github.com/kiwitcms/kiwitcms/issues/2914>`_
 - Don't collapse Test plan multiselect on Search Test Cases page. Refs
-  `Issue #3325 <https://github.com/kiwitcms/Kiwi/issues/3325>`_
+  `Issue #3325 <https://github.com/kiwitcms/kiwitcms/issues/3325>`_
 
 
 API
 ~~~
 
 - ``Bug.create()`` method will store the ``text`` field as initial comment. Closes
-  `Issue #4617 <https://github.com/kiwitcms/Kiwi/issues/4617>`_
+  `Issue #4617 <https://github.com/kiwitcms/kiwitcms/issues/4617>`_
 - ``User.update()`` method no longer accepts the ``email`` field
 - Add ``TestExecution.count_attachments()`` method
 - Add ``TestPlan.clone()`` method
@@ -179,7 +179,7 @@ Security
 - Update node_modules/jszip from 3.10.1 to 3.10.2
 - Route requests to ``/uploads/`` internally to check for permissions before
   handing off to Nginx to serve the actual file. Fixes
-  `GHSA-4fp9-ph54-5fjw <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-4fp9-ph54-5fjw>`_
+  `GHSA-4fp9-ph54-5fjw <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-4fp9-ph54-5fjw>`_
 
 
 Improvements
@@ -215,11 +215,11 @@ Security
 ~~~~~~~~
 
 - Overwrite all fields when saving BugSystem via Admin. Fixes
-  `GHSA-38fx-5xmx-c3r8 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-38fx-5xmx-c3r8>`_
+  `GHSA-38fx-5xmx-c3r8 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-38fx-5xmx-c3r8>`_
 - Improve field arguments restriction for JSON-RPC API method calls. Fixes
-  `GHSA-9g83-4wjw-77gx <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-9g83-4wjw-77gx>`_
+  `GHSA-9g83-4wjw-77gx <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-9g83-4wjw-77gx>`_
 - Validate ``BugSystem.tracker_type`` field against ``settings.EXTERNAL_BUG_TRACKERS``. Fixes
-  `GHSA-vm6v-85rx-3mr2 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-vm6v-85rx-3mr2>`_
+  `GHSA-vm6v-85rx-3mr2 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-vm6v-85rx-3mr2>`_
 
 
 Improvements
@@ -272,7 +272,7 @@ Security
 - Update node_modules/js-yaml from 4.2.0 to 4.3.1
 - Do not render ``BugSystem.api_password`` field value in Admin page to prevent
   exposing 3rd party credentials. Fixes
-  `GHSA-cq4x-2h36-285q <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-cq4x-2h36-285q>`_
+  `GHSA-cq4x-2h36-285q <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-cq4x-2h36-285q>`_
 
 
 Improvements
@@ -289,15 +289,15 @@ Improvements
 - Improve internal caching for ``Markdown.render()`` API method
   to remove cache key warnings and avoid crashes with 3rd party cache backends
 - Update helm charts. Closes
-  `Issue #4232 <https://github.com/kiwitcms/Kiwi/issues/4232>`_ and
-  `Issue #3323 <https://github.com/kiwitcms/Kiwi/issues/3323>`_
+  `Issue #4232 <https://github.com/kiwitcms/kiwitcms/issues/4232>`_ and
+  `Issue #3323 <https://github.com/kiwitcms/kiwitcms/issues/3323>`_
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Fix broken URL. Refs
-  `Issue #4401 <https://github.com/kiwitcms/Kiwi/issues/4401>`_
+  `Issue #4401 <https://github.com/kiwitcms/kiwitcms/issues/4401>`_
 
 
 Refactoring and testing
@@ -329,15 +329,15 @@ Security
 - Update node_modules/fast-uri from 3.1.3 to 3.1.4
 - Make admin pages, views and API methods tenant aware so that
   they only show users which are authorized for the current tenant. Fixes
-  `Issue #4410 <https://github.com/kiwitcms/Kiwi/issues/4410>`_
+  `Issue #4410 <https://github.com/kiwitcms/kiwitcms/issues/4410>`_
 - Restrict field arguments for API method calls. Fixes
-  `CVE-2026-77437 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-554x-3chh-x3h9>`_
+  `CVE-2026-77437 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-554x-3chh-x3h9>`_
 - Remove handling for ``?next=`` parameter in Confirm view. Fixes
-  `CVE-2026-77433 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-gcwf-c25f-p9rv>`_
+  `CVE-2026-77433 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-gcwf-c25f-p9rv>`_
 - Improve how file upload validator interprets chunks for large files. Fixes
-  `CVE-2026-77434 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-cjrx-h8r2-jgc7>`_
+  `CVE-2026-77434 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-cjrx-h8r2-jgc7>`_
 - Improve parsing for ``tracker_from_url()`` helper. Fixes
-  `CVE-2026-77435 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-3qxv-9j3q-c68v>`_
+  `CVE-2026-77435 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-3qxv-9j3q-c68v>`_
 
 
 Improvements
@@ -371,7 +371,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Fix broken URL in documentation. Fixes
-  `Issue #4401 <https://github.com/kiwitcms/Kiwi/issues/4401>`_
+  `Issue #4401 <https://github.com/kiwitcms/kiwitcms/issues/4401>`_
 
 
 Refactoring and testing
@@ -404,9 +404,9 @@ Security
 ~~~~~~~~
 
 - Restrict open redirect. Fixes
-  `CVE-2026-54724 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-hmj5-jm8h-h9fh>`_
+  `CVE-2026-54724 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-hmj5-jm8h-h9fh>`_
 - Validate user input in ``extra_link`` fields. Fixes
-  `CVE-2026-55630 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-473p-56xx-vg67>`_
+  `CVE-2026-55630 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-473p-56xx-vg67>`_
 
 
 Improvements
@@ -436,7 +436,7 @@ API
 ~~~
 
 - Add ``TestExecution.remove_tag()`` API method. Refs
-  `Issue #4349 <https://github.com/kiwitcms/Kiwi/issues/4349>`_
+  `Issue #4349 <https://github.com/kiwitcms/kiwitcms/issues/4349>`_
 - ``Tag.filter()`` API method now returns the ``execution`` field
 
 
@@ -484,7 +484,7 @@ Security
 - Update node_modules/fast-uri from 3.1.0 to 3.1.2
 - Update node_modules/flatted from 3.3.3 to 3.4.2
 - Make /init-db/ page a no-op if already executed once. Fixes
-  `CVE-2026-49292 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-v8rp-6xcv-fwgh>`_
+  `CVE-2026-49292 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-v8rp-6xcv-fwgh>`_
 
 
 Improvements
@@ -505,9 +505,9 @@ Improvements
 - Update node_modules/webpack-cli from 7.0.1 to 7.0.2
 - Update node_modules/webpack from 5.105.4 to 5.106.0
 - Display ``Last modified`` column in TestCase Search page. Closes
-  `Issue #4140 <https://github.com/kiwitcms/Kiwi/issues/4140>`_
+  `Issue #4140 <https://github.com/kiwitcms/kiwitcms/issues/4140>`_
 - Remove requirement for ``setuptools<82``. Fixes
-  `Issue #4299 <https://github.com/kiwitcms/Kiwi/issues/4299>`_
+  `Issue #4299 <https://github.com/kiwitcms/kiwitcms/issues/4299>`_
 
 
 Removals
@@ -520,10 +520,10 @@ Removals
 Release
 ~~~~~~~
 
-- ``pub.kiwitcms.eu/kiwitcms/kiwi`` container is now a rolling release
+- ``pub.kiwitcms.eu/kiwitcms/kiwitcms`` container is now a rolling release
 - PyPI packages are uploaded to
   `pkg.kiwitcms.eu <https://kiwitcms.org/packages/>`_. Closes
-  `Issue #3376 <https://github.com/kiwitcms/Kiwi/issues/3376>`_
+  `Issue #3376 <https://github.com/kiwitcms/kiwitcms/issues/3376>`_
 
 
 API
@@ -539,7 +539,7 @@ Refactoring and testing
 - Update locust from 2.43.3 to 2.44.1
 - Update codecov/codecov-action from 5 to 6
 - Merge Dockerfile.buildroot with Dockerfile. Closes
-  `Issue #3496 <https://github.com/kiwitcms/Kiwi/issues/3496>`_
+  `Issue #3496 <https://github.com/kiwitcms/kiwitcms/issues/3496>`_
 - Replace ``pkg_resources`` discovery with ``importlib.metadata``
 - GitLab Issues are now called Work Items
 
@@ -629,9 +629,9 @@ Improvements
 - Update node_modules/pdfmake from 0.2.20 to 0.3.3
 - Models Classification, Product, Priority, Component and Version can now be
   translated in Admin pages (@nichicom-yasutake). Fixes
-  `Issue #4193 <https://github.com/kiwitcms/Kiwi/issues/4193>`_
+  `Issue #4193 <https://github.com/kiwitcms/kiwitcms/issues/4193>`_
 - Display categories ordered by name. Fixes
-  `Issue #4166 <https://github.com/kiwitcms/Kiwi/issues/4166>`_
+  `Issue #4166 <https://github.com/kiwitcms/kiwitcms/issues/4166>`_
 - Stricter checking for attributes in uploaded files
 - Strip newline characters from email subjects to avoid crashes
 
@@ -728,14 +728,14 @@ Improvements
 
 - Update bleach from 6.2.0 to 6.3.0
 - Update django-grappelli from 4.0.2 to 4.0.3. Fixes
-  `Issue #4119 <https://github.com/kiwitcms/Kiwi/issues/4119>`_
+  `Issue #4119 <https://github.com/kiwitcms/kiwitcms/issues/4119>`_
 - Update django-tree-queries from 0.21.2 to 0.23.0
 - Update markdown from 3.9 to 3.10
 - Update psycopg[binary] from 3.2.11 to 3.3.1
 - Update python-gitlab from 6.5.0 to 7.0.0
 - Add new toolbar menu item on TestRun page, which opens the
   Execution Dashboard page with executions from the current TestRun. Closes
-  `Issue #4084 <https://github.com/kiwitcms/Kiwi/issues/4084>`_
+  `Issue #4084 <https://github.com/kiwitcms/kiwitcms/issues/4084>`_
 - Display TestCase ID on Execution Dashboard page
 - Display Priority & Automated columns in Execution Dashboard page
 
@@ -806,7 +806,7 @@ Improvements
 - Update python-gitlab from 6.3.0 to 6.5.0
 - Update uwsgi from 2.0.30 to 2.0.31
 - Display records count in TestPlan page. Fixes
-  `Issue #4110 <https://github.com/kiwitcms/Kiwi/issues/4110>`_
+  `Issue #4110 <https://github.com/kiwitcms/kiwitcms/issues/4110>`_
 - Add 'Deactivate selected accounts' dropdown on /admin/auth/user/ page
 - Add 'Deactivate' button in 'Change user' admin page
 
@@ -874,11 +874,11 @@ Improvements
   (Makson Lee)
 - Rename navbar item PLUGINS -> MORE
 - Send email notifications when a TestCase is created. Fixes
-  `Issue #4058 <https://github.com/kiwitcms/Kiwi/issues/4058>`_
+  `Issue #4058 <https://github.com/kiwitcms/kiwitcms/issues/4058>`_
 - Add Cancel button for "New TestCase" & "Edit TestCase" pages. Fixes
-  `Issue #4073 <https://github.com/kiwitcms/Kiwi/issues/4073>`_
+  `Issue #4073 <https://github.com/kiwitcms/kiwitcms/issues/4073>`_
 - Display number of records found on Search pages. Fixes
-  `Issue #3324 <https://github.com/kiwitcms/Kiwi/issues/3324>`_
+  `Issue #3324 <https://github.com/kiwitcms/kiwitcms/issues/3324>`_
 - Start keeping track of history for ``Product``, ``Version`` and ``Build``
   records
 
@@ -901,12 +901,12 @@ Bug fixes
 ~~~~~~~~~
 
 - Correct a typo. Fixes
-  `Issue #4072 <https://github.com/kiwitcms/Kiwi/issues/4072>`_
+  `Issue #4072 <https://github.com/kiwitcms/kiwitcms/issues/4072>`_
 - Avoid broader matches when searching for harmful HTML attributes in
   uploaded files. Fixes
-  `Issue #4074 <https://github.com/kiwitcms/Kiwi/issues/4074>`_
+  `Issue #4074 <https://github.com/kiwitcms/kiwitcms/issues/4074>`_
 - Send a POST request when clicking Logout menu while on Admin page. Fixes
-  `Issue #4005 <https://github.com/kiwitcms/Kiwi/issues/4005>`_
+  `Issue #4005 <https://github.com/kiwitcms/kiwitcms/issues/4005>`_
 
 
 Refactoring and testing
@@ -921,9 +921,9 @@ Refactoring and testing
 - Update node_modules/webpack from 5.99.9 to 5.101.3
 - Adjust API tests for Django 5.2
 - Add test for
-  `Issue #4074 <https://github.com/kiwitcms/Kiwi/issues/4074>`_
+  `Issue #4074 <https://github.com/kiwitcms/kiwitcms/issues/4074>`_
 - Add logout tests via browser for
-  `Issue #4005 <https://github.com/kiwitcms/Kiwi/issues/4005>`_
+  `Issue #4005 <https://github.com/kiwitcms/kiwitcms/issues/4005>`_
 
 
 Translations
@@ -991,7 +991,7 @@ Improvements
   to prevent usernames being exposed in logs or anonymous analytics
 - Refactor URL ``/plan/<pk>/<slug>`` into ``/plan/<pk>/`` to prevent test plan
   summary being exposed in logs or anonymous analytics. Fixes
-  `Issue #3994 <https://github.com/kiwitcms/Kiwi/issues/3994>`_
+  `Issue #3994 <https://github.com/kiwitcms/kiwitcms/issues/3994>`_
 
 
 Bug fixes
@@ -1123,24 +1123,24 @@ Improvements
 - Update psycopg from 3.2.4 to 3.2.5
 - Update pygithub from 2.5.0 to 2.6.1
 - Enable search functionality on Tag Admin page (Jurijs Ješkins). Fixes
-  `Issue #3739 <https://github.com/kiwitcms/Kiwi/issues/3739>`_
+  `Issue #3739 <https://github.com/kiwitcms/kiwitcms/issues/3739>`_
 - After cloning a TestCase load its Edit page. (Martin Bodurov)
 - Add ``Search Test Executions`` item under ``SEARCH`` menu in navigation bar
 - Display ``Default tester`` field on Search Test Cases page
 - Display ``Default tester`` fields on Execution Dashboard page. Closes
-  `Issue #3766 <https://github.com/kiwitcms/Kiwi/issues/3766>`_
+  `Issue #3766 <https://github.com/kiwitcms/kiwitcms/issues/3766>`_
 - On TestRun view page display TestExecution history diff only when user
   accessing the page has the ``testruns.view_historicaltestexecution``
   permission. Otherwise it will not be shown
 - Display ``Last Bug ID - Status`` widget for each TestExecution row on
   TestRun view page. Closes
-  `Issue #3748 <https://github.com/kiwitcms/Kiwi/issues/3748>`_
+  `Issue #3748 <https://github.com/kiwitcms/kiwitcms/issues/3748>`_
 - Allow user to exclude ``Product`` condition on Search Test Cases page
 - Update references to Kiwi TCMS container images across our code base,
   documentation and website as we may change hosting providers soon
 - Update performance results documentation
 - Document results for parallel user session perfomance. Closes
-  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
+  `Issue #721 <https://github.com/kiwitcms/kiwitcms/issues/721>`_
 
 
 API
@@ -1246,9 +1246,9 @@ Refactoring and testing
 - Refactor ``request_contents_processor()`` to expose only data we use
   which sometimes lead to traceback recursion when rendering templates!
 - Similate an API write performance test with Locust. References
-  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
+  `Issue #721 <https://github.com/kiwitcms/kiwitcms/issues/721>`_
 - Simulate a web performance test with Locust + Playwright. References
-  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_. Execution
+  `Issue #721 <https://github.com/kiwitcms/kiwitcms/issues/721>`_. Execution
   frequencies are informed by our Plausible.io stats
 
 
@@ -1306,16 +1306,16 @@ API
 
 - Method ``Bug.details()`` will now return the additional fields
   ``id``, ``status`` and ``url``! References
-  `Issue #3748 <https://github.com/kiwitcms/Kiwi/issues/3748>`_
+  `Issue #3748 <https://github.com/kiwitcms/kiwitcms/issues/3748>`_
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Remove internal ``IssueTrackerType.rpc_cache`` attribute. Fixes
-  `Issue #3757 <https://github.com/kiwitcms/Kiwi/issues/3757>`_
+  `Issue #3757 <https://github.com/kiwitcms/kiwitcms/issues/3757>`_
 - Update filtering logic for ``Automated=False`` on TestPlan view page. Fixes
-  `Issue #3841 <https://github.com/kiwitcms/Kiwi/issues/3841>`_
+  `Issue #3841 <https://github.com/kiwitcms/kiwitcms/issues/3841>`_
 - Refresh test execution counter when filtering on TestRun view page
 
 
@@ -1393,8 +1393,8 @@ Bug fixes
 
 - Increase uWSGI configuration ``buffer-size`` to 20k to allows the creation of
   a TestRun with 1000 test cases! Fixes
-  `Issue #3387 <https://github.com/kiwitcms/Kiwi/issues/3387>`_,
-  `Issue #3800 <https://github.com/kiwitcms/Kiwi/issues/3800>`_
+  `Issue #3387 <https://github.com/kiwitcms/kiwitcms/issues/3387>`_,
+  `Issue #3800 <https://github.com/kiwitcms/kiwitcms/issues/3800>`_
 
 
 Refactoring and testing
@@ -1445,33 +1445,33 @@ Improvements
 - Update psycopg from 3.1.19 to 3.2.1
 - Update python-gitlab from 4.6.0 to 4.9.0
 - Add a ``Test Plan +`` button on *New Test Run* page. Refs
-  `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
+  `Issue #3680 <https://github.com/kiwitcms/kiwitcms/issues/3680>`_
 - Always show the ``Build +`` button on *New Test Run* page. Refs
-  `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
+  `Issue #3680 <https://github.com/kiwitcms/kiwitcms/issues/3680>`_
 - Add a ``Product +`` button on *New Test Run* page. Closes
-  `Issue #3680 <https://github.com/kiwitcms/Kiwi/issues/3680>`_
+  `Issue #3680 <https://github.com/kiwitcms/kiwitcms/issues/3680>`_
 - Add auto-complete for ``Parent ID`` field on *Edit TestPlan* page. Closes
-  `Issue #3189 <https://github.com/kiwitcms/Kiwi/issues/3189>`_
+  `Issue #3189 <https://github.com/kiwitcms/kiwitcms/issues/3189>`_
 
 
 API
 ~~~
 
 - Add ``TestRun.remove()`` API method. Fixes
-  `Issue #3691 <https://github.com/kiwitcms/Kiwi/issues/3691>`_
+  `Issue #3691 <https://github.com/kiwitcms/kiwitcms/issues/3691>`_
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Do not call ``TestExecution.remove_link()`` on *TestRun* page with undefined
-  argument (@Melzmann). Fixes `Issue #3728 <https://github.com/kiwitcms/Kiwi/issues/3728>`_
+  argument (@Melzmann). Fixes `Issue #3728 <https://github.com/kiwitcms/kiwitcms/issues/3728>`_
   where URLs attached to a test execution suddenly go missing after some time
 - On *New Test Run* page when Product is updated trigger TestPlan on-change
   to fix a bug where the Build drop-down is not cleared and may be showing
   values which are invalid for the current selection
 - Adjust angle bracket icon direction when viewing nested testplans. Fixes
-  `Issue #3163 <https://github.com/kiwitcms/Kiwi/issues/3163>`_
+  `Issue #3163 <https://github.com/kiwitcms/kiwitcms/issues/3163>`_
 - Strip newline characters from email subjects to avoid crashes.
   Fixes `Sentry KIWI-TCMS-P7 <https://kiwitcms.sentry.io/issues/5547586648/>`_
 
@@ -1695,7 +1695,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Downgrade node_modules/datatables.net-buttons from 3.0.0 to 2.4.3. Fixes
-  `Issue #3552 <https://github.com/kiwitcms/Kiwi/issues/3552>`_
+  `Issue #3552 <https://github.com/kiwitcms/kiwitcms/issues/3552>`_
 
 
 Refactoring
@@ -1739,7 +1739,7 @@ Improvements
 - Send ``Referer:`` header for container ``HEALTHCHECK`` command in order to
   make NGINX logs more readable
 - Allow users to reset their email by asking them to confirm their new address. Fixes
-  `Issue #3211 <https://github.com/kiwitcms/Kiwi/issues/3211>`_
+  `Issue #3211 <https://github.com/kiwitcms/kiwitcms/issues/3211>`_
 - Add support for custom email validators on the registration page
 - Move ``X-Frame-Options`` header definition into settings
 - Move ``X-Content-Type-Options`` header definition into settings
@@ -1775,7 +1775,7 @@ Bug fixes
 
 - Fix a bug where non-distinct values made it into generated property matrix
 - On TestRun page allow removal of individual parametrized TestExecution(s).
-  Closes `Pull #3282 <https://github.com/kiwitcms/Kiwi/pull/3282>`_
+  Closes `Pull #3282 <https://github.com/kiwitcms/kiwitcms/pull/3282>`_
 
 
 Refactoring and testing
@@ -1834,7 +1834,7 @@ Improvements
 - Show an icon when some child TPs not shown on Search Test Plans page to let
   the user know that parent-child hierarchies shown on the page may be
   incomplete because the data has been filtered out by their search criteria.
-  Closes `Issue #3313 <https://github.com/kiwitcms/Kiwi/issues/3313>`_
+  Closes `Issue #3313 <https://github.com/kiwitcms/kiwitcms/issues/3313>`_
 - Hide the Expand/Collapse button Search Test Plans page for TP with 0 children
   in the result set
 
@@ -1858,7 +1858,7 @@ Settings
 - Explicitly define the ``DATA_UPLOAD_MAX_MEMORY_SIZE`` setting. It controls
   file uploads via RPC, not webUI, because the payload is base64 encoded and is
   part of the request body. Closes
-  `Issue #3262 <https://github.com/kiwitcms/Kiwi/issues/3262>`_
+  `Issue #3262 <https://github.com/kiwitcms/kiwitcms/issues/3262>`_
 
 
 API
@@ -1891,7 +1891,7 @@ Bug fixes
   cause was that the correct relationship here should have been
   TR -> Build -> Version which is independent of the relationship
   TP -> Product -> Version. Fixes
-  `Issue #3258 <https://github.com/kiwitcms/Kiwi/issues/3258>`_
+  `Issue #3258 <https://github.com/kiwitcms/kiwitcms/issues/3258>`_
 - Fix bug in search/display of Product on Search TestRun page. The root
   cause was that the correct relationship here should have been
   TR -> Build -> Version -> Product which is independent of the relationship
@@ -2066,7 +2066,7 @@ Improvements
 - Update documentation for JIRA integration
 - Clarify the django-ses add-on mentioned in documentation
 - Add a button to delete URLs from test executions. Fixes
-  `Issue #2936 <https://github.com/kiwitcms/Kiwi/issues/2936>`_
+  `Issue #2936 <https://github.com/kiwitcms/kiwitcms/issues/2936>`_
 - Show traceback info during IssueTracker health-check to
   make it easier to debug problems
 
@@ -2089,14 +2089,14 @@ Bug fixes
 ~~~~~~~~~
 
 - Hide all expanded child rows in TestPlan Search page. Fixes
-  `Issue #3245 <https://github.com/kiwitcms/Kiwi/issues/3245>`_ (@somenewacc)
+  `Issue #3245 <https://github.com/kiwitcms/kiwitcms/issues/3245>`_ (@somenewacc)
 - Fix wrong query parameter on DASHBOARD page (@somenewacc)
 - Fix template variable for form fields in search pages (@somenewacc)
 - Prevent multiplication of callbacks for data tables (@somenewacc)
 - Don't fail IssueTracker health-check if we didn't use OpenGraph
 - Reorder items under ``SEARCH`` menu for consistency with items
   under the ``TESTING`` menu. Fixes
-  `Issue #3315 <https://github.com/kiwitcms/Kiwi/issues/3315>`_
+  `Issue #3315 <https://github.com/kiwitcms/kiwitcms/issues/3315>`_
 
 
 Refactoring and testing
@@ -2147,7 +2147,7 @@ Security
   `CVE-2023-36053 <https://github.com/advisories/GHSA-jh3w-4vvf-mjgr>`_ -
   ReDoS vulnerability
 - Patch misconfigured HTTP headers allowing stored XSS execution. Fixes
-  `CVE-2023-36809 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-jpgw-2r9m-8qfw>`_
+  `CVE-2023-36809 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-jpgw-2r9m-8qfw>`_
 - Sanitize test plan name in ``tree_view_html()`` function to reduce the
   opportunity for exploiting stored XSS vulnerabilities
 - Extend the list of file upload validators to reduce the opportunity for
@@ -2213,7 +2213,7 @@ Security
 ~~~~~~~~
 
 - Improved checks when uploading potentially dangerous files. Fixes
-  `CVE-2023-33977 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-2fqm-m4r2-fh98>`_
+  `CVE-2023-33977 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-2fqm-m4r2-fh98>`_
 
 
 Improvements
@@ -2223,12 +2223,12 @@ Improvements
 - Update jira from 3.5.0 to 3.5.1
 - Add ``HEALTHCHECK`` command for Docker container
 - Add searching by TestRun summary in Telemetry pages. Fixes
-  `Issue #3190 <https://github.com/kiwitcms/Kiwi/issues/3190>`_
+  `Issue #3190 <https://github.com/kiwitcms/kiwitcms/issues/3190>`_
 - Make it more clear when email notifications trigger. Closes
-  `Issue #3212 <https://github.com/kiwitcms/Kiwi/issues/3212>`_
+  `Issue #3212 <https://github.com/kiwitcms/kiwitcms/issues/3212>`_
 - Improve messaging for Issue Tracker Configuration health check.
-  References `Issue #3141 <https://github.com/kiwitcms/Kiwi/issues/3141>`_,
-  closes `Issue #3191 <https://github.com/kiwitcms/Kiwi/issues/3191>`_,
+  References `Issue #3141 <https://github.com/kiwitcms/kiwitcms/issues/3141>`_,
+  closes `Issue #3191 <https://github.com/kiwitcms/kiwitcms/issues/3191>`_,
   closes `Issue #34 <https://github.com/kiwitcms/trackers-integration/issues/34>`_
 
 
@@ -2280,7 +2280,7 @@ Security
   We believe this does not affect Kiwi TCMS
 - Implement better scanning for embedded ``<script>`` tags in uploaded files
 - Force ``Content-Type: text/plain`` when serving uploaded files. Fixes
-  `CVE-2023-32686 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-x7c2-7wvg-jpx7>`_
+  `CVE-2023-32686 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-x7c2-7wvg-jpx7>`_
 - Explicitly configure top-level permissions for CI jobs as ``read-all``
 - Pass untrusted input via intermediate ENV variables in CI jobs
 
@@ -2336,9 +2336,9 @@ Security
 ~~~~~~~~
 
 - For security reasons updating email address is no longer allowed. Fixes
-  `CVE-2023-30544 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7x6q-3v3m-cwjg>`_
+  `CVE-2023-30544 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-7x6q-3v3m-cwjg>`_
 - Block uploads of potentially harmful files. Fixes
-  `CVE-2023-30613 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-fwcf-753v-fgcj>`_
+  `CVE-2023-30613 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-fwcf-753v-fgcj>`_
 
 
 Improvements
@@ -2353,23 +2353,23 @@ Improvements
   the user is viewing records from the main tenant or from an individual tenant
   to avoid confusion
 - Add new Execution Dashboard telemetry report. Closes
-  `Issue #2918 <https://github.com/kiwitcms/Kiwi/issues/2918>`_
+  `Issue #2918 <https://github.com/kiwitcms/kiwitcms/issues/2918>`_
 - Add column visibility button on search pages. Fixes
-  `Issue #3149 <https://github.com/kiwitcms/Kiwi/issues/3149>`_
+  `Issue #3149 <https://github.com/kiwitcms/kiwitcms/issues/3149>`_
 - Add CSV, Excel, PDF and Print buttons on search pages. Fixes
-  `Issue #3150 <https://github.com/kiwitcms/Kiwi/issues/3150>`_
+  `Issue #3150 <https://github.com/kiwitcms/kiwitcms/issues/3150>`_
 - Allow manually resetting ``TestRun.stop_date`` when editing page. Refs
-  `Issue #3124 <https://github.com/kiwitcms/Kiwi/issues/3124>`_
+  `Issue #3124 <https://github.com/kiwitcms/kiwitcms/issues/3124>`_
 - Display child test plans on Search Test Plans page. Fixes
-  `Issue #2917 <https://github.com/kiwitcms/Kiwi/issues/2917>`_
+  `Issue #2917 <https://github.com/kiwitcms/kiwitcms/issues/2917>`_
 - Display nested test plans in drop down select widget on Search Test Cases page.
-  Fixes `Issue #3134 <https://github.com/kiwitcms/Kiwi/issues/3134>`_
+  Fixes `Issue #3134 <https://github.com/kiwitcms/kiwitcms/issues/3134>`_
 - Display nested test plans in drop down select widget on Telemetry pages
 - Display pagination controls for search results both at the top and bottom
 - On Search Test Runs page display start/stop timestamp columns. Closes
-  `Issue #2306 <https://github.com/kiwitcms/Kiwi/issues/2306>`_
+  `Issue #2306 <https://github.com/kiwitcms/kiwitcms/issues/2306>`_
 - On Search Test Cases page display results from child test plans. Fixes
-  `Issue #3135 <https://github.com/kiwitcms/Kiwi/issues/3135>`_
+  `Issue #3135 <https://github.com/kiwitcms/kiwitcms/issues/3135>`_
 
 
 API
@@ -2378,10 +2378,10 @@ API
 - ``TestExecution.update()`` method will no longer update ``self.stop_date``
   and ``self.run.stop_date`` fields when status has been changed! The
   appropriate behavior here should be specified by the client calling this API
-  method. Refs `Issue #3112 <https://github.com/kiwitcms/Kiwi/issues/3112>`_
+  method. Refs `Issue #3112 <https://github.com/kiwitcms/kiwitcms/issues/3112>`_
 - ``TestPlan.filter()`` method now returns the ``children_count`` field.
-  Refs `Issue #3134 <https://github.com/kiwitcms/Kiwi/issues/3134>`_,
-  `Issue #2917 <https://github.com/kiwitcms/Kiwi/issues/2917>`_
+  Refs `Issue #3134 <https://github.com/kiwitcms/kiwitcms/issues/3134>`_,
+  `Issue #2917 <https://github.com/kiwitcms/kiwitcms/issues/2917>`_
 - ``TestExecution.filter()`` method now returns ``status__icon`` &
   ``status__color`` fields
 
@@ -2390,11 +2390,11 @@ Bug fixes
 ~~~~~~~~~
 
 - Fix test case filter widget on Test Plan page. Fixes
-  `Issue #3137 <https://github.com/kiwitcms/Kiwi/issues/3137>`_
+  `Issue #3137 <https://github.com/kiwitcms/kiwitcms/issues/3137>`_
 - Disable selection of inactive test plans on New Test Run page. Fixes
-  `Issue #3152 <https://github.com/kiwitcms/Kiwi/issues/3152>`_
+  `Issue #3152 <https://github.com/kiwitcms/kiwitcms/issues/3152>`_
 - Add styled page for attachment upload errors. Fixes
-  `Issue #1156 <https://github.com/kiwitcms/Kiwi/issues/1156>`_
+  `Issue #1156 <https://github.com/kiwitcms/kiwitcms/issues/1156>`_
 - Fix include syntax for ``uwsgi.override`` in ``uwsgi.conf``
 
 
@@ -2445,7 +2445,7 @@ Security
 ~~~~~~~~
 
 - Add the ``Content-Security-Policy`` header to block inline JavaScript. Fixes
-  `CVE-2023-27489 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-2wcr-87wf-cf9j>`_
+  `CVE-2023-27489 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-2wcr-87wf-cf9j>`_
 - Add the ``X-Frame-Options`` header to deny loading Kiwi TCMS into an iframe
 - Add the ``X-Content-Type-Options`` header
 
@@ -2464,7 +2464,7 @@ Improvements
   executions with components, parameters and/or tags (@somenewacc)
 - Expose all RPC methods in the documentation
 - Update documentation to describe transitions for TestRun statuses. Closes
-  `Issue #3124 <https://github.com/kiwitcms/Kiwi/issues/3124>`_
+  `Issue #3124 <https://github.com/kiwitcms/kiwitcms/issues/3124>`_
 
 
 Settings
@@ -2479,9 +2479,9 @@ API
 
 - New API method ``TestRun.add_attachment`` (David M. Johnson)
 - New API method ``Environment.filter()`` method. Refs
-  `Issue #3034 <https://github.com/kiwitcms/Kiwi/issues/3034>`_ (@somenewacc)
+  `Issue #3034 <https://github.com/kiwitcms/kiwitcms/issues/3034>`_ (@somenewacc)
 - New API method ``Environment.create()``. Closes
-  `Issue #3034 <https://github.com/kiwitcms/Kiwi/issues/3034>`_ (@somenewacc)
+  `Issue #3034 <https://github.com/kiwitcms/kiwitcms/issues/3034>`_ (@somenewacc)
 
 
 Bug fixes
@@ -2537,9 +2537,9 @@ Security
   `CVE-2023-23969 <https://docs.djangoproject.com/en/4.1/releases/4.1.6/>`_ and
   `CVE-2023-24580 <https://docs.djangoproject.com/en/4.1/releases/4.1.7/>`_
 - Rate limit everything under /accounts/. Fixes
-  `CVE-2023-25156 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7968-h4m4-ghm9>`_
+  `CVE-2023-25156 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-7968-h4m4-ghm9>`_
 - Require a captcha challenge on password reset form. Fixes
-  `CVE-2023-25171 <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-7j9h-3jxf-3vrf>`_
+  `CVE-2023-25171 <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-7j9h-3jxf-3vrf>`_
 
 
 Improvements
@@ -2564,7 +2564,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Load SimpleMDE for Admin pages. Fixes
-  `Issue #3057 <https://github.com/kiwitcms/Kiwi/issues/3057>`_
+  `Issue #3057 <https://github.com/kiwitcms/kiwitcms/issues/3057>`_
 - Don't show all builds on Search Test Runs page before Product and Version
   fields are initialized when loading the page directly
 
@@ -2628,7 +2628,7 @@ Security
 
     Existing users are advised to reset their passwords!
     For more information see
-    `GHSA-496x-2jqf-hp7g <https://github.com/kiwitcms/Kiwi/security/advisories/GHSA-496x-2jqf-hp7g>`_
+    `GHSA-496x-2jqf-hp7g <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-496x-2jqf-hp7g>`_
 
 
 Improvements
@@ -2657,7 +2657,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Trigger on-change handler for Test Case Search popup. Fixes
-  `Issue #2679 <https://github.com/kiwitcms/Kiwi/issues/2679>`_
+  `Issue #2679 <https://github.com/kiwitcms/kiwitcms/issues/2679>`_
 - Fix the ``+ Build`` button on Bug and TestRun pages which didn't properly
   select Product & Version
 - Editing TestRun page now properly saves all datetime fields instead of
@@ -2670,9 +2670,9 @@ Refactoring and testing
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - Start using webpack for JavaScript assets. Closes
-  `Issue #1262 <https://github.com/kiwitcms/Kiwi/issues/1262>`_
+  `Issue #1262 <https://github.com/kiwitcms/kiwitcms/issues/1262>`_
 - Refactor duplicated setup in Telemetry pages. Closes
-  `Issue #1118 <https://github.com/kiwitcms/Kiwi/issues/1118>`_
+  `Issue #1118 <https://github.com/kiwitcms/kiwitcms/issues/1118>`_
 - Add CodeQL workflow for GitHub code scanning
 - Make it possible to override attachments card title
 - Remove useless tooltip from Telemetry pages
@@ -2748,7 +2748,7 @@ Bug fixes
 ~~~~~~~~~
 
 - ``JIRA.get_issue_type_from_jira()`` now accepts a second argument. Fixes
-  `Issue #2929 <https://github.com/kiwitcms/Kiwi/issues/2929>`_ (@cmbahadir)
+  `Issue #2929 <https://github.com/kiwitcms/kiwitcms/issues/2929>`_ (@cmbahadir)
 - Fix typo in documentation (Christian Clauss)
 - Trim white-space after splitting parameter values. For example the inputs
   'OS=Linux' and 'OS = Windows ' will result in
@@ -2814,17 +2814,17 @@ Improvements
 - Update python-gitlab from 3.7.0 to 3.9.0
 - Update tzdata from 2022.1 to 2022.2
 - Add Product drop down field in Build admin page. Closes
-  `Issue #2818 <https://github.com/kiwitcms/Kiwi/issues/2818>`_
+  `Issue #2818 <https://github.com/kiwitcms/kiwitcms/issues/2818>`_
 - Add 'prune' argument required for Django 4.1 compatibility
 - Improve documentation around ``DEFAULT_GROUPS``
 - Update docs about language preferences and add a Change language menu item. Closes
-  `Issue #2901 <https://github.com/kiwitcms/Kiwi/issues/2901>`_,
-  `Issue #2902 <https://github.com/kiwitcms/Kiwi/issues/2902>`_,
-  `Issue #2903 <https://github.com/kiwitcms/Kiwi/issues/2903>`_
+  `Issue #2901 <https://github.com/kiwitcms/kiwitcms/issues/2901>`_,
+  `Issue #2902 <https://github.com/kiwitcms/kiwitcms/issues/2902>`_,
+  `Issue #2903 <https://github.com/kiwitcms/kiwitcms/issues/2903>`_
 - Performance improvement for Status matrix telemetry
 - Performance improvement for Execution trends telemetry
 - Display a spinner widget while telemetry data is still loading. Closes
-  `Issue #1801 <https://github.com/kiwitcms/Kiwi/issues/1801>`_
+  `Issue #1801 <https://github.com/kiwitcms/kiwitcms/issues/1801>`_
 
 
 Bug fixes
@@ -2902,34 +2902,34 @@ Improvements
 - Relax docutils requirement. Use latest version
 - Add template block which will allow logo customizations (Ivajlo Karabojkov)
 - Don't show ``PLUGINS`` menu when no plugins are installed. References
-  `Issue #2729 <https://github.com/kiwitcms/Kiwi/issues/2729>`_
+  `Issue #2729 <https://github.com/kiwitcms/kiwitcms/issues/2729>`_
 - Add information about Kiwi TCMS user to 1-click bug reports. Closes
-  `Issue #2591 <https://github.com/kiwitcms/Kiwi/issues/2591>`_
+  `Issue #2591 <https://github.com/kiwitcms/kiwitcms/issues/2591>`_
 - Use a better icon to signify a manual test inside the user interface
 - Change ``UserAdmin`` to be permission based instead of being role-based.
-  Fixes `Issue #2496 <https://github.com/kiwitcms/Kiwi/issues/2496>`_
+  Fixes `Issue #2496 <https://github.com/kiwitcms/kiwitcms/issues/2496>`_
 - Allow post-processing of automatically created issues. Closes
-  `Issue #2383 <https://github.com/kiwitcms/Kiwi/issues/2383>`_
+  `Issue #2383 <https://github.com/kiwitcms/kiwitcms/issues/2383>`_
 - Allow more customization over issue type discovery for Jira. Closes
-  `Issue #2833 <https://github.com/kiwitcms/Kiwi/issues/2833>`_
+  `Issue #2833 <https://github.com/kiwitcms/kiwitcms/issues/2833>`_
 - Allow more customization over project discovery for Jira
 - Allow more customization over Redmine tracker. Closes
-  `Issue #2382 <https://github.com/kiwitcms/Kiwi/issues/2382>`_
+  `Issue #2382 <https://github.com/kiwitcms/kiwitcms/issues/2382>`_
 - Allow DB settings to be read from Docker Secret files. Fixes
-  `Issue #2606 <https://github.com/kiwitcms/Kiwi/issues/2606>`_
+  `Issue #2606 <https://github.com/kiwitcms/kiwitcms/issues/2606>`_
 - Add filter on TestRun page to show test executions assigned to the
   current user. Closes
-  `Issue #333 <https://github.com/kiwitcms/Kiwi/issues/333>`_
+  `Issue #333 <https://github.com/kiwitcms/kiwitcms/issues/333>`_
 - Add URL for creating new TestRun from a TestPlan. The format is
   ``/runs/from-plan/<plan-id>/``. Closes
-  `Issue #274 <https://github.com/kiwitcms/Kiwi/issues/274>`_
+  `Issue #274 <https://github.com/kiwitcms/kiwitcms/issues/274>`_
 - Add ``bug.Severity`` attribute which is fully customizeable. Closes
-  `Issue #2703 <https://github.com/kiwitcms/Kiwi/issues/2703>`_
+  `Issue #2703 <https://github.com/kiwitcms/kiwitcms/issues/2703>`_
 - Update documentation around ``TCMS_`` environment variables
   used by automation plugins
 - Update documentation to denote that pytest plugin is now generally available
 - Document necessary permissions for adding new users. References
-  `Issue #2496 <https://github.com/kiwitcms/Kiwi/issues/2496>`_
+  `Issue #2496 <https://github.com/kiwitcms/kiwitcms/issues/2496>`_
 
 
 Database
@@ -2956,7 +2956,7 @@ API
   then use the currently logged-in user.
 - Return value for method ``TestExecution.filter()`` now contains fields
   ``expected_duration`` and ``actual_duration``. Closes
-  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_
+  `Issue #1924 <https://github.com/kiwitcms/kiwitcms/issues/1924>`_
 - Return value for method ``Bug.filter()`` now contains fields
   ``severity__name``, ``severity__icon`` and ``severity__color``
 
@@ -2965,27 +2965,27 @@ Bug fixes
 ~~~~~~~~~
 
 - Adjust field name when rendering test execution on TestRun page. Fixes
-  `Issue #2794 <https://github.com/kiwitcms/Kiwi/issues/2794>`_
+  `Issue #2794 <https://github.com/kiwitcms/kiwitcms/issues/2794>`_
 - Render rich text editor preview via backend API:
 
   - Makes display on HTML pages and editor preview the same. Fixes
-    `Issue #2659 <https://github.com/kiwitcms/Kiwi/issues/2659>`_
+    `Issue #2659 <https://github.com/kiwitcms/kiwitcms/issues/2659>`_
   - Fixes a bug with markdown rendered in JavaScript. Fixes
-    `Issue #2711 <https://github.com/kiwitcms/Kiwi/issues/2711>`_
+    `Issue #2711 <https://github.com/kiwitcms/kiwitcms/issues/2711>`_
 - Stop propagation of HTML unescape which causes display issues with
   code snippets that contain XML values. Fixes
-  `Issue #2800 <https://github.com/kiwitcms/Kiwi/issues/2800>`_
+  `Issue #2800 <https://github.com/kiwitcms/kiwitcms/issues/2800>`_
 - Show bug text only when creating new records, not when editing
 - Properly display & validate related form fields when editing bugs
 - Don't send duplicate emails when editting bugs. Fixes
-  `Issue #2782 <https://github.com/kiwitcms/Kiwi/issues/2782>`_
+  `Issue #2782 <https://github.com/kiwitcms/kiwitcms/issues/2782>`_
 
 
 Refactoring and testing
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - Convert two assignment statements to augmented source code. Closes
-  `Issue #2610 <https://github.com/kiwitcms/Kiwi/issues/2610>`_ (Markus Elfring)
+  `Issue #2610 <https://github.com/kiwitcms/kiwitcms/issues/2610>`_ (Markus Elfring)
 - Rename method ``IssueTrackerType.report_issue_from_testexecution()``:
 
   - Rename to ``_report_issue()`` which returns tuple of (object, str)
@@ -3002,7 +3002,7 @@ Refactoring and testing
       like post-processing of automatically created issues to work.
 
 - Add tests for backup & restore commands. Closes
-  `Issue #2695 <https://github.com/kiwitcms/Kiwi/issues/2695>`_
+  `Issue #2695 <https://github.com/kiwitcms/kiwitcms/issues/2695>`_
 - Update versions of several CI tools
 - Updates around new version of pylint
 - Use codecov-action to upload coverage results
@@ -3011,7 +3011,7 @@ Refactoring and testing
 - Workaround an issue with ``setuptools_git_archive`` introduced by jira==3.2.0
 - Workaround the fact that ``django-ranged-response`` doesn't provide wheels
 - Report test results via kiwitcms-django-plugin. Closes
-  `Issue #1757 <https://github.com/kiwitcms/Kiwi/issues/1757>`_
+  `Issue #1757 <https://github.com/kiwitcms/kiwitcms/issues/1757>`_
 
 
 Translations
@@ -3062,7 +3062,7 @@ Improvements
 - Update node_modules/marked from 4.0.12 to 4.0.14
 - Update node_modules/prismjs from 1.27.0 to 1.28.0
 - Allow overriding of Azure Boards API version. Closes
-  `Issue #2717 <https://github.com/kiwitcms/Kiwi/issues/2717>`_
+  `Issue #2717 <https://github.com/kiwitcms/kiwitcms/issues/2717>`_
 - If ``tenant_groups`` is enabled then ``refresh_permissions`` command will
   update default tenant groups too
 - Document tenant-group permissions
@@ -3079,7 +3079,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Patch for repositories under GitLab subgroups. Fixes
-  `Issue #2643 <https://github.com/kiwitcms/Kiwi/issues/2643>`_ (@cmeissl)
+  `Issue #2643 <https://github.com/kiwitcms/kiwitcms/issues/2643>`_ (@cmeissl)
 - Don't crash if a comment user has been removed. Fixes
   `KIWI-TCMS-HZ <https://sentry.io/organizations/kiwitcms/issues/3086416250/>`_
 
@@ -3139,9 +3139,9 @@ API
 ~~~
 
 - New API method ``Category.create()``. Fixes
-  `Issue #2705 <https://github.com/kiwitcms/Kiwi/issues/2705>`_ (Erik Heeren)
+  `Issue #2705 <https://github.com/kiwitcms/kiwitcms/issues/2705>`_ (Erik Heeren)
 - New API method ``Classification.create()``. Fixes
-  `Issue #2705 <https://github.com/kiwitcms/Kiwi/issues/2705>`_ (Erik Heeren)
+  `Issue #2705 <https://github.com/kiwitcms/kiwitcms/issues/2705>`_ (Erik Heeren)
 
 
 Refactoring and testing
@@ -3229,7 +3229,7 @@ Bug fixes
 
 - Fix inappropriate RPC calls causing Version and Build dropdown widgets to
   display no values. Fixes
-  `Issue #2704 <https://github.com/kiwitcms/Kiwi/issues/2704>`_
+  `Issue #2704 <https://github.com/kiwitcms/kiwitcms/issues/2704>`_
 
 
 Refactoring and testing
@@ -3284,13 +3284,13 @@ Improvements
 - Admin panel now allows to view, add, edit and delete Environment records
 - Allow selection of environment when creating new TestRun and display the chosen
   values inside the TestRun page. Closes
-  `Issue #1344 <https://github.com/kiwitcms/Kiwi/issues/1344>`_
+  `Issue #1344 <https://github.com/kiwitcms/kiwitcms/issues/1344>`_
 - Creating a TestRun will now generate test execution matrix based on the available
   environment and test case properties. Closes
-  `Issue #1843 <https://github.com/kiwitcms/Kiwi/issues/1843>`_
+  `Issue #1843 <https://github.com/kiwitcms/kiwitcms/issues/1843>`_
 - When generating a test execution matrix the supported algorithms are
   "full" and "pairwise". Closes
-  `Issue #1931 <https://github.com/kiwitcms/Kiwi/issues/1931>`_
+  `Issue #1931 <https://github.com/kiwitcms/kiwitcms/issues/1931>`_
 
   - Feature is enabled for test runs which contain test cases. This
     feature is not shown when creating an empty test run
@@ -3334,15 +3334,15 @@ Bug fixes
 ~~~~~~~~~
 
 - Send e-mail notification when adding comments to bugs. Fixes
-  `Issue #2232 <https://github.com/kiwitcms/Kiwi/issues/2232>`_ (@cmbahadir)
+  `Issue #2232 <https://github.com/kiwitcms/kiwitcms/issues/2232>`_ (@cmbahadir)
 - Disable the "+" button when there is no related element selected. Fixes
-  `Issue #2561 <https://github.com/kiwitcms/Kiwi/issues/2561>`_ (@cmbahadir)
+  `Issue #2561 <https://github.com/kiwitcms/kiwitcms/issues/2561>`_ (@cmbahadir)
 - When cloning test plans keep the existing test case sort order inside
   the resulting test plan. Fixes
-  `Issue #2218 <https://github.com/kiwitcms/Kiwi/issues/2218>`_ (Nicolas Gelot)
+  `Issue #2218 <https://github.com/kiwitcms/kiwitcms/issues/2218>`_ (Nicolas Gelot)
 - Configure en_US.UTF-8 locale inside container. Allows upload of files with
   unicode names. Fixes
-  `Issue #2600 <https://github.com/kiwitcms/Kiwi/issues/2600>`_
+  `Issue #2600 <https://github.com/kiwitcms/kiwitcms/issues/2600>`_
 
 
 Refactoring and testing
@@ -3403,17 +3403,17 @@ Improvements
 - Update psycopg2 from 2.9.1 to 2.9.2
 - Display a warning if connection doesn't use HTTPS (Ivajlo Karabojkov)
 - Account registration page can be turned on/off via settings. Fixes
-  `Issue #2500 <https://github.com/kiwitcms/Kiwi/issues/2500>`_
+  `Issue #2500 <https://github.com/kiwitcms/kiwitcms/issues/2500>`_
 - TestCase Search page can now filter by TestPlan. Fixes
-  `Issue #2283 <https://github.com/kiwitcms/Kiwi/issues/2283>`_
+  `Issue #2283 <https://github.com/kiwitcms/kiwitcms/issues/2283>`_
 - Allow template selection when creating new test case. Fixes
-  `Issue #957 <https://github.com/kiwitcms/Kiwi/issues/957>`_
+  `Issue #957 <https://github.com/kiwitcms/kiwitcms/issues/957>`_
 - TestCase page now allows specification of properties, e.g. mobile devices
   on which the test should be executed. This feature serves as a building
   block for
-  `Issue #1843 <https://github.com/kiwitcms/Kiwi/issues/1843>`_,
-  `Issue #1931 <https://github.com/kiwitcms/Kiwi/issues/1931>`_ and
-  `Issue #1344 <https://github.com/kiwitcms/Kiwi/issues/1344>`_ but isn't active anywhere else inside
+  `Issue #1843 <https://github.com/kiwitcms/kiwitcms/issues/1843>`_,
+  `Issue #1931 <https://github.com/kiwitcms/kiwitcms/issues/1931>`_ and
+  `Issue #1344 <https://github.com/kiwitcms/kiwitcms/issues/1344>`_ but isn't active anywhere else inside
   Kiwi TCMS at the moment
 - TestExecution properties will be displayed inside TestRun page if they
   have been specified
@@ -3472,7 +3472,7 @@ API
 - Method ``TestCase.filter()`` now returns additional fields
   ``setup_duration``, ``testing_duration``, ``expected_duration`` - all
   serialized in seconds. Refs
-  `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (Mfon Eti-mfon)
+  `Issue #1923 <https://github.com/kiwitcms/kiwitcms/issues/1923>`_ (Mfon Eti-mfon)
 - Method ``User.filter()`` will no longer return fields
   ``groups``, ``user_permissions``, ``date_joined`` and ``last_login``
 - New method ``TestExecution.properties()``
@@ -3485,9 +3485,9 @@ Bug fixes
 ~~~~~~~~~
 
 - Unify tab size & tab indentation b/w Python & SimpleMDE. Fixes
-  `Issue #1802 <https://github.com/kiwitcms/Kiwi/issues/1802>`_
+  `Issue #1802 <https://github.com/kiwitcms/kiwitcms/issues/1802>`_
 - Use ``sane_list extension`` for rendering consecutive lists in markdown. Closes
-  `Issue #2511 <https://github.com/kiwitcms/Kiwi/issues/2511>`_
+  `Issue #2511 <https://github.com/kiwitcms/kiwitcms/issues/2511>`_
 
 .. warning::
     The visual markdown editor explicitly didn't follow markdown syntax rules
@@ -3505,21 +3505,21 @@ Bug fixes
 
 - Fix broken URL and minor updates to documentation
 - Update GitLab tracker integration documentation to avoid confusion. Closes
-  `Issue #2559 <https://github.com/kiwitcms/Kiwi/issues/2559>`_
+  `Issue #2559 <https://github.com/kiwitcms/kiwitcms/issues/2559>`_
 - Limit tag input length to 255 characters. Closes
-  `Issue #2176 <https://github.com/kiwitcms/Kiwi/issues/2176>`_
+  `Issue #2176 <https://github.com/kiwitcms/kiwitcms/issues/2176>`_
 - Make error notifications in Admin to display with red color
 - Select only visible rows for bulk-update in TestRun page. Fixes
-  `Issue #2222 <https://github.com/kiwitcms/Kiwi/issues/2222>`_
+  `Issue #2222 <https://github.com/kiwitcms/kiwitcms/issues/2222>`_
 - Remove ``Cache-Control`` header from httpd. Closes
-  `Issue #443 <https://github.com/kiwitcms/Kiwi/issues/443>`_
+  `Issue #443 <https://github.com/kiwitcms/kiwitcms/issues/443>`_
 
 
 Refactoring and testing
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - Add permissions test for add-hyperlink-bulk menu. Closes
-  `Issue #716 <https://github.com/kiwitcms/Kiwi/issues/716>`_
+  `Issue #716 <https://github.com/kiwitcms/kiwitcms/issues/716>`_
 - Add explicit tests for issue tracker integration with GitLab.com
 - Tests teardown - remove comments & close issues on GitLab.com
 - Add missing ``rlPhaseEnd`` for docker tests
@@ -3610,9 +3610,9 @@ API
 ~~~
 
 - ``TestCase.create`` method accepts ``setup_duration`` and ``testing_duration`` fields.
-  Refs `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (Mfon Eti-mfon)
+  Refs `Issue #1923 <https://github.com/kiwitcms/kiwitcms/issues/1923>`_ (Mfon Eti-mfon)
 - ``TestCase.update`` method acepts  ``setup_duration`` and ``testing_duration`` fields.
-  Refs `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (Mfon Eti-mfon)
+  Refs `Issue #1923 <https://github.com/kiwitcms/kiwitcms/issues/1923>`_ (Mfon Eti-mfon)
 - New method ``Testing.individual_test_case_health``
 - Timedelta values are serialized to float, representing seconds
 
@@ -3622,9 +3622,9 @@ Bug fixes
 
 - Fix wrong URL parameter passed to test cases clone page
 - Show translated execution statuses for TestRun page. Closes
-  `Issue #1966 <https://github.com/kiwitcms/Kiwi/issues/1966>`_
+  `Issue #1966 <https://github.com/kiwitcms/kiwitcms/issues/1966>`_
 - Properly initialize Product value on TestRun Edit page. Closes
-  `Issue #2514 <https://github.com/kiwitcms/Kiwi/issues/2514>`_
+  `Issue #2514 <https://github.com/kiwitcms/kiwitcms/issues/2514>`_
 - Clone duration fields when cloning a test case
 
 
@@ -3708,24 +3708,24 @@ Bug fixes
 
 - Fix a bug where drop-down selectors for test plans would not show any values when
   product is changed. Fixes
-  `Issue #2467 <https://github.com/kiwitcms/Kiwi/issues/2467>`_
+  `Issue #2467 <https://github.com/kiwitcms/kiwitcms/issues/2467>`_
 
 
 Refactoring and testing
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - Add tests for missing coverage in ``kiwi_auth.admin``. References
-  `Issue #1607 <https://github.com/kiwitcms/Kiwi/issues/1607>`_
+  `Issue #1607 <https://github.com/kiwitcms/kiwitcms/issues/1607>`_
   (Mariyan Garvanski)
 - Fix some eslint issues and formatting in ``testcases/js/get.js``
 - Use shorter URL when cloning test cases from TP page. References
-  `Issue #1054 <https://github.com/kiwitcms/Kiwi/issues/1054>`_
+  `Issue #1054 <https://github.com/kiwitcms/kiwitcms/issues/1054>`_
 - Limit URI size to 10KiB. This alone should allow for more than 1000 PKs
   specified for cloning. In addition Django itself limits the maximum number of
   GET/POST fields to 1000 via the ``DATA_UPLOAD_MAX_NUMBER_FIELDS`` setting,
   see https://docs.djangoproject.com/en/3.2/ref/settings/#data-upload-max-number-fields.
   Closes
-  `Issue #1054 <https://github.com/kiwitcms/Kiwi/issues/1054>`_
+  `Issue #1054 <https://github.com/kiwitcms/kiwitcms/issues/1054>`_
 
 
 Translations
@@ -3776,18 +3776,18 @@ Improvements & security updates
 - Update node_modules/html5sortable from 0.11.1 to 0.13.2
 - Update node_modules/prismjs from 1.23.0 to 1.24.1
 - Multiple select for filters on Telemetry pages. Fixes
-  `Issue #1940 <https://github.com/kiwitcms/Kiwi/issues/1940>`_
+  `Issue #1940 <https://github.com/kiwitcms/kiwitcms/issues/1940>`_
   (Shantanu Verma + Alex Todorov)
 - Allow editting TestCase ``setup_duration`` & ``testing_duration`` fields.
   References
-  `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (@APiligrim + Alex Todorov)
+  `Issue #1923 <https://github.com/kiwitcms/kiwitcms/issues/1923>`_ (@APiligrim + Alex Todorov)
 - Move several checks to Dashboard page instead of performing them on
   every request (Ivajlo Karabojkov)
 - Fix grammatical error in documentation (Kushal Beniwal)
 - Add health check for Issue Tracker configuration. Fixes
-  `Issue #97 <https://github.com/kiwitcms/Kiwi/issues/97>`_
+  `Issue #97 <https://github.com/kiwitcms/kiwitcms/issues/97>`_
 - Document API URL field for Jira integration. Closes
-  `Issue #2443 <https://github.com/kiwitcms/Kiwi/issues/2443>`_
+  `Issue #2443 <https://github.com/kiwitcms/kiwitcms/issues/2443>`_
 
 
 Settings
@@ -3811,20 +3811,20 @@ Bug fixes
 ~~~~~~~~~
 
 - Make error messages in admin forms more legible. Fixes
-  `Issue #2404 <https://github.com/kiwitcms/Kiwi/issues/2404>`_
+  `Issue #2404 <https://github.com/kiwitcms/kiwitcms/issues/2404>`_
 - Large images will now fit into the available space on the screen,
   e.g. inside test case description cards. Fixes
-  `Issue #2220 <https://github.com/kiwitcms/Kiwi/issues/2220>`_
+  `Issue #2220 <https://github.com/kiwitcms/kiwitcms/issues/2220>`_
 
 
 Refactoring and testing
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - Add automated tests for missing coverage in ``kiwi_auth.admin`` References
-  `Issue #1607 <https://github.com/kiwitcms/Kiwi/issues/1607>`_ (Mariyan Garvanski)
+  `Issue #1607 <https://github.com/kiwitcms/kiwitcms/issues/1607>`_ (Mariyan Garvanski)
 - Apply eslint fixes (@sonyagennova + Alex Todorov)
 - Refactor ``TestExecution.add_link`` method to use ModelForm and extend tests. Closes
-  `Issue #1327 <https://github.com/kiwitcms/Kiwi/issues/1327>`_ (Rosen Sasov + Alex Todorov)
+  `Issue #1327 <https://github.com/kiwitcms/kiwitcms/issues/1327>`_ (Rosen Sasov + Alex Todorov)
 - Use context manager when opening files to make pylint happier
 - Simplify 2 UI buttons on TestRun page
 - Enable ``doc8`` for README and CHANGELOG and fix formatting errors
@@ -3890,25 +3890,25 @@ Improvements & security updates
 - Upgrade node_modules/html5sortable from 0.10.0 to 0.11.1
 - Upgrade node_modules/marked from 2.0.1 to 2.0.3
 - Timestamp fields added to all TestRun pages. Closes
-  `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
+  `Issue #1928 <https://github.com/kiwitcms/kiwitcms/issues/1928>`_ (Andreea Moraru)
 - Don't set ``TestRun.start_date`` automatically. Fixes
-  `Issue #2323 <https://github.com/kiwitcms/Kiwi/issues/2323>`_ (Andreea Moraru)
+  `Issue #2323 <https://github.com/kiwitcms/kiwitcms/issues/2323>`_ (Andreea Moraru)
 - Web based database initialization for new installations. Closes
-  `Issue #1698 <https://github.com/kiwitcms/Kiwi/issues/1698>`_ (Ivajlo Karabojkov)
+  `Issue #1698 <https://github.com/kiwitcms/kiwitcms/issues/1698>`_ (Ivajlo Karabojkov)
 - Automatically active the first registered user via web UI
 - Rearrange layout of before and after fields on search pages
 - Allow TestRun creation from navigation menu. Fixes
-  `Issue #2281 <https://github.com/kiwitcms/Kiwi/issues/2281>`_
+  `Issue #2281 <https://github.com/kiwitcms/kiwitcms/issues/2281>`_
 - Document hardware specs & performance baseline results. Refs
-  `Issue #721 <https://github.com/kiwitcms/Kiwi/issues/721>`_
+  `Issue #721 <https://github.com/kiwitcms/kiwitcms/issues/721>`_
 - Document performance for ``TestCase.filter``/``TestRun.filter`` methods.
   Closes
-  `Issue #1173 <https://github.com/kiwitcms/Kiwi/issues/1173>`_
+  `Issue #1173 <https://github.com/kiwitcms/kiwitcms/issues/1173>`_
 - Update documentation around ``docker-compose.yml`` and the extra script files
   that it needs
 - Document some useful management commands
 - Clarify ``set_domain`` command. Closes
-  `Issue #2375 <https://github.com/kiwitcms/Kiwi/issues/2375>`_
+  `Issue #2375 <https://github.com/kiwitcms/kiwitcms/issues/2375>`_
 
 
 Settings
@@ -3950,15 +3950,15 @@ Bug fixes
 ~~~~~~~~~
 
 - Remove links and icons from TestRun print styling. Fixes
-  `Issue #2263 <https://github.com/kiwitcms/Kiwi/issues/2263>`_ and
-  `Issue #2264 <https://github.com/kiwitcms/Kiwi/issues/2264>`_ (Gagan Deep)
+  `Issue #2263 <https://github.com/kiwitcms/kiwitcms/issues/2263>`_ and
+  `Issue #2264 <https://github.com/kiwitcms/kiwitcms/issues/2264>`_ (Gagan Deep)
 - Emails notifications are now sent into server language. Fixes
-  `Issue #1589 <https://github.com/kiwitcms/Kiwi/issues/1589>`_ (Kapil Bansal)
+  `Issue #1589 <https://github.com/kiwitcms/kiwitcms/issues/1589>`_ (Kapil Bansal)
 - Fix compatibility bug for "advanced search & add" popup windows and latest Chrome
-  browsers. Fixes `Issue #2100 <https://github.com/kiwitcms/Kiwi/issues/2100>`_
+  browsers. Fixes `Issue #2100 <https://github.com/kiwitcms/kiwitcms/issues/2100>`_
 - Redirect TestPlan Admin "Add" to the correct URL
 - Fix wrong TestExecution field names in queryset & HTML template. Refs
-  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_
+  `Issue #1924 <https://github.com/kiwitcms/kiwitcms/issues/1924>`_
 - Add default display for ``None`` fields in Test Case page
 
 
@@ -3966,20 +3966,20 @@ Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add test automation for ``TestExecution.actual_duration``. Refs
-  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_ (@APiligrim)
+  `Issue #1924 <https://github.com/kiwitcms/kiwitcms/issues/1924>`_ (@APiligrim)
 - Add test automation for ``TestCase.expected_duration``. Refs
-  `Issue #1923 <https://github.com/kiwitcms/Kiwi/issues/1923>`_ (@APiligrim)
+  `Issue #1923 <https://github.com/kiwitcms/kiwitcms/issues/1923>`_ (@APiligrim)
 - Add test automation for ``ReadOnlyHistoryAdmin``. Fixes
-  `Issue #1604 <https://github.com/kiwitcms/Kiwi/issues/1604>`_ (Kapil Bansal)
+  `Issue #1604 <https://github.com/kiwitcms/kiwitcms/issues/1604>`_ (Kapil Bansal)
 - Add ``similar-string`` checker to ``kiwi_lint``. Fixes
-  `Issue #1126 <https://github.com/kiwitcms/Kiwi/issues/1126>`_ (@17sushmita)
+  `Issue #1126 <https://github.com/kiwitcms/kiwitcms/issues/1126>`_ (@17sushmita)
 - Resolve or silence the remaining outstanding pylint issues. Closes
-  `Issue #171 <https://github.com/kiwitcms/Kiwi/issues/171>`_
+  `Issue #171 <https://github.com/kiwitcms/kiwitcms/issues/171>`_
 - Update isort from 5.7.0 to 5.8.0
 - Convert forms to ``ModelForm``
 - Remove unused method parameters
 - Remove unused ``string_to_list()``. Closes
-  `Issue #340 <https://github.com/kiwitcms/Kiwi/issues/340>`_
+  `Issue #340 <https://github.com/kiwitcms/kiwitcms/issues/340>`_
 - Simplify method used for progressbar in dashboard which also
   reduces the total number of SQL queries
 - Use existing functions, remove duplication
@@ -4051,9 +4051,9 @@ Improvements
 - Change ON/OFF button messages (Krum Petkov)
 - Automatically set test run to finished/not-finished depending on
   the state of all executions. Closes
-  `Issue #441 <https://github.com/kiwitcms/Kiwi/issues/441>`_
+  `Issue #441 <https://github.com/kiwitcms/kiwitcms/issues/441>`_
 - Allow assigning users from group admin page. Fixes
-  `Issue #1844 <https://github.com/kiwitcms/Kiwi/issues/1844>`_
+  `Issue #1844 <https://github.com/kiwitcms/kiwitcms/issues/1844>`_
 - Improve documentation around setting up devel environment
 
 
@@ -4061,9 +4061,9 @@ Database
 ~~~~~~~~
 
 - Add ``TestRun.planned_start`` and ``TestRun.planned_stop`` fields. Refs
-  `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
+  `Issue #1928 <https://github.com/kiwitcms/kiwitcms/issues/1928>`_ (Andreea Moraru)
 - Add ``TestExecution.start_date`` field. Refs
-  `Issue #1924 <https://github.com/kiwitcms/Kiwi/issues/1924>`_ (Anastasiya Uraleva)
+  `Issue #1924 <https://github.com/kiwitcms/kiwitcms/issues/1924>`_ (Anastasiya Uraleva)
 - Rename field ``TestExecution.close_date`` to ``TestExecution.stop_date``
   (Anastasiya Uraleva)
 
@@ -4083,7 +4083,7 @@ API
 - New method ``PlanType.create()``
 - Method ``TestCase.add_component()`` now returns a serialized ``Component``
   instead of a serialized ``TestCase``. Refs
-  `Issue #2145 <https://github.com/kiwitcms/Kiwi/issues/2145>`_
+  `Issue #2145 <https://github.com/kiwitcms/kiwitcms/issues/2145>`_
 - Methods ``Product.filter()``, ``Product.create()`` and ``Product.update()``:
 
   - change input parameter ``classification_id`` to ``classification`` -
@@ -4192,30 +4192,30 @@ Bug fixes
 ~~~~~~~~~
 
 - Fix removing a component from a test case immediately after it has been added. Fixes
-  `Issue #2145 <https://github.com/kiwitcms/Kiwi/issues/2145>`_ (Gagan Deep)
+  `Issue #2145 <https://github.com/kiwitcms/kiwitcms/issues/2145>`_ (Gagan Deep)
 - Fix broken object navigation in navbar. Fixes
-  `Issue #991 <https://github.com/kiwitcms/Kiwi/issues/991>`_
+  `Issue #991 <https://github.com/kiwitcms/kiwitcms/issues/991>`_
 - Refactor search pages rendering to speed it up. Closes
-  `Issue #1014 <https://github.com/kiwitcms/Kiwi/issues/1014>`_
+  `Issue #1014 <https://github.com/kiwitcms/kiwitcms/issues/1014>`_
 
 
 Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Update tests for ``TestRun.create()`` API method. Refs
-  `Issue #1928 <https://github.com/kiwitcms/Kiwi/issues/1928>`_ (Andreea Moraru)
+  `Issue #1928 <https://github.com/kiwitcms/kiwitcms/issues/1928>`_ (Andreea Moraru)
 - Add automation tests. Closes
-  `Issue #1618 <https://github.com/kiwitcms/Kiwi/issues/1618>`_ (Mariyan Garvanski)
+  `Issue #1618 <https://github.com/kiwitcms/kiwitcms/issues/1618>`_ (Mariyan Garvanski)
 - Add additional automation tests for ``tcms.management.admin``. Closes
-  `Issue #1610 <https://github.com/kiwitcms/Kiwi/issues/1610>`_ (Gagan Deep)
+  `Issue #1610 <https://github.com/kiwitcms/kiwitcms/issues/1610>`_ (Gagan Deep)
 - Add additional automation tests for ``tcms.testcases.views.EditTestCaseView``. Closes
-  `Issue #1615 <https://github.com/kiwitcms/Kiwi/issues/1615>`_ (Gagan Deep)
+  `Issue #1615 <https://github.com/kiwitcms/kiwitcms/issues/1615>`_ (Gagan Deep)
 - Add additional automation tests for ``tcms.kiwi_auth.forms``. Closes
-  `Issue #1609 <https://github.com/kiwitcms/Kiwi/issues/1609>`_ (Kapil Bansal)
+  `Issue #1609 <https://github.com/kiwitcms/kiwitcms/issues/1609>`_ (Kapil Bansal)
 - Change location of included HTML templates (Alexander Tsvetanov, Krum Petkov)
 - Erase unused view & templates (Alexander Tsvetanov)
 - Enable eslint. Closes
-  `Issue #1281 <https://github.com/kiwitcms/Kiwi/issues/1281>`_
+  `Issue #1281 <https://github.com/kiwitcms/kiwitcms/issues/1281>`_
 - Change how beakerlib test framework is installed to avoid problems
   during integration tests
 - Better inspection of beakerlib test results to avoid false positive results
@@ -4238,7 +4238,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Update name of query parameter. Fixes
-  `Issue #2196 <https://github.com/kiwitcms/Kiwi/issues/2196>`_
+  `Issue #2196 <https://github.com/kiwitcms/kiwitcms/issues/2196>`_
 
 
 Kiwi TCMS 9.0 (12 Jan 2021)
@@ -4281,7 +4281,7 @@ Improvements
 - Update node_modules/prismjs from 1.22.0 to 1.23.0
 - Update node_modules/marked from 1.2.5 to 1.2.7
 - Implement 'Select all' for TestCase Search page. Resolves
-  `Issue #2103 <https://github.com/kiwitcms/Kiwi/issues/2103>`_ (Bryan Mutai)
+  `Issue #2103 <https://github.com/kiwitcms/kiwitcms/issues/2103>`_ (Bryan Mutai)
 - Change ON/OFF button messages for several buttons (Krum Petkov)
 - Remove ``delete_selected`` action from admin pages
 - Show active test runs in TestPlan page
@@ -4303,7 +4303,7 @@ Database
     Contains backwards incompatible changes.
 
 - Replace ``Build.product`` with ``Build.version``. Closes
-  `Issue #246 <https://github.com/kiwitcms/Kiwi/issues/246>`_. Build objects
+  `Issue #246 <https://github.com/kiwitcms/kiwitcms/issues/246>`_. Build objects
   are now associated with Version objects, not with Product objects!
 
   .. warning::
@@ -4338,22 +4338,22 @@ Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add tests for ``tcms.core.middleware``. Fixes
-  `Issue #1605 <https://github.com/kiwitcms/Kiwi/issues/1605>`_ (Gagan Deep)
+  `Issue #1605 <https://github.com/kiwitcms/kiwitcms/issues/1605>`_ (Gagan Deep)
 - Add tests for ``tcms.handlers``. Fixes
-  `Issue #1611 <https://github.com/kiwitcms/Kiwi/issues/1611>`_ (Gagan Deep)
+  `Issue #1611 <https://github.com/kiwitcms/kiwitcms/issues/1611>`_ (Gagan Deep)
 - Add tests for ``tcms.kiwi_auth.views``. Fixes
-  `Issue #1608 <https://github.com/kiwitcms/Kiwi/issues/1608>`_
+  `Issue #1608 <https://github.com/kiwitcms/kiwitcms/issues/1608>`_
   (Abhishek Chaurasia)
 - Update pip during bugtracker integration tests to fix dependency issues
 - Reformat all files with black and isort. Closes
-  `Issue #1193 <https://github.com/kiwitcms/Kiwi/issues/1193>`_
+  `Issue #1193 <https://github.com/kiwitcms/kiwitcms/issues/1193>`_
 - Refactor ``TestExecution.get_bugs()`` to use ``TestExecution.links()``
 - Add return statement for invalid form to make pylint happy
 - Make ``Bug.assignee`` field a ``UserField``
 - Replace deprecated ``ugettext_lazy`` with ``gettext_lazy``
 - Fixes for Azure Boards integration tests
 - Remove ``CsrfDisableMiddleware``. Closes
-  `Issue #297 <https://github.com/kiwitcms/Kiwi/issues/297>`_
+  `Issue #297 <https://github.com/kiwitcms/kiwitcms/issues/297>`_
 - Remove unused methods & left-over views
 
 
@@ -4411,27 +4411,27 @@ Improvements
 - New ``manage.py initial_setup`` command for one-stop initial setup
   (Ivajlo Karabojkov)
 - Bug tracker integration with BitBucket (bitbucket.org). Fixes
-  `Issue #1916 <https://github.com/kiwitcms/Kiwi/issues/1916>`_ (@cmbahadir)
+  `Issue #1916 <https://github.com/kiwitcms/kiwitcms/issues/1916>`_ (@cmbahadir)
 - Complete redesign and refactoring of Test Run page:
 
   - Closes
-    `Issue #189 <https://github.com/kiwitcms/Kiwi/issues/189>`_,
-    `Issue #241 <https://github.com/kiwitcms/Kiwi/issues/241>`_,
-    `Issue #212 <https://github.com/kiwitcms/Kiwi/issues/212>`_,
-    `Issue #431 <https://github.com/kiwitcms/Kiwi/issues/431>`_,
-    `Issue #1382 <https://github.com/kiwitcms/Kiwi/issues/1382>`_
+    `Issue #189 <https://github.com/kiwitcms/kiwitcms/issues/189>`_,
+    `Issue #241 <https://github.com/kiwitcms/kiwitcms/issues/241>`_,
+    `Issue #212 <https://github.com/kiwitcms/kiwitcms/issues/212>`_,
+    `Issue #431 <https://github.com/kiwitcms/kiwitcms/issues/431>`_,
+    `Issue #1382 <https://github.com/kiwitcms/kiwitcms/issues/1382>`_
   - Add filter by component & tag. Closes
-    `Issue #833 <https://github.com/kiwitcms/Kiwi/issues/833>`_
+    `Issue #833 <https://github.com/kiwitcms/kiwitcms/issues/833>`_
   - Don't limit the user to test cases from the parent test plan like before.
     Testers can add any test case for execution inside a test run,
     even mix & match test cases between products. Fixes
-    `Issue #1934 <https://github.com/kiwitcms/Kiwi/issues/1934>`_
+    `Issue #1934 <https://github.com/kiwitcms/kiwitcms/issues/1934>`_
   - Add attachments to Test Run page. Fixes
-    `Issue #872 <https://github.com/kiwitcms/Kiwi/issues/872>`_
+    `Issue #872 <https://github.com/kiwitcms/kiwitcms/issues/872>`_
   - Refresh execution row after reporting a bug. Closes
-    `Issue #479 <https://github.com/kiwitcms/Kiwi/issues/479>`_
+    `Issue #479 <https://github.com/kiwitcms/kiwitcms/issues/479>`_
 - ``TestCaseStatus`` can now be customized. Fixes
-  `Issue #1932 <https://github.com/kiwitcms/Kiwi/issues/1932>`_
+  `Issue #1932 <https://github.com/kiwitcms/kiwitcms/issues/1932>`_
 - Update documantation & screenshots
 
 
@@ -4469,31 +4469,31 @@ Bug fixes
 
 - Fixed miscellaneous bugs in ``tcms.rpc.testcase`` (Gagan Deep)
 - Disable name change in admin for the default groups. Fixes
-  `Issue #1313 <https://github.com/kiwitcms/Kiwi/issues/1313>`_
+  `Issue #1313 <https://github.com/kiwitcms/kiwitcms/issues/1313>`_
 
 
 Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add automated tests for ``tcms.core.views.server_error``. Fixes
-  `Issue #1606 <https://github.com/kiwitcms/Kiwi/issues/1606>`_
+  `Issue #1606 <https://github.com/kiwitcms/kiwitcms/issues/1606>`_
   (Abhishek Chaurasia)
 - Add automated tests for ``tcms.rpc.api.auth``. Fixes
-  `Issue #1620 <https://github.com/kiwitcms/Kiwi/issues/1620>`_
+  `Issue #1620 <https://github.com/kiwitcms/kiwitcms/issues/1620>`_
   (Abhishek Chaurasia)
 - Add automated test for ``AnonymousViewBackend.has_perm`` method. Fixes
-  `Issue #1905 <https://github.com/kiwitcms/Kiwi/issues/1905>`_
+  `Issue #1905 <https://github.com/kiwitcms/kiwitcms/issues/1905>`_
   (Abhishek Chaurasia)
 - Add automated tests for ``tcms.core.utils.maito``. Fixes
-  `Issue #1603 <https://github.com/kiwitcms/Kiwi/issues/1603>`_ (Gagan Deep)
+  `Issue #1603 <https://github.com/kiwitcms/kiwitcms/issues/1603>`_ (Gagan Deep)
 - Add automated tests for ``tcms.utils.github``. Fixes
-  `Issue #1612 <https://github.com/kiwitcms/Kiwi/issues/1612>`_ (Gagan Deep)
+  `Issue #1612 <https://github.com/kiwitcms/kiwitcms/issues/1612>`_ (Gagan Deep)
 - Add automated tests for ``tcms.rpc.api.testscase``. Fixes
-  `Issue #1623 <https://github.com/kiwitcms/Kiwi/issues/1623>`_ (Gagan Deep)
+  `Issue #1623 <https://github.com/kiwitcms/kiwitcms/issues/1623>`_ (Gagan Deep)
 - Add automated tests for ``tcms.testcases.views.NewCaseView``. Fixes
-  `Issue #1614 <https://github.com/kiwitcms/Kiwi/issues/1614>`_ (@rish07)
+  `Issue #1614 <https://github.com/kiwitcms/kiwitcms/issues/1614>`_ (@rish07)
 - Add automated tests for ``tcms.testplans.views.NewTestPlanView.`` Fixes
-  `Issue #1616 <https://github.com/kiwitcms/Kiwi/issues/1616>`_ (@awalvie)
+  `Issue #1616 <https://github.com/kiwitcms/kiwitcms/issues/1616>`_ (@awalvie)
 - Separate two functions one from another (Alexander Tsvetanov)
 - Disable pylint checks (Alexander Tsvetanov)
 - Upgrade to MySQL 8 in Travis CI
@@ -4557,11 +4557,11 @@ Improvements
 - Update node_modules/marked from 1.1.1 to 1.2.3
 - Update node_modules/prismjs from 1.21.0 to 1.22.0
 - Add management command ``refresh_permission``. Closes
-  `Issue #1137 <https://github.com/kiwitcms/Kiwi/issues/1137>`_ (Ivajlo Karabojkov)
+  `Issue #1137 <https://github.com/kiwitcms/kiwitcms/issues/1137>`_ (Ivajlo Karabojkov)
 - Add bug tracker integration for Azure Boards. Closes
-  `Issue #1979 <https://github.com/kiwitcms/Kiwi/issues/1979>`_ (@cmbahadir)
+  `Issue #1979 <https://github.com/kiwitcms/kiwitcms/issues/1979>`_ (@cmbahadir)
 - Add autosave configuration to web editor. Closes
-  `Issue #1958 <https://github.com/kiwitcms/Kiwi/issues/1958>`_ (Mfon Eti-mfon)
+  `Issue #1958 <https://github.com/kiwitcms/kiwitcms/issues/1958>`_ (Mfon Eti-mfon)
 - Change ON/OFF button messages to Yes/No for several buttons
   (Alexander Tsvetanov)
 - Add support for object-level permissions for TestCase,
@@ -4571,8 +4571,8 @@ Improvements
   - modern look and feel using the PatternFly UI library
   - remove unused legacy code & HTML templates
   - closes
-    `Issue #663 <https://github.com/kiwitcms/Kiwi/issues/663>`_,
-    `Issue #1977 <https://github.com/kiwitcms/Kiwi/issues/1977>`_
+    `Issue #663 <https://github.com/kiwitcms/kiwitcms/issues/663>`_,
+    `Issue #1977 <https://github.com/kiwitcms/kiwitcms/issues/1977>`_
 
 - Enable Markdown support for strike-through text
 - Always pull latest RPMs when building container images
@@ -4614,12 +4614,12 @@ API
 
 - Method ``TestExecution.update()`` will now modify field ``close_date``
   depending on test execution status. Fixes
-  `Issue #1820 <https://github.com/kiwitcms/Kiwi/issues/1820>`_
+  `Issue #1820 <https://github.com/kiwitcms/kiwitcms/issues/1820>`_
 - Method ``TestCase.add_comment()`` now returns the created comment
 - Method ``TestExecution.add_comment()`` now returns the created comment
 - Method ``TestPlan.add_case()`` now returns the newly added test case
 - Add method ``TestCase.sortkeys()``. Fixes
-  `Issue #444 <https://github.com/kiwitcms/Kiwi/issues/444>`_
+  `Issue #444 <https://github.com/kiwitcms/kiwitcms/issues/444>`_
 - Add method ``Markdown.render()``
 - Add method ``TestCase.comments()``
 - Add method ``TestPlan.tree()``
@@ -4629,44 +4629,44 @@ Bug fixes
 ~~~~~~~~~
 
 - Fix url formatting. Fixes
-  `Issue #1806 <https://github.com/kiwitcms/Kiwi/issues/1806>`_ (Rosen Sasov)
+  `Issue #1806 <https://github.com/kiwitcms/kiwitcms/issues/1806>`_ (Rosen Sasov)
 - When deleting TestExecutionStatus check that there will be at least 1 left
   before deleting! Closes
-  `Issue #1978 <https://github.com/kiwitcms/Kiwi/issues/1978>`_
+  `Issue #1978 <https://github.com/kiwitcms/kiwitcms/issues/1978>`_
 - Update typeahead definitions for test case components, tags and
   for adding test plans to test cases. Fixes
-  `Issue #882 <https://github.com/kiwitcms/Kiwi/issues/882>`_
+  `Issue #882 <https://github.com/kiwitcms/kiwitcms/issues/882>`_
 - Add option to filter by reviewer in Test Plan page. Fixes
-  `Issue #564 <https://github.com/kiwitcms/Kiwi/issues/564>`_
+  `Issue #564 <https://github.com/kiwitcms/kiwitcms/issues/564>`_
 - Pass the number of disabled test cases to HTML template when
   creating a new test run. Fixes
-  `Issue #718 <https://github.com/kiwitcms/Kiwi/issues/718>`_
+  `Issue #718 <https://github.com/kiwitcms/kiwitcms/issues/718>`_
 
 
 Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - New linter to warn against ``GenericForeignKey`` fields in models. Closes
-  `Issue #1303 <https://github.com/kiwitcms/Kiwi/issues/1303>`_ (Bryan Mutai)
+  `Issue #1303 <https://github.com/kiwitcms/kiwitcms/issues/1303>`_ (Bryan Mutai)
 - Add tests for ``assign_default_group_permissions()`` (Ivajlo Karabojkov)
 - Add tests for ``TestExecutionStatusAdmin``. Refs
-  `Issue #1618 <https://github.com/kiwitcms/Kiwi/issues/1618>`_ (Mariyan Garvanski)
+  `Issue #1618 <https://github.com/kiwitcms/kiwitcms/issues/1618>`_ (Mariyan Garvanski)
 - Add tests for ``tcms.bugs.views.Search``. Closes
-  `Issue #1601 <https://github.com/kiwitcms/Kiwi/issues/1601>`_ (Mfon Eti-mfon)
+  `Issue #1601 <https://github.com/kiwitcms/kiwitcms/issues/1601>`_ (Mfon Eti-mfon)
 - Add tests for ``tcms.rpc.api.testrun``. Closes
-  `Issue #1628 <https://github.com/kiwitcms/Kiwi/issues/1628>`_ (@lcmtwn)
+  `Issue #1628 <https://github.com/kiwitcms/kiwitcms/issues/1628>`_ (@lcmtwn)
 - Add tests for ``tcms.rpc.api.classification``. Closes
-  `Issue #1621 <https://github.com/kiwitcms/Kiwi/issues/1621>`_ (Abhishek Chaurasia)
+  `Issue #1621 <https://github.com/kiwitcms/kiwitcms/issues/1621>`_ (Abhishek Chaurasia)
 - Add tests for ``tcms.rpc.api.priority``. Closes
-  `Issue #1622 <https://github.com/kiwitcms/Kiwi/issues/1622>`_ (Abhishek Chaurasia)
+  `Issue #1622 <https://github.com/kiwitcms/kiwitcms/issues/1622>`_ (Abhishek Chaurasia)
 - Add tests for ``tcms.rpc.api.testcasestatus``. Closes
-  `Issue #1624 <https://github.com/kiwitcms/Kiwi/issues/1624>`_ (Abhishek Chaurasia)
+  `Issue #1624 <https://github.com/kiwitcms/kiwitcms/issues/1624>`_ (Abhishek Chaurasia)
 - Add tests for ``tcms.rpc.api.attachment``. Closes
-  `Issue #1619 <https://github.com/kiwitcms/Kiwi/issues/1619>`_ (@awalvie)
+  `Issue #1619 <https://github.com/kiwitcms/kiwitcms/issues/1619>`_ (@awalvie)
 - Add tests for ``tcms.rpc.api.testexecution.remove_comment``. Closes
-  `Issue #1625 <https://github.com/kiwitcms/Kiwi/issues/1625>`_ (@awalvie)
+  `Issue #1625 <https://github.com/kiwitcms/kiwitcms/issues/1625>`_ (@awalvie)
 - Add tests for ``tcms.rpc.api.testexecutionstatus``. Closes
-  `Issue #1626 <https://github.com/kiwitcms/Kiwi/issues/1626>`_ (@awalvie)
+  `Issue #1626 <https://github.com/kiwitcms/kiwitcms/issues/1626>`_ (@awalvie)
 - Add tests for ``TestRun.add_case_run()`` method and rename it to
   ``TestRun.create_execution()``
 - ``libkrb5-dev`` is not needed anymore in CI with newer ``tcms-api``
@@ -4766,16 +4766,16 @@ Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add tests for ``tcms.core.templatetags``. Closes
-  `Issue #1602 <https://github.com/kiwitcms/Kiwi/issues/1602>`_ (Mariyan Garvanski)
+  `Issue #1602 <https://github.com/kiwitcms/kiwitcms/issues/1602>`_ (Mariyan Garvanski)
 - Add tests for ``tcms.bugs.views.Edit``. Closes
-  `Issue #1599 <https://github.com/kiwitcms/Kiwi/issues/1599>`_ (Mfon Eti-mfon)
+  `Issue #1599 <https://github.com/kiwitcms/kiwitcms/issues/1599>`_ (Mfon Eti-mfon)
 - Add tests for ``tcms.bugs.views.AddComment``. Closes
-  `Issue #1600 <https://github.com/kiwitcms/Kiwi/issues/1600>`_ (Mfon Eti-mfon)
+  `Issue #1600 <https://github.com/kiwitcms/kiwitcms/issues/1600>`_ (Mfon Eti-mfon)
 - Make paths used in migrations & settings platform aware in order to
   enable development mode on Windows (Mfon Eti-mfon)
 - Add new linter checker to check for use of ``db_column`` argument in
   model field definition. Closes
-  `Issue #736 <https://github.com/kiwitcms/Kiwi/issues/736>`_ (Bryan Mutai)
+  `Issue #736 <https://github.com/kiwitcms/kiwitcms/issues/736>`_ (Bryan Mutai)
 - Add tests for ``Bug.details`` API method
 - Replace deprecated ``ifequal``/``ifnotequal`` template tags
 - Adjust ``migrations_order`` for Django 3.1 compatibility
@@ -4847,9 +4847,9 @@ Improvements
 - Enable syntax highlight for code blocks
 - Remove file attachments when related objects are deleted
 - Add image and file upload buttons to text editor. Fixes
-  `Issue #977 <https://github.com/kiwitcms/Kiwi/issues/977>`_
+  `Issue #977 <https://github.com/kiwitcms/kiwitcms/issues/977>`_
 - Require ``auth.view_user`` permission when trying to view user profiles.
-  Fixes `Issue #1685 <https://github.com/kiwitcms/Kiwi/issues/1685>`_
+  Fixes `Issue #1685 <https://github.com/kiwitcms/kiwitcms/issues/1685>`_
 - Multiple pages now explicitly require view permissions before displaying
   read-only information. This gives administrators a finer grained control:
 
@@ -4919,9 +4919,9 @@ Bug fixes
 
 - Update documentation to reflect that test cases cannot be rearranged from
   within a TestRun but only from a TestPlan. Fixes
-  `Issue #1805 <https://github.com/kiwitcms/Kiwi/issues/1805>`_ (@Prome88)
+  `Issue #1805 <https://github.com/kiwitcms/kiwitcms/issues/1805>`_ (@Prome88)
 - Incorrect code formatting for HTML <pre> tags. Closes
-  `Issue #1300 <https://github.com/kiwitcms/Kiwi/issues/1300>`_
+  `Issue #1300 <https://github.com/kiwitcms/kiwitcms/issues/1300>`_
 - Fix a bug with the history handler when importing objects with ID field set.
   Resolves a crash when trying to restore backup data
 - Delete comments when Bug is removed
@@ -4932,19 +4932,19 @@ Refactoring & testing
 
 - Add linter to warn about missing backwards migrations callable in ``RunPython``
   and fix all pylint offenses. Fixes
-  `Issue #1774 <https://github.com/kiwitcms/Kiwi/issues/1774>`_ (Bryan Mutai)
+  `Issue #1774 <https://github.com/kiwitcms/kiwitcms/issues/1774>`_ (Bryan Mutai)
 - Teach linter to check API for ``@permissions_required``. Fixes
-  `Issue #1089 <https://github.com/kiwitcms/Kiwi/issues/1089>`_
+  `Issue #1089 <https://github.com/kiwitcms/kiwitcms/issues/1089>`_
 - Refactor ``NewExecutionForm`` to use ModelForm (Rosen Sasov)
 - Refactor ``UpdateExecutionForm`` to use ModelForm (Rosen Sasov)
 - Add tests for ``tcms.bugs.api``. Closes
-  `Issue #1597 <https://github.com/kiwitcms/Kiwi/issues/1597>`_ (Mfon Eti-mfon)
+  `Issue #1597 <https://github.com/kiwitcms/kiwitcms/issues/1597>`_ (Mfon Eti-mfon)
 - Add tests for ``tcms.bugs.views.New``. Closes
-  `Issue #1598 <https://github.com/kiwitcms/Kiwi/issues/1598>`_ (Mfon Eti-mfon)
+  `Issue #1598 <https://github.com/kiwitcms/kiwitcms/issues/1598>`_ (Mfon Eti-mfon)
 - Add tests for ``tcms.rpc.api.testplan``. Closes
-  `Issue #1627 <https://github.com/kiwitcms/Kiwi/issues/1627>`_ (@lcmtwn)
+  `Issue #1627 <https://github.com/kiwitcms/kiwitcms/issues/1627>`_ (@lcmtwn)
 - Add tests for ``percentage()`` function References
-  `Issue #1602 <https://github.com/kiwitcms/Kiwi/issues/1602>`_ (Mariyan Garvanski)
+  `Issue #1602 <https://github.com/kiwitcms/kiwitcms/issues/1602>`_ (Mariyan Garvanski)
 - Add the ``migrations_order`` command to help test rollbacks
 - Adjust code for deprecation warnings from Django 3.1
 - Use Python 3 style ``super()`` without arguments
@@ -4998,12 +4998,12 @@ Improvements
 - Update python-gitlab from 2.2.0 to 2.4.0
 - Update python-bugzilla from 2.3.0 to 2.5.0
 - Add middleware to warn for unapplied migrations. Fixes
-  `Issue #1696 <https://github.com/kiwitcms/Kiwi/issues/1696>`_ (Bryan Mutai)
+  `Issue #1696 <https://github.com/kiwitcms/kiwitcms/issues/1696>`_ (Bryan Mutai)
 - Add "insert table" button to SimpleMDE toolbar. References
-  `Issue #1531 <https://github.com/kiwitcms/Kiwi/issues/1531>`_ (Bryan Mutai)
+  `Issue #1531 <https://github.com/kiwitcms/kiwitcms/issues/1531>`_ (Bryan Mutai)
 - Implement
   `kiwitcms-django-plugin <https://kiwitcms.org/blog/kiwi-tcms-team/2020/06/30/django-plugin-for-kiwi-tcms/>`_.
-  Resolves `Issue #693 <https://github.com/kiwitcms/Kiwi/issues/693>`_
+  Resolves `Issue #693 <https://github.com/kiwitcms/kiwitcms/issues/693>`_
   (Bryan Mutai)
 - Add missing permission check for ``TestExecution.add_link()`` API method
   (Rosen Sasov)
@@ -5011,16 +5011,16 @@ Improvements
   (Rosen Sasov)
 - Admin interface will now appear translated
 - Propagate server side API errors to the browser. Closes
-  `Issue #625 <https://github.com/kiwitcms/Kiwi/issues/625>`_,
-  `Issue #1333 <https://github.com/kiwitcms/Kiwi/issues/1333>`_
+  `Issue #625 <https://github.com/kiwitcms/kiwitcms/issues/625>`_,
+  `Issue #1333 <https://github.com/kiwitcms/kiwitcms/issues/1333>`_
 - Improvements for Status Matrix telemetry page:
 
   - Make the horizontal scroll bar at the bottom always visible
   - Make the header row always visible
   - Add button to show columns in reverse. Fixes
-    `Issue #1682 <https://github.com/kiwitcms/Kiwi/issues/1682>`_
+    `Issue #1682 <https://github.com/kiwitcms/kiwitcms/issues/1682>`_
   - Make it possible to display TestExecutions from child TestPlans. Fixes
-    `Issue #1683 <https://github.com/kiwitcms/Kiwi/issues/1683>`_
+    `Issue #1683 <https://github.com/kiwitcms/kiwitcms/issues/1683>`_
 
 
 Database
@@ -5042,23 +5042,23 @@ Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add new linter to check for label arguments in form field classes. Fixes
-  `Issue #738 <https://github.com/kiwitcms/Kiwi/issues/738>`_ (Bryan Mutai)
+  `Issue #738 <https://github.com/kiwitcms/kiwitcms/issues/738>`_ (Bryan Mutai)
 - Add new linter to check if all forms inherit from ``ModelForm``. Fixes
-  `Issue #1384 <https://github.com/kiwitcms/Kiwi/issues/1384>`_ (Bryan Mutai)
+  `Issue #1384 <https://github.com/kiwitcms/kiwitcms/issues/1384>`_ (Bryan Mutai)
 - Enable pylint plugin ``pylint.extensions.docparams`` and resolve errors. Fixes
-  `Issue #1192 <https://github.com/kiwitcms/Kiwi/issues/1192>`_ (Bryan Mutai)
+  `Issue #1192 <https://github.com/kiwitcms/kiwitcms/issues/1192>`_ (Bryan Mutai)
 - Migrate 'test-for-missing-migrations' from Travis CI to GitHub workflow. Fixes
-  `Issue #1553 <https://github.com/kiwitcms/Kiwi/issues/1553>`_ (Bryan Mutai)
+  `Issue #1553 <https://github.com/kiwitcms/kiwitcms/issues/1553>`_ (Bryan Mutai)
 - Add tests for ``tcms.bugs.api.add_tag()``. References
-  `Issue #1597 <https://github.com/kiwitcms/Kiwi/issues/1597>`_ (Mfon Eti-mfon)
+  `Issue #1597 <https://github.com/kiwitcms/kiwitcms/issues/1597>`_ (Mfon Eti-mfon)
 - Add tests for ``tcms.bugs.api.remove_tag()``. References
-  `Issue #1597 <https://github.com/kiwitcms/Kiwi/issues/1597>`_ (Mfon Eti-mfon)
+  `Issue #1597 <https://github.com/kiwitcms/kiwitcms/issues/1597>`_ (Mfon Eti-mfon)
 - Add test for ``tcms.testplans.views.Edit``. References
-  `Issue #1617 <https://github.com/kiwitcms/Kiwi/issues/1617>`_ (@cmbahadir)
+  `Issue #1617 <https://github.com/kiwitcms/kiwitcms/issues/1617>`_ (@cmbahadir)
 - Add tests for ``markdown2html()``. Fixes
-  `Issue #1659 <https://github.com/kiwitcms/Kiwi/issues/1659>`_ (Mariyan Garvanski)
+  `Issue #1659 <https://github.com/kiwitcms/kiwitcms/issues/1659>`_ (Mariyan Garvanski)
 - Add test for Cyrillic support with MariaDB. References
-  `Issue #1770 <https://github.com/kiwitcms/Kiwi/issues/1770>`_
+  `Issue #1770 <https://github.com/kiwitcms/kiwitcms/issues/1770>`_
 
 
 Translations
@@ -5114,7 +5114,7 @@ Improvements
 - Update python-redmine from 2.2.1 to 2.3.0
 - Update patternfly from 3.59.4 to 3.59.5
 - Add ``manage.py set_domain`` command to change Kiwi TCMS domain. Fixes
-  `Issue #971 <https://github.com/kiwitcms/Kiwi/issues/971>`_ (Ivajlo Karabojkov)
+  `Issue #971 <https://github.com/kiwitcms/kiwitcms/issues/971>`_ (Ivajlo Karabojkov)
 - GitHub bug details now works for private issues
 - Gitlab bug details now works for private issues
 - JIRA bug details now works for private issues
@@ -5125,7 +5125,7 @@ Improvements
 - New feature: 1-click bug report for Redmine
 - Reverting to older historical version via Admin panel now redirects
   to object which was reverted. Fixes
-  `Issue #1074 <https://github.com/kiwitcms/Kiwi/issues/1074>`_
+  `Issue #1074 <https://github.com/kiwitcms/kiwitcms/issues/1074>`_
 - Documentation updates
 
 .. important::
@@ -5168,7 +5168,7 @@ Settings
 
 - Define the ``KIWI_DISABLE_BUGTRACKER=yes`` environment variable if you wish
   to disable the internal bug tracker. Closes
-  `Issue #1370 <https://github.com/kiwitcms/Kiwi/issues/1370>`_
+  `Issue #1370 <https://github.com/kiwitcms/kiwitcms/issues/1370>`_
 
 
 Bug fixes
@@ -5176,19 +5176,19 @@ Bug fixes
 
 - Workaround missing MariaDB CHARSET/COLLATION support, see our
   ``docker-compose.yml``. Fixes
-  `Issue #1700 <https://github.com/kiwitcms/Kiwi/issues/1700>`_
+  `Issue #1700 <https://github.com/kiwitcms/kiwitcms/issues/1700>`_
 - Install missing ``/usr/bin/mysql`` in container
 - Warning message for unconfigured Kiwi TCMS domain does not show HTML tags in
   Admin anymore. Fixes
-  `Issue #964 <https://github.com/kiwitcms/Kiwi/issues/964>`_
+  `Issue #964 <https://github.com/kiwitcms/kiwitcms/issues/964>`_
 - Unescape the ``&amp;`` string when trying to open new windows after
   clicking the 'Report bug' button in TestExecution. Fixes
-  `Issue #1533 <https://github.com/kiwitcms/Kiwi/issues/1533>`_
+  `Issue #1533 <https://github.com/kiwitcms/kiwitcms/issues/1533>`_
 - Try harder to restore the original navigation menu instead of
   leaving bogus menu items. Fixes
-  `Issue #991 <https://github.com/kiwitcms/Kiwi/issues/991>`_
+  `Issue #991 <https://github.com/kiwitcms/kiwitcms/issues/991>`_
 - Robot Framework plugin is now GA. Close
-  `Issue #984 <https://github.com/kiwitcms/Kiwi/issues/984>`_
+  `Issue #984 <https://github.com/kiwitcms/kiwitcms/issues/984>`_
 - Add LinkReference to TestExecution after creating bug via 1-click.
   The UI still needs to be refreshed which will be implemented together
   with the redesign of the TestRun page
@@ -5200,29 +5200,29 @@ Refactoring & testing
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Migrate ``check-docs-source-in-git`` to GitHub workflows. Fixes
-  `Issue #1552 <https://github.com/kiwitcms/Kiwi/issues/1552>`_ (@Prome88)
+  `Issue #1552 <https://github.com/kiwitcms/kiwitcms/issues/1552>`_ (@Prome88)
 - Migrate ``build-for-pypi`` to GitHub workflows. Fixes
-  `Issue #1554 <https://github.com/kiwitcms/Kiwi/issues/1554>`_ (@lcmtwn)
+  `Issue #1554 <https://github.com/kiwitcms/kiwitcms/issues/1554>`_ (@lcmtwn)
 - Add tests for ``TestCaseAdmin`` (Mariyan Garvanski)
 - Add tests for ``BugAdmin``. Fixes
-  `Issue #1596 <https://github.com/kiwitcms/Kiwi/issues/1596>`_ (Mariyan Garvanski)
+  `Issue #1596 <https://github.com/kiwitcms/kiwitcms/issues/1596>`_ (Mariyan Garvanski)
 - Omit ``utils/test`` from coverage reports. Fixes
-  `Issue #1631 <https://github.com/kiwitcms/Kiwi/issues/1631>`_ (@cmbahadir)
+  `Issue #1631 <https://github.com/kiwitcms/kiwitcms/issues/1631>`_ (@cmbahadir)
 - Omit ``tcms/tests`` from coverage reports. Fixes
-  `Issue #1630 <https://github.com/kiwitcms/Kiwi/issues/1630>`_ (@cmbahadir)
+  `Issue #1630 <https://github.com/kiwitcms/kiwitcms/issues/1630>`_ (@cmbahadir)
 - Add tests for ``tcms.core.forms.fields`` - Fixes
-  `Issue #1629 <https://github.com/kiwitcms/Kiwi/issues/1629>`_ (@cmbahadir)
+  `Issue #1629 <https://github.com/kiwitcms/kiwitcms/issues/1629>`_ (@cmbahadir)
 - Add tests for ``TestExecution.update()`` for ``case_text_version`` field
   (Rosen Sasov)
 - Refactor bulk-update methods in TestRun page to use JSON-RPC. Fixes
-  `Issue #1063 <https://github.com/kiwitcms/Kiwi/issues/1063>`_ (Rosen Sasov)
+  `Issue #1063 <https://github.com/kiwitcms/kiwitcms/issues/1063>`_ (Rosen Sasov)
 - Start using ``_change_reason`` instead of ``changeReason`` field in
   django-simple-history
 - Remove unused ``StripURLField`` & ``Version.string_to_id()``
 - Refactoring around TestCase and TestPlan cloning methods
 - Start testing with the internal bug tracker disabled
 - Start testing with all supported external bug trackers. Fixes
-  `Issue #1079 <https://github.com/kiwitcms/Kiwi/issues/1079>`_
+  `Issue #1079 <https://github.com/kiwitcms/kiwitcms/issues/1079>`_
 - Start Codecov for coverage reports
 - Add tests for presense of mysql/psql binaries in container
 - Add ``APIPermissionsTestCase`` with example in
@@ -5291,7 +5291,7 @@ Improvements
 - Update pygithub from 1.47 to 1.50
 - Update python-gitlab from 2.1.2 to 2.2.0
 - It is now possible to reopen closed bugs - Fixes
-  `Issue #1152 <https://github.com/kiwitcms/Kiwi/issues/1152>`_ (@cmbahadir)
+  `Issue #1152 <https://github.com/kiwitcms/kiwitcms/issues/1152>`_ (@cmbahadir)
 - Visual improvements for Status matrix telemetry:
 
   - columns now link to test runs
@@ -5302,7 +5302,7 @@ Improvements
   for 10 years
 - Improved documentation around self-signed certificates
 - Improved documentation around e-mail backend configuration. Closes
-  `Issue #1070 <https://github.com/kiwitcms/Kiwi/issues/1070>`_
+  `Issue #1070 <https://github.com/kiwitcms/kiwitcms/issues/1070>`_
   (@Schwarzkrieger)
 
 
@@ -5319,9 +5319,9 @@ Refactoring
 ~~~~~~~~~~~
 
 - Migrate bandit test job to GitHub workflows, Closes
-  `Issue #1550 <https://github.com/kiwitcms/Kiwi/issues/1550>`_ (@lcmtwn)
+  `Issue #1550 <https://github.com/kiwitcms/kiwitcms/issues/1550>`_ (@lcmtwn)
 - Migrate doc8 test job to GitHub workflows. Closes
-  `Issue #1551 <https://github.com/kiwitcms/Kiwi/issues/1551>`_ (@Prome88)
+  `Issue #1551 <https://github.com/kiwitcms/kiwitcms/issues/1551>`_ (@Prome88)
 - Add 2 more tests (Mariyan Garvanski)
 - Convert TP edit page to class based view
 - Convert forms to ModelForm
@@ -5371,7 +5371,7 @@ Improvements
 - Update marked(js) to version 0.8.2
 - Change default MariaDB charset and collation to utf8mb4. Will only affect
   new installations. Closes
-  `Issue #327 <https://github.com/kiwitcms/Kiwi/issues/327>`_
+  `Issue #327 <https://github.com/kiwitcms/kiwitcms/issues/327>`_
 - Document ``TCMS_PLAN_ID`` ENV variable supported by automation framework
   plugins
 - Test case Search page now allows searching for records containing the
@@ -5398,7 +5398,7 @@ Refactoring
 ~~~~~~~~~~~
 
 - Fix pylint errors. Closes
-  `Issue #1510 <https://github.com/kiwitcms/Kiwi/issues/1510>`_ (@cmbahadir)
+  `Issue #1510 <https://github.com/kiwitcms/kiwitcms/issues/1510>`_ (@cmbahadir)
 - Add tests for ``TestRunAdmin.delete_view()`` (Mariyan Garvanski)
 - Revert "[l10n] Add Serializer class which returns untranslated models"
 
@@ -5458,7 +5458,7 @@ Improvements
 - Update django-colorfield from 0.1.15 to 0.2.1
 - Update markdown from 3.2 to 3.2.1
 - On bug creation send email to assignee. Fixes
-  `Issue #1154 <https://github.com/kiwitcms/Kiwi/issues/1154>`_ (Mfon Eti-mfon)
+  `Issue #1154 <https://github.com/kiwitcms/kiwitcms/issues/1154>`_ (Mfon Eti-mfon)
 - Make it possible to provide override settings in a directory. Kiwi TCMS will
   respect:
 
@@ -5468,7 +5468,7 @@ Improvements
   For more information see
   https://kiwitcms.readthedocs.io/en/latest/installing_docker.html#customization
 - Allow adding TestPlan to TestCase via UI. Fixes
-  `Issue #1021 <https://github.com/kiwitcms/Kiwi/issues/1021>`_
+  `Issue #1021 <https://github.com/kiwitcms/kiwitcms/issues/1021>`_
 - Add visual representation of failures in TestCase health telemetry
 - Add helper text to TestExecutionStatus admin
 - Add link to discussion forum in Help menu
@@ -5490,11 +5490,11 @@ Bug fixes
 
 - The number of search results shown per page can now be controlled via
   ``DEFAULT_PAGE_SIZE`` setting, which is 100 by default. Fixes
-  `Issue #1210 <https://github.com/kiwitcms/Kiwi/issues/1210>`_ (Ivailo Karabojkov)
+  `Issue #1210 <https://github.com/kiwitcms/kiwitcms/issues/1210>`_ (Ivailo Karabojkov)
 - Use comma separated display of components in bug reports. Fixes
-  `Issue #1157 <https://github.com/kiwitcms/Kiwi/issues/1157>`_ (Ivailo Karabojkov)
+  `Issue #1157 <https://github.com/kiwitcms/kiwitcms/issues/1157>`_ (Ivailo Karabojkov)
 - Update selector for 'Select All' test executions in TestRun page. Fixes
-  `Issue #1404 <https://github.com/kiwitcms/Kiwi/issues/1404>`_
+  `Issue #1404 <https://github.com/kiwitcms/kiwitcms/issues/1404>`_
 - Fix crash when sorting test cases in TestPlan page. Fixes
   `Sentry #KIWI-TCMS-A6 <https://sentry.io/organizations/open-technologies-bulgaria-ltd/issues/1519809326/>`_
 - Fix a ``TC-undefined`` displayed in TestCase health telemetry
@@ -5551,7 +5551,7 @@ Improvements
 - Allow customization of test execution statuses via admin.
   For more information see
   https://kiwitcms.readthedocs.io/en/latest/admin.html#test-execution-statuses.
-  Fixes `Issue #236 <https://github.com/kiwitcms/Kiwi/issues/236>`_
+  Fixes `Issue #236 <https://github.com/kiwitcms/kiwitcms/issues/236>`_
 - Add passing rate chart to Execution trends telemetry
 - Documentation updates (@Prome88)
 
@@ -5654,28 +5654,28 @@ Bug fixes
 ~~~~~~~~~
 
 - Allow displaying lists with more then 9 items when reviewing test cases. Fixes
-  `Issue #339 <https://github.com/kiwitcms/Kiwi/issues/339>`_ (Mfon Eti-mfon)
+  `Issue #339 <https://github.com/kiwitcms/kiwitcms/issues/339>`_ (Mfon Eti-mfon)
 - Make ``tcms.tests.storage.RaiseWhenFileNotFound``` capable of finding
   finding static files on Windows which enables development mode for folks
   not using Linux environment. See
   `SO #55297178 <https://stackoverflow.com/questions/55297178>`_ (Mfon Eti-mfon)
 - Allow changing test execution status without adding comment. Fixes
-  `Issue #1261 <https://github.com/kiwitcms/Kiwi/issues/1261>`_
+  `Issue #1261 <https://github.com/kiwitcms/kiwitcms/issues/1261>`_
 - Properly refresh test run progress bar when changing statuses. Fixes
-  `Issue #1326 <https://github.com/kiwitcms/Kiwi/issues/1326>`_
+  `Issue #1326 <https://github.com/kiwitcms/kiwitcms/issues/1326>`_
 - Fix a bug where updating test cases from the UI was causing text and various
   other fields to be reset. Fixes
-  `Issue #1318 <https://github.com/kiwitcms/Kiwi/issues/1318>`_
+  `Issue #1318 <https://github.com/kiwitcms/kiwitcms/issues/1318>`_
 
 
 Refactoring
 ~~~~~~~~~~~
 
 - Extract attachments widget to new template. Fixes
-  `Issue #1124 <https://github.com/kiwitcms/Kiwi/issues/1124>`_
+  `Issue #1124 <https://github.com/kiwitcms/kiwitcms/issues/1124>`_
   (Rosen Sasov)
 - Rename RPC related classes. Fixes
-  `Issue #682 <https://github.com/kiwitcms/Kiwi/issues/682>`_
+  `Issue #682 <https://github.com/kiwitcms/kiwitcms/issues/682>`_
   (Rosen Sasov)
 - Add new test (Mariyan Garvanski)
 - Start using GitHub actions, first for running flake8
@@ -5757,18 +5757,18 @@ API
 ~~~
 
 - ``TestCase.update()`` method now allows to update the ``author`` field. Fixes
-  `Issue #630 <https://github.com/kiwitcms/Kiwi/issues/630>`_
+  `Issue #630 <https://github.com/kiwitcms/kiwitcms/issues/630>`_
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Modify template pass ``object`` as ``test_plan``. Fixes
-  `Issue #1307 <https://github.com/kiwitcms/Kiwi/issues/1307>`_ (Ed Oswald S. Go)
+  `Issue #1307 <https://github.com/kiwitcms/kiwitcms/issues/1307>`_ (Ed Oswald S. Go)
 - Enable version selection in test plan search page. Fixes
-  `Issue #1276 <https://github.com/kiwitcms/Kiwi/issues/1276>`_
+  `Issue #1276 <https://github.com/kiwitcms/kiwitcms/issues/1276>`_
 - Apply percentage rounding for completed test executions. Fixes
-  `Issue #1230 <https://github.com/kiwitcms/Kiwi/issues/1230>`_
+  `Issue #1230 <https://github.com/kiwitcms/kiwitcms/issues/1230>`_
 - Fix a logical bug in conditional expression when deciding whether or not
   reporting bugs to selected issue tracker is disabled
 
@@ -5777,9 +5777,9 @@ Refactoring
 ~~~~~~~~~~~
 
 - Add code of conduct. Fixes
-  `Issue #1185 <https://github.com/kiwitcms/Kiwi/issues/1185>`_ (Rosen Sasov)
+  `Issue #1185 <https://github.com/kiwitcms/kiwitcms/issues/1185>`_ (Rosen Sasov)
 - Add test for ``KIWI_DONT_ENFORSE_HTTPS``. Closes
-  `Issue #1274 <https://github.com/kiwitcms/Kiwi/issues/1274>`_
+  `Issue #1274 <https://github.com/kiwitcms/kiwitcms/issues/1274>`_
 - Replace ``ugettext_lazy`` with ``gettext_lazy`` for Django 3
 - Remove ``BaseCaseSearchForm.bug_id`` field
 - Refactor testcase edit view to class-based
@@ -5839,7 +5839,7 @@ Database migrations
   ``TestExecutionStatus`` and adjust existing code to work with them.
   This is a necessary step before allowing customization of test execution
   statuses, see
-  `Issue #236 <https://github.com/kiwitcms/Kiwi/issues/236>`_
+  `Issue #236 <https://github.com/kiwitcms/kiwitcms/issues/236>`_
 
 
 API
@@ -5867,15 +5867,15 @@ Bug fixes
   are too long
 - Automatically expand TestExecution comment history if there are comments
   present. Fixes
-  `Issue #349 <https://github.com/kiwitcms/Kiwi/issues/349>`_ (Matt Porter)
+  `Issue #349 <https://github.com/kiwitcms/kiwitcms/issues/349>`_ (Matt Porter)
 - Document timezone settings and show current server time in navbar. Fixes
-  `Issue #1206 <https://github.com/kiwitcms/Kiwi/issues/1206>`_
+  `Issue #1206 <https://github.com/kiwitcms/kiwitcms/issues/1206>`_
 - Check for permissions in HTML template. Closes
-  `Issue #961 <https://github.com/kiwitcms/Kiwi/issues/961>`_
+  `Issue #961 <https://github.com/kiwitcms/kiwitcms/issues/961>`_
 - Document bug tracker integration support. Fixes
-  `Issue #698 <https://github.com/kiwitcms/Kiwi/issues/698>`_
+  `Issue #698 <https://github.com/kiwitcms/kiwitcms/issues/698>`_
 - Delete comments when TestCase and TestExecution are removed. Closes
-  `Issue #1028 <https://github.com/kiwitcms/Kiwi/issues/1028>`_
+  `Issue #1028 <https://github.com/kiwitcms/kiwitcms/issues/1028>`_
 
 
 Refactoring
@@ -5883,15 +5883,15 @@ Refactoring
 
 - Pylint fixes (Mariyan Garvanski)
 - Use ``django.utils.timezone.now()`` instead of ``datetime.now()``. Closes
-  `Issue #545 <https://github.com/kiwitcms/Kiwi/issues/545>`_
+  `Issue #545 <https://github.com/kiwitcms/kiwitcms/issues/545>`_
 - Use JSON-RPC instead of backend views when working with comments. Resolves
-  `Issue #960 <https://github.com/kiwitcms/Kiwi/issues/960>`_
+  `Issue #960 <https://github.com/kiwitcms/kiwitcms/issues/960>`_
 - Remove ``tcms.core.contrib.comments`` module. Closes
-  `Issue #959 <https://github.com/kiwitcms/Kiwi/issues/959>`_
+  `Issue #959 <https://github.com/kiwitcms/kiwitcms/issues/959>`_
 - Remove ``label=`` attribute from form field. Fixes
-  `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_
+  `Issue #652 <https://github.com/kiwitcms/kiwitcms/issues/652>`_
 - Move and rename XML-RPC forms. Resolves
-  `Issue #681 <https://github.com/kiwitcms/Kiwi/issues/681>`_
+  `Issue #681 <https://github.com/kiwitcms/kiwitcms/issues/681>`_
 - Convert ``testplans.views.DeleteCasesView`` to JSON-RPC
 - Refactor more views from function based to class based
 - Remove duplicate JavaScript
@@ -5938,7 +5938,7 @@ Improvements
 - Better styling for checkboxes in 'Add hyperlink' dialog,
   part of TestRun page
 - Add hyperlink validation. Fixes
-  `Issue #1147 <https://github.com/kiwitcms/Kiwi/issues/1147>`_
+  `Issue #1147 <https://github.com/kiwitcms/kiwitcms/issues/1147>`_
 
 Database migrations
 ~~~~~~~~~~~~~~~~~~~
@@ -5958,12 +5958,12 @@ Bug fixes
 
 - Always build with the latest versions of translations
 - Add 'Delete' menu item in Bugs page. Fixes
-  `Issue #1153 <https://github.com/kiwitcms/Kiwi/issues/1153>`_
+  `Issue #1153 <https://github.com/kiwitcms/kiwitcms/issues/1153>`_
 - When deleting hyperlink from TestExecution hide the actual UI
   elements from the page
 - Fix failure to delete TCs when the number of TCs inside TP is greater
   than 100. Fixes
-  `Issue #1149 <https://github.com/kiwitcms/Kiwi/issues/1149>`_ and
+  `Issue #1149 <https://github.com/kiwitcms/kiwitcms/issues/1149>`_ and
   `Sentry KIWI-TCMS-8F <https://sentry.io/organizations/open-technologies-bulgaria-ltd/issues/1245504316/>`_
 
 
@@ -5971,10 +5971,10 @@ Refactoring
 ~~~~~~~~~~~
 
 - Rename directory ``xmlrpc`` to ``rpc`` and pylint updates. Refs
-  `Issue #682 <https://github.com/kiwitcms/Kiwi/issues/682>`_
+  `Issue #682 <https://github.com/kiwitcms/kiwitcms/issues/682>`_
   (Matej Aleksandrov, Sinergise)
 - Remove labels from form fields, Refs
-  `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_ (Azmi YÜKSEL)
+  `Issue #652 <https://github.com/kiwitcms/kiwitcms/issues/652>`_ (Azmi YÜKSEL)
 - New base class for tests around permissions (Svetlomir Balevski)
 - New "blueprint" test case around permissions to make testing in this area
   more robust
@@ -6052,14 +6052,14 @@ Improvements
 - Reduce docker image size from 1.01 GB to 577 MB
 - Add TestCase Health telemetry
 - Add support for Redmine issue tracker. Fixes
-  `Issue #41 <https://github.com/kiwitcms/Kiwi/issues/41>`_ (Jesse C. Lin)
+  `Issue #41 <https://github.com/kiwitcms/kiwitcms/issues/41>`_ (Jesse C. Lin)
 - Add breathing room around HTML form's submit buttons (Rady Madjev)
 - New TestRun page action: bulk-add hyperlinks to TestExecution(s)
 - Make it possible to disable HTTPS by specifying the
   ``KIWI_DONT_ENFORCE_HTTPS`` environment variable! Fixes
-  `Issue #1036 <https://github.com/kiwitcms/Kiwi/issues/1036>`_ (Marco Descher)
+  `Issue #1036 <https://github.com/kiwitcms/kiwitcms/issues/1036>`_ (Marco Descher)
 - Documentation updates, including internal style checker. Fixes
-  `Issue #1000 <https://github.com/kiwitcms/Kiwi/issues/1000>`_ (Prome88)
+  `Issue #1000 <https://github.com/kiwitcms/kiwitcms/issues/1000>`_ (Prome88)
 - When linking a TestExecution to a defect and choosing to update the
   Issue Tracker Kiwi TCMS will not add a comment pointing back to
   TR ID/summary/URL and TE ID/summary. This provides more detailed information
@@ -6068,9 +6068,9 @@ Improvements
 - Display additional defect information via Issue Tracker integration.
   On Patternfly pages which show defect URLs this is accessible via a
   small info icon. Fixes
-  `Issue #117 <https://github.com/kiwitcms/Kiwi/issues/117>`_
+  `Issue #117 <https://github.com/kiwitcms/kiwitcms/issues/117>`_
 - Add minimalistic defect tracker functionality. Fixes
-  `Issue #699 <https://github.com/kiwitcms/Kiwi/issues/699>`_
+  `Issue #699 <https://github.com/kiwitcms/kiwitcms/issues/699>`_
 
   - integrated with Issue Tracker integration layer as if it was
     an external system
@@ -6106,7 +6106,7 @@ Database migrations
   - add ``is_defect`` field
 
 - Apply ``LinkReference`` permissions to default group ``Tester``. Fixes
-  `Issue #881 <https://github.com/kiwitcms/Kiwi/issues/881>`_
+  `Issue #881 <https://github.com/kiwitcms/kiwitcms/issues/881>`_
 
     .. warning::
 
@@ -6114,8 +6114,8 @@ Database migrations
         apply these permissions by hand via the Admin section.
 
 - Remove ``testcases.Bug`` model, replaced with ``LinkReference``.
-  Closes `Issue #1029 <https://github.com/kiwitcms/Kiwi/issues/1029>`_ and
-  obsoletes `Issue #320 <https://github.com/kiwitcms/Kiwi/issues/320>`_.
+  Closes `Issue #1029 <https://github.com/kiwitcms/kiwitcms/issues/1029>`_ and
+  obsoletes `Issue #320 <https://github.com/kiwitcms/kiwitcms/issues/320>`_.
 
     .. note::
 
@@ -6164,7 +6164,7 @@ API
   override ``.details()`` for each issue tracker (or add your own IT) to
   extend this functionality. Information is cached for 1 hour by default.
   References
-  `Issue #117 <https://github.com/kiwitcms/Kiwi/issues/117>`_
+  `Issue #117 <https://github.com/kiwitcms/kiwitcms/issues/117>`_
 - Add methods ``Bug.add_tag()`` and ``Bug.remove_tag()``
 - Existing method with name ``Bug.filter()`` has changed behavior. It is
   now used to query objects from Kiwi TCMS minimalistic defect tracker
@@ -6190,7 +6190,7 @@ Settings
   `Django docs <https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-CACHES>`_
   for more info. Initially this setting is used to cache defect details
   received via Issue Tracker integration. See
-  `Issue #117 <https://github.com/kiwitcms/Kiwi/issues/117>`_
+  `Issue #117 <https://github.com/kiwitcms/kiwitcms/issues/117>`_
 
 
 Bug fixes
@@ -6198,15 +6198,15 @@ Bug fixes
 
 - Don't auto-download FontAwesome for SimpleMDE. Resolves icons disappearing
   on pages which have the markdown editor. Fixes
-  `Issue #905 <https://github.com/kiwitcms/Kiwi/issues/905>`_
+  `Issue #905 <https://github.com/kiwitcms/kiwitcms/issues/905>`_
 - Reorder HTML elements so Delete button is still visible in TestCase review
   comment section. Fixes
-  `Issue #1013 <https://github.com/kiwitcms/Kiwi/issues/1013>`_ (Rady Madjev)
+  `Issue #1013 <https://github.com/kiwitcms/kiwitcms/issues/1013>`_ (Rady Madjev)
 - Remove section that displays bugs in TestExecution container. Bugs are now
   denoted by a small icon next to their hyperlink. Closes
-  `Issue #475 <https://github.com/kiwitcms/Kiwi/issues/475>`_
+  `Issue #475 <https://github.com/kiwitcms/kiwitcms/issues/475>`_
 - Cache Issue Tracker connections per ``base_url``. Fixes
-  `Issue #290 <https://github.com/kiwitcms/Kiwi/issues/290>`_
+  `Issue #290 <https://github.com/kiwitcms/kiwitcms/issues/290>`_
 
 
 
@@ -6231,7 +6231,7 @@ Translations
 - Introduce a translation mode where you can translate the interface via
   in-context editor. For more information see
   `Translation guide <https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation>`_.
-  Fixes `Issue #1098 <https://github.com/kiwitcms/Kiwi/issues/1098>`_
+  Fixes `Issue #1098 <https://github.com/kiwitcms/kiwitcms/issues/1098>`_
 - Updated `Albanian translation <https://crowdin.com/project/kiwitcms/sq#>`_
 - Updated `Bulgarian translation <https://crowdin.com/project/kiwitcms/bg#>`_
 - Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
@@ -6244,7 +6244,7 @@ Translations
 For more information check-out
 `all supported languages <https://crowdin.com/project/kiwitcms>`_.
 To request new language
-`click here <https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_!
+`click here <https://github.com/kiwitcms/kiwitcms/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_!
 
 
 
@@ -6305,12 +6305,12 @@ Improvements
 
 - Convert Clone TestCase page to Patternfly, greatly simplify the UI
   and update behavior. Fixes
-  `Issue #838 <https://github.com/kiwitcms/Kiwi/issues/838/>`_:
+  `Issue #838 <https://github.com/kiwitcms/kiwitcms/issues/838/>`_:
 
   - Allow cloning into multiple test plans
   - Remove 'Filter another plan' option. Will be replaced by
     'Add TP to TC', see
-    `Issue #1021 <https://github.com/kiwitcms/Kiwi/issues/1021>`_
+    `Issue #1021 <https://github.com/kiwitcms/kiwitcms/issues/1021>`_
   - Always update sortkey. Cloned TC will show at the bottom of the
     TestPlan
   - Cloned TC author will always be set to the current user
@@ -6331,14 +6331,14 @@ Settings
 
 - Allow ENV variables ``KIWI_USE_TZ`` and ``KIWI_TIME_ZONE`` to control
   settings ``USE_TZ`` and ``TIME_ZONE``. Fixes
-  `Issue #982 <https://github.com/kiwitcms/Kiwi/issues/982/>`_ (Jason Yi)
+  `Issue #982 <https://github.com/kiwitcms/kiwitcms/issues/982/>`_ (Jason Yi)
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Fix wrong permission label when deleting comments. Fixes
-  `Issue #1010 <https://github.com/kiwitcms/Kiwi/issues/1010/>`_
+  `Issue #1010 <https://github.com/kiwitcms/kiwitcms/issues/1010/>`_
 
 
 Refactoring
@@ -6386,7 +6386,7 @@ Security
   `More info <https://docs.djangoproject.com/en/2.2/releases/2.2.2/>`_
 - Add missing permission checks for menus in Test run page UI template.
   Permission check added for TestExecution status and comment menu.
-  References `Issue #716 <https://github.com/kiwitcms/Kiwi/issues/716>`_
+  References `Issue #716 <https://github.com/kiwitcms/kiwitcms/issues/716>`_
 - Re-enable static analysis with ``bandit`` and ``Coverity Scan`` in
   Travis CI (Svetlomir Balevski)
 
@@ -6407,15 +6407,15 @@ Refactoring
 
 - Add test for ``email_case_deletion()`` (Rik)
 - New linter to warn about usage of ``AutoField``. Fixes
-  `Issue #737 <https://github.com/kiwitcms/Kiwi/issues/737>`_ (Ivo Donchev, HackSoft)
+  `Issue #737 <https://github.com/kiwitcms/kiwitcms/issues/737>`_ (Ivo Donchev, HackSoft)
 - New linter to discover empty classed. Fixes
-  `Issue #739 <https://github.com/kiwitcms/Kiwi/issues/739>`_ (Daniel Goshev)
+  `Issue #739 <https://github.com/kiwitcms/kiwitcms/issues/739>`_ (Daniel Goshev)
 - New linter to warn about usage of ``OneToOneField``. Fixes
-  `Issue #735 <https://github.com/kiwitcms/Kiwi/issues/735>`_ (George Goranov)
+  `Issue #735 <https://github.com/kiwitcms/kiwitcms/issues/735>`_ (George Goranov)
 - New linter to warn about usage of function based views. Fixes
-  `Issue #734 <https://github.com/kiwitcms/Kiwi/issues/734>`_ (Yavor Lulchev, Uber)
+  `Issue #734 <https://github.com/kiwitcms/kiwitcms/issues/734>`_ (Yavor Lulchev, Uber)
 - New linter to discover Python files in directories without ``__init__.py``. Fixes
-  `Issue #790 <https://github.com/kiwitcms/Kiwi/issues/790>`_
+  `Issue #790 <https://github.com/kiwitcms/kiwitcms/issues/790>`_
 
 
 
@@ -6452,7 +6452,7 @@ API
 
 - Remove deprecated ``TestCaseRun.`` API methods. Use the new
   ``TestExecution.`` methods introduced in v6.7. Fixes
-  `Issue #889 <https://github.com/kiwitcms/Kiwi/issues/889/>`_
+  `Issue #889 <https://github.com/kiwitcms/kiwitcms/issues/889/>`_
 
 
 Bug fixes
@@ -6504,7 +6504,7 @@ Improvements
 - Update pygithub from 1.43.6 to 1.43.7
 - Upgrade pip and setuptools inside Docker image
 - Update documentation with newer screenshots and updated Tutotial. Fixes
-  `Issue #837 <https://github.com/kiwitcms/Kiwi/issues/837/>`_ (@Prome88)
+  `Issue #837 <https://github.com/kiwitcms/kiwitcms/issues/837/>`_ (@Prome88)
 - Document how to enable public read-only views
 - Remove deprecated documentation section about Bugzilla authentication
 - Install PostgreSQL libraries in Docker image which makes it easier to
@@ -6520,7 +6520,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Pin bootstrap-switch to version 3.3.4 in ``package.json``. Fixes
-  `Issue #916 <https://github.com/kiwitcms/Kiwi/issues/916/>`_
+  `Issue #916 <https://github.com/kiwitcms/kiwitcms/issues/916/>`_
 
 
 Translations
@@ -6592,7 +6592,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Prompt user before deleting attachments. Fixes
-  `Issue #867 <https://github.com/kiwitcms/Kiwi/issues/867>`_ (Martin Jordanov)
+  `Issue #867 <https://github.com/kiwitcms/kiwitcms/issues/867>`_ (Martin Jordanov)
 - ``email_case_deletion()`` format error fixed so notifications when
   test cases are deleted are not sent (Rik)
 
@@ -6644,7 +6644,7 @@ Improvements
 - When creating new TestCase you can now change notification settings.
   Previously this was only possible during editing
 - Document import-export approaches. Closes
-  `Issue #795 <https://github.com/kiwitcms/Kiwi/issues/795>`_
+  `Issue #795 <https://github.com/kiwitcms/kiwitcms/issues/795>`_
 - Document available test automation plugins
 - Improve documentation around Docker customization and SSL termination
 - Add documentation example of reverse rroxy configuration for HAProxy
@@ -6652,10 +6652,10 @@ Improvements
 - ``TestPlan.add_case()`` will now set the sortkey to highest in plan + 10
   (Rik)
 - Add ``LinkOnly`` issue tracker. Fixes
-  `Issue #289 <https://github.com/kiwitcms/Kiwi/issues/289>`_
+  `Issue #289 <https://github.com/kiwitcms/kiwitcms/issues/289>`_
 - Use the same HTML template for both TestCase new & edit
 - New API methods for adding, removing and listing attachments. Fixes
-  `Issue #446 <https://github.com/kiwitcms/Kiwi/issues/446>`_:
+  `Issue #446 <https://github.com/kiwitcms/kiwitcms/issues/446>`_:
 
   - TestPlan.add_attachment()
   - TestCase.add_attachment()
@@ -6687,7 +6687,7 @@ Removed functionality
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Remove legacy reports. Closes
-  `Issue #657 <https://github.com/kiwitcms/Kiwi/issues/657>`_
+  `Issue #657 <https://github.com/kiwitcms/kiwitcms/issues/657>`_
 - Remove "Save & Continue" functionality from TestCase edit page
 - Renamed API methods:
 
@@ -6703,23 +6703,23 @@ Bug fixes
 ~~~~~~~~~
 
 - Remove hard-coded timestamp in TestCase page template, References
-  `Issue #765 <https://github.com/kiwitcms/Kiwi/issues/765>`_
+  `Issue #765 <https://github.com/kiwitcms/kiwitcms/issues/765>`_
 - Fix handling of ``?from_plan`` URL parameter in TestCase page
 - Make ``TestCase.text`` occupy 100% width when rendered. Fixes
-  `Issue #798 <https://github.com/kiwitcms/Kiwi/issues/798>`_
+  `Issue #798 <https://github.com/kiwitcms/kiwitcms/issues/798>`_
 - Enable ``markdown.extensions.tables``. Fixes
-  `Issue #816 <https://github.com/kiwitcms/Kiwi/issues/816>`_
+  `Issue #816 <https://github.com/kiwitcms/kiwitcms/issues/816>`_
 - Handle form erros and default values for TestPlan new/edit. Fixes
-  `Issue #864 <https://github.com/kiwitcms/Kiwi/issues/864>`_
+  `Issue #864 <https://github.com/kiwitcms/kiwitcms/issues/864>`_
 - Tests + fix for failing TestCase rendering in French
 - Show color-coded statuses on dashboard page when seen with non-English
   language
 - Refactor check for confirmed test cases when editting to work with
   translations
 - Fix form values when filtering test cases inside TestPlan. Fixes
-  `Issue #674 <https://github.com/kiwitcms/Kiwi/issues/674>`_ (@marion2016)
+  `Issue #674 <https://github.com/kiwitcms/kiwitcms/issues/674>`_ (@marion2016)
 - Show delete icon for attachments. Fixes
-  `Issue #847 <https://github.com/kiwitcms/Kiwi/issues/847>`_
+  `Issue #847 <https://github.com/kiwitcms/kiwitcms/issues/847>`_
 
 
 Refactoring
@@ -6727,10 +6727,10 @@ Refactoring
 
 - Remove unused ``.current_user`` instance attribute
 - Remove ``EditCaseForm`` and use ``NewCaseForm`` instead, References
-  `Issue #708 <https://github.com/kiwitcms/Kiwi/issues/708>`_,
-  `Issue #812 <https://github.com/kiwitcms/Kiwi/issues/812>`_
+  `Issue #708 <https://github.com/kiwitcms/kiwitcms/issues/708>`_,
+  `Issue #812 <https://github.com/kiwitcms/kiwitcms/issues/812>`_
 - Fix "Select All" checkbox. Fixes
-  `Issue #828 <https://github.com/kiwitcms/Kiwi/issues/828>`_ (Rady)
+  `Issue #828 <https://github.com/kiwitcms/kiwitcms/issues/828>`_ (Rady)
 
 
 Translations
@@ -6786,7 +6786,7 @@ API
 ~~~
 
 - New method ``Bug.report()``, References
-  `Issue #18 <https://github.com/kiwitcms/Kiwi/issues/18>`_
+  `Issue #18 <https://github.com/kiwitcms/kiwitcms/issues/18>`_
 - Method ``Bug.create()`` now accepts parameter ``auto_report=False``
 
 
@@ -6802,13 +6802,13 @@ Bug fixes
 ~~~~~~~~~
 
 - Show the user who actually tested a TestCase instead of hard-coded value. Fixes
-  `Issue #765 <https://github.com/kiwitcms/Kiwi/issues/765>`_
+  `Issue #765 <https://github.com/kiwitcms/kiwitcms/issues/765>`_
 - Properly handle pagination button states and page numbers. Fixes
-  `Issue #767 <https://github.com/kiwitcms/Kiwi/issues/767>`_
+  `Issue #767 <https://github.com/kiwitcms/kiwitcms/issues/767>`_
 - Add TestCase to TestPlan if creating from inside a TestPlan. Fixes
-  `Issue #777 <https://github.com/kiwitcms/Kiwi/issues/777>`_
+  `Issue #777 <https://github.com/kiwitcms/kiwitcms/issues/777>`_
 - Made TestCase text more readable. Fixes
-  `Issue #764 <https://github.com/kiwitcms/Kiwi/issues/764>`_
+  `Issue #764 <https://github.com/kiwitcms/kiwitcms/issues/764>`_
 - Include missing templates and static files from PyPI tarball
 
 
@@ -6897,12 +6897,12 @@ Improvements
   scenarios. We believe this puts the tester into a frame of mind more
   suitable for expressing what needs to be tested
 - Add a favicon. Fixes
-  `Issue #532 <https://github.com/kiwitcms/Kiwi/issues/532>`_
+  `Issue #532 <https://github.com/kiwitcms/kiwitcms/issues/532>`_
 - Sort Component, Product and Version objects alphabetically. Fixes
-  `Issue #633 <https://github.com/kiwitcms/Kiwi/issues/633>`_
+  `Issue #633 <https://github.com/kiwitcms/kiwitcms/issues/633>`_
 - Search test case page now shows Components and Tags
 - Search test case page now allows filtering by date. Fixes
-  `Issue #715 <https://github.com/kiwitcms/Kiwi/issues/715>`_
+  `Issue #715 <https://github.com/kiwitcms/kiwitcms/issues/715>`_
 - Search test case page now uses radio buttons to filter by automation status
 - Small performance improvement when searching test plans and test cases
 - Search test run page now allows to filter by Product but still continue to
@@ -6931,7 +6931,7 @@ permissions from the default *Tester* group and re-add them again!
 - Remove ``TestCaseRun.notes``
 - Remove ``TestCase.is_automated_proposed``
 - Remove ``TestCaseText`` model, merge into ``TestCase.text`` field. Closes
-  `Issue #198 <https://github.com/kiwitcms/Kiwi/issues/198>`_
+  `Issue #198 <https://github.com/kiwitcms/kiwitcms/issues/198>`_
 - Remove ``Priority.sortkey``
 - Remove ``Build.description``
 - Remove ``Classification.sortkey`` and ``Classification.description``
@@ -6968,7 +6968,7 @@ Bug fixes
   `StackOverflow #54177838 <https://stackoverflow.com/questions/54177838/>`_
 - Fix cloning of test cases by surrounding bootstrap-selectpicker call with
   ``try-catch``. Fixes
-  `Issue #695 <https://github.com/kiwitcms/Kiwi/issues/695>`_
+  `Issue #695 <https://github.com/kiwitcms/kiwitcms/issues/695>`_
 - Fix a traceback with TestRun report page when the RPC connection to Bugzilla
   can't be established
 
@@ -7023,7 +7023,7 @@ Security
   See CVE-2018-14041
 - By default session cookies will expire after 24 hours. This can be controlled
   via the ``SESSION_COOKIE_AGE`` setting. Fixes
-  `Issue #556 <https://github.com/kiwitcms/Kiwi/issues/556>`_
+  `Issue #556 <https://github.com/kiwitcms/kiwitcms/issues/556>`_
 
 
 Improvements
@@ -7055,7 +7055,7 @@ Removed functionality
   This is the same as ``TestRun page -> Cases menu -> Add`` action
 - Legacy reports will be removed after 1st March 2019. Provide your
   feedback in
-  `Issue #657 <https://github.com/kiwitcms/Kiwi/issues/657>`_
+  `Issue #657 <https://github.com/kiwitcms/kiwitcms/issues/657>`_
 - The ``/run/`` URL path has been merged with ``/runs/`` due to configuration
   refactoring. This may break your bookmarks or permalinks!
 
@@ -7066,7 +7066,7 @@ Bug fixes
 - Don't traceback if markdown text is ``None``. Originally reported as
   `SO #53662887 <https://stackoverflow.com/questions/53662887/>`_
 - Show loading spinner when searching. Fixes
-  `Issue #653 <https://github.com/kiwitcms/Kiwi/issues/653>`_
+  `Issue #653 <https://github.com/kiwitcms/kiwitcms/issues/653>`_
 - Quick fix: when viewing TestPlan cases make TC summary link to the test case.
   Previously the summary column was a link to nowhere.
 
@@ -7085,13 +7085,13 @@ Refactoring
 - New and updated internal linters
 - Refactor ``testplans.views.new`` to class based view (Anton Sankov)
 - Refactor ``TestCase -> Bugs tab -> Remove`` to JSON-RPC. References
-  `Issue #18 <https://github.com/kiwitcms/Kiwi/issues/18>`_
+  `Issue #18 <https://github.com/kiwitcms/kiwitcms/issues/18>`_
 - Refactor ``removeCaseRunBug()`` to JSON-RPC, References
-  `Issue #18 <https://github.com/kiwitcms/Kiwi/issues/18>`_
+  `Issue #18 <https://github.com/kiwitcms/kiwitcms/issues/18>`_
 - Remove unused ``render_form()`` methods
 - Remove unnecessary string-to-int conversion (Ivaylo Ivanov)
 - Remove obsolete label fields. References
-  `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_ (Anton Sankov)
+  `Issue #652 <https://github.com/kiwitcms/kiwitcms/issues/652>`_ (Anton Sankov)
 - Pylint fixes
 - Remove JavaScript that duplicates ``requestOperationUponFilteredCases()``
 - Remove ``QuerySetIterationProxy`` class - not used anymore
@@ -7136,7 +7136,7 @@ Improvements
 - Update to `Patternfly 3.58.0 <https://github.com/patternfly/patternfly/releases>`_
 - Make docker container restartable (Maik Opitz, Adam Hall)
 - Add GitLab issue tracker integration. Fixes
-  `Issue #176 <https://github.com/kiwitcms/Kiwi/issues/176>`_
+  `Issue #176 <https://github.com/kiwitcms/kiwitcms/issues/176>`_
   (Filipe Arruda, Federal Institute of Pernambuco)
 - Convert ``Create new TestPlan`` page to Patternfly (Anton Sankov)
 - Upon successfull registration show the list of super-users in case new
@@ -7145,11 +7145,11 @@ Improvements
   in email notifications sent via ``tcms.signals.notify_admins()``.
 - Don't include ``admin/js/*.js`` files in templates when not
   necessary. Results in faster page load. Fixes
-  `Issue #209 <https://github.com/kiwitcms/Kiwi/issues/209>`_
+  `Issue #209 <https://github.com/kiwitcms/kiwitcms/issues/209>`_
 - Enable ``nl2br`` Markdown extension which allows newline characters
   to be rendered as ``<br>`` tags in HTML. Visually the rendered
   text will look closer to what you seen in the text editor. Fixes
-  `Issue #623 <https://github.com/kiwitcms/Kiwi/issues/623>`_
+  `Issue #623 <https://github.com/kiwitcms/kiwitcms/issues/623>`_
 - Use auto-complete for adding components to TestCase
 
 
@@ -7168,7 +7168,7 @@ These actions have always been a bit broken and didn't check the
 correct permission labels. You can still update items idividually!
 
 - Selection of Components when creating new TestCase. Closes
-  `Issue #565 <https://github.com/kiwitcms/Kiwi/issues/565>`_.
+  `Issue #565 <https://github.com/kiwitcms/kiwitcms/issues/565>`_.
   Everywhere else Kiwi TCMS doesn't allow selection of many-to-many
   relationships when creating or editing objects. Tags, Bugs, Components,
   TestPlans can be added via dedicated tabs once the object has been saved.
@@ -7178,14 +7178,14 @@ Bug fixes
 ~~~~~~~~~
 
 - Hide ``KiwiUserAdmin.password`` field from super-user. Fixes
-  `Issue #610 <https://github.com/kiwitcms/Kiwi/issues/610>`_
+  `Issue #610 <https://github.com/kiwitcms/kiwitcms/issues/610>`_
 - Don't show inactive Priority. Fixes
-  `Issue #637 <https://github.com/kiwitcms/Kiwi/issues/637>`_
+  `Issue #637 <https://github.com/kiwitcms/kiwitcms/issues/637>`_
 - Don't traceback when adding new users via Admin. Fixes
-  `Issue #642 <https://github.com/kiwitcms/Kiwi/issues/642>`_
+  `Issue #642 <https://github.com/kiwitcms/kiwitcms/issues/642>`_
 - Teach ``TestRun.update()`` API method to process the ``stop_date``
   field. Fixes
-  `Issue #554 <https://github.com/kiwitcms/Kiwi/issues/554>`_ (Anton Sankov)
+  `Issue #554 <https://github.com/kiwitcms/kiwitcms/issues/554>`_ (Anton Sankov)
 - Previously when reporting issues to Bugzilla, directly from a TestRun,
   Kiwi TCMS displayed the error ``Enable reporting to this Issue Tracker by
   configuring its base_url`` although that has already been configured.
@@ -7210,11 +7210,11 @@ Refactoring
 ~~~~~~~~~~~
 
 - Remove ``fmt_queries()``. Fixes
-  `Issue #330 <https://github.com/kiwitcms/Kiwi/issues/330>`_ (Anton Sankov)
+  `Issue #330 <https://github.com/kiwitcms/kiwitcms/issues/330>`_ (Anton Sankov)
 - Remove unused parameter from ``plan_from_request_or_none()``. Refers to
-  `Issue #303 <https://github.com/kiwitcms/Kiwi/issues/303>`_ (Anton Sankov)
+  `Issue #303 <https://github.com/kiwitcms/kiwitcms/issues/303>`_ (Anton Sankov)
 - Remove ``ComponentActions()`` class. Fixes
-  `Issue #20 <https://github.com/kiwitcms/Kiwi/issues/20>`_
+  `Issue #20 <https://github.com/kiwitcms/kiwitcms/issues/20>`_
 - Convert lots of AJAX calls to JSON-RPC
 - Remove lots of unused Python, JavaScript and templates. Both after migration
   to JSON RPC and other leftovers
@@ -7248,7 +7248,7 @@ Bug fixes
 
 - Fix InvalidQuery, field ``TestCase.default_tester`` cannot be both deferred and
   traversed using ``select_related`` at the same time. References
-  `Issue #346 <https://github.com/kiwitcms/Kiwi/issues/346>`_
+  `Issue #346 <https://github.com/kiwitcms/kiwitcms/issues/346>`_
 
 Refactoring
 ~~~~~~~~~~~
@@ -7287,7 +7287,7 @@ Improvements
 
 - Update to `Django 2.1.3 <https://docs.djangoproject.com/en/2.1/releases/2.1.3/>`_
 - Update Apache config to print logs on the console. Fixes
-  `Issue #549 <https://github.com/kiwitcms/Kiwi/issues/549>`_
+  `Issue #549 <https://github.com/kiwitcms/kiwitcms/issues/549>`_
 
 
 Database
@@ -7332,7 +7332,7 @@ Improvements
 
 - Dashboard will now show TestRuns which have test cases assigned to current
   user. Fixes
-  `Issue #520 <https://github.com/kiwitcms/Kiwi/issues/520>`_
+  `Issue #520 <https://github.com/kiwitcms/kiwitcms/issues/520>`_
 - API method ``TestRun.add_case()`` now returns a serialized TestCaseRun
   object. Previously this method returned None
 
@@ -7341,7 +7341,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Don't show disabled Priority records in UI. Fixes
-  `Issue #334 <https://github.com/kiwitcms/Kiwi/issues/334>`_
+  `Issue #334 <https://github.com/kiwitcms/kiwitcms/issues/334>`_
 
 
 Translations
@@ -7459,7 +7459,7 @@ Refactoring
 - Fix pylint errors (Ivaylo Ivanov)
 - Remove unused ``TestRun.list`` and ``TestCase.list_confirmed`` methods
 - Remove unused ``plan_by_id_or_name()`` and ``is_int()``. Fixes
-  `Issue #269 <https://github.com/kiwitcms/Kiwi/issues/269>`_
+  `Issue #269 <https://github.com/kiwitcms/kiwitcms/issues/269>`_
 
 
 Database
@@ -7504,16 +7504,17 @@ Removed functionality
 - Convert squashed database migrations to regular ones and remove older
   migrations.
   **WARNING:** upgrade from versions <= 5.3.1 to 6.0 will break without an
-  intermediate upgrade to ``pub.kiwitcms.eu/kiwitcms/kiwi:5.3.1 a420465852be``.
+  intermediate upgrade to
+  ``pub.kiwitcms.eu/kiwitcms/kiwitcms:5.3.1 a420465852be``.
 - Remove deprecated ``TestCase.estimated_time`` and ``TestRun.estimated_time``. Fixes
-  `Issue #514 <https://github.com/kiwitcms/Kiwi/issues/514>`_
+  `Issue #514 <https://github.com/kiwitcms/kiwitcms/issues/514>`_
 
 
 Backend API
 -----------
 
 - No longer use ``product_version`` for ``TestRun.create``. Fixes
-  `Issue #522 <https://github.com/kiwitcms/Kiwi/issues/522>`_
+  `Issue #522 <https://github.com/kiwitcms/kiwitcms/issues/522>`_
 
   - 'product' is no longer required
   - 'product_version' is no longer required
@@ -7574,7 +7575,7 @@ tag on StackOverflow to track questions.
 This will be the last release to carry around squashed migrations. In version
 6.0 older migrations will be deleted and upgrades from versions <=5.2 to 6.0
 will break without an intermediate upgrade to 5.3!
-Use ``pub.kiwitcms.eu/kiwitcms/kiwi:5.3.1``
+Use ``pub.kiwitcms.eu/kiwitcms/kiwitcms:5.3.1``
 when upgrading at some point in the future!
 
 
@@ -7588,7 +7589,7 @@ Improvements
 
 - Update to `Django 2.1.1 <https://docs.djangoproject.com/en/2.1/releases/2.1.1/>`_
 - Update Patternfly version. Fixes
-  `Issue #381 <https://github.com/kiwitcms/Kiwi/issues/381>`_
+  `Issue #381 <https://github.com/kiwitcms/kiwitcms/issues/381>`_
 - Replace TinyMCE with SimpleMDE markdown editor. You may need to strip
   existing texts from HTML tags that were generated by TinyMCE
 - Allow downstream builds to customize the login templates by
@@ -7602,11 +7603,11 @@ Visual changes
 
 - Remove breadcrumbs at the top of pages. Only admin pages still have them
 - Convert login and registration templates to Patternfly. Fixes
-  `Issue #211 <https://github.com/kiwitcms/Kiwi/issues/211>`_
+  `Issue #211 <https://github.com/kiwitcms/kiwitcms/issues/211>`_
 - Convert 404 and 500 templates to Patternfly
 - Convert dashboard page to Patternfly
 - Convert TestRun new, edit and clone pages to Patternfly. Fixes
-  `Issue #17 <https://github.com/kiwitcms/Kiwi/issues/17>`_
+  `Issue #17 <https://github.com/kiwitcms/kiwitcms/issues/17>`_
 - Convert Search Test Plans page to Patternfly
 - Convert Search Test Runs page to Patternfly
 - Convert Search Test Cases page to Patternfly
@@ -7630,8 +7631,8 @@ Removed functionality
   the existing API
 - Remove TestCase export to XML in favor of existing API
 - Remove Advanced Search functionality. Fixes
-  `Issue #448 <https://github.com/kiwitcms/Kiwi/issues/448>`_,
-  `Issue #108 <https://github.com/kiwitcms/Kiwi/issues/108>`_
+  `Issue #448 <https://github.com/kiwitcms/kiwitcms/issues/448>`_,
+  `Issue #108 <https://github.com/kiwitcms/kiwitcms/issues/108>`_
 - Remove tech preview feature: Django Report Builder
 
 
@@ -7647,15 +7648,15 @@ Bug fixes
 ~~~~~~~~~
 
 - Don't use ``get_full_url()`` where not needed. Closes
-  `Issue #380 <https://github.com/kiwitcms/Kiwi/issues/380>`_
+  `Issue #380 <https://github.com/kiwitcms/kiwitcms/issues/380>`_
 - Remove unused templates. Fixes
-  `Issue #114 <https://github.com/kiwitcms/Kiwi/issues/114>`_
+  `Issue #114 <https://github.com/kiwitcms/kiwitcms/issues/114>`_
 - Submit filter form when clicking on tag value. Fixes
-  `Issue #426 <https://github.com/kiwitcms/Kiwi/issues/426>`_
+  `Issue #426 <https://github.com/kiwitcms/kiwitcms/issues/426>`_
 - Update ``TestCaseRun.tested_by`` when setting status. Fixes
-  `Issue #459 <https://github.com/kiwitcms/Kiwi/issues/459>`_
+  `Issue #459 <https://github.com/kiwitcms/kiwitcms/issues/459>`_
 - Add tests for ``KiwiUserAdmin``. Closes
-  `Issue #489 <https://github.com/kiwitcms/Kiwi/issues/489>`_
+  `Issue #489 <https://github.com/kiwitcms/kiwitcms/issues/489>`_
 
 
 Settings
@@ -7737,9 +7738,9 @@ Refactoring
 - Remove custom ``DBModelBackend`` authentication backend
 - Remove unused ``tcms.core.context_processors.auth_backend_processor``
 - Remove unused ``get_using_backend()``. Fixes
-  `Issue #261 <https://github.com/kiwitcms/Kiwi/issues/261>`_
+  `Issue #261 <https://github.com/kiwitcms/kiwitcms/issues/261>`_
 - Remove ``dj_pagination``. Fixes
-  `Issue #110 <https://github.com/kiwitcms/Kiwi/issues/110>`_
+  `Issue #110 <https://github.com/kiwitcms/kiwitcms/issues/110>`_
 
 
 Settings
@@ -7777,21 +7778,21 @@ Enhancements
   reports.
   See http://kiwitcms.readthedocs.io/en/latest/db.html. This feature is in
   tech-preview and it may be removed if it doesn't work out. Please comment at:
-  `Issue #452 <https://github.com/kiwitcms/Kiwi/issues/452>`_.
+  `Issue #452 <https://github.com/kiwitcms/kiwitcms/issues/452>`_.
 - Allow using ``manage.py dumpdata|loaddata|sqlflush|dbshell`` for backups, see
   `blog post <http://kiwitcms.org/blog/atodorov/2018/07/30/how-to-backup-docker-volumes-for-kiwi-tcms/>`_
 - In TestCase view page add a link to delete the current test case
 - In TestCase Admin page the ``+ Add TestCase`` button now allows to create new
   test case
 - The version menu item in the helper menu now links to
-  `Changelog <https://github.com/kiwitcms/Kiwi/blob/master/CHANGELOG.rst#change-log>`_
+  `Changelog <https://github.com/kiwitcms/kiwitcms/blob/master/CHANGELOG.rst#change-log>`_
 
 
 Deprecated functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Start showing deprecation warning for Advanced search, see
-  `Issue #448 <https://github.com/kiwitcms/Kiwi/issues/448>`_
+  `Issue #448 <https://github.com/kiwitcms/kiwitcms/issues/448>`_
 
 
 Bug fixes
@@ -7800,7 +7801,7 @@ Bug fixes
 - Allows Product/Version/Build to be shown in Testing Report. Fixes
   `Sentry KIWI-TCMS-2C <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/618688608/>`_
 - Default to ``https://`` links if not running locally. Fixes
-  `Issue #450 <https://github.com/kiwitcms/Kiwi/issues/450>`_
+  `Issue #450 <https://github.com/kiwitcms/kiwitcms/issues/450>`_
 - Apply missing CSS class for object history table so it can be displayed
   nicely
 
@@ -7811,7 +7812,7 @@ Refactoring
 - Squash some database migrations
 - Fix a number of pylint issues
 - Remove unused ``testruns.views::view_caseruns()``. References
-  `Issue #316 <https://github.com/kiwitcms/Kiwi/issues/316>`_
+  `Issue #316 <https://github.com/kiwitcms/kiwitcms/issues/316>`_
 - Remove unused template ``report/caserun.html``
 - Handle TestRun deletion via admin not home grown code
 
@@ -7839,21 +7840,21 @@ Enhancements
 
 - Upgrade to `Django 2.0.7 <https://docs.djangoproject.com/en/2.0/releases/2.0.7/>`_
 - Allow to delete TestPlan. Fixes
-  `Issue #273 <https://github.com/kiwitcms/Kiwi/issues/273>`_
+  `Issue #273 <https://github.com/kiwitcms/kiwitcms/issues/273>`_
 - Don't include username in dashboard URL
 - Copy latest TestPlan text when cloning
 - Always require users to be logged in. Anonymous users will not be allowed
   access by default. Read-only access to some views
   (e.g. get TestPlan or TestRun)
   can be enabled by disabling ``GlobalLoginRequiredMiddleware``! Fixes
-  `Issue #230 <https://github.com/kiwitcms/Kiwi/issues/230>`_
+  `Issue #230 <https://github.com/kiwitcms/kiwitcms/issues/230>`_
 - Start tracking change history for TestPlan, TestCase, TestRun and
   TestCaseRun.
-  Fixes `Issue #294 <https://github.com/kiwitcms/Kiwi/issues/294>`_
+  Fixes `Issue #294 <https://github.com/kiwitcms/kiwitcms/issues/294>`_
 - History changes are recorded as unified diff which is a universally
   recognized format
 - Show the actual changes in email notifications. Fixes
-  `Issue #199 <https://github.com/kiwitcms/Kiwi/issues/199>`_
+  `Issue #199 <https://github.com/kiwitcms/kiwitcms/issues/199>`_
 
 Bug fixes
 ~~~~~~~~~
@@ -7861,19 +7862,19 @@ Bug fixes
 - Fix ``UnboundLocalError local variable 'message' referenced before assignment``. Fixes
   `Sentry KIWI-TCMS-1S <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/589209883/>`_
 - Make email address unique when adding users via admin panel. Fixes
-  `Issue #352 <https://github.com/kiwitcms/Kiwi/issues/352>`_ and
-  `Issue #68 <https://github.com/kiwitcms/Kiwi/issues/68>`_
+  `Issue #352 <https://github.com/kiwitcms/kiwitcms/issues/352>`_ and
+  `Issue #68 <https://github.com/kiwitcms/kiwitcms/issues/68>`_
 - Fix ``unsupported operand type(s) for +=: 'int' and 'datetime.timedelta'`` by
   initializing timedelta variable properly. Fixes
   `Sentry KIWI-TCMS-1Y <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/593838484/>`_
 - Remove ``core.models.fields`` with MySQL time conversions. Fixes
-  `Issue #390 <https://github.com/kiwitcms/Kiwi/issues/390>`_
+  `Issue #390 <https://github.com/kiwitcms/kiwitcms/issues/390>`_
 - Fix bad JavaScript comparison. Fixes Coverity #289956
 - Remove expression with no effect. Fixes Coverity #289974
 - Rewrite ``request_host_link()`` to fix Coverity #289987
 - Fix Coverity #289923 - Typo in identifier
 - Don't send emails for changes performed by myself. Fixes
-  `Issue #216 <https://github.com/kiwitcms/Kiwi/issues/216>`_
+  `Issue #216 <https://github.com/kiwitcms/kiwitcms/issues/216>`_
 
 Refactoring
 ~~~~~~~~~~~
@@ -7891,19 +7892,19 @@ Refactoring
 - Convert ``TestCaseEmailSettings.cc_list`` to string field
 - Merge ``report/caseruns_table.html`` with ``reports/caseruns.html``
 - Rename model ``UserActivateKey`` to ``UserActivationKey``. Fixes
-  `Issue #276 <https://github.com/kiwitcms/Kiwi/issues/276>`_
+  `Issue #276 <https://github.com/kiwitcms/kiwitcms/issues/276>`_
 - Remove ``cached_entities()``. Fixes
-  `Issue #307 <https://github.com/kiwitcms/Kiwi/issues/307>`_
+  `Issue #307 <https://github.com/kiwitcms/kiwitcms/issues/307>`_
 - Remove ``TestPlanText.checksum`` field
 - Remove checksum fields for ``TestCaseText`` model
 - Remove unused and home-grown template tags
 - Remove unused fields ``auto_blinddown``, ``description``, ``sortkey`` from
   ``TestCaseRunStatus`` model. Fixes
-  `Issue #186 <https://github.com/kiwitcms/Kiwi/issues/186>`_
+  `Issue #186 <https://github.com/kiwitcms/kiwitcms/issues/186>`_
 - Remove ``Meta.db_name`` effectively renaming all tables. New names will use
   Django's default naming scheme
 - Remove RawSQL queries. We are now 100% ORM based. Fixes
-  `Issue #36 <https://github.com/kiwitcms/Kiwi/issues/36>`_
+  `Issue #36 <https://github.com/kiwitcms/kiwitcms/issues/36>`_
 - Remove duplicate ``MultipleEmailField`` definition
 - Remove ``TCMSLog`` view, ``TCMSLogManager``, ``TCMSLogModel``
 - Remove ``TestPlanText`` model, use ``TestPlan.text`` instead
@@ -7931,11 +7932,11 @@ Removed functionality
 
 - TestRun completion status is no longer updated automatically. You can still
   update the status manually via the 'Set Finished' or 'Set Running' links!
-  Fixes `Issue #367 <https://github.com/kiwitcms/Kiwi/issues/367>`_
+  Fixes `Issue #367 <https://github.com/kiwitcms/kiwitcms/issues/367>`_
 - Remove bookmarks functionality. There are many great bookmark manager apps
   and if the user is keen on bookmarks they should use one of them. Closes
-  `Issue #67 <https://github.com/kiwitcms/Kiwi/issues/67>`_ and
-  `Issue #210 <https://github.com/kiwitcms/Kiwi/issues/210>`_
+  `Issue #67 <https://github.com/kiwitcms/kiwitcms/issues/67>`_ and
+  `Issue #210 <https://github.com/kiwitcms/kiwitcms/issues/210>`_
 - Don't track & display history of changes for ``EnvGroup`` model
 - Remove Disable/Enable buttons from TestPlan page. Enabling and disabling
   can still be done via the edit page
@@ -7958,7 +7959,7 @@ Translations
 - New translations for Chinese Simplified, Chinese Traditional,
   German and Slovenian
 - Stop keeping compiled translations under git. Fixes
-  `Issue #387 <https://github.com/kiwitcms/Kiwi/issues/387>`_
+  `Issue #387 <https://github.com/kiwitcms/kiwitcms/issues/387>`_
 
 
 tcms-api 5.0 (24 July 2018)
@@ -7988,13 +7989,13 @@ Security
 ~~~~~~~~
 
 - Enable testing with Badit. Fixes
-  `Issue #237 <https://github.com/kiwitcms/Kiwi/issues/237>`_
+  `Issue #237 <https://github.com/kiwitcms/kiwitcms/issues/237>`_
 - Enable testing with
   `Coverity Scan <https://scan.coverity.com/projects/kiwitcms-kiwi>`_
 - Enable testing with
-  `pyup.io <https://pyup.io/repos/github/kiwitcms/Kiwi/>`_
+  `pyup.io <https://pyup.io/repos/github/kiwitcms/kiwitcms/>`_
 - Enable testing with
-  `Snyk <https://snyk.io/test/github/kiwitcms/Kiwi>`_
+  `Snyk <https://snyk.io/test/github/kiwitcms/kiwitcms>`_
 - Use SHA256 instead of MD5 and SHA1
 - Use the ``secrets`` module for activation keys
 - Remove unnecessary AJAX view that had remote code execution vulnerability
@@ -8016,7 +8017,7 @@ Enhancements
 ~~~~~~~~~~~~
 
 - Upgrade to Python 3.6. Fixes
-  `Issue #91 <https://github.com/kiwitcms/Kiwi/issues/91>`_
+  `Issue #91 <https://github.com/kiwitcms/kiwitcms/issues/91>`_
 - Upgrade to `Django 2.0.6 <https://docs.djangoproject.com/en/2.0/releases/2.0.6/>`_
 - Fix around 100 pylint issues (Anton Sankov)
 - Update email confirmation template for newly registered users and make the
@@ -8034,7 +8035,7 @@ Bug fixes
 - Rename left-over ``get_url()`` to ``get_full_url()``. Fixes
   `Sentry KIWI-TCMS-1B <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/523855781/>`_
 - Fix empty TestPlan url and Product fields in TestRun email notification. Fixes
-  `Issue #353 <https://github.com/kiwitcms/Kiwi/issues/353>`_ (Matt Porter, Konsulko Group)
+  `Issue #353 <https://github.com/kiwitcms/kiwitcms/issues/353>`_ (Matt Porter, Konsulko Group)
 
 Translations
 ~~~~~~~~~~~~
@@ -8047,7 +8048,7 @@ Documentation
 ~~~~~~~~~~~~~
 
 - Added ``git clone`` command to documentation. Fixes
-  `Issue #344 <https://github.com/kiwitcms/Kiwi/issues/344>`_ (Anton Sankov)
+  `Issue #344 <https://github.com/kiwitcms/kiwitcms/issues/344>`_ (Anton Sankov)
 
 Models and database migrations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -8068,7 +8069,7 @@ tcms-api 4.2 (23 June 2018)
 ---------------------------
 
 - Remove coloring. Fixes
-  `Issue #185 <https://github.com/kiwitcms/Kiwi/issues/185>`_
+  `Issue #185 <https://github.com/kiwitcms/kiwitcms/issues/185>`_
 - Fix using the API client against https URLs (Adam Łoszyn, Samsung)
 
 
@@ -8083,9 +8084,9 @@ Enhancements
 - Upgrade to `Django 2.0.4 <https://docs.djangoproject.com/en/2.0/releases/2.0.4/>`_
 - Enable pylint and fix around 700 issues (Anton Sankov)
 - Add pylint plugin to check docstrings for triple double quotes. Fixes
-  `Issue #296 <https://github.com/kiwitcms/Kiwi/issues/296>`_
+  `Issue #296 <https://github.com/kiwitcms/kiwitcms/issues/296>`_
 - Add pylint plugin to check for list comprehensions. Fixes
-  `Issue #270 <https://github.com/kiwitcms/Kiwi/issues/270>`_
+  `Issue #270 <https://github.com/kiwitcms/kiwitcms/issues/270>`_
 - Add pylint plugin to check for class attributes enclosed with double
   underscores. These are dunders and are reserved for Python!
 
@@ -8103,7 +8104,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Change util function to default to https. Fixes
-  `Issue #220 <https://github.com/kiwitcms/Kiwi/issues/220>`_
+  `Issue #220 <https://github.com/kiwitcms/kiwitcms/issues/220>`_
 - Fix
   `Sentry KIWI-TCMS-17 <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/495015101/>`_
 - Cast iterator to list. Fixes
@@ -8120,11 +8121,11 @@ Refactoring
 ~~~~~~~~~~~
 
 - Move Bugzilla and Kerberos backends code into their own repositories. Fixes
-  `Issue #239 <https://github.com/kiwitcms/Kiwi/issues/239>`_
+  `Issue #239 <https://github.com/kiwitcms/kiwitcms/issues/239>`_
 - Remove cache from TestCaseRunStatus. Fixes
-  `Issue #279 <https://github.com/kiwitcms/Kiwi/issues/279>`_
+  `Issue #279 <https://github.com/kiwitcms/kiwitcms/issues/279>`_
 - Rewrite ``UrlMixin``. Fixes
-  `Issue #157 <https://github.com/kiwitcms/Kiwi/issues/157>`_ (Chenxiong Qi)
+  `Issue #157 <https://github.com/kiwitcms/kiwitcms/issues/157>`_ (Chenxiong Qi)
 - Remove unused ``split_as_option`` template tag
 - Internal refactoring and more tests in ``tcms/core/ajax.py``
 - Delete unused file ``tcms/core/forms/widgets.py``
@@ -8143,22 +8144,22 @@ Enhancements
 - Upgrade to `Django 2.0.3 <https://docs.djangoproject.com/en/2.0/releases/2.0.3/>`_
 - Show ``date_joined`` column for user admin
 - Expose httpd logs to the host running docker. Fixes
-  `Issue #191 <https://github.com/kiwitcms/Kiwi/issues/191>`_
+  `Issue #191 <https://github.com/kiwitcms/kiwitcms/issues/191>`_
 
 
 Bug fixes
 ~~~~~~~~~
 
 - Move SSL keys under common directory in the container. Fixes
-  `Issue #231 <https://github.com/kiwitcms/Kiwi/issues/231>`_
+  `Issue #231 <https://github.com/kiwitcms/kiwitcms/issues/231>`_
 
 - Always select active builds for TestRun. Fixes
-  `Issue #245 <https://github.com/kiwitcms/Kiwi/issues/245>`_
+  `Issue #245 <https://github.com/kiwitcms/kiwitcms/issues/245>`_
 - Swap ``escape`` and ``escapejs`` filters. Fixes
-  `Issue #234 <https://github.com/kiwitcms/Kiwi/issues/234>`_
+  `Issue #234 <https://github.com/kiwitcms/kiwitcms/issues/234>`_
 - Globally disable ``delete_selected`` action in Admin, this removes the
   drop down selection widget! Fixes
-  `Issue #221 <https://github.com/kiwitcms/Kiwi/issues/221>`_
+  `Issue #221 <https://github.com/kiwitcms/kiwitcms/issues/221>`_
 - Fix error in TestCase view when ``from_plan`` is empty string. Fixes
   `Sentry KIWI-TCMS-Z <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/474369640/>`_
 - Fix sorting issue when None is compared to int. Fixes
@@ -8174,9 +8175,9 @@ Refactoring
 ~~~~~~~~~~~
 
 - Refactor inner class ``CaseActions``. Fixes
-  `Issue #21 <https://github.com/kiwitcms/Kiwi/issues/21>`_ (Chenxiong Qi)
+  `Issue #21 <https://github.com/kiwitcms/kiwitcms/issues/21>`_ (Chenxiong Qi)
 - Only use ``get_cases.html`` template. Fixes
-  `Issue #176 <https://github.com/kiwitcms/Kiwi/issues/176>`_
+  `Issue #176 <https://github.com/kiwitcms/kiwitcms/issues/176>`_
 - Unify ``get_details_review.html`` and ``get_details.html`` templates
 - Remove internal ``Prompt.render`` class and replace with Django messages
 - Remove ``mail/delete_plan.txt`` template
@@ -8200,7 +8201,7 @@ Models and database migrations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Use Django's own DurationField, instead of custom one. Fixes
-  `Issue #183 <https://github.com/kiwitcms/Kiwi/issues/183>`_.
+  `Issue #183 <https://github.com/kiwitcms/kiwitcms/issues/183>`_.
   API clients must now send values for ``estimated_time`` which must be in a
   format that ``parse_duration()`` understands, for example 'DD HH:MM:SS'! See
   https://docs.djangoproject.com/en/2.0/ref/utils/#django.utils.dateparse.parse_duration
@@ -8218,16 +8219,16 @@ Enhancements and bug fixes
 - Add tests for ``tcms.core.ajax.tag`` (Anton Sankov)
 - Remove unused code from ``tcms.core.ajax.tag`` (Anton Sankov)
 - Refactor ``tcms.core.ajax.tag`` to work with only one object. Fixes
-  `Issue #135 <https://github.com/kiwitcms/Kiwi/issues/135>`_ (Anton Sankov)
+  `Issue #135 <https://github.com/kiwitcms/kiwitcms/issues/135>`_ (Anton Sankov)
 - Add test for tcms_api.TestRun. Closes
-  `Issue #194 <https://github.com/kiwitcms/Kiwi/issues/194>`_
+  `Issue #194 <https://github.com/kiwitcms/kiwitcms/issues/194>`_
 - Send the ``user_registered`` signal when new users are registered
 - Add signal handler to notify admins on new users. Fixes
-  `Issue #205 <https://github.com/kiwitcms/Kiwi/issues/205>`_
+  `Issue #205 <https://github.com/kiwitcms/kiwitcms/issues/205>`_
 - Add ``is_superuser`` column to User admin. Fixes
-  `Issue #206 <https://github.com/kiwitcms/Kiwi/issues/206>`_
+  `Issue #206 <https://github.com/kiwitcms/kiwitcms/issues/206>`_
 - Properly pass variables to blocktrans tag. Fixes
-  `Issue #225 <https://github.com/kiwitcms/Kiwi/issues/225>`_
+  `Issue #225 <https://github.com/kiwitcms/kiwitcms/issues/225>`_
 - Minor documentation updates
 
 Refactoring
@@ -8244,7 +8245,7 @@ Settings
 
 - Remove ``LISTENING_MODEL_SIGNAL`` (internal setting)
 - New setting ``AUTO_APPROVE_NEW_USERS``. Fixes
-  `Issue #203 <https://github.com/kiwitcms/Kiwi/issues/203>`_
+  `Issue #203 <https://github.com/kiwitcms/kiwitcms/issues/203>`_
 
 
 Models and database migrations
@@ -8268,12 +8269,12 @@ Enhancements and bug fixes
 
 - Upgrade to Django 2.0.2
 - Pin JIRA client version to 1.0.10. Fixes
-  `Issue #195 <https://github.com/kiwitcms/Kiwi/issues/195>`_
+  `Issue #195 <https://github.com/kiwitcms/kiwitcms/issues/195>`_
 - Generate api-docs for model classes
 - Updated documentation for all RPC methods
 - Use Grappelli jQuery initialization, fixes popup windows
 - Unify RPC namespaces, API client class names and server-side model names.
-  Fixes `Issue #153 <https://github.com/kiwitcms/Kiwi/issues/153>`_
+  Fixes `Issue #153 <https://github.com/kiwitcms/kiwitcms/issues/153>`_
 
 Settings
 ~~~~~~~~
@@ -8454,22 +8455,22 @@ Enhancements and bug fixes
 - Update documentation for XML-RPC and positional arguments, translations,
   environment groups
 - Enable translations. Fixes
-  `Issue #129 <https://github.com/kiwitcms/Kiwi/issues/129>`_
+  `Issue #129 <https://github.com/kiwitcms/kiwitcms/issues/129>`_
 - Register models for DB translations. Fixes
-  `Issue #182 <https://github.com/kiwitcms/Kiwi/issues/182>`_
+  `Issue #182 <https://github.com/kiwitcms/kiwitcms/issues/182>`_
 - New German translations (@xbln)
 - Require django-attachments>=1.3 and restore attachments count in tabs
 - Fix missing tag names in TestPlan page
 - Hide admin forms for some models not supposed to be editted by users. Fixes
-  `Issue #174 <https://github.com/kiwitcms/Kiwi/issues/174>`_
+  `Issue #174 <https://github.com/kiwitcms/kiwitcms/issues/174>`_
 - Use django-grappelli for the admin templates: modern look and feel and
   less template files overriden by Kiwi TCMS
 - Load values for default property in TestRun 'Add Property' dialog. Fixes
-  `Issue #142 <https://github.com/kiwitcms/Kiwi/issues/142>`_
+  `Issue #142 <https://github.com/kiwitcms/kiwitcms/issues/142>`_
 - Correctly find property ID when renaming environment properties. Fixes
-  `Issue #167 <https://github.com/kiwitcms/Kiwi/issues/167>`_
+  `Issue #167 <https://github.com/kiwitcms/kiwitcms/issues/167>`_
 - Convert request body to string. Fixes
-  `Issue #177 <https://github.com/kiwitcms/Kiwi/issues/177>`_
+  `Issue #177 <https://github.com/kiwitcms/kiwitcms/issues/177>`_
 
 Refactoring
 ~~~~~~~~~~~
@@ -8477,7 +8478,7 @@ Refactoring
 - Remove batch tag Add/Remove sub-menu in TestPlan view (Anton Sankov)
 - Remove Edit tag button in Tag tab (Anton Sankov)
 - Remove template functions. Fixes
-  `Issue #107 <https://github.com/kiwitcms/Kiwi/issues/107>`_
+  `Issue #107 <https://github.com/kiwitcms/kiwitcms/issues/107>`_
 - Remove custom HttpJSONResponse classes
 - Remove unused and duplicate code
 
@@ -8497,15 +8498,15 @@ Enhancements and bug fixes
 - Upgrade to Django 2.0.1
 - Don't log passwords sent via RPC
 - Log XML-RPC requests from anonymous users. Fixes
-  `Issue #126 <https://github.com/kiwitcms/Kiwi/issues/126>`_
+  `Issue #126 <https://github.com/kiwitcms/kiwitcms/issues/126>`_
 - Order ``TCMSEnvValue`` records by property name and value. Fixes
-  `Issue #155 <https://github.com/kiwitcms/Kiwi/issues/155>`_
+  `Issue #155 <https://github.com/kiwitcms/kiwitcms/issues/155>`_
 - flake8 fixes (Anton Sankov)
 - Start building source code documentation from Python doc strings
 - Properly urlencode emails in personal menu links
 - Remove test case import via XML files
 - Use django-attachments for user uploaded files. Fixes
-  `Issue #160 <https://github.com/kiwitcms/Kiwi/issues/160>`_
+  `Issue #160 <https://github.com/kiwitcms/kiwitcms/issues/160>`_
   As part of this change we no longer copy Plan and Case attachments when
   cloning these objects.
 
@@ -8527,15 +8528,15 @@ Refactoring
 - Remove many unused models and classes
 - Execute tests via ``manage.py test`` and drop py.test dependency
 - Remove useless ``TestTag.string_to_list`` method. Fixes
-  `Issue #106 <https://github.com/kiwitcms/Kiwi/issues/106>`_
+  `Issue #106 <https://github.com/kiwitcms/kiwitcms/issues/106>`_
 - Use ``settings.AUTH_USER_MODEL`` in ForeignKey definitions. Fixes
-  `Issue #143 <https://github.com/kiwitcms/Kiwi/issues/143>`_
+  `Issue #143 <https://github.com/kiwitcms/kiwitcms/issues/143>`_
 
 Settings
 ~~~~~~~~
 
 - Rename ``EMAIL_FROM`` to ``DEFAULT_FROM_EMAIL``. Fixes
-  `Issue #128 <https://github.com/kiwitcms/Kiwi/issues/128>`_
+  `Issue #128 <https://github.com/kiwitcms/kiwitcms/issues/128>`_
 - Rename ``FILE_UPLOAD_DIR`` to ``MEDIA_ROOT``
 - Rename ``MAX_UPLOAD_SIZE`` to ``FILE_UPLOAD_MAX_SIZE``
 - New setting ``DELETE_ATTACHMENTS_FROM_DISK``
