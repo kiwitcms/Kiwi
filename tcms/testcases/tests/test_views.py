@@ -304,7 +304,7 @@ class TestEditCaseView(BasePlanCase):
             plan=[cls.plan],
         )
 
-        # test data for https://github.com/kiwitcms/Kiwi/issues/334
+        # test data for https://github.com/kiwitcms/kiwitcms/issues/334
 
         Priority.objects.filter(value="P4").update(is_active=False)
 

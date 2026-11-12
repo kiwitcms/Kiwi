@@ -35,7 +35,7 @@ admin.site.unregister(Site)
 admin.site.register(Site, KiwiSiteAdmin)
 
 # globally disable the 'Delete selected' action
-# see https://github.com/kiwitcms/Kiwi/issues/221 and
+# see https://github.com/kiwitcms/kiwitcms/issues/221 and
 # https://docs.djangoproject.com/en/2.0/ref/contrib/admin/actions/#disabling-actions
 admin.site.disable_action("delete_selected")
 

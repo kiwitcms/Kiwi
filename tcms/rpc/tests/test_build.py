@@ -54,7 +54,7 @@ class BuildCreate(APITestCase):
             self.rpc_client.Build.create(values)
 
     def test_build_create_with_chinese(self):
-        # also see https://github.com/kiwitcms/Kiwi/issues/1770
+        # also see https://github.com/kiwitcms/kiwitcms/issues/1770
         values = {"version": self.version.pk, "name": "开源中国", "is_active": False}
         b = self.rpc_client.Build.create(values)
         self.assertIsNotNone(b)

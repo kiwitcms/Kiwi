@@ -26,7 +26,7 @@ from tcms.tests.factories import (
 
 class SupportsCyrillic(TestCase):
     def test_create_testcase_with_cyrillic_works_issue_1770(self):
-        # https://github.com/kiwitcms/Kiwi/issues/1770
+        # https://github.com/kiwitcms/kiwitcms/issues/1770
         case = TestCaseFactory(summary="Това е тест на кирилица")
         case.save()
 

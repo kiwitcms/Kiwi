@@ -20,7 +20,7 @@ from tcms.testcases.models import TestCasePlan
 # tree can be before it gets truncated. Truncated tree columns silently lose
 # the depth first ordering, which breaks tree_view_html(), and raise DataError
 # when sql_mode is strict, which breaks saving.
-# See https://github.com/kiwitcms/Kiwi/issues/4334
+# See https://github.com/kiwitcms/kiwitcms/issues/4334
 TREE_COLUMN_WIDTH = 1000
 TREE_ORDERING_CHARS_PER_LEVEL = 20
 
@@ -270,7 +270,7 @@ class TestPlan(TreeNode, UrlMixin):
                 f"A TestPlan tree can have at most {MAX_TREE_NODES} TestPlans "
                 "on a single root to leaf path, otherwise the tree columns "
                 "of django-tree-queries are truncated. See "
-                "https://github.com/kiwitcms/Kiwi/issues/4334"
+                "https://github.com/kiwitcms/kiwitcms/issues/4334"
             )
 
     def tree_view_html(self):

@@ -192,10 +192,10 @@ export function updateParamsToSearchTags (selector, params) {
     Replaces HTML characters for display in DataTables
 
     backslash(\), quotes('), double quotes (")
-    https://github.com/kiwitcms/Kiwi/issues/78
+    https://github.com/kiwitcms/kiwitcms/issues/78
 
     angle brackets (<>)
-    https://github.com/kiwitcms/Kiwi/issues/234
+    https://github.com/kiwitcms/kiwitcms/issues/234
 */
 export function escapeHTML (unsafe) {
     return unsafe.replace(/[&<>"']/g, function (m) {
@@ -217,7 +217,7 @@ export function unescapeHTML (html) {
         .replace(/&#039;/g, '\'')
     // always keep the ampersand escape last
     // to avoid chain unescape of nested values, see
-    // https://github.com/kiwitcms/Kiwi/issues/2800
+    // https://github.com/kiwitcms/kiwitcms/issues/2800
         .replace(/&amp;/g, '&')
 }
 

@@ -223,7 +223,7 @@ TE-{execution.pk}: {execution.case.summary}"""
         This property is meant to be used by the rest of the integration code.
         """
         # b/c jira.JIRA tries to connect when object is created
-        # see https://github.com/kiwitcms/Kiwi/issues/100
+        # see https://github.com/kiwitcms/kiwitcms/issues/100
         if self.is_adding_testcase_to_issue_disabled():
             return None
 

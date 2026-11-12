@@ -37,7 +37,7 @@ class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
             "Python module is found inside a directory which is "
             "missing __init__.py! This will lead to missing packages when "
             "tarball is built for distribution on PyPI! See "
-            "https://github.com/kiwitcms/Kiwi/issues/790",
+            "https://github.com/kiwitcms/kiwitcms/issues/790",
         )
     }
 

@@ -11,14 +11,14 @@ class FormFieldChecker(checkers.BaseChecker):
             "form-field-label-used",
             "Do not use label in form Field class constructor,"
             "place template label in HTML. See:"
-            "https://github.com/kiwitcms/Kiwi/issues/738",
+            "https://github.com/kiwitcms/kiwitcms/issues/738",
         ),
         "R4812": (
             "Do not use help_text in form Field class constructor.",
             "form-field-help-text-used",
             "Do not use help_text in form Field class constructor,"
             "place template help_text in HTML. See:"
-            "https://github.com/kiwitcms/Kiwi/issues/738",
+            "https://github.com/kiwitcms/kiwitcms/issues/738",
         ),
     }
 
@@ -43,7 +43,7 @@ class ModelFormChecker(checkers.BaseChecker):
             "All forms must inherit from ModelForm",
             "must-inherit-from-model-form",
             "All forms must inherit from ModelForm"
-            "See: https://github.com/kiwitcms/Kiwi/issues/1384",
+            "See: https://github.com/kiwitcms/kiwitcms/issues/1384",
         )
     }
 
