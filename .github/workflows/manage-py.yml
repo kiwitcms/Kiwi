@@ -1,0 +1,148 @@
+name: manage.py
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  IMAGE: kiwitcms/kiwitcms
+  TAG: latest
+
+jobs:
+  should-run:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 2
+    outputs:
+      should_run: ${{ steps.counts.outputs.should_run }}
+    steps:
+      - name: Compare NEWER kiwitcms/kiwitcms against OLDER kiwitcms/kiwi
+        id: counts
+        run: |
+          set -euo pipefail
+
+          current="$(curl -fsS https://hub.docker.com/v2/repositories/kiwitcms/kiwitcms/ 2>/dev/null | jq -r '.pull_count // 0' || true)"
+          target="$(curl -fsS https://hub.docker.com/v2/repositories/kiwitcms/kiwi/ 2>/dev/null | jq -r '.pull_count // 0' || true)"
+          current="${current:-0}"
+          target="${target:-0}"
+
+          echo "kiwitcms/kiwitcms: ${current} pulls"
+          echo "kiwitcms/kiwi:     ${target} pulls"
+
+          # Docker Hub doesn't support renaming repositories and we'd really love to keep the
+          # existing badges. Employ the robots to help out with this for now
+          if [ "${current}" -lt "${target}" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  manage-py:
+    name: manage.py
+    needs: should-run
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    container:
+      image: kiwitcms/kiwitcms:latest
+    strategy:
+      fail-fast: false
+      matrix:
+        command:
+          - admin_generator
+          - captcha_clean
+          - captcha_create_pool
+          - changepassword
+          - check
+          - clean_duplicate_history
+          - clean_old_history
+          - clean_orphan_obj_perms
+          - clean_pyc
+          - clear_cache
+          - clearsessions
+          - collectstatic
+          - compile_pyc
+          - compilemessages
+          - create_command
+          - create_jobs
+          - create_template_tags
+          - createcachetable
+          - createsuperuser
+          - dbshell
+          - delete_squashed_migrations
+          - delete_stale_attachments
+          - delete_stale_comments
+          - describe_form
+          - diffsettings
+          - drop_test_database
+          - dumpdata
+          - dumpscript
+          - export_emails
+          - find_template
+          - findstatic
+          - flush
+          - generate_password
+          - generate_rpc_schema
+          - generate_secret_key
+          - graph_models
+          - init_db
+          - initial_setup
+          - inspectdb
+          - list_model_info
+          - list_signals
+          - loaddata
+          - mail_debug
+          - makemessages
+          - makemigrations
+          - managestate
+          - merge_model_instances
+          - migrate
+          - migrations_order
+          - notes
+          - optimizemigration
+          - populate_history
+          - print_settings
+          - print_user_for_session
+          - raise_test_exception
+          - refresh_permissions
+          - remove_stale_contenttypes
+          - reset_db
+          - reset_schema
+          - runjob
+          - runjobs
+          - runprofileserver
+          - runscript
+          - runserver
+          - runserver_plus
+          - sendtestemail
+          - set_default_site
+          - set_domain
+          - set_fake_emails
+          - set_fake_passwords
+          - shell
+          - shell_plus
+          - show_permissions
+          - show_template_tags
+          - show_urls
+          - showmigrations
+          - sqlcreate
+          - sqldiff
+          - sqldsn
+          - sqlflush
+          - sqlmigrate
+          - sqlsequencereset
+          - squashmigrations
+          - startapp
+          - startproject
+          - sync_s3
+          - syncdata
+          - test
+          - testserver
+          - unreferenced_files
+          - update_permissions
+          - upgrade
+          - validate_templates
+    steps:
+      - name: manage.py ${{ matrix.command }} --help
+        run: /Kiwi/manage.py ${{ matrix.command }} --help
