@@ -10,7 +10,7 @@ class GenericForeignKeyChecker(BaseChecker):
             "Avoid defining GenericForeignKey fields",
             "avoid-generic-foreign-key",
             "Avoid defining GenericForeignKey fields in models,"
-            "See: https://github.com/kiwitcms/Kiwi/issues/1303",
+            "See: https://github.com/kiwitcms/kiwitcms/issues/1303",
         )
     }
 

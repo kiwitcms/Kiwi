@@ -44,7 +44,7 @@
                     <ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenuLang">
                         <li><a target="_parent" href="https://kiwitcms.readthedocs.io/en/latest/guide/language.html">{% trans "Change language" %}</a></li>
                         <li><a target="_parent" href="https://crowdin.com/project/kiwitcms">{% trans "Supported languages" %}</a></li>
-                        <li><a target="_parent" href="https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin">{% trans "Request new language" %}</a></li>
+                        <li><a target="_parent" href="https://github.com/kiwitcms/kiwitcms/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin">{% trans "Request new language" %}</a></li>
 
                         <li class="divider"></li>
                         {% get_current_language as LANGUAGE_CODE %}
@@ -68,7 +68,7 @@
                         <li><a href="{{ link.0 }}" target="_parent">{{ link.1 }}</a></li>
                         {% endfor %}
                         <li class="divider"></li>
-                        <li><a target="_parent" href="https://github.com/kiwitcms/Kiwi/blob/master/CHANGELOG.rst#change-log">{% trans 'Version' %} {{ SETTINGS.KIWI_VERSION }}</a></li>
+                        <li><a target="_parent" href="https://github.com/kiwitcms/kiwitcms/blob/master/CHANGELOG.rst#change-log">{% trans 'Version' %} {{ SETTINGS.KIWI_VERSION }}</a></li>
                     </ul>
                 </li>
 

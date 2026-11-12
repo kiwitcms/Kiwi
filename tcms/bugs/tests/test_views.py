@@ -62,7 +62,7 @@ class TestBugStatusChange(BaseCaseRun):
         bug.refresh_from_db()
         self.assertFalse(bug.status)
 
-    # test case for https://github.com/kiwitcms/Kiwi/issues/1152
+    # test case for https://github.com/kiwitcms/kiwitcms/issues/1152
     def test_reopen_a_closed_bug(self):
         bug = BugFactory(status=False)
 

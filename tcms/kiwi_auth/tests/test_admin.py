@@ -75,7 +75,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         self.assertContains(response, self.tester.username)
 
     def test_superuser_can_add_users(self):
-        # test for https://github.com/kiwitcms/Kiwi/issues/642
+        # test for https://github.com/kiwitcms/kiwitcms/issues/642
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.admin.username, password="admin-password"
         )
@@ -289,7 +289,7 @@ class TestUserAdmin(LoggedInTestCase):  # pylint: disable=too-many-public-method
         user_should_have_perm(self.moderator, "auth.add_user")
         user_should_have_perm(self.moderator, "auth.change_user")
 
-        # test for https://github.com/kiwitcms/Kiwi/issues/642
+        # test for https://github.com/kiwitcms/kiwitcms/issues/642
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.moderator.username, password="admin-password"
         )

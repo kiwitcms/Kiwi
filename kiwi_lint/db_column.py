@@ -10,7 +10,7 @@ class DbColumnChecker(checkers.BaseChecker):
             "Do not use db_column in model field definitions",
             "db-column-used",
             "Do not use db_column argument in model field definitions,"
-            "See: https://github.com/kiwitcms/Kiwi/issues/736",
+            "See: https://github.com/kiwitcms/kiwitcms/issues/736",
         )
     }
 

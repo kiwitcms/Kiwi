@@ -215,7 +215,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#secure-ssl-redirect
 SECURE_SSL_REDIRECT = "runserver" not in sys.argv and "test" not in sys.argv
 
-# See https://github.com/kiwitcms/Kiwi/issues/2717
+# See https://github.com/kiwitcms/kiwitcms/issues/2717
 # and tcms/issuetracker/azure_boards.py
 AZURE_BOARDS_API_VERSION = os.environ.get("AZURE_BOARDS_API_VERSION", "6.0")
 
@@ -454,7 +454,7 @@ for plugin in entry_points().select(group="kiwitcms.plugins"):
 
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
-    ("https://github.com/kiwitcms/Kiwi/issues/new/choose", _("Report an Issue")),
+    ("https://github.com/kiwitcms/kiwitcms/issues/new/choose", _("Report an Issue")),
     ("http://kiwitcms.readthedocs.io/en/latest/admin.html", _("Administration Guide")),
     ("http://kiwitcms.readthedocs.io/en/latest/tutorial.html", _("User Guide")),
     ("http://kiwitcms.readthedocs.io/en/latest/api/index.html", _("API Help")),

@@ -68,7 +68,7 @@ class EditPlanViewTest(LoggedInTestCase):
 
     def test_with_invalid_notify_form_value(self):
         # Note: Boolean fields are always valid - either False or True
-        # https://github.com/kiwitcms/Kiwi/pull/1677#discussion_r438776178
+        # https://github.com/kiwitcms/kiwitcms/pull/1677#discussion_r438776178
         # That's why the only way to make the notify formset invalid is to
         # reference a non-existing email_settings ID !!!
         edit_data = self.testplan_edit_data.copy()

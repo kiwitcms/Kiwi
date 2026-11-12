@@ -19,7 +19,7 @@ trees are truncated, losing the depth first ordering, and cannot be saved at
 all when ``sql_mode`` is strict. :data:`tcms.testplans.models.MAX_TREE_NODES`
 is the number of TestPlans which fit on a single root to leaf path.
 
-https://github.com/kiwitcms/Kiwi/issues/4334
+https://github.com/kiwitcms/kiwitcms/issues/4334
 """
 
 from http import HTTPStatus
