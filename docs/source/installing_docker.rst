@@ -51,7 +51,7 @@ The above command will create two containers:
    for a list of differences.
 
 ``docker compose`` will also create two volumes for persistent data storage:
-``kiwi_db_data`` and ``kiwi_uploads``.
+``kiwitcms_db_data`` and ``kiwitcms_uploads``.
 
 .. note::
 
