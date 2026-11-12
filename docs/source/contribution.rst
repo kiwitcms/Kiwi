@@ -49,7 +49,7 @@ Reporting General Issues
 ------------------------
 
 If you have any good idea, or catch a bug, please do
-create an issue at https://github.com/kiwitcms/Kiwi/issues!
+create an issue at https://github.com/kiwitcms/kiwitcms/issues!
 
 
 Documentation
@@ -92,7 +92,7 @@ the fly as you type! Don't forget to **Save** the newly submitted translation.
     do this then use the in-context editor at https://public.tenant.kiwitcms.org!
 
 To request a new language please
-`create an issue <https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_
+`create an issue <https://github.com/kiwitcms/kiwitcms/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_
 on GitHub.
 
 If you prefer translating out of context (not recommended) please read the

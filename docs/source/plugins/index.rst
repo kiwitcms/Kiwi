@@ -3,7 +3,7 @@ Kiwi TCMS plugins
 
 You can design your own plugins which will be automatically
 discovered and loaded by Kiwi TCMS. There is an example in
-`tcms/telemetry/tests/plugin <https://github.com/kiwitcms/Kiwi/tree/master/tcms/telemetry/tests/plugin>`_
+`tcms/telemetry/tests/plugin <https://github.com/kiwitcms/kiwitcms/tree/master/tcms/telemetry/tests/plugin>`_
 but these are not limited to telemetry! They can be anything!
 
 Your plugin should be packaged as a stand-alone Django application that

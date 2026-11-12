@@ -1,5 +1,5 @@
 image:
-  repository: pub.kiwitcms.eu/kiwitcms/kiwi
+  repository: pub.kiwitcms.eu/kiwitcms/kiwitcms
   pullPolicy: IfNotPresent
   tag: latest
 

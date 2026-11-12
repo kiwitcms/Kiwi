@@ -55,7 +55,7 @@ we often hear is *How many test execution results can Kiwi TCMS deal with?*
       the host filesystem
     - Host OS - Ubuntu 24.04, freshly provisioned, no changes from defaults
     - ``api_write_test.py`` @
-      `748787a <https://github.com/kiwitcms/Kiwi/blob/748787ad37702ed4df2554330eef987ec40268b8/tests/performance/api_write_test.py>`_
+      `748787a <https://github.com/kiwitcms/kiwitcms/blob/748787ad37702ed4df2554330eef987ec40268b8/tests/performance/api_write_test.py>`_
       with ``RANGE_SIZE=100``;
       ``locust --users 1 --spawn-rate 1 --run-time 60m --locustfile api_write_test.py``
     - For each invocation ``api_write_test.py`` creates new *Product*, *Version*
@@ -235,7 +235,7 @@ will query and fully load all the results!
       the host filesystem
     - Host OS - Ubuntu 24.04, freshly provisioned, no changes from defaults
     - ``web_simulation_test.py`` @
-      `87dd61f <https://github.com/kiwitcms/Kiwi/blob/87dd61ff9955e79de4604259bc29ab7a923f0730/tests/performance/web_simulation_test.py>`_
+      `87dd61f <https://github.com/kiwitcms/kiwitcms/blob/87dd61ff9955e79de4604259bc29ab7a923f0730/tests/performance/web_simulation_test.py>`_
       ``locust --processes -1 --users 300 --spawn-rate 0.33 --run-time 60m --locustfile web_simulation_test.py``
     - ~ 15 min ramp-up of all users; then steady load
     - Existing state: 20 x TestPlan; 200 x TestCase; 200 x TestRun

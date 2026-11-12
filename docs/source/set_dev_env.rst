@@ -4,9 +4,9 @@ Setting up a local development environment
 Get source code
 ---------------
 
-The Kiwi TCMS source code is available at https://github.com/kiwitcms/Kiwi::
+The Kiwi TCMS source code is available at https://github.com/kiwitcms/kiwitcms::
 
-    git clone https://github.com/kiwitcms/Kiwi.git
+    git clone https://github.com/kiwitcms/kiwitcms.git
     cd Kiwi/
 
 Install Python 3
