@@ -57,7 +57,7 @@ jobs:
             make docker-image
 
             # tag so we can push to private container registry
-            docker tag pub.kiwitcms.eu/kiwitcms/kiwi:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
+            docker tag pub.kiwitcms.eu/kiwitcms/kiwitcms:latest quay.io/kiwitcms/upstream:$VERSION-$(uname -m)
 
             echo "+++++ Docker images +++++"
             docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"

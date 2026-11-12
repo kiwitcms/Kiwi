@@ -221,7 +221,7 @@ _EOF_
         rm -f /tmp/testcookies.txt
         rm -f /tmp/testdata.txt
         if [ -n "$ImageOS" ]; then
-            rlRun -t -c "docker volume rm kiwi_db_data"
+            rlRun -t -c "docker volume rm kiwitcms_db_data"
         fi
     rlPhaseEnd
 rlJournalEnd

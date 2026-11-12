@@ -1,7 +1,7 @@
 Kiwi TCMS - open source test management
 =======================================
 
-.. image:: https://img.shields.io/docker/pulls/kiwitcms/kiwi
+.. image:: https://img.shields.io/docker/pulls/kiwitcms/kiwitcms
     :target: https://kiwitcms.readthedocs.io/en/latest/installing_docker.html
     :alt: Downloads from Docker Hub
 
@@ -17,12 +17,12 @@ Kiwi TCMS - open source test management
     :target: https://scan.coverity.com/projects/kiwitcms-kiwi
     :alt: Coverity scan
 
-.. image:: https://codecov.io/gh/kiwitcms/Kiwi/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/kiwitcms/Kiwi
+.. image:: https://codecov.io/gh/kiwitcms/kiwitcms/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/kiwitcms/kiwitcms
     :alt: Code coverage
 
 .. image:: https://api.codeclimate.com/v1/badges/3f4e108ea369f625f112/maintainability
-   :target: https://codeclimate.com/github/kiwitcms/Kiwi/maintainability
+   :target: https://codeclimate.com/github/kiwitcms/kiwitcms/maintainability
    :alt: Maintainability
 
 .. image:: https://tidelift.com/badges/package/pypi/kiwitcms
@@ -32,7 +32,7 @@ Kiwi TCMS - open source test management
 Introduction
 ------------
 
-.. image:: https://raw.githubusercontent.com/kiwitcms/Kiwi/master/tcms/static/images/kiwi_h80.png
+.. image:: https://raw.githubusercontent.com/kiwitcms/kiwitcms/master/tcms/static/images/kiwi_h80.png
    :alt: "Kiwi TCMS Logo"
 
 Kiwi TCMS is the leading open source test management system for both manual and
@@ -63,7 +63,7 @@ Brief history
   started migrating to modern UI using Patternfly
 * Oct 2017 - Launched http://kiwitcms.org and https://public.tenant.kiwitcms.org;
   first bug report from external contributor
-* Nov 2017 - Pushed ``pub.kiwitcms.eu/kiwitcms/kiwi`` container;
+* Nov 2017 - Pushed ``pub.kiwitcms.eu/kiwitcms/kiwitcms`` container;
   merged upstream API client sources and modified them to work with the current
   code base
 * Jan 2018 - External contributions are now a fact: German translation by
@@ -112,7 +112,7 @@ Language support
 ----------------
 
 - `Supported languages <https://crowdin.com/project/kiwitcms>`_
-- `Request new language <https://github.com/kiwitcms/Kiwi/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_
+- `Request new language <https://github.com/kiwitcms/kiwitcms/issues/new?title=Request+new+language:+...&body=Please+enable+...+language+in+Crowdin>`_
 - `Translation guide <https://kiwitcms.readthedocs.io/en/latest/contribution.html#translation>`_
 
 
@@ -131,8 +131,8 @@ random kiwi bird artwork or a modified version of these files:
 
 - `Kiwi-TCMS-logo-header.svg <https://github.com/kiwitcms/kiwitcms.github.io/blob/source/theme/static/images/Kiwi-TCMS-logo-header.svg>`_ - horizontal logo, green, as used in the website header
 - `Kiwi-TCMS-logo-footer.svg <https://github.com/kiwitcms/kiwitcms.github.io/blob/source/theme/static/images/Kiwi-TCMS-logo-footer.svg>`_ - horizontal logo, white, as used in the website footer
-- `square_logo.svg <https://github.com/kiwitcms/Kiwi/blob/master/tcms/static/images/square_logo.svg>`_ - square logo, color, transparent background
-- `square-with-name.png <https://github.com/kiwitcms/Kiwi/blob/master/tcms/static/images/square-with-name.png>`_ - square logo with the name, without the tagline
+- `square_logo.svg <https://github.com/kiwitcms/kiwitcms/blob/master/tcms/static/images/square_logo.svg>`_ - square logo, color, transparent background
+- `square-with-name.png <https://github.com/kiwitcms/kiwitcms/blob/master/tcms/static/images/square-with-name.png>`_ - square logo with the name, without the tagline
 
 The Kiwi TCMS logo has been designed by Milos Babic.
 
@@ -140,8 +140,8 @@ The Kiwi TCMS logo has been designed by Milos Babic.
 Help us improve Kiwi TCMS
 -------------------------
 
-- Click the `Star` button at https://github.com/kiwitcms/Kiwi/stargazers
-- Click the star icon at https://hub.docker.com/r/kiwitcms/kiwi/
+- Click the `Star` button at https://github.com/kiwitcms/kiwitcms/stargazers
+- Click the star icon at https://hub.docker.com/r/kiwitcms/kiwitcms/
 - Subscribe to our
   `newsletter <https://kiwitcms.us17.list-manage.com/subscribe?u=9b57a21155a3b7c655ae8f922&id=c970a37581>`_
 - Send us testimonials and feedback about how your team is using Kiwi TCMS

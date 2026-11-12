@@ -3,7 +3,7 @@ services:
     # not using it in actual tests
     bugtracker_kiwitcms_org:
         container_name: bugtracker_kiwitcms_org
-        image: pub.kiwitcms.eu/kiwitcms/kiwi
+        image: pub.kiwitcms.eu/kiwitcms/kiwitcms
         restart: always
         hostname: 'bugtracker.kiwitcms.org'
         cap_drop:
