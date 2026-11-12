@@ -10,7 +10,7 @@ chart - the Kiwi TCMS isn't going to actively maintain it!
 ## TL;DR
 
 ```console
-git clone https://github.com/kiwitcms/Kiwi.git
+git clone https://github.com/kiwitcms/kiwitcms.git
 
 cd Kiwi/helm
 
@@ -36,7 +36,7 @@ To install the chart with the release name `my-release`:
 ATTENTION: make sure you have `pwgen` utility installed. Otherwise consider to supply a pre-generated password
 
 ```console
-git clone https://github.com/kiwitcms/Kiwi.git
+git clone https://github.com/kiwitcms/kiwitcms.git
 
 cd Kiwi/helm
 

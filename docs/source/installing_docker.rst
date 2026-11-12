@@ -10,7 +10,7 @@ easiest way to get started - not necessarily the most production ready!
 
     The actual container tooling you will use in production depends on your environment!
     For Kubernetes + Helm see the
-    `helm/ <https://github.com/kiwitcms/Kiwi/tree/master/helm>`_ directory in the source
+    `helm/ <https://github.com/kiwitcms/kiwitcms/tree/master/helm>`_ directory in the source
     code!
 
 
@@ -18,7 +18,7 @@ Example with docker-compose
 ---------------------------
 
 For **Kiwi TCMS Community Edition** start by copying our
-`docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.yml>`_
+`docker-compose.yml <https://raw.githubusercontent.com/kiwitcms/kiwitcms/master/docker-compose.yml>`_
 file and make sure that all other files referenced inside of it are available
 on your local filesystem!
 
@@ -73,7 +73,7 @@ The above command will create two containers:
     Alternatively you may commit or mount arbitrary text files inside the container. In both
     cases you have to configure the absolute path to the file containing the actual value
     as an environment variable inside the running container. See
-    `docker-compose.with-secrets <https://raw.githubusercontent.com/kiwitcms/Kiwi/master/docker-compose.with-secrets>`_
+    `docker-compose.with-secrets <https://raw.githubusercontent.com/kiwitcms/kiwitcms/master/docker-compose.with-secrets>`_
     for reference!
 
     For example:
@@ -373,7 +373,7 @@ Customized docker image
     directly from the master branch.
 
     The proper way to create a downstream docker image is to provide a
-    ``Dockerfile.myorg`` which inherits ``FROM pub.kiwitcms.eu/kiwitcms/kiwi:latest``
+    ``Dockerfile.myorg`` which inherits ``FROM pub.kiwitcms.eu/kiwitcms/kiwitcms:latest``
     and adds your changes as separate layers! Ideally you will keep this into
     another git repository together with your build instructions and possibly a
     customized ``docker-compose.yml`` file.

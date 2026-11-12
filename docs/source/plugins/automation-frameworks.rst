@@ -41,9 +41,9 @@ to be notified when they are officially released.
 Proposed plugins
 ----------------
 
-* Native `Test NG plugin <https://github.com/kiwitcms/Kiwi/issues/692>`_ to be
+* Native `Test NG plugin <https://github.com/kiwitcms/kiwitcms/issues/692>`_ to be
   written in Java
-* `GitHub status plugin <https://github.com/kiwitcms/Kiwi/issues/817>`_
+* `GitHub status plugin <https://github.com/kiwitcms/kiwitcms/issues/817>`_
 
 .. WHEN UPDATING THIS SECTION MAKE SURE IT MATCHES https://kiwitcms.org/features/
 
