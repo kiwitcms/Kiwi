@@ -37,7 +37,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/Kiwi/manage.py", "migrate"]
           env:
-          - name: SECRET_KEY
+          - name: KIWI_SECRET_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ $secret_name }}
@@ -83,7 +83,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-          - name: SECRET_KEY
+          - name: KIWI_SECRET_KEY
             valueFrom:
               secretKeyRef:
                 name: {{ $secret_name }}

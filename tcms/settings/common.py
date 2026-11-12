@@ -13,7 +13,7 @@ import tcms
 from tcms.utils.secrets import get_secret
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# ~~ You have to override the following settings in product.py
+# ~~ You must override the following settings in product.py
 
 
 # Set to False for production
@@ -21,7 +21,7 @@ DEBUG = True
 
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = "^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv"  # nosec:B105
+SECRET_KEY = get_secret("KIWI_SECRET_KEY", "change-me")
 
 
 # Database settings
