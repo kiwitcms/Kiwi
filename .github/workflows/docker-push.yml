@@ -39,14 +39,12 @@ jobs:
             # tag both the new and the legacy image names
             # from the same locally built image
             docker tag pub.kiwitcms.eu/kiwitcms/kiwitcms:latest kiwitcms/kiwitcms:latest
-            docker tag pub.kiwitcms.eu/kiwitcms/kiwitcms:latest kiwitcms/kiwi:latest
 
             echo "+++++ Docker images +++++"
             docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t$(date '+%d %b %Y')\t{{.Size}}"
 
             echo "${{ secrets.DOCKER_PUSH_TOKEN }}" | docker login -u="${{ secrets.DOCKER_PUSH_USERNAME }}" --password-stdin
             docker push kiwitcms/kiwitcms:latest
-            docker push kiwitcms/kiwi:latest
             docker logout
 
       - name: Remove container registry credentials
