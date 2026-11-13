@@ -1,6 +1,60 @@
 Change Log
 ==========
 
+Kiwi TCMS 17.1 (13 Nov 2026)
+----------------------------
+
+.. important::
+
+    This is a minor version release which includes critical security related updates,
+    improvements, container image rename and internal refactoring.
+
+
+Security
+~~~~~~~~
+
+- Add checks for default, weak and commonly used values of
+  ``settings.SECRET_KEY`` and display a warning on the Dashboard page. Closes
+  `GHSA-m9h5-c637-cpcg <https://github.com/kiwitcms/kiwitcms/security/advisories/GHSA-m9h5-c637-cpcg>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update markdown from 3.11.2 to 3.11.3
+- Update psycopg from 3.3.7 to 3.3.8
+- Update node_modules/pdfmake from 0.3.13 to 0.3.14
+- Propagate ``manage.py upgrade --verbosity|--no-input`` command line
+  arguments downstream
+- Rename the container image from ``kiwitcms/kiwi`` to ``kiwitcms/kiwitcms``
+- Use the error icon color for alert message text
+
+
+Settings
+~~~~~~~~
+
+- Extend ``AUTH_PASSWORD_VALIDATORS`` with known passwords
+- Pass the value of ``KIWI_SECRET_KEY`` environment variable to
+  ``settings.SECRET_KEY``
+
+
+API
+~~~
+
+- Add version and release date to generated API descriptions
+- Document ``Referer`` and ``User-Agent`` headers in generated API schemas
+
+
+Refactoring and testing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update black from 26.5.1 to 26.10.1
+- Update selenium from 4.27.1 to 4.52.0
+- Update sphinx from 9.1.1 to 9.2.0
+- Pin CI runners to ``ubuntu-26.04``
+
+
+
 Kiwi TCMS 17.0 (03 Nov 2026)
 ----------------------------
 
