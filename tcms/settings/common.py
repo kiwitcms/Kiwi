@@ -471,6 +471,9 @@ MODERNRPC_HANDLERS = [
     "tcms.rpc.handlers.KiwiTCMSJsonRpcHandler",
 ]
 
+# API clients rely on the exception messages returned by RPC methods
+MODERNRPC_EXPOSE_INTERNAL_ERRORS = True
+
 # in alphabetic order
 MODERNRPC_METHODS_MODULES = [
     "tcms.telemetry.api",
