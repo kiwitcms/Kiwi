@@ -126,14 +126,13 @@ export function pageTestplansCloneReadyHandler () {
                     }
                 }
 
-                rows.each(function (index) {
+                rows.each(function () {
                     const row = $(this)
                     let newParentId = clonedPlanIds[row.attr('data-parent-id')]
-                    const sourceParentId = row.data('parent-id')
 
-                    // the top-most TP of the deep-cloned tree keeps its parent, #4687
-                    if (index === 0 && sourceParentId) {
-                        newParentId = sourceParentId
+                    // preserve parent on root-level TP if source TP had a parent, #4687
+                    if (row.data('tree-depth') === 1 && row.data('parent-id') !== undefined) {
+                        newParentId = row.data('parent-id')
                     }
 
                     jsonRPC(
