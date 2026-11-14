@@ -130,7 +130,8 @@ export function pageTestplansCloneReadyHandler () {
                     const row = $(this)
                     let newParentId = clonedPlanIds[row.attr('data-parent-id')]
 
-                    if (row.data('tree-depth') === 1 && !newParentId) {
+                    // preserve parent on root-level TP if source TP had a parent, #4687
+                    if (row.data('tree-depth') === 1 && row.data('parent-id') !== undefined) {
                         newParentId = row.data('parent-id')
                     }
 
