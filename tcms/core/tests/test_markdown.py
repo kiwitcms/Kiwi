@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
+import warnings
+
+from bleach.sanitizer import NoCssSanitizerWarning
 
 from tcms.core.templatetags.extra_filters import markdown2html
 
@@ -97,3 +100,11 @@ def hello():
             """<p><em>hello</em> &lt;object&gt;&lt;link&gt;&lt;iframe&gt;<br>
 &lt;frame&gt;&lt;frameset&gt;&lt;embed&gt;</p>""",
         )
+
+    def test_markdown2html_sanitizes_css(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", NoCssSanitizerWarning)
+            self.assertEqual(
+                markdown2html('<p style="color:red; position:fixed">hello</p>'),
+                '<p style="color:red;">hello</p>',
+            )

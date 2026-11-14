@@ -7,12 +7,42 @@ from importlib.metadata import entry_points
 
 import bleach
 import markdown
+from bleach.css_sanitizer import CSSSanitizer
 from bleach_allowlist import markdown_attrs, markdown_tags, print_attrs, print_tags
 from django import template
 from django.contrib.messages import constants as messages
 from django.utils.safestring import mark_safe
 
 register = template.Library()
+
+# print_attrs allows the `style` attribute for all tags, so bleach needs a
+# CSS sanitizer, otherwise it emits NoCssSanitizerWarning and passes CSS
+# through untouched.
+CSS_SANITIZER = CSSSanitizer(
+    allowed_css_properties=[
+        "background",
+        "background-color",
+        "border",
+        "border-collapse",
+        "border-color",
+        "border-style",
+        "border-width",
+        "color",
+        "font-family",
+        "font-size",
+        "font-style",
+        "font-weight",
+        "height",
+        "line-height",
+        "margin",
+        "padding",
+        "text-align",
+        "text-decoration",
+        "vertical-align",
+        "white-space",
+        "width",
+    ],
+)
 
 
 @register.filter(name="is_list")
@@ -25,6 +55,7 @@ def bleach_input(input_html):
         input_html,
         markdown_tags + print_tags + ["del", "s"],
         {**markdown_attrs, **print_attrs},
+        css_sanitizer=CSS_SANITIZER,
     )
 
 
