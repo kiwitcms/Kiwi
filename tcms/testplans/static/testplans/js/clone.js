@@ -126,14 +126,20 @@ export function pageTestplansCloneReadyHandler () {
                     }
                 }
 
-                rows.each(function () {
+                rows.each(function (index) {
                     const row = $(this)
+                    let newParentId = clonedPlanIds[row.attr('data-parent-id')]
+
+                    // preserve parent on root-level TP if source TP had a parent, #4687
+                    if (index === 0 && row.data('parent-id') !== undefined) {
+                        newParentId = row.data('parent-id')
+                    }
 
                     jsonRPC(
                         'TestPlan.update',
                         [
                             clonedPlanIds[row.data('plan-id')],
-                            { parent: clonedPlanIds[row.attr('data-parent-id')] }
+                            { parent: newParentId }
                         ],
                         updateIsDone
                     )
