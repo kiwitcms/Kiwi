@@ -117,6 +117,17 @@ class KiwiTCMSHandlerMixin:
         if method_name.endswith(".create") or method_name.endswith(".update"):
             return
 
+        # an empty query matches, and so would delete, every record
+        if ".remove" in method_name:
+            values = list(args or ())
+            values.extend((kwargs or {}).values())
+
+            for value in values:
+                if isinstance(value, dict) and not value:
+                    raise RPCInvalidRequest(
+                        "Refusing an empty query: it would delete every record"
+                    )
+
         restricted_fields = (
             "__email__",
             "activation_key",

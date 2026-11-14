@@ -330,6 +330,16 @@ class TestExecutionRemoveLink(APITestCase):
         )
         self.assertEqual([], list(self.execution.links()))
 
+    def test_detach_log_with_empty_query_raises(self):
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.TestExecution.remove_link({})
+
+        links = self.execution.links()
+        self.assertEqual(1, links.count())
+        self.assertEqual(self.link.pk, links[0].pk)
+
 
 class TestExecutionRemoveLinkPermissions(APIPermissionsTestCase):
     """Test permissions of TestExecution.remove_link"""
@@ -864,6 +874,17 @@ class TestExecutionRemovePermissions(APIPermissionsTestCase):
 
             exists = TestExecution.objects.filter(pk=self.execution.pk).exists()
             self.assertTrue(exists)
+
+    def test_remove_with_empty_query_raises_and_deletes_nothing(self):
+        # grant only the permission needed for TestExecution.remove
+        self.no_permissions_but(self.permission_label)
+
+        with self.assertRaisesRegex(
+            XmlRPCFault, "Refusing an empty query: it would delete every record"
+        ):
+            self.rpc_client.TestExecution.remove({})
+
+        self.assertEqual(TestExecution.objects.count(), 1)
 
 
 class TestListAttachmentsPermissions(APIPermissionsTestCase):
