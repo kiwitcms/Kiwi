@@ -298,6 +298,33 @@ class TestCloneView(BasePlanCase):
         self.assertNotContains(response, 'class="bootstrap-switch js-parent"')
 
     @test.override_settings(LANGUAGE_CODE="en")
+    def test_open_clone_page_for_a_tree_keeps_root_parent(self):
+        parent = TestPlanFactory(product=self.product, product_version=self.version)
+        root = TestPlanFactory(
+            parent=parent, product=self.product, product_version=self.version
+        )
+        child = TestPlanFactory(
+            parent=root, product=self.product, product_version=self.version
+        )
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username, password="password"
+        )
+
+        response = self.client.get(
+            reverse("plans-clone", args=[root.pk]), {"tree": "1"}
+        )
+
+        self.assertEqual(2, self.plan_rows(response))
+        # the root of the cloned sub-tree keeps its original parent
+        self.assertContains(response, f'data-plan-id="{root.pk}"')
+        self.assertContains(response, f'data-parent-id="{parent.pk}"')
+        self.assertContains(response, f'data-plan-id="{child.pk}"')
+        # while its children point at their source parents, which will be
+        # replaced by the ids of the clones in the browser
+        self.assertContains(response, f'data-parent-id="{root.pk}"')
+
+    @test.override_settings(LANGUAGE_CODE="en")
     def test_clone_page_ignores_duplicate_and_invalid_plan_ids(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username, password="password"

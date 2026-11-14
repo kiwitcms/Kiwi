@@ -128,13 +128,20 @@ export function pageTestplansCloneReadyHandler () {
 
                 rows.each(function () {
                     const row = $(this)
+                    const sourceParentId = row.attr('data-parent-id')
+                    // the parent of the root of the cloned sub-tree isn't
+                    // cloned itself, so keep the same source parent
+                    const parentId =
+                        clonedPlanIds[sourceParentId] || sourceParentId
+                    const values = {}
+
+                    if (parentId) {
+                        values.parent = Number(parentId)
+                    }
 
                     jsonRPC(
                         'TestPlan.update',
-                        [
-                            clonedPlanIds[row.data('plan-id')],
-                            { parent: clonedPlanIds[row.attr('data-parent-id')] }
-                        ],
+                        [clonedPlanIds[row.data('plan-id')], values],
                         updateIsDone
                     )
                 })
